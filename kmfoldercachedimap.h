@@ -32,21 +32,19 @@
 #ifndef kmfoldercachedimap_h
 #define kmfoldercachedimap_h
 
-#include <kdialogbase.h>
-#include <kstandarddirs.h>
-
-
-#include <q3ptrlist.h>
-#include <qdialog.h>
-//Added by qt3to4:
-#include <QTimerEvent>
-
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
 #include "kmacctimap.h"
 #include "kmfoldertype.h"
 #include "folderjob.h"
 #include "cachedimapjob.h"
+
+#include <kdialogbase.h>
+#include <kstandarddirs.h>
+
+#include <QDialog>
+#include <QList>
+#include <QTimerEvent>
 
 using KMail::FolderJob;
 class KMAcctCachedImap;
@@ -102,7 +100,7 @@ public:
 
   /** @reimpl */
   virtual int create();
-  
+
   /** Remove this folder */
   virtual void remove();
 
@@ -172,7 +170,7 @@ public:
 
   /* Reimplemented from KMFolderMaildir */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(Q3PtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = FALSE)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?
@@ -249,7 +247,7 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
-  /** 
+  /**
    * List of namespaces that need to be queried
    * Is set by the account for the root folder when the listing starts
    */
@@ -315,7 +313,7 @@ protected:
     /** Reimplemented from KMFolder */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
 
   virtual void timerEvent( QTimerEvent* );
@@ -324,7 +322,7 @@ protected:
   void newState( int progress, const QString& syncStatus );
 
   /** See if there is a better parent then this folder */
-  KMFolderCachedImap* findParent( const QString& path, const QString& name );  
+  KMFolderCachedImap* findParent( const QString& path, const QString& name );
 
 public slots:
   /**

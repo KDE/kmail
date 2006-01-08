@@ -628,7 +628,7 @@ FolderJob* KMFolderSearch::doCreateJob(KMMessage*, FolderJob::JobType,
     return 0;
 }
 
-FolderJob* KMFolderSearch::doCreateJob(Q3PtrList<KMMessage>&, const QString&,
+FolderJob* KMFolderSearch::doCreateJob(QList<KMMessage*>&, const QString&,
                                        FolderJob::JobType, KMFolder*) const
 {
     // Should never be called

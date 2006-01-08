@@ -66,7 +66,7 @@ ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
 }
 
 //-----------------------------------------------------------------------------
-ImapJob::ImapJob( Q3PtrList<KMMessage>& msgList, QString sets, JobType jt,
+ImapJob::ImapJob( QList<KMMessage*>& msgList, QString sets, JobType jt,
                   KMFolderImap* folder )
   : FolderJob( msgList, sets, jt, folder? folder->folder() : 0 ),
     mAttachmentStrategy ( 0 ), mParentProgressItem(0)
@@ -74,7 +74,7 @@ ImapJob::ImapJob( Q3PtrList<KMMessage>& msgList, QString sets, JobType jt,
 }
 
 void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
-                    Q3PtrList<KMMessage>& msgList )
+                    QList<KMMessage*>& msgList )
 {
   mJob = 0;
 
@@ -117,11 +117,11 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   if ( jt == tPutMessage )
   {
     // transfers the complete message to the server
-    Q3PtrListIterator<KMMessage> it( msgList );
+    QList<KMMessage*>::const_iterator it;
     KMMessage* curMsg;
-    while ( ( curMsg = it.current() ) != 0 )
+    for ( it = msgList.begin(); it != msgList.end(); ++it )
     {
-      ++it;
+      msg = (*it);
       if ( mSrcFolder && !curMsg->isMessage() )
       {
         int idx = mSrcFolder->find( curMsg );
@@ -132,7 +132,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       url.setPath( folder->imapPath() + ";SECTION=" + flags );
       ImapAccountBase::jobData jd;
       jd.parent = 0; jd.offset = 0; jd.done = 0;
-      jd.total = ( curMsg->msgSizeServer() > 0 ) ? 
+      jd.total = ( curMsg->msgSizeServer() > 0 ) ?
         curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
       Q3CString cstr( curMsg->asString() );
@@ -197,7 +197,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           "ImapJobCopyMove"+ProgressManager::getUniqueID(),
                           i18n("Server operation"),
                           i18n("Source folder: %1 - Destination folder: %2")
-                            .arg( msg_parent->prettyURL(), 
+                            .arg( msg_parent->prettyURL(),
                                   mDestFolder->prettyURL() ),
                           true,
                           account->useSSL() || account->useTLS() );
@@ -236,8 +236,9 @@ ImapJob::~ImapJob()
           (*it).progressItem = 0;
         }
         if ( !(*it).msgList.isEmpty() ) {
-          for ( Q3PtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-            mit.current()->setTransferInProgress( false );
+          QList<KMMessage*>::const_iterator it2;
+          for ( it2 = (*it).msgList.begin(); it2 != (*it).msgList.end(); ++it2 )
+            (*it2)->setTransferInProgress( false );
         }
       }
       account->removeJob( mJob );
@@ -258,8 +259,9 @@ ImapJob::~ImapJob()
             (*it).progressItem = 0;
           }
           if ( !(*it).msgList.isEmpty() ) {
-            for ( Q3PtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-              mit.current()->setTransferInProgress( false );
+            QList<KMMessage*>::const_iterator it2;
+            for ( it2 = (*it).msgList.begin(); it2 != (*it).msgList.end(); ++it2 )
+              (*it2)->setTransferInProgress( false );
           }
         }
         account->removeJob( mJob ); // remove the associated kio job
@@ -396,7 +398,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         dataSize = Util::crlf2lf( (*it).data.data(), dataSize ); // always <=
         (*it).data.resize( dataSize );
 
-        // During the construction of the message from the byteArray it does 
+        // During the construction of the message from the byteArray it does
         // not have a uid. Therefore we have to make sure that no connected
         // slots are called, since they would operate on uid == 0.
         msg->parent()->storage()->blockSignals( true );
@@ -450,7 +452,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       parent->ignoreJobsForMessage( msg );
       int idx = parent->find( msg );
       if (idx != -1) parent->removeMsg( idx, true );
-      // the removeMsg will unGet the message, which will delete all 
+      // the removeMsg will unGet the message, which will delete all
       // jobs, including this one
       return;
     }
@@ -541,7 +543,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
     }
     KMMessage *msg = (*it).msgList.first();
     emit messageStored( msg );
-    if ( msg == mMsgList.getLast() )
+    if ( msg == mMsgList.last() )
     {
       emit messageCopied( mMsgList );
       if (account->slave()) {
@@ -577,7 +579,7 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
 
     int index = -1;
     KMMessage * msg;
-    for ( msg = (*it).msgList.first(); msg; msg = (*it).msgList.next() )
+    foreach ( msg, (*it).msgList )
     {
       ulong uid = msg->UID();
       index = olduids.findIndex(uid);

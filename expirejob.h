@@ -30,8 +30,8 @@
 
 #include "jobscheduler.h"
 #include "kmcommands.h"
-//Added by qt3to4:
-#include <Q3PtrList>
+
+#include <QList>
 
 namespace KMail {
 
@@ -54,7 +54,7 @@ private:
 
 private:
   QTimer mTimer;
-  Q3PtrList<KMMsgBase> mRemovedMsgs;
+  QList<KMMsgBase*> mRemovedMsgs;
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;

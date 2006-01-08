@@ -48,7 +48,7 @@
 #include <kio/job.h>
 #include <kio/global.h>
 
-#include <q3ptrlist.h>
+#include <QList>
 
 #include <q3cstring.h>
 
@@ -75,7 +75,7 @@ public:
   CachedImapJob( const QList<MsgForDownload>& msgs,
                  JobType type = tGetMessage, KMFolderCachedImap* folder = 0 );
   // Put messages
-  CachedImapJob( const Q3PtrList<KMMessage>& msgs,
+  CachedImapJob( const QList<KMMessage*>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
   CachedImapJob( const QList<unsigned long>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );

@@ -446,7 +446,7 @@ void KMHeaders::readConfig (void)
 
   { // area for config group "General"
     KConfigGroup config( KMKernel::config(), "General" );
-    bool show = config.readEntry( "showMessageSize", 
+    bool show = config.readEntry( "showMessageSize",
                     QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_SIZE, show);
 
@@ -482,7 +482,7 @@ void KMHeaders::readConfig (void)
                     QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_CRYPTO, show);
 
-    show = config.readEntry( "showReceiverColumn", 
+    show = config.readEntry( "showReceiverColumn",
                     QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_RECEIVER, show);
 
@@ -492,7 +492,7 @@ void KMHeaders::readConfig (void)
                     QVariant( true ) ).toBool();
 
     KMime::DateFormatter::FormatType t =
-      (KMime::DateFormatter::FormatType) config.readEntry( "dateFormat", 
+      (KMime::DateFormatter::FormatType) config.readEntry( "dateFormat",
       QVariant( KMime::DateFormatter::Fancy ) ).toInt();
     mDate.setCustomFormat( config.readEntry( "customDateFormat", QString() ) );
     mDate.setFormat( t );
@@ -1336,10 +1336,11 @@ void KMHeaders::applyFiltersOnMsg()
 
     int contentX, contentY;
     HeaderItem *nextItem = prepareMove( &contentX, &contentY );
-    Q3PtrList<KMMsgBase> msgList = *selectedMsgs(true);
+    KMMessageList msgList = *selectedMsgs(true);
     finalizeMove( nextItem, contentX, contentY );
 
-    for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
+    KMMsgBase *msg;
+    foreach( msg, msgList )
       scheduler->execFilters( msg );
   } else {
     int contentX, contentY;
@@ -1356,7 +1357,9 @@ void KMHeaders::applyFiltersOnMsg()
     KCursorSaver busy( KBusyPtr::busy() );
     int msgCount = 0;
     int msgCountToFilter = msgList->count();
-    for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+    QList<KMMsgBase*>::const_iterator it;
+    for ( it = msgList->begin(); it != msgList->end(); it++ ) {
+      KMMsgBase* msgBase = (*it);
       int diff = msgCountToFilter - ++msgCount;
       if ( diff < 10 || !( msgCount % 10 ) ) {
         QString statusMsg = i18n("Filtering message %1 of %2");

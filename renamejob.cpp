@@ -226,7 +226,7 @@ void RenameJob::slotMoveMessages()
       this, SLOT( slotMoveMessages() ) );
   mStorage->blockSignals( true );
   // move all messages to the new folder
-  Q3PtrList<KMMsgBase> msgList;
+  QList<KMMsgBase*> msgList;
   if ( !mStorage->isOpened() )
     mStorageTempOpened = mStorage->open() ? mStorage : 0;
   for ( int i = 0; i < mStorage->count(); i++ )

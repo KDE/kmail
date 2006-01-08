@@ -1135,7 +1135,7 @@ void KMFolderCachedImap::uploadNewMessages()
         if ( dlg.exec() ) {
           KMFolder* dest = dlg.folder();
           if ( dest ) {
-            Q3PtrList<KMMsgBase> msgs;
+            QList<KMMsgBase*> msgs;
             for( int i = 0; i < count(); ++i ) {
               KMMsgBase *msg = getMsgBase( i );
               if( !msg ) continue; /* what goes on if getMsg() returns 0? */
@@ -1283,7 +1283,7 @@ bool KMFolderCachedImap::deleteMessages()
   if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
     return false;
   /* Delete messages from cache that are gone from the server */
-  Q3PtrList<KMMessage> msgsForDeletion;
+  QList<KMMessage*> msgsForDeletion;
 
   // It is not possible to just go over all indices and remove
   // them one by one because the index list can get resized under
@@ -1910,7 +1910,7 @@ FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                  QString, const AttachmentStrategy* ) const
 {
-  Q3PtrList<KMMessage> msgList;
+  QList<KMMessage*> msgList;
   msgList.append( msg );
   CachedImapJob *job = new CachedImapJob( msgList, jt, folder? static_cast<KMFolderCachedImap*>( folder->storage() ):0 );
   job->setParentFolder( this );
@@ -1918,7 +1918,7 @@ KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder
 }
 
 FolderJob*
-KMFolderCachedImap::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+KMFolderCachedImap::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder ) const
 {
   //FIXME: how to handle sets here?

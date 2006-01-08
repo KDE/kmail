@@ -32,14 +32,15 @@
 #ifndef IMAPJOB_H
 #define IMAPJOB_H
 
+#include "folderjob.h"
+
 #include <kio/job.h>
 #include <kio/global.h>
 
-#include "folderjob.h"
+#include <QList>
 
-#include <q3cstring.h>
 //Added by qt3to4:
-#include <Q3PtrList>
+#include <q3cstring.h>
 
 class KMAcctImap;
 class KMMessage;
@@ -61,7 +62,7 @@ class ImapJob : public FolderJob
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
            QString partSpecifier = QString(), const AttachmentStrategy *as = 0 );
-  ImapJob( Q3PtrList<KMMessage>& msgList, QString sets,
+  ImapJob( QList<KMMessage*>& msgList, QString sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
 
@@ -85,7 +86,7 @@ private slots:
 private:
   void execute();
   void init( JobType jt, QString sets, KMFolderImap *folder,
-             Q3PtrList<KMMessage>& msgList );
+             QList<KMMessage*>& msgList );
   KIO::Job *mJob;
   QByteArray mData;
   const AttachmentStrategy *mAttachmentStrategy;

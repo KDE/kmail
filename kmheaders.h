@@ -5,13 +5,6 @@
 
 #include "kmime_util.h"
 #include "headeritem.h"
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PtrList>
-#include <QEvent>
-#include <QKeyEvent>
-#include <QList>
-#include <QMouseEvent>
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
 
@@ -20,13 +13,19 @@ using KMail::HeaderItem;
 #include <messagestatus.h>
 using KPIM::MessageStatus;
 
-#include <qwidget.h>
+#include <QEvent>
+#include <QKeyEvent>
+#include <QList>
+#include <QMap>
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QPointer>
+#include <QWidget>
+//Added by qt3to4:
 #include <q3strlist.h>
 #include <q3memarray.h>
-#include <qmap.h>
 #include <q3dragobject.h>
 #include <q3dict.h>
-#include <qpointer.h>
 
 class KMFolder;
 class KMMessage;
@@ -39,7 +38,7 @@ class QPixmap;
 class QIcon;
 class QDateTime;
 
-typedef Q3PtrList<KMMsgBase> KMMessageList;
+typedef QList<KMMsgBase*> KMMessageList;
 typedef QList<quint32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };

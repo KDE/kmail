@@ -345,24 +345,26 @@ int FolderStorage::find( const KMMessage * msg ) const {
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const Q3PtrList<KMMsgBase>& msgList, bool imapQuiet)
+void FolderStorage::removeMsg(const QList<KMMsgBase*>& msgList, bool imapQuiet)
 {
-  for( Q3PtrListIterator<KMMsgBase> it( msgList ); *it; ++it )
+  for( QList<KMMsgBase*>::const_iterator it = msgList.begin();
+      it != msgList.end(); ++it )
   {
-    int idx = find(it.current());
-    assert( idx != -1);
-    removeMsg(idx, imapQuiet);
+    int idx = find( *it );
+    assert( idx != -1 );
+    removeMsg( idx, imapQuiet );
   }
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const Q3PtrList<KMMessage>& msgList, bool imapQuiet)
+void FolderStorage::removeMsg(const QList<KMMessage*>& msgList, bool imapQuiet)
 {
-  for( Q3PtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  for( QList<KMMessage*>::const_iterator it = msgList.begin();
+      it != msgList.end(); ++it )
   {
-    int idx = find(it.current());
-    assert( idx != -1);
-    removeMsg(idx, imapQuiet);
+    int idx = find( *it );
+    assert( idx != -1 );
+    removeMsg( idx, imapQuiet );
   }
 }
 
@@ -447,10 +449,12 @@ KMMessage* FolderStorage::take(int idx)
   return msg;
 }
 
-void FolderStorage::take(Q3PtrList<KMMessage> msgList)
+void FolderStorage::take(QList<KMMessage*> msgList)
 {
-  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  for( QList<KMMessage*>::const_iterator it = msgList.begin();
+      it != msgList.end(); ++it )
   {
+    KMMessage *msg = (*it);
     if (msg->parent())
     {
       int idx = msg->parent()->find(msg);
@@ -571,7 +575,7 @@ FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
 }
 
 //-----------------------------------------------------------------------------
-FolderJob* FolderStorage::createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+FolderJob* FolderStorage::createJob( QList<KMMessage*>& msgList, const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
   FolderJob * job = doCreateJob( msgList, sets, jt, folder );
@@ -600,7 +604,7 @@ int FolderStorage::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg(Q3PtrList<KMMessage> msglist, int* aIndex_ret)
+int FolderStorage::moveMsg(QList<KMMessage*> msglist, int* aIndex_ret)
 {
   KMMessage* aMsg = msglist.first();
   assert(aMsg != 0);
@@ -1106,11 +1110,12 @@ void FolderStorage::search( const KMSearchPattern* pattern, quint32 serNum )
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::addMsg( Q3PtrList<KMMessage>& msgList, QList<int>& index_ret )
+int FolderStorage::addMsg( QList<KMMessage*>& msgList, QList<int>& index_ret )
 {
   int ret = 0;
   int index;
-  for ( Q3PtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  for ( QList<KMMessage*>::const_iterator it = msgList.begin();
+        it != msgList.end(); ++it )
   {
     int aret = addMsg( *it, &index );
     index_ret << index;

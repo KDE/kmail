@@ -266,7 +266,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
   KMFolderMbox::removeMsg(idx);
 }
 
-void KMFolderImap::removeMsg( const Q3PtrList<KMMessage>& msgList, bool quiet )
+void KMFolderImap::removeMsg( const QList<KMMessage*>& msgList, bool quiet )
 {
   if ( msgList.isEmpty() ) return;
   if (!quiet)
@@ -279,11 +279,9 @@ void KMFolderImap::removeMsg( const Q3PtrList<KMMessage>& msgList, bool quiet )
      iterate ourselves, as that would call KMFolderImap::removeMsg(int)
      and not the one from the store we want to be used. */
 
-  Q3PtrListIterator<KMMessage> it( msgList );
-  KMMessage *msg;
-  while ( (msg = it.current()) != 0 ) {
-    ++it;
-    int idx = find(msg);
+  QList<KMMessage*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+    int idx = find( (*it) );
     assert( idx != -1);
     // ATTENTION port me to maildir
     KMFolderMbox::removeMsg(idx, quiet);
@@ -327,7 +325,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::addMsgQuiet(Q3PtrList<KMMessage> msgList)
+void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
 {
   if ( mAddMessageProgressItem )
   {
@@ -337,8 +335,10 @@ void KMFolderImap::addMsgQuiet(Q3PtrList<KMMessage> msgList)
   KMFolder *aFolder = msgList.first()->parent();
   int undoId = -1;
   bool uidplus = mAccount->hasCapability("uidplus");
-  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  QList<KMMessage*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); ++it )
   {
+    KMMessage* msg = (*it);
     if ( undoId == -1 )
       undoId = kmkernel->undoStack()->newUndoAction( aFolder, folder() );
     if ( msg->getMsgSerNum() > 0 )
@@ -356,15 +356,15 @@ void KMFolderImap::addMsgQuiet(Q3PtrList<KMMessage> msgList)
   } else {
     kdDebug(5006) << k_funcinfo << "no parent" << endl;
   }
-  msgList.setAutoDelete(true);
-  msgList.clear();
+  while ( !msgList.empty() )
+    msgList.takeFirst();
   getFolder();
 }
 
 //-----------------------------------------------------------------------------
 int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
-  Q3PtrList<KMMessage> list;
+  QList<KMMessage*> list;
   list.append(aMsg);
   QList<int> index;
   int ret = addMsg(list, index);
@@ -372,9 +372,9 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
   return ret;
 }
 
-int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
+int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
 {
-  KMMessage *aMsg = msgList.getFirst();
+  KMMessage *aMsg = msgList.first();
   KMFolder *msgParent = aMsg->parent();
 
   ImapJob *imapJob = 0;
@@ -385,14 +385,17 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
       if (static_cast<KMFolderImap*>(msgParent->storage())->account() == account())
       {
         // make sure the messages won't be deleted while we work with them
-        for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
-          msg->setTransferInProgress(true);
+        QList<KMMessage*>::const_iterator it;
+        for ( it = msgList.begin(); it != msgList.end(); ++it )
+          (*it)->setTransferInProgress(true);
 
         if (folder() == msgParent)
         {
           // transfer the whole message, e.g. a draft-message is canceled and re-added to the drafts-folder
-          for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+          QList<KMMessage*>::const_iterator it;
+          for ( it = msgList.begin(); it != msgList.end(); ++it )
           {
+            KMMessage* msg = (*it);
             if (!msg->isComplete())
             {
               int idx = msgParent->find(msg);
@@ -417,11 +420,11 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
           for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
           {
             // we need the messages that belong to the current set to pass them to the ImapJob
-            Q3PtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
+            QList<KMMessage*> temp_msgs = splitMessageList(*it, msgList);
             if ( temp_msgs.isEmpty() ) kdDebug(5006) << "Wow! KMFolderImap::splitMessageList() returned an empty list!" << endl;
             imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
-            connect(imapJob, SIGNAL(messageCopied(Q3PtrList<KMMessage>)),
-                SLOT(addMsgQuiet(Q3PtrList<KMMessage>)));
+            connect(imapJob, SIGNAL(messageCopied(QList<KMMessage*>)),
+                SLOT(addMsgQuiet(QList<KMMessage*>)));
             connect(imapJob, SIGNAL(result(KMail::FolderJob*)),
                 SLOT(slotCopyMsgResult(KMail::FolderJob*)));
             imapJob->start();
@@ -432,11 +435,9 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
       else
       {
         // different account, check if messages can be added
-        Q3PtrListIterator<KMMessage> it( msgList );
         KMMessage *msg;
-        while ( (msg = it.current()) != 0 )
+        foreach ( msg, msgList )
         {
-          ++it;
           int index;
           if (!canAddMsgNow(msg, &index)) {
             aIndex_ret << index;
@@ -453,11 +454,9 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
   if ( !msgList.isEmpty() )
   {
     // transfer from local folders or other accounts
-    Q3PtrListIterator<KMMessage> it( msgList );
     KMMessage* msg;
-    while ( ( msg = it.current() ) != 0 )
+    foreach ( msg, msgList )
     {
-      ++it;
       if ( !msg->transferInProgress() )
         msg->setTransferInProgress( true );
     }
@@ -477,8 +476,8 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
           mAccount, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
       imapJob->setParentProgressItem( mAddMessageProgressItem );
     }
-    connect( imapJob, SIGNAL( messageCopied(Q3PtrList<KMMessage>) ),
-        SLOT( addMsgQuiet(Q3PtrList<KMMessage>) ) );
+    connect( imapJob, SIGNAL( messageCopied(QList<KMMessage*>) ),
+        SLOT( addMsgQuiet(QList<KMMessage*>) ) );
     imapJob->start();
   }
 
@@ -493,10 +492,11 @@ void KMFolderImap::slotCopyMsgResult( KMail::FolderJob* job )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::copyMsg(Q3PtrList<KMMessage>& msgList)
+void KMFolderImap::copyMsg(QList<KMMessage*>& msgList)
 {
   if ( !mAccount->hasCapability("uidplus") ) {
-    for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
+    KMMessage *msg;
+    foreach ( msg, msgList ) {
       // Remember the status with the MD5 as key
       // so it can be transfered to the new message
       mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData( msg->status() ) );
@@ -509,7 +509,7 @@ void KMFolderImap::copyMsg(Q3PtrList<KMMessage>& msgList)
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
     // we need the messages that belong to the current set to pass them to the ImapJob
-    Q3PtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
+    QList<KMMessage*> temp_msgs = splitMessageList(*it, msgList);
 
     ImapJob *job = new ImapJob(temp_msgs, *it, ImapJob::tCopyMessage, this);
     job->start();
@@ -517,8 +517,8 @@ void KMFolderImap::copyMsg(Q3PtrList<KMMessage>& msgList)
 }
 
 //-----------------------------------------------------------------------------
-Q3PtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set,
-                                                   Q3PtrList<KMMessage>& msgList)
+QList<KMMessage*> KMFolderImap::splitMessageList(const QString& set,
+                                                   QList<KMMessage*>& msgList)
 {
   int lastcomma = set.findRev(",");
   int lastdub = set.findRev(":");
@@ -529,19 +529,17 @@ Q3PtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set,
   if (last < 0) last = set.length();
   // the last uid of the current set
   const QString last_uid = set.right(set.length() - last);
-  Q3PtrList<KMMessage> temp_msgs;
+  QList<KMMessage*> temp_msgs;
   QString uid;
   if (!last_uid.isEmpty())
   {
-    Q3PtrListIterator<KMMessage> it( msgList );
     KMMessage* msg = 0;
-    while ( (msg = it.current()) != 0 )
+    while ( !msgList.empty() && (msg = msgList.takeFirst()) )
     {
       // append the msg to the new list and delete it from the old
       temp_msgs.append(msg);
       uid.setNum( msg->UID() );
       // remove modifies the current
-      msgList.remove(msg);
       if (uid == last_uid) break;
     }
   }
@@ -568,7 +566,7 @@ KMMessage* KMFolderImap::take(int idx)
   return KMFolderMbox::take(idx);
 }
 
-void KMFolderImap::take(Q3PtrList<KMMessage> msgList)
+void KMFolderImap::take(QList<KMMessage*> msgList)
 {
   deleteMessage(msgList);
 
@@ -1556,7 +1554,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderImap::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+KMFolderImap::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder->storage());
@@ -1717,12 +1715,12 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
           mAccount, SLOT(slotSimpleResult(KIO::Job *)));
 }
 
-void KMFolderImap::deleteMessage(const Q3PtrList<KMMessage>& msgList)
+void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
 {
-  Q3PtrListIterator<KMMessage> it( msgList );
+  QList<KMMessage*>::const_iterator it;
   KMMessage *msg;
-  while ( (msg = it.current()) != 0 ) {
-    ++it;
+  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+    msg = (*it);
     mUidMetaDataMap.remove( msg->UID() );
     mMetaDataMap.remove( msg->msgIdMD5() );
   }
@@ -1732,7 +1730,7 @@ void KMFolderImap::deleteMessage(const Q3PtrList<KMMessage>& msgList)
   QStringList sets = makeSets(uids);
 
   KURL url = mAccount->getUrl();
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.getFirst()->storage());
+  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.first()->storage());
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
     QString uid = *it;
@@ -1880,15 +1878,12 @@ void KMFolderImap::getUids(QList<int>& ids, QList<ulong>& uids)
   }
 }
 
-void KMFolderImap::getUids(const Q3PtrList<KMMessage>& msgList, QList<ulong>& uids)
+void KMFolderImap::getUids(const QList<KMMessage*>& msgList, QList<ulong>& uids)
 {
-  KMMessage *msg = 0;
-
-  Q3PtrListIterator<KMMessage> it( msgList );
-  while ( (msg = it.current()) != 0 ) {
-    ++it;
-    if ( msg->UID() > 0 ) {
-      uids.append( msg->UID() );
+  QList<KMMessage*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+    if ( (*it)->UID() > 0 ) {
+      uids.append( (*it)->UID() );
     }
   }
 }

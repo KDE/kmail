@@ -54,7 +54,7 @@ MboxJob::MboxJob( KMMessage *msg, JobType jt , KMFolder *folder  )
 }
 
 //-----------------------------------------------------------------------------
-MboxJob::MboxJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+MboxJob::MboxJob( QList<KMMessage*>& msgList, const QString& sets,
                   JobType jt, KMFolder *folder  )
   : FolderJob( msgList, sets, jt, folder )
 {

@@ -26,13 +26,14 @@
 
 #include "networkaccount.h"
 
-#include <qtimer.h>
-#include <qpointer.h>
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
 #include <kio/global.h>
+
+#include <QList>
+#include <QPointer>
+#include <QTimer>
+
+//Added by qt3to4:
+#include <Q3CString>
 
 class AccountManager;
 class KMFolder;
@@ -97,16 +98,16 @@ namespace KMail {
     virtual void readConfig( KConfig& config );
     virtual void writeConfig( KConfig& config );
 
-    /** 
+    /**
      * The state of the kioslave connection
      */
     enum ConnectionState { Error = 0, Connected, Connecting };
 
     // possible list types
-    enum ListType { 
-      List, 
-      ListSubscribed, 
-      ListSubscribedNoCheck, 
+    enum ListType {
+      List,
+      ListSubscribed,
+      ListSubscribedNoCheck,
       ListFolderOnly,
       ListFolderOnlySubscribed
     };
@@ -156,7 +157,7 @@ namespace KMail {
       Q3CString cdata;
       QStringList items;
       KMFolder *parent;
-      Q3PtrList<KMMessage> msgList;
+      QList<KMMessage*> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
       bool onlySubscribed, quiet, cancellable;
@@ -298,21 +299,21 @@ namespace KMail {
      */
     virtual unsigned int folderCount() const;
 
-    /** 
-     * @return defined namespaces 
+    /**
+     * @return defined namespaces
      */
     nsMap namespaces() const { return mNamespaces; }
 
     /**
      * Set defined namespaces
-     */ 
-    virtual void setNamespaces( nsMap map ) 
+     */
+    virtual void setNamespaces( nsMap map )
     { mNamespaces = map; }
 
     /**
      * Full blown section - namespace - delimiter map
      * Do not call this very often as the map is constructed on the fly
-     */ 
+     */
     nsDelimMap namespacesWithDelimiter();
 
     /**
@@ -345,11 +346,11 @@ namespace KMail {
       * Set the namespace - delimiter map
       */
      void setNamespaceToDelimiter( namespaceDelim map )
-     { mNamespaceToDelimiter = map; } 
+     { mNamespaceToDelimiter = map; }
 
      /**
       * Returns true if the given string is a namespace
-      */ 
+      */
      bool isNamespaceFolder( QString& name );
 
      /**
@@ -361,7 +362,7 @@ namespace KMail {
      /**
       * Create an IMAP path for a parent folder and a foldername
       * Parent and folder are separated with the delimiter of the account
-      * The path starts and ends with '/' 
+      * The path starts and ends with '/'
       */
      QString createImapPath( FolderStorage* parent, const QString& folderName );
 
@@ -375,7 +376,7 @@ namespace KMail {
     /**
      * Call this to get the namespaces
      * You are notified by the signal namespacesFetched
-     */ 
+     */
     void getNamespaces();
 
   private slots:
@@ -428,11 +429,11 @@ namespace KMail {
 
     /**
      * Saves the fetched namespaces
-     */ 
+     */
     void slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map );
 
-    /** 
-     * Saves the capabilities list 
+    /**
+     * Saves the capabilities list
      */
     void slotCapabilitiesResult( KIO::Job*, const QString& result );
 

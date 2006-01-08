@@ -24,9 +24,10 @@
 #include "mboxjob.h"
 
 #include <sys/types.h> // for size_t
+
+#include <QList>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 
 namespace KMail {
   class FolderJob;
@@ -119,7 +120,7 @@ public:
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */

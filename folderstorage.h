@@ -43,10 +43,9 @@
 #include "kmmsginfo.h"
 #include "kmglobal.h"
 #include "folderjob.h"
-//Added by qt3to4:
 #include <QList>
+//Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 using KMail::FolderJob;
 
 #include "mimelib/string.h"
@@ -167,7 +166,7 @@ public:
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0, QString partSpecifier = QString(),
                                 const AttachmentStrategy *as = 0 ) const;
-  virtual FolderJob* createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
 
@@ -187,7 +186,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-  virtual void take(Q3PtrList<KMMessage> msgList);
+  virtual void take(QList<KMMessage*> msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -204,11 +203,11 @@ public:
     return addMsg(msg, index_return);
   }
 
-  /** 
-   * Adds the given messages to the folder. Behaviour is identical 
-   * to addMsg(msg) 
+  /**
+   * Adds the given messages to the folder. Behaviour is identical
+   * to addMsg(msg)
    */
-  virtual int addMsg( Q3PtrList<KMMessage>&, QList<int>& index_return );
+  virtual int addMsg( QList<KMMessage*>&, QList<int>& index_return );
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -220,8 +219,8 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(const Q3PtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
-  virtual void removeMsg(const Q3PtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const QList<KMMsgBase*>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const QList<KMMessage*>& msgList, bool imapQuiet = FALSE);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -232,7 +231,7 @@ public:
     code on failure. The index of the new message is stored in index_return
     if given. */
   virtual int moveMsg(KMMessage* msg, int* index_return = 0);
-  virtual int moveMsg(Q3PtrList<KMMessage>, int* index_return = 0);
+  virtual int moveMsg(QList<KMMessage*>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBase* msg) const = 0;
@@ -364,7 +363,7 @@ public:
   virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle=false);
 
   void removeJobs();
-  
+
   /** Escape a leading dot */
   static QString dotEscape(const QString&);
 
@@ -407,7 +406,7 @@ public:
   virtual void search( const KMSearchPattern*, quint32 serNum );
 
   /** Returns true if this folder can be moved */
-  virtual bool isMoveable() const;  
+  virtual bool isMoveable() const;
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -424,7 +423,7 @@ signals:
 
   /** Emitted when the serial numbers of this folder were invalidated. */
   void invalidated( KMFolder * );
-  
+
   /** Emitted when the name of the folder changes. */
   void nameChanged();
 
@@ -471,7 +470,7 @@ signals:
    * The matching serial numbers are included
    * If @p complete is true the search is done
    */
-  void searchResult( KMFolder*, QList<quint32>, 
+  void searchResult( KMFolder*, QList<quint32>,
                      const KMSearchPattern*, bool complete );
 
   /**
@@ -492,7 +491,7 @@ public slots:
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
-  
+
   /** Emit changed signal if mQuite <=0 */
   void slotEmitChangedTimer();
 
@@ -511,7 +510,7 @@ protected:
    */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const = 0;
-  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 
   /** Tell the folder that a header field that is usually used for
@@ -556,7 +555,7 @@ friend class KMMsgDict;
   /** Replaces the serial number for the message @p msg at index @p idx with
    * @p sernum */
   void replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx );
-  
+
    /** Called when serial numbers for a folder are invalidated,
   invalidates/recreates data structures dependent on the
   serial numbers for this folder */
@@ -571,7 +570,7 @@ friend class KMMsgDict;
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-  
+
   /** Read index file and fill the message-info list mMsgList. */
   virtual bool readIndex() = 0;
   virtual KMMsgBase* takeIndexEntry( int idx ) = 0;
@@ -591,7 +590,7 @@ friend class KMMsgDict;
   bool mDirty :1;
   /** TRUE if the files of the folder are locked (writable) */
   bool mFilesLocked :1;
-  
+
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;

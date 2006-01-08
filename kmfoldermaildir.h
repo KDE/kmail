@@ -2,7 +2,8 @@
 #define kmfoldermaildir_h
 
 #include "kmfolderindex.h"
-#include <Q3PtrList>
+
+#include <QList>
 
 
 class KMFolderMaildir;
@@ -47,7 +48,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(Q3PtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = FALSE)
   { return KMFolderIndex::removeMsg(msgList, imapQuiet); }
 
   // Called by KMMsgBase::setStatus when status of a message has changed
@@ -103,7 +104,7 @@ public:
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
@@ -136,11 +137,11 @@ protected:
   int addMsgInternal( KMMessage* msg, int* index_return = 0, bool stripUid=false );
 
 private:
-  void readFileHeaderIntern( const QString& dir, const QString& file, 
+  void readFileHeaderIntern( const QString& dir, const QString& file,
                              MessageStatus& status);
-  QString moveInternal( const QString& oldLoc, const QString& newLoc, 
+  QString moveInternal( const QString& oldLoc, const QString& newLoc,
                         KMMsgInfo* mi);
-  QString moveInternal( const QString& oldLoc, const QString& newLoc, 
+  QString moveInternal( const QString& oldLoc, const QString& newLoc,
                         QString& aFileName, const MessageStatus& status );
   bool removeFile( const QString& filename );
 

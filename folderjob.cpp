@@ -58,7 +58,7 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
 }
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( const Q3PtrList<KMMessage>& msgList, const QString& sets,
+FolderJob::FolderJob( const QList<KMMessage*>& msgList, const QString& sets,
                           JobType jt, KMFolder *folder )
   : mMsgList( msgList ),mType( jt ),
     mSets( sets ), mSrcFolder( 0 ), mDestFolder( folder ),
@@ -102,8 +102,7 @@ FolderJob::~FolderJob()
 }
 
 //----------------------------------------------------------------------------
-void
-FolderJob::start()
+void FolderJob::start()
 {
   if (!mStarted)
   {
@@ -119,8 +118,7 @@ void FolderJob::kill()
 }
 
 //----------------------------------------------------------------------------
-Q3PtrList<KMMessage>
-FolderJob::msgList() const
+QList<KMMessage*> FolderJob::msgList() const
 {
   return mMsgList;
 }

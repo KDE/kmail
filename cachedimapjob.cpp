@@ -71,7 +71,7 @@ CachedImapJob::CachedImapJob( const QList<MsgForDownload>& msgs,
 }
 
 // Put messages
-CachedImapJob::CachedImapJob( const Q3PtrList<KMMessage>& msgs, JobType type,
+CachedImapJob::CachedImapJob( const QList<KMMessage*>& msgs, JobType type,
                               KMFolderCachedImap* folder )
   : FolderJob( msgs, QString(), type, folder?folder->folder():0 ), mFolder( folder ),
     mTotalBytes( msgs.count() ), // we abuse it as "total number of messages"
@@ -81,7 +81,7 @@ CachedImapJob::CachedImapJob( const Q3PtrList<KMMessage>& msgs, JobType type,
 
 CachedImapJob::CachedImapJob( const QList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
-  : FolderJob( Q3PtrList<KMMessage>(), QString(), type, folder?folder->folder():0 ),
+  : FolderJob( QList<KMMessage*>(), QString(), type, folder?folder->folder():0 ),
     mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( msgs.count() ), mMsg( 0 ),
     mParentFolder ( 0 )
 {
@@ -532,7 +532,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  QString path = mAccount->createImapPath( mFolder->imapPath(), 
+  QString path = mAccount->createImapPath( mFolder->imapPath(),
       folder->folder()->name() );
   if ( !folder->imapPathForCreation().isEmpty() ) {
     // the folder knows it's namespace

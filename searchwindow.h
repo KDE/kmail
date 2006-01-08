@@ -21,18 +21,18 @@
 #ifndef searchwindow_h
 #define searchwindow_h
 
-
-#include <q3ptrlist.h>
-#include <qstringlist.h>
-#include <qpointer.h>
-//Added by qt3to4:
-#include <QGridLayout>
-#include <QCloseEvent>
-#include <QKeyEvent>
-#include <QLabel>
-
 #include <kdialogbase.h>
 #include <kxmlguiclient.h>
+
+//Added by qt3to4:
+#include <qstringlist.h>
+#include <qpointer.h>
+
+#include <QCloseEvent>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QList>
 
 class QCheckBox;
 class QComboBox;
@@ -58,8 +58,6 @@ class DwBoyerMoore;
 namespace KMail {
   class FolderRequester;
 }
-
-typedef Q3PtrList<KMMsgBase> KMMessageList;
 
 namespace KMail {
 
@@ -91,13 +89,13 @@ public:
    * @param curFolder The folder to use as the new base for searches.
    */
   void activateFolder( KMFolder* curFolder );
-  
+
   /**
    * Provides access to the list of currently selected message in the listview.
    * @return The list of currenty selected search result messages.
    */
-  KMMessageList selectedMessages();
-  
+  QList<KMMsgBase*> selectedMessages();
+
   /**
    * Provides access to the currently selected message.
    * @return the currently selected message.

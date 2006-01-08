@@ -18,11 +18,12 @@
  *
  */
 #include <config.h>
-#include <qfileinfo.h>
-#include <qregexp.h>
+
+#include <QFileInfo>
+#include <QList>
+#include <QRegExp>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 
 #include "kmfoldermbox.h"
 #include "folderstorage.h"
@@ -456,7 +457,7 @@ KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMbox::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+KMFolderMbox::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
   MboxJob *job = new MboxJob( msgList, sets, jt, folder );

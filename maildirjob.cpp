@@ -54,7 +54,7 @@ MaildirJob::MaildirJob( KMMessage *msg, JobType jt , KMFolder *folder )
 }
 
 //-----------------------------------------------------------------------------
-MaildirJob::MaildirJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+MaildirJob::MaildirJob( QList<KMMessage*>& msgList, const QString& sets,
                         JobType jt , KMFolder *folder )
   : FolderJob( msgList, sets, jt, folder ), mParentFolder( 0 )
 {

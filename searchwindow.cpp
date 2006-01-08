@@ -646,9 +646,9 @@ void SearchWindow::enableGUI()
 
 
 //-----------------------------------------------------------------------------
-KMMessageList SearchWindow::selectedMessages()
+QList<KMMsgBase*> SearchWindow::selectedMessages()
 {
-    KMMessageList msgList;
+    QList<KMMsgBase*> msgList;
     KMFolder* folder = 0;
     int msgIndex = -1;
     for (Q3ListViewItemIterator it(mLbxMatches); it.current(); it++)
@@ -684,7 +684,7 @@ void SearchWindow::moveSelectedToFolder( int menuId )
     if (!dest)
         return;
 
-    KMMessageList msgList = selectedMessages();
+    QList<KMMsgBase*> msgList = selectedMessages();
     KMCommand *command = new KMMoveCommand( dest, msgList );
     command->start();
 }
@@ -696,7 +696,7 @@ void SearchWindow::copySelectedToFolder( int menuId )
     if (!dest)
         return;
 
-    KMMessageList msgList = selectedMessages();
+    QList<KMMsgBase*> msgList = selectedMessages();
     KMCommand *command = new KMCopyCommand( dest, msgList );
     command->start();
 }

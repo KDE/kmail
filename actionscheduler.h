@@ -84,7 +84,7 @@ public:
 
   /** Queue a message for filtering */
   void execFilters(const QList<quint32> serNums);
-  void execFilters(const Q3PtrList<KMMsgBase> msgList);
+  void execFilters(const QList<KMMsgBase*> msgList);
   void execFilters(KMMsgBase* msgBase);
   void execFilters(quint32 serNum);
 

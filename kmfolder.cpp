@@ -40,10 +40,11 @@
 #include <klocale.h>
 #include <kshortcut.h>
 #include <kmessagebox.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-//Added by qt3to4:
+
+#include <QFile>
+#include <QFileInfo>
 #include <QList>
+//Added by qt3to4:
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -346,7 +347,7 @@ FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
 }
 
-FolderJob* KMFolder::createJob( Q3PtrList<KMMessage>& msgList,
+FolderJob* KMFolder::createJob( QList<KMMessage*>& msgList,
                                 const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
@@ -378,7 +379,7 @@ KMMessage* KMFolder::take( int idx )
   return mStorage->take( idx );
 }
 
-void KMFolder::take( Q3PtrList<KMMessage> msgList )
+void KMFolder::take( QList<KMMessage*> msgList )
 {
   mStorage->take( msgList );
 }
@@ -393,7 +394,7 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
-int KMFolder::addMsg( Q3PtrList<KMMessage>& list, QList<int>& index_return )
+int KMFolder::addMsg( QList<KMMessage*>& list, QList<int>& index_return )
 {
   return mStorage->addMsg( list, index_return );
 }
@@ -408,7 +409,7 @@ void KMFolder::removeMsg( int i, bool imapQuiet )
   mStorage->removeMsg( i, imapQuiet );
 }
 
-void KMFolder::removeMsg( Q3PtrList<KMMessage> msgList, bool imapQuiet )
+void KMFolder::removeMsg( QList<KMMessage*> msgList, bool imapQuiet )
 {
   mStorage->removeMsg( msgList, imapQuiet );
 }
@@ -423,7 +424,7 @@ int KMFolder::moveMsg( KMMessage* msg, int* index_return )
   return mStorage->moveMsg( msg, index_return );
 }
 
-int KMFolder::moveMsg(Q3PtrList<KMMessage> q, int* index_return )
+int KMFolder::moveMsg(QList<KMMessage*> q, int* index_return )
 {
   return mStorage->moveMsg( q, index_return );
 }

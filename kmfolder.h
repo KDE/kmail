@@ -29,10 +29,6 @@
 #include "kmglobal.h"
 #include "kmkernel.h"
 #include "folderjob.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
 using KMail::MailingList;
@@ -41,11 +37,15 @@ class KMAccount;
 typedef QList<KMAccount*> AccountList;
 
 #include "mimelib/string.h"
+#include <kshortcut.h>
 
-#include <q3ptrvector.h>
+#include <QList>
+
+//Added by qt3to4:
+#include <Q3CString>
+
 #include <sys/types.h>
 #include <stdio.h>
-#include <kshortcut.h>
 
 class KMMessage;
 class KMFolderDir;
@@ -78,7 +78,7 @@ class KMFolder: public KMFolderNode
 public:
 
   /**
-   * Constructs a new Folder object. 
+   * Constructs a new Folder object.
    * @param parent The directory in the folder storage hierarchy under which
    * the folder's storage will be found or created.
    * @param name If name of the folder. In case there is no parent directory, because
@@ -202,7 +202,7 @@ public:
   FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0, QString partSpecifier = QString(),
                         const AttachmentStrategy *as = 0 ) const;
-  FolderJob* createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+  FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
                         KMFolder *folder = 0 ) const;
 
@@ -222,7 +222,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   KMMessage* take(int idx);
-  void take(Q3PtrList<KMMessage> msgList);
+  void take(QList<KMMessage*> msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -241,7 +241,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical
    * to addMsg(msg)
    */
-  int addMsg(Q3PtrList<KMMessage>&, QList<int>& index_return);
+  int addMsg(QList<KMMessage*>&, QList<int>& index_return);
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -249,7 +249,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   void removeMsg(int i, bool imapQuiet = false);
-  void removeMsg(Q3PtrList<KMMessage> msgList, bool imapQuiet = false);
+  void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -260,7 +260,7 @@ public:
     code on failure. The index of the new message is stored in index_return
     if given. */
   int moveMsg(KMMessage* msg, int* index_return = 0);
-  int moveMsg(Q3PtrList<KMMessage>, int* index_return = 0);
+  int moveMsg(QList<KMMessage*>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
   int find(const KMMsgBase* msg) const;
@@ -623,9 +623,9 @@ private:
   /** Mailing list attributes */
   bool                mMailingListEnabled;
   MailingList         mMailingList;
-  
+
   AccountList* mAcctList;
-  
+
   uint mIdentity;
 
   /** name of the field that is used for "From" in listbox */

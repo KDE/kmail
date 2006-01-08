@@ -157,7 +157,7 @@ KMCommand::KMCommand( QWidget *parent )
 {
 }
 
-KMCommand::KMCommand( QWidget *parent, const Q3PtrList<KMMsgBase> &msgList )
+KMCommand::KMCommand( QWidget *parent, const QList<KMMsgBase*> &msgList )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent ), mMsgList( msgList )
 {
@@ -200,14 +200,14 @@ void KMCommand::start()
 }
 
 
-const Q3PtrList<KMMessage> KMCommand::retrievedMsgs() const
+const QList<KMMessage*> KMCommand::retrievedMsgs() const
 {
   return mRetrievedMsgs;
 }
 
 KMMessage *KMCommand::retrievedMessage() const
 {
-  return mRetrievedMsgs.getFirst();
+  return *(mRetrievedMsgs.begin());
 }
 
 QWidget *KMCommand::parentWidget() const
@@ -223,27 +223,28 @@ void KMCommand::slotStart()
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
   kmkernel->filterMgr()->ref();
 
-  if (mMsgList.find(0) != -1) {
+  if ( mMsgList.contains(0) ) {
       emit messagesTransfered( Failed );
       return;
   }
 
-  if ((mMsgList.count() == 1) &&
-      (mMsgList.getFirst()->isMessage()) &&
-      (mMsgList.getFirst()->parent() == 0))
+  KMMsgBase *mb = *(mMsgList.begin());
+  if ( (mMsgList.count() == 1) && ( mb->isMessage() ) &&
+      ( mb->parent() == 0 ) )
   {
     // Special case of operating on message that isn't in a folder
-    mRetrievedMsgs.append((KMMessage*)mMsgList.getFirst());
+    mRetrievedMsgs.append((KMMessage*)mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
   }
 
-  for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
-    if (!mb->parent()) {
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
+    if ( !( (*it)->parent() ) ) {
       emit messagesTransfered( Failed );
       return;
     } else {
-      keepFolderOpen( mb->parent() );
+      keepFolderOpen( (*it)->parent() );
     }
 
   // transfer the selected messages first
@@ -257,12 +258,9 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( result == OK )
     result = execute();
   mResult = result;
-  Q3PtrListIterator<KMMessage> it( mRetrievedMsgs );
   KMMessage* msg;
-  while ( (msg = it.current()) != 0 )
-  {
-    ++it;
-    if (msg->parent())
+  foreach( msg, mRetrievedMsgs ) {
+    if ( msg && msg->parent() )
       msg->setTransferInProgress(false);
   }
   kmkernel->filterMgr()->deref();
@@ -298,8 +296,10 @@ void KMCommand::transferSelectedMsgs()
       true);
     mProgressDialog->setMinimumDuration(1000);
   }
-  for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
   {
+    KMMsgBase *mb = (*it);
     // check if all messages are complete
     KMMessage *thisMsg = 0;
     if ( mb->isMessage() )
@@ -423,10 +423,9 @@ void KMCommand::slotTransferCancelled()
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
   // unget the transfered messages
-  Q3PtrListIterator<KMMessage> it( mRetrievedMsgs );
-  KMMessage* msg;
-  while ( (msg = it.current()) != 0 )
-  {
+  QList<KMMessage*>::const_iterator it;
+  for ( it = mRetrievedMsgs.constBegin(); it != mRetrievedMsgs.constEnd(); ++it ) {
+    KMMessage* msg = (*it);
     KMFolder *folder = msg->parent();
     ++it;
     if (!folder)
@@ -740,23 +739,21 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
-                                    const Q3PtrList<KMMsgBase> &msgList )
+                                    const QList<KMMsgBase*> &msgList )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( 0 )
 {
-  if (!msgList.getFirst())
+  if ( msgList.empty() )
     return;
   setDeletesItself( true );
-  KMMsgBase *msgBase = msgList.getFirst();
-
   // We operate on serNums and not the KMMsgBase pointers, as those can
   // change, or become invalid when changing the current message, switching
   // folders, etc.
-  Q3PtrListIterator<KMMsgBase> it(msgList);
-  while ( it.current() ) {
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); it++ ) {
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
     if ((*it)->parent() != 0)
@@ -764,6 +761,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     ++it;
   }
   mMsgListIndex = 0;
+  KMMsgBase *msgBase = *(msgList.begin());
   mUrl = subjectToUrl( msgBase->cleanSubject() );
 }
 
@@ -1123,7 +1121,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const Q3PtrList<KMMsgBase> &msgList, uint identity )
+  const QList<KMMsgBase*> &msgList, uint identity )
   : KMCommand( parent, msgList ),
     mIdentity( identity )
 {
@@ -1138,7 +1136,7 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMForwardCommand::execute()
 {
-  Q3PtrList<KMMessage> msgList = retrievedMsgs();
+  QList<KMMessage*> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
     // ask if they want a mime digest forward
@@ -1162,7 +1160,8 @@ KMCommand::Result KMForwardCommand::execute()
       msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
                          " message is contained in the attachment(s).\n\n\n");
       // iterate through all the messages to be forwarded
-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+      KMMessage *msg;
+      foreach ( msg, msgList ) {
         // set the identity
         if (id == 0)
           id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
@@ -1213,14 +1212,15 @@ KMCommand::Result KMForwardCommand::execute()
     } else {            // NO MIME DIGEST, Multiple forward
       uint id = 0;
       Q3CString msgText = "";
-      Q3PtrList<KMMessage> linklist;
-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+      QList<KMMessage*> linklist;
+      QList<KMMessage*>::const_iterator it;
+      for ( it = msgList.begin(); it != msgList.end(); it++ ) {
         // set the identity
         if (id == 0)
-          id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
+          id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
 
-        msgText += msg->createForwardBody();
-        linklist.append(msg);
+        msgText += (*it)->createForwardBody();
+        linklist.append( (*it) );
       }
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
@@ -1230,8 +1230,8 @@ KMCommand::Result KMForwardCommand::execute()
       fwdMsg->setCharset("utf-8");
       fwdMsg->setBody(msgText);
 
-      for (KMMessage *msg = linklist.first(); msg; msg = linklist.next())
-        fwdMsg->link( msg, MessageStatus::statusForwarded() );
+      for ( it = linklist.begin(); it != linklist.end(); it++ )
+        fwdMsg->link( (*it), MessageStatus::statusForwarded() );
 
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
@@ -1242,7 +1242,7 @@ KMCommand::Result KMForwardCommand::execute()
   }
 
   // forward a single message at most.
-  KMMessage *msg = msgList.getFirst();
+  KMMessage *msg = msgList.first();
   if ( !msg || !msg->codec() )
     return Failed;
 
@@ -1264,7 +1264,7 @@ KMCommand::Result KMForwardCommand::execute()
 
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-           const Q3PtrList<KMMsgBase> &msgList, uint identity, KMail::Composer *win )
+           const QList<KMMsgBase*> &msgList, uint identity, KMail::Composer *win )
   : KMCommand( parent, msgList ), mIdentity( identity ),
     mWin( QPointer<KMail::Composer>( win ))
 {
@@ -1279,7 +1279,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
-  Q3PtrList<KMMessage> msgList = retrievedMsgs();
+  QList<KMMessage*> msgList = retrievedMsgs();
   KMMessage *fwdMsg = new KMMessage;
 
   if (msgList.count() >= 2) {
@@ -1288,7 +1288,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     fwdMsg->initHeader(mIdentity);
   }
   else if (msgList.count() == 1) {
-    KMMessage *msg = msgList.getFirst();
+    KMMessage *msg = msgList.first();
     fwdMsg->initFromMessage(msg);
     fwdMsg->setSubject( msg->forwardSubject() );
   }
@@ -1300,7 +1300,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     mWin = KMail::makeComposer(fwdMsg, mIdentity);
 
   // iterate through all the messages to be forwarded
-  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+  KMMessage *msg;
+  foreach ( msg, msgList ) {
     // remove headers that shouldn't be forwarded
     msg->removePrivateHeaderFields();
     msg->removeHeaderField("BCC");
@@ -1456,7 +1457,7 @@ KMCommand::Result KMFilterCommand::execute()
 
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
-                                              const Q3PtrList<KMMsgBase> &msgList,
+                                              const QList<KMMsgBase*> &msgList,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
@@ -1465,15 +1466,17 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
 KMCommand::Result KMFilterActionCommand::execute()
 {
   KCursorSaver busy( KBusyPtr::busy() );
-  Q3PtrList<KMMessage> msgList = retrievedMsgs();
+  QList<KMMessage*> msgList = retrievedMsgs();
 
-  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
-    if( msg->parent() )
-      kmkernel->filterMgr()->tempOpenFolder(msg->parent());
+  QList<KMMessage*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); it++ )
+    if( (*it)->parent() )
+      kmkernel->filterMgr()->tempOpenFolder( (*it)->parent() );
 
   int msgCount = 0;
   int msgCountToFilter = msgList.count();
-  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+  for ( it = msgList.begin(); it != msgList.end(); it++ ) {
+    KMMessage *msg = *it;
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) ) {
       QString statusMsg = i18n("Filtering message %1 of %2");
@@ -1518,12 +1521,12 @@ void KMMetaFilterActionCommand::start()
     int contentX, contentY;
     HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
 #warning Port me!
-    QList<KMMsgBase*> msgList; // = *mHeaders->selectedMsgs(true);
+    QList<KMMsgBase*> msgList = *mHeaders->selectedMsgs(true);
     mHeaders->finalizeMove( nextItem, contentX, contentY );
 
-    QListIterator<KMMsgBase*> it( msgList );
-    while ( it.hasNext())
-      scheduler->execFilters( it.next() );
+    KMMsgBase *msg;
+    foreach( msg, msgList )
+      scheduler->execFilters( msg );
   } else {
     KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
     *mHeaders->selectedMsgs(), mFilter);
@@ -1688,7 +1691,7 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
 
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
-                              const Q3PtrList<KMMsgBase> &msgList )
+                              const QList<KMMsgBase*> &msgList )
 :mDestFolder( destFolder ), mMsgList( msgList )
 {
   setDeletesItself( true );
@@ -1707,8 +1710,8 @@ KMCommand::Result KMCopyCommand::execute()
   KMMessage *msg, *newMsg;
   int idx = -1;
   bool isMessage;
-  Q3PtrList<KMMessage> list;
-  Q3PtrList<KMMessage> localList;
+  QList<KMMessage*> list;
+  QList<KMMessage*> localList;
 
   if (mDestFolder && mDestFolder->open() != 0)
   {
@@ -1719,8 +1722,10 @@ KMCommand::Result KMCopyCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
 
   mWaitingForMsgs.clear();
-  for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = mMsgList.begin(); it != mMsgList.end(); it++ )
   {
+    msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     if (isMessage = msgBase->isMessage())
     {
@@ -1837,7 +1842,7 @@ void KMCopyCommand::slotFolderComplete()
 
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-                              const Q3PtrList<KMMsgBase> &msgList)
+                              const QList<KMMsgBase*> &msgList)
   : mDestFolder( destFolder ), mMsgList( msgList ), mProgressItem( 0 )
 {
 }
@@ -1865,7 +1870,7 @@ KMCommand::Result KMMoveCommand::execute()
 {
   setEmitsCompletedItself( true );
   setDeletesItself( true );
-  typedef QMap< KMFolder*, Q3PtrList<KMMessage>* > FolderToMessageListMap;
+  typedef QMap< KMFolder*, QList<KMMessage*>* > FolderToMessageListMap;
   FolderToMessageListMap folderDeleteList;
 
   if (mDestFolder && mDestFolder->open() != 0) {
@@ -1887,19 +1892,21 @@ KMCommand::Result KMMoveCommand::execute()
   KMMsgBase *msgBase;
   int rc = 0;
   int index;
-  Q3PtrList<KMMessage> list;
+  QList<KMMessage*> list;
   int undoId = -1;
 
   if (mDestFolder) {
     connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
-    for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
+    foreach ( msgBase, mMsgList ) {
       mLostBoys.append( msgBase->getMsgSerNum() );
     }
   }
   mProgressItem->setTotalItems( mMsgList.count() );
 
-  for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = mMsgList.begin(); (*it) && !rc && it != mMsgList.end(); it++ ) {
+    msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)
       continue;
@@ -1955,7 +1962,7 @@ KMCommand::Result KMMoveCommand::execute()
       // we are really, really deleting, not just moving to trash
       if (srcFolder->folderType() == KMFolderTypeImap) {
         if (!folderDeleteList[srcFolder])
-          folderDeleteList[srcFolder] = new Q3PtrList<KMMessage>;
+          folderDeleteList[srcFolder] = new QList<KMMessage*>;
         folderDeleteList[srcFolder]->append( msg );
       } else {
         srcFolder->removeMsg(idx);
@@ -2049,7 +2056,7 @@ void KMMoveCommand::slotMoveCanceled()
 
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
-  const Q3PtrList<KMMsgBase> &msgList )
+  const QList<KMMsgBase*> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
   srcFolder->open();
@@ -2163,7 +2170,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const Q3PtrList<KMMsgBase>& msgs )
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<KMMsgBase*>& msgs )
   : KMCommand( parent, msgs ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
@@ -2181,11 +2188,10 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
   setEmitsCompletedItself( true );
   if ( mImplicitAttachments ) {
-    Q3PtrList<KMMessage> msgList = retrievedMsgs();
-    KMMessage *msg;
-    for ( Q3PtrListIterator<KMMessage> itr( msgList );
-          ( msg = itr.current() );
-          ++itr ) {
+    QList<KMMessage*> msgList = retrievedMsgs();
+    QList<KMMessage*>::const_iterator it;
+    for ( it = msgList.begin(); it != msgList.end(); ++it ) {
+      KMMessage *msg = (*it);
       partNode *rootNode = partNode::fromMessage( msg );
       for ( partNode *child = rootNode; child;
             child = child->firstChild() ) {

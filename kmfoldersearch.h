@@ -20,14 +20,15 @@
 #ifndef kmfoldersearch_h
 #define kmfoldersearch_h
 
-#include <qpointer.h>
+#include "kmfolder.h"
+#include "folderstorage.h"
+
+#include <QList>
+#include <QPointer>
 #include <QStack>
 #include <qmap.h>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
-#include "kmfolder.h"
-#include "folderstorage.h"
 
 /** A search folder is a folder that shows the result of evaluating a
     search expression. This folder is dynamically updated as the
@@ -163,7 +164,7 @@ public slots:
   virtual int updateIndex();
 
   // Examine the message
-  void slotSearchExamineMsgDone( KMFolder*, quint32 serNum, 
+  void slotSearchExamineMsgDone( KMFolder*, quint32 serNum,
                                  const KMSearchPattern*, bool );
 
 public:
@@ -189,7 +190,7 @@ protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
                                  KMFolder *folder, QString partSpecifier,
                                  const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob(Q3PtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob(QList<KMMessage*>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;
   virtual KMMessage* readMsg(int idx);
   virtual bool readIndex();

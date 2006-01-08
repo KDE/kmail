@@ -156,7 +156,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         unsigned long serNum;
         KMFolder *folder = 0;
         int idx;
-        Q3PtrList<KMMsgBase> messageList;
+        QList<KMMsgBase*> messageList;
         while (!serNumStream.atEnd()) {
             KMMsgBase *msgBase = 0;
             serNumStream >> serNum;

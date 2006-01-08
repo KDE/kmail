@@ -355,7 +355,7 @@ KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMaildir::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
+KMFolderMaildir::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                               FolderJob::JobType jt, KMFolder *folder ) const
 {
   MaildirJob *job = new MaildirJob( msgList, sets, jt, folder );
@@ -616,8 +616,8 @@ QByteArray& KMFolderMaildir::getMsgString(int idx, QByteArray& mDest)
   return mDest;
 }
 
-void KMFolderMaildir::readFileHeaderIntern( const QString& dir, 
-                                            const QString& file, 
+void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
+                                            const QString& file,
                                             MessageStatus& status )
 {
   // we keep our current directory to restore it later
@@ -1098,7 +1098,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
 
 //-----------------------------------------------------------------------------
 void KMFolderMaildir::msgStatusChanged( const MessageStatus& oldStatus,
-                                        const MessageStatus& newStatus, 
+                                        const MessageStatus& newStatus,
                                         int idx )
 {
   // if the status of any message changes, then we need to compact

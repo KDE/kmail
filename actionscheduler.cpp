@@ -53,7 +53,6 @@ using KMail::AccountManager;
 #include <QTimer>
 
 using namespace KMail;
-typedef Q3PtrList<KMMsgBase> KMMessageList;
 
 
 KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
@@ -217,11 +216,10 @@ void ActionScheduler::execFilters(const QList<quint32> serNums)
     execFilters( *it );
 }
 
-void ActionScheduler::execFilters(const Q3PtrList<KMMsgBase> msgList)
+void ActionScheduler::execFilters(const QList<KMMsgBase*> msgList)
 {
   KMMsgBase *msgBase;
-  Q3PtrList<KMMsgBase> list = msgList;
-  for (msgBase = list.first(); msgBase; msgBase = list.next())
+  foreach ( msgBase, msgList )
     execFilters( msgBase->getMsgSerNum() );
 }
 
