@@ -11,7 +11,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/libemailfunctions \
         -I$(top_srcdir)/libksieve \
         -I$(top_srcdir)/mimelib \
-        -I$(top_srcdir)/kleopatra/lib \
+        -I$(top_srcdir)/libkleo \
         -I$(top_srcdir)/indexlib \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
@@ -27,7 +27,7 @@ libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
         ../libkmime/libkmime.la ../libkpgp/libkpgp.la ../libkdepim/libkdepim.la \
         ../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
         ../libksieve/libksieve.la ../libemailfunctions/libemailfunctions.la \
-        ../kleopatra/lib/libkleopatra.la $(INDEXLIB) \
+        ../libkleo/libkleopatra.la $(INDEXLIB) \
         ../libkcal/libkcal.la
 
 kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
