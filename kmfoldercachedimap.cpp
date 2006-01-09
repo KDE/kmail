@@ -2009,9 +2009,9 @@ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& 
     mAnnotationFolderTypeChanged = false;
   else if ( entry == KOLAB_INCIDENCESFOR ) {
     mIncidencesForChanged = false;
-    // The incidences-for changed, we must trigger the freebusy creation.
-    // HACK: in theory we would need a new enum value for this.
-    kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
+    // The incidences-for changed, we must trigger the freebusy creation,
+    // and a reload of the resource for this folder.
+    kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::IncidencesForAnnotation );
   }
 }
 

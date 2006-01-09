@@ -1386,9 +1386,16 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // We can hack the N case, but not the 0 case.
   // So the idea of a DCOP signal for this wouldn't work.
   if ( ( _changes & KMailICalIface::Contents ) ||
-       ( _changes & KMailICalIface::ACL ) ) {
+       ( _changes & KMailICalIface::ACL ) ||
+       ( _changes & KMailICalIface::IncidencesForAnnotation ) ) {
     if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
       triggerKolabFreeBusy( folderURL );
+
+    // In case the alarm-relevance of this folder changed, we need 
+    // to reload it, otherwise korgac and korganizer would not
+    // notice
+    if ( _changes & KMailICalIface::IncidencesForAnnotation )
+      slotFolderPropertiesChanged( folder );
   }
 }
 
