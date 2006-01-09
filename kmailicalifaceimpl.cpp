@@ -1298,7 +1298,7 @@ void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges change
     kdDebug(5006) << "addFolderChange: nothing known about folder " << folder->location() << endl;
   }
   KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
-  configGroup.writeEntry( folder->idString() + "-changes", (*it).mChanges );
+  configGroup.writeEntry( folder->idString() + "-changes", (int)(*it).mChanges );
 }
 
 KMailICalIfaceImpl::FolderInfo KMailICalIfaceImpl::readFolderInfo( const KMFolder * const folder ) const

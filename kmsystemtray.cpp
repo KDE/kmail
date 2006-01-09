@@ -61,8 +61,8 @@ using KMail::AccountManager;
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
-  : KSystemTray( parent, name ),
+KMSystemTray::KMSystemTray(QWidget *parent)
+  : KSystemTray( parent),
     mParentVisible( true ),
     mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),

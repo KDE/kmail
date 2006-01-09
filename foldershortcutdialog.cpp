@@ -70,7 +70,8 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                              "you wish to associate with this folder.</qt>" ) );
   KHBox *hb = new KHBox( gb );
   new QWidget(hb);
-  mKeyButton = new KKeyButton( hb, "FolderShortcutSelector" );
+  mKeyButton = new KKeyButton( hb );
+  mKeyButton->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),

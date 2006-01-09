@@ -387,7 +387,9 @@ void SubscriptionDialog::show()
             case KMessageBox::No:
                 break;
             case KMessageBox::Cancel:
-                cancel();
+#warning Port me!
+//                cancel();
+                break;
         }
     }
   }

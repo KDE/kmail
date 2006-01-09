@@ -212,7 +212,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
       keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
-      mKeyButton = new KKeyButton( mAdvOptsGroup, "FilterShortcutSelector" );
+      mKeyButton = new KKeyButton( mAdvOptsGroup );
+      mKeyButton->setObjectName( "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
@@ -899,7 +900,7 @@ void KMFilterListBox::slotRename()
      i18n("Rename filter \"%1\" to:\n(leave the field empty for automatic naming)")
         .arg( filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
-     &okPressed, topLevelWidget(), 0, validator
+     &okPressed, topLevelWidget(), validator
      );
   delete validator;
 

@@ -1549,8 +1549,9 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   hlay->addWidget( mFontLocationCombo );
   hlay->addStretch( 10 );
   vlay->addSpacing( KDialog::spacingHint() );
-  mFontChooser = new KFontChooser( this, "font", false, QStringList(),
+  mFontChooser = new KFontChooser( this, false, QStringList(),
                                    false, 4 );
+  mFontChooser->setObjectName( "font" );
   mFontChooser->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   vlay->addWidget( mFontChooser );
   connect ( mFontChooser, SIGNAL( fontSelected( const QFont& ) ),
@@ -2158,7 +2159,7 @@ void AppearancePage::HeadersTab::save() {
   // check bounds:
   assert( dateDisplayID >= 0 ); assert( dateDisplayID < numDateDisplayConfig );
   general.writeEntry( "dateFormat",
-                      dateDisplayConfig[ dateDisplayID ].dateDisplay );
+                      (int)dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
 }
 

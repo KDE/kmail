@@ -45,7 +45,7 @@ class KMSystemTray : public KSystemTray
   Q_OBJECT
 public:
   /** construtor */
-  KMSystemTray(QWidget* parent=0, const char *name=0);
+  KMSystemTray(QWidget* parent=0);
   /** destructor */
   ~KMSystemTray();
 

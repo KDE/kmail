@@ -253,27 +253,27 @@ void KMFilter::readConfig(KConfigGroup & config)
       bApplyOnOutbound = bool(sets.contains("send-mail"));
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
       mApplicability = (AccountType) config.readEntry(
-            "Applicability", ButImap ).toInt();
+            "Applicability", (int)ButImap );
     }
 
-    bStopProcessingHere = config.readEntry( "StopProcessingHere", QVariant( true ) ).toBool();
-    bConfigureShortcut = config.readEntry( "ConfigureShortcut", QVariant( false ) ).toBool();
+    bStopProcessingHere = config.readEntry( "StopProcessingHere", true );
+    bConfigureShortcut = config.readEntry( "ConfigureShortcut", false );
     QString shortcut( config.readEntry( "Shortcut", QString() ) );
     if ( !shortcut.isEmpty() ) {
       KShortcut sc( shortcut );
       setShortcut( sc );
     }
-    bConfigureToolbar = config.readEntry( "ConfigureToolbar", QVariant( false ) ).toBool();
+    bConfigureToolbar = config.readEntry( "ConfigureToolbar", false );
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config.readEntry( "Icon", "gear" );
-    bAutoNaming = config.readEntry( "AutomaticName", QVariant( false ) ).toBool();
+    bAutoNaming = config.readEntry( "AutomaticName", false );
 
     int i, numActions;
     QString actName, argsName;
 
     mActions.clear();
 
-    numActions = config.readEntry( "actions", 0 ).toInt();
+    numActions = config.readEntry( "actions", 0 );
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
       KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>").arg( mPattern.name() ) );
@@ -346,7 +346,7 @@ void KMFilter::writeConfig(KConfigGroup & config) const
     config.writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config.writeEntry( "Icon", mIcon );
     config.writeEntry( "AutomaticName", bAutoNaming );
-    config.writeEntry( "Applicability", mApplicability );
+    config.writeEntry( "Applicability", (int)mApplicability );
 
     QString key;
     int i;

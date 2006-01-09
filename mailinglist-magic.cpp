@@ -391,7 +391,7 @@ void
 MailingList::writeConfig( KConfig* config ) const
 {
   config->writeEntry( "MailingListFeatures", mFeatures );
-  config->writeEntry( "MailingListHandler", mHandler );
+  config->writeEntry( "MailingListHandler", (int)mHandler );
   config->writeEntry( "MailingListId",  mId );
   config->writeEntry( "MailingListPostingAddress", mPostURLS.toStringList() );
   config->writeEntry( "MailingListSubscribeAddress", mSubscribeURLS.toStringList() );

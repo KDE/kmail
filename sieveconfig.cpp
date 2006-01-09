@@ -50,7 +50,7 @@ namespace KMail {
   void SieveConfig::writeConfig( KConfigBase & config ) const {
     config.writeEntry( "sieve-support", managesieveSupported() );
     config.writeEntry( "sieve-reuse-config", reuseConfig() );
-    config.writeEntry( "sieve-port", port() );
+    config.writeEntry( "sieve-port", (int)port() );
     config.writeEntry( "sieve-alternate-url", mAlternateURL.url() );
     config.writeEntry( "sieve-vacation-filename", mVacationFileName );
   }

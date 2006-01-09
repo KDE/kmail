@@ -197,9 +197,9 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("SystemLabel", mSystemLabel);
   config->writeEntry("ExpireMessages", mExpireMessages);
   config->writeEntry("ReadExpireAge", mReadExpireAge);
-  config->writeEntry("ReadExpireUnits", mReadExpireUnits);
+  config->writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
   config->writeEntry("UnreadExpireAge", mUnreadExpireAge);
-  config->writeEntry("UnreadExpireUnits", mUnreadExpireUnits);
+  config->writeEntry("UnreadExpireUnits", (int)mUnreadExpireUnits);
   config->writeEntry("ExpireAction", mExpireAction == ExpireDelete ? "Delete" : "Move");
   config->writeEntry("ExpireToFolder", mExpireToFolderId);
 

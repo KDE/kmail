@@ -898,7 +898,7 @@ void FolderStorage::writeConfig()
       mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
   group.writeEntry("TotalMsgs", mTotalMsgs);
   group.writeEntry("Compactable", mCompactable);
-  group.writeEntry("ContentsType", mContentsType);
+  group.writeEntry("ContentsType", (int)mContentsType);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );

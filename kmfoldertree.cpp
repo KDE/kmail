@@ -1270,7 +1270,7 @@ void KMFolderTree::cleanupConfigFile()
         continue; // hidden IMAP resource folder, don't delete info
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
-      config->deleteGroup(*grpIt, TRUE);
+      config->deleteGroup(*grpIt, KConfig::NLS);
       kdDebug(5006) << "Deleting information about folder " << name << endl;
     }
   }
