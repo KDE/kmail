@@ -101,7 +101,7 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 
 #ifdef HAVE_INDEXLIB
 	KConfigGroup cfg( KMKernel::config(), "text-index" );
-	if ( !cfg.readBoolEntry( "enabled", false ) ) {
+	if ( !cfg.readEntry( "enabled", false ) ) {
 		indexlib::remove( mIndexPath );
 		mLockFile.force_unlock();
 		mState = s_disabled;
@@ -119,7 +119,7 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 		QTimer::singleShot( 8000, this, SLOT( create() ) );
 		mState = s_willcreate;
 	} else {
-		if ( cfg.readBoolEntry( "creating" ) ) {
+		if ( cfg.readEntry( "creating",false ) ) {
 			QTimer::singleShot( 8000, this, SLOT( continueCreation() ) );
 			mState = s_creating;
 		} else {
