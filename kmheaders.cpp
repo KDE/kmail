@@ -107,6 +107,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
   mSortInfo.column = 0;
+  mSortCol = 2; // 2 == date
+  mSortDescending = false;
   mSortInfo.ascending = false;
   mReaderWindowActive = false;
   mRoot = new SortCacheItem;
@@ -130,9 +132,6 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup->insertItem(i18n("Receiver"),        KPaintInfo::COL_RECEIVER);
 
   connect(mPopup, SIGNAL(activated(int)), this, SLOT(slotToggleColumn(int)));
-
-  mSortCol = 3; // 3 == date
-  mSortDescending = false;
 
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
@@ -557,7 +556,7 @@ void KMHeaders::readFolderConfig (void)
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
-  mSortCol = config->readNumEntry("SortColumn", mSortCol /* inited to  date column */);
+  mSortCol = config->readNumEntry("SortColumn", mSortCol+1 /* inited to  date column */);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
 
@@ -2433,6 +2432,7 @@ void KMHeaders::setSorting( int column, bool ascending )
         mSortInfo.dirty = true;
     }
 
+    assert(column >= 0);
     mSortCol = column;
     mSortDescending = !ascending;
 
@@ -2567,6 +2567,7 @@ bool KMHeaders::writeSortOrder()
         kmb = mFolder->getMsgBase( i->msgId() );
         assert(kmb); // I have seen 0L come out of this, called from
                    // KMHeaders::setFolder(0xgoodpointer, false);
+                   // I see this crash too. after rebuilding a broken index on a dimap folder. always
         QString replymd5 = kmb->replyToIdMD5();
         QString replyToAuxId = kmb->replyToAuxIdMD5();
         SortCacheItem *p = NULL;
