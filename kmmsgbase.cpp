@@ -2,6 +2,7 @@
 
 #include <config.h>
 
+#include "globalsettings.h"
 #include "kmmsgbase.h"
 
 #include "kmfolderindex.h"
@@ -389,7 +390,8 @@ QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
     return QString();
 
   if ( str.find( "=?" ) < 0 )
-    return kmkernel->networkCodec()->toUnicode( str );
+    return KMMsgBase::codecForName( GlobalSettings::self()->
+                                    fallbackCharacterEncoding().latin1() )->toUnicode( str );
 
   QString result;
   Q3CString LWSP_buffer;
