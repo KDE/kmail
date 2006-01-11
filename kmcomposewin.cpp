@@ -2662,7 +2662,7 @@ void KMComposeWin::slotInsertFile()
     while (urls.count() > mMaxRecentFiles)
       urls.erase( urls.fromLast() );
     while (encodings.count() > mMaxRecentFiles)
-      urls.erase( encodings.fromLast() );
+      encodings.erase( encodings.fromLast() );
     // sanity check
     if (urls.count() != encodings.count()) {
       urls.clear();
