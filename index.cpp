@@ -160,13 +160,13 @@ bool KMMsgIndex::isIndexable( KMFolder* folder ) const {
 bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
 	if ( !isIndexable( folder ) ) return false;
 	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
-	return !config.readEntry( folderIndexDisabledKey, QVariant( false ) ).toBool();
+	return !config.readEntry( folderIndexDisabledKey, false );
 }
 
 void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
 	KConfigGroup config( KMKernel::config(), "text-index" );
-	if ( config.readEntry( "enabled", QVariant( !e ) ).toBool() == e ) return;
+	if ( config.readEntry( "enabled", !e ) == e ) return;
 	config.writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
@@ -190,7 +190,7 @@ void KMMsgIndex::setEnabled( bool e ) {
 
 void KMMsgIndex::setIndexingEnabled( KMFolder* folder, bool e ) {
 	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
-	if ( config.readEntry( folderIndexDisabledKey, QVariant( e ) ).toBool() == e )
+	if ( config.readEntry( folderIndexDisabledKey, e ) == e )
 		return; // nothing to do
 	config.writeEntry( folderIndexDisabledKey, e );
 
@@ -327,7 +327,7 @@ void KMMsgIndex::act() {
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
 		KConfigGroup config( KMKernel::config(), "Folder-" + f->idString() );
-		if ( config.readEntry( folderIndexDisabledKey, QVariant( true ) ).toBool() ) {
+		if ( config.readEntry( folderIndexDisabledKey, true ) ) {
 			for ( int i = 0; i < f->count(); ++i ) {
 				mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
 			}

@@ -194,8 +194,8 @@ void KMFolderCachedImap::readConfig()
     // for the icon
     folder()->setSystemFolder( true );
   }
-  mNoContent = group.readEntry( "NoContent", QVariant( false ) ).toBool();
-  mReadOnly = group.readEntry( "ReadOnly", QVariant( false ) ).toBool();
+  mNoContent = group.readEntry( "NoContent", false );
+  mReadOnly = group.readEntry( "ReadOnly", false );
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
@@ -211,13 +211,9 @@ void KMFolderCachedImap::readConfig()
 
   KMFolderMaildir::readConfig();
 
-  mStatusChangedLocally =
-    group.readEntry( "StatusChangedLocally", QVariant( false ) ).toBool();
-
-  mAnnotationFolderTypeChanged =
-      group.readEntry( "AnnotationFolderTypeChanged", QVariant( false ) ).toBool();
-  mIncidencesForChanged =
-      group.readEntry( "IncidencesForChanged", QVariant( false ) ).toBool();
+  mStatusChangedLocally = group.readEntry( "StatusChangedLocally", false );
+  mAnnotationFolderTypeChanged = group.readEntry( "AnnotationFolderTypeChanged", false );
+  mIncidencesForChanged = group.readEntry( "IncidencesForChanged", false );
   if ( mImapPath.isEmpty() ) {
     mImapPathCreation = group.readEntry("ImapPathCreation");
   }

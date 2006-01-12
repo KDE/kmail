@@ -857,14 +857,14 @@ void KMReaderWin::readConfig(void)
   delete mCSSHelper;
   mCSSHelper = new KMail::CSSHelper( mViewer->view() );
 
-  mNoMDNsWhenEncrypted = mdnGroup.readEntry( "not-send-when-encrypted", QVariant( true ) ).toBool();
+  mNoMDNsWhenEncrypted = mdnGroup.readEntry( "not-send-when-encrypted", true );
 
-  mUseFixedFont = reader.readEntry( "useFixedFont", QVariant( false ) ).toBool();
+  mUseFixedFont = reader.readEntry( "useFixedFont", false );
   if ( mToggleFixFontAction )
     mToggleFixFontAction->setChecked( mUseFixedFont );
 
-  mHtmlMail = reader.readEntry( "htmlMail", QVariant( false ) ).toBool();
-  mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", QVariant( false ) ).toBool();
+  mHtmlMail = reader.readEntry( "htmlMail", false );
+  mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", false );
 
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
@@ -880,7 +880,7 @@ void KMReaderWin::readConfig(void)
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
   mShowColorbar = reader.readEntry( "showColorbar",
-      QVariant( Kpgp::Module::getKpgp()->usePGP() ) ).toBool();
+      Kpgp::Module::getKpgp()->usePGP() ) ;
   // if the value defaults to enabled and KMail (with color bar) is used for
   // the first time the config dialog doesn't know this if we don't save the
   // value now
@@ -1496,7 +1496,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   bool emitReplaceMsgByUnencryptedVersion = false;
   const KConfigGroup reader( KMKernel::config(), "Reader" );
-  if ( reader.readEntry( "store-displayed-messages-unencrypted", QVariant( false ) ).toBool() ) {
+  if ( reader.readEntry( "store-displayed-messages-unencrypted", false ) ) {
 
   // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
   // of german government:

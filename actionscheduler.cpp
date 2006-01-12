@@ -809,7 +809,7 @@ bool ActionScheduler::isEnabled()
     sEnabledChecked = true;
     KConfig* config = KMKernel::config();
     KConfigGroup group(config, "General");
-    sEnabled = group.readEntry("action-scheduler", QVariant( false ) ).toBool();
+    sEnabled = group.readEntry("action-scheduler", false );
     return sEnabled;
 }
 

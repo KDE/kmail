@@ -116,7 +116,7 @@ bool KMSearch::read(QString location)
     mSearchPattern->readConfig( group );
     QString rootString = group.readEntry( "Base" );
     mRoot = kmkernel->findFolderById( rootString );
-    mRecursive = group.readEntry( "Recursive", QVariant( false ) ).toBool();
+    mRecursive = group.readEntry( "Recursive", false );
     return true;
 }
 

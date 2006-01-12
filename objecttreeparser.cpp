@@ -1431,7 +1431,7 @@ namespace KMail {
         return false;
 
       const KConfigGroup reader( KMKernel::config(), "Reader" );
-      if ( !reader.readEntry( "AutoImportKeys", QVariant( false ) ).toBool() )
+      if ( !reader.readEntry( "AutoImportKeys", false ) )
         return false;
 
       const QByteArray certData = node->msgPart().bodyDecodedBinary();

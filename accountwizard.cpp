@@ -125,7 +125,7 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
 {
   KConfigGroup wizardConfig( KMKernel::config(), "AccountWizard" );
 
-  if ( wizardConfig.readEntry( "ShowOnStartup", QVariant( true ) ).toBool() ) {
+  if ( wizardConfig.readEntry( "ShowOnStartup", true ) ) {
     AccountWizard wizard( kernel, parent );
     int result = wizard.exec();
     if ( result == QDialog::Accepted ) {

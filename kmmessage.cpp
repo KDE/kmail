@@ -3121,7 +3121,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   QString msgIdSuffix;
   KConfigGroup general( KMKernel::config(), "General" );
 
-  if( general.readEntry( "useCustomMessageIdSuffix", QVariant (false ) ).toBool() )
+  if( general.readEntry( "useCustomMessageIdSuffix", false ) )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix" );
 
   if( !msgIdSuffix.isEmpty() )

@@ -880,7 +880,7 @@ void FolderStorage::readConfig()
     mUnreadMsgs = group.readEntry("UnreadMsgs", QVariant( -1 ) ).toInt();
   if (mTotalMsgs == -1)
     mTotalMsgs = group.readEntry("TotalMsgs", QVariant( -1 ) ).toInt();
-  mCompactable = group.readEntry("Compactable", QVariant( true ) ).toBool();
+  mCompactable = group.readEntry("Compactable", true );
 
   int type = group.readEntry( "ContentsType", QVariant( 0 ) ).toInt();
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;

@@ -186,11 +186,11 @@ namespace KMail {
   void ImapAccountBase::readConfig( /*const*/ KConfig/*Base*/ & config ) {
     NetworkAccount::readConfig( config );
 
-    setAutoExpunge( config.readEntry( "auto-expunge", QVariant( false ) ).toBool() );
-    setHiddenFolders( config.readEntry( "hidden-folders", QVariant( false ) ).toBool() );
-    setOnlySubscribedFolders( config.readEntry( "subscribed-folders", QVariant( false ) ).toBool() );
-    setLoadOnDemand( config.readEntry( "loadondemand", QVariant( false ) ).toBool() );
-    setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", QVariant( false ) ).toBool() );
+    setAutoExpunge( config.readEntry( "auto-expunge", false ) );
+    setHiddenFolders( config.readEntry( "hidden-folders", false ) );
+    setOnlySubscribedFolders( config.readEntry( "subscribed-folders", false ) );
+    setLoadOnDemand( config.readEntry( "loadondemand", false ) );
+    setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", false ) );
     // read namespaces
     nsMap map;
     QStringList list = config.readListEntry( QString::number( PersonalNS ) );

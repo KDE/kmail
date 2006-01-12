@@ -152,7 +152,7 @@ namespace KMail {
 
     setLogin( config.readEntry( "login" ) );
 
-    if ( config.readEntry( "store-passwd", QVariant( false ) ).toBool() ) {
+    if ( config.readEntry( "store-passwd", false ) ) {
       mStorePasswd = true;
       QString encpasswd = config.readEntry( "pass" );
       if ( encpasswd.isEmpty() ) {
@@ -189,8 +189,8 @@ namespace KMail {
     setPort( port );
 
     setAuth( config.readEntry( "auth", "*" ) );
-    setUseSSL( config.readEntry( "use-ssl", QVariant( false ) ).toBool() );
-    setUseTLS( config.readEntry( "use-tls", QVariant( false ) ).toBool() );
+    setUseSSL( config.readEntry( "use-ssl", false ) );
+    setUseTLS( config.readEntry( "use-tls", false ) );
 
     mSieveConfig.readConfig( config );
   }

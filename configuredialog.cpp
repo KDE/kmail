@@ -184,7 +184,7 @@ namespace {
   void loadWidget( QCheckBox * b, const KConfigBase & c, const BoolConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     checkLockDown( b, c, e.key );
-    b->setChecked( c.readEntry( e.key, QVariant( e.defaultValue ) ).toBool() );
+    b->setChecked( c.readEntry( e.key, e.defaultValue ) );
   }
 
   void loadWidget( Q3ButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
@@ -994,8 +994,8 @@ void AccountsPage::SendingTab::doLoadOther() {
   mMessagePropertyCombo->setCurrentItem(
                 kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
 
-  mConfirmSendCheck->setChecked( composer.readEntry( "confirm-before-send",
-                                              QVariant( false ) ).toBool() );
+  mConfirmSendCheck->setChecked(
+      composer.readEntry( "confirm-before-send", false ) );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
   {
@@ -1371,10 +1371,9 @@ void AccountsPage::ReceivingTab::doLoadOther() {
     mAccountList->setSelected( listItem, true );
   }
 
-  mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail",
-                                  QVariant( false ) ).toBool() );
-  mCheckmailStartupCheck->setChecked( general.readEntry( "checkmail-startup",
-                                              QVariant( false ) ).toBool() );
+  mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
+  mCheckmailStartupCheck->setChecked(
+      general.readEntry( "checkmail-startup", false ) );
   QTimer::singleShot( 0, this, SLOT( slotTweakAccountList() ) );
 }
 
@@ -1617,8 +1616,7 @@ void AppearancePage::FontsTab::doLoadOther() {
     mFont[i] = fonts.readEntry( fontNames[i].configName,
       QVariant( (fontNames[i].onlyFixed) ? &fixedFont : &mFont[0] ) ).value<QFont>();
 
-  mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts",
-                                                QVariant( true ) ).toBool() );
+  mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentItem( 0 );
   slotFontSelectorChanged( 0 );
 }
@@ -1640,8 +1638,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
       fontNames[ mFontLocationCombo->currentItem() ].onlyFixed );
 
   if ( fonts.hasKey( "defaultFonts" ) )
-    mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts",
-                                              QVariant( false ) ).toBool() );
+    mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", false ) );
 }
 
 void AppearancePage::FontsTab::save() {
@@ -1736,10 +1733,8 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 void AppearancePage::ColorsTab::doLoadOther() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
-  mCustomColorCheck->setChecked(
-      !reader.readEntry( "defaultColors", QVariant( true ) ).toBool() );
-  mRecycleColorCheck->setChecked(
-      reader.readEntry( "RecycleQuoteColors", QVariant( false ) ).toBool() );
+  mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
+  mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
 
   static const QColor defaultColor[ numColorNames ] = {
     kapp->palette().active().base(), // bg
@@ -1778,11 +1773,9 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
   KConfigGroup reader( profile, "Reader" );
 
   if ( reader.hasKey( "defaultColors" ) )
-    mCustomColorCheck->setChecked(
-        !reader.readEntry( "defaultColors", QVariant( false ) ).toBool() );
+    mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", false ) );
   if ( reader.hasKey( "RecycleQuoteColors" ) )
-    mRecycleColorCheck->setChecked(
-        reader.readEntry( "RecycleQuoteColors", QVariant( false ) ).toBool() );
+    mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
 
   for ( int i = 0 ; i < numColorNames ; i++ )
     if ( reader.hasKey( colorNames[i].configName ) )
@@ -2061,14 +2054,10 @@ void AppearancePage::HeadersTab::doLoadOther() {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   // "General Options":
-  mNestedMessagesCheck->setChecked(
-      geometry.readEntry( "nestedMessages", QVariant( false ) ).toBool() );
-  mMessageSizeCheck->setChecked(
-      general.readEntry( "showMessageSize", QVariant( false ) ).toBool() );
-  mCryptoIconsCheck->setChecked(
-      general.readEntry( "showCryptoIcons", QVariant( false ) ).toBool() );
-  mAttachmentCheck->setChecked(
-      general.readEntry( "showAttachmentIcon", QVariant( true ) ).toBool() );
+  mNestedMessagesCheck->setChecked( geometry.readEntry( "nestedMessages", false ) );
+  mMessageSizeCheck->setChecked( general.readEntry( "showMessageSize", false ) );
+  mCryptoIconsCheck->setChecked( general.readEntry( "showCryptoIcons", false ) );
+  mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", true ) );
 
   // "Message Header Threading Options":
   int num = geometry.readEntry( "nestingPolicy", QVariant( 3 ) ).toInt();
@@ -2103,18 +2092,14 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
   KConfigGroup geometry( profile, "Geometry" );
 
   if ( geometry.hasKey( "nestedMessages" ) )
-    mNestedMessagesCheck->setChecked(
-        geometry.readEntry( "nestedMessages", QVariant( false ) ).toBool() );
+    mNestedMessagesCheck->setChecked( geometry.readEntry( "nestedMessages", false ) );
   if ( general.hasKey( "showMessageSize" ) )
-    mMessageSizeCheck->setChecked(
-        general.readEntry( "showMessageSize", QVariant( false ) ).toBool() );
+    mMessageSizeCheck->setChecked( general.readEntry( "showMessageSize", false ) );
 
   if( general.hasKey( "showCryptoIcons" ) )
-    mCryptoIconsCheck->setChecked(
-        general.readEntry( "showCryptoIcons", QVariant( false ) ).toBool() );
+    mCryptoIconsCheck->setChecked( general.readEntry( "showCryptoIcons", false ) );
   if ( general.hasKey( "showAttachmentIcon" ) )
-    mAttachmentCheck->setChecked(
-        general.readEntry( "showAttachmentIcon", QVariant( false ) ).toBool() );
+    mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", false ) );
 
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readEntry( "nestingPolicy", QVariant( 0 ) ).toInt();
@@ -2131,7 +2116,7 @@ void AppearancePage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  if ( geometry.readEntry( "nestedMessages", QVariant( false ) ).toBool()
+  if ( geometry.readEntry( "nestedMessages", false )
        != mNestedMessagesCheck->isChecked() ) {
     int result = KMessageBox::warningContinueCancel( this,
                    i18n("Changing the global threading setting will override "
@@ -2423,7 +2408,7 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
 
   if ( general.hasKey( "SystemTrayEnabled" ) ) {
     mSystemTrayCheck->setChecked(
-        general.readEntry( "SystemTrayEnabled", QVariant( false ) ).toBool() );
+        general.readEntry( "SystemTrayEnabled", false ) );
   }
   if ( general.hasKey( "SystemTrayPolicy" ) ) {
     mSystemTrayGroup->setButton(
@@ -2653,29 +2638,24 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   KConfigGroup general( profile, "General" );
 
   if ( composer.hasKey( "signature" ) ) {
-    bool state = composer.readEntry( "signature", QVariant( false ) ).toBool();
+    bool state = composer.readEntry( "signature", false );
     mAutoAppSignFileCheck->setChecked( state );
   }
   if ( composer.hasKey( "smart-quote" ) )
-    mSmartQuoteCheck->setChecked(
-        composer.readEntry( "smart-quote", QVariant( false ) ).toBool() );
+    mSmartQuoteCheck->setChecked( composer.readEntry( "smart-quote", false ) );
   if ( composer.hasKey( "request-mdn" ) )
-    mAutoRequestMDNCheck->setChecked(
-        composer.readEntry( "request-mdn", QVariant( false ) ).toBool() );
+    mAutoRequestMDNCheck->setChecked( composer.readEntry( "request-mdn", false ) );
   if ( composer.hasKey( "word-wrap" ) )
-    mWordWrapCheck->setChecked(
-        composer.readEntry( "word-wrap", QVariant( false ) ).toBool() );
+    mWordWrapCheck->setChecked( composer.readEntry( "word-wrap", false ) );
   if ( composer.hasKey( "break-at" ) )
-    mWrapColumnSpin->setValue(
-        composer.readEntry( "break-at", QVariant( 0 ) ).toInt() );
+    mWrapColumnSpin->setValue( composer.readEntry( "break-at", QVariant( 0 ) ).toInt() );
   if ( composer.hasKey( "autosave" ) )
-    mAutoSave->setValue(
-        composer.readEntry( "autosave", QVariant( 0 ) ).toInt() );
+    mAutoSave->setValue( composer.readEntry( "autosave", QVariant( 0 ) ).toInt() );
 
   if ( general.hasKey( "use-external-editor" )
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked(
-        general.readEntry( "use-external-editor", QVariant( false ) ).toBool() );
+        general.readEntry( "use-external-editor", false ) );
     mEditorRequester->setURL( general.readPathEntry( "external-editor" ) );
   }
 }
@@ -3091,7 +3071,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked(
-      !composer.readEntry( "force-reply-charset", QVariant( false ) ).toBool() );
+      !composer.readEntry( "force-reply-charset", false ) );
 }
 
 void ComposerPage::CharsetTab::save() {
@@ -3274,7 +3254,7 @@ void ComposerPage::HeadersTab::doLoadOther() {
   QString suffix = general.readEntry( "myMessageIdSuffix" );
   mMessageIdSuffixEdit->setText( suffix );
   bool state = ( !suffix.isEmpty() &&
-      general.readEntry( "useCustomMessageIdSuffix", QVariant( false  ) ).toBool() );
+      general.readEntry( "useCustomMessageIdSuffix", false ) );
   mCreateOwnMessageIdCheck->setChecked( state );
 
   mTagList->clear();
@@ -3384,9 +3364,9 @@ void ComposerPage::AttachmentsTab::doLoadOther() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mOutlookCompatibleCheck->setChecked(
-    composer.readEntry( "outlook-compatible-attachments", QVariant( false ) ).toBool() );
+    composer.readEntry( "outlook-compatible-attachments", false ) );
   mMissingAttachmentDetectionCheck->setChecked(
-    composer.readEntry( "showForgottenAttachmentWarning", QVariant( true ) ).toBool() );
+    composer.readEntry( "showForgottenAttachmentWarning", true ) );
   QStringList attachWordsList =
     composer.readListEntry( "attachment-keywords" );
   if ( attachWordsList.isEmpty() ) {
@@ -3668,11 +3648,11 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 void SecurityPage::GeneralTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
-  mHtmlMailCheck->setChecked( reader.readEntry( "htmlMail", QVariant( false ) ).toBool() );
+  mHtmlMailCheck->setChecked( reader.readEntry( "htmlMail", false ) );
   mExternalReferences->setChecked(
-      reader.readEntry( "htmlLoadExternal", QVariant( false ) ).toBool() );
+      reader.readEntry( "htmlLoadExternal", false ) );
   mAutomaticallyImportAttachedKeysCheck->setChecked(
-      reader.readEntry( "AutoImportKeys", QVariant( false ) ).toBool() );
+      reader.readEntry( "AutoImportKeys", false ) );
 
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
@@ -3683,7 +3663,7 @@ void SecurityPage::GeneralTab::doLoadOther() {
   if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
   mOrigQuoteGroup->setButton( num );
   mNoMDNsWhenEncryptedCheck->setChecked(
-      mdn.readEntry( "not-send-when-encrypted", QVariant( true ) ).toBool() );
+      mdn.readEntry( "not-send-when-encrypted", true ) );
 }
 
 void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -3692,13 +3672,13 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
 
   if ( reader.hasKey( "htmlMail" ) )
     mHtmlMailCheck->setChecked(
-        reader.readEntry( "htmlMail", QVariant( false ) ).toBool() );
+        reader.readEntry( "htmlMail", false ) );
   if ( reader.hasKey( "htmlLoadExternal" ) )
     mExternalReferences->setChecked(
-        reader.readEntry( "htmlLoadExternal", QVariant( false ) ).toBool() );
+        reader.readEntry( "htmlLoadExternal", false ) );
   if ( reader.hasKey( "AutoImportKeys" ) )
     mAutomaticallyImportAttachedKeysCheck->setChecked(
-        reader.readEntry( "AutoImportKeys", QVariant( false ) ).toBool() );
+        reader.readEntry( "AutoImportKeys", false ) );
 
   if ( mdn.hasKey( "default-policy" ) ) {
       int num = mdn.readEntry( "default-policy", QVariant( 0 ) ).toInt();
@@ -3712,14 +3692,14 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
   }
   if ( mdn.hasKey( "not-send-when-encrypted" ) )
       mNoMDNsWhenEncryptedCheck->setChecked(
-          mdn.readEntry( "not-send-when-encrypted", QVariant( false ) ).toBool() );
+          mdn.readEntry( "not-send-when-encrypted", false ) );
 }
 
 void SecurityPage::GeneralTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
 
-  if (reader.readEntry( "htmlMail", QVariant( false ) ).toBool() != mHtmlMailCheck->isChecked())
+  if (reader.readEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString(),
@@ -3779,22 +3759,22 @@ void SecurityPage::ComposerCryptoTab::doLoadOther() {
   // If you change default values, sync messagecomposer.cpp too
 
   mWidget->mAutoSignature->setChecked(
-      composer.readEntry( "pgp-auto-sign", QVariant( false ) ).toBool() );
+      composer.readEntry( "pgp-auto-sign", false ) );
 
   mWidget->mEncToSelf->setChecked(
-      composer.readEntry( "crypto-encrypt-to-self", QVariant( true ) ).toBool() );
+      composer.readEntry( "crypto-encrypt-to-self", true ) );
   mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
   mWidget->mShowEncryptionResult->hide();
   mWidget->mShowKeyApprovalDlg->setChecked(
-      composer.readEntry( "crypto-show-keys-for-approval", QVariant( true ) ).toBool() );
+      composer.readEntry( "crypto-show-keys-for-approval", true ) );
 
   mWidget->mAutoEncrypt->setChecked(
-      composer.readEntry( "pgp-auto-encrypt", QVariant( false ) ).toBool() );
+      composer.readEntry( "pgp-auto-encrypt", false ) );
   mWidget->mNeverEncryptWhenSavingInDrafts->setChecked(
-      composer.readEntry( "never-encrypt-drafts", QVariant( true ) ).toBool() );
+      composer.readEntry( "never-encrypt-drafts", true ) );
 
   mWidget->mStoreEncrypted->setChecked(
-      composer.readEntry( "crypto-store-encrypted", QVariant( true ) ).toBool() );
+      composer.readEntry( "crypto-store-encrypted", true ) );
 }
 
 void SecurityPage::ComposerCryptoTab::installProfile( KConfig * profile ) {
@@ -3802,27 +3782,27 @@ void SecurityPage::ComposerCryptoTab::installProfile( KConfig * profile ) {
 
   if ( composer.hasKey( "pgp-auto-sign" ) )
     mWidget->mAutoSignature->setChecked(
-        composer.readEntry( "pgp-auto-sign", QVariant( false ) ).toBool() );
+        composer.readEntry( "pgp-auto-sign", false ) );
 
   if ( composer.hasKey( "crypto-encrypt-to-self" ) )
     mWidget->mEncToSelf->setChecked(
-        composer.readEntry( "crypto-encrypt-to-self", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-encrypt-to-self", false ) );
   if ( composer.hasKey( "crypto-show-encryption-result" ) )
     mWidget->mShowEncryptionResult->setChecked(
-        composer.readEntry( "crypto-show-encryption-result", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-show-encryption-result", false ) );
   if ( composer.hasKey( "crypto-show-keys-for-approval" ) )
     mWidget->mShowKeyApprovalDlg->setChecked(
-        composer.readEntry( "crypto-show-keys-for-approval", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-show-keys-for-approval", false ) );
   if ( composer.hasKey( "pgp-auto-encrypt" ) )
     mWidget->mAutoEncrypt->setChecked(
-        composer.readEntry( "pgp-auto-encrypt", QVariant( false ) ).toBool() );
+        composer.readEntry( "pgp-auto-encrypt", false ) );
   if ( composer.hasKey( "never-encrypt-drafts" ) )
     mWidget->mNeverEncryptWhenSavingInDrafts->setChecked(
-        composer.readEntry( "never-encrypt-drafts", QVariant( false ) ).toBool() );
+        composer.readEntry( "never-encrypt-drafts", false ) );
 
   if ( composer.hasKey( "crypto-store-encrypted" ) )
     mWidget->mStoreEncrypted->setChecked(
-        composer.readEntry( "crypto-store-encrypted", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-store-encrypted", false ) );
 }
 
 void SecurityPage::ComposerCryptoTab::save() {
@@ -3873,16 +3853,16 @@ void SecurityPage::WarningTab::doLoadOther() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mWidget->warnUnencryptedCB->setChecked(
-      composer.readEntry( "crypto-warning-unencrypted", QVariant( false ) ).toBool() );
+      composer.readEntry( "crypto-warning-unencrypted", false ) );
   mWidget->mWarnUnsigned->setChecked(
-      composer.readEntry( "crypto-warning-unsigned", QVariant( false ) ).toBool() );
+      composer.readEntry( "crypto-warning-unsigned", false ) );
   mWidget->warnReceiverNotInCertificateCB->setChecked(
-      composer.readEntry( "crypto-warn-recv-not-in-cert", QVariant( true ) ).toBool() );
+      composer.readEntry( "crypto-warn-recv-not-in-cert", true ) );
 
   // The "-int" part of the key name is because there used to be a separate boolean
   // config entry for enabling/disabling. This is done with the single bool value now.
   mWidget->warnGroupBox->setChecked(
-      composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() );
+      composer.readEntry( "crypto-warn-when-near-expire", true ) );
 
   mWidget->mWarnSignKeyExpiresSB->setValue(
       composer.readEntry( "crypto-warn-sign-key-near-expire-int", QVariant( 14 ) ).toInt() );
@@ -3906,17 +3886,17 @@ void SecurityPage::WarningTab::installProfile( KConfig * profile ) {
 
   if ( composer.hasKey( "crypto-warning-unencrypted" ) )
     mWidget->warnUnencryptedCB->setChecked(
-        composer.readEntry( "crypto-warning-unencrypted", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-warning-unencrypted", false ) );
   if ( composer.hasKey( "crypto-warning-unsigned" ) )
     mWidget->mWarnUnsigned->setChecked(
-        composer.readEntry( "crypto-warning-unsigned", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-warning-unsigned", false ) );
   if ( composer.hasKey( "crypto-warn-recv-not-in-cert" ) )
     mWidget->warnReceiverNotInCertificateCB->setChecked(
-        composer.readEntry( "crypto-warn-recv-not-in-cert", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-warn-recv-not-in-cert", false ) );
 
   if ( composer.hasKey( "crypto-warn-when-near-expire" ) )
     mWidget->warnGroupBox->setChecked(
-        composer.readEntry( "crypto-warn-when-near-expire", QVariant( false ) ).toBool() );
+        composer.readEntry( "crypto-warn-when-near-expire", false ) );
 
   if ( composer.hasKey( "crypto-warn-sign-key-near-expire-int" ) )
     mWidget->mWarnSignKeyExpiresSB->setValue(
@@ -4536,11 +4516,11 @@ void MiscPage::FolderTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mEmptyTrashCheck->setChecked(
-    general.readEntry( "empty-trash-on-exit", QVariant( true ) ).toBool() );
+      general.readEntry( "empty-trash-on-exit", true ) );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-                                                  kmkernel->inboxFolder()->idString() ) );
+      kmkernel->inboxFolder()->idString() ) );
   mEmptyFolderConfirmCheck->setChecked(
-      general.readEntry( "confirm-before-empty", QVariant( true ) ).toBool() );
+      general.readEntry( "confirm-before-empty", true ) );
 
   int num = general.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
   if ( num < 0 || num > 1 ) num = 1;

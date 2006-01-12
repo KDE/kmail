@@ -82,10 +82,10 @@ void KMTransportInfo::readConfig(int id)
   precommand = config.readPathEntry("precommand");
   encryption = config.readEntry("encryption");
   authType = config.readEntry("authtype");
-  auth = config.readEntry("auth", QVariant( false ) ).toBool();
-  mStorePasswd = config.readEntry("storepass", QVariant( false ) ).toBool();
-  specifyHostname = config.readEntry("specifyHostname", QVariant( false ) ).toBool();
-  localHostname = config.readEntry("localHostname", QVariant( false ) ).toBool();
+  auth = config.readEntry("auth", false );
+  mStorePasswd = config.readEntry("storepass", false );
+  specifyHostname = config.readEntry("specifyHostname", false );
+  localHostname = config.readEntry("localHostname", false );
 
   if ( !storePasswd() )
     return;

@@ -91,8 +91,8 @@ void KMSender::readConfig(void)
   QString str;
   KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
-  mSendImmediate = config.readEntry( "Immediate", QVariant( true ) ).toBool();
-  mSendQuotedPrintable = config.readEntry( "Quoted-Printable", QVariant( true ) ).toBool();
+  mSendImmediate = config.readEntry( "Immediate", true );
+  mSendQuotedPrintable = config.readEntry( "Quoted-Printable", true );
 }
 
 

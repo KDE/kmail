@@ -50,9 +50,9 @@ namespace KMail {
     KConfigGroup fonts( config, "Fonts" );
     KConfigGroup pixmaps( config, "Pixmaps" );
 
-    mRecycleQuoteColors = reader.readEntry( "RecycleQuoteColors", QVariant( false ) ).toBool();
+    mRecycleQuoteColors = reader.readEntry( "RecycleQuoteColors", false );
 
-    if ( !reader.readEntry( "defaultColors", QVariant( true ) ).toBool() ) {
+    if ( !reader.readEntry( "defaultColors", true ) ) {
       mForegroundColor =
           reader.readEntry( "ForegroundColor", QVariant( &mForegroundColor ) ).value<QColor>();
       mLinkColor =
@@ -79,7 +79,7 @@ namespace KMail {
       }
     }
 
-    if ( !fonts.readEntry( "defaultFonts", QVariant( true ) ).toBool() ) {
+    if ( !fonts.readEntry( "defaultFonts", true ) ) {
       mBodyFont = fonts.readEntry(  "body-font",  QVariant( &mBodyFont ) ).value<QFont>();
       mPrintFont = fonts.readEntry( "print-font", QVariant( &mPrintFont ) ).value<QFont>();
       mFixedFont = fonts.readEntry( "fixed-font", QVariant( &mFixedFont ) ).value<QFont>();

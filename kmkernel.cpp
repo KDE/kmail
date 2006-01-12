@@ -494,7 +494,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       }
       // Don't show the composer window, if the automatic sending is checked
       KConfigGroup options(  config(), "Groupware" );
-      iCalAutoSend = options.readEntry( "AutomaticSending", QVariant( true ) ).toBool();
+      iCalAutoSend = options.readEntry( "AutomaticSending", true );
     }
   }
 
@@ -1305,7 +1305,7 @@ void KMKernel::init()
   QDir dir;
 
   KConfigGroup group(cfg, "General");
-  the_firstStart = group.readEntry("first-start", QVariant( true ) ).toBool();
+  the_firstStart = group.readEntry("first-start", true );
   group.writeEntry("first-start", false);
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
@@ -1535,7 +1535,7 @@ void KMKernel::cleanup(void)
 
     the_trashFolder->close(TRUE);
 
-    if (group.readEntry("empty-trash-on-exit", QVariant( true ) ).toBool() )
+    if (group.readEntry("empty-trash-on-exit", true ) )
     {
       if ( the_trashFolder->count( true ) > 0 )
         the_trashFolder->expunge();
@@ -2030,14 +2030,14 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   // a stable kmail release goes out with a nasty bug in CompactionJob...
   KConfigGroup generalGroup( config(), "General" );
 
-  if ( generalGroup.readEntry( "auto-expiring", QVariant( true ) ).toBool() ) {
+  if ( generalGroup.readEntry( "auto-expiring", true ) ) {
     the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
     the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
     the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
     // the_searchFolderMgr: no expiry there
   }
 
-  if ( generalGroup.readEntry( "auto-compaction", QVariant( true ) ).toBool() ) {
+  if ( generalGroup.readEntry( "auto-compaction", true ) ) {
     the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
     // the_imapFolderMgr: no compaction
     the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );

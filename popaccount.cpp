@@ -200,18 +200,15 @@ void PopAccount::readConfig(KConfig& config)
 {
   NetworkAccount::readConfig(config);
 
-  mUsePipelining =
-      config.readEntry("pipelining", QVariant( false ) ).toBool();
-  mLeaveOnServer =
-      config.readEntry("leave-on-server", QVariant( false ) ).toBool();
+  mUsePipelining = config.readEntry("pipelining", false );
+  mLeaveOnServer = config.readEntry("leave-on-server", false );
   mLeaveOnServerDays =
       config.readEntry("leave-on-server-days", QVariant( -1 ) ).toInt();
   mLeaveOnServerCount =
       config.readEntry("leave-on-server-count", QVariant( -1 ) ).toInt();
   mLeaveOnServerSize =
       config.readEntry("leave-on-server-size", QVariant( -1 ) ).toInt();
-  mFilterOnServer =
-      config.readEntry("filter-on-server", QVariant( false ) ).toBool();
+  mFilterOnServer = config.readEntry("filter-on-server", false );
   mFilterOnServerCheckSize =
       config.readEntry("filter-os-check-size", QVariant( (uint) 50000 ) ).toUInt();
 }

@@ -705,7 +705,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   for (int i = 1; i <= registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    if( !toolConfig.readEntry( "HeadersOnly", QVariant( false ) ).toBool() )
+    if( !toolConfig.readEntry( "HeadersOnly", false ) )
       mToolList.append( readToolConfig( toolConfig ) );
   }
 
@@ -717,7 +717,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   for (int i = 1; i <= user_registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    if( !toolConfig.readEntry( "HeadersOnly", QVariant( false ) ).toBool() )
+    if( !toolConfig.readEntry( "HeadersOnly", false ) )
       mergeToolConfig( readToolConfig( toolConfig ) );
   }
   // Make sure to have add least one tool listed even when the
@@ -752,10 +752,10 @@ AntiSpamWizard::SpamToolConfig
   QString pattern = configGroup.readEntry( "DetectionPattern" );
   QString pattern2 = configGroup.readEntry( "DetectionPattern2" );
   QString serverPattern = configGroup.readEntry( "ServerPattern" );
-  bool detectionOnly = configGroup.readEntry( "DetectionOnly", QVariant( false ) ).toBool();
-  bool useRegExp = configGroup.readEntry( "UseRegExp", QVariant( false ) ).toBool();
-  bool supportsBayes = configGroup.readEntry( "SupportsBayes", QVariant( false ) ).toBool();
-  bool supportsUnsure = configGroup.readEntry( "SupportsUnsure", QVariant( false ) ).toBool();
+  bool detectionOnly = configGroup.readEntry( "DetectionOnly", false );
+  bool useRegExp = configGroup.readEntry( "UseRegExp", false );
+  bool supportsBayes = configGroup.readEntry( "SupportsBayes", false );
+  bool supportsUnsure = configGroup.readEntry( "SupportsUnsure", false );
   return SpamToolConfig( id, version, prio, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd,
                          header, pattern, pattern2, serverPattern,
