@@ -119,7 +119,7 @@ static inline int encryptKeyNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
-  const int num = composer.readEntry( "crypto-warn-encr-key-near-expire-int", QVariant( 14 ) ).toInt();
+  const int num = composer.readEntry( "crypto-warn-encr-key-near-expire-int", 14 );
   return qMax( 1, num );
 }
 
@@ -127,7 +127,7 @@ static inline int signingKeyNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
-  const int num = composer.readEntry( "crypto-warn-sign-key-near-expire-int", QVariant( 14 ) ).toInt();
+  const int num = composer.readEntry( "crypto-warn-sign-key-near-expire-int", 14 );
   return qMax( 1, num );
 }
 
@@ -135,7 +135,7 @@ static inline int encryptRootCertNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
-  const int num = composer.readEntry( "crypto-warn-encr-root-near-expire-int", QVariant( 14 ) ).toInt();
+  const int num = composer.readEntry( "crypto-warn-encr-root-near-expire-int", 14 );
   return qMax( 1, num );
 }
 
@@ -144,7 +144,7 @@ static inline int signingRootCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num =
-      composer.readEntry( "crypto-warn-sign-root-near-expire-int", QVariant( 14 ) ).toInt();
+      composer.readEntry( "crypto-warn-sign-root-near-expire-int", 14 );
   return qMax( 1, num );
 }
 
@@ -153,7 +153,7 @@ static inline int encryptChainCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num =
-      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", QVariant( 14 ) ).toInt();
+      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 );
   return qMax( 1, num );
 }
 
@@ -162,7 +162,7 @@ static inline int signingChainCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num =
-      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", QVariant( 14 ) ).toInt();
+      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
   return qMax( 1, num );
 }
 

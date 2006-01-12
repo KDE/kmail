@@ -895,8 +895,8 @@ void KMReaderWin::readConfig(void)
   else
     mMimeTreeMode = 1;
 
-  const int mimeH = reader.readEntry( "MimePaneHeight", QVariant( 100 ) ).toInt();
-  const int messageH = reader.readEntry( "MessagePaneHeight", QVariant( 180 ) ).toInt();
+  const int mimeH = reader.readEntry( "MimePaneHeight", 100 );
+  const int messageH = reader.readEntry( "MessagePaneHeight", 180 );
   mSplitterSizes.clear();
   if ( mMimeTreeAtBottom )
     mSplitterSizes << messageH << mimeH;

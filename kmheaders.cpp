@@ -543,7 +543,8 @@ void KMHeaders::refreshNestedState(void)
   KConfigGroup config( KMKernel::config(), "Geometry" );
   mNested = config.readEntry( "nestedMessages", false );
 
-  nestingPolicy = (NestingPolicy)config.readEntry( "nestingPolicy", QVariant( OpenUnread ) ).toInt();
+  nestingPolicy = (NestingPolicy) config.readEntry( "nestingPolicy",
+                                  QVariant( OpenUnread ) ).toInt();
   if ((nestingPolicy != oldNestPolicy) ||
     (oldState != isThreaded()))
   {
@@ -560,13 +561,13 @@ void KMHeaders::readFolderConfig (void)
 
   KConfigGroup config( KMKernel::config(), "Folder-" + mFolder->idString() );
   mNestedOverride = config.readEntry( "threadMessagesOverride", false );
-  mSortCol = config.readEntry( "SortColumn", QVariant( mSortCol  + 1 /* inited to date column */) ).toInt();
+  mSortCol = config.readEntry( "SortColumn", mSortCol  + 1 /* inited to date column */);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
 
-  mTopItem = config.readEntry( "Top", QVariant( 0 ) ).toInt();
-  mCurrentItem = config.readEntry( "Current", QVariant( 0 ) ).toInt();
-  mCurrentItemSerNum = config.readEntry( "CurrentSerialNum", QVariant( 0 ) ).toInt();
+  mTopItem = config.readEntry( "Top", 0 );
+  mCurrentItem = config.readEntry( "Current", 0 );
+  mCurrentItemSerNum = config.readEntry( "CurrentSerialNum", 0 );
 
   mPaintInfo.orderOfArrival = config.readEntry( "OrderOfArrival", true );
   mPaintInfo.status = config.readEntry( "Status", false );
@@ -574,7 +575,8 @@ void KMHeaders::readFolderConfig (void)
   { //area for config group "Geometry"
     KConfigGroup config( KMKernel::config(), "Geometry" );
     mNested = config.readEntry( "nestedMessages", false );
-    nestingPolicy = (NestingPolicy)config.readEntry( "nestingPolicy", QVariant( OpenUnread ) ).toInt();
+    nestingPolicy = (NestingPolicy) config.readEntry( "nestingPolicy",
+                                    QVariant( OpenUnread ) ).toInt();
   }
 
   setRootIsDecorated( nestingPolicy != AlwaysOpen && isThreaded() );

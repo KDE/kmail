@@ -100,7 +100,7 @@ void RenameJob::execute()
     // get the default mailbox type
     KConfig *config = KMKernel::config();
     KConfigGroup group(config, "General");
-    int deftype = group.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
+    int deftype = group.readEntry("default-mailbox-format", 1 );
     if ( deftype < 0 || deftype > 1 ) deftype = 1;
 
     // the type of the new folder

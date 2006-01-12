@@ -86,7 +86,7 @@ void AccountManager::readConfig(void)
   mAcctList.clear();
 
   KConfigGroup general(config, "General");
-  num = general.readEntry( "accounts", QVariant( 0 ) ).toInt();
+  num = general.readEntry( "accounts", 0 );
 
   for (i=1; i<=num; i++)
   {

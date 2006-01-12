@@ -156,10 +156,10 @@ void KMFolder::readConfig( KConfig* config )
   if ( !config->readEntry( "SystemLabel" ).isEmpty() )
     mSystemLabel = config->readEntry( "SystemLabel" );
   mExpireMessages = config->readEntry( "ExpireMessages", false );
-  mReadExpireAge = config->readEntry( "ReadExpireAge", QVariant( 3 ) ).toInt();
+  mReadExpireAge = config->readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)
       config->readEntry( "ReadExpireUnits", QVariant( expireMonths ) ).toInt();
-  mUnreadExpireAge = config->readEntry( "UnreadExpireAge", QVariant( 12 ) ).toInt();
+  mUnreadExpireAge = config->readEntry( "UnreadExpireAge", 12 );
   mUnreadExpireUnits = (ExpireUnits)
       config->readEntry( "UnreadExpireUnits", QVariant( expireNever ) ).toInt();
   mExpireAction = config->readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;

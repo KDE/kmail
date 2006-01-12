@@ -106,7 +106,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     {
       KConfig *config = KMKernel::config();
       KConfigGroup group(config, "General");
-      int type = group.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
+      int type = group.readEntry("default-mailbox-format", 1 );
       if ( type < 0 || type > 1 ) type = 1;
       mFormatComboBox->setCurrentItem( type );
     }

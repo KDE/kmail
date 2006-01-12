@@ -1,4 +1,4 @@
-/* 
+/*
     This file is part of KMail.
 
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
@@ -637,7 +637,7 @@ bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
   kdDebug(5006) << k_funcinfo << endl;
   QList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
   for ( QList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
-                                                                    end( folderList.end() ); 
+                                                                    end( folderList.end() );
         it != end ; ++it ) {
     KMFolder * const f = findResourceFolder( (*it).location );
     if ( !f ) continue;
@@ -754,7 +754,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     const KMail::FolderContentsType t = f->storage()->contentsType();
     const Q3CString type = msg->typeStr();
     const Q3CString subtype = msg->subtypeStr();
-    const bool messageWasIcalVcardFormat = ( type.toLower() == "text" && 
+    const bool messageWasIcalVcardFormat = ( type.toLower() == "text" &&
         ( subtype.toLower() == "calendar" || subtype.toLower() == "x-vcard" ) );
 
     if ( storageFormat( f ) == StorageIcalVcard ) {
@@ -1313,8 +1313,7 @@ KMailICalIfaceImpl::FolderInfo KMailICalIfaceImpl::readFolderInfo( const KMFolde
   } else {
     info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
   }
-  info.mChanges = (FolderChanges) configGroup.readEntry( folder->idString() + "-changes",
-        QVariant( 0 ) ).toInt();
+  info.mChanges = (FolderChanges) configGroup.readEntry( folder->idString() + "-changes", 0 );
   return info;
 }
 

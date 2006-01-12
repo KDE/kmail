@@ -145,7 +145,7 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
   mFolder = 0;
   folderName = config.readEntry("Folder");
-  setCheckInterval(config.readEntry("check-interval", QVariant( 0 ) ).toInt() );
+  setCheckInterval(config.readEntry("check-interval", 0 ) );
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readEntry("check-exclude", false ) );
   setPrecommand(config.readPathEntry("precommand"));

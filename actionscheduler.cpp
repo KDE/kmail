@@ -528,7 +528,7 @@ kdDebug(5006) << debug() << endl;
   bool mdnEnabled = true;
   {
     KConfigGroup mdnConfig( kmkernel->config(), "MDN" );
-    int mode = mdnConfig.readEntry( "default-policy", QVariant( 0 ) ).toInt();
+    int mode = mdnConfig.readEntry( "default-policy", 0 );
     if (!mode || mode < 0 || mode > 3)
       mdnEnabled = false;
   }

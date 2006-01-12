@@ -72,10 +72,10 @@ void KMFilterMgr::readConfig(void)
   KConfigGroup group(config, "General");
 
   if (bPopFilter) {
-    numFilters = group.readEntry( "popfilters", QVariant( 0 ) ).toInt();
-    mShowLater = group.readEntry( "popshowDLmsgs", QVariant( 0 ) ).toInt();
+    numFilters = group.readEntry( "popfilters", 0 );
+    mShowLater = group.readEntry( "popshowDLmsgs", 0 );
   } else {
-    numFilters = group.readEntry( "filters", QVariant( 0 ) ).toInt();
+    numFilters = group.readEntry( "filters", 0 );
   }
 
   for ( int i=0 ; i < numFilters ; ++i ) {

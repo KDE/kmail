@@ -403,7 +403,7 @@ MailingList::writeConfig( KConfig* config ) const
 void
 MailingList::readConfig( KConfig* config )
 {
-  mFeatures =  config->readEntry( "MailingListFeatures", QVariant( 0 ) ).toInt();
+  mFeatures =  config->readEntry( "MailingListFeatures", 0 );
   mHandler = static_cast<MailingList::Handler>(
     config->readEntry( "MailingListHandler", QVariant( MailingList::KMail ) ).toInt() );
 

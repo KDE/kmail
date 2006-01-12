@@ -37,7 +37,7 @@ namespace KMail {
     mManagesieveSupported = config.readEntry( "sieve-support", false );
     mReuseConfig = config.readEntry( "sieve-reuse-config", true );
 
-    int port = config.readEntry( "sieve-port", QVariant( 2000 ) ).toInt();
+    int port = config.readEntry( "sieve-port", 2000 );
     if ( port < 1 || port > USHRT_MAX ) port = 2000;
     mPort = static_cast<unsigned short>( port );
 

@@ -1351,7 +1351,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
   // default:
-  int mode = mdnConfig.readEntry( "default-policy", QVariant( 0 ) ).toInt();
+  int mode = mdnConfig.readEntry( "default-policy", 0 );
   if ( !mode || mode < 0 || mode > 3 ) {
     // early out for ignore:
     setMDNSentState( KMMsgMDNIgnore );
@@ -1476,7 +1476,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   receipt->addBodyPart( &secondMsgPart );
 
   // message/rfc822 or text/rfc822-headers body part:
-  int num = mdnConfig.readEntry( "quote-message", QVariant( 0 ) ).toInt();
+  int num = mdnConfig.readEntry( "quote-message", 0 );
   if ( num < 0 || num > 2 ) num = 0;
   MDN::ReturnContent returnContent = static_cast<MDN::ReturnContent>( num );
 
@@ -3766,7 +3766,7 @@ void KMMessage::readConfig()
 
   KConfigGroup config( KMKernel::config(), "General" );
 
-  int languageNr = config.readEntry( "reply-current-language", QVariant( 0 ) ).toInt();
+  int languageNr = config.readEntry( "reply-current-language", 0 );
 
   { // area for config group "KMMessage #n"
     KConfigGroup config( KMKernel::config(), QString("KMMessage #%1").arg(languageNr) );

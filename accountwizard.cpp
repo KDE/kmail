@@ -372,7 +372,7 @@ void AccountWizard::createTransport()
   // create outgoing account
   KConfigGroup general( KMKernel::config(), "General" );
 
-  uint numTransports = general.readEntry( "transports", QVariant( 0 ) ).toInt();
+  uint numTransports = general.readEntry( "transports", 0 );
 
   for ( uint i = 1 ; i <= numTransports ; i++ ) {
     KMTransportInfo *info = new KMTransportInfo();

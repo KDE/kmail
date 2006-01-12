@@ -817,7 +817,7 @@ void KMSearchPattern::readConfig( const KConfigGroup & config ) {
 
   mOperator = config.readEntry("operator") == "or" ? OpOr : OpAnd;
 
-  const int nRules = config.readEntry( "rules", QVariant( 0 ) ).toInt();
+  const int nRules = config.readEntry( "rules", 0 );
 
   for ( int i = 0 ; i < nRules ; i++ ) {
     KMSearchRule * r = KMSearchRule::createInstanceFromConfig( config, i );

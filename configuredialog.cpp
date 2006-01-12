@@ -240,8 +240,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  int width = geometry.readEntry( "ConfigureDialogWidth", QVariant( 0 ) ).toInt();
-  int height = geometry.readEntry( "ConfigureDialogHeight", QVariant( 0 ) ).toInt();
+  int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
+  int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
   if ( width != 0 && height != 0 ) {
      setMinimumSize( width, height );
   }
@@ -955,7 +955,7 @@ void AccountsPage::SendingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
-  int numTransports = general.readEntry("transports", QVariant( 0 ) ).toInt();
+  int numTransports = general.readEntry("transports", 0 );
 
   Q3ListViewItem *top = 0;
   mTransportInfoList.clear();
@@ -2060,7 +2060,7 @@ void AppearancePage::HeadersTab::doLoadOther() {
   mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", true ) );
 
   // "Message Header Threading Options":
-  int num = geometry.readEntry( "nestingPolicy", QVariant( 3 ) ).toInt();
+  int num = geometry.readEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
 
@@ -2102,13 +2102,13 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
     mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", false ) );
 
   if ( geometry.hasKey( "nestingPolicy" ) ) {
-    int num = geometry.readEntry( "nestingPolicy", QVariant( 0 ) ).toInt();
+    int num = geometry.readEntry( "nestingPolicy", 0 );
     if ( num < 0 || num > 3 ) num = 3;
     mNestingPolicy->setButton( num );
   }
 
   if ( general.hasKey( "dateFormat" ) )
-    setDateDisplay( general.readEntry( "dateFormat", QVariant( 0 ) ).toInt(),
+    setDateDisplay( general.readEntry( "dateFormat", 0 ),
                    general.readEntry( "customDateFormat" ) );
 }
 
@@ -2411,8 +2411,7 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
         general.readEntry( "SystemTrayEnabled", false ) );
   }
   if ( general.hasKey( "SystemTrayPolicy" ) ) {
-    mSystemTrayGroup->setButton(
-        general.readEntry( "SystemTrayPolicy", QVariant( 0 ) ).toInt() );
+    mSystemTrayGroup->setButton( general.readEntry( "SystemTrayPolicy", 0 ) );
   }
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
@@ -2648,9 +2647,9 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   if ( composer.hasKey( "word-wrap" ) )
     mWordWrapCheck->setChecked( composer.readEntry( "word-wrap", false ) );
   if ( composer.hasKey( "break-at" ) )
-    mWrapColumnSpin->setValue( composer.readEntry( "break-at", QVariant( 0 ) ).toInt() );
+    mWrapColumnSpin->setValue( composer.readEntry( "break-at", 0 ) );
   if ( composer.hasKey( "autosave" ) )
-    mAutoSave->setValue( composer.readEntry( "autosave", QVariant( 0 ) ).toInt() );
+    mAutoSave->setValue( composer.readEntry( "autosave", 0 ) );
 
   if ( general.hasKey( "use-external-editor" )
        && general.hasKey( "external-editor" ) ) {
@@ -3263,7 +3262,7 @@ void ComposerPage::HeadersTab::doLoadOther() {
 
   Q3ListViewItem * item = 0;
 
-  int count = general.readEntry( "mime-header-count", QVariant( 0 ) ).toInt();
+  int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
                          Q3CString("Mime #") + Q3CString().setNum(i) );
@@ -3656,10 +3655,10 @@ void SecurityPage::GeneralTab::doLoadOther() {
 
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
-  int num = mdn.readEntry( "default-policy", QVariant( 0 ) ).toInt();
+  int num = mdn.readEntry( "default-policy", 0 );
   if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
   mMDNGroup->setButton( num );
-  num = mdn.readEntry( "quote-message", QVariant( 0 ) ).toInt();
+  num = mdn.readEntry( "quote-message", 0 );
   if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
   mOrigQuoteGroup->setButton( num );
   mNoMDNsWhenEncryptedCheck->setChecked(
@@ -3681,12 +3680,12 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
         reader.readEntry( "AutoImportKeys", false ) );
 
   if ( mdn.hasKey( "default-policy" ) ) {
-      int num = mdn.readEntry( "default-policy", QVariant( 0 ) ).toInt();
+      int num = mdn.readEntry( "default-policy", 0 );
       if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
       mMDNGroup->setButton( num );
   }
   if ( mdn.hasKey( "quote-message" ) ) {
-      int num = mdn.readEntry( "quote-message", QVariant( 0 ) ).toInt();
+      int num = mdn.readEntry( "quote-message", 0 );
       if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
       mOrigQuoteGroup->setButton( num );
   }
@@ -3865,18 +3864,18 @@ void SecurityPage::WarningTab::doLoadOther() {
       composer.readEntry( "crypto-warn-when-near-expire", true ) );
 
   mWidget->mWarnSignKeyExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-key-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
   mWidget->mWarnSignChainCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 ) );
   mWidget->mWarnSignRootCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-root-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-sign-root-near-expire-int", 14 ) );
 
   mWidget->mWarnEncrKeyExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-key-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-encr-key-near-expire-int", 14 ) );
   mWidget->mWarnEncrChainCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 ) );
   mWidget->mWarnEncrRootCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-root-near-expire-int", QVariant( 14 ) ).toInt() );
+      composer.readEntry( "crypto-warn-encr-root-near-expire-int", 14 ) );
 
   mWidget->enableAllWarningsPB->setEnabled( true );
 }
@@ -3900,23 +3899,23 @@ void SecurityPage::WarningTab::installProfile( KConfig * profile ) {
 
   if ( composer.hasKey( "crypto-warn-sign-key-near-expire-int" ) )
     mWidget->mWarnSignKeyExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-sign-key-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-sign-key-near-expire-int", 0 ) );
   if ( composer.hasKey( "crypto-warn-sign-chaincert-near-expire-int" ) )
     mWidget->mWarnSignChainCertExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 0 ) );
   if ( composer.hasKey( "crypto-warn-sign-root-near-expire-int" ) )
     mWidget->mWarnSignRootCertExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-sign-root-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-sign-root-near-expire-int", 0 ) );
 
   if ( composer.hasKey( "crypto-warn-encr-key-near-expire-int" ) )
     mWidget->mWarnEncrKeyExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-encr-key-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-encr-key-near-expire-int", 0 ) );
   if ( composer.hasKey( "crypto-warn-encr-chaincert-near-expire-int" ) )
     mWidget->mWarnEncrChainCertExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 0 ) );
   if ( composer.hasKey( "crypto-warn-encr-root-near-expire-int" ) )
     mWidget->mWarnEncrRootCertExpiresSB->setValue(
-        composer.readEntry( "crypto-warn-encr-root-near-expire-int", QVariant( 0 ) ).toInt() );
+        composer.readEntry( "crypto-warn-encr-root-near-expire-int", 0 ) );
 }
 
 void SecurityPage::WarningTab::save() {
@@ -4522,7 +4521,7 @@ void MiscPage::FolderTab::doLoadOther() {
   mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 
-  int num = general.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
+  int num = general.readEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
   mMailboxPrefCombo->setCurrentItem( num );
 

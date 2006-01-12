@@ -345,10 +345,10 @@ void KMMainWidget::readConfig(void)
     // default width of the foldertree
     static const int folderpanewidth = 250;
 
-    const int folderW = group.readEntry( "FolderPaneWidth", QVariant( folderpanewidth ) ).toInt();
-    const int headerW = group.readEntry( "HeaderPaneWidth", QVariant( width()-folderpanewidth ) ).toInt();
-    const int headerH = group.readEntry( "HeaderPaneHeight", QVariant( 180 ) ).toInt();
-    const int readerH = group.readEntry( "ReaderPaneHeight", QVariant( 280 ) ).toInt();
+    const int folderW = group.readEntry( "FolderPaneWidth", folderpanewidth );
+    const int headerW = group.readEntry( "HeaderPaneWidth", width()-folderpanewidth );
+    const int headerH = group.readEntry( "HeaderPaneHeight", 180 );
+    const int readerH = group.readEntry( "ReaderPaneHeight", 280 );
 
     mPanner1Sep.clear();
     mPanner2Sep.clear();
@@ -370,9 +370,9 @@ void KMMainWidget::readConfig(void)
       // The columns are shown by default.
 
       const int unreadColumn =
-          group.readEntry( "UnreadColumn", QVariant( 1 ) ).toInt();
+          group.readEntry( "UnreadColumn", 1 );
       const int totalColumn =
-          group.readEntry( "TotalColumn", QVariant( 2 ) ).toInt();
+          group.readEntry( "TotalColumn", 2 );
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection

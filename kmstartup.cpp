@@ -120,8 +120,7 @@ void checkConfigUpdates() {
 
   KConfig * config = KMKernel::config();
   KConfigGroup startup( config, "Startup" );
-  const int configUpdateLevel =
-      startup.readEntry( "update-level", QVariant( 0 ) ).toInt();
+  const int configUpdateLevel = startup.readEntry( "update-level", 0 );
   if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK
     return;
 
@@ -146,7 +145,7 @@ void lockOrDie() {
 
   QString lockLocation = locateLocal("data", "kmail/lock");
   KSimpleConfig config(lockLocation);
-  int oldPid = config.readEntry("pid", QVariant( -1 ) ).toInt();
+  int oldPid = config.readEntry("pid", -1 );
   const QString oldHostName = config.readEntry("hostname");
   const QString oldAppName = config.readEntry( "appName", appName );
   const QString oldProgramName = config.readEntry( "programName", programName );

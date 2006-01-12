@@ -662,7 +662,7 @@ void RecipientsPicker::readConfig()
   if ( !size.isEmpty() ) {
     resize( size );
   }
-  int currentCollection = group.readEntry( "CurrentCollection", QVariant( -1 ) ).toInt();
+  int currentCollection = group.readEntry( "CurrentCollection", -1 );
   if ( currentCollection >= 0 &&
        currentCollection < mCollectionCombo->count() ) {
     mCollectionCombo->setCurrentItem( currentCollection );

@@ -174,7 +174,7 @@ void KMTransportInfo::writeConfig(int id)
 int KMTransportInfo::findTransport(const QString &name)
 {
   KConfigGroup config( KMKernel::config(), "General" );
-  int numTransports = config.readEntry("transports", QVariant( 0 ) ).toInt();
+  int numTransports = config.readEntry("transports", 0 );
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );
@@ -188,7 +188,7 @@ QStringList KMTransportInfo::availableTransports()
 {
   QStringList result;
   KConfigGroup config( KMKernel::config(), "General" );
-  int numTransports = config.readEntry("transports", QVariant( 0 ) ).toInt();
+  int numTransports = config.readEntry("transports", 0 );
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );

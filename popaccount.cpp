@@ -202,12 +202,9 @@ void PopAccount::readConfig(KConfig& config)
 
   mUsePipelining = config.readEntry("pipelining", false );
   mLeaveOnServer = config.readEntry("leave-on-server", false );
-  mLeaveOnServerDays =
-      config.readEntry("leave-on-server-days", QVariant( -1 ) ).toInt();
-  mLeaveOnServerCount =
-      config.readEntry("leave-on-server-count", QVariant( -1 ) ).toInt();
-  mLeaveOnServerSize =
-      config.readEntry("leave-on-server-size", QVariant( -1 ) ).toInt();
+  mLeaveOnServerDays = config.readEntry("leave-on-server-days", -1 );
+  mLeaveOnServerCount = config.readEntry("leave-on-server-count", -1 );
+  mLeaveOnServerSize = config.readEntry("leave-on-server-size", -1 );
   mFilterOnServer = config.readEntry("filter-on-server", false );
   mFilterOnServerCheckSize =
       config.readEntry("filter-os-check-size", QVariant( (uint) 50000 ) ).toUInt();

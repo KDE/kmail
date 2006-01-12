@@ -701,7 +701,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // read the configuration from the global config file
   mConfig->setReadDefaults( true );
   KConfigGroup general( mConfig, "General" );
-  int registeredTools = general.readEntry( "tools", QVariant( 0 ) ).toInt();
+  int registeredTools = general.readEntry( "tools", 0 );
   for (int i = 1; i <= registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
@@ -713,7 +713,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // and merge newer config data
   mConfig->setReadDefaults( false );
   KConfigGroup user_general( mConfig, "General" );
-  int user_registeredTools = user_general.readEntry( "tools", QVariant( 0 ) ).toInt();
+  int user_registeredTools = user_general.readEntry( "tools", 0 );
   for (int i = 1; i <= user_registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
@@ -735,12 +735,12 @@ AntiSpamWizard::SpamToolConfig
     AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
 {
   QString id = configGroup.readEntry( "Ident" );
-  int version = configGroup.readEntry( "Version", QVariant( 0 ) ).toInt();
+  int version = configGroup.readEntry( "Version", 0 );
 #ifndef NDEBUG
   kdDebug(5006) << "Found predefined tool: " << id << endl;
   kdDebug(5006) << "With config version  : " << version << endl;
 #endif
-  int prio = configGroup.readEntry( "Priority", QVariant( 1 ) ).toInt();
+  int prio = configGroup.readEntry( "Priority", 1 );
   QString name = configGroup.readEntry( "VisibleName" );
   QString executable = configGroup.readEntry( "Executable" );
   QString url = configGroup.readEntry( "URL" );

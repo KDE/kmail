@@ -877,12 +877,12 @@ void FolderStorage::readConfig()
   KConfig* config = KMKernel::config();
   KConfigGroup group(config, "Folder-" + folder()->idString());
   if (mUnreadMsgs == -1)
-    mUnreadMsgs = group.readEntry("UnreadMsgs", QVariant( -1 ) ).toInt();
+    mUnreadMsgs = group.readEntry("UnreadMsgs", -1 );
   if (mTotalMsgs == -1)
-    mTotalMsgs = group.readEntry("TotalMsgs", QVariant( -1 ) ).toInt();
+    mTotalMsgs = group.readEntry("TotalMsgs", -1 );
   mCompactable = group.readEntry("Compactable", true );
 
-  int type = group.readEntry( "ContentsType", QVariant( 0 ) ).toInt();
+  int type = group.readEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
 
