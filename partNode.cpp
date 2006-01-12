@@ -179,7 +179,7 @@ const QCString & partNode::encodedBody() {
     return mEncodedBody;
 
   if ( mDwPart )
-    mEncodedBody = mDwPart->AsString().c_str();
+    mEncodedBody = mDwPart->Body().AsString().c_str();
   else
     mEncodedBody = 0;
   mEncodedOk = true;

@@ -1814,9 +1814,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     if ( partNode * p = n->parentNode() )
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) )
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" )
+        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
           toggleMarkup( true );
-
+          mEditor->setText(n->encodedBody() );
+        }
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
     mCharset=mMsg->charset();

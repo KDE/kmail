@@ -218,8 +218,6 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
   setOverwriteEnabled( true );
-
-  QTimer::singleShot( 0, this, SLOT( initializeAutoSpellChecking() ) );
 }
 
 
