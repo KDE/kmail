@@ -26,6 +26,7 @@
 #include <klistview.h>
 #include <klistviewsearchline.h>
 #include <kabc/addressee.h>
+#include <kabc/stdaddressbook.h>
 
 #include <qwidget.h>
 #include <qdialog.h>
@@ -133,6 +134,8 @@ class SearchLine : public KListViewSearchLine
     void keyPressEvent( QKeyEvent * );
 };
 
+using namespace KABC;
+
 class RecipientsPicker : public QDialog
 {
     Q_OBJECT
@@ -172,8 +175,11 @@ class RecipientsPicker : public QDialog
     void slotPicked();
     void setFocusList();
     void resetSearch();
-
+    void insertAddressBook( AddressBook * );
+    
   private:
+    KABC::StdAddressBook *mAddressBook;
+      
     QComboBox *mCollectionCombo;
     KListView *mRecipientList;
     KListViewSearchLine *mSearchLine;
