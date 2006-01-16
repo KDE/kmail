@@ -689,7 +689,7 @@ private:
   int mAtmSignColWidth;
   int mAtmCompressColWidth;
   Q3PtrList<Q3ListViewItem> mAtmItemList;
-  Q3PtrList<KMMessagePart> mAtmList;
+  QList<KMMessagePart*> mAtmList;
   QMenu *mAttachMenu;
   QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId;
   bool mAutoDeleteMsg;

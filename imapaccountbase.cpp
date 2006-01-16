@@ -105,7 +105,6 @@ namespace KMail {
       mListDirProgressItem( 0 )
   {
     mPort = imapDefaultPort;
-    mBodyPartList.setAutoDelete(true);
     KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
                             this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
@@ -115,6 +114,8 @@ namespace KMail {
   }
 
   ImapAccountBase::~ImapAccountBase() {
+    if ( !mBodyPartList.empty() )
+      delete mBodyPartList.takeFirst();
     kdWarning( mSlave, 5006 )
       << "slave should have been destroyed by subclass!" << endl;
   }
@@ -1023,16 +1024,13 @@ namespace KMail {
     // see what parts have to loaded according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
     visitor->visit( mBodyPartList );
-    Q3PtrList<KMMessagePart> parts = visitor->partsToLoad();
+    QList<KMMessagePart*> parts = visitor->partsToLoad();
     delete visitor;
-    Q3PtrListIterator<KMMessagePart> it( parts );
-    KMMessagePart *part;
+    QList<KMMessagePart*>::const_iterator it;
     int partsToLoad = 0;
     // check how many parts we have to load
-    while ( (part = it.current()) != 0 )
-    {
-      ++it;
-      if ( part->loadPart() )
+    for ( it = parts.begin(); it != parts.end(); ++it ) {
+      if ( (*it) && (*it)->loadPart() )
       {
         ++partsToLoad;
       }
@@ -1047,10 +1045,8 @@ namespace KMail {
       job->start();
       return;
     }
-    it.toFirst();
-    while ( (part = it.current()) != 0 )
-    {
-      ++it;
+    for ( it = parts.begin(); it != parts.end(); ++it ) {
+      KMMessagePart *part = (*it);
       kdDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier()
         << " (" << part->originalContentTypeStr() << ")" << endl;
       if ( part->loadHeaders() )

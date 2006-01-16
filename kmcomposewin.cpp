@@ -283,7 +283,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = false;
   mGrid = 0;
   mAtmListView = 0;
-  mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
   mAtmModified = FALSE;
   mAutoDeleteMsg = FALSE;
@@ -434,6 +433,9 @@ KMComposeWin::~KMComposeWin()
     it = mMapAtmLoadData.begin();
   }
   deleteAll( mComposedMessages );
+
+  if ( !mAtmList.empty() )
+    delete mAtmList.takeFirst();
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )
@@ -2182,7 +2184,7 @@ void KMComposeWin::addAttach(const KURL aUrl)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 {
-  mAtmList.append(msgPart);
+  mAtmList.append( (KMMessagePart*) msgPart );
 
   // show the attachment listbox if it does not up to now
   if (mAtmList.count()==1)
@@ -2266,11 +2268,11 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
 void KMComposeWin::removeAttach(const QString &aUrl)
 {
   int idx;
-  KMMessagePart* msgPart;
-  for(idx=0,msgPart=mAtmList.first(); msgPart;
-      msgPart=mAtmList.next(),idx++) {
-    if (msgPart->name() == aUrl) {
-      removeAttach(idx);
+  QList<KMMessagePart*>::const_iterator it;
+  for( idx = 0, it = mAtmList.begin();
+      (*it) && it != mAtmList.end(); ++it, idx++) {
+    if ( (*it)->name() == aUrl ) {
+      removeAttach( idx );
       return;
     }
   }
@@ -2281,10 +2283,10 @@ void KMComposeWin::removeAttach(const QString &aUrl)
 void KMComposeWin::removeAttach(int idx)
 {
   mAtmModified = TRUE;
-  mAtmList.remove(idx);
+  delete mAtmList.takeAt(idx);
   delete mAtmItemList.take(idx);
 
-  if( mAtmList.isEmpty() )
+  if( mAtmList.empty() )
   {
     mAtmListView->hide();
     mAtmListView->setMinimumSize(0, 0);

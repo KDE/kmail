@@ -504,7 +504,7 @@ namespace KMail {
     // folders that should be checked after the current check is done
     QList<QPointer<KMFolder> > mFoldersQueuedForChecking;
     // holds messageparts from the bodystructure
-    Q3PtrList<KMMessagePart> mBodyPartList;
+    QList<KMMessagePart*> mBodyPartList;
     // the current message for the bodystructure
     KMMessage* mCurrentMsg;
 

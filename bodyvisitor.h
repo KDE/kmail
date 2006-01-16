@@ -31,8 +31,8 @@
 #ifndef bodyiterator_h
 #define bodyiterator_h
 
-#include <q3ptrlist.h>
-#include <qstringlist.h>
+#include <QList>
+#include <QStringList>
 
 class KMMessagePart;
 
@@ -49,10 +49,10 @@ namespace KMail {
 
       /** Register the parts that should be visited */
       void visit( KMMessagePart * part );
-      void visit( Q3PtrList<KMMessagePart> & list );
+      void visit( QList<KMMessagePart*> & list );
 
       /** Returns a list of parts that should be loaded */
-      Q3PtrList<KMMessagePart> partsToLoad();
+      QList<KMMessagePart*> partsToLoad();
 
       /** Decides whether a part should be loaded.
           This needs to be implemented by a subclass */
@@ -66,7 +66,7 @@ namespace KMail {
       static bool parentNeedsLoading( KMMessagePart * part );
       
     protected:
-      Q3PtrList<KMMessagePart> mParts;
+      QList<KMMessagePart*> mParts;
       QStringList mBasicList;
   };
 

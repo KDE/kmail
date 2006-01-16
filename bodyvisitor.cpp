@@ -61,21 +61,19 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void BodyVisitor::visit( Q3PtrList<KMMessagePart> & list )
+  void BodyVisitor::visit( QList<KMMessagePart*> & list )
   {
     mParts = list;
   }
 
   //-----------------------------------------------------------------------------
-  Q3PtrList<KMMessagePart> BodyVisitor::partsToLoad()
+  QList<KMMessagePart*> BodyVisitor::partsToLoad()
   {
-    Q3PtrListIterator<KMMessagePart> it( mParts );
-    Q3PtrList<KMMessagePart> selected;
-    KMMessagePart *part = 0;
+    QList<KMMessagePart*>::const_iterator it;
+    QList<KMMessagePart*> selected;
     bool headerCheck = false;
-    while ( (part = it.current()) != 0 )
-    {
-      ++it;
+    for ( it = mParts.begin(); it != mParts.end(); ++it ) {
+      KMMessagePart *part = (*it);
       // skip this part if the parent part is already loading
       if ( part->parent() && 
            selected.contains( part->parent() ) &&
