@@ -42,9 +42,9 @@
 #include <QList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-using KMail::AccountDialog;
 #include "colorlistbox.h"
 #include "kmacctseldlg.h"
+using KMail::AccountDialog;
 #include "messagesender.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
@@ -581,6 +581,12 @@ AccountsPage::AccountsPage( KInstance *instance, QWidget *parent, const QStringL
   load();
 }
 
+AccountsPageSendingTab::~AccountsPageSendingTab()
+{
+  while ( !mTransportInfoList.empty() )
+    delete mTransportInfoList.takeFirst();
+}
+
 QString AccountsPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-accounts-sending");
 }
@@ -588,7 +594,6 @@ QString AccountsPage::SendingTab::helpAnchor() const {
 AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  mTransportInfoList.setAutoDelete( true );
   // temp. vars:
   QVBoxLayout *vlay;
   QVBoxLayout *btn_vlay;
@@ -809,8 +814,8 @@ void AccountsPage::SendingTab::slotAddTransport()
   // create list of names:
   // ### move behind dialog.exec()?
   QStringList transportNames;
-  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
-  for ( it.toFirst() ; it.current() ; ++it )
+  QList<KMTransportInfo*>::const_iterator it;
+  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
     transportNames << (*it)->name;
 
   if( dialog.exec() != QDialog::Accepted ) {
@@ -852,10 +857,10 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   Q3ListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
-  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
-  for ( it.toFirst() ; it.current() ; ++it )
+  QList<KMTransportInfo*>::const_iterator it;
+  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
     if ( (*it)->name == item->text(0) ) break;
-  if ( !it.current() ) return;
+  if ( !(*it) ) return;
 
   KMTransportDialog dialog( i18n("Modify Transport"), (*it), this );
 
@@ -864,9 +869,9 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   // create the list of names of transports, but leave out the current
   // item:
   QStringList transportNames;
-  Q3PtrListIterator<KMTransportInfo> jt( mTransportInfoList );
+  QList<KMTransportInfo*>::const_iterator jt;
   int entryLocation = -1;
-  for ( jt.toFirst() ; jt.current() ; ++jt )
+  for ( jt= mTransportInfoList.begin(); jt != mTransportInfoList.end(); ++jt )
     if ( jt != it )
       transportNames << (*jt)->name;
     else
@@ -911,10 +916,10 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
     KMessageBox::informationList( this, information, changedIdents );
   }
 
-  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
-  for ( it.toFirst() ; it.current() ; ++it )
+  QList<KMTransportInfo*>::iterator it;
+  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
     if ( (*it)->name == item->text(0) ) break;
-  if ( !it.current() ) return;
+  if ( !(*it) ) return;
 
   KMTransportInfo ti;
 
@@ -938,10 +943,10 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   }
 
   delete item;
-  mTransportInfoList.remove( it );
+  mTransportInfoList.erase( it );
 
   QStringList transportNames;
-  for ( it.toFirst() ; it.current() ; ++it )
+  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
     transportNames << (*it)->name;
   emit transportListChanged( transportNames );
   emit changed( true );
@@ -1019,8 +1024,9 @@ void AccountsPage::SendingTab::save() {
 
   // Save transports:
   general.writeEntry( "transports", mTransportInfoList.count() );
-  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
-  for ( int i = 1 ; it.current() ; ++it, ++i )
+  QList<KMTransportInfo*>::const_iterator it;
+  it = mTransportInfoList.begin();
+  for ( int i = 1 ; it != mTransportInfoList.end() ; ++it, ++i )
     (*it)->writeConfig(i);
 
   // Save common options:

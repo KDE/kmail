@@ -121,6 +121,12 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
   setupServerInformationPage();
 }
 
+AccountWizard::~AccountWizard()
+{
+  while ( !mTransportInfoList.empty() )
+    delete mTransportInfoList.takeFirst();
+}
+
 void AccountWizard::start( KMKernel *kernel, QWidget *parent )
 {
   KConfigGroup wizardConfig( KMKernel::config(), "AccountWizard" );
@@ -412,8 +418,8 @@ void AccountWizard::transportCreated()
   for ( uint i = 0 ; i < mTransportInfoList.count() ; i++ )
     mTransportInfo->writeConfig( i + 1 );
 
-  mTransportInfoList.setAutoDelete( true );
-  mTransportInfoList.clear();
+  while ( !mTransportInfoList.empty() )
+    delete mTransportInfoList.takeFirst();
 
   QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }

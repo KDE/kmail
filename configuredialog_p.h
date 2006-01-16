@@ -8,15 +8,16 @@
 #include <klineedit.h>
 #include <qcombobox.h>
 #include <qpointer.h>
-#include <q3ptrlist.h>
 #include <qstring.h>
 
 #include <qstringlist.h>
 //Added by qt3to4:
 #include <QLabel>
+#include <QList>
 #include <QShowEvent>
 #include <QResizeEvent>
 #include <QStackedWidget>
+
 #include <dcopobject.h>
 
 #include <kdialogbase.h>
@@ -306,6 +307,7 @@ class AccountsPageSendingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AccountsPageSendingTab( QWidget * parent=0 );
+  virtual ~AccountsPageSendingTab();
   QString helpAnchor() const;
   void save();
 
@@ -335,7 +337,7 @@ private:
   QComboBox   *mMessagePropertyCombo;
   QLineEdit   *mDefaultDomainEdit;
 
-  Q3PtrList< KMTransportInfo > mTransportInfoList;
+  QList< KMTransportInfo* > mTransportInfoList;
 };
 
 
