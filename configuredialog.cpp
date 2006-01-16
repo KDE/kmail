@@ -583,8 +583,7 @@ AccountsPage::AccountsPage( KInstance *instance, QWidget *parent, const QStringL
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
 {
-  while ( !mTransportInfoList.empty() )
-    delete mTransportInfoList.takeFirst();
+  qDeleteAll( mTransportInfoList );
 }
 
 QString AccountsPage::SendingTab::helpAnchor() const {

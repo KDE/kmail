@@ -114,8 +114,7 @@ namespace KMail {
   }
 
   ImapAccountBase::~ImapAccountBase() {
-    if ( !mBodyPartList.empty() )
-      delete mBodyPartList.takeFirst();
+    qDeleteAll (mBodyPartList );
     kdWarning( mSlave, 5006 )
       << "slave should have been destroyed by subclass!" << endl;
   }

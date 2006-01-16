@@ -699,8 +699,7 @@ KMSearchPattern::KMSearchPattern( const KConfigGroup & config )
 
 KMSearchPattern::~KMSearchPattern()
 {
-  while (!isEmpty())
-    delete takeFirst();
+  qDeleteAll( *this );
 }
 
 bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const

@@ -434,8 +434,7 @@ KMComposeWin::~KMComposeWin()
   }
   deleteAll( mComposedMessages );
 
-  if ( !mAtmList.empty() )
-    delete mAtmList.takeFirst();
+  qDeleteAll( mAtmList );
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )

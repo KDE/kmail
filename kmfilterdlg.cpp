@@ -639,8 +639,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
 
 KMFilterListBox::~KMFilterListBox()
 {
-  while (!mFilterList.isEmpty())
-    delete mFilterList.takeFirst();
+  qDeleteAll( mFilterList );
 }
 
 
@@ -1078,8 +1077,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
 KMFilterActionWidget::~KMFilterActionWidget()
 {
-  while (!mActionList.isEmpty())
-    delete mActionList.takeFirst();
+  qDeleteAll( mActionList );
 }
 
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )

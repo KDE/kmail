@@ -523,14 +523,12 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   if ( !shProc.start( KProcess::Block,
                       withOutput ? KProcess::Stdout
                                  : KProcess::NoCommunication ) ) {
-    while (!atmList.isEmpty())
-      delete atmList.takeFirst();
+    qDeleteAll( atmList );
     return ErrorButGoOn;
   }
 
   if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
-    while (!atmList.isEmpty())
-      delete atmList.takeFirst();
+    qDeleteAll( atmList );
     return ErrorButGoOn;
   }
 
@@ -549,13 +547,11 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
       aMsg->setHeaderField("X-UID",uid);
     }
     else {
-      while (!atmList.isEmpty())
-        delete atmList.takeFirst();
+      qDeleteAll( atmList );
       return ErrorButGoOn;
     }
   }
-  while (!atmList.isEmpty())
-    delete atmList.takeFirst();
+  qDeleteAll( atmList );
   return GoOn;
 }
 
@@ -1711,8 +1707,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
-  while (!atmList.isEmpty())
-    delete atmList.takeFirst();
+  qDeleteAll( atmList );
   if ( commandLine.isEmpty() )
     handler->actionMessage( ErrorButGoOn );
 
@@ -1884,8 +1879,7 @@ const QString KMFilterActionWithUrl::displayString() const
 //=============================================================================
 KMFilterActionDict::~KMFilterActionDict()
 {
-  while (!mList.isEmpty())
-    delete mList.takeFirst();
+  qDeleteAll( mList );
 }
 
 void KMFilterActionDict::init(void)

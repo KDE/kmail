@@ -3271,15 +3271,13 @@ void KMMainWidget::clearFilterActions()
   if ( !mFilterTBarActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
-    while ( !mFilterTBarActions.isEmpty() )
-      delete mFilterTBarActions.takeFirst();
+    qDeleteAll( mFilterTBarActions );
   }
   mApplyFilterActionsMenu->popupMenu()->clear();
   if ( !mFilterMenuActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
-    while ( !mFilterMenuActions.isEmpty() )
-      delete mFilterMenuActions.takeFirst();
+    qDeleteAll( mFilterMenuActions );
   }
   mFilterCommands.clear();
 }

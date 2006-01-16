@@ -111,8 +111,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
 KMFilter::~KMFilter()
 {
   if ( !bPopFilter ) {
-    while (!mActions.isEmpty())
-      delete mActions.takeFirst();
+    qDeleteAll( mActions );
   }
 }
 

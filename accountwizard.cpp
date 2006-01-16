@@ -123,8 +123,7 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
 
 AccountWizard::~AccountWizard()
 {
-  while ( !mTransportInfoList.empty() )
-    delete mTransportInfoList.takeFirst();
+    qDeleteAll( mTransportInfoList );
 }
 
 void AccountWizard::start( KMKernel *kernel, QWidget *parent )
@@ -418,8 +417,7 @@ void AccountWizard::transportCreated()
   for ( uint i = 0 ; i < mTransportInfoList.count() ; i++ )
     mTransportInfo->writeConfig( i + 1 );
 
-  while ( !mTransportInfoList.empty() )
-    delete mTransportInfoList.takeFirst();
+  qDeleteAll( mTransportInfoList );
 
   QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }
