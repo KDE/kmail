@@ -418,6 +418,7 @@ void AccountWizard::transportCreated()
     mTransportInfo->writeConfig( i + 1 );
 
   qDeleteAll( mTransportInfoList );
+  mTransportInfoList.clear();
 
   QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }

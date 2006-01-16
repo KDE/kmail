@@ -3272,12 +3272,14 @@ void KMMainWidget::clearFilterActions()
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
     qDeleteAll( mFilterTBarActions );
+    mFilterTBarActions.clear();
   }
   mApplyFilterActionsMenu->popupMenu()->clear();
   if ( !mFilterMenuActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
     qDeleteAll( mFilterMenuActions );
+    mFilterMenuActions.clear();
   }
   mFilterCommands.clear();
 }

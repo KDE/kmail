@@ -435,6 +435,7 @@ KMComposeWin::~KMComposeWin()
   deleteAll( mComposedMessages );
 
   qDeleteAll( mAtmList );
+  mAtmList.clear();
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )

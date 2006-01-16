@@ -524,11 +524,13 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
                       withOutput ? KProcess::Stdout
                                  : KProcess::NoCommunication ) ) {
     qDeleteAll( atmList );
+    atmList.clear();
     return ErrorButGoOn;
   }
 
   if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
     qDeleteAll( atmList );
+    atmList.clear();
     return ErrorButGoOn;
   }
 
@@ -548,10 +550,12 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
     }
     else {
       qDeleteAll( atmList );
+      atmList.clear();
       return ErrorButGoOn;
     }
   }
   qDeleteAll( atmList );
+  atmList.clear();
   return GoOn;
 }
 
@@ -1708,6 +1712,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
   qDeleteAll( atmList );
+  atmList.clear();
   if ( commandLine.isEmpty() )
     handler->actionMessage( ErrorButGoOn );
 

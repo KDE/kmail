@@ -57,6 +57,7 @@ void KMFilterMgr::clear()
 {
   mDirtyBufferedFolderTarget = true;
   qDeleteAll( mFilters );
+  mFilters.clear();
 }
 
 //-----------------------------------------------------------------------------
