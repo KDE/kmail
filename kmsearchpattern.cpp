@@ -792,17 +792,17 @@ bool KMSearchPattern::requiresBody() const {
 }
 
 void KMSearchPattern::purify() {
-  KMSearchRule* rule;
-  QMutableListIterator<KMSearchRule*> it( *this );
-  it.toBack();
-  while ( it.hasPrevious() )
-    rule = it.previous();
-    if ( rule->isEmpty() ) {
+  QList<KMSearchRule*>::iterator it = end();
+  while ( it != begin() ) {
+    --it;
+    if ( (*it)->isEmpty() ) {
 #ifndef NDEBUG
-      kdDebug(5006) << "KMSearchPattern::purify(): removing " << rule->asString() << endl;
+      kdDebug(5006) << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
 #endif
-      it.remove();
+      erase( it );
+      it = end();
     }
+  }
 }
 
 void KMSearchPattern::readConfig( const KConfigGroup & config ) {
