@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/usr/env bash
 
 function delete_this_key() {
     echo "# DELETE [$GROUP]$KEY"
