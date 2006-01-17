@@ -1,4 +1,4 @@
-#! /bin/usr/env bash
+#! /usr/bin/env bash
 
 while read; do
     KEY="${REPLY%%=*}"
