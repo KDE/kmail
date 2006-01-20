@@ -2197,9 +2197,11 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
   const QString &currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
+  kdDebug(5006) << "Loading current encoding: " << currentEncoding << endl;
   int i = 0;
   for( ; it != end; ++it)
   {
+    kdDebug(5006) << "Checking out: " << (*it) << " with encoding: " << KGlobal::charsets()->encodingForName(*it) << endl;
     if( KGlobal::charsets()->encodingForName(*it) == currentEncoding )
     {
       mCharsetCombo->setCurrentItem( i );
