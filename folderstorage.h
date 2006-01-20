@@ -43,10 +43,11 @@
 #include "kmmsginfo.h"
 #include "kmglobal.h"
 #include "folderjob.h"
+using KMail::FolderJob;
+
 #include <QList>
 //Added by qt3to4:
 #include <Q3CString>
-using KMail::FolderJob;
 
 #include "mimelib/string.h"
 
@@ -606,7 +607,7 @@ friend class KMMsgDict;
   /** Points at the reverse dictionary for this folder. */
   mutable KMMsgDictREntry *mRDict;
   /** List of jobs created by this folder. */
-  mutable Q3PtrList<FolderJob> mJobList;
+  mutable QList<FolderJob*> mJobList;
 
   QTimer *mDirtyTimer;
   enum { mDirtyTimerInterval = 600000 }; // 10 minutes

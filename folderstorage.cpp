@@ -92,8 +92,8 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
 //-----------------------------------------------------------------------------
 FolderStorage::~FolderStorage()
 {
-  mJobList.setAutoDelete( true );
   QObject::disconnect( SIGNAL(destroyed(QObject*)), this, 0 );
+  qDeleteAll( mJobList );
   mJobList.clear();
   KMMsgDict::deleteRentry(mRDict);
 }
@@ -1019,16 +1019,16 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
   if ( !msg || msg->transferInProgress() )
     return;
 
-  Q3PtrListIterator<FolderJob> it( mJobList );
-  while ( it.current() )
+  QList<FolderJob*>::iterator it;
+  for ( it = mJobList.begin(); it != mJobList.end(); ++it )
   {
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
-    if ( it.current()->msgList().first() == msg )
+    if ( (*it)->msgList().first() == msg )
     {
-      FolderJob* job = it.current();
-      mJobList.remove( job );
+      FolderJob* job = (*it);
+      it = mJobList.erase( it );
       delete job;
     } else
       ++it;
@@ -1038,9 +1038,8 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
 //-----------------------------------------------------------------------------
 void FolderStorage::removeJobs()
 {
-  mJobList.setAutoDelete( true );
+  qDeleteAll( mJobList );
   mJobList.clear();
-  mJobList.setAutoDelete( false );
 }
 
 

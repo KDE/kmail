@@ -4,9 +4,6 @@
 #include "kmaccount.h"
 
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
 using KMail::AccountManager;
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
@@ -29,7 +26,10 @@ using KMail::FolderJob;
 #include <kdebug.h>
 #include <kconfig.h>
 
-#include <qeventloop.h>
+#include <QList>
+#include <QEventLoop>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -294,19 +294,19 @@ void KMAccount::setCheckInterval(int aInterval)
 //----------------------------------------------------------------------------
 void KMAccount::deleteFolderJobs()
 {
-  mJobList.setAutoDelete(true);
+  qDeleteAll( mJobList );
   mJobList.clear();
-  mJobList.setAutoDelete(false);
 }
 
 //----------------------------------------------------------------------------
 void KMAccount::ignoreJobsForMessage( KMMessage* msg )
 {
   //FIXME: remove, make folders handle those
-  for( Q3PtrListIterator<FolderJob> it(mJobList); it.current(); ++it ) {
-    if ( it.current()->msgList().first() == msg) {
-      FolderJob *job = it.current();
-      mJobList.remove( job );
+  QList<FolderJob*>::iterator it;
+  for( it = mJobList.begin(); it != mJobList.end(); ++it ) {
+    if ( (*it)->msgList().first() == msg) {
+      FolderJob *job = (*it);
+      it = mJobList.erase( it );
       delete job;
       break;
     }

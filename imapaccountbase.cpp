@@ -26,12 +26,8 @@
 #endif
 
 #include "imapaccountbase.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
-using KMail::SieveConfig;
 
+using KMail::SieveConfig;
 #include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmfolder.h"
@@ -70,9 +66,13 @@ using KIO::PasswordDialog;
 #include <mimelib/message.h>
 //using KIO::Scheduler; // use FQN below
 
-#include <qregexp.h>
-#include <q3stylesheet.h>
+#include <QList>
+#include <QRegExp>
 #include <QTextDocument>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
+#include <q3stylesheet.h>
 
 namespace KMail {
 
@@ -206,7 +206,7 @@ namespace KMail {
     // read namespace - delimiter
     namespaceDelim entries = config.entryMap( config.group() );
     namespaceDelim namespaceToDelimiter;
-    for ( namespaceDelim::ConstIterator it = entries.begin(); 
+    for ( namespaceDelim::ConstIterator it = entries.begin();
           it != entries.end(); ++it )
     {
       if ( it.key().startsWith( "Namespace:" ) )
@@ -240,7 +240,7 @@ namespace KMail {
       }
     }
     QString key;
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it )
     {
       key = "Namespace:" + it.key();
@@ -264,7 +264,7 @@ namespace KMail {
     return m;
   }
 
-  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() 
+  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
   {
     if ( mSlave && mSlaveConnected ) {
       return Connected;
@@ -366,7 +366,7 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if ( makeConnection() != Connected ) 
+    if ( makeConnection() != Connected )
       return;// ## doesn't handle Connecting
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
@@ -591,13 +591,13 @@ namespace KMail {
       }
       return;
     }
-    
+
     QByteArray packedArgs;
     QDataStream stream( &packedArgs, QIODevice::WriteOnly);
     stream << (int) 'n';
     jobData jd;
     jd.total = 1; jd.done = 0; jd.cancellable = true;
-    jd.progressItem = ProgressManager::createProgressItem( 
+    jd.progressItem = ProgressManager::createProgressItem(
         ProgressManager::getUniqueID(),
         i18n("Retrieving Namespaces"),
         QString(), true, useSSL() || useTLS() );
@@ -640,7 +640,7 @@ namespace KMail {
     kdDebug(5006) << "namespaces fetched" << endl;
     emit namespacesFetched( map );
   }
-    
+
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map )
   {
@@ -727,7 +727,7 @@ namespace KMail {
         }
         KMessageBox::information( kmkernel->getKMMainWidget(), msg );
       }
-    } else 
+    } else
     {
       kdDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
@@ -762,7 +762,7 @@ namespace KMail {
       }
     }
     return QString();
-  }  
+  }
 
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
@@ -775,13 +775,13 @@ namespace KMail {
 
     // then try if the prefix is part of a namespace
     // exclude empty namespace
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it )
     {
       // the namespace definition sometimes contains the delimiter
       // make sure we also match this version
       QString stripped = it.key().left( it.key().length() - 1 );
-      if ( !it.key().isEmpty() && 
+      if ( !it.key().isEmpty() &&
           ( prefix.contains( it.key() ) || prefix.contains( stripped ) ) ) {
         return it.data();
       }
@@ -884,7 +884,7 @@ namespace KMail {
       mErrorDialogIsActive = true;
       QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
       QString caption = i18n("Error");
-      
+
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
           msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.").
@@ -942,14 +942,15 @@ namespace KMail {
         ++it;
     }
 
-    for( Q3PtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
-      if ( it.current()->isCancellable() ) {
-        FolderJob* job = it.current();
+    QList<FolderJob*>::iterator jt;
+    for( jt = mJobList.begin(); jt != mJobList.end(); ++jt ) {
+      if ( (*jt)->isCancellable() ) {
+        FolderJob* job = (*jt);
         job->setPassiveDestructor( true );
-        mJobList.remove( job );
+        jt = mJobList.erase( jt );
         delete job;
       } else
-        ++it;
+        ++jt;
     }
   }
 
@@ -1134,7 +1135,7 @@ namespace KMail {
 
      stream << (int) 'S' << url << flags;
 
-     if ( makeConnection() != Connected ) 
+     if ( makeConnection() != Connected )
        return; // can't happen with dimap
 
      KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
@@ -1273,7 +1274,7 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( const QString& parent, 
+  QString ImapAccountBase::createImapPath( const QString& parent,
                                            const QString& folderName )
   {
     QString newName = parent;
@@ -1300,7 +1301,7 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( FolderStorage* parent, 
+  QString ImapAccountBase::createImapPath( FolderStorage* parent,
                                            const QString& folderName )
   {
     QString path;
@@ -1312,7 +1313,7 @@ namespace KMail {
       // error
       return path;
     }
-    
+
     return createImapPath( path, folderName );
   }
 

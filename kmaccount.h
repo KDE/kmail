@@ -20,18 +20,17 @@
 #ifndef kmaccount_h
 #define kmaccount_h
 
+#include "kmmessage.h"
+#include "kmacctfolder.h"
+
 #include <kprocess.h>
 #include <kaccount.h>
 
-#include <qstring.h>
-#include <qpointer.h>
+#include <QList>
+#include <QMap>
+#include <QPointer>
+#include <QString>
 
-#include <qmap.h>
-//Added by qt3to4:
-#include <Q3PtrList>
-
-#include "kmmessage.h"
-#include "kmacctfolder.h"
 class QTimer;
 
 class KMFolder;
@@ -40,6 +39,7 @@ class KConfig;
 class KMFolderJob;
 class KMFolderCachedImap;
 class AccountsPageReceivingTab;
+
 namespace  KMail {
   class FolderJob;
   class AccountManager;
@@ -219,7 +219,7 @@ public:
    * @return whether mail checks can proceed
    */
   virtual bool mailCheckCanProceed() const { return true; }
-  
+
   /**
    * Set/Get if this account is currently checking mail
    */
@@ -310,7 +310,7 @@ protected:
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
   QList<KMMessage*> mReceipts;
-  Q3PtrList<FolderJob>  mJobList;
+  QList<FolderJob*>  mJobList;
   bool mHasInbox : 1;
   ProgressItem *mMailCheckProgressItem;
 
