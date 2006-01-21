@@ -2269,13 +2269,13 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   currentEncoding = currentEncoding.replace( "iso ", "iso-", false );
   ///kdDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
   int i = 0;
-  int indexOfLatin1 = 0;
+  int indexOfLatin9 = 0;
   bool found = false;
   for( ; it != end; ++it)
   {
     const QString encoding = KGlobal::charsets()->encodingForName(*it);
     if ( encoding == "iso-8859-15" )
-        indexOfLatin1 = i;
+        indexOfLatin9 = i;
     if( false && encoding == currentEncoding )
     {
       mCharsetCombo->setCurrentItem( i );
@@ -2284,8 +2284,8 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
     }
     i++;
   }
-  if ( !found ) // nothing matched, use latin1
-    mCharsetCombo->setCurrentItem( indexOfLatin1 );
+  if ( !found ) // nothing matched, use latin9
+    mCharsetCombo->setCurrentItem( indexOfLatin9 );
 }
 
 void AppearancePage::ReaderTab::readCurrentOverrideCodec()
