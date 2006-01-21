@@ -2265,17 +2265,27 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
-  const QString &currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
+  QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
+  currentEncoding = currentEncoding.replace( "iso ", "iso-", false );
+  ///kdDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
   int i = 0;
+  int indexOfLatin1 = 0;
+  bool found = false;
   for( ; it != end; ++it)
   {
-    if( KGlobal::charsets()->encodingForName(*it) == currentEncoding )
+    const QString encoding = KGlobal::charsets()->encodingForName(*it);
+    if ( encoding == "iso-8859-15" )
+        indexOfLatin1 = i;
+    if( false && encoding == currentEncoding )
     {
       mCharsetCombo->setCurrentItem( i );
+      found = true;
       break;
     }
     i++;
   }
+  if ( !found ) // nothing matched, use latin1
+    mCharsetCombo->setCurrentItem( indexOfLatin1 );
 }
 
 void AppearancePage::ReaderTab::readCurrentOverrideCodec()
