@@ -22,11 +22,8 @@
 #ifndef UNDOSTACK_H
 #define UNDOSTACK_H
 
-#include <q3ptrlist.h>
-#include <qstring.h>
-#include <qobject.h>
-//Added by qt3to4:
 #include <QList>
+#include <QObject>
 
 class KMFolder;
 class KMMsgBase;
@@ -37,10 +34,10 @@ namespace KMail {
 class UndoInfo
 {
 public:
-  int               id;
+  int          id;
   QList<ulong> serNums;
-  KMFolder         *srcFolder;
-  KMFolder         *destFolder;
+  KMFolder     *srcFolder;
+  KMFolder     *destFolder;
 };
 
 class UndoStack : public QObject
@@ -49,6 +46,7 @@ class UndoStack : public QObject
 
 public:
   UndoStack(int size);
+  ~UndoStack();
 
   void clear();
   int  size() const { return mStack.count(); }
@@ -60,7 +58,7 @@ public:
   void msgDestroyed( KMMsgBase *msg);
   void folderDestroyed( KMFolder *folder);
 protected:
-  Q3PtrList<UndoInfo> mStack;
+  QList<UndoInfo*> mStack;
   int mSize;
   int mLastId;
   UndoInfo *mCachedInfo;

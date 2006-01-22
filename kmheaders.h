@@ -79,7 +79,7 @@ public:
   virtual void setCurrentMsg(int msgId);
 
   /** Get a list of all items in the current thread */
-  Q3PtrList<Q3ListViewItem> currentThread() const;
+  QList<Q3ListViewItem*> currentThread() const;
 
   /** Set all messages in the current thread to status @p status
       or toggle it, if specified. */
@@ -380,9 +380,9 @@ private:
   /** */
   Q3Dict< SortCacheItem > mSortCacheItems;
   /** */
-  Q3Dict< Q3PtrList< SortCacheItem > > mSubjectLists;
+  Q3Dict< QList< SortCacheItem* > > mSubjectLists;
   /** */
-  Q3PtrList<HeaderItem> mImperfectlyThreadedList;
+  QList<HeaderItem*> mImperfectlyThreadedList;
 
   /** Debugging helpers for outputting the threading data structures. */
   void printSubjectThreadingTree( );

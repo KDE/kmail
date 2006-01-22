@@ -41,12 +41,17 @@ UndoStack::UndoStack(int size)
   : QObject(0, "undostack"), mSize(size), mLastId(0),
     mCachedInfo(0)
 {
-   mStack.setAutoDelete(true);
+}
+
+UndoStack::~UndoStack()
+{
+  qDeleteAll( mStack );
 }
 
 void UndoStack::clear()
 {
-   mStack.clear();
+  qDeleteAll( mStack );
+  mStack.clear();
 }
 
 int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
@@ -55,8 +60,10 @@ int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
   info->id         = ++mLastId;
   info->srcFolder  = srcFolder;
   info->destFolder = destFolder;
-  if ((int) mStack.count() == mSize)
+  if ((int) mStack.count() == mSize) {
+    delete mStack.last();
     mStack.removeLast();
+  }
   mStack.prepend( info );
   emit undoStackChanged();
   return info->id;
@@ -65,10 +72,10 @@ int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
 void UndoStack::addMsgToAction( int undoId, ulong serNum )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
-    Q3PtrListIterator<UndoInfo> itr( mStack );
-    while ( itr.current() ) {
-      if ( itr.current()->id == undoId ) {
-        mCachedInfo = itr.current();
+    QList<UndoInfo*>::const_iterator itr = mStack.begin();
+    while ( itr != mStack.end() ) {
+      if ( (*itr)->id == undoId ) {
+        mCachedInfo = (*itr);
         break;
       }
       ++itr;
@@ -87,7 +94,7 @@ void UndoStack::undo()
   KMFolder *curFolder;
   if ( mStack.count() > 0 )
   {
-    UndoInfo *info = mStack.take(0);
+    UndoInfo *info = mStack.takeFirst();
     emit undoStackChanged();
     QList<ulong>::iterator itr;
     info->destFolder->open();
@@ -141,18 +148,19 @@ UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 void
 UndoStack::folderDestroyed( KMFolder *folder)
 {
-   for( UndoInfo *info = mStack.first(); info; )
-   {
-      if ( (info->srcFolder == folder) ||
-	   (info->destFolder == folder) )
-      {
-         mStack.removeRef( info );
-         info = mStack.current();
-      }
-      else
-         info = mStack.next();
-   }
-   emit undoStackChanged();
+  QList<UndoInfo*>::iterator it = mStack.begin();
+  while ( it != mStack.end() ) {
+    UndoInfo *info = *it;
+    if ( info &&
+          ( (info->srcFolder == folder) ||
+            (info->destFolder == folder) ) ) {
+      delete info;
+      it = mStack.erase( it );
+    }
+    else
+      it++;
+  }
+  emit undoStackChanged();
 }
 
 }

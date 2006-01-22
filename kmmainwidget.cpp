@@ -17,13 +17,12 @@
 #include <qlayout.h>
 
 
-#include <q3popupmenu.h>
-//Added by qt3to4:
-#include <Q3CString>
-#include <Q3PtrList>
 #include <QLabel>
 #include <QList>
 #include <QVBoxLayout>
+//Added by qt3to4:
+#include <q3popupmenu.h>
+#include <Q3CString>
 
 #include <kopenwith.h>
 
@@ -158,7 +157,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
-  mFilterCommands.setAutoDelete(true);
   mFolderShortcutCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
@@ -227,6 +225,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 KMMainWidget::~KMMainWidget()
 {
   s_mainWidgetList->remove( this );
+  qDeleteAll( mFilterCommands );
   destruct();
 }
 
@@ -2916,7 +2915,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 void KMMainWidget::updateMessageActions()
 {
     int count = 0;
-    Q3PtrList<Q3ListViewItem> selectedItems;
+    QList<Q3ListViewItem*> selectedItems;
 
     if ( mFolder ) {
       for (Q3ListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
@@ -2936,8 +2935,8 @@ void KMMainWidget::updateMessageActions()
       Q3ListViewItem * curItemParent = mHeaders->currentItem();
       while ( curItemParent->parent() )
         curItemParent = curItemParent->parent();
-      for ( Q3PtrListIterator<Q3ListViewItem> it( selectedItems ) ;
-            it.current() ; ++ it ) {
+      QList<Q3ListViewItem*>::const_iterator it;
+      for ( it = selectedItems.begin(); it != selectedItems.end(); ++ it ) {
         Q3ListViewItem * item = *it;
         while ( item->parent() )
           item = item->parent();

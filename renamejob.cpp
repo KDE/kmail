@@ -48,9 +48,7 @@
 #include <klocale.h>
 #include <config.h>
 
-#include <qmap.h>
-//Added by qt3to4:
-#include <Q3PtrList>
+#include <QMap>
 
 using namespace KMail;
 

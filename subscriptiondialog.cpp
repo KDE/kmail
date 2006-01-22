@@ -41,9 +41,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-//Added by qt3to4:
-#include <Q3PtrList>
-
 
 namespace KMail {
 
@@ -120,7 +117,7 @@ void SubscriptionDialog::createItems()
         // so we create each parent in advance
         QStringList folders = QStringList::split(mDelimiter, parentPath);
         uint i = 0;
-        for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it ) 
+        for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it )
         {
           QString name = *it;
           if (name.startsWith("/"))
@@ -160,7 +157,7 @@ void SubscriptionDialog::createItems()
           ++i;
         } // folders
       } // parent
-    
+
       KGroupInfo info(mFolderNames[i]);
       info.path = mFolderPaths[i];
 
@@ -177,22 +174,22 @@ void SubscriptionDialog::createItems()
 
       if (oldItem) // remove old item
         mItemDict.remove(info.path);
-      
+
       mItemDict.insert(info.path, item);
       if (oldItem)
       {
         // move the old childs to the new item
-        Q3PtrList<Q3ListViewItem> itemsToMove;
+        QList<Q3ListViewItem*> itemsToMove;
         Q3ListViewItem * myChild = oldItem->firstChild();
         while (myChild)
         {
           itemsToMove.append(myChild);
           myChild = myChild->nextSibling();
         }
-        Q3PtrListIterator<Q3ListViewItem> it( itemsToMove );
+        QList<Q3ListViewItem*>::const_iterator it;
         Q3ListViewItem *cur;
-        while ((cur = it.current()))
-        {
+        for ( it = itemsToMove.constBegin();
+            ( cur = *it ) && it != itemsToMove.constEnd(); ++it ) {
           oldItem->takeItem(cur);
           item->insertItem(cur);
           if ( cur->isSelected() ) // we have new parents so open them
@@ -235,7 +232,7 @@ void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &
 
   // find the parent by it's path
   *parent = mItemDict[parentPath];
-  
+
   // check if the item already exists
   *oldItem = mItemDict[path];
 }
@@ -299,7 +296,7 @@ void SubscriptionDialog::slotLoadFolders()
 //------------------------------------------------------------------------------
 void SubscriptionDialog::processNext()
 {
-  if ( mPrefixList.isEmpty() ) 
+  if ( mPrefixList.isEmpty() )
   {
     if ( !mSubscribed )
     {
@@ -311,7 +308,7 @@ void SubscriptionDialog::processNext()
     }
   }
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
-  ImapAccountBase::ListType type = ( mSubscribed ? 
+  ImapAccountBase::ListType type = ( mSubscribed ?
       ImapAccountBase::ListSubscribedNoCheck : ImapAccountBase::List );
 
   bool completeListing = true;
@@ -320,7 +317,7 @@ void SubscriptionDialog::processNext()
   mPrefixList.pop_front();
   if ( mCurrentNamespace == "/INBOX/" )
   {
-    type = mSubscribed ? 
+    type = mSubscribed ?
       ImapAccountBase::ListFolderOnlySubscribed : ImapAccountBase::ListFolderOnly;
     completeListing = false;
   }
@@ -348,13 +345,13 @@ void SubscriptionDialog::initPrefixList()
     if ( (*it).isEmpty() )
       hasInbox = true;
   }
-  if ( !hasInbox && !ns.isEmpty() ) 
+  if ( !hasInbox && !ns.isEmpty() )
   {
     // the namespaces includes no listing for the root so start a special
     // listing for the INBOX to make sure we get it
     mPrefixList += "/INBOX/";
   }
-  
+
   mPrefixList += map[ImapAccountBase::PersonalNS];
   mPrefixList += map[ImapAccountBase::OtherUsersNS];
   mPrefixList += map[ImapAccountBase::SharedNS];

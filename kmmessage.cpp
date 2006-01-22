@@ -12,11 +12,6 @@
 #include "kmmessage.h"
 #include "mailinglist-magic.h"
 #include "messageproperty.h"
-//Added by qt3to4:
-#include <Q3StrList>
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
 using KMail::MessageProperty;
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
@@ -48,12 +43,16 @@ using KMail::HeaderStrategy;
 #include <kidna.h>
 #include <kasciistricmp.h>
 
-#include <qcursor.h>
-#include <qtextcodec.h>
-#include <qmessagebox.h>
+#include <QList>
+#include <QCursor>
+#include <QMessageBox>
+#include <QTextCodec>
+//Added by qt3to4:
+#include <Q3StrList>
+#include <Q3CString>
+
 #include <kmime_util.h>
 #include <kmime_charfreq.h>
-
 #include <kmime_header_parsing.h>
 using KMime::HeaderParsing::parseAddressList;
 using namespace KMime::Types;
@@ -2652,7 +2651,7 @@ int KMMessage::numBodyParts() const
 {
   int count = 0;
   DwBodyPart* part = getFirstDwBodyPart();
-  Q3PtrList< DwBodyPart > parts;
+  QList< DwBodyPart* > parts;
 
   while (part)
   {
@@ -2672,7 +2671,7 @@ int KMMessage::numBodyParts() const
     // (or the last top-level node)
     while (part && !(part->Next()) && !(parts.isEmpty()))
     {
-      part = parts.getLast();
+      part = parts.last();
       parts.removeLast();
     }
 
@@ -2700,7 +2699,7 @@ DwBodyPart * KMMessage::getFirstDwBodyPart() const
 int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
 {
   DwBodyPart *curpart;
-  Q3PtrList< DwBodyPart > parts;
+  QList< DwBodyPart* > parts;
   int curIdx = 0;
   int idx = 0;
   // Get the DwBodyPart for this index
@@ -2726,7 +2725,7 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
     // (or the last top-level node)
     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
     {
-      curpart = parts.getLast();
+      curpart = parts.last();
       parts.removeLast();
     } ;
     if (curpart)
@@ -2740,7 +2739,7 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
 DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
 {
   DwBodyPart *part, *curpart;
-  Q3PtrList< DwBodyPart > parts;
+  QList< DwBodyPart* > parts;
   int curIdx = 0;
   // Get the DwBodyPart for this index
 
@@ -2766,7 +2765,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
     // (or the last top-level node)
     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
     {
-      curpart = parts.getLast();
+      curpart = parts.last();
       parts.removeLast();
     }
     if (curpart)
@@ -2780,7 +2779,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
 DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 {
   DwBodyPart *part, *curpart;
-  Q3PtrList< DwBodyPart > parts;
+  QList< DwBodyPart* > parts;
   // Get the DwBodyPart for this index
 
   curpart = getFirstDwBodyPart();
@@ -2814,7 +2813,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
       // go up in the tree until reaching a node with next
       // (or the last top-level node)
       while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
-	curpart = parts.getLast();
+	curpart = parts.last();
 	parts.removeLast();
       } ;
       if (curpart)

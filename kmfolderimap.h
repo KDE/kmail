@@ -38,7 +38,6 @@
 #include <q3intdict.h>
 #include <q3dict.h>
 
-template< typename T> class Q3PtrList;
 template< typename T> class QList;
 
 class KMFolderTreeItem;

@@ -6,8 +6,6 @@
 #include "kmmsgpart.h"
 #include "attachmentstrategy.h"
 #include <kdebug.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 namespace KMail {
 

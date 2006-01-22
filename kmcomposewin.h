@@ -14,23 +14,21 @@
 #include "composer.h"
 #include "messagesender.h"
 
-#include <qlabel.h>
-#include <q3listview.h>
-
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qclipboard.h>
-#include <qpalette.h>
-#include <qfont.h>
-#include <q3ptrlist.h>
-
-#include <qsplitter.h>
 //Added by qt3to4:
 #include <Q3CString>
-#include <QGridLayout>
+#include <q3listview.h>
+
+#include <QCheckBox>
+#include <QClipboard>
 #include <QCloseEvent>
 #include <QEvent>
+#include <QFont>
+#include <QGridLayout>
+#include <QLabel>
 #include <QList>
+#include <QPalette>
+#include <QPushButton>
+#include <QSplitter>
 
 #include <kio/job.h>
 #include <kglobalsettings.h>
@@ -688,7 +686,7 @@ private:
   int mAtmEncryptColWidth;
   int mAtmSignColWidth;
   int mAtmCompressColWidth;
-  Q3PtrList<Q3ListViewItem> mAtmItemList;
+  QList<Q3ListViewItem*> mAtmItemList;
   QList<KMMessagePart*> mAtmList;
   QMenu *mAttachMenu;
   QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId;
@@ -704,7 +702,7 @@ private:
   bool mUseHTMLEditor;
   bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
-  Q3PtrList<KTempFile> mAtmTempList;
+  QList<KTempFile*> mAtmTempList;
   QPalette mPalette;
   uint mId;
   QString mOldSigText;

@@ -37,12 +37,12 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
-#include <qfile.h>
-#include <qtimer.h>
-#include <q3ptrlist.h>
-#include <qfileinfo.h>
-//Added by qt3to4:
+
+#include <QFile>
+#include <QFileInfo>
 #include <QList>
+#include <QTimer>
+
 #ifdef HAVE_INDEXLIB
 #include <indexlib/create.h>
 #endif

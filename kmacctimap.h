@@ -25,7 +25,6 @@
 #include "imapaccountbase.h"
 #include <QHash>
 #include <QList>
-#include <Q3PtrList>
 
 class KMFolderImap;
 class KMFolderTreeItem;
@@ -95,7 +94,7 @@ public:
    * Queues a message for automatic filtering
    */
   void execFilters(quint32 serNum);
-    
+
 public slots:
   /**
    * updates the new-mail-check folderlist
@@ -113,7 +112,7 @@ protected:
   virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
   virtual void cancelMailCheck();
 
-  Q3PtrList<KMail::ImapJob> mJobList;
+  QList<KMail::ImapJob*> mJobList;
   QPointer<KMFolderImap> mFolder;
 
 protected slots:
@@ -135,7 +134,7 @@ protected slots:
    * called to reset the connection error status
    */
   void slotResetConnectionError();
-    
+
   /**
    * Slots for automatic filtering
    */

@@ -13,16 +13,6 @@
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <QPixmap>
-#include <QDragLeaveEvent>
-#include <QEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
-#include <QList>
-#include <QResizeEvent>
-#include <QDragEnterEvent>
-#include <QMouseEvent>
 using KMail::AccountManager;
 #include "globalsettings.h"
 #include "kmcommands.h"
@@ -42,10 +32,19 @@ using namespace KPIM;
 #include <kmenu.h>
 #include <kdebug.h>
 
-#include <qpainter.h>
-#include <qcursor.h>
-#include <qregexp.h>
+#include <QCursor>
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QEvent>
+#include <QList>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QPainter>
+#include <QResizeEvent>
+#include <QRegExp>
 
 #include <unistd.h>
 #include <assert.h>
@@ -489,9 +488,10 @@ void KMFolderTree::updateUnreadAll()
   KMFolder* folder;
 
   fdir = &kmkernel->folderMgr()->dir();
-  for (folderNode = fdir->first();
-    folderNode != 0;
-    folderNode =fdir->next())
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = fdir->constBegin();
+      ( folderNode = *it ) && ( it != fdir->constEnd() );
+      ++it )
   {
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
@@ -667,7 +667,11 @@ void KMFolderTree::slotUpdateOneCount()
 // Recursively add a directory of folders to the tree of folders
 void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 {
-  for ( KMFolderNode * node = fdir->first() ; node ; node = fdir->next() ) {
+  QList<KMFolderNode*>::const_iterator it;
+  KMFolderNode * node;
+  for ( it = fdir->constBegin();
+      ( node = *it ) && ( it != fdir->constEnd() );
+      ++it ) {
     if ( node->isDir() )
       continue;
 
@@ -1845,7 +1849,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
     while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
         ( folderDir != folder->parent() ) )
     {
-      if ( folderDir->findRef( folder ) != -1 )
+      if ( folderDir->indexOf( folder ) != -1 )
       {
         KMessageBox::error( this, message );
         return;

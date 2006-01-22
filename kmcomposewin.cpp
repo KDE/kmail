@@ -30,16 +30,8 @@
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
-#include "attachmentlistview.h"
 #include "transportmanager.h"
-//Added by qt3to4:
-#include <QGridLayout>
-#include <QKeyEvent>
-#include <QEvent>
-#include <Q3CString>
-#include <QList>
-#include <Q3PtrList>
-#include <QLabel>
+#include "attachmentlistview.h"
 using KMail::AttachmentListView;
 #include "dictionarycombobox.h"
 using KMail::DictionaryComboBox;
@@ -125,14 +117,22 @@ using KRecentAddress::RecentAddresses;
 #include <ksavefile.h>
 #include <ktoolinvocation.h>
 
-#include <q3tabdialog.h>
-#include <qregexp.h>
-#include <qbuffer.h>
-#include <qtooltip.h>
-#include <qtextcodec.h>
-#include <q3header.h>
 
-#include <qfontdatabase.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <q3header.h>
+#include <q3tabdialog.h>
+
+#include <QBuffer>
+#include <QEvent>
+#include <QFontDatabase>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QList>
+#include <QRegExp>
+#include <QTextCodec>
+#include <QToolTip>
 
 #include <mimelib/mimepp.h>
 
@@ -283,7 +283,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = false;
   mGrid = 0;
   mAtmListView = 0;
-  mAtmTempList.setAutoDelete(TRUE);
   mAtmModified = FALSE;
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
@@ -435,7 +434,7 @@ KMComposeWin::~KMComposeWin()
   deleteAll( mComposedMessages );
 
   qDeleteAll( mAtmList );
-  mAtmList.clear();
+  qDeleteAll( mAtmTempList );
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )
@@ -2218,10 +2217,12 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 void KMComposeWin::slotUpdateAttachActions()
 {
   int selectedCount = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it ) {
+  QList<Q3ListViewItem*>::const_iterator it = mAtmItemList.constBegin();
+  while ( it != mAtmItemList.constEnd() ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
     }
+    ++it;
   }
 
   mAttachRemoveAction->setEnabled( selectedCount >= 1 );
@@ -2284,7 +2285,7 @@ void KMComposeWin::removeAttach(int idx)
 {
   mAtmModified = TRUE;
   delete mAtmList.takeAt(idx);
-  delete mAtmItemList.take(idx);
+  delete mAtmItemList.takeAt(idx);
 
   if( mAtmList.empty() )
   {
@@ -2741,11 +2742,13 @@ void KMComposeWin::slotSelectCryptoModule( bool init )
       // set/unset signing/encryption for all attachments according to the
       // state of the global sign/encrypt action
       if( !mAtmList.isEmpty() ) {
-        for( KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
-             lvi;
-             lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) ) {
-          lvi->setSign( mSignAction->isChecked() );
-          lvi->setEncrypt( mEncryptAction->isChecked() );
+        QList<Q3ListViewItem*>::const_iterator it;
+        for( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
+          KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
+          if ( lvi ) {
+            lvi->setSign( mSignAction->isChecked() );
+            lvi->setEncrypt( mEncryptAction->isChecked() );
+          }
         }
       }
       int totalWidth = 0;
@@ -2770,10 +2773,12 @@ void KMComposeWin::slotSelectCryptoModule( bool init )
                                     reducedTotalWidth - usedWidth );
       mAtmListView->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
       mAtmListView->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
-      for( KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
-           lvi;
-           lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) ) {
-        lvi->enableCryptoCBs( true );
+      QList<Q3ListViewItem*>::const_iterator it;
+      for( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
+        KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
+        if ( lvi ) {
+          lvi->enableCryptoCBs( true );
+        }
       }
     }
   } else {
@@ -2802,10 +2807,12 @@ void KMComposeWin::slotSelectCryptoModule( bool init )
       mAtmListView->setColumnWidth( mAtmColEncrypt-1, totalWidth - usedWidth );
       mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
       mAtmListView->setColumnWidth( mAtmColSign,    0 );
-      for( KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
-           lvi;
-           lvi = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) ) {
-        lvi->enableCryptoCBs( false );
+      QList<Q3ListViewItem*>::const_iterator it;
+      for( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
+        KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
+        if ( lvi ) {
+          lvi->enableCryptoCBs( false );
+        }
       }
     }
   }
@@ -2907,10 +2914,12 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
   }
 
   int selectedCount = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it ) {
+  QList<Q3ListViewItem*>::const_iterator it = mAtmItemList.constBegin();
+  while ( it != mAtmItemList.constEnd() ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
     }
+    ++it;
   }
 
   mOpenId->setEnabled( selectedCount > 0 );
@@ -2925,11 +2934,7 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
 //-----------------------------------------------------------------------------
 int KMComposeWin::currentAttachmentNum()
 {
-  int i = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i )
-    if ( *it == mAtmListView->currentItem() )
-      return i;
-  return -1;
+  return mAtmItemList.indexOf( mAtmListView->currentItem() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3127,7 +3132,9 @@ void KMComposeWin::uncompressAttach( int idx )
 void KMComposeWin::slotAttachView()
 {
   int i = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+  QList<Q3ListViewItem*>::const_iterator it;
+  for ( it = mAtmItemList.constBegin();
+        it != mAtmItemList.constEnd(); ++it, ++i ) {
     if ( (*it)->isSelected() ) {
       viewAttach( i );
     }
@@ -3137,7 +3144,9 @@ void KMComposeWin::slotAttachView()
 void KMComposeWin::slotAttachOpen()
 {
   int i = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+  QList<Q3ListViewItem*>::const_iterator it;
+  for ( it = mAtmItemList.constBegin();
+        it != mAtmItemList.constEnd(); ++it, ++i ) {
     if ( (*it)->isSelected() ) {
       openAttach( i );
     }
@@ -3238,9 +3247,11 @@ void KMComposeWin::slotAttachRemove()
 {
   bool attachmentRemoved = false;
   int i = 0;
-  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ) {
+  QList<Q3ListViewItem*>::iterator it = mAtmItemList.begin();
+  while ( it != mAtmItemList.end() ) {
     if ( (*it)->isSelected() ) {
       removeAttach( i );
+      it = mAtmItemList.begin();
       attachmentRemoved = true;
     }
     else {
@@ -3553,11 +3564,12 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // mark the attachments for (no) encryption
   if ( canSignEncryptAttachments() ) {
-    for ( KMAtmListViewItem* entry =
-            static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
-          entry;
-          entry = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) )
-      entry->setEncrypt( encrypt );
+    QList<Q3ListViewItem*>::const_iterator it;
+    for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
+      KMAtmListViewItem* entry = static_cast<KMAtmListViewItem*> (*it);
+      if ( entry )
+        entry->setEncrypt( encrypt );
+    }
   }
 }
 
@@ -3597,11 +3609,12 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 
   // mark the attachments for (no) signing
   if ( canSignEncryptAttachments() ) {
-    for ( KMAtmListViewItem* entry =
-            static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
-          entry;
-          entry = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) )
-      entry->setSign( sign );
+    QList<Q3ListViewItem*>::const_iterator it;
+    for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
+      KMAtmListViewItem* entry = static_cast<KMAtmListViewItem*> (*it);
+      if ( entry )
+        entry->setSign( sign );
+    }
   }
 }
 

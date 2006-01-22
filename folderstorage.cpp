@@ -44,9 +44,6 @@
 #include "kmfoldermgr.h"
 #include "kmcommands.h"
 #include "listjob.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3PtrList>
 using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
@@ -55,8 +52,10 @@ using KMail::ListJob;
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <qfile.h>
-#include <qregexp.h>
+//Added by qt3to4:
+#include <QFile>
+#include <QList>
+#include <QRegExp>
 
 #include <mimelib/mimepp.h>
 #include <errno.h>
@@ -692,13 +691,17 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
     // if the folder is being moved then move its node and, if necessary, also
     // the associated subfolder directory node to the new parent
     if (newParent) {
-      if (oldParent->findRef( folder() ) != -1)
-        oldParent->take();
-      newParent->inSort( folder() );
+      int idx = oldParent->indexOf( folder() );
+      if ( idx != -1)
+        oldParent->takeAt( idx );
+      newParent->prepend( folder() );
+      qSort( newParent->begin(), newParent->end() );
       if ( child ) {
-        if ( child->parent()->findRef( child ) != -1 )
-          child->parent()->take();
-        newParent->inSort( child );
+        int idx = child->parent()->indexOf( child );
+        if ( idx != -1 )
+          child->parent()->takeAt( idx );
+        newParent->prepend( child );
+        qSort( newParent->begin(), newParent->end() );
         child->setParent( newParent );
       }
     }

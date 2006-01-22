@@ -474,7 +474,7 @@ namespace KMail {
 
 
   protected:
-    Q3PtrList<QPointer<KMFolder> > mOpenFolders;
+    QList<QPointer<KMFolder>* > mOpenFolders;
     QStringList mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes;
     QMap<KIO::Job *, jobData> mapJobData;

@@ -24,8 +24,7 @@
 #endif
 
 #include "kmacctimap.h"
-#include <QList>
-#include <Q3PtrList>
+
 using KMail::SieveConfig;
 
 #include "kmmessage.h"
@@ -47,10 +46,14 @@ using KMail::ImapAccountBase;
 #include "progressmanager.h"
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
+
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+
+#include <QList>
+
 #include <errno.h>
 
 //-----------------------------------------------------------------------------
@@ -61,7 +64,6 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   mFolder = 0;
   mScheduler = 0;
   mNoopTimer.start( 60000 ); // // send a noop every minute
-  mOpenFolders.setAutoDelete(true);
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
   connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
@@ -93,6 +95,7 @@ KMAcctImap::~KMAcctImap()
     serNums.append( it.key() );
   }
   config.writeEntry( "unfiltered", serNums );
+  qDeleteAll( mOpenFolders );
 }
 
 
@@ -191,30 +194,30 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
   if (!msg) return;
-  Q3PtrListIterator<ImapJob> it( mJobList );
-  while ( it.current() )
+  QList<ImapJob*>::const_iterator it;
+  for ( it = mJobList.begin(); (*it) && it != mJobList.constEnd(); ++it )
   {
-    ImapJob *job = it.current();
-    ++it;
+    ImapJob *job = (*it);
     if ( job->msgList().first() == msg )
     {
       job->kill();
     }
+    ++it;
   }
 }
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
-  Q3PtrListIterator<ImapJob> it( mJobList );
-  while ( it.current() )
+  QList<ImapJob*>::const_iterator it;
+  for ( it = mJobList.begin(); (*it) && it != mJobList.constEnd(); ++it )
   {
-    ImapJob *job = it.current();
-    ++it;
+    ImapJob *job = (*it);
     if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )
     {
       job->kill();
     }
+    ++it;
   }
 }
 

@@ -35,17 +35,15 @@
 #include <kabc/distributionlist.h>
 #include <kmessagebox.h>
 
-#include <qlayout.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PtrList>
-#include <QKeyEvent>
-#include <QHBoxLayout>
 #include <QBoxLayout>
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
+#include <QPushButton>
+#include <QToolButton>
 #include <QVBoxLayout>
 
 RecipientItem::RecipientItem()

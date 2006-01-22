@@ -23,13 +23,12 @@
 
 #include <kurl.h>
 #include <kxmlguiclient.h>
-#include <q3listview.h>
 
-//Added by qt3to4:
-#include <QVBoxLayout>
 #include <QList>
+#include <QVBoxLayout>
+//Added by qt3to4:
+#include <q3listview.h>
 #include <Q3PopupMenu>
-#include <Q3PtrList>
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
@@ -457,7 +456,7 @@ private:
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
-  QList<int> mPanner1Sep, mPanner2Sep;
+  QList<int>    mPanner1Sep, mPanner2Sep;
   KURL          mUrlCurrent;
   QMenu         *mActMenu;
   QMenu         *mSendMenu;
@@ -496,7 +495,7 @@ private:
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
   QList<KAction*> mFilterMenuActions;
   QList<KAction*> mFilterTBarActions;
-  Q3PtrList<KMMetaFilterActionCommand> mFilterCommands;
+  QList<KMMetaFilterActionCommand*> mFilterCommands;
   Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
   QPointer <KMail::FolderJob> mJob;
 

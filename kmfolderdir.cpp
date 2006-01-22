@@ -1,10 +1,6 @@
 // kmfolderdir.cpp
 
 #include <config.h>
-#include <qdir.h>
-//Added by qt3to4:
-#include <Q3CString>
-#include <Q3PtrList>
 
 #include "kmfolderdir.h"
 #include "kmfoldersearch.h"
@@ -18,6 +14,10 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
+#include <QDir>
+#include <QList>
+//Added by qt3to4:
+#include <Q3CString>
 
 //=============================================================================
 //=============================================================================
@@ -82,15 +82,14 @@ KMFolderDir::KMFolderDir( KMFolder * owner, KMFolderDir* parent,
                           const QString& name, KMFolderDirType dirType )
   : KMFolderNode( parent, name ), KMFolderNodeList(),
     mOwner( owner ), mDirType( dirType )
-{
-  setAutoDelete( true );
-}
+{}
 
 
 //-----------------------------------------------------------------------------
 KMFolderDir::~KMFolderDir()
 {
   clear();
+  qDeleteAll( *this );
 }
 
 
@@ -110,8 +109,11 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   fld->setSystemFolder(aSysFldr);
 
   KMFolderNode* fNode;
+  QList<KMFolderNode*>::const_iterator it;
   int index = 0;
-  for (fNode=first(); fNode; fNode=next()) {
+  for ( it = begin();
+      ( ( fNode = *it ) && it != end() );
+      ++it ) {
     if (fNode->name().toLower() > fld->name().toLower()) {
       insert( index, fld );
       break;
@@ -170,11 +172,11 @@ QString KMFolderDir::prettyURL() const
 //-----------------------------------------------------------------------------
 bool KMFolderDir::reload(void)
 {
-  QDir               dir;
-  KMFolder*          folder;
-  QFileInfo          fileInfo;
-  QStringList        diList;
-  Q3PtrList<KMFolder> folderList;
+  QDir             dir;
+  KMFolder*        folder;
+  QFileInfo        fileInfo;
+  QStringList      diList;
+  QList<KMFolder*> folderList;
 
   clear();
 
@@ -275,7 +277,9 @@ bool KMFolderDir::reload(void)
     }
   }
 
-  for (folder=folderList.first(); folder; folder=folderList.next())
+  QList<KMFolder*>::const_iterator jt;
+  for ( jt = folderList.begin();
+      ( ( folder = *jt ) && ( jt != folderList.end() ) ); ++jt )
   {
     for(QStringList::Iterator it = diList.begin();
         it != diList.end();
@@ -296,10 +300,10 @@ bool KMFolderDir::reload(void)
 //-----------------------------------------------------------------------------
 KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
 {
-  KMFolderNode* fNode;
-  for (fNode=first(); fNode; fNode=next()) {
-    if (fNode->name() == aName)
-      return fNode;
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = begin(); it != end(); ++it ) {
+    if ( (*it) && (*it)->name() == aName)
+      return (*it);
   }
   return 0;
 }

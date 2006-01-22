@@ -16,8 +16,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#include <qdir.h>
-//Added by qt3to4:
+#include <QDir>
 #include <QList>
 
 #include <klocale.h>
@@ -74,9 +73,9 @@ void KMFolderMgr::expireAll() {
 
 #define DO_FOR_ALL(function, folder_code) \
   KMFolderNode* node; \
-  Q3PtrListIterator<KMFolderNode> it(*dir); \
-  for ( ; (node = it.current()); ) { \
-    ++it; \
+  QList<KMFolderNode*>::iterator it; \
+  for ( it = dir->begin(); \
+      ( ( node = *it ) && it != dir->end() ); ++it ) { \
     if (node->isDir()) continue; \
     KMFolder *folder = static_cast<KMFolder*>(node); \
     folder_code \
@@ -199,7 +198,9 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 {
   KMFolderNode* node;
 
-  for (node=mDir.first(); node; node=mDir.next())
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = mDir.begin();
+      ( ( node = *it ) && it != mDir.end() ); ++it )
   {
     if (node->isDir() && foldersOnly) continue;
     if (node->name()==folderName) return (KMFolder*)node;
@@ -322,8 +323,9 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   {
     // call remove for every child
     KMFolderNode* node;
-    Q3PtrListIterator<KMFolderNode> it(*aFolder->child());
-    for ( ; (node = it.current()); )
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = (*aFolder->child()).begin();
+        ( (node = *it) && it != (*aFolder->child()).end() ); ++it )
     {
       ++it;
       if (node->isDir()) continue;
@@ -351,7 +353,8 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
 
   KMFolderDir* fdir = aFolder->parent();
   KMFolderNode* fN;
-  for (fN = fdir->first(); fN != 0; fN = fdir->next()) {
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = fdir->begin(); ( fN = *it ) && it != fdir->end(); ++it ) {
     if (fN->isDir() && (fN->name() == "." + aFolder->fileName() + ".directory")) {
       removeDirAux(static_cast<KMFolderDir*>(fN));
       break;

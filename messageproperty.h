@@ -33,9 +33,8 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
-#include <q3ptrlist.h>
-#include <qpointer.h>
-#include <qobject.h>
+#include <QPointer>
+#include <QObject>
 
 class KMFilter;
 class KMFilterDlg;

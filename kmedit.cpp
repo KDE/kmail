@@ -18,7 +18,6 @@
 #include <maillistdrag.h>
 //Added by qt3to4:
 #include <QFocusEvent>
-#include <Q3PtrList>
 #include <QDragMoveEvent>
 #include <QKeyEvent>
 #include <QDropEvent>

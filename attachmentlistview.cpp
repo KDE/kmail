@@ -39,12 +39,11 @@ using KPIM::MailListDrag;
 #include <kurl.h>
 
 // other Qt headers
-#include <qevent.h>
 #include <q3cstring.h>
-#include <qbuffer.h>
-#include <q3ptrlist.h>
-#include <qdatastream.h>
-#include <qstring.h>
+#include <QBuffer>
+#include <QDataStream>
+#include <QEvent>
+#include <QString>
 
 // other headers (none)
 

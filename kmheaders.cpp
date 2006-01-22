@@ -5,15 +5,6 @@
 
 #include "kmheaders.h"
 #include "headeritem.h"
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3MemArray>
-#include <Q3PtrList>
-#include <QEvent>
-#include <QKeyEvent>
-#include <QList>
-#include <Q3PopupMenu>
-#include <QMouseEvent>
 using KMail::HeaderItem;
 
 #include "kcursorsaver.h"
@@ -45,19 +36,28 @@ using namespace KPIM;
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qbuffer.h>
-#include <qfile.h>
-#include <q3header.h>
-#include <q3ptrstack.h>
-#include <q3ptrqueue.h>
-#include <qpainter.h>
-#include <qtextcodec.h>
-#include <qstyle.h>
-#include <q3listview.h>
-
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
+
+//Added by qt3to4:
+#include <q3header.h>
+#include <q3ptrstack.h>
+#include <q3ptrqueue.h>
+#include <Q3PopupMenu>
+#include <Q3MemArray>
+#include <q3listview.h>
+
+#include <QBuffer>
+#include <QEvent>
+#include <QFile>
+#include <QKeyEvent>
+#include <QList>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPixmap>
+#include <QStyle>
+#include <QTextCodec>
 
 #include <stdlib.h>
 #include <errno.h>
@@ -893,11 +893,12 @@ void KMHeaders::msgAdded(int id)
       }
       if( !subjMD5.isEmpty()) {
         if ( !mSubjectLists.find(subjMD5) )
-          mSubjectLists.insert(subjMD5, new Q3PtrList<SortCacheItem>());
+          mSubjectLists.insert(subjMD5, new QList<SortCacheItem*>());
         // insertion sort by date. See buildThreadTrees for details.
         int p=0;
-        for (Q3PtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
-            it.current(); ++it) {
+        QList<SortCacheItem*>::const_iterator it;
+        for (it = (*mSubjectLists[subjMD5]).constBegin();
+            it != (*mSubjectLists[subjMD5]).constEnd(); ++it) {
           KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
           if ( mb->date() < mFolder->getMsgBase(id)->date())
             break;
@@ -917,9 +918,9 @@ void KMHeaders::msgAdded(int id)
            this, SLOT(highlightMessage(Q3ListViewItem*)));
 
     if ( !msgId.isEmpty() ) {
-      Q3PtrListIterator<HeaderItem> it(mImperfectlyThreadedList);
+      QList<HeaderItem*>::iterator it = mImperfectlyThreadedList.begin();
       HeaderItem *cur;
-      while ( (cur = it.current()) ) {
+      while ( (cur = (*it)) && it != mImperfectlyThreadedList.end() ) {
         ++it;
         int tryMe = cur->msgId();
         // Check, whether our message is the replyToId or replyToAuxId of
@@ -958,7 +959,7 @@ void KMHeaders::msgAdded(int id)
         makeHeaderVisible();
 
         if (perfectParent) {
-          mImperfectlyThreadedList.removeRef (mItems[tryMe]);
+          mImperfectlyThreadedList.removeAll( mItems[tryMe] );
           // The item was imperfectly thread before, now it's parent
           // is there. Update the .sorted file accordingly.
           QString sortFile = KMAIL_SORT_FILE(mFolder);
@@ -1043,7 +1044,7 @@ void KMHeaders::msgRemoved(int id, QString msgId )
     // Remove the message from the list of potential parents for threading by
     // subject.
     if ( mSubjThreading && removedItem->sortCacheItem()->subjectThreadingList() )
-      removedItem->sortCacheItem()->subjectThreadingList()->removeRef( removedItem->sortCacheItem() );
+      removedItem->sortCacheItem()->subjectThreadingList()->removeAll( removedItem->sortCacheItem() );
 
     // Reparent children of item.
     Q3ListViewItem *myParent = removedItem;
@@ -1053,7 +1054,7 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       threadRoot = threadRoot->parent();
     QString key = static_cast<HeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
 
-    Q3PtrList<Q3ListViewItem> childList;
+    QList<Q3ListViewItem*> childList;
     while (myChild) {
       HeaderItem *item = static_cast<HeaderItem*>(myChild);
       // Just keep the item at top level, if it will be deleted anyhow
@@ -1074,7 +1075,8 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       }
     }
 
-    for (Q3PtrListIterator<Q3ListViewItem> it(childList); it.current() ; ++it ) {
+    QList<Q3ListViewItem*>::iterator it;
+    for ( it = childList.begin(); it != childList.end() ; ++it ) {
       Q3ListViewItem *lvi = *it;
       HeaderItem *item = static_cast<HeaderItem*>(lvi);
       SortCacheItem *sci = item->sortCacheItem();
@@ -1093,19 +1095,19 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       }
 
       if ((!parent || sci->isImperfectlyThreaded())
-                      && !mImperfectlyThreadedList.containsRef(item))
+                      && !mImperfectlyThreadedList.count( item ))
         mImperfectlyThreadedList.append(item);
 
       if (parent && !sci->isImperfectlyThreaded()
-          && mImperfectlyThreadedList.containsRef(item))
-        mImperfectlyThreadedList.removeRef(item);
+          && mImperfectlyThreadedList.count( item ))
+        mImperfectlyThreadedList.removeAll(item);
     }
   }
   // Make sure our data structures are cleared.
   if (!mFolder->count())
       folderCleared();
 
-  mImperfectlyThreadedList.removeRef( removedItem );
+  mImperfectlyThreadedList.removeAll( removedItem );
 #ifdef DEBUG
   // This should never happen, in this case the folders are inconsistent.
   while ( mImperfectlyThreadedList.findRef( removedItem ) != -1 ) {
@@ -1167,13 +1169,13 @@ void KMHeaders::setMsgStatus( const MessageStatus& status, bool toggle)
 }
 
 
-Q3PtrList<Q3ListViewItem> KMHeaders::currentThread() const
+QList<Q3ListViewItem*> KMHeaders::currentThread() const
 {
-  if (!mFolder) return Q3PtrList<Q3ListViewItem>();
+  if (!mFolder) return QList<Q3ListViewItem*>();
 
   // starting with the current item...
   Q3ListViewItem *curItem = currentItem();
-  if (!curItem) return Q3PtrList<Q3ListViewItem>();
+  if (!curItem) return QList<Q3ListViewItem*>();
 
   // ...find the top-level item:
   Q3ListViewItem *topOfThread = curItem;
@@ -1181,7 +1183,7 @@ Q3PtrList<Q3ListViewItem> KMHeaders::currentThread() const
     topOfThread = topOfThread->parent();
 
   // collect the items in this thread:
-  Q3PtrList<Q3ListViewItem> list;
+  QList<Q3ListViewItem*> list;
   Q3ListViewItem *topOfNextThread = topOfThread->nextSibling();
   for ( Q3ListViewItemIterator it( topOfThread ) ;
         it.current() && it.current() != topOfNextThread ; ++it )
@@ -1191,11 +1193,11 @@ Q3PtrList<Q3ListViewItem> KMHeaders::currentThread() const
 
 void KMHeaders::setThreadStatus( const MessageStatus& status, bool toggle)
 {
-  Q3PtrList<Q3ListViewItem> curThread = currentThread();
-  Q3PtrListIterator<Q3ListViewItem> it( curThread );
+  QList<Q3ListViewItem*> curThread = currentThread();
+  QList<Q3ListViewItem*>::const_iterator it;
   SerNumList serNums;
 
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  for ( it = curThread.constBegin() ; it != curThread.constEnd() ; ++it ) {
     int id = static_cast<HeaderItem*>(*it)->msgId();
     KMMsgBase *msgBase = mFolder->getMsgBase( id );
     serNums.append( msgBase->getMsgSerNum() );
@@ -2019,10 +2021,10 @@ void KMHeaders::highlightMessage(Q3ListViewItem* lvi, bool markitread)
 
 void KMHeaders::highlightCurrentThread()
 {
-  Q3PtrList<Q3ListViewItem> curThread = currentThread();
-  Q3PtrListIterator<Q3ListViewItem> it( curThread );
+  QList<Q3ListViewItem*> curThread = currentThread();
+  QList<Q3ListViewItem*>::const_iterator it;
 
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  for ( it = curThread.constBegin() ; it != curThread.constEnd() ; ++it ) {
       Q3ListViewItem *lvi = *it;
       lvi->setSelected( true );
       lvi->repaint();
@@ -2718,14 +2720,14 @@ static int compare_SortCacheItem(const void *s1, const void *s2)
 // Debugging helpers
 void KMHeaders::printSubjectThreadingTree()
 {
-    Q3DictIterator< Q3PtrList< SortCacheItem > > it ( mSubjectLists );
+    Q3DictIterator< QList< SortCacheItem* > > it ( mSubjectLists );
     kdDebug(5006) << "SubjectThreading tree: " << endl;
     for( ; it.current(); ++it ) {
-      Q3PtrList<SortCacheItem> list = *( it.current() );
-      Q3PtrListIterator<SortCacheItem> it2( list ) ;
+      QList<SortCacheItem*> list = *( it.current() );
+      QList<SortCacheItem*>::const_iterator it2;
       kdDebug(5006) << "Subject MD5: " << it.currentKey() << " list: " << endl;
-      for( ; it2.current(); ++it2 ) {
-        SortCacheItem *sci = it2.current();
+      for( it2 = list.constBegin(); it2 != list.constEnd(); ++it2 ) {
+        SortCacheItem *sci = (*it2);
         kdDebug(5006) << "     item:" << sci << " sci id: " << sci->id() << endl;
       }
     }
@@ -2787,18 +2789,19 @@ void KMHeaders::buildSubjectThreadingTree( Q3MemArray<SortCacheItem *> sortCache
         /* For each subject, keep a list of items with that subject
          * (stripped of prefixes) sorted by date. */
         if (!mSubjectLists.find(subjMD5))
-            mSubjectLists.insert(subjMD5, new Q3PtrList<SortCacheItem>());
+            mSubjectLists.insert(subjMD5, new QList<SortCacheItem*>());
         /* Insertion sort by date. These lists are expected to be very small.
          * Also, since the messages are roughly ordered by date in the store,
          * they should mostly be prepended at the very start, so insertion is
          * cheap. */
         int p=0;
-        for (Q3PtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
-                it.current(); ++it) {
-            KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
-            if ( mb->date() < mi->date())
-                break;
-            p++;
+        QList<SortCacheItem*>::const_iterator it;
+        for ( it = (*mSubjectLists[subjMD5]).constBegin();
+              it != (*mSubjectLists[subjMD5]).constEnd(); ++it) {
+          KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
+          if ( mb->date() < mi->date())
+              break;
+          p++;
         }
         mSubjectLists[subjMD5]->insert( p, sortCache[x]);
         sortCache[x]->setSubjectThreadingList( mSubjectLists[subjMD5] );
@@ -2852,8 +2855,9 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
     if (!subjMD5.isEmpty() && mSubjectLists[subjMD5]) {
         /* Iterate over the list of potential parents with the same
          * subject, and take the closest one by date. */
-        for (Q3PtrListIterator<SortCacheItem> it2(*mSubjectLists[subjMD5]);
-                it2.current(); ++it2) {
+        QList<SortCacheItem*>::const_iterator it2;
+        for ( it2 = (*mSubjectLists[subjMD5]).constBegin();
+              it2 != (*mSubjectLists[subjMD5]).constEnd(); ++it2) {
             KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
             if ( !mb ) return parent;
             // make sure it's not ourselves
@@ -2886,7 +2890,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     bool error = false;
 
     //threaded cases
-    Q3PtrList<SortCacheItem> unparented;
+    QList<SortCacheItem*> unparented;
     mImperfectlyThreadedList.clear();
 
     //cleanup
@@ -3070,33 +3074,37 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     // Make sure we've placed everything in parent/child relationship. All
     // messages with a parent id of -1 in the sort file are reevaluated here.
     if (threaded) buildThreadingTree( sortCache );
-    Q3PtrList<SortCacheItem> toBeSubjThreaded;
+    QList<SortCacheItem*> toBeSubjThreaded;
 
     if (threaded && !unparented.isEmpty()) {
         CREATE_TIMER(reparent);
         START_TIMER(reparent);
 
-        for(Q3PtrListIterator<SortCacheItem> it(unparented); it.current(); ++it) {
-            SortCacheItem *item = (*it);
-            SortCacheItem *parent = findParent( item );
-            // If we have a parent, make sure it's not ourselves
-            if ( parent && (parent != (*it)) ) {
-                parent->addUnsortedChild((*it));
-                if(sortStream)
-                    (*it)->updateSortFile(sortStream, mFolder);
-            } else {
-                // if we will attempt subject threading, add to the list,
-                // otherwise to the root with them
-                if (mSubjThreading)
-                  toBeSubjThreaded.append((*it));
-                else
-                  mRoot->addUnsortedChild((*it));
-            }
+        QList<SortCacheItem*>::const_iterator it;
+        for ( it = unparented.constBegin();
+              it != unparented.constEnd(); ++it) {
+          SortCacheItem *item = (*it);
+          SortCacheItem *parent = findParent( item );
+          // If we have a parent, make sure it's not ourselves
+          if ( parent && (parent != (*it)) ) {
+              parent->addUnsortedChild((*it));
+              if(sortStream)
+                  (*it)->updateSortFile(sortStream, mFolder);
+          } else {
+              // if we will attempt subject threading, add to the list,
+              // otherwise to the root with them
+              if (mSubjThreading)
+                toBeSubjThreaded.append((*it));
+              else
+                mRoot->addUnsortedChild((*it));
+          }
         }
 
         if (mSubjThreading) {
             buildSubjectThreadingTree( sortCache );
-            for(Q3PtrListIterator<SortCacheItem> it(toBeSubjThreaded); it.current(); ++it) {
+            QList<SortCacheItem*>::const_iterator it;
+            for ( it = toBeSubjThreaded.constBegin();
+                  it != toBeSubjThreaded.constEnd(); ++it) {
                 SortCacheItem *item = (*it);
                 SortCacheItem *parent = findParentBySubject( item );
 
@@ -3123,7 +3131,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     compare_toplevel = true;
     do {
         i = s.dequeue();
-        const Q3PtrList<SortCacheItem> *sorted = i->sortedChildren();
+        const QList<SortCacheItem*> *sorted = i->sortedChildren();
         int unsorted_count, unsorted_off=0;
         SortCacheItem **unsorted = i->unsortedChildren(unsorted_count);
         if(unsorted)
@@ -3134,15 +3142,16 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
          * the (aptly named) unsorted array contains all as of yet unsorted
          * ones. It has just been qsorted, so it is in itself sorted. These two
          * sorted lists are now merged into one. */
-        for(Q3PtrListIterator<SortCacheItem> it(*sorted);
-            (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
+        QList<SortCacheItem*>::const_iterator it;
+        for ( it = sorted->constBegin();
+              (unsorted && unsorted_off < unsorted_count) || it != sorted->constEnd(); ) {
             /* As long as we have something in the sorted list and there is
                nothing unsorted left, use the item from the sorted list. Also
                if we are sorting descendingly and the sorted item is supposed
                to be sorted before the unsorted one do so. In the ascending
                case we invert the logic for non top level items. */
-            if( it.current() &&
-               ( !unsorted || unsorted_off >= unsorted_count
+            if( (*it) &&
+                ( !unsorted || unsorted_off >= unsorted_count
                 ||
                 ( ( !ascending || (ascending && !compare_toplevel) )
                   && (*it)->key() < unsorted[unsorted_off]->key() )

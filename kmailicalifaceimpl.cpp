@@ -1811,10 +1811,10 @@ static void vPartMicroParser( const QString& str, QString& s )
 // Returns the first child folder having the given annotation
 static KMFolder* findFolderByAnnotation( KMFolderDir* folderParentDir, const QString& annotation )
 {
-    Q3PtrListIterator<KMFolderNode> it( *folderParentDir );
-    for ( ; it.current(); ++it ) {
-      if ( !it.current()->isDir() ) {
-        KMFolder* folder = static_cast<KMFolder *>( it.current() );
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = folderParentDir->begin(); it != folderParentDir->end(); ++it ) {
+      if ( !(*it)->isDir() ) {
+        KMFolder* folder = static_cast<KMFolder *>( *it );
         if ( folder->folderType() == KMFolderTypeCachedImap ) {
           QString folderAnnotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
           //kdDebug(5006) << "findStandardResourceFolder: " << folder->name() << " has annotation " << folderAnnotation << endl;

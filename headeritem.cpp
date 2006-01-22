@@ -26,21 +26,19 @@
 **   your version.
 **
 *******************************************************************************/
-#include <klocale.h>
-#include <qapplication.h>
-#include <qregexp.h>
-#include <qbitmap.h>
-#include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QList>
-
-#include <kio/netaccess.h>
-
 #include "headeritem.h"
 #include "kmheaders.h"
-
 #include "kmfolder.h"
+
+#include <klocale.h>
+#include <kio/netaccess.h>
+
+#include <QApplication>
+#include <QBitmap>
+#include <QList>
+#include <QPainter>
+#include <QPixmap>
+#include <QRegExp>
 
 using namespace KMail;
 

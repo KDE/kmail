@@ -33,10 +33,8 @@
 #include <stdlib.h>
 
 #include <klistview.h> // include for the base class
-//Added by qt3to4:
 #include <QPixmap>
 #include <QList>
-#include <Q3PtrList>
 
 class KMMsgBase;
 class KPaintInfo;
@@ -87,7 +85,7 @@ public:
         { return mSortedChildren.count() || mUnsortedCount; }
     /** The sorted children are an array of sortcache items we know are below the
      * current one and are already properly sorted (as read from the cache ) */
-    const Q3PtrList<SortCacheItem> *sortedChildren() const
+    const QList<SortCacheItem*> *sortedChildren() const
         { return &mSortedChildren; }
     /** The unsorted children are an array of sortcache items we know are below the
      * current one, but are yet to be threaded and sorted properly. */
@@ -140,9 +138,9 @@ public:
 
     /** Set the list of mails with a certain subject that this item is on.
      * Used to remove the item from that list on deletion. */
-    void setSubjectThreadingList( Q3PtrList<SortCacheItem> *list ) { mSubjThreadingList = list; }
+    void setSubjectThreadingList( QList<SortCacheItem*> *list ) { mSubjThreadingList = list; }
     /** The list of mails with a certain subject that this item is on. */
-    Q3PtrList<SortCacheItem>* subjectThreadingList() const { return mSubjThreadingList; }
+    QList<SortCacheItem*>* subjectThreadingList() const { return mSubjThreadingList; }
 
 private:
     HeaderItem *mItem;
@@ -150,18 +148,18 @@ private:
     int mId, mSortOffset;
     QString mKey;
 
-    Q3PtrList<SortCacheItem> mSortedChildren;
+    QList<SortCacheItem*> mSortedChildren;
     int mUnsortedCount, mUnsortedSize;
     SortCacheItem **mUnsortedChildren;
     bool mImperfectlyThreaded;
     // pointer to the list it might be on so it can be remove from it
     // when the item goes away.
-    Q3PtrList<SortCacheItem>* mSubjThreadingList;
+    QList<SortCacheItem*>* mSubjThreadingList;
 };
 
 
 /**
- * Visual representation of a member of the set of displayables (mails in 
+ * Visual representation of a member of the set of displayables (mails in
  * the current folder). Each item is paired with a KMail::SortCacheItem. See there as to
  * how they are meant to cooperate. This should be about the visual aspects of
  * displaying an entry only. */
@@ -215,8 +213,8 @@ public:
   void setTempKey( QString key );
 
   int compare( Q3ListViewItem *i, int col, bool ascending ) const;
-  
-  Q3ListViewItem* firstChildNonConst(); /* Non const! */ 
+
+  Q3ListViewItem* firstChildNonConst(); /* Non const! */
 
   /** Returns whether the item is about to be removed from the list view as a
    * result of some user action. Such items are not selectable and painted with

@@ -27,9 +27,6 @@
 #undef REALLY_WANT_KMSENDER
 #include "undostack.h"
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <QByteArray>
-#include <QList>
 using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
 #include "kmversion.h"
@@ -72,11 +69,14 @@ using KMail::FolderIface;
 using KWallet::Wallet;
 #include "actionscheduler.h"
 
-#include <qutf7codec.h>
+#include <QByteArray>
+#include <QDir>
+#include <QList>
+#include <QObject>
+#include <QWidget>
+//Added by qt3to4:
 #include <q3vbox.h>
-#include <qdir.h>
-#include <qwidget.h>
-#include <qobject.h>
+#include <qutf7codec.h>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -1396,32 +1396,33 @@ void KMKernel::readConfig()
 void KMKernel::cleanupImapFolders()
 {
   KMAccount *acct = 0;
-  KMFolderNode *node = the_imapFolderMgr->dir().first();
-  while (node)
+  KMFolderNode *node;
+  QList<KMFolderNode*>::iterator it = the_imapFolderMgr->dir().begin();
+  while ( ( node = *it ) && it != the_imapFolderMgr->dir().end() )
   {
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "imap" )) )
     {
-      node = the_imapFolderMgr->dir().next();
+      ++it;
     } else {
       KMFolder* folder = static_cast<KMFolder*>(node);
       // delete only local
       static_cast<KMFolderImap*>( folder->storage() )->setAlreadyRemoved( true );
       the_imapFolderMgr->remove(folder);
-      node = the_imapFolderMgr->dir().first();
+      it = the_imapFolderMgr->dir().begin();
     }
   }
 
-  node = the_dimapFolderMgr->dir().first();
-  while (node)
+  it = the_dimapFolderMgr->dir().begin();
+  while ( ( node = *it ) && it != the_dimapFolderMgr->dir().end() )
   {
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "cachedimap" )) )
     {
-      node = the_dimapFolderMgr->dir().next();
+      ++it;
     } else {
       the_dimapFolderMgr->remove(static_cast<KMFolder*>(node));
-      node = the_dimapFolderMgr->dir().first();
+      it = the_dimapFolderMgr->dir().begin();
     }
   }
 

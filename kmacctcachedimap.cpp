@@ -34,8 +34,6 @@
 #endif
 
 #include "kmacctcachedimap.h"
-//Added by qt3to4:
-#include <QList>
 using KMail::SieveConfig;
 
 #include "kmfoldertree.h"
@@ -56,6 +54,7 @@ using KMail::AccountManager;
 #include <kapplication.h>
 #include <kconfig.h>
 
+#include <QList>
 
 KMAcctCachedImap::KMAcctCachedImap( AccountManager* aOwner,
 				    const QString& aAccountName, uint id )
@@ -145,8 +144,9 @@ QList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnec
   mapJobData.clear();
 
   // Clear the joblist. Make SURE to stop the job emitting "finished"
-  for( Q3PtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
-    it.current()->setPassiveDestructor( true );
+  QList<CachedImapJob*>::const_iterator jt;
+  for( jt = mJobList.constBegin(); jt != mJobList.constEnd(); ++jt )
+    (*jt)->setPassiveDestructor( true );
   KMAccount::deleteFolderJobs();
 
   if ( disconnectSlave && mSlave ) {
@@ -237,7 +237,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     QStringList nsToList = namespaces()[PersonalNS];
     QStringList otherNSToCheck = namespaces()[OtherUsersNS];
     otherNSToCheck += namespaces()[SharedNS];
-    for ( QStringList::Iterator it = otherNSToCheck.begin(); 
+    for ( QStringList::Iterator it = otherNSToCheck.begin();
           it != otherNSToCheck.end(); ++it ) {
       if ( (*it).isEmpty() ) {
         // empty namespaces are included in the "normal" listing
@@ -391,12 +391,14 @@ void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
 
   // Add all child folders too
   if( folder && folder->child() ) {
-    KMFolderNode *node = folder->child()->first();
-    while( node ) {
-      if( !node->isDir() ) {
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = folder->child()->constBegin();
+        it != folder->child()->constEnd();
+        ++it ) {
+      KMFolderNode *node = (*it);
+      if( node && !node->isDir() ) {
         addDeletedFolder( static_cast<KMFolder*>( node ) ); // recurse
       }
-      node = folder->child()->next();
     }
   }
 }

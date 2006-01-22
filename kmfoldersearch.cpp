@@ -46,7 +46,6 @@
 //Added by qt3to4:
 #include <QList>
 #include <Q3CString>
-#include <Q3PtrList>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -183,9 +182,8 @@ void KMSearch::start()
                 dir = &kmkernel->folderMgr()->dir();
             if ( !dir )
                 continue;
-            Q3PtrListIterator<KMFolderNode> it(*dir);
-            while ( (node = it.current()) ) {
-                ++it;
+            QList<KMFolderNode*>::const_iterator it;
+            for ( it = dir->begin(); (node = *it ) && it != dir->end(); ++it ) {
                 if ( !node->isDir() ) {
                     KMFolder* kmf = dynamic_cast<KMFolder*>( node );
                     if ( kmf )

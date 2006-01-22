@@ -46,10 +46,9 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
-#include <q3header.h>
 #include <qstyle.h>
 //Added by qt3to4:
-#include <Q3PtrList>
+#include <q3header.h>
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent )
@@ -159,7 +158,7 @@ void KMMimePartTree::saveSelectedBodyParts( bool encoded )
   if ( selected.isEmpty() )
     return;
 
-  Q3PtrList<partNode> parts;
+  QList<partNode*> parts;
   for ( QList<Q3ListViewItem*>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
     parts.append( static_cast<KMMimePartTreeItem *>( *it )->node() );
   }

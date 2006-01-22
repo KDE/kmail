@@ -14,7 +14,6 @@ using KPIM::MessageStatus;
 #include <QList>
 
 //Added by qt3to4:
-#include <Q3PtrList>
 #include <Q3PopupMenu>
 
 class KMainWindow;
@@ -377,7 +376,7 @@ public:
       @param encoded      True if the transport encoding should not be removed
                           when the attachment is saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, Q3PtrList<partNode> &attachments,
+  KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*> &attachments,
                             KMMessage *msg, bool encoded = false  );
 
 private slots:
@@ -751,7 +750,7 @@ class KDE_EXPORT KMLoadPartsCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMLoadPartsCommand( Q3PtrList<partNode>& parts, KMMessage* msg );
+  KMLoadPartsCommand( QList<partNode*>& parts, KMMessage* msg );
   KMLoadPartsCommand( partNode* node, KMMessage* msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 

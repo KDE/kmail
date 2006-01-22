@@ -34,14 +34,6 @@
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
-//Added by qt3to4:
-#include <QBoxLayout>
-#include <QGridLayout>
-#include <QHideEvent>
-#include <Q3CString>
-#include <QList>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include "colorlistbox.h"
 #include "kmacctseldlg.h"
 using KMail::AccountDialog;
@@ -106,21 +98,26 @@ using KMime::DateFormatter;
 #include <kcmultidialog.h>
 
 // Qt headers:
-#include <qvalidator.h>
+#include <QBoxLayout>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QHideEvent>
+#include <QLabel>
+#include <QLayout>
+#include <QList>
+#include <QRadioButton>
+#include <QToolTip>
+#include <QValidator>
+#include <QVBoxLayout>
 
-
-
+//Added by qt3to4:
+#include <Q3CString>
 #include <q3buttongroup.h>
-#include <qtooltip.h>
-#include <qlabel.h>
 #include <qtextcodec.h>
 #include <q3header.h>
 #include <q3popupmenu.h>
-#include <qradiobutton.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
 #include <q3widgetstack.h>
-
 
 // other headers:
 #include <assert.h>
@@ -4780,7 +4777,10 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
       if( a->folder() && a->folder()->child() ) {
         // Look inside that folder for an INBOX
         KMFolderNode *node;
-        for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
+        QList<KMFolderNode*>::const_iterator it;
+        for ( it = a->folder()->child()->constBegin();
+              ( node = *it ) && ( it != a->folder()->child()->constEnd() );
+              ++it )
           if (!node->isDir() && node->name() == "INBOX") break;
 
         if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {

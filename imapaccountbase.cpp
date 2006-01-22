@@ -71,7 +71,6 @@ using KIO::PasswordDialog;
 #include <QTextDocument>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 #include <q3stylesheet.h>
 
 namespace KMail {

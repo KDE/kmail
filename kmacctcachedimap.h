@@ -34,10 +34,8 @@
 
 #include "imapaccountbase.h"
 
-#include <qpointer.h>
-//Added by qt3to4:
 #include <QList>
-#include <Q3PtrList>
+#include <QPointer>
 
 class KMFolderCachedImap;
 class KMFolderTreeItem;
@@ -183,7 +181,7 @@ public:
    * Returns the root folder of this account
    */
   virtual FolderStorage* const rootFolder() const;
-  
+
   /** return if the account passed the annotation test  */
   bool annotationCheckPassed(){ return mAnnotationCheckPassed;};
   void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; };
@@ -205,7 +203,7 @@ private:
   void processNewMail( KMFolderCachedImap* folder, bool recurse );
 
 private:
-  Q3PtrList<CachedImapJob> mJobList;
+  QList<CachedImapJob*> mJobList;
   KMFolderCachedImap *mFolder;
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session

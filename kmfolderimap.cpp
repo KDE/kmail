@@ -34,10 +34,6 @@
 #include "kmfiltermgr.h"
 #include "kmmsgdict.h"
 #include "imapaccountbase.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
 using KMail::ImapAccountBase;
 #include "imapjob.h"
 using KMail::ImapJob;
@@ -59,8 +55,11 @@ using KMail::RenameJob;
 #include <kconfig.h>
 #include <kmessagebox.h>
 
-#include <qbuffer.h>
-#include <qtextcodec.h>
+#include <QBuffer>
+#include <QList>
+#include <QTextCodec>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <assert.h>
 
@@ -160,11 +159,12 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
   mAccount = aAccount;
   if( !folder() || !folder()->child() ) return;
   KMFolderNode* node;
-  for (node = folder()->child()->first(); node;
-       node = folder()->child()->next())
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folder()->child()->begin();
+      ( node = *it ) && it != folder()->child()->end(); ++it )
   {
-    if (!node->isDir())
-      static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage())->setAccount(aAccount);
+    if (!(*it)->isDir())
+      static_cast<KMFolderImap*>(static_cast<KMFolder*>(*it)->storage())->setAccount(aAccount);
   }
 }
 
@@ -652,8 +652,9 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
 
   folder()->createChildFolder();
   KMFolderNode *node = 0;
-  for ( node = folder()->child()->first(); node;
-        node = folder()->child()->next())
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folder()->child()->begin();
+      ( node = *it ) && it != folder()->child()->end(); ++it )
   {
     if ( !node->isDir() && node->name() == name )
       break;
@@ -791,8 +792,9 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
   {
     bool settingsChanged = false;
     // create folders if necessary
-    for ( node = folder()->child()->first(); node;
-          node = folder()->child()->next() ) {
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = folder()->child()->begin();
+        ( node = *it ) && it != folder()->child()->end(); ++it ) {
       if ( !node->isDir() && node->name() == subfolderNames[i] )
         break;
     }
@@ -858,8 +860,9 @@ void KMFolderImap::initInbox()
   KMFolderImap *f = 0;
   KMFolderNode *node = 0;
 
-  for (node = folder()->child()->first(); node;
-      node = folder()->child()->next()) {
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folder()->child()->begin();
+      ( node = *it ) && it != folder()->child()->end(); ++it ) {
     if (!node->isDir() && node->name() == "INBOX") break;
   }
   if (node) {
@@ -890,9 +893,11 @@ KMFolderImap* KMFolderImap::findParent( const QString& path, const QString& name
     parent = parent.right( parent.length() - 1 );
     if ( parent != label() )
     {
-      KMFolderNode *node = folder()->child()->first();
+      KMFolderNode *node = 0;
       // look for a better parent
-      while ( node )
+      QList<KMFolderNode*>::const_iterator it;
+      for ( it = folder()->child()->begin();
+          ( node = *it ) && it != folder()->child()->end(); ++it )
       {
         if ( node->name() == parent )
         {
@@ -900,7 +905,6 @@ KMFolderImap* KMFolderImap::findParent( const QString& path, const QString& name
           KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
           return imapFld;
         }
-        node = folder()->child()->next();
       }
     }
   }
@@ -911,9 +915,11 @@ KMFolderImap* KMFolderImap::findParent( const QString& path, const QString& name
 void KMFolderImap::checkFolders( const QStringList& subfolderNames,
     const QString& myNamespace )
 {
-  Q3PtrList<KMFolder> toRemove;
-  KMFolderNode *node = folder()->child()->first();
-  while ( node )
+  QList<KMFolder*> toRemove;
+  KMFolderNode *node = 0;
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folder()->child()->begin();
+      ( node = *it ) && it != folder()->child()->end(); ++it )
   {
     if ( !node->isDir() && subfolderNames.findIndex(node->name()) == -1 )
     {
@@ -945,11 +951,12 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
         kdDebug(5006) << "checkFolders - " << node->name() << " ignored" << endl;
       }
     }
-    node = folder()->child()->next();
   }
   // remove folders
-  for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
-    kmkernel->imapFolderMgr()->remove( doomed );
+  QList<KMFolder*>::const_iterator jt;
+  for ( jt = toRemove.constBegin(); jt != toRemove.constEnd(); ++jt )
+    if ( *jt )
+      kmkernel->imapFolderMgr()->remove( *jt );
 }
 
 //-----------------------------------------------------------------------------
@@ -2106,8 +2113,9 @@ void KMFolderImap::setSubfolderState( imapState state )
   {
     // pass through to children
     KMFolderNode* node;
-    Q3PtrListIterator<KMFolderNode> it( *folder()->child() );
-    for ( ; (node = it.current()); )
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = folder()->child()->begin();
+        ( node = *it ) && it != folder()->child()->end(); ++it )
     {
       ++it;
       if (node->isDir()) continue;
@@ -2134,8 +2142,9 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
   {
     // pass through to childs
     KMFolderNode* node;
-    Q3PtrListIterator<KMFolderNode> it( *folder()->child() );
-    for ( ; (node = it.current()); )
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = folder()->child()->begin();
+        ( node = *it ) && it != folder()->child()->end(); ++it )
     {
       ++it;
       if (node->isDir()) continue;

@@ -48,13 +48,12 @@
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
-
 #include <klocale.h>
 #include <kdebug.h>
-//Added by qt3to4:
+
 #include <QList>
+//Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 
 
 namespace KMail {
@@ -683,8 +682,9 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
                                 const QString& newPath )
 {
   if( dir ) {
-    KMFolderNode *node = dir->first();
-    while( node ) {
+    KMFolderNode *node;
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = dir->begin(); (node = *it ) && it != dir->end(); ++it ) {
       if( !node->isDir() ) {
         KMFolderCachedImap* imapFolder =
           static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
@@ -698,7 +698,6 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
             renameChildFolders( imapFolder->folder()->child(), oldPath, newPath );
           }
       }
-      node = dir->next();
     }
   }
 }

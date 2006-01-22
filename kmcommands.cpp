@@ -54,13 +54,13 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 
-#include <qtextcodec.h>
-#include <q3popupmenu.h>
 //Added by qt3to4:
+#include <q3popupmenu.h>
 #include <Q3CString>
-#include <Q3PtrList>
-#include <QList>
+
 #include <QDesktopWidget>
+#include <QList>
+#include <QTextCodec>
 
 #include <libemailfunctions/email.h>
 #include <kdebug.h>
@@ -1608,7 +1608,9 @@ void KMMenuCommand::folderToPopupMenu(bool move,
                     move, receiver, aMenuToFolder, subMenu );
     menu->insertItem( i18n( "Local Folders" ), subMenu );
     KMFolderDir* fdir = &kmkernel->imapFolderMgr()->dir();
-    for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
+    KMFolderNode *node;
+    QList<KMFolderNode*>::const_iterator it;
+    for ( it = fdir->begin(); ( node = *it ) && it != fdir->end(); ++it ) {
       if (node->isDir())
         continue;
       subMenu = new Q3PopupMenu(menu);
@@ -1616,7 +1618,7 @@ void KMMenuCommand::folderToPopupMenu(bool move,
       menu->insertItem( node->label(), subMenu );
     }
     fdir = &kmkernel->dimapFolderMgr()->dir();
-    for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
+    for ( it = fdir->begin(); ( node = *it ) && it != fdir->end(); ++it ) {
       if (node->isDir())
         continue;
       subMenu = new Q3PopupMenu(menu);
@@ -1667,10 +1669,11 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
   if (!folderDir)
     return;
 
-  for (KMFolderNode *it = folderDir->first(); it; it = folderDir->next() ) {
-    if (it->isDir())
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = folderDir->begin(); (*it) && it != folderDir->end(); ++it ) {
+    if ( (*it)->isDir() )
       continue;
-    KMFolder *child = static_cast<KMFolder*>(it);
+    KMFolder *child = static_cast<KMFolder*>(*it);
     QString label = child->label();
     label.replace("&","&&");
     if (child->child() && child->child()->first()) {
@@ -2175,12 +2178,13 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, Q3PtrList<partNode>& attachments,
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*>& attachments,
                                                     KMMessage *msg, bool encoded )
   : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
-  for ( Q3PtrListIterator<partNode> it( attachments ); it.current(); ++it ) {
-    mAttachmentMap.insert( it.current(), msg );
+  QList<partNode*>::const_iterator it;
+  for ( it = attachments.constBegin(); it != attachments.constEnd(); ++it ) {
+    mAttachmentMap.insert( (*it), msg );
   }
 }
 
@@ -2475,11 +2479,12 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   return OK;
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( Q3PtrList<partNode>& parts, KMMessage *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( QList<partNode*>& parts, KMMessage *msg )
   : mNeedsRetrieval( 0 )
 {
-  for ( Q3PtrListIterator<partNode> it( parts ); it.current(); ++it ) {
-    mPartMap.insert( it.current(), msg );
+  QList<partNode*>::const_iterator it;
+  for ( it = parts.constBegin(); it != parts.constEnd(); ++it ) {
+    mPartMap.insert( (*it), msg );
   }
 }
 
@@ -2875,7 +2880,7 @@ void KMHandleAttachmentCommand::atmView()
 
 void KMHandleAttachmentCommand::atmSave()
 {
-  Q3PtrList<partNode> parts;
+  QList<partNode*> parts;
   parts.append( mNode );
   // save, do not leave encoded
   KMSaveAttachmentsCommand *command =

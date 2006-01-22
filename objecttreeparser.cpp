@@ -85,12 +85,12 @@
 #include <kcodecs.h>
 
 // other Qt headers
-#include <qtextcodec.h>
-#include <qfile.h>
-#include <qapplication.h>
+#include <QApplication>
+#include <QFile>
+#include <QTextCodec>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
+
 #include <kstyle.h>
 #include <qbuffer.h>
 #include <qpixmap.h>

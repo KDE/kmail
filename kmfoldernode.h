@@ -20,9 +20,9 @@
 #ifndef kmfoldernode_h
 #define kmfoldernode_h
 
-#include <qobject.h>
-#include <qstring.h>
-#include <q3ptrlist.h>
+#include <QList>
+#include <QObject>
+#include <QString>
 
 class KMFolderDir;
 
@@ -75,7 +75,7 @@ protected:
   uint mId;
 };
 
-typedef Q3PtrList<KMFolderNode> KMFolderNodeList;
+typedef QList<KMFolderNode*> KMFolderNodeList;
 
 
 #endif /*kmfoldernode_h*/

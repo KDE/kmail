@@ -46,8 +46,6 @@
 #include <QList>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
-
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                              KMFolderType aFolderType, bool withIndex, bool exportedSernums )
@@ -457,10 +455,10 @@ int KMFolder::countUnreadRecursive()
   if (!dir)
     return count;
 
-  Q3PtrListIterator<KMFolderNode> it(*dir);
-  for ( ; it.current(); ++it )
-    if (!it.current()->isDir()) {
-      folder = static_cast<KMFolder*>(it.current());
+  QList<KMFolderNode*>::const_iterator it;
+  for ( it = dir->constBegin(); it != dir->constEnd(); ++it )
+    if ( !( (*it)->isDir() ) ) {
+      folder = static_cast<KMFolder*>( (*it) );
       count += folder->countUnreadRecursive();
     }
 

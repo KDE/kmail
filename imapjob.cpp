@@ -38,22 +38,21 @@
 #include "kmfolder.h"
 #include "kmmsgpart.h"
 #include "progressmanager.h"
-//Added by qt3to4:
-#include <QList>
-#include <Q3CString>
-#include <Q3PtrList>
 using KPIM::ProgressManager;
 #include "util.h"
 
-#include <q3stylesheet.h>
 #include <kio/scheduler.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/string.h>
-#include <QTextDocument>
 
+#include <QList>
+#include <QTextDocument>
+//Added by qt3to4:
+#include <Q3CString>
+#include <q3stylesheet.h>
 
 namespace KMail {
 
