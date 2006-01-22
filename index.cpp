@@ -34,6 +34,7 @@
 #include "kmfolder.h"
 #include "kmsearchpattern.h"
 #include "kmfoldersearch.h"
+#include "kmfolderdir.h"
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -123,8 +124,8 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 			QTimer::singleShot( 8000, this, SLOT( continueCreation() ) );
 			mState = s_creating;
 		} else {
-			mPendingMsgs = QValueListToVector( cfg.readIntListEntry( "pending" ) );
-			mRemovedMsgs = QValueListToVector( cfg.readIntListEntry( "removed" ) );
+			mPendingMsgs = QValueListToVector( cfg.readEntry( "pending", QList<int>() ) );
+			mRemovedMsgs = QValueListToVector( cfg.readEntry( "removed", QList<int>() ) );
 		}
 	}
 	mIndex = 0;
@@ -381,13 +382,15 @@ void KMMsgIndex::create() {
 	folders.push(&(kmkernel->folderMgr()->dir()));
 	folders.push(&(kmkernel->dimapFolderMgr()->dir()));
 	while ( !folders.empty() ) {
-		KMFolderDir *dir = folders.pop();
-		for(KMFolderNode *child = dir->first(); child; child = dir->next()) {
-			if ( child->isDir() )
+		const KMFolderDir *dir = folders.pop();
+                KMFolderNodeListIterator it( static_cast<const KMFolderNodeList>( *dir ) );
+                while ( it.hasNext() ) {
+                        KMFolderNode *child = it.next();
+                 	if ( child->isDir() )
 				folders.push((KMFolderDir*)child);
 			else
 				mPendingFolders.push_back( (KMFolder*)child );
-		}
+                }
 	}
 	mTimer->start( 4000 ); // wait a couple of seconds before starting up...
 	mSlowDown = true;
