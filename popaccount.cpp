@@ -168,7 +168,7 @@ void PopAccount::processNewMail(bool _interactive)
       // mTimeOfSeenMsgsVector for use in PopAccount::slotData()
       mUidsOfSeenMsgsDict.insert( uidsOfSeenMsgs[i].toLatin1(), i );
     }
-    QList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
+    QList<int> timeOfSeenMsgs = config.readEntry( "seenUidTimeList",QList<int>() );
     // If the counts differ then the config file has presumably been tampered
     // with and so to avoid possible unwanted message deletion we'll treat
     // them all as newly seen by clearing the seen times vector

@@ -305,7 +305,7 @@ void KMFilter::readConfig(KConfigGroup & config)
             .arg( mPattern.name() ) );
     }
 
-    mAccounts = config.readIntListEntry( "accounts-set" );
+    mAccounts = config.readEntry( "accounts-set",QList<int>() );
   }
 }
 
