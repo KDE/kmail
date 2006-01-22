@@ -142,7 +142,6 @@
    <text>&amp;Tools</text>
    <Action name="tools_start_certman"/>
    <Action name="tools_start_kwatchgnupg"/>
-   <Action name="import"/>
    <Separator/>
    <Action name="tools_edit_vacation"/>
    <Separator/>
