@@ -118,7 +118,7 @@ private slots:
   void slotChanged( bool b );
 
 private:
-  KURL imapURL() const;
+  KUrl imapURL() const;
   void initializeWithValuesFromFolder( KMFolder* folder );
   void startListing();
   void loadListView( const KMail::ACLList& aclList );

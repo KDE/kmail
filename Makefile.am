@@ -23,7 +23,7 @@ endif
 
 lib_LTLIBRARIES = libkmailprivate.la
 libkmailprivate_la_LDFLAGS = $(all_libraries) -avoid-version -no-undefined
-libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
+libkmailprivate_la_LIBADD  = $(LIB_KHTML)  $(LIB_KABC) \
         ../libkmime/libkmime.la ../libkpgp/libkpgp.la ../libkdepim/libkdepim.la \
         ../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
         ../libksieve/libksieve.la ../libemailfunctions/libemailfunctions.la \
