@@ -36,7 +36,7 @@ class KMFolderCachedImap;
 class KMAcctImap;
 class KMAcctCachedImap;
 class FolderStorage;
-class KURL;
+class KUrl;
 
 namespace KIO {
   class Job;

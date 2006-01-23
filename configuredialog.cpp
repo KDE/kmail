@@ -2597,7 +2597,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hbox = new KHBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
-  mEditorRequester = new KURLRequester( hbox );
+  mEditorRequester = new KUrlRequester( hbox );
   mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
   connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
            this, SLOT( slotEmitChanged( void ) ) );

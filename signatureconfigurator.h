@@ -23,7 +23,7 @@ using KPIM::Signature;
 
 class QComboBox;
 class QCheckBox;
-class KURLRequester;
+class KUrlRequester;
 class KLineEdit;
 class QString;
 class QPushButton;
@@ -69,7 +69,7 @@ namespace KMail {
   protected:
     QCheckBox     * mEnableCheck;
     QComboBox     * mSourceCombo;
-    KURLRequester * mFileRequester;
+    KUrlRequester * mFileRequester;
     QPushButton   * mEditButton;
     KLineEdit     * mCommandEdit;
     Q3TextEdit     * mTextEdit;

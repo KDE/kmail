@@ -34,7 +34,7 @@
 
 class QByteArray;
 class QString;
-class KURL;
+class KUrl;
 
 
 namespace KMail {

@@ -14,7 +14,7 @@
 */
 
 class QPushButton;
-class KURLRequester;
+class KUrlRequester;
 
 class KMFilterActionWithAddressWidget : public QWidget
 {
@@ -47,11 +47,11 @@ signals:
   void testPressed();
 protected slots:
   void playSound();
-  void openSoundDialog( KURLRequester * );
+  void openSoundDialog( KUrlRequester * );
   void slotUrlChanged( const QString & );
 
 private:
-  KURLRequester *m_urlRequester;
+  KUrlRequester *m_urlRequester;
   QPushButton *m_playButton;
 };
 

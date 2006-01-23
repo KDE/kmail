@@ -120,7 +120,7 @@ namespace KMail {
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
-    mFileRequester = new KURLRequester( page );
+    mFileRequester = new KUrlRequester( page );
     mFileRequester->setWhatsThis( 
         i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "

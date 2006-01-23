@@ -73,10 +73,10 @@ KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
     connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
     lay1->addWidget( m_playButton );
 
-    m_urlRequester = new KURLRequester( this );
+    m_urlRequester = new KUrlRequester( this );
     lay1->addWidget( m_urlRequester );
-    connect( m_urlRequester, SIGNAL( openFileDialog( KURLRequester * )),
-             SLOT( openSoundDialog( KURLRequester * )));
+    connect( m_urlRequester, SIGNAL( openFileDialog( KUrlRequester * )),
+             SLOT( openSoundDialog( KUrlRequester * )));
     connect( m_urlRequester->lineEdit(), SIGNAL( textChanged ( const QString & )), SLOT( slotUrlChanged(const QString & )));
     slotUrlChanged(m_urlRequester->lineEdit()->text() );
 }
@@ -90,7 +90,7 @@ void KMSoundTestWidget::slotUrlChanged(const QString &_text )
     m_playButton->setEnabled( !_text.isEmpty());
 }
 
-void KMSoundTestWidget::openSoundDialog( KURLRequester * )
+void KMSoundTestWidget::openSoundDialog( KUrlRequester * )
 {
     static bool init = true;
     if ( !init )

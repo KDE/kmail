@@ -34,7 +34,7 @@
 
 
 #include <QVector>
-class KURL;
+class KUrl;
 
 class QString;
 class QPoint;

@@ -33,7 +33,7 @@
 
 class AccountManager;
 class KConfig/*Base*/;
-class KURL;
+class KUrl;
 namespace KIO {
   class Slave;
   class MetaData;

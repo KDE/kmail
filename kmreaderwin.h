@@ -40,7 +40,7 @@ class KRadioAction;
 class KToggleAction;
 class KConfigBase;
 class KHTMLPart;
-class KURL;
+class KUrl;
 
 class KMFolder;
 class KMMessage;

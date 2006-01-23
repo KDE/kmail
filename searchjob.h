@@ -35,7 +35,7 @@
 
 class KMFolderImap;
 class KMSearchPattern;
-class KURL;
+class KUrl;
 
 namespace KIO {
   class Job;

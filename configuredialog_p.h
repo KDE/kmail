@@ -29,7 +29,7 @@
 class QPushButton;
 class QLabel;
 class QCheckBox;
-class KURLRequester;
+class KUrlRequester;
 class KFontChooser;
 class QRadioButton;
 class ColorListBox;
@@ -606,7 +606,7 @@ private:
   KIntSpinBox   *mWrapColumnSpin;
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
-  KURLRequester *mEditorRequester;
+  KUrlRequester *mEditorRequester;
 };
 
 class ComposerPagePhrasesTab : public ConfigModuleTab {

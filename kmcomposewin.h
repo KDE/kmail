@@ -69,7 +69,7 @@ class KTempFile;
 class KToolBar;
 class KToggleAction;
 class KSelectColorAction;
-class KURL;
+class KUrl;
 class KRecentFilesAction;
 class SpellingFilter;
 class MessageComposer;
