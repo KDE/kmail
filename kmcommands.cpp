@@ -71,7 +71,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kparts/browserextension.h>
-#include <kprogress.h>
+#include <kprogressbar.h>
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>

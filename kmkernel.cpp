@@ -58,7 +58,7 @@ using KMail::FolderIface;
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
-#include <kprogress.h>
+#include <kprogressbar.h>
 #include <kpassivepopup.h>
 #include <dcopclient.h>
 #include <ksystemtray.h>
