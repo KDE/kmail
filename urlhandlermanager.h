@@ -71,9 +71,9 @@ namespace KMail {
     void registerHandler( const Interface::BodyPartURLHandler * handler );
     void unregisterHandler( const Interface::BodyPartURLHandler * handler );
 
-    bool handleClick( const KURL & url, KMReaderWin * w=0 ) const;
-    bool handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w=0 ) const;
-    QString statusBarMessage( const KURL & url, KMReaderWin * w=0 ) const;
+    bool handleClick( const KUrl & url, KMReaderWin * w=0 ) const;
+    bool handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w=0 ) const;
+    QString statusBarMessage( const KUrl & url, KMReaderWin * w=0 ) const;
 
   private:
     typedef QVector<const URLHandler*> HandlerList;
