@@ -52,7 +52,7 @@ namespace KMail {
 
 
   private:
-    void setXfaceFromFile( const KURL &url );
+    void setXfaceFromFile( const KUrl &url );
 
   private slots:
     void slotSelectFile();

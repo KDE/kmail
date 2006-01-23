@@ -1470,7 +1470,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     // ### i.e. if the sender's email address is contained in the vCard.
     const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
     KABC::VCardConverter t;
-    if ( !t.parseVCards( vcard ).empty() ) {
+    if ( !t.parseVCards( vcard.toAscii() ).empty() ) {
       hasVCard = true;
       kdDebug(5006) << "FOUND A VALID VCARD" << endl;
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );

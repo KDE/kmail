@@ -98,7 +98,6 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
 {
   static bool pixmapsLoaded = false;
   //qInitImageIO();
-  KImageIO::registerFormats();
   mOwner  = aOwner;
   mFolder = 0;
   noRepaint = false;

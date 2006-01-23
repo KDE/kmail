@@ -44,14 +44,13 @@
 
 namespace KMail {
 
-int MailSourceHighlighter::highlightParagraph( const QString& text, int ) {
+void MailSourceHighlighter::highlightBlock ( const QString & text ) {
   QRegExp regexp( "^([\\w-]+:\\s)" );
   if( regexp.search( text ) != -1 ) {
-    QFont font = textEdit()->currentFont();
+    QFont font = document()->defaultFont ();
     font.setBold( true );
     setFormat( 0, regexp.matchedLength(), font );
   }
-  return 0;
 }
 
 MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
@@ -61,7 +60,8 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   Q3Accel *accel = new Q3Accel( this, "browser close-accel" );
   accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
   accel->connectItem( accel->insertItem( Qt::Key_W+Qt::CTRL ), this , SLOT( close() ));
-  setWordWrap( KTextBrowser::NoWrap );
+#warning "kde4 port setWordWrap\n";
+  //setWordWrap( KTextBrowser::NoWrap );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIcon::Desktop ), IconSize( KIcon::Desktop ) ),
                   qApp->windowIcon().pixmap( IconSize( KIcon::Small ), IconSize( KIcon::Small ) ) );
 }

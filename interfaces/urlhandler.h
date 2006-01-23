@@ -56,7 +56,7 @@ namespace KMail {
 	@return true if the click was handled by this URLHandler,
 	false otherwise.
     */
-    virtual bool handleClick( const KURL & url, KMReaderWin * w ) const = 0;
+    virtual bool handleClick( const KUrl & url, KMReaderWin * w ) const = 0;
     /** Called when RMB-clicking on a link in the reader. Should show
 	a context menu at the specified point with the specified
 	widget as parent.
@@ -64,13 +64,13 @@ namespace KMail {
 	@return true if the right-click was handled by this
 	URLHandler, false otherwise.
     */
-    virtual bool handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const = 0;
+    virtual bool handleContextMenuRequest( const KUrl & url, const QPoint & p, KMReaderWin * w ) const = 0;
     /** Called when hovering over a link.
 
 	@return a string to be shown in the status bar while hovering
 	over this link.
     */
-    virtual QString statusBarMessage( const KURL & url, KMReaderWin * w ) const = 0;
+    virtual QString statusBarMessage( const KUrl & url, KMReaderWin * w ) const = 0;
   };
 
 } // namespace KMail

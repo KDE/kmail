@@ -22,7 +22,7 @@ class KSpellConfig;
 class KSpell;
 class SpellingFilter;
 class KTempFile;
-class KDictSpellingHighlighter;
+class K3DictSpellingHighlighter;
 class KDirWatch;
 class KProcess;
 
@@ -120,7 +120,7 @@ private:
   bool      mUseExtEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  KDictSpellingHighlighter *mSpellChecker;
+  K3DictSpellingHighlighter *mSpellChecker;
   bool mSpellLineEdit;
 };
 

@@ -49,7 +49,7 @@ using KPIM::MailListDrag;
 #include <kspell.h>
 #include <kspelldlg.h>
 #include <spellingfilter.h>
-#include <ksyntaxhighlighter.h>
+#include <k3syntaxhighlighter.h>
 
 #include <qregexp.h>
 #include <qbuffer.h>
@@ -244,7 +244,7 @@ void KMEdit::initializeAutoSpellChecking()
   QColor col3 = readerConfig.readEntry( "QuotedText2", QVariant( &defaultColor2 ) ).value<QColor>();
   QColor col4 = readerConfig.readEntry( "QuotedText1", QVariant( &defaultColor1 ) ).value<QColor>();
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", QVariant( &c ) ).value<QColor>();
-  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ true,
+  mSpellChecker = new K3DictSpellingHighlighter( this, /*active*/ true,
                                                 /*autoEnabled*/ false,
                                                 /*spellColor*/ misspelled,
                                                 /*colorQuoting*/ true,
@@ -558,7 +558,7 @@ void KMEdit::spellcheck()
                       SLOT(slotSpellcheck2(KSpell*)));
 //  }
 
-  QStringList l = KSpellingHighlighter::personalWords();
+  QStringList l = K3SpellingHighlighter::personalWords();
   for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
       mKSpell->addPersonal( *it );
   }
@@ -694,7 +694,7 @@ void KMEdit::slotSpellResult(const QString &s)
       }
   }
   mKSpell->cleanUp();
-  KDictSpellingHighlighter::dictionaryChanged();
+  K3DictSpellingHighlighter::dictionaryChanged();
 
   emit spellcheck_done( dlgResult );
 }

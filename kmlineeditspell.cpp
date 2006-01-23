@@ -91,7 +91,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
   KVCardDrag::decode( event, vcards );
   if ( !vcards.isEmpty() ) {
     KABC::VCardConverter converter;
-    KABC::Addressee::List list = converter.parseVCards( vcards );
+    KABC::Addressee::List list = converter.parseVCards( vcards.toAscii() );
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
       insertEmails( (*ait).emails() );
@@ -112,7 +112,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
           QByteArray rawData = file.readAll();
           file.close();
           QString data = QString::fromUtf8( rawData.data(), rawData.size() + 1 );
-          list += converter.parseVCards( data );
+          list += converter.parseVCards( data.toAscii() );
           KIO::NetAccess::removeTempFile( fileName );
         } else {
           QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" );

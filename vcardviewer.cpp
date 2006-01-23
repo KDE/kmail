@@ -43,11 +43,11 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const cha
 {
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->enableLinks( 0 );
-  mAddresseeView->setVScrollBarMode(Q3ScrollView::Auto);
+  mAddresseeView->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
   setMainWidget(mAddresseeView);
 
   VCardConverter vcc;
-  mAddresseeList = vcc.parseVCards( vCard );
+  mAddresseeList = vcc.parseVCards( vCard.toAscii() );
   if ( !mAddresseeList.empty() ) {
     itAddresseeList = mAddresseeList.begin();
     mAddresseeView->setAddressee( *itAddresseeList );

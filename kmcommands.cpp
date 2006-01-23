@@ -57,6 +57,7 @@
 //Added by qt3to4:
 #include <q3popupmenu.h>
 #include <Q3CString>
+#include <kprogressdialog.h>
 
 #include <QDesktopWidget>
 #include <QList>
@@ -289,7 +290,7 @@ void KMCommand::transferSelectedMsgs()
   // for some reason the KProgressDialog eats the MouseReleaseEvent (if a
   // command is executed after the MousePressEvent), cf. bug #71761.
   if ( mCountMsgs > 0 ) {
-    mProgressDialog = new KProgressDialog(mParent, "transferProgress",
+    mProgressDialog = new KProgressDialog(mParent,
       i18n("Please wait"),
       i18n("Please wait while the message is transferred",
         "Please wait while the %n messages are transferred", mMsgList.count()),
@@ -356,7 +357,7 @@ void KMCommand::transferSelectedMsgs()
     if ( mProgressDialog ) {
       connect(mProgressDialog, SIGNAL(cancelClicked()),
               this, SLOT(slotTransferCancelled()));
-      mProgressDialog->progressBar()->setTotalSteps(totalSize);
+      mProgressDialog->progressBar()->setMaximum(totalSize);
     }
   }
 }
@@ -374,7 +375,7 @@ void KMCommand::slotMsgTransfered(KMMessage* msg)
 
 void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
 {
-  mProgressDialog->progressBar()->setProgress( done );
+  mProgressDialog->progressBar()->setValue( done );
 }
 
 void KMCommand::slotJobFinished()

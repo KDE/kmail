@@ -111,7 +111,7 @@ using KRecentAddress::RecentAddresses;
 #include <kspell.h>
 #include <kspelldlg.h>
 #include <spellingfilter.h>
-#include <ksyntaxhighlighter.h>
+#include <k3syntaxhighlighter.h>
 #include <kcolordialog.h>
 #include <kzip.h>
 #include <ksavefile.h>
