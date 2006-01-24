@@ -113,7 +113,7 @@ public: // mailserviceimpl
    * From MailComposerIface
    */
   void send(int how);
-  void addAttachment(KURL url,QString comment);
+  void addAttachment(KUrl url,QString comment);
   void addAttachment(const QString &name,
                     const Q3CString &cte,
                     const QByteArray &data,
@@ -254,7 +254,7 @@ private slots:
    */
   void slotPrint();
   void slotAttachFile();
-  void slotInsertRecentFile(const KURL&);
+  void slotInsertRecentFile(const KUrl&);
 public slots: // kmkernel, callback
   void slotSendNow();
 private slots:
@@ -453,7 +453,7 @@ private slots:
   void alignmentChanged( int );
 
 public: // kmkernel, attachmentlistview
-  void addAttach(const KURL url);
+  void addAttach(const KUrl url);
 
 public: // kmcommand
   /**
@@ -784,7 +784,7 @@ private:
   QSplitter *mSplitter;
   struct atmLoadData
   {
-    KURL url;
+    KUrl url;
     QByteArray data;
     bool insert;
     Q3CString encoding;

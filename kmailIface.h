@@ -27,17 +27,17 @@ k_dcop:
   virtual int openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, int hidden,
-                           const KURL &messageFile) = 0;
+                           const KUrl &messageFile) = 0;
   virtual int openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, int hidden,
-                           const KURL &messageFile,
-                           const KURL &attachURL) = 0;
+                           const KUrl &messageFile,
+                           const KUrl &attachURL) = 0;
   virtual int openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, int hidden,
-                           const KURL &messageFile,
-                           const KURL::List &attachURLs) = 0;
+                           const KUrl &messageFile,
+                           const KUrl::List &attachURLs) = 0;
   virtual int openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
@@ -101,7 +101,7 @@ k_dcop:
                              const QString & messagefile, 
                              const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage(const QString & foldername,
-                             const KURL & messagefile, 
+                             const KUrl & messagefile, 
                              const QString & MsgStatusFlags = QString()) = 0;
 
   virtual QStringList folderList() const =0;
@@ -155,8 +155,8 @@ k_dcop_hidden:
                              const QString& bcc, 
                              bool hidden, 
                              bool useFolderId, 
-                             const KURL &messageFile,
-                             const KURL &attachURL) = 0;
+                             const KUrl &messageFile,
+                             const KUrl &attachURL) = 0;
 
   /** Shows the specified message in a separate message window.
       @param serialNumber the serial number of the message to be shown.
@@ -205,7 +205,7 @@ k_dcop_hidden:
                                         const QString & messagefile, 
                                         const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage_fastImport(const QString & foldername,
-                                        const KURL & messagefile, 
+                                        const KUrl & messagefile, 
                                         const QString & MsgStatusFlags = QString()) = 0;
 
   /** Clears the list of added message ids which is used to filter out

@@ -984,11 +984,11 @@ void KMReaderWin::initHtmlWidget(void)
 #endif
 
   connect(mViewer->browserExtension(),
-          SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KURL &)));
+          SIGNAL(openURLRequest(const KUrl &, const KParts::URLArgs &)),this,
+          SLOT(slotUrlOpen(const KUrl &)));
   connect(mViewer->browserExtension(),
-          SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KURL &)));
+          SIGNAL(createNewWindow(const KUrl &, const KParts::URLArgs &)),this,
+          SLOT(slotUrlOpen(const KUrl &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
@@ -1588,7 +1588,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     << "trying to writeMsgHeader() without a header strategy set!" << endl;
   QString href;
   if (hasVCard)
-    href = QString("file:") + KURL::encode_string( mTempFiles.last() );
+    href = QString("file:") + KUrl::encode_string( mTempFiles.last() );
 
   return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
 }
@@ -1662,7 +1662,7 @@ void KMReaderWin::printMsg()
 
 
 //-----------------------------------------------------------------------------
-int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
+int KMReaderWin::msgPartFromUrl(const KUrl &aUrl)
 {
   if (aUrl.isEmpty()) return -1;
 
@@ -1783,7 +1783,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
     return;
   }
 
-  const KURL url(aUrl);
+  const KUrl url(aUrl);
   mUrlClicked = url;
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
@@ -1794,7 +1794,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
+void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::URLArgs &)
 {
   mUrlClicked = aUrl;
 
@@ -1808,7 +1808,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
-  const KURL url( aUrl );
+  const KUrl url( aUrl );
   mUrlClicked = url;
 
   if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
@@ -2001,7 +2001,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
       htmlWriter()->write( "<img src=\"file:" +
-                           KURL::encode_string( aFileName ) +
+                           KUrl::encode_string( aFileName ) +
                            "\" border=\"0\">\n"
                            "</body></html>\n" );
       htmlWriter()->end();
@@ -2341,7 +2341,7 @@ void KMReaderWin::slotUrlCopy()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen( const KURL &url )
+void KMReaderWin::slotUrlOpen( const KUrl &url )
 {
   if ( !url.isEmpty() )
     mUrlClicked = url;
@@ -2372,7 +2372,7 @@ void KMReaderWin::slotMailtoReply()
 }
 
 //-----------------------------------------------------------------------------
-partNode * KMReaderWin::partNodeFromUrl( const KURL & url ) {
+partNode * KMReaderWin::partNodeFromUrl( const KUrl & url ) {
   return mRootNode ? mRootNode->findId( msgPartFromUrl( url ) ) : 0 ;
 }
 

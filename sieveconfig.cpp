@@ -134,8 +134,8 @@ namespace KMail {
     mPortSpin->setValue( port );
   }
 
-  KURL SieveConfigEditor::alternateURL() const {
-    KURL url ( mAlternateURLEdit->text() );
+  KUrl SieveConfigEditor::alternateURL() const {
+    KUrl url ( mAlternateURLEdit->text() );
     if ( !url.isValid() )
       return KURL();
 
@@ -145,7 +145,7 @@ namespace KMail {
     return url;
   }
 
-  void SieveConfigEditor::setAlternateURL( const KURL & url ) {
+  void SieveConfigEditor::setAlternateURL( const KUrl & url ) {
     mAlternateURLEdit->setText( url.url() );
   }
 

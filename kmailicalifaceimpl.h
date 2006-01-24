@@ -121,7 +121,7 @@ public:
 
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
-  KURL getAttachment( const QString& resource,
+  KUrl getAttachment( const QString& resource,
                       quint32 sernum,
                       const QString& filename );
 
@@ -195,10 +195,10 @@ public:
   static const char* annotationForContentsType( KMail::FolderContentsType type );
 
   // Called after a folder was synced with the server
-  void folderSynced( KMFolder* folder, const KURL& folderURL );
+  void folderSynced( KMFolder* folder, const KUrl& folderURL );
   // Called when deletion of a folder from the server suceeded,
   // triggers fb re-generation
-  void folderDeletedOnServer( const KURL& folderURL );
+  void folderDeletedOnServer( const KUrl& folderURL );
   void addFolderChange( KMFolder* folder, FolderChanges changes );
 
   // See CachedImapJob::slotPutMessageResult
@@ -263,9 +263,9 @@ private:
   static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
 
   void handleFolderSynced( KMFolder* folder,
-                           const KURL& folderURL,
+                           const KUrl& folderURL,
                            int _changes );
-  void triggerKolabFreeBusy( const KURL& folderURL );
+  void triggerKolabFreeBusy( const KUrl& folderURL );
 
   StorageFormat globalStorageFormat() const;
 

@@ -257,8 +257,8 @@ namespace KMail {
   //
   //
 
-  KURL NetworkAccount::getUrl() const {
-    KURL url;
+  KUrl NetworkAccount::getUrl() const {
+    KUrl url;
     url.setProtocol( protocol() );
     url.setUser( login() );
     url.setPass( passwd() );

@@ -775,7 +775,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
   {
     mTransportInfo->readConfig(nr);
   } else {
-    if (transport.startsWith("smtp://")) // should probably use KURL and SMTP_PROTOCOL
+    if (transport.startsWith("smtp://")) // should probably use KUrl and SMTP_PROTOCOL
     {
       mTransportInfo->type = "smtp";
       mTransportInfo->auth = FALSE;
@@ -790,7 +790,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
         mTransportInfo->port = "25";
       }
     } else
-    if (transport.startsWith("smtps://"))  // should probably use KURL and SMTPS_PROTOCOL
+    if (transport.startsWith("smtps://"))  // should probably use KUrl and SMTPS_PROTOCOL
     {
       mTransportInfo->type = "smtps";
       mTransportInfo->auth = FALSE;
@@ -1037,7 +1037,7 @@ KMSendSMTP::~KMSendSMTP()
 
 bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
   QString query = "headers=0&from=";
-  query += KURL::encode_string( sender );
+  query += KUrl::encode_string( sender );
 
   if ( !to.empty() )
     query += "&to=" + to.join( "&to=" );
@@ -1049,12 +1049,12 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   KMTransportInfo * ti = mSender->transportInfo();
 
   if ( ti->specifyHostname )
-    query += "&hostname=" + KURL::encode_string( ti->localHostname );
+    query += "&hostname=" + KUrl::encode_string( ti->localHostname );
 
   if ( !kmkernel->msgSender()->sendQuotedPrintable() )
     query += "&body=8bit";
 
-  KURL destination;
+  KUrl destination;
 
   destination.setProtocol((ti->encryption == "SSL") ? SMTPS_PROTOCOL : SMTP_PROTOCOL);
   destination.setHost(ti->host);

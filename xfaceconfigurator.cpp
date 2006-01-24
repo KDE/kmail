@@ -211,7 +211,7 @@ namespace KMail {
     mTextEdit->setText( text );
   }
 
-  void XFaceConfigurator::setXfaceFromFile( const KURL &url )
+  void XFaceConfigurator::setXfaceFromFile( const KUrl &url )
   {
     QString tmpFile;
     if( KIO::NetAccess::download( url, tmpFile, this ) )
@@ -228,7 +228,7 @@ namespace KMail {
   {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
     QString filter = mimeTypes.join (" ");
-    KURL url = KFileDialog::getOpenURL( QString(), filter, this, QString() );
+    KUrl url = KFileDialog::getOpenURL( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
       setXfaceFromFile( url );
   }
@@ -253,7 +253,7 @@ namespace KMail {
       }
       else
       {
-        KURL url = me.photo().url();
+        KUrl url = me.photo().url();
         if( !url.isEmpty() )
           setXfaceFromFile( url );
         else

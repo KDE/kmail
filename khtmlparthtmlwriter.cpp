@@ -140,7 +140,7 @@ namespace KMail {
     DOM::HTMLCollection images = document.images();
     for ( DOM::Node node = images.firstItem(); !node.isNull(); node = images.nextItem() ) {
       DOM::HTMLImageElement image( node );
-      KURL url( image.src().string() );
+      KUrl url( image.src().string() );
       if ( url.protocol() == "cid" ) {
         EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.find( url.path() );
         if ( it != mEmbeddedPartMap.end() ) {

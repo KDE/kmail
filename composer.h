@@ -42,7 +42,7 @@ namespace KMail {
      * From MailComposerIface
      */
     virtual void send( int how ) = 0;
-    virtual void addAttachment( KURL url, QString comment ) = 0;
+    virtual void addAttachment( KUrl url, QString comment ) = 0;
     virtual void addAttachment( const QString & name,
                                 const Q3CString & cte,
                                 const QByteArray & data,
@@ -136,7 +136,7 @@ namespace KMail {
     virtual void autoSaveMessage() = 0;
 
   public: // kmkernel, attachmentlistview
-    virtual void addAttach( const KURL url ) = 0;
+    virtual void addAttach( const KUrl url ) = 0;
 
   public: // kmcommand
     /**

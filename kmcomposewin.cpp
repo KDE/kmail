@@ -459,7 +459,7 @@ void KMComposeWin::send(int how)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttachment(KURL url,QString /*comment*/)
+void KMComposeWin::addAttachment(KUrl url,QString /*comment*/)
 {
   addAttach(url);
 }
@@ -1165,7 +1165,7 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "insert_file");
   mRecentAction = new KRecentFilesAction (i18n("&Insert File Recent"),
 		      "fileopen", 0,
-		      this,  SLOT(slotInsertRecentFile(const KURL&)),
+		      this,  SLOT(slotInsertRecentFile(const KUrl&)),
 		      actionCollection(), "insert_file_recent");
 
   mRecentAction->loadEntries( KMKernel::config() );
@@ -2155,7 +2155,7 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttach(const KURL aUrl)
+void KMComposeWin::addAttach(const KUrl aUrl)
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
@@ -2500,9 +2500,9 @@ void KMComposeWin::slotAttachFile()
   fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
   fdlg.setMode(KFile::Files);
   fdlg.exec();
-  KURL::List files = fdlg.selectedURLs();
+  KUrl::List files = fdlg.selectedURLs();
 
-  for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
+  for (KUrl::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
 }
 
@@ -2654,7 +2654,7 @@ void KMComposeWin::slotInsertFile()
       == QTextCodec::codecForLocale()) combo->setCurrentItem(i);
   if (!fdlg.exec()) return;
 
-  KURL u = fdlg.selectedURL();
+  KUrl u = fdlg.selectedURL();
   mRecentAction->addURL(u);
   // Prevent race condition updating list when multiple composers are open
   {
@@ -2686,7 +2686,7 @@ void KMComposeWin::slotInsertFile()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotInsertRecentFile(const KURL& u)
+void KMComposeWin::slotInsertRecentFile(const KUrl& u)
 {
   if (u.fileName().isEmpty()) return;
 
@@ -3195,7 +3195,7 @@ void KMComposeWin::openAttach( int index )
   const bool autoDelete = true;
   atmTempFile->setAutoDelete( autoDelete );
 
-  KURL url;
+  KUrl url;
   url.setPath( atmTempFile->name() );
 
   KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
@@ -3233,7 +3233,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KURL url = KFileDialog::getSaveURL(QString(), QString(), 0, i18n("Save Attachment As"));
+  KUrl url = KFileDialog::getSaveURL(QString(), QString(), 0, i18n("Save Attachment As"));
 
   if( url.isEmpty() )
     return;
@@ -3320,7 +3320,7 @@ void KMComposeWin::slotPasteAsQuotation()
 
 void KMComposeWin::slotPasteAsAttachment()
 {
-  KURL url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
+  KUrl url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
   if ( url.isValid() ) {
     addAttach(QApplication::clipboard()->text( QClipboard::Clipboard ) );
     return;

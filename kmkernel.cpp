@@ -194,8 +194,8 @@ KMKernel::~KMKernel ()
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
   QString to, cc, bcc, subj, body;
-  KURL messageFile;
-  KURL::List attachURLs;
+  KUrl messageFile;
+  KUrl::List attachURLs;
   bool mailto = false;
   bool checkMail = false;
   bool viewOnly = false;
@@ -264,7 +264,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewOnly = true;
     const QString filename =
       QString::fromLocal8Bit( args->getOption( "view" ) );
-    messageFile = KURL::fromPathOrURL( filename );
+    messageFile = KUrl::fromPathOrURL( filename );
     if ( !messageFile.isValid() ) {
       messageFile = KURL();
       messageFile.setPath( filename );
@@ -280,7 +280,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
         to += args->url(i).path() + ", ";
       else {
         QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
-        KURL url( tmpArg );
+        KUrl url( tmpArg );
         if ( url.isValid() )
           attachURLs += url;
         else
@@ -369,8 +369,8 @@ void KMKernel::openReader( bool onlyCheck )
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
-                            const KURL &messageFile,
-                            const KURL::List &attachURLs)
+                            const KUrl &messageFile,
+                            const KUrl::List &attachURLs)
 {
   kdDebug(5006) << "KMKernel::openComposer called" << endl;
   KMMessage *msg = new KMMessage;
@@ -395,7 +395,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
-  for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
+  for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
   if (hidden == 0) {
     cWin->show();
@@ -568,8 +568,8 @@ DCOPRef KMKernel::newMessage(const QString &to,
                              const QString &bcc,
                              bool hidden,
                              bool useFolderId,
-                             const KURL & /*messageFile*/,
-                             const KURL &attachURL)
+                             const KUrl & /*messageFile*/,
+                             const KUrl &attachURL)
 {
   KMail::Composer * win = 0;
   KMMessage *msg = new KMMessage;
@@ -601,7 +601,7 @@ DCOPRef KMKernel::newMessage(const QString &to,
   return DCOPRef( win->asMailComposerIFace() );
 }
 
-int KMKernel::viewMessage( const KURL & messageFile )
+int KMKernel::viewMessage( const KUrl & messageFile )
 {
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
 
@@ -644,7 +644,7 @@ int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrl
   return dcopAddMessage(foldername, KURL(msgUrlString), MsgStatusFlags);
 }
 
-int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
+int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
                               const QString & MsgStatusFlags)
 {
   kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
@@ -821,7 +821,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
 }
 
 int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
-                                         const KURL & msgUrl,
+                                         const KUrl & msgUrl,
                                          const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
@@ -1699,8 +1699,8 @@ void KMKernel::dumpDeadLetters()
 void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QString &cc, const QString &bcc,
                       const QString &subj, const QString &body,
-                      const KURL &messageFile,
-                      const KURL::List &attachURLs)
+                      const KUrl &messageFile,
+                      const KUrl::List &attachURLs)
 {
   if (mailto)
     openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);
@@ -1712,7 +1712,7 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
   //Anything else?
 }
 
-void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
+void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL,
   bool overwrite)
 {
   // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether

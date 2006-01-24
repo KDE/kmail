@@ -36,7 +36,7 @@ using namespace KMail;
 
 // Convert str to an ACLPermissions value.
 // url and user are there only for the error message
-static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url, const QString& user ) {
+static unsigned int IMAPRightsToPermission( const QString& str, const KUrl& url, const QString& user ) {
   unsigned int perm = 0;
   bool foundSeenPerm = false;
   uint len = str.length();
@@ -117,7 +117,7 @@ QString ACLJobs::permissionsToString( unsigned int permissions )
 }
 #endif
 
-KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KURL& url, const QString& user, unsigned int permissions )
+KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KUrl& url, const QString& user, unsigned int permissions )
 {
   QString perm = QString::fromLatin1( permissionsToIMAPRights( permissions ) );
 
@@ -130,7 +130,7 @@ KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KURL& url, const QStri
   return job;
 }
 
-ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KURL& url, const QString& user )
+ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KUrl& url, const QString& user )
 {
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
@@ -141,7 +141,7 @@ ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KURL& url, c
   return job;
 }
 
-ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KURL& url )
+ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KUrl& url )
 {
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
@@ -152,7 +152,7 @@ ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KURL& url )
   return job;
 }
 
-ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KURL& url )
+ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KUrl& url )
 {
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
@@ -163,7 +163,7 @@ ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KURL
   return job;
 }
 
-ACLJobs::GetACLJob::GetACLJob( const KURL& url, const QByteArray &packedArgs,
+ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs,
                                  bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
 {
@@ -184,7 +184,7 @@ void ACLJobs::GetACLJob::slotInfoMessage( KIO::Job*, const QString& str )
   }
 }
 
-ACLJobs::GetUserRightsJob::GetUserRightsJob( const KURL& url, const QByteArray &packedArgs,
+ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs,
                                                bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
 {
@@ -198,7 +198,7 @@ void ACLJobs::GetUserRightsJob::slotInfoMessage( KIO::Job*, const QString& str )
   m_permissions = IMAPRightsToPermission( str, url(), QString() );
 }
 
-ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,
+ACLJobs::DeleteACLJob::DeleteACLJob( const KUrl& url, const QString& userId,
                                      const QByteArray &packedArgs,
                                      bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo ),
@@ -208,7 +208,7 @@ ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,
 
 ////
 
-ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KURL& url, const ACLList& acl, bool showProgressInfo )
+ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl, bool showProgressInfo )
   : KIO::Job( showProgressInfo ),
     mSlave( slave ),
     mUrl( url ), mACLList( acl ), mACLListIterator( mACLList.begin() )
@@ -252,7 +252,7 @@ void ACLJobs::MultiSetACLJob::slotResult( KIO::Job *job )
   slotStart();
 }
 
-ACLJobs::MultiSetACLJob* ACLJobs::multiSetACL( KIO::Slave* slave, const KURL& url, const ACLList& acl )
+ACLJobs::MultiSetACLJob* ACLJobs::multiSetACL( KIO::Slave* slave, const KUrl& url, const ACLList& acl )
 {
   return new MultiSetACLJob( slave, url, acl, false /*showProgressInfo*/ );
 }

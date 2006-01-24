@@ -354,7 +354,7 @@ void PopAccount::startJob()
     }
   // end precommand code
 
-  KURL url = getUrl();
+  KUrl url = getUrl();
 
   if ( !url.isValid() ) {
     KMessageBox::error(0, i18n("Source URL is malformed"),
@@ -455,7 +455,7 @@ void PopAccount::slotJobFinished() {
     // set the initial size of mUidsOfNextSeenMsgsDict to the number of
     // messages on the server + 10%
     mUidsOfNextSeenMsgsDict.reserve( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath( "/uidl" );
     job = KIO::get( url, false, false );
     connectJob();
@@ -507,7 +507,7 @@ void PopAccount::slotJobFinished() {
     // kdDebug(5006) << "Num of Msgs to Filter: " << mHeadersOnServer.count() << endl;
     // if there are mails which should be checkedc download the headers
     if ( ( mHeadersOnServer.count() > 0 ) && ( mFilterOnServer == true ) ) {
-      KURL url = getUrl();
+      KUrl url = getUrl();
       QByteArray headerIds = mHeadersOnServer[0]->id();
       for ( int i = 1; i < mHeadersOnServer.count(); ++i ) {
         headerIds += ',';
@@ -535,7 +535,7 @@ void PopAccount::slotJobFinished() {
         }
         ids.chop( 1 ); // cut off the trailing ','
       }
-      KURL url = getUrl();
+      KUrl url = getUrl();
       url.setPath( "/download/" + ids );
       job = KIO::get( url, false, false );
       connectJob();
@@ -634,7 +634,7 @@ void PopAccount::slotJobFinished() {
       }
       ids.chop( 1 ); // cut off the trailing ','
     }
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath( "/download/" + ids );
     job = KIO::get( url, false, false );
     connectJob();
@@ -651,7 +651,7 @@ void PopAccount::slotJobFinished() {
 
     kmkernel->folderMgr()->syncAllFolders();
 
-    KURL url = getUrl();
+    KUrl url = getUrl();
     QList< QPair<time_t, QByteArray> > idsToSave;
     // Check if we want to keep any messages
     if ( mLeaveOnServer && !idsOfMsgsToDelete.isEmpty() ) {
@@ -759,7 +759,7 @@ void PopAccount::slotJobFinished() {
             "Fetched %n messages from %1. Terminating transmission...",
             numMsgs )
       .arg( mHost ) );
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath( "/commit" );
     job = KIO::get( url, false, false );
     stage = Quit;

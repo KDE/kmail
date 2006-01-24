@@ -77,30 +77,30 @@ namespace ACLJobs {
     All = List | Read | WriteFlags | Insert | Post | Create | Delete | Administer
   };
   /// Set the permissions for a given user on a given url
-  KIO::SimpleJob* setACL( KIO::Slave* slave, const KURL& url, const QString& user, unsigned int permissions );
+  KIO::SimpleJob* setACL( KIO::Slave* slave, const KUrl& url, const QString& user, unsigned int permissions );
 
   class DeleteACLJob;
   /// Delete the permissions for a given user on a given url
-  DeleteACLJob* deleteACL( KIO::Slave* slave, const KURL& url, const QString& user );
+  DeleteACLJob* deleteACL( KIO::Slave* slave, const KUrl& url, const QString& user );
 
   class GetACLJob;
   /// List all ACLs for a given url
-  GetACLJob* getACL( KIO::Slave* slave, const KURL& url );
+  GetACLJob* getACL( KIO::Slave* slave, const KUrl& url );
 
   class GetUserRightsJob;
   /// Get the users' rights for a given url
-  GetUserRightsJob* getUserRights( KIO::Slave* slave, const KURL& url );
+  GetUserRightsJob* getUserRights( KIO::Slave* slave, const KUrl& url );
 
   class MultiSetACLJob;
   /// Set and delete a list of permissions for different users on a given url
-  MultiSetACLJob* multiSetACL( KIO::Slave* slave, const KURL& url, const ACLList& acl );
+  MultiSetACLJob* multiSetACL( KIO::Slave* slave, const KUrl& url, const ACLList& acl );
 
   /// List all ACLs for a given url
   class GetACLJob : public KIO::SimpleJob
   {
     Q_OBJECT
   public:
-    GetACLJob( const KURL& url, const QByteArray &packedArgs,
+    GetACLJob( const KUrl& url, const QByteArray &packedArgs,
                bool showProgressInfo );
 
     const ACLList& entries() const { return m_entries; }
@@ -116,7 +116,7 @@ namespace ACLJobs {
   {
     Q_OBJECT
   public:
-    GetUserRightsJob( const KURL& url, const QByteArray &packedArgs,
+    GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs,
                       bool showProgressInfo );
     unsigned int permissions() const { return m_permissions; }
 
@@ -132,7 +132,7 @@ namespace ACLJobs {
   {
     Q_OBJECT
   public:
-    DeleteACLJob( const KURL& url, const QString& userId,
+    DeleteACLJob( const KUrl& url, const QString& userId,
                   const QByteArray &packedArgs,
                   bool showProgressInfo );
 
@@ -147,7 +147,7 @@ namespace ACLJobs {
     Q_OBJECT
 
   public:
-    MultiSetACLJob( KIO::Slave* slave, const KURL& url, const ACLList& acl, bool showProgressInfo );
+    MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl, bool showProgressInfo );
 
   signals:
     // Emitted when a given user's permissions were successfully changed.
@@ -160,7 +160,7 @@ namespace ACLJobs {
 
   private:
     KIO::Slave* mSlave;
-    const KURL mUrl;
+    const KUrl mUrl;
     const ACLList mACLList;
     ACLList::const_iterator mACLListIterator;
   };

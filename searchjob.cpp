@@ -82,7 +82,7 @@ void SearchJob::searchCompleteFolder()
     return slotSearchData( 0, QString() );
 
   // do the IMAP search  
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
@@ -367,7 +367,7 @@ void SearchJob::searchSingleMessage()
 
     // only search for that UID
     searchString += " UID " + QString::number( mb->UID() );
-    KURL url = mAccount->getUrl();
+    KUrl url = mAccount->getUrl();
     url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
     QByteArray packedArgs;
     QDataStream stream( &packedArgs, QIODevice::WriteOnly );

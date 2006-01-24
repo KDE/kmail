@@ -115,9 +115,9 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     command->start();
   }
   else {
-    KURL::List urlList = KURL::List::fromMimeData( e->mimeData() );
+    KUrl::List urlList = KUrl::List::fromMimeData( e->mimeData() );
     if ( !urlList.isEmpty() ) {
-      for( KURL::List::Iterator it = urlList.begin();
+      for( KUrl::List::Iterator it = urlList.begin();
            it != urlList.end(); ++it ) {
         mComposer->addAttach( *it );
       }

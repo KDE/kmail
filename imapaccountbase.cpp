@@ -353,7 +353,7 @@ namespace KMail {
   void ImapAccountBase::changeSubscription( bool subscribe, const QString& imapPath )
   {
     // change the subscription of the folder
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath(imapPath);
 
     QByteArray packedArgs;
@@ -416,7 +416,7 @@ namespace KMail {
       return;
     }
 
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath(imapPath);
 
     ACLJobs::GetUserRightsJob* job = ACLJobs::getUserRights( mSlave, url );
@@ -458,7 +458,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::getACL( KMFolder* parent, const QString& imapPath )
   {
-    KURL url = getUrl();
+    KUrl url = getUrl();
     url.setPath(imapPath);
 
     ACLJobs::GetACLJob* job = ACLJobs::getACL( mSlave, url );
@@ -957,7 +957,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::jobData::htmlURL() const
   {
-    KURL u(  url );
+    KUrl u(  url );
 #warning Port me!
 // I've changed htmlURL() to prettyURL() to make the file compile.
 // However I'm not sure this is really the correct replacement.
@@ -1126,7 +1126,7 @@ namespace KMail {
   {
      // set the status on the server, the uids are integrated in the path
      kdDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
-     KURL url = getUrl();
+     KUrl url = getUrl();
      url.setPath(path);
 
      QByteArray packedArgs;

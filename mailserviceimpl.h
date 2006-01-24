@@ -46,14 +46,14 @@ namespace KMail {
     bool sendMessage( const QString& from, const QString& to,
                       const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
-                      const KURL::List& attachments );
+                      const KUrl::List& attachments );
 
     // FIXME KDE 4.0: Remove this.
     // (cf. libkdepim/interfaces/MailTransportServiceIface.h)
     bool sendMessage( const QString& to,
                       const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
-                      const KURL::List& attachments );
+                      const KUrl::List& attachments );
 
     bool sendMessage( const QString& from, const QString& to,
                       const QString& cc, const QString& bcc,

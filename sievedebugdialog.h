@@ -75,7 +75,7 @@ protected slots:
 
 protected:
     KMail::SieveJob *mSieveJob;
-    KURL mUrl;
+    KUrl mUrl;
 
     Q3TextEdit *mEdit;
 

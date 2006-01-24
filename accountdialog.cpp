@@ -1929,7 +1929,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  KURL url = dialog.selectedURL();
+  KUrl url = dialog.selectedURL();
   if( url.isEmpty() )
   {
     return;

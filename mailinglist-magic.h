@@ -51,20 +51,20 @@ public:
   void setHandler( Handler han );
   Handler handler() const;
 
-  void setPostURLS ( const KURL::List& );
-  KURL::List postURLS() const;
+  void setPostURLS ( const KUrl::List& );
+  KUrl::List postURLS() const;
 
-  void setSubscribeURLS( const KURL::List& );
-  KURL::List subscribeURLS() const;
+  void setSubscribeURLS( const KUrl::List& );
+  KUrl::List subscribeURLS() const;
 
-  void setUnsubscribeURLS ( const KURL::List& );
-  KURL::List unsubscribeURLS() const;
+  void setUnsubscribeURLS ( const KUrl::List& );
+  KUrl::List unsubscribeURLS() const;
 
-  void setHelpURLS( const KURL::List& );
-  KURL::List helpURLS() const;
+  void setHelpURLS( const KUrl::List& );
+  KUrl::List helpURLS() const;
 
-  void setArchiveURLS( const KURL::List& );
-  KURL::List archiveURLS() const;
+  void setArchiveURLS( const KUrl::List& );
+  KUrl::List archiveURLS() const;
 
   void setId( const QString& );
   QString id() const;
@@ -74,11 +74,11 @@ public:
 private:
   int        mFeatures;
   Handler    mHandler;
-  KURL::List mPostURLS;
-  KURL::List mSubscribeURLS;
-  KURL::List mUnsubscribeURLS;
-  KURL::List mHelpURLS;
-  KURL::List mArchiveURLS;
+  KUrl::List mPostURLS;
+  KUrl::List mSubscribeURLS;
+  KUrl::List mUnsubscribeURLS;
+  KUrl::List mHelpURLS;
+  KUrl::List mArchiveURLS;
   QString    mId;
 };
 

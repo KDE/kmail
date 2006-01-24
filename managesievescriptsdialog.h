@@ -46,7 +46,7 @@ private:
   QMap<Q3CheckListItem*,KURL> mUrls;
   QMap<Q3CheckListItem*,Q3CheckListItem*> mSelectedItems;
   Q3CheckListItem * mContextMenuItem;
-  KURL mCurrentURL;
+  KUrl mCurrentURL;
   bool mWasActive : 1;
 };
 

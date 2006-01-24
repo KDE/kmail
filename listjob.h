@@ -93,7 +93,7 @@ protected:
   /**
    * Does the actual KIO::listDir
    */
-  void doListing( const KURL& url, const ImapAccountBase::jobData& jd );
+  void doListing( const KUrl& url, const ImapAccountBase::jobData& jd );
 
 protected slots:
   /**

@@ -102,7 +102,7 @@ namespace KMail {
     virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
 
     /** @return an URL for this account */
-    virtual KURL getUrl() const;
+    virtual KUrl getUrl() const;
 
     /** @return the KIO slave for this account */
     KIO::Slave * slave() const { return mSlave; }

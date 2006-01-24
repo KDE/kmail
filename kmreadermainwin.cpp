@@ -300,15 +300,15 @@ void KMReaderMainWin::setupAccel()
                      mReaderWin, SLOT(slotScrollNext()));
   accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
                      mReaderWin, SLOT(slotCopySelectedText()));
-  connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
-	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
-  connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
+  connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
+	  this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));
+  connect(mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
 	  mReaderWin, SLOT(slotUrlClicked()));
 
 }
 
 
-void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
+void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint)
 {
   KMenu * menu = new KMenu;
   mUrl = aUrl;

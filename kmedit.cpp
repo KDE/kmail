@@ -173,20 +173,20 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         command->start();
     }
     else {
-      KURL::List urlList = KURL::List::fromMimeData( e->mimeData() );
+      KUrl::List urlList = KUrl::List::fromMimeData( e->mimeData() );
       if ( !urlList.isEmpty() ) {
         KMenu p;
         const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
         const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
         const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
         if ( selectedAction == addAsTextAction ) {
-          for ( KURL::List::Iterator it = urlList.begin();
+          for ( KUrl::List::Iterator it = urlList.begin();
                 it != urlList.end(); ++it ) {
             insert( (*it).url() );
           }
         }
         else if ( selectedAction == addAsAtmAction ) {
-          for ( KURL::List::Iterator it = urlList.begin();
+          for ( KUrl::List::Iterator it = urlList.begin();
                 it != urlList.end(); ++it ) {
             mComposer->addAttach( *it );
           }

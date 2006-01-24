@@ -74,7 +74,7 @@ KIO::MetaData KMServerTest::slaveConfig() const {
 }
 
 void KMServerTest::startOffSlave( int port ) {
-  KURL url;
+  KUrl url;
   url.setProtocol( mSSL ? mProtocol + 's' : mProtocol );
   url.setHost( mHost );
   if ( port )

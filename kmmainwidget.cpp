@@ -570,9 +570,9 @@ void KMMainWidget::createWidgets(void)
 
     connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
         this, SLOT(slotReplaceMsgByUnencryptedVersion()));
-    connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
-        this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
-    connect(mMsgView, SIGNAL(urlClicked(const KURL&,int)),
+    connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
+        this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));
+    connect(mMsgView, SIGNAL(urlClicked(const KUrl&,int)),
         mMsgView, SLOT(slotUrlClicked()));
     connect(mHeaders, SIGNAL(maybeDeleting()),
         mMsgView, SLOT(clearCache()));
@@ -2133,7 +2133,7 @@ void KMMainWidget::slotMarkAll()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoint)
+void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoint)
 {
   KMenu * menu = new KMenu;
   updateMessageMenu();

@@ -126,7 +126,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
         int idx = mSrcFolder->find( curMsg );
         curMsg = mSrcFolder->getMsg( idx );
       }
-      KURL url = account->getUrl();
+      KUrl url = account->getUrl();
       QString flags = KMFolderImap::statusToFlags( curMsg->status() );
       url.setPath( folder->imapPath() + ";SECTION=" + flags );
       ImapAccountBase::jobData jd;
@@ -177,8 +177,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   }
   else if ( jt == tCopyMessage || jt == tMoveMessage )
   {
-    KURL url = account->getUrl();
-    KURL destUrl = account->getUrl();
+    KUrl url = account->getUrl();
+    KUrl destUrl = account->getUrl();
     destUrl.setPath(folder->imapPath());
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(msg_parent->storage());
     url.setPath( imapDestFolder->imapPath() + ";UID=" + sets );
@@ -285,7 +285,7 @@ void ImapJob::slotGetNextMessage()
     deleteLater();
     return;
   }
-  KURL url = account->getUrl();
+  KUrl url = account->getUrl();
   QString path = msgParent->imapPath() + ";UID=" + QString::number(msg->UID());
   ImapAccountBase::jobData jd;
   jd.parent = 0; jd.offset = 0;

@@ -34,7 +34,7 @@ public:
   void showMsg( const QString & encoding, KMMessage *msg );
 
 private slots:
-  void slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint);
+  void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
 
   /** Copy selected messages to folder with corresponding to given menuid */
   void copySelectedToFolder( int menuId );
@@ -56,7 +56,7 @@ private:
 
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
-  KURL mUrl;
+  KUrl mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,

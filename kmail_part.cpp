@@ -109,7 +109,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #if 0
   //It's also possible to make a part out of a readerWin
   KMReaderWin *mReaderWin = new KMReaderWin( canvas, canvas, actionCollection() );
-  connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
+  connect(mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
 	  mReaderWin, SLOT(slotUrlClicked()));
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mReaderWin);

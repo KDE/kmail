@@ -108,7 +108,7 @@ void KMSoundTestWidget::openSoundDialog( KUrlRequester * )
    QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
 
     if ( !soundDirs.isEmpty() ) {
-        KURL soundURL;
+        KUrl soundURL;
         QDir dir;
         dir.setFilter( QDir::Files | QDir::Readable );
         QStringList::ConstIterator it = soundDirs.begin();

@@ -578,8 +578,8 @@ QString KMFolder::prettyURL() const
 QString KMFolder::mailingListPostAddress() const
 {
   if ( mMailingList.features() & MailingList::Post ) {
-    KURL::List::const_iterator it;
-    KURL::List post = mMailingList.postURLS();
+    KUrl::List::const_iterator it;
+    KUrl::List post = mMailingList.postURLS();
     for( it = post.begin(); it != post.end(); ++it ) {
       // We check for isEmpty because before 3.3 postAddress was just an
       // email@kde.org and that leaves protocol() field in the kurl class

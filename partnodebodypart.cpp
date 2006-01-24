@@ -52,7 +52,7 @@ QString KMail::PartNodeBodyPart::makeLink( const QString & path ) const {
   // FIXME: use a PRNG for the first arg, instead of a serial number
   return QString( "x-kmail:/bodypart/%1/%2/%3" )
     .arg( serial++ ).arg( mPartNode.nodeId() )
-    .arg( KURL::encode_string_no_slash( path, utf8 ) );
+    .arg( KUrl::encode_string_no_slash( path, utf8 ) );
 }
 
 QString KMail::PartNodeBodyPart::asText() const {

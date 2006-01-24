@@ -29,7 +29,7 @@ namespace KMail {
   class SieveConfig {
   public:
     SieveConfig( bool managesieveSupported=false, bool reuseConfig=true,
-		 unsigned int port=2000, const KURL & alternateURL=KURL() )
+		 unsigned int port=2000, const KUrl & alternateURL=KURL() )
       : mManagesieveSupported( managesieveSupported ),
 	mReuseConfig( reuseConfig ),
 	mPort( port ),
@@ -63,10 +63,10 @@ namespace KMail {
       mPort = port;
     }
 
-    KURL alternateURL() const {
+    KUrl alternateURL() const {
       return mAlternateURL;
     }
-    void setAlternateURL( const KURL & url ) {
+    void setAlternateURL( const KUrl & url ) {
       mAlternateURL = url;
     }
 
@@ -79,7 +79,7 @@ namespace KMail {
     bool mManagesieveSupported;
     bool mReuseConfig;
     unsigned short mPort;
-    KURL mAlternateURL;
+    KUrl mAlternateURL;
     QString mVacationFileName;
   };
 
@@ -97,8 +97,8 @@ namespace KMail {
     unsigned short port() const;
     virtual void setPort( unsigned short port );
 
-    KURL alternateURL() const;
-    virtual void setAlternateURL( const KURL & url );
+    KUrl alternateURL() const;
+    virtual void setAlternateURL( const KUrl & url );
 
     SieveConfig config() const {
       return SieveConfig( managesieveSupported(), reuseConfig(),

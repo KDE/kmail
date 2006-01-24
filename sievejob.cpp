@@ -31,7 +31,7 @@ using KIO::UDSEntry;
 
 namespace KMail {
 
-  SieveJob::SieveJob( const KURL & url, const QString & script,
+  SieveJob::SieveJob( const KUrl & url, const QString & script,
 		      const QStack<Command> & commands,
 		      QObject * parent, const char * name )
     : QObject( parent, name ),
@@ -79,8 +79,8 @@ namespace KMail {
     case SearchActive:
       kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyURL() << " )" << endl;
       {
-	KURL url = mUrl;
-	QString query = url.query(); //save query part, because KURL::cd() erases it
+	KUrl url = mUrl;
+	QString query = url.query(); //save query part, because KUrl::cd() erases it
 	if ( !url.fileName().isEmpty() )
 		url.cd("..");
 	url.setQuery( query );
@@ -222,7 +222,7 @@ namespace KMail {
     }
   }
 
-  SieveJob * SieveJob::put( const KURL & dest, const QString & script,
+  SieveJob * SieveJob::put( const KUrl & dest, const QString & script,
 			    bool makeActive, bool wasActive ) {
     QStack<Command> commands;
     if ( makeActive )
@@ -233,25 +233,25 @@ namespace KMail {
     return new SieveJob( dest, script, commands );
   }
 
-  SieveJob * SieveJob::get( const KURL & src ) {
+  SieveJob * SieveJob::get( const KUrl & src ) {
     QStack<Command> commands;
     commands.push( Get );
     commands.push( SearchActive );
     return new SieveJob( src, QString(), commands );
   }
 
-  SieveJob * SieveJob::list( const KURL & src ) {
+  SieveJob * SieveJob::list( const KUrl & src ) {
     QStack<Command> commands;
     commands.push( List );
     return new SieveJob( src, QString(), commands );
   }
-  SieveJob * SieveJob::del( const KURL & url ) {
+  SieveJob * SieveJob::del( const KUrl & url ) {
     QStack<Command> commands;
     commands.push( Delete );
     return new SieveJob( url, QString(), commands );
   }
 
-  SieveJob * SieveJob::activate( const KURL & url ) {
+  SieveJob * SieveJob::activate( const KUrl & url ) {
     QStack<Command> commands;
     commands.push( Activate );
     commands.push( Deactivate );

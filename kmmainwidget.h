@@ -320,7 +320,7 @@ protected slots:
   void slotSendQueued();
   void slotSendQueuedVia( int item );
   void slotOnlineStatus();
-  void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
+  void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
   void slotMarkAll();
   void slotMemInfo();
   void slotSearch();
@@ -457,7 +457,7 @@ private:
   QString       mStartupFolder;
   int		mMessageStatusId;
   QList<int>    mPanner1Sep, mPanner2Sep;
-  KURL          mUrlCurrent;
+  KUrl          mUrlCurrent;
   QMenu         *mActMenu;
   QMenu         *mSendMenu;
   QMenu         *mFileMenu;

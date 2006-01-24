@@ -1025,7 +1025,7 @@ namespace KMail {
                  "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
       if ( !fileName.isEmpty() )
         htmlStr += "<a href=\"" + QString("file:")
-          + KURL::encode_string( fileName ) + "\">"
+          + KUrl::encode_string( fileName ) + "\">"
           + label + "</a>";
       else
         htmlStr += label;
@@ -1749,7 +1749,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
 
     QString href = fileName.isEmpty() ?
       "part://" + QString::number( partNum + 1 ) :
-      "file:" + KURL::encode_string( fileName ) ;
+      "file:" + KUrl::encode_string( fileName ) ;
 
     QString iconName;
     if( inlineImage )
@@ -1983,7 +1983,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
         if( !filename.isEmpty() )
             htmlStr += "<a href=\"" + QString("file:")
-                     + KURL::encode_string( filename ) + "\">"
+                     + KUrl::encode_string( filename ) + "\">"
                      + i18n("Encapsulated message") + "</a>";
         else
             htmlStr += i18n("Encapsulated message");

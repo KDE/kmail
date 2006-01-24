@@ -80,9 +80,9 @@ QString MboxCompactionJob::realLocation() const
   QString location = mSrcFolder->location();
   QFileInfo inf( location );
   if (inf.isSymLink()) {
-    KURL u; u.setPath( location );
+    KUrl u; u.setPath( location );
     // follow (and resolve) symlinks so that the final ::rename() always works
-    // KURL gives us support for absolute and relative links transparently.
+    // KUrl gives us support for absolute and relative links transparently.
     return KURL( u, inf.readLink() ).path();
   }
   return location;

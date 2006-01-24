@@ -294,7 +294,7 @@ MailingList::handler() const
 }
 
 void
-MailingList::setPostURLS ( const KURL::List& lst )
+MailingList::setPostURLS ( const KUrl::List& lst )
 {
   mFeatures |= Post;
   if ( lst.empty() ) {
@@ -302,14 +302,14 @@ MailingList::setPostURLS ( const KURL::List& lst )
   }
   mPostURLS = lst;
 }
-KURL::List
+KUrl::List
 MailingList::postURLS() const
 {
   return mPostURLS;
 }
 
 void
-MailingList::setSubscribeURLS( const KURL::List& lst )
+MailingList::setSubscribeURLS( const KUrl::List& lst )
 {
   mFeatures |= Subscribe;
   if ( lst.empty() ) {
@@ -318,14 +318,14 @@ MailingList::setSubscribeURLS( const KURL::List& lst )
 
   mSubscribeURLS = lst;
 }
-KURL::List
+KUrl::List
 MailingList::subscribeURLS() const
 {
   return mSubscribeURLS;
 }
 
 void
-MailingList::setUnsubscribeURLS( const KURL::List& lst )
+MailingList::setUnsubscribeURLS( const KUrl::List& lst )
 {
   mFeatures |= Unsubscribe;
   if ( lst.empty() ) {
@@ -334,13 +334,13 @@ MailingList::setUnsubscribeURLS( const KURL::List& lst )
 
   mUnsubscribeURLS = lst;
 }
-KURL::List MailingList::unsubscribeURLS() const
+KUrl::List MailingList::unsubscribeURLS() const
 {
   return mUnsubscribeURLS;
 }
 
 void
-MailingList::setHelpURLS( const KURL::List& lst )
+MailingList::setHelpURLS( const KUrl::List& lst )
 {
   mFeatures |= Help;
   if ( lst.empty() ) {
@@ -349,14 +349,14 @@ MailingList::setHelpURLS( const KURL::List& lst )
 
   mHelpURLS = lst;
 }
-KURL::List
+KUrl::List
 MailingList::helpURLS() const
 {
   return mHelpURLS;
 }
 
 void
-MailingList::setArchiveURLS( const KURL::List& lst )
+MailingList::setArchiveURLS( const KUrl::List& lst )
 {
   mFeatures |= Archive;
   if ( lst.empty() ) {
@@ -365,7 +365,7 @@ MailingList::setArchiveURLS( const KURL::List& lst )
 
   mArchiveURLS = lst;
 }
-KURL::List
+KUrl::List
 MailingList::archiveURLS() const
 {
   return mArchiveURLS;

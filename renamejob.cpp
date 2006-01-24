@@ -169,9 +169,9 @@ void RenameJob::execute()
     // first rename it on the server
     mNewImapPath = mOldImapPath;
     mNewImapPath = mNewImapPath.replace( mOldName, mNewName );
-    KURL src( account->getUrl() );
+    KUrl src( account->getUrl() );
     src.setPath( mOldImapPath );
-    KURL dst( account->getUrl() );
+    KUrl dst( account->getUrl() );
     dst.setPath( mNewImapPath );
     KIO::SimpleJob *job = KIO::rename( src, dst, true );
     kdDebug(5006)<< "RenameJob::rename - " << src.prettyURL()

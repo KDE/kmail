@@ -35,7 +35,7 @@ namespace KMail {
     Q_OBJECT
   protected:
     enum Command { Get, Put, Activate, Deactivate, SearchActive, List, Delete };
-    SieveJob( const KURL & url, const QString & script,
+    SieveJob( const KUrl & url, const QString & script,
 	      const QStack<Command> & commands,
 	      QObject * parent=0, const char * name=0 );
     virtual ~SieveJob();
@@ -47,22 +47,22 @@ namespace KMail {
      * Store a Sieve script. If @param makeActive is set, also mark the
      * script active
      */
-    static SieveJob * put( const KURL & dest, const QString & script,
+    static SieveJob * put( const KUrl & dest, const QString & script,
 			   bool makeActive, bool wasActive );
 
     /**
      * Get a specific Sieve script
      */
-    static SieveJob * get( const KURL & src );
+    static SieveJob * get( const KUrl & src );
 
     /**
      * List all available scripts
      */
-    static SieveJob * list( const KURL & url );
+    static SieveJob * list( const KUrl & url );
 
-    static SieveJob * del( const KURL & url );
+    static SieveJob * del( const KUrl & url );
 
-    static SieveJob * activate( const KURL & url );
+    static SieveJob * activate( const KUrl & url );
 
     void kill( bool quiet=true );
 
@@ -103,7 +103,7 @@ namespace KMail {
     void slotResult( KIO::Job * ); // for all commands
 
   protected:
-    KURL mUrl;
+    KUrl mUrl;
     KIO::Job * mJob;
     QTextDecoder * mDec;
     QString mScript;

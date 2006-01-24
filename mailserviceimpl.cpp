@@ -55,7 +55,7 @@ MailServiceImpl::MailServiceImpl()
 bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
                                    const QString& cc, const QString& bcc,
                                    const QString& subject, const QString& body,
-                                   const KURL::List& attachments )
+                                   const KUrl::List& attachments )
 {
   if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
     return false;
@@ -75,7 +75,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
 
-  for( KURL::List::ConstIterator itr = attachments.begin();
+  for( KUrl::List::ConstIterator itr = attachments.begin();
        itr != attachments.end(); ++itr ) {
     cWin->addAttachment( *itr, "" );
   }
@@ -87,9 +87,9 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
 bool MailServiceImpl::sendMessage( const QString& to,
                                    const QString& cc, const QString& bcc,
                                    const QString& subject, const QString& body,
-                                   const KURL::List& attachments )
+                                   const KUrl::List& attachments )
 {
-  kdDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,KURL::List attachments)" << endl;
+  kdDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,KUrl::List attachments)" << endl;
   kdDebug(5006) << "This DCOP call is deprecated. Use the corresponding DCOP call with the additional parameter QString from instead." << endl;
   return sendMessage( QString(), to, cc, bcc, subject, body, attachments );
 }

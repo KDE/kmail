@@ -99,20 +99,20 @@ public:
   /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KURL &messageFile, const KURL::List &attachURLs);
+                    const KUrl &messageFile, const KUrl::List &attachURLs);
   /** For backward compatibility */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KURL &messageFile, const KURL& attachURL)
+                    const KUrl &messageFile, const KUrl& attachURL)
   {
-    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List(attachURL));
+    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KUrl::List(attachURL));
   }
   /** For backward compatibility */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KURL &messageFile)
+                    const KUrl &messageFile)
   {
-    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List());
+    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KUrl::List());
   }
   /** For backward compatibility
    * @deprecated
@@ -156,8 +156,8 @@ public:
                      const QString &bcc,
                      bool hidden,
                      bool useFolderId,
-                     const KURL &messageFile,
-                     const KURL &attachURL);
+                     const KUrl &messageFile,
+                     const KUrl &attachURL);
 
   int sendCertificate( const QString& to, const QByteArray& certData );
 
@@ -165,13 +165,13 @@ public:
   
   int dcopAddMessage(const QString & foldername, const QString & messagefile,
                      const QString & MsgStatusFlags = QString());
-  int dcopAddMessage(const QString & foldername, const KURL & messagefile,
+  int dcopAddMessage(const QString & foldername, const KUrl & messagefile,
                      const QString & MsgStatusFlags = QString());
   void dcopResetAddMessage();
   /** add messages without rejecting duplicates */
   int dcopAddMessage_fastImport(const QString & foldername, const QString & messagefile,
                                 const QString & MsgStatusFlags = QString());
-  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messagefile,
+  int dcopAddMessage_fastImport(const QString & foldername, const KUrl & messagefile,
                                 const QString & MsgStatusFlags = QString());
   
   QStringList folderList() const;
@@ -182,7 +182,7 @@ public:
   virtual QString getFrom( quint32 serialNumber );
   virtual QString debugScheduler();
   virtual QString debugSernum( quint32 serialNumber );
-  int viewMessage( const KURL & messageFile );
+  int viewMessage( const KUrl & messageFile );
 
   /**
    * Pauses all background jobs and does not
@@ -247,8 +247,8 @@ public:
   void setFirstInstance(bool value) { the_firstInstance = value; }
   void action (bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
-	       const KURL &messageFile, const KURL::List &attach);
-  void byteArrayToRemoteFile(const QByteArray&, const KURL&,
+	       const KUrl &messageFile, const KUrl::List &attach);
+  void byteArrayToRemoteFile(const QByteArray&, const KUrl&,
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
@@ -428,7 +428,7 @@ private:
   KMMsgIndex *the_msgIndex;
   struct putData
   {
-    KURL url;
+    KUrl url;
     QByteArray data;
     int offset;
   };

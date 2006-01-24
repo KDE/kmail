@@ -166,7 +166,7 @@ void CachedImapJob::execute()
 
 void CachedImapJob::listMessages()
 {
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";UID=1:*;SECTION=FLAGS RFC822.SIZE");
 
   KIO::SimpleJob *job = KIO::get(url, false, false);
@@ -206,7 +206,7 @@ void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
 
   QString uids = mFoldersOrMessages.front(); mFoldersOrMessages.pop_front();
 
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() +
                QString::fromLatin1(";UID=%1").arg(uids) );
 
@@ -220,7 +220,7 @@ void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
 
 void CachedImapJob::expungeFolder()
 {
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   // Special URL that means EXPUNGE
   url.setPath( mFolder->imapPath() + QString::fromLatin1(";UID=*") );
 
@@ -314,7 +314,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
     KMFolderImap::flagsToStatus(mMsg, mfd.flags);
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -367,7 +367,7 @@ void CachedImapJob::slotPutNextMessage()
     return;
   }
 
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   QString flags = KMFolderImap::statusToFlags( mMsg->status() );
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
@@ -530,7 +530,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   QString path = mAccount->createImapPath( mFolder->imapPath(),
       folder->folder()->name() );
   if ( !folder->imapPathForCreation().isEmpty() ) {
@@ -579,7 +579,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
 
   QString folderPath = mFoldersOrMessages.front();
   mFoldersOrMessages.pop_front();
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath(folderPath);
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.path = url.path();
@@ -592,7 +592,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
 
 void CachedImapJob::checkUidValidity()
 {
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";UID=0:0" );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -657,11 +657,11 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
 void CachedImapJob::renameFolder( const QString &newName )
 {
   // Set the source URL
-  KURL urlSrc = mAccount->getUrl();
+  KUrl urlSrc = mAccount->getUrl();
   urlSrc.setPath( mFolder->imapPath() );
 
   // Set the destination URL - this is a bit trickier
-  KURL urlDst = mAccount->getUrl();
+  KUrl urlDst = mAccount->getUrl();
   QString imapPath( mFolder->imapPath() );
   // Destination url = old imappath - oldname + new name
   imapPath.truncate( imapPath.length() - mFolder->folder()->name().length() - 1);

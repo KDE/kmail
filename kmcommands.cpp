@@ -445,7 +445,7 @@ void KMCommand::keepFolderOpen( KMFolder *folder )
   mFolders.append( folder );
 }
 
-KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
+KMMailtoComposeCommand::KMMailtoComposeCommand( const KUrl &url,
                                                 KMMessage *msg )
   :mUrl( url ), mMessage( msg )
 {
@@ -473,7 +473,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
 
 KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
-   const KURL &url, KMMessage *msg, const QString &selection )
+   const KUrl &url, KMMessage *msg, const QString &selection )
   :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
 }
@@ -495,7 +495,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 
 
 KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
-   const KURL &url, KMMessage *msg )
+   const KUrl &url, KMMessage *msg )
   :KMCommand( parent, msg ), mUrl( url )
 {
 }
@@ -515,7 +515,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 }
 
 
-KMAddBookmarksCommand::KMAddBookmarksCommand( const KURL &url, QWidget *parent )
+KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
 }
@@ -534,7 +534,7 @@ KMCommand::Result KMAddBookmarksCommand::execute()
   return OK;
 }
 
-KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
+KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
    QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
@@ -549,7 +549,7 @@ KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 }
 
 
-KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
+KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
    QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
@@ -565,7 +565,7 @@ KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 }
 
 
-KMUrlCopyCommand::KMUrlCopyCommand( const KURL &url, KMMainWidget *mainWidget )
+KMUrlCopyCommand::KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget )
   :mUrl( url ), mMainWidget( mainWidget )
 {
 }
@@ -591,7 +591,7 @@ KMCommand::Result KMUrlCopyCommand::execute()
 }
 
 
-KMUrlOpenCommand::KMUrlOpenCommand( const KURL &url, KMReaderWin *readerWin )
+KMUrlOpenCommand::KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin )
   :mUrl( url ), mReaderWin( readerWin )
 {
 }
@@ -605,7 +605,7 @@ KMCommand::Result KMUrlOpenCommand::execute()
 }
 
 
-KMUrlSaveCommand::KMUrlSaveCommand( const KURL &url, QWidget *parent )
+KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
 }
@@ -614,7 +614,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 {
   if ( mUrl.isEmpty() )
     return OK;
-  KURL saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString(),
+  KUrl saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString(),
                                          parentWidget() );
   if ( saveUrl.isEmpty() )
     return Canceled;
@@ -712,7 +712,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-static KURL subjectToUrl( const QString & subject ) {
+static KUrl subjectToUrl( const QString & subject ) {
     return KFileDialog::getSaveURL( subject.trimmed()
                                            .replace( QDir::separator(), '_' ),
                                     QString() );
@@ -766,7 +766,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   mUrl = subjectToUrl( msgBase->cleanSubject() );
 }
 
-KURL KMSaveMsgCommand::url()
+KUrl KMSaveMsgCommand::url()
 {
   return mUrl;
 }
@@ -912,7 +912,7 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 
 //-----------------------------------------------------------------------------
 
-KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url,
+KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
                                     const QString & encoding )
   : KMCommand( parent ),
     mUrl( url ),
@@ -2098,7 +2098,7 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 }
 
 
-KMUrlClickedCommand::KMUrlClickedCommand( const KURL &url, uint identity,
+KMUrlClickedCommand::KMUrlClickedCommand( const KUrl &url, uint identity,
   KMReaderWin *readerWin, bool htmlPref, KMMainWidget *mainWidget )
   :mUrl( url ), mIdentity( identity ), mReaderWin( readerWin ),
    mHtmlPref( htmlPref ), mMainWidget( mainWidget )
@@ -2126,13 +2126,13 @@ KMCommand::Result KMUrlClickedCommand::execute()
       query = query.mid(queryPart.length());
 
       if (queryPart.left(9) == "?subject=")
-        msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
+        msg->setSubject( KUrl::decode_string(queryPart.mid(9)) );
       else if (queryPart.left(6) == "?body=")
         // It is correct to convert to latin1() as URL should not contain
         // anything except ascii.
-        msg->setBody( KURL::decode_string(queryPart.mid(6)).toLatin1() );
+        msg->setBody( KUrl::decode_string(queryPart.mid(6)).toLatin1() );
       else if (queryPart.left(4) == "?cc=")
-        msg->setCc( KURL::decode_string(queryPart.mid(4)) );
+        msg->setCc( KUrl::decode_string(queryPart.mid(4)) );
     }
 
     KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
@@ -2247,7 +2247,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
 
-  KURL url, dirUrl;
+  KUrl url, dirUrl;
   if ( mAttachmentMap.count() > 1 ) {
     // get the dir
     dirUrl = KDirSelectDialog::selectDirectory( QString(), false,
@@ -2290,7 +2290,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
         it != mAttachmentMap.end();
         ++it ) {
-    KURL curUrl;
+    KUrl curUrl;
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
       QString s =
@@ -2357,7 +2357,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
-                                                      const KURL& url )
+                                                      const KUrl& url )
 {
   bool bSaveEncrypted = false;
   bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
@@ -2588,12 +2588,12 @@ KMMailingListCommand::KMMailingListCommand( QWidget *parent, KMFolder *folder )
 
 KMCommand::Result KMMailingListCommand::execute()
 {
-  KURL::List lst = urls();
+  KUrl::List lst = urls();
   QString handler = ( mFolder->mailingList().handler() == MailingList::KMail )
     ? "mailto" : "https";
 
   KMCommand *command = 0;
-  for ( KURL::List::Iterator itr = lst.begin(); itr != lst.end(); ++itr ) {
+  for ( KUrl::List::Iterator itr = lst.begin(); itr != lst.end(); ++itr ) {
     if ( handler == (*itr).protocol() ) {
       command = new KMUrlClickedCommand( *itr, mFolder->identity(), 0, false );
     }
@@ -2624,7 +2624,7 @@ KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, KMFolder *f
   : KMMailingListCommand( parent, folder )
 {
 }
-KURL::List KMMailingListPostCommand::urls() const
+KUrl::List KMMailingListPostCommand::urls() const
 {
   return mFolder->mailingList().postURLS();
 }
@@ -2633,7 +2633,7 @@ KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, K
   : KMMailingListCommand( parent, folder )
 {
 }
-KURL::List KMMailingListSubscribeCommand::urls() const
+KUrl::List KMMailingListSubscribeCommand::urls() const
 {
   return mFolder->mailingList().subscribeURLS();
 }
@@ -2642,7 +2642,7 @@ KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *paren
   : KMMailingListCommand( parent, folder )
 {
 }
-KURL::List KMMailingListUnsubscribeCommand::urls() const
+KUrl::List KMMailingListUnsubscribeCommand::urls() const
 {
   return mFolder->mailingList().unsubscribeURLS();
 }
@@ -2651,7 +2651,7 @@ KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, KMF
   : KMMailingListCommand( parent, folder )
 {
 }
-KURL::List KMMailingListArchivesCommand::urls() const
+KUrl::List KMMailingListArchivesCommand::urls() const
 {
   return mFolder->mailingList().archiveURLS();
 }
@@ -2660,12 +2660,12 @@ KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, KMFolder *f
   : KMMailingListCommand( parent, folder )
 {
 }
-KURL::List KMMailingListHelpCommand::urls() const
+KUrl::List KMMailingListHelpCommand::urls() const
 {
   return mFolder->mailingList().helpURLS();
 }
 
-KMIMChatCommand::KMIMChatCommand( const KURL &url, KMMessage *msg )
+KMIMChatCommand::KMIMChatCommand( const KUrl &url, KMMessage *msg )
   :mUrl( url ), mMessage( msg )
 {
 }
@@ -2837,8 +2837,8 @@ void KMHandleAttachmentCommand::atmOpen()
     return;
   }
 
-  KURL::List lst;
-  KURL url;
+  KUrl::List lst;
+  KUrl url;
   bool autoDelete = true;
   QString fname = createAtmFileLink();
 
@@ -2856,8 +2856,8 @@ void KMHandleAttachmentCommand::atmOpen()
 
 void KMHandleAttachmentCommand::atmOpenWith()
 {
-  KURL::List lst;
-  KURL url;
+  KUrl::List lst;
+  KUrl url;
   bool autoDelete = true;
   QString fname = createAtmFileLink();
 
@@ -2986,7 +2986,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 }
 
 // return true if we should proceed, false if we should abort
-static bool checkOverwrite( const KURL& url, bool& overwrite, QWidget* w )
+static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
 {
   if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
     if ( KMessageBox::Cancel ==
@@ -3031,7 +3031,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
     return;
   }
 
-  const KURL url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString(), parentWidget() );
+  const KUrl url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString(), parentWidget() );
   if ( url.isEmpty() )
     return;
 

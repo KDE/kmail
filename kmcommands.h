@@ -154,12 +154,12 @@ class KDE_EXPORT KMMailtoComposeCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoComposeCommand( const KURL &url, KMMessage *msg=0 );
+  KMMailtoComposeCommand( const KUrl &url, KMMessage *msg=0 );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   KMMessage *mMessage;
 };
 
@@ -168,13 +168,13 @@ class KDE_EXPORT KMMailtoReplyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoReplyCommand( QWidget *parent, const KURL &url,
+  KMMailtoReplyCommand( QWidget *parent, const KUrl &url,
 			KMMessage *msg, const QString &selection );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   QString mSelection;
 };
 
@@ -183,13 +183,13 @@ class KDE_EXPORT KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( QWidget *parent, const KURL &url,
+  KMMailtoForwardCommand( QWidget *parent, const KUrl &url,
 			  KMMessage *msg );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
 };
 
 class KDE_EXPORT KMMailtoAddAddrBookCommand : public KMCommand
@@ -197,12 +197,12 @@ class KDE_EXPORT KMMailtoAddAddrBookCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoAddAddrBookCommand( const KURL &url, QWidget *parent );
+  KMMailtoAddAddrBookCommand( const KUrl &url, QWidget *parent );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
 };
 
 class KDE_EXPORT KMAddBookmarksCommand : public KMCommand
@@ -210,12 +210,12 @@ class KDE_EXPORT KMAddBookmarksCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMAddBookmarksCommand( const KURL &url, QWidget *parent );
+  KMAddBookmarksCommand( const KUrl &url, QWidget *parent );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
 };
 
 
@@ -224,12 +224,12 @@ class KDE_EXPORT KMMailtoOpenAddrBookCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoOpenAddrBookCommand( const KURL &url, QWidget *parent );
+  KMMailtoOpenAddrBookCommand( const KUrl &url, QWidget *parent );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
 };
 
 class KDE_EXPORT KMUrlCopyCommand : public KMCommand
@@ -237,12 +237,12 @@ class KDE_EXPORT KMUrlCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlCopyCommand( const KURL &url, KMMainWidget *mainWidget = 0 );
+  KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget = 0 );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   KMMainWidget *mMainWidget;
 };
 
@@ -251,12 +251,12 @@ class KDE_EXPORT KMUrlOpenCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlOpenCommand( const KURL &url, KMReaderWin *readerWin );
+  KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   KMReaderWin *mReaderWin;
 };
 
@@ -265,7 +265,7 @@ class KDE_EXPORT KMUrlSaveCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlSaveCommand( const KURL &url, QWidget *parent );
+  KMUrlSaveCommand( const KUrl &url, QWidget *parent );
 
 private slots:
   void slotUrlSaveResult( KIO::Job *job );
@@ -273,7 +273,7 @@ private slots:
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
 };
 
 class KDE_EXPORT KMEditMsgCommand : public KMCommand
@@ -308,7 +308,7 @@ class KDE_EXPORT KMSaveMsgCommand : public KMCommand
 public:
   KMSaveMsgCommand( QWidget *parent, const QList<KMMsgBase*> &msgList );
   KMSaveMsgCommand( QWidget *parent, KMMessage * msg );
-  KURL url();
+  KUrl url();
 
 private:
   virtual Result execute();
@@ -321,7 +321,7 @@ private slots:
 
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
-  KURL mUrl;
+  KUrl mUrl;
   QList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
   KMMessage *mStandAloneMessage;
@@ -336,7 +336,7 @@ class KDE_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL(),
+  KMOpenMsgCommand( QWidget *parent, const KUrl & url = KURL(),
                     const QString & encoding = QString() );
 
 private:
@@ -348,7 +348,7 @@ private slots:
 
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
-  KURL mUrl;
+  KUrl mUrl;
   DwString mMsgString;
   KIO::TransferJob *mJob;
   const QString mEncoding;
@@ -384,7 +384,7 @@ private slots:
 
 private:
   virtual Result execute();
-  Result saveItem( partNode *node, const KURL& url );
+  Result saveItem( partNode *node, const KUrl& url );
 
 private:
   PartNodeMessageMap mAttachmentMap;
@@ -732,13 +732,13 @@ class KDE_EXPORT KMUrlClickedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlClickedCommand( const KURL &url, uint identity,
+  KMUrlClickedCommand( const KUrl &url, uint identity,
     KMReaderWin *readerWin, bool mHtmlPref, KMMainWidget *mainWidget = 0 );
 
 private:
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   uint mIdentity;
   KMReaderWin *mReaderWin;
   bool mHtmlPref;
@@ -791,7 +791,7 @@ private:
 private slots:
   void commandCompleted( KMCommand *command );
 protected:
-  virtual KURL::List urls() const =0;
+  virtual KUrl::List urls() const =0;
 protected:
   KMFolder *mFolder;
 };
@@ -802,7 +802,7 @@ class KDE_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 public:
   KMMailingListPostCommand( QWidget *parent, KMFolder *parent );
 protected:
-  virtual KURL::List urls() const;
+  virtual KUrl::List urls() const;
 };
 
 class KDE_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
@@ -811,7 +811,7 @@ class KDE_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 public:
   KMMailingListSubscribeCommand( QWidget *parent, KMFolder *parent );
 protected:
-  virtual KURL::List urls() const;
+  virtual KUrl::List urls() const;
 };
 
 class KDE_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
@@ -820,7 +820,7 @@ class KDE_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 public:
   KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *parent );
 protected:
-  virtual KURL::List urls() const;
+  virtual KUrl::List urls() const;
 };
 
 class KDE_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
@@ -829,7 +829,7 @@ class KDE_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 public:
   KMMailingListArchivesCommand( QWidget *parent, KMFolder *parent );
 protected:
-  virtual KURL::List urls() const;
+  virtual KUrl::List urls() const;
 };
 
 class KDE_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
@@ -838,7 +838,7 @@ class KDE_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 public:
   KMMailingListHelpCommand( QWidget *parent, KMFolder *parent );
 protected:
-  virtual KURL::List urls() const;
+  virtual KUrl::List urls() const;
 };
 
 class KDE_EXPORT KMIMChatCommand : public KMCommand
@@ -846,7 +846,7 @@ class KDE_EXPORT KMIMChatCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMIMChatCommand( const KURL &url, KMMessage *msg=0 );
+  KMIMChatCommand( const KUrl &url, KMMessage *msg=0 );
 
 private:
   /**
@@ -857,7 +857,7 @@ private:
    */
   virtual Result execute();
 
-  KURL mUrl;
+  KUrl mUrl;
   KMMessage *mMessage;
 };
 

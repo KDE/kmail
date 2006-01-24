@@ -244,12 +244,12 @@ public:
                                  int recCount = 0 );
 
   /** Returns message part from given URL or null if invalid. */
-  partNode* partNodeFromUrl(const KURL &url);
+  partNode* partNodeFromUrl(const KUrl &url);
 
   partNode * partNodeForId( int id );
 
   /** Returns id of message part from given URL or -1 if invalid. */
-  static int msgPartFromUrl(const KURL &url);
+  static int msgPartFromUrl(const KUrl &url);
 
   void setUpdateAttachment() { mAtmUpdate = true; }
 
@@ -262,11 +262,11 @@ public:
 
   void openAttachment( int id, const QString & name );
 
-  void emitUrlClicked( const KURL & url, int button ) {
+  void emitUrlClicked( const KUrl & url, int button ) {
     emit urlClicked( url, button );
   }
 
-  void emitPopupMenu( const KURL & url, const QPoint & p ) {
+  void emitPopupMenu( const KUrl & url, const QPoint & p ) {
     if ( message() )
       emit popupMenu( *message(), url, p );
   }
@@ -285,10 +285,10 @@ signals:
   void replaceMsgByUnencryptedVersion();
 
   /** The user presses the right mouse button. 'url' may be 0. */
-  void popupMenu(KMMessage &msg, const KURL &url, const QPoint& mousePos);
+  void popupMenu(KMMessage &msg, const KUrl &url, const QPoint& mousePos);
 
   /** The user has clicked onto an URL that is no attachment. */
-  void urlClicked(const KURL &url, int button);
+  void urlClicked(const KUrl &url, int button);
 
   /** Pgp displays a password dialog */
   void noDrag(void);
@@ -315,7 +315,7 @@ public slots:
   void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
-  void slotUrlOpen(const KURL &url, const KParts::URLArgs &args);
+  void slotUrlOpen(const KUrl &url, const KParts::URLArgs &args);
 
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);
@@ -343,7 +343,7 @@ public slots:
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
   void slotUrlCopy();
-  void slotUrlOpen( const KURL &url = KURL() );
+  void slotUrlOpen( const KUrl &url = KURL() );
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
@@ -488,7 +488,7 @@ private:
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
-  KURL mUrlClicked;
+  KUrl mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;
   // an attachment should be updated
   bool mAtmUpdate;

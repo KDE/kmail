@@ -97,10 +97,10 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       insertEmails( (*ait).emails() );
     }
   } else {
-    KURL::List urls = KURL::List::fromMimeData( event->mimeData() );
+    KUrl::List urls = KUrl::List::fromMimeData( event->mimeData() );
     if ( !urls.isEmpty() ) {
       //kdDebug(5006) << "urlList" << endl;
-      KURL::List::Iterator it = urls.begin();
+      KUrl::List::Iterator it = urls.begin();
       KABC::VCardConverter converter;
       KABC::Addressee::List list;
       QString fileName;

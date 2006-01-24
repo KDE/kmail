@@ -132,7 +132,7 @@ void ListJob::execute()
             mType == ImapAccountBase::ListFolderOnlySubscribed )
     section = ";SECTION=FOLDERONLY";
 
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( mPath
       + ";TYPE=" + ltype
       + section );
@@ -197,7 +197,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   {
     // get the needed information
     const QString name = udsIt->stringValue( KIO::UDS_NAME );
-    const KURL url = KURL( udsIt->stringValue( KIO::UDS_URL ), 106 ); // utf-8
+    const KUrl url = KURL( udsIt->stringValue( KIO::UDS_URL ), 106 ); // utf-8
     const QString mimeType = udsIt->stringValue( KIO::UDS_MIME_TYPE );
     const QString attributes = udsIt->stringValue( KIO::UDS_EXTRA );
     if ( (mimeType == "inode/directory" || mimeType == "message/digest"

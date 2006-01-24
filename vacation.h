@@ -55,7 +55,7 @@ namespace KMail {
 				  const KMime::Types::AddrSpecList & aliases);
     static bool parseScript( const QString & script, QString & messageText,
 			     int & notificationInterval, QStringList & aliases );
-    KURL findURL() const;
+    KUrl findURL() const;
     void handlePutResult( KMail::SieveJob * job, bool success, bool );
 
 
@@ -73,7 +73,7 @@ namespace KMail {
   protected:
     // IO:
     KMail::SieveJob * mSieveJob;
-    KURL mUrl;
+    KUrl mUrl;
     // GUI:
     KMail::VacationDialog * mDialog;
     bool mWasActive;

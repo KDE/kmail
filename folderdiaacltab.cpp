@@ -365,9 +365,9 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 }
 
 // Warning before save() this will return the url of the _parent_ folder, when creating a new one
-KURL KMail::FolderDiaACLTab::imapURL() const
+KUrl KMail::FolderDiaACLTab::imapURL() const
 {
-  KURL url = mImapAccount->getUrl();
+  KUrl url = mImapAccount->getUrl();
   url.setPath( mImapPath );
   return url;
 }

@@ -864,7 +864,7 @@ void KMFolderCachedImap::serverSyncInternal()
       kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
       newState( mProgress, i18n("Checking annotation support"));
 
-      KURL url = mAccount->getUrl();
+      KUrl url = mAccount->getUrl();
       url.setPath( imapPath() );
       KMail::AnnotationList annotations; // to be set
 
@@ -910,7 +910,7 @@ void KMFolderCachedImap::serverSyncInternal()
         annotations << KOLAB_INCIDENCESFOR;
       if ( !annotations.isEmpty() ) {
         newState( mProgress, i18n("Retrieving annotations"));
-        KURL url = mAccount->getUrl();
+        KUrl url = mAccount->getUrl();
         url.setPath( imapPath() );
         AnnotationJobs::MultiGetAnnotationJob* job =
           AnnotationJobs::multiGetAnnotation( mAccount->slave(), url, annotations );
@@ -932,7 +932,7 @@ void KMFolderCachedImap::serverSyncInternal()
     if ( !noContent() && mAccount->hasAnnotationSupport() &&
          ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       newState( mProgress, i18n("Setting annotations"));
-      KURL url = mAccount->getUrl();
+      KUrl url = mAccount->getUrl();
       url.setPath( imapPath() );
       KMail::AnnotationList annotations; // to be set
       if ( mAnnotationFolderTypeChanged && !mAnnotationFolderType.isEmpty() ) {
@@ -973,7 +973,7 @@ void KMFolderCachedImap::serverSyncInternal()
       }
       if ( hasChangedACLs ) {
         newState( mProgress, i18n("Setting permissions"));
-        KURL url = mAccount->getUrl();
+        KUrl url = mAccount->getUrl();
         url.setPath( imapPath() );
         KIO::Job* job = KMail::ACLJobs::multiSetACL( mAccount->slave(), url, mACLList );
         ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1031,7 +1031,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // All done for this folder.
     mProgress = 100; // all done
     newState( mProgress, i18n("Synchronization done"));
-      KURL url = mAccount->getUrl();
+      KUrl url = mAccount->getUrl();
       url.setPath( imapPath() );
       kmkernel->iCalIface().folderSynced( folder(), url );
     }
@@ -2287,7 +2287,7 @@ void KMFolderCachedImap::slotFolderDeletionOnServerFinished()
 {
   for ( QStringList::const_iterator it = foldersForDeletionOnServer.constBegin();
       it != foldersForDeletionOnServer.constEnd(); ++it ) {
-    KURL url( mAccount->getUrl() );
+    KUrl url( mAccount->getUrl() );
     url.setPath( *it );
     kmkernel->iCalIface().folderDeletedOnServer( url );
   }

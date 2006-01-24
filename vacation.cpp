@@ -216,14 +216,14 @@ namespace KMail {
     return script;
   }
 
-  static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
+  static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
     assert( a );
     SieveConfig sieve = a->sieveConfig();
     if ( !sieve.managesieveSupported() )
       return KURL();
     if ( sieve.reuseConfig() ) {
       // assemble Sieve url from the settings of the account:
-      KURL u;
+      KUrl u;
       u.setProtocol( "sieve" );
       u.setHost( a->host() );
       u.setUser( a->login() );
@@ -233,18 +233,18 @@ namespace KMail {
       u.setFileName( sieve.vacationFileName() );
       return u;
     } else {
-      KURL u = sieve.alternateURL();
+      KUrl u = sieve.alternateURL();
       u.setFileName( sieve.vacationFileName() );
       return u;
     }
   }
 
-  KURL Vacation::findURL() const {
+  KUrl Vacation::findURL() const {
     AccountManager * am = kmkernel->acctMgr();
     assert( am );
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
-        KURL u = findUrlForAccount( iab );
+        KUrl u = findUrlForAccount( iab );
 	if ( !u.isEmpty() )
 	  return u;
       }

@@ -72,14 +72,14 @@ void KMail::ManageSieveScriptsDialog::killAllJobs() {
   mJobs.clear();
 }
 
-static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
+static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
   assert( a );
   const KMail::SieveConfig sieve = a->sieveConfig();
   if ( !sieve.managesieveSupported() )
     return KURL();
   if ( sieve.reuseConfig() ) {
     // assemble Sieve url from the settings of the account:
-    KURL u;
+    KUrl u;
     u.setProtocol( "sieve" );
     u.setHost( a->host() );
     u.setUser( a->login() );
@@ -105,7 +105,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
     last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
     last->setPixmap( 0, SmallIcon( "server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
-      const KURL u = ::findUrlForAccount( iab );
+      const KUrl u = ::findUrlForAccount( iab );
       if ( u.isEmpty() )
         continue;
       SieveJob * job = SieveJob::list( u );
@@ -190,7 +190,7 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item
     return;
   if ( !mSelectedItems.count( item ) )
     return;
-  KURL u = mUrls[item];
+  KUrl u = mUrls[item];
   if ( u.isEmpty() )
     return;
   Q3CheckListItem * selected = mSelectedItems[item];
@@ -227,7 +227,7 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
   if ( !mUrls.count( parent ) )
     return;
 
-  KURL u = mUrls[parent];
+  KUrl u = mUrls[parent];
   if ( u.isEmpty() )
     return;
 
@@ -252,7 +252,7 @@ void KMail::ManageSieveScriptsDialog::slotEditScript() {
   Q3CheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
   if ( !mUrls.count( parent ) )
     return;
-  KURL url = mUrls[parent];
+  KUrl url = mUrls[parent];
   if ( url.isEmpty() )
     return;
   url.setFileName( mContextMenuItem->text( 0 ) );
@@ -273,7 +273,7 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
   if ( !mUrls.count( mContextMenuItem ) )
     return;
 
-  KURL u = mUrls[mContextMenuItem];
+  KUrl u = mUrls[mContextMenuItem];
   if ( u.isEmpty() )
     return;
 

@@ -35,7 +35,7 @@
 using namespace KMail;
 
 KIO::SimpleJob* AnnotationJobs::setAnnotation(
-    KIO::Slave* slave, const KURL& url, const QString& entry,
+    KIO::Slave* slave, const KUrl& url, const QString& entry,
     const QMap<QString,QString>& attributes )
 {
   QByteArray packedArgs;
@@ -48,7 +48,7 @@ KIO::SimpleJob* AnnotationJobs::setAnnotation(
 }
 
 AnnotationJobs::GetAnnotationJob* AnnotationJobs::getAnnotation(
-    KIO::Slave* slave, const KURL& url, const QString& entry,
+    KIO::Slave* slave, const KUrl& url, const QString& entry,
     const QStringList& attributes )
 {
   QByteArray packedArgs;
@@ -60,7 +60,7 @@ AnnotationJobs::GetAnnotationJob* AnnotationJobs::getAnnotation(
   return job;
 }
 
-AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KURL& url, const QString& entry,
+AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KUrl& url, const QString& entry,
                                                     const QByteArray &packedArgs,
                                                     bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo ),
@@ -83,7 +83,7 @@ void AnnotationJobs::GetAnnotationJob::slotInfoMessage( KIO::Job*, const QString
 }
 
 AnnotationJobs::MultiGetAnnotationJob::MultiGetAnnotationJob(
-  KIO::Slave* slave, const KURL& url, const QStringList& entries, bool showProgressInfo )
+  KIO::Slave* slave, const KUrl& url, const QStringList& entries, bool showProgressInfo )
   : KIO::Job( showProgressInfo ),
     mSlave( slave ),
     mUrl( url ), mEntryList( entries ), mEntryListIterator( mEntryList.begin() )
@@ -130,7 +130,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KIO::Job *job )
   slotStart();
 }
 
-AnnotationJobs::MultiGetAnnotationJob* AnnotationJobs::multiGetAnnotation( KIO::Slave* slave, const KURL& url, const QStringList& entries )
+AnnotationJobs::MultiGetAnnotationJob* AnnotationJobs::multiGetAnnotation( KIO::Slave* slave, const KUrl& url, const QStringList& entries )
 {
   return new MultiGetAnnotationJob( slave, url, entries, false /*showProgressInfo*/ );
 }
@@ -138,7 +138,7 @@ AnnotationJobs::MultiGetAnnotationJob* AnnotationJobs::multiGetAnnotation( KIO::
 ////
 
 AnnotationJobs::MultiSetAnnotationJob::MultiSetAnnotationJob(
-  KIO::Slave* slave, const KURL& url, const AnnotationList& annotations, bool showProgressInfo )
+  KIO::Slave* slave, const KUrl& url, const AnnotationList& annotations, bool showProgressInfo )
   : KIO::Job( showProgressInfo ),
     mSlave( slave ),
     mUrl( url ), mAnnotationList( annotations ), mAnnotationListIterator( mAnnotationList.begin() )
@@ -179,7 +179,7 @@ void AnnotationJobs::MultiSetAnnotationJob::slotResult( KIO::Job *job )
 }
 
 AnnotationJobs::MultiSetAnnotationJob* AnnotationJobs::multiSetAnnotation(
-  KIO::Slave* slave, const KURL& url, const AnnotationList& annotations )
+  KIO::Slave* slave, const KUrl& url, const AnnotationList& annotations )
 {
   return new MultiSetAnnotationJob( slave, url, annotations, false /*showProgressInfo*/ );
 }

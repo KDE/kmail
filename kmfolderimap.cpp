@@ -212,7 +212,7 @@ void KMFolderImap::remove()
     FolderStorage::remove();
     return;
   }
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath(imapPath());
   if ( mAccount->makeConnection() == ImapAccountBase::Error ||
        imapPath().isEmpty() )
@@ -998,7 +998,7 @@ void KMFolderImap::checkValidity()
     close();
     return;
   }
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
   kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
 
@@ -1179,7 +1179,7 @@ void KMFolderImap::getFolder(bool force)
 //-----------------------------------------------------------------------------
 void KMFolderImap::reallyGetFolder(const QString &startUid)
 {
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
     mContentState = imapNoInformation;
@@ -1309,7 +1309,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
   {
     mContentState = imapDownloadInProgress;
-    KURL url = mAccount->getUrl();
+    KUrl url = mAccount->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     jd.url = url.url();
@@ -1611,7 +1611,7 @@ void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
     kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
     return;
   }
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   QString parent = ( parentPath.isEmpty() ? imapPath() : parentPath );
   QString path = mAccount->createImapPath( parent, name );
   if ( askUser ) {
@@ -1662,14 +1662,14 @@ QTextCodec * KMFolderImap::utf7Codec()
 QString KMFolderImap::encodeFileName(const QString &name)
 {
   QString result = utf7Codec()->fromUnicode(name);
-  return KURL::encode_string_no_slash(result);
+  return KUrl::encode_string_no_slash(result);
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMFolderImap::decodeFileName(const QString &name)
 {
-  QString result = KURL::decode_string(name);
+  QString result = KUrl::decode_string(name);
   return utf7Codec()->toUnicode(result.toLatin1());
 }
 
@@ -1700,7 +1700,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 {
   mUidMetaDataMap.remove( msg->UID() );
   mMetaDataMap.remove( msg->msgIdMD5() );
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
   ulong uid = msg->UID();
   /* If the uid is empty the delete job below will nuke all mail in the
@@ -1736,7 +1736,7 @@ void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);
 
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.first()->storage());
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
@@ -1899,7 +1899,7 @@ void KMFolderImap::getUids(const QList<KMMessage*>& msgList, QList<ulong>& uids)
 void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
 {
   aFolder->setNeedsCompacting(FALSE);
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath(aFolder->imapPath() + ";UID=*");
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
     return;
@@ -1951,7 +1951,7 @@ bool KMFolderImap::processNewMail(bool)
         this, SLOT( slotProcessNewMail(int, const QString&) ) );
     return true;
   }
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   if (mReadOnly)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
   else
@@ -2065,7 +2065,7 @@ int KMFolderImap::expungeContents()
   int rc = KMFolderMbox::expungeContents();
 
   // set the deleted flag for all messages in the folder
-  KURL url = mAccount->getUrl();
+  KUrl url = mAccount->getUrl();
   url.setPath( imapPath() + ";UID=1:*");
   if ( mAccount->makeConnection() == ImapAccountBase::Connected )
   {

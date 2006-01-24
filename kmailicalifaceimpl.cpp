@@ -228,7 +228,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 
   bool bOK = false;
 
-  KURL url( attachmentURL );
+  KUrl url( attachmentURL );
   if ( url.isValid() && url.isLocalFile() ) {
     const QString fileName( url.path() );
     QFile file( fileName );
@@ -813,7 +813,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
   return rc;
 }
 
-KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
+KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
                                         quint32 sernum,
                                         const QString& filename )
 {
@@ -837,7 +837,7 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
     return KURL();
   }
 
-  KURL url;
+  KUrl url;
 
   bool bOK = false;
   bool quiet = mResourceQuiet;
@@ -1318,7 +1318,7 @@ KMailICalIfaceImpl::FolderInfo KMailICalIfaceImpl::readFolderInfo( const KMFolde
 }
 
 
-void KMailICalIfaceImpl::folderSynced( KMFolder* folder, const KURL& folderURL )
+void KMailICalIfaceImpl::folderSynced( KMFolder* folder, const KUrl& folderURL )
 {
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() && (*it).mChanges ) {
@@ -1328,7 +1328,7 @@ void KMailICalIfaceImpl::folderSynced( KMFolder* folder, const KURL& folderURL )
 }
 
 void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
-                                             const KURL& folderURL,
+                                             const KUrl& folderURL,
                                              int _changes )
 {
   // This is done here instead of in the resource, because
@@ -1342,17 +1342,17 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   }
 }
 
-void KMailICalIfaceImpl::folderDeletedOnServer( const KURL& folderURL )
+void KMailICalIfaceImpl::folderDeletedOnServer( const KUrl& folderURL )
 {
   triggerKolabFreeBusy( folderURL );
 }
 
-void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
+void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
 {
   /* Steffen said: you must issue an authenticated HTTP GET request to
      https://kolabserver/freebusy/trigger/user@domain/Folder/NestedFolder.pfb
      (replace .pfb with .xpfb for extended fb lists). */
-  KURL httpURL( folderURL );
+  KUrl httpURL( folderURL );
   // Keep username ("user@domain"), pass, and host from the imap url
   httpURL.setProtocol( "https" );
   httpURL.setPort( 0 ); // remove imap port

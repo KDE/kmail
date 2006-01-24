@@ -75,7 +75,7 @@ k_dcop:
 
   virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
   
-  virtual KURL getAttachment( const QString& resource,
+  virtual KUrl getAttachment( const QString& resource,
                               quint32 sernum,
                               const QString& filename ) = 0;
 

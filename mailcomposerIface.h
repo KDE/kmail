@@ -25,7 +25,7 @@ class MailComposerIface : virtual public DCOPObject
     /**
       Add url as attachment with a user-defined comment.
     */
-    virtual void addAttachment(KURL url,QString comment) = 0;
+    virtual void addAttachment(KUrl url,QString comment) = 0;
     /**
       Set message body.
     */
