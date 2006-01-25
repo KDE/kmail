@@ -71,7 +71,7 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   QString serNumUri = locateLocal( "data", "kmail/unfiltered." +
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
-  QStringList serNums = config.readListEntry( "unfiltered" );
+  QStringList serNums = config.readEntry( "unfiltered" , QStringList() );
 
   for ( QStringList::ConstIterator it = serNums.begin();
 	it != serNums.end(); ++it ) {

@@ -408,9 +408,9 @@ MailingList::readConfig( KConfig* config )
     config->readEntry( "MailingListHandler", QVariant( MailingList::KMail ) ).toInt() );
 
   mId = config->readEntry("MailingListId");
-  mPostURLS        = config->readListEntry( "MailingListPostingAddress" );
-  mSubscribeURLS   = config->readListEntry( "MailingListSubscribeAddress" );
-  mUnsubscribeURLS = config->readListEntry( "MailingListUnsubscribeAddress" );
-  mArchiveURLS     = config->readListEntry( "MailingListArchiveAddress" );
-  mHelpURLS        = config->readListEntry( "MailingListHelpAddress" );
+  mPostURLS        = config->readEntry( "MailingListPostingAddress" , QStringList() );
+  mSubscribeURLS   = config->readEntry( "MailingListSubscribeAddress" , QStringList() );
+  mUnsubscribeURLS = config->readEntry( "MailingListUnsubscribeAddress" , QStringList() );
+  mArchiveURLS     = config->readEntry( "MailingListArchiveAddress" , QStringList() );
+  mHelpURLS        = config->readEntry( "MailingListHelpAddress" , QStringList() );
 }

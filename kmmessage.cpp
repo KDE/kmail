@@ -3789,7 +3789,7 @@ void KMMessage::readConfig()
     if (sWrapCol < 30)
       sWrapCol = 30;
 
-    sPrefCharsets = config.readListEntry("pref-charsets");
+    sPrefCharsets = config.readEntry("pref-charsets", QStringList() );
   }
 
   { // area for config group "Reader"

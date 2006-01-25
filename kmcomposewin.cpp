@@ -2661,8 +2661,8 @@ void KMComposeWin::slotInsertFile()
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
     QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).toLatin1();
-    QStringList urls = group.readListEntry( "recent-urls" );
-    QStringList encodings = group.readListEntry( "recent-encodings" );
+    QStringList urls = group.readEntry( "recent-urls" , QStringList() );
+    QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
     uint mMaxRecentFiles = 30;
@@ -2699,8 +2699,8 @@ void KMComposeWin::slotInsertRecentFile(const KUrl& u)
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QStringList urls = group.readListEntry( "recent-urls" );
-    QStringList encodings = group.readListEntry( "recent-encodings" );
+    QStringList urls = group.readEntry( "recent-urls" , QStringList() );
+    QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
     int index = urls.findIndex( u.prettyURL() );
     if (index != -1) {
       QString encoding = encodings[ index ];

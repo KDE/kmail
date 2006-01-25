@@ -1348,7 +1348,7 @@ void KMKernel::init()
   imProxy()->initialize();
   { // area for config group "Composer"
     KConfigGroup group(cfg, "Composer");
-    if (group.readListEntry("pref-charsets").isEmpty())
+    if (group.readEntry("pref-charsets", QStringList() ).isEmpty())
     {
       group.writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }

@@ -192,13 +192,13 @@ namespace KMail {
     setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", false ) );
     // read namespaces
     nsMap map;
-    QStringList list = config.readListEntry( QString::number( PersonalNS ) );
+    QStringList list = config.readEntry( QString::number( PersonalNS) , QStringList() );
     if ( !list.isEmpty() )
       map[PersonalNS] = list.gres( "\"", "" );
-    list = config.readListEntry( QString::number( OtherUsersNS ) );
+    list = config.readEntry( QString::number( OtherUsersNS) , QStringList()  );
     if ( !list.isEmpty() )
       map[OtherUsersNS] = list.gres( "\"", "" );
-    list = config.readListEntry( QString::number( SharedNS ) );
+    list = config.readEntry( QString::number( SharedNS ), QStringList() );
     if ( !list.isEmpty() )
       map[SharedNS] = list.gres( "\"", "" );
     setNamespaces( map );

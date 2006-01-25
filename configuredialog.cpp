@@ -3071,7 +3071,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 void ComposerPage::CharsetTab::doLoadOther() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  QStringList charsets = composer.readListEntry( "pref-charsets" );
+  QStringList charsets = composer.readEntry( "pref-charsets" , QStringList() );
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
@@ -3379,7 +3379,7 @@ void ComposerPage::AttachmentsTab::doLoadOther() {
   mMissingAttachmentDetectionCheck->setChecked(
     composer.readEntry( "showForgottenAttachmentWarning", true ) );
   QStringList attachWordsList =
-    composer.readListEntry( "attachment-keywords" );
+    composer.readEntry( "attachment-keywords" , QStringList() );
   if ( attachWordsList.isEmpty() ) {
     // default value
     attachWordsList << QString::fromLatin1("attachment")

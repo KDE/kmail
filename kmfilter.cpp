@@ -241,7 +241,7 @@ void KMFilter::readConfig(KConfigGroup & config)
       mAction = NoAction;
   }
   else {
-    QStringList sets = config.readListEntry("apply-on");
+    QStringList sets = config.readEntry("apply-on", QStringList() );
     if ( sets.isEmpty() && !config.hasKey("apply-on") ) {
       bApplyOnOutbound = false;
       bApplyOnInbound = true;

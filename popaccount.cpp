@@ -159,7 +159,7 @@ void PopAccount::processNewMail(bool _interactive)
     QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
                                        mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
-    QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+    QStringList uidsOfSeenMsgs = config.readEntry( "seenUidList" , QStringList() );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.reserve( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     for ( int i = 0; i < uidsOfSeenMsgs.count(); ++i ) {
@@ -176,7 +176,7 @@ void PopAccount::processNewMail(bool _interactive)
       mTimeOfSeenMsgsVector = timeOfSeenMsgs.toVector();
     else
       mTimeOfSeenMsgsVector.clear();
-    QStringList downloadLater = config.readListEntry( "downloadLater" );
+    QStringList downloadLater = config.readEntry( "downloadLater" , QStringList() );
     for ( int i = 0; i < downloadLater.count(); ++i ) {
       mHeaderLaterUids.insert( downloadLater[i].toLatin1() );
     }
