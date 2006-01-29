@@ -71,6 +71,7 @@ using KMail::ListJob;
 #include <qlayout.h>
 #include <qvaluelist.h>
 #include "annotationjobs.h"
+#include "quotajobs.h"
 #include <libkdepim/kincidencechooser.h>
 using namespace KMail;
 #include <globalsettings.h>
@@ -151,7 +152,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false )
+    mIncidencesForChanged( false ),
+    mQuotaInfo()
 {
   setUidValidity("");
   readUidCache();
@@ -565,6 +567,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
   case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
   case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
+  case SYNC_STATE_GET_QUOTA:         return "SYNC_STATE_GET_QUOTA";
   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
@@ -929,8 +932,7 @@ void KMFolderCachedImap::serverSyncInternal()
     }
 
   case SYNC_STATE_GET_ACLS:
-    // Continue with the subfolders
-    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+    mSyncState = SYNC_STATE_GET_QUOTA;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       newState( mProgress, i18n( "Retrieving permissions" ) );
@@ -939,7 +941,22 @@ void KMFolderCachedImap::serverSyncInternal()
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
       break;
     }
-
+  case SYNC_STATE_GET_QUOTA:
+    // Continue with the subfolders
+    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+    if( !noContent() && mAccount->hasQuotaSupport() ) {
+      newState( mProgress, i18n("Getting quota information"));
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      KIO::Job* job = KMail::QuotaJobs::getStorageQuota( mAccount->slave(), url );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      mAccount->insertJob(job, jd);
+      connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
+          SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
+      connect( job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotQuotaResult(KIO::Job *)) );
+      break;
+    }
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
       mProgress = 98;
@@ -1769,6 +1786,12 @@ KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job*, const KMail::A
 }
 
 void
+KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
+{
+    mQuotaInfo = info;
+}
+
+void
 KMFolderCachedImap::setACLList( const ACLList& arr )
 {
   mACLList = arr;
@@ -2000,6 +2023,39 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
   mProgress += 2;
   serverSyncInternal();
 }
+
+void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  Q_ASSERT( it != mAccount->jobsEnd() );
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  Q_ASSERT( (*it).parent == folder() );
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  QuotaJobs::GetStorageQuotaJob* quotajob = static_cast<QuotaJobs::GetStorageQuotaJob *>( job );
+  if ( quotajob->error() ) {
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
+      // that's when the imap server doesn't support quota
+      mAccount->setHasNoQuotaSupport();
+    }
+    else
+      kdWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
+  } else {
+    // There was no error, which means the server does support quota, but
+    // our info is not valid. That means that there is no quota on this folder,
+    // which we indicate by setting the name to something valid, but leaving the
+    // values invalid.
+    if ( !mQuotaInfo.isValid() ) {
+      mQuotaInfo.name = "STORAGE";
+    }
+  }
+
+  if (mAccount->slave()) mAccount->removeJob(job);
+  mProgress += 2;
+  serverSyncInternal();
+}
+
+
 
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )

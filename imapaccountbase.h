@@ -251,6 +251,17 @@ namespace KMail {
     void setHasNoAnnotationSupport() { mAnnotationSupport = false; }
 
     /**
+     * Returns false if the IMAP server for this account doesn't support quotas.
+     * (and true if it does, or if we didn't try yet).
+     */
+    bool hasQuotaSupport() const { return mQuotaSupport; }
+
+    /**
+     * Called if the quota command failed due to 'unsupported'
+     */
+    void setHasNoQuotaSupport() { mQuotaSupport = false; }
+
+    /**
      * React to an error from the job. Uses job->error and job->errorString and calls
      * the protected virtual handleJobError with them. See handleError below for details.
      */
@@ -374,6 +385,7 @@ namespace KMail {
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;
     bool mAnnotationSupport : 1;
+    bool mQuotaSupport : 1;
     bool mSlaveConnected : 1;
     bool mSlaveConnectionError : 1;
 

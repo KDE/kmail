@@ -44,6 +44,7 @@
 #include "mailinglist-magic.h"
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
+#include "folderdiaquotatab.h"
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
@@ -154,6 +155,13 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     if ( FolderDiaACLTab::supports( refFolder ) ) {
       box = addVBoxPage( i18n("Access Control") );
       tab = new FolderDiaACLTab( this, box );
+      addTab( tab );
+    }
+  }
+  if ( !noContent && refFolder && ( /*folderType == KMFolderTypeImap ||*/ folderType == KMFolderTypeCachedImap ) ) {
+    if ( FolderDiaQuotaTab::supports( refFolder ) ) {
+      box = addVBoxPage( i18n("Quota") );
+      tab = new FolderDiaQuotaTab( this, box );
       addTab( tab );
     }
   }
