@@ -23,10 +23,6 @@
 #include <kdialogbase.h>
 #include <kabc/addressee.h>
 
-
-
-class QString;
-
 namespace KPIM {
   class AddresseeView;
 }
@@ -37,7 +33,7 @@ namespace KMail {
   {
      Q_OBJECT
      public:
-       VCardViewer(QWidget *parent, const QString& vCard, const char* name);
+       VCardViewer(QWidget *parent, const QByteArray& vCard, const char* name);
        virtual ~VCardViewer();
 
      protected:

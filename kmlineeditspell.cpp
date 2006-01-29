@@ -87,11 +87,10 @@ void KMLineEdit::insertEmails( const QStringList & emails )
 
 void KMLineEdit::dropEvent(QDropEvent *event)
 {
-  QString vcards;
-  KVCardDrag::decode( event, vcards );
-  if ( !vcards.isEmpty() ) {
-    KABC::VCardConverter converter;
-    KABC::Addressee::List list = converter.parseVCards( vcards.toAscii() );
+  if ( KVCardDrag::canDecode( event ) ) {
+    KABC::Addressee::List list;
+    KVCardDrag::decode( event, list );
+
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
       insertEmails( (*ait).emails() );
@@ -109,10 +108,9 @@ void KMLineEdit::dropEvent(QDropEvent *event)
         if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
           QFile file( fileName );
           file.open( QIODevice::ReadOnly );
-          QByteArray rawData = file.readAll();
+          const QByteArray data = file.readAll();
           file.close();
-          QString data = QString::fromUtf8( rawData.data(), rawData.size() + 1 );
-          list += converter.parseVCards( data.toAscii() );
+          list += converter.parseVCards( data );
           KIO::NetAccess::removeTempFile( fileName );
         } else {
           QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" );
