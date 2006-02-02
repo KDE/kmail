@@ -1853,6 +1853,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   // some information that is needed for imap messages with LOD
   msg->setParent( message()->parent() );
   msg->setUID(message()->UID());
+  msg->setComplete(true);
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideEncoding(), msg );

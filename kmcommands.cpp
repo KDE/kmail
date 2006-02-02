@@ -980,6 +980,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       return;
     }
     KMMessage *msg = new KMMessage( dwMsg );
+    msg->setComplete( true );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
     win->showMsg( mEncoding, msg );
