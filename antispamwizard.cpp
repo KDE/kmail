@@ -431,7 +431,7 @@ void AntiSpamWizard::accept()
         classHamFilterActions->append( classHamFilterAction );
       }
     }
-	KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
+    KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
     if ( replaceExistingFilters )
       classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
     else
@@ -664,15 +664,15 @@ void AntiSpamWizard::sortFilterOnExistance(
 AntiSpamWizard::SpamToolConfig::SpamToolConfig( QString toolId,
       int configVersion, int prio, QString name, QString exec,
       QString url, QString filter, QString detection, QString spam, QString ham,
-	  QString noSpam, QString header, QString pattern, QString pattern2,
-	  QString serverPattern, bool detectionOnly, bool regExp, bool bayesFilter,
-	  bool tristateDetection, WizardMode type )
+      QString noSpam, QString header, QString pattern, QString pattern2,
+      QString serverPattern, bool detectionOnly, bool regExp, bool bayesFilter,
+      bool tristateDetection, WizardMode type )
   : mId( toolId ), mVersion( configVersion ), mPrio( prio ),
     mVisibleName( name ), mExecutable( exec ), mWhatsThisText( url ),
     mFilterName( filter ), mDetectCmd( detection ), mSpamCmd( spam ),
     mHamCmd( ham ), mNoSpamCmd( noSpam ), mDetectionHeader( header ),
-	mDetectionPattern( pattern ), mDetectionPattern2( pattern2 ),
-	mServerPattern( serverPattern ), mDetectionOnly( detectionOnly ),
+    mDetectionPattern( pattern ), mDetectionPattern2( pattern2 ),
+    mServerPattern( serverPattern ), mDetectionOnly( detectionOnly ),
     mUseRegExp( regExp ), mSupportsBayesFilter( bayesFilter ),
     mSupportsUnsure( tristateDetection ), mType( type )
 {
@@ -783,7 +783,7 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
                         "spamassassin -L",
                         "sa-learn -L --spam --no-rebuild --single",
                         "sa-learn -L --ham --no-rebuild --single",
-						"spamassassin -d",
+                        "spamassassin -d",
                         "X-Spam-Flag", "yes", "", "",
                         false, false, true, false, AntiSpam );
 }
