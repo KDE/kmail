@@ -110,8 +110,7 @@ QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KURL
             SLOT(slotQuotaInfoReceived(const QuotaInfoList&)));
     connect(job, SIGNAL(quotaRootResult(const QStringList&)),
             SLOT(slotQuotarootResult(const QStringList&)));
-    connect( job, SIGNAL( result( KIO::Job* ) ),
-             SLOT( slotResult( KIO::Job* ) ) );
+    addSubjob( job );
     KIO::Scheduler::assignJobToSlave( slave, job );
 }
 
