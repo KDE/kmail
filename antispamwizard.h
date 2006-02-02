@@ -91,7 +91,8 @@ namespace KMail {
     PipeCmdDetect=spamassassin -L
     ExecCmdSpam=sa-learn --spam --no-rebuild --single
     ExecCmdHam=sa-learn --ham --no-rebuild --single
-    DetectionHeader=X-Spam-Flag
+    PipeCmdNoSpam=spamassassin -d
+	DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
     DetectionPattern2=
     DetectionOnly=0
@@ -139,8 +140,8 @@ namespace KMail {
           SpamToolConfig( QString toolId, int configVersion, int prio,
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
-                        QString header, QString pattern, QString pattern2,
-                        QString serverPattern,
+						QString noSpam, QString header, QString pattern,
+						QString pattern2, QString serverPattern,
                         bool detectionOnly, bool regExp, bool bayesFilter, 
                         bool tristateDetection, WizardMode type );
 
@@ -154,6 +155,7 @@ namespace KMail {
           QString getDetectCmd() const { return mDetectCmd; }
           QString getSpamCmd() const { return mSpamCmd; }
           QString getHamCmd() const { return mHamCmd; }
+		  QString getNoSpamCmd() const { return mNoSpamCmd; }
           QString getDetectionHeader() const { return mDetectionHeader; }
           QString getDetectionPattern() const { return mDetectionPattern; }
           QString getDetectionPattern2() const { return mDetectionPattern2; }
@@ -190,7 +192,9 @@ namespace KMail {
           QString mSpamCmd;
           // pipe through cmd to let the tool learn a ham message
           QString mHamCmd;
-          // by which header are messages marked as spam
+          // pipe through cmd to let the tool delete the spam markup
+          QString mNoSpamCmd;
+		  // by which header are messages marked as spam
           QString mDetectionHeader;
           // what header pattern is used to mark spam messages
           QString mDetectionPattern;
