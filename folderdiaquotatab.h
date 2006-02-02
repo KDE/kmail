@@ -63,6 +63,12 @@ public:
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );
+  void showQuotaWidget();
+private slots:
+  // Network (KIO) slots
+  void slotConnectionResult( int, const QString& );
+  void slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& );
+
 
 private:
 
@@ -70,6 +76,7 @@ private:
   QuotaWidget* mQuotaWidget;
   QWidgetStack* mStack;
   ImapAccountBase* mImapAccount;
+  QString mImapPath;
   KMFolderDialog* mDlg;
 
   QuotaInfo mQuotaInfo;

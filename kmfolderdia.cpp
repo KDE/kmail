@@ -158,7 +158,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
       addTab( tab );
     }
   }
-  if ( !noContent && refFolder && ( /*folderType == KMFolderTypeImap ||*/ folderType == KMFolderTypeCachedImap ) ) {
+  if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
     if ( FolderDiaQuotaTab::supports( refFolder ) ) {
       box = addVBoxPage( i18n("Quota") );
       tab = new FolderDiaQuotaTab( this, box );

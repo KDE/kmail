@@ -134,4 +134,9 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotaInfoReceived( const QuotaInfoList& 
     }
 }
 
+QuotaInfo QuotaJobs::GetStorageQuotaJob::storageQuotaInfo() const
+{
+  return mStorageQuotaInfo;
+}
+
 #include "quotajobs.moc"

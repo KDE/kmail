@@ -113,6 +113,9 @@ class GetStorageQuotaJob : public KIO::Job
 public:
   GetStorageQuotaJob( KIO::Slave* slave, const KURL& url );
 
+  /**  Returns the storage quota info, if any, can be queried on result(). */
+  QuotaInfo storageQuotaInfo() const;
+
 signals:
   /** Emitted to indicate that storage quota information has
    * been received. Is not emitted if there is no such info
@@ -120,6 +123,7 @@ signals:
    * result() signal to be informed when the job is done.
    */
   void storageQuotaResult( const QuotaInfo& info );
+
 
 protected slots:
   void slotQuotarootResult( const QStringList& roots );
