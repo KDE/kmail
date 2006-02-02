@@ -46,6 +46,7 @@ struct QuotaInfo {
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
     : name( _name ), root( _root ), current( _current ),max( _max )  {}
   bool isValid() { return !name.isEmpty(); }
+  bool isEmpty() { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
   QString name;  // e.g. STORAGE
   QString root; /// e.g. INBOX
   QVariant current;
