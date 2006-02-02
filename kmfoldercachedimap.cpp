@@ -209,6 +209,18 @@ void KMFolderCachedImap::readConfig()
 
   mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
 
+  int storageQutaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
+  int storageQutaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
+  QString storageQuotaRoot = config->readEntry( "StorageQuotaRoot", QString::null );
+  if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
+      mQuotaInfo.name = "STORAGE";
+      mQuotaInfo.root = storageQuotaRoot;
+      if ( storageQutaUsage > -1 )
+        mQuotaInfo.current = storageQutaUsage;
+      if ( storageQutaLimit > -1 )
+        mQuotaInfo.max = storageQutaLimit;
+  }
+
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally =
@@ -225,11 +237,11 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
-  writeAnnotationConfig();
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
   KMFolderMaildir::writeConfig();
 }
 
-void KMFolderCachedImap::writeAnnotationConfig()
+void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig()
 {
   KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
   if ( !folder()->noContent() )
@@ -240,6 +252,20 @@ void KMFolderCachedImap::writeAnnotationConfig()
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
   }
   configGroup.writeEntry( "UserRights", mUserRights );
+
+  if ( mQuotaInfo.isValid() ) {
+    if ( mQuotaInfo.current.isValid() ) {
+      configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current.toInt() );
+    }
+    if ( mQuotaInfo.max.isValid() ) {
+      configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max.toInt() );
+    }
+    configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root );
+  } else {
+    configGroup.deleteEntry( "StorageQuotaUsage");
+    configGroup.deleteEntry( "StorageQuotaRoot");
+    configGroup.deleteEntry( "StorageQuotaLimit");
+  }
 }
 
 void KMFolderCachedImap::remove()
@@ -1747,7 +1773,7 @@ void
 KMFolderCachedImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
-  writeAnnotationConfig();
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void
@@ -1789,6 +1815,7 @@ void
 KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 {
     mQuotaInfo = info;
+    writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void
@@ -1926,7 +1953,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was (" << oldType << " " << oldSubType << ") => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }
   // Ensure that further readConfig()s don't lose mAnnotationFolderType
-  writeAnnotationConfig();
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void KMFolderCachedImap::setIncidencesFor( IncidencesFor incfor )
@@ -1974,7 +2001,7 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
             markUnreadAsRead();
 
           // Ensure that further readConfig()s don't lose mAnnotationFolderType
-          writeAnnotationConfig();
+          writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
           break;
         }
       }
@@ -2033,10 +2060,12 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
   if ( (*it).parent != folder() ) return; // Shouldn't happen
 
   QuotaJobs::GetStorageQuotaJob* quotajob = static_cast<QuotaJobs::GetStorageQuotaJob *>( job );
+  QuotaInfo empty;
   if ( quotajob->error() ) {
     if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
       // that's when the imap server doesn't support quota
       mAccount->setHasNoQuotaSupport();
+      mQuotaInfo = empty;
     }
     else
       kdWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
@@ -2044,9 +2073,11 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
     // There was no error, which means the server does support quota, but
     // our info is not valid. That means that there is no quota on this folder,
     // which we indicate by setting the name to something valid, but leaving the
-    // values invalid.
+    // values invalid or setting them to invalid, in case we had info there before.
     if ( !mQuotaInfo.isValid() ) {
+      mQuotaInfo = empty;
       mQuotaInfo.name = "STORAGE";
+      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
     }
   }
 

@@ -147,7 +147,7 @@ void KMail::FolderDiaQuotaTab::load()
         mLabel->setText( i18n( "This account does not have support for quota information." ) );
       }
     } else {
-      if ( mQuotaInfo.current.isValid() ) {
+      if ( !mQuotaInfo.isEmpty() ) {
         mStack->raiseWidget( mQuotaWidget );
         mQuotaWidget->setQuotaInfo( mQuotaInfo );
       } else {

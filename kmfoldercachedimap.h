@@ -94,7 +94,7 @@ public:
   virtual void readConfig();
   virtual void writeConfig();
 
-  void writeAnnotationConfig();
+  void writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
@@ -216,8 +216,8 @@ public:
    * doesn't support quota. The difference can be figured out by
    * asking the account whether it supports quota. If we have 
    * synced, the account supports quota, but there is no quota
-   * on the folder, the return info will be valid, the name valid,
-   * but the current and max values invalid.
+   * on the folder, the return info will be valid, but empty.
+   * @see QuotaInfo::isEmpty(), QuotaInfo::isValid()
    */
   const QuotaInfo quotaInfo() const { return mQuotaInfo; }
 
