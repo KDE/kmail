@@ -76,6 +76,7 @@ protected:
 };
 
 typedef QList<KMFolderNode*> KMFolderNodeList;
+typedef QListIterator<KMFolderNode*> KMFolderNodeListIterator;
 
 
 #endif /*kmfoldernode_h*/
