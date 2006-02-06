@@ -101,7 +101,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0),
   mContextMenuShown( false ), mWallet( 0 )
 {
-  kdDebug(5006) << "KMKernel::KMKernel" << endl;
+  kDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
   the_startingUp = true;
   closed_by_user = true;
@@ -146,7 +146,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // register our own (libkdenetwork) utf-7 codec as long as Qt
   // doesn't have it's own:
   if ( !QTextCodec::codecForName("utf-7") ) {
-    kdDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
+    kDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
     (void) new QUtf7Codec();
   }
 
@@ -188,7 +188,7 @@ KMKernel::~KMKernel ()
   delete mWallet;
   mWallet = 0;
   mySelf = 0;
-  kdDebug(5006) << "KMKernel::~KMKernel" << endl;
+  kDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
@@ -323,7 +323,7 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
 {
-  kdDebug(5006) << "KMKernel::checkMail called" << endl;
+  kDebug(5006) << "KMKernel::checkMail called" << endl;
 
   KMAccount* acct = kmkernel->acctMgr()->findByName(account);
   if (acct)
@@ -334,7 +334,7 @@ void KMKernel::openReader( bool onlyCheck )
 {
   KMMainWin *mWin = 0;
   KMainWindow *ktmw = 0;
-  kdDebug(5006) << "KMKernel::openReader called" << endl;
+  kDebug(5006) << "KMKernel::openReader called" << endl;
 
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it ) {
@@ -372,7 +372,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const KUrl &messageFile,
                             const KUrl::List &attachURLs)
 {
-  kdDebug(5006) << "KMKernel::openComposer called" << endl;
+  kDebug(5006) << "KMKernel::openComposer called" << endl;
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -421,7 +421,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp )
 {
-  kdDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
+  kDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
 
   return openComposer ( to, cc, bcc, subject, body, hidden,
                         attachName, attachCte, attachData,
@@ -442,7 +442,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset )
 {
-  kdDebug(5006) << "KMKernel::openComposer()" << endl;
+  kDebug(5006) << "KMKernel::openComposer()" << endl;
 
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
@@ -488,7 +488,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->setParameter( attachParamAttr, attachParamValue );
       msgPart->setContentDisposition( attachContDisp );
       if( !attachCharset.isEmpty() ) {
-        // kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
+        // kDebug(5006) << "KMKernel::openComposer set attachCharset to "
         // << attachCharset << endl;
         msgPart->setCharset( attachCharset );
       }
@@ -530,7 +530,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
   QStringList availTransports = KMail::TransportManager::transportNames();
   QStringList::const_iterator it = availTransports.find( transport );
   if ( it == availTransports.end() ) {
-    kdWarning() << "The transport you entered is not available" << endl;
+    kWarning() << "The transport you entered is not available" << endl;
     return;
   }
   GlobalSettings::self()->setDefaultTransport( transport );
@@ -647,7 +647,7 @@ int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrl
 int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
                               const QString & MsgStatusFlags)
 {
-  kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
+  kDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
   if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
@@ -826,7 +826,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
 {
   // Use this function to import messages without
   // search for already existing emails.
-  kdDebug(5006) << "KMKernel::dcopAddMessage_fastImport called" << endl;
+  kDebug(5006) << "KMKernel::dcopAddMessage_fastImport called" << endl;
 
   if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
@@ -1310,14 +1310,14 @@ void KMKernel::init()
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
   QString foldersPath = group.readPathEntry( "folders" );
-  kdDebug(5006) << k_funcinfo << "foldersPath (from config): '" << foldersPath << "'" << endl;
+  kDebug(5006) << k_funcinfo << "foldersPath (from config): '" << foldersPath << "'" << endl;
 
   if ( foldersPath.isEmpty() ) {
     foldersPath = localDataPath() + "mail";
     if ( transferMail( foldersPath ) ) {
       group.writePathEntry( "folders", foldersPath );
     }
-    kdDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
+    kDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
   }
 
   the_undoStack     = new UndoStack(20);
@@ -1658,8 +1658,8 @@ bool KMKernel::transferMail( QString & destinationDir )
   }
 
   if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kdDebug(5006) << k_funcinfo << "Moving " << dir << " to " << destinationDir << " failed: " << KIO::NetAccess::lastErrorString() << endl;
-    kdDebug(5006) << k_funcinfo << "Deleting " << destinationDir << endl;
+    kDebug(5006) << k_funcinfo << "Moving " << dir << " to " << destinationDir << " failed: " << KIO::NetAccess::lastErrorString() << endl;
+    kDebug(5006) << k_funcinfo << "Deleting " << destinationDir << endl;
     KIO::NetAccess::del( destinationDir, 0 );
     destinationDir = dir;
     return false;
@@ -1737,7 +1737,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
     data.duplicate( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
     (*it).offset += MAX_CHUNK_SIZE;
-    //kdDebug( 5006 ) << "Sending " << MAX_CHUNK_SIZE << " bytes ("
+    //kDebug( 5006 ) << "Sending " << MAX_CHUNK_SIZE << " bytes ("
     //                << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
   }
   else
@@ -1746,7 +1746,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     data.duplicate( (*it).data.data() + (*it).offset, remainingBytes );
     (*it).data = QByteArray();
     (*it).offset = 0;
-    //kdDebug( 5006 ) << "Sending " << remainingBytes << " bytes\n";
+    //kDebug( 5006 ) << "Sending " << remainingBytes << " bytes\n";
   }
 }
 
@@ -1841,7 +1841,7 @@ void KMKernel::emergencyExit( const QString& reason )
                       "terminate now.\nThe error was:\n%1").arg( reason );
   }
 
-  kdWarning() << mesg << endl;
+  kWarning() << mesg << endl;
   KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
 
   ::exit(1);
@@ -1906,7 +1906,7 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
 
 KPIM::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
-    kdDebug(5006) << "instantating KPIM::IdentityManager" << endl;
+    kDebug(5006) << "instantating KPIM::IdentityManager" << endl;
     mIdentityManager = new KPIM::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
@@ -1987,7 +1987,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
 
 void KMKernel::selectFolder( QString folderPath )
 {
-  kdDebug(5006)<<"Selecting a folder "<<folderPath<<endl;
+  kDebug(5006)<<"Selecting a folder "<<folderPath<<endl;
   const QString localPrefix = "/Local";
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )

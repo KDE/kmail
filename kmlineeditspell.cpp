@@ -98,7 +98,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
   } else {
     KUrl::List urls = KUrl::List::fromMimeData( event->mimeData() );
     if ( !urls.isEmpty() ) {
-      //kdDebug(5006) << "urlList" << endl;
+      //kDebug(5006) << "urlList" << endl;
       KUrl::List::Iterator it = urls.begin();
       KABC::VCardConverter converter;
       KABC::Addressee::List list;

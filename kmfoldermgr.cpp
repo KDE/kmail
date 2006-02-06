@@ -371,7 +371,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
   if ( parent )
     static_cast<KMFolder*>(parent)->storage()->updateChildrenState();
   else
-    kdWarning(5006) << "Can not find parent folder" << endl;
+    kWarning(5006) << "Can not find parent folder" << endl;
 
   if (aFolder == mRemoveOrig) {
     // call only if we're removing the original parent folder
@@ -546,7 +546,7 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
 //-----------------------------------------------------------------------------
 void KMFolderMgr::slotRenameDone( QString, bool success )
 {
-  kdDebug(5006) << k_funcinfo << success << endl;
+  kDebug(5006) << k_funcinfo << success << endl;
 }
 
 #include "kmfoldermgr.moc"

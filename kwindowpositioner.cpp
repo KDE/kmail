@@ -52,7 +52,7 @@ void KWindowPositioner::reposition()
     relativePos = QPoint( 100 - mSlave->width() + mMaster->width(),
       mMaster->height() );
   } else {
-    kdError() << "KWindowPositioner: Illegal mode" << endl;
+    kError() << "KWindowPositioner: Illegal mode" << endl;
   }
   QPoint pos = mMaster->mapToGlobal( relativePos );
   mSlave->move( pos );

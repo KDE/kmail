@@ -115,7 +115,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
-    kdDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
+    kDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
     //delete mdn;
   }
 }
@@ -440,7 +440,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       if ( tf->status() != 0 ) {
         tf->close();
         delete tf;
-        kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
+        kDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
         return QString();
       }
       tf->setAutoDelete(TRUE);
@@ -1409,7 +1409,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
 void KMFilterActionCopy::processAsync(KMMessage* msg) const
 {
   // FIXME remove the debug output
-  kdDebug(5006) << "##### KMFilterActionCopy::processAsync(KMMessage* msg)" << endl;
+  kDebug(5006) << "##### KMFilterActionCopy::processAsync(KMMessage* msg)" << endl;
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
 
   KMCommand *cmd = new KMCopyCommand( mFolder, msg );
@@ -1525,7 +1525,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
-    kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
+    kDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;
@@ -1565,7 +1565,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
-    kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
+    kDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;
@@ -1663,7 +1663,7 @@ class PipeJob : public KPIM::ThreadWeaver::Job
           filterFolder->addMsg( mMsg );
           handler->ignoreChanges( oldStatus );
         } else {
-          kdDebug(5006) << "Warning: Cannot refresh the message from the external filter." << endl;
+          kDebug(5006) << "Warning: Cannot refresh the message from the external filter." << endl;
         }
       }
 

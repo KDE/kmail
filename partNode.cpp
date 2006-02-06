@@ -87,7 +87,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     mType    = explicitType;     // this happens e.g. for the Root Node
     mSubType = explicitSubType;  // representing the _whole_ message
   } else {
-//    kdDebug(5006) << "\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown\n" << endl;
+//    kDebug(5006) << "\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown\n" << endl;
     if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
       mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
       mSubType = dwPart->Headers().ContentType().Subtype();
@@ -101,7 +101,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     DwString type, subType;
     DwTypeEnumToStr( mType, type );
     DwSubtypeEnumToStr( mSubType, subType );
-    kdDebug(5006) << "\npartNode::partNode()   " << type.c_str() << "/" << subType.c_str() << "\n" << endl;
+    kDebug(5006) << "\npartNode::partNode()   " << type.c_str() << "/" << subType.c_str() << "\n" << endl;
   }
 #endif
 }
@@ -165,7 +165,7 @@ partNode::~partNode() {
 
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
-  kdDebug(5006) << QString().fill( ' ', chars ) << "+ "
+  kDebug(5006) << QString().fill( ' ', chars ) << "+ "
 		<< typeString() << '/' << subTypeString() << endl;
   if ( mChild )
     mChild->dump( chars + 1 );
@@ -293,7 +293,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
         }
     }
 
-//kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
+//kDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
 
     return myState;
 }
@@ -336,7 +336,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
         }
     }
 
-//kdDebug(5006) << "\n\n  KMMsgSignatureState: " << myState << endl;
+//kDebug(5006) << "\n\n  KMMsgSignatureState: " << myState << endl;
 
     return myState;
 }
@@ -397,7 +397,7 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
   DwString typeStr, subTypeStr;
   DwTypeEnumToStr( mType, typeStr );
   DwSubtypeEnumToStr( mSubType, subTypeStr );
-  kdDebug(5006) << "partNode::findType() is looking at " << typeStr.c_str()
+  kDebug(5006) << "partNode::findType() is looking at " << typeStr.c_str()
                 << "/" << subTypeStr.c_str() << endl;
 #endif
     if(    (mType != DwMime::kTypeUnknown)
@@ -495,8 +495,8 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
     // remove linebreak+whitespace from folded Content-Description
     cntDesc.replace( QRegExp("\\n\\s*"), " " );
 
-kdDebug(5006) << "      Inserting one item into MimePartTree" << endl;
-kdDebug(5006) << "                Content-Type: " << cntType << endl;
+kDebug(5006) << "      Inserting one item into MimePartTree" << endl;
+kDebug(5006) << "                Content-Type: " << cntType << endl;
     if( parentItem )
       mMimePartTreeItem = new KMMimePartTreeItem( parentItem,
                                                   this,
@@ -588,7 +588,7 @@ bool partNode::isFirstTextPart() const {
   for ( const partNode * n = root ; n ; n = n->next() )
     if ( n->type() == DwMime::kTypeText )
       return n == this;
-  kdFatal() << "partNode::isFirstTextPart(): Didn't expect to end up here..." << endl;
+  kFatal() << "partNode::isFirstTextPart(): Didn't expect to end up here..." << endl;
   return false; // make comiler happy
 }
 

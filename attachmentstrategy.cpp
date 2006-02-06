@@ -161,7 +161,7 @@ namespace KMail {
     case Inlined: return inlined();
     case Hidden:  return hidden();
     }
-    kdFatal( 5006 ) << "AttachmentStrategy::create(): Unknown attachment startegy ( type == "
+    kFatal( 5006 ) << "AttachmentStrategy::create(): Unknown attachment startegy ( type == "
 		    << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }
@@ -172,7 +172,7 @@ namespace KMail {
     //if ( lowerType == "smart" )   return smart(); // not needed, see below
     if ( lowerType == "inlined" ) return inlined();
     if ( lowerType == "hidden" )  return hidden();
-    // don't kdFatal here, b/c the strings are user-provided
+    // don't kFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
     return smart();
   }

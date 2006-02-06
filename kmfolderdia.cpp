@@ -95,7 +95,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mIsNewFolder( aFolder == 0 ),
   mFolderTree( aParent )
 {
-  kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
+  kDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folders;

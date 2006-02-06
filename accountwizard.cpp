@@ -111,7 +111,7 @@ class AccountTypeBox : public KListBox
 };
 
 AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
-  : KWizard( parent, "KWizard" ), mKernel( kernel ),
+  : K3Wizard( parent, "KWizard" ), mKernel( kernel ),
     mAccount( 0 ), mTransportInfo( 0 ), mServerTest( 0 )
 {
   setupWelcomePage();

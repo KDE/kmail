@@ -39,7 +39,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
     mRefCount( 0 )
 {
   if (bPopFilter)
-    kdDebug(5006) << "pPopFilter set" << endl;
+    kDebug(5006) << "pPopFilter set" << endl;
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 }
@@ -85,7 +85,7 @@ void KMFilterMgr::readConfig(void)
     filter->purify();
     if ( filter->isEmpty() ) {
 #ifndef NDEBUG
-      kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
+      kDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
                     << "is empty!" << endl;
 #endif
       delete filter;
@@ -160,7 +160,7 @@ int KMFilterMgr::moveMessage(KMMessage *msg) const
     if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
       KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
   } else {
-    kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
+    kDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
     return 2;
   }
   return 0;
@@ -214,7 +214,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
     return processPop( msg );
 
   if ( set == NoSet ) {
-    kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
+    kDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
                   << endl;
     return 1;
   }
@@ -466,7 +466,7 @@ void KMFilterMgr::dump(void) const
 {
   QList<KMFilter*>::const_iterator it = mFilters.begin();
   for ( ; it != mFilters.end() ; ++it ) {
-    kdDebug(5006) << (*it)->asString() << endl;
+    kDebug(5006) << (*it)->asString() << endl;
   }
 }
 #endif

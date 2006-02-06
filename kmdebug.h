@@ -1,4 +1,4 @@
-// -*- c++ -*- convenience wrappers around kdDebug/kdWarning/etc
+// -*- c++ -*- convenience wrappers around kDebug/kWarning/etc
 
 #ifndef __KMAIL_KMDEBUG_H__
 #define __KMAIL_KMDEBUG_H__
@@ -18,17 +18,17 @@
 /** KMail's debug area code */
 static const int kmail_debug_area = 5006;
 
-static inline kmail_dbgstream kmDebug() { return kdDebug( kmail_debug_area ); }
-static inline kmail_dbgstream kmDebug( bool cond ) { return kdDebug( cond, kmail_debug_area ); }
+static inline kmail_dbgstream kmDebug() { return kDebug( kmail_debug_area ); }
+static inline kmail_dbgstream kmDebug( bool cond ) { return kDebug( cond, kmail_debug_area ); }
 
-static inline kdbgstream kmWarning() { return kdWarning( kmail_debug_area ); }
-static inline kdbgstream kmWarning( bool cond ) { return kdWarning( cond, kmail_debug_area ); }
+static inline kdbgstream kmWarning() { return kWarning( kmail_debug_area ); }
+static inline kdbgstream kmWarning( bool cond ) { return kWarning( cond, kmail_debug_area ); }
 
-static inline kdbgstream kmError() { return kdError( kmail_debug_area ); }
-static inline kdbgstream kmError( bool cond ) { return kdError( cond, kmail_debug_area ); }
+static inline kdbgstream kmError() { return kError( kmail_debug_area ); }
+static inline kdbgstream kmError( bool cond ) { return kError( cond, kmail_debug_area ); }
 
-static inline kdbgstream kmFatal() { return kdFatal( kmail_debug_area ); }
-static inline kdbgstream kmFatal( bool cond ) { return kdFatal( cond, kmail_debug_area ); }
+static inline kdbgstream kmFatal() { return kFatal( kmail_debug_area ); }
+static inline kdbgstream kmFatal( bool cond ) { return kFatal( cond, kmail_debug_area ); }
 
 // timing utilities
 #if !defined( NDEBUG ) && defined( DEBUG_TIMING )
@@ -37,7 +37,7 @@ static inline kdbgstream kmFatal( bool cond ) { return kdFatal( cond, kmail_debu
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
 #define GRAB_TIMER(x) x ## _tmp2.msecsTo(QTime::currentTime())
 #define END_TIMER(x) x += GRAB_TIMER(x); x ## _tmp++
-#define SHOW_TIMER(x) kdDebug(5006) << #x " == " << x << "(" << x ## _tmp << ")\n"
+#define SHOW_TIMER(x) kDebug(5006) << #x " == " << x << "(" << x ## _tmp << ")\n"
 #else
 #define CREATE_TIMER(x)
 #define START_TIMER(x)
@@ -51,7 +51,7 @@ static inline kdbgstream kmFatal( bool cond ) { return kdFatal( cond, kmail_debu
 #define CREATE_COUNTER(x) int x ## _cnt=0
 #define RESET_COUNTER(x) x ## _cnt=0
 #define INC_COUNTER(x) x ## _cnt++
-#define SHOW_COUNTER(x) kdDebug(5006) << #x " == " << x ## _cnt << endl
+#define SHOW_COUNTER(x) kDebug(5006) << #x " == " << x ## _cnt << endl
 #else
 #define CREATE_COUNTER(x)
 #define RESET_COUNTER(x)

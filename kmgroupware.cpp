@@ -58,14 +58,14 @@ bool vPartFoundAndDecoded( KMMessage* msg, QString& s )
              (DwMime::kSubtypeMixed  == msg->subtype() ) ||
              (DwMime::kSubtypeAlternative  == msg->subtype() ))
   {
-    // kdDebug(5006) << "KMGroupware looking for TNEF data" << endl;
+    // kDebug(5006) << "KMGroupware looking for TNEF data" << endl;
     DwBodyPart* dwPart = msg->findDwBodyPart( DwMime::kTypeApplication,
                                               DwMime::kSubtypeMsTNEF );
     if( !dwPart )
       dwPart = msg->findDwBodyPart( DwMime::kTypeApplication,
                                     DwMime::kSubtypeOctetStream );
     if( dwPart ){
-      // kdDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
+      // kDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
       s = KCal::IncidenceFormatter::msTNEFToVPart( msgPart.bodyDecodedBinary() );

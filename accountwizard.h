@@ -29,7 +29,7 @@
 #ifndef KMWIZARD_H
 #define KMWIZARD_H
 
-#include <kwizard.h>
+#include <k3wizard.h>
 
 #include <QLabel>
 #include <QList>
@@ -45,7 +45,7 @@ class KMServerTest;
 class AccountTypeBox;
 class KMTransportInfo;
 
-class AccountWizard : public KWizard
+class AccountWizard : public K3Wizard
 {
   Q_OBJECT
 

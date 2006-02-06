@@ -253,11 +253,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   object = mPatternEdit->child( "regExpLineEdit" );
   if ( object && object->isWidgetType() ) {
       static_cast<QWidget*>(object)->setFocus();
-      //kdDebug(5006) << "SearchWindow: focus has been given to widget "
+      //kDebug(5006) << "SearchWindow: focus has been given to widget "
       //              << object->name() << endl;
   }
   else
-      kdDebug(5006) << "SearchWindow: regExpLineEdit not found" << endl;
+      kDebug(5006) << "SearchWindow: regExpLineEdit not found" << endl;
 
   //set up actions
   KActionCollection *ac = actionCollection();

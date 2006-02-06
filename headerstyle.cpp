@@ -493,7 +493,7 @@ namespace KMail {
       if ( addresses[0].photo().isIntern() )
       {
         // get photo data and convert to data: url
-        //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
+        //kDebug( 5006 ) << "INTERNAL photo found" << endl;
         QImage photo = addresses[0].photo().data();
         if ( !photo.isNull() )
         {
@@ -511,7 +511,7 @@ namespace KMail {
       }
       else
       {
-        //kdDebug( 5006 ) << "URL found" << endl;
+        //kDebug( 5006 ) << "URL found" << endl;
         photoURL = addresses[0].photo().url();
         if ( photoURL.startsWith("/") )
           photoURL.prepend( "file:" );
@@ -519,7 +519,7 @@ namespace KMail {
     }
     else // TODO: find a usable one
     {
-      kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
+      kDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
       userHTML = "&nbsp;";
     }
 
@@ -540,7 +540,7 @@ namespace KMail {
 
     if( !photoURL.isEmpty() )
     {
-        //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
+        //kDebug( 5006 ) << "Got a photo: " << photoURL << endl;
       userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
           .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
       if ( presence.isEmpty() ) {
@@ -569,7 +569,7 @@ namespace KMail {
       presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );
-    kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
+    kDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
 #endif
 
 
@@ -693,7 +693,7 @@ namespace KMail {
     case Plain:  return plain();
     case Fancy:   return fancy();
     }
-    kdFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
+    kFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
                     << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }
@@ -703,7 +703,7 @@ namespace KMail {
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "plain" )  return plain();
     //if ( lowerType == "fancy" ) return fancy(); // not needed, see below
-    // don't kdFatal here, b/c the strings are user-provided
+    // don't kFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
     return fancy();
   }

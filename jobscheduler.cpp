@@ -64,7 +64,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
     for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       if ( (*it)->taskTypeId() == typeId && (*it)->folder() == folder ) {
 #ifdef DEBUG_SCHEDULER
-        kdDebug(5006) << "JobScheduler: already having task type " << typeId << " for folder " << folder->label() << endl;
+        kDebug(5006) << "JobScheduler: already having task type " << typeId << " for folder " << folder->label() << endl;
 #endif
         delete task;
         if ( !mCurrentTask && immediate ) {
@@ -81,7 +81,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
     runTaskNow( task );
   else {
 #ifdef DEBUG_SCHEDULER
-    kdDebug(5006) << "JobScheduler: adding task " << task << " (type " << task->taskTypeId()
+    kDebug(5006) << "JobScheduler: adding task " << task << " (type " << task->taskTypeId()
                   << ") for folder " << task->folder() << " " << task->folder()->label() << endl;
 #endif
     mTaskList.append( task );
@@ -104,7 +104,7 @@ void JobScheduler::notifyOpeningFolder( KMFolder* folder )
   if ( mCurrentTask && mCurrentTask->folder() == folder ) {
     if ( mCurrentJob->isOpeningFolder() ) { // set when starting a job for this folder
 #ifdef DEBUG_SCHEDULER
-      kdDebug(5006) << "JobScheduler: got the opening-notification for " << folder->label() << " as expected." << endl;
+      kDebug(5006) << "JobScheduler: got the opening-notification for " << folder->label() << " as expected." << endl;
 #endif
     } else {
       // Jobs scheduled from here should always be cancellable.
@@ -120,7 +120,7 @@ void JobScheduler::interruptCurrentTask()
 {
   Q_ASSERT( mCurrentTask );
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: interrupting job " << mCurrentJob << " for folder " << mCurrentTask->folder()->label() << endl;
+  kDebug(5006) << "JobScheduler: interrupting job " << mCurrentJob << " for folder " << mCurrentTask->folder()->label() << endl;
 #endif
   // File it again. This will either delete it or put it in mTaskList.
   registerTask( mCurrentTask );
@@ -132,7 +132,7 @@ void JobScheduler::slotRunNextJob()
 {
   while ( !mCurrentJob ) {
 #ifdef DEBUG_SCHEDULER
-    kdDebug(5006) << "JobScheduler: slotRunNextJob" << endl;
+    kDebug(5006) << "JobScheduler: slotRunNextJob" << endl;
 #endif
     Q_ASSERT( mCurrentTask == 0 );
     ScheduledTask* task = 0;
@@ -142,7 +142,7 @@ void JobScheduler::slotRunNextJob()
       KMFolder* folder = (*it)->folder();
       if ( folder == 0 ) {
 #ifdef DEBUG_SCHEDULER
-        kdDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
+        kDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
 #endif
         removeTask( it );
         if ( !mTaskList.isEmpty() )
@@ -155,7 +155,7 @@ void JobScheduler::slotRunNextJob()
       // But first we ask search folders to release their access to it
       kmkernel->searchFolderMgr()->tryReleasingFolder( folder );
 #ifdef DEBUG_SCHEDULER
-      kdDebug(5006) << "   looking at folder " << folder->label()
+      kDebug(5006) << "   looking at folder " << folder->label()
                     << " " << folder->location()
                     << "  isOpened=" << (*it)->folder()->isOpened() << endl;
 #endif
@@ -197,7 +197,7 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   mTimer.stop();
   mCurrentJob = mCurrentTask->run();
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: task " << mCurrentTask
+  kDebug(5006) << "JobScheduler: task " << mCurrentTask
                 << " (type " << mCurrentTask->taskTypeId() << ")"
                 << " for folder " << mCurrentTask->folder()->label()
                 << " returned job " << mCurrentJob << " "
@@ -220,7 +220,7 @@ void JobScheduler::slotJobFinished()
 {
   // Do we need to test for mCurrentJob->error()? What do we do then?
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: slotJobFinished" << endl;
+  kDebug(5006) << "JobScheduler: slotJobFinished" << endl;
 #endif
   delete mCurrentTask;
   mCurrentTask = 0;

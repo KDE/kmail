@@ -255,7 +255,7 @@ namespace KMail {
     case Brief:  return brief();
     case Custom:  return custom();
     }
-    kdFatal( 5006 ) << "HeaderStrategy::create(): Unknown header strategy ( type == "
+    kFatal( 5006 ) << "HeaderStrategy::create(): Unknown header strategy ( type == "
 		    << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }
@@ -267,7 +267,7 @@ namespace KMail {
     //if ( lowerType == "standard" ) return standard(); // not needed, see below
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "custom" )  return custom();
-    // don't kdFatal here, b/c the strings are user-provided
+    // don't kFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
     return standard();
   }

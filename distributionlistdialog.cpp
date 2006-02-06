@@ -195,7 +195,7 @@ void DistributionListDialog::slotUser1()
   while( i ) {
     DistributionListItem *item = static_cast<DistributionListItem *>( i );
     if ( item->isOn() ) {
-      kdDebug() << "  " << item->addressee().fullEmail() << endl;
+      kDebug() << "  " << item->addressee().fullEmail() << endl;
       if ( item->isTransient() ) {
         // FIXME: Adding to the address book doesn't seem to work.
         ab->insertAddressee( item->addressee() );

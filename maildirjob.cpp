@@ -105,7 +105,7 @@ void MaildirJob::startJob()
   case tCreateFolder:
   case tGetFolder:
   case tListMessages:
-    kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
+    kDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
     break;
   default:
     break;

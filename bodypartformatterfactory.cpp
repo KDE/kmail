@@ -85,7 +85,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
 
   TypeRegistry::iterator type_it = all->find( type );
   if ( type_it == all->end() ) {
-    kdDebug( 5006 ) << "BodyPartFormatterFactory: instantiating new Subtype Registry for \""
+    kDebug( 5006 ) << "BodyPartFormatterFactory: instantiating new Subtype Registry for \""
 		    << type << "\"" << endl;
     type_it = all->insert( std::make_pair( type, SubtypeRegistry() ) ).first;
     assert( type_it != all->end() );
@@ -94,7 +94,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
   SubtypeRegistry & subtype_reg = type_it->second;
   SubtypeRegistry::iterator subtype_it = subtype_reg.find( subtype );
   if ( subtype_it != subtype_reg.end() ) {
-    kdDebug( 5006 ) << "BodyPartFormatterFactory: overwriting previously registered formatter for \""
+    kDebug( 5006 ) << "BodyPartFormatterFactory: overwriting previously registered formatter for \""
 		    << type << "/" << subtype << "\"" << endl;
     subtype_reg.erase( subtype_it ); subtype_it = subtype_reg.end();
   }
@@ -105,28 +105,28 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
 static void loadPlugins() {
   const BodyPartFormatterPluginLoader * pl = BodyPartFormatterPluginLoader::instance();
   if ( !pl ) {
-    kdWarning( 5006 ) << "BodyPartFormatterFactory: cannot instantiate plugin loader!" << endl;
+    kWarning( 5006 ) << "BodyPartFormatterFactory: cannot instantiate plugin loader!" << endl;
     return;
   }
   const QStringList types = pl->types();
-  kdDebug( 5006 ) << "BodyPartFormatterFactory: found " << types.size() << " plugins." << endl;
+  kDebug( 5006 ) << "BodyPartFormatterFactory: found " << types.size() << " plugins." << endl;
   for ( QStringList::const_iterator it = types.begin() ; it != types.end() ; ++it ) {
     const KMail::Interface::BodyPartFormatterPlugin * plugin = pl->createForName( *it );
     if ( !plugin ) {
-      kdWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it << "\" is not valid!" << endl;
+      kWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it << "\" is not valid!" << endl;
       continue;
     }
     for ( int i = 0 ; const KMail::Interface::BodyPartFormatter * bfp = plugin->bodyPartFormatter( i ) ; ++i ) {
       const char * type = plugin->type( i );
       if ( !type || !*type ) {
-	kdWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it
+	kWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it
 			  << "\" returned empty type specification for index "
 			  << i << endl;
 	break;
       }
       const char * subtype = plugin->subtype( i );
       if ( !subtype || !*subtype ) {
-	kdWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it
+	kWarning( 5006 ) << "BodyPartFormatterFactory: plugin \"" << *it
 			  << "\" returned empty subtype specification for index "
 			  << i << endl;
 	break;
@@ -175,7 +175,7 @@ const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::cre
   if ( subtype_it == subtype_reg.end() )
     return 0;
 
-  kdWarning( !(*subtype_it).second, 5006 )
+  kWarning( !(*subtype_it).second, 5006 )
     << "BodyPartFormatterFactory: a null bodypart formatter sneaked in for \""
     << type << "/" << subtype << "\"!" << endl;
 

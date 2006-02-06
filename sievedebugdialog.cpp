@@ -68,116 +68,116 @@ public:
     SieveDebugDataExtractor()
     :   KSieve::ScriptBuilder()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     virtual ~SieveDebugDataExtractor()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
 private:
     void commandStart( const QString & identifier )
     {
-        kdDebug( 5006 ) << k_funcinfo << "Identifier: '" << identifier << "'" << endl;
+        kDebug( 5006 ) << k_funcinfo << "Identifier: '" << identifier << "'" << endl;
         reset();
     }
 
     void commandEnd()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void testStart( const QString & )
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void testEnd()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void testListStart()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void testListEnd()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void blockStart()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void blockEnd()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void hashComment( const QString & )
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void bracketComment( const QString & )
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void lineFeed()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void error( const KSieve::Error & e )
     {
-        kdDebug( 5006 ) << "### " << k_funcinfo << "Error: " <<
+        kDebug( 5006 ) << "### " << k_funcinfo << "Error: " <<
             e.asString() << " @ " << e.line() << "," << e.column() << endl;
     }
 
     void finished()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void taggedArgument( const QString & tag )
     {
-        kdDebug( 5006 ) << k_funcinfo << "Tag: '" << tag << "'" << endl;
+        kDebug( 5006 ) << k_funcinfo << "Tag: '" << tag << "'" << endl;
     }
 
     void stringArgument( const QString & string, bool, const QString & )
     {
-        kdDebug( 5006 ) << k_funcinfo << "String: '" << string << "'" << endl;
+        kDebug( 5006 ) << k_funcinfo << "String: '" << string << "'" << endl;
     }
 
     void numberArgument( unsigned long number, char )
     {
-        kdDebug( 5006 ) << k_funcinfo << "Number: " << number << endl;
+        kDebug( 5006 ) << k_funcinfo << "Number: " << number << endl;
     }
 
     void stringListArgumentStart()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
     void stringListEntry( const QString & string, bool, const QString & )
     {
-        kdDebug( 5006 ) << k_funcinfo << "String: '" << string << "'" << endl;
+        kDebug( 5006 ) << k_funcinfo << "String: '" << string << "'" << endl;
     }
 
     void stringListArgumentEnd()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 
 private:
     void reset()
     {
-        kdDebug( 5006 ) << k_funcinfo << endl;
+        kDebug( 5006 ) << k_funcinfo << endl;
     }
 };
 
@@ -215,7 +215,7 @@ SieveDebugDialog::~SieveDebugDialog()
         mSieveJob->kill();
         mSieveJob = 0;
     }
-    kdDebug( 5006 ) << k_funcinfo << endl;
+    kDebug( 5006 ) << k_funcinfo << endl;
 }
 
 void SieveDebugDialog::slotDiagNextAccount()
@@ -309,7 +309,7 @@ void SieveDebugDialog::slotDiagNextScript()
 void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
     const QString &script, bool active )
 {
-    kdDebug( 5006 ) << "SieveDebugDialog::slotGetScript( ??, " << success
+    kDebug( 5006 ) << "SieveDebugDialog::slotGetScript( ??, " << success
               << ", ?, " << active << " )" << endl
               << "script:" << endl
               << script << endl;
@@ -334,7 +334,7 @@ void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
 void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     const QStringList &scriptList, const QString &activeScript )
 {
-    kdDebug( 5006 ) << k_funcinfo << "Success: " << success << ", List: " << scriptList.join( ", " ) <<
+    kDebug( 5006 ) << k_funcinfo << "Success: " << success << ", List: " << scriptList.join( ", " ) <<
         ", active: " << activeScript << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
@@ -372,7 +372,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
 
 void SieveDebugDialog::slotDialogOk()
 {
-    kdDebug(5006) << "SieveDebugDialog::slotDialogOk()" << endl;
+    kDebug(5006) << "SieveDebugDialog::slotDialogOk()" << endl;
 }
 
 void SieveDebugDialog::slotPutActiveResult( SieveJob * job, bool success )
@@ -396,7 +396,7 @@ void SieveDebugDialog::handlePutResult( SieveJob *, bool success, bool activated
             "Out of Office reply has been deactivated." ) );
     }
 
-    kdDebug( 5006 ) << "SieveDebugDialog::handlePutResult( ???, " << success << ", ? )" << endl;
+    kDebug( 5006 ) << "SieveDebugDialog::handlePutResult( ???, " << success << ", ? )" << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 }
 

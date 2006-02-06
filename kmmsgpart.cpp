@@ -152,11 +152,11 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
 
 void KMMessagePart::setCharset( const Q3CString & c ) {
   if ( type() != DwMime::kTypeText )
-    kdWarning()
+    kWarning()
       << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
       << "Fix this caller:" << endl
       << "====================================================================" << endl
-      << kdBacktrace( 5 ) << endl
+      << kBacktrace( 5 ) << endl
       << "====================================================================" << endl;
   mCharset = c;
 }
@@ -181,14 +181,14 @@ void KMMessagePart::setBodyEncoded(const Q3CString& aStr)
       QByteArray::Iterator oit = mBody.begin();
       QByteArray::ConstIterator oend = mBody.end();
       if ( !codec->encode( iit, iend, oit, oend ) )
-	kdWarning(5006) << codec->name()
+	kWarning(5006) << codec->name()
 			<< " codec lies about it's maxEncodedSizeFor( "
 			<< mBodyDecodedSize << " ). Result truncated!" << endl;
       mBody.truncate( oit - mBody.begin() );
       break;
     }
   default:
-    kdWarning(5006) << "setBodyEncoded: unknown encoding '" << cteStr()
+    kWarning(5006) << "setBodyEncoded: unknown encoding '" << cteStr()
 		    << "'. Assuming binary." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
@@ -212,7 +212,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
+  kDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
 	    << dwCte.c_str() << endl;
 #endif
@@ -235,7 +235,7 @@ void KMMessagePart::setBodyAndGuessCte(const Q3CString& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
+  kDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
 	    << dwCte.c_str() << endl;
 #endif
@@ -266,7 +266,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
       break;
     }
   default:
-    kdWarning(5006) << "setBodyEncodedBinary: unknown encoding '" << cteStr()
+    kWarning(5006) << "setBodyEncodedBinary: unknown encoding '" << cteStr()
 		    << "'. Assuming binary." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
@@ -295,7 +295,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
         // Nice: we can use the convenience function :-)
         result = codec->decode( mBody );
       else {
-        kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
+        kWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
                         << "'. Assuming binary." << endl;
 	result.duplicate(mBody);
       }
@@ -334,13 +334,13 @@ Q3CString KMMessagePart::bodyDecoded(void) const
         Q3CString::Iterator oit = result.begin();
         Q3CString::ConstIterator oend = result.begin() + bufSize;
         if ( !codec->decode( iit, mBody.end(), oit, oend ) )
-          kdWarning(5006) << codec->name()
+          kWarning(5006) << codec->name()
                           << " lies about it's maxDecodedSizeFor( "
                           << mBody.size() << " ). Result truncated!" << endl;
         len = oit - result.begin();
         result.truncate( len ); // adds trailing NUL
       } else {
-        kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
+        kWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
                         << "'. Assuming binary." << endl;
         decodeBinary = true;
       }
@@ -353,7 +353,7 @@ Q3CString KMMessagePart::bodyDecoded(void) const
     result[len] = 0;
   }
 
-  kdWarning( result.length() != len, 5006 )
+  kWarning( result.length() != len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
 
   result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion

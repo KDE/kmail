@@ -191,7 +191,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result()
 {
   if ( mResult == Undefined )
-    kdDebug(5006) << k_funcinfo << "mResult is Undefined" << endl;
+    kDebug(5006) << k_funcinfo << "mResult is Undefined" << endl;
   return mResult;
 }
 
@@ -323,7 +323,7 @@ void KMCommand::transferSelectedMsgs()
     if ( thisMsg->parent() && !thisMsg->isComplete() &&
          ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
     {
-      kdDebug(5006)<<"### INCOMPLETE\n";
+      kDebug(5006)<<"### INCOMPLETE\n";
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;
@@ -1352,7 +1352,7 @@ KMCommand::Result KMRedirectCommand::execute()
     ? KMail::MessageSender::SendImmediate
     : KMail::MessageSender::SendLater;
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
-    kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
+    kDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
     return Failed; // error: couldn't send
   }
   return OK;
@@ -2002,7 +2002,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
     /* Unfortunately older UW imap servers change uid validity for each put job.
      * Yes, it is really that broken. *sigh* So we cannot report error here, I guess. */
     if ( !mLostBoys.isEmpty() ) {
-      kdDebug(5006) <<  "### Not all moved messages reported back that they were " << endl
+      kDebug(5006) <<  "### Not all moved messages reported back that they were " << endl
                     <<  "### added to the target folder. Did uidValidity change? " << endl;
     }
     completeMove( OK );
@@ -2015,7 +2015,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
   if ( folder != mDestFolder || mLostBoys.find( serNum ) == mLostBoys.end() ) {
-    //kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
+    //kDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
     //                 "folder or invalid serial number." << endl;
     return;
   }
@@ -2519,7 +2519,7 @@ void KMLoadPartsCommand::slotStart()
                  this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
         job->start();
       } else
-        kdWarning(5006) << "KMLoadPartsCommand - msg has no parent" << endl;
+        kWarning(5006) << "KMLoadPartsCommand - msg has no parent" << endl;
     }
   }
   if ( mNeedsRetrieval == 0 )
@@ -2540,7 +2540,7 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
         it.key()->setDwPart( part );
     }
   } else
-    kdWarning(5006) << "KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!" << endl;
+    kWarning(5006) << "KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!" << endl;
   --mNeedsRetrieval;
   if ( mNeedsRetrieval == 0 )
     execute();
@@ -2672,7 +2672,7 @@ KMIMChatCommand::KMIMChatCommand( const KUrl &url, KMMessage *msg )
 
 KMCommand::Result KMIMChatCommand::execute()
 {
-  kdDebug( 5006 ) << k_funcinfo << " URL is: " << mUrl << endl;
+  kDebug( 5006 ) << k_funcinfo << " URL is: " << mUrl << endl;
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
@@ -2685,7 +2685,7 @@ KMCommand::Result KMIMChatCommand::execute()
   }
   else
   {
-    kdDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addressees.count() << endl;
+    kDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addressees.count() << endl;
 
     QString apology;
     if ( addressees.isEmpty() )
@@ -2722,7 +2722,7 @@ void KMHandleAttachmentCommand::slotStart()
   if ( !mNode->msgPart().isComplete() )
   {
     // load the part
-    kdDebug(5006) << "load part" << endl;
+    kDebug(5006) << "load part" << endl;
     KMLoadPartsCommand *command = new KMLoadPartsCommand( mNode, mMsg );
     connect( command, SIGNAL( partsRetrieved() ),
         this, SLOT( slotPartComplete() ) );
@@ -2762,7 +2762,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
       return Undefined;
       break;
     default:
-      kdDebug(5006) << "unknown action " << mAction << endl;
+      kDebug(5006) << "unknown action " << mAction << endl;
       break;
   }
   setResult( OK );
@@ -2777,7 +2777,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 
   if ( atmFileInfo.size() == 0 )
   {
-    kdDebug(5006) << k_funcinfo << "rewriting attachment" << endl;
+    kDebug(5006) << k_funcinfo << "rewriting attachment" << endl;
     // there is something wrong so write the file again
     QByteArray data = mNode->msgPart().bodyDecodedBinary();
     if ( mNode->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
@@ -2833,7 +2833,7 @@ void KMHandleAttachmentCommand::atmOpen()
   if ( !mOffer )
     mOffer = getServiceOffer();
   if ( !mOffer ) {
-    kdDebug(5006) << k_funcinfo << "got no offer" << endl;
+    kDebug(5006) << k_funcinfo << "got no offer" << endl;
     return;
   }
 

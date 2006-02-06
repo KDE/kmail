@@ -54,7 +54,7 @@ void KMailApplication::commitData(QSessionManager& sm) {
 
 int KMailApplication::newInstance()
 {
-  kdDebug(5006) << "KMailApplication::newInstance()" << endl;
+  kDebug(5006) << "KMailApplication::newInstance()" << endl;
   if (!kmkernel)
      return 0;
 

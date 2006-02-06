@@ -310,7 +310,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     assert( idx != -1 );
     aFolder->take( idx );
   } else {
-    kdDebug(5006) << k_funcinfo << "no parent" << endl;
+    kDebug(5006) << k_funcinfo << "no parent" << endl;
   }
   if ( !mAccount->hasCapability("uidplus") ) {
     // Remember the status with the MD5 as key
@@ -354,7 +354,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
   if ( aFolder ) {
     aFolder->take( msgList );
   } else {
-    kdDebug(5006) << k_funcinfo << "no parent" << endl;
+    kDebug(5006) << k_funcinfo << "no parent" << endl;
   }
   while ( !msgList.empty() )
     msgList.takeFirst();
@@ -421,7 +421,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
           {
             // we need the messages that belong to the current set to pass them to the ImapJob
             QList<KMMessage*> temp_msgs = splitMessageList(*it, msgList);
-            if ( temp_msgs.isEmpty() ) kdDebug(5006) << "Wow! KMFolderImap::splitMessageList() returned an empty list!" << endl;
+            if ( temp_msgs.isEmpty() ) kDebug(5006) << "Wow! KMFolderImap::splitMessageList() returned an empty list!" << endl;
             imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QList<KMMessage*>)),
                 SLOT(addMsgQuiet(QList<KMMessage*>)));
@@ -581,17 +581,17 @@ void KMFolderImap::slotListNamespaces()
       this, SLOT( slotListNamespaces() ) );
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
-    kdWarning(5006) << "slotListNamespaces - got no connection" << endl;
+    kWarning(5006) << "slotListNamespaces - got no connection" << endl;
     return;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
     // wait for the connectionResult
-    kdDebug(5006) << "slotListNamespaces - waiting for connection" << endl;
+    kDebug(5006) << "slotListNamespaces - waiting for connection" << endl;
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotListNamespaces() ) );
     return;
   }
-  kdDebug(5006) << "slotListNamespaces" << endl;
+  kDebug(5006) << "slotListNamespaces" << endl;
   // reset subfolder states recursively
   setSubfolderState( imapNoInformation );
   mSubfolderState = imapListingInProgress;
@@ -637,7 +637,7 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
                                        const QStringList& subfolderAttributes,
                                        const ImapAccountBase::jobData& jobData )
 {
-  kdDebug(5006) << "slotCheckNamespace - " << subfolderNames.join(",") << endl;
+  kDebug(5006) << "slotCheckNamespace - " << subfolderNames.join(",") << endl;
 
   // get a correct foldername:
   // strip / and make sure it does not contain the delimiter
@@ -663,7 +663,7 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
   {
     if ( node )
     {
-      kdDebug(5006) << "delete namespace folder " << name << endl;
+      kDebug(5006) << "delete namespace folder " << name << endl;
       KMFolder *fld = static_cast<KMFolder*>(node);
       KMFolderImap* nsFolder = static_cast<KMFolderImap*>(fld->storage());
       nsFolder->setAlreadyRemoved( true );
@@ -673,7 +673,7 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
     if ( node )
     {
       // folder exists so pass on the attributes
-      kdDebug(5006) << "found namespace folder " << name << endl;
+      kDebug(5006) << "found namespace folder " << name << endl;
       if ( !mAccount->listOnlyOpenFolders() )
       {
         KMFolderImap* nsFolder =
@@ -684,7 +684,7 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
     } else
     {
       // create folder
-      kdDebug(5006) << "create namespace folder " << name << endl;
+      kDebug(5006) << "create namespace folder " << name << endl;
       KMFolder *fld = folder()->child()->createFolder( name );
       if ( fld ) {
         KMFolderImap* f = static_cast<KMFolderImap*> ( fld->storage() );
@@ -708,7 +708,7 @@ bool KMFolderImap::listDirectory()
   if ( !mAccount ||
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
   {
-    kdDebug(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
+    kDebug(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
     return false;
   }
 
@@ -744,7 +744,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
                                    const ImapAccountBase::jobData& jobData )
 {
   mSubfolderState = imapFinished;
-  //kdDebug(5006) << label() << ": folderNames=" << subfolderNames << " folderPaths="
+  //kDebug(5006) << label() << ": folderNames=" << subfolderNames << " folderPaths="
   //<< subfolderPaths << " mimeTypes=" << subfolderMimeTypes << endl;
 
   // don't react on changes
@@ -766,7 +766,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     KMFolderImap* parent = findParent( subfolderPaths.first(), subfolderNames.first() );
     if ( parent )
     {
-      kdDebug(5006) << "KMFolderImap::slotListResult - pass listing to "
+      kDebug(5006) << "KMFolderImap::slotListResult - pass listing to "
         << parent->label() << endl;
       parent->slotListResult( subfolderNames, subfolderPaths,
           subfolderMimeTypes, subfolderAttributes, jobData );
@@ -803,14 +803,14 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     }
     else if ( subfolderPaths[i] != "/INBOX/" )
     {
-      kdDebug(5006) << "create folder " << subfolderNames[i] << endl;
+      kDebug(5006) << "create folder " << subfolderNames[i] << endl;
       KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
       if ( fld ) {
         f = static_cast<KMFolderImap*> ( fld->storage() );
         f->close();
         settingsChanged = true;
       } else {
-        kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
+        kWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
       }
     }
     if ( f )
@@ -844,7 +844,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
         f->listDirectory();
       }
     } else {
-      kdWarning(5006) << "can't find folder " << subfolderNames[i] << endl;
+      kWarning(5006) << "can't find folder " << subfolderNames[i] << endl;
     }
   } // for subfolders
 
@@ -929,7 +929,7 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
       // that the folder is within the current namespace
       bool isInNamespace = ( myNamespace.isEmpty() ||
           myNamespace == mAccount->namespaceForFolder( imapFld ) );
-      kdDebug(5006) << node->name() << " in namespace " << myNamespace << ":" <<
+      kDebug(5006) << node->name() << " in namespace " << myNamespace << ":" <<
         isInNamespace << endl;
       // ignore some cases
       QString name = node->name();
@@ -944,11 +944,11 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
       if ( !ignore )
       {
         // remove the folder without server round trip
-        kdDebug(5006) << "checkFolders - " << node->name() << " disappeared" << endl;
+        kDebug(5006) << "checkFolders - " << node->name() << " disappeared" << endl;
         imapFld->setAlreadyRemoved( true );
         toRemove.append( fld );
       } else {
-        kdDebug(5006) << "checkFolders - " << node->name() << " ignored" << endl;
+        kDebug(5006) << "checkFolders - " << node->name() << " ignored" << endl;
       }
     }
   }
@@ -1000,7 +1000,7 @@ void KMFolderImap::checkValidity()
   }
   KUrl url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
-  kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
+  kDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
 
   // Start with a clean slate
   disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
@@ -1008,7 +1008,7 @@ void KMFolderImap::checkValidity()
 
   KMAcctImap::ConnectionState connectionState = mAccount->makeConnection();
   if ( connectionState == ImapAccountBase::Error ) {
-    kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
+    kDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     mContentState = imapNoInformation;
     close();
@@ -1016,14 +1016,14 @@ void KMFolderImap::checkValidity()
   } else if ( connectionState == ImapAccountBase::Connecting ) {
     // We'll wait for the connectionResult signal from the account. If it
     // errors, the above will catch it.
-    kdDebug(5006) << "CheckValidity - waiting for connection" << endl;
+    kDebug(5006) << "CheckValidity - waiting for connection" << endl;
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( checkValidity() ) );
     return;
   }
   // Only check once at a time.
   if (mCheckingValidity) {
-    kdDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
+    kDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
     close();
     return;
   }
@@ -1075,7 +1075,7 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
-  kdDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
+  kDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
@@ -1110,7 +1110,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     if (uidValidity() != uidv)
     {
       // uidValidity changed
-      kdDebug(5006) << k_funcinfo << "uidValidty changed from "
+      kDebug(5006) << k_funcinfo << "uidValidty changed from "
        << uidValidity() << " to " << uidv << endl;
       if ( !uidValidity().isEmpty() )
       {
@@ -1431,7 +1431,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       int exists = (*it).cdata.mid( c+10,
           (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
       if ( ok && exists < count() ) {
-        kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
+        kDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
         reallyGetFolder( QString() );
         (*it).cdata.remove(0, pos);
@@ -1605,10 +1605,10 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
 void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
                                 bool askUser)
 {
-  kdDebug(5006) << "KMFolderImap::createFolder - name=" << name << ",parent=" <<
+  kDebug(5006) << "KMFolderImap::createFolder - name=" << name << ",parent=" <<
     parentPath << ",askUser=" << askUser << endl;
   if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
-    kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
+    kWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
     return;
   }
   KUrl url = mAccount->getUrl();
@@ -1707,7 +1707,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
      folder, so we better safeguard against that. See ::expungeFolder, as
      to why. :( */
   if ( uid == 0 ) {
-     kdDebug( 5006 ) << "KMFolderImap::deleteMessage: Attempt to delete "
+     kDebug( 5006 ) << "KMFolderImap::deleteMessage: Attempt to delete "
                         "an empty UID. Aborting."  << endl;
      return;
   }
@@ -1803,7 +1803,7 @@ void KMFolderImap::setStatus(QList<int>& ids, const MessageStatus& status, bool 
     // we're currently get'ing this folder
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
-    kdDebug(5006) << "Set status during folder listing, restarting listing." << endl;
+    kDebug(5006) << "Set status during folder listing, restarting listing." << endl;
     disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
     quiet( false );
     reallyGetFolder( QString() );
@@ -1929,11 +1929,11 @@ bool KMFolderImap::processNewMail(bool)
 {
    // a little safety
   if ( !mAccount ) {
-    kdDebug(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
+    kDebug(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
     return false;
   }
   if ( imapPath().isEmpty() ) {
-    kdDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
+    kDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
     // remove it locally
     setAlreadyRemoved( true );
     kmkernel->imapFolderMgr()->remove( folder() );
@@ -1941,12 +1941,12 @@ bool KMFolderImap::processNewMail(bool)
   }
   // check the connection
   if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
-    kdDebug(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
+    kDebug(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
     return false;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
     // wait
-    kdDebug(5006) << "KMFolderImap::processNewMail - waiting for connection: " << label() << endl;
+    kDebug(5006) << "KMFolderImap::processNewMail - waiting for connection: " << label() << endl;
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotProcessNewMail(int, const QString&) ) );
     return true;
@@ -2092,7 +2092,7 @@ void
 KMFolderImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
-  kdDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
+  kDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -2228,7 +2228,7 @@ const ulong KMFolderImap::serNumForUID( ulong uid )
     KMMsgMetaData *md = mUidMetaDataMap[uid];
     return md->serNum();
   } else {
-    kdDebug(5006) << "serNumForUID: unknown uid " << uid << endl;
+    kDebug(5006) << "serNumForUID: unknown uid " << uid << endl;
     return 0;
   }
 }
@@ -2247,7 +2247,7 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
 void KMFolderImap::setImapPath( const QString& path )
 {
   if ( path.isEmpty() ) {
-    kdWarning(5006) << k_funcinfo << "ignoring empty path" << endl;
+    kWarning(5006) << k_funcinfo << "ignoring empty path" << endl;
   } else {
     mImapPath = path;
   }

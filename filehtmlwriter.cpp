@@ -51,7 +51,7 @@ namespace KMail {
 
   FileHtmlWriter::~FileHtmlWriter() {
     if ( mFile.isOpen() ) {
-      kdWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
+      kWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
       mStream.unsetDevice();
       mFile.close();
     }
@@ -91,12 +91,12 @@ namespace KMail {
 
   void FileHtmlWriter::openOrWarn() {
     if ( mFile.isOpen() ) {
-      kdWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
+      kWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
       mStream.unsetDevice();
       mFile.close();
     }
     if ( !mFile.open( QIODevice::WriteOnly ) )
-      kdWarning( 5006 ) << "FileHtmlWriter: Cannot open file " << mFile.name() << endl;
+      kWarning( 5006 ) << "FileHtmlWriter: Cannot open file " << mFile.name() << endl;
     else
       mStream.setDevice( &mFile );
   }

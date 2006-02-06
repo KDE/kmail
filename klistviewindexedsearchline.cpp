@@ -49,7 +49,7 @@ KListViewIndexedSearchLine::~KListViewIndexedSearchLine() {
 
 
 void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
-	kdDebug( 5006 ) << "updateSearch( -" << s << "- )" << endl;
+	kDebug( 5006 ) << "updateSearch( -" << s << "- )" << endl;
 	mFiltering = false;
 	if ( !s.isNull() && !s.isEmpty() ) {
 		bool ok = false;

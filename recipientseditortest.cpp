@@ -56,7 +56,7 @@ Composer::Composer( QWidget *parent )
   mRecipients = new RecipientsEditor( this );
   topLayout->addMultiCellWidget( mRecipients, 1, 1, 0, 1 );
 
-  kdDebug() << "SIZEHINT: " << mRecipients->sizeHint() << endl;
+  kDebug() << "SIZEHINT: " << mRecipients->sizeHint() << endl;
 
 //  mRecipients->setFixedHeight( 10 );
   

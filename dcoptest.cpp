@@ -15,7 +15,7 @@
 
 int main(int argc,char **argv)
 {
-  kdDebug(5006) << "Test KMail DCOP interface." << endl;
+  kDebug(5006) << "Test KMail DCOP interface." << endl;
 
   KAboutData aboutData( "testKMailDCOP",
    "Test for KMail DCOP interface", "0.0" );
@@ -36,7 +36,7 @@ int main(int argc,char **argv)
                              "publish","attachement;");
   composerStub.send(2);
 
-  kdDebug(5006) << "testDCOP done." << endl;
+  kDebug(5006) << "testDCOP done." << endl;
 
   return 0;
 }

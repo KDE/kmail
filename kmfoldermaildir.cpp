@@ -166,19 +166,19 @@ int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
 
   // create the maildir directory structure
   if ( ::mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
-    kdDebug(5006) << "Could not create folder " << folderPath << endl;
+    kDebug(5006) << "Could not create folder " << folderPath << endl;
     return errno;
   }
   if ( ::mkdir( QFile::encodeName( folderPath + "/new" ), S_IRWXU ) > 0 ) {
-    kdDebug(5006) << "Could not create folder " << folderPath << "/new" << endl;
+    kDebug(5006) << "Could not create folder " << folderPath << "/new" << endl;
     return errno;
   }
   if ( ::mkdir( QFile::encodeName( folderPath + "/cur" ), S_IRWXU ) > 0 ) {
-    kdDebug(5006) << "Could not create folder " << folderPath << "/cur" << endl;
+    kDebug(5006) << "Could not create folder " << folderPath << "/cur" << endl;
     return errno;
   }
   if ( ::mkdir( QFile::encodeName( folderPath + "/tmp" ), S_IRWXU ) > 0 ) {
-    kdDebug(5006) << "Could not create folder " << folderPath << "/tmp" << endl;
+    kDebug(5006) << "Could not create folder " << folderPath << "/tmp" << endl;
     return errno;
   }
 
@@ -294,7 +294,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 
   unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
                            qMin( mMsgList.count(), startIndex + nbMessages );
-  //kdDebug(5006) << "KMFolderMaildir: compacting from " << startIndex << " to " << stopIndex << endl;
+  //kDebug(5006) << "KMFolderMaildir: compacting from " << startIndex << " to " << stopIndex << endl;
   for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     if (!mi)
@@ -414,7 +414,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->setHeaderField( "X-UID", uidHeader );
 
   if ( msgText.length() <= 0 ) {
-    kdDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
+    kDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
     return 0;
   }
 
@@ -433,7 +433,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   {
     opened = true;
     rc = open();
-    kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
+    kDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
   }
 
@@ -464,11 +464,11 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     else
       ++mUnreadMsgs;
     if ( !mQuiet ) {
-      kdDebug( 5006 ) << "FolderStorage::msgStatusChanged" << endl;
+      kDebug( 5006 ) << "FolderStorage::msgStatusChanged" << endl;
       emit numUnreadMsgsChanged( folder() );
     }else{
       if ( !mEmitChangedTimer->isActive() ) {
-//        kdDebug( 5006 )<< "QuietTimer started" << endl;
+//        kDebug( 5006 )<< "QuietTimer started" << endl;
         mEmitChangedTimer->start( 3000 );
       }
       mChanged = true;
@@ -504,7 +504,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     mb->setIndexOffset( ftell(mIndexStream) );
     mb->setIndexLength( len );
     if(fwrite(buffer, len, 1, mIndexStream) != 1)
-    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    kDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
@@ -513,9 +513,9 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
       error |= appendToFolderIdsFile( idx );
 
     if (error) {
-      kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
+      kDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
-	kdDebug(5006) << "Undoing changes" << endl;
+	kDebug(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
       kmkernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
@@ -587,7 +587,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       return str;
     }
   }
-  kdDebug(5006) << "Could not open file r+ " << abs_file << endl;
+  kDebug(5006) << "Could not open file r+ " << abs_file << endl;
   return DwString();
 }
 
@@ -603,7 +603,7 @@ QByteArray& KMFolderMaildir::getMsgString(int idx, QByteArray& mDest)
 
   if (QFile::exists(abs_file) == false)
   {
-    kdDebug(5006) << "The " << abs_file << " file doesn't exist!" << endl;
+    kDebug(5006) << "The " << abs_file << " file doesn't exist!" << endl;
     return mDest;
   }
 
@@ -638,7 +638,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   // open the file and get a pointer to it
   QFile f(file);
   if ( f.open( QIODevice::ReadOnly ) == false ) {
-    kdWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
+    kWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
                     << "' could not be opened for reading the message. "
                        "Please check ownership and permissions."
                     << endl;
@@ -852,7 +852,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/new");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kdDebug(5006) << "Directory " << location() << "/new doesn't exist or is a file"<< endl;
+    kDebug(5006) << "Directory " << location() << "/new doesn't exist or is a file"<< endl;
     return 1;
   }
   QDir newDir(location() + "/new");
@@ -861,7 +861,7 @@ int KMFolderMaildir::createIndexFromContents()
   dirinfo.setFile(location() + "/cur");
   if (!dirinfo.exists() || !dirinfo.isDir())
   {
-    kdDebug(5006) << "Directory " << location() << "/cur doesn't exist or is a file"<< endl;
+    kDebug(5006) << "Directory " << location() << "/cur doesn't exist or is a file"<< endl;
     return 1;
   }
   QDir curDir(location() + "/cur");
@@ -969,7 +969,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
       return true;
   }
 
-  kdDebug(5006) << "Can't delete " << abs_file << " " << perror << endl;
+  kDebug(5006) << "Can't delete " << abs_file << " " << perror << endl;
   return false;
 }
 

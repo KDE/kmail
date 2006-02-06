@@ -114,7 +114,7 @@ namespace KMail {
 
   ImapAccountBase::~ImapAccountBase() {
     qDeleteAll (mBodyPartList );
-    kdWarning( mSlave, 5006 )
+    kWarning( mSlave, 5006 )
       << "slave should have been destroyed by subclass!" << endl;
   }
 
@@ -440,10 +440,10 @@ namespace KMail {
       if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) // that's when the imap server doesn't support ACLs
           mACLSupport = false;
       else
-        kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
+        kWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
     } else {
 #ifndef NDEBUG
-      //kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
+      //kDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
 #endif
       // Store the permissions
       if ( folder->folderType() == KMFolderTypeImap )
@@ -571,7 +571,7 @@ namespace KMail {
   void ImapAccountBase::slotCapabilitiesResult( KIO::Job*, const QString& result )
   {
     mCapabilities = QStringList::split(' ', result.toLower() );
-    kdDebug(5006) << "capabilities:" << mCapabilities << endl;
+    kDebug(5006) << "capabilities:" << mCapabilities << endl;
   }
 
   //-----------------------------------------------------------------------------
@@ -580,7 +580,7 @@ namespace KMail {
     disconnect( this, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( getNamespaces() ) );
     if ( makeConnection() != Connected || !mSlave ) {
-      kdDebug(5006) << "getNamespaces - wait for connection" << endl;
+      kDebug(5006) << "getNamespaces - wait for connection" << endl;
       if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
         // when the connection is established slotSchedulerSlaveConnected notifies us
       } else {
@@ -636,14 +636,14 @@ namespace KMail {
     }
     removeJob(it);
 
-    kdDebug(5006) << "namespaces fetched" << endl;
+    kDebug(5006) << "namespaces fetched" << endl;
     emit namespacesFetched( map );
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map )
   {
-    kdDebug(5006) << "slotSaveNamespaces " << name() << endl;
+    kDebug(5006) << "slotSaveNamespaces " << name() << endl;
     // extract the needed information
     mNamespaces.clear();
     mNamespaceToDelimiter.clear();
@@ -684,7 +684,7 @@ namespace KMail {
         if ( (*it).startsWith( mOldPrefix ) ) {
           // should be ok
           done = true;
-          kdDebug(5006) << "migratePrefix - no migration needed" << endl;
+          kDebug(5006) << "migratePrefix - no migration needed" << endl;
           break;
         }
       }
@@ -702,7 +702,7 @@ namespace KMail {
             mNamespaceToDelimiter.remove( QString() );
             mNamespaceToDelimiter[mOldPrefix] = delim;
           }
-          kdDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
+          kDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
           msg += i18n("The configuration was automatically migrated but you should check "
               "your account configuration.");
         } else if ( list.count() == 1 ) {
@@ -716,11 +716,11 @@ namespace KMail {
             mNamespaceToDelimiter.remove( old );
             mNamespaceToDelimiter[mOldPrefix] = delim;
           }
-          kdDebug(5006) << "migratePrefix - replaced single with " << mOldPrefix << endl;
+          kDebug(5006) << "migratePrefix - replaced single with " << mOldPrefix << endl;
           msg += i18n("The configuration was automatically migrated but you should check "
               "your account configuration.");
         } else {
-          kdDebug(5006) << "migratePrefix - migration failed" << endl;
+          kDebug(5006) << "migratePrefix - migration failed" << endl;
           msg += i18n("It was not possible to migrate your configuration automatically "
               "so please check your account configuration.");
         }
@@ -728,7 +728,7 @@ namespace KMail {
       }
     } else
     {
-      kdDebug(5006) << "migratePrefix - no migration needed" << endl;
+      kDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
     mOldPrefix.clear();
   }
@@ -766,7 +766,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
   {
-    kdDebug(5006) << "delimiterForNamespace " << prefix << endl;
+    kDebug(5006) << "delimiterForNamespace " << prefix << endl;
     // try to match exactly
     if ( mNamespaceToDelimiter.contains(prefix) ) {
       return mNamespaceToDelimiter[prefix];
@@ -790,7 +790,7 @@ namespace KMail {
       return mNamespaceToDelimiter[QString()];
     }
     // well, we tried
-    kdDebug(5006) << "delimiterForNamespace - not found" << endl;
+    kDebug(5006) << "delimiterForNamespace - not found" << endl;
     return QString();
   }
 
@@ -917,7 +917,7 @@ namespace KMail {
       mErrorDialogIsActive = false;
     } else {
       if ( mErrorDialogIsActive )
-        kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+        kDebug(5006) << "suppressing error:" << errorMsg << endl;
     }
     if ( job && !jobsKilled )
       removeJob( job );
@@ -929,7 +929,7 @@ namespace KMail {
   {
     QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
     while ( it != mapJobData.end() ) {
-      kdDebug(5006) << "cancelMailCheck: job is cancellable: " << (*it).cancellable << endl;
+      kDebug(5006) << "cancelMailCheck: job is cancellable: " << (*it).cancellable << endl;
       if ( (*it).cancellable ) {
         it.key()->kill();
         QMap<KIO::Job*, jobData>::Iterator rmit = it;
@@ -1016,7 +1016,7 @@ namespace KMail {
 
     if ( !as )
     {
-      kdWarning(5006) << k_funcinfo << " - found no attachment strategy!" << endl;
+      kWarning(5006) << k_funcinfo << " - found no attachment strategy!" << endl;
       return;
     }
 
@@ -1038,7 +1038,7 @@ namespace KMail {
     {
       // more than 50% of the parts have to be loaded anyway so it is faster
       // to load the message completely
-      kdDebug(5006) << "Falling back to normal mode" << endl;
+      kDebug(5006) << "Falling back to normal mode" << endl;
       FolderJob *job = msg->parent()->createJob(
           msg, FolderJob::tGetMessage, 0, "TEXT" );
       job->start();
@@ -1046,18 +1046,18 @@ namespace KMail {
     }
     for ( it = parts.begin(); it != parts.end(); ++it ) {
       KMMessagePart *part = (*it);
-      kdDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier()
+      kDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier()
         << " (" << part->originalContentTypeStr() << ")" << endl;
       if ( part->loadHeaders() )
       {
-        kdDebug(5006) << "load HEADER" << endl;
+        kDebug(5006) << "load HEADER" << endl;
         FolderJob *job = msg->parent()->createJob(
             msg, FolderJob::tGetMessage, 0, part->partSpecifier()+".MIME" );
         job->start();
       }
       if ( part->loadPart() )
       {
-        kdDebug(5006) << "load Part" << endl;
+        kDebug(5006) << "load Part" << endl;
         FolderJob *job = msg->parent()->createJob(
             msg, FolderJob::tGetMessage, 0, part->partSpecifier() );
         job->start();
@@ -1076,7 +1076,7 @@ namespace KMail {
       KMMessagePart* part = new KMMessagePart( stream );
       part->setParent( parentKMPart );
       mBodyPartList.append( part );
-      kdDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier()
+      kDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier()
         << " of type " << part->originalContentTypeStr() << endl;
       DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
 
@@ -1085,7 +1085,7 @@ namespace KMail {
         // add to parent body
         parent->Body().AddBodyPart( dwpart );
         dwpart->Parse();
-//        kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
+//        kDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
 //          << ",dwparts msg " << dwpart->Body().Message() <<",id "<<dwpart->ObjectId() << endl;
       } else if ( part->partSpecifier() != "0" &&
                   !part->partSpecifier().endsWith(".HEADER") )
@@ -1093,7 +1093,7 @@ namespace KMail {
         // add to message
         dwmsg->Body().AddBodyPart( dwpart );
         dwpart->Parse();
-//        kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
+//        kDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
 //          << ",dwparts msg " << dwpart->Body().Message() <<",id "<<dwpart->ObjectId() << endl;
       } else
         dwpart = 0;
@@ -1125,7 +1125,7 @@ namespace KMail {
   void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const Q3CString& flags )
   {
      // set the status on the server, the uids are integrated in the path
-     kdDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
+     kDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
      KUrl url = getUrl();
      url.setPath(path);
 

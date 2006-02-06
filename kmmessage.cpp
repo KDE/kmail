@@ -356,7 +356,7 @@ void KMMessage::setStatusFields()
   setHeaderField("X-KMail-EncryptionState", str);
 
   str[0] = (char)signatureState();
-  //kdDebug(5006) << "Setting SignatureState header field to " << str[0] << endl;
+  //kDebug(5006) << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
   str[0] = static_cast<char>( mdnSentState() );
@@ -724,7 +724,7 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
                                DwMime::kSubtypeUnknown,
                                true,
                                false );
-  kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
+  kDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
                 << ( curNode ? "text part found!\n" : "sorry, no text node!\n" ) << endl;
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->subType();
@@ -940,7 +940,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
         // The sender didn't set a Reply-to address, so we add the From
         // address to the list of CC recipients.
         ccRecipients += from();
-        kdDebug(5006) << "Added " << from() << " to the list of CC recipients"
+        kDebug(5006) << "Added " << from() << " to the list of CC recipients"
                       << endl;
       }
       // if it is a mailing list, add the posting address
@@ -952,7 +952,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
         // in case of replying to a normal message only then add the From
         // address to the list of recipients if there was no Reply-to address
         recipients += from();
-        kdDebug(5006) << "Added " << from() << " to the list of recipients"
+        kDebug(5006) << "Added " << from() << " to the list of recipients"
                       << endl;
       }
     }
@@ -971,7 +971,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
         if(    !addressIsInAddressList( *it, recipients )
             && !addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
-          kdDebug(5006) << "Added " << *it << " to the list of CC recipients"
+          kDebug(5006) << "Added " << *it << " to the list of CC recipients"
                         << endl;
         }
       }
@@ -1307,7 +1307,7 @@ static int requestAdviceOnMDN( const char * what ) {
 			 i18n("&Ignore"), i18n("&Send") );
 	return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
       }
-  kdWarning(5006) << "didn't find data for message box \""
+  kWarning(5006) << "didn't find data for message box \""
 		  << what << "\"" << endl;
   return 0;
 }
@@ -1329,7 +1329,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     return 0;
 #else
   char st[2]; st[0] = (char)mdnSentState(); st[1] = 0;
-  kdDebug(5006) << "mdnSentState() == '" << st << "'" << endl;
+  kDebug(5006) << "mdnSentState() == '" << st << "'" << endl;
 #endif
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
@@ -1381,7 +1381,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
-  kdDebug(5006) << "KPIM::splitEmailAddrList(receiptTo): "
+  kDebug(5006) << "KPIM::splitEmailAddrList(receiptTo): "
 	    << KPIM::splitEmailAddrList(receiptTo).join("\n") << endl;
   if ( KPIM::splitEmailAddrList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
@@ -1397,7 +1397,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
   QString returnPath = returnPathList.isEmpty() ? QString()
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
-  kdDebug(5006) << "clean return path: " << returnPath << endl;
+  kDebug(5006) << "clean return path: " << returnPath << endl;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
@@ -1418,7 +1418,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     return 0;
   default:
   case 1:
-    kdFatal(5006) << "KMMessage::createMDN(): The \"ask\" mode should "
+    kFatal(5006) << "KMMessage::createMDN(): The \"ask\" mode should "
 		  << "never appear here!" << endl;
     break;
   case 2: // deny
@@ -1505,7 +1505,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   receipt->cleanupHeader();
 
-  kdDebug(5006) << "final message:\n" + receipt->asString() << endl;
+  kDebug(5006) << "final message:\n" + receipt->asString() << endl;
 
   //
   // Set "MDN sent" status:
@@ -1702,7 +1702,7 @@ QString KMMessage::dateStr() const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  //kdDebug(5006)<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
+  //kDebug(5006)<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
 
   return KMime::DateFormatter::formatDate(
       static_cast<KMime::DateFormatter::FormatType>(general.readEntry( "dateFormat",
@@ -2126,7 +2126,7 @@ AddressList KMMessage::splitAddrField( const Q3CString & str )
     return AddressList();
   const char * const send = str.begin() + str.length();
   if ( !parseAddressList( scursor, send, result ) )
-    kdDebug(5006) << "Error in address splitting: parseAddressList returned false!"
+    kDebug(5006) << "Error in address splitting: parseAddressList returned false!"
                   << endl;
   return result;
 }
@@ -2212,7 +2212,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
 {
 #if 0
   if ( type != Unstructured )
-    kdDebug(5006) << "KMMessage::setHeaderField( \"" << aName << "\", \""
+    kDebug(5006) << "KMMessage::setHeaderField( \"" << aName << "\", \""
                 << bValue << "\", " << type << " )" << endl;
 #endif
   if (aName.isEmpty()) return;
@@ -2229,7 +2229,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
       value = KPIM::normalizeAddressesAndEncodeIDNs( value );
 #if 0
     if ( type != Unstructured )
-      kdDebug(5006) << "value: \"" << value << "\"" << endl;
+      kDebug(5006) << "value: \"" << value << "\"" << endl;
 #endif
     Q3CString encoding = autoDetectCharset( charset(), sPrefCharsets, value );
     if (encoding.isEmpty())
@@ -2237,7 +2237,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
     aValue = encodeRFC2047String( value, encoding );
 #if 0
     if ( type != Unstructured )
-      kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
+      kDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
 #endif
   }
   // FIXME PORTING
@@ -2423,7 +2423,7 @@ Q3CString KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
   Q3CString str = body.c_str();
-  kdWarning( str.length() != static_cast<int>( body.length() ), 5006 )
+  kWarning( str.length() != static_cast<int>( body.length() ), 5006 )
     << "KMMessage::body(): body is binary but used as text!" << endl;
   return str;
 }
@@ -2478,7 +2478,7 @@ Q3CString KMMessage::bodyDecoded() const
   Q3CString result(len+1);
   memcpy(result.data(),dwstr.data(),len);
   result[len] = 0;
-  kdWarning(result.length() != len, 5006)
+  kWarning(result.length() != len, 5006)
     << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
   return result;
 }
@@ -2545,7 +2545,7 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
+  kDebug(5006) << "CharFreq returned " << cf.type() << "/"
                 << cf.printableRatio() << " and I chose "
                 << dwCte.c_str() << endl;
 #endif
@@ -2568,7 +2568,7 @@ void KMMessage::setBodyAndGuessCte( const Q3CString& aBuf,
 #ifndef NDEBUG
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
-  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
+  kDebug(5006) << "CharFreq returned " << cf.type() << "/"
                 << cf.printableRatio() << " and I chose "
                 << dwCte.c_str() << endl;
 #endif
@@ -2800,7 +2800,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if (curpart && curpart->hasHeaders() ) {
-      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+      kDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
 		<< "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
     }
 
@@ -3231,7 +3231,7 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 //-----------------------------------------------------------------------------
 Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
 {
-  //kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
+  //kDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
     return Q3CString();
@@ -3281,11 +3281,11 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
                    comment = comment.trimmed();
                    angleAddress = angleAddress.trimmed();
                    /*
-                   kdDebug(5006) << "Name    : \"" << name
+                   kDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
-                   kdDebug(5006) << "Comment : \"" << comment
+                   kDebug(5006) << "Comment : \"" << comment
                                  << "\"" << endl;
-                   kdDebug(5006) << "Address : \"" << angleAddress
+                   kDebug(5006) << "Address : \"" << angleAddress
                                  << "\"" << endl;
                    */
                    if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -3363,9 +3363,9 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
-  kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
-  kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  kDebug(5006) << "Name    : \"" << name << "\"" << endl;
+  kDebug(5006) << "Comment : \"" << comment << "\"" << endl;
+  kDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -3382,7 +3382,7 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
     result += angleAddress;
   }
 
-  //kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+  //kDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
   //              << "\"" << endl;
   return result;
 }
@@ -3390,7 +3390,7 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
 //-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr( const QString& aStr )
 {
-  //kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
+  //kDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
     return QString();
@@ -3443,11 +3443,11 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
                    comment = comment.trimmed();
                    angleAddress = angleAddress.trimmed();
                    /*
-                   kdDebug(5006) << "Name    : \"" << name
+                   kDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
-                   kdDebug(5006) << "Comment : \"" << comment
+                   kDebug(5006) << "Comment : \"" << comment
                                  << "\"" << endl;
-                   kdDebug(5006) << "Address : \"" << angleAddress
+                   kDebug(5006) << "Address : \"" << angleAddress
                                  << "\"" << endl;
                    */
                    if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
@@ -3525,9 +3525,9 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   comment = comment.trimmed();
   angleAddress = angleAddress.trimmed();
   /*
-  kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
-  kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
-  kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  kDebug(5006) << "Name    : \"" << name << "\"" << endl;
+  kDebug(5006) << "Comment : \"" << comment << "\"" << endl;
+  kDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
   */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
@@ -3544,7 +3544,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
     result += angleAddress;
   }
 
-  //kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+  //kDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
   //              << "\"" << endl;
   return result;
 }
@@ -3612,7 +3612,7 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
   // cut of the trailing ", "
   result.truncate( result.length() - 2 );
 
-  //kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
+  //kDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
   //              << "') returns:\n-->" << result << "<--" << endl;
   return result;
 }
@@ -3629,7 +3629,7 @@ QStringList KMMessage::stripAddressFromAddressList( const QString& address,
        it != addresses.end(); ) {
     if ( kasciistricmp( addrSpec.utf8().data(),
                         KPIM::getEmailAddress( *it ).utf8().data() ) == 0 ) {
-      kdDebug(5006) << "Removing " << *it << " from the address list"
+      kDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
     }
@@ -3647,10 +3647,10 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
   QStringList addresses = list;
   for( QStringList::Iterator it = addresses.begin();
        it != addresses.end(); ) {
-    kdDebug(5006) << "Check whether " << *it << " is one of my addresses"
+    kDebug(5006) << "Check whether " << *it << " is one of my addresses"
                   << endl;
     if( kmkernel->identityManager()->thatIsMe( KPIM::getEmailAddress( *it ) ) ) {
-      kdDebug(5006) << "Removing " << *it << " from the address list"
+      kDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
     }
@@ -3837,11 +3837,11 @@ Q3CString KMMessage::charset() const
 //-----------------------------------------------------------------------------
 void KMMessage::setCharset(const Q3CString& bStr)
 {
-  kdWarning( type() != DwMime::kTypeText )
+  kWarning( type() != DwMime::kTypeText )
     << "KMMessage::setCharset(): trying to set a charset for a non-textual mimetype." << endl
     << "Fix this caller:" << endl
     << "====================================================================" << endl
-    << kdBacktrace( 5 ) << endl
+    << kBacktrace( 5 ) << endl
     << "====================================================================" << endl;
   Q3CString aStr = bStr;
   KPIM::kAsciiToLower( aStr.data() );
@@ -3995,10 +3995,10 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 
     // search for the bodypart
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
-    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
+    kDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
     if (!mLastUpdated)
     {
-      kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "
+      kWarning(5006) << "KMMessage::updateBodyPart - can not find part "
         << specifier << endl;
       return;
     }
@@ -4062,7 +4062,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
 
   if ( !part )
   {
-    // kdDebug(5006) << "updateAttachmentState - no part!" << endl;
+    // kDebug(5006) << "updateAttachmentState - no part!" << endl;
     if ( mStatus.hasAttachment() )
       toggleStatus( MessageStatus::statusHasAttachment() );
     return;

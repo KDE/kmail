@@ -199,7 +199,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
   if ( !mFolder ) return; // in case the folder was just created
   int num = mFolder->count();
 
-  kdDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
+  kDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
 
   /* FIXME Till - make work without the folder tree
   // first try the currently selected message
@@ -292,7 +292,7 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
     mMailingList.setHelpURLS( mEditList->items() );
     break;
   default:
-    kdWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
+    kWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
   }
 }
 
@@ -316,7 +316,7 @@ void MailingListFolderPropertiesDialog::fillEditBox()
     mEditList->insertStringList( mMailingList.helpURLS().toStringList() );
     break;
   default:
-    kdWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
+    kWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
   }
 }
 
@@ -340,7 +340,7 @@ void MailingListFolderPropertiesDialog::slotInvokeHandler()
     command = new KMMailingListHelpCommand( this, mFolder );
     break;
   default:
-    kdWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
+    kWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
   }
   if ( command ) command->start();
 }

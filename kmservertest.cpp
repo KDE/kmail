@@ -115,17 +115,17 @@ void KMServerTest::slotMetaData( const KIO::MetaData & md ) {
   KIO::MetaData::const_iterator it = md.find( "PLAIN AUTH METHODS" );
   if ( it != md.end() ) {
     mAuthNone = it.data();
-    kdDebug(5006) << "mAuthNone: " << mAuthNone << endl;
+    kDebug(5006) << "mAuthNone: " << mAuthNone << endl;
   }
   it = md.find( "TLS AUTH METHODS" );
   if ( it != md.end() ) {
     mAuthTLS = it.data();
-    kdDebug(5006) << "mAuthTLS: " << mAuthTLS << endl;
+    kDebug(5006) << "mAuthTLS: " << mAuthTLS << endl;
   }
   it = md.find( "SSL AUTH METHODS" );
   if ( it != md.end() ) {
     mAuthSSL = it.data();
-    kdDebug(5006) << "mAuthSSL: " << mAuthSSL << endl;
+    kDebug(5006) << "mAuthSSL: " << mAuthSSL << endl;
   }
 }
 

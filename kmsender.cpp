@@ -281,7 +281,7 @@ void KMSender::doSendMsg()
   {
     mCurrentMsg->setTransferInProgress( FALSE );
     if( mCurrentMsg->hasUnencryptedMsg() ) {
-      kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
+      kDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
       // delete all current body parts
       mCurrentMsg->deleteBodyParts();
       // copy Content-[..] headers from unencrypted message to current one
@@ -611,7 +611,7 @@ void KMSender::doSendMsgAux()
 //-----------------------------------------------------------------------------
 void KMSender::cleanup(void)
 {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   if (mSendProc && mSendProcStarted) mSendProc->finish();
   mSendProc = 0;
   mSendProcStarted = FALSE;
@@ -852,7 +852,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
       }
       folder->close();
     } else {
-      kdWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
+      kWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
     }
   }
 }

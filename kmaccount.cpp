@@ -130,7 +130,7 @@ void KMAccount::clearPasswd()
 void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 {
   if(!aFolder) {
-    //kdDebug(5006) << "KMAccount::setFolder() : aFolder == 0" << endl;
+    //kDebug(5006) << "KMAccount::setFolder() : aFolder == 0" << endl;
     mFolder = 0;
     return;
   }
@@ -359,7 +359,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
   connect(&precommandProcess, SIGNAL(finished(bool)),
           SLOT(precommandExited(bool)));
 
-  kdDebug(5006) << "Running precommand " << precommand << endl;
+  kDebug(5006) << "Running precommand " << precommand << endl;
   if (!precommandProcess.start()) return false;
 
 #warning Port me!

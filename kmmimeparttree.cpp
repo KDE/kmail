@@ -110,7 +110,7 @@ void KMMimePartTree::itemClicked( Q3ListViewItem* item )
     else
       mReaderWin->setMsgPart( i->node() );
   } else
-    kdWarning(5006) << "Item was not a KMMimePartTreeItem!" << endl;
+    kWarning(5006) << "Item was not a KMMimePartTreeItem!" << endl;
 }
 
 
@@ -120,10 +120,10 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem* item,
     // TODO: remove this member var?
     mCurrentContextMenuItem = dynamic_cast<KMMimePartTreeItem*>( item );
     if ( 0 == mCurrentContextMenuItem ) {
-        kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
+        kDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
     }
     else {
-        kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
+        kDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
 
         QMenu* popup = new QMenu;
         popup->addAction( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );

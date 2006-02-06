@@ -444,7 +444,7 @@ void IdentityPage::slotRemoveIdentity()
   assert( !mIdentityDialog );
 
   KPIM::IdentityManager * im = kmkernel->identityManager();
-  kdFatal( im->shadowIdentities().count() < 2 )
+  kFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
   IdentityListViewItem * item =
@@ -1263,7 +1263,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
         {
           // connect to server - the namespaces are fetched automatically
-          kdDebug(5006) << "slotModifySelectedAccount - connect" << endl;
+          kDebug(5006) << "slotModifySelectedAccount - connect" << endl;
           ai->makeConnection();
         }
       }
@@ -1574,7 +1574,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-  kdDebug(5006) << "slotFontSelectorChanged() called" << endl;
+  kDebug(5006) << "slotFontSelectorChanged() called" << endl;
   if( index < 0 || index >= mFontLocationCombo->count() )
     return; // Should never happen, but it is better to check.
 
@@ -1632,7 +1632,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
       mFont[i] = fonts.readEntry( fontNames[i].configName, QVariant( QFont() ) ).value<QFont>();
-      kdDebug(5006) << "got font \"" << fontNames[i].configName
+      kDebug(5006) << "got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
   if ( needChange && mFontLocationCombo->currentItem() > 0 )
@@ -2128,7 +2128,7 @@ void AppearancePage::HeadersTab::save() {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
       QStringList groups = KMKernel::config()->groupList().grep( QRegExp("^Folder-") );
-      kdDebug(5006) << "groups.count() == " << groups.count() << endl;
+      kDebug(5006) << "groups.count() == " << groups.count() << endl;
       for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
         KConfigGroup group( KMKernel::config(), *it );
         group.deleteEntry( "threadMessagesOverride" );
@@ -2285,7 +2285,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList::ConstIterator end( encodings.end() );
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
   currentEncoding = currentEncoding.replace( "iso ", "iso-", false );
-  ///kdDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
+  ///kDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
   int i = 0;
   int indexOfLatin9 = 0;
   bool found = false;
@@ -3243,7 +3243,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   // calling this w/o selection is a programming error:
   Q3ListViewItem * item = mTagList->selectedItem();
   if ( !item ) {
-    kdDebug(5006) << "==================================================\n"
+    kDebug(5006) << "==================================================\n"
                   << "Error: Remove button was pressed although no custom header was selected\n"
                   << "==================================================\n";
     return;
@@ -4021,7 +4021,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
 
   if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
                            "load()", false ) )
-    kdError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
+    kError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
 
 }
 
@@ -4265,11 +4265,11 @@ Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* comp
 {
     Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
     if ( !entry ) {
-        kdWarning(5006) << QString( "Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName ) << endl;
+        kWarning(5006) << QString( "Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName ) << endl;
         return 0;
     }
     if( entry->argType() != argType || entry->isList() != isList ) {
-        kdWarning(5006) << QString( "Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() ) << endl;
+        kWarning(5006) << QString( "Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() ) << endl;
         return 0;
     }
     return entry;
@@ -4793,7 +4793,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   if ( selectedAccount )
     mAccountCombo->setCurrentAccount( selectedAccount );
   else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
-    kdDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
+    kDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
 }
 
 void MiscPage::GroupwareTab::save() {

@@ -67,13 +67,13 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mParentWidget( parentWidget )
 {
   setObjectName( name );
-  kdDebug(5006) << "KMailPart()" << endl;
-  kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
+  kDebug(5006) << "KMailPart()" << endl;
+  kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
   setInstance(KMailFactory::instance());
 
-  kdDebug(5006) << "KMailPart()..." << endl;
-  kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
+  kDebug(5006) << "KMailPart()..." << endl;
+  kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
@@ -148,7 +148,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
-  kdDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
+  kDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
   kmkernel->abortMailCheck();
@@ -167,7 +167,7 @@ KAboutData *KMailPart::createAboutData()
 
 bool KMailPart::openFile()
 {
-  kdDebug(5006) << "KMailPart:openFile()" << endl;
+  kDebug(5006) << "KMailPart:openFile()" << endl;
 
   mainWidget->show();
   return true;
@@ -213,7 +213,7 @@ public:
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-  kdDebug(5006) << "KMailPart::guiActivateEvent" << endl;
+  kDebug(5006) << "KMailPart::guiActivateEvent" << endl;
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
   mainWidget->initializeFolderShortcutActions();

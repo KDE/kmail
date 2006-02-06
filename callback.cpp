@@ -58,7 +58,7 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 bool Callback::mailICal( const QString& to, const QString iCal,
                          const QString& subject ) const
 {
-  kdDebug(5006) << "Mailing message:\n" << iCal << endl;
+  kDebug(5006) << "Mailing message:\n" << iCal << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();

@@ -186,7 +186,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int idx )
 {
-    //kdDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
+    //kDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
     mDirty = TRUE;
     if (storage())
         storage()->headerOfMsgChanged(this, idx);
@@ -194,7 +194,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int i
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
-    //kdDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
+    //kDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
 
     if( status.toLatin1() == (char)KMMsgEncryptionStateUnknown )
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -211,7 +211,7 @@ void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 
 void KMMsgBase::setSignatureState( const KMMsgSignatureState /*status*/, int idx )
 {
-    //kdDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
+    //kDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
     mDirty = TRUE;
     if (storage())
          storage()->headerOfMsgChanged(this, idx);
@@ -225,7 +225,7 @@ void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
-    //kdDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
+    //kDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
 
     if( status.toLatin1() == (char)KMMsgSignatureStateUnknown )
         setSignatureState( KMMsgSignatureStateUnknown, idx );
@@ -443,7 +443,7 @@ QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
 
       // valid encoding: decode and throw away separating LWSP
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
-      kdFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
+      kFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
 
       QByteArray in; in.setRawData( enc_start, pos - enc_start );
       const QByteArray enc = c->decode( in );
@@ -478,7 +478,7 @@ static const Q3CString especials = "()<>@,;:\"/[]?.= \033";
 Q3CString KMMsgBase::encodeRFC2047Quoted( const Q3CString & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
-  kdFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
+  kFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
   QByteArray in; in.setRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
   in.resetRawData( s.data(), s.length() );
@@ -724,7 +724,7 @@ Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QString
        {
          const QTextCodec *codec = KMMsgBase::codecForName(encoding);
          if (!codec) {
-           kdDebug(5006) << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding << "]" << endl;
+           kDebug(5006) << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding << "]" << endl;
          } else {
            if (codec->canEncode(text))
               return encoding;
@@ -781,7 +781,7 @@ namespace {
   template < typename T > void copy_from_stream( T & x ) {
     if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
       g_chunk_offset = g_chunk_length;
-      kdDebug( 5006 ) << "This should never happen.. "
+      kDebug( 5006 ) << "This should never happen.. "
 		      << __FILE__ << ":" << __LINE__ << endl;
       x = 0;
     } else {
@@ -831,7 +831,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
     }
     type = (MsgPartType) tmp;
     if(g_chunk_offset + l > mIndexLength) {
-	kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
+	kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
 	break;
     }
     if(type == t) {
@@ -903,7 +903,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
     type = (MsgPartType) tmp;
 
     if (g_chunk_offset + l > mIndexLength) {
-      kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
+      kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
       break;
     }
     if(type == t) {
@@ -1113,7 +1113,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
                       .arg( prefixRegExps.join(")|(?:") );
   QRegExp rx( bigRegExp, false /*case insens.*/ );
   if ( !rx.isValid() ) {
-    kdWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
+    kWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
                     << bigRegExp << "\"\n"
                     << "prefix regexp is invalid!" << endl;
     // try good ole Re/Fwd:

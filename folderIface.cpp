@@ -48,7 +48,7 @@ namespace KMail {
 FolderIface::FolderIface( const QString& vpath )
   : DCOPObject( "FolderIface" ), mPath( vpath )
 {
-  //kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
+  //kDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
   if ( !mFolder )
     mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
@@ -131,7 +131,7 @@ FolderIface::messageRefs()
     } else
       return refList;
 
-    kdDebug(5006)<<"refList == "<<messageCache.count()<<endl;
+    kDebug(5006)<<"refList == "<<messageCache.count()<<endl;
 
     for( int i = 0; i < messageCache.size(); ++i ) {
       KMMsgBase *msg = messageCache[i];
@@ -141,7 +141,7 @@ FolderIface::messageRefs()
       }
     }
 
-    kdDebug(5006)<<"Reflist size = "<<refList.count()<<endl;
+    kDebug(5006)<<"Reflist size = "<<refList.count()<<endl;
     return refList;
 }*/
 

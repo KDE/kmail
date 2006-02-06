@@ -241,7 +241,7 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
 
 void KMFolderTreeItem::slotIconsChanged()
 {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   // this is prone to change, so better check
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
@@ -511,7 +511,7 @@ void KMFolderTree::reload(bool openFolders)
 {
   if ( mReloading ) {
     // no parallel reloads are allowed
-    kdDebug(5006) << "KMFolderTree::reload - already reloading" << endl;
+    kDebug(5006) << "KMFolderTree::reload - already reloading" << endl;
     return;
   }
   mReloading = true;
@@ -1275,7 +1275,7 @@ void KMFolderTree::cleanupConfigFile()
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
       config->deleteGroup(*grpIt, KConfig::NLS);
-      kdDebug(5006) << "Deleting information about folder " << name << endl;
+      kDebug(5006) << "Deleting information about folder " << name << endl;
     }
   }
 }
@@ -1500,10 +1500,10 @@ void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 {
-//  kdDebug(5006) << "KMFolderTree::slotUpdateCountsDelayed()" << endl;
+//  kDebug(5006) << "KMFolderTree::slotUpdateCountsDelayed()" << endl;
   if ( !mFolderToUpdateCount.contains( folder->idString() ) )
   {
-//    kdDebug( 5006 )<< "adding " << folder->idString() << " to updateCountList " << endl;
+//    kDebug( 5006 )<< "adding " << folder->idString() << " to updateCountList " << endl;
     mFolderToUpdateCount.insert( folder->idString(),folder );
   }
   if ( !mUpdateCountTimer->isActive() )
@@ -1513,7 +1513,7 @@ void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 
 void KMFolderTree::slotUpdateCountTimeout()
 {
-//  kdDebug(5006) << "KMFolderTree::slotUpdateCountTimeout()" << endl;
+//  kDebug(5006) << "KMFolderTree::slotUpdateCountTimeout()" << endl;
 
   QMap<QString,KMFolder*>::iterator it;
   for ( it= mFolderToUpdateCount.begin();
@@ -1529,7 +1529,7 @@ void KMFolderTree::slotUpdateCountTimeout()
 
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
- // kdDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
+ // kDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
   Q3ListViewItem * current;
   if (folder)
     current = indexOfFolder(folder);
@@ -1615,7 +1615,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
     // toggle KMenu
     mPopup->setItemChecked( mTotalPop, isTotalActive() );
 
-  } else kdDebug(5006) << "unknown column:" << column << endl;
+  } else kDebug(5006) << "unknown column:" << column << endl;
 
   // toggles the switches of the mainwin
   emit columnsChanged();
@@ -1870,7 +1870,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
     return;
   }
 
-  kdDebug(5006) << "move folder " << currentFolder()->label() << " to "
+  kDebug(5006) << "move folder " << currentFolder()->label() << " to "
     << ( destination ? destination->label() : "Local Folders" ) << endl;
   kmkernel->folderMgr()->moveFolder( folder, parent );
 }

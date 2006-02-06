@@ -308,10 +308,10 @@ void MessageComposer::applyChanges( bool disableCrypto )
   if( getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0 ) {
     Q3CString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
     mDebugComposerCrypto = cE == "1" || cE.toUpper() == "ON" || cE.toUpper() == "TRUE";
-    kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
+    kDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
   } else {
     mDebugComposerCrypto = false;
-    kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = FALSE" << endl;
+    kDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = FALSE" << endl;
   }
 
   mHoldJobs = false;
@@ -1181,7 +1181,7 @@ Q3CString MessageComposer::bodyText()
   //  MUST be identical).
   // So make sure that the body ends with a <LF>.
   if( body[body.length()-1] != '\n' ) {
-    kdDebug(5006) << "Added an <LF> on the last line" << endl;
+    kDebug(5006) << "Added an <LF> on the last line" << endl;
     body += "\n";
   }
   return body;
@@ -1209,7 +1209,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
 
   const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos
     = mKeyResolver->encryptionItems( Kleo::InlineOpenPGPFormat );
-  kdWarning( splitInfos.empty() )
+  kWarning( splitInfos.empty() )
     << "MessageComposer::continueComposeMessage(): splitInfos.empty() for InlineOpenPGPFormat"
     << endl;
   std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it;
@@ -1342,7 +1342,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
                                       Kleo::CryptoMessageFormat format )
 {
 #ifdef DEBUG
-  kdDebug(5006) << "entering KMComposeWin::composeMessage" << endl;
+  kDebug(5006) << "entering KMComposeWin::composeMessage" << endl;
 #endif
   if ( format == Kleo::InlineOpenPGPFormat ) {
     composeInlineOpenPGPMessage( theMessage, doSign, doEncrypt );
@@ -1402,7 +1402,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       mEarlyAddAttachments = false;
   }
 
-  kdDebug(5006) << "mEarlyAddAttachments=" << mEarlyAddAttachments << " mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody << endl;
+  kDebug(5006) << "mEarlyAddAttachments=" << mEarlyAddAttachments << " mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody << endl;
 
   // if an html message is to be generated, make a text/plain and text/html part
   if ( mIsRichText ) {
@@ -1493,7 +1493,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
         const QByteArray body = it->part->bodyDecodedBinary();
         QList<int> dummy;
         it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
-        kdDebug(5006) << "Changed encoding of message part from "
+        kDebug(5006) << "Changed encoding of message part from "
                       << cte << " to " << it->part->cteStr() << endl;
       }
     }
@@ -1600,7 +1600,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
 
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    //kDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
     mEncodedBody = KMail::Util::lf2crlf( mEncodedBody );
   }
 
@@ -1608,7 +1608,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     pgpSignedMsg( mEncodedBody, format );
 
     if ( mSignature.isEmpty() ) {
-      kdDebug() << "signature was empty" << endl;
+      kDebug() << "signature was empty" << endl;
       mRc = false;
       return;
     }
@@ -1644,7 +1644,7 @@ void MessageComposer::continueComposeMessage( KMMessage& theMessage,
 
   const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos
     = mKeyResolver->encryptionItems( format );
-  kdWarning( splitInfos.empty() )
+  kWarning( splitInfos.empty() )
     << "MessageComposer::continueComposeMessage(): splitInfos.empty() for "
     << Kleo::cryptoMessageFormatToString( format ) << endl;
 
@@ -1697,9 +1697,9 @@ void MessageComposer::encryptMessage( KMMessage* msg,
     // now do the encrypting:
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    //kDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
     innerContent = KMail::Util::lf2crlf( innerContent );
-    //kdDebug(5006) << "                                                       done." << endl;
+    //kDebug(5006) << "                                                       done." << endl;
 
     QByteArray encryptedBody;
     Kpgp::Result result = pgpEncryptedMsg( encryptedBody, innerContent,
@@ -1745,7 +1745,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     msg->headers().ContentType().SetType( DwMime::kTypeMultipart );
     msg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
     msg->headers().ContentType().CreateBoundary( 0 );
-    kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to Multipart/Mixed" << endl;
+    kDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to Multipart/Mixed" << endl;
 
     // add our Body Part
     DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
@@ -1789,7 +1789,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 
       // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
       // according to RfC 2633, 3.1.1 Canonicalization
-      //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+      //kDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
       encodedAttachment = KMail::Util::lf2crlf( encodedAttachment );
 
       // sign this attachment
@@ -1855,10 +1855,10 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     if( !ourFineBodyPart.originalContentTypeStr().isEmpty() ) {
       msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
       msg->headers().ContentType().Parse();
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
+      kDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
       msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
+      kDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
     }
     if ( !ourFineBodyPart.charset().isEmpty() )
       msg->setCharset( ourFineBodyPart.charset() );
@@ -1870,7 +1870,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
                          ourFineBodyPart.contentDisposition() );
 
     if ( mDebugComposerCrypto )
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : top level headers and body adjusted" << endl;
+      kDebug(5006) << "MessageComposer::addBodyAndAttachments() : top level headers and body adjusted" << endl;
 
     // set body content
     if ( mIsRichText && !(doSign || doEncrypt) ) { // add the boundary to the header
@@ -1885,9 +1885,9 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
                        splitInfo.recipients.join(", "), KMMessage::Address );
 
   if ( mDebugComposerCrypto ) {
-    kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
+    kDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
     msg->headers().Assemble();
-    kdDebug(5006) << "\n\n\nMessageComposer::addBodyAndAttachments():\n      Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
+    kDebug(5006) << "\n\n\nMessageComposer::addBodyAndAttachments():\n      Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
   }
 }
 
@@ -1943,7 +1943,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
     }
 
-    //kdDebug(5006) << "processStructuringInfo: mainHeader=" << mainHeader << endl;
+    //kDebug(5006) << "processStructuringInfo: mainHeader=" << mainHeader << endl;
 
     DwString mainDwStr( mainHeader.data() );
     mainDwStr += "\n\n";
@@ -2000,7 +2000,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
         mainStr += "\n" + codeCStr + "\n--" + boundaryCStr;
       mainStr += "--\n";
 
-      //kdDebug(5006) << "processStructuringInfo: mainStr=" << mainStr << endl;
+      //kDebug(5006) << "processStructuringInfo: mainStr=" << mainStr << endl;
       resultingPart.setBodyEncoded( mainStr );
     }
 
@@ -2050,7 +2050,7 @@ Q3CString MessageComposer::plainTextFromMarkup( const QString& markupText )
   if( mCharset == "us-ascii" ) {
     textbody = KMMsgBase::toUsAscii( text );
   } else if( codec == 0 ) {
-    kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
+    kDebug(5006) << "Something is wrong and I can not get a codec." << endl;
     textbody = text.local8Bit();
   } else {
     textbody = codec->fromUnicode( text );
@@ -2080,7 +2080,7 @@ Q3CString MessageComposer::breakLinesAndApplyCodec()
     cText = KMMsgBase::toUsAscii( text );
     newText = QString::fromLatin1( cText );
   } else if( codec == 0 ) {
-    kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
+    kDebug(5006) << "Something is wrong and I can not get a codec." << endl;
     cText = text.local8Bit();
     newText = QString::fromLocal8Bit( cText );
   } else {
@@ -2142,11 +2142,11 @@ void MessageComposer::pgpSignedMsg( const Q3CString & cText, Kleo::CryptoMessage
   const GpgME::SigningResult res =
     job->exec( signingKeys, plainText, signingMode( format ), signature );
   if ( res.error().isCanceled() ) {
-    kdDebug() << "signing was canceled by user" << endl;
+    kDebug() << "signing was canceled by user" << endl;
     return;
   }
   if ( res.error() ) {
-    kdDebug() << "signing failed: " << res.error().asString() << endl;
+    kDebug() << "signing failed: " << res.error().asString() << endl;
     job->showErrorDialog( mComposeWin );
     return;
   }
@@ -2188,11 +2188,11 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
   const GpgME::EncryptionResult res =
     job->exec( encryptionKeys, plainText, false, encryptedBody );
   if ( res.error().isCanceled() ) {
-    kdDebug() << "encryption was canceled by user" << endl;
+    kDebug() << "encryption was canceled by user" << endl;
     return Kpgp::Canceled;
   }
   if ( res.error() ) {
-    kdDebug() << "encryption failed: " << res.error().asString() << endl;
+    kDebug() << "encryption failed: " << res.error().asString() << endl;
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
@@ -2229,14 +2229,14 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
   const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
     job->exec( signingKeys, encryptionKeys, plainText, false, encryptedBody );
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
-    kdDebug() << "encrypt/sign was canceled by user" << endl;
+    kDebug() << "encrypt/sign was canceled by user" << endl;
     return Kpgp::Canceled;
   }
   if ( res.first.error() || res.second.error() ) {
     if ( res.first.error() )
-      kdDebug() << "signing failed: " << res.first.error().asString() << endl;
+      kDebug() << "signing failed: " << res.first.error().asString() << endl;
     else
-      kdDebug() << "encryption failed: " << res.second.error().asString() << endl;
+      kDebug() << "encryption failed: " << res.second.error().asString() << endl;
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }

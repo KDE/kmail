@@ -110,12 +110,12 @@ void RenameJob::execute()
     mNewFolder = folderMgr->createFolder( mNewName, false, typenew, mNewParent );
     if ( !mNewFolder )
     {
-      kdWarning(5006) << k_funcinfo << "could not create folder" << endl;
+      kWarning(5006) << k_funcinfo << "could not create folder" << endl;
       emit renameDone( mNewName, false );
       deleteLater();
       return;
     }
-    kdDebug(5006)<< "RenameJob::rename - " << mStorage->folder()->idString()
+    kDebug(5006)<< "RenameJob::rename - " << mStorage->folder()->idString()
       << " |=> " << mNewFolder->idString() << endl;
 
     if ( mNewParent->type() == KMImapDir )
@@ -174,7 +174,7 @@ void RenameJob::execute()
     KUrl dst( account->getUrl() );
     dst.setPath( mNewImapPath );
     KIO::SimpleJob *job = KIO::rename( src, dst, true );
-    kdDebug(5006)<< "RenameJob::rename - " << src.prettyURL()
+    kDebug(5006)<< "RenameJob::rename - " << src.prettyURL()
       << " |=> " << dst.prettyURL() << endl;
     ImapAccountBase::jobData jd( src.url() );
     account->insertJob( job, jd );
@@ -219,7 +219,7 @@ void RenameJob::slotRenameResult( KIO::Job *job )
 
 void RenameJob::slotMoveMessages()
 {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   disconnect( kmkernel->imapFolderMgr(), SIGNAL( changed() ),
       this, SLOT( slotMoveMessages() ) );
   mStorage->blockSignals( true );
@@ -247,7 +247,7 @@ void RenameJob::slotMoveMessages()
 
 void RenameJob::slotMoveCompleted( KMCommand* command )
 {
-  kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
+  kDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
   if ( mStorageTempOpened ) {
     mStorageTempOpened->close();
     mStorageTempOpened = 0;
@@ -259,7 +259,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
   }
   if ( !command || command->result() == KMCommand::OK )
   {
-    kdDebug(5006) << "deleting old folder" << endl;
+    kDebug(5006) << "deleting old folder" << endl;
     // move complete or not necessary
     // save our settings
     QString oldconfig = "Folder-" + mStorage->folder()->idString();
@@ -295,7 +295,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     } else if ( mStorage->folderType() == KMFolderTypeSearch )
     {
       // invalid
-      kdWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
+      kWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
     } else {
       kmkernel->folderMgr()->remove( mStorage->folder() );
     }
@@ -303,7 +303,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     emit renameDone( mNewName, true );
   } else
   {
-    kdDebug(5006) << "rollback - deleting folder" << endl;
+    kDebug(5006) << "rollback - deleting folder" << endl;
     // move failed - rollback the last transaction
     kmkernel->undoStack()->undo();
     // .. and delete the new folder
@@ -321,7 +321,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     } else if ( mNewFolder->folderType() == KMFolderTypeSearch )
     {
       // invalid
-      kdWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
+      kWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
     } else {
       kmkernel->folderMgr()->remove( mNewFolder );
     }

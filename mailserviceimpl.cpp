@@ -89,8 +89,8 @@ bool MailServiceImpl::sendMessage( const QString& to,
                                    const QString& subject, const QString& body,
                                    const KUrl::List& attachments )
 {
-  kdDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,KUrl::List attachments)" << endl;
-  kdDebug(5006) << "This DCOP call is deprecated. Use the corresponding DCOP call with the additional parameter QString from instead." << endl;
+  kDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,KUrl::List attachments)" << endl;
+  kDebug(5006) << "This DCOP call is deprecated. Use the corresponding DCOP call with the additional parameter QString from instead." << endl;
   return sendMessage( QString(), to, cc, bcc, subject, body, attachments );
 }
 
@@ -131,8 +131,8 @@ bool MailServiceImpl::sendMessage( const QString& to,
                                    const QString& subject, const QString& body,
                                    const QByteArray& attachment )
 {
-  kdDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,QByteArray attachment)" << endl;
-  kdDebug(5006) << "This DCOP call is deprecated. Use the corresponding DCOP call with the additional parameter QString from instead." << endl;
+  kDebug(5006) << "DCOP call MailTransportServiceIface bool sendMessage(QString to,QString cc,QString bcc,QString subject,QString body,QByteArray attachment)" << endl;
+  kDebug(5006) << "This DCOP call is deprecated. Use the corresponding DCOP call with the additional parameter QString from instead." << endl;
   return sendMessage( QString(), to, cc, bcc, subject, body, attachment );
 }
 

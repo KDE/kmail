@@ -88,7 +88,7 @@ void SubscriptionDialog::createItems()
 
   GroupItem *parent = 0;
   uint done = 0;
-//  kdDebug(5006) << "createItems subscribed=" << onlySubscribed <<",folders="
+//  kDebug(5006) << "createItems subscribed=" << onlySubscribed <<",folders="
 //    << mFolderNames.join(",") << endl;
 
   for (int i = mCount; i < mFolderNames.count(); ++i)
@@ -272,12 +272,12 @@ void SubscriptionDialog::slotLoadFolders()
   // we need a connection
   if ( ai->makeConnection() == ImapAccountBase::Error )
   {
-    kdWarning(5006) << "SubscriptionDialog - got no connection" << endl;
+    kWarning(5006) << "SubscriptionDialog - got no connection" << endl;
     return;
   } else if ( ai->makeConnection() == ImapAccountBase::Connecting )
   {
     // We'll wait for the connectionResult signal from the account.
-    kdDebug(5006) << "SubscriptionDialog - waiting for connection" << endl;
+    kDebug(5006) << "SubscriptionDialog - waiting for connection" << endl;
     connect( ai, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
@@ -322,7 +322,7 @@ void SubscriptionDialog::processNext()
     completeListing = false;
   }
 
-//  kdDebug(5006) << "process " << mCurrentNamespace << ",subscribed=" << mSubscribed << endl;
+//  kDebug(5006) << "process " << mCurrentNamespace << ",subscribed=" << mSubscribed << endl;
   ListJob* job = new ListJob( ai, type, 0, ai->addPathToNamespace( mCurrentNamespace ), completeListing );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -372,7 +372,7 @@ void SubscriptionDialog::show()
   {
     if( !account->onlySubscribedFolders() )
     {
-      kdDebug() << "Not subscribed!!!" << endl;
+      kDebug() << "Not subscribed!!!" << endl;
       int result = KMessageBox::questionYesNoCancel( this,
               i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?")
               .arg( account->name() ),

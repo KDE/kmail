@@ -15,7 +15,7 @@
 KMDict::KMDict( int size )
 {
   init( ( int ) KMail::nextPrime( size ) );
-  //kdDebug( 5006 ) << "KMMDict::KMDict Size: " << mSize << endl;
+  //kDebug( 5006 ) << "KMMDict::KMDict Size: " << mSize << endl;
 }
 
 //-----------------------------------------------------------------------------

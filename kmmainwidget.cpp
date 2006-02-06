@@ -845,7 +845,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   for ( QStringList::const_iterator it = keys.begin();
         it != keys.end();
         ++it ) {
-    kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
+    kDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
                   << *it << endl;
 
     KMFolder *folder = kmkernel->findFolderById( *it );
@@ -1574,7 +1574,7 @@ void KMMainWidget::slotStartCertManager()
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
-    kdDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
+    kDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
   // process continues to run even after the KProcess object goes
   // out of scope here, since it is started in DontCare run mode.
 
@@ -1922,12 +1922,12 @@ void KMMainWidget::slotSelectMessage(KMMessage* msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-  kdDebug(5006) << "KMMainWidget::slotReplaceMsgByUnencryptedVersion()" << endl;
+  kDebug(5006) << "KMMainWidget::slotReplaceMsgByUnencryptedVersion()" << endl;
   KMMessage* oldMsg = mHeaders->currentMsg();
   if( oldMsg ) {
-    kdDebug(5006) << "KMMainWidget  -  old message found" << endl;
+    kDebug(5006) << "KMMainWidget  -  old message found" << endl;
     if( oldMsg->hasUnencryptedMsg() ) {
-      kdDebug(5006) << "KMMainWidget  -  extra unencrypted message found" << endl;
+      kDebug(5006) << "KMMainWidget  -  extra unencrypted message found" << endl;
       KMMessage* newMsg = oldMsg->unencryptedMsg();
       // adjust the message id
       {
@@ -1951,7 +1951,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         mMsgView->setIdOfLastViewedMessage( msgId );
       }
       // insert the unencrypted message
-      kdDebug(5006) << "KMMainWidget  -  adding unencrypted message to folder" << endl;
+      kDebug(5006) << "KMMainWidget  -  adding unencrypted message to folder" << endl;
       mFolder->addMsg( newMsg );
       /* Figure out its index in the folder for selecting. This must be count()-1,
        * since we append. Be safe and do find, though, just in case. */
@@ -1966,18 +1966,18 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       mHeaders->setCurrentItemByIndex( newMsgIdx );
       // remove the old one
       if ( idx != -1 ) {
-        kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
+        kDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
         mFolder->take( idx );
       }
 
-      kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
+      kDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
       updateMessageActions();
 
-      kdDebug(5006) << "KMMainWidget  -  done." << endl;
+      kDebug(5006) << "KMMainWidget  -  done." << endl;
     } else
-      kdDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
+      kDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
   } else
-    kdDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
+    kDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -2174,7 +2174,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
     }
 
     urlMenuAdded=true;
-    kdDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
+    kDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
   }
 
 
@@ -3464,7 +3464,7 @@ void KMMainWidget::toggleSystemTray()
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
-    kdDebug(5006) << "deleting systray" << endl;
+    kDebug(5006) << "deleting systray" << endl;
     delete mSystemTray;
     mSystemTray = 0;
   }

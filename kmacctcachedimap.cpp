@@ -113,7 +113,7 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
-  //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
+  //kDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
   QList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
   for( QList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderCachedImap *fld = *it;
@@ -387,7 +387,7 @@ void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
     return;
   KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(folder->storage());
   addDeletedFolder( storage->imapPath() );
-  kdDebug(5006) << k_funcinfo << storage->imapPath() << endl;
+  kDebug(5006) << k_funcinfo << storage->imapPath() << endl;
 
   // Add all child folders too
   if( folder && folder->child() ) {
@@ -420,7 +420,7 @@ QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath )
     if ( (*it).startsWith( subFolderPath ) )
       lst.prepend( *it );
   }
-  kdDebug(5006) << "KMAcctCachedImap::deletedFolderPaths for " << subFolderPath << " returning: " << lst << endl;
+  kDebug(5006) << "KMAcctCachedImap::deletedFolderPaths for " << subFolderPath << " returning: " << lst << endl;
   Q_ASSERT( !lst.isEmpty() );
   return lst;
 }

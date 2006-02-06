@@ -429,14 +429,14 @@ void PopAccount::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
   if ( stage == Head ) {
     KMPopHeaders *header = mHeadersOnServer[ mHeaderIndex ];
     int size = mMsgsPendingDownload[ header->id() ];
-    kdDebug(5006) << "Size of Message: " << size << endl;
+    kDebug(5006) << "Size of Message: " << size << endl;
     msg->setMsgLength( size );
     header->setHeader( msg );
     ++mHeaderIndex;
     slotGetNextHdr();
   } else {
-    //kdDebug(5006) << kfuncinfo << "stage == Retr" << endl;
-    //kdDebug(5006) << "curMsgData.size() = " << curMsgData.size() << endl;
+    //kDebug(5006) << kfuncinfo << "stage == Retr" << endl;
+    //kDebug(5006) << "curMsgData.size() = " << curMsgData.size() << endl;
     msg->setMsgLength( curMsgData.size() );
     msgsAwaitingProcessing.enqueue( msg );
     msgIdsAwaitingProcessing.enqueue( idsOfMsgs[indexOfCurrentMsg] );
@@ -451,7 +451,7 @@ void PopAccount::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 void PopAccount::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    kdDebug(5006) << k_funcinfo << "stage == List" << endl;
+    kDebug(5006) << k_funcinfo << "stage == List" << endl;
     // set the initial size of mUidsOfNextSeenMsgsDict to the number of
     // messages on the server + 10%
     mUidsOfNextSeenMsgsDict.reserve( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
@@ -462,7 +462,7 @@ void PopAccount::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    kdDebug(5006) << k_funcinfo << "stage == Uidl" << endl;
+    kDebug(5006) << k_funcinfo << "stage == Uidl" << endl;
     mUidlFinished = TRUE;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
@@ -480,10 +480,10 @@ void PopAccount::slotJobFinished() {
     if (mFilterOnServer == true) {
       for ( QMap<QByteArray, int>::const_iterator hids = mMsgsPendingDownload.begin();
             hids != mMsgsPendingDownload.end(); ++hids ) {
-          kdDebug(5006) << "Length: " << hids.value() << endl;
+          kDebug(5006) << "Length: " << hids.value() << endl;
           //check for mails bigger mFilterOnServerCheckSize
           if ( (unsigned int)hids.value() >= mFilterOnServerCheckSize ) {
-            kdDebug(5006) << "bigger than " << mFilterOnServerCheckSize << endl;
+            kDebug(5006) << "bigger than " << mFilterOnServerCheckSize << endl;
             const QByteArray uid = mUidForIdMap[ hids.key() ];
             KMPopHeaders *header = new KMPopHeaders( hids.key(), uid, Later );
             //set Action if already known
@@ -504,7 +504,7 @@ void PopAccount::slotJobFinished() {
       mHeaderDownUids.clear();
       mHeaderLaterUids.clear();
     }
-    // kdDebug(5006) << "Num of Msgs to Filter: " << mHeadersOnServer.count() << endl;
+    // kDebug(5006) << "Num of Msgs to Filter: " << mHeadersOnServer.count() << endl;
     // if there are mails which should be checkedc download the headers
     if ( ( mHeadersOnServer.count() > 0 ) && ( mFilterOnServer == true ) ) {
       KUrl url = getUrl();
@@ -544,7 +544,7 @@ void PopAccount::slotJobFinished() {
     }
   }
   else if (stage == Head) {
-    kdDebug(5006) << k_funcinfo << "stage == Head" << endl;
+    kDebug(5006) << k_funcinfo << "stage == Head" << endl;
 
     // All headers have been downloaded, check which mail you want to get
     // data is in list mHeadersOnServer
@@ -559,24 +559,24 @@ void PopAccount::slotJobFinished() {
       //debug todo
       switch ( action ) {
         case NoAction:
-          kdDebug(5006) << "PopFilterAction = NoAction" << endl;
+          kDebug(5006) << "PopFilterAction = NoAction" << endl;
           break;
         case Later:
-          kdDebug(5006) << "PopFilterAction = Later" << endl;
+          kDebug(5006) << "PopFilterAction = Later" << endl;
           break;
         case Delete:
-          kdDebug(5006) << "PopFilterAction = Delete" << endl;
+          kDebug(5006) << "PopFilterAction = Delete" << endl;
           break;
         case Down:
-          kdDebug(5006) << "PopFilterAction = Down" << endl;
+          kDebug(5006) << "PopFilterAction = Down" << endl;
           break;
         default:
-          kdDebug(5006) << "PopFilterAction = default oops!" << endl;
+          kDebug(5006) << "PopFilterAction = default oops!" << endl;
           break;
       }
       switch ( action ) {
         case NoAction:
-          //kdDebug(5006) << "PopFilterAction = NoAction" << endl;
+          //kDebug(5006) << "PopFilterAction = NoAction" << endl;
           dlgPopup = true;
           break;
         case Later:
@@ -662,13 +662,13 @@ void PopAccount::slotJobFinished() {
       // Delete old messages
       else if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
         time_t timeLimit = time(0) - (86400 * mLeaveOnServerDays);
-        kdDebug() << "timeLimit is " << timeLimit << endl;
+        kDebug() << "timeLimit is " << timeLimit << endl;
         for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
               it != idsOfMsgsToDelete.end(); ++it ) {
           time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[*it] ];
-          kdDebug() << "id: " << *it << " msgTime: " << msgTime << endl;
+          kDebug() << "id: " << *it << " msgTime: " << msgTime << endl;
           if ( msgTime >= timeLimit || msgTime == 0 ) {
-            kdDebug() << "Saving msg id " << *it << endl;
+            kDebug() << "Saving msg id " << *it << endl;
             QPair<time_t, QByteArray> pair( msgTime, *it );
             idsToSave.append( pair );
           }
@@ -679,12 +679,12 @@ void PopAccount::slotJobFinished() {
       // Delete more old messages if there are more than mLeaveOnServerCount
       if ( mLeaveOnServerCount > 0 ) {
         int numToDelete = idsToSave.count() - mLeaveOnServerCount;
-        kdDebug() << "numToDelete is " << numToDelete << endl;
+        kDebug() << "numToDelete is " << numToDelete << endl;
         if ( numToDelete > 0 && numToDelete < idsToSave.count() ) {
           // get rid of the first numToDelete messages
           #ifdef DEBUG
           for ( int i = 0; i < numToDelete; ++i )
-            kdDebug() << "deleting msg id " << idsToSave[i].second << endl;
+            kDebug() << "deleting msg id " << idsToSave[i].second << endl;
           #endif
           idsToSave = idsToSave.mid( numToDelete );
         }
@@ -704,15 +704,15 @@ void PopAccount::slotJobFinished() {
           firstMsgToKeep++;
         #ifdef DEBUG
         for ( int i = 0; i < firstMsgToKeep; ++i )
-          kdDebug() << "deleting msg id " << idsToSave[i].second << endl;
+          kDebug() << "deleting msg id " << idsToSave[i].second << endl;
         #endif
         if ( firstMsgToKeep > 0 )
           idsToSave = idsToSave.mid( firstMsgToKeep );
       }
       // Save msgs from deletion
-      kdDebug() << "Going to save " << idsToSave.count() << endl;
+      kDebug() << "Going to save " << idsToSave.count() << endl;
       for ( int i = 0; i < idsToSave.count(); ++i ) {
-        kdDebug() << "keeping msg id " << idsToSave[i].second << endl;
+        kDebug() << "keeping msg id " << idsToSave[i].second << endl;
         idsOfMsgsToDelete.remove( idsToSave[i].second );
       }
     }
@@ -732,7 +732,7 @@ void PopAccount::slotJobFinished() {
         ids += *it;
       }
       url.setPath( "/remove/" + ids );
-      kdDebug(5006) << "url: " << url.prettyURL() << endl;
+      kDebug(5006) << "url: " << url.prettyURL() << endl;
     } else {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
@@ -741,13 +741,13 @@ void PopAccount::slotJobFinished() {
               numMsgs )
         .arg( mHost ) );
       url.setPath( "/commit" );
-      kdDebug(5006) << "url: " << url.prettyURL() << endl;
+      kDebug(5006) << "url: " << url.prettyURL() << endl;
     }
     job = KIO::get( url, false, false );
     connectJob();
   }
   else if (stage == Dele) {
-    kdDebug(5006) << k_funcinfo << "stage == Dele" << endl;
+    kDebug(5006) << k_funcinfo << "stage == Dele" << endl;
     // remove the uids of all messages which have been deleted
     for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
           it != idsOfMsgsToDelete.end(); ++it ) {
@@ -766,7 +766,7 @@ void PopAccount::slotJobFinished() {
     connectJob();
   }
   else if (stage == Quit) {
-    kdDebug(5006) << k_funcinfo << "stage == Quit" << endl;
+    kDebug(5006) << k_funcinfo << "stage == Quit" << endl;
     saveUidList();
     job = 0;
     if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
@@ -788,7 +788,7 @@ void PopAccount::slotJobFinished() {
 //-----------------------------------------------------------------------------
 void PopAccount::processRemainingQueuedMessages()
 {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
   processMsgsTimer.stop();
 
@@ -800,7 +800,7 @@ void PopAccount::processRemainingQueuedMessages()
 //-----------------------------------------------------------------------------
 void PopAccount::saveUidList()
 {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
   if (!mUidlFinished) return;
@@ -844,7 +844,7 @@ void PopAccount::slotGetNextMsg()
     curMsgStrm = new QDataStream( &curMsgData, QIODevice::WriteOnly );
     curMsgLen = next.value();
     ++indexOfCurrentMsg;
-    kdDebug(5006) << QString("Length of message about to get %1").arg( curMsgLen ) << endl;
+    kDebug(5006) << QString("Length of message about to get %1").arg( curMsgLen ) << endl;
     mMsgsPendingDownload.erase( next );
   }
 }
@@ -854,11 +854,11 @@ void PopAccount::slotGetNextMsg()
 void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
-    kdDebug(5006) << "Data: <End>" << endl;
+    kDebug(5006) << "Data: <End>" << endl;
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
-      kdDebug(5006) << "Head: <End>" << endl;
+      kDebug(5006) << "Head: <End>" << endl;
     }
     return;
   }
@@ -926,7 +926,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
           mMsgsPendingDownload.remove( id );
         }
         else
-          kdDebug(5006) << "PopAccount::slotData synchronization failure." << endl;
+          kDebug(5006) << "PopAccount::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.insert( id );
         mUidsOfNextSeenMsgsDict.insert( uid, 1 );
         if ( mTimeOfSeenMsgsVector.empty() ) {
@@ -1010,7 +1010,7 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
 
 //-----------------------------------------------------------------------------
 void PopAccount::slotGetNextHdr(){
-  kdDebug(5006) << "slotGetNextHeader" << endl;
+  kDebug(5006) << "slotGetNextHeader" << endl;
 
   curMsgData.resize(0);
   delete curMsgStrm;

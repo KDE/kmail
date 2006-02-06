@@ -267,7 +267,7 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
                                        bool complete )
 {
     if ( pattern != mSearchPattern ) return;
-    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
+    kDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     mLastFolder = folder->label();
     QList<quint32>::Iterator it;
     for ( it = serNums.begin(); it != serNums.end(); ++it )
@@ -580,9 +580,9 @@ int KMFolderSearch::create()
     assert(!folder()->name().isEmpty());
     assert(mOpenCount == 0);
 
-    kdDebug(5006) << "Creating folder " << location() << endl;
+    kDebug(5006) << "Creating folder " << location() << endl;
     if (access(QFile::encodeName(location()), F_OK) == 0) {
-        kdDebug(5006) << "KMFolderSearch::create call to access function failed."
+        kDebug(5006) << "KMFolderSearch::create call to access function failed."
             << endl;
         return EEXIST;
     }
@@ -744,7 +744,7 @@ int KMFolderSearch::writeIndex( bool )
     umask(old_umask);
 
     if (!tmpIndexStream) {
-        kdDebug(5006) << "Cannot write '" << filename
+        kDebug(5006) << "Cannot write '" << filename
             << strerror(errno) << " (" << errno << ")" << endl;
         truncate(QFile::encodeName(filename), 0);
         return -1;
@@ -958,7 +958,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
                                                bool matches )
 {
     if ( search()->searchPattern() != pattern ) return;
-    kdDebug(5006) << folder->label() << ": serNum " << serNum
+    kDebug(5006) << folder->label() << ": serNum " << serNum
      << " matches?" << matches << endl;
 
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {

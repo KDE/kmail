@@ -102,7 +102,7 @@ void UndoStack::undo()
       serNum = *itr;
       KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);
       if ( idx == -1 || curFolder != info->destFolder ) {
-        kdDebug(5006)<<"Serious undo error!"<<endl;
+        kDebug(5006)<<"Serious undo error!"<<endl;
         delete info;
         return;
       }

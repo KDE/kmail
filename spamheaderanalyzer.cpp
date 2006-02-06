@@ -42,7 +42,7 @@ using namespace KMail;
 
 // static
 SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
-  kdDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo << endl;
   SpamScores scores;
   SpamAgents agents = AntiSpamConfig::instance()->uniqueAgents();
 
@@ -73,7 +73,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
 
     if ( !scoreValid ) {
       score = -5.0;
-      kdDebug(5006) << "Score could not be extracted from header '"
+      kDebug(5006) << "Score could not be extracted from header '"
                     << mField << "'" << endl;
     } else {
       bool floatValid = false;
@@ -93,7 +93,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kdDebug(5006) << "Score (" << scoreString << ") is no number"
+            kDebug(5006) << "Score (" << scoreString << ") is no number"
                           << endl;
           }
           else
@@ -104,7 +104,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kdDebug(5006) << "Score (" << scoreString << ") is no number"
+            kDebug(5006) << "Score (" << scoreString << ") is no number"
                           << endl;
           }
           break;
@@ -113,7 +113,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kdDebug(5006) << "Score (" << scoreString << ") is no number"
+            kDebug(5006) << "Score (" << scoreString << ") is no number"
                           << endl;
             break;
           }
@@ -126,14 +126,14 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           }
           else {
             score = -6.0;
-            kdDebug(5006) << "Threshold could not be extracted from header '"
+            kDebug(5006) << "Threshold could not be extracted from header '"
                           << mField << "'" << endl;
             break;
           }
           float threshold = thresholdString.toFloat( &floatValid );
           if ( !floatValid || ( threshold <= 0.0 ) ) {
             score = -4.0;
-            kdDebug(5006) << "Threshold (" << thresholdString << ") is no "
+            kDebug(5006) << "Threshold (" << thresholdString << ") is no "
                           << "number or is negative" << endl;
             break;
           }

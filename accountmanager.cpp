@@ -118,7 +118,7 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 
   if (account->checkingMail())
   {
-    kdDebug(5006) << "account " << account->name() << " busy, queuing" << endl;
+    kDebug(5006) << "account " << account->name() << " busy, queuing" << endl;
     return;
   }
 
@@ -128,7 +128,7 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 //-----------------------------------------------------------------------------
 void AccountManager::processNextCheck( bool _newMail )
 {
-  kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
+  kDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
   mNewMailArrived |= _newMail;
 
   for ( AccountList::Iterator it( mAcctChecking.begin() ), end( mAcctChecking.end() ); it != end;  ) {
@@ -137,7 +137,7 @@ void AccountManager::processNextCheck( bool _newMail )
     if ( acct->checkingMail() )
       continue;
     // check done
-    kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
+    kDebug(5006) << "account " << acct->name() << " finished check" << endl;
     mAcctChecking.remove( acct );
     kmkernel->filterMgr()->deref();
     disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
@@ -188,7 +188,7 @@ void AccountManager::processNextCheck( bool _newMail )
   KPIM::BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
 
-  kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
+  kDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 
   curAccount->setCheckingMail( true );
   mAcctChecking.append( curAccount );
@@ -218,7 +218,7 @@ KMAccount* AccountManager::create( const QString &aType, const QString &aName, u
     act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
   }
   if ( !act ) {
-      kdWarning(5006) << "Attempt to instantiate a non-existing account type!" << endl;
+      kWarning(5006) << "Attempt to instantiate a non-existing account type!" << endl;
       return 0;
   }
   connect( act, SIGNAL( newMailsProcessed( const QMap<QString, int> & ) ),
