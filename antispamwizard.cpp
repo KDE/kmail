@@ -66,7 +66,7 @@ using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
                                 QWidget* parent, KMFolderTree * mainFolderTree )
-  : KWizard( parent ),
+  : K3Wizard( parent ),
     mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
     mVirusRulesPage( 0 ),

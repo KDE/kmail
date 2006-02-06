@@ -31,7 +31,7 @@
 
 #include <kconfig.h>
 #include <klistbox.h>
-#include <kwizard.h>
+#include <k3wizard.h>
 
 #include <qcheckbox.h>
 #include <q3dict.h>
@@ -106,7 +106,7 @@ namespace KMail {
     and it's expected in the config dir of KDE.
 
   */
-  class AntiSpamWizard : public KWizard
+  class AntiSpamWizard : public K3Wizard
   {
     Q_OBJECT
 

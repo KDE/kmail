@@ -1428,11 +1428,11 @@ namespace {
   void initNumInput( KIntNumInput *numInput, const QByteArray &field )
   {
     if ( field == "<size>" ) {
-      numInput->setMinValue( 0 );
+      numInput->setMinimum( 0 );
       numInput->setSuffix( i18n( " bytes" ) );
     }
     else {
-      numInput->setMinValue( -10000 );
+      numInput->setMinimum( -10000 );
       numInput->setSuffix( i18n( " days" ) );
     }
   }

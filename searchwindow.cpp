@@ -225,10 +225,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   connect( mSearchFolderOpenBtn, SIGNAL( clicked() ),
            this, SLOT( openSearchFolder() ));
   mStatusBar = new KStatusBar(searchWidget);
-  mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
+#warning KStatusBar lost support for permanent items
+  mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0/*, true*/);
   mStatusBar->changeItem(i18n("Ready."), 0);
   mStatusBar->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
-  mStatusBar->insertItem(QString(), 1, 1, true);
+#warning See above
+  mStatusBar->insertItem(QString(), 1, 1/*, true*/);
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
   vbl->addWidget(mStatusBar);
 

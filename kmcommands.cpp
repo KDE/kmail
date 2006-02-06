@@ -2809,7 +2809,7 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
 
   if ( contentTypeStr == "text/x-vcard" || contentTypeStr == "text/directory" ) {
     atmView();
-    return 0;
+    return KService::Ptr( 0 );
   }
   // determine the MIME type of the attachment
   KMimeType::Ptr mimetype;

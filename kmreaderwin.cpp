@@ -1870,7 +1870,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
       node, message(), mAtmCurrent, mAtmCurrentName,
-      KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
+      KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
   connect( command, SIGNAL( showAttachment( int, const QString& ) ),
       this, SLOT( slotAtmView( int, const QString& ) ) );
   command->start();
