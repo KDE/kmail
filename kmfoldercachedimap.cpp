@@ -78,6 +78,8 @@ using namespace KMail;
 
 #define UIDCACHE_VERSION 1
 
+static QMap<QString, bool> s_theDontCheckForGhostMessagesAgains;
+
 static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
   switch (r) {
   case KMFolderCachedImap::IncForNobody: return "nobody";
@@ -137,6 +139,11 @@ void DImapTroubleShootDialog::slotRebuildIndex()
 {
   rc = User2;
   done( User2 );
+}
+
+static bool messageLooksLikeAGhostMessage( KMMsgBase* msg )
+{
+  return msg->toStrip().isEmpty() && msg->fromStrip().isEmpty() && msg->msgIdMD5().isEmpty();
 }
 
 
@@ -1070,6 +1077,35 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
   }
 }
 
+void KMFolderCachedImap::deleteGhostMessages()
+{
+  // first make sure the index is up to date, to get rid of those
+  // ghost messages that are "only" corrupt index entries
+  createIndexFromContents();
+  QPtrList<KMMessage> msgsForDeletion;
+  for( int i = 0; i < count(); ++i ) {
+    KMMsgBase *msg = getMsgBase( i );
+    if( !msg ) continue; /* what goes on if getMsg() returns 0? */
+    // while we are going through them anyhow, check for ghost messages
+    if ( messageLooksLikeAGhostMessage( msg ) ) {
+      msgsForDeletion.append( getMsg( i ) );
+    }
+  }
+  if( !msgsForDeletion.isEmpty() ) {
+      // found a ghost message, after the index has been rebuilt. This means
+      // we should probably delete it, but let's ask the user, to be sure
+      if ( !s_theDontCheckForGhostMessagesAgains.contains( folder()->idString() ) &&
+          KMessageBox::warningYesNo( 0, i18n("At least one of the messages in folder %1 "
+              "appears to be invalid, since it does not have a subject, a sender "
+              "or a receiver. Shall I remove it?" ).arg( folder()->label() ), 
+            i18n("Removing ghost messages")  ) == KMessageBox::Yes ) {
+        removeMsg( msgsForDeletion );
+      } else {
+        s_theDontCheckForGhostMessagesAgains.insert( folder()->idString(), true );
+      }
+  }
+}
+
 /* find new messages (messages without a UID) */
 QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 {
@@ -1077,8 +1113,21 @@ QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
   for( int i = 0; i < count(); ++i ) {
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue; /* what goes on if getMsg() returns 0? */
-    if ( msg->UID() == 0 )
+    // while we are going through them anyhow, check for ghost messages
+    if ( messageLooksLikeAGhostMessage( msg )
+        && !s_theDontCheckForGhostMessagesAgains.contains( folder()->idString() ) ) {
+      // Abort the sync and throw away the index, very likely we have
+      // ghost messages in the folder
+      kdWarning(5006) << "Ghost messages detected during upload! Invalidating index file for folder: " <<
+        label() << endl;
+      deleteGhostMessages();
+      resetSyncState();
+      emit folderComplete( this, false );
+      return QValueList<unsigned long>();
+    }
+    if ( msg->UID() == 0 ) {
       result.append( msg->getMsgSerNum() );
+  }
   }
   return result;
 }
