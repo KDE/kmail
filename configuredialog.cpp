@@ -162,7 +162,7 @@ namespace {
       w->setEnabled( false );
       w->setToolTip( i18n( lockedDownWarning ) );
     } else {
-      QToolTip::remove( w );
+	  w->setToolTip("");
     }
   }
 

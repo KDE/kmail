@@ -545,7 +545,6 @@ void KMSystemTray::updateNewMessages()
   updateCount();
 
   /** Update tooltip to reflect count of unread messages */
-  QToolTip::remove(this);
   this->setToolTip( mCount == 0 ?
 		      i18n("There are no unread messages")
 		      : i18n("There is 1 unread message.",
