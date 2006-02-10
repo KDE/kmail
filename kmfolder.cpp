@@ -44,8 +44,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QList>
-//Added by qt3to4:
-#include <Q3CString>
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                              KMFolderType aFolderType, bool withIndex, bool exportedSernums )

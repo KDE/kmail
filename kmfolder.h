@@ -41,8 +41,6 @@ typedef QList<KMAccount*> AccountList;
 
 #include <QList>
 
-//Added by qt3to4:
-#include <Q3CString>
 
 #include <sys/types.h>
 #include <stdio.h>
