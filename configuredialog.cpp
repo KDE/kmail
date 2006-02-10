@@ -112,7 +112,6 @@ using KMime::DateFormatter;
 #include <QVBoxLayout>
 
 //Added by qt3to4:
-#include <Q3CString>
 #include <q3buttongroup.h>
 #include <qtextcodec.h>
 #include <q3header.h>
@@ -3277,7 +3276,7 @@ void ComposerPage::HeadersTab::doLoadOther() {
   int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
-                         Q3CString("Mime #") + Q3CString().setNum(i) );
+                         QByteArray("Mime #") + QByteArray().setNum(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
     if( !name.isEmpty() )
@@ -3305,8 +3304,8 @@ void ComposerPage::HeadersTab::save() {
   Q3ListViewItem * item = mTagList->firstChild();
   for ( ; item ; item = item->itemBelow() )
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::config(), Q3CString("Mime #")
-                             + Q3CString().setNum( numValidEntries ) );
+      KConfigGroup config( KMKernel::config(), QByteArray("Mime #")
+                             + QByteArray().setNum( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
