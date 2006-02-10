@@ -28,7 +28,6 @@
 #include <QStack>
 #include <qmap.h>
 //Added by qt3to4:
-#include <Q3CString>
 
 /** A search folder is a folder that shows the result of evaluating a
     search expression. This folder is dynamically updated as the

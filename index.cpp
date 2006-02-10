@@ -59,7 +59,6 @@ namespace {
 const unsigned int MaintenanceLimit = 1000;
 const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
-
 static
 QList<int> vectorToQValueList( const std::vector<quint32>& input ) {
 	QList<int> res;
@@ -77,7 +76,6 @@ std::vector<quint32> QValueListToVector( const QList<int>& input ) {
 	}
 	return res;
 }
-
 KMMsgIndex::KMMsgIndex( QObject* parent ):
 	QObject( parent, "index" ),
 	mState( s_idle ),
