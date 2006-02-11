@@ -77,6 +77,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mMailCheckProgressItem = 0;
   mListDirProgressItem = 0;
   mAddMessageProgressItem = 0;
+  mReadOnly = false;
 
   connect (this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
            this, SLOT( slotCompleteMailCheckProgress()) );
