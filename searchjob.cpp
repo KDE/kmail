@@ -153,7 +153,7 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
   
   QString search;
   if ( !parts.isEmpty() ) {
-    if ( pattern->op() == KMSearchPattern::OpOr ) {
+    if ( pattern->op() == KMSearchPattern::OpOr && parts.size() > 1 ) {
       search = "(OR " + parts.join(" ") + ")";
     } else {
       // and's are simply joined
