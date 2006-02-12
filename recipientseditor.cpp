@@ -330,7 +330,8 @@ RecipientsView::RecipientsView( QWidget *parent )
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
 
-  addLine();
+  if(!mLines.isEmpty()) 
+  	addLine();
   setResizePolicy( Q3ScrollView::Manual );
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 }
