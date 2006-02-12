@@ -251,7 +251,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      mailto = true;
      for ( QByteArrayList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
        if ( !(*it).isEmpty() )
-         attachURLs += KURL( QString::fromLocal8Bit( *it ) );
+         attachURLs += KUrl( QString::fromLocal8Bit( *it ) );
   }
 
   if (args->isSet("composer"))
@@ -266,7 +266,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
       QString::fromLocal8Bit( args->getOption( "view" ) );
     messageFile = KUrl::fromPathOrURL( filename );
     if ( !messageFile.isValid() ) {
-      messageFile = KURL();
+      messageFile = KUrl();
       messageFile.setPath( filename );
     }
   }
@@ -641,7 +641,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrlString,
                               const QString & MsgStatusFlags)
 {
-  return dcopAddMessage(foldername, KURL(msgUrlString), MsgStatusFlags);
+  return dcopAddMessage(foldername, KUrl(msgUrlString), MsgStatusFlags);
 }
 
 int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
@@ -817,7 +817,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
                                          const QString & msgUrlString,
                                          const QString & MsgStatusFlags)
 {
-  return dcopAddMessage_fastImport(foldername, KURL(msgUrlString), MsgStatusFlags);
+  return dcopAddMessage_fastImport(foldername, KUrl(msgUrlString), MsgStatusFlags);
 }
 
 int KMKernel::dcopAddMessage_fastImport( const QString & foldername,

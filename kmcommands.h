@@ -336,7 +336,7 @@ class KDE_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KUrl & url = KURL(),
+  KMOpenMsgCommand( QWidget *parent, const KUrl & url = KUrl(),
                     const QString & encoding = QString() );
 
 private:

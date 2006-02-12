@@ -26,7 +26,7 @@ int main(int argc,char **argv)
   KMailIface_stub kmailStub("kmail","KMailIface");
   
   kmailStub.openComposer("to 1","","","First test","simple openComp call",0,
-                         KURL());
+                         KUrl());
 
   DCOPRef ref = kmailStub.openComposer("to 2","","","Second test",
                                        "DCOP ref call",0);

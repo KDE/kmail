@@ -83,7 +83,7 @@ QString MboxCompactionJob::realLocation() const
     KUrl u; u.setPath( location );
     // follow (and resolve) symlinks so that the final ::rename() always works
     // KUrl gives us support for absolute and relative links transparently.
-    return KURL( u, inf.readLink() ).path();
+    return KUrl( u, inf.readLink() ).path();
   }
   return location;
 }

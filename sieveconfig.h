@@ -29,7 +29,7 @@ namespace KMail {
   class SieveConfig {
   public:
     SieveConfig( bool managesieveSupported=false, bool reuseConfig=true,
-		 unsigned int port=2000, const KUrl & alternateURL=KURL() )
+		 unsigned int port=2000, const KUrl & alternateURL=KUrl() )
       : mManagesieveSupported( managesieveSupported ),
 	mReuseConfig( reuseConfig ),
 	mPort( port ),

@@ -137,7 +137,7 @@ namespace KMail {
   KUrl SieveConfigEditor::alternateURL() const {
     KUrl url ( mAlternateURLEdit->text() );
     if ( !url.isValid() )
-      return KURL();
+      return KUrl();
 
     if ( url.hasPass() )
       url.setPass( QString() );

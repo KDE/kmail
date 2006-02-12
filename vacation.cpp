@@ -220,7 +220,7 @@ namespace KMail {
     assert( a );
     SieveConfig sieve = a->sieveConfig();
     if ( !sieve.managesieveSupported() )
-      return KURL();
+      return KUrl();
     if ( sieve.reuseConfig() ) {
       // assemble Sieve url from the settings of the account:
       KUrl u;
@@ -248,7 +248,7 @@ namespace KMail {
 	if ( !u.isEmpty() )
 	  return u;
       }
-    return KURL();
+    return KUrl();
   }
 
   bool Vacation::parseScript( const QString & script, QString & messageText,

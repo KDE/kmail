@@ -76,7 +76,7 @@ static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
   assert( a );
   const KMail::SieveConfig sieve = a->sieveConfig();
   if ( !sieve.managesieveSupported() )
-    return KURL();
+    return KUrl();
   if ( sieve.reuseConfig() ) {
     // assemble Sieve url from the settings of the account:
     KUrl u;
@@ -332,7 +332,7 @@ void KMail::ManageSieveScriptsDialog::slotSieveEditorOkClicked() {
 
 void KMail::ManageSieveScriptsDialog::slotSieveEditorCancelClicked() {
   mSieveEditor->deleteLater(); mSieveEditor = 0;
-  mCurrentURL = KURL();
+  mCurrentURL = KUrl();
 }
 
 void KMail::ManageSieveScriptsDialog::slotPutResult( KMail::SieveJob *, bool success ) {
@@ -340,7 +340,7 @@ void KMail::ManageSieveScriptsDialog::slotPutResult( KMail::SieveJob *, bool suc
     KMessageBox::information( this, i18n( "The Sieve script was successfully uploaded." ),
                               i18n( "Sieve Script Upload" ) );
     mSieveEditor->deleteLater(); mSieveEditor = 0;
-    mCurrentURL = KURL();
+    mCurrentURL = KUrl();
   } else {
     mSieveEditor->show();
   }

@@ -1233,7 +1233,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
   else
     content = content.arg( "" );
 
-  mViewer->begin(KURL( location ));
+  mViewer->begin(KUrl( location ));
 
   QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
   QString appTitle = i18n("KMail");

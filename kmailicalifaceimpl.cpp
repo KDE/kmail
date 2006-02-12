@@ -821,7 +821,7 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   // temp file and returns a URL to it. It's up to the resource
   // to delete the tmp file later.
   if( !mUseResourceIMAP )
-    return KURL();
+    return KUrl();
 
   kDebug(5006) << "KMailICalIfaceImpl::getAttachment( "
                 << resource << ", " << sernum << ", " << filename << " )\n";
@@ -830,11 +830,11 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   KMFolder* f = findResourceFolder( resource );
   if( !f ) {
     kError(5006) << "getAttachment(" << resource << ") : Not an IMAP resource folder" << endl;
-    return KURL();
+    return KUrl();
   }
   if ( storageFormat( f ) != StorageXML ) {
     kError(5006) << "getAttachment(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
-    return KURL();
+    return KUrl();
   }
 
   KUrl url;
@@ -1378,7 +1378,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
   httpURL.setQuery( QString() );
   // Ensure that we encode everything with UTF8
-  httpURL = KURL( httpURL.url(0,106), 106 );
+  httpURL = KUrl( httpURL.url(0,106), 106 );
   kDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.

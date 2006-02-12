@@ -186,7 +186,7 @@ namespace KMail {
     { "Danny Kukawka", 0, 0, 0 }, // DCOP enhancements for better message importing
     { "Roger Larsson", 0, 0, 0 }, // add name of checked account to status bar message
     { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
-    { "Dirk M\303\274ller", 0, 0, 0 }, // KURL() fixes and qt_cast optimizations
+    { "Dirk M\303\274ller", 0, 0, 0 }, // KUrl() fixes and qt_cast optimizations
     { "OpenUsability", I18N_NOOP("Usability tests and improvements"), 0, "http://www.openusability.org" },
     { "Mario Teijeiro Otero", 0, 0, 0 }, // various vendor annotations fixes
     { "Simon Perreault", 0, 0, 0 }, // make the composer remember its "Use Fixed Font" setting (bug 49481)

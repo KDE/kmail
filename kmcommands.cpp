@@ -526,7 +526,7 @@ KMCommand::Result KMAddBookmarksCommand::execute()
   KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,
                                                                     false );
   KBookmarkGroup group = bookManager->root();
-  group.addBookmark( bookManager, mUrl.path(), KURL( mUrl ) );
+  group.addBookmark( bookManager, mUrl.path(), KUrl( mUrl ) );
   if( bookManager->save() ) {
     bookManager->emitChanged( group );
   }

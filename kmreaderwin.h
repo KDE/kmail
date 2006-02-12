@@ -343,7 +343,7 @@ public slots:
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
   void slotUrlCopy();
-  void slotUrlOpen( const KUrl &url = KURL() );
+  void slotUrlOpen( const KUrl &url = KUrl() );
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
