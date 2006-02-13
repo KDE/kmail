@@ -520,7 +520,7 @@ void KMMainWidget::createWidgets(void)
 
 
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-#ifdef HAVE_INDEXLIB  
+#ifdef HAVE_INDEXLIB
   mQuickSearchLine = new KListViewIndexedSearchLine( mSearchToolBar, mHeaders,
                                                     actionCollection(), "headers quick search line" );
 #else
@@ -761,7 +761,7 @@ void KMMainWidget::slotPopFilter()
   kmkernel->popFilterMgr()->openDialog( this );
 }
 
-void KMMainWidget::slotManageSieveScripts() 
+void KMMainWidget::slotManageSieveScripts()
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
@@ -1038,21 +1038,25 @@ void KMMainWidget::slotRemoveFolder()
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
-                   "<b>%1</b> and all its subfolders? Those subfolders "
-                   "might not be empty and their  contents will be "
-                   "discarded as well.</qt>")
+                   "<b>%1</b> and all its subfolders? Those subfolders might "
+                   "not be empty and their contents will be discarded as well. "
+                   "<p><b>Beware</b> that discarded messages are not saved "
+                   "into your Trash folder and are permanently deleted.</qt>")
               .arg( QStyleSheet::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
-                 "<b>%1</b>, discarding its contents?</qt>")
+                   "<b>%1</b>, discarding its contents? "
+                   "<p><b>Beware</b> that discarded messages are not saved "
+                   "into your Trash folder and are permanently deleted.</qt>")
               .arg( QStyleSheet::escape( mFolder->label() ) );
       }
       else {
-        str = i18n("<qt>Are you sure you want to delete the folder "
-                 "<b>%1</b> and all its subfolders, discarding their "
-                 "contents?</qt>")
+        str = i18n("<qt>Are you sure you want to delete the folder <b>%1</b> "
+                   "and all its subfolders, discarding their contents? "
+                   "<p><b>Beware</b> that discarded messages are not saved "
+                   "into your Trash folder and are permanently deleted.</qt>")
             .arg( QStyleSheet::escape( mFolder->label() ) );
       }
     }
@@ -2345,8 +2349,8 @@ void KMMainWidget::setupActions()
                              Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
-  /* The delete action is nowhere in the gui, by default, so we need to make 
-   * sure it is plugged into the KAccel now, since that won't happen on 
+  /* The delete action is nowhere in the gui, by default, so we need to make
+   * sure it is plugged into the KAccel now, since that won't happen on
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
   mDeleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
