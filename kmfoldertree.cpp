@@ -1033,6 +1033,10 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       mMainWidget->action("compact")->plug(folderMenu);
 
       folderMenu->insertSeparator();
+      if ( !fti->folder()->isSystemFolder() )
+        mMainWidget->action("delete_folder")->plug(folderMenu);
+
+      folderMenu->insertSeparator();
       mMainWidget->action("empty")->plug(folderMenu);
       folderMenu->insertSeparator();
     }
