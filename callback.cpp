@@ -112,32 +112,45 @@ QString Callback::receiver() const
   mReceiverSet = true;
 
   QStringList addrs = KPIM::splitEmailAddrList( mMsg->to() );
-  if( addrs.count() < 2 )
-    // Only one receiver, so that has to be us
-    mReceiver = mMsg->to();
-  else {
-    int found = 0;
-    for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
-      if( kmkernel->identityManager()->identityForAddress( *it ) !=
-          KPIM::Identity::null() ) {
-	// Ok, this could be us
-        ++found;
-        mReceiver = *it;
-      }
+  int found = 0;
+  for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
+    if( kmkernel->identityManager()->identityForAddress( *it ) !=
+        KPIM::Identity::null() ) {
+      // Ok, this could be us
+      ++found;
+      mReceiver = *it;
+    }
+  }
+  QStringList ccaddrs = KPIM::splitEmailAddrList( mMsg->cc() );
+  for( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
+    if( kmkernel->identityManager()->identityForAddress( *it ) !=
+        KPIM::Identity::null() ) {
+      // Ok, this could be us
+      ++found;
+      mReceiver = *it;
+    }
+  }
+  if( found != 1 ) {
+    bool ok;
+    QString selectMessage;
+    if (found == 0) {
+      selectMessage = i18n("<qt>None of your identities match the "
+          "receiver of this message,<br>please "
+          "choose which of the following addresses "
+          "is yours, if any:");
+    } else {
+      selectMessage = i18n("<qt>Several of your identities match the "
+          "receiver of this message,<br>please "
+          "choose which of the following addresses "
+          "is yours:");
     }
 
-    if( found != 1 ) {
-      bool ok;
-      mReceiver =
-        KInputDialog::getItem( i18n( "Select Address" ),
-                               i18n( "<qt>None of your identities match the "
-                                     "receiver of this message,<br>please "
-                                     "choose which of the following addresses "
-                                     "is yours:" ),
-                               addrs, 0, FALSE, &ok, kmkernel->mainWin() );
-      if( !ok )
-        mReceiver = QString::null;
-    }
+    mReceiver =
+      KInputDialog::getItem( i18n( "Select Address" ),
+          selectMessage,
+          addrs, 0, FALSE, &ok, kmkernel->mainWin() );
+    if( !ok )
+      mReceiver = QString::null;
   }
 
   return mReceiver;
