@@ -12,7 +12,7 @@
             <height>519</height>
         </rect>
     </property>
-    <property name="caption">
+    <property name="windowTitle">
         <string>Signature Configuration</string>
     </property>
     <grid>
