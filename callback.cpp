@@ -150,7 +150,7 @@ QString Callback::receiver() const
           selectMessage,
           addrs, 0, FALSE, &ok, kmkernel->mainWin() );
     if( !ok )
-      mReceiver = QString::null;
+      mReceiver.clear();
   }
 
   return mReceiver;
