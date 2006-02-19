@@ -13,8 +13,11 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Security
+Name[fr]=Sécurité
 Name[x-test]=xxSecurityxx
 Comment=Security & Privacy Settings
+Comment[fr]=Paramètres de sécurité et de confidentialité
 Comment[x-test]=xxSecurity & Privacy Settingsxx
 Keywords=kmail,security
+Keywords[fr]=KMail,sécurité
 Keywords[x-test]=xxkmail,securityxx

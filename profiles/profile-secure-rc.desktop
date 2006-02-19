@@ -1,7 +1,9 @@
 [KMail Profile]
 Name=Most Secure
+Name[fr]=Le plus sécurisé
 Name[x-test]=xxMost Securexx
 Comment=Sets all necessary options to achieve maximum security
+Comment[fr]=Règle toutes les options nécessaires pour atteindre une sécurité maximale
 Comment[x-test]=xxSets all necessary options to achieve maximum securityxx
 
 [Composer]

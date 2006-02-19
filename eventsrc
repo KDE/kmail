@@ -5,8 +5,10 @@ Comment[x-test]=xxKMailxx
 
 [new-mail-arrived]
 Name=New Mail Arrived
+Name[fr]=Un nouveau message est arrivé
 Name[x-test]=xxNew Mail Arrivedxx
 Comment=New mail arrived
+Comment[fr]=Un nouveau message est arrivé
 Comment[x-test]=xxNew mail arrivedxx
 default_sound=
 default_presentation=0

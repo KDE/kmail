@@ -1,7 +1,9 @@
 [KMail Profile]
 Name=High Contrast
+Name[fr]=Contraste élevé
 Name[x-test]=xxHigh Contrastxx
 Comment=Increased font sizes for visually impaired users
+Comment[fr]=Des polices de caractères plus grandes pour les malvoyants
 Comment[x-test]=xxIncreased font sizes for visually impaired usersxx
 
 [Reader]

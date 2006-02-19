@@ -1,7 +1,9 @@
 [KMail Profile]
 Name=Default
+Name[fr]=Défaut
 Name[x-test]=xxDefaultxx
 Comment=Standard profile
+Comment[fr]=Profil standard
 Comment[x-test]=xxStandard profilexx
 
 [Reader]

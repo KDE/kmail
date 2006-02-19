@@ -13,8 +13,11 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Identities
+Name[fr]=Identités
 Name[x-test]=xxIdentitiesxx
 Comment=Manage Identities
+Comment[fr]=Gestion des identités
 Comment[x-test]=xxManage Identitiesxx
 Keywords=kmail,identity
+Keywords[fr]=KMail,identités
 Keywords[x-test]=xxkmail,identityxx

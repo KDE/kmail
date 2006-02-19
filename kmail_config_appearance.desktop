@@ -13,8 +13,11 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Appearance
+Name[fr]=Apparence
 Name[x-test]=xxAppearancexx
 Comment=Customize Visual Appearance
+Comment[fr]=Personnalisation de l'apparence
 Comment[x-test]=xxCustomize Visual Appearancexx
 Keywords=kmail,appearance
+Keywords[fr]=KMail,apparence
 Keywords[x-test]=xxkmail,appearancexx

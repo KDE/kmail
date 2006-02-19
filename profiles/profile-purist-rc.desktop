@@ -1,7 +1,9 @@
 [KMail Profile]
 Name=Purist
+Name[fr]=Puriste
 Name[x-test]=xxPuristxx
 Comment=Most features turned off, KDE global settings are used
+Comment[fr]=Presque toutes les fonctionnalités désactivées, utilisation de la configuration globale de KDE
 Comment[x-test]=xxMost features turned off, KDE global settings are usedxx
 
 [Reader]

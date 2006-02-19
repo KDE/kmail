@@ -2,6 +2,7 @@
 Name=HTML
 Name[x-test]=xxHTMLxx
 Comment=Standard profile with HTML preview enabled - less secure!
+Comment[fr]=Profil standard avec l'aperçu HTML activé - Moins sécurisé !
 Comment[x-test]=xxStandard profile with HTML preview enabled - less secure!xx
 
 [Reader]

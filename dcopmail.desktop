@@ -3,4 +3,5 @@ Encoding=UTF-8
 Type=ServiceType
 X-KDE-ServiceType=DCOP/Mailer
 Comment=Mail program with a DCOP interface
+Comment[fr]=Programme de messagerie avec une interface DCOP
 Comment[x-test]=xxMail program with a DCOP interfacexx
