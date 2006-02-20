@@ -239,7 +239,11 @@ void KMEdit::initializeAutoSpellChecking()
 
   QColor c = Qt::red;
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
-  QColor col1 = readerConfig.readEntry( "ForegroundColor", defaultForeground  );
+  QColor col1;
+  if ( !readerConfig.readEntry(  "defaultColors", true ) )
+      col1 = readerConfig.readEntry( "ForegroundColor", defaultForeground );
+  else
+      col1 = defaultForeground;
   QColor col2 = readerConfig.readEntry( "QuotedText3", defaultColor3  );
   QColor col3 = readerConfig.readEntry( "QuotedText2", defaultColor2  );
   QColor col4 = readerConfig.readEntry( "QuotedText1", defaultColor1  );
