@@ -43,7 +43,7 @@ private:
   Q3ListView * mListView;
   SieveEditor * mSieveEditor;
   QMap<KMail::SieveJob*,Q3CheckListItem*> mJobs;
-  QMap<Q3CheckListItem*,KURL> mUrls;
+  QMap<Q3CheckListItem*,KUrl> mUrls;
   QMap<Q3CheckListItem*,Q3CheckListItem*> mSelectedItems;
   Q3CheckListItem * mContextMenuItem;
   KUrl mCurrentURL;
