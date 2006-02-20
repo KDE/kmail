@@ -2495,7 +2495,7 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
+  KFileDialog fdlg( QString::null, QString::null, this );
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption(i18n("Attach File"));
   fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
@@ -2642,7 +2642,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
+  KFileDialog fdlg( QString::null, QString::null, this );
   fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));

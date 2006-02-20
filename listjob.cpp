@@ -197,7 +197,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   {
     // get the needed information
     const QString name = udsIt->stringValue( KIO::UDS_NAME );
-    const KUrl url = KUrl( udsIt->stringValue( KIO::UDS_URL ), 106 ); // utf-8
+    const KUrl url = KUrl( udsIt->stringValue( KIO::UDS_URL ) ); // utf-8
     const QString mimeType = udsIt->stringValue( KIO::UDS_MIME_TYPE );
     const QString attributes = udsIt->stringValue( KIO::UDS_EXTRA );
     if ( (mimeType == "inode/directory" || mimeType == "message/digest"
