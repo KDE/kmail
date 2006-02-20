@@ -4451,7 +4451,11 @@ void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
   QColor defaultForeground( kapp->palette().active().text() );
-  QColor col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );
+  QColor col1;
+  if (!readerConfig.readBoolEntry("defaultColors",TRUE))
+    col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );
+  else
+    col1 = defaultForeground;
   QColor col2 = readerConfig.readColorEntry( "QuotedText3", &defaultColor3 );
   QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
