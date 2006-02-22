@@ -243,7 +243,7 @@ void KMFilterActionWithStringList::applyParamWidgetValue( QWidget* paramWidget )
 
 void KMFilterActionWithStringList::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
 }
 
@@ -254,7 +254,7 @@ void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) cons
 
 void KMFilterActionWithStringList::argsFromString( const QString argsStr )
 {
-  int idx = mParameterList.findIndex( argsStr );
+  int idx = mParameterList.indexOf( argsStr );
   if ( idx < 0 ) {
     mParameterList.append( argsStr );
     idx = mParameterList.count() - 1;
@@ -792,7 +792,7 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
 
 KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
   msg->setStatus( stati[idx-1] );
@@ -821,7 +821,7 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 
 const QString KMFilterActionSetStatus::argsAsString() const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return QString();
 
   return stati[idx-1].getStatusStr();
@@ -888,7 +888,7 @@ KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
 
 KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMMessage* msg) const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
   if ( idx == 1 ) // ignore
@@ -916,7 +916,7 @@ void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
 
 const QString KMFilterActionFakeDisposition::argsAsString() const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return QString();
 
   return QString( QChar( idx < 2 ? 'I' : char(mdns[idx-2]) ) );
@@ -983,7 +983,7 @@ void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) con
   QComboBox * cb = dynamic_cast<QComboBox*>(paramWidget);
   Q_ASSERT( cb );
 
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   cb->clear();
   cb->insertStringList( mParameterList );
   if ( idx < 0 ) {
@@ -1062,7 +1062,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
   cb->clear();
@@ -1127,7 +1127,7 @@ void KMFilterActionAddHeader::argsFromString( const QString argsStr )
     mValue = l[1];
   }
 
-  int idx = mParameterList.findIndex( s );
+  int idx = mParameterList.indexOf( s );
   if ( idx < 0 ) {
     mParameterList.append( s );
     idx = mParameterList.count() - 1;
@@ -1224,7 +1224,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  int idx = mParameterList.findIndex( mParameter );
+  int idx = mParameterList.indexOf( mParameter );
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
 
@@ -1303,7 +1303,7 @@ void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
   mRegExp.setPattern( l[1] );
   mReplacementString = l[2];
 
-  int idx = mParameterList.findIndex( s );
+  int idx = mParameterList.indexOf( s );
   if ( idx < 0 ) {
     mParameterList.append( s );
     idx = mParameterList.count() - 1;

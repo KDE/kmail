@@ -773,7 +773,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
 	msgId += msg->dateStr();
       }
 
-      int k = mAddMessageMsgIds.findIndex( msgId );
+      int k = mAddMessageMsgIds.indexOf( msgId );
       //fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
 
       if ( k == -1 ) {
@@ -1810,7 +1810,7 @@ bool KMKernel::haveSystemTrayApplet()
 
 bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
 {
-  if ( systemTrayApplets.findIndex( applet ) == -1 ) {
+  if ( systemTrayApplets.indexOf( applet ) == -1 ) {
     systemTrayApplets.append( applet );
     return true;
   }

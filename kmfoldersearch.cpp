@@ -431,7 +431,7 @@ void KMFolderSearch::addSerNum(quint32 serNum)
     KMFolder *aFolder = 0;
     KMMsgDict::instance()->getLocation(serNum, &aFolder, &idx);
     assert(aFolder && (idx != -1));
-    if(mFolders.findIndex(aFolder) == -1) {
+    if(mFolders.indexOf(aFolder) == -1) {
         aFolder->open();
         // Exceptional case, for when folder has invalid ids
         if (mInvalid)
@@ -848,7 +848,7 @@ bool KMFolderSearch::readIndex()
             return false;
         }
         mSerNums.push_back(serNum);
-        if(mFolders.findIndex(folder) == -1) {
+        if(mFolders.indexOf(folder) == -1) {
             folder->open();
             if (mInvalid) //exceptional case for when folder has invalid ids
                 return false;

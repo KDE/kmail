@@ -921,7 +921,7 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
   for ( it = folder()->child()->begin();
       ( node = *it ) && it != folder()->child()->end(); ++it )
   {
-    if ( !node->isDir() && subfolderNames.findIndex(node->name()) == -1 )
+    if ( !node->isDir() && subfolderNames.indexOf(node->name()) == -1 )
     {
       KMFolder* fld = static_cast<KMFolder*>(node);
       KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );

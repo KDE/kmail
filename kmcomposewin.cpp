@@ -661,7 +661,7 @@ void KMComposeWin::writeConfig(void)
                         mAutoSpellCheckingAction->isChecked() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
   transportHistory.remove(mTransport->currentText());
-    if (KMTransportInfo::availableTransports().findIndex(mTransport
+    if (KMTransportInfo::availableTransports().indexOf(mTransport
     ->currentText()) == -1) {
       transportHistory.prepend(mTransport->currentText());
   }
@@ -2703,7 +2703,7 @@ void KMComposeWin::slotInsertRecentFile(const KUrl& u)
     KConfigGroup group( config, "Composer" );
     QStringList urls = group.readEntry( "recent-urls" , QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
-    int index = urls.findIndex( u.prettyURL() );
+    int index = urls.indexOf( u.prettyURL() );
     if (index != -1) {
       QString encoding = encodings[ index ];
       ld.encoding = encoding.toLatin1();

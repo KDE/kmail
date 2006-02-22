@@ -207,7 +207,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       // Some servers send _lots_ of duplicates
       // This check is too slow for huge lists
       if ( mSubfolderPaths.count() > 100 ||
-           mSubfolderPaths.findIndex(url.path()) == -1 )
+           mSubfolderPaths.indexOf(url.path()) == -1 )
       {
         mSubfolderNames.append( name );
         mSubfolderPaths.append( url.path() );

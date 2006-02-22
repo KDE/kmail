@@ -757,7 +757,7 @@ void KMTransportDialog::slotSmtpCapabilities( const QStringList & capaNormal,
 	    << authNone << ", " << authSSL << ", " << authTLS << " )" << endl;
   mSmtp.encryptionNone->setEnabled( !capaNormal.isEmpty() );
   mSmtp.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
-  mSmtp.encryptionTLS->setEnabled( capaNormal.findIndex("STARTTLS") != -1 );
+  mSmtp.encryptionTLS->setEnabled( capaNormal.indexOf("STARTTLS") != -1 );
   if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() ) {
     // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
     mAuthNone = authMethodsFromStringList( capaNormal );

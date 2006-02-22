@@ -116,9 +116,9 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
   QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
-  int idx = folders.findIndex( aFolder );
+  int idx = folders.indexOf( aFolder );
   if (idx == -1)
-    idx = folders.findIndex( kmkernel->draftsFolder() );
+    idx = folders.indexOf( kmkernel->draftsFolder() );
   setCurrentItem( idx >= 0 ? idx : 0 );
 
   mFolder = aFolder;

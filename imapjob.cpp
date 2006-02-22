@@ -581,7 +581,7 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
     foreach ( msg, (*it).msgList )
     {
       ulong uid = msg->UID();
-      index = olduids.findIndex(uid);
+      index = olduids.indexOf(uid);
       if (index > -1)
       {
         // found, get the new uid

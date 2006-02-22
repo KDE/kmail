@@ -1699,7 +1699,7 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
       if (!node->isDir() ) {
         KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
 
-        if ( mSubfolderNames.findIndex(node->name()) == -1 ) {
+        if ( mSubfolderNames.indexOf(node->name()) == -1 ) {
           QString name = node->name();
           // as more than one namespace can be listed in the root folder we need to make sure
           // that the folder is within the current namespace

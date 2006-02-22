@@ -644,7 +644,7 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
   if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() ) {
     // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
     authBitsNone = authMethodsFromStringList( capaNormal );
-    if ( capaNormal.findIndex( "STARTTLS" ) != -1 )
+    if ( capaNormal.indexOf( "STARTTLS" ) != -1 )
       authBitsTLS = authBitsNone;
     else
       authBitsTLS = 0;
@@ -656,7 +656,7 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
   }
 
   uint authBits = 0;
-  if ( capaNormal.findIndex( "STARTTLS" ) != -1 ) {
+  if ( capaNormal.indexOf( "STARTTLS" ) != -1 ) {
     mTransportInfo->encryption = "TLS";
     authBits = authBitsTLS;
   } else if ( !capaSSL.isEmpty() ) {
