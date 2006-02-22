@@ -28,7 +28,7 @@
 
 class QTimer;
 
-class GlobalSettings : public QObject, public GlobalSettingsBase
+class GlobalSettings : public GlobalSettingsBase
 {
   Q_OBJECT
 public:

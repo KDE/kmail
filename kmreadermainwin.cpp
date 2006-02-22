@@ -35,6 +35,7 @@
 #include <kwin.h>
 #include <kaction.h>
 #include <kiconloader.h>
+#include <ktoolbar.h>
 #include <kdebug.h>
 #include "kmcommands.h"
 #include "kmenubar.h"

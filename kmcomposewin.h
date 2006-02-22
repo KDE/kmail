@@ -66,7 +66,6 @@ class KStatusBar;
 class KAction;
 class KToggleAction;
 class KTempFile;
-class KToolBar;
 class KToggleAction;
 class KSelectColorAction;
 class KUrl;

@@ -45,6 +45,7 @@ class KConfig;
 class KRadioAction;
 class KToggleAction;
 class KMenuBar;
+class KToolBar;
 
 class KMFolder;
 class KMFolderDir;

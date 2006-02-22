@@ -48,11 +48,10 @@ KMail::PartNodeBodyPart::PartNodeBodyPart( partNode & n, const QTextCodec * code
 {}
 
 QString KMail::PartNodeBodyPart::makeLink( const QString & path ) const {
-  static const int utf8 = 106;
   // FIXME: use a PRNG for the first arg, instead of a serial number
   return QString( "x-kmail:/bodypart/%1/%2/%3" )
     .arg( serial++ ).arg( mPartNode.nodeId() )
-    .arg( KUrl::encode_string_no_slash( path, utf8 ) );
+    .arg( QString::fromLatin1( KUrl::toPercentEncoding( path, "/" ) ) );
 }
 
 QString KMail::PartNodeBodyPart::asText() const {

@@ -18,13 +18,13 @@
 #include <q3buttongroup.h>
 #include <QMap>
 #include <QRadioButton>
+#include <QComboBox>
 #include <QString>
 
 class KMSearchPatternEdit;
 class QLabel;
 class QListWidget;
 class QPushButton;
-class QComboBox;
 class QStackedWidget;
 class QCheckBox;
 class KIconButton;

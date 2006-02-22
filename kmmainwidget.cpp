@@ -38,6 +38,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
+#include <ktoolbar.h>
 #include <ktip.h>
 #include <knotifydialog.h>
 #include <kstandarddirs.h>

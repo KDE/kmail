@@ -87,6 +87,7 @@ using KRecentAddress::RecentAddresses;
 #include <kkeydialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <ktoolbar.h>
 #include <kwin.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
@@ -1464,7 +1465,7 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
 
-#warning KStatusBar lost support for permanent widgets 
+#warning KStatusBar lost support for permanent widgets
   statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0/*,true*/);
   statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0/*,true*/);
 }
