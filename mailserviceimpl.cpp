@@ -70,7 +70,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( !cc.isEmpty() )      msg->setCc( cc );
   if ( !bcc.isEmpty() )     msg->setBcc( bcc );
   if ( !subject.isEmpty() ) msg->setSubject( subject );
-  if ( !body.isEmpty() )    msg->setBody( body.utf8() );
+  if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
@@ -113,7 +113,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( !cc.isEmpty() )      msg->setCc( cc );
   if ( !bcc.isEmpty() )     msg->setBcc( bcc );
   if ( !subject.isEmpty() ) msg->setSubject( subject );
-  if ( !body.isEmpty() )    msg->setBody( body.utf8() );
+  if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
   KMMessagePart *part = new KMMessagePart;
   part->setCteStr( "base64" );

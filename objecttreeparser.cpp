@@ -708,7 +708,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     else if ( mReader && showWarning ) {
       decryptedData = "<div style=\"font-size:x-large; text-align:center;"
                       "padding:20pt;\">"
-                    + i18n("Encrypted data not shown.").utf8()
+                    + i18n("Encrypted data not shown.").toUtf8()
                     + "</div>";
       if ( !passphraseError )
         aErrorText = i18n("Crypto plug-in \"%1\" could not decrypt the data.")
@@ -723,7 +723,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
   else if ( !cryptPlug ) {
     decryptedData = "<div style=\"text-align:center; padding:20pt;\">"
-                  + i18n("Encrypted data not shown.").utf8()
+                  + i18n("Encrypted data not shown.").toUtf8()
                   + "</div>";
     switch ( cryptPlugError ) {
     case NOT_INITIALIZED:
@@ -753,7 +753,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     else {
       decryptedData = "<div style=\"font-size:x-large; text-align:center;"
                       "padding:20pt;\">"
-                    + i18n("Encrypted data not shown.").utf8()
+                    + i18n("Encrypted data not shown.").toUtf8()
                     + "</div>";
     }
   }

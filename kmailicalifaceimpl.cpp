@@ -398,7 +398,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   } else if ( storageFormat( &folder ) == StorageIcalVcard ) {
     const KMail::FolderContentsType t = folder.storage()->contentsType();
     setIcalVcardContentTypeHeader( msg, t );
-    msg->setBodyEncoded( plainTextBody.utf8() );
+    msg->setBodyEncoded( plainTextBody.toUtf8() );
   } else {
     kWarning(5006) << k_funcinfo << "Attempt to write to folder with unknown storage type" << endl;
   }
@@ -762,7 +762,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
       if ( !messageWasIcalVcardFormat ) {
         setIcalVcardContentTypeHeader( newMsg, t );
       }
-      newMsg->setBodyEncoded( plainTextBody.utf8() );
+      newMsg->setBodyEncoded( plainTextBody.toUtf8() );
     } else if ( storageFormat( f ) == StorageXML ) {
       if ( messageWasIcalVcardFormat ) {
         // this was originally an ical event, but the folder changed to xml,

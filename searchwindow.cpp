@@ -506,7 +506,7 @@ void SearchWindow::slotAddMsg(int idx)
     else
         from = msg->from();
     if (pFolder->isSystemFolder())
-        fName = i18n(pFolder->name().utf8());
+        fName = i18n(pFolder->name().toUtf8());
     else
         fName = pFolder->name();
 

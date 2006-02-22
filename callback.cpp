@@ -66,7 +66,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
                        "text/calendar; method=reply; charset=\"utf-8\"" );
   msg->setSubject( subject );
   msg->setTo( to );
-  msg->setBody( iCal.utf8() );
+  msg->setBody( iCal.toUtf8() );
   msg->setFrom( receiver() );
   /* We want the triggering mail to be moved to the trash once this one
    * has been sent successfully. Set a link header which accomplishes that. */

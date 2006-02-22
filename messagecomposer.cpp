@@ -1247,7 +1247,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
       }
     }
     mOldBodyPart.setContentDisposition( "inline" );
-    mOldBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
+    mOldBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
     mOldBodyPart.setCharset(mCharset);
     addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
     mMessageList.push_back( msg );
@@ -1413,7 +1413,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     mOldBodyPart.setTypeStr( "multipart" );
     mOldBodyPart.setSubtypeStr( "mixed" );
   } else
-    mOldBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
+    mOldBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
 
   mOldBodyPart.setContentDisposition( "inline" );
 
@@ -1512,7 +1512,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       innerBodyPart.setSubtypeStr("alternative");//html");
     }
     else {
-      innerBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
+      innerBodyPart.setOriginalContentTypeStr( oldContentType.toUtf8() );
     }
     innerBodyPart.setContentDisposition( "inline" );
     QList<int> allowedCTEs;

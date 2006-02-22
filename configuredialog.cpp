@@ -709,7 +709,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
                             i18n("Send &messages in outbox folder:"), group );
   glay->addWidget( l, 1, 0 );
 
-  QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().utf8() );
+  QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().toUtf8() );
   l->setWhatsThis( msg );
   mSendOnCheckCombo->setWhatsThis( msg );
 
@@ -2243,7 +2243,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   QString fallbackCharsetWhatsThis =
-    i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
+    i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().toUtf8() );
   mCharsetCombo->setWhatsThis( fallbackCharsetWhatsThis );
 
   label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
@@ -2264,7 +2264,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   QString overrideCharsetWhatsThis =
-    i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
+    i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().toUtf8() );
   mOverrideCharsetCombo->setWhatsThis( overrideCharsetWhatsThis );
 
   label = new QLabel( i18n("&Override character encoding:"), this );
@@ -4582,7 +4582,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mEnableImapResCB->setToolTip(  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
   mEnableImapResCB->setWhatsThis(
-        i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().utf8() ) );
+        i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().toUtf8() ) );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -4596,7 +4596,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
                                         mBox );
   QString toolTip = i18n( "Choose the format to use to store the contents of the groupware folders." );
   QString whatsThis = i18n( GlobalSettings::self()
-        ->theIMAPResourceStorageFormatItem()->whatsThis().utf8() );
+        ->theIMAPResourceStorageFormatItem()->whatsThis().toUtf8() );
   grid->addWidget( storageFormatLA, 0, 0 );
   storageFormatLA->setToolTip( toolTip );
   storageFormatLA->setWhatsThis( whatsThis );
@@ -4616,7 +4616,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   toolTip = i18n( "Set the language of the folder names" );
   whatsThis = i18n( GlobalSettings::self()
-        ->theIMAPResourceFolderLanguageItem()->whatsThis().utf8() );
+        ->theIMAPResourceFolderLanguageItem()->whatsThis().toUtf8() );
   grid->addWidget( languageLA, 1, 0 );
   languageLA->setToolTip( toolTip );
   languageLA->setWhatsThis( whatsThis );
@@ -4633,7 +4633,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mFolderComboLabel = new QLabel( mBox ); // text depends on storage format
   toolTip = i18n( "Set the parent of the resource folders" );
-  whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().utf8() );
+  whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().toUtf8() );
   mFolderComboLabel->setToolTip( toolTip );
   mFolderComboLabel->setWhatsThis( whatsThis );
   grid->addWidget( mFolderComboLabel, 2, 0 );
@@ -4668,7 +4668,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
   mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
-           ->hideGroupwareFoldersItem()->whatsThis().utf8() ) );
+           ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
@@ -4689,13 +4689,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
   mLegacyMangleFromTo->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
-           legacyMangleFromToHeadersItem()->whatsThis().utf8() ) );
+           legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
   mLegacyBodyInvites->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
-           legacyBodyInvitesItem()->whatsThis().utf8() ) );
+           legacyBodyInvitesItem()->whatsThis().toUtf8() ) );
   connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
@@ -4703,7 +4703,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
-           automaticSendingItem()->whatsThis().utf8() ) );
+           automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 

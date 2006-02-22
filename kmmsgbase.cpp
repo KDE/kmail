@@ -674,7 +674,7 @@ QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
 QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
   if (s.trimmed().isEmpty()) return "";
   if ( utf8 )
-    return base64EncodedMD5( s.trimmed().utf8() ); // QCString overload
+    return base64EncodedMD5( s.trimmed().toUtf8() ); // QCString overload
   else
     return base64EncodedMD5( s.trimmed().toLatin1() ); // const char * overload
 }

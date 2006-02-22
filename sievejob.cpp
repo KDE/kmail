@@ -131,7 +131,7 @@ namespace KMail {
     }
 
     // Convert mScript into UTF-8:
-    data = mScript.utf8();
+    data = mScript.toUtf8();
 
     // "data" contains a trailing NUL, remove:
     if ( data.size() > 0 && data[(int)data.size() - 1] == '\0' )

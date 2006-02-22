@@ -388,10 +388,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QByteArray str = KPIM::kFileToByteArray( messageFile.path(), true, false );
     if( !str.isEmpty() )
-      msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).utf8() );
+      msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
   }
   else if (!body.isEmpty())
-    msg->setBody(body.utf8());
+    msg->setBody(body.toUtf8());
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
@@ -452,7 +452,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !bcc.isEmpty() ) msg->setBcc(bcc);
   if ( !subject.isEmpty() ) msg->setSubject(subject);
   if ( !to.isEmpty() ) msg->setTo(to);
-  if ( !body.isEmpty() ) msg->setBody(body.utf8());
+  if ( !body.isEmpty() ) msg->setBody(body.toUtf8());
 
   bool iCalAutoSend = false;
   bool noWordWrap = false;
@@ -547,7 +547,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!bcc.isEmpty()) msg->setBcc(bcc);
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
-  if (!body.isEmpty()) msg->setBody(body.utf8());
+  if (!body.isEmpty()) msg->setBody(body.toUtf8());
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
@@ -618,7 +618,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   msg->setSubject( i18n( "Certificate Signature Request" ) );
   if (!to.isEmpty()) msg->setTo(to);
   // ### Make this message customizable via KIOSK
-  msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).utf8() );
+  msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);

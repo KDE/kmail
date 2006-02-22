@@ -1041,7 +1041,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       msg->setBody( cStr );
     }else{
       msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
-				  sSmartQuote, allowDecryption).utf8());
+				  sSmartQuote, allowDecryption).toUtf8());
     }
   }
 
@@ -1151,7 +1151,7 @@ Q3CString KMMessage::createForwardBody()
   if (sHeaderStrategy == HeaderStrategy::all()) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
-    str = asQuotedString(s, "", QString(), false, false).utf8();
+    str = asQuotedString(s, "", QString(), false, false).toUtf8();
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1164,7 +1164,7 @@ Q3CString KMMessage::createForwardBody()
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", QString(), false, false).utf8();
+    str = asQuotedString(s, "", QString(), false, false).toUtf8();
     str += "\n-------------------------------------------------------\n";
   }
 
@@ -1889,7 +1889,7 @@ void KMMessage::setDrafts(const QString& aStr)
 QString KMMessage::who() const
 {
   if (mParent)
-    return KPIM::normalizeAddressesAndDecodeIDNs( headerField(mParent->whoField().utf8()) );
+    return KPIM::normalizeAddressesAndDecodeIDNs( headerField(mParent->whoField().toUtf8()) );
   return from();
 }
 
@@ -3627,8 +3627,8 @@ QStringList KMMessage::stripAddressFromAddressList( const QString& address,
   QString addrSpec( KPIM::getEmailAddress( address ) );
   for ( QStringList::Iterator it = addresses.begin();
        it != addresses.end(); ) {
-    if ( kasciistricmp( addrSpec.utf8().data(),
-                        KPIM::getEmailAddress( *it ).utf8().data() ) == 0 ) {
+    if ( kasciistricmp( addrSpec.toUtf8().data(),
+                        KPIM::getEmailAddress( *it ).toUtf8().data() ) == 0 ) {
       kDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3669,8 +3669,8 @@ bool KMMessage::addressIsInAddressList( const QString& address,
   QString addrSpec = KPIM::getEmailAddress( address );
   for( QStringList::ConstIterator it = addresses.begin();
        it != addresses.end(); ++it ) {
-    if ( kasciistricmp( addrSpec.utf8().data(),
-                        KPIM::getEmailAddress( *it ).utf8().data() ) == 0 )
+    if ( kasciistricmp( addrSpec.toUtf8().data(),
+                        KPIM::getEmailAddress( *it ).toUtf8().data() ) == 0 )
       return true;
   }
   return false;

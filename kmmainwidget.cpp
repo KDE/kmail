@@ -2772,7 +2772,7 @@ void KMMainWidget::setupActions()
                                        actionCollection(), "show_quick_search");
   mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
   mToggleShowQuickSearchAction->setWhatsThis(
-        i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().utf8() ) );
+        i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().toUtf8() ) );
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
@@ -3324,7 +3324,7 @@ void KMMainWidget::initializeFilterActions()
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
       filterName = QString("Filter %1").arg((*it)->name());
       normalizedName = filterName.replace(" ", "_");
-      if (action(normalizedName.utf8()))
+      if (action(normalizedName.toUtf8()))
         continue;
       filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
       mFilterCommands.append(filterCommand);
