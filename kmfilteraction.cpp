@@ -244,12 +244,12 @@ void KMFilterActionWithStringList::applyParamWidgetValue( QWidget* paramWidget )
 void KMFilterActionWithStringList::setParamWidgetValue( QWidget* paramWidget ) const
 {
   int idx = mParameterList.indexOf( mParameter );
-  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+  ((QComboBox*)paramWidget)->setCurrentIndex( idx >= 0 ? idx : 0 );
 }
 
 void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) const
 {
-  ((QComboBox*)paramWidget)->setCurrentItem(0);
+  ((QComboBox*)paramWidget)->setCurrentIndex(0);
 }
 
 void KMFilterActionWithStringList::argsFromString( const QString argsStr )
@@ -716,7 +716,7 @@ void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 {
   KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
   assert( ic );
-  ic->setCurrentItem( 0 );
+  ic->setCurrentIndex( 0 );
   //ic->setCurrentIdentity( kmkernel->identityManager()->defaultIdentity() );
 }
 
@@ -988,9 +988,9 @@ void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) con
   cb->insertStringList( mParameterList );
   if ( idx < 0 ) {
     cb->insertItem( mParameter );
-    cb->setCurrentItem( cb->count() - 1 );
+    cb->setCurrentIndex( cb->count() - 1 );
   } else {
-    cb->setCurrentItem( idx );
+    cb->setCurrentIndex( idx );
   }
 }
 
@@ -1069,9 +1069,9 @@ void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
   cb->insertStringList( mParameterList );
   if ( idx < 0 ) {
     cb->insertItem( mParameter );
-    cb->setCurrentItem( cb->count() - 1 );
+    cb->setCurrentIndex( cb->count() - 1 );
   } else {
-    cb->setCurrentItem( idx );
+    cb->setCurrentIndex( idx );
   }
   QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
   Q_ASSERT( le );
@@ -1093,7 +1093,7 @@ void KMFilterActionAddHeader::clearParamWidget( QWidget* paramWidget ) const
 {
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
-  cb->setCurrentItem(0);
+  cb->setCurrentIndex(0);
   QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
   Q_ASSERT( le );
   le->clear();
@@ -1232,9 +1232,9 @@ void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) co
   cb->insertStringList( mParameterList );
   if ( idx < 0 ) {
     cb->insertItem( mParameter );
-    cb->setCurrentItem( cb->count() - 1 );
+    cb->setCurrentIndex( cb->count() - 1 );
   } else {
-    cb->setCurrentItem( idx );
+    cb->setCurrentIndex( idx );
   }
 
   RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
@@ -1265,7 +1265,7 @@ void KMFilterActionRewriteHeader::clearParamWidget( QWidget* paramWidget ) const
 {
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
-  cb->setCurrentItem(0);
+  cb->setCurrentIndex(0);
 
   RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
   Q_ASSERT( rele );

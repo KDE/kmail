@@ -278,7 +278,7 @@ void LanguageComboBox::setLanguage( const QString & language )
   for (int i = 0; i < count(); i++)
     // ### FIXME: use .endWith():
     if ( text(i).find( parenthizedLanguage ) >= 0 ) {
-      setCurrentItem(i);
+      setCurrentIndex(i);
       return;
     }
 }

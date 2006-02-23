@@ -1378,7 +1378,7 @@ void AccountDialog::setupSettings()
     mFolderNames.prepend(i18n("inbox"));
     mFolderList.prepend(kmkernel->inboxFolder());
     folderCombo->insertStringList(mFolderNames);
-    folderCombo->setCurrentItem(curIndex + 1);
+    folderCombo->setCurrentIndex(curIndex + 1);
 
     // -sanders hack for startup users. Must investigate this properly
     if (folderCombo->count() == 0)

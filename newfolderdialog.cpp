@@ -108,7 +108,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       KConfigGroup group(config, "General");
       int type = group.readEntry("default-mailbox-format", 1 );
       if ( type < 0 || type > 1 ) type = 1;
-      mFormatComboBox->setCurrentItem( type );
+      mFormatComboBox->setCurrentIndex( type );
     }
     mFormatHBox->addWidget( mFormatComboBox );
     mTopLevelLayout->addLayout( mFormatHBox );
@@ -132,7 +132,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsComboBox->insertItem( i18n( "Tasks" ) );
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mFolder ) // inherit contents type from papa
-      mContentsComboBox->setCurrentItem( mFolder->storage()->contentsType() );
+      mContentsComboBox->setCurrentIndex( mFolder->storage()->contentsType() );
     mContentsHBox->addWidget( mContentsComboBox );
     mTopLevelLayout->addLayout( mContentsHBox );
   }

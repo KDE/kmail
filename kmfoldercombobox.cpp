@@ -119,7 +119,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
   int idx = folders.indexOf( aFolder );
   if (idx == -1)
     idx = folders.indexOf( kmkernel->draftsFolder() );
-  setCurrentItem( idx >= 0 ? idx : 0 );
+  setCurrentIndex( idx >= 0 ? idx : 0 );
 
   mFolder = aFolder;
 }
@@ -133,7 +133,7 @@ void KMFolderComboBox::setFolder( const QString &idString )
         removeItem(mSpecialIdx);
      mSpecialIdx = count();
      insertItem(idString, -1);
-     setCurrentItem(mSpecialIdx);
+     setCurrentIndex(mSpecialIdx);
 
      mFolder = 0;
      return;

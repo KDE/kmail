@@ -336,7 +336,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   initCollections();
 
-  mCollectionCombo->setCurrentItem( 0 );
+  mCollectionCombo->setCurrentIndex( 0 );
 
   updateList();
 
@@ -663,7 +663,7 @@ void RecipientsPicker::readConfig()
   int currentCollection = group.readEntry( "CurrentCollection", -1 );
   if ( currentCollection >= 0 &&
        currentCollection < mCollectionCombo->count() ) {
-    mCollectionCombo->setCurrentItem( currentCollection );
+    mCollectionCombo->setCurrentIndex( currentCollection );
   }
 }
 

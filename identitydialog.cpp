@@ -556,7 +556,7 @@ void IdentityDialog::slotOk() {
     mPGPEncryptionKeyRequester->setFingerprint( ident.pgpEncryptionKey() );
     mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
     mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
-    mPreferredCryptoMessageFormat->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+    mPreferredCryptoMessageFormat->setCurrentIndex( format2cb( ident.preferredCryptoMessageFormat() ) );
 
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );

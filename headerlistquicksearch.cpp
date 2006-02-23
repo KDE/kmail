@@ -81,7 +81,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   insertStatus( StatusHasAttachment );
   insertStatus( StatusWatched );
   insertStatus( StatusIgnored );
-  mStatusCombo->setCurrentItem( 0 );
+  mStatusCombo->setCurrentIndex( 0 );
   mStatusCombo->installEventFilter( this );
   connect( mStatusCombo, SIGNAL ( activated( int ) ),
            this, SLOT( slotStatusChanged( int ) ) );
@@ -152,7 +152,7 @@ bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QStrin
 void HeaderListQuickSearch::reset()
 {
   clear();
-  mStatusCombo->setCurrentItem( 0 );
+  mStatusCombo->setCurrentIndex( 0 );
   slotStatusChanged( 0 );
 }
 

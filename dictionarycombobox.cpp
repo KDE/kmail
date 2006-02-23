@@ -82,7 +82,7 @@ namespace KMail {
     for ( int i = 0; i < count(); ++i ) {
       if ( text( i ) == name ) {
         if ( i != currentItem() ) {
-          setCurrentItem( i );
+          setCurrentIndex( i );
           slotDictionaryChanged( i );
         }
         return;
@@ -96,7 +96,7 @@ namespace KMail {
       // first handle the special case of the default dictionary
       if ( dictionary == "<default>" ) {
         if ( 0 != currentItem() ) {
-          setCurrentItem( 0 );
+          setCurrentIndex( 0 );
           slotDictionaryChanged( 0 );
         }
         return;
@@ -108,7 +108,7 @@ namespace KMail {
             ++it, ++i ) {
         if ( *it == dictionary ) {
           if ( i != currentItem() ) {
-            setCurrentItem( i );
+            setCurrentIndex( i );
             slotDictionaryChanged( i );
           }
           return;
@@ -118,7 +118,7 @@ namespace KMail {
 
     // If dictionary is empty or doesn't exist fall back to the global default
     if ( mDefaultDictionary != currentItem() ) {
-      setCurrentItem( mDefaultDictionary );
+      setCurrentIndex( mDefaultDictionary );
       slotDictionaryChanged( mDefaultDictionary );
     }
   }

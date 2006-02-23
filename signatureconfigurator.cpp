@@ -195,7 +195,7 @@ namespace KMail {
     default:                     idx = 0; break;
     };
 
-    mSourceCombo->setCurrentItem( idx );
+    mSourceCombo->setCurrentIndex( idx );
   }
 
   QString SignatureConfigurator::inlineText() const {

@@ -144,7 +144,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
     mRuleField->changeItem( QString(), 0 );
   }
 
-  mRuleField->setCurrentItem( i );
+  mRuleField->setCurrentIndex( i );
   mRuleField->blockSignals( false );
 
   RuleWidgetHandlerManager::instance()->setRule( mFunctionStack, mValueStack,
@@ -167,7 +167,7 @@ void KMSearchRuleWidget::reset()
 {
   mRuleField->blockSignals( true );
   mRuleField->changeItem( "", 0 );
-  mRuleField->setCurrentItem( 0 );
+  mRuleField->setCurrentIndex( 0 );
   mRuleField->blockSignals( false );
 
   RuleWidgetHandlerManager::instance()->reset( mFunctionStack, mValueStack );

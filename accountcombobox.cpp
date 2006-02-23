@@ -73,7 +73,7 @@ void AccountComboBox::setCurrentAccount( KMAccount* account )
   QList<KMAccount *>::ConstIterator it = lst.begin();
   for ( ; it != lst.end() ; ++it, ++i ) {
     if ( (*it) == account ) {
-      setCurrentItem( i );
+      setCurrentIndex( i );
       return;
     }
   }

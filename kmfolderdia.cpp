@@ -393,9 +393,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QString whoField;
   if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();
-  if (whoField.isEmpty()) mShowSenderReceiverComboBox->setCurrentItem(0);
-  else if (whoField == "From") mShowSenderReceiverComboBox->setCurrentItem(1);
-  else if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
+  if (whoField.isEmpty()) mShowSenderReceiverComboBox->setCurrentIndex(0);
+  else if (whoField == "From") mShowSenderReceiverComboBox->setCurrentIndex(1);
+  else if (whoField == "To") mShowSenderReceiverComboBox->setCurrentIndex(2);
 
 
   // sender identity
@@ -432,7 +432,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Tasks" ) );
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
-      mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
+      mContentsComboBox->setCurrentIndex( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
               this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
   } else {
@@ -526,7 +526,7 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 
   if ( mIncidencesForComboBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-    mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
+    mIncidencesForComboBox->setCurrentIndex( dimap->incidencesFor() );
   }
 }
 

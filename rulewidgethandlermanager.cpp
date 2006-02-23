@@ -582,7 +582,7 @@ namespace {
                                                       0, false ) );
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      funcCombo->setCurrentItem( 0 );
+      funcCombo->setCurrentIndex( 0 );
       funcCombo->blockSignals( false );
     }
 
@@ -603,7 +603,7 @@ namespace {
                                                    0, false ) );
     if (combo) {
       combo->blockSignals( true );
-      combo->setCurrentItem( 0 );
+      combo->setCurrentIndex( 0 );
       combo->blockSignals( false );
     }
   }
@@ -630,12 +630,12 @@ namespace {
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( i < TextFunctionCount )
-        funcCombo->setCurrentItem( i );
+        funcCombo->setCurrentIndex( i );
       else {
         kDebug(5006) << "TextRuleWidgetHandler::setRule( "
                       << rule->asString()
                       << " ): unhandled function" << endl;
-        funcCombo->setCurrentItem( 0 );
+        funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
       functionStack->setCurrentWidget( funcCombo );
@@ -656,11 +656,11 @@ namespace {
       combo->blockSignals( true );
       for ( i = 0; i < combo->count(); ++i )
         if ( rule->contents() == combo->text( i ) ) {
-          combo->setCurrentItem( i );
+          combo->setCurrentIndex( i );
           break;
         }
       if ( i == combo->count() )
-        combo->setCurrentItem( 0 );
+        combo->setCurrentIndex( 0 );
 
       combo->blockSignals( false );
       valueStack->setCurrentWidget( combo );
@@ -892,7 +892,7 @@ namespace {
                                                       0, false ) );
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      funcCombo->setCurrentItem( 0 );
+      funcCombo->setCurrentIndex( 0 );
       funcCombo->blockSignals( false );
     }
 
@@ -931,12 +931,12 @@ namespace {
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( i < MessageFunctionCount )
-        funcCombo->setCurrentItem( i );
+        funcCombo->setCurrentIndex( i );
       else {
         kDebug(5006) << "MessageRuleWidgetHandler::setRule( "
                       << rule->asString()
                       << " ): unhandled function" << endl;
-        funcCombo->setCurrentItem( 0 );
+        funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
       functionStack->setCurrentWidget( funcCombo );
@@ -1160,7 +1160,7 @@ namespace {
                                                       0, false ) );
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      funcCombo->setCurrentItem( 0 );
+      funcCombo->setCurrentIndex( 0 );
       funcCombo->blockSignals( false );
     }
 
@@ -1170,7 +1170,7 @@ namespace {
                                                    0, false ) );
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      statusCombo->setCurrentItem( 0 );
+      statusCombo->setCurrentIndex( 0 );
       statusCombo->blockSignals( false );
     }
   }
@@ -1198,12 +1198,12 @@ namespace {
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( funcIndex < StatusFunctionCount )
-        funcCombo->setCurrentItem( funcIndex );
+        funcCombo->setCurrentIndex( funcIndex );
       else {
         kDebug(5006) << "StatusRuleWidgetHandler::setRule( "
                       << rule->asString()
                       << " ): unhandled function" << endl;
-        funcCombo->setCurrentItem( 0 );
+        funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
       functionStack->setCurrentWidget( funcCombo );
@@ -1222,12 +1222,12 @@ namespace {
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
       if ( valueIndex < KMail::StatusValueCountWithoutHidden )
-        statusCombo->setCurrentItem( valueIndex );
+        statusCombo->setCurrentIndex( valueIndex );
       else {
         kDebug(5006) << "StatusRuleWidgetHandler::setRule( "
                       << rule->asString()
                       << " ): unhandled value" << endl;
-        statusCombo->setCurrentItem( 0 );
+        statusCombo->setCurrentIndex( 0 );
       }
       statusCombo->blockSignals( false );
       valueStack->setCurrentWidget( statusCombo );
@@ -1408,7 +1408,7 @@ namespace {
                                                       0, false ) );
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
-      funcCombo->setCurrentItem( 0 );
+      funcCombo->setCurrentIndex( 0 );
       funcCombo->blockSignals( false );
     }
 
@@ -1460,12 +1460,12 @@ namespace {
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( funcIndex < NumericFunctionCount )
-        funcCombo->setCurrentItem( funcIndex );
+        funcCombo->setCurrentIndex( funcIndex );
       else {
         kDebug(5006) << "NumericRuleWidgetHandler::setRule( "
                       << rule->asString()
                       << " ): unhandled function" << endl;
-        funcCombo->setCurrentItem( 0 );
+        funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
       functionStack->setCurrentWidget( funcCombo );

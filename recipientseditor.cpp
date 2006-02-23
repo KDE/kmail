@@ -221,7 +221,7 @@ int RecipientLine::recipientsCount()
 void RecipientLine::setRecipient( const Recipient &rec )
 {
   mEdit->setText( rec.email() );
-  mCombo->setCurrentItem( Recipient::typeToId( rec.type() ) );
+  mCombo->setCurrentIndex( Recipient::typeToId( rec.type() ) );
 }
 
 void RecipientLine::setRecipient( const QString &email )
@@ -237,7 +237,7 @@ Recipient RecipientLine::recipient() const
 
 void RecipientLine::setRecipientType( Recipient::Type type )
 {
-  mCombo->setCurrentItem( Recipient::typeToId( type ) );
+  mCombo->setCurrentIndex( Recipient::typeToId( type ) );
 }
 
 Recipient::Type RecipientLine::recipientType() const

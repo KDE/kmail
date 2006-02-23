@@ -204,11 +204,11 @@ void KMMsgPartDialog::setMimeType( const QString & mimeType ) {
   if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy ) )
     for ( int i = 0 ; i < mMimeType->count() ; ++i )
       if ( mMimeType->text( i ) == mimeType ) {
-	mMimeType->setCurrentItem( i );
+	mMimeType->setCurrentIndex( i );
 	return;
       }
   mMimeType->insertItem( mimeType, 0 );
-  mMimeType->setCurrentItem( 0 );
+  mMimeType->setCurrentIndex( 0 );
   slotMimeTypeChanged( mimeType );
 }
 
@@ -261,11 +261,11 @@ void KMMsgPartDialog::setEncoding( Encoding encoding ) {
       QString text = mI18nizedEncodings.at(i);
       for ( int j = 0 ; j < mEncoding->count() ; ++j )
 	if ( mEncoding->text(j) == text ) {
-	  mEncoding->setCurrentItem( j );
+	  mEncoding->setCurrentIndex( j );
 	  return;
 	}
       mEncoding->insertItem( text, 0 );
-      mEncoding->setCurrentItem( 0 );
+      mEncoding->setCurrentIndex( 0 );
     }
   kFatal(5006) << "KMMsgPartDialog::setEncoding(): "
     "Unknown encoding encountered!" << endl;

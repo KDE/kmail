@@ -162,10 +162,10 @@ void MailingListFolderPropertiesDialog::load()
 {
   if (mFolder) mMailingList = mFolder->mailingList();
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
-  mMLHandlerCombo->setCurrentItem( mMailingList.handler() );
+  mMLHandlerCombo->setCurrentIndex( mMailingList.handler() );
   mEditList->insertStringList( mMailingList.postURLS().toStringList() );
 
-  mAddressCombo->setCurrentItem( mLastItem );
+  mAddressCombo->setCurrentIndex( mLastItem );
   mHoldsMailingList->setChecked( mFolder && mFolder->isMailingListEnabled() );
 }
 
