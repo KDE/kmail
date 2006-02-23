@@ -52,7 +52,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   readHBox->addWidget( expireReadMailCB );
 
   expireReadMailSB = new QSpinBox( privateLayoutWidget, "expireReadMailSB" );
-  expireReadMailSB->setMaxValue( 999999 );
+  expireReadMailSB->setMaximum( 999999 );
   expireReadMailSB->setValue( 30 );
   readHBox->addWidget( expireReadMailSB );
 
@@ -70,7 +70,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   unreadHBox->addWidget( expireUnreadMailCB );
 
   expireUnreadMailSB = new QSpinBox( privateLayoutWidget, "expireUnreadMailSB" );
-  expireUnreadMailSB->setMaxValue( 99999 );
+  expireUnreadMailSB->setMaximum( 99999 );
   expireUnreadMailSB->setValue( 30 );
   unreadHBox->addWidget( expireUnreadMailSB );
 
