@@ -277,12 +277,11 @@ namespace KMail {
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
       
-      PasswordDialog* dlg = new PasswordDialog( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
-      dlg->setPlainCaption( i18n("Authorization Dialog") );
-      dlg->addCommentLine( i18n("Account:"), name() );
-      int ret = dlg->exec();
+      PasswordDialog dlg( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
+      dlg.setPlainCaption( i18n("Authorization Dialog") );
+      dlg.addCommentLine( i18n("Account:"), name() );
+      int ret = dlg.exec();
       if (ret != QDialog::Accepted ) {
-        delete dlg;
         mPasswordDialogIsActive = false;
         mAskAgain = false;
         emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
@@ -291,10 +290,9 @@ namespace KMail {
       mPasswordDialogIsActive = false;
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
-      setPasswd( dlg->password(), dlg->keepPassword() );
-      setLogin( dlg->username() );
+      setPasswd( dlg.password(), dlg.keepPassword() );
+      setLogin( dlg.username() );
       mAskAgain = false;
-      delete dlg;
     }
     // already waiting for a connection?
     if ( mSlave && !mSlaveConnected ) return Connecting;
