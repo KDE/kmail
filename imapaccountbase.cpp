@@ -211,7 +211,7 @@ namespace KMail {
       if ( it.key().startsWith( "Namespace:" ) )
       {
         QString key = it.key().right( it.key().length() - 10 );
-        namespaceToDelimiter[key] = it.data();
+        namespaceToDelimiter[key] = it.value();
       }
     }
     setNamespaceToDelimiter( namespaceToDelimiter );
@@ -232,9 +232,9 @@ namespace KMail {
     QString data;
     for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it )
     {
-      if ( !it.data().isEmpty() )
+      if ( !it.value().isEmpty() )
       {
-        data = "\"" + it.data().join("\",\"") + "\"";
+        data = "\"" + it.value().join("\",\"") + "\"";
         config.writeEntry( QString::number( it.key() ), data );
       }
     }
@@ -243,7 +243,7 @@ namespace KMail {
           it != mNamespaceToDelimiter.end(); ++it )
     {
       key = "Namespace:" + it.key();
-      config.writeEntry( key, it.data() );
+      config.writeEntry( key, it.value() );
     }
   }
 
@@ -654,7 +654,7 @@ namespace KMail {
       QStringList list;
       for ( it = ns.begin(); it != ns.end(); ++it ) {
         list += it.key();
-        mNamespaceToDelimiter[ it.key() ] = it.data();
+        mNamespaceToDelimiter[ it.key() ] = it.value();
       }
       if ( !list.isEmpty() ) {
         mNamespaces[section] = list;
@@ -747,7 +747,7 @@ namespace KMail {
     for ( it = mNamespaces.begin(); it != mNamespaces.end(); ++it )
     {
       QStringList::Iterator strit;
-      for ( strit = it.data().begin(); strit != it.data().end(); ++strit )
+      for ( strit = it.value().begin(); strit != it.value().end(); ++strit )
       {
         QString ns = *strit;
         if ( ns.endsWith("/") || ns.endsWith(".") ) {
@@ -782,7 +782,7 @@ namespace KMail {
       QString stripped = it.key().left( it.key().length() - 1 );
       if ( !it.key().isEmpty() &&
           ( prefix.contains( it.key() ) || prefix.contains( stripped ) ) ) {
-        return it.data();
+        return it.value();
       }
     }
     // see if we have an empty namespace

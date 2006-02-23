@@ -272,7 +272,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
       if ( it.key() == "Id" || it.key() == "ImapPath" ||
            it.key() == "UidValidity" )
         continue;
-      group.writeEntry( it.key(), it.data() );
+      group.writeEntry( it.key(), it.value() );
     }
     mNewFolder->readConfig( config );
     // make sure the children state is correct

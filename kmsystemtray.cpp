@@ -332,7 +332,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
       {
         kDebug(5006) << "Adding folder" << endl;
         mPopupFolders.append( it.key() );
-        QString item = prettyName(it.key()) + " (" + QString::number(it.data()) + ")";
+        QString item = prettyName(it.key()) + " (" + QString::number(it.value()) + ")";
         newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
         ++it;
       }
@@ -488,7 +488,7 @@ void KMSystemTray::updateNewMessages()
    * our last known version, and adjust mCount with that difference */
   else
   {
-    int diff = unread - it.data();
+    int diff = unread - it.value();
     mCount += diff;
   }
 

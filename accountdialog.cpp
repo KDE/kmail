@@ -1883,9 +1883,9 @@ void AccountDialog::saveSettings()
     ImapAccountBase::namespaceDelim::Iterator it2;
     for ( it = mImap.nsMap.begin(); it != mImap.nsMap.end(); ++it ) {
       QStringList list;
-      for ( it2 = it.data().begin(); it2 != it.data().end(); ++it2 ) {
+      for ( it2 = it.value().begin(); it2 != it.value().end(); ++it2 ) {
         list << it2.key();
-        delimMap[it2.key()] = it2.data();
+        delimMap[it2.key()] = it2.value();
       }
       map[it.key()] = list;
     }
@@ -2226,7 +2226,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
 
   mBg = new Q3ButtonGroup( 0 );
   connect( mBg, SIGNAL( clicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
-  mDelimMap = mNamespaceMap->find( mType ).data();
+  mDelimMap = mNamespaceMap->find( mType ).value();
   ImapAccountBase::namespaceDelim::Iterator it;
   for ( it = mDelimMap.begin(); it != mDelimMap.end(); ++it ) {
     NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
@@ -2264,7 +2264,7 @@ void NamespaceEditDialog::slotOk()
 {
   QMap<int, NamespaceLineEdit*>::Iterator it;
   for ( it = mLineEditMap.begin(); it != mLineEditMap.end(); ++it ) {
-    NamespaceLineEdit* edit = it.data();
+    NamespaceLineEdit* edit = it.value();
     if ( edit->isModified() ) {
       // register delimiter for new namespace
       mDelimMap[edit->text()] = mDelimMap[edit->lastText()];

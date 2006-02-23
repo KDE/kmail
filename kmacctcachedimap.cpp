@@ -185,7 +185,7 @@ void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
   while (it != mapJobData.end())
   {
-    if (it.data().parent == fti->folder())
+    if (it.value().parent == fti->folder())
     {
       killAllJobs();
       break;

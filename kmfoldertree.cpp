@@ -1524,7 +1524,7 @@ void KMFolderTree::slotUpdateCountTimeout()
       it!=mFolderToUpdateCount.end();
       ++it )
   {
-    slotUpdateCounts( it.data() );
+    slotUpdateCounts( it.value() );
   }
   mFolderToUpdateCount.clear();
   mUpdateCountTimer->stop();
