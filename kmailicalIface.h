@@ -116,6 +116,20 @@ k_dcop:
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
+  /** 
+   * Trigger the creation of a new resource folder with name @param resource
+   * under parent @param.
+   * @return success or failure
+   */
+  virtual bool addSubresource( const QString& resource,
+                               const QString& parent,
+                               const QString& contentsType ) = 0;
+  /** 
+   * Trigger the deletion of a new resource folder with id @param resource.
+   * @return success or failure
+   */
+  virtual bool removeSubresource( const QString& resource ) = 0;
+
   /// The format of the mails containing other contents than actual mail
   /// (like contacts, calendar etc.)
   /// This is currently either ical/vcard, or XML.

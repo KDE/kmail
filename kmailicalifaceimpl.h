@@ -113,6 +113,11 @@ public:
                       Q_UINT32 sernum,
                       const QString& filename );
 
+  bool removeSubresource( const QString& );
+
+  bool addSubresource( const QString& resource,
+                       const QString& parent,
+                       const QString& contentsType );
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
@@ -130,8 +135,8 @@ public:
   bool isResourceFolder( KMFolder* folder ) const;
 
   /**
-   * Returns true if resource mode is enabled and folder is one of the
-   * default four resource folders.
+   * Returns true if the folder is one of the default five
+   * resource folders.
    */
   bool isStandardResourceFolder( KMFolder* folder ) const;
 
