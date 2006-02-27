@@ -1465,7 +1465,6 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
 
-#warning KStatusBar lost support for permanent widgets
   statusBar()->insertPermanentItem(i18n(" Column: %1 ").arg("     "),2,0);
   statusBar()->insertPermanentItem(i18n(" Line: %1 ").arg("     "),1,0);
 }
