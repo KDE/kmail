@@ -16,6 +16,7 @@
 
 #include "kmailIface.h"
 #include "kmmsgbase.h"
+#include "globalsettings.h"
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -400,6 +401,7 @@ protected slots:
 signals:
   void configChanged();
   void folderRemoved( KMFolder* aFolder );
+  void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
 
 private:
   void openReader( bool onlyCheck );
