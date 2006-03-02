@@ -2077,13 +2077,15 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
 :KMMoveCommand( sernum )
 {
-  KMFolder *srcFolder;
+  KMFolder *srcFolder = 0;
   int idx;
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
-  KMMsgBase *msg = srcFolder->getMsgBase( idx );
-  srcFolder->open();
-  mOpenedFolders.push_back( srcFolder );
-  addMsg( msg );
+  if ( srcFolder ) {
+    KMMsgBase *msg = srcFolder->getMsgBase( idx );
+    srcFolder->open();
+    mOpenedFolders.push_back( srcFolder );
+    addMsg( msg );
+  }
   setDestFolder( findTrashFolder( srcFolder ) );
 }
 
