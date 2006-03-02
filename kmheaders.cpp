@@ -1159,12 +1159,12 @@ void KMHeaders::setMsgStatus( const MessageStatus& status, bool toggle)
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
         // the item's parent is closed, don't traverse any more of this subtree
-        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
+        Q3ListViewItem * lastAncestorWithSiblings = it.current()->parent();
         // travel towards the root until we find an ancestor with siblings
         while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
           lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
         // move the iterator to that ancestor's next sibling
-        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
+        it = Q3ListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
         continue;
       }
 
