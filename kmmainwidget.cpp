@@ -213,6 +213,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
+  connect( kmkernel, SIGNAL( onlineStatusChanged( GlobalSettings::EnumNetworkState::type ) ),
+           this, SLOT( slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type ) ) );
+
   toggleSystemTray();
 
   // must be the last line of the constructor:
@@ -604,6 +607,7 @@ void KMMainWidget::createWidgets(void)
 
   // create list of folders
   mFolderTree = new KMFolderTree(this, folderParent, "folderTree");
+  mFolderTree->setFrameStyle( QFrame::NoFrame );
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
@@ -1666,17 +1670,24 @@ void KMMainWidget::slotSaveAttachments()
 
 void KMMainWidget::slotOnlineStatus()
 {
+  // KMKernel will emit a signal when we toggle the network state that is caught by
+  // KMMainWidget::slotUpdateOnlineStatus to update our GUI
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     // if online; then toggle and set it offline.
-    actionCollection()->action( "online_status" )->setText( i18n("Go Online") );
     kmkernel->stopNetworkJobs();
-    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   } else {
-    actionCollection()->action( "online_status" )->setText( i18n("Go Offline") );
     kmkernel->resumeNetworkJobs();
-    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
 }
+
+void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type )
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
+    actionCollection()->action( "online_status" )->setText( i18n("Work Offline") );
+  else
+    actionCollection()->action( "online_status" )->setText( i18n("Work Online") );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
@@ -3024,10 +3035,7 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
-    if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
-      actionCollection()->action( "online_status" )->setText( i18n("Go Offline") );
-    else
-      actionCollection()->action( "online_status" )->setText( i18n("Go Online") );
+    slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 

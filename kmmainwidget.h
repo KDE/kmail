@@ -321,6 +321,7 @@ protected slots:
   void slotSendQueued();
   void slotSendQueuedVia( int item );
   void slotOnlineStatus();
+  void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
   void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
   void slotMarkAll();
   void slotMemInfo();

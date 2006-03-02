@@ -20,6 +20,7 @@
 
 #include "kmailIface.h"
 #include "kmmsgbase.h"
+#include "globalsettings.h"
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -162,7 +163,7 @@ public:
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }
-  
+
   int dcopAddMessage(const QString & foldername, const QString & messagefile,
                      const QString & MsgStatusFlags = QString());
   int dcopAddMessage(const QString & foldername, const KUrl & messagefile,
@@ -173,7 +174,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
   int dcopAddMessage_fastImport(const QString & foldername, const KUrl & messagefile,
                                 const QString & MsgStatusFlags = QString());
-  
+
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
@@ -196,9 +197,9 @@ public:
   */
   virtual void resumeBackgroundJobs();
 
-  /** 
-   * Stops all network related jobs and enter offline mode 
-   * New network jobs cannot be started. 
+  /**
+   * Stops all network related jobs and enter offline mode
+   * New network jobs cannot be started.
   */
   void stopNetworkJobs();
 
@@ -216,7 +217,7 @@ public:
   static bool askToGoOnline();
 
   /** Checks if the current network state is online or offline
-   * @return true if the network state is offline 
+   * @return true if the network state is offline
    * @return false if the network state is online
    */
   static bool isOffline();
@@ -393,7 +394,7 @@ public slots:
 
   void slotShowConfigurationDialog();
   void slotRunBackgroundTasks();
-  
+
   void slotConfigChanged();
 
 protected slots:
@@ -403,6 +404,7 @@ protected slots:
 signals:
   void configChanged();
   void folderRemoved( KMFolder* aFolder );
+  void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
 
 private:
   void openReader( bool onlyCheck );

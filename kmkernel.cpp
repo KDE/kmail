@@ -11,6 +11,8 @@
 //#include <weaverlogger.h>
 
 #include "globalsettings.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "index.h"
 #include "kmmainwin.h"
@@ -952,7 +954,6 @@ void KMKernel::raise()
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
-  KMainWindow *win = 0;
   QObjectList l;
 
   // First look for a KMainWindow.
@@ -1072,6 +1073,8 @@ void KMKernel::stopNetworkJobs()
     return;
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
+  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
+  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 
 }
 
@@ -1081,6 +1084,8 @@ void KMKernel::resumeNetworkJobs()
     return;
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
+  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 
   if ( kmkernel->msgSender()->sendImmediate() ) {
     kmkernel->msgSender()->sendQueued();
