@@ -1154,12 +1154,26 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 void KMHeaders::setMsgStatus( const MessageStatus& status, bool toggle)
 {
   SerNumList serNums;
-  for (Q3ListViewItemIterator it(this); it.current(); ++it)
+  Q3ListViewItemIterator it(this, Q3ListViewItemIterator::Selected|Q3ListViewItemIterator::Visible);
+  while( it.current() ) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
+        // the item's parent is closed, don't traverse any more of this subtree
+        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
+        // travel towards the root until we find an ancestor with siblings
+        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
+          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
+        // move the iterator to that ancestor's next sibling
+        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
+        continue;
+      }
+
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       serNums.append( msgBase->getMsgSerNum() );
     }
+    ++it;
+  }
   if (serNums.empty())
     return;
 
