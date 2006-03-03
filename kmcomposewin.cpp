@@ -1444,7 +1444,7 @@ void KMComposeWin::setupActions(void)
                                      this, SLOT( slotTextColor() ),
                                      actionCollection(), "format_color");
 
-  editorFocusChanged(false);
+  //  editorFocusChanged(false);
   createGUI("kmcomposerui.rc");
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
@@ -1489,12 +1489,12 @@ void KMComposeWin::setupEditor(void)
 
   if (GlobalSettings::self()->wordWrap())
   {
-    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
+    mEditor->setWordWrap( QTextEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
   else
   {
-    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+    mEditor->setWordWrap( QTextEdit::NoWrap );
   }
 
   // Font setup
@@ -1605,7 +1605,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
   int maxLineLength = 0;
   int curPos;
   int oldPos = 0;
-  if (mEditor->QMultiLineEdit::wordWrap() == QMultiLineEdit::FixedColumnWidth) {
+  if (mEditor->QTextEdit::wordWrap() == QTextEdit::FixedColumnWidth) {
     for (curPos = 0; curPos < (int)body.length(); ++curPos)
         if (body[curPos] == '\n') {
           if ((curPos - oldPos) > maxLineLength)
@@ -3331,7 +3331,11 @@ void KMComposeWin::slotAddQuotes()
 {
     if( mEditor->hasFocus() && msg() )
     {
-        if ( mEditor->hasMarkedText()) {
+        // TODO: I think this is backwards.
+        // i.e, if no region is marked then add quotes to every line
+        // else add quotes only on the lines that are marked.
+
+        if ( mEditor->hasMarkedText() ) {
             QString s = mEditor->markedText();
             if(!s.isEmpty())
                 mEditor->insert(addQuotesToText(s));
@@ -3339,7 +3343,7 @@ void KMComposeWin::slotAddQuotes()
             int l =  mEditor->currentLine();
             int c =  mEditor->currentColumn();
             QString s =  mEditor->textLine(l);
-            s.prepend("> ");
+            s.prepend(quotePrefixName());
             mEditor->insertLine(s,l);
             mEditor->removeLine(l+1);
             mEditor->setCursorPosition(l,c+2);
@@ -3357,32 +3361,44 @@ QString KMComposeWin::addQuotesToText(const QString &inputText)
     return KMMessage::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
 }
 
+QString KMComposeWin::removeQuotesFromText(const QString &inputText)
+{
+    QString s = inputText;
+
+    // remove first leading quote
+    QString quotePrefix = '^' + quotePrefixName();
+    QRegExp rx(quotePrefix);
+    s.remove(rx);
+
+    // now remove all remaining leading quotes
+    quotePrefix = '\n' + quotePrefixName();
+    rx = quotePrefix;
+    s.replace(rx, "\n");
+
+    return s;
+}
+
 void KMComposeWin::slotRemoveQuotes()
 {
     if( mEditor->hasFocus() && msg() )
     {
-        QString quotePrefix = quotePrefixName();
-        if (mEditor->hasMarkedText()) {
+        // TODO: I think this is backwards.
+        // i.e, if no region is marked then remove quotes from every line
+        // else remove quotes only on the lines that are marked.
+
+        if ( mEditor->hasMarkedText() ) {
             QString s = mEditor->markedText();
-            QString quotePrefix = quotePrefixName();
-            if (s.left(2) == quotePrefix )
-                s.remove(0,2);
-            s.replace("\n"+quotePrefix,"\n");
-            mEditor->insert(s);
+            mEditor->insert(removeQuotesFromText(s));
         } else {
             int l = mEditor->currentLine();
             int c = mEditor->currentColumn();
             QString s = mEditor->textLine(l);
-            if (s.left(2) == quotePrefix) {
-                s.remove(0,2);
-                mEditor->insertLine(s,l);
-                mEditor->removeLine(l+1);
-                mEditor->setCursorPosition(l,c-2);
-            }
+            mEditor->insertLine(removeQuotesFromText(s),l);
+            mEditor->removeLine(l+1);
+            mEditor->setCursorPosition(l,c-2);
         }
     }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()
@@ -3391,7 +3407,7 @@ void KMComposeWin::slotUndo()
   if (!fw) return;
 
   if ( ::qt_cast<KEdit*>(fw) )
-      static_cast<QMultiLineEdit*>(fw)->undo();
+      static_cast<QTextEdit*>(fw)->undo();
   else if (::qt_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->undo();
 }
@@ -3606,12 +3622,12 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 {
   if (on)
   {
-    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
+    mEditor->setWordWrap( QTextEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
   else
   {
-    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+    mEditor->setWordWrap( QTextEdit::NoWrap );
   }
 }
 
@@ -3967,7 +3983,64 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCleanSpace()
 {
-  mEditor->cleanWhiteSpace();
+  // Originally we simply used the KEdit::cleanWhiteSpace() method,
+  // but that code doesn't handle quoted-lines or signatures, so instead
+  // we now simply use regexp's to squeeze sequences of tabs and spaces
+  // into a single space, and make sure all our lines are single-spaced.
+  //
+  // Yes, extra space in a quote string is squeezed.
+  // Signatures are respected (i.e. not cleaned).
+
+  QString s;
+  if ( mEditor->hasMarkedText() ) {
+    s = mEditor->markedText();
+    if( s.isEmpty() )
+      return;
+  } else {
+    s = mEditor->text();
+  }
+
+  // Remove the signature for now.
+  QString sig;
+  bool restore = false;
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForUoid( mId );
+  if ( !ident.isNull() ) {
+    sig = ident.signatureText();
+    if( !sig.isEmpty() ) {
+      if( s.endsWith( sig ) ) {
+        s.truncate( s.length() - sig.length() );
+        restore = true;
+      }
+    }
+  }
+
+  // Squeeze tabs and spaces
+  QRegExp squeeze( "[\t, ]+" );
+  s.replace( squeeze, QChar( ' ' ) );
+
+  // Remove trailing whitespace
+  QRegExp trailing( "\\s+$" );
+  s.replace( trailing, QChar( '\n' ) );
+
+  // Single space lines
+  QRegExp singleSpace( "[\n]{2,}" );
+  s.replace( singleSpace, QChar( '\n' ) );
+
+  // Restore the signature
+  if ( restore )
+    s.append( sig );
+
+  // Put the new text in place.
+  // The lines below do not clear the undo history, but unfortuately cause
+  // the side-effect that you need to press Ctrl-Z twice (first Ctrl-Z will
+  // show cleared text area) to get back the original, pre-cleaned text.
+  // If you use mEditor->setText( s ) then the undo history is cleared so
+  // that isn't a good solution either.
+  // TODO: is Qt4 better at handling the undo history??
+  if ( !mEditor->hasMarkedText() )
+    mEditor->clear();
+  mEditor->insert( s );
 }
 
 //-----------------------------------------------------------------------------
