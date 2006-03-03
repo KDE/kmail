@@ -750,7 +750,8 @@ private:
 
   bool mSubjectTextWasSpellChecked;
 
-  QString addQuotesToText(const QString &inputText);
+  QString addQuotesToText( const QString &inputText );
+  QString removeQuotesFromText( const QString &inputText );
   // helper method for rethinkFields
   int calcColumnWidth(int which, long allShowing, int width);
 
