@@ -1091,11 +1091,12 @@ void KMFolderCachedImap::deleteGhostMessages()
       msgsForDeletion.append( getMsg( i ) );
     }
   }
-  if( !msgsForDeletion.isEmpty() && !mReadOnly ) {
+  if( !msgsForDeletion.isEmpty() ) {
       // found a ghost message, after the index has been rebuilt. This means
       // we should probably delete it, but let's ask the user, to be sure
-      if ( !s_theDontCheckForGhostMessagesAgains.contains( folder()->idString() ) &&
-          KMessageBox::warningYesNo( 0, i18n("At least one of the messages in folder %1 "
+      if ( !s_theDontCheckForGhostMessagesAgains.contains( folder()->idString() )
+        && !mReadOnly
+        && KMessageBox::warningYesNo( 0, i18n("At least one of the messages in folder %1 "
               "appears to be invalid, since it does not have a subject, a sender "
               "or a receiver. Shall I remove it?" ).arg( folder()->prettyURL() ), 
             i18n("Removing ghost messages")  ) == KMessageBox::Yes ) {
