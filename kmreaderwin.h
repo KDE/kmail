@@ -251,7 +251,7 @@ public:
   /** Returns id of message part from given URL or -1 if invalid. */
   static int msgPartFromUrl(const KUrl &url);
 
-  void setUpdateAttachment() { mAtmUpdate = true; }
+  void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
 
   /** Access to the KHTMLPart used for the viewer. Use with
       care! */

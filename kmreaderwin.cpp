@@ -794,6 +794,10 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
   assert( msg != 0 );
 
   // find our partNode and update it
+  if ( !msg->lastUpdatedPart() ) {
+    kDebug(5006) << "KMReaderWin::update - no updated part" << endl;
+    return;
+  }
   partNode* node = mRootNode->findNodeForDwPart( msg->lastUpdatedPart() );
   if ( !node ) {
     kDebug(5006) << "KMReaderWin::update - can't find node for part" << endl;
@@ -812,6 +816,8 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
   }
   KPIM::kByteArrayToFile( data, mAtmCurrentName, false, false, false );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
+
+  mAtmUpdate = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -1904,7 +1910,6 @@ void KMReaderWin::slotCopySelectedText()
 void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
   assert(aMsgPart!=0);
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   KMMessage* msg = new KMMessage;
   msg->fromString(aMsgPart->bodyDecoded());
   assert(msg != 0);
