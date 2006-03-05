@@ -375,6 +375,8 @@ void RecipientsPicker::initCollections()
   mAllRecipients->setTitle( i18n("All") );
   insertCollection( mAllRecipients );
 
+  insertAddressBook( mAddressBook );
+
   insertDistributionLists();
 
   insertRecentAddresses();
