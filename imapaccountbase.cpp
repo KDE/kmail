@@ -280,16 +280,17 @@ namespace KMail {
       // "keep password" checkbox. Then, we set [Passwords]Keep to
       // storePasswd(), so that the checkbox in the dialog will be
       // init'ed correctly:
-      bool store = true;
       KConfigGroup passwords( KGlobal::config(), "Passwords" );
       passwords.writeEntry( "Keep", storePasswd() );
       QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
-      if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,
-					       QString(), name(),
-					       i18n("Account:") )
-          != QDialog::Accepted ) {
+
+      PasswordDialog dlg( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
+      dlg.setPlainCaption( i18n("Authorization Dialog") );
+      dlg.addCommentLine( i18n("Account:"), name() );
+      int ret = dlg.exec();
+      if (ret != QDialog::Accepted ) {
         mPasswordDialogIsActive = false;
         mAskAgain = false;
         emit connectionResult( KIO::ERR_USER_CANCELED, QString() );
@@ -298,8 +299,8 @@ namespace KMail {
       mPasswordDialogIsActive = false;
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
-      setPasswd( pass, store );
-      setLogin( log );
+      setPasswd( dlg.password(), dlg.keepPassword() );
+      setLogin( dlg.username() );
       mAskAgain = false;
     }
     // already waiting for a connection?
