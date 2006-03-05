@@ -27,7 +27,6 @@
 
 #include <klistview.h>
 #include <klocale.h>
-#include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
 #include <kiconloader.h>
 #include <kdialog.h>
@@ -334,6 +333,13 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   buttonLayout->addWidget( closeButton );
   connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
+  {
+    using namespace KABC;
+    mAddressBook = KABC::StdAddressBook::self( true );
+    connect( mAddressBook, SIGNAL( addressBookChanged( AddressBook * ) ),
+             this, SLOT( insertAddressBook( AddressBook * ) ) );
+  }
+
   initCollections();
 
   mCollectionCombo->setCurrentIndex( 0 );
@@ -365,8 +371,21 @@ RecipientsPicker::~RecipientsPicker()
 
 void RecipientsPicker::initCollections()
 {
-  KABC::StdAddressBook *addressbook = KABC::StdAddressBook::self( true );
+  mAllRecipients = new RecipientsCollection;
+  mAllRecipients->setTitle( i18n("All") );
+  insertCollection( mAllRecipients );
 
+  insertDistributionLists();
+
+  insertRecentAddresses();
+
+  mSelectedRecipients = new RecipientsCollection;
+  mSelectedRecipients->setTitle( i18n("Selected Recipients") );
+  insertCollection( mSelectedRecipients );
+}
+
+void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
+{
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 
   QList<KABC::Resource*> resources = addressbook->resources();
@@ -378,9 +397,6 @@ void RecipientsPicker::initCollections()
   }
 
   QMap<QString,RecipientsCollection *> categoryMap;
-
-  mAllRecipients = new RecipientsCollection;
-  mAllRecipients->setTitle( i18n("All") );
 
   KABC::AddressBook::Iterator it;
   for( it = addressbook->begin(); it != addressbook->end(); ++it ) {
@@ -415,8 +431,6 @@ void RecipientsPicker::initCollections()
     }
   }
 
-  insertCollection( mAllRecipients );
-
   QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator it2;
   for( it2 = collectionMap.begin(); it2 != collectionMap.end(); ++it2 ) {
     insertCollection( *it2 );
@@ -427,13 +441,7 @@ void RecipientsPicker::initCollections()
     insertCollection( *it3 );
   }
 
-  insertDistributionLists();
-
-  insertRecentAddresses();
-
-  mSelectedRecipients = new RecipientsCollection;
-  mSelectedRecipients->setTitle( i18n("Selected Recipients") );
-  insertCollection( mSelectedRecipients );
+  updateList();
 }
 
 void RecipientsPicker::insertDistributionLists()
