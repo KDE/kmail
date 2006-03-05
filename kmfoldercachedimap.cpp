@@ -149,7 +149,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSubfolderState( imapNoInformation ),
     mIncidencesFor( IncForAdmins ),
     mIsSelected( false ),
-    mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
+    mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mUserRights( 0 ), mSilentUpload( false ),
     mFolderRemoved( false ),
