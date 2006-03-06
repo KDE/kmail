@@ -613,13 +613,11 @@ void RecipientsPicker::pick( Recipient::Type type )
   kdDebug() << "RecipientsPicker::pick " << int( type ) << endl;
 
   int count = 0;
-  QListViewItem *viewItem;
-  for( viewItem = mRecipientList->firstChild(); viewItem;
-       viewItem = viewItem->nextSibling() ) {
-    if ( viewItem->isSelected() ) {
+  QListViewItemIterator it( mRecipientList , 
+            QListViewItemIterator::Visible | QListViewItemIterator::Selected );
+  for ( ; it.current(); ++it )
       ++count;
-    }
-  }
+
   if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
         i18n("You selected 1 recipient. The maximum supported number of "
@@ -630,16 +628,15 @@ void RecipientsPicker::pick( Recipient::Type type )
     return;
   }
 
- for( viewItem = mRecipientList->firstChild(); viewItem;
-       viewItem = viewItem->nextSibling() ) {
-    if ( viewItem->isSelected() ) {
-      RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
-      if ( item ) {
-        RecipientItem *i = item->recipientItem();
-        Recipient r = i->recipient();
-        r.setType( type );
-        emit pickedRecipient( r );
-      }
+  it = QListViewItemIterator( mRecipientList , 
+            QListViewItemIterator::Visible | QListViewItemIterator::Selected );
+  for ( ; it.current(); ++it ) {
+    RecipientViewItem *item = static_cast<RecipientViewItem *>( it.current() );
+    if ( item ) {
+      RecipientItem *i = item->recipientItem();
+      Recipient r = i->recipient();
+      r.setType( type );
+      emit pickedRecipient( r );
     }
   }
   close();
