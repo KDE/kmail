@@ -86,6 +86,7 @@ namespace KMail {
       mAutoExpunge( true ),
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
+      mOnlyLocallySubscribedFolders( false ),
       mLoadOnDemand( false ),
       mListOnlyOpenFolders( false ),
       mProgressEnabled( false ),
@@ -118,6 +119,7 @@ namespace KMail {
     mAutoExpunge = true;
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
+    mOnlyLocallySubscribedFolders = false;
     mLoadOnDemand = false;
     mListOnlyOpenFolders = false;
     mProgressEnabled = false;
@@ -133,8 +135,10 @@ namespace KMail {
     setAutoExpunge( i->autoExpunge() );
     setHiddenFolders( i->hiddenFolders() );
     setOnlySubscribedFolders( i->onlySubscribedFolders() );
+    setOnlyLocallySubscribedFolders( i->onlyLocallySubscribedFolders() );
     setLoadOnDemand( i->loadOnDemand() );
     setListOnlyOpenFolders( i->listOnlyOpenFolders() );
+    localBlacklistFromStringList( i->locallyBlacklistedFolders() );
   }
 
   unsigned short int ImapAccountBase::defaultPort() const {
@@ -177,6 +181,10 @@ namespace KMail {
     mOnlySubscribedFolders = show;
   }
 
+  void ImapAccountBase::setOnlyLocallySubscribedFolders( bool show ) {
+    mOnlyLocallySubscribedFolders = show;
+  }
+
   void ImapAccountBase::setLoadOnDemand( bool load ) {
     mLoadOnDemand = load;
   }
@@ -198,8 +206,10 @@ namespace KMail {
     setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
+    setOnlyLocallySubscribedFolders( config.readBoolEntry( "locally-subscribed-folders", false ) );
     setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
     setListOnlyOpenFolders( config.readBoolEntry( "listOnlyOpenFolders", false ) );
+    localBlacklistFromStringList( config.readListEntry( "locallyUnsubscribedFolders" ) );
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
@@ -209,8 +219,10 @@ namespace KMail {
     config.writeEntry( "auto-expunge", autoExpunge() );
     config.writeEntry( "hidden-folders", hiddenFolders() );
     config.writeEntry( "subscribed-folders", onlySubscribedFolders() );
+    config.writeEntry( "locally-subscribed-folders", onlyLocallySubscribedFolders() );
     config.writeEntry( "loadondemand", loadOnDemand() );
     config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
+    config.writeEntry( "locallyUnsubscribedFolders", locallyBlacklistedFolders() );
   }
 
   //
@@ -909,6 +921,40 @@ namespace KMail {
     if ( !rootFolder() || !rootFolder()->folder() || !rootFolder()->folder()->child() )
       return 0;
     return kmkernel->imapFolderMgr()->folderCount( rootFolder()->folder()->child() );
+  }
+
+
+  bool ImapAccountBase::locallySubscribedTo( const QString& imapPath )
+  {
+      return mLocalSubscriptionBlackList.find( imapPath ) == mLocalSubscriptionBlackList.end();
+  }
+
+  void ImapAccountBase::changeLocalSubscription( const QString& imapPath, bool subscribe )
+  {
+    if ( subscribe ) {
+      // find in blacklist and remove from it
+      mLocalSubscriptionBlackList.erase( imapPath );
+    } else {
+      // blacklist
+      mLocalSubscriptionBlackList.insert( imapPath );
+    }
+  }
+
+
+  QStringList ImapAccountBase::locallyBlacklistedFolders() const
+  {
+      QStringList list;
+      std::set<QString>::const_iterator it = mLocalSubscriptionBlackList.begin();
+      std::set<QString>::const_iterator end = mLocalSubscriptionBlackList.end();
+      for ( ; it != end ; ++it )
+        list.append( *it );
+      return list;
+  }
+
+  void ImapAccountBase::localBlacklistFromStringList( const QStringList &list )
+  {
+    for( QStringList::ConstIterator it = list.constBegin( ); it != list.constEnd( ); ++it )
+      mLocalSubscriptionBlackList.insert( *it );
   }
 
 } // namespace KMail

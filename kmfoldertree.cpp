@@ -988,6 +988,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     folderMenu->insertItem(SmallIcon("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
+    folderMenu->insertItem(SmallIcon("bookmark_folder"),
+        i18n("Local Subscription..."), mMainWidget,
+        SLOT(slotLocalSubscriptionDialog()));
 
     if (!fti->folder()->noContent())
     {

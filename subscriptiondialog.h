@@ -41,13 +41,19 @@ class FolderStorage;
 
 namespace KMail {
 
-  class SubscriptionDialog : public KSubscription
+  // Abstract base class for the server side and client side subscription dialogs.
+  // Scott Meyers says: "Make non-leaf classes abstract" and he is right, I think.
+  // (More Effective C++, Item 33)
+  class SubscriptionDialogBase : public KSubscription
   {
     Q_OBJECT
 
     public:
-      SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct,
-         QString startPath = QString::null );
+      SubscriptionDialogBase( QWidget *parent,
+                              const QString &caption,
+                              KAccount* acct,
+                              QString startPath = QString::null );
+      virtual ~SubscriptionDialogBase() {}
 
     protected:
       void findParentItem ( QString &name, QString &path, QString &compare,
@@ -71,12 +77,20 @@ namespace KMail {
        */
       void slotLoadFolders();
 
-      /**
-       * Create or update the listitems
-       */
-      void createItems();
 
-    private:
+    protected:
+      virtual void listAllAvailableAndCreateItems() = 0;
+      virtual void processFolderListing() = 0;
+      virtual void doSave() = 0;
+
+      // helpers
+      /** Move all child items of @param oldItem under @param item */
+      void moveChildrenToNewParent( GroupItem *oldItem, GroupItem *item  );
+
+      /** Create a listview item for the i-th entry in the list of available
+       * folders. */
+      void createListViewItem( int i );
+
       QString mDelimiter;
       QStringList mFolderNames, mFolderPaths,
                   mFolderMimeTypes, mFolderAttributes;
@@ -85,6 +99,32 @@ namespace KMail {
       bool mCheckForExisting;
       QDict<GroupItem> mItemDict;
       QString mStartPath;
+  };
+
+  class SubscriptionDialog : public SubscriptionDialogBase
+  {
+    Q_OBJECT
+    public:
+
+      SubscriptionDialog( QWidget *parent,
+                          const QString &caption,
+                          KAccount* acct,
+                          QString startPath = QString::null );
+      virtual ~SubscriptionDialog();
+     protected:
+      /** reimpl */
+      virtual void listAllAvailableAndCreateItems();
+      /** reimpl */
+      virtual void processFolderListing();
+      /** reimpl */
+      virtual void doSave();
+    private:
+      /**
+       * Create or update the listitems, depending on whether we are listing
+       * all available folders, or only subscribed ones.
+       */
+      void processItems();
+
   };
 
 } // namespace KMail

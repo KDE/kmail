@@ -2045,6 +2045,4 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
   return true;
 }
 
-
-
 #include "kmailicalifaceimpl.moc"

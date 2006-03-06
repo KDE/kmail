@@ -851,6 +851,11 @@ void AccountDialog::makeImapAccountPage( bool connected )
     i18n("Show only s&ubscribed folders"), page1);
   grid->addMultiCellWidget( mImap.subscribedFoldersCheck, row, row, 0, 1 );
 
+  ++row;
+  mImap.locallySubscribedFoldersCheck = new QCheckBox(
+    i18n("Show only &locally subscribed folders"), page1);
+  grid->addMultiCellWidget( mImap.locallySubscribedFoldersCheck, row, row, 0, 1 );
+
   if ( !connected ) {
     // not implemented for disconnected yet
     ++row;
@@ -1081,6 +1086,7 @@ void AccountDialog::setupSettings()
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
+    mImap.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
     mImap.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
     mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
@@ -1136,6 +1142,7 @@ void AccountDialog::setupSettings()
 #endif
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
+    mImap.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
@@ -1628,6 +1635,7 @@ void AccountDialog::saveSettings()
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
+    epa.setOnlyLocallySubscribedFolders( mImap.locallySubscribedFoldersCheck->isChecked() );
     epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
     epa.setListOnlyOpenFolders( mImap.listOnlyOpenCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
@@ -1681,6 +1689,7 @@ void AccountDialog::saveSettings()
     epa.setProgressDialogEnabled( mImap.progressDialogCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
+    epa.setOnlyLocallySubscribedFolders( mImap.locallySubscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     KMFolder *t = mImap.trashCombo->getFolder();

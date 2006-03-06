@@ -35,6 +35,8 @@
 
 #include <errno.h>
 
+#include <qvaluevector.h>
+
 #include "kmkernel.h"
 #include "kmfoldercachedimap.h"
 #include "undostack.h"
@@ -1587,6 +1589,7 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
     type = ImapAccountBase::ListSubscribed;
   ListJob* job = new ListJob( this, mAccount, type, secondStep,
       false, mAccount->hasInbox() );
+  job->setHonorLocalSubscription( true );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1665,11 +1668,11 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
 void KMFolderCachedImap::listDirectory2() {
   foldersForDeletionOnServer.clear();
   QString path = folder()->path();
-  KMFolderCachedImap *f = 0;
   kmkernel->dimapFolderMgr()->quiet(true);
 
   if (mCreateInbox)
   {
+    KMFolderCachedImap *f = 0;
     KMFolderNode *node;
     // create the INBOX
     for (node = folder()->child()->first(); node; node = folder()->child()->next())
@@ -1695,6 +1698,7 @@ void KMFolderCachedImap::listDirectory2() {
   }
 
   // Find all subfolders present on server but not on disk
+  QValueVector<int> foldersNewOnServer;
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
 
     if (mSubfolderNames[i].upper() == "INBOX" &&
@@ -1703,7 +1707,8 @@ void KMFolderCachedImap::listDirectory2() {
       continue;
 
     // Find the subdir, if already present
-    KMFolderNode *node;
+    KMFolderCachedImap *f = 0;
+    KMFolderNode *node = 0;
     for (node = folder()->child()->first(); node;
          node = folder()->child()->next())
       if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
@@ -1729,34 +1734,43 @@ void KMFolderCachedImap::listDirectory2() {
         foldersForDeletionOnServer += mAccount->deletedFolderPaths( subfolderPath ); // grab all subsubfolders too
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
-        KMFolder* newFolder = folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap);
-        if (newFolder)
-          f = static_cast<KMFolderCachedImap*>(newFolder->storage());
-        if (f) {
-          f->close();
-          f->setAccount(mAccount);
-          kmkernel->dimapFolderMgr()->contentsChanged();
-          f->mAnnotationFolderType = "FROMSERVER";
-          //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
-        } else {
-          kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
-        }
+        foldersNewOnServer.append( i );
       }
     } else { // Folder found locally
       if( static_cast<KMFolder*>(node)->folderType() == KMFolderTypeCachedImap )
-        f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-    }
-
-    if( f ) {
-      // kdDebug(5006) << "folder("<<f->name()<<")->imapPath()=" << f->imapPath()
-      //               << "\nSetting imapPath " << mSubfolderPaths[i] << endl;
-      // Write folder settings
-      f->setAccount(mAccount);
-      f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
-      f->setNoChildren(mSubfolderMimeTypes[i] == "message/digest");
-      f->setImapPath(mSubfolderPaths[i]);
+        f = dynamic_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+      if( f ) {
+        // kdDebug(5006) << "folder("<<f->name()<<")->imapPath()=" << f->imapPath()
+        //               << "\nSetting imapPath " << mSubfolderPaths[i] << endl;
+        // Write folder settings
+        f->setAccount(mAccount);
+        f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+        f->setNoChildren(mSubfolderMimeTypes[i] == "message/digest");
+        f->setImapPath(mSubfolderPaths[i]);
+      }
     }
   }
+
+  for ( uint i = 0; i < foldersNewOnServer.count(); ++i ) {
+    int idx = foldersNewOnServer[i];
+
+    KMFolder* newFolder = folder()->child()->createFolder( mSubfolderNames[idx], false, KMFolderTypeCachedImap);
+    if (newFolder) {
+      KMFolderCachedImap *f = dynamic_cast<KMFolderCachedImap*>(newFolder->storage());
+      kdDebug(5006) << " ####### Locally creating folder " << mSubfolderNames[idx] <<endl;
+      f->close();
+      f->setAccount(mAccount);
+      kmkernel->dimapFolderMgr()->contentsChanged();
+      f->mAnnotationFolderType = "FROMSERVER";
+      f->setNoContent(mSubfolderMimeTypes[idx] == "inode/directory");
+      f->setNoChildren(mSubfolderMimeTypes[idx] == "message/digest");
+      f->setImapPath(mSubfolderPaths[idx]);
+      //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
+    } else {
+      kdDebug(5006) << "can't create folder " << mSubfolderNames[idx] <<endl;
+    }
+  }
+
   kmkernel->dimapFolderMgr()->quiet(false);
   emit listComplete(this);
   serverSyncInternal();
