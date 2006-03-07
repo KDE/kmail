@@ -50,7 +50,7 @@ void MessageProperty::setFiltering( quint32 serNum, bool filter )
 {
   assert(!filtering(serNum) || !filter);
   if (filter && !filtering(serNum))
-    sFolders.replace(serNum, QPointer<KMFolder>(0) );
+    sFolders.insert(serNum, QPointer<KMFolder>(0) );
   else if (!filter)
     sFolders.remove(serNum);
 }
@@ -74,7 +74,7 @@ KMFolder* MessageProperty::filterFolder( quint32 serNum )
 
 void MessageProperty::setFilterFolder( quint32 serNum, KMFolder* folder )
 {
-  sFolders.replace(serNum, QPointer<KMFolder>(folder) );
+  sFolders.insert(serNum, QPointer<KMFolder>(folder) );
 }
 
 KMFolder* MessageProperty::filterFolder( const KMMsgBase *msgBase )
@@ -97,7 +97,7 @@ ActionScheduler* MessageProperty::filterHandler( quint32 serNum )
 void MessageProperty::setFilterHandler( quint32 serNum, ActionScheduler* handler )
 {
   if (handler)
-    sHandlers.replace( serNum, QPointer<ActionScheduler>(handler) );
+    sHandlers.insert( serNum, QPointer<ActionScheduler>(handler) );
   else
     sHandlers.remove( serNum );
 }
@@ -131,7 +131,7 @@ void MessageProperty::setTransferInProgress( quint32 serNum, bool transfer, bool
   if ( transferInProgress < 0 )
     transferInProgress = 0;
   if (transferInProgress)
-    sTransfers.replace( serNum, transferInProgress );
+    sTransfers.insert( serNum, transferInProgress );
   else
     sTransfers.remove( serNum );
 }
@@ -156,7 +156,7 @@ quint32 MessageProperty::serialCache( const KMMsgBase *msgBase )
 void MessageProperty::setSerialCache( const KMMsgBase *msgBase, quint32 serNum )
 {
   if (serNum)
-    sSerialCache.replace( msgBase, serNum );
+    sSerialCache.insert( msgBase, serNum );
   else
     sSerialCache.remove( msgBase );
 }

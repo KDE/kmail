@@ -939,7 +939,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, quint32 serNum)
     // if we are already checking this folder, refcount
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
-      mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
+      mFoldersCurrentlyBeingSearched.insert( folder, count+1 );
     } else {
       connect( folder->storage(),
               SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
@@ -971,7 +971,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
                                                     const KMSearchPattern*, bool ) ) );
         mFoldersCurrentlyBeingSearched.remove( folder );
       } else {
-        mFoldersCurrentlyBeingSearched.replace( folder, count-1 );
+        mFoldersCurrentlyBeingSearched.insert( folder, count-1 );
       }
     } else {
       Q_ASSERT( 0 ); // Can't happen (TM)
@@ -1102,7 +1102,7 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
     // if we are already checking this folder, refcount
     if ( mFoldersCurrentlyBeingSearched.contains( aFolder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[aFolder];
-      mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
+      mFoldersCurrentlyBeingSearched.insert( aFolder, count+1 );
     } else {
       connect( aFolder->storage(),
               SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
