@@ -1067,9 +1067,9 @@ void ASWizSpamRulesPage::processSelectionChange( KMFolder* )
 void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
 {
   mMoveUnsureRules->setEnabled( enabled );
-  mMoveUnsureRules->setShown( enabled );
+  mMoveUnsureRules->setVisible( enabled );
   mFolderReqForUnsureFolder->setEnabled( enabled );
-  mFolderReqForUnsureFolder->setShown( enabled );
+  mFolderReqForUnsureFolder->setVisible( enabled );
 }
 
 
