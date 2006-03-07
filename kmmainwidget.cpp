@@ -3343,7 +3343,7 @@ void KMMainWidget::initializeFilterActions()
         icon = "gear";
       filterAction = new KAction(as, icon, (*it)->shortcut(), filterCommand,
                                  SLOT(start()), actionCollection(),
-                                 normalizedName.local8Bit());
+                                 normalizedName.toLocal8Bit());
       if(!addedSeparator) {
         mApplyFilterActionsMenu->popupMenu()->insertSeparator();
         addedSeparator = !addedSeparator;
@@ -3425,7 +3425,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   QString normalizedName = actionname.replace(" ", "_");
   KAction* action =
     new KAction(actionlabel, folder->shortcut(), c, SLOT(start()),
-                actionCollection(), normalizedName.local8Bit());
+                actionCollection(), normalizedName.toLocal8Bit());
   action->setIcon( folder->unreadIconPath() );
   c->setAction( action ); // will be deleted along with the command
 }

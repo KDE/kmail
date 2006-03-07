@@ -732,7 +732,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
                 0, status,
                 xmarkStr.trimmed(),
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
-				file.local8Bit(),
+				file.toLocal8Bit(),
                 KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                 KMMsgMDNStateUnknown, f.size() );
 

@@ -2051,7 +2051,7 @@ Q3CString MessageComposer::plainTextFromMarkup( const QString& markupText )
     textbody = KMMsgBase::toUsAscii( text );
   } else if( codec == 0 ) {
     kDebug(5006) << "Something is wrong and I can not get a codec." << endl;
-    textbody = text.local8Bit();
+    textbody = text.toLocal8Bit();
   } else {
     textbody = codec->fromUnicode( text );
   }
@@ -2081,7 +2081,7 @@ Q3CString MessageComposer::breakLinesAndApplyCodec()
     newText = QString::fromLatin1( cText );
   } else if( codec == 0 ) {
     kDebug(5006) << "Something is wrong and I can not get a codec." << endl;
-    cText = text.local8Bit();
+    cText = text.toLocal8Bit();
     newText = QString::fromLocal8Bit( cText );
   } else {
     cText = codec->fromUnicode( text );

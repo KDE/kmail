@@ -378,7 +378,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       sysLine += " ";
       while (!sysLine.isEmpty())
       {
-        *mExtEditorProcess << sysLine.left(sysLine.find(" ")).local8Bit();
+        *mExtEditorProcess << sysLine.left(sysLine.find(" ")).toLocal8Bit();
         sysLine.remove(0, sysLine.find(" ") + 1);
       }
       connect(mExtEditorProcess, SIGNAL(processExited(KProcess*)),

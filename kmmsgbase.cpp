@@ -599,7 +599,7 @@ Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
   else if ( codec )
     latin = codec->fromUnicode( _str );
   else
-    latin = _str.local8Bit();
+    latin = _str.toLocal8Bit();
 
   char *l;
   for ( l = latin.data(); *l; ++l ) {
