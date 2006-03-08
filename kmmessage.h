@@ -157,8 +157,8 @@ public:
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          QString selection=QString(), bool noQuote=FALSE,
-                          bool allowDecryption=TRUE, bool selectionIsBody=FALSE);
+                          QString selection=QString(), bool noQuote=false,
+                          bool allowDecryption=true, bool selectionIsBody=false);
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -201,8 +201,8 @@ public:
           QList<KMime::MDN::DispositionModifier> m=QList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
-  void fromDwString(const DwString& str, bool setStatus=FALSE);
-  void fromString(const Q3CString& str, bool setStatus=FALSE);
+  void fromDwString(const DwString& str, bool setStatus=false);
+  void fromString(const Q3CString& str, bool setStatus=false);
   void fromByteArray( const QByteArray & ba, bool setStatus=false );
 
   /** Return the entire message contents in the DwString. This function
@@ -260,7 +260,7 @@ public:
 
   /** Initialize headers fields according to the identity and the transport
     header of the given original message */
-  void initFromMessage(const KMMessage *msg, bool idHeaders = TRUE);
+  void initFromMessage(const KMMessage *msg, bool idHeaders = true);
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
@@ -282,7 +282,7 @@ public:
     Call this method before sending *after* all changes to the message
     are done because this method does things different if there are
     attachments / multiple body parts. */
-  void setAutomaticFields(bool isMultipart=FALSE);
+  void setAutomaticFields(bool isMultipart=false);
 
   /** Get or set the 'Date' header field */
   QString dateStr() const;
@@ -656,7 +656,7 @@ public:
    * only the name part and not the given emailAddr.
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,
-          bool stripped=TRUE);
+          bool stripped=true);
 
   /** Strips an address from an address list. This is for example used
       when replying to all.
@@ -728,17 +728,17 @@ public:
 
   /** Get/set offset in mail folder. */
   off_t folderOffset() const { return mFolderOffset; }
-  void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+  void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(true); } }
 
   /** Get/set filename in mail folder. */
   QString fileName() const { return mFileName; }
-  void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
+  void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(true); } }
 
   /** Get/set size of message in the folder including the whole header in
       bytes. Can be 0, if the message is not in a folder.
       The setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
   size_t msgSize() const { return mMsgSize; }
-  void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
+  void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(true); } }
 
   /** Unlike the above function this works also, if the message is not in a
       folder */

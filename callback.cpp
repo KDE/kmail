@@ -148,7 +148,7 @@ QString Callback::receiver() const
     mReceiver =
       KInputDialog::getItem( i18n( "Select Address" ),
           selectMessage,
-          addrs, 0, FALSE, &ok, kmkernel->mainWin() );
+          addrs, 0, false, &ok, kmkernel->mainWin() );
     if( !ok )
       mReceiver.clear();
   }

@@ -151,8 +151,8 @@ public: // kmkernel, kmcommands, callback
    * Set the message the composer shall work with. This discards
    * previous messages without calling applyChanges() on them before.
    */
-   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE,
-	       bool allowDecryption=FALSE, bool isModified=FALSE);
+   void setMsg(KMMessage* newMsg, bool mayAutoSign=true,
+	       bool allowDecryption=false, bool isModified=false);
 
 private: // kmedit
   /**
@@ -201,7 +201,7 @@ public: // kmkernel, kmcommand, mailserviceimpl
   /**
    * Recode to the specified charset
    */
-   void setCharset(const QByteArray& aCharset, bool forceDefault = FALSE);
+   void setCharset(const QByteArray& aCharset, bool forceDefault = false);
 
 public: // kmcommand
   /**

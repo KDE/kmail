@@ -481,7 +481,7 @@ void KMFolderTree::writeConfig()
 void KMFolderTree::updateUnreadAll()
 {
   bool upd = isUpdatesEnabled();
-  setUpdatesEnabled(FALSE);
+  setUpdatesEnabled(false);
 
   KMFolderDir* fdir;
   KMFolderNode* folderNode;
@@ -729,7 +729,7 @@ void KMFolderTree::delayedUpdate()
 {
   bool upd = isUpdatesEnabled();
   if ( upd ) {
-    setUpdatesEnabled(FALSE);
+    setUpdatesEnabled(false);
 
     for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
       KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -780,7 +780,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
 void KMFolderTree::prepareItem( KMFolderTreeItem* fti )
 {
   for ( Q3ListViewItem * parent = fti->parent() ; parent ; parent = parent->parent() )
-    parent->setOpen( TRUE );
+    parent->setOpen( true );
   ensureItemVisible( fti );
 }
 
@@ -932,13 +932,13 @@ void KMFolderTree::doFolderSelected( Q3ListViewItem* qlvi )
      && (mLastItem->folder()->folderType() == KMFolderTypeImap))
   {
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder()->storage());
-    imapFolder->setSelected(FALSE);
+    imapFolder->setSelected(false);
   }
   mLastItem = fti;
 
   clearSelection();
   setCurrentItem( qlvi );
-  setSelected( qlvi, TRUE );
+  setSelected( qlvi, true );
   ensureItemVisible( qlvi );
   if (!folder) {
     emit folderSelected(0); // Root has been selected
@@ -966,7 +966,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   if (!lvi)
     return;
   setCurrentItem( lvi );
-  setSelected( lvi, TRUE );
+  setSelected( lvi, true );
 
   if (!mMainWidget) return; // safe bet
 
@@ -1183,7 +1183,7 @@ void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
   if (d->exec()) { // fti may be deleted here
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
-      qlvi->setOpen(TRUE);
+      qlvi->setOpen(true);
       blockSignals( true );
       setCurrentItem( qlvi );
       blockSignals( false );
@@ -1299,7 +1299,7 @@ void KMFolderTree::openFolder()
 {
     autoopen_timer.stop();
     if ( dropItem && !dropItem->isOpen() ) {
-        dropItem->setOpen( TRUE );
+        dropItem->setOpen( true );
         dropItem->repaint();
     }
 }
@@ -1379,7 +1379,7 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 
     setCurrentItem( oldCurrent );
     if ( oldSelected )
-      setSelected( oldSelected, TRUE );
+      setSelected( oldSelected, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1423,7 +1423,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     if ( oldSelected )
     {
       clearSelection();
-      setSelected( oldSelected, TRUE );
+      setSelected( oldSelected, true );
     }
 }
 

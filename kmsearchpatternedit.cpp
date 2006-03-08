@@ -288,11 +288,11 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
   mRuleList = aList;
 
   if ( mWidgetList.first() ) // move this below next 'if'?
-    mWidgetList.first()->blockSignals(TRUE);
+    mWidgetList.first()->blockSignals(true);
 
   if ( aList->count() == 0 ) {
     slotClear();
-    mWidgetList.first()->blockSignals(FALSE);
+    mWidgetList.first()->blockSignals(false);
     return;
   }
 
@@ -321,7 +321,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
     ((KMSearchRuleWidget*)(*wIt))->reset();
 
   assert( mWidgetList.first() );
-  mWidgetList.first()->blockSignals(FALSE);
+  mWidgetList.first()->blockSignals(false);
 }
 
 void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
@@ -401,9 +401,9 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this );
 
   mAllRBtn->setObjectName( "mAllRBtn" );
-  mAllRBtn->setChecked(TRUE);
+  mAllRBtn->setChecked(true);
   mAnyRBtn->setObjectName( "mAnyRBtn" );
-  mAnyRBtn->setChecked(FALSE);
+  mAnyRBtn->setChecked(false);
 
   layout->addWidget( mAllRBtn );
   layout->addWidget( mAnyRBtn );
@@ -440,14 +440,14 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
 
   mPattern = aPattern;
 
-  blockSignals(TRUE);
+  blockSignals(true);
   if ( mPattern->op() == KMSearchPattern::OpOr )
-    mAnyRBtn->setChecked(TRUE);
+    mAnyRBtn->setChecked(true);
   else
-    mAllRBtn->setChecked(TRUE);
-  blockSignals(FALSE);
+    mAllRBtn->setChecked(true);
+  blockSignals(false);
 
-  setEnabled( TRUE );
+  setEnabled( true );
 }
 
 void KMSearchPatternEdit::setHeadersOnly( bool headersOnly )
@@ -459,11 +459,11 @@ void KMSearchPatternEdit::reset()
 {
   mRuleLister->reset();
 
-  blockSignals(TRUE);
-  mAllRBtn->setChecked( TRUE );
-  blockSignals(FALSE);
+  blockSignals(true);
+  mAllRBtn->setChecked( true );
+  blockSignals(false);
 
-  setEnabled( FALSE );
+  setEnabled( false );
 }
 
 void KMSearchPatternEdit::slotRadioClicked(QAbstractButton *aRBtn)

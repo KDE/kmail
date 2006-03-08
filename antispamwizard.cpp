@@ -180,11 +180,11 @@ void AntiSpamWizard::accept()
         pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-        pipeFilter->setApplyOnOutbound( FALSE);
+        pipeFilter->setApplyOnOutbound( false);
         pipeFilter->setApplyOnInbound();
         pipeFilter->setApplyOnExplicit();
-        pipeFilter->setStopProcessingHere( FALSE );
-        pipeFilter->setConfigureShortcut( FALSE );
+        pipeFilter->setStopProcessingHere( false );
+        pipeFilter->setConfigureShortcut( false );
 
         filterList.append( pipeFilter );
       }
@@ -225,11 +225,11 @@ void AntiSpamWizard::accept()
           }
         }
       }
-      virusFilter->setApplyOnOutbound( FALSE);
+      virusFilter->setApplyOnOutbound( false);
       virusFilter->setApplyOnInbound();
       virusFilter->setApplyOnExplicit();
-      virusFilter->setStopProcessingHere( TRUE );
-      virusFilter->setConfigureShortcut( FALSE );
+      virusFilter->setStopProcessingHere( true );
+      virusFilter->setConfigureShortcut( false );
 
       filterList.append( virusFilter );
     }
@@ -259,11 +259,11 @@ void AntiSpamWizard::accept()
           pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsLessOrEqual, "256000" ) );
-        pipeFilter->setApplyOnOutbound( FALSE);
+        pipeFilter->setApplyOnOutbound( false);
         pipeFilter->setApplyOnInbound();
         pipeFilter->setApplyOnExplicit();
-        pipeFilter->setStopProcessingHere( FALSE );
-        pipeFilter->setConfigureShortcut( FALSE );
+        pipeFilter->setStopProcessingHere( false );
+        pipeFilter->setConfigureShortcut( false );
 
         filterList.append( pipeFilter );
       }
@@ -311,11 +311,11 @@ void AntiSpamWizard::accept()
           }
       }
     }
-    spamFilter->setApplyOnOutbound( FALSE);
+    spamFilter->setApplyOnOutbound( false);
     spamFilter->setApplyOnInbound();
     spamFilter->setApplyOnExplicit();
-    spamFilter->setStopProcessingHere( TRUE );
-    spamFilter->setConfigureShortcut( FALSE );
+    spamFilter->setStopProcessingHere( true );
+    spamFilter->setConfigureShortcut( false );
     filterList.append( spamFilter );
 
     if ( mSpamRulesPage->moveUnsureSelected() )
@@ -353,11 +353,11 @@ void AntiSpamWizard::accept()
             }
         }
       }
-      unsureFilter->setApplyOnOutbound( FALSE);
+      unsureFilter->setApplyOnOutbound( false);
       unsureFilter->setApplyOnInbound();
       unsureFilter->setApplyOnExplicit();
-      unsureFilter->setStopProcessingHere( TRUE );
-      unsureFilter->setConfigureShortcut( FALSE );
+      unsureFilter->setStopProcessingHere( true );
+      unsureFilter->setConfigureShortcut( false );
 
       if ( atLeastOneUnsurePattern )
         filterList.append( unsureFilter );
@@ -396,12 +396,12 @@ void AntiSpamWizard::accept()
       classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
     classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-    classSpamFilter->setApplyOnOutbound( FALSE);
-    classSpamFilter->setApplyOnInbound( FALSE );
-    classSpamFilter->setApplyOnExplicit( FALSE );
-    classSpamFilter->setStopProcessingHere( TRUE );
-    classSpamFilter->setConfigureShortcut( TRUE );
-    classSpamFilter->setConfigureToolbar( TRUE );
+    classSpamFilter->setApplyOnOutbound( false);
+    classSpamFilter->setApplyOnInbound( false );
+    classSpamFilter->setApplyOnExplicit( false );
+    classSpamFilter->setStopProcessingHere( true );
+    classSpamFilter->setConfigureShortcut( true );
+    classSpamFilter->setConfigureToolbar( true );
     filterList.append( classSpamFilter );
 
     // Classify messages manually as not Spam / as Ham
@@ -438,12 +438,12 @@ void AntiSpamWizard::accept()
       classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
     classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-    classHamFilter->setApplyOnOutbound( FALSE);
-    classHamFilter->setApplyOnInbound( FALSE );
-    classHamFilter->setApplyOnExplicit( FALSE );
-    classHamFilter->setStopProcessingHere( TRUE );
-    classHamFilter->setConfigureShortcut( TRUE );
-    classHamFilter->setConfigureToolbar( TRUE );
+    classHamFilter->setApplyOnOutbound( false);
+    classHamFilter->setApplyOnInbound( false );
+    classHamFilter->setApplyOnExplicit( false );
+    classHamFilter->setStopProcessingHere( true );
+    classHamFilter->setConfigureShortcut( true );
+    classHamFilter->setConfigureToolbar( true );
     filterList.append( classHamFilter );
   }
 

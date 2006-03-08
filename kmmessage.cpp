@@ -204,7 +204,7 @@ void KMMessage::setReferences(const Q3CString& aStr)
 {
   if (aStr.isNull()) return;
   mMsg->Headers().References().FromString(aStr);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -233,7 +233,7 @@ void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 //-----------------------------------------------------------------------------
 bool KMMessage::isMessage() const
 {
-  return TRUE;
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ const DwString& KMMessage::asDwString() const
 {
   if (mNeedsAssembly)
   {
-    mNeedsAssembly = FALSE;
+    mNeedsAssembly = false;
     mMsg->Assemble();
   }
   return mMsg->AsString();
@@ -299,7 +299,7 @@ const DwMessage *KMMessage::asDwMessage()
 {
   if (mNeedsAssembly)
   {
-    mNeedsAssembly = FALSE;
+    mNeedsAssembly = false;
     mMsg->Assemble();
   }
   return mMsg;
@@ -415,7 +415,7 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
   if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
     updateAttachmentState();
 
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
   mDate = date();
 }
 
@@ -1657,7 +1657,7 @@ void KMMessage::cleanupHeader()
   DwField* nextField;
 
   if (mNeedsAssembly) mMsg->Assemble();
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
 
   while (field)
   {
@@ -1665,7 +1665,7 @@ void KMMessage::cleanupHeader()
     if (field->FieldBody()->AsString().empty())
     {
       header.RemoveField(field);
-      mNeedsAssembly = TRUE;
+      mNeedsAssembly = true;
     }
     field = nextField;
   }
@@ -1688,7 +1688,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
     // Create a random printable string and set it as the boundary parameter
     contentType.CreateBoundary(0);
   }
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -1770,8 +1770,8 @@ void KMMessage::setDate(time_t aDate)
   mDate = aDate;
   mMsg->Headers().Date().FromCalendarTime(aDate);
   mMsg->Headers().Date().Assemble();
-  mNeedsAssembly = TRUE;
-  mDirty = TRUE;
+  mNeedsAssembly = true;
+  mDirty = true;
 }
 
 
@@ -1782,8 +1782,8 @@ void KMMessage::setDate(const Q3CString& aStr)
 
   header.Date().FromString(aStr);
   header.Date().Parse();
-  mNeedsAssembly = TRUE;
-  mDirty = TRUE;
+  mNeedsAssembly = true;
+  mDirty = true;
 
   if (header.HasDate())
     mDate = header.Date().AsUnixTime();
@@ -1908,7 +1908,7 @@ void KMMessage::setFrom(const QString& bStr)
   if (aStr.isNull())
     aStr = "";
   setHeaderField( "From", aStr, Address );
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -1939,7 +1939,7 @@ QString KMMessage::subject() const
 void KMMessage::setSubject(const QString& aStr)
 {
   setHeaderField("Subject",aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -1954,7 +1954,7 @@ QString KMMessage::xmark() const
 void KMMessage::setXMark(const QString& aStr)
 {
   setHeaderField("X-KMail-Mark", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -2057,7 +2057,7 @@ bool KMMessage::subjectIsPrefixed() const {
 void KMMessage::setReplyToId(const QString& aStr)
 {
   setHeaderField("In-Reply-To", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -2088,7 +2088,7 @@ QString KMMessage::msgIdMD5() const {
 void KMMessage::setMsgId(const QString& aStr)
 {
   setHeaderField("Message-Id", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2101,7 +2101,7 @@ size_t KMMessage::msgSizeServer() const {
 void KMMessage::setMsgSizeServer(size_t size)
 {
   setHeaderField("X-Length", Q3CString().setNum(size));
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2114,7 +2114,7 @@ ulong KMMessage::UID() const {
 void KMMessage::setUID(ulong uid)
 {
   setHeaderField("X-UID", Q3CString().setNum(uid));
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2202,7 +2202,7 @@ void KMMessage::removeHeaderField(const Q3CString& aName)
   if (!field) return;
 
   header.RemoveField(field);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2255,7 +2255,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
     header.AddFieldAt( 1, field );
   else
     header.AddOrReplaceField( field );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2282,7 +2282,7 @@ void KMMessage::setTypeStr(const Q3CString& aStr)
 {
   dwContentType().SetTypeStr(DwString(aStr));
   dwContentType().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2291,7 +2291,7 @@ void KMMessage::setType(int aType)
 {
   dwContentType().SetType(aType);
   dwContentType().Assemble();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2319,7 +2319,7 @@ void KMMessage::setSubtypeStr(const Q3CString& aStr)
 {
   dwContentType().SetSubtypeStr(DwString(aStr));
   dwContentType().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2328,7 +2328,7 @@ void KMMessage::setSubtype(int aSubtype)
 {
   dwContentType().SetSubtype(aSubtype);
   dwContentType().Assemble();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2361,9 +2361,9 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
 void KMMessage::setContentTypeParam(const Q3CString& attr, const Q3CString& val)
 {
   if (mNeedsAssembly) mMsg->Assemble();
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
   setDwMediaTypeParam( dwContentType(), attr, val );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2392,7 +2392,7 @@ void KMMessage::setContentTransferEncodingStr(const Q3CString& aStr)
 {
   mMsg->Headers().ContentTransferEncoding().FromString(aStr);
   mMsg->Headers().ContentTransferEncoding().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2400,7 +2400,7 @@ void KMMessage::setContentTransferEncodingStr(const Q3CString& aStr)
 void KMMessage::setContentTransferEncoding(int aCte)
 {
   mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2598,7 +2598,7 @@ void KMMessage::setBodyEncoded(const Q3CString& aStr)
   }
 
   mMsg->Body().FromString(dwResult);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2621,7 +2621,7 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
   }
 
   mMsg->Body().FromString(dwResult);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2629,7 +2629,7 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
 void KMMessage::setBody(const Q3CString& aStr)
 {
   mMsg->Body().FromString(aStr.data());
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 void KMMessage::setMultiPartBody( const Q3CString & aStr ) {
@@ -3098,7 +3098,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 void KMMessage::addDwBodyPart(DwBodyPart * aDwPart)
 {
   mMsg->Body().AddBodyPart( aDwPart );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 

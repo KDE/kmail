@@ -40,7 +40,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
   if ( dirType == KMStandardDir )
     mDir.setBaseURL( I18N_NOOP("Local Folders") );
   mQuiet = 0;
-  mChanged = FALSE;
+  mChanged = false;
   setBasePath(aBasePath);
   mRemoveOrig = 0;
 }
@@ -399,7 +399,7 @@ KMFolderRootDir& KMFolderMgr::dir(void)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::contentsChanged(void)
 {
-  if (mQuiet) mChanged = TRUE;
+  if (mQuiet) mChanged = true;
   else emit changed();
 }
 
@@ -495,7 +495,7 @@ void KMFolderMgr::quiet(bool beQuiet)
     {
       mQuiet = 0;
       if (mChanged) emit changed();
-      mChanged = FALSE;
+      mChanged = false;
     }
   }
 }

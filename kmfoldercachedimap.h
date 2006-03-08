@@ -169,8 +169,8 @@ public:
   }
 
   /* Reimplemented from KMFolderMaildir */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = false)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?

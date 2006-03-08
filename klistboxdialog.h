@@ -18,7 +18,7 @@ public:
                     const QString& labelText,
                     QWidget*    parent = 0,
                     const char* name   = 0,
-                    bool        modal  = TRUE );
+                    bool        modal  = true );
     ~KListBoxDialog();
     
     void setLabelAbove(  const QString& label  );

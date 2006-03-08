@@ -250,7 +250,7 @@ public:
                const QString &bcc, const QString &subj, const QString &body,
 	       const KUrl &messageFile, const KUrl::List &attach);
   void byteArrayToRemoteFile(const QByteArray&, const KUrl&,
-			     bool overwrite = FALSE);
+			     bool overwrite = false);
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
   bool folderIsTrash(KMFolder *);

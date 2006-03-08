@@ -85,7 +85,7 @@ public:
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=FALSE);
+  virtual void close(bool force=false);
 
   virtual int canAccess();
 

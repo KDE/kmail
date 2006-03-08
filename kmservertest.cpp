@@ -63,7 +63,7 @@ KMServerTest::KMServerTest( const QString & protocol, const QString & host, int 
 //-----------------------------------------------------------------------------
 KMServerTest::~KMServerTest()
 {
-  if (mJob) mJob->kill(TRUE);
+  if (mJob) mJob->kill(true);
 }
 
 

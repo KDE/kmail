@@ -64,7 +64,7 @@ public:
   /** Clear messages. If autoDelete is set (default) the messages are
       deleted. The array is not resized.  If @p syncDict, also updates
       the message dictionary. */
-  void clear(bool autoDelete=TRUE, bool syncDict = false);
+  void clear(bool autoDelete=true, bool syncDict = false);
 
   /** Resize array and initialize new elements if any. Returns
     FALSE if memory cannot be allocated. */

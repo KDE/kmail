@@ -24,7 +24,7 @@ public:
 	       KMFolderDirType = KMStandardDir );
   virtual ~KMFolderDir();
 
-  virtual bool isDir() const { return TRUE; }
+  virtual bool isDir() const { return true; }
 
   /** Read contents of directory. */
   virtual bool reload();
@@ -42,7 +42,7 @@ public:
    the folder is marked as a (KMail) system folder.
    Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& folderName,
-				 bool sysFldr=FALSE,
+				 bool sysFldr=false,
                                  KMFolderType folderType=KMFolderTypeMbox);
 
   /** Returns folder with given name or zero if it does not exist */

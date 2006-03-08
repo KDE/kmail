@@ -105,7 +105,7 @@ public:
       quick test. Eg., actions that have a mail address as parameter
       shouldn't try real address validation, but only check if the
       string representation is empty. */
-  virtual bool isEmpty() const { return FALSE; }
+  virtual bool isEmpty() const { return false; }
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */

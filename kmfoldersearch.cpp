@@ -366,7 +366,7 @@ KMFolderSearch::~KMFolderSearch()
     delete mSearch;
     mSearch = 0;
     if (mOpenCount > 0)
-        close(TRUE);
+        close(true);
 }
 
 void KMFolderSearch::setSearch(KMSearch *search)
@@ -558,7 +558,7 @@ void KMFolderSearch::close(bool force)
     }
     mFolders.clear();
 
-    clearIndex(TRUE);
+    clearIndex(true);
 
     if (mIdsStream)
         fclose(mIdsStream);
@@ -771,8 +771,8 @@ int KMFolderSearch::writeIndex( bool )
     if (fclose(tmpIndexStream) != 0) return errno;
 
     ::rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
-    mDirty = FALSE;
-    mUnlinked = FALSE;
+    mDirty = false;
+    mUnlinked = false;
 
     return 0;
 }

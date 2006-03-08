@@ -162,7 +162,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       jd.progressItem->setTotalItems( jd.total );
       connect ( jd.progressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
           account, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
-      KIO::SimpleJob *job = KIO::put( url, 0, FALSE, FALSE, FALSE );
+      KIO::SimpleJob *job = KIO::put( url, 0, false, false, false );
       KIO::Scheduler::assignJobToSlave( account->slave(), job );
       account->insertJob( job, jd );
       connect( job, SIGNAL(result(KIO::Job *)),
@@ -203,7 +203,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     jd.progressItem->setTotalItems( jd.total );
     connect ( jd.progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
               account, SLOT( slotAbortRequested(KPIM::ProgressItem* ) ) );
-    KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
+    KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, false );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
     account->insertJob( mJob, jd );
@@ -324,7 +324,7 @@ void ImapJob::slotGetNextMessage()
             account, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
   jd.progressItem->setTotalItems( jd.total );
 
-  KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );
+  KIO::SimpleJob *simpleJob = KIO::get( url, false, false );
   KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
   mJob = simpleJob;
   account->insertJob( mJob, jd );

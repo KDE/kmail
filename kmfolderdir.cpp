@@ -188,7 +188,7 @@ bool KMFolderDir::reload(void)
   {
     QString msg = i18n("<qt>Cannot enter folder <b>%1</b>.</qt>").arg(fldPath);
     KMessageBox::information(0, msg);
-    return FALSE;
+    return false;
   }
 
   QFileInfoList fiList = dir.entryInfoList();
@@ -196,7 +196,7 @@ bool KMFolderDir::reload(void)
   {
     QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>").arg(fldPath);
     KMessageBox::information(0, msg);
-    return FALSE;
+    return false;
   }
 
   Q_FOREACH( fileInfo, fiList )
@@ -293,7 +293,7 @@ bool KMFolderDir::reload(void)
         break;
       }
   }
-  return TRUE;
+  return true;
 }
 
 

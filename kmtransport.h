@@ -68,7 +68,7 @@ class KMTransportSelDlg : public KDialogBase
   Q_OBJECT
 
 public:
-  KMTransportSelDlg( QWidget *parent=0, const char *name=0, bool modal=TRUE );
+  KMTransportSelDlg( QWidget *parent=0, const char *name=0, bool modal=true );
   int selected() const;
 
 private slots:
@@ -84,7 +84,7 @@ class KMTransportDialog : public KDialogBase
 
 public:
   KMTransportDialog( const QString & caption, KMTransportInfo *transportInfo,
-		     QWidget *parent=0, const char *name=0, bool modal=TRUE );
+		     QWidget *parent=0, const char *name=0, bool modal=true );
   virtual ~KMTransportDialog();
 
 private slots:

@@ -1171,13 +1171,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     else if (updateReaderWinTimer.isActive())
       updateReaderWinTimer.start( delay );
     else
-      updateReaderWinTimer.start( 0, TRUE );
+      updateReaderWinTimer.start( 0, true );
   }
 
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
        && GlobalSettings::self()->delayedMarkAsRead() ) {
     if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, true );
     else
       slotTouchMessage();
   }

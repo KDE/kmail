@@ -127,8 +127,8 @@ public:
   KMAcctImap* account() const { return mAccount; }
 
   /** Remove (first occurrence of) given message from the folder. */
-  virtual void removeMsg(int i, bool quiet = FALSE);
-  virtual void removeMsg(const QList<KMMessage*>& msgList, bool quiet = FALSE);
+  virtual void removeMsg(int i, bool quiet = false);
+  virtual void removeMsg(const QList<KMMessage*>& msgList, bool quiet = false);
 
   virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
@@ -154,12 +154,12 @@ public:
   /**
    * Retrieve all mails in a folder
    */
-  void getFolder(bool force = FALSE);
+  void getFolder(bool force = false);
 
   /**
    * same as above but also checks for new mails
    */
-  void getAndCheckFolder(bool force = FALSE);
+  void getAndCheckFolder(bool force = false);
 
   /**
    * Get the whole message
@@ -284,7 +284,7 @@ public:
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). This also
     cancels all pending jobs. */
-  virtual void close(bool force=FALSE);
+  virtual void close(bool force=false);
 
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
@@ -369,7 +369,7 @@ public slots:
    * Convert IMAP flags to a message status
    * @param newMsg specifies whether unseen messages are new or unread
    */
-  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = true);
 
   /**
    * Connected to the result signal of the copy/move job

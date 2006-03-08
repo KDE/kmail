@@ -1089,7 +1089,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
   } else {
     // Error (error message already shown by the account)
     newState( mProgress, KIO::buildErrorString( errorCode, errorMsg ));
-    emit folderComplete(this, FALSE);
+    emit folderComplete(this, false);
   }
 }
 

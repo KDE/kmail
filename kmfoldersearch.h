@@ -173,7 +173,7 @@ public:
   virtual int open();
   virtual int canAccess();
   virtual void sync();
-  virtual void close(bool force=FALSE);
+  virtual void close(bool force=false);
   virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;

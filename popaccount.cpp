@@ -107,12 +107,12 @@ void PopAccount::init(void)
 {
   NetworkAccount::init();
 
-  mUsePipelining = FALSE;
-  mLeaveOnServer = FALSE;
+  mUsePipelining = false;
+  mLeaveOnServer = false;
   mLeaveOnServerDays = -1;
   mLeaveOnServerCount = -1;
   mLeaveOnServerSize = -1;
-  mFilterOnServer = FALSE;
+  mFilterOnServer = false;
   //tz todo
   mFilterOnServerCheckSize = 50000;
 }
@@ -145,14 +145,14 @@ void PopAccount::processNewMail(bool _interactive)
       bool b = storePasswd();
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
         i18n("You need to supply a username and a password to access this "
-        "mailbox."), FALSE, QString(), mName, i18n("Account:"))
+        "mailbox."), false, QString(), mName, i18n("Account:"))
         != QDialog::Accepted)
       {
         checkDone( false, CheckAborted );
         return;
       } else {
         setPasswd( passwd, b );
-        mAskAgain = FALSE;
+        mAskAgain = false;
       }
     }
 
@@ -185,7 +185,7 @@ void PopAccount::processNewMail(bool _interactive)
     mSizeOfNextSeenMsgsDict.clear();
 
     interactive = _interactive;
-    mUidlFinished = FALSE;
+    mUidlFinished = false;
     startJob();
   }
   else {
@@ -463,7 +463,7 @@ void PopAccount::slotJobFinished() {
   }
   else if (stage == Uidl) {
     kDebug(5006) << k_funcinfo << "stage == Uidl" << endl;
-    mUidlFinished = TRUE;
+    mUidlFinished = true;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
          mUidsOfNextSeenMsgsDict.isEmpty() && !idsOfMsgs.isEmpty() ) {
@@ -1001,7 +1001,7 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
 
   stage = Quit;
   if (error == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd)
-    mAskAgain = TRUE;
+    mAskAgain = true;
   /* We need a timer, otherwise slotSlaveError of the next account is also
      executed, if it reuses the slave, because the slave member variable
      is changed too early */

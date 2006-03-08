@@ -88,7 +88,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 			       const QString& aName):
   KDialogBase( KDialogBase::Tabbed,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
-               KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
+               KDialogBase::Ok, aParent, "KMFolderDialog", true ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),

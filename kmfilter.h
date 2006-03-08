@@ -138,7 +138,7 @@ public:
       outbound messages (@p aApply == TRUE) or not.
       See applyOnOutbound applyOnInbound setApplyOnInbound
   */
-  void setApplyOnOutbound( bool aApply=TRUE ) { bApplyOnOutbound = aApply; }
+  void setApplyOnOutbound( bool aApply=true ) { bApplyOnOutbound = aApply; }
 
   /** @return TRUE if this filter should be applied on
       outbound messages, FALSE otherwise.
@@ -150,7 +150,7 @@ public:
       inbound messages (@p aApply == TRUE) or not.
       @see setApplyOnOutbound applyOnInbound applyOnOutbound
   */
-  void setApplyOnInbound( bool aApply=TRUE ) { bApplyOnInbound = aApply; }
+  void setApplyOnInbound( bool aApply=true ) { bApplyOnInbound = aApply; }
 
   /** @return TRUE if this filter should be applied on
       inbound messages, FALSE otherwise.
@@ -162,7 +162,7 @@ public:
       explicit (CTRL-J) filtering (@p aApply == TRUE) or not.
       @see setApplyOnOutbound applyOnInbound applyOnOutbound
   */
-  void setApplyOnExplicit( bool aApply=TRUE ) { bApplyOnExplicit = aApply; }
+  void setApplyOnExplicit( bool aApply=true ) { bApplyOnExplicit = aApply; }
 
   /** @return TRUE if this filter should be applied on
       explicit (CTRL-J) filtering, FALSE otherwise.
@@ -193,7 +193,7 @@ public:
       set of accounts.
       @see setApplicability applyOnAccount
   */
-  void setApplyOnAccount( uint id, bool aApply=TRUE );
+  void setApplyOnAccount( uint id, bool aApply=true );
 
   /** @return TRUE if this filter should be applied on
       inbound messages from the account with id (@p id), FALSE otherwise.

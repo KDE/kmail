@@ -276,7 +276,7 @@ bool KMFolderIndex::readIndex()
     else if (mi->isNew())
     {
       mi->setStatus(KMMsgStatusUnread);
-      mi->setDirty(FALSE);
+      mi->setDirty(false);
     }
 #endif
     if ((mi->status().isNew()) || (mi->status().isUnread()) ||
@@ -289,7 +289,7 @@ bool KMFolderIndex::readIndex()
   }
   if( version < 1505)
   {
-    mConvertToUtf8 = FALSE;
+    mConvertToUtf8 = false;
     setDirty( true );
     writeIndex();
   }
@@ -322,14 +322,14 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
 	  kDebug(5006) << "Converting old index file " << indexLocation() << " to utf-8" << endl;
-	  mConvertToUtf8 = TRUE;
+	  mConvertToUtf8 = true;
       }
-      return TRUE;
+      return true;
   } else if (indexVersion == 1505) {
   } else if (indexVersion < INDEX_VERSION) {
       kDebug(5006) << "Index file " << indexLocation() << " is out of date. Re-creating it." << endl;
       createIndexFromContents();
-      return FALSE;
+      return false;
   } else if(indexVersion > INDEX_VERSION) {
       kapp->setOverrideCursor(KCursor::arrowCursor());
       int r = KMessageBox::questionYesNo(0,
@@ -341,7 +341,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       kapp->restoreOverrideCursor();
       if (r == KMessageBox::Yes)
 	  createIndexFromContents();
-      return FALSE;
+      return false;
   }
   else {
       // Header
@@ -385,7 +385,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
          kDebug(5006) << "Index File sizeOfLong is " << mIndexSizeOfLong << " while sizeof(long) is " << sizeof(long) << " !" << endl;
 
   }
-  return TRUE;
+  return true;
 }
 
 
@@ -408,7 +408,7 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
 	mIndexStreamPtr = 0;
 	mIndexStreamPtrLength = 0;
-	return TRUE;
+	return true;
     }
 
     assert(mIndexStream);
@@ -418,7 +418,7 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
 	mIndexStreamPtr = 0;
 	mIndexStreamPtrLength = 0;
-	return FALSE;
+	return false;
     }
     if(mIndexStreamPtr)
 	munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
@@ -428,10 +428,10 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
     if(mIndexStreamPtr == MAP_FAILED) {
 	mIndexStreamPtr = 0;
 	mIndexStreamPtrLength = 0;
-	return FALSE;
+	return false;
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 

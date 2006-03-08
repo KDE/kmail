@@ -2567,7 +2567,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     QString line;
 
     /* search next occurrence of '\n' */
-    pos = s.find('\n', beg, FALSE);
+    pos = s.find('\n', beg, false);
     if (pos == (unsigned int)(-1))
         pos = length;
 

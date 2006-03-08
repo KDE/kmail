@@ -208,7 +208,7 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   if (!lvi)
     return;
   setCurrentItem( lvi );
-  setSelected( lvi, TRUE );
+  setSelected( lvi, true );
 
   const KMFolder * folder = static_cast<FolderItem *>( lvi )->folder();
   if ( !folder || folder->noContent() || folder->noChildren() )

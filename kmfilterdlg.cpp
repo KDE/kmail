@@ -108,10 +108,10 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //=============================================================================
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
-  : KDialogBase( parent, name, FALSE /* modality */,
+  : KDialogBase( parent, name, false /* modality */,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
 		 Help|Ok|Apply|Cancel /* button mask */,
-		 Ok /* default btn */, FALSE /* separator */),
+		 Ok /* default btn */, false /* separator */),
   bPopFilter(popFilter)
 {
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
@@ -693,9 +693,9 @@ void KMFilterListBox::slotUpdateFilterName()
 
   if ( displayedName == shouldBeName ) return;
 
-  mListWidget->blockSignals(TRUE);
+  mListWidget->blockSignals(true);
   mListWidget->item( mIdxSelItem )->setText( shouldBeName );
-  mListWidget->blockSignals(FALSE);
+  mListWidget->blockSignals(false);
 }
 
 void KMFilterListBox::slotShowLaterToggled(bool aOn)
@@ -884,7 +884,7 @@ void KMFilterListBox::slotRename()
     return;
   }
 
-  bool okPressed = FALSE;
+  bool okPressed = false;
   KMFilter *filter = mFilterList.at( mIdxSelItem );
 
   // enableControls should make sure this method is
@@ -937,10 +937,10 @@ void KMFilterListBox::enableControls()
 void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
   assert(mListWidget);
-  setEnabled(FALSE);
+  setEnabled(false);
   // we don't want the insertion to
   // cause flicker in the edit widgets.
-  blockSignals(TRUE);
+  blockSignals(true);
 
   // clear both lists
   mFilterList.clear();
@@ -964,8 +964,8 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
     mListWidget->addItem( (*it)->pattern()->name() );
   }
 
-  blockSignals(FALSE);
-  setEnabled(TRUE);
+  blockSignals(false);
+  setEnabled(true);
 
   // create an empty filter when there's none, to avoid a completely
   // disabled dialog (usability tests indicated that the new-filter
@@ -1031,7 +1031,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   int i;
 
-  mComboBox = new QComboBox( FALSE, this );
+  mComboBox = new QComboBox( false, this );
   assert( mComboBox );
   mWidgetStack = new QStackedWidget(this);
   assert( mWidgetStack );
@@ -1083,7 +1083,7 @@ KMFilterActionWidget::~KMFilterActionWidget()
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 {
   int i=0;
-  bool found = FALSE;
+  bool found = false;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
   QString label = ( aAction ) ? aAction->label() : QString() ;
 
@@ -1098,7 +1098,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
       // the combo box
       mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
       mWidgetStack->setCurrentIndex(i);
-      found = TRUE;
+      found = true;
     } else // clear the parameter widget
       mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
   if ( found ) return;
@@ -1151,7 +1151,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   mActionList = aList;
 
-  ((QWidget*)parent())->setEnabled( TRUE );
+  ((QWidget*)parent())->setEnabled( true );
 
   if ( aList->count() == 0 ) {
     slotClear();
@@ -1185,7 +1185,7 @@ void KMFilterActionWidgetLister::reset()
 
   mActionList = 0;
   slotClear();
-  ((QWidget*)parent())->setEnabled( FALSE );
+  ((QWidget*)parent())->setEnabled( false );
 }
 
 QWidget* KMFilterActionWidgetLister::createWidget( QWidget *parent )
@@ -1282,11 +1282,11 @@ void KMPopFilterActionWidget::slotActionClicked( QAbstractButton *btn )
 
 void KMPopFilterActionWidget::reset()
 {
-  blockSignals(TRUE);
-  mActionMap[Down]->setChecked( TRUE );
-  blockSignals(FALSE);
+  blockSignals(true);
+  mActionMap[Down]->setChecked( true );
+  blockSignals(false);
 
-  setEnabled( FALSE );
+  setEnabled( false );
 }
 
 #include "kmfilterdlg.moc"

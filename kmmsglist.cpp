@@ -26,7 +26,7 @@ KMMsgList::KMMsgList(int initSize)
 //-----------------------------------------------------------------------------
 KMMsgList::~KMMsgList()
 {
-  clear(TRUE);
+  clear(true);
 }
 
 
@@ -71,22 +71,22 @@ bool KMMsgList::resize(unsigned int aSize)
   }
 
   // do the resizing
-  if (!Q3MemArray<KMMsgBase*>::resize(aSize)) return FALSE;
+  if (!Q3MemArray<KMMsgBase*>::resize(aSize)) return false;
 
   // initialize new elements
   for (i=oldSize; i<aSize; i++)
     at(i) = 0;
 
-  return TRUE;
+  return true;
 }
 
 
 //-----------------------------------------------------------------------------
 bool KMMsgList::reset(unsigned int aSize)
 {
-  if (!resize(aSize)) return FALSE;
+  if (!resize(aSize)) return false;
   clear();
-  return TRUE;
+  return true;
 }
 
 

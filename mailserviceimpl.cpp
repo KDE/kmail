@@ -73,7 +73,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
 
   for( KUrl::List::ConstIterator itr = attachments.begin();
        itr != attachments.end(); ++itr ) {
@@ -121,7 +121,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   msg->addBodyPart( part );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   return true;
 }
 

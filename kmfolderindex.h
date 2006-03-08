@@ -95,7 +95,7 @@ protected:
       failure. */
   virtual int createIndexFromContents() = 0;
 
-  bool updateIndexStreamPtr(bool just_close=FALSE);
+  bool updateIndexStreamPtr(bool just_close=false);
 
   /** Tests whether the contents of this folder is newer than the index.
       Should return IndexTooOld if the index is older than the contents.

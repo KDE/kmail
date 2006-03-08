@@ -32,7 +32,7 @@ public:
 
   /** Searches folder and returns it. Skips directories
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
-  virtual KMFolder* find(const QString& folderName, bool foldersOnly=TRUE);
+  virtual KMFolder* find(const QString& folderName, bool foldersOnly=true);
 
   /** Searches for a folder with the given id, recurses into directories */
   virtual KMFolder* findIdString(const QString& folderId,
@@ -42,7 +42,7 @@ public:
    * created. Directories are skipped.
    * If an id is passed this searches for it
    */
-  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE,
+  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=true,
       const uint id = 0);
 
   /** Searches folder by id and returns it. Skips directories
@@ -58,7 +58,7 @@ public:
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  virtual KMFolder* createFolder(const QString& fName, bool sysFldr=FALSE,
+  virtual KMFolder* createFolder(const QString& fName, bool sysFldr=false,
 				 KMFolderType aFolderType=KMFolderTypeMbox,
 				 KMFolderDir *aFolderDir = 0);
 
@@ -82,7 +82,7 @@ public:
  				 QList<QPointer<KMFolder> > *folders,
   				 KMFolderDir *adir,
   				 const QString& prefix,
-				 bool i18nized=FALSE );
+				 bool i18nized=false );
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */

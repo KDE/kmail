@@ -355,14 +355,14 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       if (k->key() == Qt::Key_Up)
       {
         emit focusUp();
-        return TRUE;
+        return true;
       }
 
       // ignore modifier keys (cf. bug 48841)
       if ( (k->key() == Qt::Key_Shift) || (k->key() == Qt::Key_Control) ||
            (k->key() == Qt::Key_Meta) || (k->key() == Qt::Key_Alt) )
         return true;
-      if (mExtEditorTempFile) return TRUE;
+      if (mExtEditorTempFile) return true;
       QString sysLine = mExtEditor;
       mExtEditorTempFile = new KTempFile();
 
@@ -395,7 +395,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
                  SLOT(slotExternalEditorTempFileChanged(const QString&)) );
         mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
       }
-      return TRUE;
+      return true;
     } else {
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
@@ -404,7 +404,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       deselect();
       emit focusUp();
-      return TRUE;
+      return true;
     }
     // ---sven's Arrow key navigation end ---
 
@@ -412,7 +412,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       deselect();
       emit focusUp();
-      return TRUE;
+      return true;
     }
 
     }

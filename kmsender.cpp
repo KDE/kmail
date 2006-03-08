@@ -54,8 +54,8 @@ KMSender::KMSender()
 {
   mPrecommand = 0;
   mSendProc = 0;
-  mSendProcStarted = FALSE;
-  mSendInProgress = FALSE;
+  mSendProcStarted = false;
+  mSendInProgress = false;
   mCurrentMsg = 0;
   mTransportInfo = new KMTransportInfo();
   readConfig();
@@ -72,7 +72,7 @@ KMSender::KMSender()
 //-----------------------------------------------------------------------------
 KMSender::~KMSender()
 {
-  writeConfig(FALSE);
+  writeConfig(false);
   delete mSendProc;
   delete mPrecommand;
   delete mTransportInfo;
@@ -132,7 +132,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   if(!aMsg)
       return false;
 
-  if (!settingsOk()) return FALSE;
+  if (!settingsOk()) return false;
 
   if (aMsg->to().isEmpty())
   {
@@ -198,11 +198,11 @@ void KMSender::outboxMsgAdded(int idx)
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if (!settingsOk()) return FALSE;
+  if (!settingsOk()) return false;
 
   if (mSendInProgress)
   {
-    return FALSE;
+    return false;
   }
 
   // open necessary folders
@@ -213,7 +213,7 @@ bool KMSender::doSendQueued( const QString &customTransport )
     // Nothing in the outbox. We are done.
     mOutboxFolder->close();
     mOutboxFolder = 0;
-    return TRUE;
+    return true;
   }
   mTotalBytes = 0;
   for( int i = 0 ; i<mTotalMessages ; ++i )
@@ -230,7 +230,7 @@ bool KMSender::doSendQueued( const QString &customTransport )
   // start sending the messages
   mCustomTransport = customTransport;
   doSendMsg();
-  return TRUE;
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ void KMSender::doSendMsg()
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
   if (mCurrentMsg  && kmkernel->filterMgr())
   {
-    mCurrentMsg->setTransferInProgress( FALSE );
+    mCurrentMsg->setTransferInProgress( false );
     if( mCurrentMsg->hasUnencryptedMsg() ) {
       kDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
       // delete all current body parts
@@ -447,7 +447,7 @@ void KMSender::doSendMsg()
     cleanup();
     return;
   }
-  mCurrentMsg->setTransferInProgress( TRUE );
+  mCurrentMsg->setTransferInProgress( true );
 
   // start the sender process or initialize communication
   if (!mSendInProgress)
@@ -461,7 +461,7 @@ void KMSender::doSendMsg()
     connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
              this, SLOT( slotAbortSend() ) );
     kapp->ref();
-    mSendInProgress = TRUE;
+    mSendInProgress = true;
   }
 
   QString msgTransport = mCustomTransport;
@@ -476,7 +476,7 @@ void KMSender::doSendMsg()
   if (!mSendProc || msgTransport != mMethodStr) {
     if (mSendProcStarted && mSendProc) {
       mSendProc->finish();
-      mSendProcStarted = FALSE;
+      mSendProcStarted = false;
     }
 
     mSendProc = createSendProcFromString(msgTransport);
@@ -577,7 +577,7 @@ static void extractSenderToCCAndBcc( KMMessage * aMsg, QString * sender, QString
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsgAux()
 {
-  mSendProcStarted = TRUE;
+  mSendProcStarted = true;
 
   // start sending the current message
 
@@ -614,12 +614,12 @@ void KMSender::cleanup(void)
   kDebug(5006) << k_funcinfo << endl;
   if (mSendProc && mSendProcStarted) mSendProc->finish();
   mSendProc = 0;
-  mSendProcStarted = FALSE;
+  mSendProcStarted = false;
   if (mSendInProgress) kapp->deref();
-  mSendInProgress = FALSE;
+  mSendInProgress = false;
   if (mCurrentMsg)
   {
-    mCurrentMsg->setTransferInProgress( FALSE );
+    mCurrentMsg->setTransferInProgress( false );
     mCurrentMsg = 0;
   }
   if ( mSentFolder ) {
@@ -778,7 +778,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
     if (transport.startsWith("smtp://")) // should probably use KUrl and SMTP_PROTOCOL
     {
       mTransportInfo->type = "smtp";
-      mTransportInfo->auth = FALSE;
+      mTransportInfo->auth = false;
       mTransportInfo->encryption = "NONE";
       QString serverport = transport.mid(7);
       int colon = serverport.find(':');
@@ -793,7 +793,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
     if (transport.startsWith("smtps://"))  // should probably use KUrl and SMTPS_PROTOCOL
     {
       mTransportInfo->type = "smtps";
-      mTransportInfo->auth = FALSE;
+      mTransportInfo->auth = false;
       mTransportInfo->encryption = "ssl";
       QString serverport = transport.mid(7);
       int colon = serverport.find(':');
@@ -871,16 +871,16 @@ KMSendProc::KMSendProc( KMSender * sender )
 //-----------------------------------------------------------------------------
 void KMSendProc::reset()
 {
-  mSending = FALSE;
-  mSendOk = FALSE;
+  mSending = false;
+  mSendOk = false;
   mLastErrorMessage.clear();
 }
 
 //-----------------------------------------------------------------------------
 void KMSendProc::failed(const QString &aMsg)
 {
-  mSending = FALSE;
-  mSendOk = FALSE;
+  mSending = false;
+  mSendOk = false;
   mLastErrorMessage = aMsg;
 }
 
@@ -1065,19 +1065,19 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
     if( (ti->user.isEmpty() || ti->passwd().isEmpty()) &&
       ti->authType != "GSSAPI" )
     {
-      bool b = FALSE;
+      bool b = false;
       int result;
 
       KCursorSaver idle(KBusyPtr::idle());
       QString passwd = ti->passwd();
       result = KIO::PasswordDialog::getNameAndPassword(ti->user, passwd,
 	&b, i18n("You need to supply a username and a password to use this "
-	     "SMTP server."), FALSE, QString(), ti->name, QString());
+	     "SMTP server."), false, QString(), ti->name, QString());
 
       if ( result != QDialog::Accepted )
       {
         abort();
-        return FALSE;
+        return false;
       }
       if (int id = KMTransportInfo::findTransport(ti->name)) {
         ti->setPasswd( passwd );
@@ -1133,7 +1133,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
 void KMSendSMTP::cleanup() {
   if(mJob)
   {
-    mJob->kill(TRUE);
+    mJob->kill(true);
     mJob = 0;
     mSlave = 0;
   }

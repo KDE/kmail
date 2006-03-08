@@ -163,7 +163,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     QRect r = mListview->itemRect( this );
     if ( !r.size().isValid() ) {
         mListview->ensureItemVisible( this );
-        mListview->repaintContents( FALSE );
+        mListview->repaintContents( false );
         r = mListview->itemRect( this );
     }
     int colWidth = mListview->header()->sectionSize( column );
@@ -193,7 +193,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     QRect r = mListview->itemRect( this );
     if ( !r.size().isValid() ) {
         mListview->ensureItemVisible( this );
-        mListview->repaintContents( FALSE );
+        mListview->repaintContents( false );
         r = mListview->itemRect( this );
     }
     int colWidth = mListview->header()->sectionSize( column );

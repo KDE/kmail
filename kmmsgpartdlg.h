@@ -142,7 +142,7 @@ protected:
 class KMMsgPartDialogCompat : public KMMsgPartDialog {
   Q_OBJECT
 public:
-  KMMsgPartDialogCompat( const char * caption=0, bool=FALSE );
+  KMMsgPartDialogCompat( const char * caption=0, bool=false );
   virtual ~KMMsgPartDialogCompat();
 
   /** Display information about this message part. */

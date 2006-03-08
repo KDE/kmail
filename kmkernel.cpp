@@ -396,7 +396,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
   if (hidden == 0) {
@@ -552,7 +552,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!body.isEmpty()) msg->setBody(body.toUtf8());
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   if (!hidden) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
@@ -623,7 +623,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
@@ -682,7 +682,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+        QStringList subFList = QStringList::split("/",_foldername,false);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -700,7 +700,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
-             folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+             folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }
 
             if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
@@ -861,7 +861,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+        QStringList subFList = QStringList::split("/",_foldername,false);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -879,7 +879,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
-              folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+              folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }
             if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
           }
@@ -1247,7 +1247,7 @@ void KMKernel::initFolders(KConfig* cfg)
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
 
-  the_inboxFolder->setSystemFolder(TRUE);
+  the_inboxFolder->setSystemFolder(true);
   if ( the_inboxFolder->userWhoField().isEmpty() )
     the_inboxFolder->setUserWhoField( QString() );
   // inboxFolder->open();
@@ -1258,7 +1258,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_outboxFolder->setNoChildren(true);
 
-  the_outboxFolder->setSystemFolder(TRUE);
+  the_outboxFolder->setSystemFolder(true);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString() );
   /* Nuke the oubox's index file, to make sure that no ghost messages are in
@@ -1275,7 +1275,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_sentFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
-  the_sentFolder->setSystemFolder(TRUE);
+  the_sentFolder->setSystemFolder(true);
   if ( the_sentFolder->userWhoField().isEmpty() )
     the_sentFolder->setUserWhoField( QString() );
   // the_sentFolder->open();
@@ -1284,7 +1284,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
-  the_trashFolder->setSystemFolder(TRUE);
+  the_trashFolder->setSystemFolder(true);
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString() );
   // the_trashFolder->open();
@@ -1293,7 +1293,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
-  the_draftsFolder->setSystemFolder(TRUE);
+  the_draftsFolder->setSystemFolder(true);
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString() );
   the_draftsFolder->open();
@@ -1539,7 +1539,7 @@ void KMKernel::cleanup(void)
 
   if (the_trashFolder) {
 
-    the_trashFolder->close(TRUE);
+    the_trashFolder->close(true);
 
     if (group.readEntry("empty-trash-on-exit", true ) )
     {
@@ -1560,7 +1560,7 @@ void KMKernel::cleanup(void)
   {
     folder = *it;
     if (!folder || folder->isDir()) continue;
-    folder->close(TRUE);
+    folder->close(true);
   }
   strList.clear();
   folders.clear();
@@ -1569,7 +1569,7 @@ void KMKernel::cleanup(void)
   {
     folder = *it;
     if (!folder || folder->isDir()) continue;
-    folder->close(TRUE);
+    folder->close(true);
   }
 
   delete the_msgIndex;
@@ -1721,7 +1721,7 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL,
   bool overwrite)
 {
   // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether
-  KIO::Job *job = KIO::put(aURL, -1, overwrite, FALSE);
+  KIO::Job *job = KIO::put(aURL, -1, overwrite, false);
   putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
   mPutJobs.insert(job, pd);
   connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
@@ -1767,7 +1767,7 @@ void KMKernel::slotResult(KIO::Job *job)
         i18n("File %1 exists.\nDo you want to replace it?")
         .arg((*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue)
-        byteArrayToRemoteFile((*it).data, (*it).url, TRUE);
+        byteArrayToRemoteFile((*it).data, (*it).url, true);
     }
     else job->showErrorDialog();
   }

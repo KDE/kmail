@@ -162,7 +162,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       fld->quiet(false);
       fld->setContentState(KMFolderImap::imapNoInformation);
       fld->setSubfolderState(KMFolderImap::imapNoInformation);
-      fld->sendFolderComplete(FALSE);
+      fld->sendFolderComplete(false);
       fld->removeJobs();
     }
     if ( (*it).progressItem )
@@ -256,7 +256,7 @@ void KMAcctImap::cancelMailCheck()
   // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
   for( QList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderImap *fld = *it;
-    fld->sendFolderComplete(FALSE);
+    fld->sendFolderComplete(false);
   }
 }
 

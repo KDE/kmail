@@ -47,8 +47,8 @@ public:
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
 
   /** Remove (first occurrence of) given message from the folder. */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(QList<KMMessage*> msgList, bool imapQuiet = false)
   { return KMFolderIndex::removeMsg(msgList, imapQuiet); }
 
   // Called by KMMsgBase::setStatus when status of a message has changed
@@ -71,7 +71,7 @@ public:
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=FALSE);
+  virtual void close(bool force=false);
 
   /** Create the necessary folders for a maildir folder. Usually you will
       want to use create() instead.
