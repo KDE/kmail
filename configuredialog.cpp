@@ -4520,13 +4520,25 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
-  grid->addMultiCellWidget( mHideGroupwareFolders, 3, 3, 0, 1 );
+  grid->addMultiCellWidget( mHideGroupwareFolders, 3, 3, 0, 0 );
   QToolTip::add( mHideGroupwareFolders,
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
   QWhatsThis::add( mHideGroupwareFolders, i18n( GlobalSettings::self()
            ->hideGroupwareFoldersItem()->whatsThis().utf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  mOnlyShowGroupwareFolders = new QCheckBox( i18n( "&Only show groupware folders for this account" ),
+                                         mBox, "OnlyGroupwareFoldersBox" );
+  grid->addMultiCellWidget( mOnlyShowGroupwareFolders, 3, 3, 1, 1 );
+  QToolTip::add( mOnlyShowGroupwareFolders,
+                 i18n( "When this is checked, you will not see normal  "
+                       "mail folders in the folder tree for the account "
+                       "configured for groupware." ) );
+  QWhatsThis::add( mOnlyShowGroupwareFolders, i18n( GlobalSettings::self()
+           ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().utf8() ) );
+  connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
@@ -4608,6 +4620,7 @@ void MiscPage::GroupwareTab::load() {
   mBox->setEnabled( mEnableImapResCB->isChecked() );
 
   mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
+  mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
 
   KMAccount* selectedAccount = 0;
   int accountId = GlobalSettings::self()->theIMAPResourceAccount();
@@ -4627,6 +4640,7 @@ void MiscPage::GroupwareTab::save() {
 
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
 
   // Inbox folder of the selected account
   KMAccount* acct = mAccountCombo->currentAccount();

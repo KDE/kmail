@@ -144,6 +144,14 @@
           "need to see them, you can set that here.&lt;/p&gt;</whatsthis>
       </entry>
 
+      <entry name="ShowOnlyGroupwareFoldersForGroupwareAccount" type="Bool">
+        <default>false</default>
+        <whatsthis>&lt;p&gt;If the account used for storing groupware information "
+          "is not used to manage normal mail, set this option to make KMail only "
+          "show groupware folders in it. This is useful if you are handling regular "
+          "mail via an additional online IMAP account.&lt;/p&gt;</whatsthis>
+      </entry>
+
       <entry name="TheIMAPResourceStorageFormat" type="Enum">
         <choices>
           <choice name="IcalVcard"/>

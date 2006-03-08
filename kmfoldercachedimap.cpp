@@ -1751,21 +1751,51 @@ void KMFolderCachedImap::listDirectory2() {
     }
   }
 
+  /* In case we are ignoring non-groupware folders, and this is the groupware
+   * main account, find out the contents types of folders that have newly 
+   * appeared on the server. Otherwise just create them and finish listing.
+   * If a folder is already known to be locally unsubscribed, it won't be
+   * listed at all, on this level, so these are only folders that we are
+   * seeing for the first time. */
+  if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() 
+     && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
+     && mAccount->hasAnnotationSupport()
+     && kmkernel->iCalIface().isEnabled()
+     && !foldersNewOnServer.isEmpty() ) {
+
+    QStringList paths;
+    for ( uint i = 0; i < foldersNewOnServer.count(); ++i )
+      paths << mSubfolderPaths[ foldersNewOnServer[i] ];
+
+    AnnotationJobs::MultiUrlGetAnnotationJob* job =
+      AnnotationJobs::multiUrlGetAnnotation( mAccount->slave(), mAccount->getUrl(), paths, KOLAB_FOLDERTYPE );
+    ImapAccountBase::jobData jd( QString::null, folder() );
+    jd.cancellable = true;
+    mAccount->insertJob(job, jd);
+    connect( job, SIGNAL(result(KIO::Job *)),
+        SLOT(slotMultiUrlGetAnnotationResult(KIO::Job *)) );
+
+  } else {
+    createFoldersNewOnServerAndFinishListing( foldersNewOnServer );
+  }
+}
+
+void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing( const QValueVector<int> foldersNewOnServer )
+{
   for ( uint i = 0; i < foldersNewOnServer.count(); ++i ) {
     int idx = foldersNewOnServer[i];
-
     KMFolder* newFolder = folder()->child()->createFolder( mSubfolderNames[idx], false, KMFolderTypeCachedImap);
     if (newFolder) {
       KMFolderCachedImap *f = dynamic_cast<KMFolderCachedImap*>(newFolder->storage());
       kdDebug(5006) << " ####### Locally creating folder " << mSubfolderNames[idx] <<endl;
       f->close();
       f->setAccount(mAccount);
-      kmkernel->dimapFolderMgr()->contentsChanged();
       f->mAnnotationFolderType = "FROMSERVER";
       f->setNoContent(mSubfolderMimeTypes[idx] == "inode/directory");
       f->setNoChildren(mSubfolderMimeTypes[idx] == "message/digest");
       f->setImapPath(mSubfolderPaths[idx]);
       //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
+      kmkernel->dimapFolderMgr()->contentsChanged();
     } else {
       kdDebug(5006) << "can't create folder " << mSubfolderNames[idx] <<endl;
     }
@@ -2114,6 +2144,50 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
   mProgress += 2;
   serverSyncInternal();
 }
+
+void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  Q_ASSERT( it != mAccount->jobsEnd() );
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  Q_ASSERT( (*it).parent == folder() );
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  QValueVector<int> folders;
+  AnnotationJobs::MultiUrlGetAnnotationJob* annjob
+    = static_cast<AnnotationJobs::MultiUrlGetAnnotationJob *>( job );
+  if ( annjob->error() ) {
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
+      // that's when the imap server doesn't support annotations
+      if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
+           && (uint)GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id() )
+        KMessageBox::error( 0, i18n( "The IMAP server %1 doesn't have support for imap annotations. The XML storage cannot be used on this server, please re-configure KMail differently" ).arg( mAccount->host() ) );
+      mAccount->setHasNoAnnotationSupport();
+    }
+    else
+      kdWarning(5006) << "slotGetMultiUrlAnnotationResult: " << job->errorString() << endl;
+  } else {
+    // we got the annotation allright, let's filter out the ones with the wrong type
+    QMap<QString, QString> annotations = annjob->annotations();
+    QMap<QString, QString>::Iterator it = annotations.begin();
+    for ( ; it != annotations.end(); ++it ) {
+      const QString folderPath = it.key();
+      const QString annotation = it.data();
+      kdDebug(5006) << k_funcinfo << "Folder: " << folderPath << " has type: " << annotation << endl;
+      if ( annotation.simplifyWhiteSpace() != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) {
+        folders.append( mSubfolderPaths.findIndex( folderPath ) );
+        kdDebug(5006) << k_funcinfo << " subscribing to: " << folderPath << endl;
+      } else {
+        kdDebug(5006) << k_funcinfo << " automatically unsubscribing from: " << folderPath << endl;
+        mAccount->changeLocalSubscription( folderPath, false );
+      }
+    }
+  }
+
+  if (mAccount->slave()) mAccount->removeJob(job);
+  createFoldersNewOnServerAndFinishListing( folders );
+}
+
 
 void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
 {

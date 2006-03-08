@@ -890,6 +890,7 @@ private:
   KMail::AccountComboBox* mAccountCombo;
 
   QCheckBox* mHideGroupwareFolders;
+  QCheckBox* mOnlyShowGroupwareFolders;
   QCheckBox* mAutoResCB;
   QCheckBox* mAutoDeclConflCB;
   QCheckBox* mAutoDeclRecurCB;
