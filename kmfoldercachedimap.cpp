@@ -1757,10 +1757,14 @@ void KMFolderCachedImap::listDirectory2() {
    * If a folder is already known to be locally unsubscribed, it won't be
    * listed at all, on this level, so these are only folders that we are
    * seeing for the first time. */
+     
+  /*  Note: We ask the globalsettings, and not the current state of the
+   *  kmkernel->iCalIface().isEnabled(), since that is false during the 
+   *  very first sync, where we already want to filter. */
   if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() 
      && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
      && mAccount->hasAnnotationSupport()
-     && kmkernel->iCalIface().isEnabled()
+     && GlobalSettings::self()->theIMAPResourceEnabled()
      && !mFoldersNewOnServer.isEmpty() ) {
 
     QStringList paths;
