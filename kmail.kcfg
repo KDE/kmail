@@ -138,7 +138,7 @@
       </entry>
 
       <entry name="HideGroupwareFolders" type="Bool">
-        <default>true</default>
+        <default>false</default>
         <whatsthis>&lt;p&gt;Usually you will not have any reason to see the "
           "folders that hold the IMAP resources. But if you "
           "need to see them, you can set that here.&lt;/p&gt;</whatsthis>
