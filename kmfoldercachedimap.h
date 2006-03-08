@@ -403,6 +403,7 @@ private:
 
   QValueList<KMFolderCachedImap*> mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
+  QValueVector<int> mFoldersNewOnServer;
 
   /** Mapping uid -> index
       Keep updated in addMsg, take and removeMsg. This is used to lookup

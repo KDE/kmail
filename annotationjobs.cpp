@@ -224,13 +224,16 @@ void AnnotationJobs::MultiUrlGetAnnotationJob::slotResult( KIO::Job *job )
   const QString& path = *mPathListIterator;
   GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
   const AnnotationList& lst = getJob->annotations();
+  QString value;
   for ( unsigned int i = 0 ; i < lst.size() ; ++ i ) {
     kdDebug(5006) << "MultiURL: found annotation " << lst[i].name << " = " << lst[i].value << " for path: " << path << endl;
     if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
-      mAnnotations.insert( path, lst[i].value );
+      value = lst[i].value;
       break;
     }
   }
+  // insert an empty string in case we didn't find anything
+  mAnnotations.insert( path, value );
   // Move on to next one
   ++mPathListIterator;
   slotStart();

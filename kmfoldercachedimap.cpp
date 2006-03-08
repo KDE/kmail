@@ -1697,8 +1697,8 @@ void KMFolderCachedImap::listDirectory2() {
     mAccount->setHasInbox( true );
   }
 
+  mFoldersNewOnServer.clear();
   // Find all subfolders present on server but not on disk
-  QValueVector<int> foldersNewOnServer;
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
 
     if (mSubfolderNames[i].upper() == "INBOX" &&
@@ -1734,7 +1734,7 @@ void KMFolderCachedImap::listDirectory2() {
         foldersForDeletionOnServer += mAccount->deletedFolderPaths( subfolderPath ); // grab all subsubfolders too
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
-        foldersNewOnServer.append( i );
+        mFoldersNewOnServer.append( i );
       }
     } else { // Folder found locally
       if( static_cast<KMFolder*>(node)->folderType() == KMFolderTypeCachedImap )
@@ -1761,11 +1761,11 @@ void KMFolderCachedImap::listDirectory2() {
      && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
      && mAccount->hasAnnotationSupport()
      && kmkernel->iCalIface().isEnabled()
-     && !foldersNewOnServer.isEmpty() ) {
+     && !mFoldersNewOnServer.isEmpty() ) {
 
     QStringList paths;
-    for ( uint i = 0; i < foldersNewOnServer.count(); ++i )
-      paths << mSubfolderPaths[ foldersNewOnServer[i] ];
+    for ( uint i = 0; i < mFoldersNewOnServer.count(); ++i )
+      paths << mSubfolderPaths[ mFoldersNewOnServer[i] ];
 
     AnnotationJobs::MultiUrlGetAnnotationJob* job =
       AnnotationJobs::multiUrlGetAnnotation( mAccount->slave(), mAccount->getUrl(), paths, KOLAB_FOLDERTYPE );
@@ -1776,7 +1776,7 @@ void KMFolderCachedImap::listDirectory2() {
         SLOT(slotMultiUrlGetAnnotationResult(KIO::Job *)) );
 
   } else {
-    createFoldersNewOnServerAndFinishListing( foldersNewOnServer );
+    createFoldersNewOnServerAndFinishListing( mFoldersNewOnServer );
   }
 }
 
@@ -2166,6 +2166,7 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
     }
     else
       kdWarning(5006) << "slotGetMultiUrlAnnotationResult: " << job->errorString() << endl;
+    folders = mFoldersNewOnServer; // create all of them, to be safe
   } else {
     // we got the annotation allright, let's filter out the ones with the wrong type
     QMap<QString, QString> annotations = annjob->annotations();
@@ -2174,7 +2175,8 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
       const QString folderPath = it.key();
       const QString annotation = it.data();
       kdDebug(5006) << k_funcinfo << "Folder: " << folderPath << " has type: " << annotation << endl;
-      if ( annotation.simplifyWhiteSpace() != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) {
+      if ( annotation.isEmpty()
+        || annotation.simplifyWhiteSpace() != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) {
         folders.append( mSubfolderPaths.findIndex( folderPath ) );
         kdDebug(5006) << k_funcinfo << " subscribing to: " << folderPath << endl;
       } else {
