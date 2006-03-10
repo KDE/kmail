@@ -648,7 +648,7 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
   bool firstPart = true;
 
 
-  const QStringList lines = QStringList::split('\n', msg, true);
+  const QStringList lines = msg.split('\n');
 
   QString result;
   for(QStringList::const_iterator it = lines.begin();

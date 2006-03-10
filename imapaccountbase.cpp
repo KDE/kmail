@@ -571,7 +571,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotCapabilitiesResult( KIO::Job*, const QString& result )
   {
-    mCapabilities = QStringList::split(' ', result.toLower() );
+    mCapabilities = result.toLower().split(' ', QString::SkipEmptyParts );
     kDebug(5006) << "capabilities:" << mCapabilities << endl;
   }
 
@@ -621,10 +621,10 @@ namespace KMail {
 
     nsDelimMap map;
     namespaceDelim nsDelim;
-    QStringList ns = QStringList::split( ",", str );
+    QStringList ns = str.split( ",", QString::SkipEmptyParts );
     for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it ) {
       // split, allow empty parts as we can get empty namespaces
-      QStringList parts = QStringList::split( "=", *it, true );
+      QStringList parts = (*it).split( "=" );
       imapNamespace section = imapNamespace( parts[0].toInt() );
       if ( map.contains( section ) ) {
         nsDelim = map[section];

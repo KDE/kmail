@@ -682,7 +682,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,false);
+        QStringList subFList = _foldername.split("/", QString::SkipEmptyParts);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -861,7 +861,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,false);
+        QStringList subFList = _foldername.split("/", QString::SkipEmptyParts);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;

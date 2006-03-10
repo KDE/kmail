@@ -749,7 +749,7 @@ uint AccountWizard::authMethodsFromString( const QString & s )
 {
   unsigned int result = 0;
 
-  QStringList sl = QStringList::split( '\n', s.toUpper() );
+  QStringList sl = s.toUpper().split( '\n', QString::SkipEmptyParts );
   for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
     if (  *it == "SASL/LOGIN" )
       result |= Login;

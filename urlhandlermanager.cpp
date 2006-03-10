@@ -195,7 +195,7 @@ static partNode * partNodeFromXKMailUrl( const KUrl & url, KMReaderWin * w, QStr
   if ( !urlPath.startsWith( "/bodypart/" ) )
     return 0;
 
-  const QStringList urlParts = QStringList::split( '/', urlPath.mid( 10 ), true );
+  const QStringList urlParts = urlPath.mid( 10 ).split( '/' );
   if ( urlParts.size() != 3 )
     return 0;
   bool ok = false;

@@ -1471,8 +1471,8 @@ Kleo::KeyResolver::ContactPreferences Kleo::KeyResolver::lookupContactPreference
     pref.signingPreference = Kleo::stringToSigningPreference( signPref );
     QString cryptoFormats = addr.custom( "KADDRESSBOOK", "CRYPTOPROTOPREF" );
     pref.cryptoMessageFormat = Kleo::stringToCryptoMessageFormat( cryptoFormats );
-    pref.pgpKeyFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "OPENPGPFP" ) );
-    pref.smimeCertFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "SMIMEFP" ) );
+    pref.pgpKeyFingerprints = addr.custom( "KADDRESSBOOK", "OPENPGPFP" ).split( ',', QString::SkipEmptyParts );
+    pref.smimeCertFingerprints = addr.custom( "KADDRESSBOOK", "SMIMEFP" ).split(',', QString::SkipEmptyParts );
   }
   // insert into map and grab resulting iterator
   d->mContactPreferencesMap.insert( std::make_pair( address, pref ) );

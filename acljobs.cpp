@@ -174,7 +174,7 @@ ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs,
 void ACLJobs::GetACLJob::slotInfoMessage( KIO::Job*, const QString& str )
 {
   // Parse the result
-  QStringList lst = QStringList::split( " ", str );
+  QStringList lst = str.split( " ", QString::SkipEmptyParts );
   while ( lst.count() >= 2 ) // we take items 2 by 2
   {
     QString user = lst.front(); lst.pop_front();

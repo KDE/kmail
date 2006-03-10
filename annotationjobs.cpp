@@ -73,7 +73,7 @@ AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KUrl& url, const QStri
 void AnnotationJobs::GetAnnotationJob::slotInfoMessage( KIO::Job*, const QString& str )
 {
   // Parse the result
-  QStringList lst = QStringList::split( "\r", str );
+  QStringList lst = str.split( "\r", QString::SkipEmptyParts );
   while ( lst.count() >= 2 ) // we take items 2 by 2
   {
     QString name = lst.front(); lst.pop_front();

@@ -115,7 +115,7 @@ void SubscriptionDialog::createItems()
         // the parent is not available and it's no root-item
         // this happens when the folders do not arrive in hierarchical order
         // so we create each parent in advance
-        QStringList folders = QStringList::split(mDelimiter, parentPath);
+        QStringList folders = parentPath.split(mDelimiter, QString::SkipEmptyParts);
         uint i = 0;
         for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it )
         {

@@ -1117,7 +1117,7 @@ const QString KMFilterActionAddHeader::displayString() const
 
 void KMFilterActionAddHeader::argsFromString( const QString argsStr )
 {
-  QStringList l = QStringList::split( '\t', argsStr, true /*allow empty entries*/ );
+  QStringList l = argsStr.split( '\t' );
   QString s;
   if ( l.count() < 2 ) {
     s = l[0];
@@ -1296,7 +1296,7 @@ const QString KMFilterActionRewriteHeader::displayString() const
 
 void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 {
-  QStringList l = QStringList::split( '\t', argsStr, true /*allow empty entries*/ );
+  QStringList l = argsStr.split( '\t' );
   QString s;
 
   s = l[0];

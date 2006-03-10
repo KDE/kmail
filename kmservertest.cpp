@@ -105,9 +105,9 @@ void KMServerTest::startOffSlave( int port ) {
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
   if ( mSSL )
-    mListSSL = QStringList::split(' ', data);
+    mListSSL = data.split(' ', QString::SkipEmptyParts);
   else
-    mListNormal = QStringList::split(' ', data);
+    mListNormal = data.split(' ', QString::SkipEmptyParts);
 }
 
 

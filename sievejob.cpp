@@ -175,7 +175,7 @@ namespace KMail {
     delete mDec; mDec = 0;
 
     if ( mSieveCapabilities.empty() ) {
-      mSieveCapabilities = QStringList::split( ' ', job->queryMetaData( "sieveExtensions" ) );
+      mSieveCapabilities = job->queryMetaData( "sieveExtensions" ).split(' ', QString::SkipEmptyParts );
       kDebug(5006) << "Received Sieve extensions supported:" << endl
 		    << mSieveCapabilities.join("\n") << endl;
     }
