@@ -361,10 +361,10 @@ void KMFilter::purify()
         --it;
 
     // Remove invalid accounts from mAccounts - just to be tidy
-    QValueListConstIterator<int> it2 = mAccounts.begin();
+    QValueListIterator<int> it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
       if ( !kmkernel->acctMgr()->find( *it2 ) )
-         mAccounts.remove( *it2 );
+         it2 = mAccounts.remove( it2 );
       else
          ++it2;
     }
