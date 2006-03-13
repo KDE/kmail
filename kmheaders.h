@@ -8,7 +8,7 @@
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <kfoldertree.h> // for KPaintInfo
 #include <messagestatus.h>
 using KPIM::MessageStatus;
@@ -52,7 +52,7 @@ enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 #define KMAIL_RESERVED 3
 
 /** The widget that shows the contents of folders */
-class KMHeaders : public KListView
+class KMHeaders : public K3ListView
 {
   Q_OBJECT
 
@@ -196,7 +196,7 @@ signals:
   void messageListUpdated();
 
   /** emitted after a new item has been fully built and added to the
-   * list view. We can't use KListView::itemAdded, as that is emitted
+   * list view. We can't use K3ListView::itemAdded, as that is emitted
    * from the ctor of the item, at which point the building of the item
    * is not yet far enough along to update the quick search, which is
    * what is connected to this signal. */

@@ -30,7 +30,7 @@
 ////////////////////////////////////////
 ///  view
 KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialog)
-      : KListView(aParent)
+      : K3ListView(aParent)
 {
   mDialog=aDialog;
   int mDownIndex=addColumn(QIcon(QPixmap(mDown)), QString(), 24);
@@ -236,7 +236,7 @@ const char *KMPopHeadersView::mDel[19] = {
 /////////////////////////////////////////
 /////////////////////////////////////////
 KMPopHeadersViewItem::KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction)
-      : KListViewItem(aParent)
+      : K3ListViewItem(aParent)
 {
   mParent = aParent;
   mAction = NoAction;

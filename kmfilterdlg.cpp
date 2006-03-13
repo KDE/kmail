@@ -25,7 +25,7 @@ using KMail::AccountManager;
 #include <kconfig.h>
 #include <kicondialog.h>
 #include <kkeybutton.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kpushbutton.h>
 #include <kvbox.h>
 
@@ -188,7 +188,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       vbl3->addWidget( mApplyOnForChecked );
       vbl3->addStretch( 2 );
 
-      mAccountList = new KListView( mAdvOptsGroup );
+      mAccountList = new K3ListView( mAdvOptsGroup );
       mAccountList->setObjectName( "accountList" );
       mAccountList->addColumn( i18n("Account Name") );
       mAccountList->addColumn( i18n("Type") );

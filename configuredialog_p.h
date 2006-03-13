@@ -21,7 +21,7 @@
 #include <dcopobject.h>
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kcmodule.h>
 #include <klocale.h>
 #include <kdepimmacros.h>
@@ -159,7 +159,7 @@ private:
   void setup();
 
 private:
-  KListView   *mListView;
+  K3ListView   *mListView;
   QStringList mProfileList;
 };
 
@@ -272,12 +272,12 @@ private slots:
   void slotModifyIdentity();
   void slotRemoveIdentity();
   /** Connected to @p mRenameButton's clicked() signal. Just does a
-      KListView::rename on the selected item */
+      K3ListView::rename on the selected item */
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KPIM::IdentityManager */
   void slotRenameIdentity( Q3ListViewItem *, const QString &, int );
-  void slotContextMenu( KListView*, Q3ListViewItem *, const QPoint & );
+  void slotContextMenu( K3ListView*, Q3ListViewItem *, const QPoint & );
   void slotSetAsDefault();
   void slotIdentitySelectionChanged();
 
@@ -992,7 +992,7 @@ private:
 //
 //
 
-class ListView : public KListView {
+class ListView : public K3ListView {
   Q_OBJECT
 public:
   ListView( QWidget *parent=0, int visibleItem=10 );

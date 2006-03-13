@@ -42,7 +42,7 @@ class KPushButton;
 class QStackedWidget;
 class KHBox;
 class Q3VButtonGroup;
-class KListView;
+class K3ListView;
 namespace KIO { class Job; }
 
 namespace KMail {
@@ -106,7 +106,7 @@ private slots:
   void slotReceivedUserRights( KMFolder* folder );
   void slotDirectoryListingFinished(KMFolderImap*);
 
-  // User (KListView) slots
+  // User (K3ListView) slots
   void slotEditACL(Q3ListViewItem*);
   void slotSelectionChanged(Q3ListViewItem*);
 
@@ -130,7 +130,7 @@ private:
   KHBox* mACLWidget;
   //class ListView;
   class ListViewItem;
-  KListView* mListView;
+  K3ListView* mListView;
   KPushButton* mAddACL;
   KPushButton* mEditACL;
   KPushButton* mRemoveACL;

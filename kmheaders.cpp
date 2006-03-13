@@ -94,7 +94,7 @@ QPixmap* KMHeaders::pixReadFwdReplied = 0;
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
-  KListView( parent )
+  K3ListView( parent )
 {
   static bool pixmapsLoaded = false;
   //qInitImageIO();
@@ -244,7 +244,7 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
   }
-  return KListView::eventFilter(o, e);
+  return K3ListView::eventFilter(o, e);
 }
 
 //-----------------------------------------------------------------------------
@@ -378,7 +378,7 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 
 bool KMHeaders::event(QEvent *e)
 {
-  bool result = KListView::event(e);
+  bool result = K3ListView::event(e);
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
@@ -984,7 +984,7 @@ void KMHeaders::msgAdded(int id)
   }
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-    KListView::setSorting(mSortCol, !mSortDescending );
+    K3ListView::setSorting(mSortCol, !mSortDescending );
     mSortInfo.fakeSort = 0;
   }
   appendItemToSortFile(hi); //inserted into sorted list
@@ -1069,7 +1069,7 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
       if (mSortInfo.fakeSort) {
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-        KListView::setSorting(mSortCol, !mSortDescending );
+        K3ListView::setSorting(mSortCol, !mSortDescending );
         mSortInfo.fakeSort = 0;
       }
     }
@@ -1306,7 +1306,7 @@ void KMHeaders::setStyleDependantFrameWidth()
 void KMHeaders::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  KListView::styleChange( oldStyle );
+  K3ListView::styleChange( oldStyle );
 }
 
 //-----------------------------------------------------------------------------
@@ -1614,7 +1614,7 @@ void KMHeaders::setSelected( Q3ListViewItem *item, bool selected )
     return;
 
   if ( item->isVisible() )
-    KListView::setSelected( item, selected );
+    K3ListView::setSelected( item, selected );
 
   // If the item is the parent of a closed thread recursively select
   // children .
@@ -2076,7 +2076,7 @@ void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
   noRepaint = true;
   clear();
   noRepaint = false;
-  KListView::setSorting( mSortCol, !mSortDescending );
+  K3ListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
     mItems.resize(0);
     repaint();
@@ -2138,7 +2138,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
       case Qt::Key_PageDown:
       case Qt::Key_PageUp:
       case Qt::Key_Escape:
-        KListView::keyPressEvent( e );
+        K3ListView::keyPressEvent( e );
       }
       if (!shft)
         connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
@@ -2189,7 +2189,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }
 
   // let klistview do it's thing, expanding/collapsing, selection/deselection
-  KListView::contentsMousePressEvent(e);
+  K3ListView::contentsMousePressEvent(e);
   /* QListView's shift-select selects also invisible items. Until that is
      fixed, we have to deselect hidden items here manually, so the quick
      search doesn't mess things up. */
@@ -2229,7 +2229,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
   if (e->button() != Qt::RightButton)
-    KListView::contentsMouseReleaseEvent(e);
+    K3ListView::contentsMouseReleaseEvent(e);
 
   mMousePressed = false;
 }
@@ -2485,7 +2485,7 @@ void KMHeaders::setSorting( int column, bool ascending )
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
   }
-  KListView::setSorting( column, ascending );
+  K3ListView::setSorting( column, ascending );
   ensureCurrentItemVisible();
   // Make sure the config and .sorted file are updated, otherwise stale info
   // is read on new imap mail. ( folder->folderComplete() -> readSortOrder() ).
@@ -2934,7 +2934,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
 
             //Hackyness to work around qlistview problems
-            KListView::setSorting(-1);
+            K3ListView::setSorting(-1);
             header()->setSortIndicator(column, ascending);
             QObject::connect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
             //setup mSortInfo here now, as above may change it
@@ -3054,7 +3054,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         mSortInfo.ascending = ascending = !mSortDescending;
         threaded = (isThreaded());
         sorted_count = discovered_count = appended = 0;
-        KListView::setSorting( mSortCol, !mSortDescending );
+        K3ListView::setSorting( mSortCol, !mSortDescending );
     }
     //fill in empty holes
     if((sorted_count + discovered_count - deleted_count) < mFolder->count()) {

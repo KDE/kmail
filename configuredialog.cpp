@@ -297,8 +297,8 @@ IdentityPage::IdentityPage( KInstance *instance, QWidget *parent, const QStringL
            SLOT(slotRenameIdentity(Q3ListViewItem*,const QString&,int)) );
   connect( mIdentityList, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
            SLOT(slotModifyIdentity()) );
-  connect( mIdentityList, SIGNAL(contextMenu(KListView*,Q3ListViewItem*,const QPoint&)),
-           SLOT(slotContextMenu(KListView*,Q3ListViewItem*,const QPoint&)) );
+  connect( mIdentityList, SIGNAL(contextMenu(K3ListView*,Q3ListViewItem*,const QPoint&)),
+           SLOT(slotContextMenu(K3ListView*,Q3ListViewItem*,const QPoint&)) );
   // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
@@ -488,7 +488,7 @@ void IdentityPage::slotRenameIdentity( Q3ListViewItem * i,
   item->redisplay();
 }
 
-void IdentityPage::slotContextMenu( KListView *, Q3ListViewItem * i,
+void IdentityPage::slotContextMenu( K3ListView *, Q3ListViewItem * i,
                                     const QPoint & pos ) {
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 

@@ -16,7 +16,7 @@
 #ifndef _KMAIL_ATTACHMENTLISTVIEW_H_
 #define _KMAIL_ATTACHMENTLISTVIEW_H_
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
@@ -32,7 +32,7 @@ namespace KMail {
 
 class Composer;
 
-class AttachmentListView : public KListView
+class AttachmentListView : public K3ListView
 {
   Q_OBJECT
 public:

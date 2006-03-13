@@ -44,7 +44,7 @@ using namespace KMail;
 
 // Constuction a new list view item with the given colors and pixmap
 HeaderItem::HeaderItem( Q3ListView* parent, int msgId, const QString& key )
-  : KListViewItem( parent ),
+  : K3ListViewItem( parent ),
   mMsgId( msgId ),
   mKey( key ),
   mAboutToBeDeleted( false ),
@@ -55,7 +55,7 @@ HeaderItem::HeaderItem( Q3ListView* parent, int msgId, const QString& key )
 
 // Constuction a new list view item with the given parent, colors, & pixmap
 HeaderItem::HeaderItem( Q3ListViewItem* parent, int msgId, const QString& key )
-  : KListViewItem( parent ),
+  : K3ListViewItem( parent ),
   mMsgId( msgId ),
   mKey( key ),
   mAboutToBeDeleted( false ),
@@ -403,7 +403,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   font.setWeight( weight );
   p->setFont( font );
 
-  KListViewItem::paintCell( p, _cg, column, width, align );
+  K3ListViewItem::paintCell( p, _cg, column, width, align );
 
   if (aboutToBeDeleted()) {
     // strike through

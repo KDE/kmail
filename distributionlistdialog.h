@@ -26,7 +26,7 @@
 #include "recipientseditor.h"
 
 class QLineEdit;
-class KListView;
+class K3ListView;
 
 class DistributionListDialog : public KDialogBase
 {
@@ -40,7 +40,7 @@ class DistributionListDialog : public KDialogBase
     
   private:
     QLineEdit *mTitleEdit;
-    KListView *mRecipientsList;
+    K3ListView *mRecipientsList;
 };
 
 #endif

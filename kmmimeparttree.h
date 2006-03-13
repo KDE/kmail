@@ -35,7 +35,7 @@
 #ifndef KMMIMEPARTTREE_H
 #define KMMIMEPARTTREE_H
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <kio/global.h>
 
 #include <qstring.h>
@@ -44,7 +44,7 @@ class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
 
-class KMMimePartTree : public KListView
+class KMMimePartTree : public K3ListView
 {
   Q_OBJECT
   friend class ::KMReaderWin;

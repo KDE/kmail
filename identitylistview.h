@@ -32,7 +32,7 @@
 #ifndef __KMAIL_IDENTITYLIST_H__
 #define __KMAIL_IDENTITYLIST_H__
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <QDropEvent>
 
@@ -47,7 +47,7 @@ namespace KMail {
   /** @short A QListViewItem for use in IdentityListView
       @author Marc Mutz <mutz@kde.org>
   **/
-  class IdentityListViewItem : public KListViewItem {
+  class IdentityListViewItem : public K3ListViewItem {
   public:
     IdentityListViewItem( IdentityListView * parent,
 			  const KPIM::Identity & ident );
@@ -68,7 +68,7 @@ namespace KMail {
   /** @short A listview for KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
-  class IdentityListView : public KListView {
+  class IdentityListView : public K3ListView {
     Q_OBJECT
   public:
     IdentityListView( QWidget * parent=0 );

@@ -38,7 +38,7 @@
 
 using KMail::HeaderListQuickSearch;
 
-KListViewIndexedSearchLine::KListViewIndexedSearchLine( QWidget* parent, KListView* listView, KActionCollection* actionCollection ):
+KListViewIndexedSearchLine::KListViewIndexedSearchLine( QWidget* parent, K3ListView* listView, KActionCollection* actionCollection ):
 	HeaderListQuickSearch( parent, listView, actionCollection ),
 	mFiltering( false )
 {
@@ -60,7 +60,7 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 			mFiltering = ok;
 		}
 	}
-	KListViewSearchLine::updateSearch( s );
+	K3ListViewSearchLine::updateSearch( s );
 }
 
 bool KListViewIndexedSearchLine::itemMatches( const Q3ListViewItem* item, const QString& s ) const {

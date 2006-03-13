@@ -25,7 +25,7 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -107,7 +107,7 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   titleLayout->addWidget( mTitleEdit );
   mTitleEdit->setFocus();
   
-  mRecipientsList = new KListView( topFrame );
+  mRecipientsList = new K3ListView( topFrame );
   mRecipientsList->addColumn( QString() );
   mRecipientsList->addColumn( i18n("Name") );
   mRecipientsList->addColumn( i18n("Email") );

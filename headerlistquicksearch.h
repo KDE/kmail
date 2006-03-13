@@ -33,24 +33,24 @@
 
 #include <messagestatus.h>
 #include "kmsearchpattern.h"
-#include <klistviewsearchline.h>
+#include <k3listviewsearchline.h>
 
 //Added by qt3to4:
 #include <QLabel>
 #include <QEvent>
 class QComboBox;
 class QLabel;
-class KListView;
+class K3ListView;
 class KActionCollection;
 
 namespace KMail {
 
-class HeaderListQuickSearch : public KListViewSearchLine
+class HeaderListQuickSearch : public K3ListViewSearchLine
 {
 Q_OBJECT
 public:
     HeaderListQuickSearch( QWidget *parent,
-                                             KListView *listView,
+                                             K3ListView *listView,
                                              KActionCollection *actionCollection );
     virtual ~HeaderListQuickSearch();
 

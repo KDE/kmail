@@ -55,12 +55,12 @@ namespace KMail {
   //
 
   IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, const KPIM::Identity & ident )
-    : KListViewItem( parent ), mUOID( ident.uoid() ) {
+    : K3ListViewItem( parent ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
   IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, Q3ListViewItem * after, const KPIM::Identity & ident )
-    : KListViewItem( parent, after ), mUOID( ident.uoid() ) {
+    : K3ListViewItem( parent, after ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
@@ -98,7 +98,7 @@ namespace KMail {
   //
 
   IdentityListView::IdentityListView( QWidget * parent )
-    : KListView( parent )
+    : K3ListView( parent )
   {
     setFullWidth( true );
     setDragEnabled( true );
@@ -125,7 +125,7 @@ namespace KMail {
 	  item->setText( 0, ident.identityName() );
       }
     }
-    KListView::rename( i, col );
+    K3ListView::rename( i, col );
   }
 
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {

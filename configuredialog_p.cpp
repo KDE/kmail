@@ -129,7 +129,7 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
 }
 
 ListView::ListView( QWidget *parent, int visibleItem )
-  : KListView( parent )
+  : K3ListView( parent )
 {
   setVisibleItem(visibleItem);
 }
@@ -137,14 +137,14 @@ ListView::ListView( QWidget *parent, int visibleItem )
 
 void ListView::resizeEvent( QResizeEvent *e )
 {
-  KListView::resizeEvent(e);
+  K3ListView::resizeEvent(e);
   resizeColums();
 }
 
 
 void ListView::showEvent( QShowEvent *e )
 {
-  KListView::showEvent(e);
+  K3ListView::showEvent(e);
   resizeColums();
 }
 
@@ -296,7 +296,7 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   QWidget * page = makeMainWidget();
   QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
 
-  mListView = new KListView( page );
+  mListView = new K3ListView( page );
   mListView->setObjectName( "mListView" );
   mListView->addColumn( i18n("Available Profiles") );
   mListView->addColumn( i18n("Description") );

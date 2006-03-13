@@ -52,7 +52,7 @@
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent )
-    : KListView( parent ),
+    : K3ListView( parent ),
       mReaderWin( readerWin ), mSizeColumn(0)
 {
     setStyleDependantFrameWidth();
@@ -200,7 +200,7 @@ void KMMimePartTree::setStyleDependantFrameWidth()
 void KMMimePartTree::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  KListView::styleChange( oldStyle );
+  K3ListView::styleChange( oldStyle );
 }
 
 //-----------------------------------------------------------------------------

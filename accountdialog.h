@@ -24,7 +24,7 @@
 #define _ACCOUNT_DIALOG_H_
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klineedit.h>
 #include <qpointer.h>
 //Added by qt3to4:

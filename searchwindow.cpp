@@ -161,7 +161,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
-  mLbxMatches = new KListView( searchWidget );
+  mLbxMatches = new K3ListView( searchWidget );
   mLbxMatches->setObjectName( "Find Messages" );
 
   /*
@@ -174,13 +174,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
      solves the above problem, but speeds searches with many hits
      up considerably. - till
 
-     TODO: subclass KListViewItem and do proper (and performant)
+     TODO: subclass K3ListViewItem and do proper (and performant)
      comapare functions
   */
   mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
-  mLbxMatches->setSelectionModeExt(KListView::Extended);
+  mLbxMatches->setSelectionModeExt(K3ListView::Extended);
   mLbxMatches->addColumn(i18n("Subject"),
       group.readEntry( "SubjectWidth", 150 ) );
   mLbxMatches->addColumn(i18n("Sender/Receiver"),
@@ -508,7 +508,7 @@ void SearchWindow::slotAddMsg(int idx)
     else
         fName = pFolder->name();
 
-    (void)new KListViewItem(mLbxMatches, mLbxMatches->lastItem(),
+    (void)new K3ListViewItem(mLbxMatches, mLbxMatches->lastItem(),
                             msg->subject(), from, msg->dateIsoStr(),
                             fName,
                             QString::number(mFolder->serNum(idx)));

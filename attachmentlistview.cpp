@@ -52,7 +52,7 @@ namespace KMail {
 
 AttachmentListView::AttachmentListView( KMail::Composer * composer,
                                         QWidget* parent )
-  : KListView( parent ),
+  : K3ListView( parent ),
     mComposer( composer )
 {
   setAcceptDrops( true );
@@ -71,7 +71,7 @@ void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
   if( e->provides( MailListDrag::format() ) )
     e->accept( true );
   else
-    KListView::dragEnterEvent( e );
+    K3ListView::dragEnterEvent( e );
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
   if( e->provides( MailListDrag::format() ) )
     e->accept( true );
   else
-    KListView::dragMoveEvent( e );
+    K3ListView::dragMoveEvent( e );
 }
 
 //-----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
       }
     }
     else {
-      KListView::dropEvent( e );
+      K3ListView::dropEvent( e );
     }
   }
 }

@@ -197,11 +197,11 @@ unsigned int KMail::ACLEntryDialog::permissions() const
   return mButtonGroup->selectedId();
 }
 
-class KMail::FolderDiaACLTab::ListViewItem : public KListViewItem
+class KMail::FolderDiaACLTab::ListViewItem : public K3ListViewItem
 {
 public:
   ListViewItem( Q3ListView* listview )
-    : KListViewItem( listview, listview->lastItem() ),
+    : K3ListViewItem( listview, listview->lastItem() ),
       mModified( false ), mNew( false ) {}
 
   void load( const ACLListEntry& entry );
@@ -334,7 +334,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 
   mACLWidget = new KHBox( mStack );
   mACLWidget->setSpacing( KDialog::spacingHint() );
-  mListView = new KListView( mACLWidget );
+  mListView = new K3ListView( mACLWidget );
   mListView->setAllColumnsShowFocus( true );
   mStack->addWidget( mACLWidget );
   mListView->addColumn( i18n( "User Id" ) );

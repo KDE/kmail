@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <klistview.h> // include for the base class
+#include <k3listview.h> // include for the base class
 #include <QPixmap>
 #include <QList>
 
@@ -163,7 +163,7 @@ private:
  * the current folder). Each item is paired with a KMail::SortCacheItem. See there as to
  * how they are meant to cooperate. This should be about the visual aspects of
  * displaying an entry only. */
-class HeaderItem : public KListViewItem
+class HeaderItem : public K3ListViewItem
 {
 public:
   HeaderItem( Q3ListView* parent, int msgId, const QString& key = QString() );

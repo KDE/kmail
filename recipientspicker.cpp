@@ -25,7 +25,7 @@
 
 #include <libkdepim/recentaddresses.h>
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <kabc/resource.h>
 #include <kiconloader.h>
@@ -146,8 +146,8 @@ QString RecipientItem::recipientType() const
 }
 
 
-RecipientViewItem::RecipientViewItem( RecipientItem *item, KListView *listView )
-  : KListViewItem( listView ), mRecipientItem( item )
+RecipientViewItem::RecipientViewItem( RecipientItem *item, K3ListView *listView )
+  : K3ListViewItem( listView ), mRecipientItem( item )
 {
   setText( 0, item->recipientType() );
   setText( 1, item->name() );
@@ -165,7 +165,7 @@ RecipientItem *RecipientViewItem::recipientItem() const
 #warning Port me!
 #if 0
 RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
-  KListView *listView )
+  K3ListView *listView )
   : QToolTip( parent )
 {
   mListView = listView;
@@ -239,8 +239,8 @@ void RecipientsCollection::deleteAll()
 }
 
 
-SearchLine::SearchLine( QWidget *parent, KListView *listView )
-  : KListViewSearchLine( parent, listView )
+SearchLine::SearchLine( QWidget *parent, K3ListView *listView )
+  : K3ListViewSearchLine( parent, listView )
 {
 }
 
@@ -248,7 +248,7 @@ void SearchLine::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Qt::Key_Down ) emit downPressed();
 
-  KListViewSearchLine::keyPressEvent( ev );
+  K3ListViewSearchLine::keyPressEvent( ev );
 }
 
 
@@ -289,7 +289,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   label = new QLabel( i18n("&Search:"), this );
   searchLayout->addWidget( label );
 
-  mRecipientList = new KListView( this );
+  mRecipientList = new K3ListView( this );
   mRecipientList->setSelectionMode( Q3ListView::Extended );
   mRecipientList->setAllColumnsShowFocus( true );
   mRecipientList->setFullWidth( true );

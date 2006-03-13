@@ -39,7 +39,7 @@
 
 #include <kaction.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 
 #include "kmfolder.h"
@@ -50,9 +50,9 @@
 namespace KMail {
 
 HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
-                                              KListView *listView,
+                                              K3ListView *listView,
                                               KActionCollection *actionCollection )
-  : KListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
+  : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
                                            QApplication::isRightToLeft()
@@ -88,7 +88,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   label->setBuddy( mStatusCombo );
 
-  /* Disable the signal connected by KListViewSearchLine since it will call
+  /* Disable the signal connected by K3ListViewSearchLine since it will call
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
    * in getMsgBaseForItem( item ) wanting to access items which are no longer
    * there. Rather rely on KMHeaders::msgAdded and its signal. */
@@ -145,7 +145,7 @@ bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QStrin
     if ( !msg || ! ( msg->messageStatus() & mStatus ) )
       return false;
   }
-  return KListViewSearchLine::itemMatches(item, s);
+  return K3ListViewSearchLine::itemMatches(item, s);
 }
 
 //-----------------------------------------------------------------------------

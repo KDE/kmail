@@ -207,7 +207,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
                KSpellConfig* autoSpellConfig,
                const char *name)
-  : KEdit( parent, name ),
+  : KEdit( parent ),
     mComposer( composer ),
     mKSpell( 0 ),
     mSpellConfig( autoSpellConfig ),

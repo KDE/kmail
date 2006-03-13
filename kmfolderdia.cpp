@@ -55,7 +55,7 @@
 #include <kicondialog.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kvbox.h>
 
 #include <qcheckbox.h>

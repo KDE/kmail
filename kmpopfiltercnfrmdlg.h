@@ -21,7 +21,7 @@
 #include "kmpopheaders.h"
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 #include <QMap>
 #include <QKeyEvent>
@@ -34,7 +34,7 @@ class KMPopFilterCnfrmDlg;
 /**
   * @author Heiko Hund
   */
-class KMPopHeadersView : public KListView
+class KMPopHeadersView : public K3ListView
 {
   Q_OBJECT
 
@@ -60,7 +60,7 @@ private:
 
 
 
-class KMPopHeadersViewItem : public KListViewItem
+class KMPopHeadersViewItem : public K3ListViewItem
 {
 public:
   KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction);

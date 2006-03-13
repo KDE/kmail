@@ -408,7 +408,7 @@ bool KMFolderTree::event(QEvent *e)
      readColorConfig();
      return true;
   }
-  return KListView::event(e);
+  return K3ListView::event(e);
 }
 
 //-----------------------------------------------------------------------------
@@ -955,7 +955,7 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   KConfigGroup conf( KMKernel::config(), "Geometry" );
   conf.writeEntry(name(), size().width());
 
-  KListView::resizeEvent(e);
+  K3ListView::resizeEvent(e);
 }
 
 //-----------------------------------------------------------------------------

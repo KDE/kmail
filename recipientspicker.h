@@ -23,8 +23,8 @@
 
 #include "recipientseditor.h"
 
-#include <klistview.h>
-#include <klistviewsearchline.h>
+#include <k3listview.h>
+#include <k3listviewsearchline.h>
 #include <kabc/addressee.h>
 #include <kabc/stdaddressbook.h>
 
@@ -77,10 +77,10 @@ class RecipientItem
     QString mKey;
 };
 
-class RecipientViewItem : public KListViewItem
+class RecipientViewItem : public K3ListViewItem
 {
   public:
-    RecipientViewItem( RecipientItem *, KListView * );
+    RecipientViewItem( RecipientItem *, K3ListView * );
 
     RecipientItem *recipientItem() const;
 
@@ -91,13 +91,13 @@ class RecipientViewItem : public KListViewItem
 class RecipientsListToolTip : public QToolTip
 {
   public:
-    RecipientsListToolTip( QWidget *parent, KListView * );
+    RecipientsListToolTip( QWidget *parent, K3ListView * );
 
   protected:
     void maybeTip( const QPoint &pos );
 
   private:
-    KListView *mListView;
+    K3ListView *mListView;
 };
 
 class RecipientsCollection
@@ -125,11 +125,11 @@ class RecipientsCollection
     QMap<QString, RecipientItem *> mKeyMap;
 };
 
-class SearchLine : public KListViewSearchLine
+class SearchLine : public K3ListViewSearchLine
 {
     Q_OBJECT
   public:
-    SearchLine( QWidget *parent, KListView *listView );
+    SearchLine( QWidget *parent, K3ListView *listView );
 
   signals:
     void downPressed();
@@ -185,8 +185,8 @@ class RecipientsPicker : public QDialog
     KABC::StdAddressBook *mAddressBook;
 
     QComboBox *mCollectionCombo;
-    KListView *mRecipientList;
-    KListViewSearchLine *mSearchLine;
+    K3ListView *mRecipientList;
+    K3ListViewSearchLine *mSearchLine;
 
     QPushButton *mToButton;
     QPushButton *mCcButton;

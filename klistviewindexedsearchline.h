@@ -31,16 +31,16 @@
 
 
 #include <klineedit.h>
-#include <klistviewsearchline.h>
+#include <k3listviewsearchline.h>
 #include "headerlistquicksearch.h"
 #include <q3hbox.h>
 
 #include <vector>
 
-class KListView;
+class K3ListView;
 class Q3ListViewItem;
 class QToolButton;
-class KListViewSearchLine;
+class K3ListViewSearchLine;
 
 /**
  * Extends HeaderListQuickSearch to also search inside message bodies using KMMsgIndex
@@ -52,7 +52,7 @@ class KDEUI_EXPORT KListViewIndexedSearchLine: public KMail::HeaderListQuickSear
 
 public:
 
-    explicit KListViewIndexedSearchLine( QWidget *parent, KListView *listView, KActionCollection* action );
+    explicit KListViewIndexedSearchLine( QWidget *parent, K3ListView *listView, KActionCollection* action );
     ~KListViewIndexedSearchLine();
 
 public slots:

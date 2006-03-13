@@ -29,7 +29,7 @@ class QStackedWidget;
 class QCheckBox;
 class KIconButton;
 class KKeyButton;
-class KListView;
+class K3ListView;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -378,7 +378,7 @@ protected:
       this filter to all accounts or to selected accounts only. */
   QRadioButton *mApplyOnForAll, *mApplyOnForTraditional, *mApplyOnForChecked;
   /** ListView that shows the accounts in the advanced tab */
-  KListView *mAccountList;
+  K3ListView *mAccountList;
 
   QCheckBox *mStopProcessingHere;
   QCheckBox *mConfigureShortcut;
