@@ -303,7 +303,7 @@ install_files( ${DATA_INSTALL_DIR}/kmail FILES kmcomposerui.rc kmmainwin.rc kmre
 install_files( ${SERVICETYPES_INSTALL_DIR} FILES dcopmail.desktop dcopimap.desktop )
 install_files( /include FILES kmailIface.h kmailpartIface.h kmailicalIface.h )
 install_files( ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter FILES application_octetstream.desktop )
-install_files( ${DATA_INSTALL_DIR}/kconf_update FILES kmail.upd )
+install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES kmail.upd )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
