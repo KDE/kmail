@@ -145,7 +145,10 @@ void DImapTroubleShootDialog::slotRebuildIndex()
 
 static bool messageLooksLikeAGhostMessage( KMMsgBase* msg )
 {
-  return msg->toStrip().isEmpty() && msg->fromStrip().isEmpty() && msg->msgIdMD5().isEmpty();
+  return msg->toStrip().isEmpty()
+      && msg->fromStrip().isEmpty()
+      && msg->msgIdMD5().isEmpty()
+      && msg->subject().isEmpty();
 }
 
 
