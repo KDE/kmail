@@ -802,7 +802,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     if ( node ) {
       f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
     }
-    else if ( subfolderPaths[i] != "/INBOX/" )
+    else if ( subfolderPaths[i].upper() != "/INBOX/" )
     {
       kDebug(5006) << "create folder " << subfolderNames[i] << endl;
       KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
