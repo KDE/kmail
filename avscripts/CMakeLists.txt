@@ -5,6 +5,7 @@ include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_D
 
 ########### install files ###############
 
+install_files( /bin FILES kmail_clamav.sh kmail_sav.sh kmail_fprot.sh kmail_antivir.sh )
 
 kde4_footer()
 
