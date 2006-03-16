@@ -2831,7 +2831,7 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
     {
       if (!qstricmp(param->Attribute().c_str(), "charset"))
         aPart->setCharset(QCString(param->Value().c_str()).lower());
-      else if (param->Attribute().c_str()=="name*")
+      else if (!qstrnicmp(param->Attribute().c_str(), "name", 4))
         aPart->setName(KMMsgBase::decodeRFC2231String(
               param->Value().c_str()));
       else {
