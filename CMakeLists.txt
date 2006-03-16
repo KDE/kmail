@@ -12,7 +12,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkmime ${CMAKE_SOURCE_DIR}/libkpgp ${
 
 ########### next target ###############
 
-set(kmailprivate_LIB_SRCS 
+set(kmailprivate_LIB_SRCS ${libemailfunctions_SRCS} 
    kmmessage.cpp 
    kmmainwin.cpp 
    configuredialog.cpp 
@@ -188,13 +188,13 @@ kde4_add_dcop_skels(kmailprivate_LIB_SRCS
    mailcomposerIface.h 
    folderIface.h )
 
-kde4_add_dcop_stubs(kmailprivate_LIB_SRCS korganizeriface.h )
+kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc )
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${QT_AND_KDECORE_LIBS} khtml kde3support kmime kpgp kdepim kpimidentities mimelib ksieve emailfunctions kleopatra kcal )
+target_link_libraries(kmailprivate  ${LIB_KDE3SUPPORT} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install_targets(${LIB_INSTALL_DIR} kmailprivate )
@@ -288,7 +288,7 @@ if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
 
-target_link_libraries(recipienteditortest  ${QT_AND_KDECORE_LIBS} kmailprivate kdepim kio )
+target_link_libraries(recipienteditortest  ${LIB_KIO} kmailprivate kdepim )
 
 endif(KDE4_BUILD_TESTS)
 
