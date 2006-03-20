@@ -173,7 +173,21 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   }
 
   //Ensure the message is correctly and fully parsed
-  openOutbox.folder()->unGetMsg( openOutbox.folder()->count() - 1 );
+  
+  /* The above was added by Marc and seems to be necessary to ensure
+   * the mail is in a sane state before sending. The unGet makes the
+   * attached unencrypted version of the mail (if there is one ) disappear.
+   * though, so we need to make sure to keep it around and restore it
+   * afterwards. The real fix would be to replace the unGet with
+   * whatever parsing is triggered by it, but I'm too chicken to do that,
+   * in this branch.
+   * Note that the unencrypted mail will be lost if the mail remains in
+   * the outbox across a restart anyhow, but that never worked, afaikt. */
+  const int idx = openOutbox.folder()->count() - 1;
+  KMMessage * const unencryptedMsg = aMsg->unencryptedMsg();
+  openOutbox.folder()->unGetMsg( idx );
+  KMMessage * const tempMsg = openOutbox.folder()->getMsg( idx );
+  tempMsg->setUnencryptedMsg( unencryptedMsg );
 
   if ( !sendNow || mSendInProgress )
     return true;
