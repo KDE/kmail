@@ -498,7 +498,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   if ( !ac )
       return;
 
-  KRadioAction *raction = 0;
+  KToggleAction *raction = 0;
 
   // header style
   KActionMenu *headerMenu =
@@ -508,35 +508,35 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
 
-  raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0,
+  raction = new KToggleAction( i18n("View->headers->", "&Fancy Headers"), 0,
                               this, SLOT(slotFancyHeaders()),
                               ac, "view_headers_fancy" );
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->headers->", "&Brief Headers"), 0,
+  raction = new KToggleAction( i18n("View->headers->", "&Brief Headers"), 0,
                               this, SLOT(slotBriefHeaders()),
                               ac, "view_headers_brief" );
   raction->setToolTip( i18n("Show brief list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->headers->", "&Standard Headers"), 0,
+  raction = new KToggleAction( i18n("View->headers->", "&Standard Headers"), 0,
                               this, SLOT(slotStandardHeaders()),
                               ac, "view_headers_standard" );
   raction->setToolTip( i18n("Show standard list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->headers->", "&Long Headers"), 0,
+  raction = new KToggleAction( i18n("View->headers->", "&Long Headers"), 0,
                               this, SLOT(slotLongHeaders()),
                               ac, "view_headers_long" );
   raction->setToolTip( i18n("Show long list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0,
+  raction = new KToggleAction( i18n("View->headers->", "&All Headers"), 0,
                               this, SLOT(slotAllHeaders()),
                               ac, "view_headers_all" );
   raction->setToolTip( i18n("Show all message headers") );
@@ -550,28 +550,28 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect( attachmentMenu, SIGNAL(activated()),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
-  raction = new KRadioAction( i18n("View->attachments->", "&As Icons"), 0,
+  raction = new KToggleAction( i18n("View->attachments->", "&As Icons"), 0,
                               this, SLOT(slotIconicAttachments()),
                               ac, "view_attachments_as_icons" );
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->attachments->", "&Smart"), 0,
+  raction = new KToggleAction( i18n("View->attachments->", "&Smart"), 0,
                               this, SLOT(slotSmartAttachments()),
                               ac, "view_attachments_smart" );
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->attachments->", "&Inline"), 0,
+  raction = new KToggleAction( i18n("View->attachments->", "&Inline"), 0,
                               this, SLOT(slotInlineAttachments()),
                               ac, "view_attachments_inline" );
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0,
+  raction = new KToggleAction( i18n("View->attachments->", "&Hide"), 0,
                               this, SLOT(slotHideAttachments()),
                               ac, "view_attachments_hide" );
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
@@ -625,7 +625,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 }
 
 // little helper function
-KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
+KToggleAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
@@ -642,12 +642,12 @@ KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, cons
       actionName = "view_headers_all";
   }
   if ( actionName )
-    return static_cast<KRadioAction*>(mActionCollection->action(actionName));
+    return static_cast<KToggleAction*>(mActionCollection->action(actionName));
   else
     return 0;
 }
 
-KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
+KToggleAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
@@ -661,7 +661,7 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
     actionName = "view_attachments_hide";
 
   if ( actionName )
-    return static_cast<KRadioAction*>(mActionCollection->action(actionName));
+    return static_cast<KToggleAction*>(mActionCollection->action(actionName));
   else
     return 0;
 }
@@ -726,7 +726,7 @@ void KMReaderWin::slotCycleHeaderStyles() {
   }
 
   if ( actionName )
-    static_cast<KRadioAction*>( mActionCollection->action( actionName ) )->setChecked( true );
+    static_cast<KToggleAction*>( mActionCollection->action( actionName ) )->setChecked( true );
 }
 
 
@@ -748,7 +748,7 @@ void KMReaderWin::slotHideAttachments() {
 
 void KMReaderWin::slotCycleAttachmentStrategy() {
   setAttachmentStrategy( attachmentStrategy()->next() );
-  KRadioAction * action = actionForAttachmentStrategy( attachmentStrategy() );
+  KToggleAction * action = actionForAttachmentStrategy( attachmentStrategy() );
   assert( action );
   action->setChecked( true );
 }
@@ -874,7 +874,7 @@ void KMReaderWin::readConfig(void)
 
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
-  KRadioAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
+  KToggleAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
   if ( raction )
     raction->setChecked( true );
 

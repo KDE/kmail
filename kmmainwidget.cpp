@@ -2662,13 +2662,13 @@ void KMMainWidget::setupActions()
 		     actionCollection(), "view_unread" );
   unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
 
-  mUnreadColumnToggle = new KRadioAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
+  mUnreadColumnToggle = new KToggleAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_column" );
   mUnreadColumnToggle->setExclusiveGroup( "view_unread_group" );
   unreadMenu->insert( mUnreadColumnToggle );
 
-  mUnreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
+  mUnreadTextToggle = new KToggleAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
   mUnreadTextToggle->setExclusiveGroup( "view_unread_group" );

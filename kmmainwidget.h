@@ -42,7 +42,7 @@ class QSplitter;
 class KActionMenu;
 class KActionCollection;
 class KConfig;
-class KRadioAction;
+class KToggleAction;
 class KToggleAction;
 class KMenuBar;
 class KToolBar;
@@ -437,8 +437,8 @@ private:
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
   /** we need to access those KToggleActions from the foldertree-popup */
-  KRadioAction* mUnreadColumnToggle;
-  KRadioAction* mUnreadTextToggle;
+  KToggleAction* mUnreadColumnToggle;
+  KToggleAction* mUnreadTextToggle;
   KToggleAction* mTotalColumnToggle;
 
   KToggleAction *mToggleShowQuickSearchAction;

@@ -36,7 +36,7 @@ class KActionCollection;
 class KAction;
 class KActionMenu;
 class KSelectAction;
-class KRadioAction;
+class KToggleAction;
 class KToggleAction;
 class KConfigBase;
 class KHTMLPart;
@@ -434,9 +434,9 @@ private:
   void saveSplitterSizes( KConfigBase & c ) const;
   QString createAtmFileLink() const;
 
-  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+  KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
-  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+  KToggleAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
 
