@@ -1105,12 +1105,12 @@ void KMComposeWin::setupActions(void)
                         this, SLOT(slotSendNow()), actionCollection(),"send_default");
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
+    actActionNowMenu =  new KActionMenu ( KIcon( "mail_send"), i18n("&Send Mail Via"),
 		    actionCollection(), "send_default_via" );
 
     (void) new KAction (i18n("Send &Later"), "queue", 0, this,
 			SLOT(slotSendLater()), actionCollection(),"send_alternative");
-    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue",
+    actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_alternative_via" );
 
   }
@@ -1120,14 +1120,14 @@ void KMComposeWin::setupActions(void)
     (void) new KAction (i18n("Send &Later"), "queue",
                         Qt::CTRL+Qt::Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),"send_default");
-    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue",
+    actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_default_via" );
 
    ( void )  new KAction( i18n("&Send Mail"), "mail_send", 0,
                         this, SLOT(slotSendNow()), actionCollection(),"send_alternative");
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
+    actActionNowMenu =  new KActionMenu ( KIcon("mail_send"), i18n("&Send Mail Via"),
 		    actionCollection(), "send_alternative_via" );
 
   }
@@ -1228,10 +1228,10 @@ void KMComposeWin::setupActions(void)
   mFixedFontAction->setChecked( GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
-  mUrgentAction = new KToggleAction (i18n("&Urgent"), 0,
+  mUrgentAction = new KToggleAction (i18n("&Urgent"), KShortcut(),
                                     actionCollection(),
                                     "urgent");
-  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
+  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), KShortcut(),
                                          actionCollection(),
                                          "options_request_mdn");
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
@@ -1239,7 +1239,7 @@ void KMComposeWin::setupActions(void)
   mEncodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
                                       0, this, SLOT(slotSetCharset() ),
                                       actionCollection(), "charsets" );
-  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
+  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), KShortcut(),
                       actionCollection(), "wordwrap");
   mWordWrapAction->setChecked(GlobalSettings::self()->wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
@@ -1410,16 +1410,16 @@ void KMComposeWin::setupActions(void)
   styleItems << i18n( "Ordered List (Alpha lower)" );
   styleItems << i18n( "Ordered List (Alpha upper)" );
 
-  listAction = new KSelectAction( i18n( "Select Style" ), 0, actionCollection(),
+  listAction = new KSelectAction( i18n( "Select Style" ), KShortcut(), actionCollection(),
                                  "text_list" );
   listAction->setItems( styleItems );
   connect( listAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotListAction( const QString& ) ) );
-  fontAction = new KFontAction( "Select Font", 0, actionCollection(),
+  fontAction = new KFontAction( "Select Font", KShortcut(), actionCollection(),
                                "text_font" );
   connect( fontAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction( "Select Size", 0, actionCollection(),
+  fontSizeAction = new KFontSizeAction( "Select Size", KShortcut(), actionCollection(),
                                        "text_size" );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
@@ -2645,9 +2645,9 @@ void KMComposeWin::slotInsertFile()
   fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));
-  fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(false), 4711,
-    false, 0, 0, 0);
-  KComboBox *combo = fdlg.toolBar()->getCombo(4711);
+  KComboBox *combo = new KComboBox( this );
+  combo->addItems( KMMsgBase::supportedEncodings(false) );
+  fdlg.toolBar()->addWidget( combo );
   for (int i = 0; i < combo->count(); i++)
     if (KGlobal::charsets()->codecForName(KGlobal::charsets()->
       encodingForName(combo->text(i)))
@@ -3575,9 +3575,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // show the appropriate icon
   if ( encrypt )
-    mEncryptAction->setIcon("encrypted");
+    mEncryptAction->setIcon( KIcon("encrypted") );
   else
-    mEncryptAction->setIcon("decrypted");
+    mEncryptAction->setIcon( KIcon("decrypted") );
 
   // mark the attachments for (no) encryption
   if ( canSignEncryptAttachments() ) {

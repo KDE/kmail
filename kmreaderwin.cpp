@@ -508,39 +508,40 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
 
+  QActionGroup *group = new QActionGroup( this );
   raction = new KToggleAction( i18n("View->headers->", "&Fancy Headers"), 0,
                               this, SLOT(slotFancyHeaders()),
                               ac, "view_headers_fancy" );
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
-  raction->setExclusiveGroup( "view_headers_group" );
+  group->addAction( raction );
   headerMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->headers->", "&Brief Headers"), 0,
                               this, SLOT(slotBriefHeaders()),
                               ac, "view_headers_brief" );
   raction->setToolTip( i18n("Show brief list of message headers") );
-  raction->setExclusiveGroup( "view_headers_group" );
+  group->addAction( raction );
   headerMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->headers->", "&Standard Headers"), 0,
                               this, SLOT(slotStandardHeaders()),
                               ac, "view_headers_standard" );
   raction->setToolTip( i18n("Show standard list of message headers") );
-  raction->setExclusiveGroup( "view_headers_group" );
+  group->addAction( raction );
   headerMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->headers->", "&Long Headers"), 0,
                               this, SLOT(slotLongHeaders()),
                               ac, "view_headers_long" );
   raction->setToolTip( i18n("Show long list of message headers") );
-  raction->setExclusiveGroup( "view_headers_group" );
+  group->addAction( raction );
   headerMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->headers->", "&All Headers"), 0,
                               this, SLOT(slotAllHeaders()),
                               ac, "view_headers_all" );
   raction->setToolTip( i18n("Show all message headers") );
-  raction->setExclusiveGroup( "view_headers_group" );
+  group->addAction( raction );
   headerMenu->insert( raction );
 
   // attachment style
@@ -550,32 +551,33 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect( attachmentMenu, SIGNAL(activated()),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
+  group = new QActionGroup( this );
   raction = new KToggleAction( i18n("View->attachments->", "&As Icons"), 0,
                               this, SLOT(slotIconicAttachments()),
                               ac, "view_attachments_as_icons" );
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
-  raction->setExclusiveGroup( "view_attachments_group" );
+  group->addAction( raction );
   attachmentMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->attachments->", "&Smart"), 0,
                               this, SLOT(slotSmartAttachments()),
                               ac, "view_attachments_smart" );
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
-  raction->setExclusiveGroup( "view_attachments_group" );
+  group->addAction( raction );
   attachmentMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->attachments->", "&Inline"), 0,
                               this, SLOT(slotInlineAttachments()),
                               ac, "view_attachments_inline" );
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
-  raction->setExclusiveGroup( "view_attachments_group" );
+  group->addAction( raction );
   attachmentMenu->insert( raction );
 
   raction = new KToggleAction( i18n("View->attachments->", "&Hide"), 0,
                               this, SLOT(slotHideAttachments()),
                               ac, "view_attachments_hide" );
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
-  raction->setExclusiveGroup( "view_attachments_group" );
+  group->addAction( raction );
   attachmentMenu->insert( raction );
 
   // Set Encoding submenu

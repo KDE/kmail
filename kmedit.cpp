@@ -24,6 +24,7 @@
 #include <QContextMenuEvent>
 #include <Q3PopupMenu>
 #include <QDragEnterEvent>
+#include <QTextStream>
 using KPIM::MailListDrag;
 
 #include <libkdepim/kfileio.h>

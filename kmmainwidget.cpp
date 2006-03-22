@@ -536,7 +536,7 @@ void KMMainWidget::createWidgets(void)
 #endif
   mSearchAndHeaders = new KVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
-  mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
+  mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
 
 
@@ -551,7 +551,7 @@ void KMMainWidget::createWidgets(void)
 #endif
   mQuickSearchLine->setObjectName( "headers quick search line" );
   label->setBuddy( mQuickSearchLine );
-  mSearchToolBar->setStretchableWidget( mQuickSearchLine );
+  mSearchToolBar->addWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
   if ( !GlobalSettings::self()->quickSearchActive() ) mSearchToolBar->hide();
@@ -2308,7 +2308,7 @@ void KMMainWidget::setupActions()
 		      actionCollection(), "check_mail" );
 
   KActionMenu *actActionMenu = new
-    KActionMenu( i18n("Check Mail &In"), "mail_get", actionCollection(),
+    KActionMenu( KIcon("mail_get"), i18n("Check Mail &In"), actionCollection(),
 				   	"check_mail_in" );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
@@ -2325,7 +2325,7 @@ void KMMainWidget::setupActions()
                      SLOT(slotOnlineStatus()), actionCollection(), "online_status");
 
   KActionMenu *sendActionMenu = new
-    KActionMenu( i18n("Send Queued Messages Via"), "mail_send_via", actionCollection(),
+    KActionMenu( KIcon("mail_send_via"), i18n("Send Queued Messages Via"), actionCollection(),
                                        "send_queued_via" );
   sendActionMenu->setDelayed(true);
 
@@ -2386,7 +2386,8 @@ void KMMainWidget::setupActions()
    * as a part, though. */
   mDeleteAction = new KAction( i18n("&Delete"), "editdelete", Qt::SHIFT+Qt::Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
-  mDeleteAction->plugAccel( actionCollection()->kaccel() );
+#warning Port me!
+//  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
   mTrashThreadAction = new KAction( KGuiItem( i18n("M&ove Thread to Trash"), "edittrash",
                                        i18n("Move thread to trashcan") ),
@@ -2464,8 +2465,8 @@ void KMMainWidget::setupActions()
                       Qt::CTRL+Qt::SHIFT+Qt::Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
 
-  mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
-					"mail_forward", actionCollection(),
+  mForwardActionMenu = new KActionMenu( KIcon("mail_forward"), i18n("Message->","&Forward"),
+					actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
@@ -2484,8 +2485,8 @@ void KMMainWidget::setupActions()
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
-  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
-                                      "mail_reply", actionCollection(),
+  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18n("Message->","&Reply"),
+                                      actionCollection(),
                                       "message_reply_menu" );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
@@ -2521,7 +2522,7 @@ void KMMainWidget::setupActions()
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   //----- Create filter actions
-  mFilterMenu = new KActionMenu( i18n("&Create Filter"), "filter", actionCollection(), "create_filter" );
+  mFilterMenu = new KActionMenu( KIcon("filter"), i18n("&Create Filter"), actionCollection(), "create_filter" );
   connect( mFilterMenu, SIGNAL(activated()), this,
 	   SLOT(slotFilter()) );
   mSubjectFilterAction = new KAction( i18n("Filter on &Subject..."), 0, this,
@@ -2548,7 +2549,8 @@ void KMMainWidget::setupActions()
 
   mEditAction = new KAction( i18n("&Edit Message"), "edit", Qt::Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
-  mEditAction->plugAccel( actionCollection()->kaccel() );
+#warning Port me!
+//  mEditAction->plugAccel( actionCollection()->kaccel() );
 
   //----- "Mark Message" submenu
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
@@ -2661,17 +2663,18 @@ void KMMainWidget::setupActions()
     new KActionMenu( i18n("View->", "&Unread Count"),
 		     actionCollection(), "view_unread" );
   unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
+  QActionGroup *group = new QActionGroup( this );
 
   mUnreadColumnToggle = new KToggleAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_column" );
-  mUnreadColumnToggle->setExclusiveGroup( "view_unread_group" );
+  group->addAction( mUnreadColumnToggle );
   unreadMenu->insert( mUnreadColumnToggle );
 
   mUnreadTextToggle = new KToggleAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
-  mUnreadTextToggle->setExclusiveGroup( "view_unread_group" );
+  group->addAction( mUnreadTextToggle );
   unreadMenu->insert( mUnreadTextToggle );
 
   // toggle for total column
@@ -2712,7 +2715,8 @@ void KMMainWidget::setupActions()
   KAction* dukeOfMonmoth = new KAction( i18n("&Display Message"), Qt::Key_Return, this,
                         SLOT( slotDisplayCurrentMessage() ), actionCollection(),
                         "display_message" );
-  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
+#warning Port me!
+//  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString(),
@@ -3304,9 +3308,10 @@ void KMMainWidget::initializeFolderShortcutActions()
   // If we are loaded as a part, this will be set to fals, since the part
   // does xml loading. Temporarily set to true, in that case, so the
   // accels are added to the collection as expected.
-  bool old = actionCollection()->isAutoConnectShortcuts();
+#warning Port me: *AutoConnectShortcuts has beeen removed from KActionCollection
+//  bool old = actionCollection()->isAutoConnectShortcuts();
 
-  actionCollection()->setAutoConnectShortcuts( true );
+//  actionCollection()->setAutoConnectShortcuts( true );
   QList< QPointer< KMFolder > > folders = kmkernel->allFolders();
   QList< QPointer< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
@@ -3314,7 +3319,7 @@ void KMMainWidget::initializeFolderShortcutActions()
     ++it;
     slotShortcutChanged( folder ); // load the initial accel
   }
-  actionCollection()->setAutoConnectShortcuts( old );
+//  actionCollection()->setAutoConnectShortcuts( old );
 }
 
 
@@ -3402,10 +3407,9 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
 
 bool KMMainWidget::shortcutIsValid( const KShortcut &sc ) const
 {
-  KActionPtrList actions = actionCollection()->actions();
-  KActionPtrList::Iterator it( actions.begin() );
-  for ( ; it != actions.end(); it++ ) {
-    if ( (*it)->shortcut() == sc ) return false;
+  QList<KAction*> actions = actionCollection()->actions();
+  foreach ( KAction *a, actions ) {
+    if ( a->shortcut() == sc ) return false;
   }
   return true;
 }
@@ -3426,7 +3430,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   KAction* action =
     new KAction(actionlabel, folder->shortcut(), c, SLOT(start()),
                 actionCollection(), normalizedName.toLocal8Bit());
-  action->setIcon( folder->unreadIconPath() );
+  action->setIcon( KIcon( folder->unreadIconPath() ) );
   c->setAction( action ); // will be deleted along with the command
 }
 

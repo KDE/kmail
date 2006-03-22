@@ -239,8 +239,9 @@ void KMReaderMainWin::setupAccel()
                                    "view_source" );
 
 
-  mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
-					"mail_forward", actionCollection(),
+  mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
+                                        i18n("Message->","&Forward"),
+					actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
            SLOT( slotForwardMsg() ) );
@@ -261,8 +262,8 @@ void KMReaderMainWin::setupAccel()
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
 
-  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
-                                      "mail_reply", actionCollection(),
+  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18n("Message->","&Reply"),
+                                      actionCollection(),
                                       "message_reply_menu" );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
