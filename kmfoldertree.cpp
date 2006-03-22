@@ -146,11 +146,11 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     icon = mFolder->normalIconPath();
   }
   KIconLoader * il = KGlobal::instance()->iconLoader();
-  QPixmap pm = il->loadIcon( icon, KIcon::Small, size,
-                             KIcon::DefaultState, 0, true );
+  QPixmap pm = il->loadIcon( icon, K3Icon::Small, size,
+                             K3Icon::DefaultState, 0, true );
   if ( pm.isNull() ) {
-      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
-                         KIcon::DefaultState, 0, true );
+      pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
+                         K3Icon::DefaultState, 0, true );
   }
 
   return pm;
@@ -167,22 +167,22 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
   if ( mFolder->useCustomIcons() ) {
-    pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, size,
-                       KIcon::DefaultState, 0, true );
+    pm = il->loadIcon( mFolder->unreadIconPath(), K3Icon::Small, size,
+                       K3Icon::DefaultState, 0, true );
     if ( pm.isNull() )
-      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
-                         KIcon::DefaultState, 0, true );
+      pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
+                         K3Icon::DefaultState, 0, true );
   }
   if ( pm.isNull() ) {
     if ( mFolder && mFolder->noContent() ) {
-      pm = il->loadIcon( "folder_grey_open", KIcon::Small, size,
-                         KIcon::DefaultState, 0, true );
+      pm = il->loadIcon( "folder_grey_open", K3Icon::Small, size,
+                         K3Icon::DefaultState, 0, true );
     } else {
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
-                         KIcon::Small, size, KIcon::DefaultState, 0, true );
+                         K3Icon::Small, size, K3Icon::DefaultState, 0, true );
       if ( pm.isNull() )
-        pm = il->loadIcon( "folder_open", KIcon::Small, size,
-                           KIcon::DefaultState, 0, true );
+        pm = il->loadIcon( "folder_open", K3Icon::Small, size,
+                           K3Icon::DefaultState, 0, true );
     }
   }
 

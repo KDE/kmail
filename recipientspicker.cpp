@@ -54,7 +54,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
 
-  mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", KIcon::Small );
+  mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", K3Icon::Small );
 
   mKey = "D" + list->name();
 }
@@ -69,7 +69,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   if ( !img.isNull() )
     mIcon = img.smoothScale( 20, 20, Qt::KeepAspectRatio );
   else
-    mIcon = KGlobal::iconLoader()->loadIcon( "personal", KIcon::Small );
+    mIcon = KGlobal::iconLoader()->loadIcon( "personal", K3Icon::Small );
 
   mKey = "A" + a.preferredEmail();
 }
@@ -282,7 +282,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   QToolButton *button = new QToolButton( this );
   button->setIconSet( KGlobal::iconLoader()->loadIconSet(
-              KApplication::reverseLayout() ? "clear_left":"locationbar_erase", KIcon::Small, 0 ) );
+              KApplication::reverseLayout() ? "clear_left":"locationbar_erase", K3Icon::Small, 0 ) );
   searchLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );
 

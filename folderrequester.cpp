@@ -55,7 +55,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   edit->setReadOnly( true );
 
   QToolButton* button = new QToolButton( this );
-  button->setIconSet( KGlobal::iconLoader()->loadIconSet( "folder", KIcon::Small, 0 ) );
+  button->setIconSet( KGlobal::iconLoader()->loadIconSet( "folder", K3Icon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotOpenDialog()) );
 
   setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,

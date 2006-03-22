@@ -32,7 +32,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString() ,this );
-  mBtn->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
+  mBtn->setPixmap( BarIcon( "contents", K3Icon::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
   hbl->addWidget( mBtn );
 

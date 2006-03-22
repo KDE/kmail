@@ -220,8 +220,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
                    KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
   , mProfileDialog( 0 )
 {
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIcon::Desktop ), IconSize( KIcon::Desktop ) ),
-                  qApp->windowIcon().pixmap(IconSize( KIcon::Small ), IconSize( KIcon::Small ) ) );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
+                  qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
   showButton( User1, true );
 
   addModule ( "kmail_config_identity", false );

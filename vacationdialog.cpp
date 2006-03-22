@@ -46,7 +46,7 @@ namespace KMail {
 				  const char * name, bool modal )
     : KDialogBase( Plain, caption, Ok|Cancel|Default, Ok, parent, name, modal )
   {
-    KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
+    KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 
     static const int rows = 4;
     int row = -1;

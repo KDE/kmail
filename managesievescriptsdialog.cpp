@@ -40,7 +40,7 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
 {
   setAttribute( Qt::WA_GroupLeader );
   setAttribute( Qt::WA_DeleteOnClose );
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, 0 );
 

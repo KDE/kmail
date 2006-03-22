@@ -85,7 +85,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLastFocus(0),
   mKMMainWidget(w)
 {
-  KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)));
+  KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );

@@ -389,7 +389,7 @@ QString KMMessagePart::iconName() const
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString(), false );
   fileName =
-    KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
+    KGlobal::instance()->iconLoader()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
 }
 

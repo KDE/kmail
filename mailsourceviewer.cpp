@@ -62,8 +62,8 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   accel->connectItem( accel->insertItem( Qt::Key_W+Qt::CTRL ), this , SLOT( close() ));
 #warning "kde4 port setWordWrap\n";
   //setWordWrap( KTextBrowser::NoWrap );
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIcon::Desktop ), IconSize( KIcon::Desktop ) ),
-                  qApp->windowIcon().pixmap( IconSize( KIcon::Small ), IconSize( KIcon::Small ) ) );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
+                  qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
 }
 
 MailSourceViewer::~MailSourceViewer()

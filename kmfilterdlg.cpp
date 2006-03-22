@@ -114,7 +114,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 		 Ok /* default btn */, false /* separator */),
   bPopFilter(popFilter)
 {
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget( this );
@@ -226,7 +226,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 
       mFilterActionIconButton = new KIconButton( hbox );
       mFilterActionLabel->setBuddy( mFilterActionIconButton );
-      mFilterActionIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
+      mFilterActionIconButton->setIconType( K3Icon::NoGroup, K3Icon::Any, true );
       mFilterActionIconButton->setIconSize( 16 );
       mFilterActionIconButton->setIcon( "gear" );
       mFilterActionIconButton->setEnabled( false );
@@ -576,11 +576,11 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   hb->setSpacing(4);
   mBtnUp = new KPushButton( QString(), hb );
   mBtnUp->setAutoRepeat( true );
-  mBtnUp->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
+  mBtnUp->setIconSet( BarIconSet( "up", K3Icon::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
   mBtnDown = new KPushButton( QString(), hb );
   mBtnDown->setAutoRepeat( true );
-  mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
+  mBtnDown->setIconSet( BarIconSet( "down", K3Icon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
   mBtnUp->setToolTip( i18n("Up") );
   mBtnDown->setToolTip( i18n("Down") );
@@ -593,13 +593,13 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   hb = new KHBox(this);
   hb->setSpacing(4);
   mBtnNew = new QPushButton( QString(), hb );
-  mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
+  mBtnNew->setPixmap( BarIcon( "filenew", K3Icon::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
   mBtnCopy = new QPushButton( QString(), hb );
-  mBtnCopy->setPixmap( BarIcon( "editcopy", KIcon::SizeSmall ) );
+  mBtnCopy->setPixmap( BarIcon( "editcopy", K3Icon::SizeSmall ) );
   mBtnCopy->setMinimumSize( mBtnCopy->sizeHint() * 1.2 );
   mBtnDelete = new QPushButton( QString(), hb );
-  mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
+  mBtnDelete->setPixmap( BarIcon( "editdelete", K3Icon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
   mBtnNew->setToolTip( i18n("New") );
