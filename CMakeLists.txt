@@ -194,7 +194,7 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBRARIES} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal )
+target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install_targets(${LIB_INSTALL_DIR} kmailprivate )
@@ -288,7 +288,7 @@ if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
 
-target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBRARIES} kmailprivate kdepim )
+target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBS} kmailprivate kdepim )
 
 endif(KDE4_BUILD_TESTS)
 
