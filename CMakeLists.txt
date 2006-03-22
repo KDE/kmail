@@ -194,7 +194,7 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${LIB_KDE3SUPPORT} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal )
+target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBRARIES} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install_targets(${LIB_INSTALL_DIR} kmailprivate )
@@ -210,7 +210,7 @@ kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kcm_kmail )
 
-target_link_libraries(kcm_kmail  ${QT_AND_KDECORE_LIBS} kmailprivate )
+target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kcm_kmail )
 
@@ -227,7 +227,7 @@ kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmailpart )
 
-target_link_libraries(kmailpart  ${QT_AND_KDECORE_LIBS} kmailprivate )
+target_link_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kmailpart )
 
@@ -242,7 +242,7 @@ kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${km
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_application_octetstream )
 
-target_link_libraries(kmail_bodypartformatter_application_octetstream  ${QT_AND_KDECORE_LIBS} )
+target_link_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kmail_bodypartformatter_application_octetstream )
 
@@ -255,7 +255,7 @@ kde4_automoc(${kmail_SRCS})
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
-target_link_libraries(kmail  ${QT_AND_KDECORE_LIBS} kmailprivate )
+target_link_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install_targets(/bin kmail )
 
@@ -274,7 +274,7 @@ if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(dcoptest ${dcoptest_SRCS})
 
-target_link_libraries(dcoptest  ${QT_AND_KDECORE_LIBS} kio )
+target_link_libraries(dcoptest  ${KDE4_KDECORE_LIBS} kio )
 
 endif(KDE4_BUILD_TESTS)
 
@@ -288,7 +288,7 @@ if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
 
-target_link_libraries(recipienteditortest  ${LIB_KIO} kmailprivate kdepim )
+target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBRARIES} kmailprivate kdepim )
 
 endif(KDE4_BUILD_TESTS)
 
