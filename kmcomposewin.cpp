@@ -2655,7 +2655,7 @@ void KMComposeWin::slotInsertFile()
   if (!fdlg.exec()) return;
 
   KUrl u = fdlg.selectedURL();
-  mRecentAction->addURL(u);
+  mRecentAction->addUrl(u);
   // Prevent race condition updating list when multiple composers are open
   {
     KConfig *config = KMKernel::config();
