@@ -274,7 +274,7 @@ if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(dcoptest ${dcoptest_SRCS})
 
-target_link_libraries(dcoptest  ${KDE4_KDECORE_LIBS} kio )
+target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
 
 endif(KDE4_BUILD_TESTS)
 
