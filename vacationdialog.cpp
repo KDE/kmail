@@ -71,7 +71,7 @@ namespace KMail {
     // "Resent only after" spinbox and label:
     ++row;
     mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, 10, plainPage(), "mIntervalSpin" );
-    mIntervalSpin->setSuffix( i18n(" days") );
+    connect(mIntervalSpin, SIGNAL( valueChanged( int )), SLOT( slotIntervalSpinChanged( int ) ) );
     glay->addWidget( new QLabel( mIntervalSpin, i18n("&Resend notification only after:"), plainPage() ), row, 0 );
     glay->addWidget( mIntervalSpin, row, 1 );
 
@@ -137,6 +137,10 @@ namespace KMail {
 
   void VacationDialog::setMailAliases( const QString & aliases ) {
     mMailAliasesEdit->setText( aliases );
+  }
+
+  void VacationDialog::slotIntervalSpinChanged ( int value ) {
+    mIntervalSpin->setSuffix( i18n(" day", " days", value) );
   }
 
 } // namespace KMail

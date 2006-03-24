@@ -632,7 +632,8 @@ void AccountDialog::makePopAccountPage()
            this, SLOT( slotEnableLeaveOnServerDays(bool)) );
   mPop.leaveOnServerDaysSpin = new KIntNumInput( afterDaysBox );
   mPop.leaveOnServerDaysSpin->setRange( 1, 365, 1, false );
-  mPop.leaveOnServerDaysSpin->setSuffix( i18n(" days") );
+  connect( mPop.leaveOnServerDaysSpin, SIGNAL(valueChanged(int)),
+           SLOT(slotLeaveOnServerDaysChanged(int)));
   mPop.leaveOnServerDaysSpin->setValue( 1 );
   afterDaysBox->setStretchFactor( mPop.leaveOnServerDaysSpin, 1 );
   grid->addMultiCellWidget( afterDaysBox, 7, 7, 0, 1 );
@@ -644,7 +645,8 @@ void AccountDialog::makePopAccountPage()
            this, SLOT( slotEnableLeaveOnServerCount(bool)) );
   mPop.leaveOnServerCountSpin = new KIntNumInput( leaveOnServerCountBox );
   mPop.leaveOnServerCountSpin->setRange( 1, 999999, 1, false );
-  mPop.leaveOnServerCountSpin->setSuffix( i18n(" messages") );
+  connect( mPop.leaveOnServerCountSpin, SIGNAL(valueChanged(int)),
+           SLOT(slotLeaveOnServerCountChanged(int)));
   mPop.leaveOnServerCountSpin->setValue( 100 );
   grid->addMultiCellWidget( leaveOnServerCountBox, 8, 8, 0, 1 );
   QHBox *leaveOnServerSizeBox = new QHBox( page1 );
@@ -696,8 +698,9 @@ void AccountDialog::makePopAccountPage()
   mPop.filterOnServerSizeSpin->setEnabled( false );
   hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
   mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
+  connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
+          SLOT(slotFilterOnServerSizeChanged(int)));
   mPop.filterOnServerSizeSpin->setValue( 50000 );
-  mPop.filterOnServerSizeSpin->setSuffix( i18n(" byte") );
   grid->addMultiCellWidget( hbox, 11, 11, 0, 1 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
 	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
@@ -1680,6 +1683,23 @@ void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
   checkHighest( mImap.encryptionGroup );
   delete mServerTest;
   mServerTest = 0;
+}
+
+void AccountDialog::slotLeaveOnServerDaysChanged ( int value )
+{
+  mPop.leaveOnServerDaysSpin->setSuffix( i18n(" day", " days", value) );
+}
+
+
+void AccountDialog::slotLeaveOnServerCountChanged ( int value )
+{
+  mPop.leaveOnServerCountSpin->setSuffix( i18n(" message", " messages", value) );
+}
+
+
+void AccountDialog::slotFilterOnServerSizeChanged ( int value )
+{
+  mPop.filterOnServerSizeSpin->setSuffix( i18n(" byte", " bytes", value) );
 }
 
 

@@ -224,6 +224,9 @@ class AccountDialog : public KDialogBase
     void slotEditOtherUsersNamespace();
     void slotEditSharedNamespace();
     void slotConnectionResult( int errorCode, const QString& );
+    void slotLeaveOnServerDaysChanged( int value );
+    void slotLeaveOnServerCountChanged( int value );
+    void slotFilterOnServerSizeChanged( int value );
 #if 0
     // Moc doesn't understand #if 0, so they are also commented out
     // void slotClearResourceAllocations();
