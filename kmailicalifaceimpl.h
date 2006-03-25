@@ -41,6 +41,7 @@
 #include <qdict.h>
 #include <qguardedptr.h>
 
+class QTextCodec;
 class KMFolder;
 class KMMessage;
 class KMFolderDir;
@@ -292,6 +293,7 @@ private:
   bool mUseResourceIMAP;
   bool mResourceQuiet;
   bool mHideFolders;
+  const QTextCodec* mUTF8Codec;
 };
 
 #endif // KMAILICALIFACEIMPL_H

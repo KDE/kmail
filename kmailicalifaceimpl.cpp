@@ -139,6 +139,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 
   mExtraFolders.setAutoDelete( true );
+
+  mUTF8Codec = QTextCodec::codecForName( "utf8" );
 }
 
 // Receive an iCal or vCard from the resource
@@ -612,7 +614,6 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
                   QMIN( f->count(), startIndex + nbMessages );
   kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
                 << resource << " ) from " << startIndex << " to " << stopIndex << endl;
-
   for(int i = startIndex; i < stopIndex; ++i) {
     KMMessage* msg = f->storage()->readTemporaryMsg(i);
     if ( msg ) {
@@ -626,7 +627,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
-          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) ));
+          aMap.insert( msg->getMsgSerNum(), msgPart.bodyToUnicode( mUTF8Codec ) );
         } else {
           // This is *not* an error: it may be that not all of the messages
           // have a message part that is matching the wanted MIME type
