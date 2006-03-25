@@ -189,10 +189,10 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
    * in this branch.
    * Note that the unencrypted mail will be lost if the mail remains in
    * the outbox across a restart anyhow, but that never worked, afaikt. */
-  const int idx = openOutbox.folder()->count() - 1;
+  const int idx = kmkernel->outboxFolder()->count() - 1;
   KMMessage * const unencryptedMsg = aMsg->unencryptedMsg();
-  openOutbox.folder()->unGetMsg( idx );
-  KMMessage * const tempMsg = openOutbox.folder()->getMsg( idx );
+  kmkernel->outboxFolder()->unGetMsg( idx );
+  KMMessage * const tempMsg = kmkernel->outboxFolder()->getMsg( idx );
   tempMsg->setUnencryptedMsg( unencryptedMsg );
 
   if (sendNow && !mSendInProgress) rc = sendQueued();
