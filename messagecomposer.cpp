@@ -1684,6 +1684,7 @@ void MessageComposer::continueComposeMessage( KMMessage& theMessage,
 					     mPreviousBoundaryLevel,
 					     mOldBodyPart, mNewBodyPart,
 					     format, this ) );
+
 }
 
 void MessageComposer::encryptMessage( KMMessage* msg,
@@ -1910,8 +1911,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     if ( msg->typeStr() == "text" && msg->subtypeStr() == "calendar" ) {
       msg->setBody( QCString( msg->bodyDecodedBinary() ) );
       msg->setHeaderField( "Content-Transfer-Encoding", "7bit" );
+      msg->getTopLevelPart()->Assemble();
     }
-
   }
 
   msg->setHeaderField( "X-KMail-Recipients",
