@@ -55,6 +55,9 @@ namespace KMail {
     KMime::Types::AddrSpecList mailAliases() const;
     virtual void setMailAliases( const KMime::Types::AddrSpecList & aliases );
     virtual void setMailAliases( const QString & aliases );
+    
+  private slots:
+    void slotIntervalSpinChanged( int value );
 
   protected:
     QCheckBox   * mActiveCheck;
