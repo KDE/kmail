@@ -1909,7 +1909,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
      * here.
      */
     if ( msg->typeStr() == "text" && msg->subtypeStr() == "calendar" ) {
-      msg->setBody( QCString( msg->bodyDecodedBinary() ) );
+      msg->setBody( msg->bodyDecoded() );
       msg->setHeaderField( "Content-Transfer-Encoding", "7bit" );
       msg->getTopLevelPart()->Assemble();
     }
