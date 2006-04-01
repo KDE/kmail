@@ -3348,15 +3348,12 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
            mAttachWordsListEditor, SLOT(setEnabled(bool)) );
 }
 
-void ComposerPage::AttachmentsTab::doLoadOther() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-
+void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings() {
   mOutlookCompatibleCheck->setChecked(
-    composer.readBoolEntry( "outlook-compatible-attachments", false ) );
+    GlobalSettings::self()->outlookCompatibleAttachments() );
   mMissingAttachmentDetectionCheck->setChecked(
-    composer.readBoolEntry( "showForgottenAttachmentWarning", true ) );
-  QStringList attachWordsList =
-    composer.readListEntry( "attachment-keywords" );
+    GlobalSettings::self()->showForgottenAttachmentWarning() );
+  QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
   if ( attachWordsList.isEmpty() ) {
     // default value
     attachWordsList << QString::fromLatin1("attachment")
@@ -3371,13 +3368,12 @@ void ComposerPage::AttachmentsTab::doLoadOther() {
 }
 
 void ComposerPage::AttachmentsTab::save() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-  composer.writeEntry( "outlook-compatible-attachments",
-                       mOutlookCompatibleCheck->isChecked() );
-  composer.writeEntry( "showForgottenAttachmentWarning",
-                       mMissingAttachmentDetectionCheck->isChecked() );
-  composer.writeEntry( "attachment-keywords",
-                       mAttachWordsListEditor->stringList() );
+  GlobalSettings::self()->setOutlookCompatibleAttachments(
+    mOutlookCompatibleCheck->isChecked() );
+  GlobalSettings::self()->setShowForgottenAttachmentWarning(
+    mMissingAttachmentDetectionCheck->isChecked() );
+  GlobalSettings::self()->setAttachmentKeywords(
+    mAttachWordsListEditor->stringList() );
 }
 
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()

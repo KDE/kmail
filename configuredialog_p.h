@@ -715,8 +715,7 @@ private slots:
   void slotOutlookCompatibleClicked();
 
 private:
-  //virtual void doLoadFromGlobalSettings();
-  virtual void doLoadOther();
+  virtual void doLoadFromGlobalSettings();
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
