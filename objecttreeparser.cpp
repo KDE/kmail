@@ -92,6 +92,7 @@
 #include <qbuffer.h>
 #include <qpixmap.h>
 #include <qpainter.h>
+#include <qregexp.h>
 
 // other headers
 #include <memory>
@@ -765,30 +766,21 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   //static
   bool ObjectTreeParser::containsExternalReferences( const QCString & str )
   {
-    int httpPos = str.find( "\"http:", 0, true );
-    int httpsPos = str.find( "\"https:", 0, true );
+    QRegExp httpRegExp("(\\\"|\\\'|url\\s*\\(\\s*)http[s]?:");
+    int httpPos = str.find( httpRegExp, 0 );
 
-    while ( httpPos >= 0 || httpsPos >= 0 ) {
-      // pos = index of next occurrence of "http: or "https: whichever comes first
-      int pos = ( httpPos < httpsPos )
-                ? ( ( httpPos >= 0 ) ? httpPos : httpsPos )
-                : ( ( httpsPos >= 0 ) ? httpsPos : httpPos );
+    while ( httpPos >= 0 ) {
       // look backwards for "href"
-      if ( pos > 5 ) {
-        int hrefPos = str.findRev( "href", pos - 5, true );
+      if ( httpPos > 5 ) {
+        int hrefPos = str.findRev( "href", httpPos - 5, true );
         // if no 'href' is found or the distance between 'href' and '"http[s]:'
         // is larger than 7 (7 is the distance in 'href = "http[s]:') then
         // we assume that we have found an external reference
-        if ( ( hrefPos == -1 ) || ( pos - hrefPos > 7 ) )
+        if ( ( hrefPos == -1 ) || ( httpPos - hrefPos > 7 ) )
           return true;
       }
       // find next occurrence of "http: or "https:
-      if ( pos == httpPos ) {
-        httpPos = str.find( "\"http:", httpPos + 6, true );
-      }
-      else {
-        httpsPos = str.find( "\"https:", httpsPos + 7, true );
-      }
+      httpPos = str.find( httpRegExp, httpPos + 6 );
     }
     return false;
   }
