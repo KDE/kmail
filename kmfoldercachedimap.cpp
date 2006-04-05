@@ -542,8 +542,11 @@ void KMFolderCachedImap::serverSync( bool recurse )
   mRecurse = recurse;
   assert( account() );
 
-  mAccount->mailCheckProgressItem()->reset();
-  mAccount->mailCheckProgressItem()->setTotalItems( 100 );
+  ProgressItem *progressItem = mAccount->mailCheckProgressItem();
+  if ( progressItem ) {
+    progressItem->reset();
+    progressItem->setTotalItems( 100 );
+  }
   mProgress = 0;
 
 #if 0
