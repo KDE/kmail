@@ -1994,7 +1994,7 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
   kdDebug(5006) << "contents type: " << contentsType << endl;
   KMFolder *folder = findResourceFolder( parent );
   KMFolderDir *parentFolderDir = !parent.isEmpty() && folder ? folder->createChildFolder(): mFolderParentDir;
-  if ( parentFolderDir->hasNamedFolder( resource ) ) return false;
+  if ( !parentFolderDir || parentFolderDir->hasNamedFolder( resource ) ) return false;
 
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
