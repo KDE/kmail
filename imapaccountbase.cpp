@@ -1281,7 +1281,8 @@ namespace KMail {
     if ( delim.isEmpty() ) {
       delim = "/";
     }
-    if ( !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
+    if ( !newName.isEmpty() && 
+         !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
       newName = newName + delim;
     }
     newName = newName + folderName;
