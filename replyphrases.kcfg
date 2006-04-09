@@ -20,17 +20,14 @@
     <entry name="PhraseForward" type="String" key="phrase-forward">
       <label></label>
       <whatsthis></whatsthis>
-      <default>Forwarded Message</default>
     </entry>
     <entry name="PhraseReplySender" type="String" key="phrase-reply">
       <label></label>
       <whatsthis></whatsthis>
-      <default>On %D, you wrote:</default>
     </entry>
     <entry name="PhraseReplyAll" type="String" key="phrase-reply-all">
       <label></label>
       <whatsthis></whatsthis>
-      <default>On %D, %F wrote:</default>
     </entry>
 
   </group>
