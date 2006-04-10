@@ -345,13 +345,13 @@ void ProfileDialog::setup() {
     if ( name.isEmpty() ) {
       kWarning(5006) << "File \"" << (*it)
 		      << "\" doesn't provide a profile name!" << endl;
-      name = i18n("Missing profile name placeholder","Unnamed");
+      name = i18nc("Missing profile name placeholder","Unnamed");
     }
     QString desc = profile.readEntry( "Comment" );
     if ( desc.isEmpty() ) {
       kWarning(5006) << "File \"" << (*it)
 		      << "\" doesn't provide a description!" << endl;
-      desc = i18n("Missing profile description placeholder","Not available");
+      desc = i18nc("Missing profile description placeholder","Not available");
     }
     listItem = new Q3ListViewItem( mListView, listItem, name, desc );
   }

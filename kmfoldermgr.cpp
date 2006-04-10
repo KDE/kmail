@@ -141,16 +141,16 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   if ( info.exists() ) {
    if ( !info.isDir() ) {
       KMessageBox::sorry(0, i18n("'%1' does not appear to be a folder.\n"
-                                 "Please move the file out of the way.")
-                            .arg( mBasePath ) );
+                                 "Please move the file out of the way.",
+                              mBasePath ) );
       ::exit(-1);
     }
     if ( !info.isReadable() || !info.isWritable() ) {
       KMessageBox::sorry(0, i18n("The permissions of the folder '%1' are "
                                "incorrect;\n"
                                "please make sure that you can view and modify "
-                               "the content of this folder.")
-                            .arg( mBasePath ) );
+                               "the content of this folder.",
+                              mBasePath ) );
       ::exit(-1);
     }
    } else {
@@ -158,8 +158,8 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
     if ( ::mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
-                                 "modify the content of the folder '%2'.")
-                            .arg( mBasePath ).arg( QDir::homePath() ) );
+                                 "modify the content of the folder '%2'.",
+                              mBasePath, QDir::homePath() ) );
       ::exit(-1);
     }
   }
@@ -303,7 +303,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
 
     folder = createFolder(aFolderName, sysFldr, type);
     if (!folder) {
-      KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
+      KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.", aFolderName, mBasePath)));
       exit(-1);
     }
     if ( id > 0 )

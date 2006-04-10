@@ -477,8 +477,8 @@ void ActionScheduler::enqueue(quint32 serNum)
 void ActionScheduler::processMessage()
 {
 kDebug(5006) << debug() << endl;
-  QString statusMsg = i18n("%1 messages waiting to be filtered");
-  statusMsg = statusMsg.arg( mFetchSerNums.count() );
+  QString statusMsg = i18n( "%1 messages waiting to be filtered",
+                            mFetchSerNums.count() );
   KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
 
   if (mExecutingLock)
@@ -607,8 +607,8 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
     KMMessage *msg = message( *mMessageIt );
     if (msg) {
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText( i18n( "<b>Applying filter action:</b> %1" )
-                        .arg( mFilterAction->displayString() ) );
+        QString logText( i18n( "<b>Applying filter action:</b> %1" ,
+                          mFilterAction->displayString() ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }
       KMFilterAction *action = mFilterAction;

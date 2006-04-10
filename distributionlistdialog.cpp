@@ -186,7 +186,7 @@ void DistributionListDialog::slotUser1()
   if ( manager.list( name ) ) {
     KMessageBox::information( this,
       i18n( "<qt>Distribution list with the given name <b>%1</b> "
-        "already exists. Please select a different name.</qt>" ).arg( name ) );
+        "already exists. Please select a different name.</qt>", name ) );
     return;
   }
 

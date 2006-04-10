@@ -858,10 +858,10 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     if ( !folder->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-        summary += "<br>" + i18n( "1 new message in %1",
+        summary += "<br>" + i18np( "1 new message in %1",
                                   "%n new messages in %1",
-                                  newInFolder.find( *it ).data() )
-                            .arg( folder->prettyURL() );
+                                  newInFolder.find( *it ).data() ,
+                              folder->prettyURL() );
       }
     }
   }
@@ -870,9 +870,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     return;
 
   if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-    summary = i18n( "%1 is a list of the number of new messages per folder",
-                    "<b>New mail arrived</b><br>%1" )
-              .arg( summary );
+    summary = i18nc( "%1 is a list of the number of new messages per folder",
+                    "<b>New mail arrived</b><br>%1" ,
+                summary );
   }
   else {
     summary = i18n( "New mail arrived" );
@@ -960,7 +960,7 @@ void KMMainWidget::modifyFolder( KMFolderTreeItem* folderItem )
   KMFolder* folder = folderItem->folder();
   KMFolderTree* folderTree = static_cast<KMFolderTree *>( folderItem->listView() );
   KMFolderDialog props( folder, folder->parent(), folderTree,
-                        i18n("Properties of Folder %1").arg( folder->label() ) );
+                        i18n("Properties of Folder %1", folder->label() ) );
   props.exec();
   updateFolderMenu();
 }
@@ -989,7 +989,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroup group(config, "General");
 
   if (group.readEntry("warn-before-expire", true ) ) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Qt::escape( mFolder->label() ));
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
@@ -1012,7 +1012,7 @@ void KMMainWidget::slotEmptyFolder()
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
-           "folder <b>%1</b> to the trash?</qt>").arg( Qt::escape( mFolder->label() ) );
+           "folder <b>%1</b> to the trash?</qt>", Qt::escape( mFolder->label() ) );
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edittrash"))
       != KMessageBox::Continue) return;
@@ -1050,38 +1050,38 @@ void KMMainWidget::slotRemoveFolder()
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br>"
-                "Any messages it shows will still be available in their original folder.</qt>")
-           .arg( Qt::escape( mFolder->label() ) );
+                "Any messages it shows will still be available in their original folder.</qt>",
+             Qt::escape( mFolder->label() ) );
   } else {
     title = i18n("Delete Folder");
     if ( mFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
-                   "<b>%1</b>?</qt>")
-              .arg( Qt::escape( mFolder->label() ) );
+                   "<b>%1</b>?</qt>",
+                Qt::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b> and all its subfolders? Those subfolders might "
                    "not be empty and their contents will be discarded as well. "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>")
-              .arg( Qt::escape( mFolder->label() ) );
+                   "into your Trash folder and are permanently deleted.</qt>",
+                Qt::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
                    "<b>%1</b>, discarding its contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>")
-              .arg( Qt::escape( mFolder->label() ) );
+                   "into your Trash folder and are permanently deleted.</qt>",
+                Qt::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the folder <b>%1</b> "
                    "and all its subfolders, discarding their contents? "
                    "<p><b>Beware</b> that discarded messages are not saved "
-                   "into your Trash folder and are permanently deleted.</qt>")
-            .arg( Qt::escape( mFolder->label() ) );
+                   "into your Trash folder and are permanently deleted.</qt>",
+              Qt::escape( mFolder->label() ) );
       }
     }
   }
@@ -1098,7 +1098,7 @@ void KMMainWidget::slotRemoveFolder()
         KMessageBox::information(this,
             i18n("<qt>The folder you deleted was associated with the account "
               "<b>%1</b> which delivered mail into it. The folder the account "
-              "delivers new mail into was reset to the main Inbox folder.</qt>").arg( (*it)->name()));
+              "delivers new mail into was reset to the main Inbox folder.</qt>", (*it)->name()));
       }
     }
     if (mFolder->folderType() == KMFolderTypeImap)
@@ -1479,7 +1479,7 @@ void KMMainWidget::updateListFilterAction()
     mListFilterAction->setEnabled( false );
   else {
     mListFilterAction->setEnabled( true );
-    mListFilterAction->setText( i18n( "Filter on Mailing-List %1..." ).arg( lname ) );
+    mListFilterAction->setText( i18n( "Filter on Mailing-List %1...", lname ) );
   }
 }
 
@@ -2465,13 +2465,13 @@ void KMMainWidget::setupActions()
                       Qt::CTRL+Qt::SHIFT+Qt::Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
 
-  mForwardActionMenu = new KActionMenu( KIcon("mail_forward"), i18n("Message->","&Forward"),
+  mForwardActionMenu = new KActionMenu( KIcon("mail_forward"), i18nc("Message->","&Forward"),
 					actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
 
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+  mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Qt::Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
 					"message_forward_as_attachment" );
@@ -2485,7 +2485,7 @@ void KMMainWidget::setupActions()
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
-  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18n("Message->","&Reply"),
+  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18nc("Message->","&Reply"),
                                       actionCollection(),
                                       "message_reply_menu" );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
@@ -2512,7 +2512,7 @@ void KMMainWidget::setupActions()
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
 
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+  mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
                                  "mail_forward",
 				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
@@ -2660,49 +2660,49 @@ void KMMainWidget::setupActions()
   //----- View Menu
   // Unread Submenu
   KActionMenu * unreadMenu =
-    new KActionMenu( i18n("View->", "&Unread Count"),
+    new KActionMenu( i18nc("View->", "&Unread Count"),
 		     actionCollection(), "view_unread" );
   unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
   QActionGroup *group = new QActionGroup( this );
 
-  mUnreadColumnToggle = new KToggleAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
+  mUnreadColumnToggle = new KToggleAction( i18nc("View->Unread Count", "View in &Separate Column"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_column" );
   group->addAction( mUnreadColumnToggle );
   unreadMenu->insert( mUnreadColumnToggle );
 
-  mUnreadTextToggle = new KToggleAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
+  mUnreadTextToggle = new KToggleAction( i18nc("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
   group->addAction( mUnreadTextToggle );
   unreadMenu->insert( mUnreadTextToggle );
 
   // toggle for total column
-  mTotalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
+  mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"), 0, this,
 			       SLOT(slotToggleTotalColumn()),
 			       actionCollection(), "view_columns_total" );
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
 
-  (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString(),
+  (void)new KAction( KGuiItem( i18nc("View->","&Expand Thread"), QString(),
 			       i18n("Expand the current thread") ),
 		     Qt::Key_Period, this,
 		     SLOT(slotExpandThread()),
 		     actionCollection(), "expand_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString(),
+  (void)new KAction( KGuiItem( i18nc("View->","&Collapse Thread"), QString(),
 			       i18n("Collapse the current thread") ),
 		     Qt::Key_Comma, this,
 		     SLOT(slotCollapseThread()),
 		     actionCollection(), "collapse_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString(),
+  (void)new KAction( KGuiItem( i18nc("View->","Ex&pand All Threads"), QString(),
 			       i18n("Expand all threads in the current folder") ),
 		     Qt::CTRL+Qt::Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
 		     actionCollection(), "expand_all_threads" );
 
-  (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString(),
+  (void)new KAction( KGuiItem( i18nc("View->","C&ollapse All Threads"), QString(),
 			       i18n("Collapse all threads in the current folder") ),
 		     Qt::CTRL+Qt::Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
@@ -2773,7 +2773,7 @@ void KMMainWidget::setupActions()
   shortcut.append( KKey( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
-  new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString(),
+  new KAction( KGuiItem( i18nc("Go->","Next Unread &Text"), QString(),
                          i18n("Go to the next unread text"),
                          i18n("Scroll down current message. "
                               "If at end of current message, "
@@ -3266,7 +3266,7 @@ void KMMainWidget::removeDuplicates()
   mHeaders->setFolder(oFolder);
   QString msg;
   if ( numDuplicates )
-    msg = i18n("Removed %n duplicate message.",
+    msg = i18np("Removed %n duplicate message.",
                "Removed %n duplicate messages.", numDuplicates );
     else
       msg = i18n("No duplicate messages found.");
@@ -3342,7 +3342,7 @@ void KMMainWidget::initializeFilterActions()
         continue;
       filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
       mFilterCommands.append(filterCommand);
-      QString as = i18n("Filter %1").arg((*it)->name());
+      QString as = i18n("Filter %1", (*it)->name());
       QString icon = (*it)->icon();
       if ( icon.isEmpty() )
         icon = "gear";

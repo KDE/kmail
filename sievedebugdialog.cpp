@@ -226,7 +226,7 @@ void SieveDebugDialog::slotDiagNextAccount()
     KMAccount *acc = mAccountList.first();
     mAccountList.pop_front();
 
-    mEdit->append( i18n( "Collecting data for account '%1'...\n" ).arg( acc->name() ) );
+    mEdit->append( i18n( "Collecting data for account '%1'...\n", acc->name() ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
     mAccountBase = dynamic_cast<KMail::ImapAccountBase *>( acc );
     if ( mAccountBase )
@@ -282,7 +282,7 @@ void SieveDebugDialog::slotDiagNextScript()
     QString scriptFile = mScriptList.first();
     mScriptList.pop_front();
 
-    mEdit->append( i18n( "Contents of script '%1':\n" ).arg( scriptFile ) );
+    mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
     SieveConfig sieve = mAccountBase->sieveConfig();
     if ( sieve.reuseConfig() )
     {
@@ -324,7 +324,7 @@ void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
         mEdit->append( i18n(
             "------------------------------------------------------------\n"
             "%1\n"
-            "------------------------------------------------------------\n\n" ).arg( script ) );
+            "------------------------------------------------------------\n\n", script ) );
     }
 
     // Fetch next script
@@ -363,7 +363,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
         for ( QStringList::const_iterator it = scriptList.begin(); it != scriptList.end(); ++it )
             mEdit->append( "* " + *it + "\n" );
         mEdit->append( "\n" );
-        mEdit->append( i18n( "Active script: %1\n\n" ).arg( activeScript ) );
+        mEdit->append( i18n( "Active script: %1\n\n", activeScript ) );
     }
 
     // Handle next job: dump scripts for this server

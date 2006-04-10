@@ -132,14 +132,14 @@ bool KMAcctLocal::preProcess()
 
   //BroadcastStatus::instance()->reset();
   BroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...").arg(mName));
+	i18n("Preparing transmission from \"%1\"...", mName));
 
 
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
     mName,
-    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    i18n("Preparing transmission from \"%1\"...", mName),
     false, // cannot be canceled
     false ); // no tls/ssl
 
@@ -169,8 +169,8 @@ bool KMAcctLocal::preProcess()
     kDebug(5006) << "mailFolder could not be locked" << endl;
     mMailFolder->close();
     checkDone( mHasNewMail, CheckError );
-    QString errMsg = i18n( "Transmission failed: Could not lock %1." )
-      .arg( mMailFolder->location() );
+    QString errMsg = i18n( "Transmission failed: Could not lock %1." ,
+        mMailFolder->location() );
     BroadcastStatus::instance()->setStatusMsg( errMsg );
     return false;
   }
@@ -180,10 +180,6 @@ bool KMAcctLocal::preProcess()
   mNumMsgs = mMailFolder->count();
 
   mMailCheckProgressItem->setTotalItems( mNumMsgs );
-
-  // prepare the static parts of the status message:
-  mStatusMsgStub = i18n("Moving message %3 of %2 from %1.")
-    .arg(mMailFolder->location()).arg( mNumMsgs );
 
   //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
   return true;
@@ -198,7 +194,9 @@ bool KMAcctLocal::fetchMsg()
   /* This causes mail eating
   if (kmkernel->mailCheckAborted()) break; */
 
-  const QString statusMsg = mStatusMsgStub.arg( mMsgsFetched );
+  const QString statusMsg = i18n( "Moving message %1 of %2 from %3.",
+                                  mMsgsFetched, mNumMsgs,
+                                  mMailFolder->location() );
   //BroadcastStatus::instance()->setStatusMsg( statusMsg );
   mMailCheckProgressItem->incCompletedItems();
   mMailCheckProgressItem->updateProgress();
@@ -250,17 +248,17 @@ void KMAcctLocal::postProcess()
     if ( rc != 0 ) {
       KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                      i18n( "<qt>Cannot remove mail from "
-                                           "mailbox <b>%1</b>:<br>%2</qt>" )
-                                     .arg( mMailFolder->location() )
-                                     .arg( strerror( rc ) ) );
+                                           "mailbox <b>%1</b>:<br>%2</qt>" ,
+                                       mMailFolder->location() ,
+                                       strerror( rc ) ) );
     }
 
     if( mMailCheckProgressItem ) { // do this only once...
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, mNumMsgs );
       mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from mailbox %1.",
+        i18np( "Fetched 1 message from mailbox %1.",
               "Fetched %n messages from mailbox %1.",
-              mNumMsgs ).arg( mMailFolder->location() ) );
+              mNumMsgs, mMailFolder->location() ) );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
     }

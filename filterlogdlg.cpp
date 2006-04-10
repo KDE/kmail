@@ -253,8 +253,8 @@ void FilterLogDialog::slotUser2()
     {
       KMessageBox::error( this,
                           i18n( "Could not write the file %1:\n"
-                                "\"%2\" is the detailed error description." )
-                          .arg( fileName,
+                                "\"%2\" is the detailed error description.",
+                                fileName,
                                 QString::fromLocal8Bit( strerror( errno ) ) ),
                           i18n( "KMail Error" ) );
     }

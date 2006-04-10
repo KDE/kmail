@@ -502,42 +502,42 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
   // header style
   KActionMenu *headerMenu =
-    new KActionMenu( i18n("View->", "&Headers"), ac, "view_headers" );
+    new KActionMenu( i18nc("View->", "&Headers"), ac, "view_headers" );
   headerMenu->setToolTip( i18n("Choose display style of message headers") );
 
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
 
   QActionGroup *group = new QActionGroup( this );
-  raction = new KToggleAction( i18n("View->headers->", "&Fancy Headers"), 0,
+  raction = new KToggleAction( i18nc("View->headers->", "&Fancy Headers"), 0,
                               this, SLOT(slotFancyHeaders()),
                               ac, "view_headers_fancy" );
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->headers->", "&Brief Headers"), 0,
+  raction = new KToggleAction( i18nc("View->headers->", "&Brief Headers"), 0,
                               this, SLOT(slotBriefHeaders()),
                               ac, "view_headers_brief" );
   raction->setToolTip( i18n("Show brief list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->headers->", "&Standard Headers"), 0,
+  raction = new KToggleAction( i18nc("View->headers->", "&Standard Headers"), 0,
                               this, SLOT(slotStandardHeaders()),
                               ac, "view_headers_standard" );
   raction->setToolTip( i18n("Show standard list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->headers->", "&Long Headers"), 0,
+  raction = new KToggleAction( i18nc("View->headers->", "&Long Headers"), 0,
                               this, SLOT(slotLongHeaders()),
                               ac, "view_headers_long" );
   raction->setToolTip( i18n("Show long list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->headers->", "&All Headers"), 0,
+  raction = new KToggleAction( i18nc("View->headers->", "&All Headers"), 0,
                               this, SLOT(slotAllHeaders()),
                               ac, "view_headers_all" );
   raction->setToolTip( i18n("Show all message headers") );
@@ -546,34 +546,34 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
   // attachment style
   KActionMenu *attachmentMenu =
-    new KActionMenu( i18n("View->", "&Attachments"), ac, "view_attachments" );
+    new KActionMenu( i18nc("View->", "&Attachments"), ac, "view_attachments" );
   attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
   connect( attachmentMenu, SIGNAL(activated()),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
   group = new QActionGroup( this );
-  raction = new KToggleAction( i18n("View->attachments->", "&As Icons"), 0,
+  raction = new KToggleAction( i18nc("View->attachments->", "&As Icons"), 0,
                               this, SLOT(slotIconicAttachments()),
                               ac, "view_attachments_as_icons" );
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->attachments->", "&Smart"), 0,
+  raction = new KToggleAction( i18nc("View->attachments->", "&Smart"), 0,
                               this, SLOT(slotSmartAttachments()),
                               ac, "view_attachments_smart" );
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->attachments->", "&Inline"), 0,
+  raction = new KToggleAction( i18nc("View->attachments->", "&Inline"), 0,
                               this, SLOT(slotInlineAttachments()),
                               ac, "view_attachments_inline" );
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18n("View->attachments->", "&Hide"), 0,
+  raction = new KToggleAction( i18nc("View->attachments->", "&Hide"), 0,
                               this, SLOT(slotHideAttachments()),
                               ac, "view_attachments_hide" );
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
@@ -1272,8 +1272,8 @@ void KMReaderWin::displayOfflinePage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
 {
-  QString info =
-    i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
+  KLocalizedString info =
+    ki18nc("%1: KMail version; %2: help:// URL; %3: homepage URL; "
 	 "%4: generated list of new features; "
 	 "%5: First-time user text (only shown on first start); "
          "%6: generated list of important changes; "
@@ -1292,50 +1292,50 @@ void KMReaderWin::displayAboutPage()
 	 "<p>We hope that you will enjoy KMail.</p>\n"
 	 "<p>Thank you,</p>\n"
 	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-    .arg(KMAIL_VERSION) // KMail version
-    .arg("help:/kmail/index.html") // KMail help:// URL
-    .arg("http://kmail.kde.org/"); // KMail homepage URL
+           .subs( KMAIL_VERSION ) // KMail version
+           .subs( "help:/kmail/index.html" ) // KMail help:// URL
+           .subs( "http://kmail.kde.org/" ); // KMail homepage URL
 
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
     QString featuresText =
       i18n("<p>Some of the new features in this release of KMail include "
-           "(compared to KMail %1, which is part of KDE %2):</p>\n")
-      .arg("1.9").arg("3.5"); // prior KMail and KDE version
+           "(compared to KMail %1, which is part of KDE %2):</p>\n",
+       QString("1.9"), QString("3.5")); // prior KMail and KDE version
     featuresText += "<ul>\n";
     for ( int i = 0 ; i < numKMailChanges ; i++ )
       featuresText += "<li>" + i18n( kmailNewFeatures[i] ) + "</li>\n";
     featuresText += "</ul>\n";
-    info = info.arg( featuresText );
+    info = info.subs( featuresText );
   }
   else
-    info = info.arg( QString::null ); // remove the place holder
+    info = info.subs( QString::null ); // remove the place holder
 
   if( kmkernel->firstStart() ) {
-    info = info.arg( i18n("<p>Please take a moment to fill in the KMail "
+    info = info.subs( i18n("<p>Please take a moment to fill in the KMail "
 			  "configuration panel at Settings-&gt;Configure "
 			  "KMail.\n"
 			  "You need to create at least a default identity and "
 			  "an incoming as well as outgoing mail account."
 			  "</p>\n") );
   } else {
-    info = info.arg( QString::null ); // remove the place holder
+    info = info.subs( QString::null ); // remove the place holder
   }
 
   if ( ( numKMailChanges > 1 ) || ( numKMailChanges == 1 && strlen(kmailChanges[0]) > 0 ) ) {
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
-           "Important changes</span> (compared to KMail %1):</p>\n")
-      .arg("1.9");
+           "Important changes</span> (compared to KMail %1):</p>\n",
+       QString("1.9"));
     changesText += "<ul>\n";
     for ( int i = 0 ; i < numKMailChanges ; i++ )
-      changesText += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
+      changesText += i18n("<li>%1</li>\n", i18n( kmailChanges[i] ) );
     changesText += "</ul>\n";
-    info = info.arg( changesText );
+    info = info.subs( changesText );
   }
   else
-    info = info.arg( QString::null ); // remove the place holder
+    info = info.subs( QString::null ); // remove the place holder
 
-  displaySplashPage( info );
+  displaySplashPage( info.toString() );
 }
 
 void KMReaderWin::enableMsgDisplay() {
@@ -1834,9 +1834,9 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   mAtmCurrent = id;
   mAtmCurrentName = name;
   KMenu *menu = new KMenu();
-  menu->insertItem(SmallIcon("fileopen"),i18n("to open", "Open"), 1);
+  menu->insertItem(SmallIcon("fileopen"),i18nc("to open", "Open"), 1);
   menu->insertItem(i18n("Open With..."), 2);
-  menu->insertItem(i18n("to view something", "View"), 3);
+  menu->insertItem(i18nc("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
   if ( name.endsWith( ".xia", false ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
@@ -1976,7 +1976,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       }
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
-      mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
+      mMainWindow->setCaption(i18n("View Attachment: %1", pname));
   } else if (kasciistricmp(aMsgPart->typeStr(), "image")==0 ||
              (kasciistricmp(aMsgPart->typeStr(), "application")==0 &&
               kasciistricmp(aMsgPart->subtypeStr(), "postscript")==0))
@@ -2012,7 +2012,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
                            "\" border=\"0\">\n"
                            "</body></html>\n" );
       htmlWriter()->end();
-      setCaption( i18n("View Attachment: %1").arg( pname ) );
+      setCaption( i18n("View Attachment: %1", pname ) );
       show();
   } else {
     htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
@@ -2022,14 +2022,14 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     // A QString cannot handle binary data. So if it's shorter than the
     // attachment, we assume the attachment is binary:
     if( str.length() < aMsgPart->decodedSize() ) {
-      str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]",
+      str += QString::fromLatin1("\n") + i18np("[KMail: Attachment contains binary data. Trying to show first character.]",
           "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
           str.length());
     }
     htmlWriter()->write( Qt::escape( str ) );
     htmlWriter()->queue("</body></html>");
     htmlWriter()->flush();
-    mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
+    mMainWindow->setCaption(i18n("View Attachment: %1", pname));
   }
   // ---Sven's view text, html and image attachments in html widget end ---
 }
@@ -2116,14 +2116,14 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   if ( filenameText.isEmpty() )
     filenameText = msgPart.name();
   if ( offer ) {
-    open_text = i18n("&Open with '%1'").arg( offer->name() );
+    open_text = i18n("&Open with '%1'", offer->name() );
   } else {
     open_text = i18n("&Open With...");
   }
   const QString text = i18n("Open attachment '%1'?\n"
                             "Note that opening an attachment may compromise "
-                            "your system's security.")
-                       .arg( filenameText );
+                            "your system's security.",
+                         filenameText );
   const int choice = KMessageBox::questionYesNoCancel( this, text,
       i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
       QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName

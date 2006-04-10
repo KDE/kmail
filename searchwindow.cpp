@@ -271,7 +271,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                   SLOT(slotReplyListToMsg()), ac,
                                   "search_reply_list" );
   mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
-                                        i18n("Message->","&Forward"),
+                                        i18nc("Message->","&Forward"),
                                         ac, "search_message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
@@ -279,7 +279,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                 0, this, SLOT(slotForwardMsg()),
                                 ac, "search_message_forward_inline" );
   mForwardActionMenu->insert( mForwardAction );
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+  mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
                                        "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()), ac,
                                         "search_message_forward_as_attachment" );
@@ -345,21 +345,21 @@ void SearchWindow::updStatus(void)
     if (mFolder && mFolder->search() && !mFolder->search()->running()) {
         if(!mStopped) {
             genMsg = i18n("Done");
-            detailMsg = i18n("%n match (%1)", "%n matches (%1)", numMatches)
-                        .arg(i18n("%n message processed",
+            detailMsg = i18np("%n match (%1)", "%n matches (%1)", numMatches,
+                         i18np("%n message processed",
                                   "%n messages processed", count));
         } else {
             genMsg = i18n("Search canceled");
-            detailMsg = i18n("%n match so far (%1)",
-                             "%n matches so far (%1)", numMatches)
-                        .arg(i18n("%n message processed",
+            detailMsg = i18np("%n match so far (%1)",
+                             "%n matches so far (%1)", numMatches,
+                         i18np("%n message processed",
                                   "%n messages processed", count));
         }
     } else {
-        genMsg = i18n("%n match", "%n matches", numMatches);
-        detailMsg = i18n("Searching in %1 (message %2)")
-                    .arg(folderName)
-                    .arg(count);
+        genMsg = i18np("%n match", "%n matches", numMatches);
+        detailMsg = i18n("Searching in %1 (message %2)",
+                     folderName,
+                     count);
     }
 
     mStatusBar->changeItem(genMsg, 0);

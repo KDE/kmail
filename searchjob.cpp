@@ -239,7 +239,7 @@ void SearchJob::slotSearchFolder()
       // so we need to download all messages and check
       QString question = i18n("To execute your search all messages of the folder %1 "
           "have to be downloaded from the server. This may take some time. "
-          "Do you want to continue your search?").arg( mFolder->label() );
+          "Do you want to continue your search?", mFolder->label() );
       if ( KMessageBox::warningContinueCancel( 0, question,
             i18n("Continue Search"), i18n("&Search"), 
             "continuedownloadingforsearch" ) != KMessageBox::Continue ) 

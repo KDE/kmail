@@ -292,7 +292,7 @@ void KMCommand::transferSelectedMsgs()
   if ( mCountMsgs > 0 ) {
     mProgressDialog = new KProgressDialog(mParent,
       i18n("Please wait"),
-      i18n("Please wait while the message is transferred",
+      i18np("Please wait while the message is transferred",
         "Please wait while the %n messages are transferred", mMsgList.count()),
       true);
     mProgressDialog->setMinimumDuration(1000);
@@ -395,7 +395,7 @@ void KMCommand::slotJobFinished()
   }
   // update the progressbar
   if ( mProgressDialog ) {
-    mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
+    mProgressDialog->setLabel(i18np("Please wait while the message is transferred",
           "Please wait while the %n messages are transferred", KMCommand::mCountJobs));
   }
   if (KMCommand::mCountJobs == 0)
@@ -621,8 +621,8 @@ KMCommand::Result KMUrlSaveCommand::execute()
   if ( KIO::NetAccess::exists( saveUrl, false, parentWidget() ) )
   {
     if (KMessageBox::warningContinueCancel(0,
-        i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>")
-        .arg(saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+        i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>",
+         saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         != KMessageBox::Continue)
       return Canceled;
   }
@@ -881,8 +881,8 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
     if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
     {
       if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?")
-        .arg(mUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+        i18n("File %1 exists.\nDo you want to replace it?",
+         mUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue) {
         mOffset = 0;
 
@@ -1480,8 +1480,8 @@ KMCommand::Result KMFilterActionCommand::execute()
     KMMessage *msg = *it;
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) ) {
-      QString statusMsg = i18n("Filtering message %1 of %2");
-      statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+      QString statusMsg = i18n( "Filtering message %1 of %2",
+                                msgCount, msgCountToFilter );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
       KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
@@ -2159,8 +2159,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-msdos-program" ||
         mime->name() == "application/x-shellscript" )
     {
-      if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" )
-        .arg( mUrl.prettyURL() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
+      if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" ,
+          mUrl.prettyURL() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl, mMainWidget );
@@ -2274,7 +2274,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     if ( s.isEmpty() )
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
-      s = i18n("filename for an unnamed attachment", "attachment.1");
+      s = i18nc("filename for an unnamed attachment", "attachment.1");
     url = KFileDialog::getSaveURL( s, QString(), parentWidget(),
                                    QString() );
     if ( url.isEmpty() ) {
@@ -2301,9 +2301,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         s = it.key()->msgPart().name().trimmed().replace( ':', '_' );
       if ( s.isEmpty() ) {
         ++unnamedAtmCount;
-        s = i18n("filename for the %1-th unnamed attachment",
-                 "attachment.%1")
-            .arg( unnamedAtmCount );
+        s = i18nc("filename for the %1-th unnamed attachment",
+                 "attachment.%1",
+              unnamedAtmCount );
       }
       curUrl.setFileName( s );
     } else {
@@ -2341,8 +2341,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
         if ( KMessageBox::warningContinueCancel( parentWidget(),
-              i18n( "A file named %1 already exists. Do you want to overwrite it?" )
-              .arg( curUrl.fileName() ),
+              i18n( "A file named %1 already exists. Do you want to overwrite it?" ,
+                curUrl.fileName() ),
               i18n( "File Already Exists" ), i18n("&Overwrite") ) == KMessageBox::Cancel) {
           continue;
         }
@@ -2365,8 +2365,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
   if( bEncryptedParts )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" ).
-          arg( url.fileName() ),
+          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" , 
+           url.fileName() ),
           i18n( "KMail Question" ), i18n("Keep Encryption"), i18n("Do Not Keep") ) ==
         KMessageBox::Yes )
       bSaveEncrypted = true;
@@ -2374,8 +2374,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bSaveWithSig = true;
   if( node->signatureState() != KMMsgNotSigned )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" ).
-          arg( url.fileName() ),
+          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" , 
+           url.fileName() ),
           i18n( "KMail Question" ), i18n("Keep Signature"), i18n("Do Not Keep") ) !=
         KMessageBox::Yes )
       bSaveWithSig = false;
@@ -2450,10 +2450,10 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if ( !file.open( QIODevice::WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),
-          i18n( "%2 is detailed error description",
-            "Could not write the file %1:\n%2" )
-          .arg( file.name() )
-          .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
+          i18nc( "%2 is detailed error description",
+            "Could not write the file %1:\n%2" ,
+            file.name() ,
+            QString::fromLocal8Bit( strerror( errno ) ) ),
           i18n( "KMail Error" ) );
       return Failed;
     }
@@ -2472,8 +2472,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if ( !KIO::NetAccess::upload( tf.name(), url, parentWidget() ) )
     {
       KMessageBox::error( parentWidget(),
-          i18n( "Could not write the file %1." )
-          .arg( url.path() ),
+          i18n( "Could not write the file %1." ,
+            url.path() ),
           i18n( "KMail Error" ) );
       return Failed;
     }
@@ -2694,7 +2694,6 @@ KMCommand::Result KMIMChatCommand::execute()
       apology = i18n( "There is no Address Book entry for this email address. Add them to the Address Book and then add instant messaging addresses using your preferred messaging client." );
     else
     {
-      apology = i18n( "More than one Address Book entry uses this email address:\n %1\n it is not possible to determine who to chat with." );
       QStringList nameList;
       KABC::Addressee::List::const_iterator it = addressees.begin();
       KABC::Addressee::List::const_iterator end = addressees.end();
@@ -2703,7 +2702,7 @@ KMCommand::Result KMIMChatCommand::execute()
           nameList.append( (*it).realName() );
       }
       QString names = nameList.join( QString::fromLatin1( ",\n" ) );
-      apology = apology.arg( names );
+      apology = i18n( "More than one Address Book entry uses this email address:\n %1\n it is not possible to determine who to chat with.", names );
     }
 
     KMessageBox::sorry( parentWidget(), apology );
@@ -2995,7 +2994,7 @@ static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
          KMessageBox::warningContinueCancel(
                                             w,
                                             i18n( "A file named \"%1\" already exists. "
-                                                  "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
+                                                  "Are you sure you want to overwrite it?", url.prettyURL() ),
                                             i18n( "Overwrite File?" ),
                                             i18n( "&Overwrite" ) ) )
       return false;

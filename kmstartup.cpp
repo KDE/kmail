@@ -171,8 +171,8 @@ void lockOrDie() {
         msg = i18n("%1 already seems to be running on another display on "
                    "this machine. Running %2 more than once "
                    "can cause the loss of mail. You should not start %1 "
-                   "unless you are sure that it is not already running.")
-              .arg( programName, programName );
+                   "unless you are sure that it is not already running.",
+                   programName, programName );
               // QString::arg( st ) only replaces the first occurrence of %1
               // with st while QString::arg( s1, s2 ) replacess all occurrences
               // of %1 with s1 and all occurrences of %2 with s2. So don't
@@ -181,28 +181,28 @@ void lockOrDie() {
         msg = i18n("%1 seems to be running on another display on this "
                    "machine. Running %1 and %2 at the same "
                    "time can cause the loss of mail. You should not start %2 "
-                   "unless you are sure that %1 is not running.")
-              .arg( oldProgramName, programName );
+                   "unless you are sure that %1 is not running.",
+                   oldProgramName, programName );
     }
     else {
       if ( oldAppName == appName )
         msg = i18n("%1 already seems to be running on %2. Running %1 more "
                    "than once can cause the loss of mail. You should not "
                    "start %1 on this computer unless you are sure that it is "
-                   "not already running on %2.")
-              .arg( programName, oldHostName );
+                   "not already running on %2.",
+                   programName, oldHostName );
       else
         msg = i18n("%1 seems to be running on %3. Running %1 and %2 at the "
                    "same time can cause the loss of mail. You should not "
                    "start %2 on this computer unless you are sure that %1 is "
-                   "not running on %3.")
-              .arg( oldProgramName, programName, oldHostName );
+                   "not running on %3.",
+                    oldProgramName, programName, oldHostName );
     }
 
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::No ==
          KMessageBox::warningYesNo( 0, msg, QString(),
-                                    i18n("Start %1").arg( programName ),
+                                    i18n("Start %1", programName ),
                                     i18n("Exit") ) ) {
       exit(1);
     }

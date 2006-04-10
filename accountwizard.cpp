@@ -508,7 +508,7 @@ void AccountWizard::checkPopCapabilities( const QString &server, int port )
   connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
            this, SLOT( popCapabilities( const QStringList&, const QStringList& ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1..." ).arg( server ) );
+  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::checkImapCapabilities( const QString &server, int port )
@@ -519,7 +519,7 @@ void AccountWizard::checkImapCapabilities( const QString &server, int port )
   connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
            this, SLOT( imapCapabilities( const QStringList&, const QStringList& ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1..." ).arg( server ) );
+  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
@@ -532,7 +532,7 @@ void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
            this, SLOT( smtpCapabilities( const QStringList&, const QStringList&,
                                          const QString&, const QString&, const QString& ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1..." ).arg( server ) );
+  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::popCapabilities( const QStringList &capaNormalList,

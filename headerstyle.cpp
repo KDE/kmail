@@ -399,8 +399,8 @@ namespace KMail {
         meterBar.setPixel( i, 0, i+1 );
       }
     }
-    QString titleText = i18n("%1% probability of being spam.\n\nFull report:\n%2")
-                     .arg( QString::number( percent ), filterHeader );
+    QString titleText = i18n("%1% probability of being spam.\n\nFull report:\n%2",
+                             percent, filterHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
             QString::number( 5 ), titleText );
@@ -599,8 +599,8 @@ namespace KMail {
                            .arg(i18n("From: "))
                  + KMMessage::emailAddrAsAnchor( fromStr, false )
                  + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
-                                + i18n("(resent from %1)")
-                                  .arg( KMMessage::emailAddrAsAnchor(
+                                + i18n("(resent from %1)",
+                                    KMMessage::emailAddrAsAnchor(
                                     message->headerField( "Resent-From" ),false) )
                               : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"

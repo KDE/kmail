@@ -728,8 +728,8 @@ void KMComposeWin::autoSaveMessage()
       KMessageBox::queuedMessageBox( 0, KMessageBox::Sorry,
                                      i18n("Autosaving the message as %1 "
                                           "failed.\n"
-                                          "Reason: %2" )
-                                     .arg( filename, strerror( status ) ),
+                                          "Reason: %2",
+                                           filename, strerror( status ) ),
                                      i18n("Autosaving Failed") );
       mLastAutoSaveErrno = status;
     }
@@ -890,7 +890,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
                     mLblTransport, mTransport, mBtnTransport);
 
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
-  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("sender address field", "&From:"),
+  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18nc("sender address field", "&From:"),
                     mLblFrom, mEdtFrom /*, mBtnFrom */ );
 
   QWidget *prevFocus = mEdtFrom;
@@ -904,7 +904,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if ( mClassicalRecipients ) {
     if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-    rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("recipient address field", "&To:"),
+    rethinkHeaderLine(showHeaders, HDR_TO, row, i18nc("recipient address field", "&To:"),
                     mLblTo, mEdtTo, mBtnTo,
                     i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
@@ -1464,8 +1464,8 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
 
-  statusBar()->insertPermanentItem(i18n(" Column: %1 ").arg("     "),2,0);
-  statusBar()->insertPermanentItem(i18n(" Line: %1 ").arg("     "),1,0);
+  statusBar()->insertPermanentItem(i18n(" Column: %1 ", QString("     ")),2,0);
+  statusBar()->insertPermanentItem(i18n(" Line: %1 ", QString("     ")),1,0);
 }
 
 
@@ -1476,9 +1476,9 @@ void KMComposeWin::updateCursorPosition()
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp = i18n(" Line: %1 ").arg(line+1);
+  temp = i18n(" Line: %1 ", line+1);
   statusBar()->changeItem(temp,1);
-  temp = i18n(" Column: %1 ").arg(col+1);
+  temp = i18n(" Column: %1 ", col+1);
   statusBar()->changeItem(temp,2);
 }
 
@@ -2159,8 +2159,8 @@ void KMComposeWin::addAttach(const KUrl aUrl)
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
-                                 "<p>you have to specify the full path if you wish to attach a file.</p></qt>" )
-                        .arg( aUrl.prettyURL() ) );
+                                 "<p>you have to specify the full path if you wish to attach a file.</p></qt>" ,
+                          aUrl.prettyURL() ) );
     return;
   }
   KIO::TransferJob *job = KIO::get(aUrl);
@@ -2822,8 +2822,8 @@ static void showExportError( QWidget * w, const GpgME::Error & err ) {
   assert( err );
   const QString msg = i18n("<qt><p>An error occurred while trying to export "
 			   "the key from the backend:</p>"
-			   "<p><b>%1</b></p></qt>")
-    .arg( QString::fromLocal8Bit( err.asString() ) );
+			   "<p><b>%1</b></p></qt>",
+      QString::fromLocal8Bit( err.asString() ) );
   KMessageBox::error( w, msg, i18n("Key Export Failed") );
 }
 
@@ -2862,7 +2862,7 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
 
   // create message part
   KMMessagePart * msgPart = new KMMessagePart();
-  msgPart->setName( i18n("OpenPGP key 0x%1").arg( mFingerprint ) );
+  msgPart->setName( i18n("OpenPGP key 0x%1", mFingerprint ) );
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
   QList<int> dummy;
@@ -2900,9 +2900,9 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QMenu(this);
 
-     mOpenId = mAttachMenu->addAction(i18n("to open", "Open"), this,
+     mOpenId = mAttachMenu->addAction(i18nc("to open", "Open"), this,
                              SLOT(slotAttachOpen()));
-     mViewId = mAttachMenu->addAction(i18n("to view", "View"), this,
+     mViewId = mAttachMenu->addAction(i18nc("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->addAction(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mSaveAsId = mAttachMenu->addAction( SmallIconSet("filesaveas"), i18n("Save As..."), this,
@@ -3855,8 +3855,8 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
           KMessageBox::information(0, i18n("The custom drafts folder for identity "
                                            "\"%1\" does not exist (anymore); "
                                            "therefore, the default drafts folder "
-                                           "will be used.")
-                                   .arg( id.identityName() ) );
+                                           "will be used.",
+                                     id.identityName() ) );
         }
       }
       if (imapDraftsFolder && imapDraftsFolder->noContent())

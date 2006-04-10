@@ -145,7 +145,7 @@ namespace KMail {
   }
 
   void VacationDialog::slotIntervalSpinChanged ( int value ) {
-    mIntervalSpin->setSuffix( i18n(" day", " days", value) );
+    mIntervalSpin->setSuffix( i18np(" day", " days", value) );
   }
 
 } // namespace KMail

@@ -896,8 +896,8 @@ void KMFilterListBox::slotRename()
   QString newName = KInputDialog::getText
     (
      i18n("Rename Filter"),
-     i18n("Rename filter \"%1\" to:\n(leave the field empty for automatic naming)")
-        .arg( filter->pattern()->name() ) /*label*/,
+     i18n("Rename filter \"%1\" to:\n(leave the field empty for automatic naming)",
+          filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
      &okPressed, topLevelWidget(), validator
      );

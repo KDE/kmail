@@ -240,7 +240,7 @@ void KMReaderMainWin::setupAccel()
 
 
   mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
-                                        i18n("Message->","&Forward"),
+                                        i18nc("Message->","&Forward"),
 					actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
@@ -251,18 +251,18 @@ void KMReaderMainWin::setupAccel()
 				actionCollection(), "message_forward_inline" );
   mForwardActionMenu->insert( mForwardAction );
 
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+  mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Qt::Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
 
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+  mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
 				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
 
-  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18n("Message->","&Reply"),
+  mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18nc("Message->","&Reply"),
                                       actionCollection(),
                                       "message_reply_menu" );
   connect( mReplyActionMenu, SIGNAL(activated()), this,

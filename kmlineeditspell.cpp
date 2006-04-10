@@ -113,8 +113,8 @@ void KMLineEdit::dropEvent(QDropEvent *event)
           list += converter.parseVCards( data );
           KIO::NetAccess::removeTempFile( fileName );
         } else {
-          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" );
-          KMessageBox::error( parentWidget(), text.arg( (*it).url() ), caption );
+          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>", (*it).url() );
+          KMessageBox::error( parentWidget(), text, caption );
         }
         KABC::Addressee::List::Iterator ait;
         for ( ait = list.begin(); ait != list.end(); ++ait )

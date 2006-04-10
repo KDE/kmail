@@ -71,11 +71,11 @@ namespace KMail {
         i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
-		   << i18n("continuation of \"obtain signature text from\"",
+		   << i18nc("continuation of \"obtain signature text from\"",
 			   "Input Field Below")
-		   << i18n("continuation of \"obtain signature text from\"",
+		   << i18nc("continuation of \"obtain signature text from\"",
 			   "File")
-                   << i18n("continuation of \"obtain signature text from\"",
+                   << i18nc("continuation of \"obtain signature text from\"",
 			   "Output of Command")
 		   );
     label = new QLabel( mSourceCombo,

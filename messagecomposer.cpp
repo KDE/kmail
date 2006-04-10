@@ -732,7 +732,7 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "Sign this message?");
       switch ( KMessageBox::questionYesNoCancel( mComposeWin, msg,
 						 i18n("Sign Message?"),
-						 i18n("to sign","&Sign"),
+						 i18nc("to sign","&Sign"),
 						 i18n("Do &Not Sign") ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
@@ -755,7 +755,7 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "Sign this message?");
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
 						i18n("Sign Message?"),
-						i18n("to sign","&Sign"),
+						i18nc("to sign","&Sign"),
 						i18n("Do &Not Sign") ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
@@ -2024,8 +2024,8 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       KMessageBox::sorry( mComposeWin,
                           i18n( "<qt><p>Error: The backend did not return "
                                 "any encoded data.</p>"
-                                "<p>Please report this bug:<br>%2</p></qt>" )
-                          .arg( bugURL ) );
+                                "<p>Please report this bug:<br>%2</p></qt>" ,
+                            bugURL ) );
       bOk = false;
     }
     resultingPart.setBodyEncoded( resultingBody );

@@ -372,8 +372,8 @@ void KMSender::doSendMsg()
         KMessageBox::error(0, i18n("Moving the sent message \"%1\" from the "
           "\"outbox\" to the \"sent-mail\" folder failed.\n"
           "Possible reasons are lack of disk space or write permission. "
-          "Please try to fix the problem and move the message manually.")
-          .arg(mCurrentMsg->subject()));
+          "Please try to fix the problem and move the message manually.",
+           mCurrentMsg->subject()));
         cleanup();
         return;
       }
@@ -420,8 +420,8 @@ void KMSender::doSendMsg()
                                    "Please set the email address of "
                                    "identity '%1' in the Identities "
                                    "section of the configuration dialog "
-                                   "and then try again." )
-                             .arg( id.identityName() ) );
+                                   "and then try again." ,
+                               id.identityName() ) );
       mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
     }
@@ -436,12 +436,12 @@ void KMSender::doSendMsg()
         sentFolder->close();
     if ( someSent ) {
       if ( mSentMessages == mTotalMessages ) {
-        setStatusMsg(i18n("%n queued message successfully sent.",
+        setStatusMsg(i18np("%n queued message successfully sent.",
                           "%n queued messages successfully sent.",
                           mSentMessages));
       } else {
-        setStatusMsg(i18n("%1 of %2 queued messages successfully sent.")
-            .arg(mSentMessages).arg( mTotalMessages ));
+        setStatusMsg(i18n("%1 of %2 queued messages successfully sent.",
+             mSentMessages, mTotalMessages ));
       }
     }
     cleanup();
@@ -522,7 +522,7 @@ void KMSender::doSendMsg()
 }
 
 bool KMSender::runPrecommand( const QString & cmd ) {
-  setStatusMsg( i18n("Executing precommand %1").arg( cmd ) );
+  setStatusMsg( i18n("Executing precommand %1", cmd ) );
   mPrecommand = new KMPrecommand( cmd );
   connect( mPrecommand, SIGNAL(finished(bool)),
            SLOT(slotPrecommandFinished(bool)) );
@@ -581,9 +581,9 @@ void KMSender::doSendMsgAux()
 
   // start sending the current message
 
-  setStatusMsg(i18n("%3: subject of message","Sending message %1 of %2: %3")
-	       .arg(mSentMessages+mFailedMessages+1).arg(mTotalMessages)
-	       .arg(mCurrentMsg->subject()));
+  setStatusMsg(i18nc("%3: subject of message","Sending message %1 of %2: %3",
+	        mSentMessages+mFailedMessages+1, mTotalMessages,
+	        mCurrentMsg->subject()));
   QStringList to, cc, bcc;
   QString sender;
   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
@@ -681,9 +681,9 @@ void KMSender::slotIdle()
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
         "from the 'outbox' folder.\n"
-        "The following transport protocol was used:\n  %2")
-      .arg(errString)
-      .arg(mMethodStr);
+        "The following transport protocol was used:\n  %2",
+       errString,
+       mMethodStr);
     if (!errString.isEmpty()) KMessageBox::error(0,msg);
     setStatusMsg( i18n( "Sending aborted." ) );
   } else {
@@ -704,9 +704,9 @@ void KMSender::slotIdle()
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.</p>"
             "<p>The following transport protocol was used:  %2</p>"
-            "<p>Do you want me to continue sending the remaining messages?</p>")
-            .arg(errString)
-            .arg(mMethodStr);
+            "<p>Do you want me to continue sending the remaining messages?</p>",
+             errString,
+             mMethodStr);
           res = KMessageBox::warningYesNo( 0 , msg ,
                   i18n( "Continue Sending" ), i18n( "&Continue Sending" ),
                   i18n("&Abort Sending") );
@@ -715,9 +715,9 @@ void KMSender::slotIdle()
             "The message will stay in the 'outbox' folder until you either "
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.\n"
-            "The following transport protocol was used:\n %2")
-            .arg(errString)
-            .arg(mMethodStr);
+            "The following transport protocol was used:\n %2",
+             errString,
+             mMethodStr);
           KMessageBox::error(0,msg);
         }
         if (res == KMessageBox::Yes) {
@@ -915,9 +915,9 @@ bool KMSendSendmail::doStart() {
                              "The message will stay in the 'outbox' folder and will be resent.\n"
                              "Please remove it from there if you do not want the message to "
                              "be resent.\n"
-                             "The following transport protocol was used:\n  %2")
-                        .arg(str + "\n")
-                        .arg("sendmail://");
+                             "The following transport protocol was used:\n  %2",
+                         str + "\n",
+                         "sendmail://");
     KMessageBox::information(0,msg);
     return false;
   }
@@ -959,8 +959,8 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
   mMsgStr = message;
 
   if ( !mMailerProc->start( KProcess::NotifyOnExit, KProcess::All ) ) {
-    KMessageBox::information( 0, i18n("Failed to execute mailer program %1")
-                              .arg( mSender->transportInfo()->host ) );
+    KMessageBox::information( 0, i18n("Failed to execute mailer program %1",
+                                mSender->transportInfo()->host ) );
     return false;
   }
   mMsgPos  = mMsgStr.data();

@@ -107,13 +107,13 @@ void KMAcctMaildir::processNewMail(bool)
   }
 
   BroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...").arg(mName));
+	i18n("Preparing transmission from \"%1\"...", mName));
 
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
     mName,
-    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    i18n("Preparing transmission from \"%1\"...", mName),
     false, // cannot be canceled
     false ); // no tls/ssl
 
@@ -129,7 +129,7 @@ void KMAcctMaildir::processNewMail(bool)
   rc = mailFolder.open();
   if (rc)
   {
-    QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>").arg( mailFolder.location() );
+    QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>", mailFolder.location() );
     KMessageBox::sorry(0, aStr);
     kDebug(5006) << "cannot open folder " << mailFolder.location() << endl;
     checkDone( hasNewMail, CheckError );
@@ -145,10 +145,6 @@ void KMAcctMaildir::processNewMail(bool)
   addedOk = true;
   t.start();
 
-  // prepare the static parts of the status message:
-  QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
-    .arg(mailFolder.location()).arg(num);
-
   mMailCheckProgressItem->setTotalItems( num );
 
   for (i=0; i<num; i++)
@@ -161,7 +157,8 @@ void KMAcctMaildir::processNewMail(bool)
     }
     if (!addedOk) break;
 
-    QString statusMsg = statusMsgStub.arg(i);
+    QString statusMsg = i18n( "Moving message %1 of %2 from %3.",
+                              i, num, mailFolder.location() );
     mMailCheckProgressItem->incCompletedItems();
     mMailCheckProgressItem->updateProgress();
     mMailCheckProgressItem->setStatus( statusMsg );
@@ -191,9 +188,9 @@ void KMAcctMaildir::processNewMail(bool)
   if( mMailCheckProgressItem ) { // do this only once...
     BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
     mMailCheckProgressItem->setStatus(
-      i18n( "Fetched 1 message from maildir folder %1.",
+      i18np( "Fetched 1 message from maildir folder %1.",
             "Fetched %n messages from maildir folder %1.",
-            num ).arg(mailFolder.location() ) );
+            num , mailFolder.location() ) );
 
     mMailCheckProgressItem->setComplete();
     mMailCheckProgressItem = 0;

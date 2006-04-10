@@ -300,7 +300,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders
 
   QLabel *l = new QLabel(i18n("Messages to filter found on POP Account: <b>%1</b><p>"
       "The messages shown exceed the maximum size limit you defined for this account.<br>You can select "
-      "what you want to do with them by checking the appropriate button.").arg(aAccount), w);
+      "what you want to do with them by checking the appropriate button.", aAccount), w);
   vbl->addWidget(l);
 
   Q3GroupBox *upperBox = new Q3GroupBox(i18n("Messages Exceeding Size"), w);
@@ -367,7 +367,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders
   }
 
   if(rulesetCount)
-      lowerBox->setTitle(i18n("Ruleset Filtered Messages: %1").arg(rulesetCount));
+      lowerBox->setTitle(i18n("Ruleset Filtered Messages: %1", rulesetCount));
 
   // connect signals and slots
   connect(lv, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),

@@ -287,8 +287,8 @@ namespace KMail {
 		"fax.:  +49 711 1111 12\n"
 		"\n"
 		"Yours sincerely,\n"
-		"-- <enter your name and email address here>\n")
-      .arg( KGlobal::locale()->formatDate( QDate::currentDate().addDays( 1 ) ) );
+		"-- <enter your name and email address here>\n",
+        KGlobal::locale()->formatDate( QDate::currentDate().addDays( 1 ) ) );
   }
 
   int Vacation::defaultNotificationInterval() {

@@ -65,7 +65,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 {
   setAttribute( Qt::WA_DeleteOnClose );
   if ( folder ) {
-    setCaption( i18n("New Subfolder of %1").arg( folder->prettyURL() ) );
+    setCaption( i18n("New Subfolder of %1", folder->prettyURL() ) );
   }
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
@@ -216,7 +216,7 @@ void NewFolderDialog::slotOk()
       delimiter = ai->delimiterForFolder( mFolder->storage() );
     }
     if ( !delimiter.isEmpty() && fldName.find( delimiter ) != -1 ) {
-      KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name." ).arg( delimiter ) );
+      KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name.", delimiter ) );
       return;
     }
   }
@@ -233,14 +233,14 @@ void NewFolderDialog::slotOk()
           && ( selectedFolderDir == mFolder->parent() )
           && ( mFolder->storage()->name() == fldName ) ) ) )
   {
-    const QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
+    const QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" , fldName);
     KMessageBox::error( this, message );
     return;
   }
 
   /* Ok, obvious errors caught, let's try creating it for real. */
   const QString message = i18n( "<qt>Failed to create folder <b>%1</b>."
-            "</qt> " ).arg(fldName);
+            "</qt> " , fldName);
   bool success = false;
   KMFolder *newFolder = 0;
 

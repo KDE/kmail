@@ -309,8 +309,8 @@ namespace KMail {
     mSlaveConnected = false;
     mSlave = KIO::Scheduler::getConnectedSlave( getUrl(), slaveConfig() );
     if ( !mSlave ) {
-      KMessageBox::error(0, i18n("Could not start process for %1.")
-			 .arg( getUrl().protocol() ) );
+      KMessageBox::error(0, i18n("Could not start process for %1.",
+			   getUrl().protocol() ) );
       return Error;
     }
     if ( mSlave->isConnected() ) {
@@ -390,7 +390,7 @@ namespace KMail {
     QString path = static_cast<KIO::SimpleJob*>(job)->url().path();
     if (job->error())
     {
-      handleJobError( job, i18n( "Error while trying to subscribe to %1:" ).arg( path ) + '\n' );
+      handleJobError( job, i18n( "Error while trying to subscribe to %1:", path ) + '\n' );
       // ## emit subscriptionChanged here in case anyone needs it to support continue/cancel
     }
     else
@@ -692,7 +692,7 @@ namespace KMail {
       if ( !done ) {
         QString msg = i18n("KMail has detected a prefix entry in the "
             "configuration of the account \"%1\" which is obsolete with the "
-            "support of IMAP namespaces.").arg( name() );
+            "support of IMAP namespaces.", name() );
         if ( list.contains( QString() ) ) {
           // replace empty entry with the old prefix
           list.remove( QString() );
@@ -840,9 +840,9 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), Qt::escape( from ), Q3StyleSheet::escape( subject ) )
+      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.", msg->dateStr(), Qt::escape( from ), Q3StyleSheet::escape( subject ) )
       + "</p><p>"
-      + i18n("The destination folder was %1, which has the URL %2.").arg( Qt::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) )
+      + i18n("The destination folder was %1, which has the URL %2.", Qt::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) )
       + "</p><p>"
       + i18n("The error message from the server communication is here:") + "</p>";
     return handleJobError( job, myError );
@@ -887,16 +887,16 @@ namespace KMail {
 
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
-          msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.").
-            arg( name() );
+          msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.", 
+             name() );
           KMessageBox::information( kapp->activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
           // Show it in the status bar, in case the user has ticked "don't show again"
           if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
             KPIM::BroadcastStatus::instance()->setStatusMsg(
-                i18n(  "The connection to account %1 was broken." ).arg( name() ) );
+                i18n(  "The connection to account %1 was broken.", name() ) );
           else if ( errorCode == KIO::ERR_SERVER_TIMEOUT )
             KPIM::BroadcastStatus::instance()->setStatusMsg(
-                i18n(  "The connection to account %1 timed out." ).arg( name() ) );
+                i18n(  "The connection to account %1 timed out.", name() ) );
         } else {
           if ( !errors.isEmpty() )
               KMessageBox::detailedError( kapp->activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );

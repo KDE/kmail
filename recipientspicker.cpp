@@ -90,7 +90,7 @@ QString RecipientItem::email() const
 {
   if ( mAddressee.isEmpty() &&  mDistributionList ) {
     int count = mDistributionList->entries().count();
-    return i18n( "1 email address", "%n email addresses", count );
+    return i18np( "1 email address", "%n email addresses", count );
   } else {
     return mEmail;
   }
@@ -115,8 +115,8 @@ QString RecipientItem::toolTip() const
     }
     txt += "<b>" + mEmail + "</b>";
   } else if ( mDistributionList ) {
-    txt += "<b>" + i18n("Distribution List %1")
-      .arg( mDistributionList->name() ) + "</b>";
+    txt += "<b>" + i18n("Distribution List %1",
+        mDistributionList->name() ) + "</b>";
     txt += "<ul>";
     KABC::DistributionList::Entry::List entries = mDistributionList->entries();
     KABC::DistributionList::Entry::List::ConstIterator it;
@@ -630,11 +630,11 @@ void RecipientsPicker::pick( Recipient::Type type )
 
   if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
-        i18n("You selected 1 recipient. The maximum supported number of "
+        i18np("You selected 1 recipient. The maximum supported number of "
              "recipients is %1. Please adapt the selection.",
              "You selected %n recipients. The maximum supported number of "
-             "recipients is %1. Please adapt the selection.", count)
-      .arg( GlobalSettings::self()->maximumRecipients() ) );
+             "recipients is %1. Please adapt the selection.", count,
+        GlobalSettings::self()->maximumRecipients() ) );
     return;
   }
 

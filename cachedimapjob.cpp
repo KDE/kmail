@@ -510,7 +510,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 
     if ( job->error() && !silentUpload ) {
       QString myError = "<p><b>" + i18n("Error while uploading folder")
-        + "</b></p><p>" + i18n("Could not make the folder <b>%1</b> on the server.").arg((*it).items[0])
+        + "</b></p><p>" + i18n("Could not make the folder <b>%1</b> on the server.", (*it).items[0])
         + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
       mAccount->handleJobError( job, myError );
     }
@@ -564,7 +564,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
     mAccount->removeDeletedFolder( (*it).path );
 
     if( job->error() ) {
-      mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: " ).arg( (*it).path ) + '\n' );
+      mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: ", (*it).path ) + '\n' );
       delete this;
       return;
     }
@@ -617,7 +617,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
 
   if( job->error() ) {
     mErrorCode = job->error();
-    mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: " ).arg( (*it).parent->label() ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: ", (*it).parent->label() ) + '\n' );
     delete this;
     return;
   }
@@ -719,7 +719,7 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
       mFolder->folder()->setLabel( (*renit).mOldLabel );
       mAccount->removeRenamedFolder( mFolder->imapPath() );
     }
-    mAccount->handleJobError( job, i18n( "Error while trying to rename folder %1" ).arg( mFolder->label() ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while trying to rename folder %1", mFolder->label() ) + '\n' );
   } else {
     // Okay, the folder seems to be renamed on the server,
     // now rename it on disk

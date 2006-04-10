@@ -115,9 +115,9 @@ namespace KMail {
                     i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
-        << i18n( "continuation of \"obtain picture from\"",
+        << i18nc( "continuation of \"obtain picture from\"",
                  "External Source" )
-        << i18n( "continuation of \"obtain picture from\"",
+        << i18nc( "continuation of \"obtain picture from\"",
                  "Input Field Below" ) );
     label = new QLabel( mSourceCombo,
                         i18n("Obtain pic&ture from:"), this );

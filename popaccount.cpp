@@ -347,7 +347,7 @@ void PopAccount::startJob()
   if (!runPrecommand(precommand()))
     {
       KMessageBox::sorry(0,
-                         i18n("Could not execute precommand: %1").arg(precommand()),
+                         i18n("Could not execute precommand: %1", precommand()),
                          i18n("KMail Error Message"));
       checkDone( false, CheckError );
       return;
@@ -376,7 +376,7 @@ void PopAccount::startJob()
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
     mName,
-    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    i18n("Preparing transmission from \"%1\"...", mName),
     true, // can be canceled
     useSSL() || useTLS() );
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
@@ -720,10 +720,10 @@ void PopAccount::slotJobFinished() {
     if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
       mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Deleting messages from server...",
+        i18np( "Fetched 1 message from %1. Deleting messages from server...",
               "Fetched %n messages from %1. Deleting messages from server...",
-              numMsgs )
-        .arg( mHost ) );
+              numMsgs ,
+          mHost ) );
       QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
       QByteArray ids = *it;
       ++it;
@@ -736,10 +736,10 @@ void PopAccount::slotJobFinished() {
     } else {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Terminating transmission...",
+        i18np( "Fetched 1 message from %1. Terminating transmission...",
               "Fetched %n messages from %1. Terminating transmission...",
-              numMsgs )
-        .arg( mHost ) );
+              numMsgs ,
+          mHost ) );
       url.setPath( "/commit" );
       kDebug(5006) << "url: " << url.prettyURL() << endl;
     }
@@ -755,10 +755,10 @@ void PopAccount::slotJobFinished() {
     }
     idsOfMsgsToDelete.clear();
     mMailCheckProgressItem->setStatus(
-      i18n( "Fetched 1 message from %1. Terminating transmission...",
+      i18np( "Fetched 1 message from %1. Terminating transmission...",
             "Fetched %n messages from %1. Terminating transmission...",
-            numMsgs )
-      .arg( mHost ) );
+            numMsgs ,
+        mHost ) );
     KUrl url = getUrl();
     url.setPath( "/commit" );
     job = KIO::get( url, false, false );
@@ -877,16 +877,19 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
       QString msg;
       if (numBytes != numBytesToRead && mLeaveOnServer)
       {
-        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6 "
-                   "(%7 KB remain on the server).")
-          .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-          .arg(numBytesToRead/1024).arg(mLogin).arg(mHost).arg(numBytes/1024);
+        msg = ki18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6 "
+                    "(%7 KB remain on the server).")
+           .subs( indexOfCurrentMsg+1 ).subs( numMsgs )
+           .subs( numBytesRead/1024 ).subs( numBytesToRead/1024 )
+           .subs( mLogin ).subs( mHost ).subs( numBytes/1024 )
+           .toString();
       }
       else
       {
-        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6.")
-          .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-          .arg(numBytesToRead/1024).arg(mLogin).arg(mHost);
+        msg = ki18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6.")
+           .subs( indexOfCurrentMsg+1 ).subs( numMsgs ).subs( numBytesRead/1024 )
+           .subs( numBytesToRead/1024 ).subs( mLogin ).subs( mHost )
+           .toString();
       }
       mMailCheckProgressItem->setStatus( msg );
       mMailCheckProgressItem->setProgress(

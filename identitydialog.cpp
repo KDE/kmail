@@ -484,14 +484,14 @@ void IdentityDialog::slotOk() {
 		 "any user ID with the configured email address for this "
 		 "identity (%1).\n"
 		 "This might result in warning messages on the receiving side "
-		 "when trying to verify signatures made with this configuration.");
+		 "when trying to verify signatures made with this configuration.", email);
       err = true;
     }
     else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
 			    DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() ) {
       msg = i18n("One of the configured OpenPGP encryption keys does not contain "
 		 "any user ID with the configured email address for this "
-		 "identity (%1).");
+		 "identity (%1).", email);
       err = true;
     }
     else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
@@ -500,19 +500,19 @@ void IdentityDialog::slotOk() {
 		 "the configured email address for this "
 		 "identity (%1).\n"
 		 "This might result in warning messages on the receiving side "
-		 "when trying to verify signatures made with this configuration.");
+		 "when trying to verify signatures made with this configuration.", email);
       err = true;
     }
     else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
 			    DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() ) {
       msg = i18n("One of the configured S/MIME encryption certificates does not contain "
 		 "the configured email address for this "
-		 "identity (%1).");
+		 "identity (%1).", email);
       err = true;
     }
 
     if ( err )
-      if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
+      if ( KMessageBox::warningContinueCancel( this, msg,
                                           i18n("Email Address Not Found in Key/Certificates"),
                                           KStdGuiItem::cont(), "warn_email_not_in_certificate" )
 	 != KMessageBox::Continue)
@@ -544,7 +544,7 @@ void IdentityDialog::slotOk() {
 
   void IdentityDialog::setIdentity( KPIM::Identity & ident ) {
 
-    setCaption( i18n("Edit Identity \"%1\"").arg( ident.identityName() ) );
+    setCaption( i18n("Edit Identity \"%1\"", ident.identityName() ) );
 
     // "General" tab:
     mNameEdit->setText( ident.fullName() );
@@ -571,8 +571,8 @@ void IdentityDialog::slotOk() {
                              i18n("The custom sent-mail folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default sent-mail folder "
-                                  "will be used.")
-                             .arg( ident.identityName() ) ) )
+                                  "will be used.",
+                               ident.identityName() ) ) )
       mFccCombo->setFolder( kmkernel->sentFolder() );
     else
       mFccCombo->setFolder( ident.fcc() );
@@ -582,8 +582,8 @@ void IdentityDialog::slotOk() {
                              i18n("The custom drafts folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default drafts folder "
-                                  "will be used.")
-                             .arg( ident.identityName() ) ) )
+                                  "will be used.",
+                               ident.identityName() ) ) )
       mDraftsCombo->setFolder( kmkernel->draftsFolder() );
     else
       mDraftsCombo->setFolder( ident.drafts() );

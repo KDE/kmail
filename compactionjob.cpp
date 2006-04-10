@@ -96,7 +96,7 @@ int MboxCompactionJob::executeNow( bool silent )
   if (!storage->compactable()) {
     kDebug(5006) << storage->location() << " compaction skipped." << endl;
     if ( !mSilent ) {
-      QString str = i18n( "For safety reasons, compaction has been disabled for %1" ).arg( mbox->label() );
+      QString str = i18n( "For safety reasons, compaction has been disabled for %1", mbox->label() );
       BroadcastStatus::instance()->setStatusMsg( str );
     }
     return 0;
@@ -173,11 +173,11 @@ void MboxCompactionJob::done( int rc )
     mbox->close(true);
     mbox->setAutoCreateIndex( autoCreate );
     mbox->setNeedsCompacting( false );            // We are clean now
-    str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
+    str = i18n( "Folder \"%1\" successfully compacted", mSrcFolder->label() );
     kDebug(5006) << str << endl;
   } else {
     mbox->close();
-    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
+    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted.", mSrcFolder->label() );
     kDebug(5006) << "Error occurred while compacting " << mbox->location() << endl;
     kDebug(5006) << "Compaction aborted." << endl;
     QFile::remove( mTempName );
@@ -256,9 +256,9 @@ void MaildirCompactionJob::done( int rc )
   mCancellable = false;
   QString str;
   if ( !rc ) {
-    str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
+    str = i18n( "Folder \"%1\" successfully compacted", mSrcFolder->label() );
   } else {
-    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
+    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted.", mSrcFolder->label() );
   }
   mErrorCode = rc;
   storage->setNeedsCompacting( false );

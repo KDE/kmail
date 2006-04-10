@@ -517,7 +517,7 @@ void KMFolderCachedImap::slotTroubleshoot()
     QString str = i18n("Are you sure you want to refresh the IMAP cache of "
                        "the folder %1 and all its subfolders?\nThis will "
                        "remove all changes you have done locally to your "
-                       "folders.").arg( label() );
+                       "folders.", label() );
     QString s1 = i18n("Refresh IMAP Cache");
     QString s2 = i18n("&Refresh");
     if( KMessageBox::warningContinueCancel( 0, str, s1, s2 ) ==
@@ -534,7 +534,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), mSyncState ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
@@ -655,14 +655,14 @@ void KMFolderCachedImap::serverSyncInternal()
       // Cancelled by user, or slave can't start
       // kDebug(5006) << "makeConnection said Error, aborting." << endl;
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
-      newState( mProgress, i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
+      newState( mProgress, i18n( "Error connecting to server %1", mAccount->host() ) );
       close();
       emit folderComplete(this, false);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
       mAccount->setAnnotationCheckPassed( false );
       // kDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
-      newState( mProgress, i18n("Connecting to %1").arg( mAccount->host() ) );
+      newState( mProgress, i18n("Connecting to %1", mAccount->host() ) );
       // We'll wait for the connectionResult signal from the account.
       connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
                this, SLOT( slotConnectionResult(int, const QString&) ) );
@@ -1572,7 +1572,7 @@ void KMFolderCachedImap::listNamespaces()
   mNamespacesToList.pop_front();
 
   mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
-  newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
+  newState( mProgress, i18n("Retrieving folders for namespace %1", ns));
   KMail::ListJob* job = new KMail::ListJob( mAccount, type, this,
       mAccount->addPathToNamespace( ns ) );
   job->setNamespace( ns );
@@ -1804,7 +1804,7 @@ void KMFolderCachedImap::listDirectory2()
       // (could be that the folder was deleted & recreated meanwhile from another client...)
       if ( !locallyDeleted && mAccount->isPreviouslyDeletedFolder( subfolderPath ) ) {
            locallyDeleted = KMessageBox::warningYesNo(
-             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ), QString(), KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
+             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>", mSubfolderNames[i] ), QString(), KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
       }
 
       if ( locallyDeleted ) {
@@ -2207,7 +2207,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
       // that's when the imap server doesn't support annotations
       if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
            && (uint)GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id() )
-	KMessageBox::error( 0, i18n( "The IMAP server %1 does not have support for IMAP annotations. The XML storage cannot be used on this server; please re-configure KMail differently." ).arg( mAccount->host() ) );
+	KMessageBox::error( 0, i18n( "The IMAP server %1 does not have support for IMAP annotations. The XML storage cannot be used on this server; please re-configure KMail differently.", mAccount->host() ) );
       mAccount->setHasNoAnnotationSupport();
     }
     else

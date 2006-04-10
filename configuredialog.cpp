@@ -451,7 +451,7 @@ void IdentityPage::slotRemoveIdentity()
   if ( !item ) return;
 
   QString msg = i18n("<qt>Do you really want to remove the identity named "
-                     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
+                     "<b>%1</b>?</qt>", item->identity().identityName() );
   if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
    KGuiItem(i18n("&Remove"),"editdelete") ) == KMessageBox::Continue )
     if ( im->removeIdentity( item->identity().identityName() ) ) {
@@ -745,9 +745,9 @@ static inline QString uniqueName( const QStringList & list,
   int suffix = 1;
   QString result = name;
   while ( list.find( result ) != list.end() ) {
-    result = i18n("%1: name; %2: number appended to it to make it unique "
-                  "among a list of names", "%1 %2")
-      .arg( name ).arg( suffix );
+    result = i18nc("%1: name; %2: number appended to it to make it unique "
+                  "among a list of names", "%1 %2",
+        name, suffix );
     suffix++;
   }
   return result;
@@ -832,11 +832,11 @@ void AccountsPage::SendingTab::slotAddTransport()
   if ( lastItem ) {
     typeDisplayName = transportInfo->type;
   } else {
-    typeDisplayName = i18n("%1: type of transport. Result used in "
+    typeDisplayName = i18nc("%1: type of transport. Result used in "
                            "Configure->Accounts->Sending listview, \"type\" "
                            "column, first row, to indicate that this is the "
-                           "default transport", "%1 (Default)")
-      .arg( transportInfo->type );
+                           "default transport", "%1 (Default)",
+        transportInfo->type );
     GlobalSettings::self()->setDefaultTransport( transportInfo->name );
   }
   (void) new Q3ListViewItem( mTransportList, lastItem, transportInfo->name,
@@ -905,7 +905,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   }
 
   if ( !changedIdents.isEmpty() ) {
-    QString information = i18n( "This identity has been changed to use the default transport:",
+    QString information = i18np( "This identity has been changed to use the default transport:",
                           "These %n identities have been changed to use the default transport:",
                           changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );
@@ -1325,8 +1325,8 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
   }
   if ( !acct ) {
     // ### FIXME: see above
-    KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
-                        .arg(listItem->text(0)) );
+    KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
+                         listItem->text(0)) );
     return;
   }
 
@@ -1407,8 +1407,8 @@ void AccountsPage::ReceivingTab::save() {
         it != mAccountsToDelete.end() ; ++it ) {
     kmkernel->acctMgr()->writeConfig( true );
     if ( (*it) && !kmkernel->acctMgr()->remove(*it) )
-      KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
-                          .arg( (*it)->name() ) );
+      KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
+                            (*it)->name() ) );
   }
   mAccountsToDelete.clear();
 
@@ -2482,7 +2482,7 @@ ComposerPage::ComposerPage( KInstance *instance, QWidget *parent, const QStringL
   // "Attachments" tab:
   //
   mAttachmentsTab = new AttachmentsTab();
-  addTab( mAttachmentsTab, i18n("Config->Composer->Attachments", "A&ttachments") );
+  addTab( mAttachmentsTab, i18nc("Config->Composer->Attachments", "A&ttachments") );
   load();
 }
 
@@ -2828,10 +2828,10 @@ void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
   locale.setLanguage( lang );
   mLanguageList.append(
      LanguageItem( lang,
-                   locale.translate("On %D, you wrote:"),
-                   locale.translate("On %D, %F wrote:"),
-                   locale.translate("Forwarded Message"),
-                   locale.translate(">%_") ) );
+                   ki18n("On %D, you wrote:").toString( &locale ),
+                   ki18n("On %D, %F wrote:").toString( &locale ),
+                   ki18n("Forwarded Message").toString( &locale ),
+                   ki18n(">%_").toString( &locale ) ) );
   mRemoveButton->setEnabled( true );
   slotLanguageChanged( QString() );
 }
@@ -3563,8 +3563,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
                            "compromised by present and anticipated security "
                            "exploits. <a href=\"whatsthis:%1\">More about "
                            "HTML mails...</a> <a href=\"whatsthis:%2\">More "
-                           "about external references...</a>")
-                           .arg(htmlWhatsThis).arg(externalWhatsThis),
+                           "about external references...</a>",
+                            htmlWhatsThis, externalWhatsThis),
                            group );
 
   vlay->addWidget( group );
@@ -3631,8 +3631,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   // Warning label:
   label = new KActiveLabel( i18n("<b>WARNING:</b> Unconditionally returning "
                            "confirmations undermines your privacy. "
-                           "<a href=\"whatsthis:%1\">More...</a>")
-                             .arg(receiptWhatsThis),
+                           "<a href=\"whatsthis:%1\">More...</a>",
+                              receiptWhatsThis),
                            group );
 
   vlay->addWidget( group );
@@ -4136,7 +4136,7 @@ void SecurityPage::SMimeTab::doLoadOther() {
     QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
     if ( systemProxy.isEmpty() )
       systemProxy = i18n( "no proxy" );
-    mWidget->systemHTTPProxy->setText( i18n( "(Current system setting: %1)" ).arg( systemProxy ) );
+    mWidget->systemHTTPProxy->setText( i18n( "(Current system setting: %1)", systemProxy ) );
     bool honor = e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue();
     mWidget->honorHTTPProxyRB->setChecked( honor );
     mWidget->useCustomHTTPProxyRB->setChecked( !honor );
@@ -4336,7 +4336,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
-    new QCheckBox( i18n("Corresponds to Folder->Move All Messages to Trash",
+    new QCheckBox( i18nc("Corresponds to Folder->Move All Messages to Trash",
                         "Ask for co&nfirmation before moving all messages to "
                         "trash"),
                    this );
@@ -4353,15 +4353,15 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLoopOnGotoUnread = new QComboBox( false, this );
   label = new QLabel( mLoopOnGotoUnread,
-           i18n("to be continued with \"do not loop\", \"loop in current folder\", "
+           i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
                 "and \"loop in all folders\".",
                 "When trying to find unread messages:"), this );
   mLoopOnGotoUnread->insertStringList( QStringList()
-      << i18n("continuation of \"When trying to find unread messages:\"",
+      << i18nc("continuation of \"When trying to find unread messages:\"",
               "Do not Loop")
-      << i18n("continuation of \"When trying to find unread messages:\"",
+      << i18nc("continuation of \"When trying to find unread messages:\"",
               "Loop in Current Folder")
-      << i18n("continuation of \"When trying to find unread messages:\"",
+      << i18nc("continuation of \"When trying to find unread messages:\"",
               "Loop in All Folders"));
   hlay->addWidget( label );
   hlay->addWidget( mLoopOnGotoUnread, 1 );
@@ -4372,16 +4372,16 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mActionEnterFolder = new QComboBox( false, this );
   label = new QLabel( mActionEnterFolder,
-           i18n("to be continued with \"jump to first new message\", "
+           i18nc("to be continued with \"jump to first new message\", "
                 "\"jump to first unread or new message\","
                 "and \"jump to last selected message\".",
                 "When entering a folder:"), this );
   mActionEnterFolder->insertStringList( QStringList()
-      << i18n("continuation of \"When entering a folder:\"",
+      << i18nc("continuation of \"When entering a folder:\"",
               "Jump to First New Message")
-      << i18n("continuation of \"When entering a folder:\"",
+      << i18nc("continuation of \"When entering a folder:\"",
               "Jump to First Unread or New Message")
-      << i18n("continuation of \"When entering a folder:\"",
+      << i18nc("continuation of \"When entering a folder:\"",
               "Jump to Last Selected Message"));
   hlay->addWidget( label );
   hlay->addWidget( mActionEnterFolder, 1 );
@@ -4415,13 +4415,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mMailboxPrefCombo = new QComboBox( false, this );
   label = new QLabel( mMailboxPrefCombo,
-                      i18n("to be continued with \"flat files\" and "
+                      i18nc("to be continued with \"flat files\" and "
                            "\"directories\", resp.",
                            "By default, &message folders on disk are:"), this );
   mMailboxPrefCombo->insertStringList( QStringList()
-          << i18n("continuation of \"By default, &message folders on disk are\"",
+          << i18nc("continuation of \"By default, &message folders on disk are\"",
                   "Flat Files (\"mbox\" format)")
-          << i18n("continuation of \"By default, &message folders on disk are\"",
+          << i18nc("continuation of \"By default, &message folders on disk are\"",
                   "Directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
@@ -4459,7 +4459,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addStretch( 1 );
 
   // and now: add QWhatsThis:
-  QString msg = i18n( "what's this help",
+  QString msg = i18nc( "what's this help",
                       "<qt><p>This selects which mailbox format will be "
                       "the default for local folders:</p>"
                       "<p><b>mbox:</b> KMail's mail "
@@ -4476,7 +4476,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   mMailboxPrefCombo->setWhatsThis( msg );
   label->setWhatsThis( msg );
   // @TODO: Till, move into .kcgc file
-  msg = i18n( "what's this help",
+  msg = i18nc( "what's this help",
             "<qt><p>When jumping to the next unread message, it may occur "
             "that no more unread messages are below the current message.</p>"
             "<p><b>Do not loop:</b> The search will stop at the last message in "
@@ -4493,7 +4493,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
 #ifdef HAVE_INDEXLIB
  // this is probably overly pessimistic
-  msg = i18n( "what's this help",
+  msg = i18nc( "what's this help",
 		  "<qt><p>Full text indexing allows very fast searches on the content "
 		  "of your messages. When enabled, the search dialog will work very fast. "
 		  "Also, the search tool bar will also select messages based on content.</p>"

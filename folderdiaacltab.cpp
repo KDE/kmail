@@ -115,7 +115,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   for ( unsigned int i = 0;
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );
         ++i ) {
-    QRadioButton* cb = new QRadioButton( i18n( "Permissions", standardPermissions[i].userString ), mButtonGroup );
+    QRadioButton* cb = new QRadioButton( i18nc( "Permissions", standardPermissions[i].userString ), mButtonGroup );
     // We store the permission value (bitfield) as the id of the radiobutton in the group
     mButtonGroup->insert( cb, standardPermissions[i].permissions );
   }
@@ -241,12 +241,12 @@ static QString permissionsToUserString( unsigned int permissions, const QString&
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );
         ++i ) {
     if ( permissions == standardPermissions[i].permissions )
-      return i18n( "Permissions", standardPermissions[i].userString );
+      return i18nc( "Permissions", standardPermissions[i].userString );
   }
   if ( internalRightsList.isEmpty() )
     return i18n( "Custom Permissions" ); // not very helpful, but shouldn't happen
   else
-    return i18n( "Custom Permissions (%1)" ).arg( internalRightsList );
+    return i18n( "Custom Permissions (%1)", internalRightsList );
 }
 
 void KMail::FolderDiaACLTab::ListViewItem::setPermissions( unsigned int permissions )
@@ -449,7 +449,7 @@ void KMail::FolderDiaACLTab::load()
   KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
   if ( folder && folder->storage() == mImapAccount->rootFolder() )
     return; // nothing to be done for the (virtual) account folder
-  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
+  mLabel->setText( i18n( "Connecting to server %1, please wait...", mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
     slotConnectionResult( -1, QString() );
@@ -467,7 +467,7 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
               this, SLOT( slotConnectionResult(int, const QString&) ) );
   if ( errorCode ) {
     if ( errorCode == -1 ) // unspecified error
-      mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
+      mLabel->setText( i18n( "Error connecting to server %1", mImapAccount->host() ) );
     else
       // Connection error (error message box already shown by the account)
       mLabel->setText( KIO::buildErrorString( errorCode, errorMsg ) );
@@ -516,7 +516,7 @@ void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, c
       if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION )
         mLabel->setText( i18n( "This IMAP server does not have support for access control lists (ACL)" ) );
       else
-        mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
+        mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1", job->errorString() ) );
       return;
     }
 

@@ -186,7 +186,7 @@ bool KMFolderDir::reload(void)
 
   if (!dir.cd(fldPath))
   {
-    QString msg = i18n("<qt>Cannot enter folder <b>%1</b>.</qt>").arg(fldPath);
+    QString msg = i18n("<qt>Cannot enter folder <b>%1</b>.</qt>", fldPath);
     KMessageBox::information(0, msg);
     return false;
   }
@@ -194,7 +194,7 @@ bool KMFolderDir::reload(void)
   QFileInfoList fiList = dir.entryInfoList();
   if (fiList.isEmpty())
   {
-    QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>").arg(fldPath);
+    QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>", fldPath);
     KMessageBox::information(0, msg);
     return false;
   }

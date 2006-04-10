@@ -1183,8 +1183,8 @@ void KMKernel::testDir(const char *_name)
     if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
-                                 "modify the content of the folder '%2'.")
-                            .arg( foldersPath ).arg( QDir::homePath() ) );
+                                 "modify the content of the folder '%2'.",
+                              foldersPath, QDir::homePath() ) );
       ::exit(-1);
     }
   }
@@ -1192,8 +1192,8 @@ void KMKernel::testDir(const char *_name)
     KMessageBox::sorry(0, i18n("The permissions of the folder '%1' are "
                                "incorrect;\n"
                                "please make sure that you can view and modify "
-                               "the content of this folder.")
-                          .arg( foldersPath ) );
+                               "the content of this folder.",
+                            foldersPath ) );
     ::exit(-1);
   }
 }
@@ -1465,7 +1465,7 @@ void KMKernel::cleanupImapFolders()
       cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(QString::number(acct->id()),
             false, KMFolderTypeCachedImap)->storage());
       if (!cfld) {
-        KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
+        KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.", acct->name(), the_dimapFolderMgr->basePath())));
         exit(-1);
       }
       cfld->folder()->setId( acct->id() );
@@ -1630,28 +1630,30 @@ bool KMKernel::transferMail( QString & destinationDir )
   if ( KIO::NetAccess::exists( destinationDir, true, 0 ) ) {
     // if destinationDir exists, we need to warn about possible
     // overwriting of files. otherwise, we don't have to
-    msg = i18n( "%1-%3 is the application name, %4-%7 are folder path",
-                "<qt>The <i>%4</i> folder exists. "
-                "%1 now uses the <i>%5</i> folder for "
-                "its messages.<p>"
-                "%2 can move the contents of <i>%6<i> into this folder for "
-                "you, though this may replace any existing files with "
-                "the same name in <i>%7</i>.<p>"
-                "<strong>Would you like %3 to move the mail "
-                "files now?</strong></qt>" )
-          .arg( kmailName, kmailName, kmailName )
-          .arg( dir, destinationDir, dir, destinationDir );
+    msg = ki18nc( "%1-%3 is the application name, %4-%7 are folder path",
+                  "<qt>The <i>%4</i> folder exists. "
+                  "%1 now uses the <i>%5</i> folder for "
+                  "its messages.<p>"
+                  "%2 can move the contents of <i>%6<i> into this folder for "
+                  "you, though this may replace any existing files with "
+                  "the same name in <i>%7</i>.<p>"
+                  "<strong>Would you like %3 to move the mail "
+                  "files now?</strong></qt>" )
+          .subs( kmailName ).subs( kmailName ).subs( kmailName )
+          .subs( dir ).subs( destinationDir ).subs( dir ).subs( destinationDir )
+          .toString();
   }
   else {
-    msg = i18n( "%1-%3 is the application name, %4-%6 are folder path",
-                "<qt>The <i>%4</i> folder exists. "
-                "%1 now uses the <i>%5</i> folder for "
-                "its messages. %2 can move the contents of <i>%6</i> into "
-                "this folder for you.<p>"
-                "<strong>Would you like %3 to move the mail "
-                "files now?</strong></qt>" )
-          .arg( kmailName, kmailName, kmailName )
-          .arg( dir, destinationDir, dir );
+    msg = ki18nc( "%1-%3 is the application name, %4-%6 are folder path",
+                  "<qt>The <i>%4</i> folder exists. "
+                  "%1 now uses the <i>%5</i> folder for "
+                  "its messages. %2 can move the contents of <i>%6</i> into "
+                  "this folder for you.<p>"
+                  "<strong>Would you like %3 to move the mail "
+                  "files now?</strong></qt>" )
+          .subs( kmailName ).subs( kmailName ).subs( kmailName )
+          .subs( dir ).subs( destinationDir ).subs( dir )
+          .toString();
   }
   QString title = i18n( "Migrate Mail Files?" );
   QString buttonText = i18n( "Move" );
@@ -1764,8 +1766,8 @@ void KMKernel::slotResult(KIO::Job *job)
     if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
     {
       if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?")
-        .arg((*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+        i18n("File %1 exists.\nDo you want to replace it?",
+         (*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, true);
     }
@@ -1843,7 +1845,7 @@ void KMKernel::emergencyExit( const QString& reason )
   }
   else {
     mesg = i18n("KMail encountered a fatal error and will "
-                      "terminate now.\nThe error was:\n%1").arg( reason );
+                      "terminate now.\nThe error was:\n%1", reason );
   }
 
   kWarning() << mesg << endl;

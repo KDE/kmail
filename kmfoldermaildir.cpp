@@ -87,12 +87,12 @@ int KMFolderMaildir::canAccess()
     int nRetVal = QFile::exists(sBadFolderName) ? EPERM : ENOENT;
     KCursorSaver idle(KBusyPtr::idle());
     if ( nRetVal == ENOENT )
-      KMessageBox::sorry(0, i18n("Error opening %1; this folder is missing.")
-                         .arg(sBadFolderName));
+      KMessageBox::sorry(0, i18n("Error opening %1; this folder is missing.",
+                          sBadFolderName));
     else
       KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
-                                 "maildir folder, or you do not have sufficient access permissions.")
-                         .arg(sBadFolderName));
+                                 "maildir folder, or you do not have sufficient access permissions.",
+                          sBadFolderName));
     return nRetVal;
   }
 
@@ -122,8 +122,8 @@ int KMFolderMaildir::open()
     {
       QString str;
       mIndexStream = 0;
-      str = i18n("Folder `%1' changed; recreating index.")
-		  .arg(name());
+      str = i18n("Folder `%1' changed; recreating index.",
+		   name());
       emit statusMsg(str);
     } else {
       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file

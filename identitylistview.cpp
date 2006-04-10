@@ -82,10 +82,10 @@ namespace KMail {
   void IdentityListViewItem::init( const KPIM::Identity & ident ) {
     if ( ident.isDefault() )
       // Add "(Default)" to the end of the default identity's name:
-      setText( 0, i18n("%1: identity name. Used in the config "
+      setText( 0, i18nc("%1: identity name. Used in the config "
 		       "dialog, section Identity, to indicate the "
-		       "default identity", "%1 (Default)")
-	       .arg( ident.identityName() ) );
+		       "default identity", "%1 (Default)",
+	         ident.identityName() ) );
     else
       setText( 0, ident.identityName() );
     setText( 1, ident.fullEmailAddr() );

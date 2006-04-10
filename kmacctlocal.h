@@ -52,7 +52,6 @@ private:
   int mNumMsgs;
   int mMsgsFetched;
   KMFolder *mMailFolder;
-  QString mStatusMsgStub;
 };
 
 #endif /*kmacctlocal_h*/

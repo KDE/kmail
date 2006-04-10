@@ -547,7 +547,7 @@ void KMSystemTray::updateNewMessages()
   /** Update tooltip to reflect count of unread messages */
   this->setToolTip( mCount == 0 ?
 		      i18n("There are no unread messages")
-		      : i18n("There is 1 unread message.",
+		      : i18np("There is 1 unread message.",
                              "There are %n unread messages.",
                            mCount));
 

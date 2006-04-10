@@ -124,8 +124,8 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   for ( ; it != mActions.end() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
-      QString logText( i18n( "<b>Applying filter action:</b> %1" )
-                       .arg( (*it)->displayString() ) );
+      QString logText( i18n( "<b>Applying filter action:</b> %1" ,
+                         (*it)->displayString() ) );
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
 
@@ -275,7 +275,7 @@ void KMFilter::readConfig(KConfigGroup & config)
     numActions = config.readEntry( "actions", 0 );
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
-      KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>").arg( mPattern.name() ) );
+      KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>", mPattern.name() ) );
     }
 
     for ( i=0 ; i < numActions ; i++ ) {
@@ -300,9 +300,9 @@ void KMFilter::readConfig(KConfigGroup & config)
         }
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
-            i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
-            .arg( config.readEntry( actName, QString() ) )
-            .arg( mPattern.name() ) );
+            i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>",
+              config.readEntry( actName, QString() ) ,
+              mPattern.name() ) );
     }
 
     mAccounts = config.readEntry( "accounts-set",QList<int>() );

@@ -777,10 +777,10 @@ void AccountDialog::makePopAccountPage()
     i18n("Authentication Method"), page2 );
   mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup,
                                     "auth clear text" );
-  mPop.authLogin = new QRadioButton( i18n("Please translate this "
+  mPop.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mPop.authGroup, "auth login" );
-  mPop.authPlain = new QRadioButton( i18n("Please translate this "
+  mPop.authPlain = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
     mPop.authGroup, "auth plain"  );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup, "auth cram-md5" );
@@ -1079,10 +1079,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
-  mImap.authLogin = new QRadioButton( i18n("Please translate this "
+  mImap.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mImap.authGroup );
-  mImap.authPlain = new QRadioButton( i18n("Please translate this "
+  mImap.authPlain = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
      mImap.authGroup );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mImap.authGroup );
@@ -1691,19 +1691,19 @@ void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
 
 void AccountDialog::slotLeaveOnServerDaysChanged ( int value )
 {
-  mPop.leaveOnServerDaysSpin->setSuffix( i18n(" day", " days", value) );
+  mPop.leaveOnServerDaysSpin->setSuffix( i18np(" day", " days", value) );
 }
 
 
 void AccountDialog::slotLeaveOnServerCountChanged ( int value )
 {
-  mPop.leaveOnServerCountSpin->setSuffix( i18n(" message", " messages", value) );
+  mPop.leaveOnServerCountSpin->setSuffix( i18np(" message", " messages", value) );
 }
 
 
 void AccountDialog::slotFilterOnServerSizeChanged ( int value )
 {
-  mPop.filterOnServerSizeSpin->setSuffix( i18n(" byte", " bytes", value) );
+  mPop.filterOnServerSizeSpin->setSuffix( i18np(" byte", " bytes", value) );
 }
 
 
@@ -2241,7 +2241,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
   } else {
     ns = i18n("Shared");
   }
-  setCaption( i18n("Edit Namespace '%1'").arg(ns) );
+  setCaption( i18n("Edit Namespace '%1'", ns) );
   Q3Grid* grid = new Q3Grid( 2, page );
 
   mBg = new Q3ButtonGroup( 0 );

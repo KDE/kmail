@@ -98,7 +98,7 @@ void AccountManager::readConfig(void)
       acctType = "pop";
     acctName = group.readEntry("Name");
     id = config->readEntry( "Id", QVariant( (uint) 0 ) ).toUInt();
-    if (acctName.isEmpty()) acctName = i18n("Account %1").arg(i);
+    if (acctName.isEmpty()) acctName = i18n("Account %1", i);
     acct = create(acctType, acctName, id);
     if (!acct) continue;
     add(acct);
@@ -173,8 +173,8 @@ void AccountManager::processNextCheck( bool _newMail )
        curAccount->folder() == 0 ) {
     QString tmp = i18n("Account %1 has no mailbox defined:\n"
         "mail checking aborted;\n"
-        "check your account settings.")
-      .arg(curAccount->name());
+        "check your account settings.",
+       curAccount->name());
     KMessageBox::information(0,tmp);
     emit checkedMail( false, mInteractive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
@@ -186,7 +186,7 @@ void AccountManager::processNextCheck( bool _newMail )
                 this, SLOT( processNextCheck( bool ) ) );
 
   KPIM::BroadcastStatus::instance()->setStatusMsg(
-      i18n("Checking account %1 for new mail").arg(curAccount->name()));
+      i18n("Checking account %1 for new mail", curAccount->name()));
 
   kDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 

@@ -1232,7 +1232,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   if (job->error())
   {
     mAccount->handleJobError( job,
-         i18n("Error while listing the contents of the folder %1.").arg( label() ) );
+         i18n("Error while listing the contents of the folder %1.", label() ) );
     mAccount->removeJob(it);
     finishMailCheck( imapNoInformation );
     return;

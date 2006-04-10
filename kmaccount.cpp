@@ -45,7 +45,7 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   : QObject(parent), mPrecommand(precommand)
 {
   BroadcastStatus::instance()->setStatusMsg(
-      i18n("Executing precommand %1").arg(precommand ));
+      i18n("Executing precommand %1", precommand ));
 
   mPrecommandProcess.setUseShell(true);
   mPrecommandProcess << precommand;
@@ -64,8 +64,8 @@ KMPrecommand::~KMPrecommand()
 bool KMPrecommand::start()
 {
   bool ok = mPrecommandProcess.start( KProcess::NotifyOnExit );
-  if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.")
-    .arg(mPrecommand));
+  if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.",
+     mPrecommand));
   return ok;
 }
 
@@ -75,8 +75,8 @@ void KMPrecommand::precommandExited(KProcess *p)
 {
   int exitCode = p->normalExit() ? p->exitStatus() : -1;
   if (exitCode)
-    KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2")
-      .arg(exitCode).arg(strerror(exitCode)));
+    KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2",
+       exitCode, strerror(exitCode)));
   emit finished(!exitCode);
 }
 
@@ -354,7 +354,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
   KMPrecommand precommandProcess(precommand, this);
 
   BroadcastStatus::instance()->setStatusMsg(
-      i18n("Executing precommand %1").arg(precommand ));
+      i18n("Executing precommand %1", precommand ));
 
   connect(&precommandProcess, SIGNAL(finished(bool)),
           SLOT(precommandExited(bool)));

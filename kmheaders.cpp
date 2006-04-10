@@ -1316,14 +1316,14 @@ void KMHeaders::setFolderInfoStatus ()
   QString str;
   const int unread = mFolder->countUnread();
   if ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
-    str = unread ? i18n( "1 unsent", "%n unsent", unread ) : i18n( "0 unsent" );
+    str = unread ? i18np( "1 unsent", "%n unsent", unread ) : i18n( "0 unsent" );
   else
-    str = unread ? i18n( "1 unread", "%n unread", unread ) : i18n( "0 unread" );
+    str = unread ? i18np( "1 unread", "%n unread", unread ) : i18n( "0 unread" );
   const int count = mFolder->count();
-  str = count ? i18n( "1 message, %1.", "%n messages, %1.", count ).arg( str )
+  str = count ? i18np( "1 message, %1.", "%n messages, %1.", count, str )
               : i18n( "0 messages" ); // no need for "0 unread" to be added here
   if ( mFolder->isReadOnly() )
-    str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.").arg( str );
+    str = i18nc("%1 = n messages, m unread.", "%1 Folder is read-only.", str );
   BroadcastStatus::instance()->setStatusMsg(str);
 }
 
@@ -1366,8 +1366,8 @@ void KMHeaders::applyFiltersOnMsg()
       KMMsgBase* msgBase = (*it);
       int diff = msgCountToFilter - ++msgCount;
       if ( diff < 10 || !( msgCount % 10 ) ) {
-        QString statusMsg = i18n("Filtering message %1 of %2");
-        statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+        QString statusMsg = i18n( "Filtering message %1 of %2",
+                                  msgCount, msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
         KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
       }
@@ -1495,7 +1495,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   if ( msgList.isEmpty( ) ) return;
   if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
-         i18n("<qt>Do you really want to delete the selected message?<br>"
+         i18np("<qt>Do you really want to delete the selected message?<br>"
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %n selected messages?<br>"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
@@ -2642,7 +2642,7 @@ bool KMHeaders::writeSortOrder()
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
         kWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-        kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+        kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
     ::rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
@@ -2682,7 +2682,7 @@ void KMHeaders::appendItemToSortFile(HeaderItem *khi)
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
         kWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-        kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+        kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
   } else {

@@ -778,7 +778,7 @@ void SideWidget::setTotal( int recipients, int lines )
 
   QString labelText;
   if ( recipients == 0 ) labelText = i18n("No recipients");
-  else labelText = i18n("1 recipient","%n recipients", recipients );
+  else labelText = i18np("1 recipient","%n recipients", recipients );
   mTotalLabel->setText( labelText );
 
   if ( lines > 3 ) mTotalLabel->show();
@@ -876,9 +876,9 @@ void RecipientsEditor::setRecipientString( const QString &str,
   for( it = r.begin(); it != r.end(); ++it ) {
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
-        i18n("Truncating recipients list to %1 of %2 entries.")
-        .arg( GlobalSettings::self()->maximumRecipients() )
-        .arg( r.count() ) );
+        i18n("Truncating recipients list to %1 of %2 entries.",
+          GlobalSettings::self()->maximumRecipients() ,
+          r.count() ) );
       break;
     }
     addRecipient( *it, type );

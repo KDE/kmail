@@ -888,7 +888,7 @@ void KMSearchPattern::writeConfig( KConfigGroup & config ) const {
 void KMSearchPattern::init() {
   clear();
   mOperator = OpAnd;
-  mName = '<' + i18n("name used for a virgin filter","unknown") + '>';
+  mName = '<' + i18nc("name used for a virgin filter","unknown") + '>';
 }
 
 QString KMSearchPattern::asString() const {

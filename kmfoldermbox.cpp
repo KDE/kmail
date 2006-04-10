@@ -110,7 +110,7 @@ int KMFolderMbox::open()
   if (!mStream)
   {
     KNotifyClient::event( 0, "warning",
-    i18n("Cannot open file \"%1\":\n%2").arg(location()).arg(strerror(errno)));
+    i18n("Cannot open file \"%1\":\n%2", location(), strerror(errno)));
     kDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
@@ -137,9 +137,9 @@ int KMFolderMbox::open()
                            "in the <a href=\"%1\">FAQ section of the manual "
                            "of KMail</a> for "
                            "information about how to prevent this "
-                           "problem from happening again.</p></qt>")
-                      .arg("help:/kmail/faq.html#faq-index-regeneration")
-                      .arg(name());
+                           "problem from happening again.</p></qt>",
+                       QString("help:/kmail/faq.html#faq-index-regeneration"),
+                       name());
         // When KMail is starting up we have to show a non-blocking message
         // box so that the initialization can continue. We don't show a
         // queued message box when KMail isn't starting up because queued
@@ -163,8 +163,8 @@ int KMFolderMbox::open()
        }
        QString str;
        mIndexStream = 0;
-       str = i18n("Folder `%1' changed. Recreating index.")
-             .arg(name());
+       str = i18n("Folder `%1' changed. Recreating index.",
+              name());
        emit statusMsg(str);
      } else {
        mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
@@ -308,7 +308,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
         !mIndexStream || fsync(fileno(mIndexStream))) {
-    kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2").arg( indexLocation() ).arg(errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
+    kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2", indexLocation() , errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
     }
 }
 
@@ -606,7 +606,7 @@ int KMFolderMbox::createIndexFromContents()
       {
         if (numStatus <= 0)
         {
-          msgStr = i18n("Creating index file: one message done", "Creating index file: %n messages done", num);
+          msgStr = i18np("Creating index file: one message done", "Creating index file: %n messages done", num);
           emit statusMsg(msgStr);
           numStatus = 10;
         }

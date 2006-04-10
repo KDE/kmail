@@ -160,17 +160,17 @@ void ExpireJob::done()
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
       moving = true;
-      str = i18n( "Removing 1 old message from folder %1...",
-                  "Removing %n old messages from folder %1...", count )
-            .arg( mSrcFolder->label() );
+      str = i18np( "Removing 1 old message from folder %1...",
+                  "Removing %n old messages from folder %1...", count ,
+              mSrcFolder->label() );
     } else {
       // Expire by moving
       mMoveToFolder =
         kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
       if ( !mMoveToFolder ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
-                    "folder %2 not found" )
-              .arg( mSrcFolder->label(), mSrcFolder->expireToFolderId() );
+                    "folder %2 not found",
+                    mSrcFolder->label(), mSrcFolder->expireToFolderId() );
         kWarning(5006) << str << endl;
       } else {
         kDebug(5006) << "ExpireJob: finished expiring in folder "
@@ -182,10 +182,9 @@ void ExpireJob::done()
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
         moving = true;
-        str = i18n( "Moving 1 old message from folder %1 to folder %2...",
-                    "Moving %n old messages from folder %1 to folder %2...",
-                    count )
-              .arg( mSrcFolder->label(), mMoveToFolder->label() );
+        str = i18np( "Moving 1 old message from folder %1 to folder %2...",
+                     "Moving %n old messages from folder %1 to folder %2...",
+                     count, mSrcFolder->label(), mMoveToFolder->label() );
       }
     }
   }
@@ -210,37 +209,36 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
   switch ( command->result() ) {
   case KMCommand::OK:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18n( "Removed 1 old message from folder %1.",
+      msg = i18np( "Removed 1 old message from folder %1.",
                   "Removed %n old messages from folder %1.",
-                  mRemovedMsgs.count() )
-            .arg( mSrcFolder->label() );
+                  mRemovedMsgs.count() ,
+              mSrcFolder->label() );
     }
     else {
-      msg = i18n( "Moved 1 old message from folder %1 to folder %2.",
-                  "Moved %n old messages from folder %1 to folder %2.",
-                  mRemovedMsgs.count() )
-            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+      msg = i18np( "Moved 1 old message from folder %1 to folder %2.",
+                   "Moved %n old messages from folder %1 to folder %2.",
+                   mRemovedMsgs.count(), mSrcFolder->label(), mMoveToFolder->label() );
     }
     break;
   case KMCommand::Failed:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18n( "Removing old messages from folder %1 failed." )
-            .arg( mSrcFolder->label() );
+      msg = i18n( "Removing old messages from folder %1 failed." ,
+              mSrcFolder->label() );
     }
     else {
-      msg = i18n( "Moving old messages from folder %1 to folder %2 failed." )
-            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+      msg = i18n( "Moving old messages from folder %1 to folder %2 failed.",
+                  mSrcFolder->label(), mMoveToFolder->label() );
     }
     break;
   case KMCommand::Canceled:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18n( "Removing old messages from folder %1 was canceled." )
-            .arg( mSrcFolder->label() );
+      msg = i18n( "Removing old messages from folder %1 was canceled." ,
+              mSrcFolder->label() );
     }
     else {
       msg = i18n( "Moving old messages from folder %1 to folder %2 was "
-                  "canceled." )
-            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+                  "canceled.",
+                  mSrcFolder->label(), mMoveToFolder->label() );
     }
   default: ;
   }

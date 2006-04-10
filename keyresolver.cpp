@@ -482,87 +482,84 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
     const QString msg =
       key.protocol() == GpgME::Context::OpenPGP
       ? ( mine ? sign
-	  ? i18n("<p>Your OpenPGP signing key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than a day.</p>",
-		 "<p>Your OpenPGP signing key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than %n days.</p>",
-		 daysTillExpiry )
-	  : i18n("<p>Your OpenPGP encryption key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than a day.</p>",
-		 "<p>Your OpenPGP encryption key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than %n days.</p>",
-		 daysTillExpiry )
-	  : i18n("<p>The OpenPGP key for</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than a day.</p>",
-		 "<p>The OpenPGP key for</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
-		 "<p>expires in less than %n days.</p>",
-		 daysTillExpiry ) ).arg( QString::fromUtf8( key.userID(0).id() ),
-					 key.shortKeyID() )
+	  ? ki18np("<p>Your OpenPGP signing key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than a day.</p>",
+		   "<p>Your OpenPGP signing key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than %n days.</p>")
+	  : ki18np("<p>Your OpenPGP encryption key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than a day.</p>",
+		   "<p>Your OpenPGP encryption key</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than %n days.</p>")
+	  : ki18np("<p>The OpenPGP key for</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than a day.</p>",
+		   "<p>The OpenPGP key for</p><p align=center><b>%1</b> (KeyID 0x%2)</p>"
+		   "<p>expires in less than %n days.</p>") )
+		  .subs( daysTillExpiry )
+		  .subs( QString::fromUtf8( key.userID(0).id() ) )
+		  .subs( key.shortKeyID() )
+		  .toString()
       : ( ca
 	  ? ( key.isRoot()
 	      ? ( mine ? sign
-		  ? i18n("<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry )
-		  : i18n("<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry )
-		  : i18n("<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The root certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry ) )
+		  ? ki18np("<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>")
+		  : ki18np("<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>")
+		  : ki18np("<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The root certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>") )
 	      : ( mine ? sign
-		  ? i18n("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry )
-		  : i18n("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry )
-		  : i18n("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than a day.</p>",
-			 "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
-			 "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-			 "<p>expires in less than %n days.</p>",
-			 daysTillExpiry ) ) ).arg( Kleo::DN( orig.userID(0).id() ).prettyDN(),
-						   orig.issuerSerial(),
-						   Kleo::DN( key.userID(0).id() ).prettyDN() )
+		  ? ki18np("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>")
+		  : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>")
+		  : ki18np("<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than a day.</p>",
+			   "<p>The intermediate CA certificate</p><p align=center><b>%3</b></p>"
+			   "<p>for S/MIME certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+			   "<p>expires in less than %n days.</p>") ) )
+			   .subs( daysTillExpiry )
+			   .subs( Kleo::DN( orig.userID(0).id() ).prettyDN() )
+			   .subs( orig.issuerSerial() )
+			   .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
+			   .toString()
 	  : ( mine ? sign
-	      ? i18n("<p>Your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than a day.</p>",
-		     "<p>Your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than %n days.</p>",
-		     daysTillExpiry )
-	      : i18n("<p>Your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than a day.</p>",
-		     "<p>Your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than %n days.</p>",
-		     daysTillExpiry )
-	      : i18n("<p>The S/MIME certificate for</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than a day.</p>",
-		     "<p>The S/MIME certificate for</p><p align=center><b>%1</b> (serial number %2)</p>"
-		     "<p>expires in less than %n days.</p>",
-		     daysTillExpiry ) ).arg( Kleo::DN( key.userID(0).id() ).prettyDN(),
-					     key.issuerSerial() ) );
+	      ? ki18np("<p>Your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than a day.</p>",
+		       "<p>Your S/MIME signing certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than %n days.</p>")
+	      : ki18np("<p>Your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than a day.</p>",
+		       "<p>Your S/MIME encryption certificate</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than %n days.</p>")
+	      : ki18np("<p>The S/MIME certificate for</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than a day.</p>",
+		       "<p>The S/MIME certificate for</p><p align=center><b>%1</b> (serial number %2)</p>"
+		       "<p>expires in less than %n days.</p>" ) )
+		       .subs( daysTillExpiry )
+		       .subs( Kleo::DN( key.userID(0).id() ).prettyDN() )
+		       .subs( key.issuerSerial() )
+		       .toString() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     key.protocol() == GpgME::Context::OpenPGP
 					     ? i18n("OpenPGP Key Expires Soon" )
@@ -1334,13 +1331,13 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
       // since it's a bug in the configuration and the user should be
       // notified about it as early as possible:
       keys = selectKeys( person,
-			 i18n("if in your language something like "
+			 i18nc("if in your language something like "
 			      "'key(s)' isn't possible please "
 			      "use the plural in the translation",
 			      "There is a problem with the "
 			      "encryption key(s) for \"%1\".\n\n"
 			      "Please re-select the key(s) which should "
-			      "be used for this recipient.").arg(person),
+			      "be used for this recipient.", person),
 			 keys );
       if ( !keys.empty() )
 	return keys;
@@ -1370,19 +1367,19 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   // FIXME: let user get the key from keyserver
   return selectKeys( person,
 		     matchingKeys.empty()
-		     ? i18n("if in your language something like "
+		     ? i18nc("if in your language something like "
 			    "'key(s)' isn't possible please "
 			    "use the plural in the translation",
 			    "No valid and trusted encryption key was "
 			    "found for \"%1\".\n\n"
 			    "Select the key(s) which should "
-			    "be used for this recipient.").arg(person)
-		     : i18n("if in your language something like "
+			    "be used for this recipient.", person)
+		     : i18nc("if in your language something like "
 			    "'key(s)' isn't possible please "
 			    "use the plural in the translation",
 			    "More than one key matches \"%1\".\n\n"
 			    "Select the key(s) which should "
-			    "be used for this recipient.").arg(person),
+			    "be used for this recipient.", person),
 		     matchingKeys );
 }
 
@@ -1488,7 +1485,7 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
   KABC::Addressee addr;
   if ( res.isEmpty() ) {
      bool ok = true;
-     QString fullName = KInputDialog::getText( i18n( "Name Selection" ), i18n( "Which name shall the contact '%1' have in your addressbook?" ).arg( email ), QString(), &ok );
+     QString fullName = KInputDialog::getText( i18n( "Name Selection" ), i18n( "Which name shall the contact '%1' have in your addressbook?", email ), QString(), &ok );
     if ( ok ) {
       addr.setNameFromString( fullName );
       addr.insertEmail( email, true );

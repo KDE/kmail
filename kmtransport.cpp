@@ -148,7 +148,7 @@ void KMTransportInfo::writeConfig(int id)
               "but should not be considered secure from decryption efforts "
               "if access to the configuration file is obtained.\n"
               "Do you want to store the password for account '%1' in the "
-              "configuration file?").arg( name ),
+              "configuration file?", name ),
          i18n("KWallet Not Available"),
          KGuiItem( i18n("Store Password") ),
          KGuiItem( i18n("Do Not Store Password") ) )
@@ -513,10 +513,10 @@ void KMTransportDialog::makeSmtpPage()
 
   mSmtp.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
-  mSmtp.authLogin = new QRadioButton( i18n("Please translate this "
+  mSmtp.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mSmtp.authGroup );
-  mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
+  mSmtp.authPlain = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
     mSmtp.authGroup  );
   mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mSmtp.authGroup );

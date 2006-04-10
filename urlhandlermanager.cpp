@@ -443,7 +443,7 @@ namespace {
     QString displayName, libName, keyId;
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return QString();
-    return i18n("Show certificate 0x%1").arg( keyId );
+    return i18n("Show certificate 0x%1", keyId );
   }
 }
 
@@ -497,8 +497,8 @@ namespace {
     if ( name.isEmpty() )
       name = msgPart.name();
     if ( !name.isEmpty() )
-      return i18n( "Attachment: %1" ).arg( name );
-    return i18n( "Attachment #%1 (unnamed)" ).arg( KMReaderWin::msgPartFromUrl( url ) );
+      return i18n( "Attachment: %1", name );
+    return i18n( "Attachment #%1 (unnamed)", KMReaderWin::msgPartFromUrl( url ) );
   }
 }
 

@@ -1537,7 +1537,7 @@ void KMailICalIfaceImpl::readConfig()
       // No subfolder was found, so ask if we can make them
       msg = i18n("KMail will now create the required groupware folders"
                  " as subfolders of %1; if you do not want this, cancel"
-                 " and the IMAP resource will be disabled").arg(parentFolderName);
+                 " and the IMAP resource will be disabled", parentFolderName);
     } else {
       // Some subfolders were found, be more precise
       QString operations = "<ul>";
@@ -1545,17 +1545,17 @@ void KMailICalIfaceImpl::readConfig()
         if ( i != KMail::ContentsTypeMail ) {
           QString typeName = localizedDefaultFolderName( static_cast<KMail::FolderContentsType>( i ) );
           if ( results[i].found == StandardFolderSearchResult::NotFound )
-            operations += "<li>" + i18n( "%1: no folder found, will create it" ).arg( typeName ) + "</li>";
+            operations += "<li>" + i18n( "%1: no folder found, will create it", typeName ) + "</li>";
           else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
-            operations += "<li>" + i18n( "%1: found folder %2, will set it as main groupware folder" ).
-                          arg( typeName ).arg( results[i].folder->label() ) + "</li>";
+            operations += "<li>" + i18n( "%1: found folder %2, will set it as main groupware folder" , 
+                           typeName, results[i].folder->label() ) + "</li>";
         }
       }
       operations += "</ul>";
 
       msg = i18n("<qt>KMail found the following groupware folders in %1 and needs to perform the following operations: %2"
                  "<br>If you do not want this, cancel"
-                 " and the IMAP resource will be disabled").arg(parentFolderName, operations);
+                 " and the IMAP resource will be disabled", parentFolderName, operations);
 
     }
 
@@ -1687,8 +1687,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   }
 
   if( folder->canAccess() != 0 ) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
-                       .arg( folderName( itemType ) ) );
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.",
+                         folderName( itemType ) ) );
     return 0;
   }
   folder->storage()->setContentsType( contentsType );

@@ -106,7 +106,7 @@ void FolderRequester::setFolder( const QString &idString )
   if ( folder )
     setFolder( folder );
   else {
-    edit->setText( i18n( "Unknown folder '%1'" ).arg( idString ) );
+    edit->setText( i18n( "Unknown folder '%1'", idString ) );
     mFolder = 0;
   }
   mFolderId = idString;

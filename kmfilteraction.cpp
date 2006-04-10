@@ -775,17 +775,17 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   // if you change this list, also update
   // KMFilterActionSetStatus::stati above
   mParameterList.append( "" );
-  mParameterList.append( i18n("msg status","Important") );
-  mParameterList.append( i18n("msg status","Read") );
-  mParameterList.append( i18n("msg status","Unread") );
-  mParameterList.append( i18n("msg status","Replied") );
-  mParameterList.append( i18n("msg status","Forwarded") );
-  mParameterList.append( i18n("msg status","Old") );
-  mParameterList.append( i18n("msg status","New") );
-  mParameterList.append( i18n("msg status","Watched") );
-  mParameterList.append( i18n("msg status","Ignored") );
-  mParameterList.append( i18n("msg status","Spam") );
-  mParameterList.append( i18n("msg status","Ham") );
+  mParameterList.append( i18nc("msg status","Important") );
+  mParameterList.append( i18nc("msg status","Read") );
+  mParameterList.append( i18nc("msg status","Unread") );
+  mParameterList.append( i18nc("msg status","Replied") );
+  mParameterList.append( i18nc("msg status","Forwarded") );
+  mParameterList.append( i18nc("msg status","Old") );
+  mParameterList.append( i18nc("msg status","New") );
+  mParameterList.append( i18nc("msg status","Watched") );
+  mParameterList.append( i18nc("msg status","Ignored") );
+  mParameterList.append( i18nc("msg status","Spam") );
+  mParameterList.append( i18nc("msg status","Ham") );
 
   mParameter = mParameterList.at(0);
 }
@@ -875,13 +875,13 @@ KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
   // if you change this list, also update
   // mdns above
   mParameterList.append( "" );
-  mParameterList.append( i18n("MDN type","Ignore") );
-  mParameterList.append( i18n("MDN type","Displayed") );
-  mParameterList.append( i18n("MDN type","Deleted") );
-  mParameterList.append( i18n("MDN type","Dispatched") );
-  mParameterList.append( i18n("MDN type","Processed") );
-  mParameterList.append( i18n("MDN type","Denied") );
-  mParameterList.append( i18n("MDN type","Failed") );
+  mParameterList.append( i18nc("MDN type","Ignore") );
+  mParameterList.append( i18nc("MDN type","Displayed") );
+  mParameterList.append( i18nc("MDN type","Deleted") );
+  mParameterList.append( i18nc("MDN type","Dispatched") );
+  mParameterList.append( i18nc("MDN type","Processed") );
+  mParameterList.append( i18nc("MDN type","Denied") );
+  mParameterList.append( i18nc("MDN type","Failed") );
 
   mParameter = mParameterList.at(0);
 }

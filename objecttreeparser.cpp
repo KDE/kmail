@@ -573,27 +573,27 @@ namespace KMail {
           QString errorMsg;
           switch ( cryptPlugError ) {
           case NOT_INITIALIZED:
-            errorMsg = i18n( "Crypto plug-in \"%1\" is not initialized." )
-                       .arg( cryptPlugLibName );
+            errorMsg = i18n( "Crypto plug-in \"%1\" is not initialized." ,
+                         cryptPlugLibName );
             break;
           case CANT_VERIFY_SIGNATURES:
-            errorMsg = i18n( "Crypto plug-in \"%1\" cannot verify signatures." )
-                       .arg( cryptPlugLibName );
+            errorMsg = i18n( "Crypto plug-in \"%1\" cannot verify signatures." ,
+                         cryptPlugLibName );
             break;
           case NO_PLUGIN:
             if ( cryptPlugDisplayName.isEmpty() )
               errorMsg = i18n( "No appropriate crypto plug-in was found." );
             else
-              errorMsg = i18n( "%1 is either 'OpenPGP' or 'S/MIME'",
-                               "No %1 plug-in was found." )
-                           .arg( cryptPlugDisplayName );
+              errorMsg = i18nc( "%1 is either 'OpenPGP' or 'S/MIME'",
+                               "No %1 plug-in was found." ,
+                             cryptPlugDisplayName );
             break;
           }
           messagePart.errorText = i18n( "The message is signed, but the "
                                         "validity of the signature cannot be "
                                         "verified.<br />"
-                                        "Reason: %1" )
-                                  .arg( errorMsg );
+                                        "Reason: %1" ,
+                                    errorMsg );
         }
 
         if ( mReader )
@@ -711,10 +711,10 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                     + i18n("Encrypted data not shown.").toUtf8()
                     + "</div>";
       if ( !passphraseError )
-        aErrorText = i18n("Crypto plug-in \"%1\" could not decrypt the data.")
-                       .arg( cryptPlugLibName )
+        aErrorText = i18n("Crypto plug-in \"%1\" could not decrypt the data.",
+                         cryptPlugLibName )
                    + "<br />"
-                   + i18n("Error: %1").arg( aErrorText );
+                   + i18n("Error: %1", aErrorText );
     }
     if ( errTxt )
       free( errTxt );
@@ -727,12 +727,12 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                   + "</div>";
     switch ( cryptPlugError ) {
     case NOT_INITIALIZED:
-      aErrorText = i18n( "Crypto plug-in \"%1\" is not initialized." )
-                     .arg( cryptPlugLibName );
+      aErrorText = i18n( "Crypto plug-in \"%1\" is not initialized." ,
+                       cryptPlugLibName );
       break;
     case CANT_DECRYPT:
-      aErrorText = i18n( "Crypto plug-in \"%1\" cannot decrypt messages." )
-                     .arg( cryptPlugLibName );
+      aErrorText = i18n( "Crypto plug-in \"%1\" cannot decrypt messages." ,
+                       cryptPlugLibName );
       break;
     case NO_PLUGIN:
       aErrorText = i18n( "No appropriate crypto plug-in was found." );
@@ -1440,7 +1440,7 @@ namespace KMail {
         = smimeCrypto->importCertificate( certData.data(), certData.size() );
       if ( res.error() ) {
         htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
-                                   "Reason: %1").arg( QString::fromLocal8Bit( res.error().asString() ) ) );
+                                   "Reason: %1", QString::fromLocal8Bit( res.error().asString() ) ) );
         return true;
       }
 
@@ -1454,16 +1454,16 @@ namespace KMail {
       }
       QString comment = "<b>" + i18n( "Certificate import status:" ) + "</b><br>&nbsp;<br>";
       if ( nImp )
-        comment += i18n( "1 new certificate was imported.",
+        comment += i18np( "1 new certificate was imported.",
                          "%n new certificates were imported.", nImp ) + "<br>";
       if ( nUnc )
-        comment += i18n( "1 certificate was unchanged.",
+        comment += i18np( "1 certificate was unchanged.",
                          "%n certificates were unchanged.", nUnc ) + "<br>";
       if ( nSKImp )
-        comment += i18n( "1 new secret key was imported.",
+        comment += i18np( "1 new secret key was imported.",
                          "%n new secret keys were imported.", nSKImp ) + "<br>";
       if ( nSKUnc )
-        comment += i18n( "1 secret key was unchanged.",
+        comment += i18np( "1 secret key was unchanged.",
                          "%n secret keys were unchanged.", nSKUnc ) + "<br>";
       comment += "&nbsp;<br>";
       htmlWriter()->queue( comment );
@@ -1479,13 +1479,13 @@ namespace KMail {
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
         if ( (*it).error() )
-          htmlWriter()->queue( i18n( "Failed: %1 (%2)" ).arg( (*it).fingerprint() )
-                               .arg( QString::fromLocal8Bit( (*it).error().asString() ) ) );
+          htmlWriter()->queue( i18n( "Failed: %1 (%2)", (*it).fingerprint() ,
+                                 QString::fromLocal8Bit( (*it).error().asString() ) ) );
         else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
           if ( (*it).status() & GpgME::Import::ContainedSecretKey )
-            htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
+            htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)", (*it).fingerprint() ) );
           else
-            htmlWriter()->queue( i18n( "New or changed: %1" ).arg( (*it).fingerprint() ) );
+            htmlWriter()->queue( i18n( "New or changed: %1", (*it).fingerprint() ) );
         htmlWriter()->queue( "<br>" );
       }
 
@@ -1906,8 +1906,8 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                result2 += i18n("Internal system error #%1 occurred.")
-                        .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
+                result2 += i18n("Internal system error #%1 occurred.",
+                          statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
                 // if an unsupported internal error occurred
                 // we cannot trust any information
                 // that was given back by the plug-in
@@ -1999,7 +1999,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
         else {
             htmlStr += i18n("Encrypted message (decryption not possible)");
             if( !block.errorText.isEmpty() )
-                htmlStr += "<br />" + i18n("Reason: %1").arg( block.errorText );
+                htmlStr += "<br />" + i18n("Reason: %1", block.errorText );
         }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
@@ -2106,7 +2106,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                 i18n("Warning:") +
                                 "</u> " +
                                 i18n("Sender's mail address is not stored "
-                                     "in the %1 used for signing.").arg(certificate) +
+                                     "in the %1 used for signing.", certificate) +
                                 "<br />" +
                                 i18n("sender: ") +
                                 msgFrom +
@@ -2131,9 +2131,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             i18n("Warning:") +
                             "</u> " +
                             i18n("No mail address is stored in the %1 used for signing, "
-                                 "so we cannot compare it to the sender's address %2.")
-                            .arg(certificate)
-                            .arg(msgFrom);
+                                 "so we cannot compare it to the sender's address %2.",
+                             certificate,
+                             msgFrom);
                     }
                     if( !greenCaseWarning.isEmpty() ) {
                         if( !statusStr.isEmpty() )
@@ -2152,8 +2152,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             else if( showKeyInfos ) {
                 if( cannotCheckSignature ) {
                     htmlStr += i18n( "Not enough information to check "
-                                     "signature. %1" )
-                                .arg( keyWithWithoutURL );
+                                     "signature. %1" ,
+                                  keyWithWithoutURL );
                 }
                 else {
 
@@ -2170,8 +2170,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         if( signer.isEmpty() || onlyShowKeyURL )
                             htmlStr += i18n( "Message was signed with unknown key." );
                         else
-                            htmlStr += i18n( "Message was signed by %1." )
-                                    .arg( signer );
+                            htmlStr += i18n( "Message was signed by %1." ,
+                                      signer );
                     } else {
                         bool dateOK = ( 0 < block.creationTime.tm_year &&
                                         block.creationTime.tm_year < 3000 );
@@ -2181,32 +2181,32 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         if( dateOK && created.isValid() ) {
                             if( signer.isEmpty() ) {
                                 if( onlyShowKeyURL )
-                                    htmlStr += i18n( "Message was signed with key %1." )
-                                                .arg( keyWithWithoutURL );
+                                    htmlStr += i18n( "Message was signed with key %1." ,
+                                                  keyWithWithoutURL );
                                 else
-                                    htmlStr += i18n( "Message was signed on %1 with key %2." )
-                                                .arg( KGlobal::locale()->formatDateTime( created ) )
-                                                .arg( keyWithWithoutURL );
+                                    htmlStr += i18n( "Message was signed on %1 with key %2." ,
+                                                  KGlobal::locale()->formatDateTime( created ) ,
+                                                  keyWithWithoutURL );
                             }
                             else {
                                 if( onlyShowKeyURL )
-                                    htmlStr += i18n( "Message was signed with key %1." )
-                                            .arg( keyWithWithoutURL );
+                                    htmlStr += i18n( "Message was signed with key %1." ,
+                                              keyWithWithoutURL );
                                 else
-                                    htmlStr += i18n( "Message was signed by %3 on %1 with key %2" )
-                                            .arg( KGlobal::locale()->formatDateTime( created ) )
-                                            .arg( keyWithWithoutURL )
-                                            .arg( signer );
+                                    htmlStr += i18n( "Message was signed by %3 on %1 with key %2" ,
+                                              KGlobal::locale()->formatDateTime( created ) ,
+                                              keyWithWithoutURL ,
+                                              signer );
                             }
                         }
                         else {
                             if( signer.isEmpty() || onlyShowKeyURL )
-                                htmlStr += i18n( "Message was signed with key %1." )
-                                        .arg( keyWithWithoutURL );
+                                htmlStr += i18n( "Message was signed with key %1." ,
+                                          keyWithWithoutURL );
                             else
-                                htmlStr += i18n( "Message was signed by %2 with key %1." )
-                                        .arg( keyWithWithoutURL )
-                                        .arg( signer );
+                                htmlStr += i18n( "Message was signed by %2 with key %1." ,
+                                          keyWithWithoutURL ,
+                                          signer );
                         }
                     }
                 }
@@ -2241,12 +2241,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     if ( dateOK )
                       created.setTime_t( mktime(&block.creationTime) );
                     if( dateOK && created.isValid() )
-                        htmlStr += i18n( "Message was signed on %1 with unknown key %2." )
-                                .arg( KGlobal::locale()->formatDateTime( created ) )
-                                .arg( keyWithWithoutURL );
+                        htmlStr += i18n( "Message was signed on %1 with unknown key %2." ,
+                                  KGlobal::locale()->formatDateTime( created ) ,
+                                  keyWithWithoutURL );
                     else
-                        htmlStr += i18n( "Message was signed with unknown key %1." )
-                                .arg( keyWithWithoutURL );
+                        htmlStr += i18n( "Message was signed with unknown key %1." ,
+                                  keyWithWithoutURL );
                   }
                   else
                     htmlStr += i18n( "Message was signed with unknown key." );
@@ -2278,11 +2278,11 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                                   .arg( keyWithWithoutURL )
-                                   .arg( signer );
+                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." ,
+                                     keyWithWithoutURL ,
+                                     signer );
                     else
-                        htmlStr += i18n( "Message was signed by %1." ).arg( signer );
+                        htmlStr += i18n( "Message was signed by %1.", signer );
                     htmlStr += "<br />";
 
                     switch( block.keyTrust )
@@ -2317,11 +2317,11 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                        .arg( keyWithWithoutURL )
-                        .arg( signer );
+                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." ,
+                          keyWithWithoutURL ,
+                          signer );
                     else
-                        htmlStr += i18n( "Message was signed by %1." ).arg( signer );
+                        htmlStr += i18n( "Message was signed by %1.", signer );
                     htmlStr += "<br />";
                     htmlStr += i18n("Warning: The signature is bad.");
                     htmlStr += "</td></tr>"

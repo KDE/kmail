@@ -2947,7 +2947,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
   if ( DwBodyPart *part = dwBodyPart( aIdx ) ) {
     KMMessage::bodyPart(part, aPart);
     if( aPart->name().isEmpty() )
-      aPart->setName( i18n("Attachment: %1").arg( aIdx ) );
+      aPart->setName( i18n("Attachment: %1", aIdx ) );
   }
 }
 

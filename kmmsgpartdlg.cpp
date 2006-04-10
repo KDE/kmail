@@ -93,7 +93,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "<p>normally, you do not need to touch this setting, since the "
 	     "type of the file is automatically checked; but, sometimes, %1 "
 	     "may not detect the type correctly -- here is where you can fix "
-	     "that.</p></qt>").arg( kapp->aboutData()->programName() );
+	     "that.</p></qt>", kapp->aboutData()->programName() );
   mMimeType->setWhatsThis( msg );
 
   // row 1: Size label:
@@ -105,8 +105,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "<p>sometimes, %1 will only give an estimated size here, "
 	     "because calculating the exact size would take too much time; "
 	     "when this is the case, it will be made visible by adding "
-	     "\"(est.)\" to the size displayed.</p></qt>")
-    .arg( kapp->aboutData()->programName() );
+	     "\"(est.)\" to the size displayed.</p></qt>",
+      kapp->aboutData()->programName() );
   mSize->setWhatsThis( msg );
 
   // row 2: "Name" lineedit and label:
@@ -151,8 +151,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "resulting message, e.g. if a PostScript file does not contain "
 	     "binary data, but consists of pure text -- in this case, choosing "
 	     "\"quoted-printable\" over the default \"base64\" will save up "
-	     "to 25% in resulting message size.</p></qt>")
-    .arg( kapp->aboutData()->programName() );
+	     "to 25% in resulting message size.</p></qt>",
+      kapp->aboutData()->programName() );
   label->setWhatsThis( msg );
   mEncoding->setWhatsThis( msg );
 
@@ -224,8 +224,8 @@ void KMMsgPartDialog::setMimeTypeList( const QStringList & mimeTypes ) {
 void KMMsgPartDialog::setSize( KIO::filesize_t size, bool estimated ) {
   QString text = KIO::convertSize( size );
   if ( estimated )
-    text = i18n("%1: a filesize incl. unit (e.g. \"1.3 KB\")",
-		"%1 (est.)").arg( text );
+    text = i18nc("%1: a filesize incl. unit (e.g. \"1.3 KB\")",
+		"%1 (est.)", text );
   mSize->setText( text );
 }
 
