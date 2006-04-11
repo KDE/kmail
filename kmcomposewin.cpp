@@ -4401,8 +4401,7 @@ void KMComposeWin::slotUpdateToolbars()
 void KMComposeWin::slotEditKeys()
 {
   KKeyDialog::configure( actionCollection(),
-                         false /*don't allow one-letter shortcuts*/
-                         );
+    KKeyChooser::LetterShortcutsDisallowed );
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )

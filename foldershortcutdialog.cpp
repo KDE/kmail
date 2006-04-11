@@ -76,7 +76,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
 
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
            this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
-  mKeyButton->setShortcut( folder->shortcut(), false );
+  mKeyButton->setShortcut( folder->shortcut() );
 }
 
 FolderShortcutDialog::~FolderShortcutDialog()
@@ -88,14 +88,14 @@ void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
   if ( sc == mKeyButton->shortcut() ) return;
   if ( sc.toString().isNull() ) {
     // null is fine, that's reset, but sc.іsNull() will be false :/
-    mKeyButton->setShortcut( KShortcut::null(), false );
+    mKeyButton->setShortcut( KShortcut::null() );
   } else {
     if( !mMainWidget->shortcutIsValid( sc ) ) {
       QString msg( i18n( "The selected shortcut is already used, "
             "please select a different one." ) );
       KMessageBox::sorry( mMainWidget, msg );
     } else {
-      mKeyButton->setShortcut( sc, false );
+      mKeyButton->setShortcut( sc );
     }
   }
 }

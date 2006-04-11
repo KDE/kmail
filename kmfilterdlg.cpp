@@ -396,7 +396,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
-    mKeyButton->setShortcut( shortcut, false );
+    mKeyButton->setShortcut( shortcut );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
@@ -508,7 +508,7 @@ void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );
   } else {
-    mKeyButton->setShortcut( mySc, false );
+    mKeyButton->setShortcut( mySc );
     if ( mFilter )
       mFilter->setShortcut( mKeyButton->shortcut() );
   }

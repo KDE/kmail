@@ -2295,7 +2295,7 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotExpireAll()),
 		      actionCollection(), "expire_all_folders" );
 
-  (void) new KAction( i18n("&Refresh Local IMAP Cache"), "refresh",
+  (void) new KAction( i18n("&Refresh Local IMAP Cache"), "refresh", 0,
 		      this, SLOT(slotInvalidateIMAPFolders()),
 		      actionCollection(), "file_invalidate_imap_cache" );
 
@@ -2721,7 +2721,7 @@ void KMMainWidget::setupActions()
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString(),
                          i18n("Go to the next message") ),
-                         "N;Right", this, SLOT(slotNextMessage()),
+                         KShortcut( "N;Right" ), this, SLOT(slotNextMessage()),
                          actionCollection(), "go_next_message" );
 
   new KAction( KGuiItem( i18n("Next &Unread Message"),
@@ -2737,9 +2737,9 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_important_message" );
   */
 
-  new KAction( KGuiItem( i18n("&Previous Message"), QString(),
+  new KAction( KGuiItem( i18n("&Previous Message"), 0,
                          i18n("Go to the previous message") ),
-                         "P;Left", this, SLOT(slotPrevMessage()),
+                         KShortcut( "P;Left" ), this, SLOT(slotPrevMessage()),
                          actionCollection(), "go_prev_message" );
 
   new KAction( KGuiItem( i18n("Previous Unread &Message"),
@@ -2761,7 +2761,7 @@ void KMMainWidget::setupActions()
                            Qt::ALT+Qt::Key_Plus, this, SLOT(slotNextUnreadFolder()),
                            actionCollection(), "go_next_unread_folder" );
   KShortcut shortcut = action->shortcut();
-  shortcut.append( KKey( Qt::CTRL+Qt::Key_Plus ) );
+  shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
   action->setShortcut( shortcut );
 
   action =
@@ -2770,7 +2770,7 @@ void KMMainWidget::setupActions()
                            Qt::ALT+Qt::Key_Minus, this, SLOT(slotPrevUnreadFolder()),
                            actionCollection(), "go_prev_unread_folder" );
   shortcut = action->shortcut();
-  shortcut.append( KKey( Qt::CTRL+Qt::Key_Minus ) );
+  shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
   new KAction( KGuiItem( i18nc("Go->","Next Unread &Text"), QString(),
@@ -2838,8 +2838,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotEditKeys()
 {
   KKeyDialog::configure( actionCollection(),
-			 true /*allow one-letter shortcuts*/
-			 );
+    KKeyChooser::LetterShortcutsAllowed );
 }
 
 //-----------------------------------------------------------------------------

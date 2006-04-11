@@ -230,7 +230,7 @@ void KMReaderMainWin::setupAccel()
 
   KAction *closeAction = KStdAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = closeAction->shortcut();
-  closeShortcut.append( KKey(Qt::Key_Escape));
+  closeShortcut.append( QKeySequence(Qt::Key_Escape));
   closeAction->setShortcut(closeShortcut);
 
   //----- View Menu

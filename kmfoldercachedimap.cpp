@@ -534,7 +534,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), mSyncState ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), int( mSyncState ) ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
