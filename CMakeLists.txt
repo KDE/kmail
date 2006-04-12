@@ -304,7 +304,7 @@ install_files( ${SERVICETYPES_INSTALL_DIR} FILES dcopmail.desktop dcopimap.deskt
 install_files( /include FILES kmailIface.h kmailpartIface.h kmailicalIface.h )
 install_files( ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter FILES application_octetstream.desktop )
 install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES kmail.upd )
-install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl kmail-upd-identities.pl kmail-3.1-use-UOID-for-identities.pl kmail-3.1-update-new-mail-notification-settings.pl kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl kmail-3.2-update-loop-on-goto-unread-settings.shkmail-3.2-misc.sh kmail-3.3-use-ID-for-accounts.pl kmail-3.3-move-identities.pl kmail-3.3-aegypten.pl kmail-3.3-split-sign-encr-keys.sh kmail-3.3-misc.pl kmail-3.3b1-misc.pl kmail-3.4-misc.pl kmail-3.4.1-update-status-filters.pl )
+install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl kmail-upd-identities.pl kmail-3.1-use-UOID-for-identities.pl kmail-3.1-update-new-mail-notification-settings.pl kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl kmail-3.2-update-loop-on-goto-unread-settings.sh kmail-3.2-misc.sh kmail-3.3-use-ID-for-accounts.pl kmail-3.3-move-identities.pl kmail-3.3-aegypten.pl kmail-3.3-split-sign-encr-keys.sh kmail-3.3-misc.pl kmail-3.3b1-misc.pl kmail-3.4-misc.pl kmail-3.4.1-update-status-filters.pl )
 
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
