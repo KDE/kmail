@@ -25,6 +25,8 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
+#include "config.h"
+
 #include "compactionjob.h"
 #include "kmfolder.h"
 #include "broadcaststatus.h"
