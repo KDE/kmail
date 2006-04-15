@@ -139,7 +139,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
   KIconLoader * il = KGlobal::instance()->iconLoader();
   QPixmap pm = il->loadIcon( icon, KIcon::Small, size,
                              KIcon::DefaultState, 0, true );
-  if ( pm.isNull() ) {
+  if ( mFolder && pm.isNull() ) {
       pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
                          KIcon::DefaultState, 0, true );
   }
@@ -157,7 +157,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
     pm = normalIcon( size );
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
-  if ( mFolder->useCustomIcons() ) {
+  if ( mFolder && mFolder->useCustomIcons() ) {
     pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, size,
                        KIcon::DefaultState, 0, true );
     if ( pm.isNull() )
@@ -1477,7 +1477,8 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
 
   QString fldName, oldFldName;
 
-  oldFldName = fti->name(0);
+  if ( fti )
+    oldFldName = fti->name(0);
 
   if (!text.isEmpty())
           fldName = text;
@@ -1546,10 +1547,12 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 
   // get the unread count
   int count = 0;
-  if (folder->noContent()) // always empty
+  if (folder && folder->noContent()) // always empty
     count = -1;
-  else
-    count = fti->folder()->countUnread();
+  else {
+    if ( fti->folder() ) 
+      count = fti->folder()->countUnread();
+  }
 
   // set it
   bool repaint = false;
