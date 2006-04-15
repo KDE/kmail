@@ -95,7 +95,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     QBuffer serNumBuffer( &serNums );
     serNumBuffer.open( QIODevice::ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
-    unsigned long serNum;
+    quint32 serNum;
     KMFolder *folder = 0;
     int idx;
     QList<KMMsgBase*> messageList;
