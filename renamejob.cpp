@@ -59,11 +59,13 @@ RenameJob::RenameJob( FolderStorage* storage, const QString& newName,
    mNewName( newName ), mNewFolder( 0 )
 {
   mStorageTempOpened = 0;
-  mOldName = storage->name();
-  if ( storage->folderType() == KMFolderTypeImap ) {
-    mOldImapPath = static_cast<KMFolderImap*>(storage)->imapPath();
-  } else if ( storage->folderType() == KMFolderTypeCachedImap ) {
-    mOldImapPath = static_cast<KMFolderCachedImap*>(storage)->imapPath();
+  if ( storage ) {
+    mOldName = storage->name();
+    if ( storage->folderType() == KMFolderTypeImap ) {
+      mOldImapPath = static_cast<KMFolderImap*>(storage)->imapPath();
+    } else if ( storage->folderType() == KMFolderTypeCachedImap ) {
+      mOldImapPath = static_cast<KMFolderCachedImap*>(storage)->imapPath();
+    }
   }
 }
 

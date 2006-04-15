@@ -373,8 +373,10 @@ void KMSender::doSendMsg()
       KMessageBox::information(0, i18n("Critical error: "
                    "Unable to process sent mail (out of space?)"
                    "Moving failing message to \"sent-mail\" folder."));
-      sentFolder->moveMsg(mCurrentMsg);
-      sentFolder->close();
+      if ( sentFolder ) {
+        sentFolder->moveMsg(mCurrentMsg);
+        sentFolder->close();
+      }
       cleanup();
       return;
     case 1:
