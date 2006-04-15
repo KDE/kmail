@@ -97,11 +97,12 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   // imap folder, use its account for keeping track of the job. Otherwise,
   // this is a get job and the src folder is an imap one. Use its account
   // then.
-  KMAcctImap *account;
+  KMAcctImap *account = 0;
   if (folder) {
     account = folder->account();
   } else {
-    account = static_cast<KMFolderImap*>(msg_parent->storage())->account();
+    if ( msg_parent && msg_parent->storage() )
+      account = static_cast<KMFolderImap*>(msg_parent->storage())->account();
   }
   if ( !account ||
        account->makeConnection() == ImapAccountBase::Error ) {
@@ -223,29 +224,8 @@ ImapJob::~ImapJob()
   if ( mDestFolder )
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
-    if ( account &&  mJob ) {
-      ImapAccountBase::JobIterator it = account->findJob( mJob );
-      if ( it != account->jobsEnd() ) {
-        if( (*it).progressItem ) {
-          (*it).progressItem->setComplete();
-          (*it).progressItem = 0;
-        }
-        if ( !(*it).msgList.isEmpty() ) {
-          for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-            mit.current()->setTransferInProgress( false );
-        }
-      }
-      account->removeJob( mJob );
-    }
-    account->mJobList.remove( this );
-    mDestFolder->close();
-  }
-
-  if ( mSrcFolder ) {
-    if (!mDestFolder || mDestFolder != mSrcFolder) {
-      if (! (mSrcFolder->folderType() == KMFolderTypeImap) ) return;
-      KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder->storage())->account();
-      if ( account && mJob ) {
+    if ( account ) {
+      if ( mJob ) {
         ImapAccountBase::JobIterator it = account->findJob( mJob );
         if ( it != account->jobsEnd() ) {
           if( (*it).progressItem ) {
@@ -257,9 +237,34 @@ ImapJob::~ImapJob()
               mit.current()->setTransferInProgress( false );
           }
         }
-        account->removeJob( mJob ); // remove the associated kio job
+        account->removeJob( mJob );
       }
-      account->mJobList.remove( this ); // remove the folderjob
+      account->mJobList.remove( this );
+    }
+    mDestFolder->close();
+  }
+
+  if ( mSrcFolder ) {
+    if (!mDestFolder || mDestFolder != mSrcFolder) {
+      if (! (mSrcFolder->folderType() == KMFolderTypeImap) ) return;
+      KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder->storage())->account();
+      if ( account ) {
+        if ( mJob ) {
+          ImapAccountBase::JobIterator it = account->findJob( mJob );
+          if ( it != account->jobsEnd() ) {
+            if( (*it).progressItem ) {
+              (*it).progressItem->setComplete();
+              (*it).progressItem = 0;
+            }
+            if ( !(*it).msgList.isEmpty() ) {
+              for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+                mit.current()->setTransferInProgress( false );
+            }
+          }
+          account->removeJob( mJob ); // remove the associated kio job
+        }
+        account->mJobList.remove( this ); // remove the folderjob
+      }
     }
     mSrcFolder->close();
   }
