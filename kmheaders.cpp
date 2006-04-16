@@ -1841,7 +1841,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
   bool foundUnreadMessage = false;
 
   if (!mFolder) return -1;
-  if (mFolder->count() == -1) return -1;
+  if (mFolder->count() <= 0) return -1;
 
   if ((aStartAt >= 0) && (aStartAt < (int)mItems.size()))
     item = mItems[aStartAt];
