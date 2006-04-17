@@ -114,7 +114,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   note = new QLabel( privateLayoutWidget, "note" );
   note->setText( i18n( "Note: Expiry action will be applied immediately after confirming settings." ) );
-  note->setAlignment( int( Qt::TextWordWrap | Qt::AlignVCenter ) );
+  note->setAlignment( Qt::AlignVCenter );
+  note->setWordWrap( true );
+
   globalVBox->addWidget( note );
 
   // Load the values from the folder
