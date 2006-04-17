@@ -212,7 +212,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kcm_kmail )
 
 target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 kcm_kmail )
+install_targets(${PLUGIN_INSTALL_DIR} kcm_kmail )
 
 
 ########### next target ###############
@@ -229,7 +229,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmailpart )
 
 target_link_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 kmailpart )
+install_targets(${PLUGIN_INSTALL_DIR} kmailpart )
 
 
 ########### next target ###############
@@ -244,7 +244,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_applica
 
 target_link_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 kmail_bodypartformatter_application_octetstream )
+install_targets(${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_application_octetstream )
 
 
 ########### next target ###############
