@@ -84,12 +84,6 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     }
   }
 
-   // trigger from here, since it needs a fully constructed FolderStorage
-  if ( mExportsSernums )
-    mStorage->registerWithMessageDict();
-  if ( !mHasIndex )
-    mStorage->setAutoCreateIndex( false );
-
   if ( aParent ) {
     connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
              aParent->manager(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ) );
@@ -133,7 +127,15 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
+  // Meanwhile, readConfig must be done before registerWithMessageDict, since
+  // that one can call writeConfig in some circumstances - David
   mStorage->readConfig();
+
+   // trigger from here, since it needs a fully constructed FolderStorage
+  if ( mExportsSernums )
+    mStorage->registerWithMessageDict();
+  if ( !mHasIndex )
+    mStorage->setAutoCreateIndex( false );
 
   if ( mId == 0 && aParent )
     mId = aParent->manager()->createId();
