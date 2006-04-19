@@ -1859,7 +1859,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
   bool foundUnreadMessage = false;
 
   if (!mFolder) return -1;
-  if (!(mFolder->count()) > 0) return -1;
+  if (mFolder->count() == -1) return -1;
 
   if ((aStartAt >= 0) && (aStartAt < (int)mItems.size()))
     item = mItems[aStartAt];
@@ -3306,7 +3306,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
         kWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-        //kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+
+        return true;
     }
     if(sortStream)
         fclose(sortStream);
