@@ -315,12 +315,6 @@ protected:
   ProgressItem *mMailCheckProgressItem;
 
 private:
-    /**
-     * avoid compiler warning about hidden virtual
-     */
-    virtual void setName( const char *name ) { QObject::setName( name ); }
-
-private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
 };
