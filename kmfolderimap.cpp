@@ -1100,17 +1100,20 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     int a = cstr.find("X-uidValidity: ");
     int b = cstr.find("\r\n", a);
     QString uidv;
-    if ( (b - a - 15) >= 0 ) uidv = cstr.mid(a + 15, b - a - 15);
+    if ( (b - a - 15) >= 0 ) 
+      uidv = cstr.mid(a + 15, b - a - 15);
     a = cstr.find("X-Access: ");
     b = cstr.find("\r\n", a);
     QString access;
-    if ( (b - a - 10) >= 0 ) access = cstr.mid(a + 10, b - a - 10);
+    if ( (b - a - 10) >= 0 )
+      access = cstr.mid(a + 10, b - a - 10);
     mReadOnly = access == "Read only";
     a = cstr.find("X-Count: ");
     b = cstr.find("\r\n", a);
     int exists = -1;
-    bool ok;
-    if ( (b - a - 9) >= 0 ) exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
+    bool ok = false;
+    if ( (b - a - 9) >= 0 ) 
+      exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
     if ( !ok ) exists = -1;
     QString startUid;
     if (uidValidity() != uidv)
