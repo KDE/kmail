@@ -55,22 +55,22 @@
 static inline Q3ListBoxItem * findSelectedItem( Q3ListBox * lb ) {
   Q3ListBoxItem * item = 0;
   for ( item = lb->firstItem() ; item && !item->isSelected() ;
-	item = item->next() ) ;
+        item = item->next() ) ;
   return item;
 }
 
 SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
-						const char * name,
-						ButtonCode buttons,
-						const QString & addLabel,
-						const QString & removeLabel,
-						const QString & modifyLabel,
-						const QString & addDialogLabel )
+                                                const char * name,
+                                                ButtonCode buttons,
+                                                const QString & addLabel,
+                                                const QString & removeLabel,
+                                                const QString & modifyLabel,
+                                                const QString & addDialogLabel )
   : QWidget( parent, name ),
     mAddButton(0), mRemoveButton(0), mModifyButton(0),
     mUpButton(0), mDownButton(0),
     mAddDialogLabel( addDialogLabel.isEmpty() ?
-		     i18n("New entry:") : addDialogLabel )
+                     i18n("New entry:") : addDialogLabel )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
@@ -91,7 +91,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     mAddButton->setAutoDefault( false );
     vlay->addWidget( mAddButton );
     connect( mAddButton, SIGNAL(clicked()),
-	     this, SLOT(slotAdd()) );
+             this, SLOT(slotAdd()) );
   }
 
   if ( buttons & Remove ) {
@@ -103,7 +103,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     mRemoveButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mRemoveButton );
     connect( mRemoveButton, SIGNAL(clicked()),
-	     this, SLOT(slotRemove()) );
+             this, SLOT(slotRemove()) );
   }
 
   if ( buttons & Modify ) {
@@ -115,7 +115,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     mModifyButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mModifyButton );
     connect( mModifyButton, SIGNAL(clicked()),
-	     this, SLOT(slotModify()) );
+             this, SLOT(slotModify()) );
     connect( mListBox, SIGNAL( doubleClicked( Q3ListBoxItem* ) ),
              this, SLOT( slotModify() ) );
   }
@@ -123,33 +123,33 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   if ( buttons & Up ) {
     if ( !(buttons & Down) )
       kDebug(5006) << "Are you sure you want to use an Up button "
-	"without a Down button??" << endl;
+        "without a Down button??" << endl;
     mUpButton = new KPushButton( QString(), this );
-    mUpButton->setIconSet( BarIconSet( "up", K3Icon::SizeSmall ) );
+    mUpButton->setIcon( BarIconSet( "up", K3Icon::SizeSmall ) );
     mUpButton->setAutoDefault( false );
     mUpButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mUpButton );
     connect( mUpButton, SIGNAL(clicked()),
-	     this, SLOT(slotUp()) );
+             this, SLOT(slotUp()) );
   }
 
   if ( buttons & Down ) {
     if ( !(buttons & Up) )
       kDebug(5006) << "Are you sure you want to use a Down button "
-	"without an Up button??" << endl;
+        "without an Up button??" << endl;
     mDownButton = new KPushButton( QString(), this );
-    mDownButton->setIconSet( BarIconSet( "down", K3Icon::SizeSmall ) );
+    mDownButton->setIcon( BarIconSet( "down", K3Icon::SizeSmall ) );
     mDownButton->setAutoDefault( false );
     mDownButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mDownButton );
     connect( mDownButton, SIGNAL(clicked()),
-	     this, SLOT(slotDown()) );
+             this, SLOT(slotDown()) );
   }
 
   vlay->addStretch( 1 ); // spacer
 
   connect( mListBox, SIGNAL(selectionChanged()),
-	   this, SLOT(slotSelectionChanged()) );
+           this, SLOT(slotSelectionChanged()) );
 }
 
 void SimpleStringListEditor::setStringList( const QStringList & strings ) {

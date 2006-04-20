@@ -181,7 +181,7 @@ RecipientLine::RecipientLine( QWidget *parent )
            this, SLOT( slotTypeModified() ) );
 
   mRemoveButton = new QPushButton( this );
-  mRemoveButton->setIconSet( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
+  mRemoveButton->setIcon( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
   connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
   mRemoveButton->setToolTip( i18n("Remove recipient line") );

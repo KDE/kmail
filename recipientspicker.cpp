@@ -281,7 +281,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
 
   QToolButton *button = new QToolButton( this );
-  button->setIconSet( KGlobal::iconLoader()->loadIconSet(
+  button->setIcon( KGlobal::iconLoader()->loadIconSet(
               KApplication::reverseLayout() ? "clear_left":"locationbar_erase", K3Icon::Small, 0 ) );
   searchLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );

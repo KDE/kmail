@@ -70,7 +70,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
 
   mBtnTo = new QPushButton( QString(), hbox );
   mBtnTo->setObjectName( "toBtn" );
-  mBtnTo->setPixmap( BarIcon( "contents", K3Icon::SizeSmall ) );
+  mBtnTo->setIcon( BarIconSet( "contents", K3Icon::SizeSmall ) );
   mBtnTo->setMinimumSize( mBtnTo->sizeHint() * 1.2 );
   mBtnTo->setToolTip( i18n("Use the Address-Selection Dialog") );
   mBtnTo->setWhatsThis( i18n("This button opens a separate dialog "
