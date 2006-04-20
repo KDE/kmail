@@ -327,7 +327,7 @@ void AccountDialog::makeLocalAccountPage()
   QGridLayout *topLayout = new QGridLayout( page, 12, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 11, 10 );
-  topLayout->setColStretch( 1, 10 );
+  topLayout->setColumnStretch( 1, 10 );
 
   mLocal.titleLabel = new QLabel( i18n("Account Type: Local Account"), page );
   topLayout->addWidget( mLocal.titleLabel, 0, 0, 1, 3 );
@@ -461,7 +461,7 @@ void AccountDialog::makeMaildirAccountPage()
   QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 11, 10 );
-  topLayout->setColStretch( 1, 10 );
+  topLayout->setColumnStretch( 1, 10 );
 
   mMaildir.titleLabel = new QLabel( i18n("Account Type: Maildir Account"), page );
   topLayout->addWidget( mMaildir.titleLabel, 0, 0, 1, 3 );
@@ -571,7 +571,7 @@ void AccountDialog::makePopAccountPage()
   QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 15, 10 );
-  grid->setColStretch( 1, 10 );
+  grid->setColumnStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("Account &name:"), page1 );
   grid->addWidget( label, 0, 0 );

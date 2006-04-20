@@ -660,7 +660,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // a grid layout for the contents of the "common options" group box
   glay = new QGridLayout( group->layout(), 5, 3, KDialog::spacingHint() );
-  glay->setColStretch( 2, 10 );
+  glay->setColumnStretch( 2, 10 );
 
   // "confirm before send" check box:
   mConfirmSendCheck = new QCheckBox( i18n("Confirm &before send"), group );
@@ -2718,8 +2718,8 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
 
   glay = new QGridLayout( this, 7, 3, KDialog::spacingHint() );
   glay->setMargin( KDialog::marginHint() );
-  glay->setColStretch( 1, 1 );
-  glay->setColStretch( 2, 1 );
+  glay->setColumnStretch( 1, 1 );
+  glay->setColumnStretch( 2, 1 );
   glay->setRowStretch( 7, 1 );
 
   // row 0: help text
@@ -3149,7 +3149,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   // "custom header fields" listbox:
   glay = new QGridLayout( vlay, 5, 3 ); // inherits spacing
   glay->setRowStretch( 2, 1 );
-  glay->setColStretch( 1, 1 );
+  glay->setColumnStretch( 1, 1 );
   mTagList = new ListView( this );
   mTagList->setObjectName( "tagList" );
   mTagList->addColumn( i18n("Name") );
@@ -4588,7 +4588,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mBox = new QWidget( b1 );
   QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
-  grid->setColStretch( 1, 1 );
+  grid->setColumnStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
            mBox, SLOT( setEnabled(bool) ) );
 

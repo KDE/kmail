@@ -325,7 +325,7 @@ void KMTransportDialog::makeSendmailPage()
   QGridLayout *grid = new QGridLayout( topLayout, 3, 3, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 2, 10 );
-  grid->setColStretch( 1, 10 );
+  grid->setColumnStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page );
   grid->addWidget( label, 0, 0 );
@@ -379,7 +379,7 @@ void KMTransportDialog::makeSmtpPage()
   QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
-  grid->setColStretch( 1, 10 );
+  grid->setColumnStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, 0, 0 );

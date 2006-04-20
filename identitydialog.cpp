@@ -109,7 +109,7 @@ namespace KMail {
     tabWidget->addTab( tab, i18n("&General") );
     glay = new QGridLayout( tab, 4, 2, marginHint(), spacingHint() );
     glay->setRowStretch( 3, 1 );
-    glay->setColStretch( 1, 1 );
+    glay->setColumnStretch( 1, 1 );
 
     // "Name" line edit and label:
     ++row;
@@ -160,7 +160,7 @@ namespace KMail {
     mCryptographyTab = tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("Cryptograph&y") );
     glay = new QGridLayout( tab, 6, 2, marginHint(), spacingHint() );
-    glay->setColStretch( 1, 1 );
+    glay->setColumnStretch( 1, 1 );
 
     // "OpenPGP Signature Key" requester and label:
     ++row;
@@ -291,7 +291,7 @@ namespace KMail {
     glay = new QGridLayout( tab, 7, 2, marginHint(), spacingHint() );
     // the last (empty) row takes all the remaining space
     glay->setRowStretch( 7-1, 1 );
-    glay->setColStretch( 1, 1 );
+    glay->setColumnStretch( 1, 1 );
 
     // "Reply-To Address" line edit and label:
     ++row;

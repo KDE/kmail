@@ -52,7 +52,7 @@ namespace KMail {
     int row = -1;
 
     QGridLayout * glay = new QGridLayout( plainPage(), rows, 2, 0, spacingHint() );
-    glay->setColStretch( 1, 1 );
+    glay->setColumnStretch( 1, 1 );
 
     // explanation label:
     ++row;

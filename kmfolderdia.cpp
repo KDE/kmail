@@ -374,7 +374,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout( topLayout, 3, 2, KDialog::spacingHint() );
-  gl->setColStretch( 1, 100 ); // make the second column use all available space
+  gl->setColumnStretch( 1, 100 ); // make the second column use all available space
   int row = -1;
 
   // sender or receiver column?

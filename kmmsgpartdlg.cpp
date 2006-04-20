@@ -64,7 +64,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
     mI18nizedEncodings << i18n( encodingTypes[i].displayName );
 
   glay = new QGridLayout( plainPage(), 9 /*rows*/, 2 /*cols*/, spacingHint() );
-  glay->setColStretch( 1, 1 );
+  glay->setColumnStretch( 1, 1 );
   glay->setRowStretch( 8, 1 );
 
   // mimetype icon:

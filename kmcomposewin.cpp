@@ -854,9 +854,9 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   delete mGrid;
   mGrid = new QGridLayout(mMainWidget, numRows, 3, KDialogBase::marginHint()/2, KDialogBase::spacingHint());
-  mGrid->setColStretch(0, 1);
-  mGrid->setColStretch(1, 100);
-  mGrid->setColStretch(2, 1);
+  mGrid->setColumnStretch(0, 1);
+  mGrid->setColumnStretch(1, 100);
+  mGrid->setColumnStretch(2, 1);
   mGrid->setRowStretch(mNumHeaders, 100);
 
   row = 0;

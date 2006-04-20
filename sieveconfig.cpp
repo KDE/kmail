@@ -63,7 +63,7 @@ namespace KMail {
 
     QGridLayout * glay = new QGridLayout( this, 5, 2, 0, KDialog::spacingHint() );
     glay->setRowStretch( 4, 1 );
-    glay->setColStretch( 1, 1 );
+    glay->setColumnStretch( 1, 1 );
 
 
     // "Server supports sieve" checkbox:
