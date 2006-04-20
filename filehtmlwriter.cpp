@@ -96,7 +96,7 @@ namespace KMail {
       mFile.close();
     }
     if ( !mFile.open( QIODevice::WriteOnly ) )
-      kWarning( 5006 ) << "FileHtmlWriter: Cannot open file " << mFile.name() << endl;
+      kWarning( 5006 ) << "FileHtmlWriter: Cannot open file " << mFile.fileName() << endl;
     else
       mStream.setDevice( &mFile );
   }

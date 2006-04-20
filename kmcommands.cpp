@@ -2446,7 +2446,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   if ( url.isLocalFile() )
   {
     // save directly
-    file.setName( url.path() );
+    file.setFileName( url.path() );
     if ( !file.open( QIODevice::WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),

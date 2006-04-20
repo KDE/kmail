@@ -117,7 +117,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 
   if( fname.isEmpty() ) {
     fname = QDir::homePath() + "/.procmailrc";
-    mProcmailrc.setName(fname);
+    mProcmailrc.setFileName(fname);
   }
 
   QRegExp lockFileGlobal("^LOCKFILE=", true);
@@ -895,7 +895,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
-  button->setIconSet(
+  button->setIcon(
       KGlobal::iconLoader()->loadIconSet( "reload", K3Icon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
   button->setWhatsThis(
@@ -909,7 +909,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
-  mImap.editPNS->setIconSet(
+  mImap.editPNS->setIcon(
       KGlobal::iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editPNS->setAutoRaise( true );
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -921,7 +921,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
-  mImap.editONS->setIconSet(
+  mImap.editONS->setIcon(
       KGlobal::iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editONS->setAutoRaise( true );
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -933,7 +933,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
-  mImap.editSNS->setIconSet(
+  mImap.editSNS->setIcon(
       KGlobal::iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editSNS->setAutoRaise( true );
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -2259,7 +2259,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
     edit->setText( it.key() );
     QToolButton* button = new QToolButton( grid );
-    button->setIconSet(
+    button->setIcon(
       KGlobal::iconLoader()->loadIconSet( "editdelete", K3Icon::Small, 0 ) );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );

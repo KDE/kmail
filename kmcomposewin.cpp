@@ -507,14 +507,14 @@ void KMComposeWin::addImageFromClipboard()
   else
     tmpFile = new QFile(mTempDir->name() + attName + ".png" );
 
-  if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
+  if ( !QApplication::clipboard()->image().save( tmpFile->fileName(), "PNG" ) ) {
     KMessageBox::error( this, i18n("Unknown error trying to save image."), i18n("Attaching Image Failed") );
     delete mTempDir;
     mTempDir = 0;
     return;
   }
 
-  addAttach( tmpFile->name() );
+  addAttach( tmpFile->fileName() );
 }
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody(QString body)
