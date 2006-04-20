@@ -88,8 +88,6 @@ using KWallet::Wallet;
 #include <stdlib.h>
 #include <assert.h>
 
-#include <X11/Xlib.h>
-#include <fixx11h.h>
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 
@@ -1676,17 +1674,6 @@ bool KMKernel::transferMail( QString & destinationDir )
   return true;
 }
 
-
-void KMKernel::ungrabPtrKb(void)
-{
-  QWidget* widg = KMainWindow::memberList().first();
-  Display* dpy;
-
-  if (!widg) return;
-  dpy = widg->x11Display();
-  XUngrabKeyboard(dpy, CurrentTime);
-  XUngrabPointer(dpy, CurrentTime);
-}
 
 
 void KMKernel::dumpDeadLetters()

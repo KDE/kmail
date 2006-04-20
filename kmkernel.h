@@ -242,7 +242,6 @@ public:
    * method returns.
    */
   bool transferMail( QString & destinationDir );
-  void ungrabPtrKb(void);
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }

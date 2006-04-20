@@ -62,7 +62,6 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include <QX11Info>
 #include <kiconloader.h>
 
 namespace KMail {

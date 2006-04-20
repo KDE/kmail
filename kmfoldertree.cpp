@@ -49,9 +49,6 @@ using namespace KPIM;
 #include <unistd.h>
 #include <assert.h>
 
-#include <X11/Xlib.h>
-#include <fixx11h.h>
-
 //=============================================================================
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,

@@ -2393,7 +2393,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   {
     if( bSaveEncrypted || !bEncryptedParts) {
       partNode *dataNode = node;
-      Q3CString rawReplyString;
+      QByteArray rawReplyString;
       bool gotRawReplyString = false;
       if( !bSaveWithSig ) {
         if( DwMime::kTypeMultipart == node->type() &&

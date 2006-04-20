@@ -3136,12 +3136,12 @@ QString KMMessage::generateMessageId( const QString& addr )
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::html2source( const Q3CString & src )
+QByteArray KMMessage::html2source( const Q3CString & src )
 {
-  Q3CString result( 1 + 6*src.length() );  // maximal possible length
+  QByteArray result( 1 + 6*src.length() );  // maximal possible length
 
   Q3CString::ConstIterator s = src.begin();
-  Q3CString::Iterator d = result.begin();
+  QByteArray::Iterator d = result.begin();
   while ( *s ) {
     switch ( *s ) {
     case '<': {
@@ -3204,7 +3204,7 @@ Q3CString KMMessage::html2source( const Q3CString & src )
         *d++ = *s++;
     }
   }
-  result.truncate( d - result.begin() ); // adds trailing NUL
+  result.truncate( d - result.begin() );
   return result;
 }
 

@@ -621,7 +621,7 @@ public:
     * Does *not* use the Qt replace function but runs a very fast C code
     * the same way as lf2crlf() does.
    */
-  static Q3CString html2source( const Q3CString & src );
+  static QByteArray html2source( const Q3CString & src );
 
   /** Encodes an email address as mailto URL
    */
