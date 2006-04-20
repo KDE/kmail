@@ -2790,7 +2790,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
   }
 
   KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.extension() );
+                          "]."+ atmFileInfo.suffix() );
 
   linkFile->setAutoDelete(true);
   QString linkName = linkFile->name();

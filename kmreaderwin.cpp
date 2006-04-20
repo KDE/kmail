@@ -2419,7 +2419,7 @@ QString KMReaderWin::createAtmFileLink() const
   QFileInfo atmFileInfo(mAtmCurrentName);
 
   KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.extension() );
+                          "]."+ atmFileInfo.suffix() );
 
   linkFile->setAutoDelete(true);
   QString linkName = linkFile->name();
