@@ -775,24 +775,31 @@ void AccountDialog::makePopAccountPage()
 
   mPop.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
-  mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup,
-                                    "auth clear text" );
+  mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
+  mPop.authUser->setObjectName( "auth clear text" );
   mPop.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
-    mPop.authGroup, "auth login" );
+    mPop.authGroup );
+  mPop.authLogin->setObjectName( "auth login" );
   mPop.authPlain = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
-    mPop.authGroup, "auth plain"  );
-  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup, "auth cram-md5" );
-  mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup, "auth digest-md5" );
-  mPop.authNTLM = new QRadioButton( i18n("&NTLM"), mPop.authGroup, "auth ntlm" );
-  mPop.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mPop.authGroup, "auth gssapi" );
+    mPop.authGroup  );
+  mPop.authPlain->setObjectName( "auth plain" );
+  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup );
+  mPop.authCRAM_MD5->setObjectName( "auth cram-md5" );
+  mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup );
+  mPop.authDigestMd5->setObjectName( "auth digest-md5" );
+  mPop.authNTLM = new QRadioButton( i18n("&NTLM"), mPop.authGroup );
+  mPop.authNTLM->setObjectName( "auth ntlm" );
+  mPop.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mPop.authGroup );
+  mPop.authGSSAPI->setObjectName( "auth gssapi" );
   if ( KProtocolInfo::capabilities("pop3").contains("SASL") == 0 )
   {
     mPop.authNTLM->hide();
     mPop.authGSSAPI->hide();
   }
-  mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup, "auth apop" );
+  mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
+  mPop.authAPOP->setObjectName( "auth apop" );
 
   vlay->addWidget( mPop.authGroup );
 
