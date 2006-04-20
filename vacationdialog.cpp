@@ -56,21 +56,21 @@ namespace KMail {
 
     // explanation label:
     ++row;
-    glay->addMultiCellWidget( new QLabel( i18n("Configure vacation "
+    glay->addWidget( new QLabel( i18n("Configure vacation "
 					       "notifications to be sent:"),
-					  plainPage() ), row, row, 0, 1 );
+					  plainPage() ), row, 0, 1, 2 );
 
     // Activate checkbox:
     ++row;
     mActiveCheck = new QCheckBox( i18n("&Activate vacation notifications"), plainPage() );
-    glay->addMultiCellWidget( mActiveCheck, row, row, 0, 1 );
+    glay->addWidget( mActiveCheck, row, 0, 1, 2 );
 
     // Message text edit:
     ++row;
     glay->setRowStretch( row, 1 );
     mTextEdit = new Q3TextEdit( plainPage(), "mTextEdit" );
     mTextEdit->setTextFormat( Qt::PlainText );
-    glay->addMultiCellWidget( mTextEdit, row, row, 0, 1 );
+    glay->addWidget( mTextEdit, row, 0, 1, 2 );
 
     // "Resent only after" spinbox and label:
     ++row;

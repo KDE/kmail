@@ -110,7 +110,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   topLayout->addWidget( kabBtn, 0, 2 );
 
   mButtonGroup = new Q3VButtonGroup( i18n( "Permissions" ), page );
-  topLayout->addMultiCellWidget( mButtonGroup, 1, 1, 0, 2 );
+  topLayout->addWidget( mButtonGroup, 1, 0, 1, 3 );
 
   for ( unsigned int i = 0;
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );

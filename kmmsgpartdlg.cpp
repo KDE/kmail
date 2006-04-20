@@ -70,7 +70,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   // mimetype icon:
   mIcon = new QLabel( plainPage() );
   mIcon->setPixmap( DesktopIcon("unknown") );
-  glay->addMultiCellWidget( mIcon, 0, 1, 0, 0 );
+  glay->addWidget( mIcon, 0, 0, 2, 1);
 
   // row 0: Type combobox:
   mMimeType = new KComboBox( true, plainPage() );
@@ -158,7 +158,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 5: "Suggest automatic display..." checkbox:
   mInline = new QCheckBox( i18n("Suggest &automatic display"), plainPage() );
-  glay->addMultiCellWidget( mInline, 5, 5, 0, 1 );
+  glay->addWidget( mInline, 5, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want to suggest to the "
 	     "recipient the automatic (inline) display of this part in the "
@@ -170,7 +170,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 6: "Sign" checkbox:
   mSigned = new QCheckBox( i18n("&Sign this part"), plainPage() );
-  glay->addMultiCellWidget( mSigned, 6, 6, 0, 1 );
+  glay->addWidget( mSigned, 6, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
 	     "signed;</p>"
@@ -180,7 +180,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 7: "Encrypt" checkbox:
   mEncrypted = new QCheckBox( i18n("Encr&ypt this part"), plainPage() );
-  glay->addMultiCellWidget( mEncrypted, 7, 7, 0, 1 );
+  glay->addWidget( mEncrypted, 7, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
 	     "encrypted;</p>"

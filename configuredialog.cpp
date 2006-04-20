@@ -664,7 +664,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // "confirm before send" check box:
   mConfirmSendCheck = new QCheckBox( i18n("Confirm &before send"), group );
-  glay->addMultiCellWidget( mConfirmSendCheck, 0, 0, 0, 1 );
+  glay->addWidget( mConfirmSendCheck, 0, 0, 1, 2 );
   connect( mConfirmSendCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -700,7 +700,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // "default domain" input field:
   mDefaultDomainEdit = new KLineEdit( group );
-  glay->addMultiCellWidget( mDefaultDomainEdit, 4, 4, 1, 2 );
+  glay->addWidget( mDefaultDomainEdit, 4, 1, 1, 2 );
   connect( mDefaultDomainEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2723,7 +2723,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
   glay->setRowStretch( 7, 1 );
 
   // row 0: help text
-  glay->addMultiCellWidget( new QLabel( i18n("<qt>The following placeholders are "
+  glay->addWidget( new QLabel( i18n("<qt>The following placeholders are "
                                              "supported in the reply phrases:<br>"
                                              "<b>%D</b>: date, <b>%S</b>: subject,<br>"
                                              "<b>%e</b>: sender's address, <b>%F</b>: sender's name, <b>%f</b>: sender's initials,<br>"
@@ -2731,13 +2731,13 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
                                              "<b>%C</b>: carbon copy names, <b>%c</b>: carbon copy names and addresses,<br>"
                                              "<b>%%</b>: percent sign, <b>%_</b>: space, "
                                              "<b>%L</b>: linebreak</qt>"), this ),
-                            0, 0, 0, 2 ); // row 0; cols 0..2
+                            0, 0, 0, 3 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:
   mPhraseLanguageCombo = new LanguageComboBox( false, this );
   glay->addWidget( new QLabel( mPhraseLanguageCombo,
                                i18n("Lang&uage:"), this ), 1, 0 );
-  glay->addMultiCellWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
+  glay->addWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
   connect( mPhraseLanguageCombo, SIGNAL(activated(const QString&)),
            this, SLOT(slotLanguageChanged(const QString&)) );
 
@@ -2760,7 +2760,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
                                i18n("Reply to se&nder:"), this ), 3, 0 );
-  glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
+  glay->addWidget( mPhraseReplyEdit, 3, 1, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
   mPhraseReplyAllEdit = new KLineEdit( this );
@@ -2768,7 +2768,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
                                i18n("Repl&y to all:"), this ), 4, 0 );
-  glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
+  glay->addWidget( mPhraseReplyAllEdit, 4, 1, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
   mPhraseForwardEdit = new KLineEdit( this );
@@ -2776,7 +2776,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseForwardEdit,
                                i18n("&Forward:"), this ), 5, 0 );
-  glay->addMultiCellWidget( mPhraseForwardEdit, 5, 5, 1, 2 ); // cols 1..2
+  glay->addWidget( mPhraseForwardEdit, 5, 1, 1, 2 ); // cols 1..2
 
   // row 6: "quote indicator" line edit and label:
   mPhraseIndentPrefixEdit = new KLineEdit( this );
@@ -2784,7 +2784,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseIndentPrefixEdit,
                                i18n("&Quote indicator:"), this ), 6, 0 );
-  glay->addMultiCellWidget( mPhraseIndentPrefixEdit, 6, 6, 1, 2 );
+  glay->addWidget( mPhraseIndentPrefixEdit, 6, 1, 1, 2 );
 
   // row 7: spacer
 }
@@ -3158,7 +3158,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mTagList->setSorting( -1 );
   connect( mTagList, SIGNAL(selectionChanged()),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
-  glay->addMultiCellWidget( mTagList, 0, 2, 0, 1 );
+  glay->addWidget( mTagList, 0, 0, 3, 2 );
 
   // "new" and "remove" buttons:
   button = new QPushButton( i18n("Ne&w"), this );
@@ -4663,7 +4663,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
-  grid->addMultiCellWidget( mHideGroupwareFolders, 3, 3, 0, 1 );
+  grid->addWidget( mHideGroupwareFolders, 3, 0, 1, 2 );
   mHideGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );

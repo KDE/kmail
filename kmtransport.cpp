@@ -422,7 +422,7 @@ void KMTransportDialog::makeSmtpPage()
 
   QFrame* line = new QFrame( page1 );
   line->setFrameStyle( QFrame::HLine | QFrame::Plain );
-  grid->addMultiCellWidget( line, 6, 6, 0, 1 );
+  grid->addWidget( line, 6, 0, 1, 2 );
 
   mSmtp.authCheck =
     new QCheckBox( i18n("Server &requires authentication"), page1 );
@@ -433,7 +433,7 @@ void KMTransportDialog::makeSmtpPage()
                        "'Authenticated SMTP' or simply ASMTP."));
   connect(mSmtp.authCheck, SIGNAL(clicked()),
           SLOT(slotRequiresAuthClicked()));
-  grid->addMultiCellWidget( mSmtp.authCheck, 7, 7, 0, 1 );
+  grid->addWidget( mSmtp.authCheck, 7, 0, 1, 2 );
 
   mSmtp.loginLabel = new QLabel( i18n("&Login:"), page1 );
   grid->addWidget( mSmtp.loginLabel, 8, 0 );
@@ -466,15 +466,15 @@ void KMTransportDialog::makeSmtpPage()
                   "obfuscated format, but should not be "
                   "considered secure from decryption efforts "
                   "if access to the configuration file is obtained."));
-  grid->addMultiCellWidget( mSmtp.storePasswordCheck, 10, 10, 0, 1 );
+  grid->addWidget( mSmtp.storePasswordCheck, 10, 0, 1, 2 );
 
   line = new Q3Frame( page1 );
   line->setFrameStyle( Q3Frame::HLine | Q3Frame::Plain );
-  grid->addMultiCellWidget( line, 11, 11, 0, 1 );
+  grid->addWidget( line, 11, 0, 1, 2 );
 
   mSmtp.specifyHostnameCheck =
     new QCheckBox( i18n("Sen&d custom hostname to server"), page1 );
-  grid->addMultiCellWidget( mSmtp.specifyHostnameCheck, 12, 12, 0, 1 );
+  grid->addWidget( mSmtp.specifyHostnameCheck, 12, 0, 1, 2 );
   mSmtp.specifyHostnameCheck->setWhatsThis(
                   i18n("Check this option to have KMail use "
                        "a custom hostname when identifying itself "

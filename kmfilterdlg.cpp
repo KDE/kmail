@@ -195,28 +195,26 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mAccountList->setAllColumnsShowFocus( true );
       mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
       mAccountList->setSorting( -1 );
-      gl->addMultiCellWidget( mAccountList, 0, 3, 1, 3 );
+      gl->addWidget( mAccountList, 0, 1, 4, 3 );
 
       mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
-      gl->addMultiCellWidget( mApplyOnOut, 4, 4, 0, 3 );
+      gl->addWidget( mApplyOnOut, 4, 0, 1, 4 );
 
       mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), mAdvOptsGroup );
-      gl->addMultiCellWidget( mApplyOnCtrlJ, 5, 5, 0, 3 );
+      gl->addWidget( mApplyOnCtrlJ, 5, 0, 1, 4 );
 
       mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), mAdvOptsGroup );
-      gl->addMultiCellWidget( mStopProcessingHere,
-			      6, 6, /*from to row*/
-  			      0, 3 /*from to col*/ );
+      gl->addWidget( mStopProcessingHere, 6, 0, 1, 4 );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), mAdvOptsGroup );
-      gl->addMultiCellWidget( mConfigureShortcut, 7, 7, 0, 1 );
+      gl->addWidget( mConfigureShortcut, 7, 0, 1, 2 );
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
       keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-      gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
+      gl->addWidget( keyButtonLabel, 7, 2, 1, 1);
       mKeyButton = new KKeyButton( mAdvOptsGroup );
       mKeyButton->setObjectName( "FilterShortcutSelector" );
-      gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
+      gl->addWidget( mKeyButton, 7, 3, 1, 1);
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
-      gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
+      gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
 
       KHBox *hbox = new KHBox( mAdvOptsGroup );
@@ -231,7 +229,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mFilterActionIconButton->setIcon( "gear" );
       mFilterActionIconButton->setEnabled( false );
 
-      gl->addMultiCellWidget( hbox, 9, 9, 0, 3 );
+      gl->addWidget( hbox, 9, 0, 1, 4 );
 
       mAdvOptsGroup->setLayout( gl );
     }

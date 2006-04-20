@@ -330,12 +330,12 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->setColStretch( 1, 10 );
 
   mLocal.titleLabel = new QLabel( i18n("Account Type: Local Account"), page );
-  topLayout->addMultiCellWidget( mLocal.titleLabel, 0, 0, 0, 2 );
+  topLayout->addWidget( mLocal.titleLabel, 0, 0, 1, 3 );
   QFont titleFont( mLocal.titleLabel->font() );
   titleFont.setBold( true );
   mLocal.titleLabel->setFont( titleFont );
   KSeparator *hline = new KSeparator( Qt::Horizontal, page);
-  topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
+  topLayout->addWidget( hline, 1, 0, 1, 3 );
 
   QLabel *label = new QLabel( i18n("Account &name:"), page );
   topLayout->addWidget( label, 2, 0 );
@@ -391,7 +391,7 @@ void AccountDialog::makeLocalAccountPage()
     i18n("Non&e (use with care)"), group);
   groupLayout->addWidget(mLocal.lockNone, 4, 0);
 
-  topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
+  topLayout->addWidget( group, 4, 0, 1, 3 );
 
 #if 0
   KHBox* resourceHB = new KHBox( page );
@@ -416,17 +416,17 @@ void AccountDialog::makeLocalAccountPage()
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mLocal.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
-  topLayout->addMultiCellWidget( resourceHB, 5, 5, 0, 2 );
+  topLayout->addWidget( resourceHB, 5, 0, 1, 3 );
 #endif
 
   mLocal.includeInCheck =
     new QCheckBox( i18n("Include in m&anual mail check"),
                    page );
-  topLayout->addMultiCellWidget( mLocal.includeInCheck, 5, 5, 0, 2 );
+  topLayout->addWidget( mLocal.includeInCheck, 5, 0, 1, 3 );
 
   mLocal.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page );
-  topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
+  topLayout->addWidget( mLocal.intervalCheck, 6, 0, 1, 3 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableLocalInterval(bool)) );
   mLocal.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
@@ -464,14 +464,14 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->setColStretch( 1, 10 );
 
   mMaildir.titleLabel = new QLabel( i18n("Account Type: Maildir Account"), page );
-  topLayout->addMultiCellWidget( mMaildir.titleLabel, 0, 0, 0, 2 );
+  topLayout->addWidget( mMaildir.titleLabel, 0, 0, 1, 3 );
   QFont titleFont( mMaildir.titleLabel->font() );
   titleFont.setBold( true );
   mMaildir.titleLabel->setFont( titleFont );
   QFrame *hline = new QFrame( page );
   hline->setFrameShape ( QFrame::HLine );
   hline->setFrameShadow( QFrame::Sunken);
-  topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
+  topLayout->addWidget( hline, 1, 0, 1, 3 );
 
   mMaildir.nameEdit = new KLineEdit( page );
   topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
@@ -512,16 +512,16 @@ void AccountDialog::makeMaildirAccountPage()
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mMaildir.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
-  topLayout->addMultiCellWidget( resourceHB, 4, 4, 0, 2 );
+  topLayout->addWidget( resourceHB, 4, 0, 1, 3 );
 #endif
 
   mMaildir.includeInCheck =
     new QCheckBox( i18n("Include in &manual mail check"), page );
-  topLayout->addMultiCellWidget( mMaildir.includeInCheck, 4, 4, 0, 2 );
+  topLayout->addWidget( mMaildir.includeInCheck, 4, 0, 1, 3 );
 
   mMaildir.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page );
-  topLayout->addMultiCellWidget( mMaildir.intervalCheck, 5, 5, 0, 2 );
+  topLayout->addWidget( mMaildir.intervalCheck, 5, 0, 1, 3 );
   connect( mMaildir.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableMaildirInterval(bool)) );
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
@@ -621,13 +621,13 @@ void AccountDialog::makePopAccountPage()
                    "obfuscated format, but should not be "
                    "considered secure from decryption efforts "
                    "if access to the configuration file is obtained.") );
-  grid->addMultiCellWidget( mPop.storePasswordCheck, 5, 5, 0, 1 );
+  grid->addWidget( mPop.storePasswordCheck, 5, 0, 1, 2 );
 
   mPop.leaveOnServerCheck =
     new QCheckBox( i18n("Lea&ve fetched messages on the server"), page1 );
   connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
-  grid->addMultiCellWidget( mPop.leaveOnServerCheck, 6, 6, 0, 1 );
+  grid->addWidget( mPop.leaveOnServerCheck, 6, 0, 1, 2 );
   KHBox *afterDaysBox = new KHBox( page1 );
   afterDaysBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerDaysCheck =
@@ -640,7 +640,7 @@ void AccountDialog::makePopAccountPage()
            SLOT(slotLeaveOnServerDaysChanged(int)));
   mPop.leaveOnServerDaysSpin->setValue( 1 );
   afterDaysBox->setStretchFactor( mPop.leaveOnServerDaysSpin, 1 );
-  grid->addMultiCellWidget( afterDaysBox, 7, 7, 0, 1 );
+  grid->addWidget( afterDaysBox, 7, 0, 1, 2 );
   KHBox *leaveOnServerCountBox = new KHBox( page1 );
   leaveOnServerCountBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerCountCheck =
@@ -652,7 +652,7 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerCountSpin, SIGNAL(valueChanged(int)),
            SLOT(slotLeaveOnServerCountChanged(int)));
   mPop.leaveOnServerCountSpin->setValue( 100 );
-  grid->addMultiCellWidget( leaveOnServerCountBox, 8, 8, 0, 1 );
+  grid->addWidget( leaveOnServerCountBox, 8, 0, 1, 2 );
   KHBox *leaveOnServerSizeBox = new KHBox( page1 );
   leaveOnServerSizeBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerSizeCheck =
@@ -663,7 +663,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerSizeSpin->setRange( 1, 999999, 1, false );
   mPop.leaveOnServerSizeSpin->setSuffix( i18n(" MB") );
   mPop.leaveOnServerSizeSpin->setValue( 10 );
-  grid->addMultiCellWidget( leaveOnServerSizeBox, 9, 9, 0, 1 );
+  grid->addWidget( leaveOnServerSizeBox, 9, 0, 1, 2 );
 #if 0
   KHBox *resourceHB = new KHBox( page1 );
   resourceHB->setSpacing( 11 );
@@ -687,12 +687,12 @@ void AccountDialog::makePopAccountPage()
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mPop.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
-  grid->addMultiCellWidget( resourceHB, 10, 10, 0, 2 );
+  grid->addWidget( resourceHB, 10, 0, 1, 3 );
 #endif
 
   mPop.includeInCheck =
     new QCheckBox( i18n("Include in man&ual mail check"), page1 );
-  grid->addMultiCellWidget( mPop.includeInCheck, 10, 10, 0, 1 );
+  grid->addWidget( mPop.includeInCheck, 10, 0, 1, 2 );
 
   KHBox * hbox = new KHBox( page1 );
   hbox->setSpacing( KDialog::spacingHint() );
@@ -705,7 +705,7 @@ void AccountDialog::makePopAccountPage()
   connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
           SLOT(slotFilterOnServerSizeChanged(int)));
   mPop.filterOnServerSizeSpin->setValue( 50000 );
-  grid->addMultiCellWidget( hbox, 11, 11, 0, 1 );
+  grid->addWidget( hbox, 11, 0, 1, 2 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
 	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
   connect( mPop.filterOnServerCheck, SIGNAL( clicked() ),
@@ -718,7 +718,7 @@ void AccountDialog::makePopAccountPage()
 
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mPop.intervalCheck, 12, 12, 0, 1 );
+  grid->addWidget( mPop.intervalCheck, 12, 0, 1, 2 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
@@ -949,24 +949,24 @@ void AccountDialog::makeImapAccountPage( bool connected )
                    "obfuscated format, but should not be "
                    "considered secure from decryption efforts "
                    "if access to the configuration file is obtained.") );
-  grid->addMultiCellWidget( mImap.storePasswordCheck, row, row, 0, 1 );
+  grid->addWidget( mImap.storePasswordCheck, row, 0, 1, 2 );
 
   if( !connected ) {
     ++row;
     mImap.autoExpungeCheck =
       new QCheckBox( i18n("Automaticall&y compact folders (expunges deleted messages)"), page1);
-    grid->addMultiCellWidget( mImap.autoExpungeCheck, row, row, 0, 1 );
+    grid->addWidget( mImap.autoExpungeCheck, row, 0, 1, 2 );
   }
 
   ++row;
   mImap.hiddenFoldersCheck = new QCheckBox( i18n("Sho&w hidden folders"), page1);
-  grid->addMultiCellWidget( mImap.hiddenFoldersCheck, row, row, 0, 1 );
+  grid->addWidget( mImap.hiddenFoldersCheck, row, 0, 1, 2 );
 
 
   ++row;
   mImap.subscribedFoldersCheck = new QCheckBox(
     i18n("Show only s&ubscribed folders"), page1);
-  grid->addMultiCellWidget( mImap.subscribedFoldersCheck, row, row, 0, 1 );
+  grid->addWidget( mImap.subscribedFoldersCheck, row, 0, 1, 2 );
 
   if ( !connected ) {
     // not implemented for disconnected yet
@@ -975,7 +975,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
         i18n("Load attach&ments on demand"), page1);
     mImap.loadOnDemandCheck->setWhatsThis(
         i18n("Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.") );
-    grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
+    grid->addWidget( mImap.loadOnDemandCheck, row, 0, 1, 2 );
   }
 
   if ( !connected ) {
@@ -985,7 +985,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
         i18n("List only open folders"), page1);
     mImap.listOnlyOpenCheck->setWhatsThis(
         i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
-    grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
+    grid->addWidget( mImap.listOnlyOpenCheck, row, 0, 1, 2 );
   }
 
 #if 0
@@ -1012,18 +1012,18 @@ void AccountDialog::makeImapAccountPage( bool connected )
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mImap.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
-  grid->addMultiCellWidget( resourceHB, row, row, 0, 2 );
+  grid->addWidget( resourceHB, row, 0, 1, 3 );
 #endif
 
   ++row;
   mImap.includeInCheck =
     new QCheckBox( i18n("Include in manual mail chec&k"), page1 );
-  grid->addMultiCellWidget( mImap.includeInCheck, row, row, 0, 1 );
+  grid->addWidget( mImap.includeInCheck, row, 0, 1, 2 );
 
   ++row;
   mImap.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mImap.intervalCheck, row, row, 0, 2 );
+  grid->addWidget( mImap.intervalCheck, row, 0, 1, 3 );
   connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableImapInterval(bool)) );
   ++row;

@@ -69,7 +69,7 @@ namespace KMail {
     // "Server supports sieve" checkbox:
     ++row;
     mManagesieveCheck = new QCheckBox( i18n("&Server supports Sieve"), this );
-    glay->addMultiCellWidget( mManagesieveCheck, row, row, 0, 1 );
+    glay->addWidget( mManagesieveCheck, row, 0, 1, 2 );
 
     connect( mManagesieveCheck, SIGNAL(toggled(bool)), SLOT(slotEnableWidgets()) );
 
@@ -78,7 +78,7 @@ namespace KMail {
     mSameConfigCheck = new QCheckBox( i18n("&Reuse host and login configuration"), this );
     mSameConfigCheck->setChecked( true );
     mSameConfigCheck->setEnabled( false );
-    glay->addMultiCellWidget( mSameConfigCheck, row, row, 0, 1 );
+    glay->addWidget( mSameConfigCheck, row, 0, 1, 2 );
 
     connect( mSameConfigCheck, SIGNAL(toggled(bool)), SLOT(slotEnableWidgets()) );
 

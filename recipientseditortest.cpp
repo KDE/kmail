@@ -54,18 +54,18 @@ Composer::Composer( QWidget *parent )
   topLayout->addWidget( edit, 0, 1 );
   
   mRecipients = new RecipientsEditor( this );
-  topLayout->addMultiCellWidget( mRecipients, 1, 1, 0, 1 );
+  topLayout->addWidget( mRecipients, 1, 0, 1, 2 );
 
   kDebug() << "SIZEHINT: " << mRecipients->sizeHint() << endl;
 
 //  mRecipients->setFixedHeight( 10 );
   
   Q3TextEdit *editor = new Q3TextEdit( this );
-  topLayout->addMultiCellWidget( editor, 2, 2, 0, 1 );
+  topLayout->addWidget( editor, 2, 0, 1, 2 );
   topLayout->setRowStretch( 2, 1 );
   
   QPushButton *button = new QPushButton( "&Close", this );
-  topLayout->addMultiCellWidget( button, 3, 3, 0, 1 );
+  topLayout->addWidget( button, 3, 0, 1, 2 );
   connect( button, SIGNAL( clicked() ), SLOT( slotClose() ) );
 }
 

@@ -940,7 +940,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
       prevFocus = connectFocusMoving( prevFocus, mEdtBcc );
     }
   } else {
-    mGrid->addMultiCellWidget( mRecipientsEditor, row, row, 0, 2 );
+    mGrid->addWidget( mRecipientsEditor, row, 0, 1, 3 );
     ++row;
 
     if ( showHeaders & HDR_REPLY_TO ) {
@@ -970,7 +970,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   assert(row<=mNumHeaders);
 
-  mGrid->addMultiCellWidget(mSplitter, row, mNumHeaders, 0, 2);
+  mGrid->addWidget(mSplitter, row, 0, mNumHeaders- row+1, 3 );
 
   if( !mAtmList.isEmpty() )
     mAtmListView->show();
@@ -1029,7 +1029,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
       mGrid->addWidget(aBtn, aRow, 2);
       aBtn->show();
     } else {
-      mGrid->addMultiCellWidget(aEdt, aRow, aRow, 1, 2 );
+      mGrid->addWidget(aEdt, aRow, 1, 1, 2 );
     }
     aRow++;
   }

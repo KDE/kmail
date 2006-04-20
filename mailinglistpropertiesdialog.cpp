@@ -70,7 +70,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   mHoldsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
                     SLOT(slotHoldsML(bool)) );
-  groupLayout->addMultiCellWidget( mHoldsMailingList, 0, 0, 0, 2 );
+  groupLayout->addWidget( mHoldsMailingList, 0, 0, 1, 3 );
 
   groupLayout->addItem( new QSpacerItem( 0, 10 ), 1, 0 );
 
@@ -87,7 +87,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 		    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 4, 0 );
   mMLId = new QLabel( label, "", mlGroup );
-  groupLayout->addMultiCellWidget( mMLId, 4, 4, 1, 2 );
+  groupLayout->addWidget( mMLId, 4, 1, 1, 2 );
   mMLId->setEnabled( false );
 
   //FIXME: add QWhatsThis
@@ -100,7 +100,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   mMLHandlerCombo->insertItem( i18n("KMail"), MailingList::KMail );
   mMLHandlerCombo->insertItem( i18n("Browser"), MailingList::Browser );
   mMLHandlerCombo->setEnabled( false );
-  groupLayout->addMultiCellWidget( mMLHandlerCombo, 5, 5, 1, 2 );
+  groupLayout->addWidget( mMLHandlerCombo, 5, 1, 1, 2 );
   QObject::connect( mMLHandlerCombo, SIGNAL(activated(int)),
                     SLOT(slotMLHandling(int)) );
   label->setBuddy( mMLHandlerCombo );
@@ -131,7 +131,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 
   mEditList = new KEditListBox( mlGroup );
   mEditList->setEnabled( false );
-  groupLayout->addMultiCellWidget( mEditList, 7, 7, 0, 3 );
+  groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 
   QStringList el;
 
