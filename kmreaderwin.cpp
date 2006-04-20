@@ -415,17 +415,20 @@ kDebug(5006) << "                      Root node will NOT be replaced." << endl;
 
 void KMReaderWin::createWidgets() {
   QVBoxLayout * vlay = new QVBoxLayout( this );
-  mSplitter = new QSplitter( Qt::Vertical, this, "mSplitter" );
+  mSplitter = new QSplitter( Qt::Vertical, this );
+  mSplitter->setObjectName( "mSplitter" );
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter );
   mMimePartTree->setObjectName( "mMimePartTree" );
   mBox = new KHBox( mSplitter );
   setStyleDependantFrameWidth();
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
-  mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
-  mViewer = new KHTMLPart( mBox, "mViewer" );
+  mColorBar = new HtmlStatusBar( mBox );
+  mColorBar->setObjectName( "mColorBar" );
+  mViewer = new KHTMLPart( mBox );
+  mViewer->setObjectName( "mViewer" );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-  mSplitter->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+  mSplitter->setStretchFactor( mMimePartTree, 0 );
 }
 
 const int KMReaderWin::delay = 150;
@@ -923,9 +926,9 @@ void KMReaderWin::readConfig(void)
 
 void KMReaderWin::adjustLayout() {
   if ( mMimeTreeAtBottom )
-    mSplitter->moveToLast( mMimePartTree );
+    mSplitter->addWidget( mMimePartTree );
   else
-    mSplitter->moveToFirst( mMimePartTree );
+    mSplitter->insertWidget( 0, mMimePartTree );
   mSplitter->setSizes( mSplitterSizes );
 
   if ( mMimeTreeMode == 2 && mMsgDisplay )

@@ -501,19 +501,23 @@ void KMMainWidget::createWidgets(void)
   if ( mLongFolderList ) {
     // superior splitter: folder tree vs. rest
     // inferior splitter: headers vs. message vs. mime tree
-    mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
+    mPanner1 = new QSplitter( Qt::Horizontal, this );
+    mPanner1->setObjectName( "panner 1" );
     mPanner1->setOpaqueResize( opaqueResize );
     Qt::Orientation orientation = mReaderWindowBelow ? Qt::Vertical : Qt::Horizontal;
-    mPanner2 = new QSplitter( orientation, mPanner1, "panner 2" );
+    mPanner2 = new QSplitter( orientation, mPanner1 );
+    mPanner2->setObjectName( "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );
     folderParent = mPanner1;
     headerParent = mimeParent = messageParent = mPanner2;
   } else /* !mLongFolderList */ {
     // superior splitter: ( folder tree + headers ) vs. message vs. mime
     // inferior splitter: folder tree vs. headers
-    mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
+    mPanner1 = new QSplitter( Qt::Vertical, this );
+    mPanner1->setObjectName( "panner 1" );
     mPanner1->setOpaqueResize( opaqueResize );
-    mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
+    mPanner2 = new QSplitter( Qt::Horizontal, mPanner1 );
+    mPanner2->setObjectName( "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );
     headerParent = folderParent = mPanner2;
     mimeParent = messageParent = mPanner1;
@@ -535,9 +539,11 @@ void KMMainWidget::createWidgets(void)
   headerParent->dumpObjectTree();
 #endif
   mSearchAndHeaders = new KVBox( headerParent );
-  mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
+  mSearchToolBar = new KToolBar( mSearchAndHeaders);
+  mSearchToolBar->setObjectName( "search toolbar" );
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
-  QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
+  QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar );
+  QLabe->setObjectName( "kde toolbar widget" );
 
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
@@ -606,7 +612,8 @@ void KMMainWidget::createWidgets(void)
 		     this, SLOT(slotCopyMsg()) );
 
   // create list of folders
-  mFolderTree = new KMFolderTree(this, folderParent, "folderTree");
+  mFolderTree = new KMFolderTree(this, folderParent);
+  mFolderTree->setObjectName( "folderTree" );
   mFolderTree->setFrameStyle( QFrame::NoFrame );
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
@@ -687,27 +694,27 @@ void KMMainWidget::activatePanners(void)
     mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
     if (mMsgView) {
       mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-      mPanner2->moveToLast( mMsgView );
+      mPanner2->addWidget( mMsgView );
     }
     mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-    mPanner1->moveToLast( mPanner2 );
+    mPanner1->addWidget( mPanner2 );
     mPanner1->setSizes( mPanner1Sep );
-    mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
+    mPanner1->setStretchFactor( mFolderTree, 0 );
     mPanner2->setSizes( mPanner2Sep );
-    mPanner2->setResizeMode( mSearchAndHeaders, QSplitter::KeepSize );
+    mPanner2->setStretchFactor( mSearchAndHeaders, 0 );
   } else /* !mLongFolderList */ {
     mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
     mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-    mPanner2->moveToLast( mSearchAndHeaders );
-    mPanner1->moveToFirst( mPanner2 );
+    mPanner2->addWidget( mSearchAndHeaders );
+    mPanner1->insertWidget( 0, mPanner2 );
     if (mMsgView) {
       mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-      mPanner1->moveToLast( mMsgView );
+      mPanner1->addWidget( mMsgView );
     }
     mPanner1->setSizes( mPanner1Sep );
     mPanner2->setSizes( mPanner2Sep );
-    mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
-    mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
+    mPanner1->setStretchFactor( mPanner2, 0 );
+    mPanner2->setStretchFactor( mFolderTree, 0 );
   }
 
   if (mMsgView) {

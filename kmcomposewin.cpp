@@ -290,9 +290,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAutoCharset = true;
   mFixedFontAction = 0;
   mTempDir = 0;
-  mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
+  mSplitter->setObjectName( "mSplitter" );
   mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
-  mSplitter->moveToFirst( mEditor );
+  mSplitter->insertWidget( 0, mEditor );
   mSplitter->setOpaqueResize( true );
 
   mEditor->initializeAutoSpellChecking();
