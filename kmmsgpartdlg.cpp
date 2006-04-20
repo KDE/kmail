@@ -48,10 +48,10 @@ static const int numEncodingTypes =
   sizeof encodingTypes / sizeof *encodingTypes;
 
 KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
-				  QWidget * parent, const char * name )
+                                  QWidget * parent, const char * name )
   : KDialogBase( Plain,
-		 caption.isEmpty() ? i18n("Message Part Properties") : caption,
-		 Ok|Cancel|Help, Ok, parent, name, true, true)
+                 caption.isEmpty() ? i18n("Message Part Properties") : caption,
+                 Ok|Cancel|Help, Ok, parent, name, true, true)
 {
   // tmp vars:
   QGridLayout * glay;
@@ -76,24 +76,24 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mMimeType = new KComboBox( true, plainPage() );
   mMimeType->setInsertPolicy( QComboBox::NoInsert );
   mMimeType->setValidator( new KMimeTypeValidator( mMimeType ) );
-  mMimeType->insertStringList( QStringList()
-			       << QString::fromLatin1("text/html")
-			       << QString::fromLatin1("text/plain")
-			       << QString::fromLatin1("image/gif")
-			       << QString::fromLatin1("image/jpeg")
-			       << QString::fromLatin1("image/png")
-			       << QString::fromLatin1("application/octet-stream")
-			       << QString::fromLatin1("application/x-gunzip")
-			       << QString::fromLatin1("application/zip") );
+  mMimeType->addItems( QStringList()
+                               << QString::fromLatin1("text/html")
+                               << QString::fromLatin1("text/plain")
+                               << QString::fromLatin1("image/gif")
+                               << QString::fromLatin1("image/jpeg")
+                               << QString::fromLatin1("image/png")
+                               << QString::fromLatin1("application/octet-stream")
+                               << QString::fromLatin1("application/x-gunzip")
+                               << QString::fromLatin1("application/zip") );
   connect( mMimeType, SIGNAL(textChanged(const QString&)),
-	   this, SLOT(slotMimeTypeChanged(const QString&)) );
+           this, SLOT(slotMimeTypeChanged(const QString&)) );
   glay->addWidget( mMimeType, 0, 1 );
 
   msg = i18n("<qt><p>The <em>MIME type</em> of the file:</p>"
-	     "<p>normally, you do not need to touch this setting, since the "
-	     "type of the file is automatically checked; but, sometimes, %1 "
-	     "may not detect the type correctly -- here is where you can fix "
-	     "that.</p></qt>", kapp->aboutData()->programName() );
+             "<p>normally, you do not need to touch this setting, since the "
+             "type of the file is automatically checked; but, sometimes, %1 "
+             "may not detect the type correctly -- here is where you can fix "
+             "that.</p></qt>", kapp->aboutData()->programName() );
   mMimeType->setWhatsThis( msg );
 
   // row 1: Size label:
@@ -102,10 +102,10 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mSize, 1, 1 );
 
   msg = i18n("<qt><p>The size of the part:</p>"
-	     "<p>sometimes, %1 will only give an estimated size here, "
-	     "because calculating the exact size would take too much time; "
-	     "when this is the case, it will be made visible by adding "
-	     "\"(est.)\" to the size displayed.</p></qt>",
+             "<p>sometimes, %1 will only give an estimated size here, "
+             "because calculating the exact size would take too much time; "
+             "when this is the case, it will be made visible by adding "
+             "\"(est.)\" to the size displayed.</p></qt>",
       kapp->aboutData()->programName() );
   mSize->setWhatsThis( msg );
 
@@ -116,10 +116,10 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mFileName, 2, 1 );
 
   msg = i18n("<qt><p>The file name of the part:</p>"
-	     "<p>although this defaults to the name of the attached file, "
-	     "it does not specify the file to be attached; rather, it "
-	     "suggests a file name to be used by the recipient's mail agent "
-	     "when saving the part to disk.</p></qt>");
+             "<p>although this defaults to the name of the attached file, "
+             "it does not specify the file to be attached; rather, it "
+             "suggests a file name to be used by the recipient's mail agent "
+             "when saving the part to disk.</p></qt>");
   label->setWhatsThis( msg );
   mFileName->setWhatsThis( msg );
 
@@ -130,28 +130,29 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mDescription, 3, 1 );
 
   msg = i18n("<qt><p>A description of the part:</p>"
-	     "<p>this is just an informational description of the part, "
-	     "much like the Subject is for the whole message; most "
-	     "mail agents will show this information in their message "
-	     "previews alongside the attachment's icon.</p></qt>");
+             "<p>this is just an informational description of the part, "
+             "much like the Subject is for the whole message; most "
+             "mail agents will show this information in their message "
+             "previews alongside the attachment's icon.</p></qt>");
   label->setWhatsThis( msg );
   mDescription->setWhatsThis( msg );
 
   // row 4: "Encoding" combobox and label:
-  mEncoding = new QComboBox( false, plainPage() );
-  mEncoding->insertStringList( mI18nizedEncodings );
+  mEncoding = new QComboBox( plainPage() );
+  mEncoding->setEditable( false );
+  mEncoding->addItems( mI18nizedEncodings );
   label = new QLabel( mEncoding, i18n("&Encoding:"), plainPage() );
   glay->addWidget( label, 4, 0 );
   glay->addWidget( mEncoding, 4, 1 );
 
   msg = i18n("<qt><p>The transport encoding of this part:</p>"
-	     "<p>normally, you do not need to change this, since %1 will use "
-	     "a decent default encoding, depending on the MIME type; yet, "
-	     "sometimes, you can significantly reduce the size of the "
-	     "resulting message, e.g. if a PostScript file does not contain "
-	     "binary data, but consists of pure text -- in this case, choosing "
-	     "\"quoted-printable\" over the default \"base64\" will save up "
-	     "to 25% in resulting message size.</p></qt>",
+             "<p>normally, you do not need to change this, since %1 will use "
+             "a decent default encoding, depending on the MIME type; yet, "
+             "sometimes, you can significantly reduce the size of the "
+             "resulting message, e.g. if a PostScript file does not contain "
+             "binary data, but consists of pure text -- in this case, choosing "
+             "\"quoted-printable\" over the default \"base64\" will save up "
+             "to 25% in resulting message size.</p></qt>",
       kapp->aboutData()->programName() );
   label->setWhatsThis( msg );
   mEncoding->setWhatsThis( msg );
@@ -161,11 +162,11 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mInline, 5, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want to suggest to the "
-	     "recipient the automatic (inline) display of this part in the "
-	     "message preview, instead of the default icon view;</p>"
-	     "<p>technically, this is carried out by setting this part's "
-	     "<em>Content-Disposition</em> header field to \"inline\" "
-	     "instead of the default \"attachment\".</p></qt>");
+             "recipient the automatic (inline) display of this part in the "
+             "message preview, instead of the default icon view;</p>"
+             "<p>technically, this is carried out by setting this part's "
+             "<em>Content-Disposition</em> header field to \"inline\" "
+             "instead of the default \"attachment\".</p></qt>");
   mInline->setWhatsThis( msg );
 
   // row 6: "Sign" checkbox:
@@ -173,9 +174,9 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mSigned, 6, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
-	     "signed;</p>"
-	     "<p>the signature will be made with the key that you associated "
-	     "with the currently-selected identity.</p></qt>");
+             "signed;</p>"
+             "<p>the signature will be made with the key that you associated "
+             "with the currently-selected identity.</p></qt>");
   mSigned->setWhatsThis( msg );
 
   // row 7: "Encrypt" checkbox:
@@ -183,9 +184,9 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( mEncrypted, 7, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
-	     "encrypted;</p>"
-	     "<p>the part will be encrypted for the recipients of this "
-	     "message</p></qt>");
+             "encrypted;</p>"
+             "<p>the part will be encrypted for the recipients of this "
+             "message</p></qt>");
   mEncrypted->setWhatsThis( msg );
   // (row 8: spacer)
 }
@@ -203,29 +204,29 @@ void KMMsgPartDialog::setMimeType( const QString & mimeType ) {
   QString tmp = mimeType; // get rid of const'ness
   if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy ) )
     for ( int i = 0 ; i < mMimeType->count() ; ++i )
-      if ( mMimeType->text( i ) == mimeType ) {
-	mMimeType->setCurrentIndex( i );
-	return;
+      if ( mMimeType->itemText( i ) == mimeType ) {
+        mMimeType->setCurrentIndex( i );
+        return;
       }
-  mMimeType->insertItem( mimeType, 0 );
+  mMimeType->addItem( mimeType, 0 );
   mMimeType->setCurrentIndex( 0 );
   slotMimeTypeChanged( mimeType );
 }
 
 void KMMsgPartDialog::setMimeType( const QString & type,
-				   const QString & subtype ) {
+                                   const QString & subtype ) {
   setMimeType( QString::fromLatin1("%1/%2").arg(type).arg(subtype) );
 }
 
 void KMMsgPartDialog::setMimeTypeList( const QStringList & mimeTypes ) {
-  mMimeType->insertStringList( mimeTypes );
+  mMimeType->addItems( mimeTypes );
 }
 
 void KMMsgPartDialog::setSize( KIO::filesize_t size, bool estimated ) {
   QString text = KIO::convertSize( size );
   if ( estimated )
     text = i18nc("%1: a filesize incl. unit (e.g. \"1.3 KB\")",
-		"%1 (est.)", text );
+                "%1 (est.)", text );
   mSize->setText( text );
 }
 
@@ -251,7 +252,7 @@ KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
     if ( s == mI18nizedEncodings.at(i) )
       return encodingTypes[i].encoding;
   kFatal(5006) << "KMMsgPartDialog::encoding(): Unknown encoding encountered!"
-		<< endl;
+                << endl;
   return None; // keep compiler happy
 }
 
@@ -260,11 +261,11 @@ void KMMsgPartDialog::setEncoding( Encoding encoding ) {
     if ( encodingTypes[i].encoding == encoding ) {
       QString text = mI18nizedEncodings.at(i);
       for ( int j = 0 ; j < mEncoding->count() ; ++j )
-	if ( mEncoding->text(j) == text ) {
-	  mEncoding->setCurrentIndex( j );
-	  return;
-	}
-      mEncoding->insertItem( text, 0 );
+        if ( mEncoding->itemText(j) == text ) {
+          mEncoding->setCurrentIndex( j );
+          return;
+        }
+      mEncoding->addItem( text, 0 );
       mEncoding->setCurrentIndex( 0 );
     }
   kFatal(5006) << "KMMsgPartDialog::setEncoding(): "
@@ -275,7 +276,7 @@ void KMMsgPartDialog::setShownEncodings( int encodings ) {
   mEncoding->clear();
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     if ( encodingTypes[i].encoding & encodings )
-      mEncoding->insertItem( mI18nizedEncodings.at(i) );
+      mEncoding->addItem( mI18nizedEncodings.at(i) );
 }
 
 bool KMMsgPartDialog::isInline() const {

@@ -131,7 +131,7 @@ class LanguageComboBox : public QComboBox
   Q_OBJECT
 
   public:
-    LanguageComboBox( bool rw, QWidget *parent=0 );
+    LanguageComboBox( QWidget *parent=0 );
     int insertLanguage( const QString & language );
     QString language() const;
     void setLanguage( const QString & language );

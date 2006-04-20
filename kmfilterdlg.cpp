@@ -1029,7 +1029,8 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   int i;
 
-  mComboBox = new QComboBox( false, this );
+  mComboBox = new QComboBox( this );
+  mComboBox->setEditable( false );
   assert( mComboBox );
   mWidgetStack = new QStackedWidget(this);
   assert( mWidgetStack );
@@ -1046,13 +1047,13 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
     // add parameter widget to widget stack:
     mWidgetStack->insertWidget( i, a->createParamWidget( mWidgetStack ) );
     // add (i18n-ized) name to combo box
-    mComboBox->insertItem( (*it)->label );
+    mComboBox->addItem( (*it)->label );
   }
   // widget for the case where no action is selected.
   mWidgetStack->insertWidget( i,new QLabel( i18n("Please select an action."), mWidgetStack ) );
   mWidgetStack->setCurrentIndex(i);
-  mComboBox->insertItem( " " );
-  mComboBox->setCurrentItem(i);
+  mComboBox->addItem( " " );
+  mComboBox->setCurrentIndex(i);
 
   // don't show scroll bars.
   mComboBox->setMaxCount( mComboBox->count() );
@@ -1088,13 +1089,13 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.
   for ( ; i < count ; i++ )
-    if ( aAction && mComboBox->text(i) == label ) {
+    if ( aAction && mComboBox->itemText(i) == label ) {
       //...set the parameter widget to the settings
       // of aAction...
       aAction->setParamWidgetValue( mWidgetStack->widget(i) );
       //...and show the correct entry of
       // the combo box
-      mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
+      mComboBox->setCurrentIndex(i); // (mm) also raise the widget, but doesn't
       mWidgetStack->setCurrentIndex(i);
       found = true;
     } else // clear the parameter widget
@@ -1102,7 +1103,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
   if ( found ) return;
 
   // not found, so set the empty widget
-  mComboBox->setCurrentItem( count ); // last item
+  mComboBox->setCurrentIndex( count ); // last item
   mWidgetStack->setCurrentIndex( count) ;
 }
 

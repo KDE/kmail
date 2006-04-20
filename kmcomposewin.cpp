@@ -197,7 +197,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( false );
-  mTransport = new QComboBox(true, mMainWidget);
+  mTransport = new QComboBox(mMainWidget);
+  mTransport->setEditable( true );
   mEdtFrom = new KMLineEdit(false,mMainWidget, "fromLine");
 
   mEdtReplyTo = new KMLineEdit(true,mMainWidget, "replyToLine");
@@ -622,20 +623,20 @@ void KMComposeWin::readConfig(void)
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
   mTransport->clear();
-  mTransport->insertStringList( KMTransportInfo::availableTransports() );
+  mTransport->addItems( KMTransportInfo::availableTransports() );
   while ( transportHistory.count() > GlobalSettings::self()->maxTransportEntries() )
     transportHistory.remove( transportHistory.last() );
-  mTransport->insertStringList( transportHistory );
+  mTransport->addItems( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
   {
     for (int i = 0; i < mTransport->count(); i++)
-      if (mTransport->text(i) == currentTransport)
-        mTransport->setCurrentItem(i);
+      if (mTransport->itemText(i) == currentTransport)
+        mTransport->setCurrentIndex(i);
     mTransport->setEditText( currentTransport );
   }
 
   if ( !mBtnTransport->isChecked() ) {
-    mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
+    mTransport->setItemText( mTransport->currentIndex(), GlobalSettings::self()->defaultTransport() );
   }
 
   QString fccName = "";
@@ -1778,8 +1779,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
   {
     for (int i = 0; i < mTransport->count(); i++)
-      if (mTransport->text(i) == transport)
-        mTransport->setCurrentItem(i);
+      if (mTransport->itemText(i) == transport)
+        mTransport->setCurrentIndex(i);
     mTransport->setEditText( transport );
   }
 
@@ -2651,8 +2652,8 @@ void KMComposeWin::slotInsertFile()
   fdlg.toolBar()->addWidget( combo );
   for (int i = 0; i < combo->count(); i++)
     if (KGlobal::charsets()->codecForName(KGlobal::charsets()->
-      encodingForName(combo->text(i)))
-      == QTextCodec::codecForLocale()) combo->setCurrentItem(i);
+      encodingForName(combo->itemText(i)))
+      == QTextCodec::codecForLocale()) combo->setCurrentIndex(i);
   if (!fdlg.exec()) return;
 
   KUrl u = fdlg.selectedURL();
@@ -3773,8 +3774,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
   // resending.
   // Hence this following conditional
   QString hf = mMsg->headerField("X-KMail-Transport");
-  if ((mTransport->currentText() != mTransport->text(0)) ||
-      (!hf.isEmpty() && (hf != mTransport->text(0))))
+  if ((mTransport->currentText() != mTransport->itemText(0)) ||
+      (!hf.isEmpty() && (hf != mTransport->itemText(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
   mDisableBreaking = saveInDrafts;
@@ -3939,7 +3940,7 @@ void KMComposeWin::slotSendNowVia( int item )
   QStringList availTransports= KMail::TransportManager::transportNames();
   QString customTransport = availTransports[ item ];
 
-  mTransport->setCurrentText( customTransport );
+  mTransport->setItemText( mTransport->currentIndex(), customTransport );
   slotSendNow();
 }
 
@@ -3949,7 +3950,7 @@ void KMComposeWin::slotSendLaterVia( int item )
   QStringList availTransports= KMail::TransportManager::transportNames();
   QString customTransport = availTransports[ item ];
 
-  mTransport->setCurrentText( customTransport );
+  mTransport->setItemText( mTransport->currentIndex(), customTransport );
   slotSendLater();
 }
 
@@ -4277,23 +4278,23 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     if ( transp.isEmpty() )
     {
       mMsg->removeHeaderField("X-KMail-Transport");
-      transp = mTransport->text(0);
+      transp = mTransport->itemText(0);
     }
     else
       mMsg->setHeaderField("X-KMail-Transport", transp);
     bool found = false;
     int i;
     for (i = 0; i < mTransport->count(); i++) {
-      if (mTransport->text(i) == transp) {
+      if (mTransport->itemText(i) == transp) {
         found = true;
-        mTransport->setCurrentItem(i);
+        mTransport->setCurrentIndex(i);
         break;
       }
     }
     if (found == false) {
       if (i == mTransport->maxCount()) mTransport->setMaxCount(i + 1);
-      mTransport->insertItem(transp,i);
-      mTransport->setCurrentItem(i);
+      mTransport->addItem(transp,i);
+      mTransport->setCurrentIndex(i);
     }
   }
 

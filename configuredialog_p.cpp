@@ -83,8 +83,9 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 
   // row 4: combobox with existing identities and label
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mComboBox = new QComboBox( false, page );
-  mComboBox->insertStringList( identities );
+  mComboBox = new QComboBox( page );
+  mComboBox->setEditable( false );
+  mComboBox->addItems( identities );
   mComboBox->setEnabled( false );
   QLabel *label = new QLabel( mComboBox, i18n("&Existing identities:"), page );
   label->setEnabled( false );
@@ -121,7 +122,7 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   }
   // or name doesn't yet exist.
   for ( int i = 0 ; i < mComboBox->count() ; i++ )
-    if ( mComboBox->text(i) == name ) {
+    if ( mComboBox->itemText(i) == name ) {
       enableButtonOK( false );
       return;
     }
@@ -203,7 +204,8 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   // layout the page (a combobox with label):
   QWidget *page = makeMainWidget();
   QHBoxLayout *hlay = new QHBoxLayout( page, 0, spacingHint() );
-  mComboBox = new QComboBox( false, page );
+  mComboBox = new QComboBox( page );
+  mComboBox->setEditable( false );
   hlay->addWidget( new QLabel( mComboBox, i18n("Choose &language:"), page ) );
   hlay->addWidget( mComboBox, 1 );
 
@@ -232,11 +234,11 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
       QString displayname = QString::fromLatin1("%1 (%2)")
 	.arg( name ).arg( acronym );
       QPixmap flag( locate("locale", acronym + flagPng ) );
-      mComboBox->insertItem( flag, displayname );
+      mComboBox->addItem( flag, displayname );
     }
   }
   if ( !mComboBox->count() ) {
-    mComboBox->insertItem( i18n("No More Languages Available") );
+    mComboBox->addItem( i18n("No More Languages Available") );
     enableButtonOK( false );
   } else mComboBox->model()->sort( 0 );
 }
@@ -249,8 +251,8 @@ QString NewLanguageDialog::language() const
 }
 
 
-LanguageComboBox::LanguageComboBox( bool rw, QWidget *parent )
-  : QComboBox( rw, parent )
+LanguageComboBox::LanguageComboBox( QWidget *parent )
+  : QComboBox( parent )
 {
 }
 
@@ -261,7 +263,7 @@ int LanguageComboBox::insertLanguage( const QString & language )
   KConfigGroup group( &entry, "KCM Locale" );
   QString name = group.readEntry( "Name" );
   QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
-  insertItem( QPixmap( locate("locale", language + flagPng ) ), output );
+  addItem( QPixmap( locate("locale", language + flagPng ) ), output );
   return findText(output);
 }
 
@@ -277,7 +279,7 @@ void LanguageComboBox::setLanguage( const QString & language )
   QString parenthizedLanguage = QString::fromLatin1("(%1)").arg( language );
   for (int i = 0; i < count(); i++)
     // ### FIXME: use .endWith():
-    if ( text(i).find( parenthizedLanguage ) >= 0 ) {
+    if ( itemText(i).find( parenthizedLanguage ) >= 0 ) {
       setCurrentIndex(i);
       return;
     }

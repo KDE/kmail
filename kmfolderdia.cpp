@@ -387,9 +387,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mShowSenderReceiverComboBox->setToolTip( tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
   gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
-  mShowSenderReceiverComboBox->insertItem(i18n("Default"), 0);
-  mShowSenderReceiverComboBox->insertItem(i18n("Sender"), 1);
-  mShowSenderReceiverComboBox->insertItem(i18n("Receiver"), 2);
+  mShowSenderReceiverComboBox->addItem(i18n("Default"), 0);
+  mShowSenderReceiverComboBox->addItem(i18n("Sender"), 1);
+  mShowSenderReceiverComboBox->addItem(i18n("Receiver"), 2);
 
   QString whoField;
   if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();
@@ -425,12 +425,12 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     label->setBuddy( mContentsComboBox );
     gl->addWidget( mContentsComboBox, row, 1 );
 
-    mContentsComboBox->insertItem( i18n( "Mail" ) );
-    mContentsComboBox->insertItem( i18n( "Calendar" ) );
-    mContentsComboBox->insertItem( i18n( "Contacts" ) );
-    mContentsComboBox->insertItem( i18n( "Notes" ) );
-    mContentsComboBox->insertItem( i18n( "Tasks" ) );
-    mContentsComboBox->insertItem( i18n( "Journal" ) );
+    mContentsComboBox->addItem( i18n( "Mail" ) );
+    mContentsComboBox->addItem( i18n( "Calendar" ) );
+    mContentsComboBox->addItem( i18n( "Contacts" ) );
+    mContentsComboBox->addItem( i18n( "Notes" ) );
+    mContentsComboBox->addItem( i18n( "Tasks" ) );
+    mContentsComboBox->addItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
       mContentsComboBox->setCurrentIndex( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
@@ -467,9 +467,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                            "A company-wide folder with optional events in it would use \"Nobody\" "
                            "since it is not known who will go to those events." ) );
 
-    mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
-    mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
-    mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
+    mIncidencesForComboBox->addItem( i18n( "Nobody" ) );
+    mIncidencesForComboBox->addItem( i18n( "Admins of This Folder" ) );
+    mIncidencesForComboBox->addItem( i18n( "All Readers of This Folder" ) );
 
     if ( mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeCalendar
       && mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeTask ) {
@@ -540,7 +540,7 @@ void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
 void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 {
   KMail::FolderContentsType type =
-    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
   if( type != KMail::ContentsTypeMail && GlobalSettings::self()->hideGroupwareFolders() ) {
     QString message = i18n("You have configured this folder to contain groupware information "
         "and the general configuration option to hide groupware folders is "
@@ -561,9 +561,9 @@ bool FolderDiaGeneralTab::save()
   KMFolder* folder = mDlg->folder();
   folder->setIdentity( mIdentityComboBox->currentIdentity() );
   // set whoField
-  if (mShowSenderReceiverComboBox->currentItem() == 1)
+  if (mShowSenderReceiverComboBox->currentIndex() == 1)
     folder->setUserWhoField("From");
-  else if (mShowSenderReceiverComboBox->currentItem() == 2)
+  else if (mShowSenderReceiverComboBox->currentIndex() == 2)
     folder->setUserWhoField("To");
   else
     folder->setUserWhoField("");
@@ -610,13 +610,13 @@ bool FolderDiaGeneralTab::save()
     // Set type field
     if ( mContentsComboBox ) {
       KMail::FolderContentsType type =
-        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
       folder->storage()->setContentsType( type );
     }
 
     if ( mIncidencesForComboBox && folder->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap::IncidencesFor incfor =
-        static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+        static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentIndex() );
       KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
       if ( dimap->incidencesFor() != incfor ) {
         dimap->setIncidencesFor( incfor );

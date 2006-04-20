@@ -230,8 +230,9 @@ KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, c
 
 QWidget* KMFilterActionWithStringList::createParamWidget( QWidget* parent ) const
 {
-  QComboBox *cb = new QComboBox( false, parent );
-  cb->insertStringList( mParameterList );
+  QComboBox *cb = new QComboBox( parent );
+  cb->setEditable( false );
+  cb->addItems( mParameterList );
   setParamWidgetValue( cb );
   return cb;
 }
@@ -963,7 +964,8 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
 
 QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
 {
-  QComboBox *cb = new QComboBox( true/*editable*/, parent );
+  QComboBox *cb = new QComboBox( parent );
+  cb->setEditable( true );
   cb->setInsertPolicy( QComboBox::AtBottom );
   setParamWidgetValue( cb );
   return cb;
@@ -985,9 +987,9 @@ void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) con
 
   int idx = mParameterList.indexOf( mParameter );
   cb->clear();
-  cb->insertStringList( mParameterList );
+  cb->addItems( mParameterList );
   if ( idx < 0 ) {
-    cb->insertItem( mParameter );
+    cb->addItem( mParameter );
     cb->setCurrentIndex( cb->count() - 1 );
   } else {
     cb->setCurrentIndex( idx );
@@ -1047,7 +1049,9 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QWidget *w = new QWidget( parent );
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
-  QComboBox *cb = new QComboBox( true, w, "combo" );
+  QComboBox *cb = new QComboBox( w );
+  cb->setObjectName( "combo" );
+  cb->setEditable( true );
   cb->setInsertPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
   QLabel *l = new QLabel( i18n("With value:"), w );
@@ -1066,9 +1070,9 @@ void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
   cb->clear();
-  cb->insertStringList( mParameterList );
+  cb->addItems( mParameterList );
   if ( idx < 0 ) {
-    cb->insertItem( mParameter );
+    cb->addItem( mParameter );
     cb->setCurrentIndex( cb->count() - 1 );
   } else {
     cb->setCurrentIndex( idx );
@@ -1199,7 +1203,9 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
 
-  QComboBox *cb = new QComboBox( true, w, "combo" );
+  QComboBox *cb = new QComboBox( w );
+  cb->setEditable( true );
+  cb->setObjectName( "combo" );
   cb->setInsertPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
 
@@ -1207,7 +1213,8 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  RegExpLineEdit *rele = new RegExpLineEdit( w, "search" );
+  RegExpLineEdit *rele = new RegExpLineEdit( w );
+  rele->setObjectName( "search" );
   hbl->addWidget( rele, 1 );
 
   l = new QLabel( i18n("With:"), w );
@@ -1229,9 +1236,9 @@ void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) co
   Q_ASSERT( cb );
 
   cb->clear();
-  cb->insertStringList( mParameterList );
+  cb->addItems( mParameterList );
   if ( idx < 0 ) {
-    cb->insertItem( mParameter );
+    cb->addItem( mParameter );
     cb->setCurrentIndex( cb->count() - 1 );
   } else {
     cb->setCurrentIndex( idx );

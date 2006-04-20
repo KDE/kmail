@@ -95,21 +95,22 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       ( mFolder->folderType() != KMFolderTypeImap &&
         mFolder->folderType() != KMFolderTypeCachedImap ) ) {
     mFormatHBox = new QHBoxLayout( 0, 0, 6);
-	  mFormatHBox->setObjectName( "mFormatHBox" );
+    mFormatHBox->setObjectName( "mFormatHBox" );
     mMailboxFormatLabel = new QLabel( privateLayoutWidget );
-	  mMailboxFormatLabel->setObjectName( "mMailboxFormatLabel" );
+    mMailboxFormatLabel->setObjectName( "mMailboxFormatLabel" );
     mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
 
-    mFormatComboBox = new QComboBox( false, privateLayoutWidget );
-	  mFormatComboBox->setObjectName( "mFormatComboBox" );
+    mFormatComboBox = new QComboBox( privateLayoutWidget );
+    mFormatComboBox->setEditable( false );
+    mFormatComboBox->setObjectName( "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
     mFormatComboBox->setWhatsThis( i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
 
-    mFormatComboBox->insertItem("mbox", 0);
-    mFormatComboBox->insertItem("maildir", 1);
+    mFormatComboBox->insertItem(0,"mbox");
+    mFormatComboBox->insertItem(1,"maildir");
     // does the below make any sense?
-    //  mFormatComboBox->insertItem("search", 2);
+    //  mFormatComboBox->insertItem(2, "search");
     {
       KConfig *config = KMKernel::config();
       KConfigGroup group(config, "General");
@@ -124,23 +125,24 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   // --- contents -----
   if ( kmkernel->iCalIface().isEnabled() ) {
     mContentsHBox = new QHBoxLayout( 0, 0, 6);
-	  mContentsHBox->setObjectName( "mContentsHBox" );
+    mContentsHBox->setObjectName( "mContentsHBox" );
 
     mContentsLabel = new QLabel( privateLayoutWidget );
-	  mContentsLabel->setObjectName( "mContentsLabel" );
+    mContentsLabel->setObjectName( "mContentsLabel" );
     mContentsLabel->setText( i18n( "Folder &contains:" ) );
     mContentsHBox->addWidget( mContentsLabel );
 
-    mContentsComboBox = new QComboBox( false, privateLayoutWidget );
-	  mContentsComboBox->setObjectName( "mContentsComboBox" );
+    mContentsComboBox = new QComboBox(  privateLayoutWidget );
+    mContentsComboBox->setEditable( false );
+    mContentsComboBox->setObjectName( "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
     mContentsComboBox->setWhatsThis( i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
-    mContentsComboBox->insertItem( i18n( "Mail" ) );
-    mContentsComboBox->insertItem( i18n( "Calendar" ) );
-    mContentsComboBox->insertItem( i18n( "Contacts" ) );
-    mContentsComboBox->insertItem( i18n( "Notes" ) );
-    mContentsComboBox->insertItem( i18n( "Tasks" ) );
-    mContentsComboBox->insertItem( i18n( "Journal" ) );
+    mContentsComboBox->addItem( i18n( "Mail" ) );
+    mContentsComboBox->addItem( i18n( "Calendar" ) );
+    mContentsComboBox->addItem( i18n( "Contacts" ) );
+    mContentsComboBox->addItem( i18n( "Notes" ) );
+    mContentsComboBox->addItem( i18n( "Tasks" ) );
+    mContentsComboBox->addItem( i18n( "Journal" ) );
     if ( mFolder ) // inherit contents type from papa
       mContentsComboBox->setCurrentIndex( mFolder->storage()->contentsType() );
     mContentsHBox->addWidget( mContentsComboBox );
@@ -168,18 +170,19 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     }
     if ( rootFolder && namespaces.count() > 1 ) {
       mNamespacesHBox = new QHBoxLayout( 0, 0, 6);
-		  mNamespacesHBox->setObjectName( "mNamespaceHBox" );
+      mNamespacesHBox->setObjectName( "mNamespaceHBox" );
 
       mNamespacesLabel = new QLabel( privateLayoutWidget );
-		  mNamespacesLabel->setObjectName( "mNamespacesLabel" );
+      mNamespacesLabel->setObjectName( "mNamespacesLabel" );
       mNamespacesLabel->setText( i18n( "Namespace for &folder:" ) );
       mNamespacesHBox->addWidget( mNamespacesLabel );
 
-      mNamespacesComboBox = new QComboBox( false, privateLayoutWidget );
-		  mNamespacesComboBox->setObjectName( "mNamespacesComboBox" );
+      mNamespacesComboBox = new QComboBox( privateLayoutWidget );
+      mNamespacesComboBox->setEditable( false );
+      mNamespacesComboBox->setObjectName( "mNamespacesComboBox" );
       mNamespacesLabel->setBuddy( mNamespacesComboBox );
       mNamespacesComboBox->setWhatsThis( i18n( "Select the personal namespace the folder should be created in." ) );
-      mNamespacesComboBox->insertStringList( namespaces );
+      mNamespacesComboBox->addItems( namespaces );
       mNamespacesHBox->addWidget( mNamespacesComboBox );
       mTopLevelLayout->addLayout( mNamespacesHBox );
     } else {
@@ -293,7 +296,7 @@ void NewFolderDialog::slotOk()
     }
   } else {
     // local folder
-    if (mFormatComboBox->currentItem() == 1)
+    if (mFormatComboBox->currentIndex() == 1)
       newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMaildir, selectedFolderDir );
     else
       newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMbox, selectedFolderDir );
@@ -308,7 +311,7 @@ void NewFolderDialog::slotOk()
   // Set type field
   if ( kmkernel->iCalIface().isEnabled() && mContentsComboBox ) {
     KMail::FolderContentsType type =
-      static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+      static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
     newFolder->storage()->setContentsType( type );
     newFolder->storage()->writeConfig(); // connected slots will read it
   }

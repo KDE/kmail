@@ -42,8 +42,8 @@
 
 namespace KMail {
 
-  DictionaryComboBox::DictionaryComboBox( QWidget * parent, const char * name )
-    : QComboBox( false, parent, name ),
+  DictionaryComboBox::DictionaryComboBox( QWidget * parent )
+    : QComboBox( false, parent ),
       mSpellConfig( 0 ),
       mDefaultDictionary( 0 )
   {
@@ -67,7 +67,7 @@ namespace KMail {
 
   QString DictionaryComboBox::currentDictionary() const
   {
-    QString dict = mDictionaries[ currentItem() ];
+    QString dict = mDictionaries[ currentIndex() ];
     if ( dict.isEmpty() )
       return "<default>";
     else
@@ -80,8 +80,8 @@ namespace KMail {
       return;
 
     for ( int i = 0; i < count(); ++i ) {
-      if ( text( i ) == name ) {
-        if ( i != currentItem() ) {
+      if ( itemText( i ) == name ) {
+        if ( i != currentIndex() ) {
           setCurrentIndex( i );
           slotDictionaryChanged( i );
         }
@@ -95,7 +95,7 @@ namespace KMail {
     if ( !dictionary.isEmpty() ) {
       // first handle the special case of the default dictionary
       if ( dictionary == "<default>" ) {
-        if ( 0 != currentItem() ) {
+        if ( 0 != currentIndex() ) {
           setCurrentIndex( 0 );
           slotDictionaryChanged( 0 );
         }
@@ -107,7 +107,7 @@ namespace KMail {
             it != mDictionaries.end();
             ++it, ++i ) {
         if ( *it == dictionary ) {
-          if ( i != currentItem() ) {
+          if ( i != currentIndex() ) {
             setCurrentIndex( i );
             slotDictionaryChanged( i );
           }
@@ -117,7 +117,7 @@ namespace KMail {
     }
 
     // If dictionary is empty or doesn't exist fall back to the global default
-    if ( mDefaultDictionary != currentItem() ) {
+    if ( mDefaultDictionary != currentIndex() ) {
       setCurrentIndex( mDefaultDictionary );
       slotDictionaryChanged( mDefaultDictionary );
     }
@@ -133,7 +133,7 @@ namespace KMail {
     delete mSpellConfig;
     mSpellConfig = new KSpellConfig( 0, 0, false );
     mSpellConfig->fillDicts( this, &mDictionaries );
-    mDefaultDictionary = currentItem();
+    mDefaultDictionary = currentIndex();
   }
 
   void DictionaryComboBox::slotDictionaryChanged( int idx )

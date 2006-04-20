@@ -46,7 +46,7 @@ class AccountComboBox : public QComboBox
   Q_OBJECT
 
 public:
-  AccountComboBox( QWidget* parent, const char* name = 0 );
+  AccountComboBox( QWidget* parent );
 
   void setCurrentAccount( KMAccount* account );
   KMAccount* currentAccount() const;

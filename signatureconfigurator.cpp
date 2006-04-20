@@ -66,20 +66,21 @@ namespace KMail {
 
     // "obtain signature text from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
-    mSourceCombo = new QComboBox( false, this );
+    mSourceCombo = new QComboBox( this );
+    mSourceCombo->setEditable( false );
     mSourceCombo->setWhatsThis(
         i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
-    mSourceCombo->insertStringList( QStringList()
-		   << i18nc("continuation of \"obtain signature text from\"",
-			   "Input Field Below")
-		   << i18nc("continuation of \"obtain signature text from\"",
-			   "File")
+    mSourceCombo->addItems( QStringList()
                    << i18nc("continuation of \"obtain signature text from\"",
-			   "Output of Command")
-		   );
+                           "Input Field Below")
+                   << i18nc("continuation of \"obtain signature text from\"",
+                           "File")
+                   << i18nc("continuation of \"obtain signature text from\"",
+                           "Output of Command")
+                   );
     label = new QLabel( mSourceCombo,
-			i18n("Obtain signature &text from:"), this );
+                        i18n("Obtain signature &text from:"), this );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
     hlay->addWidget( mSourceCombo, 1 );
@@ -89,18 +90,18 @@ namespace KMail {
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
-	     widgetStack, SLOT(setCurrentIndex (int)) );
+             widgetStack, SLOT(setCurrentIndex (int)) );
     // connects for the enabling of the widgets depending on
     // signatureEnabled:
     connect( mEnableCheck, SIGNAL(toggled(bool)),
-	     mSourceCombo, SLOT(setEnabled(bool)) );
+             mSourceCombo, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
-	     widgetStack, SLOT(setEnabled(bool)) );
+             widgetStack, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
-	     label, SLOT(setEnabled(bool)) );
+             label, SLOT(setEnabled(bool)) );
     // The focus might be still in the widget that is disabled
     connect( mEnableCheck, SIGNAL(clicked()),
-	     mEnableCheck, SLOT(setFocus()) );
+             mEnableCheck, SLOT(setFocus()) );
 
     int pageno = 0;
     // page 0: input field for direct entering:
@@ -116,7 +117,7 @@ namespace KMail {
 
     // page 1: "signature file" requester, label, "edit file" button:
     ++pageno;
-	page = new QWidget( widgetStack );
+        page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
@@ -126,11 +127,11 @@ namespace KMail {
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
     hlay->addWidget( new QLabel( mFileRequester,
-				 i18n("S&pecify file:"), page ) );
+                                 i18n("S&pecify file:"), page ) );
     hlay->addWidget( mFileRequester, 1 );
     mFileRequester->button()->setAutoDefault( false );
     connect( mFileRequester, SIGNAL(textChanged(const QString &)),
-	     this, SLOT(slotEnableEditButton(const QString &)) );
+             this, SLOT(slotEnableEditButton(const QString &)) );
     mEditButton = new QPushButton( i18n("Edit &File"), page );
     mEditButton->setWhatsThis( i18n("Opens the specified file in a text editor."));
     connect( mEditButton, SIGNAL(clicked()), SLOT(slotEdit()) );
@@ -155,7 +156,7 @@ namespace KMail {
              "standard output) as a signature. Usual commands for use with this "
              "mechanism are \"fortune\" or \"ksig -random\"."));
     hlay->addWidget( new QLabel( mCommandEdit,
-				 i18n("S&pecify command:"), page ) );
+                                 i18n("S&pecify command:"), page ) );
     hlay->addWidget( mCommandEdit, 1 );
     page_vlay->addStretch( 1 ); // spacer
 
@@ -176,7 +177,7 @@ namespace KMail {
   Signature::Type SignatureConfigurator::signatureType() const {
     if ( !isSignatureEnabled() ) return Signature::Disabled;
 
-    switch ( mSourceCombo->currentItem() ) {
+    switch ( mSourceCombo->currentIndex() ) {
     case 0:  return Signature::Inlined;
     case 1:  return Signature::FromFile;
     case 2:  return Signature::FromCommand;

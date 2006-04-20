@@ -500,7 +500,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
   kDebug() << "RecipientsPicker::insertCollection() " << coll->title()
     << "  index: " << index << endl;
 
-  mCollectionCombo->insertItem( coll->title(), index );
+  mCollectionCombo->addItem( coll->title(), index );
   mCollectionMap.insert( index, coll );
 }
 
@@ -577,7 +577,7 @@ void RecipientsPicker::updateList()
 {
   mRecipientList->clear();
 
-  RecipientsCollection *coll = mCollectionMap[ mCollectionCombo->currentItem() ];
+  RecipientsCollection *coll = mCollectionMap[ mCollectionCombo->currentIndex() ];
 
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
@@ -679,7 +679,7 @@ void RecipientsPicker::writeConfig()
   KConfig *cfg = KGlobal::config();
   KConfigGroup group( cfg, "RecipientsPicker" );
   group.writeEntry( "Size", size() );
-  group.writeEntry( "CurrentCollection", mCollectionCombo->currentItem() );
+  group.writeEntry( "CurrentCollection", mCollectionCombo->currentIndex() );
 }
 
 void RecipientsPicker::setFocusList()

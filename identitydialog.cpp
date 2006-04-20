@@ -265,14 +265,15 @@ namespace KMail {
 
     // "Preferred Crypto Message Format" combobox and label:
     ++row;
-    mPreferredCryptoMessageFormat = new QComboBox( false, tab );
+    mPreferredCryptoMessageFormat = new QComboBox( tab );
+    mPreferredCryptoMessageFormat->setEditable( false );
     QStringList l;
     l << Kleo::cryptoMessageFormatToLabel( Kleo::AutoFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::InlineOpenPGPFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::OpenPGPMIMEFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
-    mPreferredCryptoMessageFormat->insertStringList( l );
+    mPreferredCryptoMessageFormat->addItems( l );
     label = new QLabel( mPreferredCryptoMessageFormat,
 			i18n("Preferred crypto message format:"), tab );
 
@@ -359,9 +360,10 @@ namespace KMail {
     ++row;
     mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
     glay->addWidget( mTransportCheck, row, 0 );
-    mTransportCombo = new QComboBox( true, tab );
+    mTransportCombo = new QComboBox( tab );
+    mTransportCombo->setEditable( true );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-    mTransportCombo->insertStringList( KMail::TransportManager::transportNames() );
+    mTransportCombo->addItems( KMail::TransportManager::transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );
     connect( mTransportCheck, SIGNAL(toggled(bool)),
              mTransportCombo, SLOT(setEnabled(bool)) );
@@ -605,7 +607,7 @@ void IdentityDialog::slotOk() {
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
-    ident.setPreferredCryptoMessageFormat( cb2format( mPreferredCryptoMessageFormat->currentItem() ) );
+    ident.setPreferredCryptoMessageFormat( cb2format( mPreferredCryptoMessageFormat->currentIndex() ) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
@@ -627,7 +629,7 @@ void IdentityDialog::slotOk() {
     QString content = mTransportCombo->currentText();
     // update combo box:
     mTransportCombo->clear();
-    mTransportCombo->insertStringList( sl );
+    mTransportCombo->addItems( sl );
     // restore saved setting:
     mTransportCombo->setEditText( content );
   }

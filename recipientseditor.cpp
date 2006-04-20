@@ -160,7 +160,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   QStringList recipientTypes = Recipient::allTypeLabels();
 
   mCombo = new RecipientComboBox( this );
-  mCombo->insertStringList( recipientTypes );
+  mCombo->addItems( recipientTypes );
   topLayout->addWidget( mCombo );
   mCombo->setToolTip( i18n("Select type of recipient") );
 
@@ -232,7 +232,7 @@ void RecipientLine::setRecipient( const QString &email )
 Recipient RecipientLine::recipient() const
 {
   return Recipient( mEdit->text(),
-    Recipient::idToType( mCombo->currentItem() ) );
+    Recipient::idToType( mCombo->currentIndex() ) );
 }
 
 void RecipientLine::setRecipientType( Recipient::Type type )
@@ -242,7 +242,7 @@ void RecipientLine::setRecipientType( Recipient::Type type )
 
 Recipient::Type RecipientLine::recipientType() const
 {
-  return Recipient::idToType( mCombo->currentItem() );
+  return Recipient::idToType( mCombo->currentIndex() );
 }
 
 void RecipientLine::activate()

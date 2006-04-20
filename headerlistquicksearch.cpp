@@ -69,8 +69,9 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   QLabel *label = new QLabel( i18n("Stat&us:"), parent, "kde toolbar widget" );
 
-  mStatusCombo = new QComboBox( parent, "quick search status combo box" );
-  mStatusCombo->insertItem( SmallIcon( "run" ), i18n("Any Status") );
+  mStatusCombo = new QComboBox( parent );
+  mStatusCombo->setObjectName( "quick search status combo box" );
+  mStatusCombo->addItem( SmallIcon( "run" ), i18n("Any Status") );
 
   insertStatus( StatusUnread );
   insertStatus( StatusNew );
@@ -167,7 +168,7 @@ void HeaderListQuickSearch::slotStatusChanged( int index )
 
 void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
 {
-  mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[which].icon ),
+  mStatusCombo->addItem( SmallIcon( KMail::StatusValues[which].icon ),
     i18n( KMail::StatusValues[ which ].text ) );
   statusList.append( KMail::StatusValues[ which ].text );
 }

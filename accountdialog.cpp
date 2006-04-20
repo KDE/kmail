@@ -345,10 +345,11 @@ void AccountDialog::makeLocalAccountPage()
 
   label = new QLabel( i18n("File &location:"), page );
   topLayout->addWidget( label, 3, 0 );
-  mLocal.locationEdit = new QComboBox( true, page );
+  mLocal.locationEdit = new QComboBox( page );
+  mLocal.locationEdit->setEditable( true );
   label->setBuddy( mLocal.locationEdit );
   topLayout->addWidget( mLocal.locationEdit, 3, 1 );
-  mLocal.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
+  mLocal.locationEdit->addItems(procmailrcParser.getSpoolFilesList());
 
   QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
   choose->setAutoDefault( false );
@@ -367,9 +368,10 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile:"), group);
   groupLayout->addWidget(mLocal.lockProcmail, 0, 0);
 
-  mLocal.procmailLockFileName = new QComboBox( true, group );
+  mLocal.procmailLockFileName = new QComboBox( group );
+  mLocal.procmailLockFileName->setEditable( true );
   groupLayout->addWidget(mLocal.procmailLockFileName, 0, 1);
-  mLocal.procmailLockFileName->insertStringList(procmailrcParser.getLockFilesList());
+  mLocal.procmailLockFileName->addItems(procmailrcParser.getLockFilesList());
   mLocal.procmailLockFileName->setEnabled(false);
 
   QObject::connect(mLocal.lockProcmail, SIGNAL(toggled(bool)),
@@ -440,7 +442,8 @@ void AccountDialog::makeLocalAccountPage()
 
   label = new QLabel( i18n("&Destination folder:"), page );
   topLayout->addWidget( label, 8, 0 );
-  mLocal.folderCombo = new QComboBox( false, page );
+  mLocal.folderCombo = new QComboBox( page );
+  mLocal.folderCombo->setEditable( false );
   label->setBuddy( mLocal.folderCombo );
   topLayout->addWidget( mLocal.folderCombo, 8, 1 );
 
@@ -478,9 +481,10 @@ void AccountDialog::makeMaildirAccountPage()
   QLabel *label = new QLabel( mMaildir.nameEdit, i18n("Account &name:"), page );
   topLayout->addWidget( label, 2, 0 );
 
-  mMaildir.locationEdit = new QComboBox( true, page );
+  mMaildir.locationEdit = new QComboBox( page );
+  mMaildir.locationEdit->setEditable( true );
   topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
-  mMaildir.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
+  mMaildir.locationEdit->addItems(procmailrcParser.getSpoolFilesList());
   label = new QLabel( mMaildir.locationEdit, i18n("Folder &location:"), page );
   topLayout->addWidget( label, 3, 0 );
 
@@ -523,7 +527,7 @@ void AccountDialog::makeMaildirAccountPage()
     new QCheckBox( i18n("Enable &interval mail checking"), page );
   topLayout->addWidget( mMaildir.intervalCheck, 5, 0, 1, 3 );
   connect( mMaildir.intervalCheck, SIGNAL(toggled(bool)),
-	   this, SLOT(slotEnableMaildirInterval(bool)) );
+           this, SLOT(slotEnableMaildirInterval(bool)) );
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
@@ -533,10 +537,11 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
   topLayout->addWidget( mMaildir.intervalSpin, 6, 1 );
 
-  mMaildir.folderCombo = new QComboBox( false, page );
+  mMaildir.folderCombo = new QComboBox( page );
+  mMaildir.folderCombo->setEditable( false );
   topLayout->addWidget( mMaildir.folderCombo, 7, 1 );
   label = new QLabel( mMaildir.folderCombo,
-		      i18n("&Destination folder:"), page );
+                      i18n("&Destination folder:"), page );
   topLayout->addWidget( label, 7, 0 );
 
   mMaildir.precommand = new KLineEdit( page );
@@ -1124,12 +1129,12 @@ void AccountDialog::setupSettings()
     if ( acctLocal->location().isEmpty() )
         acctLocal->setLocation( procmailrcParser.getSpoolFilesList().first() );
     else
-        mLocal.locationEdit->insertItem( acctLocal->location() );
+        mLocal.locationEdit->addItem( acctLocal->location() );
 
     if ( acctLocal->procmailLockFileName().isEmpty() )
         acctLocal->setProcmailLockFileName( procmailrcParser.getLockFilesList().first() );
     else
-        mLocal.procmailLockFileName->insertItem( acctLocal->procmailLockFileName() );
+        mLocal.procmailLockFileName->addItem( acctLocal->procmailLockFileName() );
 
     mLocal.nameEdit->setText( mAccount->name() );
     mLocal.nameEdit->setFocus();
@@ -1365,7 +1370,7 @@ void AccountDialog::setupSettings()
   }
   if( acctFolder == 0 )
   {
-    folderCombo->insertItem( i18n("<none>") );
+    folderCombo->addItem( i18n("<none>") );
   }
   else
   {
@@ -1387,12 +1392,12 @@ void AccountDialog::setupSettings()
     }
     mFolderNames.prepend(i18n("inbox"));
     mFolderList.prepend(kmkernel->inboxFolder());
-    folderCombo->insertStringList(mFolderNames);
+    folderCombo->addItems(mFolderNames);
     folderCombo->setCurrentIndex(curIndex + 1);
 
     // -sanders hack for startup users. Must investigate this properly
     if (folderCombo->count() == 0)
-      folderCombo->insertItem( i18n("inbox") );
+      folderCombo->addItem( i18n("inbox") );
   }
 }
 
@@ -1779,7 +1784,7 @@ void AccountDialog::saveSettings()
 
     mAccount->setPrecommand( mLocal.precommand->text() );
 
-    mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentItem()) );
+    mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()) );
 
   }
   else if( accountType == "pop" )
@@ -1792,7 +1797,7 @@ void AccountDialog::saveSettings()
 #endif
     mAccount->setCheckExclude( !mPop.includeInCheck->isChecked() );
 
-    mAccount->setFolder( mFolderList.at(mPop.folderCombo->currentItem()) );
+    mAccount->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()) );
 
     initAccountForConnect();
     PopAccount &epa = *(PopAccount*)mAccount;
@@ -1878,7 +1883,7 @@ void AccountDialog::saveSettings()
         mAccount->setName( mMaildir.nameEdit->text() );
         acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
 
-        KMFolder *targetFolder = mFolderList.at(mMaildir.folderCombo->currentItem());
+        KMFolder *targetFolder = mFolderList.at(mMaildir.folderCombo->currentIndex());
         if ( targetFolder->location()  == acctMaildir->location() ) {
             /*
                Prevent data loss if the user sets the destination folder to be the same as the
@@ -1929,11 +1934,11 @@ void AccountDialog::saveSettings()
   if (newAcct)
   {
     if( accountType == "local" ) {
-      newAcct->setFolder( mFolderList.at(mLocal.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()), true );
     } else if ( accountType == "pop" ) {
-      newAcct->setFolder( mFolderList.at(mPop.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()), true );
     } else if ( accountType == "maildir" ) {
-      newAcct->setFolder( mFolderList.at(mMaildir.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mMaildir.folderCombo->currentIndex()), true );
     } else if ( accountType == "imap" ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
     } else if ( accountType == "cachedimap" ) {

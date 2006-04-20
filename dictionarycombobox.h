@@ -48,7 +48,7 @@ namespace KMail {
   class DictionaryComboBox : public QComboBox {
     Q_OBJECT
   public:
-    DictionaryComboBox( QWidget * parent=0, const char * name=0 );
+    DictionaryComboBox( QWidget * parent=0 );
     ~DictionaryComboBox();
 
     QString currentDictionaryName() const;

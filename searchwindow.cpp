@@ -147,8 +147,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   QObject *object = 0;
   if ( !list.isEmpty() )
       object = list.first();
-  if (!searchFolder && object && ::qobject_cast<QComboBox*>(object))
-      static_cast<QComboBox*>(object)->setCurrentText("Subject");
+  if (!searchFolder && object && ::qobject_cast<QComboBox*>(object)) {
+      QComboBox *box = static_cast<QComboBox*>(object);
+      box->setItemText( box->currentIndex(), "Subject" );
+  }
 
   vbl->addWidget( mPatternEdit );
 

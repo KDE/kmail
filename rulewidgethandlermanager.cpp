@@ -424,9 +424,10 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack, "textRuleFuncCombo" );
+    QComboBox *funcCombo = new QComboBox( functionStack );
+    funcCombo->setObjectName( "textRuleFuncCombo" );
     for ( int i = 0; i < TextFunctionCount; ++i ) {
-      funcCombo->insertItem( i18n( TextFunctions[i].displayName ) );
+      funcCombo->addItem( i18n( TextFunctions[i].displayName ) );
     }
     funcCombo->adjustSize();
     QObject::connect( funcCombo, SIGNAL( activated( int ) ),
@@ -454,9 +455,10 @@ namespace {
     }
 
     if ( number == 2 ) {
-      QComboBox *combo =  new QComboBox( valueStack, "categoryCombo" );
+      QComboBox *combo =  new QComboBox( valueStack );
+      combo->setObjectName( "categoryCombo" );
       QStringList categories = KabcBridge::categories();
-      combo->insertStringList( categories );
+      combo->addItems( categories );
       QObject::connect( combo, SIGNAL( activated( int ) ),
                         receiver, SLOT( slotValueChanged() ) );
       return combo;
@@ -476,7 +478,7 @@ namespace {
     //  dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
     //                                                  0, false ) );
     if ( funcCombo ) {
-      return TextFunctions[funcCombo->currentItem()].id;
+      return TextFunctions[funcCombo->currentIndex()].id;
     }
     else
       kDebug(5006) << "TextRuleWidgetHandler::currentFunction: "
@@ -655,7 +657,7 @@ namespace {
                                                     0, false ) );
       combo->blockSignals( true );
       for ( i = 0; i < combo->count(); ++i )
-        if ( rule->contents() == combo->text( i ) ) {
+        if ( rule->contents() == combo->itemText( i ) ) {
           combo->setCurrentIndex( i );
           break;
         }
@@ -755,9 +757,10 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack, "messageRuleFuncCombo" );
+    QComboBox *funcCombo = new QComboBox( functionStack );
+    funcCombo->setObjectName( "messageRuleFuncCombo" );
     for ( int i = 0; i < MessageFunctionCount; ++i ) {
-      funcCombo->insertItem( i18n( MessageFunctions[i].displayName ) );
+      funcCombo->addItem( i18n( MessageFunctions[i].displayName ) );
     }
     funcCombo->adjustSize();
     QObject::connect( funcCombo, SIGNAL( activated( int ) ),
@@ -798,7 +801,7 @@ namespace {
     //  dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
     //                                                  0, false ) );
     if ( funcCombo ) {
-      return MessageFunctions[funcCombo->currentItem()].id;
+      return MessageFunctions[funcCombo->currentIndex()].id;
     }
     else
       kDebug(5006) << "MessageRuleWidgetHandler::currentFunction: "
@@ -1030,10 +1033,10 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack,
-                                          "statusRuleFuncCombo" );
+    QComboBox *funcCombo = new QComboBox( functionStack );
+    funcCombo->setObjectName( "statusRuleFuncCombo" );
     for ( int i = 0; i < StatusFunctionCount; ++i ) {
-      funcCombo->insertItem( i18n( StatusFunctions[i].displayName ) );
+      funcCombo->addItem( i18n( StatusFunctions[i].displayName ) );
     }
     funcCombo->adjustSize();
     QObject::connect( funcCombo, SIGNAL( activated( int ) ),
@@ -1050,10 +1053,10 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *statusCombo = new QComboBox( valueStack,
-                                            "statusRuleValueCombo" );
+    QComboBox *statusCombo = new QComboBox( valueStack );
+    statusCombo->setObjectName( "statusRuleValueCombo" );
     for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
-      statusCombo->insertItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
+      statusCombo->addItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
@@ -1072,7 +1075,7 @@ namespace {
     //  dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
     //                                                  0, false ) );
     if ( funcCombo ) {
-      return StatusFunctions[funcCombo->currentItem()].id;
+      return StatusFunctions[funcCombo->currentIndex()].id;
     }
     else
       kDebug(5006) << "StatusRuleWidgetHandler::currentFunction: "
@@ -1102,7 +1105,7 @@ namespace {
     //  dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",
     //                                               0, false ) );
     if ( statusCombo ) {
-      return statusCombo->currentItem();
+      return statusCombo->currentIndex();
     }
     else
       kDebug(5006) << "StatusRuleWidgetHandler::currentStatusValue: "
@@ -1290,10 +1293,10 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    QComboBox *funcCombo = new QComboBox( functionStack,
-                                          "numericRuleFuncCombo" );
+    QComboBox *funcCombo = new QComboBox( functionStack );
+    funcCombo->setObjectName( "numericRuleFuncCombo" );
     for ( int i = 0; i < NumericFunctionCount; ++i ) {
-      funcCombo->insertItem( i18n( NumericFunctions[i].displayName ) );
+      funcCombo->addItem( i18n( NumericFunctions[i].displayName ) );
     }
     funcCombo->adjustSize();
     QObject::connect( funcCombo, SIGNAL( activated( int ) ),
@@ -1328,7 +1331,7 @@ namespace {
     //  dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
     //                                                  0, false ) );
     if ( funcCombo ) {
-      return NumericFunctions[funcCombo->currentItem()].id;
+      return NumericFunctions[funcCombo->currentIndex()].id;
     }
     else
       kDebug(5006) << "NumericRuleWidgetHandler::currentFunction: "

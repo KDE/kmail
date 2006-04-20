@@ -110,11 +110,12 @@ namespace KMail {
 
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
-    mSourceCombo = new QComboBox( false, this );
+    mSourceCombo = new QComboBox( this );
+    mSourceCombo->setEditable( false );
     mSourceCombo->setWhatsThis(
                     i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
-    mSourceCombo->insertStringList( QStringList()
+    mSourceCombo->addItems( QStringList()
         << i18nc( "continuation of \"obtain picture from\"",
                  "External Source" )
         << i18nc( "continuation of \"obtain picture from\"",

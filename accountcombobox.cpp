@@ -36,8 +36,7 @@
 
 using namespace KMail;
 
-AccountComboBox::AccountComboBox( QWidget* parent, const char* name )
-  : QComboBox( parent, name )
+AccountComboBox::AccountComboBox( QWidget* parent ) : QComboBox( parent )
 {
   connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
            this, SLOT( slotRefreshAccounts() ) );
@@ -60,7 +59,7 @@ void AccountComboBox::slotRefreshAccounts()
   for ( ; it != lst.end() ; ++it )
     accountNames.append( (*it)->name() );
   kDebug() << k_funcinfo << accountNames << endl;
-  insertStringList( accountNames );
+  addItems( accountNames );
   if ( curr )
     setCurrentAccount( curr );
 }
@@ -84,7 +83,7 @@ KMAccount* AccountComboBox::currentAccount() const
   int i = 0;
   QList<KMAccount *> lst = applicableAccounts();
   QList<KMAccount *>::ConstIterator it = lst.begin();
-  while ( it != lst.end() && i < currentItem() ) {
+  while ( it != lst.end() && i < currentIndex() ) {
     ++it;
     ++i;
   }

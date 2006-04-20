@@ -75,15 +75,15 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
   initFieldList( headersOnly, mAbsoluteDates );
 
   mRuleField->clear();
-  mRuleField->insertStringList( mFilterFieldList );
+  mRuleField->addItems( mFilterFieldList );
   mRuleField->setMaxCount( mRuleField->count() );
   mRuleField->adjustSize();
 
   if ((currentText != "<message>") &&
       (currentText != "<body>"))
-    mRuleField->changeItem( QString::fromAscii( currentText ), 0 );
+    mRuleField->setItemText( 0, QString::fromAscii( currentText ) );
   else
-    mRuleField->changeItem( QString(), 0 );
+    mRuleField->setItemText( 0, QString() );
 }
 
 void KMSearchRuleWidget::initWidget()
@@ -91,8 +91,10 @@ void KMSearchRuleWidget::initWidget()
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
   // initialize the header field combo box
-  mRuleField = new QComboBox( true, this, "mRuleField" );
-  mRuleField->insertStringList( mFilterFieldList );
+  mRuleField = new QComboBox( this );
+  mRuleField->setObjectName( "mRuleField" );
+  mRuleField->setEditable( true );
+  mRuleField->addItems( mFilterFieldList );
   // don't show sliders when popping up this menu
   mRuleField->setMaxCount( mRuleField->count() );
   mRuleField->adjustSize();
@@ -118,9 +120,9 @@ void KMSearchRuleWidget::initWidget()
   setFocusProxy( mRuleField );
 
   connect( mRuleField, SIGNAL( activated( const QString & ) ),
-	   this, SLOT( slotRuleFieldChanged( const QString & ) ) );
+           this, SLOT( slotRuleFieldChanged( const QString & ) ) );
   connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
-	   this, SLOT( slotRuleFieldChanged( const QString & ) ) );
+           this, SLOT( slotRuleFieldChanged( const QString & ) ) );
   connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
            this, SIGNAL( fieldChanged( const QString & ) ) );
 }
@@ -138,10 +140,10 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
   mRuleField->blockSignals( true );
 
   if ( i < 0 ) { // not found -> user defined field
-    mRuleField->changeItem( QString::fromLatin1( aRule->field() ), 0 );
+    mRuleField->setItemText( 0, QString::fromLatin1( aRule->field() ) );
     i = 0;
   } else { // found in the list of predefined fields
-    mRuleField->changeItem( QString(), 0 );
+    mRuleField->setItemText( 0, QString() );
   }
 
   mRuleField->setCurrentIndex( i );
@@ -166,7 +168,7 @@ KMSearchRule* KMSearchRuleWidget::rule() const {
 void KMSearchRuleWidget::reset()
 {
   mRuleField->blockSignals( true );
-  mRuleField->changeItem( "", 0 );
+  mRuleField->setItemText( 0, "" );
   mRuleField->setCurrentIndex( 0 );
   mRuleField->blockSignals( false );
 
@@ -217,7 +219,7 @@ int KMSearchRuleWidget::indexOfRuleField( const QByteArray & aName ) const
   QString i18n_aName = i18n( aName );
 
   for ( int i = 1; i < mRuleField->count(); ++i ) {
-    if ( mRuleField->text( i ) == i18n_aName )
+    if ( mRuleField->itemText( i ) == i18n_aName )
       return i;
   }
 

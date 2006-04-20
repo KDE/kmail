@@ -11,8 +11,9 @@
 //-----------------------------------------------------------------------------
 
 KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
-  : QComboBox( parent, name )
+  : QComboBox( parent )
 {
+  if (name) setObjectName( name );
   init();
 }
 
@@ -20,8 +21,9 @@ KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
 //-----------------------------------------------------------------------------
 
 KMFolderComboBox::KMFolderComboBox( bool rw, QWidget *parent, char *name )
-  : QComboBox( rw, parent, name )
+  : QComboBox( rw, parent )
 {
+  if (name) setObjectName( name );
   init();
 }
 
@@ -104,7 +106,7 @@ void KMFolderComboBox::refreshFolders()
 
   KMFolder *folder = getFolder();
   this->clear();
-  insertStringList( names );
+  addItems( names );
   setFolder( folder );
 }
 
@@ -132,7 +134,7 @@ void KMFolderComboBox::setFolder( const QString &idString )
      if (mSpecialIdx >= 0)
         removeItem(mSpecialIdx);
      mSpecialIdx = count();
-     insertItem(idString, -1);
+     addItem(idString, -1);
      setCurrentIndex(mSpecialIdx);
 
      mFolder = 0;
@@ -152,7 +154,7 @@ KMFolder *KMFolderComboBox::getFolder()
   QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
-  if (currentItem() == mSpecialIdx)
+  if (currentIndex() == mSpecialIdx)
      return 0;
 
   QString text = currentText();

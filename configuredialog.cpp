@@ -669,8 +669,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "send on check" combo:
-  mSendOnCheckCombo = new QComboBox( false, group );
-  mSendOnCheckCombo->insertStringList( QStringList()
+  mSendOnCheckCombo = new QComboBox( group );
+  mSendOnCheckCombo->setEditable( false );
+  mSendOnCheckCombo->addItems( QStringList()
                                       << i18n("Never Automatically")
                                       << i18n("On Manual Mail Checks")
                                       << i18n("On All Mail Checks") );
@@ -679,8 +680,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "default send method" combo:
-  mSendMethodCombo = new QComboBox( false, group );
-  mSendMethodCombo->insertStringList( QStringList()
+  mSendMethodCombo = new QComboBox( group );
+  mSendMethodCombo->setEditable( false );
+  mSendMethodCombo->addItems( QStringList()
                                       << i18n("Send Now")
                                       << i18n("Send Later") );
   glay->addWidget( mSendMethodCombo, 2, 1 );
@@ -690,8 +692,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // "message property" combo:
   // ### FIXME: remove completely?
-  mMessagePropertyCombo = new QComboBox( false, group );
-  mMessagePropertyCombo->insertStringList( QStringList()
+  mMessagePropertyCombo = new QComboBox( group );
+  mMessagePropertyCombo->setEditable( false );
+  mMessagePropertyCombo->addItems( QStringList()
                      << i18n("Allow 8-bit")
                      << i18n("MIME Compliant (Quoted Printable)") );
   glay->addWidget( mMessagePropertyCombo, 3, 1 );
@@ -948,7 +951,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 }
 
 void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
-  mSendOnCheckCombo->setCurrentItem( GlobalSettings::self()->sendOnCheck() );
+  mSendOnCheckCombo->setCurrentIndex( GlobalSettings::self()->sendOnCheck() );
 }
 
 void AccountsPage::SendingTab::doLoadOther() {
@@ -989,9 +992,9 @@ void AccountsPage::SendingTab::doLoadOther() {
     }
   }
 
-  mSendMethodCombo->setCurrentItem(
+  mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
-  mMessagePropertyCombo->setCurrentItem(
+  mMessagePropertyCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
 
   mConfirmSendCheck->setChecked(
@@ -1025,11 +1028,11 @@ void AccountsPage::SendingTab::save() {
     (*it)->writeConfig(i);
 
   // Save common options:
-  GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentItem() );
+  GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
   kmkernel->msgSender()->setSendImmediate(
-                             mSendMethodCombo->currentItem() == 0 );
+                             mSendMethodCombo->currentIndex() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
-                             mMessagePropertyCombo->currentItem() == 1 );
+                             mMessagePropertyCombo->currentIndex() == 1 );
   kmkernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
   general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
@@ -1534,13 +1537,14 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
   // "font location" combo box and label:
   hlay = new QHBoxLayout( vlay ); // inherites spacing
-  mFontLocationCombo = new QComboBox( false, this );
+  mFontLocationCombo = new QComboBox( this );
+  mFontLocationCombo->setEditable( false );
   mFontLocationCombo->setEnabled( false ); // !mCustomFontCheck->isChecked()
 
   QStringList fontDescriptions;
   for ( int i = 0 ; i < numFontNames ; i++ )
     fontDescriptions << i18n( fontNames[i].displayName );
-  mFontLocationCombo->insertStringList( fontDescriptions );
+  mFontLocationCombo->addItems( fontDescriptions );
 
   label = new QLabel( mFontLocationCombo, i18n("Apply &to:"), this );
   label->setEnabled( false ); // since !mCustomFontCheck->isChecked()
@@ -1618,7 +1622,7 @@ void AppearancePage::FontsTab::doLoadOther() {
       QVariant( (fontNames[i].onlyFixed) ? &fixedFont : &mFont[0] ) ).value<QFont>();
 
   mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
-  mFontLocationCombo->setCurrentItem( 0 );
+  mFontLocationCombo->setCurrentIndex( 0 );
   slotFontSelectorChanged( 0 );
 }
 
@@ -1634,9 +1638,9 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
       kDebug(5006) << "got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
-  if ( needChange && mFontLocationCombo->currentItem() > 0 )
-    mFontChooser->setFont( mFont[ mFontLocationCombo->currentItem() ],
-      fontNames[ mFontLocationCombo->currentItem() ].onlyFixed );
+  if ( needChange && mFontLocationCombo->currentIndex() > 0 )
+    mFontChooser->setFont( mFont[ mFontLocationCombo->currentIndex() ],
+      fontNames[ mFontLocationCombo->currentIndex() ].onlyFixed );
 
   if ( fonts.hasKey( "defaultFonts" ) )
     mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", false ) );
@@ -2237,7 +2241,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   // Fallback Character Encoding
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mCharsetCombo = new QComboBox( this );
-  mCharsetCombo->insertStringList( KMMsgBase::supportedEncodings( false ) );
+  mCharsetCombo->addItems( KMMsgBase::supportedEncodings( false ) );
 
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2257,8 +2261,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   mOverrideCharsetCombo = new QComboBox( this );
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
-  mOverrideCharsetCombo->insertStringList( encodings );
-  mOverrideCharsetCombo->setCurrentItem(0);
+  mOverrideCharsetCombo->addItems( encodings );
+  mOverrideCharsetCombo->setCurrentIndex(0);
 
   connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2295,21 +2299,21 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
         indexOfLatin9 = i;
     if( false && encoding == currentEncoding )
     {
-      mCharsetCombo->setCurrentItem( i );
+      mCharsetCombo->setCurrentIndex( i );
       found = true;
       break;
     }
     i++;
   }
   if ( !found ) // nothing matched, use latin9
-    mCharsetCombo->setCurrentItem( indexOfLatin9 );
+    mCharsetCombo->setCurrentIndex( indexOfLatin9 );
 }
 
 void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 {
   const QString &currentOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
   if ( currentOverrideEncoding.isEmpty() ) {
-    mOverrideCharsetCombo->setCurrentItem( 0 );
+    mOverrideCharsetCombo->setCurrentIndex( 0 );
     return;
   }
   QStringList encodings = KMMsgBase::supportedEncodings( false );
@@ -2321,7 +2325,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   {
     if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
     {
-      mOverrideCharsetCombo->setCurrentItem( i );
+      mOverrideCharsetCombo->setCurrentIndex( i );
       break;
     }
     i++;
@@ -2358,7 +2362,7 @@ void AppearancePage::ReaderTab::save() {
   GlobalSettings::self()->setFallbackCharacterEncoding(
       KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::self()->setOverrideCharacterEncoding(
-      mOverrideCharsetCombo->currentItem() == 0 ?
+      mOverrideCharsetCombo->currentIndex() == 0 ?
         QString() :
         KGlobal::charsets()->encodingForName( mOverrideCharsetCombo->currentText() ) );
 }
@@ -2734,7 +2738,8 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
                             0, 0, 0, 3 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:
-  mPhraseLanguageCombo = new LanguageComboBox( false, this );
+  mPhraseLanguageCombo = new LanguageComboBox( this );
+  mPhraseLanguageCombo->setEditable( false );
   glay->addWidget( new QLabel( mPhraseLanguageCombo,
                                i18n("Lang&uage:"), this ), 1, 0 );
   glay->addWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
@@ -2822,7 +2827,7 @@ void ComposerPage::PhrasesTab::slotNewLanguage()
 
 void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
 {
-  mPhraseLanguageCombo->setCurrentItem(
+  mPhraseLanguageCombo->setCurrentIndex(
     mPhraseLanguageCombo->insertLanguage( lang ) );
   KLocale locale("kmail");
   locale.setLanguage( lang );
@@ -2839,7 +2844,7 @@ void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
 void ComposerPage::PhrasesTab::slotRemoveLanguage()
 {
   assert( mPhraseLanguageCombo->count() > 1 );
-  int index = mPhraseLanguageCombo->currentItem();
+  int index = mPhraseLanguageCombo->currentIndex();
   assert( 0 <= index && index < (int)mLanguageList.count() );
 
   // remove current item from internal list and combobox:
@@ -2856,7 +2861,7 @@ void ComposerPage::PhrasesTab::slotRemoveLanguage()
 
 void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
 {
-  int index = mPhraseLanguageCombo->currentItem();
+  int index = mPhraseLanguageCombo->currentIndex();
   assert( index < (int)mLanguageList.count() );
   saveActiveLanguageItem();
   mActiveLanguageItem = index;
@@ -2894,7 +2899,7 @@ void ComposerPage::PhrasesTab::doLoadFromGlobalSettings() {
     slotAddNewLanguage( KGlobal::locale()->language() );
   }
 
-  mPhraseLanguageCombo->setCurrentItem( currentNr );
+  mPhraseLanguageCombo->setCurrentIndex( currentNr );
   mActiveLanguageItem = currentNr;
   setLanguageItemInformation( currentNr );
   mRemoveButton->setEnabled( mLanguageList.count() > 1 );
@@ -2902,7 +2907,7 @@ void ComposerPage::PhrasesTab::doLoadFromGlobalSettings() {
 
 void ComposerPage::PhrasesTab::save() {
   GlobalSettings::self()->setReplyLanguagesCount( mLanguageList.count() );
-  GlobalSettings::self()->setReplyCurrentLanguage( mPhraseLanguageCombo->currentItem() );
+  GlobalSettings::self()->setReplyCurrentLanguage( mPhraseLanguageCombo->currentIndex() );
 
   saveActiveLanguageItem();
   LanguageItemList::Iterator it = mLanguageList.begin();
@@ -4355,12 +4360,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
   // "when trying to find unread messages" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mLoopOnGotoUnread = new QComboBox( false, this );
+  mLoopOnGotoUnread = new QComboBox( this );
+  mLoopOnGotoUnread->setEditable( false );
   label = new QLabel( mLoopOnGotoUnread,
            i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
                 "and \"loop in all folders\".",
                 "When trying to find unread messages:"), this );
-  mLoopOnGotoUnread->insertStringList( QStringList()
+  mLoopOnGotoUnread->addItems( QStringList()
       << i18nc("continuation of \"When trying to find unread messages:\"",
               "Do not Loop")
       << i18nc("continuation of \"When trying to find unread messages:\"",
@@ -4374,13 +4380,14 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
   // when entering a folder
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mActionEnterFolder = new QComboBox( false, this );
+  mActionEnterFolder = new QComboBox( this );
+  mActionEnterFolder->setEditable( false );
   label = new QLabel( mActionEnterFolder,
            i18nc("to be continued with \"jump to first new message\", "
                 "\"jump to first unread or new message\","
                 "and \"jump to last selected message\".",
                 "When entering a folder:"), this );
-  mActionEnterFolder->insertStringList( QStringList()
+  mActionEnterFolder->addItems( QStringList()
       << i18nc("continuation of \"When entering a folder:\"",
               "Jump to First New Message")
       << i18nc("continuation of \"When entering a folder:\"",
@@ -4417,12 +4424,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mMailboxPrefCombo = new QComboBox( false, this );
+  mMailboxPrefCombo = new QComboBox( this );
+  mMailboxPrefCombo->setEditable( false );
   label = new QLabel( mMailboxPrefCombo,
                       i18nc("to be continued with \"flat files\" and "
                            "\"directories\", resp.",
                            "By default, &message folders on disk are:"), this );
-  mMailboxPrefCombo->insertStringList( QStringList()
+  mMailboxPrefCombo->addItems( QStringList()
           << i18nc("continuation of \"By default, &message folders on disk are\"",
                   "Flat Files (\"mbox\" format)")
           << i18nc("continuation of \"By default, &message folders on disk are\"",
@@ -4515,8 +4523,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 void MiscPage::FolderTab::doLoadFromGlobalSettings() {
   mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
   // default = "Loop in current folder"
-  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::self()->loopOnGotoUnread() );
-  mActionEnterFolder->setCurrentItem( GlobalSettings::self()->actionEnterFolder() );
+  mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
+  mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
   mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
   mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
   mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
@@ -4534,7 +4542,7 @@ void MiscPage::FolderTab::doLoadOther() {
 
   int num = general.readEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
-  mMailboxPrefCombo->setCurrentItem( num );
+  mMailboxPrefCombo->setCurrentIndex( num );
 
 #ifdef HAVE_INDEXLIB
   mIndexingEnabled->setChecked( kmkernel->msgIndex() && kmkernel->msgIndex()->isEnabled() );
@@ -4546,14 +4554,14 @@ void MiscPage::FolderTab::save() {
 
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
+  general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentIndex() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
                                   mOnStartupOpenFolder->folder()->idString() : QString() );
 
   GlobalSettings::self()->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::self()->setDelayedMarkTime( mDelayedMarkTime->value() );
-  GlobalSettings::self()->setActionEnterFolder( mActionEnterFolder->currentItem() );
-  GlobalSettings::self()->setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
+  GlobalSettings::self()->setActionEnterFolder( mActionEnterFolder->currentIndex() );
+  GlobalSettings::self()->setLoopOnGotoUnread( mLoopOnGotoUnread->currentIndex() );
   GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
@@ -4600,11 +4608,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   grid->addWidget( storageFormatLA, 0, 0 );
   storageFormatLA->setToolTip( toolTip );
   storageFormatLA->setWhatsThis( whatsThis );
-  mStorageFormatCombo = new QComboBox( false, mBox );
+  mStorageFormatCombo = new QComboBox( mBox );
+  mStorageFormatCombo->setEditable( false );
   storageFormatLA->setBuddy( mStorageFormatCombo );
   QStringList formatLst;
   formatLst << i18n("Standard (Ical / Vcard)") << i18n("Kolab (XML)");
-  mStorageFormatCombo->insertStringList( formatLst );
+  mStorageFormatCombo->addItems( formatLst );
   grid->addWidget( mStorageFormatCombo, 0, 1 );
   mStorageFormatCombo->setToolTip( toolTip );
   mStorageFormatCombo->setWhatsThis( whatsThis );
@@ -4620,11 +4629,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   grid->addWidget( languageLA, 1, 0 );
   languageLA->setToolTip( toolTip );
   languageLA->setWhatsThis( whatsThis );
-  mLanguageCombo = new QComboBox( false, mBox );
+  mLanguageCombo = new QComboBox( mBox );
+  mLanguageCombo->setEditable( false );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
-  mLanguageCombo->insertStringList( lst );
+  mLanguageCombo->addItems( lst );
   grid->addWidget( mLanguageCombo, 1, 1 );
   mLanguageCombo->setToolTip( toolTip );
   mLanguageCombo->setWhatsThis( whatsThis );
@@ -4752,9 +4762,9 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
 
   mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
   int i = GlobalSettings::self()->theIMAPResourceFolderLanguage();
-  mLanguageCombo->setCurrentItem(i);
+  mLanguageCombo->setCurrentIndex(i);
   i = GlobalSettings::self()->theIMAPResourceStorageFormat();
-  mStorageFormatCombo->setCurrentItem(i);
+  mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
@@ -4803,7 +4813,7 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
   GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
-  int format = mStorageFormatCombo->currentItem();
+  int format = mStorageFormatCombo->currentIndex();
   GlobalSettings::self()->setTheIMAPResourceStorageFormat( format );
 
   // Write the IMAP resource config
@@ -4827,7 +4837,7 @@ void MiscPage::GroupwareTab::save() {
 
   bool enabled = mEnableImapResCB->isChecked() && !folderId.isEmpty();
   GlobalSettings::self()->setTheIMAPResourceEnabled( enabled );
-  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
+  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mLanguageCombo->currentIndex() );
   GlobalSettings::self()->setTheIMAPResourceFolderParent( folderId );
 }
 

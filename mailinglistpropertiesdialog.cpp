@@ -97,8 +97,8 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 		    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 5, 0 );
   mMLHandlerCombo = new QComboBox( mlGroup );
-  mMLHandlerCombo->insertItem( i18n("KMail"), MailingList::KMail );
-  mMLHandlerCombo->insertItem( i18n("Browser"), MailingList::Browser );
+  mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
+  mMLHandlerCombo->addItem( i18n("Browser"), MailingList::Browser );
   mMLHandlerCombo->setEnabled( false );
   groupLayout->addWidget( mMLHandlerCombo, 5, 1, 1, 2 );
   QObject::connect( mMLHandlerCombo, SIGNAL(activated(int)),
@@ -142,7 +142,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
      << i18n( "Unsubscribe from List" )
      << i18n( "List Archives" )
      << i18n( "List Help" );
-  mAddressCombo->insertStringList( el );
+  mAddressCombo->addItems( el );
   QObject::connect( mAddressCombo, SIGNAL(activated(int)),
                     SLOT(slotAddressChanged(int)) );
 
@@ -274,7 +274,7 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
     mEditList->insertStringList( newList );
   }
 
-  //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentItem() ) );
+  //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentIndex() ) );
   switch ( mLastItem ) {
   case 0:
     mMailingList.setPostURLS( mEditList->items() );
@@ -299,7 +299,7 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
 void MailingListFolderPropertiesDialog::fillEditBox()
 {
   mEditList->clear();
-  switch ( mAddressCombo->currentItem() ) {
+  switch ( mAddressCombo->currentIndex() ) {
   case 0:
     mEditList->insertStringList( mMailingList.postURLS().toStringList() );
     break;
@@ -323,7 +323,7 @@ void MailingListFolderPropertiesDialog::fillEditBox()
 void MailingListFolderPropertiesDialog::slotInvokeHandler()
 {
   KMCommand *command =0;
-  switch ( mAddressCombo->currentItem() ) {
+  switch ( mAddressCombo->currentIndex() ) {
   case 0:
     command = new KMMailingListPostCommand( this, mFolder );
     break;
