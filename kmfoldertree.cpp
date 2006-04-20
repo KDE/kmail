@@ -1009,7 +1009,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     }
   } else { // regular folders
 
-    folderMenu->insertSeparator();
+    folderMenu->addSeparator();
     if ( !fti->folder()->noChildren() ) {
       folderMenu->insertItem(SmallIconSet("folder_new"),
                              i18n("&New Subfolder..."), this,
@@ -1032,13 +1032,13 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
       mMainWidget->action("compact")->plug(folderMenu);
 
-      folderMenu->insertSeparator();
+      folderMenu->addSeparator();
       if ( !fti->folder()->isSystemFolder() ) {
         mMainWidget->action("delete_folder")->plug(folderMenu);
-        folderMenu->insertSeparator();
+        folderMenu->addSeparator();
       }
       mMainWidget->action("empty")->plug(folderMenu);
-      folderMenu->insertSeparator();
+      folderMenu->addSeparator();
     }
   }
 
@@ -1065,7 +1065,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
                               i18n("&Troubleshoot IMAP Cache..."),
                               folder, SLOT(slotTroubleshoot()) );
     }
-    folderMenu->insertSeparator();
+    folderMenu->addSeparator();
   }
 
   if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {

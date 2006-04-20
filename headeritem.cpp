@@ -212,7 +212,8 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
   }
 
   QPixmap res( width, height );
-  QBitmap mask( width, height, true );
+  QBitmap mask( width, height );
+  mask.clear();
 
   int x = 0;
   for ( PixmapList::ConstIterator it = pixmaps.begin();

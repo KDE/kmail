@@ -1513,16 +1513,16 @@ void KMComposeWin::setupEditor(void)
                    SLOT(undo()), KStdAccel::shortcut(KStdAccel::Undo));
   menu->insertItem(i18n("Redo"),mEditor,
                    SLOT(redo()), KStdAccel::shortcut(KStdAccel::Redo));
-  menu->insertSeparator();
+  menu->addSeparator();
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
   menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
   menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
   menu->insertItem(i18n("Mark All"),this, SLOT(slotMarkAll()));
-  menu->insertSeparator();
+  menu->addSeparator();
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
-  menu->insertSeparator();
+  menu->addSeparator();
   menu->insertItem(i18n("Fixed Font Widths"), this, SLOT(slotUpdateFont()));
   mEditor->installRBPopup(menu);
   */
@@ -2909,7 +2909,7 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
                                           SLOT( slotAttachSave() ) );
      mPropertiesId = mAttachMenu->addAction( i18n("Properties"), this,
                                               SLOT( slotAttachProperties() ) );
-     mAttachMenu->insertSeparator();
+     mAttachMenu->addSeparator();
      mAttachMenu->addAction(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));
   }
 

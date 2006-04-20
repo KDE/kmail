@@ -325,7 +325,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
       if ( mMsg ) {
         mReaderWin->mailToReplyAction()->plug( menu );
         mReaderWin->mailToForwardAction()->plug( menu );
-        menu->insertSeparator();
+        menu->addSeparator();
       }
       mReaderWin->addAddrBookAction()->plug( menu );
       mReaderWin->openAddrBookAction()->plug( menu );
@@ -341,7 +341,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
   }
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
-      menu->insertSeparator();
+      menu->addSeparator();
     mReaderWin->copyAction()->plug( menu );
     mReaderWin->selectAllAction()->plug( menu );
   } else if ( !urlMenuAdded )
@@ -357,7 +357,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     if( !aMsg.parent()->isSent() && !aMsg.parent()->isDrafts() ) {
       mReplyActionMenu->plug( menu );
       mForwardActionMenu->plug( menu );
-      menu->insertSeparator();
+      menu->addSeparator();
     }
 
     Q3PopupMenu* copyMenu = new Q3PopupMenu(menu);
@@ -366,10 +366,10 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
       mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
           &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
-    menu->insertSeparator();
+    menu->addSeparator();
     mViewSourceAction->plug( menu );
     mReaderWin->toggleFixFontAction()->plug( menu );
-    menu->insertSeparator();
+    menu->addSeparator();
     mPrintAction->plug( menu );
     menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );

@@ -2303,7 +2303,7 @@ void KMHeaders::slotRMB()
        mOwner->sendAgainAction()->plug(menu);
      }
   }
-  menu->insertSeparator();
+  menu->addSeparator();
 
   Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
   mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
@@ -2319,7 +2319,7 @@ void KMHeaders::slotRMB()
         &mMenuToFolder, msgMoveMenu );
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
   }
-  menu->insertSeparator();
+  menu->addSeparator();
   mOwner->statusMenu()->plug( menu ); // Mark Message menu
   if ( mOwner->threadStatusMenu()->isEnabled() ) {
     mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
@@ -2331,16 +2331,16 @@ void KMHeaders::slotRMB()
   }
 
   if ( !out_folder ) {
-    menu->insertSeparator();
+    menu->addSeparator();
     mOwner->filterMenu()->plug( menu ); // Create Filter menu
     mOwner->action("apply_filter_actions")->plug(menu);
   }
 
-  menu->insertSeparator();
+  menu->addSeparator();
   mOwner->saveAsAction()->plug(menu);
   mOwner->saveAttachmentsAction()->plug(menu);
   mOwner->printAction()->plug(menu);
-  menu->insertSeparator();
+  menu->addSeparator();
   if ( mFolder->isTrash() ) {
     mOwner->deleteAction()->plug(menu);
     if ( mOwner->trashThreadAction()->isEnabled() )

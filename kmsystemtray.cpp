@@ -129,12 +129,12 @@ void KMSystemTray::buildPopupMenu()
     action->plug( mPopupMenu );
   if ( ( action = mainWidget->action("send_queued_via") ) )
     action->plug( mPopupMenu );
-  mPopupMenu->insertSeparator();
+  mPopupMenu->addSeparator();
   if ( ( action = mainWidget->action("new_message") ) )
     action->plug( mPopupMenu );
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
     action->plug( mPopupMenu );
-  mPopupMenu->insertSeparator();
+  mPopupMenu->addSeparator();
 
   KMainWindow *mainWin = ::qobject_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)

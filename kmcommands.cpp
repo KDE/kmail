@@ -1664,7 +1664,7 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
       menuId = menu->insertItem(i18n("Copy to This Folder"));
     aMenuToFolder->insert( menuId, folder );
     menu->setItemEnabled( menuId, !folder->isReadOnly() );
-    menu->insertSeparator();
+    menu->addSeparator();
   }
 
   if (!folderDir)

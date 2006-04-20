@@ -2166,7 +2166,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
       mMsgView->mailToReplyAction()->plug( menu );
       mMsgView->mailToForwardAction()->plug( menu );
 
-      menu->insertSeparator();
+      menu->addSeparator();
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
       mMsgView->copyURLAction()->plug( menu );
@@ -2196,9 +2196,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
 
   if(mMsgView && !mMsgView->copyText().isEmpty()) {
     if ( urlMenuAdded )
-      menu->insertSeparator();
+      menu->addSeparator();
     mReplyActionMenu->plug(menu);
-    menu->insertSeparator();
+    menu->addSeparator();
 
     mMsgView->copyAction()->plug( menu );
     mMsgView->selectAllAction()->plug( menu );
@@ -2220,26 +2220,26 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
         mReplyActionMenu->plug(menu);
       mForwardActionMenu->plug(menu);
     }
-    menu->insertSeparator();
+    menu->addSeparator();
 
     mCopyActionMenu->plug( menu );
     mMoveActionMenu->plug( menu );
 
-    menu->insertSeparator();
+    menu->addSeparator();
 
     mStatusMenu->plug( menu );
-    menu->insertSeparator();
+    menu->addSeparator();
 
     viewSourceAction()->plug(menu);
     if(mMsgView) {
       mMsgView->toggleFixFontAction()->plug(menu);
     }
-    menu->insertSeparator();
+    menu->addSeparator();
     mPrintAction->plug( menu );
     mSaveAsAction->plug( menu );
     mSaveAttachmentsAction->plug( menu );
 
-    menu->insertSeparator();
+    menu->addSeparator();
     if( mFolder->isTrash() )
       mDeleteAction->plug( menu );
     else
@@ -3349,7 +3349,7 @@ void KMMainWidget::initializeFilterActions()
                                  SLOT(start()), actionCollection(),
                                  normalizedName.toLocal8Bit());
       if(!addedSeparator) {
-        mApplyFilterActionsMenu->popupMenu()->insertSeparator();
+        mApplyFilterActionsMenu->popupMenu()->addSeparator();
         addedSeparator = !addedSeparator;
 	mFilterMenuActions.append( new KActionSeparator());
       }
