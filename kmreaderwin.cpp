@@ -1239,7 +1239,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
   QString location = locate("data", "kmail/about/main.html");
   QString content = KPIM::kFileToByteArray( location );
   content = content.arg( locate( "data", "libkdepim/about/kde_infopage.css" ) );
-  if ( kapp->reverseLayout() )
+  if ( kapp->isRightToLeft() )
     content = content.arg( "@import \"%1\";" ).arg( locate( "data", "libkdepim/about/kde_infopage_rtl.css" ) );
   else
     content = content.arg( "" );

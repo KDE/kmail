@@ -282,7 +282,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   QToolButton *button = new QToolButton( this );
   button->setIcon( KGlobal::iconLoader()->loadIconSet(
-              KApplication::reverseLayout() ? "clear_left":"locationbar_erase", K3Icon::Small, 0 ) );
+              KApplication::isRightToLeft() ? "clear_left":"locationbar_erase", K3Icon::Small, 0 ) );
   searchLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );
 
