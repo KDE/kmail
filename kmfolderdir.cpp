@@ -182,7 +182,7 @@ bool KMFolderDir::reload(void)
 
   const QString fldPath = path();
   dir.setFilter(QDir::Files | QDir::Dirs | QDir::Hidden);
-  dir.setNameFilter("*");
+  dir.setNameFilters(QStringList("*"));
 
   if (!dir.cd(fldPath))
   {
