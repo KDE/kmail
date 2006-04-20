@@ -196,13 +196,13 @@ void KMSystemTray::updateCount()
 
     // decrease the size of the font for the number of unread messages if the
     // number doesn't fit into the available space
-    float countFontSize = countFont.pointSizeFloat();
+    float countFontSize = countFont.pointSizeF();
     QFontMetrics qfm( countFont );
     int width = qfm.width( countString );
     if( width > oldPixmapWidth )
     {
       countFontSize *= float( oldPixmapWidth ) / float( width );
-      countFont.setPointSizeFloat( countFontSize );
+      countFont.setPointSizeF( countFontSize );
     }
 
     // Create an image which represents the number of unread messages
