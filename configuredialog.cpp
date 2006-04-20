@@ -2126,7 +2126,7 @@ void AppearancePage::HeadersTab::save() {
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
-      QStringList groups = KMKernel::config()->groupList().grep( QRegExp("^Folder-") );
+      QStringList groups = KMKernel::config()->groupList().filter( QRegExp("^Folder-") );
       kDebug(5006) << "groups.count() == " << groups.count() << endl;
       for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
         KConfigGroup group( KMKernel::config(), *it );

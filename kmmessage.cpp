@@ -596,7 +596,7 @@ static bool flushPart(QString &msg, QStringList &part,
    // Remove empty lines at end of quote
    while ((part.begin() != part.end()) && part.last().isEmpty())
    {
-      part.remove(part.fromLast());
+      part.removeLast();
    }
 
    QString text;
@@ -678,7 +678,9 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
         // Search if the last non-blank line could be "From" line
         if (part.count() && (oldIndent.length() < indent.length()))
         {
-           QStringList::Iterator it2 = part.fromLast();
+           QStringList::Iterator it2 = part.isEmpty() ? part.end() : --part.end();
+           // FIXME: what if all strings are empty? Then we'll decrement part.begin().
+           // Shouldn't we also check for .begin()?
            while( (it2 != part.end()) && (*it2).isEmpty())
              --it2;
 

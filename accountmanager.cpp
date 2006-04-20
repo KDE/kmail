@@ -55,7 +55,7 @@ void AccountManager::writeConfig( bool withSync )
 
   // first delete all account groups in the config file:
   QStringList accountGroups =
-    config->groupList().grep( QRegExp( "Account \\d+" ) );
+    config->groupList().filter( QRegExp( "Account \\d+" ) );
   for ( QStringList::Iterator it = accountGroups.begin() ;
 	it != accountGroups.end() ; ++it )
     config->deleteGroup( *it );

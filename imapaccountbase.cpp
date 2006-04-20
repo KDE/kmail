@@ -194,13 +194,13 @@ namespace KMail {
     nsMap map;
     QStringList list = config.readEntry( QString::number( PersonalNS) , QStringList() );
     if ( !list.isEmpty() )
-      map[PersonalNS] = list.gres( "\"", "" );
+      map[PersonalNS] = list.replaceInStrings( "\"", "" );
     list = config.readEntry( QString::number( OtherUsersNS) , QStringList()  );
     if ( !list.isEmpty() )
-      map[OtherUsersNS] = list.gres( "\"", "" );
+      map[OtherUsersNS] = list.replaceInStrings( "\"", "" );
     list = config.readEntry( QString::number( SharedNS ), QStringList() );
     if ( !list.isEmpty() )
-      map[SharedNS] = list.gres( "\"", "" );
+      map[SharedNS] = list.replaceInStrings( "\"", "" );
     setNamespaces( map );
     // read namespace - delimiter
     namespaceDelim entries = config.entryMap( config.group() );

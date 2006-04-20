@@ -178,7 +178,7 @@ namespace KMail {
       headerParts << strToHtml(message->dateShortStr());
 
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
-    headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
+    headerStr += " (" + headerParts.filter( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
     headerStr += "</div>\n";
 

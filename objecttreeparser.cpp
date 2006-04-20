@@ -2098,9 +2098,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                       .arg( startKeyHREF )
                                       .arg( "certificate" );
                     if( !blockAddrs.empty() ){
-                        if( blockAddrs.grep(
-                                msgFrom,
-                                false ).isEmpty() ) {
+                        if( !blockAddrs.contains( msgFrom, Qt::CaseInsensitive ) ) {
                             greenCaseWarning =
                                 "<u>" +
                                 i18n("Warning:") +

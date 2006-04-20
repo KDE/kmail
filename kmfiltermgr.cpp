@@ -102,7 +102,7 @@ void KMFilterMgr::writeConfig(bool withSync)
 
   // first, delete all groups:
   QStringList filterGroups =
-    config->groupList().grep( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
+    config->groupList().filter( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
   for ( QStringList::Iterator it = filterGroups.begin() ;
         it != filterGroups.end() ; ++it )
     config->deleteGroup( *it );

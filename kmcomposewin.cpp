@@ -2668,9 +2668,9 @@ void KMComposeWin::slotInsertFile()
     // Would be nicer to get this constant from KRecentFilesAction
     uint mMaxRecentFiles = 30;
     while ((uint)urls.count() > mMaxRecentFiles)
-      urls.erase( urls.fromLast() );
+      urls.removeLast();
     while ((uint)encodings.count() > mMaxRecentFiles)
-      encodings.erase( encodings.fromLast() );
+      encodings.removeLast();
     // sanity check
     if (urls.count() != encodings.count()) {
       urls.clear();
