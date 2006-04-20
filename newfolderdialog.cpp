@@ -67,19 +67,23 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   if ( folder ) {
     setCaption( i18n("New Subfolder of %1", folder->prettyURL() ) );
   }
-  QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
+  QWidget* privateLayoutWidget = new QWidget( this );
+  privateLayoutWidget->setObjectName( "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
   setMainWidget( privateLayoutWidget );
   mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 0, spacingHint(),
                                      "mTopLevelLayout");
 
-  mNameHBox = new QHBoxLayout( 0, 0, 6, "mNameHBox");
+  mNameHBox = new QHBoxLayout( 0, 0, 6);
+  mNameHBox->setObjectName( "mNameHBox" );
 
-  mNameLabel = new QLabel( privateLayoutWidget, "mNameLabel" );
+  mNameLabel = new QLabel( privateLayoutWidget );
+  mNameLabel->setObjectName( "mNameLabel" );
   mNameLabel->setText( i18n( "&Name:" ) );
   mNameHBox->addWidget( mNameLabel );
 
-  mNameLineEdit = new QLineEdit( privateLayoutWidget, "mNameLineEdit" );
+  mNameLineEdit = new QLineEdit( privateLayoutWidget );
+  mNameLineEdit->setObjectName( "mNameLineEdit" );
   mNameLabel->setBuddy( mNameLineEdit );
   mNameLineEdit->setWhatsThis( i18n( "Enter a name for the new folder." ) );
   mNameLineEdit->setFocus();
@@ -90,12 +94,15 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   if ( !mFolder ||
       ( mFolder->folderType() != KMFolderTypeImap &&
         mFolder->folderType() != KMFolderTypeCachedImap ) ) {
-    mFormatHBox = new QHBoxLayout( 0, 0, 6, "mFormatHBox");
-    mMailboxFormatLabel = new QLabel( privateLayoutWidget, "mMailboxFormatLabel" );
+    mFormatHBox = new QHBoxLayout( 0, 0, 6);
+	  mFormatHBox->setObjectName( "mFormatHBox" );
+    mMailboxFormatLabel = new QLabel( privateLayoutWidget );
+	  mMailboxFormatLabel->setObjectName( "mMailboxFormatLabel" );
     mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
 
-    mFormatComboBox = new QComboBox( false, privateLayoutWidget, "mFormatComboBox" );
+    mFormatComboBox = new QComboBox( false, privateLayoutWidget );
+	  mFormatComboBox->setObjectName( "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
     mFormatComboBox->setWhatsThis( i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
 
@@ -116,13 +123,16 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   // --- contents -----
   if ( kmkernel->iCalIface().isEnabled() ) {
-    mContentsHBox = new QHBoxLayout( 0, 0, 6, "mContentsHBox");
+    mContentsHBox = new QHBoxLayout( 0, 0, 6);
+	  mContentsHBox->setObjectName( "mContentsHBox" );
 
-    mContentsLabel = new QLabel( privateLayoutWidget, "mContentsLabel" );
+    mContentsLabel = new QLabel( privateLayoutWidget );
+	  mContentsLabel->setObjectName( "mContentsLabel" );
     mContentsLabel->setText( i18n( "Folder &contains:" ) );
     mContentsHBox->addWidget( mContentsLabel );
 
-    mContentsComboBox = new QComboBox( false, privateLayoutWidget, "mContentsComboBox" );
+    mContentsComboBox = new QComboBox( false, privateLayoutWidget );
+	  mContentsComboBox->setObjectName( "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
     mContentsComboBox->setWhatsThis( i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
     mContentsComboBox->insertItem( i18n( "Mail" ) );
@@ -157,13 +167,16 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       }
     }
     if ( rootFolder && namespaces.count() > 1 ) {
-      mNamespacesHBox = new QHBoxLayout( 0, 0, 6, "mNamespaceHBox");
+      mNamespacesHBox = new QHBoxLayout( 0, 0, 6);
+		  mNamespacesHBox->setObjectName( "mNamespaceHBox" );
 
-      mNamespacesLabel = new QLabel( privateLayoutWidget, "mNamespacesLabel" );
+      mNamespacesLabel = new QLabel( privateLayoutWidget );
+		  mNamespacesLabel->setObjectName( "mNamespacesLabel" );
       mNamespacesLabel->setText( i18n( "Namespace for &folder:" ) );
       mNamespacesHBox->addWidget( mNamespacesLabel );
 
-      mNamespacesComboBox = new QComboBox( false, privateLayoutWidget, "mNamespacesComboBox" );
+      mNamespacesComboBox = new QComboBox( false, privateLayoutWidget );
+		  mNamespacesComboBox->setObjectName( "mNamespacesComboBox" );
       mNamespacesLabel->setBuddy( mNamespacesComboBox );
       mNamespacesComboBox->setWhatsThis( i18n( "Select the personal namespace the folder should be created in." ) );
       mNamespacesComboBox->insertStringList( namespaces );
