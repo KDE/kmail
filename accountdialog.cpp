@@ -325,7 +325,7 @@ void AccountDialog::makeLocalAccountPage()
   ProcmailRCParser procmailrcParser;
   QFrame *page = makeMainWidget();
   QGridLayout *topLayout = new QGridLayout( page, 12, 3, 0, spacingHint() );
-  topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColumnStretch( 1, 10 );
 
@@ -459,7 +459,7 @@ void AccountDialog::makeMaildirAccountPage()
 
   QFrame *page = makeMainWidget();
   QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
-  topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColumnStretch( 1, 10 );
 
@@ -569,7 +569,7 @@ void AccountDialog::makePopAccountPage()
   tabWidget->addTab( page1, i18n("&General") );
 
   QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
-  grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 15, 10 );
   grid->setColumnStretch( 1, 10 );
 
@@ -833,7 +833,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   int row = -1;
   QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
-  grid->addColSpacing( 1, fontMetrics().maxWidth()*16 );
+  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*16, 0 ), 0, 1 );
 
   ++row;
   QLabel *label = new QLabel( i18n("Account &name:"), page1 );

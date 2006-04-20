@@ -323,7 +323,7 @@ void KMTransportDialog::makeSendmailPage()
   topLayout->addWidget( hline );
 
   QGridLayout *grid = new QGridLayout( topLayout, 3, 3, spacingHint() );
-  grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 2, 10 );
   grid->setColumnStretch( 1, 10 );
 
@@ -377,7 +377,7 @@ void KMTransportDialog::makeSmtpPage()
   tabWidget->addTab( page1, i18n("&General") );
 
   QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
-  grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 13, 10 );
   grid->setColumnStretch( 1, 10 );
 
