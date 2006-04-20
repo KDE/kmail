@@ -82,8 +82,8 @@ namespace KMail {
              this, SIGNAL( textChanged( const QString & ) ) );
 
     if( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
-      mRegExpEditButton = new QPushButton( i18n("Edit..."), this,
-                                           "mRegExpEditButton" );
+      mRegExpEditButton = new QPushButton( i18n("Edit..."), this );
+      mRegExpEditButton->setObjectName( "mRegExpEditButton" );
       mRegExpEditButton->setSizePolicy( QSizePolicy::Minimum,
                                         QSizePolicy::Fixed );
       hlay->addWidget( mRegExpEditButton );

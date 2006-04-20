@@ -68,7 +68,8 @@ KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
     : QWidget( parent, name)
 {
     QHBoxLayout *lay1 = new QHBoxLayout( this );
-    m_playButton = new QPushButton( this, "m_playButton" );
+    m_playButton = new QPushButton( this );
+    m_playButton->setObjectName( "m_playButton" );
     m_playButton->setPixmap( SmallIcon( "1rightarrow" ) );
     connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
     lay1->addWidget( m_playButton );
