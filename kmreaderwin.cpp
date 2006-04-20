@@ -428,7 +428,7 @@ void KMReaderWin::createWidgets() {
   mViewer = new KHTMLPart( mBox );
   mViewer->setObjectName( "mViewer" );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-  mSplitter->setStretchFactor( mMimePartTree, 0 );
+  mSplitter->setStretchFactor( mSplitter->indexOf(mMimePartTree), 0 );
 }
 
 const int KMReaderWin::delay = 150;

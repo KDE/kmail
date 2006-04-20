@@ -543,7 +543,7 @@ void KMMainWidget::createWidgets(void)
   mSearchToolBar->setObjectName( "search toolbar" );
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar );
-  QLabe->setObjectName( "kde toolbar widget" );
+  label->setObjectName( "kde toolbar widget" );
 
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
@@ -699,9 +699,9 @@ void KMMainWidget::activatePanners(void)
     mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
     mPanner1->addWidget( mPanner2 );
     mPanner1->setSizes( mPanner1Sep );
-    mPanner1->setStretchFactor( mFolderTree, 0 );
+    mPanner1->setStretchFactor( mPanner1->indexOf(mFolderTree), 0 );
     mPanner2->setSizes( mPanner2Sep );
-    mPanner2->setStretchFactor( mSearchAndHeaders, 0 );
+    mPanner2->setStretchFactor( mPanner2->indexOf(mSearchAndHeaders), 0 );
   } else /* !mLongFolderList */ {
     mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
     mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
@@ -713,8 +713,8 @@ void KMMainWidget::activatePanners(void)
     }
     mPanner1->setSizes( mPanner1Sep );
     mPanner2->setSizes( mPanner2Sep );
-    mPanner1->setStretchFactor( mPanner2, 0 );
-    mPanner2->setStretchFactor( mFolderTree, 0 );
+    mPanner1->setStretchFactor( mPanner1->indexOf(mPanner2), 0 );
+    mPanner2->setStretchFactor( mPanner2->indexOf(mFolderTree), 0 );
   }
 
   if (mMsgView) {
