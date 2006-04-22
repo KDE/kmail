@@ -45,7 +45,7 @@
 #include <mimelib/utility.h>
 
 #include <kdebug.h>
-#include <kasciistricmp.h>
+#include <kglobal.h>
 
 namespace {
   class AnyTypeBodyPartFormatter

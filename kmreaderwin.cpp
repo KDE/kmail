@@ -114,7 +114,7 @@ using KMail::TeeHtmlWriter;
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
-#include <kasciistricmp.h>
+#include <kglobal.h>
 
 #include <qclipboard.h>
 

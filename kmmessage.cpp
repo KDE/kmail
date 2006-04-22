@@ -35,13 +35,13 @@ using KMail::HeaderStrategy;
 #include <kaddrbook.h>
 
 #include <kapplication.h>
+#include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <khtml_part.h>
 #include <kuser.h>
 #include <kidna.h>
-#include <kasciistricmp.h>
 
 #include <QList>
 #include <QCursor>
