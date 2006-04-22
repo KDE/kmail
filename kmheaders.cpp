@@ -2041,7 +2041,7 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 
   int idx = item->msgId();
   KMMessage *msg = mFolder->getMsg(idx);
-  if (!msg->transferInProgress())
+  if (msg && !msg->transferInProgress())
   {
     emit activated(mFolder->getMsg(idx));
   }
