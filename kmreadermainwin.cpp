@@ -92,6 +92,10 @@ void KMReaderMainWin::initKMReaderMainWin() {
   setupAccel();
   setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
   applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
+  if( ! mReaderWin->message() ) { 
+    menuBar()->hide(); 
+    toolBar( "mainToolBar" )->hide(); 
+  } 
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -116,6 +120,7 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
   mReaderWin->setMsg( msg, true );
   setCaption( msg->subject() );
   mMsg = msg;
+  menuBar()->show();
   toolBar( "mainToolBar" )->show();
 }
 
@@ -165,7 +170,7 @@ void KMReaderMainWin::slotReplyListToMsg()
 void KMReaderMainWin::slotForwardMsg()
 {
    KMCommand *command = 0;
-   if ( mReaderWin->message()->parent() ) {
+   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
     command = new KMForwardCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
    } else {
@@ -178,7 +183,7 @@ void KMReaderMainWin::slotForwardMsg()
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
    KMCommand *command = 0;
-   if ( mReaderWin->message()->parent() ) {
+   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
    } else {

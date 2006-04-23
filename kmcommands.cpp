@@ -175,7 +175,8 @@ KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
-  mMsgList.append( &msg->toMsgBase() );
+  if ( msg )
+    mMsgList.append( &msg->toMsgBase() );
 }
 
 KMCommand::~KMCommand()

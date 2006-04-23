@@ -1394,6 +1394,9 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
+  //Needed here, since this function is also called when the configuration
+  //changes, and the static variables should be updated then - IOF
+  KMMessage::readConfig();
 }
 
 void KMKernel::cleanupImapFolders()
