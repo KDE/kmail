@@ -1106,10 +1106,10 @@ namespace KMail {
       {
         DwBodyPart* newparent = dwpart;
         const DwMessage* newmsg = dwmsg;
-        if ( part->originalContentTypeStr() == "MESSAGE/RFC822" &&
+        if ( part->originalContentTypeStr() == "MESSAGE/RFC822" && dwpart &&
              dwpart->Body().Message() )
         {
-          // set the encapsulated message as new parent message
+          // set the encapsulated message as the new message
           newparent = 0;
           newmsg = dwpart->Body().Message();
         }

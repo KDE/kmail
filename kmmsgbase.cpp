@@ -603,7 +603,7 @@ Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
 
   char *l;
   for ( l = latin.data(); *l; ++l ) {
-    if ( ( *l & 0xE0 == 0 ) || ( *l & 0x80 ) )
+    if ( ( ( *l & 0xE0 ) == 0 ) || ( *l & 0x80 ) )
       // *l is control character or 8-bit char
       break;
   }

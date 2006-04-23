@@ -883,8 +883,10 @@ void KMFolderImap::initInbox()
     }
     kmkernel->imapFolderMgr()->contentsChanged();
   }
-  f->initializeFrom( this, "/INBOX/", "message/directory" );
-  f->setChildrenState( QString() );
+  if ( f ) {
+    f->initializeFrom( this, "/INBOX/", "message/directory" );
+    f->setChildrenState( QString() );
+  }
   // so we have an INBOX
   mAccount->setHasInbox( true );
 }

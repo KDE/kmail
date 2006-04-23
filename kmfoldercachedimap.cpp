@@ -1761,11 +1761,14 @@ void KMFolderCachedImap::listDirectory2()
         f = static_cast<KMFolderCachedImap*>(newFolder->storage());
       }
     }
-    f->setAccount( mAccount );
-    f->setImapPath( "/INBOX/" );
-    f->folder()->setLabel( i18n("inbox") );
+    if ( f ) {
+      f->setAccount( mAccount );
+      f->setImapPath( "/INBOX/" );
+      f->folder()->setLabel( i18n("inbox") );
+    }
     if (!node) {
-      f->close();
+      if ( f )
+        f->close();
       kmkernel->dimapFolderMgr()->contentsChanged();
     }
     // so we have an INBOX
