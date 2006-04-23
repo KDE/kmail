@@ -2894,7 +2894,9 @@ void KMMainWidget::slotCollapseAllThreads()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowMsgSrc()
 {
-  mMsgView->setUpdateAttachment( false );
+  if ( mMsgView )
+    mMsgView->setUpdateAttachment( false );
+
   KMMessage *msg = mHeaders->currentMsg();
   if ( !msg )
     return;
