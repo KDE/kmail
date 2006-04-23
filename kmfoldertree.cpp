@@ -1472,13 +1472,12 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
 
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 
-  if (fti && fti->folder() && col != 0 && !currentFolder()->child())
+  if ((!fti) || (fti && fti->folder() && col != 0 && !currentFolder()->child()))
           return;
 
   QString fldName, oldFldName;
 
-  if ( fti )
-    oldFldName = fti->name(0);
+  oldFldName = fti->name(0);
 
   if (!text.isEmpty())
           fldName = text;
