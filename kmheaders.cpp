@@ -2059,7 +2059,7 @@ void KMHeaders::selectMessage(Q3ListViewItem* lvi)
 
   int idx = item->msgId();
   KMMessage *msg = mFolder->getMsg(idx);
-  if (!msg->transferInProgress())
+  if (msg && !msg->transferInProgress())
   {
     emit activated(mFolder->getMsg(idx));
   }
