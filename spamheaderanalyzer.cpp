@@ -31,6 +31,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "spamheaderanalyzer.h"
 
 #include "antispamconfig.h"

@@ -30,6 +30,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "callback.h"
 #include "kmkernel.h"
 #include "kmmessage.h"

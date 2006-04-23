@@ -27,6 +27,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "filterlog.h"
 
 #include <kdebug.h>

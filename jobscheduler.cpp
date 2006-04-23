@@ -26,6 +26,8 @@
  *  your version.
  */
 
+#include "config.h"
+
 #include "jobscheduler.h"
 #include "kmfolder.h"
 #include "folderstorage.h"

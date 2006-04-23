@@ -29,6 +29,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "secondarywindow.h"
 
 #include "kmkernel.h"

@@ -27,6 +27,9 @@
     you do not wish to do so, delete this exception statement from
     your version.
 */
+
+#include "config.h"
+
 #include "headerlistquicksearch.h"
 
 #include <qapplication.h>

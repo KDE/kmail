@@ -30,6 +30,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "interfaces/bodypartformatter.h"
 
 #include <kdepimmacros.h>

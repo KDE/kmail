@@ -26,6 +26,8 @@
  * your version.
  */
 
+#include "config.h"
+
 #include "index.h"
 
 #include "kmkernel.h"

@@ -28,6 +28,9 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
+
+#include "config.h"
+
 #include "acljobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>

@@ -26,6 +26,8 @@
 **   your version.
 *******************************************************************************/
 
+#include "config.h"
+
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <klineedit.h>

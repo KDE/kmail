@@ -29,6 +29,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "attachmentcollector.h"
 
 #include "partNode.h"

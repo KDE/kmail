@@ -26,6 +26,8 @@
  *  your version.
  */
 
+#include "config.h"
+
 #include "searchjob.h"
 #include "kmfolderimap.h"
 #include "imapaccountbase.h"

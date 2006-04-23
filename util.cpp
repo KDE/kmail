@@ -35,6 +35,9 @@
 **   your version.
 **
 *******************************************************************************/
+
+#include "config.h"
+
 #include "util.h"
 
 #include <stdlib.h>

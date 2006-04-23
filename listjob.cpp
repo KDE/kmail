@@ -26,6 +26,8 @@
  *  your version.
  */
 
+#include "config.h"
+
 #include "listjob.h"
 #include "kmessagebox.h"
 #include "kmfolderimap.h"

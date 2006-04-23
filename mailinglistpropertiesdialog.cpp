@@ -25,7 +25,10 @@
 **   you do not wish to do so, delete this exception statement from
 **   your version.
 *******************************************************************************/
+#include "config.h"
+
 #include <qlayout.h>
+
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <q3groupbox.h>

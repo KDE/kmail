@@ -27,6 +27,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "redirectdialog.h"
 
 #include "kmkernel.h"

@@ -1,3 +1,4 @@
+#include "config.h"
 
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"

@@ -31,6 +31,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "partnodebodypart.h"
 
 #include "partNode.h"

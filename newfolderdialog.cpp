@@ -26,6 +26,8 @@
 **   your version.
 *******************************************************************************/
 
+#include "config.h"
+
 #include <qvariant.h>
 #include <qpushbutton.h>
 #include <qlabel.h>

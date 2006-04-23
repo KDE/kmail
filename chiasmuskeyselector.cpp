@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include "chiasmuskeyselector.h"
 
 #include <klineedit.h>

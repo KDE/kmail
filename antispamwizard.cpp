@@ -27,6 +27,8 @@
     your version.
 */
 
+#include "config.h"
+
 #include "antispamwizard.h"
 #include "kcursorsaver.h"
 #include "accountmanager.h"

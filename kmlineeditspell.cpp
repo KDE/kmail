@@ -3,6 +3,8 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
+#include "config.h"
+
 #include "kmlineeditspell.h"
 
 #include "recentaddresses.h"

@@ -27,6 +27,8 @@
  * your version.
  */
 
+#include "config.h"
+
 #include "klistviewindexedsearchline.h"
 #include <kdebug.h>
 #include <sys/types.h>
