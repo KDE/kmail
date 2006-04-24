@@ -387,7 +387,7 @@ QString KMMessagePart::iconName() const
   Q3CString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
   QString fileName =
-    KMimeType::mimeType( mimeType )->icon( QString(), false );
+    KMimeType::mimeType( mimeType )->icon( QString() );
   fileName =
     KGlobal::instance()->iconLoader()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
