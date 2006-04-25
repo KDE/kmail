@@ -73,9 +73,14 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   privateLayoutWidget->setObjectName( "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
   setMainWidget( privateLayoutWidget );
-  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 0, spacingHint(), "mTopLevelLayout");
+  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget );
+  mTopLevelLayout->setObjectName( "mTopLevelLayout" );
+  mTopLevelLayout->setSpacing( spacingHint() );
+  mTopLevelLayout->setMargin( 0 );
 
-  mNameHBox = new QHBoxLayout( 0, 0, 6);
+  mNameHBox = new QHBoxLayout();
+  mNameHBox->setSpacing( 6 );
+  mNameHBox->setMargin( 0 );
   mNameHBox->setObjectName( "mNameHBox" );
 
   mNameLabel = new QLabel( privateLayoutWidget );
@@ -95,7 +100,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   if ( !mFolder ||
       ( mFolder->folderType() != KMFolderTypeImap &&
         mFolder->folderType() != KMFolderTypeCachedImap ) ) {
-    mFormatHBox = new QHBoxLayout( 0, 0, 6);
+    mFormatHBox = new QHBoxLayout();
+    mFormatHBox->setSpacing( 6 );
+    mFormatHBox->setMargin( 0 );
     mFormatHBox->setObjectName( "mFormatHBox" );
     mMailboxFormatLabel = new QLabel( privateLayoutWidget );
     mMailboxFormatLabel->setObjectName( "mMailboxFormatLabel" );
@@ -125,7 +132,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   // --- contents -----
   if ( kmkernel->iCalIface().isEnabled() ) {
-    mContentsHBox = new QHBoxLayout( 0, 0, 6);
+    mContentsHBox = new QHBoxLayout();
+    mContentsHBox->setSpacing( 6 );
+    mContentsHBox->setMargin( 0 );
     mContentsHBox->setObjectName( "mContentsHBox" );
 
     mContentsLabel = new QLabel( privateLayoutWidget );
@@ -170,7 +179,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       }
     }
     if ( rootFolder && namespaces.count() > 1 ) {
-      mNamespacesHBox = new QHBoxLayout( 0, 0, 6);
+      mNamespacesHBox = new QHBoxLayout();
+      mNamespacesHBox->setSpacing( 6 );
+      mNamespacesHBox->setMargin( 0 );
       mNamespacesHBox->setObjectName( "mNamespaceHBox" );
 
       mNamespacesLabel = new QLabel( privateLayoutWidget );

@@ -101,13 +101,17 @@ namespace KMail {
     // Tab Widget: General
     //
     row = -1;
-    QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
+    QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+    vlay->setSpacing( spacingHint() );
+    vlay->setMargin( 0 );
     QTabWidget *tabWidget = new QTabWidget( plainPage(), "config-identity-tab" );
     vlay->addWidget( tabWidget );
 
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&General") );
-    glay = new QGridLayout( tab, 4, 2, marginHint(), spacingHint() );
+    glay = new QGridLayout( tab );
+    glay->setSpacing( spacingHint() );
+    glay->setMargin( marginHint() );
     glay->setRowStretch( 3, 1 );
     glay->setColumnStretch( 1, 1 );
 
@@ -159,7 +163,9 @@ namespace KMail {
     row = -1;
     mCryptographyTab = tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("Cryptograph&y") );
-    glay = new QGridLayout( tab, 6, 2, marginHint(), spacingHint() );
+    glay = new QGridLayout( tab );
+    glay->setSpacing( spacingHint() );
+    glay->setMargin( marginHint() );
     glay->setColumnStretch( 1, 1 );
 
     // "OpenPGP Signature Key" requester and label:
@@ -289,7 +295,9 @@ namespace KMail {
     row = -1;
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&Advanced") );
-    glay = new QGridLayout( tab, 7, 2, marginHint(), spacingHint() );
+    glay = new QGridLayout( tab );
+    glay->setSpacing( spacingHint() );
+    glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
     glay->setRowStretch( 7-1, 1 );
     glay->setColumnStretch( 1, 1 );

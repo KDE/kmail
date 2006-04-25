@@ -51,7 +51,9 @@ namespace KMail {
     static const int rows = 4;
     int row = -1;
 
-    QGridLayout * glay = new QGridLayout( plainPage(), rows, 2, 0, spacingHint() );
+    QGridLayout * glay = new QGridLayout( plainPage() );
+    glay->setSpacing( spacingHint() );
+    glay->setMargin( 0 );
     glay->setColumnStretch( 1, 1 );
 
     // explanation label:

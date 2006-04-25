@@ -225,7 +225,9 @@ void AccountWizard::setupAccountTypePage()
 void AccountWizard::setupAccountInformationPage()
 {
   mAccountInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mAccountInformationPage, 3, 2, KDialog::marginHint(), KDialog::spacingHint() );
+  QGridLayout *layout = new QGridLayout( mAccountInformationPage );
+  layout->setSpacing( KDialog::spacingHint() );
+  layout->setMargin( KDialog::marginHint() );
 
   QLabel *label = new QLabel( i18n( "Real name:" ), mAccountInformationPage );
   mRealName = new KLineEdit( mAccountInformationPage );
@@ -254,7 +256,9 @@ void AccountWizard::setupAccountInformationPage()
 void AccountWizard::setupLoginInformationPage()
 {
   mLoginInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mLoginInformationPage, 2, 2, KDialog::marginHint(), KDialog::spacingHint() );
+  QGridLayout *layout = new QGridLayout( mLoginInformationPage );
+  layout->setSpacing( KDialog::spacingHint() );
+  layout->setMargin( KDialog::marginHint() );
 
   QLabel *label = new QLabel( i18n( "Login name:" ), mLoginInformationPage );
   mLoginName = new KLineEdit( mLoginInformationPage );
@@ -277,7 +281,9 @@ void AccountWizard::setupLoginInformationPage()
 void AccountWizard::setupServerInformationPage()
 {
   mServerInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mServerInformationPage, 3, 2, KDialog::marginHint(), KDialog::spacingHint() );
+  QGridLayout *layout = new QGridLayout( mServerInformationPage );
+  layout->setSpacing( KDialog::spacingHint() );
+  layout->setMargin( KDialog::marginHint() );
 
   mIncomingLabel = new QLabel( mServerInformationPage );
 

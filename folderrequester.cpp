@@ -50,7 +50,9 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   : QWidget( parent ), mFolder( 0 ), mFolderTree( tree ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+  QHBoxLayout * hlay = new QHBoxLayout( this );
+  hlay->setSpacing( KDialog::spacingHint() );
+  hlay->setMargin( 0 );
   hlay->setAutoAdd( true );
 
   edit = new KLineEdit( this );

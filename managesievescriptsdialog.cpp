@@ -44,7 +44,9 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
   setAttribute( Qt::WA_DeleteOnClose );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 
-  QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, 0 );
+  QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
 
   mListView = new Q3ListView( plainPage() );
   mListView->addColumn( i18n( "Available Scripts" ) );
@@ -297,7 +299,9 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
 KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   : KDialogBase( Plain, i18n( "Edit Sieve Script" ), Ok|Cancel, Ok, parent, name )
 {
-  QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( 0 );
   mTextEdit = new Q3TextEdit( plainPage() );
   vlay->addWidget( mTextEdit );
   mTextEdit->setTextFormat( Qt::PlainText );

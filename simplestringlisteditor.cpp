@@ -72,7 +72,9 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     mAddDialogLabel( addDialogLabel.isEmpty() ?
                      i18n("New entry:") : addDialogLabel )
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+  QHBoxLayout * hlay = new QHBoxLayout( this );
+  hlay->setSpacing( KDialog::spacingHint() );
+  hlay->setMargin( 0 );
 
   mListBox = new Q3ListBox( this );
   hlay->addWidget( mListBox, 1 );

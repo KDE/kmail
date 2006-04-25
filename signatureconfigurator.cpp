@@ -55,7 +55,10 @@ namespace KMail {
     QVBoxLayout * vlay;
     QVBoxLayout * page_vlay;
 
-    vlay = new QVBoxLayout( this, 0, KDialog::spacingHint(), "main layout" );
+    vlay = new QVBoxLayout( this );
+    vlay->setObjectName( "main layout" );
+    vlay->setSpacing( KDialog::spacingHint() );
+    vlay->setMargin( 0 );
 
     // "enable signatue" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Enable signature"), this );

@@ -249,13 +249,17 @@ KMTransportSelDlg::KMTransportSelDlg( QWidget *parent, const char *name,
   : KDialogBase( parent, name, modal, i18n("Add Transport"), Ok|Cancel, Ok )
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Transport"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );
-  QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint()*2, spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( group );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( spacingHint()*2 );
   vlay->addSpacing( fontMetrics().lineSpacing() );
 
   QRadioButton *radioButton1 = new QRadioButton( i18n("SM&TP"), group );
@@ -311,7 +315,9 @@ KMTransportDialog::~KMTransportDialog()
 void KMTransportDialog::makeSendmailPage()
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   mSendmail.titleLabel = new QLabel( page );
   mSendmail.titleLabel->setText( i18n("Transport: Sendmail") );
@@ -322,7 +328,8 @@ void KMTransportDialog::makeSendmailPage()
   KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
-  QGridLayout *grid = new QGridLayout( topLayout, 3, 3, spacingHint() );
+  QGridLayout *grid = new QGridLayout( topLayout );
+  grid->setSpacing( spacingHint() );
   grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 2, 10 );
   grid->setColumnStretch( 1, 10 );
@@ -359,7 +366,9 @@ void KMTransportDialog::slotSendmailEditPath(const QString & _text)
 void KMTransportDialog::makeSmtpPage()
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   mSmtp.titleLabel = new QLabel( page );
   mSmtp.titleLabel->setText( i18n("Transport: SMTP") );
@@ -376,7 +385,8 @@ void KMTransportDialog::makeSmtpPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1 );
+  grid->setSpacing( spacingHint() );
   grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 13, 10 );
   grid->setColumnStretch( 1, 10 );
@@ -498,7 +508,8 @@ void KMTransportDialog::makeSmtpPage()
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( page2 );
+  vlay->setSpacing( spacingHint() );
   mSmtp.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mSmtp.encryptionNone =

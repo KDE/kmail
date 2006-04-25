@@ -25,7 +25,9 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
     resize( 400, 180 );
 
     QFrame *page = makeMainWidget();
-    QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+    QVBoxLayout *topLayout = new QVBoxLayout( page );
+    topLayout->setSpacing( spacingHint() );
+    topLayout->setMargin( 0 );
     labelAboveLA = new QLabel( page, "labelAboveLA" );
     labelAboveLA->setText( labelText );
 

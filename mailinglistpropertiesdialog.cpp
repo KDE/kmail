@@ -61,11 +61,14 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QLabel* label;
   mLastItem = 0;
 
-  QVBoxLayout *topLayout = new QVBoxLayout( layout(), spacingHint(), "topLayout" );
+  QVBoxLayout *topLayout = new QVBoxLayout( layout() );
+  topLayout->setObjectName( "topLayout" );
+  topLayout->setSpacing( spacingHint() );
 
   Q3GroupBox *mlGroup = new Q3GroupBox( i18n("Associated Mailing List" ), this );
   mlGroup->setColumnLayout( 0,  Qt::Vertical );
-  QGridLayout *groupLayout = new QGridLayout( mlGroup->layout(), 6, 3, spacingHint() );
+  QGridLayout *groupLayout = new QGridLayout( mlGroup->layout() );
+  groupLayout->setSpacing( spacingHint() );
   topLayout->addWidget( mlGroup );
   setMainWidget( mlGroup );
 

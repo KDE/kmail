@@ -854,7 +854,9 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   if ( bannerName && !bannerName->isEmpty() )
     banner = *bannerName;
 
-  mLayout = new QHBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  mLayout = new QHBoxLayout( this );
+  mLayout->setSpacing( KDialog::spacingHint() );
+  mLayout->setMargin( KDialog::marginHint() );
   mPixmap = new QPixmap( UserIcon(banner) );
   mBannerLabel = new QLabel( this );
   mBannerLabel->setPixmap( *mPixmap );
@@ -1080,7 +1082,8 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
                                   KMFolderTree * mainFolderTree )
   : ASWizPage( parent, name )
 {
-  QGridLayout *grid = new QGridLayout( mLayout, 5, 1, KDialog::spacingHint() );
+  QGridLayout *grid = new QGridLayout( mLayout );
+  grid->setSpacing( KDialog::spacingHint() );
 
   mPipeRules = new QCheckBox( i18n("Check messages using the anti-virus tools"), this );
   mPipeRules->setWhatsThis(

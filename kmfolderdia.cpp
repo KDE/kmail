@@ -247,7 +247,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QLabel *label;
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( this );
+  topLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->setMargin( 0 );
 
   // Musn't be able to edit details for a system folder.
   if ( !mIsLocalSystemFolder ) {
@@ -373,7 +375,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   addLine( this, topLayout );
 
   // use grid layout for the following combobox settings
-  QGridLayout *gl = new QGridLayout( topLayout, 3, 2, KDialog::spacingHint() );
+  QGridLayout *gl = new QGridLayout( topLayout );
+  gl->setSpacing( KDialog::spacingHint() );
   gl->setColumnStretch( 1, 100 ); // make the second column use all available space
   int row = -1;
 

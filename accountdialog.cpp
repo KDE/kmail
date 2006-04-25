@@ -324,7 +324,9 @@ void AccountDialog::makeLocalAccountPage()
 {
   ProcmailRCParser procmailrcParser;
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 12, 3, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
   topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColumnStretch( 1, 10 );
@@ -461,7 +463,9 @@ void AccountDialog::makeMaildirAccountPage()
   ProcmailRCParser procmailrcParser;
 
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
   topLayout->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColumnStretch( 1, 10 );
@@ -556,7 +560,9 @@ void AccountDialog::makeMaildirAccountPage()
 void AccountDialog::makePopAccountPage()
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   mPop.titleLabel = new QLabel( page );
   mPop.titleLabel->setText( i18n("Account Type: POP Account") );
@@ -573,7 +579,9 @@ void AccountDialog::makePopAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1 );
+  grid->setSpacing( spacingHint() );
+  grid->setMargin( marginHint() );
   grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 15, 10 );
   grid->setColumnStretch( 1, 10 );
@@ -749,7 +757,9 @@ void AccountDialog::makePopAccountPage()
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( page2 );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( marginHint() );
 
   vlay->addSpacing( KDialog::spacingHint() );
 
@@ -823,7 +833,9 @@ void AccountDialog::makePopAccountPage()
 void AccountDialog::makeImapAccountPage( bool connected )
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   mImap.titleLabel = new QLabel( page );
   if( connected )
@@ -844,7 +856,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
   tabWidget->addTab( page1, i18n("&General") );
 
   int row = -1;
-  QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1 );
+  grid->setSpacing( spacingHint() );
+  grid->setMargin( marginHint() );
   grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*16, 0 ), 0, 1 );
 
   ++row;
@@ -1059,7 +1073,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( page2 );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( marginHint() );
 
   vlay->addSpacing( KDialog::spacingHint() );
 

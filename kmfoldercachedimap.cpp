@@ -104,7 +104,8 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
     rc( Cancel )
 {
   QFrame* page = plainPage();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( 0 );
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
                       "<p>If you have problems with synchronizing an IMAP "
                       "folder, you should first try rebuilding the index "

@@ -61,7 +61,9 @@ namespace KMail {
     int row = -1;
     QLabel * label;
 
-    QGridLayout * glay = new QGridLayout( this, 5, 2, 0, KDialog::spacingHint() );
+    QGridLayout * glay = new QGridLayout( this );
+    glay->setSpacing( KDialog::spacingHint() );
+    glay->setMargin( 0 );
     glay->setRowStretch( 4, 1 );
     glay->setColumnStretch( 1, 1 );
 

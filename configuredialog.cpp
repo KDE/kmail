@@ -288,7 +288,9 @@ IdentityPage::IdentityPage( KInstance *instance, QWidget *parent, const QStringL
   : ConfigModule( instance, parent, args ),
     mIdentityDialog( 0 )
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+  QHBoxLayout * hlay = new QHBoxLayout( this );
+  hlay->setSpacing( KDialog::spacingHint() );
+  hlay->setMargin( 0 );
 
   mIdentityList = new IdentityListView( this );
   connect( mIdentityList, SIGNAL(selectionChanged()),
@@ -597,7 +599,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   QPushButton *button;
   Q3GroupBox   *group;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
   // label: zero stretch ### FIXME more
   vlay->addWidget( new QLabel( i18n("Outgoing accounts (add at least one):"), this ) );
 
@@ -659,7 +663,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   vlay->addWidget(group);
 
   // a grid layout for the contents of the "common options" group box
-  glay = new QGridLayout( group->layout(), 5, 3, KDialog::spacingHint() );
+  glay = new QGridLayout( group->layout() );
+  glay->setSpacing( KDialog::spacingHint() );
   glay->setColumnStretch( 2, 10 );
 
   // "confirm before send" check box:
@@ -1052,7 +1057,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   QPushButton *button;
   Q3GroupBox   *group;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // label: zero stretch
   vlay->addWidget( new QLabel( i18n("Incoming accounts (add at least one):"), this ) );
@@ -1528,7 +1535,9 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   QLabel      *label;
 
   // "Use custom fonts" checkbox, followed by <hr>
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
   mCustomFontCheck = new QCheckBox( i18n("&Use custom fonts"), this );
   vlay->addWidget( mCustomFontCheck );
   vlay->addWidget( new KSeparator( Qt::Horizontal, this ) );
@@ -1704,7 +1713,9 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   QVBoxLayout *vlay;
 
   // "use custom colors" check box
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
   mCustomColorCheck = new QCheckBox( i18n("&Use custom colors"), this );
   vlay->addWidget( mCustomColorCheck );
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
@@ -1853,7 +1864,9 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   // tmp. vars:
   QVBoxLayout * vlay;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "folder list" radio buttons:
   populateButtonGroup( mFolderListGroup = new Q3HButtonGroup( this ), folderListMode );
@@ -1941,7 +1954,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   Q3ButtonGroup * group;
   QRadioButton * radio;
 
-  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "General Options" group:
   group = new Q3VButtonGroup( i18n( "General Options" ), this );
@@ -2187,7 +2202,9 @@ QString AppearancePage::ReaderTab::helpAnchor() const {
 AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
@@ -2385,7 +2402,9 @@ QString AppearancePage::SystemTrayTab::helpAnchor() const {
 AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "Enable system tray applet" check box
   mSystemTrayCheck = new QCheckBox( i18n("Enable system tray icon"), this );
@@ -2504,7 +2523,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   KHBox       *hbox;
   QString      msg;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // some check buttons...
   mAutoAppSignFileCheck = new QCheckBox(
@@ -2719,7 +2740,8 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
   QGridLayout *glay;
   QPushButton *button;
 
-  glay = new QGridLayout( this, 7, 3, KDialog::spacingHint() );
+  glay = new QGridLayout( this );
+  glay->setSpacing( KDialog::spacingHint() );
   glay->setMargin( KDialog::marginHint() );
   glay->setColumnStretch( 1, 1 );
   glay->setColumnStretch( 2, 1 );
@@ -2934,7 +2956,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   QLabel      *label;
 
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   group = new Q3GroupBox(1, Qt::Horizontal, i18n("Repl&y Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
@@ -3018,7 +3042,9 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
   QVBoxLayout *vlay;
   QLabel      *label;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   label = new QLabel( i18n("This list is checked for every outgoing message "
                            "from the top to the bottom for a charset that "
@@ -3117,7 +3143,9 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   QLabel      *label;
   QPushButton *button;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "Use custom Message-Id suffix" checkbox:
   mCreateOwnMessageIdCheck =
@@ -3329,7 +3357,9 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
   QVBoxLayout *vlay;
   QLabel      *label;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "Outlook compatible attachment naming" check box
   mOutlookCompatibleCheck =
@@ -3488,7 +3518,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   QWidget      *w;
   QString       msg;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // QWhat'sThis texts
   QString htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
@@ -3754,7 +3786,9 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+  QVBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
 
   mWidget = new ComposerCryptoConfiguration( this );
   connect( mWidget->mAutoSignature, SIGNAL( toggled(bool) ), this, SLOT( slotEmitChanged() ) );
@@ -3842,7 +3876,9 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+  QVBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
 
   mWidget = new WarningConfiguration( this );
   vlay->addWidget( mWidget );
@@ -3971,7 +4007,9 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+  QVBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
 
   mWidget = new SMimeConfiguration( this );
   vlay->addWidget( mWidget );
@@ -4287,7 +4325,9 @@ QString SecurityPage::CryptPlugTab::helpAnchor() const {
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   mBackendConfig = Kleo::CryptoBackendFactory::instance()->configWidget( this, "mBackendConfig" );
   connect( mBackendConfig, SIGNAL( changed( bool ) ), this, SIGNAL( changed( bool ) ) );
@@ -4340,7 +4380,9 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   QHBoxLayout *hlay;
   QLabel      *label;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
 
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
@@ -4576,7 +4618,9 @@ QString MiscPage::GroupwareTab::helpAnchor() const {
 MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
-  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( KDialog::marginHint() );
   vlay->setAutoAdd( true );
 
   // IMAP resource setup
@@ -4593,7 +4637,9 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mBox = new QWidget( b1 );
-  QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
+  QGridLayout* grid = new QGridLayout( mBox );
+  grid->setSpacing( KDialog::spacingHint() );
+  grid->setMargin( 0 );
   grid->setColumnStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
            mBox, SLOT( setEnabled(bool) ) );

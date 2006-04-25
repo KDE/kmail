@@ -63,7 +63,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     mI18nizedEncodings << i18n( encodingTypes[i].displayName );
 
-  glay = new QGridLayout( plainPage(), 9 /*rows*/, 2 /*cols*/, spacingHint() );
+  glay = new QGridLayout( plainPage() );
+  glay->setSpacing( spacingHint() );
   glay->setColumnStretch( 1, 1 );
   glay->setRowStretch( 8, 1 );
 

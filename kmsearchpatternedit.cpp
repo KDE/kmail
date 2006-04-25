@@ -88,7 +88,9 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 
 void KMSearchRuleWidget::initWidget()
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+  QHBoxLayout * hlay = new QHBoxLayout( this );
+  hlay->setSpacing( KDialog::spacingHint() );
+  hlay->setMargin( 0 );
 
   // initialize the header field combo box
   mRuleField = new QComboBox( this );

@@ -18,7 +18,8 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
 {
   QWidget *page = makeMainWidget();
 
-  QVBoxLayout *layout = new QVBoxLayout(page, KDialog::spacingHint());
+  QVBoxLayout *layout = new QVBoxLayout(page);
+  layout->setSpacing(KDialog::spacingHint());
 
   mLabel = new QLabel( i18n( "Please select the Chiasmus key file to use:" ), page );
   layout->addWidget( mLabel );

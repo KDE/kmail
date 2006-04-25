@@ -119,7 +119,10 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 
   QWidget *w = new QWidget( this );
   setMainWidget( w );
-  QHBoxLayout *topLayout = new QHBoxLayout( w, 0, spacingHint(), "topLayout" );
+  QHBoxLayout *topLayout = new QHBoxLayout( w );
+  topLayout->setObjectName( "topLayout" );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
   QHBoxLayout *hbl = topLayout;
   QVBoxLayout *vbl2 = 0;
   QWidget *page1 = 0;
@@ -135,14 +138,22 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 
     page1 = new QWidget( tabWidget );
     tabWidget->addTab( page1, i18n("&General") );
-    hbl = new QHBoxLayout( page1, 0, spacingHint(), "kmfd_hbl" );
+    hbl = new QHBoxLayout( page1 );
+    hbl->setObjectName( "kmfd_hbl" );
+    hbl->setSpacing( spacingHint() );
+    hbl->setMargin( 0 );
 
     page2 = new QWidget( tabWidget );
     tabWidget->addTab( page2, i18n("A&dvanced") );
-    vbl2 = new QVBoxLayout( page2, 0, spacingHint(), "kmfd_vbl2" );
+    vbl2 = new QVBoxLayout( page2 );
+    vbl2->setObjectName( "kmfd_vbl2" );
+    vbl2->setSpacing( spacingHint() );
+    vbl2->setMargin( 0 );
   }
 
-  QVBoxLayout *vbl = new QVBoxLayout( hbl, spacingHint(), "kmfd_vbl" );
+  QVBoxLayout *vbl = new QVBoxLayout( hbl );
+  vbl->setObjectName( "kmfd_vbl" );
+  vbl->setSpacing( spacingHint() );
   hbl->setStretchFactor( vbl, 2 );
 
   mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), bPopFilter ? w : page1 , "spe", bPopFilter);
@@ -171,7 +182,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     mAdvOptsGroup = new QGroupBox (i18n("Advanced Options"), page2);
     {
       QGridLayout *gl = new QGridLayout();
-      QVBoxLayout *vbl3 = new QVBoxLayout( gl, spacingHint(), "vbl3" );
+      QVBoxLayout *vbl3 = new QVBoxLayout( gl );
+      vbl3->setObjectName( "vbl3" );
+      vbl3->setSpacing( spacingHint() );
       vbl3->addStretch( 1 );
       mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), mAdvOptsGroup );
       vbl3->addWidget( mApplyOnIn );

@@ -51,7 +51,9 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 {
   setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
   QWidget * page = makeMainWidget();
-  QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( page );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( 0 );
 
   // row 0: line edit with label
   QHBoxLayout * hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -203,7 +205,9 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
 {
   // layout the page (a combobox with label):
   QWidget *page = makeMainWidget();
-  QHBoxLayout *hlay = new QHBoxLayout( page, 0, spacingHint() );
+  QHBoxLayout *hlay = new QHBoxLayout( page );
+  hlay->setSpacing( spacingHint() );
+  hlay->setMargin( 0 );
   mComboBox = new QComboBox( page );
   mComboBox->setEditable( false );
   hlay->addWidget( new QLabel( mComboBox, i18n("Choose &language:"), page ) );
@@ -296,7 +300,9 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
 {
   // tmp. vars:
   QWidget * page = makeMainWidget();
-  QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( page );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( 0 );
 
   mListView = new K3ListView( page );
   mListView->setObjectName( "mListView" );
@@ -375,7 +381,9 @@ void ProfileDialog::slotOk() {
 ConfigModuleWithTabs::ConfigModuleWithTabs( KInstance *instance, QWidget *parent, const QStringList &args )
   : ConfigModule( instance, parent, args )
 {
-  QVBoxLayout *vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( this );
+  vlay->setSpacing( KDialog::spacingHint() );
+  vlay->setMargin( 0 );
   mTabWidget = new QTabWidget( this );
   vlay->addWidget( mTabWidget );
 }

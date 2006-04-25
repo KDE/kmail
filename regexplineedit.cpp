@@ -72,7 +72,9 @@ namespace KMail {
 
   void RegExpLineEdit::initWidget( const QString &str )
   {
-    QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+    QHBoxLayout * hlay = new QHBoxLayout( this );
+    hlay->setSpacing( KDialog::spacingHint() );
+    hlay->setMargin( 0 );
 
     mLineEdit = new KLineEdit( str, this );
     setFocusProxy( mLineEdit );

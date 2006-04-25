@@ -38,13 +38,17 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   : KDialogBase( parent, name, modal, i18n("Add Account"), Ok|Cancel, Ok )
 {
   QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( page );
+  topLayout->setSpacing( spacingHint() );
+  topLayout->setMargin( 0 );
 
   Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Account Type"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );
-  QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint()*2, spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( group );
+  vlay->setSpacing( spacingHint() );
+  vlay->setMargin( spacingHint()*2 );
   vlay->addSpacing( fontMetrics().lineSpacing() );
 
   QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox"), group );

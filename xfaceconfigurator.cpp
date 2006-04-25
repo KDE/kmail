@@ -87,7 +87,10 @@ namespace KMail {
     QPushButton * mFromFileBtn;
     QPushButton * mFromAddrbkBtn;
 
-    vlay = new QVBoxLayout( this, 0, KDialog::spacingHint(), "main layout" );
+    vlay = new QVBoxLayout( this );
+    vlay->setObjectName( "main layout" );
+    vlay->setSpacing( KDialog::spacingHint() );
+    vlay->setMargin( 0 );
     hlay = new QHBoxLayout( vlay );
 
     // "enable X-Face" checkbox:
