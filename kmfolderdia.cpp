@@ -255,7 +255,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if ( !mIsLocalSystemFolder ) {
 
     QHBoxLayout *hl = new QHBoxLayout();
-    topLayout->addLayout( hl );
+    topLayout->addItem( hl );
     hl->setSpacing( KDialog::spacingHint() );
 
     label = new QLabel( i18n("&Name:"), this );
@@ -276,7 +276,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
     //start icons group
     QVBoxLayout *ivl = new QVBoxLayout();
-    topLayout->addLayout( ivl );
+    topLayout->addItem( ivl );
     ivl->setSpacing( KDialog::spacingHint() );
 
     QHBoxLayout *ihl = new QHBoxLayout( ivl );
@@ -335,7 +335,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   // should new mail in this folder be ignored?
   QHBoxLayout *hbl = new QHBoxLayout();
-  topLayout->addLayout( hbl );
+  topLayout->addItem( hbl );
   hbl->setSpacing( KDialog::spacingHint() );
   mNotifyOnNewMailCheckBox =
     new QCheckBox( i18n("Act on new/unread mail in this folder" ), this );
@@ -355,7 +355,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     // should this folder be included in new-mail-checks?
 
     QHBoxLayout *nml = new QHBoxLayout();
-    topLayout->addLayout( nml );
+    topLayout->addItem( nml );
     nml->setSpacing( KDialog::spacingHint() );
     mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks"), this );
     // default is on
@@ -366,7 +366,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   // should replies to mails in this folder be kept in this same folder?
   hbl = new QHBoxLayout();
-  topLayout->addLayout( hbl );
+  topLayout->addItem( hbl );
   hbl->setSpacing( KDialog::spacingHint() );
   mKeepRepliesInSameFolderCheckBox =
     new QCheckBox( i18n("Keep replies in this folder" ), this );
@@ -381,7 +381,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout();
-  topLayout->addLayout( gl );
+  topLayout->addItem( gl );
   gl->setSpacing( KDialog::spacingHint() );
   gl->setColumnStretch( 1, 100 ); // make the second column use all available space
   int row = -1;

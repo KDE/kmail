@@ -664,7 +664,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // a grid layout for the contents of the "common options" group box
   glay = new QGridLayout();
-  group->layout()->addLayout( glay );
+  group->layout()->addItem( glay );
   glay->setSpacing( KDialog::spacingHint() );
   glay->setColumnStretch( 2, 10 );
 

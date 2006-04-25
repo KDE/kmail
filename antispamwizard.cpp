@@ -875,7 +875,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   : ASWizPage( parent, name )
 {
   QBoxLayout * layout = new QVBoxLayout();
-  mLayout->addLayout( layout );
+  mLayout->addItem( layout );
 
   mIntroText = new QLabel( this );
   mIntroText->setText(
@@ -961,7 +961,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   : ASWizPage( parent, name )
 {
   QVBoxLayout *layout = new QVBoxLayout();
-  mLayout->addLayout( layout );
+  mLayout->addItem( layout );
 
   mMarkRules = new QCheckBox( i18n("&Mark detected spam messages as read"), this );
   mMarkRules->setWhatsThis(
@@ -981,7 +981,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForSpamFolder->setShowImapFolders( false );
 
   QHBoxLayout *hLayout1 = new QHBoxLayout();
-  layout->addLayout( hLayout1 );
+  layout->addItem( hLayout1 );
   hLayout1->addSpacing( KDialog::spacingHint() * 3 );
   hLayout1->addWidget( mFolderReqForSpamFolder );
 
@@ -1000,7 +1000,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForUnsureFolder->setShowImapFolders( false );
 
   QHBoxLayout *hLayout2 = new QHBoxLayout();
-  layout->addLayout( hLayout2 );
+  layout->addItem( hLayout2 );
   hLayout2->addSpacing( KDialog::spacingHint() * 3 );
   hLayout2->addWidget( mFolderReqForUnsureFolder );
 
@@ -1087,7 +1087,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
   : ASWizPage( parent, name )
 {
   QGridLayout *grid = new QGridLayout();
-  mLayout->addLayout( grid );
+  mLayout->addItem( grid );
   grid->setSpacing( KDialog::spacingHint() );
 
   mPipeRules = new QCheckBox( i18n("Check messages using the anti-virus tools"), this );
@@ -1164,7 +1164,7 @@ ASWizSummaryPage::ASWizSummaryPage( QWidget * parent, const char * name )
   : ASWizPage( parent, name )
 {
   QBoxLayout * layout = new QVBoxLayout();
-  mLayout->addLayout( layout );
+  mLayout->addItem( layout );
 
   mSummaryText = new QLabel( this );
   layout->addWidget( mSummaryText );
