@@ -874,7 +874,8 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
                               QWidget * parent, const char * name )
   : ASWizPage( parent, name )
 {
-  QBoxLayout * layout = new QVBoxLayout( mLayout );
+  QBoxLayout * layout = new QVBoxLayout();
+  mLayout->addLayout( layout );
 
   mIntroText = new QLabel( this );
   mIntroText->setText(
@@ -959,7 +960,8 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
                                         KMFolderTree * mainFolderTree )
   : ASWizPage( parent, name )
 {
-  QVBoxLayout *layout = new QVBoxLayout( mLayout );
+  QVBoxLayout *layout = new QVBoxLayout();
+  mLayout->addLayout( layout );
 
   mMarkRules = new QCheckBox( i18n("&Mark detected spam messages as read"), this );
   mMarkRules->setWhatsThis(
@@ -978,7 +980,8 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForSpamFolder->setShowOutbox( false );
   mFolderReqForSpamFolder->setShowImapFolders( false );
 
-  QHBoxLayout *hLayout1 = new QHBoxLayout( layout );
+  QHBoxLayout *hLayout1 = new QHBoxLayout();
+  layout->addLayout( hLayout1 );
   hLayout1->addSpacing( KDialog::spacingHint() * 3 );
   hLayout1->addWidget( mFolderReqForSpamFolder );
 
@@ -996,7 +999,8 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForUnsureFolder->setShowOutbox( false );
   mFolderReqForUnsureFolder->setShowImapFolders( false );
 
-  QHBoxLayout *hLayout2 = new QHBoxLayout( layout );
+  QHBoxLayout *hLayout2 = new QHBoxLayout();
+  layout->addLayout( hLayout2 );
   hLayout2->addSpacing( KDialog::spacingHint() * 3 );
   hLayout2->addWidget( mFolderReqForUnsureFolder );
 
@@ -1082,7 +1086,8 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
                                   KMFolderTree * mainFolderTree )
   : ASWizPage( parent, name )
 {
-  QGridLayout *grid = new QGridLayout( mLayout );
+  QGridLayout *grid = new QGridLayout();
+  mLayout->addLayout( grid );
   grid->setSpacing( KDialog::spacingHint() );
 
   mPipeRules = new QCheckBox( i18n("Check messages using the anti-virus tools"), this );
@@ -1158,7 +1163,8 @@ void ASWizVirusRulesPage::processSelectionChange()
 ASWizSummaryPage::ASWizSummaryPage( QWidget * parent, const char * name )
   : ASWizPage( parent, name )
 {
-  QBoxLayout * layout = new QVBoxLayout( mLayout );
+  QBoxLayout * layout = new QVBoxLayout();
+  mLayout->addLayout( layout );
 
   mSummaryText = new QLabel( this );
   layout->addWidget( mSummaryText );

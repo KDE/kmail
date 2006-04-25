@@ -100,7 +100,8 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );
   
-  QBoxLayout *titleLayout = new QHBoxLayout( topLayout );
+  QBoxLayout *titleLayout = new QHBoxLayout();
+  topLayout->addLayout( titleLayout );
   
   QLabel *label = new QLabel( i18n("Name:"), topFrame );
   titleLayout->addWidget( label );

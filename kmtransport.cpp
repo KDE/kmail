@@ -328,7 +328,8 @@ void KMTransportDialog::makeSendmailPage()
   KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
-  QGridLayout *grid = new QGridLayout( topLayout );
+  QGridLayout *grid = new QGridLayout();
+  topLayout->addLayout( grid );
   grid->setSpacing( spacingHint() );
   grid->addItem( new QSpacerItem( fontMetrics().maxWidth()*15, 0 ), 0, 1 );
   grid->setRowStretch( 2, 10 );

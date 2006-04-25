@@ -266,7 +266,8 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( KDialog::marginHint() );
 
-  QBoxLayout *resLayout = new QHBoxLayout( topLayout );
+  QBoxLayout *resLayout = new QHBoxLayout();
+  topLayout->addLayout( resLayout );
 
   QLabel *label = new QLabel( i18n("Address book:"), this );
   resLayout->addWidget( label );
@@ -280,7 +281,8 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mCollectionCombo, SIGNAL( activated( int ) ),
     SLOT( updateList() ) );
 
-  QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
+  QBoxLayout *searchLayout = new QHBoxLayout();
+  topLayout->addLayout( searchLayout );
 
   QToolButton *button = new QToolButton( this );
   button->setIcon( KGlobal::iconLoader()->loadIconSet(
@@ -313,7 +315,8 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   label->setBuddy( label );
   connect( mSearchLine, SIGNAL( downPressed() ), SLOT( setFocusList() ) );
 
-  QBoxLayout *buttonLayout = new QHBoxLayout( topLayout );
+  QBoxLayout *buttonLayout = new QHBoxLayout();
+  topLayout->addLayout( buttonLayout );
 
   buttonLayout->addStretch( 1 );
 

@@ -362,7 +362,8 @@ void AccountDialog::makeLocalAccountPage()
   group->setColumnLayout(0, Qt::Horizontal);
   group->layout()->setSpacing( 0 );
   group->layout()->setMargin( 0 );
-  QGridLayout *groupLayout = new QGridLayout( group->layout() );
+  QGridLayout *groupLayout = new QGridLayout();
+  group->layout()->addLayout( groupLayout );
   groupLayout->setAlignment( Qt::AlignTop );
   groupLayout->setSpacing( 6 );
   groupLayout->setMargin( 11 );
