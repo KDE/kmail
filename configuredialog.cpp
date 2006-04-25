@@ -2385,8 +2385,7 @@ QString AppearancePage::SystemTrayTab::helpAnchor() const {
 AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(),
-                                        KDialog::spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "Enable system tray applet" check box
   mSystemTrayCheck = new QCheckBox( i18n("Enable system tray icon"), this );
@@ -4577,8 +4576,7 @@ QString MiscPage::GroupwareTab::helpAnchor() const {
 MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
-  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(),
-                                      KDialog::spacingHint() );
+  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   vlay->setAutoAdd( true );
 
   // IMAP resource setup
