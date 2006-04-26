@@ -32,6 +32,7 @@ namespace KWallet {
   class Wallet;
 }
 
+class KJob;
 /** The KMail namespace contains classes used for KMail.
 * This is to keep them out of the way from all the other
 * un-namespaced classes in libs and the rest of PIM.
@@ -398,7 +399,7 @@ public slots:
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
-  void slotResult(KIO::Job*);
+  void slotResult(KJob*);
 
 signals:
   void configChanged();

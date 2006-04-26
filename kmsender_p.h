@@ -21,6 +21,7 @@ namespace KIO {
   class Slave;
 }
 
+class KJob;
 class KMSendProc: public QObject
 {
   Q_OBJECT
@@ -125,7 +126,7 @@ public:
 
 private slots:
   void dataReq(KIO::Job *, QByteArray &);
-  void result(KIO::Job *);
+  void result(KJob *);
   void slaveError(KIO::Slave *, int, const QString &);
 
 private:

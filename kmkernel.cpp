@@ -1718,8 +1718,8 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL,
   mPutJobs.insert(job, pd);
   connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
     SLOT(slotDataReq(KIO::Job*,QByteArray&)));
-  connect(job, SIGNAL(result(KIO::Job*)),
-    SLOT(slotResult(KIO::Job*)));
+  connect(job, SIGNAL(result(KJob*)),
+    SLOT(slotResult(KJob*)));
 }
 
 void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
@@ -1747,9 +1747,9 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
   }
 }
 
-void KMKernel::slotResult(KIO::Job *job)
+void KMKernel::slotResult(KJob *job)
 {
-  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(job);
+  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(static_cast<KIO::Job*>(job));
   assert(it != mPutJobs.end());
   if (job->error())
   {
@@ -1761,7 +1761,7 @@ void KMKernel::slotResult(KIO::Job *job)
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, true);
     }
-    else job->showErrorDialog();
+    else static_cast<KIO::Job*>(job)->showErrorDialog();
   }
   mPutJobs.remove(it);
 }

@@ -1124,7 +1124,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   }
   mJob->addMetaData( "lf2crlf+dotstuff", "slave" );
   KIO::Scheduler::assignJobToSlave(mSlave, mJob);
-  connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
+  connect(mJob, SIGNAL(result(KJob *)), this, SLOT(result(KJob *)));
   connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
           this, SLOT(dataReq(KIO::Job *, QByteArray &)));
   mSendOk = true;
@@ -1173,7 +1173,7 @@ void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
   mSender->emitProgressInfo( mMessageOffset );
 }
 
-void KMSendSMTP::result(KIO::Job *_job)
+void KMSendSMTP::result(KJob *_job)
 {
   if (!mJob) return;
   mJob = 0;
