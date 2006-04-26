@@ -435,7 +435,7 @@ protected slots:
    * Retrieve the whole folder or only the changes
    */
   void checkValidity();
-  void slotCheckValidityResult(KIO::Job * job);
+  void slotCheckValidityResult(KJob * job);
 
   /**
    * Get the folder now (internal)
@@ -445,30 +445,30 @@ protected slots:
   /**
    * For listing the contents of a folder
    */
-  void slotListFolderResult(KIO::Job * job);
+  void slotListFolderResult(KJob * job);
   void slotListFolderEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
   /**
    * For retrieving a message digest
    */
-  void slotGetMessagesResult(KIO::Job * job);
-  void slotGetLastMessagesResult(KIO::Job * job);
+  void slotGetMessagesResult(KJob * job);
+  void slotGetLastMessagesResult(KJob * job);
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
 
   /**
    * For creating a new subfolder
    */
-  void slotCreateFolderResult(KIO::Job * job);
+  void slotCreateFolderResult(KJob * job);
 
   /**
    * Remove the folder also locally, if removing on the server succeeded
    */
-  void slotRemoveFolderResult(KIO::Job *job);
+  void slotRemoveFolderResult(KJob *job);
 
   /**
    * Update the number of unseen messages
    */
-  void slotStatResult(KIO::Job *job);
+  void slotStatResult(KJob *job);
 
   /**
    * notify the progress item that the mail check for this folder is

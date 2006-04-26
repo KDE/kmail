@@ -275,13 +275,13 @@ protected slots:
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotCheckUidValidityResult( KMail::FolderJob* job );
-  void slotTestAnnotationResult(KIO::Job *job);
-  void slotGetAnnotationResult( KIO::Job* );
-  void slotSetAnnotationResult(KIO::Job *job);
+  void slotTestAnnotationResult(KJob *job);
+  void slotGetAnnotationResult( KJob* );
+  void slotSetAnnotationResult(KJob *job);
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
 
-  void slotMultiSetACLResult(KIO::Job *);
+  void slotMultiSetACLResult(KJob *);
   void slotACLChanged( const QString&, int );
   void slotAnnotationResult(const QString& entry, const QString& value, bool found);
   void slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value );

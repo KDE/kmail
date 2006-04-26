@@ -236,18 +236,18 @@ void KMFolderImap::remove()
                       false,
                       mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotRemoveFolderResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          this, SLOT(slotRemoveFolderResult(KJob *)));
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
+void KMFolderImap::slotRemoveFolderResult(KJob *job)
 {
-  ImapAccountBase::JobIterator it = mAccount->findJob(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
   {
-    mAccount->handleJobError( job, i18n("Error while removing a folder.") );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while removing a folder.") );
     emit removed(folder(), false);
   } else {
     mAccount->removeJob(it);
@@ -1056,8 +1056,8 @@ void KMFolderImap::checkValidity()
   KIO::SimpleJob *job = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          SLOT(slotCheckValidityResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          SLOT(slotCheckValidityResult(KJob *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   // Only check once at a time.
@@ -1081,18 +1081,18 @@ ulong KMFolderImap::lastUid()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
+void KMFolderImap::slotCheckValidityResult(KJob * job)
 {
   kDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
-  ImapAccountBase::JobIterator it = mAccount->findJob(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error()) {
     if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
       // we suppress access denied messages because they are normally a result of
       // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that
       // we notice when this changes
-      mAccount->handleJobError( job, i18n("Error while querying the server status.") );
+      mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while querying the server status.") );
     }
     mContentState = imapNoInformation;
     emit folderComplete(this, false);
@@ -1209,8 +1209,8 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
     mAccount->insertJob(job, jd);
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotListFolderResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotListFolderResult(KJob *)));
     connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
@@ -1225,8 +1225,8 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
     mAccount->insertJob(newJob, jd);
-    connect(newJob, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotGetLastMessagesResult(KIO::Job *)));
+    connect(newJob, SIGNAL(result(KJob *)),
+            this, SLOT(slotGetLastMessagesResult(KJob *)));
     connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
             this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
   }
@@ -1234,14 +1234,14 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotListFolderResult(KIO::Job * job)
+void KMFolderImap::slotListFolderResult(KJob * job)
 {
-  ImapAccountBase::JobIterator it = mAccount->findJob(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return;
   QString uids;
   if (job->error())
   {
-    mAccount->handleJobError( job,
+    mAccount->handleJobError( static_cast<KIO::Job*>(job),
          i18n("Error while listing the contents of the folder %1.", label() ) );
     mAccount->removeJob(it);
     finishMailCheck( imapNoInformation );
@@ -1326,10 +1326,10 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->insertJob(newJob, jd);
-    connect(newJob, SIGNAL(result(KIO::Job *)),
+    connect(newJob, SIGNAL(result(KJob *)),
         this, (*i == sets.at(sets.size() - 1))
-        ? SLOT(slotGetLastMessagesResult(KIO::Job *))
-        : SLOT(slotGetMessagesResult(KIO::Job *)));
+        ? SLOT(slotGetLastMessagesResult(KJob *))
+        : SLOT(slotGetMessagesResult(KJob *)));
     connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
         this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
   }
@@ -1599,16 +1599,16 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotGetLastMessagesResult(KIO::Job * job)
+void KMFolderImap::slotGetLastMessagesResult(KJob * job)
 {
-  getMessagesResult(job, true);
+  getMessagesResult(static_cast<KIO::Job*>(job), true);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
+void KMFolderImap::slotGetMessagesResult(KJob * job)
 {
-  getMessagesResult(job, false);
+  getMessagesResult(static_cast<KIO::Job*>(job), false);
 }
 
 
@@ -1635,15 +1635,15 @@ void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
   ImapAccountBase::jobData jd( url.url(), folder() );
   jd.items = QStringList( name );
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotCreateFolderResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          this, SLOT(slotCreateFolderResult(KJob *)));
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
+void KMFolderImap::slotCreateFolderResult(KJob * job)
 {
-  ImapAccountBase::JobIterator it = mAccount->findJob(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
   {
@@ -1651,10 +1651,10 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
       // Creating a folder failed, remove it from the tree.
       mAccount->listDirectory( );
     }
-    mAccount->handleJobError( job, i18n("Error while creating a folder.") );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while creating a folder.") );
   } else {
     listDirectory();
-    mAccount->removeJob(job);
+    mAccount->removeJob(static_cast<KIO::Job*>(job));
   }
 }
 
@@ -1729,8 +1729,8 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          mAccount, SLOT(slotSimpleResult(KJob *)));
 }
 
 void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
@@ -1762,8 +1762,8 @@ void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
     mAccount->insertJob(job, jd);
-    connect(job, SIGNAL(result(KIO::Job *)),
-        mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+        mAccount, SLOT(slotSimpleResult(KJob *)));
   }
 }
 
@@ -1815,7 +1815,7 @@ void KMFolderImap::setStatus(QList<int>& ids, const MessageStatus& status, bool 
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
     kDebug(5006) << "Set status during folder listing, restarting listing." << endl;
-    disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
+    disconnect(this, SLOT(slotListFolderResult(KJob *)));
     quiet( false );
     reallyGetFolder( QString() );
   }
@@ -1919,8 +1919,8 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
   ImapAccountBase::jobData jd( url.url(), 0 );
   jd.quiet = quiet;
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          mAccount, SLOT(slotSimpleResult(KJob *)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1981,22 +1981,22 @@ bool KMFolderImap::processNewMail(bool)
   ImapAccountBase::jobData jd(url.url(), folder() );
   jd.cancellable = true;
   mAccount->insertJob(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          SLOT(slotStatResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          SLOT(slotStatResult(KJob *)));
   return true;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotStatResult(KIO::Job * job)
+void KMFolderImap::slotStatResult(KJob * job)
 {
   slotCompleteMailCheckProgress();
-  ImapAccountBase::JobIterator it = mAccount->findJob(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return;
   mAccount->removeJob(it);
   if (job->error())
   {
-    mAccount->handleJobError( job, i18n("Error while getting folder information.") );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while getting folder information.") );
   } else {
     KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
     const long long count = uds.numberValue( KIO::UDS_SIZE );
@@ -2085,8 +2085,8 @@ int KMFolderImap::expungeContents()
     ImapAccountBase::jobData jd( url.url(), 0 );
     jd.quiet = true;
     mAccount->insertJob(job, jd);
-    connect(job, SIGNAL(result(KIO::Job *)),
-            mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            mAccount, SLOT(slotSimpleResult(KJob *)));
   }
   /* Is the below correct? If we are expunging (in the folder sense, not the imap sense),
      why delete but not (imap-)expunge? Since the folder is not active there is no concept

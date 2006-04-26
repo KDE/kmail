@@ -881,8 +881,8 @@ void KMFolderCachedImap::serverSyncInternal()
       ImapAccountBase::jobData jd( url.url(), folder() );
       jd.cancellable = true; // we can always do so later
       mAccount->insertJob(job, jd);
-       connect(job, SIGNAL(result(KIO::Job *)),
-              SLOT(slotTestAnnotationResult(KIO::Job *)));
+       connect(job, SIGNAL(result(KJob *)),
+              SLOT(slotTestAnnotationResult(KJob *)));
       break;
     }
 
@@ -924,8 +924,8 @@ void KMFolderCachedImap::serverSyncInternal()
 
         connect( job, SIGNAL(annotationResult(const QString&, const QString&, bool)),
                  SLOT(slotAnnotationResult(const QString&, const QString&, bool)) );
-        connect( job, SIGNAL(result(KIO::Job *)),
-                 SLOT(slotGetAnnotationResult(KIO::Job *)) );
+        connect( job, SIGNAL(result(KJob *)),
+                 SLOT(slotGetAnnotationResult(KJob *)) );
         break;
       }
     }
@@ -959,8 +959,8 @@ void KMFolderCachedImap::serverSyncInternal()
 
         connect(job, SIGNAL(annotationChanged( const QString&, const QString&, const QString& ) ),
                 SLOT( slotAnnotationChanged( const QString&, const QString&, const QString& ) ));
-        connect(job, SIGNAL(result(KIO::Job *)),
-                SLOT(slotSetAnnotationResult(KIO::Job *)));
+        connect(job, SIGNAL(result(KJob *)),
+                SLOT(slotSetAnnotationResult(KJob *)));
         break;
       }
     }
@@ -983,8 +983,8 @@ void KMFolderCachedImap::serverSyncInternal()
         ImapAccountBase::jobData jd( url.url(), folder() );
         mAccount->insertJob(job, jd);
 
-        connect(job, SIGNAL(result(KIO::Job *)),
-                SLOT(slotMultiSetACLResult(KIO::Job *)));
+        connect(job, SIGNAL(result(KJob *)),
+                SLOT(slotMultiSetACLResult(KJob *)));
         connect(job, SIGNAL(aclChanged( const QString&, int )),
                 SLOT(slotACLChanged( const QString&, int )) );
         break;
@@ -1989,20 +1989,20 @@ KMFolderCachedImap::setACLList( const ACLList& arr )
 }
 
 void
-KMFolderCachedImap::slotMultiSetACLResult(KIO::Job *job)
+KMFolderCachedImap::slotMultiSetACLResult(KJob *job)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
   if ( (*it).parent != folder() ) return; // Shouldn't happen
 
   if ( job->error() )
     // Display error but don't abort the sync just for this
     // PENDING(dfaure) reconsider using handleJobError now that it offers continue/cancel
-    job->showErrorDialog();
+    static_cast<KIO::Job*>(job)->showErrorDialog();
   else
     kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
 
-  if (mAccount->slave()) mAccount->removeJob(job);
+  if (mAccount->slave()) mAccount->removeJob(static_cast<KIO::Job*>(job));
   serverSyncInternal();
 }
 
@@ -2197,9 +2197,9 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
   }
 }
 
-void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
+void KMFolderCachedImap::slotGetAnnotationResult( KJob* job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   Q_ASSERT( it != mAccount->jobsEnd() );
   if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
   Q_ASSERT( (*it).parent == folder() );
@@ -2218,7 +2218,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
       kWarning(5006) << "slotGetAnnotationResult: " << job->errorString() << endl;
   }
 
-  if (mAccount->slave()) mAccount->removeJob(job);
+  if (mAccount->slave()) mAccount->removeJob(static_cast<KIO::Job*>(job));
   mProgress += 2;
   serverSyncInternal();
 }
@@ -2237,9 +2237,9 @@ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& 
   }
 }
 
-void KMFolderCachedImap::slotTestAnnotationResult(KIO::Job *job)
+void KMFolderCachedImap::slotTestAnnotationResult(KJob *job)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   Q_ASSERT( it != mAccount->jobsEnd() );
   if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
   Q_ASSERT( (*it).parent == folder() );
@@ -2252,14 +2252,14 @@ void KMFolderCachedImap::slotTestAnnotationResult(KIO::Job *job)
   } else {
     kDebug(5006) << "Test Annotation was passed   OK" << endl;
   }
-  if (mAccount->slave()) mAccount->removeJob(job);
+  if (mAccount->slave()) mAccount->removeJob(static_cast<KIO::Job*>(job));
   serverSyncInternal();
 }
 
 void
-KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
+KMFolderCachedImap::slotSetAnnotationResult(KJob *job)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
   if ( (*it).parent != folder() ) return; // Shouldn't happen
 
@@ -2267,11 +2267,11 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
   if ( job->error() ) {
     // Don't show error if the server doesn't support ANNOTATEMORE and this folder only contains mail
     if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION && contentsType() == ContentsTypeMail )
-      if (mAccount->slave()) mAccount->removeJob(job);
+      if (mAccount->slave()) mAccount->removeJob(static_cast<KIO::Job*>(job));
     else
-      cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
+      cont = mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while setting annotation: " ) + '\n' );
   } else {
-    if (mAccount->slave()) mAccount->removeJob(job);
+    if (mAccount->slave()) mAccount->removeJob(static_cast<KIO::Job*>(job));
   }
   if ( cont )
     serverSyncInternal();
