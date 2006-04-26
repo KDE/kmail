@@ -118,7 +118,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   {
     // transfers the complete message to the server
     QList<KMMessage*>::const_iterator it;
-    KMMessage* curMsg;
+    KMMessage* curMsg = 0;
     for ( it = msgList.begin(); it != msgList.end(); ++it )
     {
       msg = (*it);
