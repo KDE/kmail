@@ -43,7 +43,7 @@ namespace KIO {
   class SimpleJob;
   class MetaData;
 }
-
+class KJob;
 class KMServerTest : public QObject
 {
   Q_OBJECT
@@ -61,8 +61,8 @@ signals:
                      const QString & authTLS );
 
 protected slots:
-  void slotData(KIO::Job *job, const QString &data);
-  void slotResult(KIO::Job *job);
+  void slotData(KJob *job, const QString &data, const QString &);
+  void slotResult(KJob *job);
   void slotMetaData( const KIO::MetaData & );
   void slotSlaveResult(KIO::Slave *aSlave, int error,
     const QString &errorText = QString());

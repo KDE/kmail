@@ -95,14 +95,14 @@ void KMServerTest::startOffSlave( int port ) {
 
   mJob = KIO::special( url, packedArgs, false );
   KIO::Scheduler::assignJobToSlave( mSlave, mJob );
-  connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
-  connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-	   SLOT(slotData(KIO::Job*,const QString&)) );
+  connect( mJob, SIGNAL(result(KJob*)), SLOT(slotResult(KJob*)) );
+  connect( mJob, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+	   SLOT(slotData(KJob*,const QString&,const QString&)) );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMServerTest::slotData(KIO::Job *, const QString &data)
+void KMServerTest::slotData(KJob *, const QString &data,const QString&)
 {
   if ( mSSL )
     mListSSL = data.split(' ', QString::SkipEmptyParts);
@@ -130,7 +130,7 @@ void KMServerTest::slotMetaData( const KIO::MetaData & md ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMServerTest::slotResult(KIO::Job *job)
+void KMServerTest::slotResult(KJob *job)
 {
   slotSlaveResult(mSlave, job->error());
 }

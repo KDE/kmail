@@ -174,24 +174,24 @@ void CachedImapJob::listMessages()
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.cancellable = true;
   mAccount->insertJob( job, jd );
-  connect( job, SIGNAL( result(KIO::Job *) ),
-           this, SLOT( slotListMessagesResult( KIO::Job* ) ) );
+  connect( job, SIGNAL( result(KJob *) ),
+           this, SLOT( slotListMessagesResult( KJob* ) ) );
   // send the data directly for KMFolderCachedImap
   connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
            mFolder, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
 }
 
-void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
+void CachedImapJob::slotDeleteNextMessages( KJob* job )
 {
   if (job) {
-    KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+    KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
       delete this;
       return;
     }
 
     if( job->error() ) {
-      mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+      mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while deleting messages on the server: " ) + '\n' );
       delete this;
       return;
     }
@@ -214,8 +214,8 @@ void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( simpleJob, jd );
-  connect( simpleJob, SIGNAL( result(KIO::Job *) ),
-           this, SLOT( slotDeleteNextMessages(KIO::Job *) ) );
+  connect( simpleJob, SIGNAL( result(KJob *) ),
+           this, SLOT( slotDeleteNextMessages(KJob *) ) );
 }
 
 void CachedImapJob::expungeFolder()
@@ -228,13 +228,13 @@ void CachedImapJob::expungeFolder()
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( job, jd );
-  connect( job, SIGNAL( result(KIO::Job *) ),
-           this, SLOT( slotExpungeResult(KIO::Job *) ) );
+  connect( job, SIGNAL( result(KJob *) ),
+           this, SLOT( slotExpungeResult(KJob *) ) );
 }
 
-void CachedImapJob::slotExpungeResult( KIO::Job * job )
+void CachedImapJob::slotExpungeResult( KJob * job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
@@ -242,7 +242,7 @@ void CachedImapJob::slotExpungeResult( KIO::Job * job )
 
   if (job->error()) {
     mErrorCode = job->error();
-    mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while deleting messages on the server: " ) + '\n' );
   }
   else
     mAccount->removeJob(it);
@@ -250,10 +250,10 @@ void CachedImapJob::slotExpungeResult( KIO::Job * job )
   delete this;
 }
 
-void CachedImapJob::slotGetNextMessage(KIO::Job * job)
+void CachedImapJob::slotGetNextMessage(KJob * job)
 {
   if (job) {
-    KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+    KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
       delete this;
       return;
@@ -261,7 +261,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
 
     if (job->error()) {
       mErrorCode = job->error();
-      mAccount->handleJobError( job, i18n( "Error while retrieving message on the server: " ) + '\n' );
+      mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while retrieving message on the server: " ) + '\n' );
       delete this;
       return;
     }
@@ -325,8 +325,8 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   mAccount->insertJob(simpleJob, jd);
   connect(simpleJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
           this, SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
-  connect(simpleJob, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotGetNextMessage(KIO::Job *)));
+  connect(simpleJob, SIGNAL(result(KJob *)),
+          this, SLOT(slotGetNextMessage(KJob *)));
   connect(simpleJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
           mFolder, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
 }
@@ -394,14 +394,14 @@ void CachedImapJob::slotPutNextMessage()
   KIO::SimpleJob *simpleJob = KIO::put(url, 0, false, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
-  connect( simpleJob, SIGNAL( result(KIO::Job *) ),
-           SLOT( slotPutMessageResult(KIO::Job *) ) );
+  connect( simpleJob, SIGNAL( result(KJob *) ),
+           SLOT( slotPutMessageResult(KJob *) ) );
   connect( simpleJob, SIGNAL( dataReq(KIO::Job *, QByteArray &) ),
            SLOT( slotPutMessageDataReq(KIO::Job *, QByteArray &) ) );
   connect( simpleJob, SIGNAL( data(KIO::Job *, const QByteArray &) ),
            mFolder, SLOT( slotSimpleData(KIO::Job *, const QByteArray &) ) );
-  connect( simpleJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-             SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)) );
+  connect( simpleJob, SIGNAL(infoMessage(KJob *, const QString &, const QString &)),
+             SLOT(slotPutMessageInfoData(KJob *, const QString &, const QString &)) );
 
 }
 
@@ -409,7 +409,7 @@ void CachedImapJob::slotPutNextMessage()
 // TODO: port to KIO::StoredTransferJob once it's ok to require kdelibs-3.3
 void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
@@ -426,11 +426,11 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 }
 
 //----------------------------------------------------------------------------
-void CachedImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
+void CachedImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const QString &)
 {
   KMFolderCachedImap * imapFolder = static_cast<KMFolderCachedImap*>(mDestFolder->storage());
   KMAcctCachedImap *account = imapFolder->account();
-  ImapAccountBase::JobIterator it = account->findJob( job );
+  ImapAccountBase::JobIterator it = account->findJob( static_cast<KIO::Job*>(job) );
   if ( it == account->jobsEnd() ) return;
 
   if ( data.find("UID") != -1 && mMsg )
@@ -443,16 +443,16 @@ void CachedImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 
 
 //-----------------------------------------------------------------------------
-void CachedImapJob::slotPutMessageResult(KIO::Job *job)
+void CachedImapJob::slotPutMessageResult(KJob *job)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
   }
 
   if ( job->error() ) {
-    bool cont = mAccount->handlePutError( job, *it, mFolder->folder() );
+    bool cont = mAccount->handlePutError( static_cast<KIO::Job*>(job), *it, mFolder->folder() );
     if ( !cont ) {
       delete this;
     } else {
@@ -495,10 +495,10 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
 }
 
 
-void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
+void CachedImapJob::slotAddNextSubfolder( KJob * job )
 {
   if (job) {
-    KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+    KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
       delete this;
       return;
@@ -512,7 +512,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       QString myError = "<p><b>" + i18n("Error while uploading folder")
         + "</b></p><p>" + i18n("Could not make the folder <b>%1</b> on the server.", (*it).items[0])
         + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
-      mAccount->handleJobError( job, myError );
+      mAccount->handleJobError( static_cast<KIO::Job*>(job), myError );
     }
 
     if( job->error() ) {
@@ -547,15 +547,15 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
-  connect( simpleJob, SIGNAL(result(KIO::Job *)),
-           this, SLOT(slotAddNextSubfolder(KIO::Job *)) );
+  connect( simpleJob, SIGNAL(result(KJob *)),
+           this, SLOT(slotAddNextSubfolder(KJob *)) );
 }
 
 
-void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
+void CachedImapJob::slotDeleteNextFolder( KJob *job )
 {
   if (job) {
-    KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+    KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
       delete this;
       return;
@@ -564,7 +564,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
     mAccount->removeDeletedFolder( (*it).path );
 
     if( job->error() ) {
-      mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: ", (*it).path ) + '\n' );
+      mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while deleting folder %1 on the server: ", (*it).path ) + '\n' );
       delete this;
       return;
     }
@@ -586,8 +586,8 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   KIO::SimpleJob *simpleJob = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
-  connect( simpleJob, SIGNAL( result(KIO::Job *) ),
-           SLOT( slotDeleteNextFolder(KIO::Job *) ) );
+  connect( simpleJob, SIGNAL( result(KJob *) ),
+           SLOT( slotDeleteNextFolder(KJob *) ) );
 }
 
 void CachedImapJob::checkUidValidity()
@@ -601,15 +601,15 @@ void CachedImapJob::checkUidValidity()
   KIO::SimpleJob *job = KIO::get( url, false, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
-  connect( job, SIGNAL(result(KIO::Job *)),
-           SLOT(slotCheckUidValidityResult(KIO::Job *)) );
+  connect( job, SIGNAL(result(KJob *)),
+           SLOT(slotCheckUidValidityResult(KJob *)) );
   connect( job, SIGNAL(data(KIO::Job *, const QByteArray &)),
            mFolder, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
 }
 
-void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
+void CachedImapJob::slotCheckUidValidityResult(KJob * job)
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
@@ -617,7 +617,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
 
   if( job->error() ) {
     mErrorCode = job->error();
-    mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: ", (*it).parent->label() ) + '\n' );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while reading folder %1 on the server: ", (*it).parent->label() ) + '\n' );
     delete this;
     return;
   }
@@ -674,8 +674,8 @@ void CachedImapJob::renameFolder( const QString &newName )
   KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   mAccount->insertJob( simpleJob, jd );
-  connect( simpleJob, SIGNAL(result(KIO::Job *)),
-           SLOT(slotRenameFolderResult(KIO::Job *)) );
+  connect( simpleJob, SIGNAL(result(KJob *)),
+           SLOT(slotRenameFolderResult(KJob *)) );
 }
 
 static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
@@ -702,9 +702,9 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
   }
 }
 
-void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
+void CachedImapJob::slotRenameFolderResult( KJob *job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
@@ -719,7 +719,7 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
       mFolder->folder()->setLabel( (*renit).mOldLabel );
       mAccount->removeRenamedFolder( mFolder->imapPath() );
     }
-    mAccount->handleJobError( job, i18n( "Error while trying to rename folder %1", mFolder->label() ) + '\n' );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while trying to rename folder %1", mFolder->label() ) + '\n' );
   } else {
     // Okay, the folder seems to be renamed on the server,
     // now rename it on disk
@@ -740,9 +740,9 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
   delete this;
 }
 
-void CachedImapJob::slotListMessagesResult( KIO::Job * job )
+void CachedImapJob::slotListMessagesResult( KJob * job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(static_cast<KIO::Job*>(job));
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     delete this;
     return;
@@ -750,7 +750,7 @@ void CachedImapJob::slotListMessagesResult( KIO::Job * job )
 
   if (job->error()) {
     mErrorCode = job->error();
-    mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while deleting messages on the server: " ) + '\n' );
   }
   else
     mAccount->removeJob(it);

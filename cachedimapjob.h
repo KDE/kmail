@@ -104,18 +104,18 @@ protected:
   void listMessages();
 
 protected slots:
-  virtual void slotGetNextMessage( KIO::Job *job = 0 );
-  virtual void slotAddNextSubfolder( KIO::Job *job = 0 );
+  virtual void slotGetNextMessage( KJob *job = 0 );
+  virtual void slotAddNextSubfolder( KJob *job = 0 );
   virtual void slotPutNextMessage();
   virtual void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
-  virtual void slotPutMessageResult( KIO::Job *job );
-  virtual void slotPutMessageInfoData(KIO::Job *, const QString &data);
-  virtual void slotExpungeResult( KIO::Job *job );
-  virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
-  virtual void slotCheckUidValidityResult( KIO::Job *job );
-  virtual void slotRenameFolderResult( KIO::Job *job );
-  virtual void slotListMessagesResult( KIO::Job * job );
-  void slotDeleteNextMessages( KIO::Job* job = 0 );
+  virtual void slotPutMessageResult( KJob *job );
+  virtual void slotPutMessageInfoData(KJob *, const QString &data,const QString&);
+  virtual void slotExpungeResult( KJob *job );
+  virtual void slotDeleteNextFolder( KJob *job = 0 );
+  virtual void slotCheckUidValidityResult( KJob *job );
+  virtual void slotRenameFolderResult( KJob *job );
+  virtual void slotListMessagesResult( KJob * job );
+  void slotDeleteNextMessages( KJob* job = 0 );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
 
 private:
