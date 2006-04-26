@@ -38,6 +38,7 @@ class KMCommand;
 namespace KIO {
   class Job;
 }
+class KJob;
 
 namespace KMail {
 
@@ -65,7 +66,7 @@ public:
 
 protected slots:
   /** Rename the folder */
-  void slotRenameResult( KIO::Job* job );
+  void slotRenameResult( KJob* job );
 
   /** Move all messages from the original folder to mNewFolder */
   void slotMoveMessages();

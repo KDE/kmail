@@ -36,7 +36,7 @@
 class KMFolderImap;
 class KMSearchPattern;
 class KUrl;
-
+class KJob;
 namespace KIO {
   class Job;
 }
@@ -99,7 +99,7 @@ protected slots:
   void slotSearchMessageArrived( KMMessage* msg );
 
   // error handling for all cases
-  void slotSearchResult( KIO::Job *job );
+  void slotSearchResult( KJob *job );
 
   // imap search result from a single message
   void slotSearchDataSingleMessage( KIO::Job* job, const QString& data );

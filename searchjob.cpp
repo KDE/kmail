@@ -93,8 +93,8 @@ void SearchJob::searchCompleteFolder()
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
       SLOT(slotSearchData(KIO::Job*,const QString&)) );
-  connect( job, SIGNAL(result(KIO::Job *)),
-      SLOT(slotSearchResult(KIO::Job *)) );
+  connect( job, SIGNAL(result(KJob *)),
+      SLOT(slotSearchResult(KJob *)) );
 }
 
 //-----------------------------------------------------------------------------
@@ -333,11 +333,11 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
 }
 
 //-----------------------------------------------------------------------------
-void SearchJob::slotSearchResult( KIO::Job *job )
+void SearchJob::slotSearchResult( KJob *job )
 {
   if ( job->error() )
   {
-    mAccount->handleJobError( job, i18n("Error while searching.") );
+    mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while searching.") );
     if ( mSerNum == 0 )
     {
       // folder

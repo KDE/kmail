@@ -107,7 +107,7 @@ namespace KMail {
       assert( 0 );
     }
     // common to all jobs:
-    connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
+    connect( mJob, SIGNAL(result(KJob*)), SLOT(slotResult(KJob*)) );
   }
 
   void SieveJob::slotData( Job *, const QByteArray & data ) {
@@ -162,7 +162,7 @@ namespace KMail {
     }
   }
 
-  void SieveJob::slotResult( Job * job ) {
+  void SieveJob::slotResult( KJob * job ) {
     Command lastCmd = mCommands.top();
 
     // First, let's see if we come back from a SearchActive. If so, set
@@ -175,14 +175,14 @@ namespace KMail {
     delete mDec; mDec = 0;
 
     if ( mSieveCapabilities.empty() ) {
-      mSieveCapabilities = job->queryMetaData( "sieveExtensions" ).split(' ', QString::SkipEmptyParts );
+      mSieveCapabilities = static_cast<KIO::Job*>(job)->queryMetaData( "sieveExtensions" ).split(' ', QString::SkipEmptyParts );
       kDebug(5006) << "Received Sieve extensions supported:" << endl
 		    << mSieveCapabilities.join("\n") << endl;
     }
 
     // check for errors:
     if ( job->error() ) {
-      job->showErrorDialog( 0 );
+      static_cast<KIO::Job*>(job)->showErrorDialog( 0 );
 
       emit result( this, false, mScript, mUrl.fileName() == mActiveScriptName );
 

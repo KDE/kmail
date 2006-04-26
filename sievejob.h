@@ -29,6 +29,7 @@ namespace KIO {
   class Job;
 }
 
+class KJob;
 namespace KMail {
 
   class SieveJob : public QObject {
@@ -100,7 +101,7 @@ namespace KMail {
     void slotData( KIO::Job *, const QByteArray & ); // for get
     void slotDataReq( KIO::Job *, QByteArray & ); // for put
     void slotEntries( KIO::Job *, const KIO::UDSEntryList & ); // for listDir
-    void slotResult( KIO::Job * ); // for all commands
+    void slotResult( KJob * ); // for all commands
 
   protected:
     KUrl mUrl;

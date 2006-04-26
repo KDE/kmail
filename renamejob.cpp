@@ -181,15 +181,15 @@ void RenameJob::execute()
     ImapAccountBase::jobData jd( src.url() );
     account->insertJob( job, jd );
     KIO::Scheduler::assignJobToSlave( account->slave(), job );
-    connect( job, SIGNAL(result(KIO::Job*)),
-        SLOT(slotRenameResult(KIO::Job*)) );
+    connect( job, SIGNAL(result(KJob*)),
+        SLOT(slotRenameResult(KJob*)) );
   }
 }
 
-void RenameJob::slotRenameResult( KIO::Job *job )
+void RenameJob::slotRenameResult( KJob *job )
 {
   ImapAccountBase* account = static_cast<KMFolderImap*>(mStorage)->account();
-  ImapAccountBase::JobIterator it = account->findJob(job);
+  ImapAccountBase::JobIterator it = account->findJob(static_cast<KIO::Job*>(job));
   if ( it == account->jobsEnd() )
   {
     emit renameDone( mNewName, false );
@@ -198,7 +198,7 @@ void RenameJob::slotRenameResult( KIO::Job *job )
   }
   if ( job->error() )
   {
-    account->handleJobError( job, i18n("Error while renaming a folder.") );
+    account->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while renaming a folder.") );
     emit renameDone( mNewName, false );
     deleteLater();
     return;
