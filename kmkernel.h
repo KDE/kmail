@@ -138,6 +138,31 @@ public:
   virtual QString getFrom( Q_UINT32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
+  /** 
+   * Stops all network related jobs and enter offline mode 
+   * New network jobs cannot be started. 
+  */
+  void stopNetworkJobs();
+
+  /**
+   * Resumes all network related jobs and enter online mode
+   * New network jobs can be started.
+  */
+  void resumeNetworkJobs();
+
+  /** A static helper function that asks the user
+   * if they want to go online.
+   * @return true if the user wants to go online
+   * @return false if the user wants to stay offline
+   */
+  static bool askToGoOnline();
+
+  /** Checks if the current network state is online or offline
+   * @return true if the network state is offline 
+   * @return false if the network state is online
+   */
+  static bool isOffline();
+
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
@@ -294,6 +319,7 @@ protected slots:
 signals:
   void configChanged();
   void folderRemoved( KMFolder* aFolder );
+  void onlineStatusChanged( int );
 
 private:
   void openReader( bool onlyCheck );

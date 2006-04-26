@@ -19,6 +19,14 @@
         <whatsthis></whatsthis>
         <default>false</default>
       </entry>
+      <entry name="NetworkState"  type="Enum">
+        <choices>
+          <choice name="Online"/>
+          <choice name="Offline"/>
+        </choices>
+        <default>Online</default>
+      </entry>
+
       <entry name="LoopOnGotoUnread"  type="Enum">
         <label></label>
         <whatsthis></whatsthis>

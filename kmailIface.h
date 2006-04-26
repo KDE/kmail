@@ -105,6 +105,16 @@ k_dcop:
 
   virtual int timeOfLastMessageCountChange() const =0;
 
+  /**
+   * Stop all network related jobs and enter offline mode
+  */
+  virtual void stopNetworkJobs() = 0;
+
+  /**
+   * Resume all network related jobs and enter online mode
+  */
+  virtual void resumeNetworkJobs() = 0;
+
 k_dcop_signals:
   void unreadCountChanged();
 

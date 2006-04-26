@@ -3164,7 +3164,16 @@ void KMComposeWin::slotContinuePrint( bool rc )
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
-  mSendNow = aSendNow;
+  if ( aSendNow && kmkernel->isOffline() ) {
+    KMessageBox::information( this,
+                              i18n("KMail is currently in offline mode,"
+                                   "your messages will be kept in the outbox until you go online."),
+                              i18n("Online/Offline"), "kmailIsOffline" );
+    mSendNow = false;
+  } else {
+    mSendNow = aSendNow;
+  }
+
   mSaveInDrafts = saveInDrafts;
 
   if (!saveInDrafts)

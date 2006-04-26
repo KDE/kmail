@@ -165,6 +165,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
 
+  connect( kmkernel, SIGNAL( onlineStatusChanged( int ) ),
+           this, SLOT( slotUpdateOnlineStatus( int ) ) );
+
   toggleSystemTray();
 
   // must be the last line of the constructor:
@@ -733,14 +736,16 @@ void KMMainWidget::slotImport()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
- kmkernel->acctMgr()->checkMail(true);
+  if ( kmkernel->askToGoOnline() )
+    kmkernel->acctMgr()->checkMail(true);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount(int item)
 {
-  kmkernel->acctMgr()->intCheckMail(item);
+  if ( kmkernel->askToGoOnline() )
+    kmkernel->acctMgr()->intCheckMail(item);
 }
 
 //-----------------------------------------------------------------------------
@@ -1043,6 +1048,12 @@ void KMMainWidget::slotRefreshFolder()
 {
   if (mFolder)
   {
+    if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) {
+      if ( !kmkernel->askToGoOnline() ) {
+        return;
+      }
+    }
+
     if (mFolder->folderType() == KMFolderTypeImap)
     {
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
@@ -1381,6 +1392,10 @@ void KMMainWidget::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditVacation()
 {
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
+  }
+
   if ( mVacation )
     return;
 
@@ -1496,11 +1511,32 @@ void KMMainWidget::slotSaveAttachments()
   saveCommand->start();
 }
 
+void KMMainWidget::slotOnlineStatus()
+{
+  // KMKernel will emit a signal when we toggle the network state that is caught by
+  // KMMainWidget::slotUpdateOnlineStatus to update our GUI
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
+    // if online; then toggle and set it offline.
+    kmkernel->stopNetworkJobs();
+  } else {
+    kmkernel->resumeNetworkJobs();
+  }
+}
+
+void KMMainWidget::slotUpdateOnlineStatus( int )
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
+    actionCollection()->action( "online_status" )->setText( i18n("Work Offline") );
+  else
+    actionCollection()->action( "online_status" )->setText( i18n("Work Online") );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
 {
-  kmkernel->msgSender()->sendQueued();
+  if ( kmkernel->askToGoOnline() )
+    kmkernel->msgSender()->sendQueued();
 }
 
 
@@ -2211,6 +2247,11 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
+
+  (void) new KAction( i18n("Online Status (unknown)"), "online_status", 0, this,
+                     SLOT(slotOnlineStatus()), actionCollection(), "online_status");
+
+
   KAction *act;
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
@@ -3017,6 +3058,8 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );
     actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
+
+    slotUpdateOnlineStatus( GlobalSettings::self()->networkState());
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
@@ -3370,6 +3413,8 @@ ImapAccountBase* KMMainWidget::findCurrentImapAccountBase()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubscriptionDialog()
 {
+  if (!mFolder || !kmkernel->askToGoOnline() ) return;
+
   ImapAccountBase* account = findCurrentImapAccountBase();
   if ( !account ) return;
   const QString startPath = findCurrentImapPath();

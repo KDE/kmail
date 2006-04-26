@@ -10,6 +10,8 @@
 #include <weaverlogger.h>
 
 #include "globalsettings.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
@@ -783,6 +785,60 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   folder->close();
   return result;
 }
+
+void KMKernel::stopNetworkJobs()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return;
+
+  the_acctMgr->cancelMailCheck();
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
+  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline, all network jobs are suspended"));
+  emit onlineStatusChanged( GlobalSettings::networkState() );
+}
+
+void KMKernel::resumeNetworkJobs()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
+    return;
+
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online, all network jobs resumed"));
+  emit onlineStatusChanged( GlobalSettings::networkState() );
+
+  if ( kmkernel->msgSender()->sendImmediate() ) {
+    kmkernel->msgSender()->sendQueued();
+  }
+}
+
+bool KMKernel::isOffline()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return true;
+  else
+    return false;
+}
+
+bool KMKernel::askToGoOnline()
+{
+  if ( kmkernel->isOffline() ) {
+    int rc =
+    KMessageBox::questionYesNo( KMKernel::self()->mainWin(),
+                                i18n("KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
+
+    if( rc == KMessageBox::No ) {
+      return false;
+    } else {
+      kmkernel->resumeNetworkJobs();
+    }
+  }
+  return true;
+}
+
 
 /********************************************************************/
 /*                        Kernel methods                            */

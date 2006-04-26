@@ -187,7 +187,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       mServerConnections[accountHostName] >= GlobalSettings::self()->maxConnectionsPerHost();
     kdDebug(5006) << "connection limit reached: "
                   << connectionLimitForHostReached << endl;
-    if ( !(*it)->checkingMail() && !connectionLimitForHostReached ) {
+    if ( !(*it)->checkingMail() && !connectionLimitForHostReached && !kmkernel->isOffline() ) {
       curAccount = (*it);
       mAcctTodo.remove( curAccount );
       break;

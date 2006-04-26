@@ -306,6 +306,8 @@ protected slots:
   void slotCycleHeaderStyles();
   void slotCycleAttachmentStrategy();
   void slotSendQueued();
+  void slotOnlineStatus();
+  void slotUpdateOnlineStatus( int );
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
   void slotMarkAll();
   void slotMemInfo();
