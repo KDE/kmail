@@ -477,7 +477,7 @@ namespace {
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
     //                                                  0, false ) );
-    if ( funcCombo ) {
+    if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return TextFunctions[funcCombo->currentIndex()].id;
     }
     else
@@ -800,7 +800,7 @@ namespace {
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
     //                                                  0, false ) );
-    if ( funcCombo ) {
+    if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return MessageFunctions[funcCombo->currentIndex()].id;
     }
     else
@@ -1074,7 +1074,7 @@ namespace {
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
     //                                                  0, false ) );
-    if ( funcCombo ) {
+    if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return StatusFunctions[funcCombo->currentIndex()].id;
     }
     else
@@ -1330,7 +1330,7 @@ namespace {
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
     //                                                  0, false ) );
-    if ( funcCombo ) {
+    if ( funcCombo && funcCombo->currentIndex() >= 0 ) {
       return NumericFunctions[funcCombo->currentIndex()].id;
     }
     else
