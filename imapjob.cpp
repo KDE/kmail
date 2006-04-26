@@ -121,7 +121,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     KMMessage* curMsg = 0;
     for ( it = msgList.begin(); it != msgList.end(); ++it )
     {
-      msg = (*it);
+      curMsg = (*it);
       if ( mSrcFolder && !curMsg->isMessage() )
       {
         int idx = mSrcFolder->find( curMsg );
