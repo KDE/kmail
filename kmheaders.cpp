@@ -2109,7 +2109,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     bool shft = (e->state() & Qt::ShiftModifier );
     Q3ListViewItem *cur = currentItem();
 
-    if (!e || !firstChild())
+    if (!firstChild())
       return;
 
     // If no current item, make some first item current when a key is pressed
