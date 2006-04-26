@@ -81,7 +81,7 @@ void SearchJob::searchCompleteFolder()
   QString searchString = searchStringFromPattern( mSearchPattern );
 
   if ( searchString.isEmpty() ) // skip imap search and download the messages
-    return slotSearchData( 0, QString() );
+    return slotSearchData( 0, QString(),QString() );
 
   // do the IMAP search  
   KUrl url = mAccount->getUrl();
@@ -91,8 +91,8 @@ void SearchJob::searchCompleteFolder()
   stream << (int) 'E' << url;
   KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-      SLOT(slotSearchData(KIO::Job*,const QString&)) );
+  connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+      SLOT(slotSearchData(KJob*,const QString&,const QString&)) );
   connect( job, SIGNAL(result(KJob *)),
       SLOT(slotSearchResult(KJob *)) );
 }
@@ -170,7 +170,7 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
 }
 
 //-----------------------------------------------------------------------------
-void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
+void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
 {
   if ( job && job->error() ) {
     // error is handled in slotSearchResult
@@ -357,7 +357,7 @@ void SearchJob::searchSingleMessage()
   if ( searchString.isEmpty() )
   {
     // no imap search
-    slotSearchDataSingleMessage( 0, QString() );
+    slotSearchDataSingleMessage( 0, QString(), QString() );
   } else
   {
     // imap search
@@ -376,15 +376,15 @@ void SearchJob::searchSingleMessage()
     stream << (int) 'E' << url;
     KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-    connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-        SLOT(slotSearchDataSingleMessage(KIO::Job*,const QString&)) );
+    connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+        SLOT(slotSearchDataSingleMessage(KJob*,const QString&,const QString&)) );
     connect( job, SIGNAL(result(KIO::Job *)),
         SLOT(slotSearchResult(KIO::Job *)) );
   }
 }
 
 //-----------------------------------------------------------------------------
-void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data )
+void SearchJob::slotSearchDataSingleMessage( KJob* job, const QString& data,const QString& )
 {
   if ( job && job->error() ) {
     // error is handled in slotSearchResult

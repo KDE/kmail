@@ -274,10 +274,10 @@ void PopAccount::connectJob() {
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
          SLOT( slotData( KIO::Job*, const QByteArray &)));
-  connect(job, SIGNAL( result( KIO::Job * ) ),
-         SLOT( slotResult( KIO::Job * ) ) );
-  connect(job, SIGNAL(infoMessage( KIO::Job*, const QString & )),
-         SLOT( slotMsgRetrieved(KIO::Job*, const QString &)));
+  connect(job, SIGNAL( result( KJob * ) ),
+         SLOT( slotResult( KJob * ) ) );
+  connect(job, SIGNAL(infoMessage( KJob*, const QString &, const QString & )),
+         SLOT( slotMsgRetrieved(KJob*, const QString &, const QString &)));
 }
 
 
@@ -416,7 +416,7 @@ MetaData PopAccount::slaveConfig() const {
 //-----------------------------------------------------------------------------
 // one message is finished
 // add data to a KMMessage
-void PopAccount::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
+void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString &)
 {
   if (infoMsg != "message complete") return;
   KMMessage *msg = new KMMessage;
@@ -956,7 +956,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 
 
 //-----------------------------------------------------------------------------
-void PopAccount::slotResult( KIO::Job* )
+void PopAccount::slotResult( KJob* )
 {
   if (!job) return;
   if ( job->error() )

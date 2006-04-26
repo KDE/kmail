@@ -435,7 +435,7 @@ private slots:
    * KIO slots for attachment insertion
    */
   void slotAttachFileData(KIO::Job *, const QByteArray &);
-  void slotAttachFileResult(KIO::Job *);
+  void slotAttachFileResult(KJob *);
 
   void slotListAction(const QString &);
   void slotFontAction(const QString &);

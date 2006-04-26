@@ -13,7 +13,7 @@ class KMMessage;
 
 class QDataStream;
 class QByteArray;
-
+class KJob;
 namespace KIO {
   class MetaData;
   class Slave;
@@ -193,7 +193,7 @@ protected slots:
    * A messages has been retrieved successfully. The next data belongs to the
    * next message.
    */
-  void slotMsgRetrieved(KIO::Job*, const QString &);
+  void slotMsgRetrieved(KJob*, const QString &, const QString &);
 
   /**
    * New data has arrived append it to the end of the current message
@@ -205,7 +205,7 @@ protected slots:
    * or because the job has been canceled or because the complete message
    * has been downloaded
    */
-  void slotResult( KIO::Job* );
+  void slotResult( KJob* );
 
   /**
    * Cleans up after a user cancels the current job

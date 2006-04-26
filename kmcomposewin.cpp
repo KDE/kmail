@@ -2177,8 +2177,8 @@ void KMComposeWin::addAttach(const KUrl aUrl)
     ld.encoding = aUrl.fileEncoding().toLatin1();
 
   mMapAtmLoadData.insert(job, ld);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotAttachFileResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          this, SLOT(slotAttachFileResult(KJob *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 }
@@ -2524,14 +2524,14 @@ void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachFileResult(KIO::Job *job)
+void KMComposeWin::slotAttachFileResult(KJob *job)
 {
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(static_cast<KIO::Job*>(job));
   assert(it != mMapAtmLoadData.end());
   if (job->error())
   {
     mMapAtmLoadData.remove(it);
-    job->showErrorDialog();
+    static_cast<KIO::Job*>(job)->showErrorDialog();
     return;
   }
   if ((*it).insert)
@@ -2712,8 +2712,8 @@ void KMComposeWin::slotInsertRecentFile(const KUrl& u)
     }
   }
   mMapAtmLoadData.insert(job, ld);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotAttachFileResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          this, SLOT(slotAttachFileResult(KJob *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 }

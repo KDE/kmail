@@ -628,15 +628,15 @@ KMCommand::Result KMUrlSaveCommand::execute()
       return Canceled;
   }
   KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, true);
-  connect(job, SIGNAL(result(KIO::Job*)), SLOT(slotUrlSaveResult(KIO::Job*)));
+  connect(job, SIGNAL(result(KJob*)), SLOT(slotUrlSaveResult(KJob*)));
   setEmitsCompletedItself( true );
   return OK;
 }
 
-void KMUrlSaveCommand::slotUrlSaveResult( KIO::Job *job )
+void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 {
   if ( job->error() ) {
-    job->showErrorDialog();
+    static_cast<KIO::Job*>(job)->showErrorDialog();
     setResult( Failed );
     emit completed( this );
   }
@@ -780,8 +780,8 @@ KMCommand::Result KMSaveMsgCommand::execute()
   mJob->setReportDataSent( true );
   connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
     SLOT(slotSaveDataReq()));
-  connect(mJob, SIGNAL(result(KIO::Job*)),
-    SLOT(slotSaveResult(KIO::Job*)));
+  connect(mJob, SIGNAL(result(KJob*)),
+    SLOT(slotSaveResult(KJob*)));
   setEmitsCompletedItself( true );
   return OK;
 }
@@ -875,7 +875,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   }
 }
 
-void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
+void KMSaveMsgCommand::slotSaveResult(KJob *job)
 {
   if (job->error())
   {
@@ -893,13 +893,13 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
         mJob->setReportDataSent( true );
         connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
             SLOT(slotSaveDataReq()));
-        connect(mJob, SIGNAL(result(KIO::Job*)),
-            SLOT(slotSaveResult(KIO::Job*)));
+        connect(mJob, SIGNAL(result(KJob*)),
+            SLOT(slotSaveResult(KJob*)));
       }
     }
     else
     {
-      job->showErrorDialog();
+      static_cast<KIO::Job*>(job)->showErrorDialog();
       setResult( Failed );
       emit completed( this );
       deleteLater();
@@ -936,8 +936,8 @@ KMCommand::Result KMOpenMsgCommand::execute()
   mJob->setReportDataSent( true );
   connect( mJob, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
            this, SLOT( slotDataArrived( KIO::Job*, const QByteArray & ) ) );
-  connect( mJob, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotResult( KIO::Job * ) ) );
+  connect( mJob, SIGNAL( result( KJob * ) ),
+           SLOT( slotResult( KJob * ) ) );
   setEmitsCompletedItself( true );
   return OK;
 }
@@ -950,11 +950,11 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
   mMsgString.append( data.data(), data.size() );
 }
 
-void KMOpenMsgCommand::slotResult( KIO::Job *job )
+void KMOpenMsgCommand::slotResult( KJob *job )
 {
   if ( job->error() ) {
     // handle errors
-    job->showErrorDialog();
+    static_cast<KIO::Job*>(job)->showErrorDialog();
     setResult( Failed );
     emit completed( this );
   }
@@ -3044,14 +3044,14 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   d.setDisabled( true ); // we got this far, don't delete yet
   KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
   uploadJob->setWindow( parentWidget() );
-  connect( uploadJob, SIGNAL(result(KIO::Job*)),
-           this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KIO::Job*)) );
+  connect( uploadJob, SIGNAL(result(KJob*)),
+           this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KJob*)) );
 }
 
-void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job * job )
+void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KJob * job )
 {
   if ( job->error() )
-    job->showErrorDialog();
+    static_cast<KIO::Job*>(job)->showErrorDialog();
   LaterDeleterWithCommandCompletion d( this );
   d.setResult( OK );
 }

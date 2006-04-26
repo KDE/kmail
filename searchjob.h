@@ -93,7 +93,7 @@ protected slots:
   void slotSearchFolder();
 
   // processes the server answer
-  void slotSearchData( KIO::Job* job, const QString& data );
+  void slotSearchData( KJob* job, const QString& data, const QString& );
 
   // message is downloaded and searched
   void slotSearchMessageArrived( KMMessage* msg );
@@ -102,7 +102,7 @@ protected slots:
   void slotSearchResult( KJob *job );
 
   // imap search result from a single message
-  void slotSearchDataSingleMessage( KIO::Job* job, const QString& data );
+  void slotSearchDataSingleMessage( KJob* job, const QString& data, const QString& );
 
   // the user cancelled the search progress
   void slotAbortSearch( KPIM::ProgressItem* item );

@@ -268,7 +268,7 @@ public:
   KMUrlSaveCommand( const KUrl &url, QWidget *parent );
 
 private slots:
-  void slotUrlSaveResult( KIO::Job *job );
+  void slotUrlSaveResult( KJob *job );
 
 private:
   virtual Result execute();
@@ -315,7 +315,7 @@ private:
 
 private slots:
   void slotSaveDataReq();
-  void slotSaveResult(KIO::Job *job);
+  void slotSaveResult(KJob *job);
   /** the message has been transferred for saving */
   void slotMessageRetrievedForSaving(KMMessage *msg);
 
@@ -344,7 +344,7 @@ private:
 
 private slots:
   void slotDataArrived( KIO::Job *job, const QByteArray & data );
-  void slotResult( KIO::Job *job );
+  void slotResult( KJob *job );
 
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
@@ -932,7 +932,7 @@ private slots:
   void slotPartComplete();
 
   void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
-  void slotAtmDecryptWithChiasmusUploadResult( KIO::Job * );
+  void slotAtmDecryptWithChiasmusUploadResult( KJob * );
 
 private:
   partNode* mNode;
