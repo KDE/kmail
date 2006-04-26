@@ -106,7 +106,7 @@ namespace ACLJobs {
     const ACLList& entries() const { return m_entries; }
 
   protected slots:
-    void slotInfoMessage( KIO::Job*, const QString& );
+    void slotInfoMessage( KJob*, const QString&, const QString& );
   private:
     ACLList m_entries;
   };

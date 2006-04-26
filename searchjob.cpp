@@ -378,8 +378,8 @@ void SearchJob::searchSingleMessage()
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
         SLOT(slotSearchDataSingleMessage(KJob*,const QString&,const QString&)) );
-    connect( job, SIGNAL(result(KIO::Job *)),
-        SLOT(slotSearchResult(KIO::Job *)) );
+    connect( job, SIGNAL(result(KJob *)),
+        SLOT(slotSearchResult(KJob *)) );
   }
 }
 

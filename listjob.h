@@ -37,7 +37,7 @@ class KMAcctImap;
 class KMAcctCachedImap;
 class FolderStorage;
 class KUrl;
-
+class KJob; 
 namespace KIO {
   class Job;
 }
@@ -100,7 +100,7 @@ protected slots:
    * Is called when the listing is done
    * Passes the folders and the jobData to the responding folder
    */
-  void slotListResult( KIO::Job* job );
+  void slotListResult( KJob* job );
 
   /**
    * Collects the folder information

@@ -71,16 +71,16 @@ public:
   void setParentProgressItem( KPIM::ProgressItem *p ) { mParentProgressItem = p; }
 
 private slots:
-  void slotGetMessageResult( KIO::Job * job );
-  void slotGetBodyStructureResult( KIO::Job * job );
+  void slotGetMessageResult( KJob * job );
+  void slotGetBodyStructureResult( KJob * job );
   void slotGetNextMessage();
   /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
-  void slotPutMessageResult( KIO::Job *job );
-  void slotPutMessageInfoData(KIO::Job *, const QString &data);
+  void slotPutMessageResult( KJob *job );
+  void slotPutMessageInfoData(KJob *, const QString &data, const QString &);
   /** result of a copy-operation */
-  void slotCopyMessageResult( KIO::Job *job );
-  void slotCopyMessageInfoData( KIO::Job *, const QString &data );
+  void slotCopyMessageResult( KJob *job );
+  void slotCopyMessageInfoData( KJob *, const QString &data, const QString & );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
 
 private:

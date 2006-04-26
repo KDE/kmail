@@ -143,8 +143,8 @@ void ListJob::execute()
   KIO::SimpleJob *job = KIO::listDir( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
-  connect( job, SIGNAL(result(KIO::Job *)),
-      this, SLOT(slotListResult(KIO::Job *)) );
+  connect( job, SIGNAL(result(KJob *)),
+      this, SLOT(slotListResult(KJob *)) );
   connect( job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
       this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)) );
 }
@@ -161,9 +161,9 @@ void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
   }
 }
 
-void ListJob::slotListResult( KIO::Job* job )
+void ListJob::slotListResult( KJob* job )
 {
-  ImapAccountBase::JobIterator it = mAccount->findJob( job );
+  ImapAccountBase::JobIterator it = mAccount->findJob( static_cast<KIO::Job *>(job) );
   if ( it == mAccount->jobsEnd() )
   {
     delete this;
@@ -171,7 +171,7 @@ void ListJob::slotListResult( KIO::Job* job )
   }
   if ( job->error() )
   {
-    mAccount->handleJobError( job,
+    mAccount->handleJobError( static_cast<KIO::Job *>(job),
         i18n( "Error while listing folder %1: " , (*it).path),
         true );
   } else

@@ -170,11 +170,11 @@ ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs,
                                  bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
 {
-  connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-           SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
+  connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+           SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
 
-void ACLJobs::GetACLJob::slotInfoMessage( KIO::Job*, const QString& str )
+void ACLJobs::GetACLJob::slotInfoMessage( KJob*, const QString& str,const QString& )
 {
   // Parse the result
   QStringList lst = str.split( " ", QString::SkipEmptyParts );
