@@ -219,7 +219,6 @@ const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleStri
     return *this;
 
   setField( other.field() );
-  mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
   setFunction( other.function() );
   setContents( other.contents() );
   delete mBmHeaderField; mBmHeaderField = 0;

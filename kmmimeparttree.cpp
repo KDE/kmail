@@ -234,11 +234,11 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
 		   KIO::convertSize( size ) ),
     mPartNode( node ), mOrigSize(size)
 {
+  Q_ASSERT(parent);
   if( node )
     node->setMimePartTreeItem( this );
   setIconAndTextForType( mimetype );
-  if ( parent )
-    parent->correctSize(this);
+  parent->correctSize(this);
 }
 
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
