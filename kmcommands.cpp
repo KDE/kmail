@@ -2086,8 +2086,8 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
     srcFolder->open();
     mOpenedFolders.push_back( srcFolder );
     addMsg( msg );
+    setDestFolder( findTrashFolder( srcFolder ) );
   }
-  setDestFolder( findTrashFolder( srcFolder ) );
 }
 
 KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )

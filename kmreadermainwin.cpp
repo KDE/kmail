@@ -344,7 +344,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     }
     urlMenuAdded=true;
   }
-  if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
+  if(!mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->addSeparator();
     mReaderWin->copyAction()->plug( menu );
