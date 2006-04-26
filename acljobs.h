@@ -121,7 +121,7 @@ namespace ACLJobs {
     unsigned int permissions() const { return m_permissions; }
 
   protected slots:
-    void slotInfoMessage( KIO::Job*, const QString& );
+    void slotInfoMessage( KJob*, const QString&,const QString& );
   private:
     unsigned int m_permissions;
   };

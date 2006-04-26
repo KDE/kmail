@@ -376,27 +376,27 @@ namespace KMail {
     else jd.onlySubscribed = false;
     insertJob(job, jd);
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-        SLOT(slotSubscriptionResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+        SLOT(slotSubscriptionResult(KJob *)));
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotSubscriptionResult( KIO::Job * job )
+  void ImapAccountBase::slotSubscriptionResult( KJob * job )
   {
     // result of a subscription-job
-    JobIterator it = findJob( job );
+    JobIterator it = findJob( static_cast<KIO::Job*>(job));
     if ( it == jobsEnd() ) return;
     bool onlySubscribed = (*it).onlySubscribed;
     QString path = static_cast<KIO::SimpleJob*>(job)->url().path();
     if (job->error())
     {
-      handleJobError( job, i18n( "Error while trying to subscribe to %1:", path ) + '\n' );
+      handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while trying to subscribe to %1:", path ) + '\n' );
       // ## emit subscriptionChanged here in case anyone needs it to support continue/cancel
     }
     else
     {
       emit subscriptionChanged( path, onlySubscribed );
-      if (mSlave) removeJob(job);
+      if (mSlave) removeJob(static_cast<KIO::Job*>(job));
     }
   }
 
@@ -426,11 +426,11 @@ namespace KMail {
     jd.cancellable = true;
     insertJob(job, jd);
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotGetUserRightsResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            SLOT(slotGetUserRightsResult(KJob *)));
   }
 
-  void ImapAccountBase::slotGetUserRightsResult( KIO::Job* _job )
+  void ImapAccountBase::slotGetUserRightsResult( KJob* _job )
   {
     ACLJobs::GetUserRightsJob* job = static_cast<ACLJobs::GetUserRightsJob *>( _job );
     JobIterator it = findJob( job );
@@ -467,11 +467,11 @@ namespace KMail {
     jd.cancellable = true;
     insertJob(job, jd);
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotGetACLResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            SLOT(slotGetACLResult(KJob *)));
   }
 
-  void ImapAccountBase::slotGetACLResult( KIO::Job* _job )
+  void ImapAccountBase::slotGetACLResult( KJob* _job )
   {
     ACLJobs::GetACLJob* job = static_cast<ACLJobs::GetACLJob *>( _job );
     JobIterator it = findJob( job );
@@ -493,8 +493,8 @@ namespace KMail {
 
       KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
       KIO::Scheduler::assignJobToSlave(mSlave, job);
-      connect( job, SIGNAL(result( KIO::Job * ) ),
-          this, SLOT( slotSimpleResult( KIO::Job * ) ) );
+      connect( job, SIGNAL(result( KJob * ) ),
+          this, SLOT( slotSimpleResult( KJob * ) ) );
     } else {
       /* Stop the timer, we have disconnected. We have to make sure it is
          started again when a new slave appears. */
@@ -564,12 +564,12 @@ namespace KMail {
     stream << (int) 'c';
     KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
     KIO::Scheduler::assignJobToSlave( mSlave, job );
-    connect( job, SIGNAL(infoMessage(KIO::Job*, const QString&)),
-	   SLOT(slotCapabilitiesResult(KIO::Job*, const QString&)) );
+    connect( job, SIGNAL(infoMessage(KJob*, const QString&,const QString &)),
+	   SLOT(slotCapabilitiesResult(KJob*, const QString&,const QString&)) );
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotCapabilitiesResult( KIO::Job*, const QString& result )
+  void ImapAccountBase::slotCapabilitiesResult( KJob*, const QString& result,const QString & )
   {
     mCapabilities = result.toLower().split(' ', QString::SkipEmptyParts );
     kDebug(5006) << "capabilities:" << mCapabilities << endl;
@@ -609,14 +609,14 @@ namespace KMail {
     KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
     KIO::Scheduler::assignJobToSlave( mSlave, job );
     insertJob( job, jd );
-    connect( job, SIGNAL( infoMessage(KIO::Job*, const QString&) ),
-        SLOT( slotNamespaceResult(KIO::Job*, const QString&) ) );
+    connect( job, SIGNAL( infoMessage(KJob*, const QString&, const QString&) ),
+        SLOT( slotNamespaceResult(KJob*, const QString&, const QString&) ) );
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotNamespaceResult( KIO::Job* job, const QString& str )
+  void ImapAccountBase::slotNamespaceResult( KJob* job, const QString& str, const QString& )
   {
-    JobIterator it = findJob( job );
+    JobIterator it = findJob( static_cast<KIO::Job*>(job) );
     if ( it == jobsEnd() ) return;
 
     nsDelimMap map;
@@ -804,9 +804,9 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotSimpleResult(KIO::Job * job)
+  void ImapAccountBase::slotSimpleResult(KJob * job)
   {
-    JobIterator it = findJob( job );
+    JobIterator it = findJob( static_cast<KIO::Job*>(job) );
     bool quiet = false;
     if (it != mapJobData.end()) {
       quiet = (*it).quiet;
@@ -815,7 +815,7 @@ namespace KMail {
     }
     if (job->error()) {
       if (!quiet)
-        handleJobError(job, QString() );
+        handleJobError(static_cast<KIO::Job*>(job), QString() );
       else {
         if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
           // make sure ERR_CONNECTION_BROKEN is properly handled and the slave
@@ -1143,18 +1143,18 @@ namespace KMail {
      ImapAccountBase::jobData jd( url.url(), folder );
      jd.path = path;
      insertJob(job, jd);
-     connect(job, SIGNAL(result(KIO::Job *)),
-           SLOT(slotSetStatusResult(KIO::Job *)));
+     connect(job, SIGNAL(result(KJob *)),
+           SLOT(slotSetStatusResult(KJob *)));
   }
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotSetStatusResult(KIO::Job * job)
+  void ImapAccountBase::slotSetStatusResult(KJob * job)
   {
-     ImapAccountBase::JobIterator it = findJob(job);
+     ImapAccountBase::JobIterator it = findJob(static_cast<KIO::Job*>(job));
      if ( it == jobsEnd() ) return;
      int errorCode = job->error();
      if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
-       bool cont = handleJobError( job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
+       bool cont = handleJobError( static_cast<KIO::Job*>(job), i18n( "Error while uploading status of messages to server: " ) + '\n' );
        emit imapStatusChanged( (*it).parent, (*it).path, cont );
      }
      else

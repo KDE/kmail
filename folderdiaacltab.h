@@ -36,7 +36,7 @@
 #include "kmfoldertype.h"
 //Added by qt3to4:
 #include <QLabel>
-
+class KJob;
 class KMFolderImap;
 class KPushButton;
 class QStackedWidget;
@@ -101,7 +101,7 @@ private slots:
   // Network (KIO) slots
   void slotConnectionResult( int, const QString& );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
-  void slotMultiSetACLResult(KIO::Job *);
+  void slotMultiSetACLResult(KJob *);
   void slotACLChanged( const QString&, int );
   void slotReceivedUserRights( KMFolder* folder );
   void slotDirectoryListingFinished(KMFolderImap*);

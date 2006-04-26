@@ -755,20 +755,20 @@ void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
   jd.total = 1; jd.done = 0; jd.parent = 0;
   mImapAccount->insertJob(job, jd);
 
-  connect(job, SIGNAL(result(KIO::Job *)),
-          SLOT(slotMultiSetACLResult(KIO::Job *)));
+  connect(job, SIGNAL(result(KJob *)),
+          SLOT(slotMultiSetACLResult(KJob *)));
   connect(job, SIGNAL(aclChanged( const QString&, int )),
           SLOT(slotACLChanged( const QString&, int )) );
 }
 
-void KMail::FolderDiaACLTab::slotMultiSetACLResult(KIO::Job* job)
+void KMail::FolderDiaACLTab::slotMultiSetACLResult(KJob* job)
 {
-  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
+  ImapAccountBase::JobIterator it = mImapAccount->findJob( static_cast<KIO::Job*>(job) );
   if ( it == mImapAccount->jobsEnd() ) return;
   mImapAccount->removeJob( it );
 
   if ( job->error() ) {
-    job->showErrorDialog( this );
+    static_cast<KIO::Job*>(job)->showErrorDialog( this );
     if ( mAccepting ) {
       emit cancelAccept();
       mAccepting = false; // don't emit readyForAccept anymore

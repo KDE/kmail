@@ -103,7 +103,7 @@ public:
   const AnnotationList& annotations() const { return mAnnotations; }
 
 protected slots:
-  void slotInfoMessage( KIO::Job*, const QString& );
+  void slotInfoMessage( KJob*, const QString&,const QString& );
 private:
   AnnotationList mAnnotations;
   QString mEntry;

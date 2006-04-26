@@ -69,11 +69,11 @@ AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KUrl& url, const QStri
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo ),
     mEntry( entry )
 {
-  connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-           SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
+  connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+           SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
 
-void AnnotationJobs::GetAnnotationJob::slotInfoMessage( KIO::Job*, const QString& str )
+void AnnotationJobs::GetAnnotationJob::slotInfoMessage( KJob*, const QString& str,const QString& )
 {
   // Parse the result
   QStringList lst = str.split( "\r", QString::SkipEmptyParts );

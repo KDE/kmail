@@ -191,11 +191,11 @@ ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &
                                                bool showProgressInfo )
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
 {
-  connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-           SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
+  connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+           SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
 
-void ACLJobs::GetUserRightsJob::slotInfoMessage( KIO::Job*, const QString& str )
+void ACLJobs::GetUserRightsJob::slotInfoMessage( KJob*, const QString& str,const QString& )
 {
   // Parse the result
   m_permissions = IMAPRightsToPermission( str, url(), QString() );

@@ -384,7 +384,7 @@ namespace KMail {
      * is called when the changeSubscription has finished
      * emits subscriptionChanged
      */
-    void slotSubscriptionResult(KIO::Job * job);
+    void slotSubscriptionResult(KJob * job);
 
   protected slots:
     virtual void slotCheckQueuedFolders();
@@ -397,13 +397,13 @@ namespace KMail {
     /**
      * Only delete information about the job and ignore write errors
      */
-    void slotSetStatusResult(KIO::Job * job);
+    void slotSetStatusResult(KJob * job);
 
     /// Result of getUserRights() job
-    void slotGetUserRightsResult( KIO::Job* _job );
+    void slotGetUserRightsResult( KJob* _job );
 
     /// Result of getACL() job
-    void slotGetACLResult( KIO::Job* _job );
+    void slotGetACLResult( KJob* _job );
 
     /**
      * Send a NOOP command regularly to keep the slave from disconnecting
@@ -422,10 +422,10 @@ namespace KMail {
     /**
      * Only delete information about the job
      */
-    void slotSimpleResult(KIO::Job * job);
+    void slotSimpleResult(KJob * job);
 
     /** Gets and parses the namespaces */
-    void slotNamespaceResult( KIO::Job*, const QString& str );
+    void slotNamespaceResult( KJob*, const QString& str,const QString & );
 
     /**
      * Saves the fetched namespaces
@@ -435,7 +435,7 @@ namespace KMail {
     /**
      * Saves the capabilities list
      */
-    void slotCapabilitiesResult( KIO::Job*, const QString& result );
+    void slotCapabilitiesResult( KJob*, const QString& result,const QString & );
 
   protected:
 
