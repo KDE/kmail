@@ -1141,7 +1141,7 @@ void AccountDialog::setupSettings()
   if( accountType == "local" )
   {
     ProcmailRCParser procmailrcParser;
-    KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
+    KMAcctLocal *acctLocal = static_cast<KMAcctLocal*>(mAccount);
 
     if ( acctLocal->location().isEmpty() )
         acctLocal->setLocation( procmailrcParser.getSpoolFilesList().first() );
