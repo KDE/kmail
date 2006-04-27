@@ -1778,7 +1778,7 @@ KMCommand::Result KMCopyCommand::execute()
       }
     }
 
-    if (!isMessage && list.isEmpty())
+    if (srcFolder && !isMessage && list.isEmpty())
     {
       assert(idx != -1);
       srcFolder->unGetMsg( idx );
