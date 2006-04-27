@@ -521,7 +521,7 @@ void AntiSpamWizard::checkToolAvailability()
       while ( account ) {
         if ( account->type() == "pop" || account->type().contains( "imap" ) ) {
           const NetworkAccount * n = dynamic_cast<const NetworkAccount*>( account );
-          if ( n->host().toLower().contains( pattern.toLower() ) ) {
+          if ( n && n->host().toLower().contains( pattern.toLower() ) ) {
             mInfoPage->addAvailableTool( (*it).getVisibleName() );
             found = true;
           }
