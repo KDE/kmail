@@ -1741,7 +1741,7 @@ KMCommand::Result KMCopyCommand::execute()
       msg = srcFolder->getMsg(idx);
     }
 
-    if (srcFolder &&
+    if (srcFolder && mDestFolder &&
         (srcFolder->folderType()== KMFolderTypeImap) &&
         (mDestFolder->folderType() == KMFolderTypeImap) &&
         (static_cast<KMFolderImap*>(srcFolder->storage())->account() ==
