@@ -480,7 +480,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       QString mbSubject = mb->subject();
       msg = readMsg(idx);
       // sanity check
-      if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {
+      if (mCompactable && (msg->subject().isEmpty() != mbSubject.isEmpty())) {
         kDebug(5006) << "Error: " << location() <<
           " Index file is inconsistent with folder file. This should never happen." << endl;
         mCompactable = false; // Don't compact
