@@ -2567,7 +2567,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
       QString ext;
       if( !patterns.isEmpty() ) {
         ext = patterns[0];
-        int i = ext.findRev( '.' );
+        int i = ext.lastIndexOf( '.' );
         if( i == -1 )
           ext.prepend( '.' );
         else if( i > 0 )

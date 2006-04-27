@@ -2321,7 +2321,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
      while ( renameNumbering.contains(file) ) {
        file = origFile;
        int num = renameNumbering[file] + 1;
-       int dotIdx = file.findRev('.');
+       int dotIdx = file.lastIndexOf('.');
        file = file.insert( (dotIdx>=0) ? dotIdx : file.length(), QString("_") + QString::number(num) );
      }
      curUrl.setFileName(file);

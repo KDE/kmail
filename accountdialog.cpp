@@ -183,7 +183,7 @@ void
 ProcmailRCParser::processLocalLock(const QString &s)
 {
   QString val;
-  int colonPos = s.findRev(':');
+  int colonPos = s.lastIndexOf(':');
 
   if (colonPos > 0) { // we don't care about the leading one
     val = s.mid(colonPos + 1).trimmed();

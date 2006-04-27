@@ -1958,7 +1958,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         QString prefix("DecryptedMsg.");
         int oldIdx = msgId.find(prefix, 0, false);
         if( -1 == oldIdx ) {
-          int leftAngle = msgId.findRev( '<' );
+          int leftAngle = msgId.lastIndexOf( '<' );
           msgId = msgId.insert( (-1 == leftAngle) ? 0 : ++leftAngle, prefix );
         }
         else {

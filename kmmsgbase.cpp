@@ -556,7 +556,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
       if (result.right(5) == "?=\n  ") {
         start--; result.truncate(result.length() - 1);
       }
-      int lastNewLine = result.findRev("\n ");
+      int lastNewLine = result.lastIndexOf("\n ");
       if (!result.mid(lastNewLine).trimmed().isEmpty()
         && result.length() - lastNewLine + encLength + 2 > maxLen)
           result += "\n ";
@@ -648,7 +648,7 @@ QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
 
   Q3CString charset = _str.left(p);
 
-  Q3CString st = _str.mid(_str.findRev('\'') + 1);
+  Q3CString st = _str.mid(_str.lastIndexOf('\'') + 1);
   char ch, ch2;
   p = 0;
   while (p < (int)st.length())

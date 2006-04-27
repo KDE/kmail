@@ -250,7 +250,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
 QString NewLanguageDialog::language() const
 {
   QString s = mComboBox->currentText();
-  int i = s.findRev( '(' );
+  int i = s.lastIndexOf( '(' );
   return s.mid( i + 1, s.length() - i - 2 );
 }
 
@@ -274,7 +274,7 @@ int LanguageComboBox::insertLanguage( const QString & language )
 QString LanguageComboBox::language() const
 {
   QString s = currentText();
-  int i = s.findRev( '(' );
+  int i = s.lastIndexOf( '(' );
   return s.mid( i + 1, s.length() - i - 2 );
 }
 

@@ -526,8 +526,8 @@ void KMFolderImap::copyMsg(QList<KMMessage*>& msgList)
 QList<KMMessage*> KMFolderImap::splitMessageList(const QString& set,
                                                    QList<KMMessage*>& msgList)
 {
-  int lastcomma = set.findRev(",");
-  int lastdub = set.findRev(":");
+  int lastcomma = set.lastIndexOf(",");
+  int lastdub = set.lastIndexOf(":");
   int last = 0;
   if (lastdub > lastcomma) last = lastdub;
   else last = lastcomma;

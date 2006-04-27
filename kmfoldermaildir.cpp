@@ -684,7 +684,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
       referencesStr = referencesStr.trimmed();
       if( !referencesStr.isEmpty() ) {
         int leftAngle, rightAngle;
-        leftAngle = referencesStr.findRev( '<' );
+        leftAngle = referencesStr.lastIndexOf( '<' );
         if( ( leftAngle != -1 )
             && ( replyToIdStr.isEmpty() || ( replyToIdStr[0] != '<' ) ) ) {
           // use the last reference, instead of missing In-Reply-To
@@ -692,10 +692,10 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
         }
 
         // find second last reference
-        leftAngle = referencesStr.findRev( '<', leftAngle - 1 );
+        leftAngle = referencesStr.lastIndexOf( '<', leftAngle - 1 );
         if( leftAngle != -1 )
           referencesStr = referencesStr.mid( leftAngle );
-        rightAngle = referencesStr.findRev( '>' );
+        rightAngle = referencesStr.lastIndexOf( '>' );
         if( rightAngle != -1 )
           referencesStr.truncate( rightAngle + 1 );
 

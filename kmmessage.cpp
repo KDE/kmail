@@ -636,9 +636,9 @@ static bool flushPart(QString &msg, QStringList &part,
 
 static QString stripSignature( const QString & msg, bool clearSigned ) {
   if ( clearSigned )
-    return msg.left( msg.findRev( QRegExp( "\n--\\s?\n" ) ) );
+    return msg.left( msg.lastIndexOf( QRegExp( "\n--\\s?\n" ) ) );
   else
-    return msg.left( msg.findRev( "\n-- \n" ) );
+    return msg.left( msg.lastIndexOf( "\n-- \n" ) );
 }
 
 QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
@@ -827,7 +827,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
 
   // Remove blank lines at the beginning:
   const int firstNonWS = content.find( QRegExp( "\\S" ) );
-  const int lineStart = content.findRev( '\n', firstNonWS );
+  const int lineStart = content.lastIndexOf( '\n', firstNonWS );
   if ( lineStart >= 0 )
     content.remove( 0, static_cast<unsigned int>( lineStart ) );
 
@@ -1080,8 +1080,8 @@ Q3CString KMMessage::getRefStr() const
   if (!firstRef.isEmpty())
     retRefStr = firstRef + ' ';
 
-  i = refStr.findRev('<');
-  j = refStr.findRev('>');
+  i = refStr.lastIndexOf('<');
+  j = refStr.lastIndexOf('>');
 
   lastRef = refStr.mid(i, j-i+1);
   if (!lastRef.isEmpty() && lastRef != firstRef)
@@ -1972,7 +1972,7 @@ QString KMMessage::replyToId() const
   if (rightAngle != -1)
     replyTo.truncate( rightAngle + 1 );
   // now search the start of the message id
-  leftAngle = replyTo.findRev( '<' );
+  leftAngle = replyTo.lastIndexOf( '<' );
   if (leftAngle != -1)
     replyTo = replyTo.mid( leftAngle );
 
@@ -1985,7 +1985,7 @@ QString KMMessage::replyToId() const
     return replyTo;
 
   references = headerField("References");
-  leftAngle = references.findRev( '<' );
+  leftAngle = references.lastIndexOf( '<' );
   if (leftAngle != -1)
     references = references.mid( leftAngle );
   rightAngle = references.find( '>' );
@@ -2013,11 +2013,11 @@ QString KMMessage::references() const
   QString references = headerField( "References" );
 
   // keep the last two entries for threading
-  leftAngle = references.findRev( '<' );
-  leftAngle = references.findRev( '<', leftAngle - 1 );
+  leftAngle = references.lastIndexOf( '<' );
+  leftAngle = references.lastIndexOf( '<', leftAngle - 1 );
   if( leftAngle != -1 )
     references = references.mid( leftAngle );
-  rightAngle = references.findRev( '>' );
+  rightAngle = references.lastIndexOf( '>' );
   if( rightAngle != -1 )
     references.truncate( rightAngle + 1 );
 
@@ -2073,7 +2073,7 @@ QString KMMessage::msgId() const
   if (rightAngle != -1)
     msgId.truncate( rightAngle + 1 );
   // now search the start of the message id
-  const int leftAngle = msgId.findRev( '<' );
+  const int leftAngle = msgId.lastIndexOf( '<' );
   if (leftAngle != -1)
     msgId = msgId.mid( leftAngle );
   return msgId;

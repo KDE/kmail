@@ -1631,7 +1631,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
 
   mTempDirs.append( fname );
   // strip off a leading path
-  int slashPos = fileName.findRev( '/' );
+  int slashPos = fileName.lastIndexOf( '/' );
   if( -1 != slashPos )
     fileName = fileName.mid( slashPos + 1 );
   if( fileName.isEmpty() )
@@ -1680,8 +1680,8 @@ int KMReaderWin::msgPartFromUrl(const KUrl &aUrl)
   if (!aUrl.isLocalFile()) return -1;
 
   QString path = aUrl.path();
-  uint right = path.findRev('/');
-  uint left = path.findRev('.', right);
+  uint right = path.lastIndexOf('/');
+  uint left = path.lastIndexOf('.', right);
 
   bool ok;
   int res = path.mid(left + 1, right - left - 1).toInt(&ok);

@@ -430,7 +430,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       //Get word right clicked on
       const QRegExp wordBoundary( "[\\s\\W]" );
-      firstSpace = paraText.findRev( wordBoundary, charPos ) + 1;
+      firstSpace = paraText.lastIndexOf( wordBoundary, charPos ) + 1;
       lastSpace = paraText.find( wordBoundary, charPos );
       if( lastSpace == -1 )
         lastSpace = paraText.length();
