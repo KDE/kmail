@@ -1532,7 +1532,7 @@ void KMailICalIfaceImpl::readConfig()
 
   if( noneFound || mustFix ) {
     QString msg;
-    QString parentFolderName = folderParent->name() : folderParentDir->name();
+    QString parentFolderName = folderParent->name();
     if ( noneFound ) {
       // No subfolder was found, so ask if we can make them
       msg = i18n("KMail will now create the required groupware folders"
