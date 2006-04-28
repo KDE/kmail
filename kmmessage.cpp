@@ -826,7 +826,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
     asPlainText( aStripSignature, allowDecryption ) : selection ;
 
   // Remove blank lines at the beginning:
-  const int firstNonWS = content.find( QRegExp( "\\S" ) );
+  const int firstNonWS = content.indexOf( QRegExp( "\\S" ) );
   const int lineStart = content.lastIndexOf( '\n', firstNonWS );
   if ( lineStart >= 0 )
     content.remove( 0, static_cast<unsigned int>( lineStart ) );
@@ -867,7 +867,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
        !parent()->mailingListPostAddress().isEmpty() ) {
     mailingListAddresses << parent()->mailingListPostAddress();
   }
-  if ( headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
+  if ( headerField("List-Post").contains( "mailto:", Qt::CaseInsensitive ) ) {
     QString listPost = headerField("List-Post");
     QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
     if ( rx.search( listPost, 0 ) != -1 ) // matched
@@ -1074,8 +1074,8 @@ Q3CString KMMessage::getRefStr() const
   if (refStr.isEmpty())
     return headerField("Message-Id").toLatin1();
 
-  i = refStr.find('<');
-  j = refStr.find('>');
+  i = refStr.indexOf('<');
+  j = refStr.indexOf('>');
   firstRef = refStr.mid(i, j-i+1);
   if (!firstRef.isEmpty())
     retRefStr = firstRef + ' ';
@@ -1968,7 +1968,7 @@ QString KMMessage::replyToId() const
 
   replyTo = headerField("In-Reply-To");
   // search the end of the (first) message id in the In-Reply-To header
-  rightAngle = replyTo.find( '>' );
+  rightAngle = replyTo.indexOf( '>' );
   if (rightAngle != -1)
     replyTo.truncate( rightAngle + 1 );
   // now search the start of the message id
@@ -1981,14 +1981,14 @@ QString KMMessage::replyToId() const
   // misconfigured Mutt. They look like this <"from foo"@bar.baz>, i.e.
   // they contain double quotes and spaces. We only check for '"'.
   if (!replyTo.isEmpty() && (replyTo[0] == '<') &&
-      ( -1 == replyTo.find( '"' ) ) )
+      ( !replyTo.contains( '"' ) ) )
     return replyTo;
 
   references = headerField("References");
   leftAngle = references.lastIndexOf( '<' );
   if (leftAngle != -1)
     references = references.mid( leftAngle );
-  rightAngle = references.find( '>' );
+  rightAngle = references.indexOf( '>' );
   if (rightAngle != -1)
     references.truncate( rightAngle + 1 );
 
@@ -2033,7 +2033,7 @@ QString KMMessage::replyToAuxIdMD5() const
   QString result = references();
   // references contains two items, use the first one
   // (the second to last reference)
-  const int rightAngle = result.find( '>' );
+  const int rightAngle = result.indexOf( '>' );
   if( rightAngle != -1 )
     result.truncate( rightAngle + 1 );
 
@@ -2069,7 +2069,7 @@ QString KMMessage::msgId() const
   QString msgId = headerField("Message-Id");
 
   // search the end of the message id
-  const int rightAngle = msgId.find( '>' );
+  const int rightAngle = msgId.indexOf( '>' );
   if (rightAngle != -1)
     msgId.truncate( rightAngle + 1 );
   // now search the start of the message id
@@ -3012,7 +3012,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 	i2 = iL;
       if( i1+1 < i2 ) {
 	parAV = additionalParam.mid( i1, (i2-i1) );
-	iM = parAV.find('=');
+	iM = parAV.indexOf('=');
 	if( -1 < iM )
         {
 	  parA = parAV.left( iM ).data();
@@ -3035,7 +3035,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 	ct.AddParameter( param );
       }
       i1 = i2+1;
-      i2 = additionalParam.find( ';', i1 );
+      i2 = additionalParam.indexOf( ';', i1 );
     }
   }
 
@@ -3712,7 +3712,7 @@ QString KMMessage::expandAliases( const QString& recipients )
 
     // check whether the address is missing the domain part
     // FIXME: looking for '@' might be wrong
-    if ( receiver.find('@') == -1 ) {
+    if ( !receiver.contains('@') ) {
       KConfigGroup general( KMKernel::config(), "General" );
       QString defaultdomain = general.readEntry( "Default domain" );
       if( !defaultdomain.isEmpty() ) {
@@ -3751,7 +3751,7 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
   const KUser user( loginName );
   if ( user.isValid() ) {
     QString fullName = user.fullName();
-    if ( fullName.find( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) != -1 )
+    if ( fullName.contains( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) )
       address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
 	      + "\" <" + address + '>';
     else

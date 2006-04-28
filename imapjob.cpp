@@ -136,9 +136,9 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
         curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
       Q3CString cstr( curMsg->asString() );
-      int a = cstr.find("\nX-UID: ");
-      int b = cstr.find('\n', a);
-      if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
+      int a = cstr.indexOf("\nX-UID: ");
+      int b = cstr.indexOf('\n', a);
+      if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);
       jd.data.resize( cstr.length() + cstr.count( "\n" ) - cstr.count( "\r\n" ) );
       unsigned int i = 0;
       char prevChar = '\0';
@@ -298,7 +298,7 @@ void ImapJob::slotGetNextMessage()
   jd.msgList.append( msg );
   if ( !mPartSpecifier.isEmpty() )
   {
-    if ( mPartSpecifier.find ("STRUCTURE", 0, false) != -1 ) {
+    if ( mPartSpecifier.contains ("STRUCTURE", Qt::CaseInsensitive) ) {
       path += ";SECTION=STRUCTURE";
     } else if ( mPartSpecifier == "HEADER" ) {
       path += ";SECTION=HEADER";
@@ -333,7 +333,7 @@ void ImapJob::slotGetNextMessage()
   KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
   mJob = simpleJob;
   account->insertJob( mJob, jd );
-  if ( mPartSpecifier.find( "STRUCTURE", 0, false ) != -1 )
+  if ( mPartSpecifier.contains( "STRUCTURE", false ) )
   {
     connect( mJob, SIGNAL(result(KJob *)),
              this, SLOT(slotGetBodyStructureResult(KJob *)) );
@@ -571,7 +571,7 @@ void ImapJob::slotCopyMessageInfoData(KJob * job, const QString & data, const QS
   ImapAccountBase::JobIterator it = account->findJob( static_cast<KIO::Job*>(job) );
   if ( it == account->jobsEnd() ) return;
 
-  if (data.find("UID") != -1)
+  if (data.contains("UID") )
   {
     // split
     QString oldUid = data.section(' ', 1, 1);
@@ -604,7 +604,7 @@ void ImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const QStri
   ImapAccountBase::JobIterator it = account->findJob( static_cast<KIO::Job*>(job) );
   if ( it == account->jobsEnd() ) return;
 
-  if ( data.find("UID") != -1 )
+  if ( data.contains("UID") )
   {
     ulong uid = ( data.right(data.length()-4) ).toInt();
     if ( !(*it).msgList.isEmpty() )

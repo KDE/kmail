@@ -375,9 +375,9 @@ void CachedImapJob::slotPutNextMessage()
 
   mMsg->setUID( 0 ); // for the index
   Q3CString cstr(mMsg->asString());
-  int a = cstr.find("\nX-UID: ");
-  int b = cstr.find('\n', a);
-  if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
+  int a = cstr.indexOf("\nX-UID: ");
+  int b = cstr.indexOf('\n', a);
+  if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);
   Q3CString mData(cstr.length() + cstr.count('\n'));
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
@@ -433,7 +433,7 @@ void CachedImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const
   ImapAccountBase::JobIterator it = account->findJob( static_cast<KIO::Job*>(job) );
   if ( it == account->jobsEnd() ) return;
 
-  if ( data.find("UID") != -1 && mMsg )
+  if ( data.contains("UID") && mMsg )
   {
     int uid = (data.right(data.length()-4)).toInt();
     kDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
@@ -624,7 +624,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
 
   // Check the uidValidity
   Q3CString cstr((*it).data.data(), (*it).data.size() + 1);
-  int a = cstr.find("X-uidValidity: ");
+  int a = cstr.indexOf("X-uidValidity: ");
   if (a < 0) {
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
@@ -632,7 +632,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
                   << mFolder->name() << endl;
   }
   else {
-    int b = cstr.find("\r\n", a);
+    int b = cstr.indexOf("\r\n", a);
     if ( (b - a - 15) >= 0 ) {
       QString uidv = cstr.mid(a + 15, b - a - 15);
       // kDebug(5006) << "New uidv = " << uidv << ", old uidv = "
@@ -690,7 +690,7 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
           static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
         if ( !imapFolder->imapPath().isEmpty() )
           // Only rename folders that have been accepted by the server
-          if( imapFolder->imapPath().find( oldPath ) == 0 ) {
+          if( imapFolder->imapPath().startsWith( oldPath ) ) {
             QString p = imapFolder->imapPath();
             p = p.mid( oldPath.length() );
             p.prepend( newPath );
