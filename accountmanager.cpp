@@ -138,7 +138,7 @@ void AccountManager::processNextCheck( bool _newMail )
       continue;
     // check done
     kDebug(5006) << "account " << acct->name() << " finished check" << endl;
-    mAcctChecking.remove( acct );
+    mAcctChecking.removeAll( acct );
     kmkernel->filterMgr()->deref();
     disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                       this, SLOT( processNextCheck( bool ) ) );
@@ -163,7 +163,7 @@ void AccountManager::processNextCheck( bool _newMail )
     ++it;
     if ( !acct->checkingMail() && acct->mailCheckCanProceed() ) {
       curAccount = acct;
-      mAcctTodo.remove( acct );
+      mAcctTodo.removeAll( acct );
       break;
     }
   }
@@ -287,7 +287,7 @@ bool AccountManager::remove( KMAccount* acct )
 {
   if( !acct )
     return false;
-  mAcctList.remove( acct );
+  mAcctList.removeAll( acct );
   emit accountRemoved( acct );
   return true;
 }

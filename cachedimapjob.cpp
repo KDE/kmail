@@ -122,7 +122,7 @@ CachedImapJob::CachedImapJob( JobType type, KMFolderCachedImap* folder )
 
 CachedImapJob::~CachedImapJob()
 {
-  mAccount->mJobList.remove(this);
+  mAccount->mJobList.removeAll(this);
 }
 
 void CachedImapJob::execute()

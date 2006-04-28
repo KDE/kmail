@@ -244,7 +244,7 @@ ImapJob::~ImapJob()
         }
         account->removeJob( mJob );
       }
-      account->mJobList.remove( this );
+      account->mJobList.removeAll( this );
     }
     mDestFolder->close();
   }
@@ -269,7 +269,7 @@ ImapJob::~ImapJob()
           }
           account->removeJob( mJob ); // remove the associated kio job
         }
-        account->mJobList.remove( this ); // remove the folderjob
+        account->mJobList.removeAll( this ); // remove the folderjob
       }
     }
     mSrcFolder->close();
@@ -439,7 +439,7 @@ void ImapJob::slotGetMessageResult( KJob * job )
   }
   if (account->slave()) {
       account->removeJob(it);
-      account->mJobList.remove(this);
+      account->mJobList.removeAll(this);
   }
   /* This needs to be emitted last, so the slots that are hooked to it
    * don't unGetMsg the msg before we have finished. */
@@ -499,7 +499,7 @@ void ImapJob::slotGetBodyStructureResult( KJob * job )
   }
   if (account->slave()) {
       account->removeJob(it);
-      account->mJobList.remove(this);
+      account->mJobList.removeAll(this);
   }
   deleteLater();
 }
@@ -551,7 +551,7 @@ void ImapJob::slotPutMessageResult( KJob *job )
     {
       emit messageCopied( mMsgList );
       if (account->slave()) {
-        account->mJobList.remove( this );
+        account->mJobList.removeAll( this );
       }
       deleteMe = true;
     }
@@ -641,7 +641,7 @@ void ImapJob::slotCopyMessageResult( KJob *job )
   }
   if (account->slave()) {
     account->removeJob(it);
-    account->mJobList.remove(this);
+    account->mJobList.removeAll(this);
   }
   deleteLater();
 }

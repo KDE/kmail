@@ -129,7 +129,7 @@ void FilterLog::checkLogSize()
       if ( it != mLogEntries.end())
       {
         mCurrentLogSize -= (*it).length();
-        mLogEntries.remove( it );
+        mLogEntries.erase( it );
         kDebug(5006) << "Filter log: new size = " 
                       << QString::number( mCurrentLogSize ) << endl;
       }

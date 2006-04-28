@@ -114,7 +114,7 @@ void FolderStorage::addJob( FolderJob* job ) const
 
 void FolderStorage::removeJob( QObject* job )
 {
-  mJobList.remove( static_cast<FolderJob*>( job ) );
+  mJobList.removeAll( static_cast<FolderJob*>( job ) );
 }
 
 

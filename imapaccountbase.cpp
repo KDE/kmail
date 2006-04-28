@@ -695,7 +695,7 @@ namespace KMail {
             "support of IMAP namespaces.", name() );
         if ( list.contains( QString() ) ) {
           // replace empty entry with the old prefix
-          list.remove( QString() );
+          list.removeAll( QString() );
           list += mOldPrefix;
           mNamespaces[PersonalNS] = list;
           if ( mNamespaceToDelimiter.contains( QString() ) ) {

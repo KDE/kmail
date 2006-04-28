@@ -699,7 +699,7 @@ Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QString
     if (!_encoding.isEmpty())
     {
        QString currentCharset = QString::fromLatin1(_encoding);
-       charsets.remove(currentCharset);
+       charsets.removeAll(currentCharset);
        charsets.prepend(currentCharset);
     }
 

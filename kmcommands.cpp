@@ -1831,7 +1831,7 @@ KMCommand::Result KMCopyCommand::execute()
 
 void KMCopyCommand::slotMsgAdded( KMFolder*, quint32 serNum )
 {
-  mWaitingForMsgs.remove( serNum );
+  mWaitingForMsgs.removeAll( serNum );
   if ( mWaitingForMsgs.isEmpty() )
   {
     mDestFolder->close();
@@ -2020,7 +2020,7 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
     //                 "folder or invalid serial number." << endl;
     return;
   }
-  mLostBoys.remove(serNum);
+  mLostBoys.removeAll(serNum);
   if ( mLostBoys.isEmpty() ) {
     // we are done. All messages transferred to the host succesfully
     disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),

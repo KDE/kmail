@@ -360,7 +360,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
       break;
     }
   }
-  aFolder->parent()->remove(aFolder);
+  aFolder->parent()->removeAll(aFolder);
   // find the parent folder by stripping "." and ".directory" from the name
   QString parentName = fdir->name();
   parentName = parentName.mid( 1, parentName.length()-11 );
@@ -385,7 +385,7 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
   QDir dir;
   QString folderDirLocation = aFolderDir->path();
   aFolderDir->clear();
-  aFolderDir->parent()->remove(aFolderDir);
+  aFolderDir->parent()->removeAll(aFolderDir);
   dir.rmdir(folderDirLocation);
 }
 

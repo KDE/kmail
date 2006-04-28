@@ -228,7 +228,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 //perform all cleanup that requires the kernel in destruct()
 KMMainWidget::~KMMainWidget()
 {
-  s_mainWidgetList->remove( this );
+  s_mainWidgetList->removeAll( this );
   qDeleteAll( mFilterCommands );
   destruct();
 }
@@ -3254,7 +3254,7 @@ void KMMainWidget::removeDuplicates()
     bool finished = false;
     for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
       if (!((*mFolder)[*jt]->status().isUnread())) {
-        (*it).remove( jt );
+        (*it).erase( jt );
         (*it).prepend( *jt );
         finished = true;
       }

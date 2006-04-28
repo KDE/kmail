@@ -98,7 +98,7 @@ void JobScheduler::removeTask( TaskList::Iterator& it )
 {
   if ( (*it)->isImmediate() )
     --mPendingImmediateTasks;
-  mTaskList.remove( it );
+  mTaskList.erase( it );
 }
 
 void JobScheduler::notifyOpeningFolder( KMFolder* folder )

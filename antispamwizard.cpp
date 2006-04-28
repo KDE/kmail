@@ -808,7 +808,7 @@ void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConf
 #ifndef NDEBUG
         kDebug(5006) << "Replacing config ..." << endl;
 #endif
-        mToolList.remove( it );
+        mToolList.erase( it );
         mToolList.append( config );
       }
       break;
@@ -836,7 +836,7 @@ void AntiSpamWizard::ConfigReader::sortToolList()
     }
     config = (*highest);
     tmpList.append( config );
-    mToolList.remove( highest );
+    mToolList.erase( highest );
   }
   for ( QList<SpamToolConfig>::Iterator it = tmpList.begin();
         it != tmpList.end(); ++it ) {

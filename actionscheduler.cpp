@@ -121,7 +121,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
 
 ActionScheduler::~ActionScheduler()
 {
-  schedulerList->remove( this );
+  schedulerList->removeAll( this );
   tempCloseFolders();
   mSrcFolder->close();
 
@@ -421,7 +421,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
       return;
   }
 
-  mFetchSerNums.remove( msg->getMsgSerNum() );
+  mFetchSerNums.removeAll( msg->getMsgSerNum() );
 
   // Note: This may not be necessary. What about when it's time to
   //       delete the original message?
@@ -644,7 +644,7 @@ void ActionScheduler::moveMessage()
     mOriginalSerNum = 0;
   MessageProperty::setFilterHandler( *mMessageIt, 0 );
   MessageProperty::setFiltering( *mMessageIt, false );
-  mSerNums.remove( *mMessageIt );
+  mSerNums.removeAll( *mMessageIt );
 
   KMMessage *orgMsg = 0;
   ReturnCode mOldReturnCode = mResult;

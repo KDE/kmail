@@ -424,7 +424,7 @@ void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
       QList<KMFilter*>::const_iterator it2 = mFilters.begin();
       for ( ; it2 != mFilters.end() ; ++it2 ) {
         if ( (*it1)->name() == (*it2)->name() ) {
-          mFilters.remove( (*it2) );
+          mFilters.removeAll( (*it2) );
           it2 = mFilters.constBegin();
         }
       }

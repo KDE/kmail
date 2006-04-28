@@ -625,7 +625,7 @@ void KMComposeWin::readConfig(void)
   mTransport->clear();
   mTransport->addItems( KMTransportInfo::availableTransports() );
   while ( transportHistory.count() > GlobalSettings::self()->maxTransportEntries() )
-    transportHistory.remove( transportHistory.last() );
+    transportHistory.removeLast();
   mTransport->addItems( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
   {
@@ -662,7 +662,7 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::self()->setAutoSpellChecking(
                         mAutoSpellCheckingAction->isChecked() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
-  transportHistory.remove(mTransport->currentText());
+  transportHistory.removeAll(mTransport->currentText());
     if (!KMTransportInfo::availableTransports().contains(mTransport->currentText())) {
       transportHistory.prepend(mTransport->currentText());
   }

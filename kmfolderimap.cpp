@@ -447,7 +447,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
           int index;
           if (!canAddMsgNow(msg, &index)) {
             aIndex_ret << index;
-            msgList.remove(msg);
+            msgList.removeAll(msg);
           } else {
             if (!msg->transferInProgress())
               msg->setTransferInProgress(true);
@@ -1279,7 +1279,7 @@ void KMFolderImap::slotListFolderResult(KJob * job)
         if (!mReadOnly)
           flagsToStatus( msgBase, serverFlags, false );
         idx++;
-        uid = (*it).items.remove(uid);
+        uid = (*it).items.erase(uid);
         if ( msgBase->getMsgSerNum() > 0 ) {
           saveMsgMetaData( static_cast<KMMessage*>(msgBase) );
         }

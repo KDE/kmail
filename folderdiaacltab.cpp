@@ -795,7 +795,7 @@ void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissi
       }
     }
   } else {
-    uint nr = mRemovedACLs.remove( userId );
+    uint nr = mRemovedACLs.removeAll( userId );
     ok = ( nr > 0 );
   }
   if ( !ok )

@@ -687,7 +687,7 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
            if ((it2 != part.end()) && ((*it2).endsWith(":")))
            {
               fromLine = oldIndent + (*it2) + '\n';
-              part.remove(it2);
+              part.erase(it2);
            }
         }
         if (flushPart( result, part, oldIndent, maxLineLength))
@@ -2526,8 +2526,8 @@ QList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
   // - a line starts with "From "
   if ( ( willBeSigned && cf.hasTrailingWhitespace() ) ||
        cf.hasLeadingFrom() ) {
-    allowedCtes.remove( DwMime::kCte8bit );
-    allowedCtes.remove( DwMime::kCte7bit );
+    allowedCtes.removeAll( DwMime::kCte8bit );
+    allowedCtes.removeAll( DwMime::kCte7bit );
   }
 
   return allowedCtes;
@@ -3634,7 +3634,7 @@ QStringList KMMessage::stripAddressFromAddressList( const QString& address,
                         KPIM::getEmailAddress( *it ).toUtf8().data() ) == 0 ) {
       kDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
-      it = addresses.remove( it );
+      it = addresses.erase( it );
     }
     else
       ++it;
@@ -3655,7 +3655,7 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
     if( kmkernel->identityManager()->thatIsMe( KPIM::getEmailAddress( *it ) ) ) {
       kDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
-      it = addresses.remove( it );
+      it = addresses.erase( it );
     }
     else
       ++it;

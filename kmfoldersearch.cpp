@@ -284,7 +284,7 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
                                         const KMSearchPattern*, bool ) ) );
       --mRemainingFolders;
       folder->close();
-      mOpenedFolders.remove( folder );
+      mOpenedFolders.removeAll( folder );
       if ( mRemainingFolders <= 0 )
       {
         mRemainingFolders = 0;

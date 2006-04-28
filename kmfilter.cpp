@@ -201,7 +201,7 @@ void KMFilter::setApplyOnAccount( uint id, bool aApply )
   if (aApply && !mAccounts.contains( id )) {
     mAccounts.append( id );
   } else if (!aApply && mAccounts.contains( id )) {
-    mAccounts.remove( id );
+    mAccounts.removeAll( id );
   }
 }
 
@@ -372,7 +372,7 @@ void KMFilter::purify()
     while ( it.hasPrevious() ) {
       KMFilterAction *action = it.previous();
       if ( action->isEmpty() )
-        mActions.remove ( action );
+        mActions.removeAll ( action );
     }
 
     // Remove invalid accounts from mAccounts - just to be tidy

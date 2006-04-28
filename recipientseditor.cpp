@@ -501,7 +501,7 @@ void RecipientsView::slotDeleteLine()
   if ( mLines.at( newPos ) )
     mLines.at( newPos )->activate();
 
-  mLines.remove( line );
+  mLines.removeAll( line );
   removeChild( line );
   delete line;
 

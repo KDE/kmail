@@ -38,7 +38,7 @@ void KMAcctFolder::removeAccount( KMAccount* aAcct )
 {
   if ( !aAcct || !acctList() ) return;
 
-  acctList()->remove( aAcct );
+  acctList()->removeAll( aAcct );
   aAcct->setFolder( 0 );
   if ( acctList()->count() <= 0 ) {
     delete acctList();

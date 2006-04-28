@@ -1163,12 +1163,12 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
   QList<ModifiedAccountsType*>::Iterator k;
   for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
     if ((*k)->oldAccount)
-      accountNames.remove( (*k)->oldAccount->name() );
+      accountNames.removeAll( (*k)->oldAccount->name() );
 
   QList< QPointer<KMAccount> >::Iterator l;
   for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
     if (*l)
-      accountNames.remove( (*l)->name() );
+      accountNames.removeAll( (*l)->name() );
 
   QList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
@@ -1289,7 +1289,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   }
 
   QStringList accountNames = occupiedNames();
-  accountNames.remove( account->name() );
+  accountNames.removeAll( account->name() );
 
   AccountDialog dialog( i18n("Modify Account"), account, this );
 
@@ -1317,7 +1317,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
     if ( (*j)->newAccount->name() == listItem->text(0) ) {
       acct = (*j)->oldAccount;
       mAccountsToDelete.append( acct );
-      mModifiedAccounts.remove( j );
+      mModifiedAccounts.erase( j );
       break;
     }
   if ( !acct ) {
@@ -1325,7 +1325,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
         acct = *it;
-        mNewAccounts.remove( it );
+        mNewAccounts.erase( it );
         break;
       }
   }

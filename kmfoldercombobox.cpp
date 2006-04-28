@@ -85,8 +85,8 @@ void KMFolderComboBox::createFolderList(QStringList *names,
         break;
     }
     if ( folderIt != folders->end() ) {
-      folders->remove( folderIt );
-      names->remove( namesIt );
+      folders->erase( folderIt );
+      names->erase( namesIt );
     }
   }
 

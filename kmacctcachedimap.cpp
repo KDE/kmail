@@ -437,8 +437,8 @@ bool KMAcctCachedImap::isPreviouslyDeletedFolder( const QString& subFolderPath )
 
 void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )
 {
-  mDeletedFolders.remove( subFolderPath );
-  mPreviouslyDeletedFolders.remove( subFolderPath );
+  mDeletedFolders.removeAll( subFolderPath );
+  mPreviouslyDeletedFolders.removeAll( subFolderPath );
 }
 
 void KMAcctCachedImap::addRenamedFolder( const QString& subFolderPath, const QString& oldLabel, const QString& newName )
