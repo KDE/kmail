@@ -355,7 +355,7 @@ void AccountManager::addToTotalNewMailCount( const QMap<QString, int> & newInFol
   for ( QMap<QString, int>::const_iterator it = newInFolder.begin();
         it != newInFolder.end(); ++it ) {
     mTotalNewMailsArrived += it.data();
-    if ( mTotalNewInFolder.find( it.key() ) == mTotalNewInFolder.end() )
+    if ( !mTotalNewInFolder.contains( it.key() )  )
       mTotalNewInFolder[it.key()] = it.data();
     else
       mTotalNewInFolder[it.key()] += it.data();
@@ -375,7 +375,7 @@ uint AccountManager::createId()
   do
   {
     newId = KRandom::random();
-  } while ( usedIds.find(newId) != usedIds.end() );
+  } while ( usedIds.contains(newId)  );
 
   return newId;
 }

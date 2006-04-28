@@ -781,7 +781,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
       mTransportInfo->auth = false;
       mTransportInfo->encryption = "NONE";
       QString serverport = transport.mid(7);
-      int colon = serverport.find(':');
+      int colon = serverport.indexOf(':');
       if (colon != -1) {
         mTransportInfo->host = serverport.left(colon);
         mTransportInfo->port = serverport.mid(colon + 1);
@@ -796,7 +796,7 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
       mTransportInfo->auth = false;
       mTransportInfo->encryption = "ssl";
       QString serverport = transport.mid(7);
-      int colon = serverport.find(':');
+      int colon = serverport.indexOf(':');
       if (colon != -1) {
         mTransportInfo->host = serverport.left(colon);
         mTransportInfo->port = serverport.mid(colon + 1);

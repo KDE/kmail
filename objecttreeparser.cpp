@@ -941,7 +941,7 @@ namespace KMail {
       int subPos = partStr.indexOf(subSearch, 0, Qt::CaseInsensitive );
       if ( -1 < subPos ){
         subject = partStr.mid(subPos+subSearch.length());
-        thisEoL = subject.find('\n');
+        thisEoL = subject.indexOf('\n');
         if ( -1 < thisEoL )
           subject.truncate( thisEoL );
       }
@@ -1956,7 +1956,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
         }
         /*
         // add i18n support for 3rd party plug-ins here:
-        else if (0 <= cryptPlug->libName().find( "yetanotherpluginname", 0, false )) {
+        else if ( cryptPlug->libName().contains( "yetanotherpluginname", Qt::CaseInsensitive )) {
 
         }
         */
@@ -2565,7 +2565,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     QString line;
 
     /* search next occurrence of '\n' */
-    pos = s.find('\n', beg, false);
+    pos = s.indexOf('\n', beg, Qt::CaseInsensitive);
     if (pos == (unsigned int)(-1))
         pos = length;
 

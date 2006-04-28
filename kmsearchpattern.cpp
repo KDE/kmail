@@ -404,10 +404,10 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
       return ( QString::compare( msgContents.toLower(), contents().toLower() ) != 0 );
 
   case KMSearchRule::FuncContains:
-    return ( msgContents.find( contents(), 0, false ) >= 0 );
+    return ( msgContents.contains( contents(), Qt::CaseInsensitive ) );
 
   case KMSearchRule::FuncContainsNot:
-    return ( msgContents.find( contents(), 0, false ) < 0 );
+    return ( !msgContents.contains( contents(), Qt::CaseInsensitive ) );
 
   case KMSearchRule::FuncRegExp:
     {
@@ -561,10 +561,10 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
       return ( numericalValue != numericalMsgContents );
 
   case KMSearchRule::FuncContains:
-    return ( msgContents.find( contents(), 0, false ) >= 0 );
+    return ( msgContents.contains( contents(), Qt::CaseInsensitive ) );
 
   case KMSearchRule::FuncContainsNot:
-    return ( msgContents.find( contents(), 0, false ) < 0 );
+    return ( !msgContents.contains( contents(), Qt::CaseInsensitive ) );
 
   case KMSearchRule::FuncRegExp:
     {
