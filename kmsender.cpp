@@ -340,12 +340,10 @@ void KMSender::doSendMsg()
     if ( sentFolder == 0 || sentFolder->isReadOnly() )
       sentFolder = kmkernel->sentFolder();
 
-    if ( sentFolder ) {
-      if ( const int err = sentFolder->open() ) {
-        Q_UNUSED( err );
-        cleanup();
-        return;
-      }
+    if ( const int err = sentFolder->open() ) {
+      Q_UNUSED( err );
+      cleanup();
+      return;
     }
 
     // Disable the emitting of msgAdded signal, because the message is taken out of the
