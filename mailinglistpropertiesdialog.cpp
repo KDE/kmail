@@ -93,7 +93,8 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
   groupLayout->addWidget( label, 4, 0 );
-  mMLId = new QLabel( label, "", mlGroup );
+  mMLId = new QLabel( "", mlGroup );
+  mMLId->setBuddy( label );
   groupLayout->addWidget( mMLId, 4, 1, 1, 2 );
   mMLId->setEnabled( false );
 

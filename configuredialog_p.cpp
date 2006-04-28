@@ -89,7 +89,8 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   mComboBox->setEditable( false );
   mComboBox->addItems( identities );
   mComboBox->setEnabled( false );
-  QLabel *label = new QLabel( mComboBox, i18n("&Existing identities:"), page );
+  QLabel *label = new QLabel( i18n("&Existing identities:"), page );
+  label->setBuddy( mComboBox );
   label->setEnabled( false );
   hlay->addWidget( label );
   hlay->addWidget( mComboBox, 1 );

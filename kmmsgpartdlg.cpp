@@ -112,7 +112,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 2: "Name" lineedit and label:
   mFileName = new KLineEdit( plainPage() );
-  label = new QLabel( mFileName, i18n("&Name:"), plainPage() );
+  label = new QLabel( i18n("&Name:"), plainPage() );
+  label->setBuddy( mFileName );
   glay->addWidget( label, 2, 0 );
   glay->addWidget( mFileName, 2, 1 );
 
@@ -126,7 +127,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 3: "Description" lineedit and label:
   mDescription = new KLineEdit( plainPage() );
-  label = new QLabel( mDescription, i18n("&Description:"), plainPage() );
+  label = new QLabel( i18n("&Description:"), plainPage() );
+  label->setBuddy( mDescription );
   glay->addWidget( label, 3, 0 );
   glay->addWidget( mDescription, 3, 1 );
 
@@ -142,7 +144,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mEncoding = new QComboBox( plainPage() );
   mEncoding->setEditable( false );
   mEncoding->addItems( mI18nizedEncodings );
-  label = new QLabel( mEncoding, i18n("&Encoding:"), plainPage() );
+  label = new QLabel( i18n("&Encoding:"), plainPage() );
+  label->setBuddy( mEncoding );
   glay->addWidget( label, 4, 0 );
   glay->addWidget( mEncoding, 4, 1 );
 

@@ -70,7 +70,8 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                         "Resets the quick search so that "
                                         "all messages are shown again." ) );
 
-  QLabel *label = new QLabel( i18n("Stat&us:"), parent, "kde toolbar widget" );
+  QLabel *label = new QLabel( i18n("Stat&us:"), parent );
+  label->setObjectName( "kde toolbar widget" );
 
   mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );

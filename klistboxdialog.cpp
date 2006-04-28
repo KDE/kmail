@@ -28,7 +28,8 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
     QVBoxLayout *topLayout = new QVBoxLayout( page );
     topLayout->setSpacing( spacingHint() );
     topLayout->setMargin( 0 );
-    labelAboveLA = new QLabel( page, "labelAboveLA" );
+    labelAboveLA = new QLabel( page );
+    labelAboveLA->setObjectName( "labelAboveLA" );
     labelAboveLA->setText( labelText );
 
     topLayout->addWidget( labelAboveLA );
@@ -37,7 +38,8 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
 
     topLayout->addWidget( entriesLB );
 
-    commentBelowLA = new QLabel( page, "commentBelowLA" );
+    commentBelowLA = new QLabel( page );
+    commentBelowLA->setObjectName( "commentBelowLA" );
     commentBelowLA->setText( "" );
     topLayout->addWidget( commentBelowLA );
     commentBelowLA->hide();

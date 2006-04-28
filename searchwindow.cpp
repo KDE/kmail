@@ -210,7 +210,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   QHBoxLayout *hbl2 = new QHBoxLayout( vbl );
   hbl2->setObjectName( "kmfs_hbl2" );
   hbl2->setSpacing( spacingHint() );
-  mSearchFolderLbl = new QLabel(i18n("Search folder &name:"), searchWidget);
+  mSearchFolderLbl = new QLabel(i18n("Search folder &name:"),searchWidget);
   hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
   if (searchFolder)

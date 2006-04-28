@@ -119,7 +119,8 @@ namespace KMail {
     ++row;
     mNameEdit = new KLineEdit( tab );
     glay->addWidget( mNameEdit, row, 1 );
-    label = new QLabel( mNameEdit, i18n("&Your name:"), tab );
+    label = new QLabel( i18n("&Your name:"), tab );
+    label->setBuddy( mNameEdit );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Your name</h3>"
                "<p>This field should contain your name as you would like "
@@ -133,7 +134,8 @@ namespace KMail {
     ++row;
     mOrganizationEdit = new KLineEdit( tab );
     glay->addWidget( mOrganizationEdit, row, 1 );
-    label =  new QLabel( mOrganizationEdit, i18n("Organi&zation:"), tab );
+    label =  new QLabel( i18n("Organi&zation:"), tab );
+    label->setBuddy( mOrganizationEdit );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Organization</h3>"
                "<p>This field should have the name of your organization "
@@ -148,7 +150,8 @@ namespace KMail {
     ++row;
     mEmailEdit = new KLineEdit( tab );
     glay->addWidget( mEmailEdit, row, 1 );
-    label = new QLabel( mEmailEdit, i18n("&Email address:"), tab );
+    label = new QLabel( i18n("&Email address:"), tab );
+    label->setBuddy( mEmailEdit );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Email address</h3>"
                "<p>This field should have your full email address.</p>"
@@ -184,7 +187,8 @@ namespace KMail {
 	       "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
-    label = new QLabel( mPGPSigningKeyRequester, i18n("OpenPGP signing key:"), tab );
+    label = new QLabel( i18n("OpenPGP signing key:"), tab );
+    label->setBuddy( mPGPSigningKeyRequester );
     mPGPSigningKeyRequester->setWhatsThis( msg );
     label->setWhatsThis( msg );
 
@@ -209,7 +213,8 @@ namespace KMail {
                "to encrypt copies of outgoing messages to you using OpenPGP; "
 	       "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
-    label = new QLabel( mPGPEncryptionKeyRequester, i18n("OpenPGP encryption key:"), tab );
+    label = new QLabel( i18n("OpenPGP encryption key:"), tab );
+    label->setBuddy( mPGPEncryptionKeyRequester );
     mPGPEncryptionKeyRequester->setWhatsThis( msg );
     label->setWhatsThis( msg );
 
@@ -231,7 +236,8 @@ namespace KMail {
                "<p>You can leave this blank, but KMail will not be able "
                "to digitally sign emails using S/MIME; "
 	       "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel( mSMIMESigningKeyRequester, i18n("S/MIME signing certificate:"), tab );
+    label = new QLabel( i18n("S/MIME signing certificate:"), tab );
+    label->setBuddy( mSMIMESigningKeyRequester );
     mSMIMESigningKeyRequester->setWhatsThis( msg );
     label->setWhatsThis( msg );
     glay->addWidget( label, row, 0 );
@@ -259,7 +265,8 @@ namespace KMail {
                "<p>You can leave this blank, but KMail will not be able "
                "to encrypt copies of outgoing messages to you using S/MIME; "
 	       "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel( mSMIMEEncryptionKeyRequester, i18n("S/MIME encryption certificate:"), tab );
+    label = new QLabel( i18n("S/MIME encryption certificate:"), tab );
+    label->setBuddy( mSMIMEEncryptionKeyRequester );
     mSMIMEEncryptionKeyRequester->setWhatsThis( msg );
     label->setWhatsThis( msg );
 
@@ -306,7 +313,8 @@ namespace KMail {
     ++row;
     mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true, "mReplyToEdit" );
     glay->addWidget( mReplyToEdit, row, 1 );
-    label = new QLabel ( mReplyToEdit, i18n("&Reply-To address:"), tab);
+    label = new QLabel ( i18n("&Reply-To address:"), tab );
+    label->setBuddy( mReplyToEdit );
     glay->addWidget( label , row, 0 );
     msg = i18n("<qt><h3>Reply-To addresses</h3>"
                "<p>This sets the <tt>Reply-to:</tt> header to contain a "
@@ -325,7 +333,8 @@ namespace KMail {
     ++row;
     mBccEdit = new KPIM::AddresseeLineEdit( tab, true, "mBccEdit" );
     glay->addWidget( mBccEdit, row, 1 );
-    label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
+    label = new QLabel( i18n("&BCC addresses:"), tab );
+    label->setBuddy( mBccEdit );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
                "<p>The addresses that you enter here will be added to each "

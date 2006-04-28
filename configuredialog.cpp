@@ -1556,7 +1556,8 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
     fontDescriptions << i18n( fontNames[i].displayName );
   mFontLocationCombo->addItems( fontDescriptions );
 
-  label = new QLabel( mFontLocationCombo, i18n("Apply &to:"), this );
+  label = new QLabel( i18n("Apply &to:"), this );
+  label->setBuddy( mFontLocationCombo );
   label->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   hlay->addWidget( label );
 
@@ -3207,7 +3208,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   // "name" and "value" line edits and labels:
   mTagNameEdit = new KLineEdit( this );
   mTagNameEdit->setEnabled( false );
-  mTagNameLabel = new QLabel( mTagNameEdit, i18n("&Name:"), this );
+  mTagNameLabel = new QLabel( i18n("&Name:"), this );
+  mTagNameLabel->setBuddy( mTagNameEdit );
   mTagNameLabel->setEnabled( false );
   glay->addWidget( mTagNameLabel, 3, 0 );
   glay->addWidget( mTagNameEdit, 3, 1 );
@@ -3216,7 +3218,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
 
   mTagValueEdit = new KLineEdit( this );
   mTagValueEdit->setEnabled( false );
-  mTagValueLabel = new QLabel( mTagValueEdit, i18n("&Value:"), this );
+  mTagValueLabel = new QLabel( i18n("&Value:"), this );
+  mTagValueLabel->setBuddy( mTagValueEdit );
   mTagValueLabel->setEnabled( false );
   glay->addWidget( mTagValueLabel, 4, 0 );
   glay->addWidget( mTagValueEdit, 4, 1 );
