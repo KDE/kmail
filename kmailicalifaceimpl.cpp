@@ -1365,7 +1365,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
     kWarning() << "KCal::ResourceKolab::fromKMailFolderSynced path is too short: " << path << endl;
     return;
   }
-  if ( path.startsWith( "/INBOX/", false ) ) {
+  if ( path.startsWith( "/INBOX/", Qt::CaseInsensitive ) ) {
     // If INBOX, replace it with the username (which is user@domain)
     path = path.mid( secondSlash );
     path.prepend( folderURL.user() );

@@ -1205,7 +1205,7 @@ KMCommand::Result KMForwardCommand::execute()
       msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
-      msgPart->setBodyEncoded(Q3CString(msgPartText.ascii()));
+      msgPart->setBodyEncoded(Q3CString(msgPartText.toAscii()));
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->addAttach(msgPart);
@@ -2907,7 +2907,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
     return;
 
   // FIXME: better detection of mimetype??
-  if ( !mAtmName.endsWith( ".xia", false ) )
+  if ( !mAtmName.endsWith( ".xia", Qt::CaseInsensitive ) )
     return;
 
   const Kleo::CryptoBackend::Protocol * chiasmus =
@@ -3005,7 +3005,7 @@ static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
 }
 
 static const QString chomp( const QString & base, const QString & suffix, bool cs ) {
-  return base.endsWith( suffix, cs ) ? base.left( base.length() - suffix.length() ) : base ;
+  return base.endsWith( suffix, cs?(Qt::CaseSensitive):(Qt::CaseInsensitive) ) ? base.left( base.length() - suffix.length() ) : base ;
 }
 
 void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::Error & err, const QVariant & result )

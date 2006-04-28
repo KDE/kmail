@@ -1707,7 +1707,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
   const QString chiasmusCharset = curNode->contentTypeParameter("chiasmus-charset");
   const QTextCodec* aCodec = chiasmusCharset.isEmpty()
     ? codecFor( curNode )
-    : KMMsgBase::codecForName( chiasmusCharset.ascii() );
+    : KMMsgBase::codecForName( chiasmusCharset.toAscii() );
   htmlWriter()->queue( quotedHTML( aCodec->toUnicode( body ), false /*decorate*/ ) );
   result.setInlineEncryptionState( KMMsgFullyEncrypted );
   if ( mReader )

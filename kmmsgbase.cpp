@@ -391,7 +391,7 @@ QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
 
   if ( !str.contains( "=?" ) )
     return KMMsgBase::codecForName( GlobalSettings::self()->
-                                    fallbackCharacterEncoding().latin1() )->toUnicode( str );
+                                    fallbackCharacterEncoding().toLatin1() )->toUnicode( str );
 
   QString result;
   Q3CString LWSP_buffer;

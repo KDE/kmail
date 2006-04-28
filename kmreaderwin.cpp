@@ -1841,7 +1841,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18nc("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
-  if ( name.endsWith( ".xia", false ) &&
+  if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
     menu->insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
   menu->insertItem(i18n("Properties"), 5);

@@ -567,7 +567,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
   for ( QVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
     const QString filename = part->fileName();
-    if ( filename.endsWith( ".xia", false ) )
+    if ( filename.endsWith( ".xia", Qt::CaseInsensitive ) )
       continue; // already encrypted
     const QByteArray body = part->bodyDecodedBinary();
     QByteArray resultData;

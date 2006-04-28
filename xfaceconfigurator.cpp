@@ -275,9 +275,9 @@ namespace KMail {
     
     if ( !str.isEmpty() )
     {
-      if ( str.startsWith("x-face:", false) )
+      if ( str.startsWith("x-face:", Qt::CaseInsensitive) )
       {
-        str = str.remove("x-face:", false);
+        str = str.remove("x-face:", Qt::CaseInsensitive);
         mTextEdit->setText(str);
       }
       KXFace xf;

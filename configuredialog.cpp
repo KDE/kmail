@@ -2306,7 +2306,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
-  currentEncoding = currentEncoding.replace( "iso ", "iso-", false );
+  currentEncoding = currentEncoding.replace( "iso ", "iso-", Qt::CaseInsensitive );
   ///kDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
   int i = 0;
   int indexOfLatin9 = 0;

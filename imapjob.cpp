@@ -333,7 +333,7 @@ void ImapJob::slotGetNextMessage()
   KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
   mJob = simpleJob;
   account->insertJob( mJob, jd );
-  if ( mPartSpecifier.contains( "STRUCTURE", false ) )
+  if ( mPartSpecifier.contains( "STRUCTURE", Qt::CaseSensitive ) )
   {
     connect( mJob, SIGNAL(result(KJob *)),
              this, SLOT(slotGetBodyStructureResult(KJob *)) );

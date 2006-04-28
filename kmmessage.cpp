@@ -252,7 +252,7 @@ void KMMessage::setTransferInProgress(bool value, bool force)
 
 
 bool KMMessage::isUrgent() const {
-  return headerField( "Priority" ).contains( "urgent", false )
+  return headerField( "Priority" ).contains( "urgent", Qt::CaseSensitive )
     || headerField( "X-Priority" ).startsWith( "2" );
 }
 
@@ -1366,7 +1366,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // an MDN with any disposition type other than "failed" in response
   // to the request.
   QString notificationOptions = headerField("Disposition-Notification-Options");
-  if ( notificationOptions.contains( "required", false ) ) {
+  if ( notificationOptions.contains( "required", Qt::CaseSensitive ) ) {
     // ### hacky; should parse...
     // There is a required option that we don't understand. We need to
     // ask the user what we should do:
@@ -1400,7 +1400,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   QString returnPath = returnPathList.isEmpty() ? QString()
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
   kDebug(5006) << "clean return path: " << returnPath << endl;
-  if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
+  if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, Qt::CaseSensitive ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
 			       "mdnReturnPathEmpty" :
@@ -3087,7 +3087,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     part->Body().FromString("");
 
   if (!aPart->partSpecifier().isNull())
-    part->SetPartId( aPart->partSpecifier().latin1() );
+    part->SetPartId( DwString(aPart->partSpecifier().toLatin1()) );
 
   if (aPart->decodedSize() > 0)
     part->SetBodySize( aPart->decodedSize() );

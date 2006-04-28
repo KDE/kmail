@@ -807,7 +807,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     if ( node ) {
       f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
     }
-    else if ( subfolderPaths[i].upper() != "/INBOX/" )
+    else if ( subfolderPaths[i].toUpper() != "/INBOX/" )
     {
       kDebug(5006) << "create folder " << subfolderNames[i] << endl;
       KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
@@ -981,11 +981,11 @@ void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
 void KMFolderImap::setChildrenState( QString attributes )
 {
   // update children state
-  if ( attributes.contains( "haschildren", false ) )
+  if ( attributes.contains( "haschildren", Qt::CaseSensitive ) )
   {
     setHasChildren( FolderStorage::HasChildren );
-  } else if ( attributes.contains( "hasnochildren", false ) ||
-              attributes.contains( "noinferiors", false ) )
+  } else if ( attributes.contains( "hasnochildren", Qt::CaseSensitive ) ||
+              attributes.contains( "noinferiors", Qt::CaseSensitive ) )
   {
     setHasChildren( FolderStorage::HasNoChildren );
   } else

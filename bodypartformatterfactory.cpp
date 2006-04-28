@@ -185,7 +185,7 @@ const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::cre
 }
 
 const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::createFor( const QString & type, const QString & subtype ) const {
-  return createFor( type.latin1(), subtype.latin1() );
+  return createFor( type.toLatin1(), subtype.toLatin1() );
 }
 
 const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::createFor( const QByteArray & type, const QByteArray & subtype ) const {
