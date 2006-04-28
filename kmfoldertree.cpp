@@ -1873,6 +1873,9 @@ void KMFolderTree::moveFolder( KMFolder* destination )
     return;
   }
 
+  if (!folder)
+	return;
+
   kDebug(5006) << "move folder " << currentFolder()->label() << " to "
     << ( destination ? destination->label() : "Local Folders" ) << endl;
   kmkernel->folderMgr()->moveFolder( folder, parent );
