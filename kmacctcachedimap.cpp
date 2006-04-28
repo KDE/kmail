@@ -296,7 +296,7 @@ void KMAcctCachedImap::addUnreadMsgCount( const KMFolderCachedImap *folder,
     // therefore doesn't need to be counted here
     const QString folderId = folder->folder()->idString();
     int newInFolder = countUnread;
-    if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
+    if ( mUnreadBeforeCheck.contains( folderId )  )
       newInFolder -= mUnreadBeforeCheck[folderId];
     if ( newInFolder > 0 )
       addToNewInFolder( folderId, newInFolder );
@@ -427,12 +427,12 @@ QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath )
 
 bool KMAcctCachedImap::isDeletedFolder( const QString& subFolderPath ) const
 {
-  return mDeletedFolders.find( subFolderPath ) != mDeletedFolders.end();
+  return mDeletedFolders.contains( subFolderPath ) ;
 }
 
 bool KMAcctCachedImap::isPreviouslyDeletedFolder( const QString& subFolderPath ) const
 {
-  return mPreviouslyDeletedFolders.find( subFolderPath ) != mPreviouslyDeletedFolders.end();
+  return mPreviouslyDeletedFolders.contains( subFolderPath ) ;
 }
 
 void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )

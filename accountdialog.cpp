@@ -135,7 +135,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 
       int commentPos = -1;
 
-      if( (commentPos = s.find('#')) > -1 ) {
+      if( (commentPos = s.indexOf('#')) > -1 ) {
         // get rid of trailing comment
         s.truncate(commentPos);
         s = s.trimmed();
@@ -145,7 +145,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
         processGlobalLock(s);
       } else if( lockFileLocal.search(s) != -1 ) {
         processLocalLock(s);
-      } else if( int i = s.find('=') ) {
+      } else if( int i = s.indexOf('=') ) {
         processVariableSetting(s,i);
       }
     }
@@ -174,7 +174,7 @@ ProcmailRCParser::~ProcmailRCParser()
 void
 ProcmailRCParser::processGlobalLock(const QString &s)
 {
-  QString val = expandVars(s.mid(s.find('=') + 1).trimmed());
+  QString val = expandVars(s.mid(s.indexOf('=') + 1).trimmed());
   if ( !mLockFiles.contains(val) )
     mLockFiles << val;
 }

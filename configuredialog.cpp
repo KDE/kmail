@@ -753,7 +753,7 @@ static inline QString uniqueName( const QStringList & list,
 {
   int suffix = 1;
   QString result = name;
-  while ( list.find( result ) != list.end() ) {
+  while ( list.contains( result )  ) {
     result = i18nc("%1: name; %2: number appended to it to make it unique "
                   "among a list of names", "%1 %2",
         name, suffix );

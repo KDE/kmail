@@ -102,7 +102,7 @@ FolderStorage::~FolderStorage()
 QString FolderStorage::dotEscape(const QString& aStr)
 {
   if (aStr.isEmpty() || aStr[0] != '.') return aStr;
-  return aStr.left(aStr.find(QRegExp("[^\\.]"))) + aStr;
+  return aStr.left(aStr.indexOf(QRegExp("[^\\.]"))) + aStr;
 }
 
 void FolderStorage::addJob( FolderJob* job ) const

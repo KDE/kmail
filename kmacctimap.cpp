@@ -394,7 +394,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   // count the unread messages
   const QString folderId = folder->idString();
   int newInFolder = folder->countUnread();
-  if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
+  if ( mUnreadBeforeCheck.contains( folderId )  )
     newInFolder -= mUnreadBeforeCheck[folderId];
   if ( newInFolder > 0 ) {
     addToNewInFolder( folderId, newInFolder );
@@ -568,9 +568,9 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
 void KMAcctImap::execFilters(quint32 serNum)
 {
   if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
-  QList<quint32>::iterator findIt = mFilterSerNums.find( serNum );
-  if ( findIt != mFilterSerNums.end() )
+  if ( mFilterSerNums.contains( serNum ) )
       return;
+  
   mFilterSerNums.append( serNum );
   mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), 1 );
 }

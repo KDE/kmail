@@ -663,8 +663,7 @@ void KMComposeWin::writeConfig(void)
                         mAutoSpellCheckingAction->isChecked() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
   transportHistory.remove(mTransport->currentText());
-    if (KMTransportInfo::availableTransports().indexOf(mTransport
-    ->currentText()) == -1) {
+    if (!KMTransportInfo::availableTransports().contains(mTransport->currentText())) {
       transportHistory.prepend(mTransport->currentText());
   }
   GlobalSettings::self()->setTransportHistory( transportHistory );
@@ -2599,7 +2598,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
                               !kmkernel->msgSender()->sendQuotedPrintable());
   kDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
-  int slash = mimeType.find( '/' );
+  int slash = mimeType.indexOf( '/' );
   if( slash == -1 )
     slash = mimeType.length();
   msgPart->setTypeStr( mimeType.left( slash ).toLatin1() );

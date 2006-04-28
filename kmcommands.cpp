@@ -2015,7 +2015,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
-  if ( folder != mDestFolder || mLostBoys.find( serNum ) == mLostBoys.end() ) {
+  if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
     //kDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
     //                 "folder or invalid serial number." << endl;
     return;
@@ -2121,7 +2121,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     QString query=mUrl.query();
     while (!query.isEmpty()) {
       QString queryPart;
-      int secondQuery = query.find('?',1);
+      int secondQuery = query.indexOf('?',1);
       if (secondQuery != -1)
         queryPart = query.left(secondQuery);
       else

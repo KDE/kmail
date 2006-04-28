@@ -528,8 +528,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 void KMKernel::setDefaultTransport( const QString & transport )
 {
   QStringList availTransports = KMail::TransportManager::transportNames();
-  QStringList::const_iterator it = availTransports.find( transport );
-  if ( it == availTransports.end() ) {
+  if ( !availTransports.contains( transport ) ) {
     kWarning() << "The transport you entered is not available" << endl;
     return;
   }
@@ -1807,7 +1806,7 @@ bool KMKernel::haveSystemTrayApplet()
 
 bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
 {
-  if ( systemTrayApplets.indexOf( applet ) == -1 ) {
+  if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
     return true;
   }
@@ -1817,14 +1816,7 @@ bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
 
 bool KMKernel::unregisterSystemTrayApplet( const KSystemTray* applet )
 {
-  QList<const KSystemTray*>::iterator it =
-    systemTrayApplets.find( applet );
-  if ( it != systemTrayApplets.end() ) {
-    systemTrayApplets.remove( it );
-    return true;
-  }
-  else
-    return false;
+  return systemTrayApplets.removeAll( applet ) > 0;
 }
 
 void KMKernel::emergencyExit( const QString& reason )

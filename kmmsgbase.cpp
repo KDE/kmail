@@ -333,7 +333,7 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   {
     QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
     QString mimeName = (codec) ? QString(codec->mimeName()).toLower() : (*it);
-    if (mimeNames.find(mimeName) == mimeNames.end())
+    if (!mimeNames.contains(mimeName) )
     {
       encodings.append(KGlobal::charsets()->languageForEncoding(*it)
         + " ( " + mimeName + " )");
@@ -389,7 +389,7 @@ QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
   if ( str.isEmpty() )
     return QString();
 
-  if ( str.find( "=?" ) < 0 )
+  if ( !str.contains( "=?" ) )
     return KMMsgBase::codecForName( GlobalSettings::self()->
                                     fallbackCharacterEncoding().latin1() )->toUnicode( str );
 
@@ -520,7 +520,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
     start = pos; p = pos;
     while (p < strLength)
     {
-      if (!breakLine && (_str.at(p) == ' ' || dontQuote.find(_str.at(p)) != -1))
+      if (!breakLine && (_str.at(p) == ' ' || dontQuote.contains(_str.at(p)) ))
         start = p + 1;
       if (_str.at(p).unicode() >= 128 || _str.at(p).unicode() < 32)
         break;
@@ -528,9 +528,9 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
     }
     if (breakLine || p < strLength)
     {
-      while (dontQuote.find(_str.at(start)) != -1) start++;
+      while (dontQuote.contains(_str.at(start)) ) start++;
       stop = start;
-      while (stop < strLength && dontQuote.find(_str.at(stop)) == -1)
+      while (stop < strLength && !dontQuote.contains(_str.at(stop)) )
         stop++;
       result += _str.mid(pos, start - pos).toLatin1();
       encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
@@ -643,7 +643,7 @@ Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
 {
-  int p = _str.find('\'');
+  int p = _str.indexOf('\'');
   if (p < 0) return kmkernel->networkCodec()->toUnicode(_str);
 
   Q3CString charset = _str.left(p);

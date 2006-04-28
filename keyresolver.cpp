@@ -387,7 +387,7 @@ namespace {
 
 static QString canonicalAddress( const QString & _address ) {
   const QString address = KPIM::getEmailAddress( _address );
-  if ( address.find('@') == -1 ) {
+  if ( !address.contains('@') ) {
     // local address
     //char hostname[1024];
     //gethostname(hostname,1024);

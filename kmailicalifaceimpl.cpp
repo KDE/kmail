@@ -240,7 +240,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       KMMessagePart msgPart;
       msgPart.setName( attachmentName );
 
-      const int iSlash = attachmentMimetype.find('/');
+      const int iSlash = attachmentMimetype.indexOf('/');
       const Q3CString sType    = attachmentMimetype.left( iSlash   ).toLatin1();
       const Q3CString sSubtype = attachmentMimetype.mid(  iSlash+1 ).toLatin1();
       msgPart.setTypeStr( sType );
@@ -289,7 +289,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 // Look for the attachment with the right mimetype
 bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s )
 {
-  const int iSlash = mimetype.find('/');
+  const int iSlash = mimetype.indexOf('/');
   const Q3CString sType    = mimetype.left( iSlash   ).toLatin1();
   const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
   DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype, true /* starts with sSubtype, to accept application/x-vnd.kolab.contact.distlist */ );
@@ -525,7 +525,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
     KMMessage* msg = f->storage()->readTemporaryMsg(i);
 #endif
     if ( msg ) {
-      const int iSlash = mimetype.find('/');
+      const int iSlash = mimetype.indexOf('/');
       const Q3CString sType    = mimetype.left( iSlash   ).toLatin1();
       const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
       if ( sType.isEmpty() || sSubtype.isEmpty() ) {
@@ -1360,7 +1360,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   // IMAP path is either /INBOX/<path> or /user/someone/<path>
   QString path = folderURL.path( -1 );
   Q_ASSERT( path.startsWith( "/" ) );
-  int secondSlash = path.find( '/', 1 );
+  int secondSlash = path.indexOf( '/', 1 );
   if ( secondSlash == -1 ) {
     kWarning() << "KCal::ResourceKolab::fromKMailFolderSynced path is too short: " << path << endl;
     return;
