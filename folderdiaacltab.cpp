@@ -144,7 +144,7 @@ static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat 
   if ( userIdFormat == FullEmail )
     return email;
   else { // mUserIdFormat == UserName
-    email.truncate( email.find( '@' ) );
+    email.truncate( email.indexOf( '@' ) );
     return email;
   }
 }
@@ -414,7 +414,7 @@ void KMail::FolderDiaACLTab::load()
   // but the default value is determined from the current user's own id.
   QString defaultFormat = "fullemail";
   // warning mImapAccount can be 0 if creating a subsubsubfolder with dimap...  (bug?)
-  if ( mImapAccount && mImapAccount->login().find('@') == -1 )
+  if ( mImapAccount && !mImapAccount->login().contains('@') )
     defaultFormat = "username"; // no @ found, so we assume it's just the username
   KConfigGroup configGroup( kmkernel->config(), "IMAP" );
   QString str = configGroup.readEntry( "UserIdFormat", defaultFormat );
