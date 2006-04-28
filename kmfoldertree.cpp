@@ -53,10 +53,11 @@ using namespace KPIM;
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                                     KFolderTreeItem::Protocol protocol )
-  : QObject( parent, name.toLatin1() ),
+  : QObject( parent ),
     KFolderTreeItem( parent, name, protocol, Root ),
     mFolder( 0 ), mNeedsRepaint( true )
 {
+  setObjectName( name );
   init();
   setPixmap( 0, normalIcon() );
 }
@@ -64,10 +65,11 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 //-----------------------------------------------------------------------------
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder )
-  : QObject( parent, name.toLatin1() ),
+  : QObject( parent ),
     KFolderTreeItem( parent, name ),
     mFolder( folder ), mNeedsRepaint( true )
 {
+  setObjectName( name );
   init();
   setPixmap( 0, normalIcon() );
 }
@@ -75,10 +77,11 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 //-----------------------------------------------------------------------------
 KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & name,
                     KMFolder* folder )
-  : QObject( 0, name.toLatin1() ),
+  : QObject( 0 ),
     KFolderTreeItem( parent, name ),
     mFolder( folder ), mNeedsRepaint( true )
 {
+  setObjectName( name );
   init();
   setPixmap( 0, normalIcon() );
 }
@@ -950,7 +953,7 @@ void KMFolderTree::doFolderSelected( Q3ListViewItem* qlvi )
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
   KConfigGroup conf( KMKernel::config(), "Geometry" );
-  conf.writeEntry(name(), size().width());
+  conf.writeEntry(objectName(), size().width());
 
   K3ListView::resizeEvent(e);
 }
@@ -1475,7 +1478,7 @@ void KMFolderTree::slotRenameFolder(Q3ListViewItem *item, int col,
 
   QString fldName, oldFldName;
 
-  oldFldName = fti->name(0);
+  oldFldName = fti->objectName();
 
   if (!text.isEmpty())
           fldName = text;
@@ -1642,7 +1645,7 @@ bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-      o->isA("QHeader") )
+      o->metaObject()->className() == "QHeader" )
   {
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;

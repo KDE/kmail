@@ -137,11 +137,12 @@ const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContents
 */
 
 KMailICalIfaceImpl::KMailICalIfaceImpl()
-  : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
+  : DCOPObject( "KMailICalIface" ), QObject( 0 ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
     mFolderLanguage( 0 ), mFolderParentDir( 0 ), mFolderType( KMFolderTypeUnknown ),
     mUseResourceIMAP( false ), mResourceQuiet( false ), mHideFolders( true )
 {
+  setObjectName( "KMailICalIFaceImpl" );
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),

@@ -292,9 +292,10 @@ public:
 };
 
 MessageComposer::MessageComposer( KMComposeWin* win, const char* name )
-  : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 ),
+  : QObject( win ), mComposeWin( win ), mCurrentJob( 0 ),
     mKeyResolver( 0 ), mIdentityUid( 0 )
 {
+  setObjectName( name );
 }
 
 MessageComposer::~MessageComposer()

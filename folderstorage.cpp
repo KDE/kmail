@@ -63,8 +63,9 @@ using KMail::ListJob;
 //-----------------------------------------------------------------------------
 
 FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
-  : QObject( folder, aName ), mFolder( folder ), mEmitChangedTimer( 0L )
+  : QObject( folder ), mFolder( folder ), mEmitChangedTimer( 0L )
 {
+  setObjectName( aName );
   mOpenCount = 0;
   mQuiet = 0;
   mChanged = false;

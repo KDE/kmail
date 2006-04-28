@@ -692,7 +692,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   QString str = msg->codec()->toUnicode( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
-  viewer->setCaption( i18n("Message as Plain Text") );
+  viewer->setWindowTitle( i18n("Message as Plain Text") );
   viewer->setText(str);
   if( mFixedFont )
     viewer->setFont(KGlobalSettings::fixedFont());

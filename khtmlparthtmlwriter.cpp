@@ -50,9 +50,10 @@ namespace KMail {
 
   KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
 					    QObject * parent, const char * name )
-    : QObject( parent, name ), HtmlWriter(),
+    : QObject( parent ), HtmlWriter(),
       mHtmlPart( part ), mState( Ended )
   {
+    setObjectName( name );
     assert( part );
     connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
   }

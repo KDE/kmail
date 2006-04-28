@@ -37,10 +37,11 @@
 using namespace KMail;
 
 JobScheduler::JobScheduler( QObject* parent, const char* name )
-  : QObject( parent, name ), mTimer( this ),
+  : QObject( parent ), mTimer( this ),
     mPendingImmediateTasks( 0 ),
     mCurrentTask( 0 ), mCurrentJob( 0 )
 {
+  setObjectName( name );
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotRunNextJob() ) );
   // No need to start the internal timer yet, we wait for a task to be scheduled
 }

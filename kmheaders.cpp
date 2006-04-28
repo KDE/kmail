@@ -229,7 +229,7 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-      o->isA("QHeader") )
+      o->metaObject()->className() == "QHeader" )
   {
     // if we currently only show one of either sender/receiver column
     // modify the popup text in the way, that it displays the text of the other of the two
@@ -1292,7 +1292,7 @@ void KMHeaders::setStyleDependantFrameWidth()
 {
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style()->isA("KeramikStyle") )
+  if( style()->metaObject()->className() == "KeramikStyle" )
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );

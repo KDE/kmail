@@ -757,7 +757,7 @@ void KMComposeWin::slotView(void)
 
   //This sucks awfully, but no, I cannot get an activated(int id) from
   // actionContainer()
-  if (!sender()->isA("KToggleAction"))
+  if ( sender()->metaObject()->className() != "KToggleAction")
     return;
   KToggleAction *act = (KToggleAction *) sender();
 

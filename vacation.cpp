@@ -165,8 +165,9 @@ namespace {
 namespace KMail {
 
   Vacation::Vacation( QObject * parent, const char * name )
-    : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false )
+    : QObject( parent ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false )
   {
+    setObjectName( name );
     mUrl = findURL();
     kDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...

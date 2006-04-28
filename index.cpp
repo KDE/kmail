@@ -79,7 +79,7 @@ std::vector<quint32> QValueListToVector( const QList<int>& input ) {
 	return res;
 }
 KMMsgIndex::KMMsgIndex( QObject* parent ):
-	QObject( parent, "index" ),
+	QObject( parent ),
 	mState( s_idle ),
 #ifdef HAVE_INDEXLIB
 	mLockFile( std::string( static_cast<const char*>( QFile::encodeName( defaultPath() ) + "/lock" ) ) ),
@@ -91,6 +91,7 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	//mSyncTimer( new QTimer( this ) ),
 	mSlowDown( false ) {
 	kDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
+	setObjectName( "index" );
 
 	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
 	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );

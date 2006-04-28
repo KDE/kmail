@@ -260,7 +260,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 {
 //  KWin::setType( winId(), NET::Dock );
 
-  setCaption( i18n("Select Recipient") );
+  setWindowTitle( i18n("Select Recipient") );
 
   QBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );

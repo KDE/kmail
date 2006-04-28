@@ -1420,7 +1420,7 @@ void KMReaderWin::displayMessage() {
   htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
   if (!parent())
-    setCaption(msg->subject());
+    setWindowTitle(msg->subject());
 
   removeTempFiles();
 
@@ -1857,7 +1857,7 @@ void KMReaderWin::setStyleDependantFrameWidth()
     return;
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style()->isA("KeramikStyle") )
+  if( style()->metaObject()->className() == "KeramikStyle" )
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
@@ -1954,7 +1954,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       KMMessage* msg = new KMMessage;
       assert(aMsgPart!=0);
       msg->fromString(aMsgPart->bodyDecoded());
-      mMainWindow->setCaption(msg->subject());
+      mMainWindow->setWindowTitle(msg->subject());
       setMsg(msg, true);
       setAutoDelete(true);
   } else if (kasciistricmp(aMsgPart->typeStr(), "text")==0) {
@@ -1979,7 +1979,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       }
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
-      mMainWindow->setCaption(i18n("View Attachment: %1", pname));
+      mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
   } else if (kasciistricmp(aMsgPart->typeStr(), "image")==0 ||
              (kasciistricmp(aMsgPart->typeStr(), "application")==0 &&
               kasciistricmp(aMsgPart->subtypeStr(), "postscript")==0))
@@ -2015,7 +2015,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
                            "\" border=\"0\">\n"
                            "</body></html>\n" );
       htmlWriter()->end();
-      setCaption( i18n("View Attachment: %1", pname ) );
+      setWindowTitle( i18n("View Attachment: %1", pname ) );
       show();
   } else {
     htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
@@ -2032,7 +2032,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     htmlWriter()->write( Qt::escape( str ) );
     htmlWriter()->queue("</body></html>");
     htmlWriter()->flush();
-    mMainWindow->setCaption(i18n("View Attachment: %1", pname));
+    mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
   }
   // ---Sven's view text, html and image attachments in html widget end ---
 }

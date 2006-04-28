@@ -139,7 +139,7 @@ int KMFolderMbox::open()
                            "information about how to prevent this "
                            "problem from happening again.</p></qt>",
                        QString("help:/kmail/faq.html#faq-index-regeneration"),
-                       name());
+                       objectName());
         // When KMail is starting up we have to show a non-blocking message
         // box so that the initialization can continue. We don't show a
         // queued message box when KMail isn't starting up because queued
@@ -164,7 +164,7 @@ int KMFolderMbox::open()
        QString str;
        mIndexStream = 0;
        str = i18n("Folder `%1' changed. Recreating index.",
-              name());
+              objectName());
        emit statusMsg(str);
      } else {
        mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
@@ -216,7 +216,7 @@ int KMFolderMbox::create()
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
 
-  kDebug(5006) << "Creating folder " << name() << endl;
+  kDebug(5006) << "Creating folder " << objectName() << endl;
   if (access(QFile::encodeName(location()), F_OK) == 0) {
     kDebug(5006) << "KMFolderMbox::create call to access function failed." << endl;
     kDebug(5006) << "File:: " << endl;
@@ -1000,7 +1000,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   clearerr(mStream);
   if (len <= 0)
   {
-    kDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
+    kDebug(5006) << "Message added to folder `" << objectName() << "' contains no data. Ignoring it." << endl;
     if (opened) close();
     return 0;
   }

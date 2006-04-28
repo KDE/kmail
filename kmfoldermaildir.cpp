@@ -122,8 +122,7 @@ int KMFolderMaildir::open()
     {
       QString str;
       mIndexStream = 0;
-      str = i18n("Folder `%1' changed; recreating index.",
-		   name());
+      str = i18n("Folder `%1' changed; recreating index.", objectName());
       emit statusMsg(str);
     } else {
       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
@@ -414,7 +413,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     aMsg->setHeaderField( "X-UID", uidHeader );
 
   if ( msgText.length() <= 0 ) {
-    kDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
+    kDebug(5006) << "Message added to folder `" << objectName() << "' contains no data. Ignoring it." << endl;
     return 0;
   }
 

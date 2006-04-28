@@ -97,11 +97,12 @@ KMKernel *KMKernel::mySelf = 0;
 /*                     Constructor and destructor                   */
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
-  DCOPObject("KMailIface"), QObject(parent, name),
+  DCOPObject("KMailIface"), QObject(parent),
   mIdentityManager(0), mConfigureDialog(0),
   mContextMenuShown( false ), mWallet( 0 )
 {
   kDebug(5006) << "KMKernel::KMKernel" << endl;
+  setObjectName( name );
   mySelf = this;
   the_startingUp = true;
   closed_by_user = true;
@@ -338,7 +339,7 @@ void KMKernel::openReader( bool onlyCheck )
 
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it ) {
-    if ( (*it)->isA("KMMainWin") ) {
+    if ( (*it)->metaObject()->className() == "KMMainWin" ) {
       ktmw = (*it);
       break;
     }
@@ -1504,7 +1505,7 @@ void KMKernel::closeAllKMailWindows()
   KMainWindow *window = 0;
   while ( it.hasNext() ) {
     window = it.next();
-    if ( window && ( window->isA("KMMainWindow") ||
+    if ( window && ( window->metaObject()->className() == "KMMainWindow" ||
                      window->inherits("KMail::SecondaryWindow") ) )
       window->close( true ); // close and delete the window
   }
@@ -1913,7 +1914,7 @@ KMainWindow* KMKernel::mainWin()
   // First look for a KMMainWin.
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it )
-    if ( (*it)->isA("KMMainWin") )
+    if ( (*it)->metaObject()->className() == "KMMainWin" )
       return kmWin;
 
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in

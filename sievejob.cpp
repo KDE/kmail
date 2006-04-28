@@ -34,10 +34,11 @@ namespace KMail {
   SieveJob::SieveJob( const KUrl & url, const QString & script,
 		      const QStack<Command> & commands,
 		      QObject * parent, const char * name )
-    : QObject( parent, name ),
+    : QObject( parent ),
       mUrl( url ), mJob( 0 ), mDec( 0 ),
       mScript( script ), mFileExists( DontKnow ), mCommands( commands )
   {
+    setObjectName( name );
     assert( !commands.isEmpty() );
     schedule( commands.top() );
   }

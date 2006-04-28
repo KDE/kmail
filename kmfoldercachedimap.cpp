@@ -188,7 +188,7 @@ void KMFolderCachedImap::readConfig()
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "Folder-" + folder()->idString() );
   if( mImapPath.isEmpty() ) mImapPath = group.readEntry( "ImapPath" );
-  if( QString( name() ).toUpper() == "INBOX" && mImapPath == "/INBOX/" )
+  if( QString( objectName() ).toUpper() == "INBOX" && mImapPath == "/INBOX/" )
   {
     folder()->setLabel( i18n( "inbox" ) );
     // for the icon
@@ -262,7 +262,7 @@ void KMFolderCachedImap::remove()
 {
   mFolderRemoved = true;
 
-  QString part1 = folder()->path() + "/." + dotEscape(name());
+  QString part1 = folder()->path() + "/." + dotEscape(objectName());
   QString uidCacheFile = part1 + ".uidcache";
   // This is the account folder of an account that was just removed
   // When this happens, be sure to delete all traces of the cache
@@ -407,7 +407,7 @@ int KMFolderCachedImap::rename( const QString& aName,
                                 KMFolderDir* /*aParent*/ )
 {
   QString oldName = mAccount->renamedFolder( imapPath() );
-  if ( oldName.isEmpty() ) oldName = name();
+  if ( oldName.isEmpty() ) oldName = objectName();
   if ( aName == oldName )
     // Stupid user trying to rename it to it's old name :)
     return 0;
@@ -423,7 +423,7 @@ int KMFolderCachedImap::rename( const QString& aName,
   // the last sync. Only rename if the new one is different. If it's the same,
   // don't rename, but also make sure the rename is reset, in the case of
   // A -> B -> A renames.
-  if ( name() != aName )
+  if ( objectName() != aName )
     mAccount->addRenamedFolder( imapPath(), folder()->label(), aName );
   else
     mAccount->removeRenamedFolder( imapPath() );
@@ -498,7 +498,7 @@ KMAcctCachedImap *KMFolderCachedImap::account() const
 {
   if( (KMAcctCachedImap *)mAccount == 0 ) {
     // Find the account
-    mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->findByName( name() ) );
+    mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->findByName( objectName() ) );
   }
 
   return mAccount;
@@ -1516,7 +1516,7 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
 
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
-  assert( aAccount->isA("KMAcctCachedImap") );
+  assert( aAccount->metaObject()->className() == "KMAcctCachedImap" );
   mAccount = aAccount;
   if( imapPath()=="/" ) aAccount->setFolder( folder() );
 

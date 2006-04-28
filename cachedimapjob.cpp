@@ -629,7 +629,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
     kDebug(5006) << "No uidvalidity available for folder "
-                  << mFolder->name() << endl;
+                  << mFolder->objectName() << endl;
   }
   else {
     int b = cstr.indexOf("\r\n", a);
@@ -646,7 +646,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
       }
     } else
       kDebug(5006) << "No uidvalidity available for folder "
-                    << mFolder->name() << endl;
+                    << mFolder->objectName() << endl;
   }
 
   mAccount->removeJob(it);
@@ -723,7 +723,7 @@ void CachedImapJob::slotRenameFolderResult( KJob *job )
   } else {
     // Okay, the folder seems to be renamed on the server,
     // now rename it on disk
-    QString oldName = mFolder->name();
+    QString oldName = mFolder->objectName();
     QString oldPath = mFolder->imapPath();
     mAccount->removeRenamedFolder( oldPath );
     mFolder->setImapPath( (*it).path );

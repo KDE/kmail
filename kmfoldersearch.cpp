@@ -72,8 +72,9 @@
 
 
 KMSearch::KMSearch(QObject * parent, const char * name)
-    :QObject(parent, name)
+    :QObject(parent)
 {
+    setObjectName( name );
     mRemainingFolders = -1;
     mRecursive = true;
     mRunByIndex = mRunning = false;

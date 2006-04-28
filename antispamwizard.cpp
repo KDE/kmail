@@ -107,7 +107,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 #endif
   }
 
-  setCaption( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
+  setWindowTitle( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
                                     : i18n( "Anti-Virus Wizard" ) );
   mInfoPage = new ASWizInfoPage( mMode, 0, "" );
   addPage( mInfoPage,

@@ -21,7 +21,7 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
 
 {
     if ( !name )
-      setName( "KListBoxDialog" );
+      setObjectName( "KListBoxDialog" );
     resize( 400, 180 );
 
     QFrame *page = makeMainWidget();

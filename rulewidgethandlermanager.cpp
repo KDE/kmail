@@ -232,9 +232,9 @@ namespace {
   /** Returns the number of immediate children of parent with the given object
       name. Used by RuleWidgetHandlerManager::createWidgets().
   */
-  int childCount( const QObject *parent, const char *objName )
+  int childCount( const QObject *parent, const QString &objName )
   {
-    QObjectList list = parent->queryList( 0, objName, false, false );
+    QObjectList list = parent->queryList( 0, objName.toLatin1().data(), false, false );
     if ( list.isEmpty() )
       return 0;
     const int count = list.count();
@@ -251,14 +251,14 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
     for ( int i = 0;
           ( w = (*it)->createFunctionWidget( i, functionStack, receiver ) );
           ++i ) {
-      if ( childCount( functionStack, w->name() ) < 2 ) {
+      if ( childCount( functionStack, w->objectName() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         functionStack->addWidget( w );
       }
       else {
         // there was already a widget with this name, so discard this widget
         kDebug(5006) << "RuleWidgetHandlerManager::createWidgets: "
-                      << w->name() << " already exists in functionStack"
+                      << w->objectName() << " already exists in functionStack"
                       << endl;
         delete w; w = 0;
       }
@@ -266,14 +266,14 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
     for ( int i = 0;
           ( w = (*it)->createValueWidget( i, valueStack, receiver ) );
           ++i ) {
-      if ( childCount( valueStack, w->name() ) < 2 ) {
+      if ( childCount( valueStack, w->objectName() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         valueStack->addWidget( w );
       }
       else {
         // there was already a widget with this name, so discard this widget
         kDebug(5006) << "RuleWidgetHandlerManager::createWidgets: "
-                      << w->name() << " already exists in valueStack"
+                      << w->objectName() << " already exists in valueStack"
                       << endl;
         delete w; w = 0;
       }
@@ -366,7 +366,7 @@ namespace {
 
     QObject *obj = 0;
     Q_FOREACH( obj, list ) {
-      if ( !objName || qstrcmp( objName, obj->name() ) == 0 )
+      if ( !objName || qstrcmp( objName, obj->objectName().toLatin1().data() ) == 0 )
         break;
     }
     return obj;

@@ -60,7 +60,7 @@ RenameJob::RenameJob( FolderStorage* storage, const QString& newName,
 {
   mStorageTempOpened = 0;
   if ( storage ) {
-    mOldName = storage->name();
+    mOldName = storage->objectName();
     if ( storage->folderType() == KMFolderTypeImap ) {
       mOldImapPath = static_cast<KMFolderImap*>(storage)->imapPath();
     } else if ( storage->folderType() == KMFolderTypeCachedImap ) {
@@ -346,7 +346,7 @@ void RenameJob::slotMoveSubFolders( QString newName, bool success )
         FolderStorage* childStorage = static_cast<KMFolder*>(node)->storage();
         if ( !mNewFolder->child() )
           mNewFolder->createChildFolder();
-        RenameJob* job = new RenameJob( childStorage, childStorage->name(),
+        RenameJob* job = new RenameJob( childStorage, childStorage->objectName(),
                                         mNewFolder->child() );
         connect( job, SIGNAL( renameDone( QString, bool ) ),
             this, SLOT( slotMoveSubFolders( QString, bool ) ) );

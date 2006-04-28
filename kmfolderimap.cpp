@@ -185,7 +185,7 @@ void KMFolderImap::readConfig()
   if ( mImapPath.isEmpty() ) {
     setImapPath( group.readEntry("ImapPath") );
   }
-  if (QString(name()).toUpper() == "INBOX" && mImapPath == "/INBOX/")
+  if (QString(objectName()).toUpper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder()->setSystemFolder( true );
     folder()->setLabel( i18n("inbox") );
@@ -1944,7 +1944,7 @@ bool KMFolderImap::processNewMail(bool)
     return false;
   }
   if ( imapPath().isEmpty() ) {
-    kDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
+    kDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << objectName() << " is empty!" << endl;
     // remove it locally
     setAlreadyRemoved( true );
     kmkernel->imapFolderMgr()->remove( folder() );
