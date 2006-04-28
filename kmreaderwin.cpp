@@ -1752,15 +1752,15 @@ bool foundSMIMEData( const QString aUrl,
   displayName = "";
   libName = "";
   keyId = "";
-  int i1 = aUrl.find( showCertMan );
+  int i1 = aUrl.indexOf( showCertMan );
   if( -1 < i1 ) {
     i1 += showCertMan.length();
-    int i2 = aUrl.find(" ### ", i1);
+    int i2 = aUrl.indexOf(" ### ", i1);
     if( i1 < i2 )
     {
       displayName = aUrl.mid( i1, i2-i1 );
       i1 = i2+5;
-      i2 = aUrl.find(" ### ", i1);
+      i2 = aUrl.indexOf(" ### ", i1);
       if( i1 < i2 )
       {
         libName = aUrl.mid( i1, i2-i1 );

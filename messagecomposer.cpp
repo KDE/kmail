@@ -1527,7 +1527,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerDwPart->Assemble();
     if ( mIsRichText ) { // and add our mp/a boundary
         Q3CString tmpbody = innerDwPart->AsString().c_str();
-        int boundPos = tmpbody.find( '\n' );
+        int boundPos = tmpbody.indexOf( '\n' );
         if( -1 < boundPos ) {
           QByteArray bStr( ";\n  boundary=\"" );
           bStr += mSaveBoundary.c_str();
@@ -1588,7 +1588,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
 
     // manually add a boundary definition to the Content-Type header
     if( !boundaryCStr.isEmpty() ) {
-      int boundPos = mEncodedBody.find( '\n' );
+      int boundPos = mEncodedBody.indexOf( '\n' );
       if( -1 < boundPos ) {
         // insert new "boundary" parameter
         QByteArray bStr( ";\n  boundary=\"" );

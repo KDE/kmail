@@ -163,7 +163,7 @@ void AccountWizard::showPage( QWidget *page )
     if ( mLoginName->text().isEmpty() ) {
       // try to extract login from email address
       QString email = mEMailAddress->text();
-      int pos = email.find( '@' );
+      int pos = email.indexOf( '@' );
       if ( pos != -1 )
         mLoginName->setText( email.left( pos ) );
 
@@ -342,7 +342,7 @@ QString AccountWizard::accountName() const
   QString name( i18n( "None" ) );
 
   QString email = mEMailAddress->text();
-  int pos = email.find( '@' );
+  int pos = email.indexOf( '@' );
   if ( pos != -1 ) {
     name = email.mid( pos + 1 );
     name[ 0 ] = name[ 0 ].toUpper();

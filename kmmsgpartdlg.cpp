@@ -417,7 +417,7 @@ void KMMsgPartDialogCompat::applyChanges()
   // apply Content-Type:
   Q3CString type = mimeType().toLatin1();
   Q3CString subtype;
-  int idx = type.find('/');
+  int idx = type.indexOf('/');
   if ( idx < 0 )
     subtype = "";
   else {

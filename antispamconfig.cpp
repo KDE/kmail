@@ -91,7 +91,7 @@ const SpamAgents AntiSpamConfig::uniqueAgents() const
     SpamAgents::ConstIterator end( mAgents.end() );
     for ( ; it != end ; ++it ) {
         const QString agent( ( *it ).name() );
-        if ( seenAgents.find( agent ) == seenAgents.end() ) {
+        if ( !seenAgents.contains( agent )  ) {
             agents.append( *it );
             seenAgents.append( agent );
         }

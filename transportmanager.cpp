@@ -63,7 +63,7 @@ namespace KMail {
     do
     {
       newId = KRandom::random();
-    } while ( usedIds.find(newId) != usedIds.end() );
+    } while ( usedIds.contains(newId)  );
 
     return newId;
   }

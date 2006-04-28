@@ -294,7 +294,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
       // imap and local search have to match
       if ( mLocalSearchPattern->matches( msg ) &&
           ( mImapSearchHits.isEmpty() ||
-           mImapSearchHits.find( QString::number(msg->UID() ) ) != mImapSearchHits.end() ) ) {
+           mImapSearchHits.contains( QString::number(msg->UID() ) )  ) ) {
         quint32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
         matches = true;
@@ -302,7 +302,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     } else if ( mLocalSearchPattern->op() == KMSearchPattern::OpOr ) {
       // imap or local search have to match
       if ( mLocalSearchPattern->matches( msg ) ||
-          mImapSearchHits.find( QString::number(msg->UID()) ) != mImapSearchHits.end() ) {
+          mImapSearchHits.contains( QString::number(msg->UID()) )  ) {
         quint32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
         matches = true;

@@ -58,7 +58,7 @@ static unsigned int IMAPRightsToPermission( const QString& str, const KUrl& url,
     default: break;
     }
   }
-  if ( ( perm & ACLJobs::Read ) && str.find( 's' ) == -1 ) {
+  if ( ( perm & ACLJobs::Read ) && !str.contains( 's' ) ) {
     // Reading without 'seen' is, well, annoying. Unusable, even.
     // So we treat 'rs' as a single one.
     // But if the permissions were set out of kmail, better check that both are set
