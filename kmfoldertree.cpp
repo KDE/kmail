@@ -1850,6 +1850,9 @@ void KMFolderTree::moveSelectedToFolder( int menuId )
 void KMFolderTree::moveFolder( KMFolder* destination )
 {
   KMFolder* folder = currentFolder();
+  if (!folder)
+	return;
+
   KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
   if ( destination )
     parent = destination->createChildFolder();
@@ -1859,7 +1862,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
 
   KMFolderDir* folderDir = parent;
   // check that the folder can be moved
-  if ( folder && folder->child() )
+  if ( folder->child() )
   {
     while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
         ( folderDir != folder->parent() ) )
@@ -1873,13 +1876,13 @@ void KMFolderTree::moveFolder( KMFolder* destination )
     }
   }
 
-  if( folder && folder->child() && parent &&
+  if( folder->child() && parent &&
       ( parent->path().find( folder->child()->path() + "/" ) == 0 ) ) {
     KMessageBox::error( this, message );
     return;
   }
 
-  if( folder && folder->child()
+  if( folder->child()
       && ( parent == folder->child() ) ) {
     KMessageBox::error( this, message );
     return;
