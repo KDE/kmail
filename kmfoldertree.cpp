@@ -1268,7 +1268,7 @@ void KMFolderTree::cleanupConfigFile()
   {
     if ((*grpIt).left(7) != "Folder-") continue;
     name = (*grpIt).mid(7);
-    if (folderMap.find(name) == folderMap.end())
+    if (!folderMap.contains(name) )
     {
       KMFolder* folder = kmkernel->findFolderById( name );
       if ( folder && kmkernel->iCalIface().hideResourceFolder( folder ) )
@@ -1865,7 +1865,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
   }
 
   if( folder->child() && parent &&
-      ( parent->path().find( folder->child()->path() + "/" ) == 0 ) ) {
+      ( parent->path().startsWith( folder->child()->path() + "/" ) ) ) {
     KMessageBox::error( this, message );
     return;
   }

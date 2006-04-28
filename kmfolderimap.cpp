@@ -929,7 +929,7 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
   for ( it = folder()->child()->begin();
       ( node = *it ) && it != folder()->child()->end(); ++it )
   {
-    if ( !node->isDir() && subfolderNames.indexOf(node->name()) == -1 )
+    if ( !node->isDir() && !subfolderNames.contains(node->name()) )
     {
       KMFolder* fld = static_cast<KMFolder*>(node);
       KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
@@ -981,11 +981,11 @@ void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
 void KMFolderImap::setChildrenState( QString attributes )
 {
   // update children state
-  if ( attributes.find( "haschildren", 0, false ) != -1 )
+  if ( attributes.contains( "haschildren", false ) )
   {
     setHasChildren( FolderStorage::HasChildren );
-  } else if ( attributes.find( "hasnochildren", 0, false ) != -1 ||
-              attributes.find( "noinferiors", 0, false ) != -1 )
+  } else if ( attributes.contains( "hasnochildren", false ) ||
+              attributes.contains( "noinferiors", false ) )
   {
     setHasChildren( FolderStorage::HasNoChildren );
   } else
@@ -1099,19 +1099,19 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
     close();
   } else {
     Q3CString cstr((*it).data.data(), (*it).data.size() + 1);
-    int a = cstr.find("X-uidValidity: ");
-    int b = cstr.find("\r\n", a);
+    int a = cstr.indexOf("X-uidValidity: ");
+    int b = cstr.indexOf("\r\n", a);
     QString uidv;
     if ( (b - a - 15) >= 0 ) 
       uidv = cstr.mid(a + 15, b - a - 15);
-    a = cstr.find("X-Access: ");
-    b = cstr.find("\r\n", a);
+    a = cstr.indexOf("X-Access: ");
+    b = cstr.indexOf("\r\n", a);
     QString access;
     if ( (b - a - 10) >= 0 )
       access = cstr.mid(a + 10, b - a - 10);
     mReadOnly = access == "Read only";
-    a = cstr.find("X-Count: ");
-    b = cstr.find("\r\n", a);
+    a = cstr.indexOf("X-Count: ");
+    b = cstr.indexOf("\r\n", a);
     int exists = -1;
     bool ok = false;
     if ( (b - a - 9) >= 0 ) 
@@ -1267,7 +1267,7 @@ void KMFolderImap::slotListFolderResult(KJob * job)
       mailUid = msgBase->UID();
       // parse the uid from the server and the flags out of the list from
       // the server. Format: 1234, 1
-      c = (*uid).find(",");
+      c = (*uid).indexOf(",");
       serverUid = (*uid).left( c ).toLong();
       serverFlags = (*uid).mid( c+1 ).toInt();
       if ( mailUid < serverUid ) {
@@ -1292,7 +1292,7 @@ void KMFolderImap::slotListFolderResult(KJob * job)
   }
   // strip the flags from the list of uids, so it can be reused
   for (uid = (*it).items.begin(); uid != (*it).items.end(); ++uid)
-    (*uid).truncate((*uid).find(","));
+    (*uid).truncate((*uid).indexOf(","));
   ImapAccountBase::jobData jd( QString::null, (*it).parent );
   jd.total = (*it).items.count();
   if (jd.total == 0)
@@ -1424,7 +1424,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   (*it).cdata += Q3CString(data, data.size() + 1);
-  int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
+  int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if ( pos == -1 ) {
     // if we do not find the pattern in the complete string we will not find
     // it in a substring.
@@ -1432,15 +1432,15 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   }
   if (pos > 0)
   {
-    int p = (*it).cdata.find("\r\nX-uidValidity:");
+    int p = (*it).cdata.indexOf("\r\nX-uidValidity:");
     if (p != -1) setUidValidity((*it).cdata
-      .mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
-    int c = (*it).cdata.find("\r\nX-Count:");
+      .mid(p + 17, (*it).cdata.indexOf("\r\n", p+1) - p - 17));
+    int c = (*it).cdata.indexOf("\r\nX-Count:");
     if ( c != -1 )
     {
       bool ok;
       int exists = (*it).cdata.mid( c+10,
-          (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
+          (*it).cdata.indexOf("\r\n", c+1) - c-10 ).toInt(&ok);
       if ( ok && exists < count() ) {
         kDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
@@ -1456,7 +1456,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     }
     (*it).cdata.remove(0, pos);
   }
-  pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+  pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST", 1);
   int flags;
   while (pos >= 0)
   {
@@ -1532,7 +1532,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
-    pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+    pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST", 1);
   } // while
 }
 

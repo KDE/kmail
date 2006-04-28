@@ -616,7 +616,7 @@ int KMFolderMbox::createIndexFromContents()
           msgIdStr = msgIdStr.trimmed();
           if( !msgIdStr.isEmpty() ) {
             int rightAngle;
-            rightAngle = msgIdStr.find( '>' );
+            rightAngle = msgIdStr.indexOf( '>' );
             if( rightAngle != -1 )
               msgIdStr.truncate( rightAngle + 1 );
           }
@@ -624,7 +624,7 @@ int KMFolderMbox::createIndexFromContents()
           replyToIdStr = replyToIdStr.trimmed();
           if( !replyToIdStr.isEmpty() ) {
             int rightAngle;
-            rightAngle = replyToIdStr.find( '>' );
+            rightAngle = replyToIdStr.indexOf( '>' );
             if( rightAngle != -1 )
               replyToIdStr.truncate( rightAngle + 1 );
           }
@@ -652,7 +652,7 @@ int KMFolderMbox::createIndexFromContents()
             // message In-Reply-To points to is not kept in this folder,
             // but e.g. in an Outbox
             replyToAuxIdStr = referencesStr;
-            rightAngle = referencesStr.find( '>' );
+            rightAngle = referencesStr.indexOf( '>' );
             if( rightAngle != -1 )
               replyToAuxIdStr.truncate( rightAngle + 1 );
           }
@@ -1181,7 +1181,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t&
         mtext.resize(20);
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
-        if ( mtext.find( "from " ) ) {
+        if ( mtext.indexOf( "from " ) ) {
           if (mtext.size() < (size_t)folder_offset)
               mtext.resize(folder_offset);
           if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||

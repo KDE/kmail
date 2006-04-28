@@ -629,9 +629,9 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   // actually be some other state (but not New)
   if ( status.isRead() )
   {
-    if (file.find(":2,") == -1)
+    if ( !file.contains(":2,") )
       status.setUnread();
-    else if (file.right(5) == ":2,RS")
+    else if ( file.right(5) == ":2,RS" )
       status.setReplied();
   }
 
@@ -668,7 +668,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
       msgIdStr = msgIdStr.trimmed();
       if( !msgIdStr.isEmpty() ) {
         int rightAngle;
-        rightAngle = msgIdStr.find( '>' );
+        rightAngle = msgIdStr.indexOf( '>' );
         if( rightAngle != -1 )
           msgIdStr.truncate( rightAngle + 1 );
       }
@@ -676,7 +676,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
       replyToIdStr = replyToIdStr.trimmed();
       if( !replyToIdStr.isEmpty() ) {
         int rightAngle;
-        rightAngle = replyToIdStr.find( '>' );
+        rightAngle = replyToIdStr.indexOf( '>' );
         if( rightAngle != -1 )
           replyToIdStr.truncate( rightAngle + 1 );
       }
@@ -704,7 +704,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
         // message In-Reply-To points to is not kept in this folder,
         // but e.g. in an Outbox
         replyToAuxIdStr = referencesStr;
-        rightAngle = referencesStr.find( '>' );
+        rightAngle = referencesStr.indexOf( '>' );
         if( rightAngle != -1 )
           replyToAuxIdStr.truncate( rightAngle + 1 );
       }

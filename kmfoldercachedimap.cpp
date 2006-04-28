@@ -1398,27 +1398,27 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     return;
   }
   (*it).cdata += Q3CString(data, data.size() + 1);
-  int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
+  int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if (pos > 0) {
-    int a = (*it).cdata.find("\r\nX-uidValidity:");
+    int a = (*it).cdata.indexOf("\r\nX-uidValidity:");
     if (a != -1) {
-      int b = (*it).cdata.find("\r\n", a + 17);
+      int b = (*it).cdata.indexOf("\r\n", a + 17);
       setUidValidity((*it).cdata.mid(a + 17, b - a - 17));
     }
-    a = (*it).cdata.find("\r\nX-Access:");
+    a = (*it).cdata.indexOf("\r\nX-Access:");
     // Only trust X-Access (i.e. the imap select info) if we don't know mUserRights.
     // The latter is more accurate (checked on every sync) whereas X-Access is only
     // updated when selecting the folder again, which might not happen if using
     // RMB / Check Mail in this folder. We don't need two (potentially conflicting)
     // sources for the readonly setting, in any case.
     if (a != -1 && mUserRights == -1 ) {
-      int b = (*it).cdata.find("\r\n", a + 12);
+      int b = (*it).cdata.indexOf("\r\n", a + 12);
       const QString access = (*it).cdata.mid(a + 12, b - a - 12);
       setReadOnly( access == "Read only" );
     }
     (*it).cdata.remove(0, pos);
   }
-  pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+  pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST", 1);
   // Start with something largish when rebuilding the cache
   if ( uidsOnServer.size() == 0 )
     uidsOnServer.resize( KMail::nextPrime( 2000 ) );
@@ -1485,7 +1485,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
-    pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+    pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST", 1);
   }
 }
 
@@ -1703,7 +1703,7 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
       if (!node->isDir() ) {
         KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
 
-        if ( mSubfolderNames.indexOf(node->name()) == -1 ) {
+        if ( !mSubfolderNames.contains(node->name()) ) {
           QString name = node->name();
           // as more than one namespace can be listed in the root folder we need to make sure
           // that the folder is within the current namespace
@@ -2094,7 +2094,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
 {
   QString oldType = mAnnotationFolderType;
   QString oldSubType;
-  int dot = oldType.find( '.' );
+  int dot = oldType.indexOf( '.' );
   if ( dot != -1 ) {
     oldType.truncate( dot );
     oldSubType = mAnnotationFolderType.mid( dot + 1 );
@@ -2139,7 +2139,7 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
     if ( found ) {
       QString type = value;
       QString subtype;
-      int dot = value.find( '.' );
+      int dot = value.indexOf( '.' );
       if ( dot != -1 ) {
         type.truncate( dot );
         subtype = value.mid( dot + 1 );
