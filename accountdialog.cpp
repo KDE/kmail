@@ -1080,7 +1080,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   vlay->addSpacing( KDialog::spacingHint() );
 
-  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  QHBoxLayout *buttonLay = new QHBoxLayout();
+  vlay->addLayout( buttonLay );
   mImap.checkCapabilities =
     new QPushButton( i18n("Check &What the Server Supports"), page2 );
   connect(mImap.checkCapabilities, SIGNAL(clicked()),
