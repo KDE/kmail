@@ -33,10 +33,10 @@ static QString check_sender(const KMMessage  *message,
   {
     header_name = "Sender";
     header_value = header;
-    header = header.mid( 6, header.find( '@' ) - 6 );
+    header = header.mid( 6, header.indexOf( '@' ) - 6 );
 
   } else {
-    int index = header.find( "-owner@ " );
+    int index = header.indexOf( "-owner@ " );
     if ( index == -1 )
       return QString();
 
@@ -54,12 +54,12 @@ static QString check_x_beenthere(const KMMessage  *message,
                                  QString &header_value )
 {
   QString header = message->headerField( "X-BeenThere" );
-  if ( header.isNull() || header.find( '@' ) == -1 )
+  if ( header.isNull() || header.indexOf( '@' ) == -1 )
     return QString();
 
   header_name = "X-BeenThere";
   header_value = header;
-  header.truncate( header.find( '@' ) );
+  header.truncate( header.indexOf( '@' ) );
   return header;
 }
 
@@ -70,13 +70,13 @@ static QString check_delivered_to(const KMMessage  *message,
 {
   QString header = message->headerField( "Delivered-To" );
   if ( header.isNull() || header.left(13 ) != "mailing list"
-       || header.find( '@' ) == -1 )
+       || header.indexOf( '@' ) == -1 )
     return QString();
 
   header_name = "Delivered-To";
   header_value = header;
 
-  return header.mid( 13, header.find( '@' ) - 13 );
+  return header.mid( 13, header.indexOf( '@' ) - 13 );
 }
 
 /* X-Mailing-List: <?([^@]+) */
@@ -88,15 +88,15 @@ static QString check_x_mailing_list(const KMMessage  *message,
   if ( header.isEmpty() )
     return QString();
 
-  if ( header.find( '@' ) < 1 )
+  if ( header.indexOf( '@' ) < 1 )
     return QString();
 
   header_name = "X-Mailing-List";
   header_value = header;
   if ( header[0] == '<' )
-    header = header.mid(1,  header.find( '@' ) - 1);
+    header = header.mid(1,  header.indexOf( '@' ) - 1);
   else
-    header.truncate( header.find( '@' ) );
+    header.truncate( header.indexOf( '@' ) );
   return header;
 }
 
@@ -110,11 +110,11 @@ static QString check_list_id(const KMMessage  *message,
   if ( header.isEmpty() )
     return QString();
 
-  lAnglePos = header.find( '<' );
+  lAnglePos = header.indexOf( '<' );
   if ( lAnglePos < 0 )
     return QString();
 
-  firstDotPos = header.find( '.', lAnglePos );
+  firstDotPos = header.indexOf( '.', lAnglePos );
   if ( firstDotPos < 0 )
     return QString();
 
@@ -134,14 +134,14 @@ static QString check_list_post(const KMMessage  *message,
   if ( header.isEmpty() )
     return QString();
 
-  int lAnglePos = header.find( "<mailto:" );
+  int lAnglePos = header.indexOf( "<mailto:" );
   if ( lAnglePos < 0 )
     return QString();
 
   header_name = "List-Post";
   header_value = header;
   header = header.mid( lAnglePos + 8, header.length());
-  header.truncate( header.find('@') );
+  header.truncate( header.indexOf('@') );
   return header;
 }
 
@@ -154,12 +154,12 @@ static QString check_mailing_list(const KMMessage  *message,
   if ( header.isEmpty() )
     return QString();
 
-  if (header.left( 5 ) != "list " || header.find( '@' ) < 5 )
+  if (header.left( 5 ) != "list " || header.indexOf( '@' ) < 5 )
     return QString();
 
   header_name = "Mailing-List";
   header_value = header;
-  header = header.mid(5,  header.find( '@' ) - 5);
+  header = header.mid(5,  header.indexOf( '@' ) - 5);
   return header;
 }
 
@@ -172,12 +172,12 @@ static QString check_x_loop(const KMMessage  *message,
   if ( header.isEmpty() )
     return QString();
 
-  if (header.find( '@' ) < 2 )
+  if (header.indexOf( '@' ) < 2 )
     return QString();
 
   header_name = "X-Loop";
   header_value = header;
-  header.truncate(header.find( '@' ));
+  header.truncate(header.indexOf( '@' ));
   return header;
 }
 
@@ -191,7 +191,7 @@ static QString check_x_ml_name(const KMMessage  *message,
 
   header_name = "X-ML-Name";
   header_value = header;
-  header.truncate(header.find( '@' ));
+  header.truncate(header.indexOf( '@' ));
   return header;
 }
 
@@ -220,8 +220,8 @@ headerToAddress( const QString& header )
   if ( header.isEmpty() )
     return addr;
 
-  while ( (start = header.find( "<", start )) != -1 ) {
-    if ( (end = header.find( ">", ++start ) ) == -1 ) {
+  while ( (start = header.indexOf( "<", start )) != -1 ) {
+    if ( (end = header.indexOf( ">", ++start ) ) == -1 ) {
       kDebug(5006)<<k_funcinfo<<"Serious mailing list header parsing error !"<<endl;
       return addr;
     }

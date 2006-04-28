@@ -233,7 +233,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
     // we extract it from the path: "/prefix/de/entry.desktop" -> "de"
     QString acronym = (*it).section( '/', -2, -2 );
 
-    if ( suppressedAcronyms.find( acronym ) == suppressedAcronyms.end() ) {
+    if ( !suppressedAcronyms.contains( acronym )  ) {
       // not found:
       QString displayname = QString::fromLatin1("%1 (%2)")
 	.arg( name ).arg( acronym );
@@ -283,7 +283,7 @@ void LanguageComboBox::setLanguage( const QString & language )
   QString parenthizedLanguage = QString::fromLatin1("(%1)").arg( language );
   for (int i = 0; i < count(); i++)
     // ### FIXME: use .endWith():
-    if ( itemText(i).find( parenthizedLanguage ) >= 0 ) {
+    if ( itemText(i).contains( parenthizedLanguage ) ) {
       setCurrentIndex(i);
       return;
     }

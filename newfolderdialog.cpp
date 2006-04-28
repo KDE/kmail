@@ -221,7 +221,7 @@ void NewFolderDialog::slotOk()
         i18n( "No Name Specified" ) );
      return;
   }
-  if ( fldName.find( '/' ) != -1 &&
+  if ( fldName.contains( '/' ) &&
     ( !mFolder
       || mFolder->folderType() == KMFolderTypeImap
       || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
@@ -243,7 +243,7 @@ void NewFolderDialog::slotOk()
       KMAcctCachedImap* ai = static_cast<KMFolderCachedImap*>( mFolder->storage() )->account();
       delimiter = ai->delimiterForFolder( mFolder->storage() );
     }
-    if ( !delimiter.isEmpty() && fldName.find( delimiter ) != -1 ) {
+    if ( !delimiter.isEmpty() && fldName.contains( delimiter ) ) {
       KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name.", delimiter ) );
       return;
     }

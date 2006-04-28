@@ -47,7 +47,7 @@ KMMessagePart::KMMessagePart( QDataStream & stream )
   KPIM::kAsciiToUpper( mOriginalContentTypeStr.data() );
 
   // set the type
-  int sep = mOriginalContentTypeStr.find('/');
+  int sep = mOriginalContentTypeStr.indexOf('/');
   mType = mOriginalContentTypeStr.left(sep);
   mSubtype = mOriginalContentTypeStr.mid(sep+1);
 
@@ -375,7 +375,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   KMimeMagicResult * result = KMimeMagic::self()->findBufferType( body );
 
   QString mimetype = result->mimeType();
-  const int sep = mimetype.find('/');
+  const int sep = mimetype.indexOf('/');
   mType = mimetype.left(sep).toLatin1();
   mSubtype = mimetype.mid(sep+1).toLatin1();
 }
@@ -513,10 +513,10 @@ QString KMMessagePart::fileName(void) const
   int endOfFilename;
   if ( '"' == mContentDisposition[startOfFilename] ) {
     startOfFilename++; // the double quote isn't part of the filename
-    endOfFilename = mContentDisposition.find('"', startOfFilename) - 1;
+    endOfFilename = mContentDisposition.indexOf('"', startOfFilename) - 1;
   }
   else {
-    endOfFilename = mContentDisposition.find(';', startOfFilename) - 1;
+    endOfFilename = mContentDisposition.indexOf(';', startOfFilename) - 1;
   }
   if (endOfFilename < 0)
     endOfFilename = 32767;

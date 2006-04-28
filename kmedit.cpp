@@ -379,8 +379,8 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       sysLine += " ";
       while (!sysLine.isEmpty())
       {
-        *mExtEditorProcess << sysLine.left(sysLine.find(" ")).toLocal8Bit();
-        sysLine.remove(0, sysLine.find(" ") + 1);
+        *mExtEditorProcess << sysLine.left(sysLine.indexOf(" ")).toLocal8Bit();
+        sysLine.remove(0, sysLine.indexOf(" ") + 1);
       }
       connect(mExtEditorProcess, SIGNAL(processExited(KProcess*)),
               SLOT(slotExternalEditorDone(KProcess*)));
@@ -431,7 +431,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       //Get word right clicked on
       const QRegExp wordBoundary( "[\\s\\W]" );
       firstSpace = paraText.lastIndexOf( wordBoundary, charPos ) + 1;
-      lastSpace = paraText.find( wordBoundary, charPos );
+      lastSpace = paraText.indexOf( wordBoundary, charPos );
       if( lastSpace == -1 )
         lastSpace = paraText.length();
       QString word = paraText.mid( firstSpace, lastSpace - firstSpace );

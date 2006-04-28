@@ -756,7 +756,7 @@ namespace KMail {
           ns = ns.left( ns.length()-1 );
         }
         // first ignore an empty prefix as it would match always
-        if ( !ns.isEmpty() && path.find( ns ) != -1 ) {
+        if ( !ns.isEmpty() && path.contains( ns ) ) {
           return (*strit);
         }
       }
