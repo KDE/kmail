@@ -43,10 +43,10 @@ void KabcBridge::addresses(QStringList& result) // includes lists
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
     const QStringList emails = (*it).emails();
     QString n = (*it).prefix() + " " +
-		(*it).givenName() + " " +
-		(*it).additionalName() + " " +
-	        (*it).familyName() + " " +
-		(*it).suffix();
+                (*it).givenName() + " " +
+                (*it).additionalName() + " " +
+                (*it).familyName() + " " +
+                (*it).suffix();
     n = n.simplified();
 
     QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
@@ -57,23 +57,23 @@ void KabcBridge::addresses(QStringList& result) // includes lists
     for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
       email = *mit;
       if (!email.isEmpty()) {
-	if (n.isEmpty() || (email.find( '<' ) != -1))
-	  addr.clear();
-	else { // do we really need quotes around this name ?
-          if (n.find(needQuotes) != -1)
-	    addr = '"' + n + endQuote;
-	  else
-	    addr = n + ' ';
-	}
+        if (n.isEmpty() || (email.contains( '<' ) ))
+          addr.clear();
+        else { // do we really need quotes around this name ?
+          if (n.contains(needQuotes) )
+            addr = '"' + n + endQuote;
+          else
+            addr = n + ' ';
+        }
 
-	if (!addr.isEmpty() && (email.find( '<' ) == -1)
-	    && (email.find( '>' ) == -1)
-	    && (email.find( ',' ) == -1))
-	  addr += '<' + email + '>';
-	else
-	  addr += email;
-	addr = addr.trimmed();
-	result.append( addr );
+        if (!addr.isEmpty() && !(email.contains( '<' ) )
+            && !(email.contains( '>' ) )
+            && !(email.contains( ',' ) ))
+          addr += '<' + email + '>';
+        else
+          addr += email;
+        addr = addr.trimmed();
+        result.append( addr );
       }
     }
   }
@@ -127,7 +127,7 @@ QStringList KabcBridge::categories()
     for ( QStringList::ConstIterator itAux = aux.begin();
           itAux != aux.end(); ++itAux ) {
       // don't have duplicates in allcategories
-      if ( allcategories.find( *itAux ) == allcategories.end() )
+      if ( !allcategories.contains( *itAux )  )
         allcategories += *itAux;
     }
   }
