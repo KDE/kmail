@@ -79,7 +79,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = loadIcon( "kmail" );
-  mLightIconImage = loadIcon( "kmaillight" ).convertToImage();
+  mLightIconImage = loadIcon( "kmaillight" ).toImage();
 
   setPixmap(mDefaultIcon);
 
@@ -229,15 +229,13 @@ void KMSystemTray::updateCount()
     p.setPen( Qt::blue );
     p.drawText( numberPixmap.rect(), Qt::AlignCenter, countString );
     numberPixmap.setMask( numberPixmap.createHeuristicMask() );
-    QImage numberImage = numberPixmap.convertToImage();
+    QImage numberImage = numberPixmap.toImage();
 
     // Overlay the light KMail icon with the number image
     QImage iconWithNumberImage = mLightIconImage.copy();
     KIconEffect::overlay( iconWithNumberImage, numberImage );
 
-    QPixmap iconWithNumber;
-    iconWithNumber.convertFromImage( iconWithNumberImage );
-    setPixmap( iconWithNumber );
+    setPixmap( QPixmap::fromImage( iconWithNumberImage ) );
   } else
   {
     setPixmap( mDefaultIcon );

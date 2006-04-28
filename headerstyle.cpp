@@ -485,7 +485,7 @@ namespace KMail {
           if ( !presence.isEmpty() )
           {
             QString presenceIcon = QString::fromLatin1( " <img src=\"%1\"/>" )
-                .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).convertToImage() ) );
+                .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).toImage() ) );
             presence += presenceIcon;
           }
       }

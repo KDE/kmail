@@ -281,8 +281,7 @@ namespace KMail {
         mTextEdit->setText(str);
       }
       KXFace xf;
-      QPixmap p( 48, 48 );
-      p.convertFromImage( xf.toImage(str) );
+      QPixmap p = QPixmap::fromImage( xf.toImage(str) );
       mXFaceLabel->setPixmap( p );
     }
     else
