@@ -134,7 +134,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   KHBox * hbox = new KHBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
   mLogMemLimitSpin = new QSpinBox( hbox );
-  mLogMemLimitSpin->setMinValue( 1 );
+  mLogMemLimitSpin->setMinimum( 1 );
   mLogMemLimitSpin->setMaximum( 1024 * 256 ); // 256 MB
   // value in the QSpinBox is in KB while it's in Byte in the FilterLog
   mLogMemLimitSpin->setValue( FilterLog::instance()->getMaxLogSize() / 1024 );

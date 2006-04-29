@@ -175,7 +175,7 @@ KMKernel::~KMKernel ()
   while ( it != mPutJobs.end() )
   {
     KIO::Job *job = it.key();
-    mPutJobs.remove( it );
+    mPutJobs.erase( it );
     job->kill();
     it = mPutJobs.begin();
   }
@@ -1763,7 +1763,7 @@ void KMKernel::slotResult(KJob *job)
     }
     else static_cast<KIO::Job*>(job)->showErrorDialog();
   }
-  mPutJobs.remove(it);
+  mPutJobs.erase(it);
 }
 
 void KMKernel::slotRequestConfigSync() {

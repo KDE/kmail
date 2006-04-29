@@ -430,7 +430,7 @@ KMComposeWin::~KMComposeWin()
   while ( it != mMapAtmLoadData.end() )
   {
     KIO::Job *job = it.key();
-    mMapAtmLoadData.remove( it );
+    mMapAtmLoadData.erase( it );
     job->kill();
     it = mMapAtmLoadData.begin();
   }
@@ -1965,15 +1965,15 @@ void KMComposeWin::setFcc( const QString &idString )
 bool KMComposeWin::isModified() const
 {
   return ( mEditor->isModified() ||
-           mEdtFrom->edited() ||
+           mEdtFrom->isModified() ||
            ( mEdtReplyTo && mEdtReplyTo->edited() ) ||
-           ( mEdtTo && mEdtTo->edited() ) ||
-           ( mEdtCc && mEdtCc->edited() ) ||
-           ( mEdtBcc && mEdtBcc->edited() ) ||
+           ( mEdtTo && mEdtTo->isModified() ) ||
+           ( mEdtCc && mEdtCc->isModified() ) ||
+           ( mEdtBcc && mEdtBcc->isModified() ) ||
            ( mRecipientsEditor && mRecipientsEditor->isModified() ) ||
-           mEdtSubject->edited() ||
+           mEdtSubject->isModified() ||
            mAtmModified ||
-           ( mTransport->lineEdit() && mTransport->lineEdit()->edited() ) );
+           ( mTransport->lineEdit() && mTransport->lineEdit()->isModified() ) );
 }
 
 
@@ -1982,7 +1982,7 @@ void KMComposeWin::setModified( bool modified )
 {
   mEditor->setModified( modified );
   if ( !modified ) {
-    mEdtFrom->setEdited( false );
+    mEdtFrom->setModified( false );
     if ( mEdtReplyTo ) mEdtReplyTo->setEdited( false );
     if ( mEdtTo ) mEdtTo->setEdited( false );
     if ( mEdtCc ) mEdtCc->setEdited( false );
@@ -2529,7 +2529,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   assert(it != mMapAtmLoadData.end());
   if (job->error())
   {
-    mMapAtmLoadData.remove(it);
+    mMapAtmLoadData.erase(it);
     static_cast<KIO::Job*>(job)->showErrorDialog();
     return;
   }
@@ -2541,7 +2541,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
       mEditor->insert( codec->toUnicode( (*it).data ) );
     else
       mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
-    mMapAtmLoadData.remove(it);
+    mMapAtmLoadData.erase(it);
     return;
   }
   const Q3CString partCharset = (*it).url.fileEncoding().isEmpty()
@@ -2606,7 +2606,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   msgPart->setContentDisposition(Q3CString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
-  mMapAtmLoadData.remove(it);
+  mMapAtmLoadData.erase(it);
 
   msgPart->setCharset(partCharset);
 

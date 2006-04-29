@@ -2321,7 +2321,7 @@ void NamespaceEditDialog::slotOk()
       mDelimMap.remove( edit->lastText() );
     }
   }
-  mNamespaceMap->replace( mType, mDelimMap );
+  mNamespaceMap->insert( mType, mDelimMap );
   KDialogBase::slotOk();
 }
 

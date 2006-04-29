@@ -2236,7 +2236,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
              !it.key()->parentNode() ) ) {
         PartNodeMessageMap::iterator delIt = it;
         ++it;
-        mAttachmentMap.remove( delIt );
+        mAttachmentMap.erase( delIt );
       }
       else
         ++it;

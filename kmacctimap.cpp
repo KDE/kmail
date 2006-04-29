@@ -231,7 +231,7 @@ void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
      it++;
      if ( (*i).parent ) {
         if ( (*i).parent == folder ) {
-           mapJobData.remove(i);
+           mapJobData.erase(i);
         }
      }
   }

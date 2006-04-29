@@ -935,7 +935,7 @@ namespace KMail {
         it.key()->kill();
         QMap<KIO::Job*, jobData>::Iterator rmit = it;
         ++it;
-        mapJobData.remove( rmit );
+        mapJobData.erase( rmit );
         // We killed a job -> this kills the slave
         mSlave = 0;
       } else
@@ -1182,7 +1182,7 @@ namespace KMail {
       (*it).progressItem->setComplete();
       (*it).progressItem = 0;
     }
-    mapJobData.remove( it );
+    mapJobData.erase( it );
   }
 
   //-----------------------------------------------------------------------------

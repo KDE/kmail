@@ -114,7 +114,7 @@ void KMFolderImap::close(bool aForced)
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
   if (isSelected() && !aForced) {
-      kdWarning(5006) << "Trying to close the selected folder " << label() << 
+      kWarning(5006) << "Trying to close the selected folder " << label() <<
           " - ignoring!" << endl;
       return;
   }
