@@ -60,13 +60,12 @@ static inline Q3ListBoxItem * findSelectedItem( Q3ListBox * lb ) {
 }
 
 SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
-                                                const char * name,
                                                 ButtonCode buttons,
                                                 const QString & addLabel,
                                                 const QString & removeLabel,
                                                 const QString & modifyLabel,
                                                 const QString & addDialogLabel )
-  : QWidget( parent, name ),
+  : QWidget( parent ),
     mAddButton(0), mRemoveButton(0), mModifyButton(0),
     mUpButton(0), mDownButton(0),
     mAddDialogLabel( addDialogLabel.isEmpty() ?

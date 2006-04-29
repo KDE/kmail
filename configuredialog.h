@@ -38,7 +38,7 @@ class ConfigureDialog : public KCMultiDialog
   Q_OBJECT
 
 public:
-  ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
+  ConfigureDialog( QWidget *parent=0, bool modal=true );
   ~ConfigureDialog();
 
 signals:

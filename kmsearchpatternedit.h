@@ -40,7 +40,7 @@ class KMSearchRuleWidget : public QWidget
 public:
   /** Constructor. You can give a KMSearchRule as parameter, which will
       be used to initialize the widget. */
-  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
+  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, bool headersOnly = false, bool absoluteDates = false );
 
   enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
 

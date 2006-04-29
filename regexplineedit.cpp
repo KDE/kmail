@@ -51,8 +51,8 @@
 
 namespace KMail {
 
-  RegExpLineEdit::RegExpLineEdit( QWidget *parent, const char *name )
-    : QWidget( parent, name ),
+  RegExpLineEdit::RegExpLineEdit( QWidget *parent )
+    : QWidget( parent ),
       mLineEdit( 0 ),
       mRegExpEditButton( 0 ),
       mRegExpEditDialog( 0 )
@@ -60,9 +60,8 @@ namespace KMail {
     initWidget();
   }
 
-  RegExpLineEdit::RegExpLineEdit( const QString &str, QWidget *parent,
-                                  const char *name )
-    : QWidget( parent, name ),
+  RegExpLineEdit::RegExpLineEdit( const QString &str, QWidget *parent )
+    : QWidget( parent ),
       mLineEdit( 0 ),
       mRegExpEditButton( 0 ),
       mRegExpEditDialog( 0 )

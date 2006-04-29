@@ -86,7 +86,7 @@ namespace KMail {
   class SieveConfigEditor : public QWidget {
     Q_OBJECT
   public:
-    SieveConfigEditor( QWidget * parent=0, const char * name=0 );
+    SieveConfigEditor( QWidget * parent=0 );
 
     bool managesieveSupported() const;
     virtual void setManagesieveSupported( bool enable );

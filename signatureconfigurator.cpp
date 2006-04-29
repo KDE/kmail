@@ -45,8 +45,8 @@ using namespace KMail;
 
 namespace KMail {
 
-  SignatureConfigurator::SignatureConfigurator( QWidget * parent, const char * name )
-    : QWidget( parent, name )
+  SignatureConfigurator::SignatureConfigurator( QWidget * parent )
+    : QWidget( parent )
   {
     // tmp. vars:
     QLabel * label;
@@ -62,7 +62,7 @@ namespace KMail {
 
     // "enable signatue" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Enable signature"), this );
-    mEnableCheck->setWhatsThis( 
+    mEnableCheck->setWhatsThis(
         i18n("Check this box if you want KMail to append a signature to mails "
              "written with this identity."));
     vlay->addWidget( mEnableCheck );
@@ -109,7 +109,7 @@ namespace KMail {
     int pageno = 0;
     // page 0: input field for direct entering:
     mTextEdit = new Q3TextEdit( widgetStack );
-    mTextEdit->setWhatsThis( 
+    mTextEdit->setWhatsThis(
         i18n("Use this field to enter an arbitrary static signature."));
     widgetStack->insertWidget( pageno,mTextEdit );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
@@ -125,7 +125,7 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KUrlRequester( page );
-    mFileRequester->setWhatsThis( 
+    mFileRequester->setWhatsThis(
         i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
@@ -152,7 +152,7 @@ namespace KMail {
     mCommandEdit = new KLineEdit( page );
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );
-    mCommandEdit->setWhatsThis( 
+    mCommandEdit->setWhatsThis(
         i18n("You can add an arbitrary command here, either with or without path "
              "depending on whether or not the command is in your Path. For every "
              "new mail, KMail will execute the command and use what it outputs (to "

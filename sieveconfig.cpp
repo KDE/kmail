@@ -54,8 +54,8 @@ namespace KMail {
   }
 
 
-  SieveConfigEditor::SieveConfigEditor( QWidget * parent, const char * name )
-    : QWidget( parent, name )
+  SieveConfigEditor::SieveConfigEditor( QWidget * parent )
+    : QWidget( parent )
   {
     // tmp. vars:
     int row = -1;

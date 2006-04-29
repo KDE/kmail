@@ -34,7 +34,7 @@ namespace KMail {
   class SignatureConfigurator : public QWidget {
     Q_OBJECT
   public:
-    SignatureConfigurator( QWidget * parent=0, const char * name=0 );
+    SignatureConfigurator( QWidget * parent=0 );
     virtual ~SignatureConfigurator();
 
     bool isSignatureEnabled() const;

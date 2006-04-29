@@ -73,8 +73,8 @@ using namespace KPIM;
 
 namespace KMail {
 
-  XFaceConfigurator::XFaceConfigurator( QWidget * parent, const char * name )
-    : QWidget( parent, name )
+  XFaceConfigurator::XFaceConfigurator( QWidget * parent )
+    : QWidget( parent )
   {
     // tmp. vars:
     QLabel * label;
@@ -272,7 +272,7 @@ namespace KMail {
   void XFaceConfigurator::slotUpdateXFace()
   {
     QString str = mTextEdit->text();
-    
+
     if ( !str.isEmpty() )
     {
       if ( str.startsWith("x-face:", Qt::CaseInsensitive) )

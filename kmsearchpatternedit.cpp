@@ -52,9 +52,9 @@ static const int SpecialRuleFieldsCount =
 //=============================================================================
 
 KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
-                                        const char *name, bool headersOnly,
+                                        bool headersOnly,
                                         bool absoluteDates )
-  : QWidget( parent, name ),
+  : QWidget( parent ),
     mRuleField( 0 ),
     mFunctionStack( 0 ),
     mValueStack( 0 ),
@@ -347,7 +347,7 @@ void KMSearchRuleWidgetLister::reset()
 
 QWidget* KMSearchRuleWidgetLister::createWidget( QWidget *parent )
 {
-  return new KMSearchRuleWidget(parent, 0, 0, mHeadersOnly, mAbsoluteDates);
+  return new KMSearchRuleWidget(parent, 0,  mHeadersOnly, mAbsoluteDates);
 }
 
 void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )

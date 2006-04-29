@@ -1774,7 +1774,8 @@ void KMKernel::slotRequestConfigSync() {
 void KMKernel::slotShowConfigurationDialog()
 {
   if( !mConfigureDialog ) {
-    mConfigureDialog = new ConfigureDialog( 0, "configure", false );
+    mConfigureDialog = new ConfigureDialog( 0, false );
+    mConfigureDialog->setObjectName( "configure" );
     connect( mConfigureDialog, SIGNAL( configCommitted() ),
              this, SLOT( slotConfigChanged() ) );
   }

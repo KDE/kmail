@@ -443,7 +443,8 @@ namespace {
   {
     if ( number == 0 ) {
       RegExpLineEdit *lineEdit =
-        new RegExpLineEdit( valueStack, "regExpLineEdit" );
+        new RegExpLineEdit( valueStack );
+      lineEdit->setObjectName( "regExpLineEdit" );
       QObject::connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
                         receiver, SLOT( slotValueChanged() ) );
       return lineEdit;
@@ -776,7 +777,8 @@ namespace {
   {
     if ( number == 0 ) {
       RegExpLineEdit *lineEdit =
-        new RegExpLineEdit( valueStack, "regExpLineEdit" );
+        new RegExpLineEdit( valueStack );
+      lineEdit->setObjectName( "regExpLineEdit" );
       QObject::connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
                         receiver, SLOT( slotValueChanged() ) );
       return lineEdit;

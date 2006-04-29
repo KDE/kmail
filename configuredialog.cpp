@@ -215,11 +215,12 @@ namespace {
 }
 
 
-ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal )
+ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   : KCMultiDialog( KDialogBase::IconList, KGuiItem( i18n( "&Load Profile..." ) ),
-                   KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
+                   KGuiItem(), User2, i18n( "Configure" ), parent )
   , mProfileDialog( 0 )
 {
+  setModal( modal );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
   showButton( User1, true );
@@ -2975,7 +2976,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   SimpleStringListEditor::ButtonCode buttonCode =
     static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
   mReplyListEditor =
-    new SimpleStringListEditor( group, 0, buttonCode,
+    new SimpleStringListEditor( group, buttonCode,
                                 i18n("A&dd..."), i18n("Re&move"),
                                 i18n("Mod&ify..."),
                                 i18n("Enter new reply prefix:") );
@@ -3003,7 +3004,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
   // row 1: string list editor
   mForwardListEditor =
-    new SimpleStringListEditor( group, 0, buttonCode,
+    new SimpleStringListEditor( group, buttonCode,
                                 i18n("Add..."),
                                 i18n("Remo&ve"),
                                 i18n("Modify..."),
@@ -3055,7 +3056,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
   vlay->addWidget( label );
 
   mCharsetListEditor =
-    new SimpleStringListEditor( this, 0, SimpleStringListEditor::All,
+    new SimpleStringListEditor( this, SimpleStringListEditor::All,
                                 i18n("A&dd..."), i18n("Remo&ve"),
                                 i18n("&Modify..."), i18n("Enter charset:") );
   connect( mCharsetListEditor, SIGNAL( changed( void ) ),
@@ -3398,7 +3399,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
   SimpleStringListEditor::ButtonCode buttonCode =
     static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
   mAttachWordsListEditor =
-    new SimpleStringListEditor( this, 0, buttonCode,
+    new SimpleStringListEditor( this, buttonCode,
                                 i18n("A&dd..."), i18n("Re&move"),
                                 i18n("Mod&ify..."),
                                 i18n("Enter new key word:") );

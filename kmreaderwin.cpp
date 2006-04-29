@@ -437,9 +437,8 @@ const int KMReaderWin::delay = 150;
 KMReaderWin::KMReaderWin(QWidget *aParent,
 			 QWidget *mainWindow,
 			 KActionCollection* actionCollection,
-                         const char *aName,
                          Qt::WindowFlags aFlags )
-  : QWidget(aParent, aName, aFlags | Qt::WDestructiveClose),
+  : QWidget(aParent, aFlags | Qt::WDestructiveClose),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),

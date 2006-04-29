@@ -34,7 +34,7 @@ namespace KMail {
   class XFaceConfigurator : public QWidget {
     Q_OBJECT
   public:
-    XFaceConfigurator( QWidget * parent=0, const char * name=0 );
+    XFaceConfigurator( QWidget * parent=0 );
     virtual ~XFaceConfigurator();
 
     bool isXFaceEnabled() const;
