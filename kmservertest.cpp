@@ -114,17 +114,17 @@ void KMServerTest::slotData(KJob *, const QString &data,const QString&)
 void KMServerTest::slotMetaData( const KIO::MetaData & md ) {
   KIO::MetaData::const_iterator it = md.find( "PLAIN AUTH METHODS" );
   if ( it != md.end() ) {
-    mAuthNone = it.data();
+    mAuthNone = it.value();
     kDebug(5006) << "mAuthNone: " << mAuthNone << endl;
   }
   it = md.find( "TLS AUTH METHODS" );
   if ( it != md.end() ) {
-    mAuthTLS = it.data();
+    mAuthTLS = it.value();
     kDebug(5006) << "mAuthTLS: " << mAuthTLS << endl;
   }
   it = md.find( "SSL AUTH METHODS" );
   if ( it != md.end() ) {
-    mAuthSSL = it.data();
+    mAuthSSL = it.value();
     kDebug(5006) << "mAuthSSL: " << mAuthSSL << endl;
   }
 }

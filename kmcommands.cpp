@@ -1981,8 +1981,8 @@ KMCommand::Result KMMoveCommand::execute()
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
-      it.key()->removeMsg(*it.data());
-      delete it.data();
+      it.key()->removeMsg(*it.value());
+      delete it.value();
     }
 //    Result result = ( mLostBoys.isEmpty() ? OK : Failed );
     completeMove( OK );
@@ -2512,10 +2512,10 @@ void KMLoadPartsCommand::slotStart()
          !it.key()->msgPart().partSpecifier().isEmpty() ) {
       // incomplete part, so retrieve it first
       ++mNeedsRetrieval;
-      KMFolder* curFolder = it.data()->parent();
+      KMFolder* curFolder = it.value()->parent();
       if ( curFolder ) {
         FolderJob *job =
-          curFolder->createJob( it.data(), FolderJob::tGetMessage,
+          curFolder->createJob( it.value(), FolderJob::tGetMessage,
                                 0, it.key()->msgPart().partSpecifier() );
         job->setCancellable( false );
         connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),

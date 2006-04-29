@@ -354,11 +354,11 @@ void AccountManager::addToTotalNewMailCount( const QMap<QString, int> & newInFol
 {
   for ( QMap<QString, int>::const_iterator it = newInFolder.begin();
         it != newInFolder.end(); ++it ) {
-    mTotalNewMailsArrived += it.data();
+    mTotalNewMailsArrived += it.value();
     if ( !mTotalNewInFolder.contains( it.key() )  )
-      mTotalNewInFolder[it.key()] = it.data();
+      mTotalNewInFolder[it.key()] = it.value();
     else
-      mTotalNewInFolder[it.key()] += it.data();
+      mTotalNewInFolder[it.key()] += it.value();
   }
 }
 
