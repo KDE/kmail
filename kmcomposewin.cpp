@@ -2048,7 +2048,7 @@ bool KMComposeWin::userForgotAttachment()
   QRegExp rx ( QString::fromLatin1("\\b") +
                attachWordsList.join("\\b|\\b") +
                QString::fromLatin1("\\b") );
-  rx.setCaseSensitive( false );
+  rx.setCaseSensitive( Qt::CaseInsensitive );
 
   bool gotMatch = false;
 
@@ -2056,7 +2056,7 @@ bool KMComposeWin::userForgotAttachment()
   // unless the message is a reply or a forwarded message
   QString subj = subject();
   gotMatch =    ( KMMessage::stripOffPrefixes( subj ) == subj )
-             && ( rx.search( subj ) >= 0 );
+             && ( rx.indexIn( subj ) >= 0 );
 
   if ( !gotMatch ) {
     // check whether the non-quoted text contains one of the attachment key
@@ -2064,8 +2064,8 @@ bool KMComposeWin::userForgotAttachment()
     QRegExp quotationRx ("^([ \\t]*([|>:}#]|[A-Za-z]+>))+");
     for ( int i = 0; i < mEditor->numLines(); ++i ) {
       QString line = mEditor->textLine( i );
-      gotMatch =    ( quotationRx.search( line ) < 0 )
-                 && ( rx.search( line ) >= 0 );
+      gotMatch =    ( quotationRx.indexIn( line ) < 0 )
+                 && ( rx.indexIn( line ) >= 0 );
       if ( gotMatch )
         break;
     }

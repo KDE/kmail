@@ -66,7 +66,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
     if ( (*it).scoreType() != SpamAgentBool ) {
       // Can we extract the score?
       QRegExp scorePattern = (*it).scorePattern();
-      if ( scorePattern.search( mField ) != -1 ) {
+      if ( scorePattern.indexIn( mField ) != -1 ) {
         scoreString = scorePattern.cap( 1 );
         scoreValid = true;
       }
@@ -85,7 +85,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           break;
 
         case SpamAgentBool:
-          if( (*it).scorePattern().search( mField ) == -1 )
+          if( (*it).scorePattern().indexIn( mField ) == -1 )
             score = 0.0;
           else
             score = 100.0;
@@ -123,7 +123,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           // Find the threshold value.
           QString thresholdString;
           QRegExp thresholdPattern = (*it).thresholdPattern();
-          if ( thresholdPattern.search( mField ) != -1 ) {
+          if ( thresholdPattern.indexIn( mField ) != -1 ) {
             thresholdString = thresholdPattern.cap( 1 );
           }
           else {

@@ -46,7 +46,7 @@ namespace KMail {
 
 void MailSourceHighlighter::highlightBlock ( const QString & text ) {
   QRegExp regexp( "^([\\w-]+:\\s)" );
-  if( regexp.search( text ) != -1 ) {
+  if( regexp.indexIn( text ) != -1 ) {
     QFont font = document()->defaultFont ();
     font.setBold( true );
     setFormat( 0, regexp.matchedLength(), font );

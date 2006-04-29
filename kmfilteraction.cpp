@@ -419,7 +419,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 
   // search for '%n'
   int start = -1;
-  while ( ( start = r.search( result, start + 1 ) ) > 0 ) {
+  while ( ( start = r.indexIn( result, start + 1 ) ) > 0 ) {
     int len = r.matchedLength();
     // and save the encountered 'n' in a list.
     bool OK = false;
@@ -470,9 +470,9 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 
   // And finally, replace the %{foo} with the content of the foo
   // header field:
-  QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", false );
+  QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
   int idx = 0;
-  while ( ( idx = header_rx.search( result, idx ) ) != -1 ) {
+  while ( ( idx = header_rx.indexIn( result, idx ) ) != -1 ) {
     QString replacement = KProcess::quote( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
     result.replace( idx, header_rx.matchedLength(), replacement );
     idx += replacement.length();

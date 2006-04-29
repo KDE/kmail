@@ -120,8 +120,8 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
     mProcmailrc.setFileName(fname);
   }
 
-  QRegExp lockFileGlobal("^LOCKFILE=", true);
-  QRegExp lockFileLocal("^:0", true);
+  QRegExp lockFileGlobal("^LOCKFILE=", Qt::CaseSensitive);
+  QRegExp lockFileLocal("^:0", Qt::CaseSensitive);
 
   if(  mProcmailrc.open(QIODevice::ReadOnly) ) {
 
@@ -141,9 +141,9 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
         s = s.trimmed();
       }
 
-      if(  lockFileGlobal.search(s) != -1 ) {
+      if(  lockFileGlobal.indexIn(s) != -1 ) {
         processGlobalLock(s);
-      } else if( lockFileLocal.search(s) != -1 ) {
+      } else if( lockFileLocal.indexIn(s) != -1 ) {
         processLocalLock(s);
       } else if( int i = s.indexOf('=') ) {
         processVariableSetting(s,i);

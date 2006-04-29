@@ -1111,7 +1111,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
   // 2. matches at least one of the part regexps in prefixRegExps
   QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
                       .arg( prefixRegExps.join(")|(?:") );
-  QRegExp rx( bigRegExp, false /*case insens.*/ );
+  QRegExp rx( bigRegExp, Qt::CaseInsensitive );
   if ( !rx.isValid() ) {
     kWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
                     << bigRegExp << "\"\n"
@@ -1120,10 +1120,10 @@ QString KMMsgBase::replacePrefixes( const QString& str,
     recognized = str.startsWith( newPrefix );
   } else { // valid rx
     QString tmp = str;
-    if ( rx.search( tmp ) == 0 ) {
+    if ( rx.indexIn( tmp ) == 0 ) {
       recognized = true;
       if ( replace )
-	return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
+        return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
     }
   }
   if ( !recognized )

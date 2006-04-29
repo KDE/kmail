@@ -597,7 +597,7 @@ int KMFolderMbox::createIndexFromContents()
 
     if (atEof ||
         (memcmp(line, MSG_SEPERATOR_START, MSG_SEPERATOR_START_LEN)==0 &&
-         regexp.search(line) >= 0))
+         regexp.indexIn(line) >= 0))
     {
       size = pos - offs;
       pos = ftell(mStream);

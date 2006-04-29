@@ -869,8 +869,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
   if ( headerField("List-Post").contains( "mailto:", Qt::CaseInsensitive ) ) {
     QString listPost = headerField("List-Post");
-    QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
-    if ( rx.search( listPost, 0 ) != -1 ) // matched
+    QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", Qt::CaseInsensitive );
+    if ( rx.indexIn( listPost, 0 ) != -1 ) // matched
       mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
   }
 
@@ -1528,10 +1528,10 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
 QString KMMessage::replaceHeadersInString( const QString & s ) const {
   QString result = s;
-  QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
+  QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
   Q_ASSERT( rx.isValid() );
   int idx = 0;
-  while ( ( idx = rx.search( result, idx ) ) != -1 ) {
+  while ( ( idx = rx.indexIn( result, idx ) ) != -1 ) {
     QString replacement = headerField( rx.cap(1).toLatin1() );
     result.replace( idx, rx.matchedLength(), replacement );
     idx += replacement.length();
@@ -2451,7 +2451,7 @@ QByteArray KMMessage::bodyDecodedBinary() const
   }
 
   int len = dwstr.size();
-  QByteArray ba(len);
+  QByteArray ba(len,'\0');
   memcpy(ba.data(),dwstr.data(),len);
   return ba;
 }
@@ -3140,7 +3140,7 @@ QString KMMessage::generateMessageId( const QString& addr )
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::html2source( const Q3CString & src )
 {
-  QByteArray result( 1 + 6*src.length() );  // maximal possible length
+  QByteArray result( 1 + 6*src.length(), '\0' );  // maximal possible length
 
   Q3CString::ConstIterator s = src.begin();
   QByteArray::Iterator d = result.begin();

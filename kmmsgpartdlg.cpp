@@ -379,7 +379,7 @@ void KMMsgPartDialogCompat::setMsgPart( KMMessagePart * aMsgPart )
   setMimeType( mMsgPart->typeStr(), mMsgPart->subtypeStr() );
   setSize( mMsgPart->decodedSize() );
   QString cd(mMsgPart->contentDisposition());
-  setInline( cd.indexOf( QRegExp("^\\s*inline", false) ) >= 0 );
+  setInline( cd.indexOf( QRegExp("^\\s*inline", Qt::CaseInsensitive) ) >= 0 );
 }
 
 
