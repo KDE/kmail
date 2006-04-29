@@ -1161,7 +1161,7 @@ void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
   // Send it by 32K chuncks
   const int chunkSize = qMin( mMessageLength - mMessageOffset, (unsigned int)32*1024 );
   if ( chunkSize > 0 ) {
-    array.duplicate(mMessage.data() + mMessageOffset, chunkSize);
+    array = QByteArray(mMessage.data() + mMessageOffset, chunkSize);
     mMessageOffset += chunkSize;
   } else
   {

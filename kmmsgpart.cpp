@@ -105,7 +105,7 @@ int KMMessagePart::decodedSize(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBody(const Q3CString &aStr)
 {
-  mBody.duplicate( aStr.data(), aStr.length() );
+  mBody = aStr;
 
   int enc = cte();
   if (enc == DwMime::kCte7bit || enc == DwMime::kCte8bit || enc == DwMime::kCteBinary)
@@ -193,7 +193,7 @@ void KMMessagePart::setBodyEncoded(const Q3CString& aStr)
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    mBody.duplicate( aStr.data(), mBodyDecodedSize );
+    mBody = QByteArray( aStr.data(), mBodyDecodedSize );
     break;
   }
 }
@@ -271,7 +271,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    mBody.duplicate( aStr );
+    mBody = aStr;
     break;
   }
 }
@@ -288,7 +288,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
     case DwMime::kCte7bit:
     case DwMime::kCte8bit:
     case DwMime::kCteBinary:
-      result.duplicate(mBody);
+      result = mBody;
       break;
     default:
       if ( const Codec * codec = Codec::codecForName( cteStr() ) )
@@ -297,7 +297,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
       else {
         kWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
                         << "'. Assuming binary." << endl;
-	result.duplicate(mBody);
+        result = mBody;
       }
   }
 

@@ -1290,8 +1290,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
 
-  QByteArray plainText;
-  plainText.duplicate( body.data(), body.length() ); // hrmpf...
+  QByteArray plainText( body );
 
   // This reads strange, but we know that AdjustCryptFlagsJob created a single splitinfo,
   // under the given "format" (usually openpgp/mime; doesn't matter)
@@ -2137,8 +2136,7 @@ void MessageComposer::pgpSignedMsg( const Q3CString & cText, Kleo::CryptoMessage
     return;
   }
 
-  QByteArray plainText;
-  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
+  QByteArray plainText( cText );
   QByteArray signature;
   const GpgME::SigningResult res =
     job->exec( signingKeys, plainText, signingMode( format ), signature );
@@ -2183,8 +2181,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
     return Kpgp::Failure;
   }
 
-  QByteArray plainText;
-  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
+  QByteArray plainText( cText );
 
   const GpgME::EncryptionResult res =
     job->exec( encryptionKeys, plainText, false, encryptedBody );
@@ -2224,8 +2221,7 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
     return Kpgp::Failure;
   }
 
-  QByteArray plainText;
-  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
+  QByteArray plainText( cText.data() );
 
   const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
     job->exec( signingKeys, encryptionKeys, plainText, false, encryptedBody );

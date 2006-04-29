@@ -415,10 +415,10 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
     return;
   }
   if ((*it).data.size() - (*it).offset > 0x8000) {
-    data.duplicate((*it).data.data() + (*it).offset, 0x8000);
+    data = QByteArray((*it).data.data() + (*it).offset, 0x8000);
     (*it).offset += 0x8000;
   } else if ((*it).data.size() - (*it).offset > 0) {
-    data.duplicate((*it).data.data() + (*it).offset,
+    data = QByteArray((*it).data.data() + (*it).offset,
                    (*it).data.size() - (*it).offset);
     (*it).offset = (*it).data.size();
   } else

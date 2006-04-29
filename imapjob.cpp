@@ -513,12 +513,12 @@ void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )
 
   if ((*it).data.size() - (*it).offset > 0x8000)
   {
-    data.duplicate((*it).data.data() + (*it).offset, 0x8000);
+    data = QByteArray((*it).data.data() + (*it).offset, 0x8000);
     (*it).offset += 0x8000;
   }
   else if ((*it).data.size() - (*it).offset > 0)
   {
-    data.duplicate((*it).data.data() + (*it).offset, (*it).data.size() - (*it).offset);
+    data = QByteArray((*it).data.data() + (*it).offset, (*it).data.size() - (*it).offset);
     (*it).offset = (*it).data.size();
   } else data.resize(0);
 }
