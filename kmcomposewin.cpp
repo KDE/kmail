@@ -3466,7 +3466,7 @@ void KMComposeWin::slotCopy()
 #undef KeyPress
 #endif
 
-  QKeyEvent k(QEvent::KeyPress, Qt::Key_C , 0 , Qt::ControlModifier);
+  QKeyEvent k(QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier);
   kapp->notify(fw, &k);
 }
 
@@ -3486,7 +3486,7 @@ void KMComposeWin::slotPaste()
 #undef KeyPress
 #endif
 
-    QKeyEvent k(QEvent::KeyPress, Qt::Key_V , 0 , Qt::ControlModifier);
+    QKeyEvent k(QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier);
     kapp->notify(fw, &k);
   }
 
