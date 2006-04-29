@@ -270,7 +270,7 @@ bool RecipientLine::isModified()
 void RecipientLine::clearModified()
 {
   mModified = false;
-  mEdit->clearModified();
+  mEdit->setModified( false );
 }
 
 void RecipientLine::slotReturnPressed()

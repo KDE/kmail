@@ -138,7 +138,7 @@ void RedirectDialog::slotAddrBook()
   if (dlg.exec()==QDialog::Rejected) return;
 
   mEditTo->setText( dlg.to().join(", ") );
-  mEditTo->setEdited( true );
+  mEditTo->setModified( true );
 }
 
 

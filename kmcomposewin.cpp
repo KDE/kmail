@@ -1966,7 +1966,7 @@ bool KMComposeWin::isModified() const
 {
   return ( mEditor->isModified() ||
            mEdtFrom->isModified() ||
-           ( mEdtReplyTo && mEdtReplyTo->edited() ) ||
+           ( mEdtReplyTo && mEdtReplyTo->isModified() ) ||
            ( mEdtTo && mEdtTo->isModified() ) ||
            ( mEdtCc && mEdtCc->isModified() ) ||
            ( mEdtBcc && mEdtBcc->isModified() ) ||
@@ -1983,15 +1983,15 @@ void KMComposeWin::setModified( bool modified )
   mEditor->setModified( modified );
   if ( !modified ) {
     mEdtFrom->setModified( false );
-    if ( mEdtReplyTo ) mEdtReplyTo->setEdited( false );
-    if ( mEdtTo ) mEdtTo->setEdited( false );
-    if ( mEdtCc ) mEdtCc->setEdited( false );
-    if ( mEdtBcc ) mEdtBcc->setEdited( false );
+    if ( mEdtReplyTo ) mEdtReplyTo->setModified( false );
+    if ( mEdtTo ) mEdtTo->setModified( false );
+    if ( mEdtCc ) mEdtCc->setModified( false );
+    if ( mEdtBcc ) mEdtBcc->setModified( false );
     if ( mRecipientsEditor ) mRecipientsEditor->clearModified();
-    mEdtSubject->setEdited( false );
+    mEdtSubject->setModified( false );
     mAtmModified =  false ;
     if ( mTransport->lineEdit() )
-      mTransport->lineEdit()->setEdited( false );
+      mTransport->lineEdit()->setModified( false );
   }
 }
 
@@ -2361,13 +2361,13 @@ void KMComposeWin::addrBookSelIntoOld()
   if (dlg.exec()==QDialog::Rejected) return;
 
   mEdtTo->setText( dlg.to().join(", ") );
-  mEdtTo->setEdited( true );
+  mEdtTo->setModified( true );
 
   mEdtCc->setText( dlg.cc().join(", ") );
-  mEdtCc->setEdited( true );
+  mEdtCc->setModified( true );
 
   mEdtBcc->setText( dlg.bcc().join(", ") );
-  mEdtBcc->setEdited( true );
+  mEdtBcc->setModified( true );
 
   //Make sure BCC field is shown if needed
   if ( !mEdtBcc->text().isEmpty() ) {
@@ -2407,15 +2407,15 @@ void KMComposeWin::addrBookSelIntoNew()
 
   QStringList list = selection.to() + selection.toDistributionLists();
   mEdtTo->setText( list.join(", ") );
-  mEdtTo->setEdited( true );
+  mEdtTo->setModified( true );
 
   list = selection.cc() + selection.ccDistributionLists();
   mEdtCc->setText( list.join(", ") );
-  mEdtCc->setEdited( true );
+  mEdtCc->setModified( true );
 
   list = selection.bcc() + selection.bccDistributionLists();
   mEdtBcc->setText( list.join(", ") );
-  mEdtBcc->setEdited( true );
+  mEdtBcc->setModified( true );
 
   //Make sure BCC field is shown if needed
   if ( !mEdtBcc->text().isEmpty() ) {
@@ -4214,10 +4214,10 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   // don't overwrite the BCC field under certain circomstances
   // NOT edited and preset BCC from the identity
-  if( mEdtBcc && !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+  if( mEdtBcc && !mEdtBcc->isModified() && !ident.bcc().isEmpty() ) {
     // BCC NOT empty AND contains a diff adress then the preset BCC
     // of the new identity
-    if( !mEdtBcc->text().isEmpty() && mEdtBcc->text() != ident.bcc() && !mEdtBcc->edited() ) {
+    if( !mEdtBcc->text().isEmpty() && mEdtBcc->text() != ident.bcc() && !mEdtBcc->isModified() ) {
       mEdtBcc->setText( ident.bcc() );
     } else {
       // user type into the editbox an address that != to the preset bcc
@@ -4236,7 +4236,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // user edited the bcc box and has a preset bcc in the identity
   // we will append whatever the user typed to the preset address
   // allowing the user to keep all addresses
-  if( mEdtBcc && mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+  if( mEdtBcc && mEdtBcc->isModified() && !ident.bcc().isEmpty() ) {
     if( !mEdtBcc->text().isEmpty() ) {
       QString temp_string ( mEdtBcc->text() + QString::fromLatin1(",") + ident.bcc() );
       mEdtBcc->setText( temp_string );
@@ -4247,7 +4247,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // user typed nothing and the identity does not have a preset bcc
   // we then reset the value to get rid of any previous
   // values if the user changed identity mid way through.
-  if( mEdtBcc && !mEdtBcc->edited() && ident.bcc().isEmpty() ) {
+  if( mEdtBcc && !mEdtBcc->isModified() && ident.bcc().isEmpty() ) {
     mEdtBcc->setText( ident.bcc() );
   }
   // make sure the BCC field is shown because else it's ignored
