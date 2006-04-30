@@ -64,8 +64,10 @@ KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WF
 KMail::HtmlStatusBar::~HtmlStatusBar() {}
 
 void KMail::HtmlStatusBar::upd() {
-  setEraseColor( bgColor() );
-  setPaletteForegroundColor( fgColor() );
+  QPalette pal = palette();
+  pal.setColor( backgroundRole(), bgColor() );
+  pal.setColor( foregroundRole(), fgColor() );
+  setPalette( pal );
   setText( message() );
 }
 

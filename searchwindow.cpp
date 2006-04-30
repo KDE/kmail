@@ -121,7 +121,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mChkSubFolders->setChecked(true);
   hbl->addWidget(mChkSubFolders);
 
-  QWidget *spacer = new QWidget( searchWidget, "spacer" );
+  QWidget *spacer = new QWidget( searchWidget );
+  spacer->setObjectName( "spacer" );
   spacer->setMinimumHeight( 2 );
   vbl->addWidget( spacer );
 

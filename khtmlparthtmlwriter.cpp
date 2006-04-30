@@ -89,7 +89,7 @@ namespace KMail {
 
     mHtmlPart->view()->viewport()->setUpdatesEnabled( true );
     mHtmlPart->view()->setUpdatesEnabled( true );
-    mHtmlPart->view()->viewport()->repaint( false );
+    mHtmlPart->view()->viewport()->repaint();
     mState = Ended;
   }
 

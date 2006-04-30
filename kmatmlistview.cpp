@@ -186,7 +186,9 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     else
       bg = cg.base();
 
-    mCBCompress->setPaletteBackgroundColor(bg);
+    QPalette pal;
+    pal.setColor( mCBCompress->backgroundRole(), bg );
+    mCBCompress->setPalette(pal);
     mCBCompress->show();
   }
   if( 5 == column || 6 == column ) {
@@ -216,8 +218,10 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     else
       bg = cg.base();
 
+    QPalette pal;
+    pal.setColor( cb->backgroundRole(), bg );
+    cb->setPalette( pal );
     bool enabled = (5 == column) ? mCBEncryptEnabled : mCBSignEnabled;
-    cb->setPaletteBackgroundColor(bg);
     if (enabled) cb->show();
   }
 }

@@ -373,7 +373,7 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
                         rect.left() + contentsX(),
                         rect.top() + contentsY() );
   else
-    p->fillRect( rect, colorGroup().base() );
+    p->fillRect( rect, palette().color( QPalette::Base ) );
 }
 
 bool KMHeaders::event(QEvent *e)

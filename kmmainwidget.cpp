@@ -137,7 +137,7 @@ static KStaticDeleter<QList<KMMainWidget*> > mwlsd;
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
                            KXMLGUIClient *aGUIClient,
                            KActionCollection *actionCollection, KConfig* config ) :
-    QWidget(parent, name),
+    QWidget(parent),
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
@@ -162,6 +162,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
+  setObjectName( name );
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
   mToolbarActionSeparator = new KActionSeparator( actionCollection );
@@ -477,7 +478,7 @@ void KMMainWidget::writeConfig(void)
   geometry.writeEntry( "HeaderPaneWidth", widths[1] );
 
   // Only save when the widget is shown (to avoid saving a wrong value)
-  if ( mSearchAndHeaders && mSearchAndHeaders->isShown() ) {
+  if ( mSearchAndHeaders && !mSearchAndHeaders->isHidden() ) {
     geometry.writeEntry( "HeaderPaneHeight", heights[0] );
     geometry.writeEntry( "ReaderPaneHeight", heights[1] );
   }
@@ -691,24 +692,24 @@ void KMMainWidget::activatePanners(void)
         mMsgView, SLOT( slotCopySelectedText() ));
   }
   if ( mLongFolderList ) {
-    mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mSearchAndHeaders->setParent( mPanner2 );
     if (mMsgView) {
-      mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+      mMsgView->setParent( mPanner2 );
       mPanner2->addWidget( mMsgView );
     }
-    mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+    mFolderTree->setParent( mPanner1 );
     mPanner1->addWidget( mPanner2 );
     mPanner1->setSizes( mPanner1Sep );
     mPanner1->setStretchFactor( mPanner1->indexOf(mFolderTree), 0 );
     mPanner2->setSizes( mPanner2Sep );
     mPanner2->setStretchFactor( mPanner2->indexOf(mSearchAndHeaders), 0 );
   } else /* !mLongFolderList */ {
-    mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-    mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mFolderTree->setParent( mPanner2 );
+    mSearchAndHeaders->setParent( mPanner2 );
     mPanner2->addWidget( mSearchAndHeaders );
     mPanner1->insertWidget( 0, mPanner2 );
     if (mMsgView) {
-      mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+      mMsgView->setParent( mPanner1 );
       mPanner1->addWidget( mMsgView );
     }
     mPanner1->setSizes( mPanner1Sep );

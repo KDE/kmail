@@ -848,8 +848,9 @@ void AntiSpamWizard::ConfigReader::sortToolList()
 //---------------------------------------------------------------------------
 ASWizPage::ASWizPage( QWidget * parent, const char * name,
                       const QString *bannerName )
-  : QWidget( parent, name )
+  : QWidget( parent )
 {
+  setObjectName( name );
   QString banner = "kmwizard.png";
   if ( bannerName && !bannerName->isEmpty() )
     banner = *bannerName;

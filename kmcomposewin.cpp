@@ -1023,7 +1023,9 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->setFixedWidth( mLabelWidth );
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
-    aEdt->setBackgroundColor( mBackColor );
+    QPalette pal;
+    pal.setColor( aEdt->backgroundRole(), mBackColor );
+    aEdt->setPalette( pal );
     aEdt->show();
 
     if (aBtn) {
@@ -3509,7 +3511,8 @@ void KMComposeWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotClose()
 {
-  close(false);
+  #warning "Port me: make sure to set/unset the  Qt::WA_DeleteOnClose flag to match the old behavior of close(false)"
+  close();
 }
 
 
@@ -4150,7 +4153,8 @@ void KMComposeWin::slotSpellcheck()
   mEditor->spellcheck();
 }
 
-void KMComposeWin::polish()
+#warning "ensurePolished() should be a const method, but we call non-const method"
+void KMComposeWin::ensurePolished()
 {
   // Ensure the html toolbar is appropriately shown/hidden
   markupAction->setChecked(mHtmlMarkup);
@@ -4158,7 +4162,7 @@ void KMComposeWin::polish()
     toolBar("htmlToolBar")->show();
   else
     toolBar("htmlToolBar")->hide();
-  KMail::Composer::polish();
+  KMail::Composer::ensurePolished();
 }
 
 //-----------------------------------------------------------------------------

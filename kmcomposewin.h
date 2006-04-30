@@ -247,7 +247,7 @@ public: // callback
   }
 
 private slots:
-  void polish();
+  void ensurePolished();
   /**
    * Actions:
    */
