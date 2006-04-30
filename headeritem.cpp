@@ -402,7 +402,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   }
 
   // set color and font
-  _cg.setColor( QColorGroup::Text, *color );
+  _cg.setColor( QPalette::Text, *color );
   font.setWeight( weight );
   p->setFont( font );
 
@@ -414,7 +414,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   }
 
   // reset color
-  _cg.setColor( QColorGroup::Text, c );
+  _cg.setColor( QPalette::Text, c );
 }
 
 QString HeaderItem::generate_key( KMHeaders *headers,
