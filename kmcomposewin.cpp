@@ -538,8 +538,8 @@ bool KMComposeWin::event(QEvent *e)
 void KMComposeWin::readColorConfig(void)
 {
   if ( GlobalSettings::self()->useDefaultColors() ) {
-    mForeColor = QColor(kapp->palette().active().text());
-    mBackColor = QColor(kapp->palette().active().base());
+    mForeColor = QColor(kapp->palette().color( QPalette::Text ));
+    mBackColor = QColor(kapp->palette().color( QPalette::Base ));
   } else {
     mForeColor = GlobalSettings::self()->foregroundColor();
     mBackColor = GlobalSettings::self()->backgroundColor();
@@ -547,12 +547,12 @@ void KMComposeWin::readColorConfig(void)
 
   // Color setup
   mPalette = kapp->palette();
-  QColorGroup cgrp  = mPalette.active();
-  cgrp.setColor( QColorGroup::Base, mBackColor);
-  cgrp.setColor( QColorGroup::Text, mForeColor);
-  mPalette.setDisabled(cgrp);
-  mPalette.setActive(cgrp);
-  mPalette.setInactive(cgrp);
+  mPalette.setColor( QPalette::Base, mBackColor );
+  mPalette.setColor( QPalette::Text, mForeColor );
+  # warning "FIXME: Do we need to call setDisabled/setActive/setInactive or are the setColor calls enough??"
+//   mPalette.setDisabled(cgrp);
+//   mPalette.setActive(cgrp);
+//   mPalette.setInactive(cgrp);
 
   mEdtFrom->setPalette(mPalette);
   mEdtReplyTo->setPalette(mPalette);

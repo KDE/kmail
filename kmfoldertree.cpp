@@ -416,9 +416,9 @@ void KMFolderTree::readColorConfig (void)
 {
   // Custom/System color support
   KConfigGroup conf( KMKernel::config(), "Reader" );
-  QColor c1=QColor(kapp->palette().active().text());
+  QColor c1=QColor(kapp->palette().color( QPalette::Text ));
   QColor c2=QColor("blue");
-  QColor c4=QColor(kapp->palette().active().base());
+  QColor c4=QColor(kapp->palette().color( QPalette::Base ));
 
   if (!conf.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = conf.readEntry( "ForegroundColor",

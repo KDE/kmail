@@ -392,10 +392,10 @@ void KMHeaders::readColorConfig (void)
 {
   // Custom/System colors
   KConfigGroup config( KMKernel::config(), "Reader" );
-  QColor c1=QColor(kapp->palette().active().text());
+  QColor c1=QColor(kapp->palette().color( QPalette::Text ));
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
-  QColor c4=QColor(kapp->palette().active().base());
+  QColor c4=QColor(kapp->palette().color( QPalette::Base ));
   QColor c5=QColor(0,0x7F,0);
   QColor c6=QColor(0,0x98,0);
   QColor c7=KGlobalSettings::alternateBackgroundColor();

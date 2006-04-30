@@ -230,8 +230,8 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 //-----------------------------------------------------------------------------
 void SimpleFolderTree::readColorConfig (void)
 {
-  QColor c1=QColor(kapp->palette().active().text());
-  QColor c2=QColor(kapp->palette().active().base());
+  QColor c1=QColor(kapp->palette().color( QPalette::Text ));
+  QColor c2=QColor(kapp->palette().color( QPalette::Base ));
 
   mPaintInfo.colFore = c1;
   mPaintInfo.colBack = c2;

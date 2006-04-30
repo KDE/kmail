@@ -182,9 +182,9 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
 
     QColor bg;
     if (isSelected())
-      bg = cg.highlight();
+      bg = cg.color( QPalette::Highlight );
     else
-      bg = cg.base();
+      bg = cg.color( QPalette::Base );
 
     QPalette pal;
     pal.setColor( mCBCompress->backgroundRole(), bg );
@@ -214,9 +214,9 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
 
     QColor bg;
     if (isSelected())
-      bg = cg.highlight();
+      bg = cg.color( QPalette::Highlight );
     else
-      bg = cg.base();
+      bg = cg.color( QPalette::Base );
 
     QPalette pal;
     pal.setColor( cb->backgroundRole(), bg );

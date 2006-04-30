@@ -369,7 +369,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   MessageStatus status = mMsgBase->status();
 
   QColorGroup _cg( cg );
-  QColor c = _cg.text();
+  QColor c = _cg.color( QPalette::Text );
   QColor *color = const_cast<QColor *>( &headers->paintInfo()->colFore );
   QFont font = p->font();
   int weight = font.weight();

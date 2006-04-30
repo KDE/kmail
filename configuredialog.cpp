@@ -1762,9 +1762,9 @@ void AppearancePage::ColorsTab::doLoadOther() {
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
 
   static const QColor defaultColor[ numColorNames ] = {
-    kapp->palette().active().base(), // bg
+    kapp->palette().color( QPalette::Base ), // bg
     KGlobalSettings::alternateBackgroundColor(), // alt bg
-    kapp->palette().active().text(), // fg
+    kapp->palette().color( QPalette::Text ), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
