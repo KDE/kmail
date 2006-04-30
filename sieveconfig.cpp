@@ -97,7 +97,9 @@ namespace KMail {
     ++row;
     mAlternateURLEdit = new KLineEdit( this );
     mAlternateURLEdit->setEnabled( false );
-    glay->addWidget( new QLabel( mAlternateURLEdit, i18n("&Alternate URL:"), this ), row, 0 );
+    label = new QLabel( i18n("&Alternate URL:"), this );
+    label->setBuddy( mAlternateURLEdit );
+    glay->addWidget( label, row, 0 );
     glay->addWidget( mAlternateURLEdit, row, 1 );
 
     // row 4 is spacer

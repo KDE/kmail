@@ -79,7 +79,9 @@ namespace KMail {
     mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, plainPage() );
     mIntervalSpin->setObjectName( "mIntervalSpin" );
     connect(mIntervalSpin, SIGNAL( valueChanged( int )), SLOT( slotIntervalSpinChanged( int ) ) );
-    glay->addWidget( new QLabel( mIntervalSpin, i18n("&Resend notification only after:"), plainPage() ), row, 0 );
+    QLabel *label = new QLabel( i18n("&Resend notification only after:"), plainPage() );
+    label->setBuddy( mIntervalSpin );
+    glay->addWidget( label, row, 0 );
     glay->addWidget( mIntervalSpin, row, 1 );
 
     // "Send responses for these addresses" lineedit and label:

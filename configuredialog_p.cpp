@@ -60,7 +60,9 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addLayout( hlay );
   mLineEdit = new KLineEdit( page );
   mLineEdit->setFocus();
-  hlay->addWidget( new QLabel( mLineEdit, i18n("&New identity:"), page ) );
+  QLabel *l = new QLabel( i18n("&New identity:"), page );
+  l->setBuddy( mLineEdit );
+  hlay->addWidget( l );
   hlay->addWidget( mLineEdit, 1 );
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotEnableOK(const QString&)) );
@@ -213,7 +215,9 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   hlay->setMargin( 0 );
   mComboBox = new QComboBox( page );
   mComboBox->setEditable( false );
-  hlay->addWidget( new QLabel( mComboBox, i18n("Choose &language:"), page ) );
+  QLabel *l = new QLabel( i18n("Choose &language:"), page );
+  l->setBuddy( mComboBox );
+  hlay->addWidget( l );
   hlay->addWidget( mComboBox, 1 );
 
   QStringList pathList = KGlobal::dirs()->findAllResources( "locale",
@@ -315,9 +319,11 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   mListView->setAllColumnsShowFocus( true );
   mListView->setSorting( -1 );
 
-  vlay->addWidget( new QLabel( mListView,
+  QLabel *l = new QLabel(
 			       i18n("&Select a profile and click 'OK' to "
-				    "load its settings:"), page ) );
+				    "load its settings:"), page );
+	l->setBuddy( mListView );
+	vlay->addWidget( l );
   vlay->addWidget( mListView, 1 );
 
   setup();

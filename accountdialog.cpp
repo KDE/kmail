@@ -483,14 +483,16 @@ void AccountDialog::makeMaildirAccountPage()
 
   mMaildir.nameEdit = new KLineEdit( page );
   topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
-  QLabel *label = new QLabel( mMaildir.nameEdit, i18n("Account &name:"), page );
+  QLabel *label = new QLabel( i18n("Account &name:"), page );
+  label->setBuddy( mMaildir.nameEdit );
   topLayout->addWidget( label, 2, 0 );
 
   mMaildir.locationEdit = new QComboBox( page );
   mMaildir.locationEdit->setEditable( true );
   topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
   mMaildir.locationEdit->addItems(procmailrcParser.getSpoolFilesList());
-  label = new QLabel( mMaildir.locationEdit, i18n("Folder &location:"), page );
+  label = new QLabel( i18n("Folder &location:"), page );
+  label->setBuddy( mMaildir.locationEdit );
   topLayout->addWidget( label, 3, 0 );
 
   QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
@@ -545,13 +547,14 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.folderCombo = new QComboBox( page );
   mMaildir.folderCombo->setEditable( false );
   topLayout->addWidget( mMaildir.folderCombo, 7, 1 );
-  label = new QLabel( mMaildir.folderCombo,
-                      i18n("&Destination folder:"), page );
+  label = new QLabel(i18n("&Destination folder:"), page );
+  label->setBuddy( mMaildir.folderCombo );
   topLayout->addWidget( label, 7, 0 );
 
   mMaildir.precommand = new KLineEdit( page );
   topLayout->addWidget( mMaildir.precommand, 8, 1 );
-  label = new QLabel( mMaildir.precommand, i18n("&Pre-command:"), page );
+  label = new QLabel( i18n("&Pre-command:"), page );
+  label->setBuddy( mMaildir.precommand );
   topLayout->addWidget( label, 8, 0 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));

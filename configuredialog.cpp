@@ -717,20 +717,22 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // labels:
-  QLabel *l =  new QLabel( mSendOnCheckCombo, /*buddy*/
-                            i18n("Send &messages in outbox folder:"), group );
+  QLabel *l =  new QLabel( i18n("Send &messages in outbox folder:"), group );
+  l->setBuddy( mSendOnCheckCombo );
   glay->addWidget( l, 1, 0 );
 
   QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().toUtf8() );
   l->setWhatsThis( msg );
   mSendOnCheckCombo->setWhatsThis( msg );
 
-  glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
-                               i18n("Defa&ult send method:"), group ), 2, 0 );
-  glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
-                               i18n("Message &property:"), group ), 3, 0 );
-  l = new QLabel( mDefaultDomainEdit, /*buddy*/
-                          i18n("Defaul&t domain:"), group );
+  l = new QLabel( i18n("Defa&ult send method:"), group );
+  l->setBuddy( mSendMethodCombo );
+  glay->addWidget( l, 2, 0 );
+  l = new QLabel( i18n("Message &property:"), group );
+  l->setBuddy( mMessagePropertyCombo );
+  glay->addWidget( l, 3, 0 );
+  l = new QLabel( i18n("Defaul&t domain:"), group );
+  l->setBuddy( mDefaultDomainEdit );
   glay->addWidget( l, 4, 0 );
 
   // and now: add QWhatsThis:
@@ -2250,8 +2252,9 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
       3/*init*/,this );
 
-  QLabel *label = new QLabel( mCollapseQuoteLevelSpin,
+  QLabel *label = new QLabel( 
            GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
+  label->setBuddy( mCollapseQuoteLevelSpin );
 
   hlay->addWidget( label );
 
@@ -2595,8 +2598,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   vlay->addLayout( hlay );
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
   mAutoSave->setObjectName( "kcfg_AutosaveInterval" );
-  label = new QLabel( mAutoSave,
-           GlobalSettings::self()->autosaveIntervalItem()->label(), this );
+  label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
+  label->setBuddy( mAutoSave );
   hlay->addWidget( label );
   hlay->addWidget( mAutoSave );
   mAutoSave->setSpecialValueText( i18n("No autosave") );
@@ -2776,8 +2779,9 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
   // row 1: label and language combo box:
   mPhraseLanguageCombo = new LanguageComboBox( this );
   mPhraseLanguageCombo->setEditable( false );
-  glay->addWidget( new QLabel( mPhraseLanguageCombo,
-                               i18n("Lang&uage:"), this ), 1, 0 );
+  QLabel *l = new QLabel( i18n("Lang&uage:"), this );
+  l->setBuddy( mPhraseLanguageCombo );
+  glay->addWidget( l, 1, 0 );
   glay->addWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
   connect( mPhraseLanguageCombo, SIGNAL(activated(const QString&)),
            this, SLOT(slotLanguageChanged(const QString&)) );
@@ -2799,32 +2803,36 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
   mPhraseReplyEdit = new KLineEdit( this );
   connect( mPhraseReplyEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  glay->addWidget( new QLabel( mPhraseReplyEdit,
-                               i18n("Reply to se&nder:"), this ), 3, 0 );
+  l = new QLabel( i18n("Reply to se&nder:"), this );
+  l->setBuddy( mPhraseReplyEdit );
+  glay->addWidget( l, 3, 0 );
   glay->addWidget( mPhraseReplyEdit, 3, 1, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
   mPhraseReplyAllEdit = new KLineEdit( this );
   connect( mPhraseReplyAllEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  glay->addWidget( new QLabel( mPhraseReplyAllEdit,
-                               i18n("Repl&y to all:"), this ), 4, 0 );
+  l = new QLabel(  i18n("Repl&y to all:"), this );
+  l->setBuddy( mPhraseReplyAllEdit );
+  glay->addWidget( l, 4, 0 );
   glay->addWidget( mPhraseReplyAllEdit, 4, 1, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
   mPhraseForwardEdit = new KLineEdit( this );
   connect( mPhraseForwardEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  glay->addWidget( new QLabel( mPhraseForwardEdit,
-                               i18n("&Forward:"), this ), 5, 0 );
+  l = new QLabel( i18n("&Forward:"), this );
+  l->setBuddy( mPhraseForwardEdit );
+  glay->addWidget( l, 5, 0 );
   glay->addWidget( mPhraseForwardEdit, 5, 1, 1, 2 ); // cols 1..2
 
   // row 6: "quote indicator" line edit and label:
   mPhraseIndentPrefixEdit = new KLineEdit( this );
   connect( mPhraseIndentPrefixEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  glay->addWidget( new QLabel( mPhraseIndentPrefixEdit,
-                               i18n("&Quote indicator:"), this ), 6, 0 );
+  l = new QLabel( i18n("&Quote indicator:"), this );
+  l->setBuddy( mPhraseIndentPrefixEdit );
+  glay->addWidget( l, 6, 0 );
   glay->addWidget( mPhraseIndentPrefixEdit, 6, 1, 1, 2 );
 
   // row 7: spacer
@@ -3179,8 +3187,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mMessageIdSuffixValidator =
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );
   mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
-  label = new QLabel( mMessageIdSuffixEdit,
-                      i18n("Custom message-&id suffix:"), this );
+  label = new QLabel(i18n("Custom message-&id suffix:"), this );
+  label->setBuddy( mMessageIdSuffixEdit );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
   mMessageIdSuffixEdit->setEnabled( false );
   hlay->addWidget( label );
@@ -4425,10 +4433,11 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addLayout( hlay );
   mLoopOnGotoUnread = new QComboBox( this );
   mLoopOnGotoUnread->setEditable( false );
-  label = new QLabel( mLoopOnGotoUnread,
+  label = new QLabel( 
            i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
                 "and \"loop in all folders\".",
                 "When trying to find unread messages:"), this );
+  label->setBuddy( mLoopOnGotoUnread );
   mLoopOnGotoUnread->addItems( QStringList()
       << i18nc("continuation of \"When trying to find unread messages:\"",
               "Do not Loop")
@@ -4446,11 +4455,12 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addLayout( hlay );
   mActionEnterFolder = new QComboBox( this );
   mActionEnterFolder->setEditable( false );
-  label = new QLabel( mActionEnterFolder,
+  label = new QLabel(
            i18nc("to be continued with \"jump to first new message\", "
                 "\"jump to first unread or new message\","
                 "and \"jump to last selected message\".",
                 "When entering a folder:"), this );
+  label->setBuddy( mActionEnterFolder );
   mActionEnterFolder->addItems( QStringList()
       << i18nc("continuation of \"When entering a folder:\"",
               "Jump to First New Message")
@@ -4492,10 +4502,10 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addLayout( hlay );
   mMailboxPrefCombo = new QComboBox( this );
   mMailboxPrefCombo->setEditable( false );
-  label = new QLabel( mMailboxPrefCombo,
-                      i18nc("to be continued with \"flat files\" and "
+  label = new QLabel(i18nc("to be continued with \"flat files\" and "
                            "\"directories\", resp.",
                            "By default, &message folders on disk are:"), this );
+  label->setBuddy( mMailboxPrefCombo );
   mMailboxPrefCombo->addItems( QStringList()
           << i18nc("continuation of \"By default, &message folders on disk are\"",
                   "Flat Files (\"mbox\" format)")
@@ -4511,8 +4521,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addLayout( hlay );
   mOnStartupOpenFolder = new FolderRequester( this,
       kmkernel->getKMMainWidget()->folderTree() );
-  label = new QLabel( mOnStartupOpenFolder,
-                      i18n("Open this folder on startup:"), this );
+  label = new QLabel( i18n("Open this folder on startup:"), this );
+  label->setBuddy( mOnStartupOpenFolder );
   hlay->addWidget( label );
   hlay->addWidget( mOnStartupOpenFolder, 1 );
   connect( mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),

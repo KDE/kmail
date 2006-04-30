@@ -83,8 +83,8 @@ namespace KMail {
                    << i18nc("continuation of \"obtain signature text from\"",
                            "Output of Command")
                    );
-    label = new QLabel( mSourceCombo,
-                        i18n("Obtain signature &text from:"), this );
+    label = new QLabel( i18n("Obtain signature &text from:"), this );
+    label->setBuddy( mSourceCombo );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
     hlay->addWidget( mSourceCombo, 1 );
@@ -133,8 +133,9 @@ namespace KMail {
         i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
-    hlay->addWidget( new QLabel( mFileRequester,
-                                 i18n("S&pecify file:"), page ) );
+    label = new QLabel( i18n("S&pecify file:"), page );
+    label->setBuddy( mFileRequester );
+    hlay->addWidget( label );
     hlay->addWidget( mFileRequester, 1 );
     mFileRequester->button()->setAutoDefault( false );
     connect( mFileRequester, SIGNAL(textChanged(const QString &)),
@@ -165,8 +166,9 @@ namespace KMail {
              "new mail, KMail will execute the command and use what it outputs (to "
              "standard output) as a signature. Usual commands for use with this "
              "mechanism are \"fortune\" or \"ksig -random\"."));
-    hlay->addWidget( new QLabel( mCommandEdit,
-                                 i18n("S&pecify command:"), page ) );
+    label = new QLabel( i18n("S&pecify command:"), page );
+    label->setBuddy( mCommandEdit );
+    hlay->addWidget( label );
     hlay->addWidget( mCommandEdit, 1 );
     page_vlay->addStretch( 1 ); // spacer
 

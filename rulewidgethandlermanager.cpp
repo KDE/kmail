@@ -452,7 +452,9 @@ namespace {
 
     // blank QLabel to hide value widget for in-address-book rule
     if ( number == 1 ) {
-      return new QLabel( valueStack, "textRuleValueHider" );
+      QLabel *label = new QLabel( "textRuleValueHider" );
+      label->setBuddy( valueStack );
+      return label;
     }
 
     if ( number == 2 ) {
@@ -786,7 +788,9 @@ namespace {
 
     // blank QLabel to hide value widget for has-attachment rule
     if ( number == 1 ) {
-      return new QLabel( valueStack, "textRuleValueHider" );
+      QLabel *label = new QLabel( "textRuleValueHider" );
+      label->setBuddy( valueStack );
+      return label;
     }
 
     return 0;

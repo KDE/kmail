@@ -287,8 +287,8 @@ namespace KMail {
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
     mPreferredCryptoMessageFormat->addItems( l );
-    label = new QLabel( mPreferredCryptoMessageFormat,
-			i18n("Preferred crypto message format:"), tab );
+    label = new QLabel( i18n("Preferred crypto message format:"), tab );
+    label->setBuddy( mPreferredCryptoMessageFormat );
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPreferredCryptoMessageFormat, row, 1 );
@@ -352,8 +352,9 @@ namespace KMail {
     ++row;
     mDictionaryCombo = new DictionaryComboBox( tab );
     glay->addWidget( mDictionaryCombo, row, 1 );
-    glay->addWidget( new QLabel( mDictionaryCombo, i18n("D&ictionary:"), tab ),
-                     row, 0 );
+    label = new QLabel( i18n("D&ictionary:"), tab );
+    label->setBuddy( mDictionaryCombo );
+    glay->addWidget( label, row, 0 );
 
     // "Sent-mail Folder" combo box and label:
     ++row;
@@ -361,8 +362,9 @@ namespace KMail {
         kmkernel->getKMMainWidget()->folderTree() );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
-    glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
-                     row, 0 );
+    label = new QLabel( i18n("Sent-mail &folder:"), tab );
+    label->setBuddy( mFccCombo );
+    glay->addWidget( label, row, 0 );
 
     // "Drafts Folder" combo box and label:
     ++row;
@@ -370,8 +372,9 @@ namespace KMail {
         kmkernel->getKMMainWidget()->folderTree() );
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
-    glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts folder:"), tab ),
-                     row, 0 );
+    label = new QLabel( i18n("&Drafts folder:"), tab );
+    label->setBuddy( mDraftsCombo );
+    glay->addWidget( label, row, 0 );
 
     // "Special transport" combobox and label:
     ++row;

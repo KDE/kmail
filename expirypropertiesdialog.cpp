@@ -92,7 +92,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   labelDays2 = new QLabel( privateLayoutWidget );
   labelDays2->setObjectName( "labelDays2" );
   labelDays2->setText( i18n( "days" ) );
-  labelDays2->setAlignment( int( Qt::AlignTop ) );
+  labelDays2->setAlignment( Qt::AlignTop );
   unreadHBox->addWidget( labelDays2 );
   globalVBox->addLayout( unreadHBox );
 
@@ -104,7 +104,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   expiryActionLabel = new QLabel( privateLayoutWidget );
   expiryActionLabel->setObjectName( "expiryActionLabel" );
   expiryActionLabel->setText( i18n( "Expiry action:" ) );
-  expiryActionLabel->setAlignment( int( Qt::AlignVCenter ) );
+  expiryActionLabel->setAlignment( Qt::AlignVCenter );
   expiryActionHBox->addWidget( expiryActionLabel );
 
   actionsHBox = new QVBoxLayout();

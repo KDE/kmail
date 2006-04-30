@@ -125,8 +125,8 @@ namespace KMail {
                  "External Source" )
         << i18nc( "continuation of \"obtain picture from\"",
                  "Input Field Below" ) );
-    label = new QLabel( mSourceCombo,
-                        i18n("Obtain pic&ture from:"), this );
+    label = new QLabel( i18n("Obtain pic&ture from:"), this );
+    label->setBuddy( mSourceCombo );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
     hlay->addWidget( mSourceCombo, 1 );
