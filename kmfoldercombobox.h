@@ -10,7 +10,6 @@
 
 #include <qcombobox.h>
 #include <qpointer.h>
-//Added by qt3to4:
 #include <QList>
 
 class KMFolderComboBox : public QComboBox
@@ -18,8 +17,7 @@ class KMFolderComboBox : public QComboBox
   Q_OBJECT
 
 public:
-  KMFolderComboBox( QWidget *parent = 0, char *name = 0 );
-  KMFolderComboBox( bool rw, QWidget *parent = 0, char *name = 0 );
+  KMFolderComboBox( QWidget *parent = 0 );
 
   /** Select whether the outbox folder is shown.  Default is yes. */
   void showOutboxFolder(bool shown);

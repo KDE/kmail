@@ -10,20 +10,8 @@
 
 //-----------------------------------------------------------------------------
 
-KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
-  : QComboBox( parent )
+KMFolderComboBox::KMFolderComboBox( QWidget *parent ) : QComboBox( parent )
 {
-  if (name) setObjectName( name );
-  init();
-}
-
-
-//-----------------------------------------------------------------------------
-
-KMFolderComboBox::KMFolderComboBox( bool rw, QWidget *parent, char *name )
-  : QComboBox( rw, parent )
-{
-  if (name) setObjectName( name );
   init();
 }
 

@@ -749,7 +749,7 @@ void AccountDialog::makePopAccountPage()
 
   label = new QLabel( i18n("Des&tination folder:"), page1 );
   grid->addWidget( label, 14, 0 );
-  mPop.folderCombo = new QComboBox( false, page1 );
+  mPop.folderCombo = new QComboBox( page1 );
   label->setBuddy( mPop.folderCombo );
   grid->addWidget( mPop.folderCombo, 14, 1 );
 

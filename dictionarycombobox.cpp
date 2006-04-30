@@ -43,7 +43,7 @@
 namespace KMail {
 
   DictionaryComboBox::DictionaryComboBox( QWidget * parent )
-    : QComboBox( false, parent ),
+    : QComboBox( parent ),
       mSpellConfig( 0 ),
       mDefaultDictionary( 0 )
   {

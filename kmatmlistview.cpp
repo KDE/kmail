@@ -1,5 +1,5 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
-// kmcomposewin.cpp
+// kmatmlistview.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
@@ -17,7 +17,6 @@
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
-#include "kmfoldercombobox.h"
 #include "kmtransport.h"
 #include "kmcommands.h"
 #include "kcursorsaver.h"
