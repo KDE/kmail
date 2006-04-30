@@ -2232,8 +2232,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Use smaller font for quoted text" check box
-  mShrinkQuotesCheck = new QCheckBox( i18n( shrinkQuotes.desc ), this,
-                                      "kcfg_ShrinkQuotes" );
+  mShrinkQuotesCheck = new QCheckBox( i18n( shrinkQuotes.desc ), this);
+  mShrinkQuotesCheck->setObjectName("kcfg_ShrinkQuotes" );
   vlay->addWidget( mShrinkQuotesCheck );
   connect( mShrinkQuotesCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -2546,22 +2546,23 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mSmartQuoteCheck = new QCheckBox(
-           GlobalSettings::self()->smartQuoteItem()->label(),
-           this, "kcfg_SmartQuote" );
+           GlobalSettings::self()->smartQuoteItem()->label(), this);
+  mSmartQuoteCheck->setObjectName( "kcfg_SmartQuote" );
   vlay->addWidget( mSmartQuoteCheck );
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mAutoRequestMDNCheck = new QCheckBox(
-           GlobalSettings::self()->requestMDNItem()->label(),
-           this, "kcfg_RequestMDN" );
+           GlobalSettings::self()->requestMDNItem()->label(), this);
+  mAutoRequestMDNCheck->setObjectName( "kcfg_RequestMDN" );
   vlay->addWidget( mAutoRequestMDNCheck );
   connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mShowRecentAddressesInComposer = new QCheckBox(
            GlobalSettings::self()->showRecentAddressesInComposerItem()->label(),
-           this, "kcfg_ShowRecentAddressesInComposer" );
+           this);
+  mShowRecentAddressesInComposer->setObjectName( "kcfg_ShowRecentAddressesInComposer" );
   vlay->addWidget( mShowRecentAddressesInComposer );
   connect( mShowRecentAddressesInComposer, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2571,8 +2572,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mWordWrapCheck = new QCheckBox(
-           GlobalSettings::self()->wordWrapItem()->label(),
-           this, "kcfg_WordWrap" );
+           GlobalSettings::self()->wordWrapItem()->label(), this);
+  mWordWrapCheck->setObjectName( "kcfg_WordWrap" );
   hlay->addWidget( mWordWrapCheck );
   connect( mWordWrapCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2626,8 +2627,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mExternalEditorCheck = new QCheckBox(
-           GlobalSettings::self()->useExternalEditorItem()->label(),
-           group, "kcfg_UseExternalEditor" );
+           GlobalSettings::self()->useExternalEditorItem()->label(), group);
+  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
   connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2997,7 +2998,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck = new QCheckBox(
      GlobalSettings::self()->replaceReplyPrefixItem()->label(),
-     group, "kcfg_ReplaceReplyPrefix" );
+     group);
+  mReplaceReplyPrefixCheck->setObjectName( "kcfg_ReplaceReplyPrefix" );
   connect( mReplaceReplyPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -3026,7 +3028,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck = new QCheckBox(
        GlobalSettings::self()->replaceForwardPrefixItem()->label(),
-       group, "kcfg_ReplaceForwardPrefix" );
+       group);
+  mReplaceForwardPrefixCheck->setObjectName( "kcfg_ReplaceForwardPrefix" );
   connect( mReplaceForwardPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -4738,8 +4741,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mAccountCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
-                                         mBox, "HideGroupwareFoldersBox" );
+  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ), mBox );
+  mHideGroupwareFolders->setObjectName( "HideGroupwareFoldersBox" );
   grid->addWidget( mHideGroupwareFolders, 3, 0, 1, 2 );
   mHideGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see the IMAP "
