@@ -71,6 +71,7 @@ MailSourceViewer::~MailSourceViewer()
   delete mSourceHighLighter; mSourceHighLighter = 0;
 }
 
+#warning "kde4 setText is deprecated"
 void MailSourceViewer::setText( const QString& text )
 {
   delete mSourceHighLighter; mSourceHighLighter = 0;
@@ -80,7 +81,7 @@ void MailSourceViewer::setText( const QString& text )
     setTextFormat( Qt::PlainText );
     mSourceHighLighter = new MailSourceHighlighter( this );
   }
-  KTextBrowser::setText( text );
+  KTextBrowser::setPlainText( text );
 }
 
 }
