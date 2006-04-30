@@ -56,7 +56,8 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->setMargin( 0 );
 
   // row 0: line edit with label
-  QHBoxLayout * hlay = new QHBoxLayout( vlay ); // inherits spacing
+  QHBoxLayout * hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mLineEdit = new KLineEdit( page );
   mLineEdit->setFocus();
   hlay->addWidget( new QLabel( mLineEdit, i18n("&New identity:"), page ) );
@@ -84,7 +85,8 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addWidget( radio );
 
   // row 4: combobox with existing identities and label
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mComboBox = new QComboBox( page );
   mComboBox->setEditable( false );
   mComboBox->addItems( identities );

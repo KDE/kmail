@@ -91,7 +91,8 @@ namespace KMail {
     vlay->setObjectName( "main layout" );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( 0 );
-    hlay = new QHBoxLayout( vlay );
+    hlay = new QHBoxLayout();
+    vlay->addLayout( hlay );
 
     // "enable X-Face" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Send picture with every message"), this );
@@ -112,7 +113,8 @@ namespace KMail {
 //     vlay->addWidget( label1 );
 
     // "obtain X-Face from" combo and label:
-    hlay = new QHBoxLayout( vlay ); // inherits spacing
+    hlay = new QHBoxLayout(); // inherits spacing
+    vlay->addLayout( hlay );
     mSourceCombo = new QComboBox( this );
     mSourceCombo->setEditable( false );
     mSourceCombo->setWhatsThis(
@@ -149,8 +151,11 @@ namespace KMail {
     // page 0: create X-Face from image file or address book entry
     page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
-    page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-    hlay = new QHBoxLayout( page_vlay ); // inherits spacing
+    page_vlay = new QVBoxLayout( page );
+    page_vlay->setMargin( 0 );
+    page_vlay->setSpacing( KDialog::spacingHint() );
+    hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
+    page_vlay->addLayout( hlay );
     mFromFileBtn = new QPushButton( i18n("Select File..."), page );
     mFromFileBtn->setWhatsThis(
                      i18n("Use this to select an image file to create the picture from. "
@@ -182,7 +187,9 @@ namespace KMail {
     ++pageno;
     page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno,page );
-    page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
+    page_vlay = new QVBoxLayout( page );
+    page_vlay->setMargin( 0 );
+    page_vlay->setSpacing( KDialog::spacingHint() );
     mTextEdit = new Q3TextEdit( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );

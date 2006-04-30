@@ -42,11 +42,14 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   privateLayoutWidget->setObjectName( "globalVBox" );
   setMainWidget( privateLayoutWidget );
   privateLayoutWidget->setGeometry( QRect( 10, 20, 270, 138 ) );
-  globalVBox = new QVBoxLayout( privateLayoutWidget, 11, 6); 
+  globalVBox = new QVBoxLayout( privateLayoutWidget );
+  globalVBox->setMargin( 11 );
   globalVBox->setObjectName( "globalVBox" );
   globalVBox->setSpacing( 20 );
 
-  readHBox = new QHBoxLayout( 0, 0, 6); 
+  readHBox = new QHBoxLayout();
+  readHBox->setMargin( 0 );
+  readHBox->setSpacing( 6 );
   readHBox->setObjectName( "readHBox" );
 
   expireReadMailCB = new QCheckBox( privateLayoutWidget );
@@ -68,7 +71,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   readHBox->addWidget( labelDays );
   globalVBox->addLayout( readHBox );
 
-  unreadHBox = new QHBoxLayout( 0, 0, 6); 
+  unreadHBox = new QHBoxLayout();
+  unreadHBox->setMargin( 0 );
+  unreadHBox->setSpacing( 6 );
   unreadHBox->setObjectName( "unreadHBox" );
 
   expireUnreadMailCB = new QCheckBox( privateLayoutWidget );
@@ -91,7 +96,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   unreadHBox->addWidget( labelDays2 );
   globalVBox->addLayout( unreadHBox );
 
-  expiryActionHBox = new QHBoxLayout( 0, 0, 6); 
+  expiryActionHBox = new QHBoxLayout();
+  expiryActionHBox->setMargin( 0 );
+  expiryActionHBox->setSpacing( 6 );
   expiryActionHBox->setObjectName( "expiryActionHBox" );
 
   expiryActionLabel = new QLabel( privateLayoutWidget );
@@ -100,12 +107,16 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   expiryActionLabel->setAlignment( int( Qt::AlignVCenter ) );
   expiryActionHBox->addWidget( expiryActionLabel );
 
-  actionsHBox = new QVBoxLayout( 0, 0, 6); 
+  actionsHBox = new QVBoxLayout();
+  actionsHBox->setMargin( 0 );
+  actionsHBox->setSpacing( 6 );
   actionsHBox->setObjectName( "actionsHBox" );
   actionsGroup = new Q3ButtonGroup( this );
   actionsGroup->hide(); // for mutual exclusion of the radio buttons
 
-  moveToHBox = new QHBoxLayout( 0, 0, 6); 
+  moveToHBox = new QHBoxLayout(); 
+  moveToHBox->setMargin( 0 );
+  moveToHBox->setSpacing( 6 );
   moveToHBox->setObjectName( "moveToHBox" );
 
   moveToRB = new QRadioButton( privateLayoutWidget );

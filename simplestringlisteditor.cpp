@@ -82,7 +82,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     kDebug(5006) << "SimpleStringListBox called with no buttons. "
       "Consider using a plain QListBox instead!" << endl;
 
-  QVBoxLayout * vlay = new QVBoxLayout( hlay ); // inherits spacing
+  QVBoxLayout * vlay = new QVBoxLayout(); // inherits spacing
+  hlay->addLayout( vlay );
 
   if ( buttons & Add ) {
     if ( addLabel.isEmpty() )

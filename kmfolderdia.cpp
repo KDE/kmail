@@ -279,7 +279,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     topLayout->addItem( ivl );
     ivl->setSpacing( KDialog::spacingHint() );
 
-    QHBoxLayout *ihl = new QHBoxLayout( ivl );
+    QHBoxLayout *ihl = new QHBoxLayout();
+    ivl->addLayout( ihl );
     mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), this );
     mIconsCheckBox->setChecked( false );
     ihl->addWidget( mIconsCheckBox );

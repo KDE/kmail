@@ -543,7 +543,8 @@ void KMTransportDialog::makeSmtpPage()
 
   vlay->addStretch();
 
-  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  QHBoxLayout *buttonLay = new QHBoxLayout();
+  vlay->addLayout( buttonLay );
   mSmtp.checkCapabilities =
     new QPushButton( i18n("Check &What the Server Supports"), page2 );
   connect(mSmtp.checkCapabilities, SIGNAL(clicked()),

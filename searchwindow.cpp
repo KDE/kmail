@@ -102,7 +102,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   vbl->addWidget( mChkbxAllFolders );
   radioGroup->insert( mChkbxAllFolders );
 
-  QHBoxLayout *hbl = new QHBoxLayout( vbl );
+  QHBoxLayout *hbl = new QHBoxLayout();
+  vbl->addLayout( hbl );
   hbl->setObjectName( "kmfs_hbl" );
   hbl->setSpacing( spacingHint() );
   mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget);
@@ -207,7 +208,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
            this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int )));
   vbl->addWidget(mLbxMatches);
 
-  QHBoxLayout *hbl2 = new QHBoxLayout( vbl );
+  QHBoxLayout *hbl2 = new QHBoxLayout();
+  vbl->addLayout( hbl2 );
   hbl2->setObjectName( "kmfs_hbl2" );
   hbl2->setSpacing( spacingHint() );
   mSearchFolderLbl = new QLabel(i18n("Search folder &name:"),searchWidget);

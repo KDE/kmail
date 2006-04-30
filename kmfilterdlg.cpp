@@ -151,7 +151,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     vbl2->setMargin( 0 );
   }
 
-  QVBoxLayout *vbl = new QVBoxLayout( hbl );
+  QVBoxLayout *vbl = new QVBoxLayout();
+  hbl->addLayout( vbl );
   vbl->setObjectName( "kmfd_vbl" );
   vbl->setSpacing( spacingHint() );
   hbl->setStretchFactor( vbl, 2 );
@@ -182,7 +183,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     mAdvOptsGroup = new QGroupBox (i18n("Advanced Options"), page2);
     {
       QGridLayout *gl = new QGridLayout();
-      QVBoxLayout *vbl3 = new QVBoxLayout( gl );
+      QVBoxLayout *vbl3 = new QVBoxLayout();
+      gl->addLayout( vbl3, 0, 0 );
       vbl3->setObjectName( "vbl3" );
       vbl3->setSpacing( spacingHint() );
       vbl3->addStretch( 1 );

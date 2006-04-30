@@ -68,7 +68,8 @@ namespace KMail {
     vlay->addWidget( mEnableCheck );
 
     // "obtain signature text from" combo and label:
-    hlay = new QHBoxLayout( vlay ); // inherits spacing
+    hlay = new QHBoxLayout(); // inherits spacing
+    vlay->addLayout( hlay );
     mSourceCombo = new QComboBox( this );
     mSourceCombo->setEditable( false );
     mSourceCombo->setWhatsThis(
@@ -122,8 +123,11 @@ namespace KMail {
     ++pageno;
         page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
-    page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-    hlay = new QHBoxLayout( page_vlay ); // inherits spacing
+    page_vlay = new QVBoxLayout( page );
+    page_vlay->setMargin( 0 );
+    page_vlay->setSpacing( KDialog::spacingHint() );
+    hlay = new QHBoxLayout(); // inherits spacing
+    page_vlay->addLayout( hlay );
     mFileRequester = new KUrlRequester( page );
     mFileRequester->setWhatsThis(
         i18n("Use this requester to specify a text file that contains your "
@@ -147,8 +151,11 @@ namespace KMail {
     ++pageno;
     page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno,page );
-    page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-    hlay = new QHBoxLayout( page_vlay ); // inherits spacing
+    page_vlay = new QVBoxLayout( page  );
+    page_vlay->setMargin( 0 );
+    page_vlay->setSpacing( KDialog::spacingHint() );
+    hlay = new QHBoxLayout(); // inherits spacing
+    page_vlay->addLayout( hlay );
     mCommandEdit = new KLineEdit( page );
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );

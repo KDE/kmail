@@ -306,7 +306,8 @@ IdentityPage::IdentityPage( KInstance *instance, QWidget *parent, const QStringL
 
   hlay->addWidget( mIdentityList, 1 );
 
-  QVBoxLayout * vlay = new QVBoxLayout( hlay ); // inherits spacing
+  QVBoxLayout * vlay = new QVBoxLayout(); // inherits spacing
+  hlay->addLayout( vlay );
 
   QPushButton * button = new QPushButton( i18n("&Add..."), this );
   mModifyButton = new QPushButton( i18n("&Modify..."), this );
@@ -625,7 +626,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   hlay->addWidget( mTransportList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
-  btn_vlay = new QVBoxLayout( hlay );
+  btn_vlay = new QVBoxLayout();
+  hlay->addLayout( btn_vlay );
 
   // "add..." button: stretch 0
   button = new QPushButton( i18n("A&dd..."), this );
@@ -1085,7 +1087,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   hlay->addWidget( mAccountList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
-  btn_vlay = new QVBoxLayout( hlay );
+  btn_vlay = new QVBoxLayout();
+  hlay->addLayout( btn_vlay );
 
   // "add..." button: stretch 0
   button = new QPushButton( i18n("A&dd..."), this );
@@ -1547,7 +1550,8 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
             this, SLOT( slotEmitChanged( void ) ) );
 
   // "font location" combo box and label:
-  hlay = new QHBoxLayout( vlay ); // inherites spacing
+  hlay = new QHBoxLayout(); // inherites spacing
+  vlay->addLayout( hlay );
   mFontLocationCombo = new QComboBox( this );
   mFontLocationCombo->setEditable( false );
   mFontLocationCombo->setEnabled( false ); // !mCustomFontCheck->isChecked()
@@ -2235,7 +2239,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   // "Show expand/collaps quote marks" check box;
-  QHBoxLayout *hlay= new QHBoxLayout( vlay ); // inherits spacing
+  QHBoxLayout *hlay= new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   populateCheckBox( mShowExpandQuotesMark= new QCheckBox( this ), showExpandQuotesMark);
   hlay->addWidget( mShowExpandQuotesMark);
   connect( mShowExpandQuotesMark, SIGNAL ( stateChanged( int ) ),
@@ -2259,7 +2264,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
       mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
 
   // Fallback Character Encoding
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mCharsetCombo = new QComboBox( this );
   mCharsetCombo->addItems( KMMsgBase::supportedEncodings( false ) );
 
@@ -2277,7 +2283,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   hlay->addWidget( mCharsetCombo );
 
   // Override Character Encoding
-  QHBoxLayout *hlay2 = new QHBoxLayout( vlay ); // inherits spacing
+  QHBoxLayout *hlay2 = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay2 );
   mOverrideCharsetCombo = new QComboBox( this );
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
@@ -2561,7 +2568,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   // a checkbox for "word wrap" and a spinbox for the column in
   // which to wrap:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mWordWrapCheck = new QCheckBox(
            GlobalSettings::self()->wordWrapItem()->label(),
            this, "kcfg_WordWrap" );
@@ -2582,7 +2590,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
   mAutoSave->setObjectName( "kcfg_AutosaveInterval" );
   label = new QLabel( mAutoSave,
@@ -2595,7 +2604,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mAutoSave, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order" ), this );
   connect( completionOrderBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureCompletionOrder() ) );
@@ -2603,7 +2613,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay->addItem( new QSpacerItem(0, 0) );
 
   // recent addresses
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses" ), this );
   connect( recentAddressesBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureRecentAddresses() ) );
@@ -3158,7 +3169,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   vlay->addWidget( mCreateOwnMessageIdCheck );
 
   // "Message-Id suffix" line edit and label:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mMessageIdSuffixEdit = new KLineEdit( this );
   // only ASCII letters, digits, plus, minus and dots are allowed
   mMessageIdSuffixValidator =
@@ -3182,7 +3194,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   vlay->addWidget( new QLabel( i18n("Define custom mime header fields:"), this) );
 
   // "custom header fields" listbox:
-  glay = new QGridLayout( vlay, 5, 3 ); // inherits spacing
+  glay = new QGridLayout(); // inherits spacing
+  vlay->addLayout( glay );
   glay->setRowStretch( 2, 1 );
   glay->setColumnStretch( 1, 1 );
   mTagList = new ListView( this );
@@ -4405,7 +4418,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "when trying to find unread messages" combo + label: stretch 0
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mLoopOnGotoUnread = new QComboBox( this );
   mLoopOnGotoUnread->setEditable( false );
   label = new QLabel( mLoopOnGotoUnread,
@@ -4425,7 +4439,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // when entering a folder
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mActionEnterFolder = new QComboBox( this );
   mActionEnterFolder->setEditable( false );
   label = new QLabel( mActionEnterFolder,
@@ -4445,7 +4460,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   connect( mActionEnterFolder, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
   hlay->addWidget( mDelayedMarkAsRead );
   mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
@@ -4469,7 +4485,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "default mailbox format" combo + label: stretch 0
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mMailboxPrefCombo = new QComboBox( this );
   mMailboxPrefCombo->setEditable( false );
   label = new QLabel( mMailboxPrefCombo,
@@ -4487,7 +4504,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "On startup..." option:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
   mOnStartupOpenFolder = new FolderRequester( this,
       kmkernel->getKMMainWidget()->folderTree() );
   label = new QLabel( mOnStartupOpenFolder,
