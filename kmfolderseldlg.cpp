@@ -237,8 +237,8 @@ void SimpleFolderTree::readColorConfig (void)
   mPaintInfo.colBack = c2;
 
   QPalette newPal = kapp->palette();
-  newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
-  newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
+  newPal.setColor( QPalette::Base, mPaintInfo.colBack );
+  newPal.setColor( QPalette::Text, mPaintInfo.colFore );
   setPalette( newPal );
 }
 
