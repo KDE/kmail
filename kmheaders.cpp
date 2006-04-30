@@ -761,7 +761,7 @@ void KMHeaders::msgChanged()
   }
   int i = topItemIndex();
   int cur = currentItemIndex();
-  if (!isUpdatesEnabled()) return;
+  if (!updatesEnabled()) return;
   QString msgIdMD5;
   Q3ListViewItem *item = currentItem();
   HeaderItem *hi = dynamic_cast<HeaderItem*>(item);
@@ -771,7 +771,7 @@ void KMHeaders::msgChanged()
     if (mb)
       msgIdMD5 = mb->msgIdMD5();
   }
-//  if (!isUpdatesEnabled()) return;
+//  if (!updatesEnabled()) return;
   // prevent IMAP messages from scrolling to top
   disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
              this,SLOT(highlightMessage(Q3ListViewItem*)));
@@ -825,7 +825,7 @@ void KMHeaders::msgChanged()
 void KMHeaders::msgAdded(int id)
 {
   HeaderItem* hi = 0;
-  if (!isUpdatesEnabled()) return;
+  if (!updatesEnabled()) return;
 
   CREATE_TIMER(msgAdded);
   START_TIMER(msgAdded);
@@ -1011,7 +1011,7 @@ void KMHeaders::msgAdded(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgRemoved(int id, QString msgId )
 {
-  if (!isUpdatesEnabled()) return;
+  if (!updatesEnabled()) return;
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
@@ -1141,7 +1141,7 @@ void KMHeaders::msgRemoved(int id, QString msgId )
 //-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 {
-  if (msgId<0 || msgId >= (int)mItems.size() || !isUpdatesEnabled()) return;
+  if (msgId<0 || msgId >= (int)mItems.size() || !updatesEnabled()) return;
   HeaderItem *item = mItems[msgId];
   if (item) {
     item->irefresh();

@@ -480,7 +480,7 @@ void KMFolderTree::writeConfig()
 // is now cached in KMails config file)
 void KMFolderTree::updateUnreadAll()
 {
-  bool upd = isUpdatesEnabled();
+  bool upd = updatesEnabled();
   setUpdatesEnabled(false);
 
   KMFolderDir* fdir;
@@ -727,7 +727,7 @@ void KMFolderTree::refresh()
 // Updates the pixmap and extendedLabel information for items
 void KMFolderTree::delayedUpdate()
 {
-  bool upd = isUpdatesEnabled();
+  bool upd = updatesEnabled();
   if ( upd ) {
     setUpdatesEnabled(false);
 
