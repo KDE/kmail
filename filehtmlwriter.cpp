@@ -46,13 +46,13 @@ namespace KMail {
     : HtmlWriter(),
       mFile( filename.isEmpty() ? QString( "filehtmlwriter.out" ) : filename )
   {
-    mStream.setEncoding( QTextStream::UnicodeUTF8 );
+    mStream.setCodec( "UTF-8" );
   }
 
   FileHtmlWriter::~FileHtmlWriter() {
     if ( mFile.isOpen() ) {
       kWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
-      mStream.unsetDevice();
+      mStream.setDevice(0);
       mFile.close();
     }
   }
@@ -65,13 +65,13 @@ namespace KMail {
 
   void FileHtmlWriter::end() {
     flush();
-    mStream.unsetDevice();
+    mStream.setDevice(0);
     mFile.close();
   }
 
   void FileHtmlWriter::reset() {
     if ( mFile.isOpen() ) {
-      mStream.unsetDevice();
+      mStream.setDevice( 0 );
       mFile.close();
     }
   }
@@ -92,7 +92,7 @@ namespace KMail {
   void FileHtmlWriter::openOrWarn() {
     if ( mFile.isOpen() ) {
       kWarning( 5006 ) << "FileHtmlWriter: file still open!" << endl;
-      mStream.unsetDevice();
+      mStream.setDevice( 0 );
       mFile.close();
     }
     if ( !mFile.open( QIODevice::WriteOnly ) )
