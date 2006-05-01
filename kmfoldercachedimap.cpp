@@ -1118,12 +1118,12 @@ void KMFolderCachedImap::uploadNewMessages()
       job->start();
       return;
     } else {
-      const QString msg ( i18n( "<p>There are new messages in this folder, which "
+      const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
             "have not been uploaded to the server yet, but you do not seem to "
             "have sufficient access rights on the folder now to upload them. "
             "Please contact your administrator to allow upload of new messages "
             "to you, or move them out of this folder.</p> "
-            "<p>Do you want to move these messages to another folder now?</p>") );
+            "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
       if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Messages to Folder"), true );
