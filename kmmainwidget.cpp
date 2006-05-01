@@ -580,10 +580,15 @@ void KMMainWidget::createWidgets(void)
   new KAction( i18n("Copy Message to Folder"), Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(),
                "copy_message_to_folder" );
+  new KAction( i18n("Jump to Folder"), Key_J, this,
+               SLOT(slotJumpToFolder()), actionCollection(),
+               "jump_to_folder" );
   mAccel->connectItem(mAccel->insertItem(Key_M),
 		     this, SLOT(slotMoveMsg()) );
   mAccel->connectItem(mAccel->insertItem(Key_C),
 		     this, SLOT(slotCopyMsg()) );
+  mAccel->connectItem(mAccel->insertItem(Key_J),
+		     this, SLOT(slotJumpToFolder()) );
 
   // create list of folders
   mFolderTree = new KMFolderTree(this, folderParent, "folderTree");
@@ -1480,6 +1485,18 @@ void KMMainWidget::slotToggleUnread()
 void KMMainWidget::slotToggleTotalColumn()
 {
   mFolderTree->toggleColumn(KMFolderTree::total, true);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotJumpToFolder()
+{
+  KMail::KMFolderSelDlg dlg( this, i18n("Jump to Folder"), true );
+  KMFolder* dest;
+
+  if (!dlg.exec()) return;
+  if (!(dest = dlg.folder())) return;
+
+  slotSelectFolder( dest );
 }
 
 //-----------------------------------------------------------------------------

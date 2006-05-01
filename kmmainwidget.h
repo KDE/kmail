@@ -282,6 +282,7 @@ protected slots:
   void slotSaveMsg();
   void slotOpenMsg();
   void slotSaveAttachments();
+  void slotJumpToFolder();
   void slotMoveMsg();
   //void slotMoveMsgToFolder( KMFolder *dest);
   void slotCopyMsgToFolder( KMFolder *dest);
