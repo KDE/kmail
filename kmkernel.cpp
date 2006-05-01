@@ -1133,7 +1133,7 @@ void KMKernel::quit()
        (our own, QSocketNotifier based. Pops up errors and sends signal
         senderFinished when done)
 
-   o If we are getting mail, stop it (but dont lose something!)
+   o If we are getting mail, stop it (but don't lose something!)
          [Done already, see mailCheckAborted]
    o If we are sending mail, go on UNLESS this was called by SM,
        in which case stop ASAP that too (can we warn? should we continue

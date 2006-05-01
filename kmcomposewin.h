@@ -194,7 +194,7 @@ public: // kmkernel, callback
 public: // kmcommand
   /**
    * If this folder is set, the original message is inserted back after
-   * cancelling
+   * canceling
    */
    void setFolder(KMFolder* aFolder) { mFolder = aFolder; }
 public: // kmkernel, kmcommand, mailserviceimpl
@@ -371,7 +371,7 @@ private slots:
   void slotInsertMyPublicKey();
 
   /**
-   * Insert arbitary public key from public keyring in the editor.
+   * Insert arbitrary public key from public keyring in the editor.
    */
   void slotInsertPublicKey();
 

@@ -91,7 +91,7 @@ public:
   int error() const { return mErrorCode; }
 
   /**
-   * @return true if this job can be cancelled, e.g. to exit the application
+   * @return true if this job can be canceled, e.g. to exit the application
    */
   bool isCancellable() const { return mCancellable; }
 

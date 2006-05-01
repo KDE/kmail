@@ -253,7 +253,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     "MailCheck" + QString::number( id() ),
     folder->label(), // will be changed immediately in serverSync anyway
     QString(),
-    true, // can be cancelled
+    true, // can be canceled
     useSSL() || useTLS() );
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotProgressItemCanceled( KPIM::ProgressItem* ) ) );

@@ -87,7 +87,7 @@ namespace KMail {
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
-     * cancelling
+     * canceling
      */
     virtual void setFolder( KMFolder * aFolder ) = 0;
 

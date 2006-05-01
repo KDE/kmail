@@ -417,7 +417,7 @@ namespace KMail {
 
   void IdentityDialog::slotAboutToShow( QWidget * w ) {
     if ( w == mCryptographyTab ) {
-      // set the configured email address as inital query of the key
+      // set the configured email address as initial query of the key
       // requesters:
       const QString email = mEmailEdit->text().trimmed();
       mPGPEncryptionKeyRequester->setInitialQuery( email );

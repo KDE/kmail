@@ -244,7 +244,7 @@ public slots:
   void doFolderSelected(Q3ListViewItem*);
 
   /**
-   * Reset current folder and all childs
+   * Reset current folder and all children
    * If no item is given we take the current one
    * If startListing is true a folder listing is started
    */

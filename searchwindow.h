@@ -92,7 +92,7 @@ public:
 
   /**
    * Provides access to the list of currently selected message in the listview.
-   * @return The list of currenty selected search result messages.
+   * @return The list of currently selected search result messages.
    */
   QList<KMMsgBase*> selectedMessages();
 

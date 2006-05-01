@@ -2022,7 +2022,7 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
   }
   mLostBoys.removeAll(serNum);
   if ( mLostBoys.isEmpty() ) {
-    // we are done. All messages transferred to the host succesfully
+    // we are done. All messages transferred to the host successfully
     disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
@@ -2223,7 +2223,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
 void KMSaveAttachmentsCommand::slotSaveAll()
 {
   // now that all message parts have been retrieved, remove all parts which
-  // don't represent an attachment if they were not explicitely passed in the
+  // don't represent an attachment if they were not explicitly passed in the
   // c'tor
   if ( mImplicitAttachments ) {
     for ( PartNodeMessageMap::iterator it = mAttachmentMap.begin();
@@ -2366,7 +2366,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
   if( bEncryptedParts )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" , 
+          i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" ,
            url.fileName() ),
           i18n( "KMail Question" ), i18n("Keep Encryption"), i18n("Do Not Keep") ) ==
         KMessageBox::Yes )
@@ -2375,7 +2375,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   bool bSaveWithSig = true;
   if( node->signatureState() != KMMsgNotSigned )
     if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" , 
+          i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" ,
            url.fileName() ),
           i18n( "KMail Question" ), i18n("Keep Signature"), i18n("Do Not Keep") ) !=
         KMessageBox::Yes )

@@ -64,10 +64,10 @@ namespace KMail {
    * @author Marc Mutz <mutz@kde.org>
    *
    * @deprecated KMail should be ported to Interface::HtmlWriter. This
-   * interface exposes internal working models. The queueing
+   * interface exposes internal working models. The queuing
    * vs. writing() issues exposed here should be hidden by using two
    * different implementations of KHTMLPartHtmlWriter: one for
-   * queueing, and one for writing. This should be fixed before the
+   * queuing, and one for writing. This should be fixed before the
    * release, so we an keep the plugin interface stable.
    *
    * Operate this interface in one and only one of the following two
@@ -75,7 +75,7 @@ namespace KMail {
    *
    * @section Sync Mode
    *
-   * In sync mode, use #begin() to initiate a session, then 
+   * In sync mode, use #begin() to initiate a session, then
    * #write() some chunks of HTML code and finally #end() the session.
    *
    * @section Async Mode

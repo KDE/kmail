@@ -40,7 +40,7 @@ public:
   /** Reset to text/plain with 7bit cte and clear all other properties. */
   void clear();
 
-  /** Obtains an independant copy (i.e. without explicitely shared data) of the
+  /** Obtains an independent copy (i.e. without explicitly shared data) of the
       data contained in msgPart. */
   void duplicate( const KMMessagePart & msgPart );
 

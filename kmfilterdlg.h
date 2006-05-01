@@ -304,7 +304,7 @@ private:
     updated as you expect. I hope this will change sometime soon.
 
     KMFilterDlg supports the creation of new filters through context
-    menues, dubbed "rapid filters". Call KMFilterMgr::createFilter
+    menus, dubbed "rapid filters". Call KMFilterMgr::createFilter
     to use this. That call will be delivered to this dialog, which in
     turn delivers it to the KMFilterListBox.
 

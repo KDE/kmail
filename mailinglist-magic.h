@@ -16,7 +16,7 @@ namespace KMail
 /**
  * Class is used for all Mailing List handling inside
  * KMail. The static detect method is used to detect
- * a full set of ml informations from a message. The
+ * a full set of ml information from a message. The
  * features() method defines which addresses the mailing
  * has defined.
  *

@@ -178,7 +178,7 @@ void SubscriptionDialog::createItems()
       mItemDict.insert(info.path, item);
       if (oldItem)
       {
-        // move the old childs to the new item
+        // move the old children to the new item
         QList<Q3ListViewItem*> itemsToMove;
         Q3ListViewItem * myChild = oldItem->firstChild();
         while (myChild)

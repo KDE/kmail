@@ -471,7 +471,7 @@ void CachedImapJob::slotPutMessageResult(KJob *job)
   int i;
   if( ( i = mFolder->find(mMsg) ) != -1 ) {
      /*
-      * If we have aquired a uid during upload the server supports the uidnext
+      * If we have acquired a uid during upload the server supports the uidnext
       * extension and there is no need to redownload this mail, we already have
       * it. Otherwise remove it, it will be redownloaded.
       */
@@ -541,7 +541,7 @@ void CachedImapJob::slotAddNextSubfolder( KJob * job )
 
   // Associate the jobData with the parent folder, not with the child
   // This is necessary in case of an error while creating the subfolder,
-  // so that folderComplete is called on the parent (and the sync resetted).
+  // so that folderComplete is called on the parent (and the sync reset).
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.items << folder->label(); // for the err msg
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);

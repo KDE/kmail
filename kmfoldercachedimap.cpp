@@ -1301,7 +1301,7 @@ bool KMFolderCachedImap::deleteMessages()
     removeMsg( msgsForDeletion );
   }
 
-  /* Delete messages from the server that we dont have anymore */
+  /* Delete messages from the server that we don't have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
     newState( mProgress, i18n("Deleting removed messages from server"));
     QStringList sets = KMFolderImap::makeSets( uidsForDeletionOnServer, true );
@@ -2067,7 +2067,7 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
   mSubfolderState = state;
   if ( state == imapNoInformation && folder()->child() )
   {
-    // pass through to childs
+    // pass through to children
     KMFolderNode* node;
     QList<KMFolderNode*>::const_iterator it;
     for ( it = folder()->child()->begin();

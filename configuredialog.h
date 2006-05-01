@@ -44,7 +44,7 @@ public:
 signals:
   /** Installs a new profile (in the dislog's widgets; to apply, the
       user has to hit the apply button). Profiles are normal kmail
-      config files which have an additonal group "KMail Profile"
+      config files which have an additional group "KMail Profile"
       containing keys "Name" and "Comment" for the name and description,
       resp. Only keys that this profile is supposed to alter should be
       included in the file.

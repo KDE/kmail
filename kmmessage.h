@@ -412,7 +412,7 @@ public:
 
   /** Sets the message serial number. If defaulted to zero, the
     serial number will be assigned using the dictionary. Note that
-    unless it is explicitely set the serial number will remain 0
+    unless it is explicitly set the serial number will remain 0
     as long as the mail is not in a folder. */
   void setMsgSerNum(unsigned long newMsgSerNum = 0);
 
@@ -807,7 +807,7 @@ public:
   bool transferInProgress() const;
   /** Set that the message shall not be deleted because it is still required */
   void setTransferInProgress(bool value, bool force = false);
-  
+
   /** Returns an mbox message separator line for this message, i.e. a
       string of the form
       "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".

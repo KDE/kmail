@@ -4218,7 +4218,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // don't overwrite the BCC field under certain circomstances
   // NOT edited and preset BCC from the identity
   if( mEdtBcc && !mEdtBcc->isModified() && !ident.bcc().isEmpty() ) {
-    // BCC NOT empty AND contains a diff adress then the preset BCC
+    // BCC NOT empty AND contains a diff address then the preset BCC
     // of the new identity
     if( !mEdtBcc->text().isEmpty() && mEdtBcc->text() != ident.bcc() && !mEdtBcc->isModified() ) {
       mEdtBcc->setText( ident.bcc() );

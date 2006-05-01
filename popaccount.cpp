@@ -991,7 +991,7 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
   if (aSlave != mSlave) return;
   if (error == KIO::ERR_SLAVE_DIED) mSlave = 0;
 
-  // explicitely disconnect the slave if the connection went down
+  // explicitly disconnect the slave if the connection went down
   if ( error == KIO::ERR_CONNECTION_BROKEN && mSlave ) {
     KIO::Scheduler::disconnectSlave( mSlave );
     mSlave = 0;

@@ -205,7 +205,7 @@ class RecipientsView : public Q3ScrollView
     /**
       * Set the width of the left most column to be the argument width.
       * This method allows other widgets to align their label/combobox column with ours
-      * by communicating how many pixels that first colum is for them.
+      * by communicating how many pixels that first column is for them.
       * Returns the width that is actually being used.
       */
     int setFirstColumnWidth( int );
@@ -328,7 +328,7 @@ class RecipientsEditor : public QWidget
     /**
       * Set the width of the left most column to be the argument width.
       * This method allows other widgets to align their label/combobox column with ours
-      * by communicating how many pixels that first colum is for them.
+      * by communicating how many pixels that first column is for them.
       * Returns the width that is actually being used.
       */
     int setFirstColumnWidth( int );

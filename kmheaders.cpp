@@ -854,7 +854,7 @@ void KMHeaders::msgAdded(int id)
       parent = findParentBySubject( sci );
       if (parent && sci->isImperfectlyThreaded()) {
         // The parent we found could be by subject, in which case it is
-        // possible, that it would be preferrable to thread it below us,
+        // possible, that it would be preferable to thread it below us,
         // not the other way around. Check that. This is not only
         // cosmetic, as getting this wrong leads to circular threading.
         if (msgId == mFolder->getMsgBase(parent->item()->msgId())->replyToIdMD5()
@@ -1992,7 +1992,7 @@ void KMHeaders::makeHeaderVisible()
 //-----------------------------------------------------------------------------
 void KMHeaders::highlightMessage(Q3ListViewItem* lvi, bool markitread)
 {
-  // shouldnt happen but will crash if it does
+  // shouldn't happen but will crash if it does
   if (lvi && !lvi->isSelectable()) return;
 
   HeaderItem *item = static_cast<HeaderItem*>(lvi);
@@ -2837,7 +2837,7 @@ SortCacheItem* KMHeaders::findParent(SortCacheItem *item)
             item->setImperfectlyThreaded(false);
     }
     if (!parent) {
-        // If we dont have a replyToId, or if we have one and the
+        // If we don't have a replyToId, or if we have one and the
         // corresponding message is not in this folder, as happens
         // if you keep your outgoing messages in an OUTBOX, for
         // example, try the list of references, because the second

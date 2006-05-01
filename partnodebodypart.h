@@ -43,7 +43,7 @@ class QTextCodec;
 namespace KMail {
 
   /**
-     @short an implemenation of the BodyPart interface using partNodes
+     @short an implementation of the BodyPart interface using partNodes
   */
   class PartNodeBodyPart : public Interface::BodyPart {
   public:

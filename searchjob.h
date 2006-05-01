@@ -104,7 +104,7 @@ protected slots:
   // imap search result from a single message
   void slotSearchDataSingleMessage( KJob* job, const QString& data, const QString& );
 
-  // the user cancelled the search progress
+  // the user canceled the search progress
   void slotAbortSearch( KPIM::ProgressItem* item );
 
 signals:

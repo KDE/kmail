@@ -65,7 +65,7 @@ namespace KMail {
     The wizard helps to create filter rules to let KMail operate
     with external anti-spam tools. The wizard tries to detect the
     tools, but the user can overide the preselections.
-    Then the user can decide what funtionality shall be supported
+    Then the user can decide what functionality shall be supported
     by the created filter rules.
     The wizard will append the created filter rules after the
     last existing rule to keep possible conflicts with existing
@@ -142,7 +142,7 @@ namespace KMail {
                         QString detection, QString spam, QString ham,
 						QString noSpam, QString header, QString pattern,
 						QString pattern2, QString serverPattern,
-                        bool detectionOnly, bool regExp, bool bayesFilter, 
+                        bool detectionOnly, bool regExp, bool bayesFilter,
                         bool tristateDetection, WizardMode type );
 
           int getVersion() const { return mVersion; }
@@ -166,7 +166,7 @@ namespace KMail {
           bool useBayesFilter() const { return mSupportsBayesFilter; }
           bool hasTristateDetection() const { return mSupportsUnsure; }
           WizardMode getType() const { return mType; }
-          // convinience methods for types
+          // convenience methods for types
           bool isSpamTool() const { return ( mType == AntiSpam ); }
           bool isVirusTool() const { return ( mType == AntiVirus ); }
 
@@ -180,7 +180,7 @@ namespace KMail {
           int mPrio;
           // the name as shown by the checkbox in the dialog page
           QString mVisibleName;
-          // the command to check the existance of the tool
+          // the command to check the existence of the tool
           QString mExecutable;
           // the What's This help text (e.g. url for the tool)
           QString mWhatsThisText;
@@ -266,7 +266,7 @@ namespace KMail {
       const QString uniqueNameFor( const QString & name );
       /* convenience method to sort out new and existing filters */
       void sortFilterOnExistance( const QString & intendedFilterName,
-                                  QString & newFilters, 
+                                  QString & newFilters,
                                   QString & replaceFilters );
 
       /* The pages in the wizard */
@@ -291,7 +291,7 @@ namespace KMail {
   class ASWizPage : public QWidget
   {
     public:
-      ASWizPage( QWidget *parent, const char *name, 
+      ASWizPage( QWidget *parent, const char *name,
                  const QString *bannerName = 0);
 
     protected:

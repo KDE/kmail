@@ -691,7 +691,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
-      // set folders explicitely to exandable when they have children
+      // set folders explicitly to exandable when they have children
       // this way we can do a listing for IMAP folders when the user expands them
       // even when the child folders are not created yet
       if ( folder->storage()->hasChildren() == FolderStorage::HasChildren ) {
@@ -1848,7 +1848,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
   if ( destination )
     parent = destination->createChildFolder();
   QString message =
-    i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" , 
+    i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ,
          folder->label() );
 
   KMFolderDir* folderDir = parent;

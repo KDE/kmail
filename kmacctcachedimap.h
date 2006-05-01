@@ -107,23 +107,23 @@ public:
   virtual void invalidateIMAPFolders( KMFolderCachedImap* );
 
   /**
-   * Remember that a folder got explicitely deleted - including all child folders
+   * Remember that a folder got explicitly deleted - including all child folders
    */
   void addDeletedFolder( KMFolder* folder );
 
   /**
-   * Remember that a folder got explicitely deleted - NOT including all child folders
+   * Remember that a folder got explicitly deleted - NOT including all child folders
    * This is used when renaming a folder.
    */
   void addDeletedFolder( const QString& imapPath );
 
   /**
-   * Ask if a folder was explicitely deleted in this session
+   * Ask if a folder was explicitly deleted in this session
    */
   bool isDeletedFolder( const QString& subFolderPath ) const;
 
   /**
-   * Ask if a folder was explicitely deleted in a previous session
+   * Ask if a folder was explicitly deleted in a previous session
    */
   bool isPreviouslyDeletedFolder( const QString& subFolderPath ) const;
 

@@ -98,7 +98,7 @@ public:
   virtual void finalizeMove( HeaderItem *item, int contentX, int contentY );
 
   /** If destination is 0 then the messages are deleted, otherwise
-    they are moved to this folder. The second parameter is usefull when the
+    they are moved to this folder. The second parameter is useful when the
     user has already confirmed the move/deletion. */
   virtual void moveMsgToFolder( KMFolder* destination,
                                 bool askForConfirmation=true );

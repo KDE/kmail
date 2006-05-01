@@ -67,7 +67,7 @@ class ScheduledExpireTask : public ScheduledTask
 {
 public:
   /// If immediate is set, the job will execute synchronously. This is used when
-  /// the user requests explicitely that the operation should happen immediately.
+  /// the user requests explicitly that the operation should happen immediately.
   ScheduledExpireTask( KMFolder* folder, bool immediate )
     : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledExpireTask() {}

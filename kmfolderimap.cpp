@@ -1090,7 +1090,7 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
   if (job->error()) {
     if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
       // we suppress access denied messages because they are normally a result of
-      // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that
+      // explicitly set ACLs. Do not save this information (e.g. setNoContent) so that
       // we notice when this changes
       mAccount->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while querying the server status.") );
     }
@@ -1102,7 +1102,7 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
     int a = cstr.indexOf("X-uidValidity: ");
     int b = cstr.indexOf("\r\n", a);
     QString uidv;
-    if ( (b - a - 15) >= 0 ) 
+    if ( (b - a - 15) >= 0 )
       uidv = cstr.mid(a + 15, b - a - 15);
     a = cstr.indexOf("X-Access: ");
     b = cstr.indexOf("\r\n", a);
@@ -1114,7 +1114,7 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
     b = cstr.indexOf("\r\n", a);
     int exists = -1;
     bool ok = false;
-    if ( (b - a - 9) >= 0 ) 
+    if ( (b - a - 9) >= 0 )
       exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
     if ( !ok ) exists = -1;
     QString startUid;
@@ -2151,7 +2151,7 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
   mAlreadyRemoved = removed;
   if ( folder()->child() )
   {
-    // pass through to childs
+    // pass through to children
     KMFolderNode* node;
     QList<KMFolderNode*>::const_iterator it;
     for ( it = folder()->child()->begin();

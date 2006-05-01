@@ -211,7 +211,7 @@ void KMSearch::stop()
         for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
             if ( !folder ) continue;
-            // explicitely stop jobs for this folder as it will not be closed below
+            // explicitly stop jobs for this folder as it will not be closed below
             // when the folder is currently selected
             if ( folder->folderType() == KMFolderTypeImap ) {
                 KMAcctImap *account =

@@ -1235,7 +1235,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t&
 //-----------------------------------------------------------------------------
 int KMFolderMbox::compact( bool silent )
 {
-  // This is called only when the user explicitely requests compaction,
+  // This is called only when the user explicitly requests compaction,
   // so we don't check needsCompact.
   int openCount = mOpenCount;
 

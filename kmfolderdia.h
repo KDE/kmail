@@ -56,7 +56,7 @@ class KMFolderTree;
 template <typename T> class QPointer;
 
 namespace KMail {
-  class FolderRequester; 
+  class FolderRequester;
 /**
  * This is the base class for tabs in the folder dialog.
  * It uses the API from ConfigModuleTab (basically: it's a widget that can load and save)
@@ -85,7 +85,7 @@ public:
 
   enum AcceptStatus { Accepted, Canceled, Delayed };
   /// Called when clicking OK.
-  /// If a module returns Delayed, the closing is cancelled for now,
+  /// If a module returns Delayed, the closing is canceled for now,
   /// and the module can close the dialog later on (i.e. after an async
   /// operation like a KIO job).
   virtual AcceptStatus accept() {

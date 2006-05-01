@@ -89,7 +89,7 @@ void KMMessagePart::duplicate( const KMMessagePart & msgPart )
 {
   // copy the data of msgPart
   *this = msgPart;
-  // detach the explicitely shared QByteArray
+  // detach the explicitly shared QByteArray
   mBody.detach();
 }
 
