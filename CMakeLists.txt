@@ -315,8 +315,6 @@ install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES upgrade-transport.pl kmail-pgpi
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
-kde4_create_doxygen_docs( REFERENCES kdeui  )
-
 kde4_footer()
 
 
