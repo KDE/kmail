@@ -34,19 +34,26 @@ namespace KMail {
       void setFolder( KMFolder* );
       void setFolder( const QString& idString );
 
+      /** Apply the given filter. */
+      void applyFilter( const QString& filter );
+
     public slots:
       void addChildFolder();
 
     protected slots:
       void slotContextMenuRequested( QListViewItem *, const QPoint & );
+      virtual void recolorRows();
 
     protected:
       /** Read color options and set palette. */
       virtual void readColorConfig(void);
+      virtual void keyPressEvent( QKeyEvent *e );
 
     private:
       KMFolderTree* mFolderTree;
       int mFolderColumn;
+      int mPathColumn;
+      QString mFilter;
       bool mLastMustBeReadWrite;
       bool mLastShowOutbox;
       bool mLastShowImapFolders;
