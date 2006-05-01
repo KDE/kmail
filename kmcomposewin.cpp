@@ -399,6 +399,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mMsg = 0;
   if (aMsg)
     setMsg(aMsg);
+  fontChanged( mEditor->currentFont() ); // set toolbar buttons to correct values
 
   mDone = true;
 }
@@ -4050,9 +4051,7 @@ void KMComposeWin::slotToggleMarkup()
     mHtmlMarkup = true;
     toolBar("htmlToolBar")->show();
    // markup will be toggled as soon as markup is actually used
-   fontChanged( mEditor->currentFont().family() ); // set buttons in correct position
-   fontAction->setFont( mEditor->currentFont().family() );
-   fontSizeAction->setFontSize( mEditor->currentFont().pointSize() );
+   fontChanged( mEditor->currentFont() ); // set buttons in correct position
    mSaveFont = mEditor->currentFont();
  }
  else
