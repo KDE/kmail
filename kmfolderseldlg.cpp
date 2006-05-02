@@ -27,8 +27,50 @@ class FolderItem : public KFolderTreeItem
     void setFolder( KMFolder * folder ) { mFolder = folder; };
     const KMFolder * folder() { return mFolder; };
 
+  // Redefine isAlternate() for proper row coloring behavior.
+  // KListViewItem::isAlternate() is not virtual!  Therefore,
+  // it is necessary to overload paintCell() below.  If it were
+  // made virtual, paintCell() would no longer be necessary.
+  bool isAlternate () {
+    return mAlternate;
+  }
+
+  // Set the flag which determines if this is an alternate row
+  void setAlternate ( bool alternate ) {
+    mAlternate = alternate;
+  }
+
+  // Must overload paintCell because neither KListViewItem::isAlternate()
+  // or KListViewItem::backgroundColor() are virtual!
+  virtual void paintCell( QPainter *p, const QColorGroup &cg,
+                          int column, int width, int alignment )
+  {
+    K3ListView* view = static_cast< K3ListView* >( listView() );
+
+    // Set alternate background to invalid
+    QColor nocolor;
+    QColor alt = view->alternateBackground();
+    view->setAlternateBackground( nocolor );
+
+    // Set the base and text to the appropriate colors
+    QColorGroup *cgroup = (QColorGroup *)&view->viewport()->colorGroup();
+    QColor base = cgroup->base();
+    QColor text = cgroup->text();
+    cgroup->setColor( QColorGroup::Base, isAlternate() ? alt : base );
+    cgroup->setColor( QColorGroup::Text, isEnabled() ? text : Qt::lightGray );
+
+    // Call the parent paint routine
+    K3ListViewItem::paintCell( p, cg, column, width, alignment );
+
+    // Restore the base and alternate background
+    cgroup->setColor( QColorGroup::Base, base );
+    cgroup->setColor( QColorGroup::Text, text );
+    view->setAlternateBackground( alt );
+  }
+
   private:
     KMFolder * mFolder;
+    bool mAlternate;
 };
 
 //-----------------------------------------------------------------------------
@@ -52,9 +94,17 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
 {
   setSelectionModeExt( Single );
   mFolderColumn = addColumn( i18n( "Folder" ) );
+  mPathColumn = addColumn( i18n( "Path" ) );
+  setAllColumnsShowFocus( true );
+  setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
 
   reload( mustBeReadWrite, true, true, preSelection );
   readColorConfig();
+
+  applyFilter( "" );
+
+  connect(this, SIGNAL(collapsed(Q3ListViewItem*)), SLOT(recolorRows()));
+  connect(this, SIGNAL(expanded(Q3ListViewItem*)),  SLOT(recolorRows()));
 
   connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ),
            this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint & ) ) );
@@ -77,6 +127,9 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
   QString selected = preSelection;
   if ( selected.isEmpty() && folder() )
     selected = folder()->idString();
+
+  mFilter = "";
+  QString path;
 
   for ( Q3ListViewItemIterator it( mFolderTree ) ; it.current() ; ++it )
   {
@@ -103,6 +156,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
         item->moveItem( lastTopItem );
       lastTopItem = item;
       depth = 0;
+      path = "";
     }
     else {
       if ( depth > lastDepth ) {
@@ -111,6 +165,8 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
         lastItem->setOpen(true);
       }
       else {
+        path = path.section( '/', 0, -2 - (lastDepth-depth) );
+
         if ( depth == lastDepth ) {
           // same level - behind previous item
           item = new FolderItem( static_cast<FolderItem*>(lastItem->parent()) );
@@ -135,9 +191,15 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
       }
     }
 
+    if ( depth > 0 )
+      path += "/";
+    path += fti->text( 0 );
+
     item->setText( mFolderColumn, fti->text( 0 ) );
+    item->setText( mPathColumn, path );
     item->setProtocol( fti->protocol() );
     item->setType( fti->type() );
+
     // Make items without folders and readonly items unselectable
     // if we're told so
     if ( mustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
@@ -242,6 +304,131 @@ void SimpleFolderTree::readColorConfig (void)
   setPalette( newPal );
 }
 
+static int recurseFilter( Q3ListViewItem * item, const QString& filter, int column )
+{
+  if ( item == 0 )
+    return 0;
+
+  Q3ListViewItem * child;
+  child = item->firstChild();
+
+  int enabled = 0;
+  while ( child ) {
+    enabled += recurseFilter( child, filter, column );
+    child = child->nextSibling();
+  }
+
+  if ( filter.length() == 0 ||
+       item->text( column ).find( filter, 0, false ) >= 0 ) {
+    item->setVisible( true );
+    ++enabled;
+  }
+  else {
+    item->setVisible( !!enabled );
+    item->setEnabled( false );
+  }
+
+  return enabled;
+}
+
+void SimpleFolderTree::recolorRows()
+{
+  // Iterate through the list to set the alternate row flags.
+  int alt = 0;
+  Q3ListViewItemIterator it ( this );
+  while ( it.current() ) {
+    FolderItem * item = static_cast< FolderItem* >( it.current() );
+
+    if ( item->isVisible() ) {
+      bool visible = true;
+      Q3ListViewItem * parent = item->parent();
+      while ( parent ) {
+        if (!parent->isOpen()) {
+          visible = false;
+          break;
+        }
+        parent = parent->parent();
+      }
+
+      if ( visible ) {
+        item->setAlternate( alt );
+        alt = !alt;
+      }
+    }
+
+    ++it;
+  }
+}
+
+void SimpleFolderTree::applyFilter( const QString& filter )
+{
+  // Reset all items to visible, enabled, and open
+  Q3ListViewItemIterator clean( this );
+  while ( clean.current() ) {
+    Q3ListViewItem * item = clean.current();
+    item->setEnabled( true );
+    item->setVisible( true );
+    item->setOpen( true );
+    ++clean;
+  }
+
+  mFilter = filter;
+
+  if ( filter.isEmpty() ) {
+    setColumnText( mPathColumn, i18n("Path") );
+    return;
+  }
+
+  // Set the visibility and enabled status of each list item.
+  // The recursive algorithm is necessary because visiblity
+  // changes are automatically applied to child nodes by Qt.
+  Q3ListViewItemIterator it( this );
+  while ( it.current() ) {
+    Q3ListViewItem * item = it.current();
+    if ( item->depth() <= 0 )
+      recurseFilter( item, filter, mPathColumn );
+    ++it;
+  }
+
+  // Recolor the rows appropriately
+  recolorRows();
+
+  // Iterate through the list to find the first selectable item
+  Q3ListViewItemIterator first ( this );
+  while ( first.current() ) {
+    FolderItem * item = static_cast< FolderItem* >( first.current() );
+
+    if ( item->isVisible() && item->isSelectable() ) {
+      setSelected( item, true );
+      ensureItemVisible( item );
+      break;
+    }
+
+    ++first;
+  }
+
+  // Display the current filter
+  setColumnText( mPathColumn, i18n("Path") + "  ( " + filter + " )" );
+
+}
+
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
+  int ch = e->ascii();
+
+  if ( ch >= 32 && ch <= 126 )
+    applyFilter( mFilter + ch );
+
+  else if ( ch == 8 || ch == 127 ) {
+    if ( mFilter.length() > 0 ) {
+      mFilter.truncate( mFilter.length()-1 );
+      applyFilter( mFilter );
+    }
+  }
+
+  else
+    K3ListView::keyPressEvent( e );
+}
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,

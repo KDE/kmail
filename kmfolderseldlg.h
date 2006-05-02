@@ -34,19 +34,26 @@ namespace KMail {
       void setFolder( KMFolder* );
       void setFolder( const QString& idString );
 
+      /** Apply the given filter. */
+      void applyFilter( const QString& filter );
+
     public slots:
       void addChildFolder();
 
     protected slots:
       void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
+      virtual void recolorRows();
 
     protected:
       /** Read color options and set palette. */
-      virtual void readColorConfig(void);
+      virtual void readColorConfig( void );
+      virtual void keyPressEvent( QKeyEvent *e );
 
     private:
       KMFolderTree* mFolderTree;
       int mFolderColumn;
+      int mPathColumn;
+      QString mFilter;
       bool mLastMustBeReadWrite;
       bool mLastShowOutbox;
       bool mLastShowImapFolders;
@@ -58,24 +65,24 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      /** 
+      /**
        * Constructor with KMMainWidget
        * @p parent @em must be a KMMainWin, because we
        *    need its foldertree.
        * @param mustBeReadWrite if true, readonly folders are disabled
-       * @param useGlobalSettings if true, the current folder is read and 
+       * @param useGlobalSettings if true, the current folder is read and
        *        written to GlobalSettings
        */
-      KMFolderSelDlg( KMMainWidget * parent, const QString& caption, 
+      KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
           bool mustBeReadWrite, bool useGlobalSettings = true );
       /**
        * Constructor with separate KMFolderTree
        * @param mustBeReadWrite if true, readonly folders are disabled
-       * @param useGlobalSettings if true, the current folder is read and 
+       * @param useGlobalSettings if true, the current folder is read and
        *        written to GlobalSettings
-       */ 
+       */
       KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
-          const QString& caption, bool mustBeReadWrite, 
+          const QString& caption, bool mustBeReadWrite,
           bool useGlobalSettings = true );
 
       virtual ~KMFolderSelDlg();
