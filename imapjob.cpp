@@ -281,15 +281,15 @@ ImapJob::~ImapJob()
 void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
-  KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->storage());
-  KMAcctImap *account = msgParent->account();
-  if ( msg->UID() == 0 )
+  KMFolderImap *msgParent = msg ? static_cast<KMFolderImap*>(msg->storage()) : 0;
+  if ( msg->UID() == 0 || !msgParent )
   {
     // broken message
     emit messageRetrieved( 0 );
     deleteLater();
     return;
   }
+  KMAcctImap *account = msgParent->account();
   KUrl url = account->getUrl();
   QString path = msgParent->imapPath() + ";UID=" + QString::number(msg->UID());
   ImapAccountBase::jobData jd;
