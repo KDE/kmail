@@ -21,6 +21,7 @@
 #include <errno.h>
 
 #include <config.h>
+#include <config-kmail.h>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
