@@ -53,18 +53,19 @@ class FolderItem : public KFolderTreeItem
     view->setAlternateBackground( nocolor );
 
     // Set the base and text to the appropriate colors
-    QColorGroup *cgroup = (QColorGroup *)&view->viewport()->colorGroup();
-    QColor base = cgroup->base();
-    QColor text = cgroup->text();
-    cgroup->setColor( QColorGroup::Base, isAlternate() ? alt : base );
-    cgroup->setColor( QColorGroup::Text, isEnabled() ? text : Qt::lightGray );
+    QPalette cgroup = view->viewport()->palette();
+    QColor base = cgroup.color( QPalette::Base );
+    QColor text = cgroup.color( QPalette::Text );
+    cgroup.setColor( QPalette::Base, isAlternate() ? alt : base );
+    cgroup.setColor( QPalette::Text, isEnabled() ? text : Qt::lightGray );
 
     // Call the parent paint routine
     K3ListViewItem::paintCell( p, cg, column, width, alignment );
 
     // Restore the base and alternate background
-    cgroup->setColor( QColorGroup::Base, base );
-    cgroup->setColor( QColorGroup::Text, text );
+    cgroup.setColor( QPalette::Base, base );
+    cgroup.setColor( QPalette::Text, text );
+    view->viewport()->setPalette( cgroup );
     view->setAlternateBackground( alt );
   }
 
@@ -319,7 +320,7 @@ static int recurseFilter( Q3ListViewItem * item, const QString& filter, int colu
   }
 
   if ( filter.length() == 0 ||
-       item->text( column ).find( filter, 0, false ) >= 0 ) {
+       item->text( column ).contains( filter, Qt::CaseInsensitive ) ) {
     item->setVisible( true );
     ++enabled;
   }
