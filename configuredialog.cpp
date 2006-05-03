@@ -2276,7 +2276,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
     const QString encoding = KGlobal::charsets()->encodingForName(*it);
     if ( encoding == "iso-8859-15" )
         indexOfLatin9 = i;
-    if( false && encoding == currentEncoding )
+    if( encoding == currentEncoding )
     {
       mCharsetCombo->setCurrentItem( i );
       found = true;
