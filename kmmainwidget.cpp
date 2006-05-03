@@ -6,6 +6,8 @@
 #include <config.h>
 #endif
 
+#include <config-kmail.h>
+
 #include <kwin.h>
 
 #ifdef MALLOC_DEBUG

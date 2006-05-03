@@ -27,7 +27,7 @@
  */
 
 #include "config.h"
-
+#include "config-kmail.h"
 #include "index.h"
 
 #include "kmkernel.h"

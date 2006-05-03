@@ -3,6 +3,7 @@
 #include <config.h>
 #endif
 
+#include <config-kmail.h>
 #include "config.h"
 #include "kmkernel.h"
 

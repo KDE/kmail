@@ -36,6 +36,7 @@
 
 #include <qtimer.h>
 #include <config.h>
+#include <config-kmail.h>
 #ifdef HAVE_INDEXLIB
 #include <indexlib/index.h>
 #include <indexlib/lockfile.h>

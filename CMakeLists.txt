@@ -1,5 +1,8 @@
 kde4_header()
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
+
+
 add_subdirectory( interfaces ) 
 add_subdirectory( about ) 
 add_subdirectory( pics ) 
