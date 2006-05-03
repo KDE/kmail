@@ -213,7 +213,7 @@ bool KMAcctLocal::fetchMsg()
       uint l = s.length();
       if ( l > 0 ) {
         QDataStream ds( &fileD0 );
-        ds.writeRawBytes( s.data(), l );
+        ds.writeRawData( s.data(), l );
       }
       fileD0.close();  // If data is 0 we just create a zero length file.
     }

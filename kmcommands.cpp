@@ -2466,7 +2466,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     ds.setDevice( tf.file() );
   }
 
-  ds.writeRawBytes( data.data(), data.size() );
+  ds.writeRawData( data.data(), data.size() );
   if ( !url.isLocalFile() )
   {
     tf.close();

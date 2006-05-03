@@ -2708,7 +2708,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     if ( f.open( QIODevice::WriteOnly ) ) {
       if ( start ) {
         QDataStream ds( &f );
-        ds.writeRawBytes( start, len );
+        ds.writeRawData( start, len );
       }
       f.close();  // If data is 0 we just create a zero length file.
     }

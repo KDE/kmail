@@ -220,7 +220,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 QFile fileD0( "testdat_xx-kmaccount-0" );
 if( fileD0.open( QIODevice::WriteOnly ) ) {
     QDataStream ds( &fileD0 );
-    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    ds.writeRawData( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
@@ -246,7 +246,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 QFile fileD0( "testdat_xx-kmaccount-1" );
 if( fileD0.open( QIODevice::WriteOnly ) ) {
     QDataStream ds( &fileD0 );
-    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    ds.writeRawData( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */

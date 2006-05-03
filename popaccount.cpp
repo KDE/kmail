@@ -866,7 +866,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   int oldNumMsgBytesRead = numMsgBytesRead;
   if (stage == Retr) {
     headers = false;
-    curMsgStrm->writeRawBytes( data.data(), data.size() );
+    curMsgStrm->writeRawData( data.data(), data.size() );
     numMsgBytesRead += data.size();
     if (numMsgBytesRead > curMsgLen)
       numMsgBytesRead = curMsgLen;
@@ -901,7 +901,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   }
 
   if (stage == Head) {
-    curMsgStrm->writeRawBytes( data.data(), data.size() );
+    curMsgStrm->writeRawData( data.data(), data.size() );
     return;
   }
 

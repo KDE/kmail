@@ -156,7 +156,7 @@ bool FilterLog::saveToFile( QString fileName )
         {
           QString tmpString = *it + '\n';
           Q3CString cstr( tmpString.toLocal8Bit() );
-          ds.writeRawBytes( cstr, cstr.size() );
+          ds.writeRawData( cstr, cstr.size() );
         }
       }
       return true;
