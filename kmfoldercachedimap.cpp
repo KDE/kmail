@@ -2128,7 +2128,10 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
     }
   } else if ( entry == KOLAB_INCIDENCESFOR ) {
     if ( found ) {
-      mIncidencesFor = incidencesForFromString( value );
+      if ( mIncidencesFor != incidencesForFromString( value ) ) {
+        kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::IncidencesForAnnotation );
+        mIncidencesFor = incidencesForFromString( value );
+      }
       Q_ASSERT( mIncidencesForChanged == false );
     }
   }
