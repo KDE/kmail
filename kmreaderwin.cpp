@@ -607,25 +607,26 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
                                      0, this, SLOT(slotMailtoOpenAddrBook()),
                                      ac, "openin_addr_book" );
   mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
-  mSelectAllAction = new KAction( i18n("Select All Text"), Qt::CTRL+Qt::SHIFT+Qt::Key_A, this,
-                                  SLOT(selectAll()), ac, "mark_all_text" );
-  mCopyURLAction = new KAction( i18n("Copy Link Address"), 0, this,
-				SLOT(slotUrlCopy()), ac, "copy_url" );
-  mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,
-                                SLOT(slotUrlOpen()), ac, "open_url" );
+  mSelectAllAction = new KAction( i18n("Select All Text"), ac, "mark_all_text" );
+  connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
+  mSelectAllAction->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_A);
+  mCopyURLAction = new KAction( i18n("Copy Link Address"), ac, "copy_url" );
+  connect(mCopyURLAction, SIGNAL(triggered(bool) ), SLOT(slotUrlCopy()));
+  mUrlOpenAction = new KAction( i18n("Open URL"), ac, "open_url" );
+  connect(mUrlOpenAction, SIGNAL(triggered(bool) ), SLOT(slotUrlOpen()));
   mAddBookmarksAction = new KAction( i18n("Bookmark This Link"),
                                      "bookmark_add",
                                      0, this, SLOT(slotAddBookmarks()),
                                      ac, "add_bookmarks" );
-  mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
-                                  SLOT(slotUrlSave()), ac, "saveas_url" );
+  mUrlSaveAsAction = new KAction( i18n("Save Link As..."), ac, "saveas_url" );
+  connect(mUrlSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotUrlSave()));
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
                                             Qt::Key_X, this, SLOT(slotToggleFixedFont()),
                                             ac, "toggle_fixedfont" );
 
-  mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
-				    SLOT(slotIMChat()), ac, "start_im_chat" );
+  mStartIMChatAction = new KAction( i18n("Chat &With..."), ac, "start_im_chat" );
+  connect(mStartIMChatAction, SIGNAL(triggered(bool) ), SLOT(slotIMChat()));
 }
 
 // little helper function
