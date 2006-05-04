@@ -128,7 +128,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       url.setPath( folder->imapPath() + ";SECTION=" + flags );
       ImapAccountBase::jobData jd;
       jd.parent = 0; jd.offset = 0; jd.done = 0;
-      jd.total = ( curMsg->msgSizeServer() > 0 ) ? 
+      jd.total = ( curMsg->msgSizeServer() > 0 ) ?
         curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
       QCString cstr( curMsg->asString() );
@@ -193,7 +193,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           "ImapJobCopyMove"+ProgressManager::getUniqueID(),
                           i18n("Server operation"),
                           i18n("Source folder: %1 - Destination folder: %2")
-                            .arg( msg_parent->prettyURL(), 
+                            .arg( msg_parent->prettyURL(),
                                   mDestFolder->prettyURL() ),
                           true,
                           account->useSSL() || account->useTLS() );
@@ -276,7 +276,7 @@ void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = msg ? static_cast<KMFolderImap*>(msg->storage()) : 0;
-  if ( msg->UID() == 0 || !msgParent )
+  if ( !msg || msg->UID() == 0 || !msgParent )
   {
     // broken message
     emit messageRetrieved( 0 );
@@ -396,7 +396,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         dataSize = Util::crlf2lf( (*it).data.data(), dataSize ); // always <=
         (*it).data.resize( dataSize );
 
-        // During the construction of the message from the byteArray it does 
+        // During the construction of the message from the byteArray it does
         // not have a uid. Therefore we have to make sure that no connected
         // slots are called, since they would operate on uid == 0.
         msg->parent()->storage()->blockSignals( true );
@@ -450,7 +450,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       parent->ignoreJobsForMessage( msg );
       int idx = parent->find( msg );
       if (idx != -1) parent->removeMsg( idx, true );
-      // the removeMsg will unGet the message, which will delete all 
+      // the removeMsg will unGet the message, which will delete all
       // jobs, including this one
       return;
     }
