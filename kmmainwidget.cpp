@@ -2392,13 +2392,13 @@ void KMMainWidget::setupActions()
 		      "configure", 0, this, SLOT(slotEditVacation()),
 		      actionCollection(), "tools_edit_vacation" );
 
-  (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
- 		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
+  KAction *action = new KAction( i18n("Filter &Log Viewer..."), actionCollection(), "filter_log_viewer" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilterLogViewer()));
 
-  (void) new KAction( i18n("&Anti-Spam Wizard..."), 0, this,
- 		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
-  (void) new KAction( i18n("&Anti-Virus Wizard..."), 0, this,
- 		      SLOT(slotAntiVirusWizard()), actionCollection(), "antiVirusWizard" );
+  action = new KAction( i18n("&Anti-Spam Wizard..."), actionCollection(), "antiSpamWizard" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiSpamWizard()));
+  action = new KAction( i18n("&Anti-Virus Wizard..."), actionCollection(), "antiVirusWizard" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
 
   //----- Edit Menu
   mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
@@ -2430,8 +2430,9 @@ void KMMainWidget::setupActions()
   mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
-  (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
-		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
+  action = new KAction( i18n("Select &All Messages"), actionCollection(), "mark_all_messages" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
+  action->setShortcut(KStdAccel::selectAll());
 
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
@@ -2781,7 +2782,7 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_prev_important_message" );
   */
 
-  KAction *action =
+  action =
     new KAction( KGuiItem( i18n("Next Unread &Folder"), QString(),
                            i18n("Go to the next folder with unread messages") ),
                            Qt::ALT+Qt::Key_Plus, this, SLOT(slotNextUnreadFolder()),

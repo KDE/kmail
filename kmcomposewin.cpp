@@ -1189,9 +1189,10 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "open_mailreader");
 
   if ( !mClassicalRecipients ) {
-    new KAction( i18n("Select &Recipients..."), Qt::CTRL + Qt::Key_L, mRecipientsEditor,
-      SLOT( selectRecipients() ), actionCollection(), "select_recipients" );
-    new KAction( i18n("Save &Distribution List..."), 0, mRecipientsEditor,
+    KAction *action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
+    connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( selectRecipients() ));
+    action->setShortcut(Qt::CTRL + Qt::Key_L);
+    action = new KAction( i18n("Save &Distribution List..."), 0, mRecipientsEditor,
       SLOT( saveDistributionList() ), actionCollection(),
       "save_distribution_list" );
   }
