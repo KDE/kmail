@@ -2252,7 +2252,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
       3/*init*/,this );
 
-  QLabel *label = new QLabel( 
+  QLabel *label = new QLabel(
            GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
   label->setBuddy( mCollapseQuoteLevelSpin );
 
@@ -2327,7 +2327,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
     const QString encoding = KGlobal::charsets()->encodingForName(*it);
     if ( encoding == "iso-8859-15" )
         indexOfLatin9 = i;
-    if( false && encoding == currentEncoding )
+    if( encoding == currentEncoding )
     {
       mCharsetCombo->setCurrentIndex( i );
       found = true;
@@ -4433,7 +4433,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   vlay->addLayout( hlay );
   mLoopOnGotoUnread = new QComboBox( this );
   mLoopOnGotoUnread->setEditable( false );
-  label = new QLabel( 
+  label = new QLabel(
            i18nc("to be continued with \"do not loop\", \"loop in current folder\", "
                 "and \"loop in all folders\".",
                 "When trying to find unread messages:"), this );
