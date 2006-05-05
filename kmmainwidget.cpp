@@ -2344,11 +2344,11 @@ void KMMainWidget::setupActions()
   connect(mActMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(mActMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
-  (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
-		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
+  KAction *action = new KAction(KIcon("mail_send"),  i18n("&Send Queued Messages"), actionCollection(), "send_queued");
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
 
-  (void) new KAction( i18n("Onlinestatus (unknown)"), "online_status", 0, this,
-                     SLOT(slotOnlineStatus()), actionCollection(), "online_status");
+  action = new KAction(KIcon("online_status"),  i18n("Onlinestatus (unknown)"), actionCollection(), "online_status");
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()));
 
   KActionMenu *sendActionMenu = new
     KActionMenu( KIcon("mail_send_via"), i18n("Send Queued Messages Via"), actionCollection(),
@@ -2362,8 +2362,8 @@ void KMMainWidget::setupActions()
   KAction *act;
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    act =  new KAction( i18n("&Address Book..."), "contents", 0, this,
-			SLOT(slotAddrBook()), actionCollection(), "addressbook" );
+    act = new KAction(KIcon("contents"),  i18n("&Address Book..."), actionCollection(), "addressbook" );
+    connect(act, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty()) act->setEnabled(false);
   }
 
@@ -2377,8 +2377,8 @@ void KMMainWidget::setupActions()
   // disable action if no kwatchgnupg binary is around
   if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) act->setEnabled(false);
 
-  act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
-		     SLOT(slotImport()), actionCollection(), "import" );
+  act = new KAction(KIcon("fileopen"),  i18n("&Import Messages..."), actionCollection(), "import" );
+  connect(act, SIGNAL(triggered(bool)), SLOT(slotImport()));
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
 #if !defined(NDEBUG)
@@ -2392,7 +2392,7 @@ void KMMainWidget::setupActions()
 		      "configure", 0, this, SLOT(slotEditVacation()),
 		      actionCollection(), "tools_edit_vacation" );
 
-  KAction *action = new KAction( i18n("Filter &Log Viewer..."), actionCollection(), "filter_log_viewer" );
+  action = new KAction( i18n("Filter &Log Viewer..."), actionCollection(), "filter_log_viewer" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilterLogViewer()));
 
   action = new KAction( i18n("&Anti-Spam Wizard..."), actionCollection(), "antiSpamWizard" );
@@ -2410,8 +2410,9 @@ void KMMainWidget::setupActions()
    * sure it is plugged into the KAccel now, since that won't happen on
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
-  mDeleteAction = new KAction( i18n("&Delete"), "editdelete", Qt::SHIFT+Qt::Key_Delete, this,
-                              SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+  mDeleteAction = new KAction(KIcon("editdelete"),  i18n("&Delete"), actionCollection(), "delete" );
+  connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
+  mDeleteAction->setShortcut(Qt::SHIFT+Qt::Key_Delete);
 #warning Port me!
 //  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
@@ -2420,26 +2421,29 @@ void KMMainWidget::setupActions()
                              Qt::CTRL+Qt::Key_Delete, this, SLOT(slotTrashThread()),
                              actionCollection(), "move_thread_to_trash" );
 
-  mDeleteThreadAction = new KAction( i18n("Delete T&hread"), "editdelete", Qt::CTRL+Qt::SHIFT+Qt::Key_Delete, this,
-                              SLOT(slotDeleteThread()), actionCollection(), "delete_thread" );
+  mDeleteThreadAction = new KAction(KIcon("editdelete"),  i18n("Delete T&hread"), actionCollection(), "delete_thread" );
+  connect(mDeleteThreadAction, SIGNAL(triggered(bool)), SLOT(slotDeleteThread()));
+  mDeleteThreadAction->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete);
 
 
-  (void) new KAction( i18n("&Find Messages..."), "mail_find", Qt::Key_S, this,
-		      SLOT(slotSearch()), actionCollection(), "search_messages" );
+  action = new KAction(KIcon("mail_find"),  i18n("&Find Messages..."), actionCollection(), "search_messages" );
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
+  action->setShortcut(Qt::Key_S);
 
-  mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
-		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
+  mFindInMessageAction = new KAction(KIcon("find"),  i18n("&Find in Message..."), actionCollection(), "find_in_messages" );
+  connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
+  mFindInMessageAction->setShortcut(KStdAccel::shortcut(KStdAccel::Find));
 
   action = new KAction( i18n("Select &All Messages"), actionCollection(), "mark_all_messages" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
   action->setShortcut(KStdAccel::selectAll());
 
   //----- Folder Menu
-  (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
-		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
+  action = new KAction(KIcon("folder_new"),  i18n("&New Folder..."), actionCollection(), "new_folder" );
+  connect(action, SIGNAL(triggered(bool)), mFolderTree, SLOT(addChildFolder()));
 
-  mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
-		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
+  mModifyFolderAction = new KAction(KIcon("configure"),  i18n("&Properties"), actionCollection(), "modify" );
+  connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
 
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
       /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ),
@@ -2450,8 +2454,8 @@ void KMMainWidget::setupActions()
                       "folder_shortcut_command" );
 
 
-  mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
-		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
+  mMarkAllAsReadAction = new KAction(KIcon("goto"),  i18n("Mark All Messages as &Read"), actionCollection(), "mark_all_as_read" );
+  connect(mMarkAllAsReadAction, SIGNAL(triggered(bool)), SLOT(slotMarkAllAsRead()));
 
   mExpireFolderAction = new KAction(i18n("&Expiration Settings"), actionCollection(), "expire");
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
@@ -2465,11 +2469,11 @@ void KMMainWidget::setupActions()
                                       actionCollection(), "refresh_folder" );
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction = new KAction( "foo", "edittrash", 0, this,
-		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
+  mEmptyFolderAction = new KAction(KIcon("edittrash"),  "foo", actionCollection(), "empty" );
+  connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
 
-  mRemoveFolderAction = new KAction( "foo", "editdelete", 0, this,
-		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
+  mRemoveFolderAction = new KAction(KIcon("editdelete"),  "foo", actionCollection(), "delete_folder" );
+  connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
@@ -2485,8 +2489,9 @@ void KMMainWidget::setupActions()
 
 
   //----- Message Menu
-  (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
-		      SLOT(slotCompose()), actionCollection(), "new_message" );
+  action = new KAction(KIcon("mail_new"),  i18n("&New Message..."), actionCollection(), "new_message" );
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
+  action->setShortcut(KStdAccel::shortcut(KStdAccel::New));
 
   (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
                       Qt::CTRL+Qt::SHIFT+Qt::Key_N, this,
@@ -2518,8 +2523,9 @@ void KMMainWidget::setupActions()
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
 
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Qt::Key_R, this,
-			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
+  mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), actionCollection(), "reply" );
+  connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
+  mReplyAction->setShortcut(Qt::Key_R);
   mReplyActionMenu->insert( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
@@ -2575,8 +2581,9 @@ void KMMainWidget::setupActions()
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mEditAction = new KAction( i18n("&Edit Message"), "edit", Qt::Key_T, this,
-                            SLOT(slotEditMsg()), actionCollection(), "edit" );
+  mEditAction = new KAction(KIcon("edit"),  i18n("&Edit Message"), actionCollection(), "edit" );
+  connect(mEditAction, SIGNAL(triggered(bool)), SLOT(slotEditMsg()));
+  mEditAction->setShortcut(Qt::Key_T);
 #warning Port me!
 //  mEditAction->plugAccel( actionCollection()->kaccel() );
 
@@ -3421,8 +3428,8 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->removeClient( mGUIClient );
 
   if ( !mTroubleshootFolderAction ) {
-    mTroubleshootFolderAction = new KAction( i18n("&Troubleshoot IMAP Cache..."), "wizard", 0,
-     this, SLOT(slotTroubleshootFolder()), actionCollection(), "troubleshoot_folder" );
+    mTroubleshootFolderAction = new KAction(KIcon("wizard"),  i18n("&Troubleshoot IMAP Cache..."), actionCollection(), "troubleshoot_folder" );
+    connect(mTroubleshootFolderAction, SIGNAL(triggered(bool)), SLOT(slotTroubleshootFolder()));
     if ( setState )
       updateFolderMenu(); // set initial state of the action
   } else {

@@ -272,8 +272,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
 
   //set up actions
   KActionCollection *ac = actionCollection();
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", 0, this,
-                              SLOT(slotReplyToMsg()), ac, "search_reply" );
+  mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), ac, "search_reply" );
+  connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
                                  0, this, SLOT(slotReplyAllToMsg()),
                                  ac, "search_reply_all" );
@@ -296,8 +296,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                         "search_message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
   mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
-  mSaveAtchAction = new KAction( i18n("Save Attachments..."), "attach", 0,
-                                 this, SLOT(slotSaveAttachments()), ac, "search_save_attachments" );
+  mSaveAtchAction = new KAction(KIcon("attach"),  i18n("Save Attachments..."), ac, "search_save_attachments" );
+  connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
 
   mPrintAction = KStdAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
