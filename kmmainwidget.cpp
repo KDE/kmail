@@ -608,7 +608,7 @@ void KMMainWidget::createWidgets(void)
   action->setShortcut(Qt::Key_M);
   new KAction( i18n("Copy Message to Folder"), Qt::Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(), "copy_message_to_folder" );
-  KAction *action = new KAction( i18n("Jump to Folder"), actionCollection(), "jump_to_folder" );
+  action = new KAction( i18n("Jump to Folder"), actionCollection(), "jump_to_folder" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotJumpToFolder()));
   action->setShortcut(Qt::Key_J);
   mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
@@ -640,7 +640,7 @@ void KMMainWidget::createWidgets(void)
   new KAction(
     i18n("Remove Duplicate Messages"), Qt::CTRL+Qt::Key_Asterisk, this, SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
 
-  KAction *action = new KAction( i18n("Abort Current Operation"), actionCollection(), "cancel" );
+  action = new KAction( i18n("Abort Current Operation"), actionCollection(), "cancel" );
   connect(action, SIGNAL(triggered(bool) ), ProgressManager::instance(), SLOT(slotAbortAll()));
   action->setShortcut(Qt::Key_Escape);
   mAccel->connectItem(mAccel->insertItem(Qt::Key_Escape),
@@ -651,7 +651,7 @@ void KMMainWidget::createWidgets(void)
   mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Right),
                      mFolderTree, SLOT(incCurrentFolder()));
 
-  KAction *action = new KAction( i18n("Focus on Previous Folder"), actionCollection(), "dec_current_folder");
+  action = new KAction( i18n("Focus on Previous Folder"), actionCollection(), "dec_current_folder");
   connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(decCurrentFolder()));
   action->setShortcut(Qt::CTRL+Qt::Key_Left);
   mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Left),
@@ -671,7 +671,7 @@ void KMMainWidget::createWidgets(void)
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Left ),
                         mHeaders, SLOT( decCurrentMessage() ) );
 
-  KAction *action = new KAction( i18n("Select Message with Focus"), actionCollection(), "select_current_message");
+  action = new KAction( i18n("Select Message with Focus"), actionCollection(), "select_current_message");
   connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT( selectCurrentMessage() ));
   action->setShortcut(Qt::ALT+Qt::Key_Space);
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
