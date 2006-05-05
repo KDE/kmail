@@ -273,8 +273,9 @@ void KMReaderMainWin::setupAccel()
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
 
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Qt::Key_R, this,
-			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
+  mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), actionCollection(), "reply" );
+  connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
+  mReplyAction->setShortcut(Qt::Key_R);
   mReplyActionMenu->insert( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",

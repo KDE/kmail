@@ -1114,8 +1114,8 @@ void KMComposeWin::setupActions(void)
     actActionNowMenu =  new KActionMenu ( KIcon( "mail_send"), i18n("&Send Mail Via"),
 		    actionCollection(), "send_default_via" );
 
-    (void) new KAction (i18n("Send &Later"), "queue", 0, this,
-			SLOT(slotSendLater()), actionCollection(),"send_alternative");
+    KAction *action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_alternative");
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendLater()));
     actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_alternative_via" );
 
