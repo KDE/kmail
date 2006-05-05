@@ -2300,9 +2300,9 @@ void KMMainWidget::getTransportMenu()
 void KMMainWidget::setupActions()
 {
   //----- File Menu
-  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
-    KStdAccel::shortcut(KStdAccel::Save),
-    this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
+  mSaveAsAction = new KAction(KIcon("filesave"),  i18n("Save &As..."), actionCollection(), "file_save_as" );
+  connect(mSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveMsg()));
+  mSaveAsAction->setShortcut(KStdAccel::shortcut(KStdAccel::Save));
 
   mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
@@ -2313,16 +2313,15 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&Expire All Folders"), 0,
 		      this, SLOT(slotExpireAll()), actionCollection(), "expire_all_folders" );
 
-  (void) new KAction( i18n("&Refresh Local IMAP Cache"), "refresh", 0,
-		      this, SLOT(slotInvalidateIMAPFolders()),
-		      actionCollection(), "file_invalidate_imap_cache" );
+  KAction *action = new KAction(KIcon("refresh"),  i18n("&Refresh Local IMAP Cache"), actionCollection(), "file_invalidate_imap_cache" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
 
   (void) new KAction( i18n("Empty All &Trash Folders"), 0,
 		      KMKernel::self(), SLOT(slotEmptyTrash()), actionCollection(), "empty_trash" );
 
-  (void) new KAction( i18n("Check &Mail"), "mail_get", Qt::CTRL+Qt::Key_L,
-		      this, SLOT(slotCheckMail()),
-		      actionCollection(), "check_mail" );
+  action = new KAction(KIcon("mail_get"),  i18n("Check &Mail"), actionCollection(), "check_mail" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
+  action->setShortcut(Qt::CTRL+Qt::Key_L);
 
   KActionMenu *actActionMenu = new
     KActionMenu( KIcon("mail_get"), i18n("Check Mail &In"), actionCollection(),
@@ -2335,7 +2334,7 @@ void KMMainWidget::setupActions()
   connect(mActMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(mActMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
-  KAction *action = new KAction(KIcon("mail_send"),  i18n("&Send Queued Messages"), actionCollection(), "send_queued");
+  action = new KAction(KIcon("mail_send"),  i18n("&Send Queued Messages"), actionCollection(), "send_queued");
   connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
 
   action = new KAction(KIcon("online_status"),  i18n("Onlinestatus (unknown)"), actionCollection(), "online_status");
@@ -2373,15 +2372,13 @@ void KMMainWidget::setupActions()
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
 #if !defined(NDEBUG)
-  (void) new KAction( i18n("&Debug Sieve..."),
-		      "idea", 0, this, SLOT(slotDebugSieve()),
-		      actionCollection(), "tools_debug_sieve" );
+  action = new KAction(KIcon("idea"),  i18n("&Debug Sieve..."), actionCollection(), "tools_debug_sieve" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotDebugSieve()));
 #endif
 
   // @TODO (marc/bo): Test
-  (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
-		      "configure", 0, this, SLOT(slotEditVacation()),
-		      actionCollection(), "tools_edit_vacation" );
+  action = new KAction(KIcon("configure"),  i18n("Edit \"Out of Office\" Replies..."), actionCollection(), "tools_edit_vacation" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditVacation()));
 
   action = new KAction( i18n("Filter &Log Viewer..."), actionCollection(), "filter_log_viewer" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilterLogViewer()));
@@ -2439,9 +2436,8 @@ void KMMainWidget::setupActions()
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
       /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ), actionCollection(), "folder_mailinglist_properties" );
 
-  mFolderShortCutCommandAction = new KAction( i18n("&Assign Shortcut..."), "configure_shortcuts",
-                      0, this, SLOT( slotFolderShortcutCommand() ), actionCollection(),
-                      "folder_shortcut_command" );
+  mFolderShortCutCommandAction = new KAction(KIcon("configure_shortcuts"),  i18n("&Assign Shortcut..."), actionCollection(), "folder_shortcut_command" );
+  connect(mFolderShortCutCommandAction, SIGNAL(triggered(bool) ), SLOT( slotFolderShortcutCommand() ));
 
 
   mMarkAllAsReadAction = new KAction(KIcon("goto"),  i18n("Mark All Messages as &Read"), actionCollection(), "mark_all_as_read" );
@@ -2454,9 +2450,7 @@ void KMMainWidget::setupActions()
   connect(mCompactFolderAction, SIGNAL(triggered(bool) ), SLOT(slotCompactFolder()));
 
   mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload",
-                                      KStdAccel::shortcut( KStdAccel::Reload ), this,
-                                      SLOT(slotRefreshFolder()),
-                                      actionCollection(), "refresh_folder" );
+                                      KStdAccel::shortcut( KStdAccel::Reload ), this, SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
   mEmptyFolderAction = new KAction(KIcon("edittrash"),  "foo", actionCollection(), "empty" );
@@ -2483,9 +2477,9 @@ void KMMainWidget::setupActions()
   connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
   action->setShortcut(KStdAccel::shortcut(KStdAccel::New));
 
-  (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
-                      Qt::CTRL+Qt::SHIFT+Qt::Key_N, this,
-		      SLOT(slotPostToML()), actionCollection(), "post_message" );
+  action = new KAction(KIcon("mail_post_to"),  i18n("New Message t&o Mailing-List..."), actionCollection(), "post_message" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));
+  action->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_N);
 
   mForwardActionMenu = new KActionMenu( KIcon("mail_forward"), i18nc("Message->","&Forward"),
 					actionCollection(),
@@ -2494,13 +2488,11 @@ void KMMainWidget::setupActions()
 	   SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Qt::Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
-					"message_forward_as_attachment" );
+				       "mail_forward", Qt::Key_F, this, SLOT(slotForwardAttachedMsg()), actionCollection(), "message_forward_as_attachment" );
   mForwardActionMenu->insert( forwardAttachedAction() );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				Qt::SHIFT+Qt::Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
+  mForwardAction = new KAction(KIcon("mail_forward"),  i18n("&Inline..."), actionCollection(), "message_forward_inline" );
+  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
+  mForwardAction->setShortcut(Qt::SHIFT+Qt::Key_F);
 
   mForwardActionMenu->insert( forwardAction() );
 
@@ -2519,26 +2511,20 @@ void KMMainWidget::setupActions()
   mReplyActionMenu->insert( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    Qt::SHIFT+Qt::Key_A, this,
-                                    SLOT(slotReplyAuthorToMsg()),
-                                    actionCollection(), "reply_author" );
+                                    Qt::SHIFT+Qt::Key_A, this, SLOT(slotReplyAuthorToMsg()), actionCollection(), "reply_author" );
   mReplyActionMenu->insert( mReplyAuthorAction );
 
-  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Qt::Key_A, this, SLOT(slotReplyAllToMsg()),
-				 actionCollection(), "reply_all" );
+  mReplyAllAction = new KAction(KIcon("mail_replyall"),  i18n("Reply to &All..."), actionCollection(), "reply_all" );
+  connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
+  mReplyAllAction->setShortcut(Qt::Key_A);
   mReplyActionMenu->insert( mReplyAllAction );
 
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Qt::Key_L, this,
-				  SLOT(slotReplyListToMsg()), actionCollection(),
-				  "reply_list" );
+				  "mail_replylist", Qt::Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
 
   mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
-                                 "mail_forward",
-				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
+                                 "mail_forward", Qt::Key_E, this, SLOT(slotRedirectMsg()), actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), actionCollection(), "noquotereply" );
@@ -2659,9 +2645,8 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
 
-  mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
-                                0, this, SLOT(slotSaveAttachments()),
-                                actionCollection(), "file_save_attachments" );
+  mSaveAttachmentsAction = new KAction(KIcon("attach"),  i18n("Save A&ttachments..."), actionCollection(), "file_save_attachments" );
+  connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
 
   mMoveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
@@ -2670,9 +2655,7 @@ void KMMainWidget::setupActions()
                                     actionCollection(), "copy_to" );
 
   mApplyAllFiltersAction = new KAction( i18n("Appl&y All Filters"), "filter",
-				    Qt::CTRL+Qt::Key_J, this,
-				    SLOT(slotApplyFilters()),
-				    actionCollection(), "apply_filters" );
+				    Qt::CTRL+Qt::Key_J, this, SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
 
   mApplyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter" ),
 					    actionCollection(),
@@ -2823,14 +2806,10 @@ void KMMainWidget::setupActions()
   // ----- Standard Actions
 //  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
   (void) new KAction( i18n("Configure &Notifications..."),
-		      "knotify", 0, this,
- 		      SLOT(slotEditNotifications()), actionCollection(),
-		      "kmail_configure_notifications" );
+		      "knotify", 0, this, SLOT(slotEditNotifications()), actionCollection(), "kmail_configure_notifications" );
 //  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
   (void) new KAction( i18n("&Configure KMail..."),
-		      "configure", 0, kmkernel,
-                      SLOT(slotShowConfigurationDialog()), actionCollection(),
-                      "kmail_configure_kmail" );
+		      "configure", 0, kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection(), "kmail_configure_kmail" );
 
   KStdAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
 
@@ -3367,8 +3346,7 @@ void KMMainWidget::initializeFilterActions()
       if ( icon.isEmpty() )
         icon = "gear";
       filterAction = new KAction(as, icon, (*it)->shortcut(), filterCommand,
-                                 SLOT(start()), actionCollection(),
-                                 normalizedName.toLocal8Bit());
+                                 SLOT(start()), actionCollection(), normalizedName.toLocal8Bit());
       if(!addedSeparator) {
         mApplyFilterActionsMenu->popupMenu()->addSeparator();
         addedSeparator = !addedSeparator;

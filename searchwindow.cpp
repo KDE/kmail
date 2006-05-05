@@ -274,26 +274,20 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   KActionCollection *ac = actionCollection();
   mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), ac, "search_reply" );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
-  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-                                 0, this, SLOT(slotReplyAllToMsg()),
-                                 ac, "search_reply_all" );
+  mReplyAllAction = new KAction(KIcon("mail_replyall"),  i18n("Reply to &All..."), ac, "search_reply_all" );
+  connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-                                  "mail_replylist", 0, this,
-                                  SLOT(slotReplyListToMsg()), ac,
-                                  "search_reply_list" );
+                                  "mail_replylist", 0, this, SLOT(slotReplyListToMsg()), ac, "search_reply_list" );
   mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
                                         i18nc("Message->","&Forward"),
                                         ac, "search_message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-                                0, this, SLOT(slotForwardMsg()),
-                                ac, "search_message_forward_inline" );
+  mForwardAction = new KAction(KIcon("mail_forward"),  i18n("&Inline..."), ac, "search_message_forward_inline" );
+  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardActionMenu->insert( mForwardAction );
   mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
-                                       "mail_forward", 0, this,
-                                        SLOT(slotForwardAttachedMsg()), ac,
-                                        "search_message_forward_as_attachment" );
+                                       "mail_forward", 0, this, SLOT(slotForwardAttachedMsg()), ac, "search_message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
   mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
   mSaveAtchAction = new KAction(KIcon("attach"),  i18n("Save Attachments..."), ac, "search_save_attachments" );
