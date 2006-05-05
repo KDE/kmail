@@ -2453,11 +2453,11 @@ void KMMainWidget::setupActions()
   mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
-  mExpireFolderAction = new KAction(i18n("&Expiration Settings"), 0, this, SLOT(slotExpireFolder()),
-				   actionCollection(), "expire");
+  mExpireFolderAction = new KAction(i18n("&Expiration Settings"), actionCollection(), "expire");
+  connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
 
-  mCompactFolderAction = new KAction( i18n("&Compact Folder"), 0, this,
-		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
+  mCompactFolderAction = new KAction( i18n("&Compact Folder"), actionCollection(), "compact" );
+  connect(mCompactFolderAction, SIGNAL(triggered(bool) ), SLOT(slotCompactFolder()));
 
   mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload",
                                       KStdAccel::shortcut( KStdAccel::Reload ), this,
@@ -2509,8 +2509,8 @@ void KMMainWidget::setupActions()
 
   mForwardActionMenu->insert( forwardAction() );
 
-  mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
-		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
+  mSendAgainAction = new KAction( i18n("Send A&gain..."), actionCollection(), "send_again" );
+  connect(mSendAgainAction, SIGNAL(triggered(bool) ), SLOT(slotResendMsg()));
 
   mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18nc("Message->","&Reply"),
                                       actionCollection(),
@@ -2545,8 +2545,9 @@ void KMMainWidget::setupActions()
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
 
-  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), Qt::SHIFT+Qt::Key_R,
-    this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
+  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), actionCollection(), "noquotereply" );
+  connect(mNoQuoteReplyAction, SIGNAL(triggered(bool) ), SLOT(slotNoQuoteReplyToMsg()));
+  mNoQuoteReplyAction->setShortcut(Qt::SHIFT+Qt::Key_R);
 
   //----- Create filter actions
   mFilterMenu = new KActionMenu( KIcon("filter"), i18n("&Create Filter"), actionCollection(), "create_filter" );
@@ -2816,12 +2817,12 @@ void KMMainWidget::setupActions()
   mToggleShowQuickSearchAction->setWhatsThis(
         i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().toUtf8() ) );
 
-  (void) new KAction( i18n("Configure &Filters..."), 0, this,
- 		      SLOT(slotFilter()), actionCollection(), "filter" );
-  (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
- 		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
-  (void) new KAction( i18n("Manage &Sieve Scripts..."), 0, this,
-                      SLOT(slotManageSieveScripts()), actionCollection(), "sieveFilters" );
+  action = new KAction( i18n("Configure &Filters..."), actionCollection(), "filter" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilter()));
+  action = new KAction( i18n("Configure &POP Filters..."), actionCollection(), "popFilter" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotPopFilter()));
+  action = new KAction( i18n("Manage &Sieve Scripts..."), actionCollection(), "sieveFilters" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotManageSieveScripts()));
 
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
 				i18n("Display KMail's Welcome Page") ),
@@ -3455,9 +3456,9 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyURL() );
   QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
-  KAction* action =
-    new KAction(actionlabel, folder->shortcut(), c, SLOT(start()),
-                actionCollection(), normalizedName.toLocal8Bit());
+  KAction* action = new KAction(actionlabel, actionCollection(), normalizedName);
+  connect(action, SIGNAL(triggered(bool) ), c, SLOT(start()));
+  action->setShortcut(folder->shortcut());
   action->setIcon( KIcon( folder->unreadIconPath() ) );
   c->setAction( action ); // will be deleted along with the command
 }

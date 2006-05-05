@@ -1214,21 +1214,21 @@ void KMComposeWin::setupActions(void)
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
-  mPasteQuotation = new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
-                      actionCollection(), "paste_quoted");
+  mPasteQuotation = new KAction(i18n("Pa&ste as Quotation"), actionCollection(), "paste_quoted");
+  connect(mPasteQuotation, SIGNAL(triggered(bool) ), SLOT( slotPasteAsQuotation()));
 
-  (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteAsAttachment()),
-                      actionCollection(), "paste_att");
+  KAction *action = new KAction(i18n("Paste as Attac&hment"), actionCollection(), "paste_att");
+  connect(action, SIGNAL(triggered(bool) ), SLOT( slotPasteAsAttachment()));
 
-  mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), 0, this,
-              SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
+  mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), actionCollection(), "tools_quote");
+  connect(mAddQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotAddQuotes()));
 
-  mRemQuoteChars = new KAction(i18n("Re&move Quote Characters"), 0, this,
-              SLOT(slotRemoveQuotes()), actionCollection(), "tools_unquote");
+  mRemQuoteChars = new KAction(i18n("Re&move Quote Characters"), actionCollection(), "tools_unquote");
+  connect(mRemQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotRemoveQuotes()));
 
 
-  (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
-                      actionCollection(), "clean_spaces");
+  action = new KAction(i18n("Cl&ean Spaces"), actionCollection(), "clean_spaces");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotCleanSpace()));
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
@@ -1336,8 +1336,8 @@ void KMComposeWin::setupActions(void)
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
-  (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
-                      actionCollection(), "setup_spellchecker");
+  action = new KAction(i18n("&Spellchecker..."), actionCollection(), "setup_spellchecker");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()));
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     KToggleAction * a = new KToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
