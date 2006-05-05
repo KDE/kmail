@@ -35,9 +35,8 @@ KMMainWin::KMMainWin(QWidget *)
 
   kapp->ref();
 
-  (void) new KAction( i18n("New &Window"), "window_new", 0,
-		      this, SLOT(slotNewMailReader()),
-		      actionCollection(), "new_mail_client" );
+  KAction *action = new KAction(KIcon("window_new"),  i18n("New &Window"), actionCollection(), "new_mail_client" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
   mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );

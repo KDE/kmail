@@ -611,8 +611,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect(mUrlOpenAction, SIGNAL(triggered(bool) ), SLOT(slotUrlOpen()));
   mAddBookmarksAction = new KAction( i18n("Bookmark This Link"),
                                      "bookmark_add",
-                                     0, this, SLOT(slotAddBookmarks()),
-                                     ac, "add_bookmarks" );
+                                     0, this, SLOT(slotAddBookmarks()), ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), ac, "saveas_url" );
   connect(mUrlSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotUrlSave()));
 

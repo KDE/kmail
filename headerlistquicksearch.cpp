@@ -63,8 +63,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                            : "locationbar_erase",
                                            0, this,
                                            SLOT( reset() ),
-                                           actionCollection,
-                                           "reset_quicksearch" );
+                                           actionCollection, "reset_quicksearch" );
   parent->addAction( resetQuickSearch );
   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
                                         "Resets the quick search so that "
