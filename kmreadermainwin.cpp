@@ -239,9 +239,9 @@ void KMReaderMainWin::setupAccel()
   closeAction->setShortcut(closeShortcut);
 
   //----- View Menu
-  mViewSourceAction = new KAction( i18n("&View Source"), Qt::Key_V, this,
-                                   SLOT(slotShowMsgSrc()), actionCollection(),
-                                   "view_source" );
+  mViewSourceAction = new KAction( i18n("&View Source"), actionCollection(), "view_source" );
+  connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
+  mViewSourceAction->setShortcut(Qt::Key_V);
 
 
   mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
@@ -263,8 +263,7 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu->insert( mForwardAttachedAction );
 
   mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
-				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
+				 Qt::Key_E, this, SLOT(slotRedirectMsg()), actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
 
   mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18nc("Message->","&Reply"),

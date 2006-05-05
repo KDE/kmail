@@ -591,21 +591,16 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mSelectEncodingAction->setItems( encodings );
   mSelectEncodingAction->setCurrentItem( 0 );
 
-  mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
-                                      SLOT(slotMailtoCompose()), ac,
-                                      "mailto_compose" );
+  mMailToComposeAction = new KAction( i18n("New Message To..."), ac, "mailto_compose" );
+  connect(mMailToComposeAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoCompose()));
   mMailToReplyAction = new KAction( i18n("Reply To..."), 0, this,
-				    SLOT(slotMailtoReply()), ac,
-				    "mailto_reply" );
+				    SLOT(slotMailtoReply()), ac, "mailto_reply" );
   mMailToForwardAction = new KAction( i18n("Forward To..."),
-                                      0, this, SLOT(slotMailtoForward()), ac,
-                                      "mailto_forward" );
-  mAddAddrBookAction = new KAction( i18n("Add to Address Book"),
-				    0, this, SLOT(slotMailtoAddAddrBook()),
-				    ac, "add_addr_book" );
+                                      0, this, SLOT(slotMailtoForward()), ac, "mailto_forward" );
+  mAddAddrBookAction = new KAction( i18n("Add to Address Book"), ac, "add_addr_book" );
+  connect(mAddAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoAddAddrBook()));
   mOpenAddrBookAction = new KAction( i18n("Open in Address Book"),
-                                     0, this, SLOT(slotMailtoOpenAddrBook()),
-                                     ac, "openin_addr_book" );
+                                     0, this, SLOT(slotMailtoOpenAddrBook()), ac, "openin_addr_book" );
   mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
   mSelectAllAction = new KAction( i18n("Select All Text"), ac, "mark_all_text" );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));

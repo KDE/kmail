@@ -1192,9 +1192,8 @@ void KMComposeWin::setupActions(void)
     KAction *action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( selectRecipients() ));
     action->setShortcut(Qt::CTRL + Qt::Key_L);
-    action = new KAction( i18n("Save &Distribution List..."), 0, mRecipientsEditor,
-      SLOT( saveDistributionList() ), actionCollection(),
-      "save_distribution_list" );
+    action = new KAction( i18n("Save &Distribution List..."), actionCollection(), "save_distribution_list" );
+    connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( saveDistributionList() ));
   }
 
   //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
@@ -1309,26 +1308,21 @@ void KMComposeWin::setupActions(void)
   //end of checkable
 
   (void) new KAction (i18n("Append S&ignature"), 0, this,
-                      SLOT(slotAppendSignature()),
-                      actionCollection(), "append_signature");
+                      SLOT(slotAppendSignature()), actionCollection(), "append_signature");
   mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
-                           SLOT(slotInsertPublicKey()),
-                           actionCollection(), "attach_public_key");
-  mAttachMPK = new KAction (i18n("Attach &My Public Key"), 0, this,
-                           SLOT(slotInsertMyPublicKey()),
-                           actionCollection(), "attach_my_public_key");
+                           SLOT(slotInsertPublicKey()), actionCollection(), "attach_public_key");
+  mAttachMPK = new KAction(i18n("Attach &My Public Key"), actionCollection(), "attach_my_public_key");
+  connect(mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
   (void) new KAction (i18n("&Attach File..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
   mAttachRemoveAction = new KAction (i18n("&Remove Attachment"), 0, this,
-                      SLOT(slotAttachRemove()),
-                      actionCollection(), "remove");
+                      SLOT(slotAttachRemove()), actionCollection(), "remove");
   mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
   mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties"), 0, this,
-                      SLOT(slotAttachProperties()),
-                      actionCollection(), "attach_properties");
+                      SLOT(slotAttachProperties()), actionCollection(), "attach_properties");
 
   setStandardToolBarMenuEnabled(true);
 
