@@ -595,8 +595,8 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect(mMailToComposeAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoCompose()));
   mMailToReplyAction = new KAction( i18n("Reply To..."), ac, "mailto_reply" );
   connect(mMailToReplyAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoReply()));
-  mMailToForwardAction = new KAction( i18n("Forward To..."),
-                                      0, this, SLOT(slotMailtoForward()), ac, "mailto_forward" );
+  mMailToForwardAction = new KAction( i18n("Forward To..."), ac, "mailto_forward" );
+  connect(mMailToForwardAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoForward()));
   mAddAddrBookAction = new KAction( i18n("Add to Address Book"), ac, "add_addr_book" );
   connect(mAddAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoAddAddrBook()));
   mOpenAddrBookAction = new KAction( i18n("Open in Address Book"), ac, "openin_addr_book" );

@@ -1309,17 +1309,17 @@ void KMComposeWin::setupActions(void)
 
   action = new KAction(i18n("Append S&ignature"), actionCollection(), "append_signature");
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAppendSignature()));
-  mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
-                           SLOT(slotInsertPublicKey()), actionCollection(), "attach_public_key");
+  mAttachPK = new KAction(i18n("Attach &Public Key..."), actionCollection(), "attach_public_key");
+  connect(mAttachPK, SIGNAL(triggered(bool) ), SLOT(slotInsertPublicKey()));
   mAttachMPK = new KAction(i18n("Attach &My Public Key"), actionCollection(), "attach_my_public_key");
   connect(mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
   (void) new KAction (i18n("&Attach File..."), "attach", 0, this, SLOT(slotAttachFile()), actionCollection(), "attach");
-  mAttachRemoveAction = new KAction (i18n("&Remove Attachment"), 0, this,
-                      SLOT(slotAttachRemove()), actionCollection(), "remove");
+  mAttachRemoveAction = new KAction(i18n("&Remove Attachment"), actionCollection(), "remove");
+  connect(mAttachRemoveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachRemove()));
   mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()), actionCollection(), "attach_save");
-  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties"), 0, this,
-                      SLOT(slotAttachProperties()), actionCollection(), "attach_properties");
+  mAttachPropertiesAction = new KAction(i18n("Attachment Pr&operties"), actionCollection(), "attach_properties");
+  connect(mAttachPropertiesAction, SIGNAL(triggered(bool) ), SLOT(slotAttachProperties()));
 
   setStandardToolBarMenuEnabled(true);
 
