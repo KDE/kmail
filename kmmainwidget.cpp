@@ -608,8 +608,9 @@ void KMMainWidget::createWidgets(void)
   action->setShortcut(Qt::Key_M);
   new KAction( i18n("Copy Message to Folder"), Qt::Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(), "copy_message_to_folder" );
-  new KAction( i18n("Jump to Folder"), Qt::Key_J, this,
-               SLOT(slotJumpToFolder()), actionCollection(), "jump_to_folder" );
+  KAction *action = new KAction( i18n("Jump to Folder"), actionCollection(), "jump_to_folder" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotJumpToFolder()));
+  action->setShortcut(Qt::Key_J);
   mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
 		     this, SLOT(slotMoveMsg()) );
   mAccel->connectItem(mAccel->insertItem(Qt::Key_C),
@@ -670,8 +671,9 @@ void KMMainWidget::createWidgets(void)
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Left ),
                         mHeaders, SLOT( decCurrentMessage() ) );
 
-  new KAction(
-    i18n("Select Message with Focus"), Qt::ALT+Qt::Key_Space, mHeaders, SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
+  KAction *action = new KAction( i18n("Select Message with Focus"), actionCollection(), "select_current_message");
+  connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT( selectCurrentMessage() ));
+  action->setShortcut(Qt::ALT+Qt::Key_Space);
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
                         mHeaders, SLOT( selectCurrentMessage() ) );
 

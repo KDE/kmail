@@ -1307,8 +1307,8 @@ void KMComposeWin::setupActions(void)
                                      actionCollection(), "show_subject");
   //end of checkable
 
-  (void) new KAction (i18n("Append S&ignature"), 0, this,
-                      SLOT(slotAppendSignature()), actionCollection(), "append_signature");
+  KAction *action = new KAction(i18n("Append S&ignature"), actionCollection(), "append_signature");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAppendSignature()));
   mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()), actionCollection(), "attach_public_key");
   mAttachMPK = new KAction(i18n("Attach &My Public Key"), actionCollection(), "attach_my_public_key");
