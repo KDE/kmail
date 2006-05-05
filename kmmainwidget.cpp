@@ -2188,31 +2188,31 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
     if (aUrl.protocol() == "mailto")
     {
       // popup on a mailto URL
-      mMsgView->mailToComposeAction()->plug( menu );
-      mMsgView->mailToReplyAction()->plug( menu );
-      mMsgView->mailToForwardAction()->plug( menu );
+      menu->addAction( mMsgView->mailToComposeAction() );
+      menu->addAction( mMsgView->mailToReplyAction() );
+      menu->addAction( mMsgView->mailToForwardAction() );
 
       menu->addSeparator();
-      mMsgView->addAddrBookAction()->plug( menu );
-      mMsgView->openAddrBookAction()->plug( menu );
-      mMsgView->copyURLAction()->plug( menu );
-      mMsgView->startImChatAction()->plug( menu );
+      menu->addAction( mMsgView->addAddrBookAction() );
+      menu->addAction( mMsgView->openAddrBookAction() );
+      menu->addAction( mMsgView->copyURLAction() );
+      menu->addAction( mMsgView->startImChatAction() );
       // only enable if our KIMProxy is functional
       mMsgView->startImChatAction()->setEnabled( kmkernel->imProxy()->initialize() );
 
     } else {
       // popup on a not-mailto URL
-      mMsgView->urlOpenAction()->plug( menu );
-      mMsgView->addBookmarksAction()->plug( menu );
-      mMsgView->urlSaveAsAction()->plug( menu );
-      mMsgView->copyURLAction()->plug( menu );
+      menu->addAction( mMsgView->urlOpenAction() );
+      menu->addAction( mMsgView->addBookmarksAction() );
+      menu->addAction( mMsgView->urlSaveAsAction() );
+      menu->addAction( mMsgView->copyURLAction() );
     }
     if ( aUrl.protocol() == "im" )
     {
       // popup on an IM address
       // no need to check the KIMProxy is initialized, as these protocols will
       // only be present if it is.
-      mMsgView->startImChatAction()->plug( menu );
+      menu->addAction( mMsgView->startImChatAction() );
     }
 
     urlMenuAdded=true;
@@ -2223,11 +2223,11 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
   if(mMsgView && !mMsgView->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->addSeparator();
-    mReplyActionMenu->plug(menu);
+    menu->addAction( mReplyActionMenu );
     menu->addSeparator();
 
-    mMsgView->copyAction()->plug( menu );
-    mMsgView->selectAllAction()->plug( menu );
+    menu->addAction( mMsgView->copyAction() );
+    menu->addAction( mMsgView->selectAllAction() );
   } else  if ( !urlMenuAdded )
   {
     // popup somewhere else (i.e., not a URL) on the message
@@ -2239,37 +2239,37 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
     }
 
     if ( mFolder->isDrafts() || mFolder->isOutbox() ) {
-      mEditAction->plug(menu);
+      menu->addAction( mEditAction );
     }
     else {
       if( !mFolder->isSent() )
-        mReplyActionMenu->plug(menu);
-      mForwardActionMenu->plug(menu);
+        menu->addAction( mReplyActionMenu );
+      menu->addAction( mForwardActionMenu );
     }
     menu->addSeparator();
 
-    mCopyActionMenu->plug( menu );
-    mMoveActionMenu->plug( menu );
+    menu->addAction( mCopyActionMenu );
+    menu->addAction( mMoveActionMenu );
 
     menu->addSeparator();
 
-    mStatusMenu->plug( menu );
+    menu->addAction( mStatusMenu );
     menu->addSeparator();
 
-    viewSourceAction()->plug(menu);
+    menu->addAction( viewSourceAction() );
     if(mMsgView) {
-      mMsgView->toggleFixFontAction()->plug(menu);
+      menu->addAction( mMsgView->toggleFixFontAction() );
     }
     menu->addSeparator();
-    mPrintAction->plug( menu );
-    mSaveAsAction->plug( menu );
-    mSaveAttachmentsAction->plug( menu );
+    menu->addAction( mPrintAction );
+    menu->addAction( mSaveAsAction );
+    menu->addAction( mSaveAttachmentsAction );
 
     menu->addSeparator();
     if( mFolder->isTrash() )
-      mDeleteAction->plug( menu );
+      menu->addAction( mDeleteAction );
     else
-      mTrashAction->plug( menu );
+      menu->addAction( mTrashAction );
   }
   KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
@@ -3360,7 +3360,7 @@ void KMMainWidget::initializeFilterActions()
   KAction *filterAction = 0;
 
   clearFilterActions();
-  mApplyAllFiltersAction->plug(mApplyFilterActionsMenu->popupMenu());
+  mApplyFilterActionsMenu->popupMenu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
   QList<KMFilter*>::const_iterator it = kmkernel->filterMgr()->filters().begin();
   for ( ;it != kmkernel->filterMgr()->filters().end(); ++it ) {
@@ -3383,7 +3383,7 @@ void KMMainWidget::initializeFilterActions()
         addedSeparator = !addedSeparator;
 	mFilterMenuActions.append( new KActionSeparator());
       }
-      filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
+      mApplyFilterActionsMenu->popupMenu()->addAction( filterAction );
       mFilterMenuActions.append(filterAction);
       if ( (*it)->configureToolbar() )
         mFilterTBarActions.append(filterAction);

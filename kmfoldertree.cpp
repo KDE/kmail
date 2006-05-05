@@ -982,10 +982,10 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
   // outbox specific, but there it's the most used action
   if ( (fti->folder() == kmkernel->outboxFolder()) && fti->folder()->count() )
-        mMainWidget->action("send_queued")->plug( folderMenu );
+        folderMenu->addAction( mMainWidget->action("send_queued") );
   // Mark all as read is supposedly used often, therefor it is first
   if ( fti->folder() && !fti->folder()->noContent() )
-      mMainWidget->action("mark_all_as_read")->plug( folderMenu );
+      folderMenu->addAction( mMainWidget->action("mark_all_as_read") );
 
   /* Treat the special case of the root and account folders */
   if ((!fti->folder() || (fti->folder()->noContent()
@@ -1000,8 +1000,8 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
                                SLOT(addChildFolder()));
 
     if (!fti->folder()) {
-      mMainWidget->action("compact_all_folders")->plug(folderMenu);
-      mMainWidget->action("expire_all_folders")->plug(folderMenu);
+      folderMenu->addAction( mMainWidget->action("compact_all_folders") );
+      folderMenu->addAction( mMainWidget->action("expire_all_folders") );
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
       folderMenu->insertItem(SmallIconSet("mail_get"), i18n("Check &Mail"),
         this,
@@ -1028,16 +1028,16 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      mMainWidget->action("search_messages")->plug(folderMenu);
+      folderMenu->addAction( mMainWidget->action("search_messages") );
 
-      mMainWidget->action("compact")->plug(folderMenu);
+      folderMenu->addAction( mMainWidget->action("compact") );
 
       folderMenu->addSeparator();
       if ( !fti->folder()->isSystemFolder() ) {
-        mMainWidget->action("delete_folder")->plug(folderMenu);
+        folderMenu->addAction( mMainWidget->action("delete_folder") );
         folderMenu->addSeparator();
       }
-      mMainWidget->action("empty")->plug(folderMenu);
+      folderMenu->addAction( mMainWidget->action("empty") );
       folderMenu->addSeparator();
     }
   }
@@ -1053,7 +1053,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
     if (!fti->folder()->noContent())
     {
-      mMainWidget->action("refresh_folder")->plug(folderMenu);
+      folderMenu->addAction( mMainWidget->action("refresh_folder") );
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
         folderMenu->insertItem(SmallIconSet("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
@@ -1069,7 +1069,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   }
 
   if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
-    mMainWidget->action("post_message")->plug(folderMenu);
+    folderMenu->addAction( mMainWidget->action("post_message") );
   }
 
   if (fti->folder() && fti->parent())
@@ -1083,7 +1083,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->insertItem( i18n("Expire..."), fti,
                               SLOT( slotShowExpiryProperties() ) );
     }
-    mMainWidget->action("modify")->plug(folderMenu);
+    folderMenu->addAction( mMainWidget->action("modify") );
   }
 
 

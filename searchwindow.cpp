@@ -745,18 +745,18 @@ void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &
         this, &mMenuToFolder, msgCopyMenu );
 
     // show most used actions
-    mReplyAction->plug(menu);
-    mReplyAllAction->plug(menu);
-    mReplyListAction->plug(menu);
-    mForwardActionMenu->plug(menu);
+    menu->addAction( mReplyAction );
+    menu->addAction( mReplyAllAction );
+    menu->addAction( mReplyListAction );
+    menu->addAction( mForwardActionMenu );
     menu->addSeparator();
     menu->insertItem(i18n("&Copy To"), msgCopyMenu);
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
-    mSaveAsAction->plug(menu);
-    mSaveAtchAction->plug(menu);
-    mPrintAction->plug(menu);
+    menu->addAction( mSaveAsAction );
+    menu->addAction( mSaveAtchAction );
+    menu->addAction( mPrintAction );
     menu->addSeparator();
-    mClearAction->plug(menu);
+    menu->addAction( mClearAction );
     menu->exec (QCursor::pos(), 0);
     delete menu;
 }

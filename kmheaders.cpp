@@ -2293,14 +2293,14 @@ void KMHeaders::slotRMB()
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
-     mOwner->editAction()->plug(menu);
+     menu->addAction( mOwner->editAction() );
   else {
      // show most used actions
      if( !mFolder->isSent() )
-       mOwner->replyMenu()->plug(menu);
-     mOwner->forwardMenu()->plug(menu);
+       menu->addAction( mOwner->replyMenu() );
+     menu->addAction( mOwner->forwardMenu() );
      if(mOwner->sendAgainAction()->isEnabled()) {
-       mOwner->sendAgainAction()->plug(menu);
+       menu->addAction( mOwner->sendAgainAction() );
      }
   }
   menu->addSeparator();
@@ -2320,35 +2320,35 @@ void KMHeaders::slotRMB()
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
   }
   menu->addSeparator();
-  mOwner->statusMenu()->plug( menu ); // Mark Message menu
+  menu->addAction( mOwner->statusMenu() ); // Mark Message menu
   if ( mOwner->threadStatusMenu()->isEnabled() ) {
-    mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
+    menu->addAction( mOwner->threadStatusMenu() ); // Mark Thread menu
   }
 
   if (!out_folder && !mFolder->isSent() && mOwner->watchThreadAction()->isEnabled() ) {
-    mOwner->watchThreadAction()->plug(menu);
-    mOwner->ignoreThreadAction()->plug(menu);
+    menu->addAction( mOwner->watchThreadAction() );
+    menu->addAction( mOwner->ignoreThreadAction() );
   }
 
   if ( !out_folder ) {
     menu->addSeparator();
-    mOwner->filterMenu()->plug( menu ); // Create Filter menu
-    mOwner->action("apply_filter_actions")->plug(menu);
+    menu->addAction( mOwner->filterMenu() ); // Create Filter menu
+    menu->addAction( mOwner->action("apply_filter_actions") );
   }
 
   menu->addSeparator();
-  mOwner->saveAsAction()->plug(menu);
-  mOwner->saveAttachmentsAction()->plug(menu);
-  mOwner->printAction()->plug(menu);
+  menu->addAction( mOwner->saveAsAction() );
+  menu->addAction( mOwner->saveAttachmentsAction() );
+  menu->addAction( mOwner->printAction() );
   menu->addSeparator();
   if ( mFolder->isTrash() ) {
-    mOwner->deleteAction()->plug(menu);
+    menu->addAction( mOwner->deleteAction() );
     if ( mOwner->trashThreadAction()->isEnabled() )
-      mOwner->deleteThreadAction()->plug(menu);
+      menu->addAction( mOwner->deleteThreadAction() );
   } else {
-    mOwner->trashAction()->plug(menu);
+    menu->addAction( mOwner->trashAction() );
     if ( mOwner->trashThreadAction()->isEnabled() )
-      mOwner->trashThreadAction()->plug(menu);
+      menu->addAction( mOwner->trashThreadAction() );
   }
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );

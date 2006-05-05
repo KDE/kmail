@@ -326,29 +326,29 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
   {
     if (aUrl.protocol() == "mailto") {
       // popup on a mailto URL
-      mReaderWin->mailToComposeAction()->plug( menu );
+      menu->addAction( mReaderWin->mailToComposeAction() );
       if ( mMsg ) {
-        mReaderWin->mailToReplyAction()->plug( menu );
-        mReaderWin->mailToForwardAction()->plug( menu );
+        menu->addAction( mReaderWin->mailToReplyAction() );
+        menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
       }
-      mReaderWin->addAddrBookAction()->plug( menu );
-      mReaderWin->openAddrBookAction()->plug( menu );
-      mReaderWin->copyAction()->plug( menu );
+      menu->addAction( mReaderWin->addAddrBookAction() );
+      menu->addAction( mReaderWin->openAddrBookAction() );
+      menu->addAction( mReaderWin->copyAction() );
     } else {
       // popup on a not-mailto URL
-      mReaderWin->urlOpenAction()->plug( menu );
-      mReaderWin->addBookmarksAction()->plug( menu );
-      mReaderWin->urlSaveAsAction()->plug( menu );
-      mReaderWin->copyURLAction()->plug( menu );
+      menu->addAction( mReaderWin->urlOpenAction() );
+      menu->addAction( mReaderWin->addBookmarksAction() );
+      menu->addAction( mReaderWin->urlSaveAsAction() );
+      menu->addAction( mReaderWin->copyURLAction() );
     }
     urlMenuAdded=true;
   }
   if(!mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->addSeparator();
-    mReaderWin->copyAction()->plug( menu );
-    mReaderWin->selectAllAction()->plug( menu );
+    menu->addAction( mReaderWin->copyAction() );
+    menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded )
   {
     // popup somewhere else (i.e., not a URL) on the message
@@ -360,8 +360,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     }
 
     if( !aMsg.parent()->isSent() && !aMsg.parent()->isDrafts() ) {
-      mReplyActionMenu->plug( menu );
-      mForwardActionMenu->plug( menu );
+      menu->addAction( mReplyActionMenu );
+      menu->addAction( mForwardActionMenu );
       menu->addSeparator();
     }
 
@@ -372,10 +372,10 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
           &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->addSeparator();
-    mViewSourceAction->plug( menu );
-    mReaderWin->toggleFixFontAction()->plug( menu );
+    menu->addAction( mViewSourceAction );
+    menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addSeparator();
-    mPrintAction->plug( menu );
+    menu->addAction( mPrintAction );
     menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );
   }

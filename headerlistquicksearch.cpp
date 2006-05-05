@@ -65,7 +65,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                            SLOT( reset() ),
                                            actionCollection,
                                            "reset_quicksearch" );
-  resetQuickSearch->plug( parent );
+  parent->addAction( resetQuickSearch );
   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
                                         "Resets the quick search so that "
                                         "all messages are shown again." ) );

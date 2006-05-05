@@ -122,24 +122,24 @@ void KMSystemTray::buildPopupMenu()
   mPopupMenu->addTitle(*(this->pixmap()), "KMail");
   KAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   if ( ( action = mainWidget->action("check_mail_in") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   if ( ( action = mainWidget->action("send_queued") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   if ( ( action = mainWidget->action("send_queued_via") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   mPopupMenu->addSeparator();
   if ( ( action = mainWidget->action("new_message") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
-    action->plug( mPopupMenu );
+    mPopupMenu->addAction( action );
   mPopupMenu->addSeparator();
 
   KMainWindow *mainWin = ::qobject_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
-      action->plug( mPopupMenu );
+      mPopupMenu->addAction( action );
 }
 
 KMSystemTray::~KMSystemTray()
