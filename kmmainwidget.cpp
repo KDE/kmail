@@ -2367,13 +2367,13 @@ void KMMainWidget::setupActions()
     if (KStandardDirs::findExe("kaddressbook").isEmpty()) act->setEnabled(false);
   }
 
-  act = new KAction( i18n("Certificate Manager..."), "pgp-keys", 0, this,
-		     SLOT(slotStartCertManager()), actionCollection(), "tools_start_certman");
+  act = new KAction(KIcon("pgp-keys"),  i18n("Certificate Manager..."), actionCollection(), "tools_start_certman");
+  connect(act, SIGNAL(triggered(bool)), SLOT(slotStartCertManager()));
   // disable action if no certman binary is around
   if (KStandardDirs::findExe("kleopatra").isEmpty()) act->setEnabled(false);
 
-  act = new KAction( i18n("GnuPG Log Viewer..."), "pgp-keys", 0, this,
-		     SLOT(slotStartWatchGnuPG()), actionCollection(), "tools_start_kwatchgnupg");
+  act = new KAction(KIcon("pgp-keys"),  i18n("GnuPG Log Viewer..."), actionCollection(), "tools_start_kwatchgnupg");
+  connect(act, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
   // disable action if no kwatchgnupg binary is around
   if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) act->setEnabled(false);
 

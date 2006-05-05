@@ -300,8 +300,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
 
   mPrintAction = KStdAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
-  mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
-                              SLOT(slotClearSelection()), ac, "search_clear_selection" );
+  mClearAction = new KAction( i18n("Clear Selection"), ac, "search_clear_selection" );
+  connect(mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()));
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
           this, SLOT(folderInvalidated(KMFolder*)));
