@@ -606,7 +606,7 @@ void KMMainWidget::createWidgets(void)
   KAction *action = new KAction( i18n("Move Message to Folder"), actionCollection(), "move_message_to_folder" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotMoveMsg()));
   action->setShortcut(Qt::Key_M);
-  KAction *action = new KAction( i18n("Copy Message to Folder"), actionCollection(), "copy_message_to_folder" );
+  action = new KAction( i18n("Copy Message to Folder"), actionCollection(), "copy_message_to_folder" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotCopyMsg()));
   action->setShortcut(Qt::Key_C);
   action = new KAction( i18n("Jump to Folder"), actionCollection(), "jump_to_folder" );
@@ -638,7 +638,7 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotFolderTreeColumnsChanged()));
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  KAction *action = new KAction( i18n("Remove Duplicate Messages"), actionCollection(), "remove_duplicate_messages");
+  action = new KAction( i18n("Remove Duplicate Messages"), actionCollection(), "remove_duplicate_messages");
   connect(action, SIGNAL(triggered(bool) ), SLOT(removeDuplicates()));
   action->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
 
@@ -648,7 +648,7 @@ void KMMainWidget::createWidgets(void)
   mAccel->connectItem(mAccel->insertItem(Qt::Key_Escape),
                      ProgressManager::instance(), SLOT(slotAbortAll()));
 
-  KAction *action = new KAction( i18n("Focus on Next Folder"), actionCollection(), "inc_current_folder");
+  action = new KAction( i18n("Focus on Next Folder"), actionCollection(), "inc_current_folder");
   connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(incCurrentFolder()));
   action->setShortcut(Qt::CTRL+Qt::Key_Right);
   mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Right),
@@ -660,18 +660,18 @@ void KMMainWidget::createWidgets(void)
   mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Left),
                      mFolderTree, SLOT(decCurrentFolder()));
 
-  KAction *action = new KAction( i18n("Select Folder with Focus"), actionCollection(), "select_current_folder");
+  action = new KAction( i18n("Select Folder with Focus"), actionCollection(), "select_current_folder");
   connect(action, SIGNAL(triggered(bool) ), mFolderTree, SLOT(selectCurrentFolder()));
   action->setShortcut(Qt::CTRL+Qt::Key_Space);
   mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
-  KAction *action = new KAction( i18n("Focus on Next Message"), actionCollection(), "inc_current_message");
+  action = new KAction( i18n("Focus on Next Message"), actionCollection(), "inc_current_message");
   connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT(incCurrentMessage()));
   action->setShortcut(Qt::ALT+Qt::Key_Right);
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Right ),
                         mHeaders, SLOT( incCurrentMessage() ) );
 
-  KAction *action = new KAction( i18n("Focus on Previous Message"), actionCollection(), "dec_current_message");
+  action = new KAction( i18n("Focus on Previous Message"), actionCollection(), "dec_current_message");
   connect(action, SIGNAL(triggered(bool) ), mHeaders, SLOT(decCurrentMessage()));
   action->setShortcut(Qt::ALT+Qt::Key_Left);
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Left ),
@@ -2316,13 +2316,13 @@ void KMMainWidget::setupActions()
   KAction *action = new KAction( i18n("&Compact All Folders"), actionCollection(), "compact_all_folders" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotCompactAll()));
 
-  KAction *action = new KAction( i18n("&Expire All Folders"), actionCollection(), "expire_all_folders" );
+  action = new KAction( i18n("&Expire All Folders"), actionCollection(), "expire_all_folders" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
 
-  KAction *action = new KAction(KIcon("refresh"),  i18n("&Refresh Local IMAP Cache"), actionCollection(), "file_invalidate_imap_cache" );
+  action = new KAction(KIcon("refresh"),  i18n("&Refresh Local IMAP Cache"), actionCollection(), "file_invalidate_imap_cache" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
 
-  KAction *action = new KAction( i18n("Empty All &Trash Folders"), actionCollection(), "empty_trash" );
+  action = new KAction( i18n("Empty All &Trash Folders"), actionCollection(), "empty_trash" );
   connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
 
   action = new KAction(KIcon("mail_get"),  i18n("Check &Mail"), actionCollection(), "check_mail" );
