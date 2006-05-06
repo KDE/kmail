@@ -371,7 +371,7 @@ kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << e
         if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
 kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
           resultingData += headers->AsString().c_str();
-        } else if( weAreReplacingTheRootNode && part->hasHeaders() ){
+        } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
 kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
 kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
 kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;

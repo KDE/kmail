@@ -380,7 +380,7 @@ void KMSender::doSendMsg()
       cleanup();
       return;
     case 1:
-      if (sentFolder->moveMsg(mCurrentMsg) != 0)
+      if ( sentFolder && sentFolder->moveMsg(mCurrentMsg) != 0 )
       {
         KMessageBox::error(0, i18n("Moving the sent message \"%1\" from the "
           "\"outbox\" to the \"sent-mail\" folder failed.\n"

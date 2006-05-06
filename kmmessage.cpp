@@ -2667,7 +2667,7 @@ int KMMessage::numBodyParts() const
       parts.removeLast();
     }
 
-    if (part->Body().Message() &&
+    if (part && part->Body().Message() &&
         part->Body().Message()->Body().FirstBodyPart())
     {
       part = part->Body().Message()->Body().FirstBodyPart();

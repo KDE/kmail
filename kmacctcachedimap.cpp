@@ -381,14 +381,14 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
 {
-  if ( folder->folderType() != KMFolderTypeCachedImap )
+  if ( !folder || folder->folderType() != KMFolderTypeCachedImap )
     return;
   KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(folder->storage());
   addDeletedFolder( storage->imapPath() );
   kdDebug(5006) << k_funcinfo << storage->imapPath() << endl;
 
   // Add all child folders too
-  if( folder && folder->child() ) {
+  if( folder->child() ) {
     KMFolderNode *node = folder->child()->first();
     while( node ) {
       if( !node->isDir() ) {

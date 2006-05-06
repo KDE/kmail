@@ -278,7 +278,7 @@ namespace KMail {
                               << node->typeString() << '/' << node->subTypeString()
                               << ')' << endl;
 
-        if ( !bpf->process( this, node, processResult ) )
+        if ( bpf && !bpf->process( this, node, processResult ) )
           defaultHandling( node, processResult );
       }
       node->setProcessed( true, false );
