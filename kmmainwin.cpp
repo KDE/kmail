@@ -20,6 +20,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <kstringhandler.h>
+#include <kstdaction.h>
 #include <kdebug.h>
 #include <ktip.h>
 
@@ -57,7 +58,7 @@ KMMainWin::KMMainWin(QWidget *)
                           actionCollection());
 
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
-  createGUI( "kmmainwin.rc", false );
+  createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
@@ -153,7 +154,7 @@ void KMMainWin::slotUpdateToolbars()
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
 
-  createGUI("kmmainwin.rc", false);
+  createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config(), "Main Window");
 
   // plug dynamically created actions again

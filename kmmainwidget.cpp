@@ -30,6 +30,7 @@
 
 #include <kmessagebox.h>
 
+#include <kactionmenu.h>
 #include <kmenu.h>
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
@@ -43,9 +44,12 @@
 #include <ktoolbar.h>
 #include <ktip.h>
 #include <knotifydialog.h>
+#include <kseparatoraction.h>
 #include <kstandarddirs.h>
+#include <kstdaction.h>
 #include <dcopclient.h>
 #include <kaddrbook.h>
+#include <ktoggleaction.h>
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
@@ -167,7 +171,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   setObjectName( name );
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
-  mToolbarActionSeparator = new KActionSeparator( actionCollection );
+  mToolbarActionSeparator = new KSeparatorAction( actionCollection );
 
   if( !s_mainWidgetList )
     mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
@@ -2584,7 +2588,7 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  mStatusMenu->insert( new KActionSeparator( actionCollection() ) );
+  mStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
 
   // -------- Toggle Actions
   mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "mail_flag",
@@ -2627,7 +2631,7 @@ void KMMainWidget::setupActions()
                                                 actionCollection(), "thread_unread");
   mThreadStatusMenu->insert( mMarkThreadAsUnreadAction );
 
-  mThreadStatusMenu->insert( new KActionSeparator( actionCollection() ) );
+  mThreadStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
 
   //----- "Mark Thread" toggle actions
   mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "mail_flag",
@@ -3358,7 +3362,7 @@ void KMMainWidget::initializeFilterActions()
       if(!addedSeparator) {
         mApplyFilterActionsMenu->popupMenu()->addSeparator();
         addedSeparator = !addedSeparator;
-	mFilterMenuActions.append( new KActionSeparator());
+	mFilterMenuActions.append( new KSeparatorAction() );
       }
       mApplyFilterActionsMenu->popupMenu()->addAction( filterAction );
       mFilterMenuActions.append(filterAction);

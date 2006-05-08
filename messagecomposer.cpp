@@ -73,6 +73,7 @@
 #include <kinputdialog.h>
 #include <kdebug.h>
 #include <kaction.h>
+#include <ktoggleaction.h>
 #include <qfile.h>
 #include <qtextcodec.h>
 #include <q3textedit.h>

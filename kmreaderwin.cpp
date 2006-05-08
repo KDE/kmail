@@ -72,8 +72,6 @@ using KMail::FileHtmlWriter;
 using KMail::TeeHtmlWriter;
 #endif
 
-#include <kasciistringtools.h>
-
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
@@ -95,6 +93,7 @@ using KMail::TeeHtmlWriter;
 #include <dom/dom_string.h>
 
 
+#include <kactionmenu.h>
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
 #include <kuserprofile.h>
@@ -114,7 +113,10 @@ using KMail::TeeHtmlWriter;
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
-#include <kglobal.h>
+#include <kascii.h>
+#include <kselectaction.h>
+#include <kstdaction.h>
+#include <ktoggleaction.h>
 
 #include <qclipboard.h>
 
@@ -2082,7 +2084,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   }
 
   Q3CString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
-  KPIM::kAsciiToLower( contentTypeStr.data() );
+  kAsciiToLower( contentTypeStr.data() );
 
   if ( ( qstrcmp( contentTypeStr, "text/directory" ) == 0 ) ||
        ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) ) {

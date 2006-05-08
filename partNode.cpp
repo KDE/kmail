@@ -38,7 +38,7 @@
 #include <qregexp.h>
 //Added by qt3to4:
 #include <Q3CString>
-#include <kglobal.h>
+#include <kascii.h>
 
 /*
   ===========================================================================

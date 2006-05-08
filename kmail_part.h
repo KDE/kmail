@@ -55,8 +55,7 @@ class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart, virtual public KMailPar
 {
     Q_OBJECT
   public:
-    KMailPart(QWidget *parentWidget, const char *widgetName,
-              QObject *parent, const char *name, const QStringList &);
+    KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &);
     virtual ~KMailPart();
 
     QWidget* parentWidget() const;

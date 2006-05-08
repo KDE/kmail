@@ -38,8 +38,8 @@ using KMail::RegExpLineEdit;
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
-#include <kaudioplayer.h>
 #include <kurlrequester.h>
+#include <phonon/simpleplayer.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -1752,9 +1752,12 @@ class KMFilterActionExecSound : public KMFilterActionWithTest
 {
 public:
   KMFilterActionExecSound();
+  ~KMFilterActionExecSound();
   virtual ReturnCode process(KMMessage* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
+private:
+  Phonon::SimplePlayer* mPlayer;
 };
 
 KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString aLabel )
@@ -1810,6 +1813,12 @@ const QString KMFilterActionWithTest::displayString() const
 KMFilterActionExecSound::KMFilterActionExecSound()
   : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
 {
+  mPlayer = new Phonon::SimplePlayer();
+}
+
+KMFilterActionExecSound::~KMFilterActionExecSound()
+{
+  delete mPlayer;
 }
 
 KMFilterAction* KMFilterActionExecSound::newAction(void)
@@ -1825,7 +1834,7 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage*) const
   QString file = QString::fromLatin1("file:");
   if (mParameter.startsWith(file))
     play = mParameter.mid(file.length());
-  KAudioPlayer::play(QFile::encodeName(play));
+  mPlayer->play( KUrl( QFile::encodeName(play) ) );
   return GoOn;
 }
 

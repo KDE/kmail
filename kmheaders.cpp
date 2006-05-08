@@ -25,6 +25,7 @@ using KMail::ActionScheduler;
 #include "globalsettings.h"
 using namespace KPIM;
 
+#include <kactionmenu.h>
 #include <kapplication.h>
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
@@ -35,6 +36,7 @@ using namespace KPIM;
 #include <kconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <ktoggleaction.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>

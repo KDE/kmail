@@ -11,10 +11,10 @@
 #include <kabc/addresseedialog.h> // for the button in KMFilterActionWithAddress
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kaudioplayer.h>
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <kstandarddirs.h>
+#include <phonon/simpleplayer.h>
 
 #include <QHBoxLayout>
 
@@ -137,7 +137,8 @@ void KMSoundTestWidget::playSound()
     QString file = QString::fromLatin1("file:");
     if (parameter.startsWith(file))
         play = parameter.mid(file.length());
-    KAudioPlayer::play(QFile::encodeName(play));
+    Phonon::SimplePlayer* player = new Phonon::SimplePlayer( this );
+    player->play( KUrl( QFile::encodeName(play) ) );
 }
 
 

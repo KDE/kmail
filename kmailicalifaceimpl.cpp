@@ -1359,7 +1359,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   httpURL.setPort( 0 ); // remove imap port
 
   // IMAP path is either /INBOX/<path> or /user/someone/<path>
-  QString path = folderURL.path( -1 );
+  QString path = folderURL.path( KUrl::RemoveTrailingSlash );
   Q_ASSERT( path.startsWith( "/" ) );
   int secondSlash = path.indexOf( '/', 1 );
   if ( secondSlash == -1 ) {
@@ -1379,7 +1379,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
   httpURL.setQuery( QString() );
   // Ensure that we encode everything with UTF8
-  httpURL = KUrl( httpURL.url(0) );
+  httpURL = KUrl( httpURL.url( KUrl::LeaveTrailingSlash ) );
   kDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.

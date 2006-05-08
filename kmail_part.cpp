@@ -61,12 +61,10 @@ using KRecentAddress::RecentAddresses;
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
 
-KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
-		     QObject *parent, const char *name, const QStringList &) :
+KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &) :
   DCOPObject("KMailIface"), KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
-  setObjectName( name );
   kDebug(5006) << "KMailPart()" << endl;
   kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
@@ -102,7 +100,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );
-  canvas->setObjectName( widgetName );
   canvas->setFocusPolicy(Qt::ClickFocus);
   setWidget(canvas);
   KGlobal::iconLoader()->addAppDir("kmail");

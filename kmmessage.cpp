@@ -28,14 +28,12 @@ using KMail::HeaderStrategy;
 #include <libkpimidentities/identitymanager.h>
 #include <libemailfunctions/email.h>
 
-#include <kasciistringtools.h>
-
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
 #include <kaddrbook.h>
 
 #include <kapplication.h>
-#include <kglobal.h>
+#include <kascii.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kconfig.h>
@@ -3810,7 +3808,7 @@ Q3CString KMMessage::defaultCharset()
 
   if (retval.isEmpty()  || (retval == "locale")) {
     retval = Q3CString(kmkernel->networkCodec()->mimeName());
-    KPIM::kAsciiToLower( retval.data() );
+    kAsciiToLower( retval.data() );
   }
 
   if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
@@ -3849,7 +3847,7 @@ void KMMessage::setCharset(const Q3CString& bStr)
     << kBacktrace( 5 ) << endl
     << "====================================================================" << endl;
   Q3CString aStr = bStr;
-  KPIM::kAsciiToLower( aStr.data() );
+  kAsciiToLower( aStr.data() );
   DwMediaType &mType = dwContentType();
   mType.Parse();
   DwParameter *param=mType.FirstParameter();

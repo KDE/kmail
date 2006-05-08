@@ -29,12 +29,15 @@
 #include <q3accel.h>
 //Added by qt3to4:
 #include <Q3PopupMenu>
+#include <kactionmenu.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kstdaccel.h>
 #include <kwin.h>
 #include <kaction.h>
 #include <kiconloader.h>
+#include <kstdaction.h>
+#include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
 #include "kmcommands.h"

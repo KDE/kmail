@@ -33,6 +33,7 @@
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kvbox.h>
 
 class Q3Accel;
@@ -40,7 +41,7 @@ class QVBoxLayout;
 class QSplitter;
 
 class KActionMenu;
-class KActionCollection;
+class KSeparatorAction;
 class KConfig;
 class KToggleAction;
 class KToggleAction;
@@ -493,7 +494,7 @@ private:
   QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
 #endif
   KActionCollection *mActionCollection;
-  KActionSeparator  *mToolbarActionSeparator;
+  KSeparatorAction  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
   QList<KAction*> mFilterMenuActions;

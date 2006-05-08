@@ -32,6 +32,7 @@
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
 
+#include <kactionmenu.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kstatusbar.h>

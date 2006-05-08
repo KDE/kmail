@@ -34,7 +34,7 @@
 
 #include "antispamconfig.h"
 
-#include <kglobal.h>
+#include <kascii.h>
 
 #include <kstaticdeleter.h>
 #include <kconfig.h>

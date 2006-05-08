@@ -2264,7 +2264,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
 
     // we may not get a slash-terminated url out of KDirSelectDialog
-    dirUrl.adjustPath( 1 );
+    dirUrl.adjustPath( KUrl::AddTrailingSlash );
   }
   else {
     // only one item, get the desired filename

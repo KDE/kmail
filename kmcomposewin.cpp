@@ -77,6 +77,8 @@ using KRecentAddress::RecentAddresses;
 #include "messagecomposer.h"
 #include "chiasmuskeyselector.h"
 
+#include <kactioncollection.h>
+#include <kactionmenu.h>
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
@@ -105,6 +107,9 @@ using KRecentAddress::RecentAddresses;
 #include <kuserprofile.h>
 #include <krun.h>
 #include <ktempdir.h>
+#include <ktoggleaction.h>
+#include <kfontaction.h>
+#include <kfontsizeaction.h>
 //#include <keditlistbox.h>
 #include "globalsettings.h"
 #include "replyphrases.h"

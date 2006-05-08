@@ -289,7 +289,7 @@ class SideWidget : public QWidget
     mutable KWindowPositioner *mPickerPositioner;
 };
 
-class RecipientsEditor : public QWidget
+class KDE_EXPORT RecipientsEditor : public QWidget
 {
     Q_OBJECT
   public:
