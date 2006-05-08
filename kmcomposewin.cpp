@@ -146,7 +146,7 @@ using KRecentAddress::RecentAddresses;
 #include <errno.h>
 #include <fcntl.h>
 #include <assert.h>
-
+#include <krecentfilesaction.h>
 #include "kmcomposewin.moc"
 
 KMail::Composer * KMail::makeComposer( KMMessage * msg, uint identitiy ) {
