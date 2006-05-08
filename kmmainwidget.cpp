@@ -527,8 +527,8 @@ void KMMainWidget::createWidgets(void)
   }
 
 #ifndef NDEBUG
-  if( mPanner1 ) mPanner1->dumpObjectTree();
-  if( mPanner2 ) mPanner2->dumpObjectTree();
+  mPanner1->dumpObjectTree();
+  mPanner2->dumpObjectTree();
 #endif
 
   mTopLayout->add( mPanner1 );
