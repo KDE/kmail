@@ -2591,21 +2591,18 @@ void KMMainWidget::setupActions()
   mStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
 
   // -------- Toggle Actions
-  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "mail_flag",
-                                 0, this, SLOT(slotSetMsgStatusFlag()),
-                                 actionCollection(), "status_flag");
+  mToggleFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Message as &Important"), actionCollection(), "status_flag");
+  connect(mToggleFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusFlag()));
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
   mStatusMenu->insert( mToggleFlagAction );
 
-  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "mail_todo",
-                                 0, this, SLOT(slotSetMsgStatusTodo()),
-                                 actionCollection(), "status_todo");
+  mToggleTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Message as &To-do"), actionCollection(), "status_todo");
+  connect(mToggleTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusTodo()));
   mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
   mStatusMenu->insert( mToggleTodoAction );
 
-  mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
-                                 0, this, SLOT(slotSetMsgStatusSent()),
-                                 actionCollection(), "status_sent");
+  mToggleSentAction = new KToggleAction(KIcon("kmmsgsent"), i18n("Mark Message as &Sent"), actionCollection(), "status_sent");
+  connect(mToggleSentAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusSent()));
   mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
 
 
@@ -2634,26 +2631,22 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "mail_flag",
-                                       0, this, SLOT(slotSetThreadStatusFlag()),
-                                       actionCollection(), "thread_flag");
+  mToggleThreadFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Thread as &Important"), actionCollection(), "thread_flag");
+  connect(mToggleThreadFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusFlag()));
   mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
 
-  mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &To-do"), "mail_todo",
-                                       0, this, SLOT(slotSetThreadStatusTodo()),
-                                       actionCollection(), "thread_todo");
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), actionCollection(), "thread_todo");
+  connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
   mThreadStatusMenu->insert( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
-  mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
-                                       0, this, SLOT(slotSetThreadStatusWatched()),
-                                       actionCollection(), "thread_watched");
+  mWatchThreadAction = new KToggleAction(KIcon("kmmsgwatched"), i18n("&Watch Thread"), actionCollection(), "thread_watched");
+  connect(mWatchThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusWatched()));
 
-  mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "mail_ignore",
-                                       0, this, SLOT(slotSetThreadStatusIgnored()),
-                                       actionCollection(), "thread_ignored");
+  mIgnoreThreadAction = new KToggleAction(KIcon("mail_ignore"), i18n("&Ignore Thread"), actionCollection(), "thread_ignored");
+  connect(mIgnoreThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusIgnored()));
 
   mSaveAttachmentsAction = new KAction(KIcon("attach"),  i18n("Save A&ttachments..."), actionCollection(), "file_save_attachments" );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
@@ -2796,9 +2789,8 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_unread_text" );
 
   //----- Settings Menu
-  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString(),
-                                       0, this, SLOT(slotToggleShowQuickSearch()),
-                                       actionCollection(), "show_quick_search");
+  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), actionCollection(), "show_quick_search");
+  connect(mToggleShowQuickSearchAction, SIGNAL(triggered(bool) ), SLOT(slotToggleShowQuickSearch()));
   mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
   mToggleShowQuickSearchAction->setWhatsThis(
         i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().toUtf8() ) );

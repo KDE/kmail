@@ -1427,25 +1427,22 @@ void KMComposeWin::setupActions(void)
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  alignLeftAction = new KToggleAction (i18n("Align Left"), "text_left", 0,
-                      this, SLOT(slotAlignLeft()), actionCollection(),
-                      "align_left");
+  alignLeftAction = new KToggleAction(KIcon("text_left"), i18n("Align Left"), actionCollection(), "align_left");
+  connect(alignLeftAction, SIGNAL(triggered(bool) ), SLOT(slotAlignLeft()));
   alignLeftAction->setChecked( true );
-  alignRightAction = new KToggleAction (i18n("Align Right"), "text_right", 0,
-                      this, SLOT(slotAlignRight()), actionCollection(),
-                      "align_right");
-  alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
-                       this, SLOT(slotAlignCenter()), actionCollection(),
-                       "align_center");
-  textBoldAction = new KToggleAction( i18n("&Bold"), "text_bold", Qt::CTRL+Qt::Key_B,
-                                     this, SLOT(slotTextBold()),
-                                     actionCollection(), "text_bold");
-  textItalicAction = new KToggleAction( i18n("&Italic"), "text_italic", Qt::CTRL+Qt::Key_I,
-                                       this, SLOT(slotTextItalic()),
-                                       actionCollection(), "text_italic");
-  textUnderAction = new KToggleAction( i18n("&Underline"), "text_under", Qt::CTRL+Qt::Key_U,
-                                     this, SLOT(slotTextUnder()),
-                                     actionCollection(), "text_under");
+  alignRightAction = new KToggleAction(KIcon("text_right"), i18n("Align Right"), actionCollection(), "align_right");
+  connect(alignRightAction, SIGNAL(triggered(bool) ), SLOT(slotAlignRight()));
+  alignCenterAction = new KToggleAction(KIcon("text_center"), i18n("Align Center"), actionCollection(), "align_center");
+  connect(alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()));
+  textBoldAction = new KToggleAction(KIcon("text_bold"),  i18n("&Bold"), actionCollection(), "text_bold");
+  connect(textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold()));
+  textBoldAction->setShortcut(Qt::CTRL+Qt::Key_B);
+  textItalicAction = new KToggleAction(KIcon("text_italic"),  i18n("&Italic"), actionCollection(), "text_italic");
+  connect(textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic()));
+  textItalicAction->setShortcut(Qt::CTRL+Qt::Key_I);
+  textUnderAction = new KToggleAction(KIcon("text_under"),  i18n("&Underline"), actionCollection(), "text_under");
+  connect(textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()));
+  textUnderAction->setShortcut(Qt::CTRL+Qt::Key_U);
   actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
                                      this, SLOT( slotFormatReset() ),
                                      actionCollection(), "format_reset");
