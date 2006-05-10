@@ -2469,17 +2469,17 @@ void KMMainWidget::setupActions()
   mRemoveFolderAction = new KAction(KIcon("editdelete"),  "foo", actionCollection(), "delete_folder" );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
-  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
-		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), actionCollection(), "prefer_html" );
+  connect(mPreferHtmlAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideHtml()));
 
-  mPreferHtmlLoadExtAction = new KToggleAction( i18n("Load E&xternal References"), 0, this,
-		      SLOT(slotOverrideHtmlLoadExt()), actionCollection(), "prefer_html_external_refs" );
+  mPreferHtmlLoadExtAction = new KToggleAction( i18n("Load E&xternal References"), actionCollection(), "prefer_html_external_refs" );
+  connect(mPreferHtmlLoadExtAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideHtmlLoadExt()));
 
-  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
-		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
+  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), actionCollection(), "thread_messages" );
+  connect(mThreadMessagesAction, SIGNAL(triggered(bool) ), SLOT(slotOverrideThread()));
 
-  mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
-		      SLOT(slotToggleSubjectThreading()), actionCollection(), "thread_messages_by_subject" );
+  mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), actionCollection(), "thread_messages_by_subject" );
+  connect(mThreadBySubjectAction, SIGNAL(triggered(bool) ), SLOT(slotToggleSubjectThreading()));
 
 
   //----- Message Menu
