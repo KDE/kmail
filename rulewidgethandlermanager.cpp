@@ -44,7 +44,7 @@
 #include <kiconloader.h>
 
 #include <QStackedWidget>
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 #include <qobject.h>
 #include <qobject.h>
@@ -385,8 +385,8 @@ using KMail::RegExpLineEdit;
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <qcombobox.h>
-#include <qlabel.h>
+#include <QComboBox>
+#include <QLabel>
 
 //=============================================================================
 //

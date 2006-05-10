@@ -52,7 +52,7 @@ using KPIM::MailListDrag;
 #include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 
-#include <qregexp.h>
+#include <QRegExp>
 #include <qbuffer.h>
 #include <qevent.h>
 

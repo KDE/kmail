@@ -20,7 +20,7 @@
 #ifndef kmmsgpart_h
 #define kmmsgpart_h
 
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 #include <q3dict.h>
 //Added by qt3to4:

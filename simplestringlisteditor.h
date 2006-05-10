@@ -32,9 +32,9 @@
 #ifndef _SIMPLESTRINGLISTEDITOR_H_
 #define _SIMPLESTRINGLISTEDITOR_H_
 
-#include <qwidget.h>
+#include <QWidget>
 #include <qstringlist.h>
-#include <qstring.h>
+#include <QString>
 
 class Q3ListBox;
 class QPushButton;

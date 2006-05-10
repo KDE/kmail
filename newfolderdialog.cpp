@@ -28,15 +28,15 @@
 
 #include "config.h"
 
-#include <qvariant.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QVariant>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QLayout>
+#include <QToolTip>
 
-#include <qregexp.h>
+#include <QRegExp>
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>

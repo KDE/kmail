@@ -33,8 +33,8 @@
 #include "headerlistquicksearch.h"
 
 #include <qapplication.h>
-#include <qlabel.h>
-#include <qcombobox.h>
+#include <QLabel>
+#include <QComboBox>
 
 #include <qtimer.h>
 //Added by qt3to4:

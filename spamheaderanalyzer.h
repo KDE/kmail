@@ -37,7 +37,7 @@
 
 class QString;
 class KMMessage;
-#include <qstring.h>
+#include <QString>
 #include <QList>
 namespace KMail {
 

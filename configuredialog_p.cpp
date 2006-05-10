@@ -30,8 +30,8 @@
 #include <qtabwidget.h>
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QLabel>
+#include <QLayout>
 //Added by qt3to4:
 #include <QPixmap>
 #include <QHBoxLayout>

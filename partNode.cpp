@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include "kmmimeparttree.h"
 #include <mimelib/utility.h>
-#include <qregexp.h>
+#include <QRegExp>
 //Added by qt3to4:
 #include <Q3CString>
 #include <kascii.h>

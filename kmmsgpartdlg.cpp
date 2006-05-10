@@ -23,14 +23,14 @@
 #include <klocale.h>
 
 // other Qt includes:
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QLabel>
+#include <QLayout>
 
 //Added by qt3to4:
 #include <QGridLayout>
 #include <Q3CString>
 #include <klineedit.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 
 // other includes:
 #include <assert.h>

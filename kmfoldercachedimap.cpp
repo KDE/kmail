@@ -71,9 +71,9 @@ using KMail::ListJob;
 #include <kio/global.h>
 #include <kio/scheduler.h>
 #include <qbuffer.h>
-#include <qfile.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QFile>
+#include <QLabel>
+#include <QLayout>
 
 #include "annotationjobs.h"
 using namespace KMail;

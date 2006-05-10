@@ -38,7 +38,7 @@
 
 #include "config.h"
 
-#include <qlabel.h>
+#include <QLabel>
 #include <Q3GroupBox>
 
 

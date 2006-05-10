@@ -41,8 +41,8 @@
 #include <kstdaction.h>
 #include <kpushbutton.h>
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 //Added by qt3to4:
 #include <QCloseEvent>
 #include <QKeyEvent>
@@ -50,10 +50,10 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <klineedit.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
-#include <qcombobox.h>
+#include <QComboBox>
 #include <qobject.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <qcursor.h>
 #include <q3popupmenu.h>

@@ -47,7 +47,7 @@ using namespace KMail::BodyPartFormatterFactoryPrivate;
 #include <kdebug.h>
 
 // Qt
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 #include <qstringlist.h>
 

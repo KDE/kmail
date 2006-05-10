@@ -3,7 +3,7 @@
 
 #include <kdialogbase.h>
 #include <kurl.h>
-#include <qmap.h>
+#include <QMap>
 
 class Q3ListView;
 class Q3ListViewItem;

@@ -23,7 +23,7 @@ using KMail::MessageProperty;
 #include <kconfig.h>
 
 // other Qt headers
-#include <qregexp.h>
+#include <QRegExp>
 
 // other headers
 #include <assert.h>

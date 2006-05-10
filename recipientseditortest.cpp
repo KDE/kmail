@@ -35,10 +35,10 @@
 #include <kmessagebox.h>
 #include "aboutdata.h"
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
+#include <QPushButton>
+#include <QLayout>
+#include <QLabel>
+#include <QLineEdit>
 #include <q3textedit.h>
 //Added by qt3to4:
 #include <QGridLayout>

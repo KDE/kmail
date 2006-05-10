@@ -16,7 +16,7 @@
 
 #undef Unsorted // X headers...
 #include <q3accel.h>
-#include <qlayout.h>
+#include <QLayout>
 
 
 #include <QLabel>

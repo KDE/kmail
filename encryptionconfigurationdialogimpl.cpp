@@ -7,8 +7,8 @@
 
 #include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
+#include <QCheckBox>
+#include <QSpinBox>
 
 
 

@@ -10,7 +10,7 @@
 #ifndef EXPIRYPROPERTIESDIALOG_H
 #define EXPIRYPROPERTIESDIALOG_H
 
-#include <qvariant.h>
+#include <QVariant>
 //Added by qt3to4:
 #include <QLabel>
 #include <QVBoxLayout>

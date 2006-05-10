@@ -29,7 +29,7 @@
 #ifndef folderrequester_h
 #define folderrequester_h
 
-#include <qwidget.h>
+#include <QWidget>
 //Added by qt3to4:
 #include <QKeyEvent>
 #include <klineedit.h>

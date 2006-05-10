@@ -32,7 +32,7 @@
 
 #ifndef __KMAIL_MESSAGESENDER_H__
 #define __KMAIL_MESSAGESENDER_H__
-#include <qstring.h>
+#include <QString>
 
 class KMMessage;
 

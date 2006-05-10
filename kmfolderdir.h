@@ -1,7 +1,7 @@
 #ifndef kmfolderdir_h
 #define kmfolderdir_h
 
-#include <qstring.h>
+#include <QString>
 //Added by qt3to4:
 #include <Q3CString>
 #include "kmfoldernode.h"

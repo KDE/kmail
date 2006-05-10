@@ -17,7 +17,7 @@
 
 #include <qobject.h>
 #include <QStack>
-#include <qstring.h>
+#include <QString>
 #include <qstringlist.h>
 #include <q3cstring.h>
 

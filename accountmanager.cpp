@@ -23,7 +23,7 @@
 #include <kconfig.h>
 #include <kapplication.h>
 
-#include <qregexp.h>
+#include <QRegExp>
 #include <krandom.h>
 
 using namespace KMail;

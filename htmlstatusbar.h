@@ -32,7 +32,7 @@
 #ifndef _KMAIL_HTMLSTATUSBAR_H_
 #define _KMAIL_HTMLSTATUSBAR_H_
 
-#include <qlabel.h>
+#include <QLabel>
 
 class QString;
 class QColor;

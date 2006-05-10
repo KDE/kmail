@@ -26,12 +26,12 @@
 #include <kshellcompletion.h>
 #include <krun.h>
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdir.h>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDir>
 #include <qfileinfo.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QLabel>
+#include <QLayout>
 #include <q3textedit.h>
 
 #include <QStackedWidget>

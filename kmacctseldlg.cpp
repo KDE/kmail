@@ -25,7 +25,7 @@
 #endif
 
 #include <q3buttongroup.h>
-#include <qlayout.h>
+#include <QLayout>
 #include <qradiobutton.h>
 //Added by qt3to4:
 #include <QVBoxLayout>

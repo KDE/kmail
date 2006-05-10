@@ -40,13 +40,13 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
 #include <q3scrollview.h>
-#include <qcombobox.h>
+#include <QComboBox>
 #include <q3hbox.h>
 #include <qtimer.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <q3stylesheet.h>
 //Added by qt3to4:
 #include <QKeyEvent>

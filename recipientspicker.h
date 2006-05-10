@@ -28,9 +28,9 @@
 #include <kabc/addressee.h>
 #include <kabc/stdaddressbook.h>
 
-#include <qwidget.h>
+#include <QWidget>
 #include <qdialog.h>
-#include <qtooltip.h>
+#include <QToolTip>
 //Added by qt3to4:
 #include <QPixmap>
 #include <QList>

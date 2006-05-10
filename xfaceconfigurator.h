@@ -17,7 +17,7 @@
 #ifndef __KMAIL_XFACECONFIGURATOR_H__
 #define __KMAIL_XFACECONFIGURATOR_H__
 
-#include <qwidget.h>
+#include <QWidget>
 #include <q3textedit.h>
 //Added by qt3to4:
 #include <QLabel>

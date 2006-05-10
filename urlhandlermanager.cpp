@@ -335,7 +335,7 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 #include <kmessagebox.h>
 #include <khtml_part.h>
 
-#include <qstring.h>
+#include <QString>
 
 namespace {
   bool ShowHtmlSwitchURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {

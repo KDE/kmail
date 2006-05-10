@@ -54,7 +54,7 @@ using KRecentAddress::RecentAddresses;
 #include <ksettings/dispatcher.h>
 
 
-#include <qlayout.h>
+#include <QLayout>
 #include <kglobal.h>
 
 

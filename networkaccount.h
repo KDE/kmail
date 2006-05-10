@@ -29,7 +29,7 @@
 
 #include "sieveconfig.h"
 
-#include <qstring.h>
+#include <QString>
 
 class AccountManager;
 class KConfig/*Base*/;

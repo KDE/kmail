@@ -24,7 +24,7 @@
 #ifndef RECIPIENTSEDITORTEST_H
 #define RECIPIENTSEDITORTEST_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 class RecipientsEditor;
 

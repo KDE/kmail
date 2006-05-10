@@ -20,7 +20,7 @@
 #include <cryptplugwrapper.h>
 
 #include <kpgp.h>
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 #include <time.h>
 

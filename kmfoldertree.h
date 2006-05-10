@@ -22,7 +22,7 @@
 #include <kfoldertree.h>
 #include <kdepimmacros.h>
 
-#include <qwidget.h>
+#include <QWidget>
 #include <qtimer.h>
 #include <q3header.h>
 //Added by qt3to4:

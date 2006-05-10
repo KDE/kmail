@@ -24,11 +24,11 @@
 #ifndef RECIPIENTSEDITOR_H
 #define RECIPIENTSEDITOR_H
 
-#include <qwidget.h>
+#include <QWidget>
 #include <q3scrollview.h>
 #include <qpointer.h>
-#include <qlineedit.h>
-#include <qtooltip.h>
+#include <QLineEdit>
+#include <QToolTip>
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>
@@ -36,7 +36,7 @@
 #include <QResizeEvent>
 
 #include "kmlineeditspell.h"
-#include <qcombobox.h>
+#include <QComboBox>
 
 class RecipientsPicker;
 

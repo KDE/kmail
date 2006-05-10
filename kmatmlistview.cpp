@@ -106,9 +106,9 @@ using KRecentAddress::RecentAddresses;
 #include <ksavefile.h>
 
 #include <q3tabdialog.h>
-#include <qregexp.h>
+#include <QRegExp>
 #include <qbuffer.h>
-#include <qtooltip.h>
+#include <QToolTip>
 #include <qtextcodec.h>
 #include <q3header.h>
 #include <q3whatsthis.h>

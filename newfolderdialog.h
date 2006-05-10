@@ -29,7 +29,7 @@
 #ifndef NEW_FOLDER_DIALOG_H
 #define NEW_FOLDER_DIALOG_H
 
-#include <qvariant.h>
+#include <QVariant>
 #include <qdialog.h>
 //Added by qt3to4:
 #include <QLabel>

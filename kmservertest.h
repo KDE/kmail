@@ -34,7 +34,7 @@
 #define kmservertest_h
 
 #include <qobject.h>
-#include <qstring.h>
+#include <QString>
 #include <qstringlist.h>
 
 namespace KIO {

@@ -38,7 +38,7 @@
 #include <kapplication.h>
 #include <kwin.h>
 
-#include <qregexp.h>
+#include <QRegExp>
 #include <q3accel.h>
 #include <kiconloader.h>
 

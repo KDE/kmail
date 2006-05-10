@@ -27,13 +27,13 @@
 *******************************************************************************/
 #include "config.h"
 
-#include <qlayout.h>
+#include <QLayout>
 
-#include <qlabel.h>
-#include <qcombobox.h>
+#include <QLabel>
+#include <QComboBox>
 #include <q3groupbox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QGridLayout>

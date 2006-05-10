@@ -6,9 +6,9 @@
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
 #include <klineedit.h>
-#include <qcombobox.h>
+#include <QComboBox>
 #include <qpointer.h>
-#include <qstring.h>
+#include <QString>
 
 #include <qstringlist.h>
 //Added by qt3to4:

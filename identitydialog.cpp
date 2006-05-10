@@ -70,12 +70,12 @@ using KMail::FolderRequester;
 
 // Qt headers:
 #include <qtabwidget.h>
-#include <qlabel.h>
+#include <QLabel>
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
+#include <QLayout>
+#include <QPushButton>
+#include <QCheckBox>
+#include <QComboBox>
 
 // other headers:
 #include <gpgmepp/key.h>

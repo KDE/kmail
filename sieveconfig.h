@@ -15,7 +15,7 @@
 #ifndef __KMAIL_SIEVECONFIG_H__
 #define __KMAIL_SIEVECONFIG_H__
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include <kurl.h>
 

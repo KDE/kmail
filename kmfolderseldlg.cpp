@@ -13,7 +13,7 @@
 #include <kiconloader.h>
 #include <kvbox.h>
 
-#include <qlayout.h>
+#include <QLayout>
 #include <qtoolbutton.h>
 
 namespace KMail {

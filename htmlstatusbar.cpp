@@ -45,8 +45,8 @@
 #include <klocale.h>
 #include <kconfig.h>
 
-#include <qcolor.h>
-#include <qstring.h>
+#include <QColor>
+#include <QString>
 //Added by qt3to4:
 #include <QLabel>
 

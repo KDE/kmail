@@ -37,7 +37,7 @@
 #ifndef KMGROUPWARE_H
 #define KMGROUPWARE_H
 
-#include <qstring.h>
+#include <QString>
 
 class KMMessage;
 

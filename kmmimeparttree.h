@@ -38,7 +38,7 @@
 #include <k3listview.h>
 #include <kio/global.h>
 
-#include <qstring.h>
+#include <QString>
 
 class partNode;
 class KMReaderWin;

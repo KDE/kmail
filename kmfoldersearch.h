@@ -26,7 +26,7 @@
 #include <QList>
 #include <QPointer>
 #include <QStack>
-#include <qmap.h>
+#include <QMap>
 //Added by qt3to4:
 
 /** A search folder is a folder that shows the result of evaluating a

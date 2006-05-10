@@ -42,7 +42,7 @@
 #include <dcopobject.h>
 #include <kurl.h>
 #include <kdebug.h>
-#include <qstring.h>
+#include <QString>
 
 namespace KMail {
 

@@ -61,8 +61,8 @@ using KMail::AccountManager;
 #include <mimelib/body.h>
 #include <mimelib/mimepp.h>
 
-#include <qfile.h>
-#include <qmap.h>
+#include <QFile>
+#include <QMap>
 #include <qtextcodec.h>
 
 #include <kdebug.h>

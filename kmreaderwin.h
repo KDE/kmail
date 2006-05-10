@@ -5,7 +5,7 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
-#include <qwidget.h>
+#include <QWidget>
 #include <qtimer.h>
 #include <qstringlist.h>
 //Added by qt3to4:

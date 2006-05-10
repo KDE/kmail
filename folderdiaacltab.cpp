@@ -53,8 +53,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
 
 #include <q3widgetstack.h>
 #include <qradiobutton.h>

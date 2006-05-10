@@ -32,7 +32,7 @@
 #ifndef _KMAIL_DICTIONARYCOMBOBOX_H_
 #define _KMAIL_DICTIONARYCOMBOBOX_H_
 
-#include <qcombobox.h>
+#include <QComboBox>
 
 class KSpellConfig;
 class QStringList;

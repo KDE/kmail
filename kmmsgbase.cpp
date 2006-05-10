@@ -27,7 +27,7 @@ using KMail::MessageProperty;
 
 #include <qtextcodec.h>
 #include <q3deepcopy.h>
-#include <qregexp.h>
+#include <QRegExp>
 
 #include <ctype.h>
 #include <stdlib.h>

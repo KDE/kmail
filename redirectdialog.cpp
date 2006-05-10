@@ -46,10 +46,10 @@ using KRecentAddress::RecentAddresses;
 #include <kvbox.h>
 
 
-#include <qtooltip.h>
+#include <QToolTip>
 
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QPushButton>
 #include <qstringlist.h>
 
 #include <QFrame>

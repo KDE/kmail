@@ -39,7 +39,7 @@
 
 #include <kurl.h>
 
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 
 static int serial = 0;

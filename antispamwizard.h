@@ -33,9 +33,9 @@
 #include <klistbox.h>
 #include <k3wizard.h>
 
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <q3dict.h>
-#include <qlayout.h>
+#include <QLayout>
 //Added by qt3to4:
 #include <QPixmap>
 #include <QLabel>

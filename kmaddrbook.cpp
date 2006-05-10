@@ -32,7 +32,7 @@
 #include <kabc/vcardconverter.h>
 #include <dcopref.h>
 
-#include <qregexp.h>
+#include <QRegExp>
 
 void KabcBridge::addresses(QStringList& result) // includes lists
 {

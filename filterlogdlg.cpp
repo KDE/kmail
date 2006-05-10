@@ -39,9 +39,9 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qspinbox.h>
+#include <QCheckBox>
+#include <QLabel>
+#include <QSpinBox>
 #include <qstringlist.h>
 #include <q3textedit.h>
 

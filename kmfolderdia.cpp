@@ -58,12 +58,12 @@
 #include <k3listview.h>
 #include <kvbox.h>
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 #include <q3groupbox.h>
-#include <qregexp.h>
-#include <qlabel.h>
-#include <qtooltip.h>
+#include <QRegExp>
+#include <QLabel>
+#include <QToolTip>
 
 //Added by qt3to4:
 #include <QGridLayout>

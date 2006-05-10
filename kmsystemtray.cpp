@@ -43,8 +43,8 @@ using KMail::AccountManager;
 
 #include <qpainter.h>
 #include <qbitmap.h>
-#include <qtooltip.h>
-#include <qwidget.h>
+#include <QToolTip>
+#include <QWidget>
 #include <qobject.h>
 
 #include <math.h>

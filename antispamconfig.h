@@ -34,7 +34,7 @@
 #ifndef __KMAIL_ANTISPAMCONFIG_H__
 #define __KMAIL_ANTISPAMCONFIG_H__
 
-#include <qregexp.h>
+#include <QRegExp>
 #include <QList>
 class QString;
 

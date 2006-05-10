@@ -38,7 +38,7 @@
 #include "partNode.h"
 #include "kmmsgpart.h"
 
-#include <qstring.h>
+#include <QString>
 
 #include <kdebug.h>
 

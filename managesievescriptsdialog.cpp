@@ -17,7 +17,7 @@
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 
-#include <qlayout.h>
+#include <QLayout>
 #include <q3listview.h>
 #include <q3textedit.h>
 #include <QMenu>

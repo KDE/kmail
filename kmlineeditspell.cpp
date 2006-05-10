@@ -24,7 +24,7 @@
 #include <klocale.h>
 
 #include <qevent.h>
-#include <qfile.h>
+#include <QFile>
 #include <q3cstring.h>
 #include <qcursor.h>
 //Added by qt3to4:

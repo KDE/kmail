@@ -23,8 +23,8 @@
 #include "kmtransport.h"
 
 #include <q3buttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 //Added by qt3to4:
 #include <QGridLayout>
 #include <Q3Frame>
@@ -34,8 +34,8 @@
 #include <qradiobutton.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QPushButton>
 
 
 #include <kfiledialog.h>

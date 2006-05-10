@@ -4,7 +4,7 @@
 #ifndef kmfoldermgr_h
 #define kmfoldermgr_h
 
-#include <qstring.h>
+#include <QString>
 
 #include <qobject.h>
 #include <qpointer.h>

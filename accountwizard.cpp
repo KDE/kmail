@@ -34,12 +34,12 @@
 #include <klistbox.h>
 #include <klocale.h>
 
-#include <qcheckbox.h>
-#include <qdir.h>
+#include <QCheckBox>
+#include <QDir>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 
 //Added by qt3to4:
 #include <QGridLayout>

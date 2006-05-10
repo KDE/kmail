@@ -8,7 +8,7 @@
 
 #include "kmfolder.h"
 
-#include <qcombobox.h>
+#include <QComboBox>
 #include <qpointer.h>
 #include <QList>
 

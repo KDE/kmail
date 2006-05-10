@@ -34,7 +34,7 @@
 #include <kparts/event.h>
 #include <kparts/part.h>
 
-#include <qwidget.h>
+#include <QWidget>
 //Added by qt3to4:
 #include <QPixmap>
 #include <kdepimmacros.h>

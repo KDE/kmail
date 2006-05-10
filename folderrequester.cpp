@@ -38,7 +38,7 @@
 #include <kiconloader.h>
 #include <kdialog.h>
 
-#include <qlayout.h>
+#include <QLayout>
 #include <qtoolbutton.h>
 //Added by qt3to4:
 #include <QHBoxLayout>

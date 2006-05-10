@@ -62,7 +62,7 @@ using namespace KPIM;
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qapplication.h>
-#include <qregexp.h>
+#include <QRegExp>
 
 namespace KMail {
 

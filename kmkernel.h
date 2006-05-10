@@ -4,7 +4,7 @@
 #define _KMCONTROL
 
 #include <qobject.h>
-#include <qstring.h>
+#include <QString>
 #include <qpointer.h>
 //Added by qt3to4:
 #include <QLabel>

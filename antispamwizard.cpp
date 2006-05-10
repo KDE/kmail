@@ -53,9 +53,9 @@
 #include <ktoolinvocation.h>
 
 #include <qdom.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QLabel>
+#include <QLayout>
+#include <QToolTip>
 
 //Added by qt3to4:
 #include <QPixmap>

@@ -13,10 +13,10 @@
 #include "kmheaders.h"
 #include "kmfolder.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
 #include <q3header.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <q3groupbox.h>
 #include <qtimer.h>
 #include <QPixmap>

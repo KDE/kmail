@@ -33,9 +33,9 @@
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
+#include <QLayout>
+#include <QLabel>
+#include <QLineEdit>
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>

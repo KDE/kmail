@@ -38,8 +38,8 @@
 
 #include <kconfig.h>
 
-#include <qcolor.h>
-#include <qfont.h>
+#include <QColor>
+#include <QFont>
 
 namespace KMail {
 

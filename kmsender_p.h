@@ -7,7 +7,7 @@
 #include "kmsender.h"
 
 #include <q3cstring.h>
-#include <qstring.h>
+#include <QString>
 #include <qstringlist.h>
 #include <qobject.h>
 #include <kio/global.h>

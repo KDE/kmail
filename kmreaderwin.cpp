@@ -122,8 +122,8 @@ using KMail::TeeHtmlWriter;
 
 #include <qtextcodec.h>
 #include <q3paintdevicemetrics.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
 #include <qsplitter.h>
 #include <qstyle.h>
 

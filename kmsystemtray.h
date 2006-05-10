@@ -20,7 +20,7 @@
 
 #include <ksystemtray.h>
 
-#include <qmap.h>
+#include <QMap>
 #include <qpointer.h>
 
 #include <qpixmap.h>

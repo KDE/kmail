@@ -6,8 +6,8 @@
 #include <config.h>
 #endif
 
-#include <qdir.h>
-#include <qregexp.h>
+#include <QDir>
+#include <QRegExp>
 //Added by qt3to4:
 #include <Q3CString>
 

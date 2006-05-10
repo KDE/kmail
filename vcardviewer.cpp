@@ -35,7 +35,7 @@ using KABC::Addressee;
 
 #include <klocale.h>
 
-#include <qstring.h>
+#include <QString>
 
 KMail::VCardViewer::VCardViewer(QWidget *parent, const QByteArray& vCard, const char* name)
   : KDialogBase( parent, name, false, i18n("VCard Viewer"), User1|User2|User3|Close, Close,

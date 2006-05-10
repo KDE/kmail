@@ -23,9 +23,9 @@
 #include <kdialog.h>
 #include <kconfigbase.h>
 
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QCheckBox>
+#include <QLabel>
 //Added by qt3to4:
 #include <QGridLayout>
 #include <klineedit.h>

@@ -10,7 +10,7 @@
 #include <kurl.h>
 #include <kglobalsettings.h>
 
-#include <qstring.h>
+#include <QString>
 #include <q3cstring.h>
 
 class KMMessage;

@@ -25,7 +25,7 @@
 
 #include <kdebug.h>
 
-#include <qwidget.h>
+#include <QWidget>
 //Added by qt3to4:
 #include <QEvent>
 

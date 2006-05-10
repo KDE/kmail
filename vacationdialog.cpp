@@ -33,10 +33,10 @@ using KMime::HeaderParsing::parseAddressList;
 #include <kwin.h>
 #include <kapplication.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
+#include <QLayout>
+#include <QLabel>
+#include <QCheckBox>
+#include <QLineEdit>
 #include <q3textedit.h>
 #include <kiconloader.h>
 

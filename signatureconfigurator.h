@@ -16,7 +16,7 @@
 #ifndef __KMAIL_SIGNATURECONFIGURATOR_H__
 #define __KMAIL_SIGNATURECONFIGURATOR_H__
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include <libkpimidentities/identity.h> // for Signature::Type
 using KPIM::Signature;

@@ -56,12 +56,12 @@ using namespace KPIM;
 using namespace KABC;
 
 #include <qbitmap.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
+#include <QCheckBox>
+#include <QComboBox>
 #include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 
 #include <QStackedWidget>
 

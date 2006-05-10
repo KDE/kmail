@@ -5,17 +5,17 @@
 #include "kmfolder.h"
 #include "kmfoldertree.h"
 
-#include <qvariant.h>
-#include <qpushbutton.h>
+#include <QVariant>
+#include <QPushButton>
 #include <q3groupbox.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
-#include <qlabel.h>
+#include <QCheckBox>
+#include <QSpinBox>
+#include <QLabel>
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QComboBox>
+#include <QLayout>
+#include <QToolTip>
 #include <q3whatsthis.h>
 //Added by qt3to4:
 #include <QVBoxLayout>

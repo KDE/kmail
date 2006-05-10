@@ -22,16 +22,16 @@
 #include "accountdialog.h"
 
 #include <q3buttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
 #include <qvalidator.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QPushButton>
 
 
-#include <qcombobox.h>
+#include <QComboBox>
 #include <q3header.h>
 #include <qtoolbutton.h>
 #include <q3grid.h>
