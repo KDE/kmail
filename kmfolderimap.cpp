@@ -275,6 +275,8 @@ int KMFolderImap::rename( const QString& newName, KMFolderDir */*aParent*/ )
     return 0;
 
   QString path = imapPath();
+  if ( path == "/INBOX/" )
+      return 0;
   path.replace( name(), newName );
   KURL src( mAccount->getUrl() );
   src.setPath( imapPath() );
