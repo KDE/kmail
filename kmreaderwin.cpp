@@ -513,37 +513,32 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
            this, SLOT(slotCycleHeaderStyles()) );
 
   QActionGroup *group = new QActionGroup( this );
-  raction = new KToggleAction( i18nc("View->headers->", "&Fancy Headers"), 0,
-                              this, SLOT(slotFancyHeaders()),
-                              ac, "view_headers_fancy" );
+  raction = new KToggleAction( i18nc("View->headers->", "&Fancy Headers"), ac, "view_headers_fancy" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Brief Headers"), 0,
-                              this, SLOT(slotBriefHeaders()),
-                              ac, "view_headers_brief" );
+  raction = new KToggleAction( i18nc("View->headers->", "&Brief Headers"), ac, "view_headers_brief" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotBriefHeaders()));
   raction->setToolTip( i18n("Show brief list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Standard Headers"), 0,
-                              this, SLOT(slotStandardHeaders()),
-                              ac, "view_headers_standard" );
+  raction = new KToggleAction( i18nc("View->headers->", "&Standard Headers"), ac, "view_headers_standard" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotStandardHeaders()));
   raction->setToolTip( i18n("Show standard list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Long Headers"), 0,
-                              this, SLOT(slotLongHeaders()),
-                              ac, "view_headers_long" );
+  raction = new KToggleAction( i18nc("View->headers->", "&Long Headers"), ac, "view_headers_long" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotLongHeaders()));
   raction->setToolTip( i18n("Show long list of message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&All Headers"), 0,
-                              this, SLOT(slotAllHeaders()),
-                              ac, "view_headers_all" );
+  raction = new KToggleAction( i18nc("View->headers->", "&All Headers"), ac, "view_headers_all" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotAllHeaders()));
   raction->setToolTip( i18n("Show all message headers") );
   group->addAction( raction );
   headerMenu->insert( raction );
@@ -556,30 +551,26 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
            this, SLOT(slotCycleAttachmentStrategy()) );
 
   group = new QActionGroup( this );
-  raction = new KToggleAction( i18nc("View->attachments->", "&As Icons"), 0,
-                              this, SLOT(slotIconicAttachments()),
-                              ac, "view_attachments_as_icons" );
+  raction = new KToggleAction( i18nc("View->attachments->", "&As Icons"), ac, "view_attachments_as_icons" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotIconicAttachments()));
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Smart"), 0,
-                              this, SLOT(slotSmartAttachments()),
-                              ac, "view_attachments_smart" );
+  raction = new KToggleAction( i18nc("View->attachments->", "&Smart"), ac, "view_attachments_smart" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotSmartAttachments()));
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Inline"), 0,
-                              this, SLOT(slotInlineAttachments()),
-                              ac, "view_attachments_inline" );
+  raction = new KToggleAction( i18nc("View->attachments->", "&Inline"), ac, "view_attachments_inline" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotInlineAttachments()));
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Hide"), 0,
-                              this, SLOT(slotHideAttachments()),
-                              ac, "view_attachments_hide" );
+  raction = new KToggleAction( i18nc("View->attachments->", "&Hide"), ac, "view_attachments_hide" );
+  connect(raction, SIGNAL(triggered(bool) ), SLOT(slotHideAttachments()));
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
   group->addAction( raction );
   attachmentMenu->insert( raction );
@@ -617,9 +608,9 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), ac, "saveas_url" );
   connect(mUrlSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotUrlSave()));
 
-  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
-                                            Qt::Key_X, this, SLOT(slotToggleFixedFont()),
-                                            ac, "toggle_fixedfont" );
+  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"), ac, "toggle_fixedfont" );
+  connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
+  mToggleFixFontAction->setShortcut(Qt::Key_X);
 
   mStartIMChatAction = new KAction( i18n("Chat &With..."), ac, "start_im_chat" );
   connect(mStartIMChatAction, SIGNAL(triggered(bool) ), SLOT(slotIMChat()));

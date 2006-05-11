@@ -1271,45 +1271,33 @@ void KMComposeWin::setupActions(void)
   mEncodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
-  markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this,
-                                    SLOT(slotToggleMarkup()),
-                      actionCollection(), "html");
+  markupAction = new KToggleAction(i18n("Formatting (HTML)"), actionCollection(), "html");
+  connect(markupAction, SIGNAL(triggered(bool) ), SLOT(slotToggleMarkup()));
 
-  mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
-                                       SLOT(slotView()),
-                                       actionCollection(), "show_all_fields");
-  mIdentityAction = new KToggleAction (i18n("&Identity"), 0, this,
-                                      SLOT(slotView()),
-                                      actionCollection(), "show_identity");
-  mDictionaryAction = new KToggleAction (i18n("&Dictionary"), 0, this,
-                                         SLOT(slotView()),
-                                         actionCollection(), "show_dictionary");
-  mFccAction = new KToggleAction (i18n("&Sent-Mail Folder"), 0, this,
-                                 SLOT(slotView()),
-                                 actionCollection(), "show_fcc");
-  mTransportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
-                                      SLOT(slotView()),
-                                      actionCollection(), "show_transport");
-  mFromAction = new KToggleAction (i18n("&From"), 0, this,
-                                  SLOT(slotView()),
-                                  actionCollection(), "show_from");
-  mReplyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
-                                       SLOT(slotView()),
-                                       actionCollection(), "show_reply_to");
+  mAllFieldsAction = new KToggleAction(i18n("&All Fields"), actionCollection(), "show_all_fields");
+  connect(mAllFieldsAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mIdentityAction = new KToggleAction(i18n("&Identity"), actionCollection(), "show_identity");
+  connect(mIdentityAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mDictionaryAction = new KToggleAction(i18n("&Dictionary"), actionCollection(), "show_dictionary");
+  connect(mDictionaryAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), actionCollection(), "show_fcc");
+  connect(mFccAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mTransportAction = new KToggleAction(i18n("&Mail Transport"), actionCollection(), "show_transport");
+  connect(mTransportAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mFromAction = new KToggleAction(i18n("&From"), actionCollection(), "show_from");
+  connect(mFromAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  mReplyToAction = new KToggleAction(i18n("&Reply To"), actionCollection(), "show_reply_to");
+  connect(mReplyToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   if ( mClassicalRecipients ) {
-    mToAction = new KToggleAction (i18n("&To"), 0, this,
-                                  SLOT(slotView()),
-                                  actionCollection(), "show_to");
-    mCcAction = new KToggleAction (i18n("&CC"), 0, this,
-                                  SLOT(slotView()),
-                                  actionCollection(), "show_cc");
-    mBccAction = new KToggleAction (i18n("&BCC"), 0, this,
-                                   SLOT(slotView()),
-                                   actionCollection(), "show_bcc");
+    mToAction = new KToggleAction(i18n("&To"), actionCollection(), "show_to");
+    connect(mToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+    mCcAction = new KToggleAction(i18n("&CC"), actionCollection(), "show_cc");
+    connect(mCcAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+    mBccAction = new KToggleAction(i18n("&BCC"), actionCollection(), "show_bcc");
+    connect(mBccAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   }
-  mSubjectAction = new KToggleAction (i18n("S&ubject"), 0, this,
-                                     SLOT(slotView()),
-                                     actionCollection(), "show_subject");
+  mSubjectAction = new KToggleAction(i18n("S&ubject"), actionCollection(), "show_subject");
+  connect(mSubjectAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   //end of checkable
 
   action = new KAction(i18n("Append S&ignature"), actionCollection(), "append_signature");

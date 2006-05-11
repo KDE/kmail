@@ -2673,21 +2673,18 @@ void KMMainWidget::setupActions()
   QActionGroup *group = new QActionGroup( this );
 
   mUnreadColumnToggle = new KToggleAction( i18nc("View->Unread Count", "View in &Separate Column"), 0, this,
-			       SLOT(slotToggleUnread()),
-			       actionCollection(), "view_unread_column" );
+			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_column" );
   group->addAction( mUnreadColumnToggle );
   unreadMenu->insert( mUnreadColumnToggle );
 
   mUnreadTextToggle = new KToggleAction( i18nc("View->Unread Count", "View After &Folder Name"), 0, this,
-			       SLOT(slotToggleUnread()),
-			       actionCollection(), "view_unread_text" );
+			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_text" );
   group->addAction( mUnreadTextToggle );
   unreadMenu->insert( mUnreadTextToggle );
 
   // toggle for total column
   mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"), 0, this,
-			       SLOT(slotToggleTotalColumn()),
-			       actionCollection(), "view_columns_total" );
+			       SLOT(slotToggleTotalColumn()), actionCollection(), "view_columns_total" );
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
 
