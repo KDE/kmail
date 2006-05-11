@@ -11,7 +11,7 @@
 #include "kmmessage.h"
 #include "globalsettings.h"
 
-#include <kasciistringtools.h>
+#include <kascii.h>
 #include <kmime_charfreq.h>
 #include <kmime_codecs.h>
 #include <mimelib/enum.h>
@@ -43,8 +43,8 @@ KMMessagePart::KMMessagePart( QDataStream & stream )
   stream >> mOriginalContentTypeStr >> mName >> mContentDescription
     >> mContentDisposition >> mCte >> size >> mPartSpecifier;
 
-  KPIM::kAsciiToLower( mContentDisposition.data() );
-  KPIM::kAsciiToUpper( mOriginalContentTypeStr.data() );
+  kAsciiToLower( mContentDisposition.data() );
+  kAsciiToUpper( mOriginalContentTypeStr.data() );
 
   // set the type
   int sep = mOriginalContentTypeStr.indexOf('/');
@@ -385,7 +385,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 QString KMMessagePart::iconName() const
 {
   Q3CString mimeType( mType + "/" + mSubtype );
-  KPIM::kAsciiToLower( mimeType.data() );
+  kAsciiToLower( mimeType.data() );
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString() );
   fileName =

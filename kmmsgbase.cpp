@@ -18,7 +18,7 @@ using KMail::MessageProperty;
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kcharsets.h>
-#include <kasciistringtools.h>
+#include <kascii.h>
 #include <kcodecs.h>
 #include <krfcdate.h>
 
@@ -301,7 +301,7 @@ const QTextCodec* KMMsgBase::codecForName(const Q3CString& _str)
 {
   if (_str.isEmpty()) return 0;
   Q3CString codec = _str;
-  KPIM::kAsciiToLower(codec.data());
+  kAsciiToLower(codec.data());
   return KGlobal::charsets()->codecForName(codec);
 }
 
@@ -498,7 +498,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
   if (charset.isEmpty())
   {
     cset = kmkernel->networkCodec()->mimeName();
-    KPIM::kAsciiToLower(cset.data());
+    kAsciiToLower(cset.data());
   }
   else cset = charset;
 
@@ -589,7 +589,7 @@ Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
   if ( charset.isEmpty() )
   {
     cset = kmkernel->networkCodec()->mimeName();
-    KPIM::kAsciiToLower( cset.data() );
+    kAsciiToLower( cset.data() );
   }
   else
     cset = charset;
@@ -711,7 +711,7 @@ Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QString
        if (encoding == "locale")
        {
          encoding = kmkernel->networkCodec()->mimeName();
-         KPIM::kAsciiToLower(encoding.data());
+         kAsciiToLower(encoding.data());
        }
        if (text.isEmpty())
          return encoding;

@@ -82,7 +82,7 @@ using KMime::DateFormatter;
 #include <klocale.h>
 #include <kapplication.h>
 #include <kcharsets.h>
-#include <kasciistringtools.h>
+#include <kascii.h>
 #include <kdebug.h>
 #include <knuminput.h>
 #include <kfontdialog.h>
@@ -3132,7 +3132,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
       Q3CString cset = kmkernel->networkCodec()->mimeName();
-      KPIM::kAsciiToLower( cset.data() );
+      kAsciiToLower( cset.data() );
       (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }
 
