@@ -1,6 +1,6 @@
 kde4_header()
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
+configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 
 add_subdirectory( interfaces ) 
@@ -16,7 +16,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkmime ${CMAKE_SOURCE_DIR}/libkpgp
   ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/indexlib
   ${GPGME_INCLUDES}
-  ${KDE4_INCLUDES} )
+   )
 
 
 ########### next target ###############
