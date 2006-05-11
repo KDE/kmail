@@ -1063,7 +1063,7 @@ void KMKernel::pauseBackgroundJobs()
 void KMKernel::resumeBackgroundJobs()
 {
   mJobScheduler->resume();
-  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true );
+  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000 );
 }
 
 void KMKernel::stopNetworkJobs()
@@ -1385,11 +1385,12 @@ void KMKernel::init()
            this, SIGNAL( folderRemoved(KMFolder*) ) );
 
   mBackgroundTasksTimer = new QTimer( this );
+  mBackgroundTasksTimer->setSingleShot( true );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-  mBackgroundTasksTimer->start( 10000, true ); // 10s minute, singleshot
+  mBackgroundTasksTimer->start( 10000 ); // 10s minute, singleshot
 #else
-  mBackgroundTasksTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
+  mBackgroundTasksTimer->start( 5 * 60000 ); // 5 minutes, singleshot
 #endif
 }
 
@@ -2038,9 +2039,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   }
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-  mBackgroundTasksTimer->start( 60 * 1000, true ); // check again in 1 minute
+  mBackgroundTasksTimer->start( 60 * 1000 ); // check again in 1 minute
 #else
-  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true ); // check again in 4 hours
+  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000 ); // check again in 4 hours
 #endif
 
 }

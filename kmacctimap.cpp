@@ -66,6 +66,7 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   mNoopTimer.start( 60000 ); // // send a noop every minute
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
+  mErrorTimer.setSingleShot( true );
   connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
 
   QString serNumUri = locateLocal( "data", "kmail/unfiltered." +
@@ -544,7 +545,7 @@ ImapAccountBase::ConnectionState KMAcctImap::makeConnection()
 {
   if ( mSlaveConnectionError )
   {
-    mErrorTimer.start(100, true); // Clear error flag
+    mErrorTimer.start( 100 ); // Clear error flag
     return Error;
   }
   return ImapAccountBase::makeConnection();

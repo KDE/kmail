@@ -1854,8 +1854,9 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       // Set a timer to show a splash screen if fetching folder contents
       // takes more than the amount of seconds configured in the kmailrc (default 1000 msec)
       mShowBusySplashTimer = new QTimer( this );
+      mShowBusySplashTimer->setSingleShot( true );
       connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
-      mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout(), true );
+      mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() );
       return;
     } else {
       // the folder is complete now - so go ahead
@@ -2816,7 +2817,9 @@ void KMMainWidget::setupActions()
 
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 
-  menutimer = new QTimer( this, "menutimer" );
+  menutimer = new QTimer( this );
+  menutimer->setObjectName( "menutimer" );
+  menutimer->setSingleShot( true );
   connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
   connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
@@ -2930,7 +2933,7 @@ void KMMainWidget::updateMessageMenu()
 void KMMainWidget::startUpdateMessageActionsTimer()
 {
     menutimer->stop();
-    menutimer->start( 20, true );
+    menutimer->start( 20 );
 }
 
 void KMMainWidget::updateMessageActions()

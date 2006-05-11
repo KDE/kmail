@@ -489,6 +489,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 
+  mResizeTimer.setSingleShot( true );
+  mDelayedMarkTimer.setSingleShot( true );
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
@@ -1160,16 +1162,19 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.stop();
       updateReaderWin();
     }
-    else if (updateReaderWinTimer.isActive())
+    else if (updateReaderWinTimer.isActive()) {
+      updateReaderWinTimer.setSingleShot( false );
       updateReaderWinTimer.start( delay );
-    else
-      updateReaderWinTimer.start( 0, true );
+    } else {
+      updateReaderWinTimer.setSingleShot( true );
+      updateReaderWinTimer.start( 0 );
+    }
   }
 
   if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
        && GlobalSettings::self()->delayedMarkAsRead() ) {
     if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, true );
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
     else
       slotTouchMessage();
   }
@@ -1685,7 +1690,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
     // Combine all resize operations that are requested as long a
     // the timer runs.
     //
-    mResizeTimer.start( 100, true );
+    mResizeTimer.start( 100 );
   }
 }
 

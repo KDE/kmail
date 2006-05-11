@@ -75,7 +75,9 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   kDebug(5006) << "Initting systray" << endl;
 
   mLastUpdate = time( 0 );
-  mUpdateTimer = new QTimer( this, "systraytimer" );
+  mUpdateTimer = new QTimer( this );
+  mUpdateTimer->setObjectName( "systraytimer" );
+  mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = loadIcon( "kmail" );
@@ -459,7 +461,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
     updateNewMessages();
   }
   else {
-    mUpdateTimer->start(150, true);
+    mUpdateTimer->start(150);
   }
 }
 

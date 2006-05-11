@@ -83,6 +83,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     mFoundCount = 0;
 
     mProcessNextBatchTimer = new QTimer();
+    mProcessNextBatchTimer->setSingleShot( true );
     connect(mProcessNextBatchTimer, SIGNAL(timeout()), this, SLOT(slotProcessNextBatch()));
 }
 
@@ -195,7 +196,7 @@ void KMSearch::start()
 
     mRemainingFolders = mFolders.count();
     mLastFolder.clear();
-    mProcessNextBatchTimer->start( 0, true );
+    mProcessNextBatchTimer->start( 0 );
 }
 
 void KMSearch::stop()
@@ -256,7 +257,7 @@ void KMSearch::slotProcessNextBatch()
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
-        mProcessNextBatchTimer->start( 0, true );
+        mProcessNextBatchTimer->start( 0 );
         return;
     }
 }
@@ -357,6 +358,7 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
             this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
   mExecuteSearchTimer = new QTimer();
+  mExecuteSearchTimer->setSingleShot( true );
   connect(mExecuteSearchTimer, SIGNAL(timeout()),
           this, SLOT(executeSearch()));
 }
@@ -990,7 +992,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
 
 //    if (mSearch->running()) {
 //        mSearch->stop();
-//        mExecuteSearchTimer->start( 0, true );
+//        mExecuteSearchTimer->start( 0 );
 //    } else {
         QVector<quint32>::const_iterator it;
         it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
@@ -1012,7 +1014,7 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, quint32 serNum)
     }
 
     if (mSearch->running()) {
-        mExecuteSearchTimer->start(0, true);
+        mExecuteSearchTimer->start(0);
     } else {
         removeSerNum(serNum);
     }
@@ -1064,7 +1066,7 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
         open();
         mTempOpened = true;
     }
-    mExecuteSearchTimer->start(0, true);
+    mExecuteSearchTimer->start(0);
 }
 
 void KMFolderSearch::examineRemovedFolder(KMFolder *folder)

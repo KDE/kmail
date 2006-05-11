@@ -43,13 +43,14 @@ GlobalSettings *GlobalSettings::self()
 GlobalSettings::GlobalSettings()
 {
   mConfigSyncTimer = new QTimer( this );
+  mConfigSyncTimer->setSingleShot( true );
   connect( mConfigSyncTimer, SIGNAL( timeout() ), this, SLOT( slotSyncNow() ) );
 }
 
 void GlobalSettings::requestSync()
 {
  if ( !mConfigSyncTimer->isActive() )
-   mConfigSyncTimer->start( 0, true /*single shot*/ );
+   mConfigSyncTimer->start( 0 );
 }
 
 void GlobalSettings::slotSyncNow()

@@ -55,6 +55,7 @@ namespace KMail {
   {
     setObjectName( name );
     assert( part );
+    mHtmlTimer.setSingleShot( true );
     connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
   }
 
@@ -126,7 +127,7 @@ namespace KMail {
     } else {
       mHtmlPart->write( mHtmlQueue.front() );
       mHtmlQueue.pop_front();
-      mHtmlTimer.start( 0, true );
+      mHtmlTimer.start( 0 );
     }
   }
 

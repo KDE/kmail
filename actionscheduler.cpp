@@ -83,18 +83,25 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   lastCommand = 0;
   lastJob = 0;
   finishTimer = new QTimer( this );
+  finishTimer->setSingleShot( true );
   connect( finishTimer, SIGNAL(timeout()), this, SLOT(finish()));
   fetchMessageTimer = new QTimer( this );
+  fetchMessageTimer->setSingleShot( true );
   connect( fetchMessageTimer, SIGNAL(timeout()), this, SLOT(fetchMessage()));
   tempCloseFoldersTimer = new QTimer( this );
+  tempCloseFoldersTimer->setSingleShot( true );
   connect( tempCloseFoldersTimer, SIGNAL(timeout()), this, SLOT(tempCloseFolders()));
   processMessageTimer = new QTimer( this );
+  processMessageTimer->setSingleShot( true );
   connect( processMessageTimer, SIGNAL(timeout()), this, SLOT(processMessage()));
   filterMessageTimer = new QTimer( this );
+  filterMessageTimer->setSingleShot( true );
   connect( filterMessageTimer, SIGNAL(timeout()), this, SLOT(filterMessage()));
   timeOutTimer = new QTimer( this );
+  timeOutTimer->setSingleShot( true );
   connect( timeOutTimer, SIGNAL(timeout()), this, SLOT(timeOut()));
   fetchTimeOutTimer = new QTimer( this );
+  fetchTimeOutTimer->setSingleShot( true );
   connect( fetchTimeOutTimer, SIGNAL(timeout()), this, SLOT(fetchTimeOut()));
 
   QList<KMFilter*>::Iterator it = filters.begin();
@@ -245,14 +252,14 @@ void ActionScheduler::execFilters(quint32 serNum)
     // Not good someone else is already filtering this msg
     mResult = ResultError;
     if (!mExecuting && !mFetchExecuting)
-      finishTimer->start( 0, true );
+      finishTimer->start( 0 );
   } else {
     // Everything is ok async fetch this message
     mFetchSerNums.append( serNum );
     if (!mFetchExecuting) {
       //Need to (re)start incomplete msg fetching chain
       mFetchExecuting = true;
-      fetchMessageTimer->start( 0, true );
+      fetchMessageTimer->start( 0 );
     }
   }
 }
@@ -272,7 +279,7 @@ KMMsgBase *ActionScheduler::messageBase(quint32 serNum)
   } else {
     // the message is gone!
     mResult = ResultError;
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
   }
   return msg;
 }
@@ -292,7 +299,7 @@ KMMessage *ActionScheduler::message(quint32 serNum)
   } else {
     // the message is gone!
     mResult = ResultError;
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
   }
   return msg;
 }
@@ -311,7 +318,7 @@ void ActionScheduler::finish()
     // Possibly if (mResult == ResultOk) should cancel job and start again.
     // Believe smarter logic to bail out if an error has occurred is required.
     // Perhaps should be testing for mFetchExecuting or at least set it to true
-    fetchMessageTimer->start( 0, true ); // give it a bit of time at a test
+    fetchMessageTimer->start( 0 ); // give it a bit of time at a test
     return;
   } else {
     mFetchExecuting = false;
@@ -319,7 +326,7 @@ void ActionScheduler::finish()
 
   if (mSerNums.begin() != mSerNums.end()) {
     mExecuting = true;
-    processMessageTimer->start( 0, true );
+    processMessageTimer->start( 0 );
     return;
   }
 
@@ -335,7 +342,7 @@ void ActionScheduler::finish()
 
       // Wait a little while before closing temp folders, just in case
       // new messages arrive for filtering.
-      tempCloseFoldersTimer->start( 60*1000, true );
+      tempCloseFoldersTimer->start( 60*1000 );
     }
     mSerNums.clear(); //abandon
     mFetchSerNums.clear(); //abandon
@@ -376,7 +383,7 @@ void ActionScheduler::fetchMessage()
     mFetchExecuting = false;
     if (!mSrcFolder->count())
       mSrcFolder->expunge();
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
     return;
   }
 
@@ -398,7 +405,7 @@ void ActionScheduler::fetchMessage()
     messageFetched( msg );
   } else if (msg) {
     fetchTimeOutTime = QTime::currentTime();
-    fetchTimeOutTimer->start( 60 * 1000, true );
+    fetchTimeOutTimer->start( 60 * 1000 );
     FolderJob *job = msg->parent()->createJob( msg );
     connect( job, SIGNAL(messageRetrieved( KMMessage* )),
 	     SLOT(messageFetched( KMMessage* )) );
@@ -407,7 +414,7 @@ void ActionScheduler::fetchMessage()
   } else {
     mFetchExecuting = false;
     mResult = ResultError;
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
     return;
   }
 }
@@ -417,7 +424,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
   fetchTimeOutTimer->stop();
   if (!msg) {
       // Should never happen, but sometimes does;
-      fetchMessageTimer->start( 0, true );
+      fetchMessageTimer->start( 0 );
       return;
   }
 
@@ -437,7 +444,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
     newMsg->setHeaderField( "X-KMail-Filtered", serNumS );
     mSrcFolder->addMsg( newMsg );
   } else {
-    fetchMessageTimer->start( 0, true );
+    fetchMessageTimer->start( 0 );
   }
   if (mFetchUnget && msg->parent())
     msg->parent()->unGetMsg( msg->parent()->find( msg ));
@@ -459,7 +466,7 @@ void ActionScheduler::enqueue(quint32 serNum)
     // Not good someone else is already filtering this msg
     mResult = ResultError;
     if (!mExecuting && !mFetchExecuting)
-      finishTimer->start( 0, true );
+      finishTimer->start( 0 );
   } else {
     // Everything is ok async filter this message
     mSerNums.append( serNum );
@@ -469,7 +476,7 @@ void ActionScheduler::enqueue(quint32 serNum)
       //       The state of mFetchExecuting is of some concern.
       mExecuting = true;
       mMessageIt = mSerNums.begin();
-      processMessageTimer->start( 0, true );
+      processMessageTimer->start( 0 );
     }
   }
 }
@@ -493,13 +500,13 @@ kDebug(5006) << debug() << endl;
 
   if (mMessageIt == mSerNums.end() && !mSerNums.isEmpty()) {
     mExecuting = false;
-    processMessageTimer->start( 600, true );
+    processMessageTimer->start( 600 );
   }
 
   if ((mMessageIt == mSerNums.end()) || (mResult != ResultOk)) {
     mExecutingLock = false;
     mExecuting = false;
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
     return;
   }
 
@@ -541,7 +548,7 @@ kDebug(5006) << debug() << endl;
     // we can work with an incomplete message
     // Get a write lock on the message while it's being filtered
     msg->setTransferInProgress( true );
-    filterMessageTimer->start( 0, true );
+    filterMessageTimer->start( 0 );
     return;
   }
   if (msg) {
@@ -552,7 +559,7 @@ kDebug(5006) << debug() << endl;
   } else {
     mExecuting = false;
     mResult = ResultError;
-    finishTimer->start( 0, true );
+    finishTimer->start( 0 );
     return;
   }
 }
@@ -561,7 +568,7 @@ void ActionScheduler::messageRetrieved(KMMessage* msg)
 {
   // Get a write lock on the message while it's being filtered
   msg->setTransferInProgress( true );
-  filterMessageTimer->start( 0, true );
+  filterMessageTimer->start( 0 );
 }
 
 void ActionScheduler::filterMessage()
@@ -594,7 +601,7 @@ void ActionScheduler::filterMessage()
     }
   }
   ++mFilterIt;
-  filterMessageTimer->start( 0, true );
+  filterMessageTimer->start( 0 );
 }
 
 void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
@@ -624,7 +631,7 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
       mFilterIt = mFilters.end();
     else
       ++mFilterIt;
-    filterMessageTimer->start( 0, true );
+    filterMessageTimer->start( 0 );
   }
 }
 
@@ -657,7 +664,7 @@ void ActionScheduler::moveMessage()
     kDebug(5006) << "The original serial number is missing. "
                   << "Cannot complete the filtering." << endl;
     mExecutingLock = false;
-    processMessageTimer->start( 0, true );
+    processMessageTimer->start( 0 );
     return;
   } else {
     if (!folder) // no filter folder specified leave in current place
@@ -681,7 +688,7 @@ void ActionScheduler::moveMessage()
   // sometimes the move command doesn't complete so time out after a minute
   // and move onto the next message
   lastCommand = cmd;
-  timeOutTimer->start( 60 * 1000, true );
+  timeOutTimer->start( 60 * 1000 );
 }
 
 void ActionScheduler::moveMessageFinished( KMCommand *command )
@@ -716,7 +723,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
 	connect( cmd, SIGNAL( completed( KMCommand * ) ),
 		 this, SLOT( processMessage() ) );
     else
-	processMessageTimer->start( 0, true );
+	processMessageTimer->start( 0 );
   } else {
     // Note: An alternative to consider is just calling
     //       finishTimer->start and returning
@@ -724,7 +731,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
 	connect( cmd, SIGNAL( completed( KMCommand * ) ),
 		 this, SLOT( finish() ) );
     else
-	finishTimer->start( 0, true );
+	finishTimer->start( 0 );
   }
   if (cmd)
     cmd->start();
@@ -749,7 +756,7 @@ void ActionScheduler::timeOut()
   lastCommand = 0;
   mExecutingLock = false;
   mExecuting = false;
-  finishTimer->start( 0, true );
+  finishTimer->start( 0 );
   if (mOriginalSerNum) // Try again
       execFilters( mOriginalSerNum );
 }
@@ -763,7 +770,7 @@ void ActionScheduler::fetchTimeOut()
 	      this, SLOT(messageFetched( KMMessage* )) );
   lastJob->kill();
   lastJob = 0;
-  fetchMessageTimer->start( 0, true );
+  fetchMessageTimer->start( 0 );
 }
 
 QString ActionScheduler::debug()
