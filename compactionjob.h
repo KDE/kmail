@@ -29,7 +29,7 @@
 #define COMPACTIONJOB_H
 
 #include "jobscheduler.h"
-#include <qstringlist.h>
+#include <QStringList>
 
 namespace KMail {
 

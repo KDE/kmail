@@ -39,8 +39,8 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include <qtimer.h>
-#include <qdatetime.h>
+#include <QTimer>
+#include <QDateTime>
 
 namespace KMail {
 

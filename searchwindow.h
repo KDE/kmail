@@ -25,8 +25,8 @@
 #include <kxmlguiclient.h>
 
 //Added by qt3to4:
-#include <qstringlist.h>
-#include <qpointer.h>
+#include <QStringList>
+#include <QPointer>
 
 #include <QCloseEvent>
 #include <QGridLayout>

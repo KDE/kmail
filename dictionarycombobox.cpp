@@ -38,7 +38,7 @@
 #include <ksconfig.h>
 #include <kdebug.h>
 
-#include <qstringlist.h>
+#include <QStringList>
 
 namespace KMail {
 

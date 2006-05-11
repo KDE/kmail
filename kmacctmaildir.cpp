@@ -4,7 +4,7 @@
 #include <config.h>
 #endif
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 #include "kmacctmaildir.h"
 #include "kmfoldermaildir.h"
 #include "kmacctfolder.h"

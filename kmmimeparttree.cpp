@@ -46,7 +46,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
-#include <qstyle.h>
+#include <QStyle>
 //Added by qt3to4:
 #include <q3header.h>
 

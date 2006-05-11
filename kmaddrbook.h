@@ -20,7 +20,7 @@
 #ifndef KMAddrBook_h
 #define KMAddrBook_h
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <kdeversion.h>
 #include <kabc/addressee.h>

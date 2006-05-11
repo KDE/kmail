@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <qpainter.h>
+#include <QPainter>
 //Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>

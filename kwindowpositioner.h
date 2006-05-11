@@ -21,7 +21,7 @@
 #ifndef KWINDOWPOSITIONER_H
 #define KWINDOWPOSITIONER_H
 
-#include <qobject.h>
+#include <QObject>
 //Added by qt3to4:
 #include <QEvent>
 

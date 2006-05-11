@@ -31,7 +31,7 @@
 #ifndef FOLDERIFACE_H
 #define FOLDERIFACE_H
 
-#include <qobject.h>
+#include <QObject>
 #include <dcopobject.h>
 
 class KMFolder;

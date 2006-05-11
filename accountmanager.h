@@ -20,7 +20,7 @@
 #ifndef accountmanager_h
 #define accountmanager_h
 
-#include <qobject.h>
+#include <QObject>
 #include "kmaccount.h"
 #include <kdepimmacros.h>
 

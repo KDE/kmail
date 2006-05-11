@@ -25,7 +25,7 @@
 
 #include "globalsettings.h"
 #include <kstaticdeleter.h>
-#include <qtimer.h>
+#include <QTimer>
 
 GlobalSettings *GlobalSettings::mSelf = 0;
 static KStaticDeleter<GlobalSettings> staticGlobalSettingsDeleter;

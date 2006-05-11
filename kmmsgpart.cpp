@@ -19,7 +19,7 @@
 #include <mimelib/string.h>
 
 #include <kiconloader.h>
-#include <qtextcodec.h>
+#include <QTextCodec>
 //Added by qt3to4:
 #include <QList>
 #include <Q3CString>

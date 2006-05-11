@@ -32,7 +32,7 @@ static inline kdbgstream kmFatal( bool cond ) { return kFatal( cond, kmail_debug
 
 // timing utilities
 #if !defined( NDEBUG ) && defined( DEBUG_TIMING )
-#include <qdatetime.h>
+#include <QDateTime>
 #define CREATE_TIMER(x) int x=0, x ## _tmp=0; QTime x ## _tmp2
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
 #define GRAB_TIMER(x) x ## _tmp2.msecsTo(QTime::currentTime())

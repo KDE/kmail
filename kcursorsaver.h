@@ -1,8 +1,8 @@
 #ifndef kcursorsaver_h
 #define kcursorsaver_h
 
-#include <qcursor.h>
-#include <qapplication.h>
+#include <QCursor>
+#include <QApplication>
 
 /**
  * @short sets a cursor and makes sure it's restored on destruction

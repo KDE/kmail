@@ -22,7 +22,7 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-#include <qpointer.h>
+#include <QPointer>
 //Added by qt3to4:
 #include <QHideEvent>
 #include <kcmultidialog.h>

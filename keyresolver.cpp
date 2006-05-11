@@ -58,7 +58,7 @@
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 
-#include <qstringlist.h>
+#include <QStringList>
 #include <q3tl.h>
 #include <algorithm>
 #include <memory>

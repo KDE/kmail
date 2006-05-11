@@ -42,7 +42,7 @@ using KMime::Types::AddrSpecList;
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-#include <qdatetime.h>
+#include <QDateTime>
 
 #include <cassert>
 

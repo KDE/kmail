@@ -25,7 +25,7 @@
 #include <cassert>
 #include <limits.h>
 
-#include <qdatetime.h>
+#include <QDateTime>
 
 #include <kdebug.h>
 #include <klocale.h>

@@ -25,7 +25,7 @@ using KIO::UDSEntryList;
 using KIO::UDSEntry;
 #include <kdebug.h>
 
-#include <qtextcodec.h>
+#include <QTextCodec>
 
 #include <cassert>
 

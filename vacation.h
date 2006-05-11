@@ -15,7 +15,7 @@
 #ifndef __KMAIL_VACATION_H__
 #define __KMAIL_VACATION_H__
 
-#include <qobject.h>
+#include <QObject>
 //Added by qt3to4:
 #include <QList>
 

@@ -33,7 +33,7 @@
 #define MAILSOURCEVIEWER_H
 
 #include <ktextbrowser.h>
-#include <qsyntaxhighlighter.h>
+#include <QSyntaxHighlighter>
 
 
 /**

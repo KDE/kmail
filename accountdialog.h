@@ -26,7 +26,7 @@
 #include <kdialogbase.h>
 #include <k3listview.h>
 #include <klineedit.h>
-#include <qpointer.h>
+#include <QPointer>
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>

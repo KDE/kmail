@@ -39,7 +39,7 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
-#include <qobject.h>
+#include <QObject>
 #include <q3cstring.h>
 
 namespace KMail

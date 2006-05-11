@@ -34,7 +34,7 @@
 #include "kmmsgpart.h"
 #include "keyresolver.h"
 
-#include <qobject.h>
+#include <QObject>
 
 //Added by qt3to4:
 #include <QList>

@@ -29,10 +29,10 @@
 #ifndef KMAIL_JOBSCHEDULER_H
 #define KMAIL_JOBSCHEDULER_H
 
-#include <qobject.h>
+#include <QObject>
 
-#include <qpointer.h>
-#include <qtimer.h>
+#include <QPointer>
+#include <QTimer>
 
 #include "folderjob.h"
 

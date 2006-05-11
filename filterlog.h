@@ -29,8 +29,8 @@
 #ifndef KMAIL_FILTERLOG_H
 #define KMAIL_FILTERLOG_H
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <QObject>
+#include <QStringList>
 #include <q3stylesheet.h>
 #include <QTextDocument>
 

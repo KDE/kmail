@@ -33,10 +33,10 @@
 #define __KMAIL_KHTMLPARTHTMLWRITER_H__
 
 #include "interfaces/htmlwriter.h"
-#include <qobject.h>
+#include <QObject>
 
-#include <qstringlist.h>
-#include <qtimer.h>
+#include <QStringList>
+#include <QTimer>
 //Added by qt3to4:
 #include <Q3CString>
 #include <QMap>

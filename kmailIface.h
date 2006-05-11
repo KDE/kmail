@@ -5,7 +5,7 @@
 #include <dcopobject.h>
 #include <dcopref.h>
 #include <kurl.h>
-#include <qstringlist.h>
+#include <QStringList>
 //Added by qt3to4:
 
 /** checkMail wont show reader but will check mail. use openReader to
