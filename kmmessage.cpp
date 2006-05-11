@@ -1159,7 +1159,7 @@ KMMessage* KMMessage::createBounce( bool )
   // Find email address of sender
   for (i=0; fromFields[i]; i++)
   {
-    senderStr = normalizeAddressesAndDecodeIDNs( headerField(fromFields[i]) );
+    senderStr = normalizeAddressesAndDecodeIDNs( rawHeaderField(fromFields[i]) );
     if (!senderStr.isEmpty()) break;
   }
   if (senderStr.isEmpty())
@@ -1872,7 +1872,7 @@ void KMMessage::setDate(const QCString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("To") );
+  return normalizeAddressesAndDecodeIDNs( rawHeaderField("To") );
 }
 
 
@@ -1891,7 +1891,7 @@ QString KMMessage::toStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyTo() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("Reply-To") );
+  return normalizeAddressesAndDecodeIDNs( rawHeaderField("Reply-To") );
 }
 
 
@@ -1935,7 +1935,7 @@ QString KMMessage::ccStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::bcc() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("Bcc") );
+  return normalizeAddressesAndDecodeIDNs( rawHeaderField("Bcc") );
 }
 
 
@@ -1969,7 +1969,7 @@ void KMMessage::setDrafts(const QString& aStr)
 QString KMMessage::who() const
 {
   if (mParent)
-    return normalizeAddressesAndDecodeIDNs( headerField(mParent->whoField().utf8()) );
+    return normalizeAddressesAndDecodeIDNs( rawHeaderField(mParent->whoField().utf8()) );
   return from();
 }
 
@@ -1977,7 +1977,7 @@ QString KMMessage::who() const
 //-----------------------------------------------------------------------------
 QString KMMessage::from() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("From") );
+  return normalizeAddressesAndDecodeIDNs( rawHeaderField("From") );
 }
 
 
@@ -3307,10 +3307,60 @@ QCString KMMessage::lf2crlf( const QCString & src )
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::normalizedAddress( const QString & displayName,
-                                      const QString & addrSpec,
-                                      const QString & comment )
+// Escapes unescaped doublequotes in str.
+static QString escapeQuotes( const QString & str )
 {
+  if ( str.isEmpty() )
+    return QString();
+
+  QString escaped;
+  // reserve enough memory for the worst case ( """..."" -> \"\"\"...\"\" )
+  escaped.reserve( 2*str.length() );
+  unsigned int len = 0;
+  for ( unsigned int i = 0; i < str.length(); ++i, ++len ) {
+    if ( str[i] == '"' ) { // unescaped doublequote
+      escaped[len] = '\\';
+      ++len;
+    }
+    else if ( str[i] == '\\' ) { // escaped character
+      escaped[len] = '\\';
+      ++len;
+      ++i;
+      if ( i >= str.length() ) // handle trailing '\' gracefully
+        break;
+    }
+    escaped[len] = str[i];
+  }
+  escaped.truncate( len );
+  return escaped;
+}
+
+//-----------------------------------------------------------------------------
+static QString quoteNameIfNecessary( const QString &str )
+{
+  QString quoted = str;
+
+  QRegExp needQuotes(  "[^ 0-9A-Za-z\\x0080-\\xFFFF]" );
+  // avoid double quoting
+  if ( ( quoted[0] == '"' ) && ( quoted[quoted.length() - 1] == '"' ) ) {
+    quoted = "\"" + escapeQuotes( quoted.mid( 1, quoted.length() - 2 ) ) + "\"";
+  }
+  else if ( quoted.find( needQuotes ) != -1 ) {
+    quoted = "\"" + escapeQuotes( quoted ) + "\"";
+  }
+
+  return quoted;
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMMessage::normalizedAddress( const QString & displayName_,
+                                      const QString & addrSpec_,
+                                      const QString & comment_ )
+{
+  QString displayName( quoteNameIfNecessary( displayName_ ) );
+  QString addrSpec( addrSpec_ );
+  QString comment( quoteNameIfNecessary( comment_ ) );
   if ( displayName.isEmpty() && comment.isEmpty() )
     return addrSpec;
   else if ( comment.isEmpty() )
@@ -3374,9 +3424,9 @@ QString KMMessage::normalizeAddressesAndDecodeIDNs( const QString & str )
            == AddressOk ) {
 
         normalizedAddressList <<
-          normalizedAddress( QString::fromUtf8( displayName ),
+          normalizedAddress( decodeRFC2047String( displayName ),
                              decodeIDN( QString::fromUtf8( addrSpec ) ),
-                             QString::fromUtf8( comment ) );
+                             decodeRFC2047String( comment ) );
       }
       else {
         kdDebug(5006) << "splitting address failed: " << *it << endl;
