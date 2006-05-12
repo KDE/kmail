@@ -67,10 +67,10 @@ public:
   void clear(bool autoDelete=true, bool syncDict = false);
 
   /** Resize array and initialize new elements if any. Returns
-    FALSE if memory cannot be allocated. */
+    false if memory cannot be allocated. */
   bool resize(unsigned int size);
 
-  /** Clear the array and resize it to given size. Returns FALSE
+  /** Clear the array and resize it to given size. Returns false
     if memory cannot be allocated. */
   bool reset(unsigned int size);
 

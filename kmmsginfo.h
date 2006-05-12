@@ -23,7 +23,6 @@
 #include <config.h>
 #include <sys/types.h>
 #include "kmmsgbase.h"
-//Added by qt3to4:
 #include <Q3CString>
 
 class KMMessage;
@@ -38,7 +37,7 @@ public:
   void compat_fromOldIndexString(const QByteArray& str, bool toUtf8);
 
 
-  /** Initialize with given values and set dirty flag to FALSE. */
+  /** Initialize with given values and set dirty flag to false. */
   virtual void init(const Q3CString& subject, const Q3CString& from,
                     const Q3CString& to, time_t date,
                     const MessageStatus& status, const Q3CString& xmark,
@@ -51,7 +50,7 @@ public:
 		    off_t folderOffset=0, size_t msgSize=0,
             size_t msgSizeServer = 0, ulong UID = 0);
 
-  /** Initialize with given values and set dirty flag to FALSE. */
+  /** Initialize with given values and set dirty flag to false. */
   virtual void init(const Q3CString& subject, const Q3CString& from,
                     const Q3CString& to, time_t date,
                     const MessageStatus& status, const Q3CString& xmark,

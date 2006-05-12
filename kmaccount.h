@@ -133,7 +133,7 @@ public:
   virtual void setTrash(const QString& aTrash) { mTrash = aTrash; }
 
   /**
-   * Process new mail for this account if one arrived. Returns TRUE if new
+   * Process new mail for this account if one arrived. Returns true if new
    * mail has been found. Whether the mail is automatically loaded to
    * an associated folder or not depends on the type of the account.
    */

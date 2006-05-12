@@ -38,7 +38,7 @@ public:
   /** URL of the node for visualization purposes. */
   virtual QString prettyURL() const;
 
-  /** Create a mail folder in this directory with given name. If sysFldr==TRUE
+  /** Create a mail folder in this directory with given name. If sysFldr==true
    the folder is marked as a (KMail) system folder.
    Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& folderName,

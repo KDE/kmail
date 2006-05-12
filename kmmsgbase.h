@@ -103,7 +103,7 @@ public:
   /** Set owning folder. */
   void setParent(KMFolder* p) { mParent = p; }
 
-  /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
+  /** Returns true if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
 
   /** Status object of the message. */
@@ -167,7 +167,7 @@ public:
   virtual void setDate(const Q3CString &aStrDate);
   virtual void setDate(time_t aUnixTime) = 0;
 
-  /** Returns TRUE if changed since last folder-sync. */
+  /** Returns true if changed since last folder-sync. */
   virtual bool dirty(void) const { return mDirty; }
 
   /** Change dirty flag. */
@@ -213,8 +213,8 @@ public:
 
   /** Skip leading keyword if keyword has given character at it's end
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
-   * If keywordFound is specified it will be TRUE if a keyword was skipped
-   * and FALSE otherwise. */
+   * If keywordFound is specified it will be true if a keyword was skipped
+   * and false otherwise. */
   static QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=0);
 

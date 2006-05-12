@@ -214,7 +214,7 @@ public:
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);
 
-  /** Returns FALSE, if the message has to be retrieved from an IMAP account
+  /** Returns false, if the message has to be retrieved from an IMAP account
    * first. In this case this function does this and cares for the rest */
   virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
 
@@ -261,7 +261,7 @@ public:
     Returns zero if readable and writable. */
   virtual int canAccess() = 0;
 
-  /** Close folder. If force is TRUE the files are closed even if
+  /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=false) = 0;
 
@@ -307,14 +307,14 @@ public:
     on failure. */
   virtual int rename(const QString& newName, KMFolderDir *aParent = 0);
 
-  /** Returns TRUE if a table of contents file is automatically created. */
+  /** Returns true if a table of contents file is automatically created. */
   bool autoCreateIndex() const { return mAutoCreateIndex; }
 
   /** Allow/disallow automatic creation of a table of contents file.
-    Default is TRUE. */
+    Default is true. */
   virtual void setAutoCreateIndex(bool);
 
-  /** Returns TRUE if the table of contents is dirty. This happens when
+  /** Returns true if the table of contents is dirty. This happens when
     a message is deleted from the folder. The toc will then be re-created
     when the folder is closed. */
   bool dirty() const { return mDirty; }
@@ -322,7 +322,7 @@ public:
   /** Change the dirty flag. */
   void setDirty(bool f);
 
-  /** Returns TRUE if the folder contains deleted messages */
+  /** Returns true if the folder contains deleted messages */
   bool needsCompacting() const { return needsCompact; }
   virtual void setNeedsCompacting(bool f) { needsCompact = f; }
 
@@ -589,7 +589,7 @@ friend class KMMsgDict;
   bool mExportsSernums :1;
   /** if the index is dirty it will be recreated upon close() */
   bool mDirty :1;
-  /** TRUE if the files of the folder are locked (writable) */
+  /** true if the files of the folder are locked (writable) */
   bool mFilesLocked :1;
 
   /** number of unread messages, -1 if not yet set */

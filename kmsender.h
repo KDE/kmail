@@ -64,10 +64,10 @@ protected:
   /** Send given message. The message is either queued or sent
     immediately. The default behaviour, as selected with
     setSendImmediate(), can be overwritten with the parameter
-    sendNow (by specifying TRUE or FALSE).
+    sendNow (by specifying true or false).
     The sender takes ownership of the given message on success,
     so DO NOT DELETE OR MODIFY the message further.
-    Returns TRUE on success. */
+    Returns true on success. */
   bool doSend(KMMessage* msg, short sendNow);
 
   /** Send queued messages, using the specified transport or the
@@ -76,11 +76,11 @@ protected:
   bool doSendQueued( const QString& transport );
 
 private:
-  /** Returns TRUE if sending is in progress. */
+  /** Returns true if sending is in progress. */
   bool sending() const { return mSendInProgress; }
 
 public:
-  /** Shall messages be sent immediately (TRUE), or shall they be
+  /** Shall messages be sent immediately (true), or shall they be
     queued and sent later upon call of sendQueued() ? */
   bool sendImmediate() const { return mSendImmediate; }
   void setSendImmediate(bool);
@@ -137,8 +137,8 @@ private:
   void cleanup();
 
   /** Test if all required settings are set.
-      Reports problems to user via dialogs and returns FALSE.
-      Returns TRUE if everything is Ok. */
+      Reports problems to user via dialogs and returns false.
+      Returns true if everything is Ok. */
   bool settingsOk() const;
 
   /** Parse protocol '://' (host port? | mailer) string and

@@ -76,14 +76,14 @@ public:
   virtual ~KMSearchRule() {};
 
   /** Tries to match the rule against the given KMMessage.
-      @return TRUE if the rule matched, FALSE otherwise. Must be
+      @return true if the rule matched, false otherwise. Must be
       implemented by subclasses.
   */
   virtual bool matches( const KMMessage * msg ) const = 0;
 
    /** Optimized version tries to match the rule against the given
        @see DwString.
-       @return TRUE if the rule matched, FALSE otherwise.
+       @return true if the rule matched, false otherwise.
    */
    virtual bool matches( const DwString & str, KMMessage & msg,
                          const DwBoyerMoore * headerField=0,
@@ -172,7 +172,7 @@ public:
   virtual bool matches( const KMMessage * msg ) const;
 
   /** Optimized version tries to match the rule against the given  DwString.
-      @return TRUE if the rule matched, FALSE otherwise.
+      @return true if the rule matched, false otherwise.
   */
   virtual bool matches( const DwString & str, KMMessage & msg,
                         const DwBoyerMoore * headerField=0,
@@ -336,7 +336,7 @@ public:
       own result or else most functionality is lacking, or has to be
       reimplemented, since the rules are private to this class.
 
-      @return TRUE if the match was successful, FALSE otherwise.
+      @return true if the match was successful, false otherwise.
   */
   bool matches( const KMMessage * msg, bool ignoreBody = false ) const;
   bool matches( const DwString & str, bool ignoreBody = false ) const;

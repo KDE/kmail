@@ -80,7 +80,7 @@ public:
 
   /**
    * Applies the user changes to the message object of the composer
-   * and signs/encrypts the message if activated. Returns FALSE in
+   * and signs/encrypts the message if activated. Returns false in
    * case of an error (e.g. if PGP encryption fails).
    * If backgroundMode is true then no functions which might require
    * user interaction (like signing/encrypting) are performed

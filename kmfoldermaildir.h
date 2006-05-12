@@ -69,7 +69,7 @@ public:
   /** fsync buffers to disk */
   virtual void sync();
 
-  /** Close folder. If force is TRUE the files are closed even if
+  /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=false);
 

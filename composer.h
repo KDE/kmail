@@ -74,7 +74,7 @@ namespace KMail {
   public: // kmkernel, callback
     /**
      * If this flag is set the message of the composer is deleted when
-     * the composer is closed and the message was not sent. Default: FALSE
+     * the composer is closed and the message was not sent. Default: false
      */
     virtual void setAutoDelete( bool f ) = 0;
 

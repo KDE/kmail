@@ -105,11 +105,11 @@ private:
 
 
   // ----- per folder serial number on-disk structure handling ("ids files")
-  
+
   /** Returns the name of the .folder.index.ids file. */
   static QString getFolderIdsLocation( const FolderStorage &folder );
 
-  /** Returns TRUE if the .folder.index.ids file should not be read. */
+  /** Returns true if the .folder.index.ids file should not be read. */
   bool isFolderIdsOutdated( const FolderStorage &folder );
 
   /** Reads the .folder.index.ids file.  Returns 0 on success. */

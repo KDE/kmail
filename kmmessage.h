@@ -110,7 +110,7 @@ public:
   KMMsgBase & toMsgBase() { return *this; }
   const KMMsgBase & toMsgBase() const { return *this; }
 
-  /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
+  /** Returns true if object is a real message (not KMMsgInfo or KMMsgBase) */
   bool isMessage() const;
 
   /** @return whether the priority: or x-priority headers indicate
@@ -126,7 +126,7 @@ public:
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
 
-  /** Returns TRUE if the message contains an unencrypted copy of itself. */
+  /** Returns true if the message contains an unencrypted copy of itself. */
   bool hasUnencryptedMsg() const { return 0 != mUnencryptedMsg; }
 
   /** Returns an unencrypted copy of this message or 0 if none exists. */
@@ -652,7 +652,7 @@ public:
                                  bool removeLineBreaks = false );
 
   /** Converts the email address(es) to (a) nice HTML mailto: anchor(s).
-   * If stripped is TRUE then the visible part of the anchor contains
+   * If stripped is true then the visible part of the anchor contains
    * only the name part and not the given emailAddr.
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,

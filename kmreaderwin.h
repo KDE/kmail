@@ -100,7 +100,7 @@ public:
   /** Read settings from app's config file. */
   void readConfig();
 
-  /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
+  /** Write settings to app's config file. Calls sync() if withSync is true. */
   void writeConfig( bool withSync=true ) const;
 
   const KMail::HeaderStyle * headerStyle() const {

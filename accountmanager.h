@@ -67,7 +67,7 @@ public:
   KMAccount* find( const uint id ) const;
 
   /** Physically remove account. Also deletes the given account object !
-      Returns FALSE and does nothing if the account cannot be removed. */
+      Returns false and does nothing if the account cannot be removed. */
   bool remove( KMAccount* );
 
   /** First account of the list */

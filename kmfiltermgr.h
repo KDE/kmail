@@ -148,7 +148,7 @@ public:
 
   /** Called from the folder manager when a folder is removed.
     Tests if the folder aFolder is used in any action. Changes
-    to aNewFolder folder in this case. Returns TRUE if a change
+    to aNewFolder folder in this case. Returns true if a change
     occurred. */
   bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 

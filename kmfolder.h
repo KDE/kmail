@@ -122,7 +122,7 @@ public:
   void setAcctList( AccountList* list ) { mAcctList = list; }
   AccountList* acctList() { return mAcctList; }
 
-  /** Returns TRUE if accounts are associated with this folder. */
+  /** Returns true if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != 0); }
 
   /** This is used by the storage to read the folder specific configuration */

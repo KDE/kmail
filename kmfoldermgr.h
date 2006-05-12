@@ -31,7 +31,7 @@ public:
   KMFolderRootDir& dir();
 
   /** Searches folder and returns it. Skips directories
-    (objects of type KMFolderDir) if foldersOnly is TRUE. */
+    (objects of type KMFolderDir) if foldersOnly is true. */
   virtual KMFolder* find(const QString& folderName, bool foldersOnly=true);
 
   /** Searches for a folder with the given id, recurses into directories */
@@ -115,7 +115,7 @@ public:
   void moveFolder( KMFolder* folder, KMFolderDir* newParent );
 
   /** Rename or move a folder */
-  void renameFolder( KMFolder* folder, const QString& newName, 
+  void renameFolder( KMFolder* folder, const QString& newName,
       KMFolderDir* newParent = 0 );
 
 public slots:

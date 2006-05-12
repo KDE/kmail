@@ -184,7 +184,7 @@ namespace KMail {
     void removeJob( KIO::Job* job );
 
     /**
-     * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
+     * Subscribe (@p subscribe = true) / Unsubscribe the folder
      * identified by @p imapPath.
      * Emits subscriptionChanged signal on success.
      */

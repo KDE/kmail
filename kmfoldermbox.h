@@ -83,7 +83,7 @@ public:
     fopen call otherwise (errno). */
   virtual int open();
 
-  /** Close folder. If force is TRUE the files are closed even if
+  /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=false);
 
@@ -151,7 +151,7 @@ protected:
 
 private:
   FILE *mStream;
-  bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
+  bool mFilesLocked; // true if the files of the folder are locked (writable)
   bool mReadOnly; // true if locking failed
   LockType mLockType;
   QString mProcmailLockFileName;

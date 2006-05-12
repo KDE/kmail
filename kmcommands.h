@@ -635,7 +635,7 @@ private:
 
   /** Returns a popupmenu containing a hierarchy of folder names.
       Each item in the popupmenu is connected to a slot, if
-      move is TRUE this slot will cause all selected messages to
+      move is true this slot will cause all selected messages to
       be moved into the given folder, otherwise messages will be
       copied.
       Am empty KMMenuToFolder must be passed in. */

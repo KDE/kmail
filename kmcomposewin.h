@@ -181,7 +181,7 @@ private:
 public: // kmkernel, callback
   /**
    * If this flag is set the message of the composer is deleted when
-   * the composer is closed and the message was not sent. Default: FALSE
+   * the composer is closed and the message was not sent. Default: false
    */
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
@@ -478,7 +478,7 @@ signals:
 private:
   /**
    * Applies the user changes to the message object of the composer
-   * and signs/encrypts the message if activated. Returns FALSE in
+   * and signs/encrypts the message if activated. Returns false in
    * case of an error (e.g. if PGP encryption fails).
    * Disables the controls of the composer window unless @dontDisable
    * is true.

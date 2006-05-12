@@ -48,8 +48,8 @@ public:
   virtual void setUsePipelining(bool);
 
   /**
-   * Shall messages be left on the server upon retreival (TRUE)
-   * or deleted (FALSE).
+   * Shall messages be left on the server upon retreival (true)
+   * or deleted (false).
    */
   bool leaveOnServer(void) const { return mLeaveOnServer; }
   virtual void setLeaveOnServer(bool);
@@ -73,8 +73,8 @@ public:
   virtual void setLeaveOnServerSize(int);
 
   /**
-   * Shall messages be filter on the server (TRUE)
-   * or not (FALSE).
+   * Shall messages be filter on the server (true)
+   * or not (false).
    */
   bool filterOnServer(void) const { return mFilterOnServer; }
   virtual void setFilterOnServer(bool);

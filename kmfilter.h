@@ -89,7 +89,7 @@ public:
       @li 0 if processed successfully.
       @param msg The message to which the actions should be applied.
       @param stopIt Contains
-      TRUE if the caller may apply other filters and FALSE if he shall
+      true if the caller may apply other filters and false if he shall
       stop the filtering of this message.
   */
   ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
@@ -135,37 +135,37 @@ public:
   const KMSearchPattern* pattern() const { return &mPattern; }
 
   /** Set whether this filter should be applied on
-      outbound messages (@p aApply == TRUE) or not.
+      outbound messages (@p aApply == true) or not.
       See applyOnOutbound applyOnInbound setApplyOnInbound
   */
   void setApplyOnOutbound( bool aApply=true ) { bApplyOnOutbound = aApply; }
 
-  /** @return TRUE if this filter should be applied on
-      outbound messages, FALSE otherwise.
+  /** @return true if this filter should be applied on
+      outbound messages, false otherwise.
       @see setApplyOnOutbound applyOnInbound setApplyOnInbound
   */
   bool applyOnOutbound() const { return bApplyOnOutbound; }
 
   /** Set whether this filter should be applied on
-      inbound messages (@p aApply == TRUE) or not.
+      inbound messages (@p aApply == true) or not.
       @see setApplyOnOutbound applyOnInbound applyOnOutbound
   */
   void setApplyOnInbound( bool aApply=true ) { bApplyOnInbound = aApply; }
 
-  /** @return TRUE if this filter should be applied on
-      inbound messages, FALSE otherwise.
+  /** @return true if this filter should be applied on
+      inbound messages, false otherwise.
       @see setApplyOnOutbound applyOnOutbound setApplyOnInbound
   */
   bool applyOnInbound() const { return bApplyOnInbound; }
 
   /** Set whether this filter should be applied on
-      explicit (CTRL-J) filtering (@p aApply == TRUE) or not.
+      explicit (CTRL-J) filtering (@p aApply == true) or not.
       @see setApplyOnOutbound applyOnInbound applyOnOutbound
   */
   void setApplyOnExplicit( bool aApply=true ) { bApplyOnExplicit = aApply; }
 
-  /** @return TRUE if this filter should be applied on
-      explicit (CTRL-J) filtering, FALSE otherwise.
+  /** @return true if this filter should be applied on
+      explicit (CTRL-J) filtering, false otherwise.
       @see setApplyOnOutbound applyOnOutbound setApplyOnInbound
   */
   bool applyOnExplicit() const { return bApplyOnExplicit; }
@@ -179,8 +179,8 @@ public:
   */
   void setApplicability( AccountType aApply=All ) { mApplicability = aApply; }
 
-  /** @return TRUE if this filter should be applied on
-      inbound messages for all accounts, or FALSE if this filter
+  /** @return true if this filter should be applied on
+      inbound messages for all accounts, or false if this filter
       is to be applied on a specified set of accounts only.
       Only applicable to filters that are applied on inbound messages.
       @see setApplicability
@@ -195,8 +195,8 @@ public:
   */
   void setApplyOnAccount( uint id, bool aApply=true );
 
-  /** @return TRUE if this filter should be applied on
-      inbound messages from the account with id (@p id), FALSE otherwise.
+  /** @return true if this filter should be applied on
+      inbound messages from the account with id (@p id), false otherwise.
       @see setApplicability
   */
   bool applyOnAccount( uint id ) const;
@@ -211,8 +211,8 @@ public:
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
   }
 
-  /** @return TRUE if this filter should be plugged into the filter menu,
-      FALSE otherwise.
+  /** @return true if this filter should be plugged into the filter menu,
+      false otherwise.
       @see setConfigureShortcut
   */
   bool configureShortcut() const { return bConfigureShortcut; }
@@ -225,8 +225,8 @@ public:
     bConfigureToolbar = aTool && bConfigureShortcut;
   }
 
-  /** @return TRUE if this filter should be plugged into the toolbar,
-      FALSE otherwise.
+  /** @return true if this filter should be plugged into the toolbar,
+      false otherwise.
       @see setConfigureToolbar
   */
   bool configureToolbar() const { return bConfigureToolbar; }
@@ -257,8 +257,8 @@ public:
    * Called from the filter manager when a folder is moved.
    * Tests if the folder aFolder is used in any action. Changes it
    * to aNewFolder folder in this case.
-   * @return TRUE if a change in some action occurred,
-   * FALSE if no action was affected.
+   * @return true if a change in some action occurred,
+   * false if no action was affected.
    */
   bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
 

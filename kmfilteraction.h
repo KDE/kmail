@@ -136,13 +136,13 @@ public:
 
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
-      case. Returns TRUE if a change was made.  */
+      case. Returns true if a change was made.  */
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
 
-  /** Temporarily open folder. Will be closed by the next 
+  /** Temporarily open folder. Will be closed by the next
     KMFilterMgr::cleanup() call.  */
   static int tempOpenFolder(KMFolder* aFolder);
 
@@ -429,7 +429,7 @@ public:
 
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
-      case. Returns TRUE if a change was made.  */
+      case. Returns true if a change was made.  */
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
 protected:
@@ -445,7 +445,7 @@ protected:
 
 
 /** Abstract base class for KMail's filter actions that need a mail
-    address as parameter, e.g. 'forward to'. Can create a 
+    address as parameter, e.g. 'forward to'. Can create a
     QComboBox (capable of completion from the address book) as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:

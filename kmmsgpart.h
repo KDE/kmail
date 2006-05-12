@@ -119,7 +119,7 @@ public:
   void setContentId( const Q3CString & aStr ) { mContentId = aStr; }
 
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
-    If autoDecode is TRUE the decoded body will be used for mime type
+    If autoDecode is true the decoded body will be used for mime type
     determination (this does not change the body itself). */
   void magicSetType(bool autoDecode=true);
 

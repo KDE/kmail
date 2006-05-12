@@ -44,8 +44,8 @@ public:
   /** Abort sending the current message. Sets mSending to false */
   virtual void abort() = 0;
 
-  /** Returns TRUE if send was successful, and FALSE otherwise.
-      Returns FALSE if sending is still in progress. */
+  /** Returns true if send was successful, and false otherwise.
+      Returns false if sending is still in progress. */
   bool sendOk() const { return mSendOk; }
 
   /** Returns error message of last call of failed(). */
@@ -62,7 +62,7 @@ signals:
 protected:
   /** Called to signal a transmission error. The sender then
     calls finish() and terminates sending of messages.
-    Sets mSending to FALSE. */
+    Sets mSending to false. */
   void failed(const QString &msg);
 
   /** Informs the user about what is going on. */
