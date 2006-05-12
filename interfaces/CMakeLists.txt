@@ -1,4 +1,3 @@
-kde4_header()
 
 
 
@@ -7,7 +6,6 @@ kde4_header()
 
 install_files( /include/kmail/interfaces FILES observer.h  	observable.h  	htmlwriter.h  	bodypart.h  	bodypartformatter.h  	bodyparturlhandler.h )
 
-kde4_footer()
 
 
 

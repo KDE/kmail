@@ -1,4 +1,3 @@
-kde4_header()
 
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
@@ -318,7 +317,6 @@ install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES upgrade-transport.pl kmail-pgpi
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
-kde4_footer()
 
 
 

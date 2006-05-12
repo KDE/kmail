@@ -1,4 +1,3 @@
-kde4_header()
 
 include_directories( ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/kmail  )
 
@@ -6,7 +5,6 @@ include_directories( ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/kmail  )
 ########### install files ###############
 
 
-kde4_footer()
 
 
 

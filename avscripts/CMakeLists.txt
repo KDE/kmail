@@ -1,4 +1,3 @@
-kde4_header()
 
 
 
@@ -7,7 +6,6 @@ kde4_header()
 
 install_files( /bin FILES kmail_clamav.sh kmail_sav.sh kmail_fprot.sh kmail_antivir.sh )
 
-kde4_footer()
 
 
 
