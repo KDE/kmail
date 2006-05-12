@@ -1054,7 +1054,7 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
     if ( status.isReplied() )
       suffix += "RS";
     else
-      suffix += "S";
+      suffix += 'S';
     aFileName += suffix;
   }
 
@@ -1083,7 +1083,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
     aFileName = constructValidFileName( QString(), status );
 
     QFileInfo fi(dest);
-    dest = fi.absolutePath() + "/" + aFileName;
+    dest = fi.absolutePath() + '/' + aFileName;
     setDirty( true );
   }
 

@@ -1868,7 +1868,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
   }
 
   if( folder->child() && parent &&
-      ( parent->path().startsWith( folder->child()->path() + "/" ) ) ) {
+      ( parent->path().startsWith( folder->child()->path() + '/' ) ) ) {
     KMessageBox::error( this, message );
     return;
   }

@@ -399,22 +399,22 @@ const QString KMFilter::asString() const
 {
   QString result;
 
-  result += "Filter name: " + name() + "\n";
-  result += mPattern.asString() + "\n";
+  result += "Filter name: " + name() + '\n';
+  result += mPattern.asString() + '\n';
 
   if (bPopFilter){
     result += "    action: ";
     result += mAction;
-    result += "\n";
+    result += '\n';
   }
   else {
     QList<KMFilterAction*>::const_iterator it( mActions.begin() );
     for ( ; it != mActions.end() ; ++it ) {
       result += "    action: ";
       result += (*it)->label();
-      result += " ";
+      result += ' ';
       result += (*it)->argsAsString();
-      result += "\n";
+      result += '\n';
     }
     result += "This filter belongs to the following sets:";
     if ( bApplyOnInbound )
@@ -423,7 +423,7 @@ const QString KMFilter::asString() const
       result += " Outbound";
     if ( bApplyOnExplicit )
       result += " Explicit";
-    result += "\n";
+    result += '\n';
     if ( bApplyOnInbound && mApplicability == All ) {
       result += "This filter applies to all accounts.\n";
     } else if ( bApplyOnInbound && mApplicability == ButImap ) {
@@ -435,8 +435,8 @@ const QString KMFilter::asString() const
         result += " None";
       else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
         if ( kmkernel->acctMgr()->find( *it2 ) )
-          result += " " + kmkernel->acctMgr()->find( *it2 )->name();
-      result += "\n";
+          result += ' ' + kmkernel->acctMgr()->find( *it2 )->name();
+      result += '\n';
     }
     if ( bStopProcessingHere )
       result += "If it matches, processing stops at this filter.\n";

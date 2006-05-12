@@ -508,7 +508,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // the user may have specified. In the long run, we
   // shouldn't be using tempfiles at all for this class, due
   // to security aspects. (mmutz)
-  commandLine =  "(" + commandLine + ") <" + inFile->name();
+  commandLine =  '(' + commandLine + ") <" + inFile->name();
 
   // write message to file
   QString tempFileName = inFile->name();
@@ -1657,7 +1657,7 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       pclose(p);
       if ( !ba.isEmpty() ) {
         KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).toLatin1() );
-        KMFolder *filterFolder =  mMsg->parent(); 
+        KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
 
         mMsg->fromByteArray( ba );
@@ -1730,7 +1730,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   // the user may have specified. In the long run, we
   // shouldn't be using tempfiles at all for this class, due
   // to security aspects. (mmutz)
-  commandLine =  "(" + commandLine + ") <" + inFile->name();
+  commandLine =  '(' + commandLine + ") <" + inFile->name();
 
   // write message to file
   QString tempFileName = inFile->name();

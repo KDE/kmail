@@ -108,7 +108,7 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //=============================================================================
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter )
-  : KDialog( parent, 
+  : KDialog( parent,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
 		 Help|Ok|Apply|Cancel /* button mask */ ),
   bPopFilter(popFilter)
@@ -700,7 +700,7 @@ void KMFilterListBox::slotUpdateFilterName()
     if ( p->first() && !p->first()->field().trimmed().isEmpty() )
       shouldBeName = QString( "<%1>: %2" ).arg( QString::fromLatin1( p->first()->field() ) ).arg( p->first()->contents() );
     else
-      shouldBeName = "<" + i18n("unnamed") + ">";
+      shouldBeName = '<' + i18n("unnamed") + '>';
     p->setName( shouldBeName );
   }
 

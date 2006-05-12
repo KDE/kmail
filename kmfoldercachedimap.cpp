@@ -2112,7 +2112,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
 
   //kDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << newType << " " << newSubType << endl;
   if ( newType != oldType || newSubType != oldSubType ) {
-    mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString() : "."+newSubType );
+    mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString() : '.'+newSubType );
     mAnnotationFolderTypeChanged = true; // force a "set annotation" on next sync
     kDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was (" << oldType << " " << oldSubType << ") => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }

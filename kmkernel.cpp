@@ -691,13 +691,13 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
             folder = the_folderMgr->findOrCreate(*it, false);
             if (folder) {
               root = false;
-              tmp_fname = "/" + *it;
+              tmp_fname = '/' + *it;
             }
             else return -1;
           }
           else {
             subfolder = folder->createChildFolder();
-            tmp_fname += "/" + *it;
+            tmp_fname += '/' + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
              folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }
@@ -870,13 +870,13 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
             folder = the_folderMgr->findOrCreate(*it, false);
             if (folder) {
               root = false;
-              tmp_fname = "/" + *it;
+              tmp_fname = '/' + *it;
             }
             else return -1;
           }
           else {
             subfolder = folder->createChildFolder();
-            tmp_fname += "/" + *it;
+            tmp_fname += '/' + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
               folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }

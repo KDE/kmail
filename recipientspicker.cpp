@@ -58,7 +58,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 
   mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", K3Icon::Small );
 
-  mKey = "D" + list->name();
+  mKey = 'D' + list->name();
 }
 
 void RecipientItem::setAddressee( const KABC::Addressee &a,
@@ -73,7 +73,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   else
     mIcon = KGlobal::iconLoader()->loadIcon( "personal", K3Icon::Small );
 
-  mKey = "A" + a.preferredEmail();
+  mKey = 'A' + a.preferredEmail();
 }
 
 QPixmap RecipientItem::icon() const
@@ -124,7 +124,7 @@ QString RecipientItem::toolTip() const
     KABC::DistributionList::Entry::List::ConstIterator it;
     for( it = entries.begin(); it != entries.end(); ++it ) {
       txt += "<li>";
-      txt += (*it).addressee.realName() + " ";
+      txt += (*it).addressee.realName() + ' ';
       txt += "<em>";
       if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
       else txt += (*it).email;
@@ -628,7 +628,7 @@ void RecipientsPicker::pick( Recipient::Type type )
   kDebug() << "RecipientsPicker::pick " << int( type ) << endl;
 
   int count = 0;
-  Q3ListViewItemIterator it( mRecipientList , 
+  Q3ListViewItemIterator it( mRecipientList ,
             Q3ListViewItemIterator::Visible | Q3ListViewItemIterator::Selected );
   for ( ; it.current(); ++it )
       ++count;
@@ -643,7 +643,7 @@ void RecipientsPicker::pick( Recipient::Type type )
     return;
   }
 
-  it = Q3ListViewItemIterator( mRecipientList , 
+  it = Q3ListViewItemIterator( mRecipientList ,
             Q3ListViewItemIterator::Visible | Q3ListViewItemIterator::Selected );
   for ( ; it.current(); ++it ) {
     RecipientViewItem *item = static_cast<RecipientViewItem *>( it.current() );

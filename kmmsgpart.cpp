@@ -384,7 +384,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::iconName() const
 {
-  Q3CString mimeType( mType + "/" + mSubtype );
+  Q3CString mimeType( mType + '/' + mSubtype );
   kAsciiToLower( mimeType.data() );
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString() );

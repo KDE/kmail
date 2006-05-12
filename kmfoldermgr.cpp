@@ -245,10 +245,10 @@ void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
 
   DO_FOR_ALL(
              {
-               getFolderURLS( flist, prefix + "/" + folder->name(), child );
+               getFolderURLS( flist, prefix + '/' + folder->name(), child );
              },
              {
-               flist << prefix + "/" + folder->name();
+               flist << prefix + '/' + folder->name();
              }
              )
 }
@@ -260,13 +260,13 @@ KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
   KMFolderDir* dir = adir ? adir : &mDir;
   DO_FOR_ALL(
         {
-          QString a = prefix + "/" + folder->name();
+          QString a = prefix + '/' + folder->name();
           KMFolder * mfolder = getFolderByURL( vpath, a,child );
           if ( mfolder )
             return mfolder;
         },
         {
-          QString comp = prefix + "/" + folder->name();
+          QString comp = prefix + '/' + folder->name();
           if ( comp  == vpath )
             return folder;
         }
@@ -355,7 +355,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
   KMFolderNode* fN;
   QList<KMFolderNode*>::const_iterator it;
   for ( it = fdir->begin(); ( fN = *it ) && it != fdir->end(); ++it ) {
-    if (fN->isDir() && (fN->name() == "." + aFolder->fileName() + ".directory")) {
+    if (fN->isDir() && (fN->name() == '.' + aFolder->fileName() + ".directory")) {
       removeDirAux(static_cast<KMFolderDir*>(fN));
       break;
     }

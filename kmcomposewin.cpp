@@ -2239,7 +2239,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
     lvi->setText(0, msgPart->name());
   lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
-  lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
+  lvi->setText(3, prettyMimeType(msgPart->typeStr() + '/' + msgPart->subtypeStr()));
 
   if ( loadDefaults ) {
     if( canSignEncryptAttachments() ) {
@@ -3524,7 +3524,7 @@ void KMComposeWin::slotNewMailReader()
 void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
   if (text.isEmpty())
-       setCaption("("+i18n("unnamed")+")");
+       setCaption('(' + i18n("unnamed") + ')');
   else setCaption(text);
 }
 

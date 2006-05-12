@@ -887,7 +887,7 @@ namespace KMail {
 
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
-          msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.", 
+          msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.",
              name() );
           KMessageBox::information( kapp->activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
           // Show it in the status bar, in case the user has ticked "don't show again"
@@ -1228,10 +1228,10 @@ namespace KMail {
   {
     QString myPrefix = prefix;
     if ( !myPrefix.startsWith( "/" ) ) {
-      myPrefix = "/" + myPrefix;
+      myPrefix = '/' + myPrefix;
     }
     if ( !myPrefix.endsWith( "/" ) ) {
-      myPrefix += "/";
+      myPrefix += '/';
     }
 
     return myPrefix;
@@ -1288,14 +1288,14 @@ namespace KMail {
     if ( delim.isEmpty() ) {
       delim = "/";
     }
-    if ( !newName.isEmpty() && 
+    if ( !newName.isEmpty() &&
          !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
       newName = newName + delim;
     }
     newName = newName + folderName;
     // add / at the end
     if ( !newName.endsWith("/") ) {
-      newName = newName + "/";
+      newName = newName + '/';
     }
 
     return newName;

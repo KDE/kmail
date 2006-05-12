@@ -347,7 +347,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     else
     {
         for ( QStringList::const_iterator it = caps.begin(); it != caps.end(); ++it )
-            mEdit->append( "* " + *it + "\n" );
+            mEdit->append( "* " + *it + '\n' );
         mEdit->append( "\n" );
     }
 
@@ -361,7 +361,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     {
         mScriptList = scriptList;
         for ( QStringList::const_iterator it = scriptList.begin(); it != scriptList.end(); ++it )
-            mEdit->append( "* " + *it + "\n" );
+            mEdit->append( "* " + *it + '\n' );
         mEdit->append( "\n" );
         mEdit->append( i18n( "Active script: %1\n\n", activeScript ) );
     }

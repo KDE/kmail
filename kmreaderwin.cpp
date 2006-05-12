@@ -1608,7 +1608,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
 
   //--- Sven's save attachments to /tmp start ---
   KTempFile *tempFile = new KTempFile( QString(),
-                                       "." + QString::number( aPartNum ) );
+                                       '.' + QString::number( aPartNum ) );
   tempFile->setAutoDelete( true );
   QString fname = tempFile->name();
   delete tempFile;
@@ -1628,7 +1628,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     fileName = fileName.mid( slashPos + 1 );
   if( fileName.isEmpty() )
     fileName = "unnamed";
-  fname += "/" + fileName;
+  fname += '/' + fileName;
 
   QByteArray data = aMsgPart->bodyDecodedBinary();
   if ( aMsgPart->type() == DwMime::kTypeText && data.size() > 0 ) {

@@ -484,7 +484,7 @@ QString KMMessage::formatString(const QString& aStr) const
         result += ' ';
         break;
       case 'L':
-        result += "\n";
+        result += '\n';
         break;
       case '%':
         result += '%';
@@ -1040,7 +1040,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       Q3CString cStr = selection.toLatin1();
       msg->setBody( cStr );
     }else{
-      msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
+      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
 				  sSmartQuote, allowDecryption).toUtf8());
     }
   }
@@ -1155,15 +1155,15 @@ Q3CString KMMessage::createForwardBody()
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
-    s += "Subject: " + subject() + "\n";
+    s += "Subject: " + subject() + '\n';
     s += "Date: "
          + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
                                              date(), sReplyLanguage, false )
-         + "\n";
-    s += "From: " + from() + "\n";
-    s += "To: " + to() + "\n";
-    if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
-    s += "\n";
+         + '\n';
+    s += "From: " + from() + '\n';
+    s += "To: " + to() + '\n';
+    if (!cc().isEmpty()) s += "Cc: " + cc() + '\n';
+    s += '\n';
     str = asQuotedString(s, "", QString(), false, false).toUtf8();
     str += "\n-------------------------------------------------------\n";
   }
@@ -3714,7 +3714,7 @@ QString KMMessage::expandAliases( const QString& recipients )
       KConfigGroup general( KMKernel::config(), "General" );
       QString defaultdomain = general.readEntry( "Default domain" );
       if( !defaultdomain.isEmpty() ) {
-        expandedRecipients += receiver + "@" + defaultdomain;
+        expandedRecipients += receiver + '@' + defaultdomain;
       }
       else {
         expandedRecipients += guessEmailAddressFromLoginName( receiver );
@@ -3824,7 +3824,7 @@ const QStringList &KMMessage::preferredCharsets()
 //-----------------------------------------------------------------------------
 Q3CString KMMessage::charset() const
 {
-  if ( mMsg->Headers().HasContentType() ) {  
+  if ( mMsg->Headers().HasContentType() ) {
     DwMediaType &mType=mMsg->Headers().ContentType();
     mType.Parse();
     DwParameter *param=mType.FirstParameter();
@@ -4164,5 +4164,5 @@ Q3CString KMMessage::mboxMessageSeparator()
     if ( dateStr[len-1] == '\n' )
       dateStr.truncate( len - 1 );
   }
-  return "From " + str + " " + dateStr + "\n";
+  return "From " + str + ' ' + dateStr + '\n';
 }

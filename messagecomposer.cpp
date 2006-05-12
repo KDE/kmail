@@ -1169,7 +1169,7 @@ Q3CString MessageComposer::bodyText()
 
   if (body.isNull()) return body;
 
-  if (body.isEmpty()) body = "\n"; // don't crash
+  if (body.isEmpty()) body = '\n'; // don't crash
 
   // From RFC 3156:
   //  Note: The accepted OpenPGP convention is for signed data to end
@@ -1184,7 +1184,7 @@ Q3CString MessageComposer::bodyText()
   // So make sure that the body ends with a <LF>.
   if( body[body.length()-1] != '\n' ) {
     kDebug(5006) << "Added an <LF> on the last line" << endl;
-    body += "\n";
+    body += '\n';
   }
   return body;
 }
@@ -1444,7 +1444,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     textDwPart->Assemble();
     newbody += "--";
     newbody +=     boundaryCStr;
-    newbody +=                 "\n";
+    newbody +=                 '\n';
     newbody += textDwPart->AsString().c_str();
     delete textDwPart;
     textDwPart = 0;
@@ -1463,7 +1463,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     htmlDwPart->Assemble();
     newbody += "\n--";
     newbody +=     boundaryCStr;
-    newbody +=                 "\n";
+    newbody +=                 '\n';
     newbody += htmlDwPart->AsString().c_str();
     delete htmlDwPart;
     htmlDwPart = 0;
@@ -1535,11 +1535,11 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
           bStr += "\"";
           body = innerDwPart->AsString().c_str();
           body.insert( boundPos, bStr );
-          body = "--" + boundaryCStr + "\n" + body;
+          body = "--" + boundaryCStr + '\n' + body;
         }
     }
     else
-      body = "--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
+      body = "--" + boundaryCStr + '\n' + innerDwPart->AsString().c_str();
     delete innerDwPart;
     innerDwPart = 0;
     // add all matching Attachments
@@ -1548,7 +1548,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
-        body += "\n--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
+        body += "\n--" + boundaryCStr + '\n' + innerDwPart->AsString().c_str();
         delete innerDwPart;
         innerDwPart = 0;
       }
@@ -1858,7 +1858,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       msg->headers().ContentType().Parse();
       kDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
-      msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
+      msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + '/' + ourFineBodyPart.subtypeStr() );
       kDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
     }
     if ( !ourFineBodyPart.charset().isEmpty() )
@@ -1994,11 +1994,11 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       Q3CString mainStr = "--" + boundaryCStr;
       if ( signing && includeCleartextWhenSigning( format ) &&
 	   !clearCStr.isEmpty() )
-        mainStr += "\n" + clearCStr + "\n--" + boundaryCStr;
+        mainStr += '\n' + clearCStr + "\n--" + boundaryCStr;
       if ( !versCStr.isEmpty() )
-        mainStr += "\n" + versCStr + "\n--" + boundaryCStr;
+        mainStr += '\n' + versCStr + "\n--" + boundaryCStr;
       if( !codeCStr.isEmpty() )
-        mainStr += "\n" + codeCStr + "\n--" + boundaryCStr;
+        mainStr += '\n' + codeCStr + "\n--" + boundaryCStr;
       mainStr += "--\n";
 
       //kDebug(5006) << "processStructuringInfo: mainStr=" << mainStr << endl;

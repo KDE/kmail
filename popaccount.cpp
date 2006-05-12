@@ -156,8 +156,8 @@ void PopAccount::processNewMail(bool _interactive)
       }
     }
 
-    QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
-                                       mHost + ":" + QString("%1").arg(mPort) );
+    QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
+                                       mHost + ':' + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readEntry( "seenUidList" , QStringList() );
     mUidsOfSeenMsgsDict.clear();
@@ -812,8 +812,8 @@ void PopAccount::saveUidList()
     uidsOfNextSeenMsgs.append( it.key() );
     seenUidTimeList.append( mTimeOfNextSeenMsgsMap[ it.key() ] );
   }
-  QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
-                                      mHost + ":" + QString::number( mPort ) );
+  QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
+                                      mHost + ':' + QString::number( mPort ) );
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   config.writeEntry( "seenUidTimeList", seenUidTimeList );

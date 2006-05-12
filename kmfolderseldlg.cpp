@@ -193,7 +193,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     }
 
     if ( depth > 0 )
-      path += "/";
+      path += '/';
     path += fti->text( 0 );
 
     item->setText( mFolderColumn, fti->text( 0 ) );

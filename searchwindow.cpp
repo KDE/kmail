@@ -585,7 +585,7 @@ void SearchWindow::renameSearchFolder()
                 break;
             }
             name.setNum( i );
-            name = mSearchFolderEdt->text() + " " + name;
+            name = mSearchFolderEdt->text() + ' ' + name;
             ++i;
         }
     }

@@ -415,7 +415,7 @@ void KMSender::doSendMsg()
       mCurrentMsg->setFrom( kmkernel->identityManager()->defaultIdentity().fullEmailAddr() );
     }
     else {
-      KMessageBox::sorry( 0, i18n( "It's not possible to send messages "
+      KMessageBox::sorry( 0, i18n( "It is not possible to send messages "
                                    "without specifying a sender address.\n"
                                    "Please set the email address of "
                                    "identity '%1' in the Identities "
@@ -916,7 +916,7 @@ bool KMSendSendmail::doStart() {
                              "Please remove it from there if you do not want the message to "
                              "be resent.\n"
                              "The following transport protocol was used:\n  %2",
-                         str + "\n",
+                         str + '\n',
                          "sendmail://");
     KMessageBox::information(0,msg);
     return false;

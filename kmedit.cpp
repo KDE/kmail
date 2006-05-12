@@ -376,7 +376,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       sysLine.replace( "%f", mExtEditorTempFile->name() );
       mExtEditorProcess = new KProcess();
       mExtEditorProcess->setUseShell( true );
-      sysLine += " ";
+      sysLine += ' ';
       while (!sysLine.isEmpty())
       {
         *mExtEditorProcess << sysLine.left(sysLine.indexOf(" ")).toLocal8Bit();

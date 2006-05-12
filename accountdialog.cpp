@@ -2163,7 +2163,7 @@ const QString AccountDialog::namespaceListToString( const QStringList& list )
   QStringList myList = list;
   for ( QStringList::Iterator it = myList.begin(); it != myList.end(); ++it ) {
     if ( (*it).isEmpty() ) {
-      (*it) = "<" + i18n("Empty") + ">";
+      (*it) = '<' + i18n("Empty") + '>';
     }
   }
   return myList.join(",");

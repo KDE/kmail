@@ -284,7 +284,7 @@ bool KMFolderDir::reload(void)
     for(QStringList::Iterator it = diList.begin();
         it != diList.end();
         ++it)
-      if (*it == "." + folder->fileName() + ".directory")
+      if (*it == '.' + folder->fileName() + ".directory")
       {
         KMFolderDir* folderDir = new KMFolderDir( folder, this, *it, mDirType);
         folderDir->reload();

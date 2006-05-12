@@ -1312,7 +1312,7 @@ void KMFolderImap::slotListFolderResult(KJob * job)
 
   QStringList sets;
   uid = (*it).items.begin();
-  if (jd.total == 1) sets.append(*uid + ":" + *uid);
+  if (jd.total == 1) sets.append(*uid + ':' + *uid);
   else sets = makeSets( (*it).items );
   mAccount->removeJob(it); // don't use *it below
 
@@ -1350,7 +1350,7 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
     const long long flags = udsIt->numberValue( KIO::UDS_ACCESS );
     if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") &&
         !(flags & 8)) {
-      (*it).items.append(name + "," + QString::number(flags));
+      (*it).items.append(name + ',' + QString::number(flags));
       if ( mMailCheckProgressItem ) {
         mMailCheckProgressItem->incCompletedItems();
         mMailCheckProgressItem->updateProgress();

@@ -296,7 +296,7 @@ namespace KMail {
       if ( strategy->showHeader( "organization" )
           && !message->headerField("Organization").isEmpty())
         headerStr.append("&nbsp;&nbsp;(" +
-              strToHtml(message->headerField("Organization")) + ")");
+              strToHtml(message->headerField("Organization")) + ')');
       headerStr.append("<br>\n");
     }
 
@@ -457,7 +457,7 @@ namespace KMail {
     if ( configReader.readEntry( "showSpamStatus", true ) ) {
       SpamScores scores = SpamHeaderAnalyzer::getSpamScores( message );
       for ( SpamScoresIterator it = scores.begin(); it != scores.end(); ++it )
-        spamHTML += (*it).agent() + " " +
+        spamHTML += (*it).agent() + ' ' +
                     drawSpamMeter( (*it).score(), (*it).spamHeader() );
     }
 
@@ -615,7 +615,7 @@ namespace KMail {
                               ? QString("")
                               : "&nbsp;&nbsp;("
                                 + strToHtml(message->headerField("Organization"))
-                                + ")")
+                                + ')')
                  + "</td></tr>\n";
     }
     // to line

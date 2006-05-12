@@ -273,7 +273,7 @@ QString KMPopHeadersViewItem::key(int col, bool) const
   if (col == 6)
   {
     QString st = text(col);
-    while (st.length() < 10) st = "0" + st;
+    while (st.length() < 10) st = '0' + st;
     return st;
   }
   return text(col);

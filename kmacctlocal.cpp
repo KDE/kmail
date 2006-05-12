@@ -156,7 +156,7 @@ bool KMAcctLocal::preProcess()
   if ( rc != 0 ) {
     QString aStr;
     aStr = i18n("Cannot open file:");
-    aStr += mMailFolder->path()+"/"+mMailFolder->name();
+    aStr += mMailFolder->path() + '/' + mMailFolder->name();
     KMessageBox::sorry(0, aStr);
     kDebug(5006) << "cannot open file " << mMailFolder->path() << "/"
       << mMailFolder->name() << endl;
@@ -181,7 +181,7 @@ bool KMAcctLocal::preProcess()
 
   mMailCheckProgressItem->setTotalItems( mNumMsgs );
 
-  //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
+  //BroadcastStatus::instance()->setStatusProgressEnable( 'L' + mName, true );
   return true;
 }
 

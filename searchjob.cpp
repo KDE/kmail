@@ -83,7 +83,7 @@ void SearchJob::searchCompleteFolder()
   if ( searchString.isEmpty() ) // skip imap search and download the messages
     return slotSearchData( 0, QString(),QString() );
 
-  // do the IMAP search  
+  // do the IMAP search
   KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
@@ -154,11 +154,11 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
       mLocalSearchPattern->append( *it );
     }
   }
-  
+
   QString search;
   if ( !parts.isEmpty() ) {
     if ( pattern->op() == KMSearchPattern::OpOr && parts.size() > 1 ) {
-      search = "(OR " + parts.join(" ") + ")";
+      search = "(OR " + parts.join(" ") + ')';
     } else {
       // and's are simply joined
       search = parts.join(" ");
@@ -174,7 +174,7 @@ void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
 {
   if ( job && job->error() ) {
     // error is handled in slotSearchResult
-    return; 
+    return;
   }
 
   if ( mLocalSearchPattern->isEmpty() && data.isEmpty() )
@@ -187,7 +187,7 @@ void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
     // remember the uids the server found
     mImapSearchHits = data.split( " ", QString::SkipEmptyParts );
 
-    if ( canMapAllUIDs() ) 
+    if ( canMapAllUIDs() )
     {
       slotSearchFolder();
     } else
@@ -203,8 +203,8 @@ void SearchJob::slotSearchData( KJob* job, const QString& data, const QString& )
 //-----------------------------------------------------------------------------
 bool SearchJob::canMapAllUIDs()
 {
-  for ( QStringList::Iterator it = mImapSearchHits.begin(); 
-        it != mImapSearchHits.end(); ++it ) 
+  for ( QStringList::Iterator it = mImapSearchHits.begin();
+        it != mImapSearchHits.end(); ++it )
   {
     if ( mFolder->serNumForUID( (*it).toULong() ) == 0 )
       return false;
@@ -214,15 +214,15 @@ bool SearchJob::canMapAllUIDs()
 
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchFolder()
-{  
+{
   disconnect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
             this, SLOT( slotSearchFolder()) );
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // pure imap search - now get the serial number for the UIDs
     QList<quint32> serNums;
-    for ( QStringList::Iterator it = mImapSearchHits.begin(); 
-        it != mImapSearchHits.end(); ++it ) 
+    for ( QStringList::Iterator it = mImapSearchHits.begin();
+        it != mImapSearchHits.end(); ++it )
     {
       serNums.append( mFolder->serNumForUID( (*it).toULong() ) );
     }
@@ -243,8 +243,8 @@ void SearchJob::slotSearchFolder()
           "have to be downloaded from the server. This may take some time. "
           "Do you want to continue your search?", mFolder->label() );
       if ( KMessageBox::warningContinueCancel( 0, question,
-            i18n("Continue Search"), i18n("&Search"), 
-            "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
+            i18n("Continue Search"), i18n("&Search"),
+            "continuedownloadingforsearch" ) != KMessageBox::Continue )
       {
         QList<quint32> serNums;
         emit searchDone( serNums, mSearchPattern, true );
@@ -416,7 +416,7 @@ void SearchJob::slotSearchDataSingleMessage( KJob* job, const QString& data,cons
     slotSearchMessageArrived( msg );
   }
 }
- 
+
 //-----------------------------------------------------------------------------
 void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
 {

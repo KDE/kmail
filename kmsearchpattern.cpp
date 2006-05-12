@@ -202,7 +202,7 @@ KMSearchRuleString::KMSearchRuleString( const QByteArray & field,
   if ( field.isEmpty() || field[0] == '<' )
     mBmHeaderField = 0;
   else // make sure you handle the unrealistic case of the message starting with mField
-    mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data());
+    mBmHeaderField = new DwBoyerMoore(('\n' + field + ": ").data());
 }
 
 KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )

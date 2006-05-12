@@ -132,9 +132,9 @@ void SubscriptionDialog::createItems()
             tmpPath << folders[j];
           QString path = tmpPath.join(mDelimiter);
           if (!path.startsWith("/"))
-            path = "/" + path;
+            path = '/' + path;
           if (!path.endsWith("/"))
-            path = path + "/";
+            path = path + '/';
           info.path = path;
           item = 0;
           if (folders.count() > 1)

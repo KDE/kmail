@@ -90,7 +90,7 @@ KMMainWin::~KMMainWin()
     // Check if this was the last KMMainWin
     int not_withdrawn = 0;
 	for (int i = 0; i < KMainWindow::memberList().size(); ++i){
-	  
+
       if ( !KMainWindow::memberList().at(i)->isHidden() &&
            KMainWindow::memberList().at(i)->isTopLevel() &&
            KMainWindow::memberList().at(i) != this &&
@@ -114,7 +114,7 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   if ( !statusBar() || !mLittleProgress) return;
   int statusWidth = statusBar()->width() - mLittleProgress->width()
                     - fontMetrics().maxWidth();
-  QString text = KStringHandler::rPixelSqueeze( " " + aText, fontMetrics(),
+  QString text = KStringHandler::rPixelSqueeze( ' ' + aText, fontMetrics(),
                                                 statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),

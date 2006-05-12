@@ -48,7 +48,7 @@ FilterLog * FilterLog::mSelf = NULL;
 
 
 FilterLog::FilterLog()
-{ 
+{
   mSelf = this;
   // start with logging disabled by default
   mLogging = false;
@@ -56,7 +56,7 @@ FilterLog::FilterLog()
   // when the log i sgoing to become very long
   mMaxLogSize = 512 * 1024;
   mCurrentLogSize = 0;
-  mAllowedTypes =  meta | patternDesc | ruleResult | 
+  mAllowedTypes =  meta | patternDesc | ruleResult |
                    patternResult | appliedAction;
 }
 
@@ -76,7 +76,7 @@ void FilterLog::add( QString logEntry, ContentType contentType )
 {
   if ( isLogging() && ( mAllowedTypes & contentType ) )
   {
-    QString timedLog = "[" + QTime::currentTime().toString() + "] ";
+    QString timedLog = '[' + QTime::currentTime().toString() + "] ";
     if ( contentType & ~meta )
       timedLog += logEntry;
     else
@@ -89,19 +89,19 @@ void FilterLog::add( QString logEntry, ContentType contentType )
 }
 
 
-void FilterLog::setMaxLogSize( long size ) 
+void FilterLog::setMaxLogSize( long size )
 {
   if ( size < -1)
     size = -1;
   // do not allow less than 1 KByte except unlimited (-1)
   if ( size >= 0 && size < 1024 )
-    size = 1024; 
-  mMaxLogSize = size; 
+    size = 1024;
+  mMaxLogSize = size;
   emit logStateChanged();
-  checkLogSize(); 
+  checkLogSize();
 }
 
-      
+
 void FilterLog::dump()
 {
 #ifndef NDEBUG
@@ -130,7 +130,7 @@ void FilterLog::checkLogSize()
       {
         mCurrentLogSize -= (*it).length();
         mLogEntries.erase( it );
-        kDebug(5006) << "Filter log: new size = " 
+        kDebug(5006) << "Filter log: new size = "
                       << QString::number( mCurrentLogSize ) << endl;
       }
       else
@@ -151,8 +151,8 @@ bool FilterLog::saveToFile( QString fileName )
       fchmod( file.handle(), S_IRUSR | S_IWUSR );
       {
         QDataStream ds( &file );
-        for ( QStringList::Iterator it = mLogEntries.begin(); 
-              it != mLogEntries.end(); ++it ) 
+        for ( QStringList::Iterator it = mLogEntries.begin();
+              it != mLogEntries.end(); ++it )
         {
           QString tmpString = *it + '\n';
           Q3CString cstr( tmpString.toLocal8Bit() );
@@ -160,7 +160,7 @@ bool FilterLog::saveToFile( QString fileName )
         }
       }
       return true;
-    } 
+    }
     else
       return false;
 }

@@ -303,7 +303,7 @@ void ImapJob::slotGetNextMessage()
     } else if ( mPartSpecifier == "HEADER" ) {
       path += ";SECTION=HEADER";
     } else {
-      path += ";SECTION=BODY.PEEK[" + mPartSpecifier + "]";
+      path += ";SECTION=BODY.PEEK[" + mPartSpecifier + ']';
       DwBodyPart * part = msg->findDwBodyPart( msg->getFirstDwBodyPart(), mPartSpecifier );
       if (part)
         jd.total = part->BodySize();

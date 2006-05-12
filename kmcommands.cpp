@@ -845,7 +845,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   if ( msg ) {
     Q3CString str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asString() );
-    str += "\n";
+    str += '\n';
     msg->setTransferInProgress(false);
 
     mData = str;
@@ -1172,7 +1172,7 @@ KMCommand::Result KMForwardCommand::execute()
         msgPartText += QString::fromLatin1( boundary );
         msgPartText += "\nContent-Type: MESSAGE/RFC822";
         msgPartText += QString("; CHARSET=%1").arg( QString::fromLatin1( msg->charset() ) );
-        msgPartText += "\n";
+        msgPartText += '\n';
         DwHeaders dwh;
         dwh.MessageId().CreateDefault();
         msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
@@ -1185,9 +1185,9 @@ KMCommand::Result KMForwardCommand::execute()
         msg->removeHeaderField("BCC");
         // set the part
         msgPartText += msg->headerAsString();
-        msgPartText += "\n";
+        msgPartText += '\n';
         msgPartText += msg->body();
-        msgPartText += "\n";     // eot
+        msgPartText += '\n';     // eot
         msgCnt++;
         fwdMsg->link( msg, MessageStatus::statusForwarded() );
       }

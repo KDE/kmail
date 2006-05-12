@@ -685,7 +685,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)
       if( child && ( oldName != newName ) ) {
-        child->setName( "." + QFile::encodeName(newName) + ".directory" );
+        child->setName( '.' + QFile::encodeName(newName) + ".directory" );
       }
     }
 

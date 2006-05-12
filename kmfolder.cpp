@@ -256,8 +256,8 @@ KMFolderDir* KMFolder::createChildFolder()
   if( mChild )
     return mChild;
 
-  QString childName = "." + fileName() + ".directory";
-  QString childDir = path() + "/" + childName;
+  QString childName = '.' + fileName() + ".directory";
+  QString childDir = path() + '/' + childName;
   if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
   {
     if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
@@ -674,7 +674,7 @@ QString KMFolder::idString() const
   int pathLen = myPath.length() - folderNode->path().length();
   QString relativePath = myPath.right( pathLen );
   if (!relativePath.isEmpty())
-    relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
+    relativePath = relativePath.right( relativePath.length() - 1 ) + '/';
   QString escapedName = name();
   /* Escape [ and ] as they are disallowed for kconfig sections and that is
      what the idString is primarily used for. */
