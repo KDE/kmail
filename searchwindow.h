@@ -21,7 +21,7 @@
 #ifndef searchwindow_h
 #define searchwindow_h
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kxmlguiclient.h>
 
 //Added by qt3to4:
@@ -67,7 +67,7 @@ namespace KMail {
    * results in a listview and allows triggering of operations such as printing
    * or moving on them.
    */
-class SearchWindow: public KDialogBase, virtual public KXMLGUIClient
+class SearchWindow: public KDialog, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -80,8 +80,7 @@ public:
    * of search operations.
    * @param modal Whether the dialog is to be shown modal.
    */
-  SearchWindow( KMMainWidget* parent, const char* name=0,
-                       KMFolder *curFolder=0, bool modal=false );
+  SearchWindow( KMMainWidget* parent, KMFolder *curFolder=0 );
   virtual ~SearchWindow();
 
   /**

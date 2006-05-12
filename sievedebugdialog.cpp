@@ -186,11 +186,11 @@ private:
 namespace KMail
 {
 
-SieveDebugDialog::SieveDebugDialog( QWidget *parent, const char *name )
-:   KDialogBase( parent, name, true, i18n( "Sieve Diagnostics" ), KDialogBase::Ok,
-    KDialogBase::Ok, true ),
+SieveDebugDialog::SieveDebugDialog( QWidget *parent )
+:   KDialog( parent, i18n( "Sieve Diagnostics" ), KDialog::Ok ),
     mSieveJob( 0 )
 {
+    setDefaultButton( KDialog::Ok );
     // Collect all accounts
     AccountManager *am = kmkernel->acctMgr();
     assert( am );

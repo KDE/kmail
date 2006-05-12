@@ -1342,8 +1342,8 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !msg || !msg->codec() )
     return Failed;
 
-  RedirectDialog dlg( parentWidget(), "redirect", true,
-                      kmkernel->msgSender()->sendImmediate() );
+  RedirectDialog dlg( parentWidget(), kmkernel->msgSender()->sendImmediate() );
+  dlg.setObjectName( "redirect" );
   if (dlg.exec()==QDialog::Rejected) return Failed;
 
   KMMessage *newMsg = msg->createRedirect( dlg.to() );

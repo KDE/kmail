@@ -267,8 +267,8 @@ ProcmailRCParser::expandVars(const QString &s)
 
 
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
-			      QWidget *parent, const char *name, bool modal )
-  : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
+			      QWidget *parent )
+  : KDialog( parent, caption, Ok|Cancel|Help ),
     mAccount( account ),
     mServerTest( 0 ),
     mCurCapa( AllCapa ),
@@ -323,7 +323,8 @@ AccountDialog::~AccountDialog()
 void AccountDialog::makeLocalAccountPage()
 {
   ProcmailRCParser procmailrcParser;
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QGridLayout *topLayout = new QGridLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -463,7 +464,8 @@ void AccountDialog::makeMaildirAccountPage()
 {
   ProcmailRCParser procmailrcParser;
 
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QGridLayout *topLayout = new QGridLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -563,7 +565,8 @@ void AccountDialog::makeMaildirAccountPage()
 
 void AccountDialog::makePopAccountPage()
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -837,7 +840,8 @@ void AccountDialog::makePopAccountPage()
 
 void AccountDialog::makeImapAccountPage( bool connected )
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -2262,10 +2266,12 @@ void NamespaceLineEdit::setText( const QString& text )
 
 NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
-  : KDialogBase( parent, "edit_namespace", false, QString(),
-      Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
+  : KDialog( parent, QString(), Ok|Cancel ), mType( type ), mNamespaceMap( map )
 {
-  QFrame *page = makeVBoxMainWidget();
+  setObjectName( "edit_namespace" );
+  setModal( false );
+  QFrame *page = new KVBox( this );
+  setMainWidget( page );
 
   QString ns;
   if ( mType == ImapAccountBase::PersonalNS ) {
@@ -2280,6 +2286,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
 
   mBg = new Q3ButtonGroup( 0 );
   connect( mBg, SIGNAL( clicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mDelimMap = mNamespaceMap->find( mType ).value();
   ImapAccountBase::namespaceDelim::Iterator it;
   for ( it = mDelimMap.begin(); it != mDelimMap.end(); ++it ) {
@@ -2326,7 +2333,6 @@ void NamespaceEditDialog::slotOk()
     }
   }
   mNamespaceMap->insert( mType, mDelimMap );
-  KDialogBase::slotOk();
 }
 
 } // namespace KMail

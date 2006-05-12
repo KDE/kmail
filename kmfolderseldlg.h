@@ -6,7 +6,7 @@
 #ifndef kmfolderseldlg_h
 #define kmfolderseldlg_h
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kfoldertree.h>
 
 class KMFolder;
@@ -60,7 +60,7 @@ namespace KMail {
 };
 
   //-----------------------------------------------------------------------------
-  class KMFolderSelDlg: public KDialogBase
+  class KMFolderSelDlg: public KDialog
   {
     Q_OBJECT
 

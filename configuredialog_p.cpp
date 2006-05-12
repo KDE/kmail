@@ -44,13 +44,12 @@
 
 
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
-				      QWidget *parent, const char *name,
-				      bool modal )
-  : KDialogBase( parent, name, modal, i18n("New Identity"),
-		 Ok|Cancel|Help, Ok, true )
+				      QWidget *parent )
+  : KDialog( parent, i18n("New Identity"), Ok|Cancel|Help )
 {
   setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
-  QWidget * page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout * vlay = new QVBoxLayout( page );
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
@@ -204,12 +203,12 @@ QSize ListView::sizeHint() const
 static QString flagPng = QString::fromLatin1("/flag.png");
 
 NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
-				      QWidget *parent, const char *name,
-				      bool modal )
-  : KDialogBase( parent, name, modal, i18n("New Language"), Ok|Cancel, Ok, true )
+				      QWidget *parent )
+  : KDialog( parent, i18n("New Language"), Ok|Cancel )
 {
   // layout the page (a combobox with label):
-  QWidget *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QHBoxLayout *hlay = new QHBoxLayout( page );
   hlay->setSpacing( spacingHint() );
   hlay->setMargin( 0 );
@@ -302,11 +301,12 @@ void LanguageComboBox::setLanguage( const QString & language )
 //
 //
 
-ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
-  : KDialogBase( parent, name, modal, i18n("Load Profile"), Ok|Cancel, Ok, true )
+ProfileDialog::ProfileDialog( QWidget * parent )
+  : KDialog( parent, i18n("Load Profile"), Ok|Cancel )
 {
   // tmp. vars:
-  QWidget * page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout * vlay = new QVBoxLayout( page );
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
@@ -333,7 +333,8 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   connect( mListView, SIGNAL(doubleClicked ( Q3ListViewItem *, const QPoint &, int ) ),
 	   SLOT(slotOk()) );
 
-  connect( this, SIGNAL(finished()), SLOT(delayedDestruct()) );
+  connect( this, SIGNAL(finished()), SLOT(deleteLater()) );
+  connect( this, SIGNAL(okClicked()), SLOT( slotOk() ) );
 
   enableButtonOK( false );
 }
@@ -383,7 +384,6 @@ void ProfileDialog::slotOk() {
 
   KConfig profile( mProfileList.at(index), true, false );
   emit profileSelected( &profile );
-  KDialogBase::slotOk();
 }
 
 

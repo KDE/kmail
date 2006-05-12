@@ -107,13 +107,13 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //
 //=============================================================================
 
-KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
-  : KDialogBase( parent, name, false /* modality */,
+KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter )
+  : KDialog( parent, 
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
-		 Help|Ok|Apply|Cancel /* button mask */,
-		 Ok /* default btn */, false /* separator */),
+		 Help|Ok|Apply|Cancel /* button mask */ ),
   bPopFilter(popFilter)
 {
+  setModal( false );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
@@ -343,7 +343,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 }
 
 void KMFilterDlg::slotFinished() {
-	delayedDestruct();
+	deleteLater();
 }
 
 void KMFilterDlg::slotSaveSize() {

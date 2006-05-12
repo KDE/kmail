@@ -32,12 +32,17 @@ using namespace KMail;
  *
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* folder )
-    : KDialogBase( tree, "expiry_properties", false, i18n( "Mail Expiry Properties" ), 
-                   KDialogBase::Ok|KDialogBase::Cancel, 
-                   KDialogBase::Ok, true ),
+    : KDialog( tree, i18n( "Mail Expiry Properties" ), 
+                   KDialog::Ok|KDialog::Cancel ),
       mFolder( folder )
 {
+  setDefaultButton( KDialog::Ok );
+  setModal( false );
+  setObjectName( "expiry_properties" );
   setAttribute( Qt::WA_DeleteOnClose );
+  
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+  
   QWidget* privateLayoutWidget = new QWidget( this );
   privateLayoutWidget->setObjectName( "globalVBox" );
   setMainWidget( privateLayoutWidget );
@@ -217,7 +222,6 @@ void ExpiryPropertiesDialog::slotOk()
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-  KDialogBase::slotOk();
 }
 
 void ExpiryPropertiesDialog::slotUpdateControls()

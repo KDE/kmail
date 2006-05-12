@@ -39,7 +39,7 @@
 #ifndef FOLDERSHORTCUTDIALOG_H
 #define FOLDERSHORTCUTDIALOG_H
 
-#include <kdialogbase.h> // include for the base class
+#include <kdialog.h> // include for the base class
 class KShortcut;
 class KMFolder;
 class KKeyButton;
@@ -48,12 +48,12 @@ class KMMainWidget;
 namespace KMail
 {
 
-class FolderShortcutDialog : public KDialogBase
+class FolderShortcutDialog : public KDialog
 {
 Q_OBJECT
 public:
 	FolderShortcutDialog( KMFolder *folder, KMMainWidget *mw, 
-                        QWidget *parent=0, const char *name=0 );
+                        QWidget *parent=0 );
 	~FolderShortcutDialog();
 
 

@@ -24,20 +24,20 @@
 #include <config.h>
 #endif
 
-#include <q3buttongroup.h>
+#include <Q3ButtonGroup>
 #include <QLayout>
 #include <qradiobutton.h>
-//Added by qt3to4:
 #include <QVBoxLayout>
 
 #include <klocale.h>
 
 #include "kmacctseldlg.moc"
 
-KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
-  : KDialogBase( parent, name, modal, i18n("Add Account"), Ok|Cancel, Ok )
+KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
+  : KDialog( parent, i18n("Add Account"), Ok|Cancel )
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );

@@ -8,15 +8,17 @@
 
 #include <QLayout>
 #include <QLabel>
-//Added by qt3to4:
 #include <QVBoxLayout>
 
 ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& caption,
                                           const QStringList& keys, const QString& currentKey,
                                           const QString& lastOptions )
-  : KDialogBase( parent, "chiasmusKeySelector", true, caption, Ok|Cancel, Ok, true )
+  : KDialog( parent, caption, Ok|Cancel )
 {
-  QWidget *page = makeMainWidget();
+  setObjectName( "chiasmusKeySelector" );
+  setDefaultButton( Ok );
+  QWidget *page = new QWidget( this );
+  setMainWidget(page);
 
   QVBoxLayout *layout = new QVBoxLayout(page);
   layout->setSpacing(KDialog::spacingHint());

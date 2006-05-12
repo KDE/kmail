@@ -55,11 +55,16 @@ using namespace KMail;
 
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
-: KDialogBase( parent, "FilterLogDlg", false, i18n( "Filter Log Viewer" ),
-              User1|User2|Close, Close, true, KStdGuiItem::clear(), KStdGuiItem::saveAs() )
+: KDialog( parent, i18n( "Filter Log Viewer" ), User1|User2|Close )
 {
+  setObjectName( "FilterLogDlg" );
+  setModal( false );
+  setDefaultButton( Close );
+  setButtonGuiItem( User1, KStdGuiItem::clear() );
+  setButtonGuiItem( User2, KStdGuiItem::saveAs() );
   setAttribute( Qt::WA_DeleteOnClose );
-  QFrame *page = makeVBoxMainWidget();
+  QFrame *page = new KVBox( this );
+  setMainWidget( page );
 
   mTextEdit = new Q3TextEdit( page );
   mTextEdit->setReadOnly( true );

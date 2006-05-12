@@ -23,7 +23,7 @@
 #ifndef _ACCOUNT_DIALOG_H_
 #define _ACCOUNT_DIALOG_H_
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <k3listview.h>
 #include <klineedit.h>
 #include <QPointer>
@@ -51,13 +51,13 @@ namespace KMail {
 class SieveConfigEditor;
 class FolderRequester;
 
-class AccountDialog : public KDialogBase
+class AccountDialog : public KDialog
 {
   Q_OBJECT
 
   public:
     AccountDialog( const QString & caption, KMAccount *account,
-		   QWidget *parent=0, const char *name=0, bool modal=true );
+		   QWidget *parent=0 );
     virtual ~AccountDialog();
   private:
     struct LocalWidgets
@@ -305,7 +305,7 @@ class NamespaceLineEdit: public KLineEdit
     QString mLastText;
 };
 
-class NamespaceEditDialog: public KDialogBase
+class NamespaceEditDialog: public KDialog
 {
   Q_OBJECT
 

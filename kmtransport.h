@@ -20,7 +20,7 @@
 #ifndef _KMTRANSPORT_H_
 #define _KMTRANSPORT_H_
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 //Added by qt3to4:
 #include <QLabel>
 
@@ -63,12 +63,12 @@ public:
     uint mId;
 };
 
-class KMTransportSelDlg : public KDialogBase
+class KMTransportSelDlg : public KDialog
 {
   Q_OBJECT
 
 public:
-  KMTransportSelDlg( QWidget *parent=0, const char *name=0, bool modal=true );
+  KMTransportSelDlg( QWidget *parent=0 );
   int selected() const;
 
 private slots:
@@ -78,13 +78,13 @@ private:
   int mSelectedButton;
 };
 
-class KMTransportDialog : public KDialogBase
+class KMTransportDialog : public KDialog
 {
   Q_OBJECT
 
 public:
   KMTransportDialog( const QString & caption, KMTransportInfo *transportInfo,
-		     QWidget *parent=0, const char *name=0, bool modal=true );
+		     QWidget *parent=0 );
   virtual ~KMTransportDialog();
 
 private slots:

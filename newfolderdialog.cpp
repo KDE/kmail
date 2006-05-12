@@ -37,12 +37,11 @@
 #include <QToolTip>
 
 #include <QRegExp>
-//Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
 #include <klocale.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kmessagebox.h>
 
 #include "newfolderdialog.h"
@@ -60,15 +59,17 @@
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-    : KDialogBase( parent, "new_folder_dialog", false, i18n( "New Folder" ),
-                   KDialogBase::Ok|KDialogBase::Cancel,
-                   KDialogBase::Ok, true ),
+    : KDialog( parent, i18n( "New Folder" ), KDialog::Ok|KDialog::Cancel ),
       mFolder( folder )
 {
+  setModal( false );
+  setObjectName( "new_folder_dialog" );
+  setDefaultButton( KDialog::Ok );
   setAttribute( Qt::WA_DeleteOnClose );
   if ( folder ) {
     setCaption( i18n("New Subfolder of %1", folder->prettyURL() ) );
   }
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   QWidget* privateLayoutWidget = new QWidget( this );
   privateLayoutWidget->setObjectName( "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
@@ -206,6 +207,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 #warning Port me!
 //  clearWState( WState_Polished );
   slotFolderNameChanged( mNameLineEdit->text());
+  
 }
 
 void NewFolderDialog::slotFolderNameChanged( const QString & _text)
@@ -327,7 +329,6 @@ void NewFolderDialog::slotOk()
     newFolder->storage()->setContentsType( type );
     newFolder->storage()->writeConfig(); // connected slots will read it
   }
-  KDialogBase::slotOk();
 }
 
 #include "newfolderdialog.moc"

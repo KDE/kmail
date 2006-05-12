@@ -270,7 +270,8 @@ void ConfigureDialog::slotUser2() {
     mProfileDialog->raise();
     return;
   }
-  mProfileDialog = new ProfileDialog( this, "mProfileDialog" );
+  mProfileDialog = new ProfileDialog( this );
+  mProfileDialog->setObjectName( "mProfileDialog" );
   connect( mProfileDialog, SIGNAL(profileSelected(KConfig*)),
                 this, SIGNAL(installProfile(KConfig*)) );
   mProfileDialog->show();
@@ -383,7 +384,8 @@ void IdentityPage::slotNewIdentity()
   assert( !mIdentityDialog );
 
   KPIM::IdentityManager * im = kmkernel->identityManager();
-  NewIdentityDialog dialog( im->shadowIdentities(), this, "new", true );
+  NewIdentityDialog dialog( im->shadowIdentities(), this );
+  dialog.setObjectName( "new" );
 
   if( dialog.exec() == QDialog::Accepted ) {
     QString identityName = dialog.identityName().trimmed();
@@ -2865,7 +2867,8 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
 
 void ComposerPage::PhrasesTab::slotNewLanguage()
 {
-  NewLanguageDialog dialog( mLanguageList, parentWidget(), "New", true );
+  NewLanguageDialog dialog( mLanguageList, parentWidget() );
+  dialog.setObjectName( "New" );
   if ( dialog.exec() == QDialog::Accepted ) slotAddNewLanguage( dialog.language() );
 }
 

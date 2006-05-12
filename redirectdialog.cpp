@@ -56,12 +56,12 @@ using KRecentAddress::RecentAddresses;
 
 using namespace KMail;
 
-RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
-                                bool modal, bool immediate )
-  : KDialogBase( parent, name, modal, i18n( "Redirect Message" ),
-                 User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
+RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
+  : KDialog( parent, i18n( "Redirect Message" ), User1|User2|Cancel )
 {
-  QFrame *vbox = makeVBoxMainWidget();
+  setDefaultButton( immediate ? User1 : User2 );
+  QFrame *vbox = new KVBox( this );
+  setMainWidget( vbox );
   mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
 

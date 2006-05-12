@@ -244,11 +244,11 @@ void KMTransportInfo::readPassword() const
 }
 
 
-KMTransportSelDlg::KMTransportSelDlg( QWidget *parent, const char *name,
-  bool modal )
-  : KDialogBase( parent, name, modal, i18n("Add Transport"), Ok|Cancel, Ok )
+KMTransportSelDlg::KMTransportSelDlg( QWidget *parent )
+  : KDialog( parent, i18n("Add Transport"), Ok|Cancel )
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -287,9 +287,8 @@ int KMTransportSelDlg::selected( void ) const
 
 KMTransportDialog::KMTransportDialog( const QString & caption,
 				      KMTransportInfo *transportInfo,
-				      QWidget *parent, const char *name,
-				      bool modal )
-  : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true ),
+				      QWidget *parent )
+  : KDialog( parent, caption, Ok|Cancel ),
     mServerTest( 0 ),
     mTransportInfo( transportInfo ),
     mAuthNone( AllAuth ), mAuthSSL( AllAuth ), mAuthTLS( AllAuth )
@@ -314,7 +313,8 @@ KMTransportDialog::~KMTransportDialog()
 
 void KMTransportDialog::makeSendmailPage()
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
@@ -366,7 +366,8 @@ void KMTransportDialog::slotSendmailEditPath(const QString & _text)
 
 void KMTransportDialog::makeSmtpPage()
 {
-  QFrame *page = makeMainWidget();
+  QWidget *page = new QWidget( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );

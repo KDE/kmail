@@ -372,8 +372,8 @@ void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
     // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
-    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter,
-                                   checkForEmptyFilterList );
+    mEditDialog = new KMFilterDlg( 0, bPopFilter, checkForEmptyFilterList );
+    mEditDialog->setObjectName( "filterdialog" );
   }
   mEditDialog->show();
 }

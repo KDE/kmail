@@ -70,12 +70,8 @@ namespace KMail {
 const int SearchWindow::MSGID_COLUMN = 4;
 
 //-----------------------------------------------------------------------------
-SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
-                         KMFolder *curFolder, bool modal):
-  KDialogBase(0, name, modal, i18n("Find Messages"),
-              User1 | User2 | Close, User1, false,
-              KGuiItem( i18n("&Search"), "find" ),
-              KStdGuiItem::stop()),
+SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
+  KDialog(0, i18n("Find Messages"), User1 | User2 | Close ),
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
@@ -85,6 +81,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLastFocus(0),
   mKMMainWidget(w)
 {
+  setDefaultButton( User1 );
+  setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "find" ) );
+  setButtonGuiItem( User2, KStdGuiItem::stop() );
   KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 
   KConfig* config = KMKernel::config();
@@ -253,8 +252,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   setMainWidget(searchWidget);
   setButtonBoxOrientation(Qt::Vertical);
 
-  mBtnSearch = actionButton(KDialogBase::User1);
-  mBtnStop = actionButton(KDialogBase::User2);
+  mBtnSearch = actionButton(KDialog::User1);
+  mBtnStop = actionButton(KDialog::User2);
   mBtnStop->setEnabled(false);
 
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
@@ -383,7 +382,7 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
         return;
     }
 
-    KDialogBase::keyPressEvent(evt);
+    KDialog::keyPressEvent(evt);
 }
 
 
@@ -563,7 +562,7 @@ void SearchWindow::closeEvent(QCloseEvent *e)
       mFolder->setSearch(new KMSearch());
       QTimer::singleShot(0, this, SLOT(slotClose()));
     } else {
-      KDialogBase::closeEvent(e);
+      KDialog::closeEvent(e);
     }
 }
 
@@ -640,7 +639,7 @@ void SearchWindow::enableGUI()
 {
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
-    actionButton(KDialogBase::Close)->setEnabled(!searching);
+    actionButton(KDialog::Close)->setEnabled(!searching);
     mCbxFolders->setEnabled(!searching);
     mChkSubFolders->setEnabled(!searching);
     mChkbxAllFolders->setEnabled(!searching);

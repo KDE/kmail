@@ -10,7 +10,7 @@
 #include "kmfilteraction.h"
 
 #include <kwidgetlister.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kvbox.h>
 
 #include <QGroupBox>
@@ -318,14 +318,14 @@ private:
 
  */
 
-class KMFilterDlg: public KDialogBase
+class KMFilterDlg: public KDialog
 {
   Q_OBJECT
 public:
   /** Create the filter dialog. The only class which should be able to
       do this is KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg( QWidget* parent=0, const char* name=0, bool popFilter=false,
+  KMFilterDlg( QWidget* parent=0, bool popFilter=false,
                bool createDummyFilter=true );
 
   /** Called from KMFilterMgr. Creates a new filter and presets

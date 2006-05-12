@@ -29,9 +29,7 @@
 #ifndef KMAIL_REDIRECTDIALOG_H
 #define KMAIL_REDIRECTDIALOG_H
 
-#include <kdialogbase.h>
-//Added by qt3to4:
-#include <QLabel>
+#include <kdialog.h>
 
 class KMLineEdit;
 class QPushButton;
@@ -49,20 +47,17 @@ namespace KMail {
     supported so far.
 
   */
-  class RedirectDialog : public KDialogBase
+  class RedirectDialog : public KDialog
   {
     Q_OBJECT
 
     public:
       /** Constructor
         @param parent parent QWidget
-        @param name dialog name
-        @param modal dialog modal type
         @param immediate True, if the Send Now button should be default
                          or false if the Queue button should be default
       */
-      RedirectDialog( QWidget *parent=0, const char *name=0,
-                      bool modal=false, bool immediate=true );
+      RedirectDialog( QWidget *parent=0, bool immediate=true );
 
       /** Return the addresses for the redirection */
       QString to() { return mResentTo; };

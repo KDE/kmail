@@ -13,18 +13,16 @@
 KListBoxDialog::KListBoxDialog( QString& _selectedString,
                                 const QString& caption,
                                 const QString& labelText,
-                                QWidget* parent,
-                                const char* name,
-                                bool modal )
-    : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true ),
+                                QWidget* parent )
+    : KDialog( parent, caption, Ok|Cancel ),
       selectedString( _selectedString )
 
 {
-    if ( !name )
-      setObjectName( "KListBoxDialog" );
+    setObjectName( "KListBoxDialog" );
     resize( 400, 180 );
 
-    QFrame *page = makeMainWidget();
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
     QVBoxLayout *topLayout = new QVBoxLayout( page );
     topLayout->setSpacing( spacingHint() );
     topLayout->setMargin( 0 );

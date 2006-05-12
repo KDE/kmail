@@ -21,7 +21,7 @@
 // not useful enough for non-developers to have this in releases.
 #if !defined(NDEBUG)
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
 
 class QString;
@@ -49,12 +49,12 @@ class SieveJob;
  * Diagnostic info for Sieve. Only compiled when debug is enabled, it is
  * not useful enough for non-developers to have this in releases.
  */
-class SieveDebugDialog : public KDialogBase
+class SieveDebugDialog : public KDialog
 {
     Q_OBJECT
 
 public:
-    SieveDebugDialog( QWidget *parent = 0, const char *name = 0 );
+    SieveDebugDialog( QWidget *parent = 0 );
     virtual ~SieveDebugDialog();
 
 protected:

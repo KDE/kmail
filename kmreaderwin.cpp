@@ -1652,7 +1652,8 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
 void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
   const QByteArray vCard = msgPart->bodyDecodedBinary();
 
-  VCardViewer *vcv = new VCardViewer(this, vCard, "vCardDialog");
+  VCardViewer *vcv = new VCardViewer(this, vCard );
+  vcv->setObjectName( "vCardDialog" );
   vcv->show();
 }
 

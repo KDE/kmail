@@ -31,16 +31,14 @@
 
 #include <QLabel>
 #include <QComboBox>
-#include <q3groupbox.h>
+#include <Q3GroupBox>
 #include <QCheckBox>
 #include <QPushButton>
-//Added by qt3to4:
 #include <QVBoxLayout>
 #include <QGridLayout>
 
 #include <klocale.h>
 #include <keditlistbox.h>
-#include <kdialogbase.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kmcommands.h>
@@ -52,14 +50,18 @@
 using namespace KMail;
 
 MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, KMFolder *folder )
-    : KDialogBase( parent, "mailinglist_properties", false, i18n( "Mailinglist Folder Properties" ), 
-                   KDialogBase::Ok|KDialogBase::Cancel, 
-                   KDialogBase::Ok, true ),
+    : KDialog( parent, i18n( "Mailinglist Folder Properties" ), 
+                   KDialog::Ok|KDialog::Cancel ),
       mFolder( folder )
 {
+  setObjectName( "mailinglist_properties" );
+  setModal( false );
+  setDefaultButton( KDialog::Ok );
   setAttribute( Qt::WA_DeleteOnClose );
   QLabel* label;
   mLastItem = 0;
+  
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 
   QVBoxLayout *topLayout = new QVBoxLayout();
   layout()->addItem( topLayout );
@@ -163,7 +165,6 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 void MailingListFolderPropertiesDialog::slotOk()
 {
   save();
-  KDialogBase::slotOk();
 }
 
 void MailingListFolderPropertiesDialog::load()

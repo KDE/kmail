@@ -20,7 +20,7 @@
 #ifndef VCARDVIEWER_H
 #define VCARDVIEWER_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kabc/addressee.h>
 
 namespace KPIM {
@@ -29,11 +29,11 @@ namespace KPIM {
 
 namespace KMail {
 
-  class VCardViewer : public KDialogBase
+  class VCardViewer : public KDialog
   {
      Q_OBJECT
      public:
-       VCardViewer(QWidget *parent, const QByteArray& vCard, const char* name);
+       VCardViewer(QWidget *parent, const QByteArray& vCard);
        virtual ~VCardViewer();
 
      protected:

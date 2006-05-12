@@ -57,14 +57,13 @@ using namespace KMail;
 
 FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                                             KMMainWidget *mainwidget,
-                                            QWidget *parent,
-                                            const char *name )
-:  KDialogBase( parent, name, true,
-               i18n( "Shortcut for Folder %1", folder->label() ),
-               KDialogBase::Ok | KDialogBase::Cancel ),
+                                            QWidget *parent )
+:  KDialog( parent, i18n( "Shortcut for Folder %1", folder->label() ),
+               KDialog::Ok | KDialog::Cancel ),
    mFolder( folder ), mMainWidget( mainwidget )
 {
-  QFrame *box = makeVBoxMainWidget();
+  QFrame *box = new KVBox( this );
+  setMainWidget( box );
   Q3GroupBox *gb = new Q3GroupBox(1, Qt::Horizontal, i18n("Select Shortcut for Folder"), box );
   gb->setWhatsThis( i18n( "<qt>To choose a key or a combination "
                              "of keys which select the current folder, "
@@ -78,6 +77,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
 
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
            this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mKeyButton->setShortcut( folder->shortcut() );
 }
 
@@ -105,7 +105,6 @@ void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
 void FolderShortcutDialog::slotOk()
 {
   mFolder->setShortcut( mKeyButton->shortcut() );
-  KDialogBase::slotOk();
 }
 
 #include "foldershortcutdialog.moc"

@@ -37,10 +37,14 @@ using KABC::Addressee;
 
 #include <QString>
 
-KMail::VCardViewer::VCardViewer(QWidget *parent, const QByteArray& vCard, const char* name)
-  : KDialogBase( parent, name, false, i18n("VCard Viewer"), User1|User2|User3|Close, Close,
-		 true, i18n("&Import"), i18n("&Next Card"), i18n("&Previous Card") )
+KMail::VCardViewer::VCardViewer(QWidget *parent, const QByteArray& vCard)
+  : KDialog( parent, i18n("VCard Viewer"), User1|User2|User3|Close )
 {
+  setModal( false );
+  setDefaultButton( Close );
+  setButtonGuiItem( User1, i18n("&Import") );
+  setButtonGuiItem( User2, i18n("&Next Card") );
+  setButtonGuiItem( User3, i18n("&Previous Card") );
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->enableLinks( 0 );
   mAddresseeView->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
@@ -62,6 +66,9 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QByteArray& vCard, const 
     mAddresseeView->setPlainText(i18n("Failed to parse vCard."));
     enableButton(User1, false);
   }
+  connect( this, SIGNAL( user1clicked() ), SLOT( slotUser1() ) );
+  connect( this, SIGNAL( user2clicked() ), SLOT( slotUser2() ) );
+  connect( this, SIGNAL( user3clicked() ), SLOT( slotUser3() ) );
 
   resize(300,400);
 }

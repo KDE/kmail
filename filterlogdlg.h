@@ -29,7 +29,7 @@
 #ifndef KMAIL_FILTERLOGDLG_H
 #define KMAIL_FILTERLOGDLG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class Q3TextEdit;
 class QCheckBox;
@@ -45,7 +45,7 @@ namespace KMail {
     The filter log dialog allows a continued observation of the 
     filter log of KMail.
   */
-  class FilterLogDialog : public KDialogBase
+  class FilterLogDialog : public KDialog
   {
     Q_OBJECT
     

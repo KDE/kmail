@@ -30,8 +30,7 @@
 #define MAILINGLISTFOLDERPROPERTIESDIALOG_H
 
 #include "mailinglist-magic.h"
-#include <kdialogbase.h> // include for the base class
-//Added by qt3to4:
+#include <kdialog.h>
 #include <QLabel>
 
 class KMFolder;
@@ -44,7 +43,7 @@ class KEditListBox;
 namespace KMail
 {
 
-class MailingListFolderPropertiesDialog : public KDialogBase
+class MailingListFolderPropertiesDialog : public KDialog
 {
   Q_OBJECT
 public:

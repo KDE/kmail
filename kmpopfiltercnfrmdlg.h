@@ -20,7 +20,7 @@
 
 #include "kmpopheaders.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <k3listview.h>
 
 #include <QMap>
@@ -75,7 +75,7 @@ protected:
 };
 
 
-class KMPopFilterCnfrmDlg : public KDialogBase
+class KMPopFilterCnfrmDlg : public KDialog
 {
 	friend class ::KMPopHeadersView;
   Q_OBJECT

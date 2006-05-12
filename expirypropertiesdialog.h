@@ -16,7 +16,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
@@ -35,7 +35,7 @@ namespace KMail {
 
   class FolderRequester;
 
-class ExpiryPropertiesDialog : public KDialogBase
+class ExpiryPropertiesDialog : public KDialog
 {
     Q_OBJECT
 

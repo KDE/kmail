@@ -30,13 +30,12 @@
 #define NEW_FOLDER_DIALOG_H
 
 #include <QVariant>
-#include <qdialog.h>
-//Added by qt3to4:
+#include <QDialog>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
@@ -49,7 +48,7 @@ class KMFolder;
 
 namespace KMail {
 
-class NewFolderDialog : public KDialogBase
+class NewFolderDialog : public KDialog
 {
   Q_OBJECT
 

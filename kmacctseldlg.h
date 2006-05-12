@@ -24,15 +24,15 @@
 #ifndef kmacctseldlg_h
 #define kmacctseldlg_h
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 /** Select account from given list of account types */
-class KMAcctSelDlg: public KDialogBase
+class KMAcctSelDlg: public KDialog
 {
   Q_OBJECT
 
   public:
-    KMAcctSelDlg( QWidget *parent=0, const char *name=0, bool modal=true );
+    KMAcctSelDlg( QWidget *parent=0 );
 
     /**
      * Returns selected button from the account selection group:

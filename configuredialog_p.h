@@ -20,7 +20,7 @@
 
 #include <dcopobject.h>
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <k3listview.h>
 #include <kcmodule.h>
 #include <klocale.h>
@@ -67,7 +67,7 @@ namespace Kleo {
   class CryptoConfigEntry;
 }
 
-class NewIdentityDialog : public KDialogBase
+class NewIdentityDialog : public KDialog
 {
   Q_OBJECT
 
@@ -75,7 +75,7 @@ public:
   enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
   NewIdentityDialog( const QStringList & identities,
-                     QWidget *parent=0, const char *name=0, bool modal=true );
+                     QWidget *parent=0 );
 
   QString identityName() const { return mLineEdit->text(); }
   QString duplicateIdentity() const { return mComboBox->currentText(); }
@@ -112,13 +112,12 @@ struct LanguageItem
 
 typedef QList<LanguageItem> LanguageItemList;
 
-class NewLanguageDialog : public KDialogBase
+class NewLanguageDialog : public KDialog
 {
   Q_OBJECT
 
   public:
-    NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0,
-                       const char *name=0, bool modal=true );
+    NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0 );
     QString language() const;
 
   private:
@@ -143,10 +142,10 @@ class LanguageComboBox : public QComboBox
 //
 //
 
-class ProfileDialog : public KDialogBase {
+class ProfileDialog : public KDialog {
   Q_OBJECT
 public:
-  ProfileDialog( QWidget * parent=0, const char * name=0, bool modal=false );
+  ProfileDialog( QWidget * parent=0 );
 
 signals:
   void profileSelected( KConfig * profile );
