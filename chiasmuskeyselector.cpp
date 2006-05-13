@@ -16,7 +16,6 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
   : KDialog( parent, caption, Ok|Cancel )
 {
   setObjectName( "chiasmusKeySelector" );
-  setDefaultButton( Ok );
   QWidget *page = new QWidget( this );
   setMainWidget(page);
 

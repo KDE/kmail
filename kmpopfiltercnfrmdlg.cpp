@@ -288,7 +288,6 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders
                                           bool aShowLaterMsgs, QWidget *aParent )
       : KDialog( aParent, i18n("POP Filter"), Ok | Help )
 {
-  setDefaultButton( Ok );
   unsigned int rulesetCount = 0;
   //mHeaders = aHeaders;
   mShowLaterMsgs = aShowLaterMsgs;

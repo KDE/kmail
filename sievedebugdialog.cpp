@@ -190,7 +190,6 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
 :   KDialog( parent, i18n( "Sieve Diagnostics" ), KDialog::Ok ),
     mSieveJob( 0 )
 {
-    setDefaultButton( KDialog::Ok );
     // Collect all accounts
     AccountManager *am = kmkernel->acctMgr();
     assert( am );

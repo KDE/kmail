@@ -56,7 +56,6 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 {
   setObjectName( "mailinglist_properties" );
   setModal( false );
-  setDefaultButton( KDialog::Ok );
   setAttribute( Qt::WA_DeleteOnClose );
   QLabel* label;
   mLastItem = 0;

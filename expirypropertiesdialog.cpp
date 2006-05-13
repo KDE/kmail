@@ -36,7 +36,6 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
                    KDialog::Ok|KDialog::Cancel ),
       mFolder( folder )
 {
-  setDefaultButton( KDialog::Ok );
   setModal( false );
   setObjectName( "expiry_properties" );
   setAttribute( Qt::WA_DeleteOnClose );
