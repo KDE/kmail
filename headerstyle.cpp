@@ -57,11 +57,11 @@ using namespace KPIM;
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
 #include <kcodecs.h>
-#include <qdatetime.h>
-#include <qbuffer.h>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qapplication.h>
+#include <QDateTime>
+#include <QBuffer>
+#include <QBitmap>
+#include <QImage>
+#include <QApplication>
 #include <QRegExp>
 
 namespace KMail {

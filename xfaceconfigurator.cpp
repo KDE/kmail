@@ -55,10 +55,10 @@ using namespace KPIM;
 #include <kabc/addressee.h>
 using namespace KABC;
 
-#include <qbitmap.h>
+#include <QBitmap>
 #include <QCheckBox>
 #include <QComboBox>
-#include <qimage.h>
+#include <QImage>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>

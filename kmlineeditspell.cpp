@@ -23,10 +23,10 @@
 #include <kcompletionbox.h>
 #include <klocale.h>
 
-#include <qevent.h>
+#include <QEvent>
 #include <QFile>
 #include <q3cstring.h>
-#include <qcursor.h>
+#include <QCursor>
 //Added by qt3to4:
 #include <QKeyEvent>
 #include <QDropEvent>

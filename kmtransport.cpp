@@ -31,9 +31,9 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <klineedit.h>
-#include <qradiobutton.h>
-#include <qtabwidget.h>
-#include <qvalidator.h>
+#include <QRadioButton>
+#include <QTabWidget>
+#include <QValidator>
 #include <QLabel>
 #include <QPushButton>
 

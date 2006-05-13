@@ -113,7 +113,7 @@ using KMime::DateFormatter;
 
 //Added by qt3to4:
 #include <q3buttongroup.h>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <q3header.h>
 #include <q3popupmenu.h>
 #include <q3widgetstack.h>

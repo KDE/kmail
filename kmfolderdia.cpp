@@ -74,7 +74,7 @@
 
 #include <assert.h>
 #include <q3buttongroup.h>
-#include <qradiobutton.h>
+#include <QRadioButton>
 
 #include "kmfolderdia.moc"
 

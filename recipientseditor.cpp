@@ -45,7 +45,7 @@
 #include <q3scrollview.h>
 #include <QComboBox>
 #include <q3hbox.h>
-#include <qtimer.h>
+#include <QTimer>
 #include <QPushButton>
 #include <q3stylesheet.h>
 //Added by qt3to4:

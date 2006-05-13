@@ -35,7 +35,7 @@
 #include "interfaces/htmlwriter.h"
 
 #include <QFile>
-#include <qtextstream.h>
+#include <QTextStream>
 
 class QString;
 

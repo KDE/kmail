@@ -75,9 +75,9 @@
 #include <kaction.h>
 #include <ktoggleaction.h>
 #include <QFile>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <q3textedit.h>
-#include <qtimer.h>
+#include <QTimer>
 //Added by qt3to4:
 #include <QList>
 #include <Q3CString>

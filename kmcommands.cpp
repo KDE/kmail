@@ -130,7 +130,7 @@ using namespace KMime;
 #include <kleo/cryptobackend.h>
 #include <kleo/cryptobackendfactory.h>
 
-#include <qclipboard.h>
+#include <QClipboard>
 
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter

@@ -21,7 +21,7 @@ using KPIM::ProgressManager;
 #include <kdebug.h>
 #include <kconfig.h>
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 #include <QTime>
 
 #include <stdlib.h>

@@ -32,11 +32,11 @@
 
 #include "headerlistquicksearch.h"
 
-#include <qapplication.h>
+#include <QApplication>
 #include <QLabel>
 #include <QComboBox>
 
-#include <qtimer.h>
+#include <QTimer>
 //Added by qt3to4:
 #include <QEvent>
 

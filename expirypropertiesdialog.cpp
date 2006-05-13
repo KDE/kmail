@@ -11,7 +11,7 @@
 #include <QCheckBox>
 #include <QSpinBox>
 #include <QLabel>
-#include <qradiobutton.h>
+#include <QRadioButton>
 #include <q3buttongroup.h>
 #include <QComboBox>
 #include <QLayout>

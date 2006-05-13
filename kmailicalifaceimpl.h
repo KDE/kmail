@@ -43,7 +43,7 @@
 #include <kfoldertree.h>
 
 #include <q3dict.h>
-#include <qpointer.h>
+#include <QPointer>
 #include <QMap>
 //Added by qt3to4:
 #include <QList>

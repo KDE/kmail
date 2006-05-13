@@ -69,7 +69,7 @@ using KMail::FolderRequester;
 #include <kdebug.h>
 
 // Qt headers:
-#include <qtabwidget.h>
+#include <QTabWidget>
 #include <QLabel>
 
 #include <QLayout>

@@ -26,7 +26,7 @@
 
 #include <QWidget>
 #include <q3scrollview.h>
-#include <qpointer.h>
+#include <QPointer>
 #include <QLineEdit>
 #include <QToolTip>
 //Added by qt3to4:

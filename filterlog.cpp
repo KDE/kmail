@@ -33,7 +33,7 @@
 
 #include <kdebug.h>
 
-#include <qdatetime.h>
+#include <QDateTime>
 #include <QFile>
 //Added by qt3to4:
 #include <Q3CString>

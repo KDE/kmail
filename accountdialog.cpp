@@ -24,16 +24,16 @@
 #include <q3buttongroup.h>
 #include <QCheckBox>
 #include <QLayout>
-#include <qtabwidget.h>
-#include <qradiobutton.h>
-#include <qvalidator.h>
+#include <QTabWidget>
+#include <QRadioButton>
+#include <QValidator>
 #include <QLabel>
 #include <QPushButton>
 
 
 #include <QComboBox>
 #include <q3header.h>
-#include <qtoolbutton.h>
+#include <QToolButton>
 #include <q3grid.h>
 //Added by qt3to4:
 #include <QGridLayout>

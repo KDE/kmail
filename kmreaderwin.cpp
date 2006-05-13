@@ -118,14 +118,14 @@ using KMail::TeeHtmlWriter;
 #include <kstdaction.h>
 #include <ktoggleaction.h>
 
-#include <qclipboard.h>
+#include <QClipboard>
 
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <q3paintdevicemetrics.h>
 #include <QLayout>
 #include <QLabel>
-#include <qsplitter.h>
-#include <qstyle.h>
+#include <QSplitter>
+#include <QStyle>
 
 // X headers...
 #undef Never

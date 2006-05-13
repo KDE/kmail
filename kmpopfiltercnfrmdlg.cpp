@@ -18,7 +18,7 @@
 #include <q3header.h>
 #include <QCheckBox>
 #include <q3groupbox.h>
-#include <qtimer.h>
+#include <QTimer>
 #include <QPixmap>
 #include <QVBoxLayout>
 

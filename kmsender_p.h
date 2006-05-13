@@ -8,8 +8,8 @@
 
 #include <q3cstring.h>
 #include <QString>
-#include <qstringlist.h>
-#include <qobject.h>
+#include <QStringList>
+#include <QObject>
 #include <kio/global.h>
 #include <kdeversion.h>
 

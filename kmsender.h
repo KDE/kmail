@@ -29,8 +29,8 @@
 
 #include <q3cstring.h>
 #include <QString>
-#include <qstringlist.h>
-#include <qobject.h>
+#include <QStringList>
+#include <QObject>
 //Added by qt3to4:
 #include <kdeversion.h>
 

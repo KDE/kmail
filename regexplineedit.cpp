@@ -45,7 +45,7 @@
 #include <QLayout>
 #include <QString>
 #include <QPushButton>
-#include <qdialog.h>
+#include <QDialog>
 //Added by qt3to4:
 #include <QHBoxLayout>
 

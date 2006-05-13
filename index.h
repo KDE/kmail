@@ -31,10 +31,10 @@
  */
 
 
-#include <qobject.h>
+#include <QObject>
 #include <q3cstring.h>
 
-#include <qtimer.h>
+#include <QTimer>
 #include <config.h>
 #include <config-kmail.h>
 #ifdef HAVE_INDEXLIB

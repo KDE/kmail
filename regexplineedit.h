@@ -33,7 +33,7 @@
 #ifndef __KMAIL_REGEXPLINEEDIT_H__
 #define __KMAIL_REGEXPLINEEDIT_H__
 
-#include <qobject.h>
+#include <QObject>
 #include <QWidget>
 
 class KLineEdit;

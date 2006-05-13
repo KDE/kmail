@@ -9,7 +9,7 @@
 #include "kmfolder.h"
 
 #include <QComboBox>
-#include <qpointer.h>
+#include <QPointer>
 #include <QList>
 
 class KMFolderComboBox : public QComboBox

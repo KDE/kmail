@@ -63,7 +63,7 @@ using KMail::AccountManager;
 
 #include <QFile>
 #include <QMap>
-#include <qtextcodec.h>
+#include <QTextCodec>
 
 #include <kdebug.h>
 #include <kiconloader.h>

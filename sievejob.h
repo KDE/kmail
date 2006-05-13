@@ -15,10 +15,10 @@
 #ifndef __KMAIL_SIEVE_JOB_H__
 #define __KMAIL_SIEVE_JOB_H__
 
-#include <qobject.h>
+#include <QObject>
 #include <QStack>
 #include <QString>
-#include <qstringlist.h>
+#include <QStringList>
 #include <q3cstring.h>
 
 #include <kurl.h>

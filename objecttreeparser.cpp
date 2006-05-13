@@ -92,9 +92,9 @@
 #include <Q3CString>
 
 #include <kstyle.h>
-#include <qbuffer.h>
-#include <qpixmap.h>
-#include <qpainter.h>
+#include <QBuffer>
+#include <QPixmap>
+#include <QPainter>
 
 // other headers
 #include <sys/stat.h>

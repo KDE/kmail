@@ -14,7 +14,7 @@
 #include <kvbox.h>
 
 #include <QLayout>
-#include <qtoolbutton.h>
+#include <QToolButton>
 
 namespace KMail {
 

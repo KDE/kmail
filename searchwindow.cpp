@@ -51,11 +51,11 @@
 #include <QVBoxLayout>
 #include <klineedit.h>
 #include <QPushButton>
-#include <qradiobutton.h>
+#include <QRadioButton>
 #include <q3buttongroup.h>
 #include <QComboBox>
-#include <qobject.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
-#include <qcursor.h>
+#include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
+#include <QCursor>
 #include <q3popupmenu.h>
 
 #include <mimelib/enum.h>

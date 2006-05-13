@@ -6,8 +6,8 @@
 
 #include <QString>
 
-#include <qobject.h>
-#include <qpointer.h>
+#include <QObject>
+#include <QPointer>
 
 #include "kmfolderdir.h"
 

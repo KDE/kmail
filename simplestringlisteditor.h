@@ -33,7 +33,7 @@
 #define _SIMPLESTRINGLISTEDITOR_H_
 
 #include <QWidget>
-#include <qstringlist.h>
+#include <QStringList>
 #include <QString>
 
 class Q3ListBox;

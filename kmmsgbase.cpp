@@ -25,7 +25,7 @@ using KMail::MessageProperty;
 #include <mimelib/mimepp.h>
 #include <kmime_codecs.h>
 
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <q3deepcopy.h>
 #include <QRegExp>
 

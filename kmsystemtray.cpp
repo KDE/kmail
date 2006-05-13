@@ -41,11 +41,11 @@ using KMail::AccountManager;
 #include <kdebug.h>
 #include <kmenu.h>
 
-#include <qpainter.h>
-#include <qbitmap.h>
+#include <QPainter>
+#include <QBitmap>
 #include <QToolTip>
 #include <QWidget>
-#include <qobject.h>
+#include <QObject>
 
 #include <math.h>
 #include <assert.h>

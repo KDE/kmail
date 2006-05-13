@@ -3,9 +3,9 @@
 #ifndef _KMCONTROL
 #define _KMCONTROL
 
-#include <qobject.h>
+#include <QObject>
 #include <QString>
-#include <qpointer.h>
+#include <QPointer>
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>

@@ -33,9 +33,9 @@
 #ifndef kmservertest_h
 #define kmservertest_h
 
-#include <qobject.h>
+#include <QObject>
 #include <QString>
-#include <qstringlist.h>
+#include <QStringList>
 
 namespace KIO {
   class Job;

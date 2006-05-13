@@ -50,7 +50,7 @@ using KRecentAddress::RecentAddresses;
 
 #include <QLabel>
 #include <QPushButton>
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <QFrame>
 

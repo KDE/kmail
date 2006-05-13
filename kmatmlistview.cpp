@@ -107,12 +107,12 @@ using KRecentAddress::RecentAddresses;
 
 #include <q3tabdialog.h>
 #include <QRegExp>
-#include <qbuffer.h>
+#include <QBuffer>
 #include <QToolTip>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <q3header.h>
 #include <q3whatsthis.h>
-#include <qfontdatabase.h>
+#include <QFontDatabase>
 
 #include <mimelib/mimepp.h>
 

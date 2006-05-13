@@ -21,10 +21,10 @@
 #include <ksystemtray.h>
 
 #include <QMap>
-#include <qpointer.h>
+#include <QPointer>
 
-#include <qpixmap.h>
-#include <qimage.h>
+#include <QPixmap>
+#include <QImage>
 //Added by qt3to4:
 #include <QMouseEvent>
 

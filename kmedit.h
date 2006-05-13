@@ -8,7 +8,7 @@
 #include <kdeversion.h>
 #include <keditcl.h>
 #include <QMap>
-#include <qstringlist.h>
+#include <QStringList>
 //Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>

@@ -6,7 +6,7 @@
 #include "cryptplugwrapper.h"
 
 #include <q3buttongroup.h>
-#include <qradiobutton.h>
+#include <QRadioButton>
 #include <QCheckBox>
 #include <QSpinBox>
 

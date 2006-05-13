@@ -38,7 +38,7 @@ using KPIM::BroadcastStatus;
 #include <klocale.h>
 
 #include <QFile>
-#include <qfileinfo.h>
+#include <QFileInfo>
 #include <QDir>
 
 #include <sys/types.h>

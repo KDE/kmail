@@ -7,10 +7,10 @@
 
 #include <klineedit.h>
 #include <QComboBox>
-#include <qpointer.h>
+#include <QPointer>
 #include <QString>
 
-#include <qstringlist.h>
+#include <QStringList>
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>

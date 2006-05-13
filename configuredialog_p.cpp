@@ -27,8 +27,8 @@
 
 // Qt headers:
 #include <q3header.h>
-#include <qtabwidget.h>
-#include <qradiobutton.h>
+#include <QTabWidget>
+#include <QRadioButton>
 #include <q3buttongroup.h>
 #include <QLabel>
 #include <QLayout>

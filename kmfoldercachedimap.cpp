@@ -70,7 +70,7 @@ using KMail::ListJob;
 #include <kconfig.h>
 #include <kio/global.h>
 #include <kio/scheduler.h>
-#include <qbuffer.h>
+#include <QBuffer>
 #include <QFile>
 #include <QLabel>
 #include <QLayout>

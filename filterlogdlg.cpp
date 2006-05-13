@@ -42,7 +42,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QSpinBox>
-#include <qstringlist.h>
+#include <QStringList>
 #include <q3textedit.h>
 
 #include <q3groupbox.h>

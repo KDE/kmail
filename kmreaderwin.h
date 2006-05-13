@@ -6,8 +6,8 @@
 #define KMREADERWIN_H
 
 #include <QWidget>
-#include <qtimer.h>
-#include <qstringlist.h>
+#include <QTimer>
+#include <QStringList>
 //Added by qt3to4:
 #include <QCloseEvent>
 #include <QEvent>

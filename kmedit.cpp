@@ -53,8 +53,8 @@ using KPIM::MailListDrag;
 #include <k3syntaxhighlighter.h>
 
 #include <QRegExp>
-#include <qbuffer.h>
-#include <qevent.h>
+#include <QBuffer>
+#include <QEvent>
 
 #include <sys/stat.h>
 #include <sys/types.h>

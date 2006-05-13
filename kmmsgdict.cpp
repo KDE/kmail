@@ -8,7 +8,7 @@
 #include "globalsettings.h"
 #include "folderstorage.h"
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 //Added by qt3to4:
 #include <Q3MemArray>
 

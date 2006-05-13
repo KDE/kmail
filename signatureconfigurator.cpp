@@ -29,7 +29,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDir>
-#include <qfileinfo.h>
+#include <QFileInfo>
 #include <QLabel>
 #include <QLayout>
 #include <q3textedit.h>

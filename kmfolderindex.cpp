@@ -20,8 +20,8 @@
 #include "kmfolder.h"
 #include <config.h>
 #include <config-kmail.h>
-#include <qfileinfo.h>
-#include <qtimer.h>
+#include <QFileInfo>
+#include <QTimer>
 //Added by qt3to4:
 #include <Q3CString>
 #include <kdebug.h>

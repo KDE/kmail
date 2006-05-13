@@ -29,7 +29,7 @@
 #include <kabc/stdaddressbook.h>
 
 #include <QWidget>
-#include <qdialog.h>
+#include <QDialog>
 #include <QToolTip>
 //Added by qt3to4:
 #include <QPixmap>
