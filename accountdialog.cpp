@@ -1410,7 +1410,7 @@ void AccountDialog::setupSettings()
       if (folder->isSystemFolder())
       {
         mFolderList.removeAll(folder);
-        mFolderNames.remove(mFolderNames.at(i));
+        mFolderNames.removeAt(i);
       } else {
         if (folder == acctFolder) curIndex = i;
         i++;

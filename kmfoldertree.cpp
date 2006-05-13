@@ -1810,7 +1810,7 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
           menuId = popup->insertItem( i18n("Move to This Folder"), -1, 0 );
         else
           menuId = popup->insertItem( i18n("Copy to This Folder"), -1, 0 );
-        popup->insertSeparator( 1 );
+        popup->addSeparator();
         aMenuToFolder->insert( menuId, fti->folder() );
       }
       menu->insertItem( label, popup );

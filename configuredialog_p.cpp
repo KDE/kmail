@@ -405,7 +405,7 @@ void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title )
 
 void ConfigModuleWithTabs::load() {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
       tab->load();
   }
@@ -415,14 +415,14 @@ void ConfigModuleWithTabs::load() {
 void ConfigModuleWithTabs::save() {
   KCModule::save();
    for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
       tab->save();
   }
 }
 
 void ConfigModuleWithTabs::defaults() {
-  ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->currentPage() );
+  ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->currentWidget() );
   if ( tab )
     tab->defaults();
   KCModule::defaults();
@@ -430,7 +430,7 @@ void ConfigModuleWithTabs::defaults() {
 
 void ConfigModuleWithTabs::installProfile(KConfig * /* profile */ ) {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
       tab->installProfile();
   }

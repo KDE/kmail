@@ -132,8 +132,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   topLayout->addWidget( mFilterList, 1 /*stretch*/ );
 
   if(!bPopFilter) {
-    QTabWidget *tabWidget = new QTabWidget( w, "kmfd_tab" );
-    tabWidget->setMargin( KDialog::marginHint() );
+    QTabWidget *tabWidget = new QTabWidget( w );
+    tabWidget->setObjectName( "kmfd_tab" );
     topLayout->addWidget( tabWidget );
 
     page1 = new QWidget( tabWidget );

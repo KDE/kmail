@@ -104,7 +104,8 @@ namespace KMail {
     QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
-    QTabWidget *tabWidget = new QTabWidget( plainPage(), "config-identity-tab" );
+    QTabWidget *tabWidget = new QTabWidget( plainPage() );
+    tabWidget->setObjectName( "config-identity-tab" );
     vlay->addWidget( tabWidget );
 
     tab = new QWidget( tabWidget );

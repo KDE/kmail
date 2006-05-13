@@ -38,6 +38,7 @@
 #include <kkeydialog.h>
 #include <kcharsets.h>
 #include <knotifyclient.h>
+#include <knotification.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
@@ -909,7 +910,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                           summary );
 
   if (mBeepOnNew) {
-    KNotifyClient::beep();
+    KNotification::beep();
   }
 }
 
