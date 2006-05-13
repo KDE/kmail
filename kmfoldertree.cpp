@@ -1324,7 +1324,7 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
     dropItem = i;
     autoopen_timer.start( autoopenTime );
   }
-  e->accept( acceptDrag(e) );
+  e->setAccepted( acceptDrag(e) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1360,10 +1360,10 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                 ;
             }
         } else {
-            e->accept( false );
+            e->setAccepted( false );
         }
     } else {
-        e->accept( false );
+        e->setAccepted( false );
         autoopen_timer.stop();
         dropItem = 0;
     }
@@ -1412,9 +1412,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         else
           emit folderDrop(fti->folder());
       }
-      e->accept( true );
+      e->setAccepted( true );
     } else
-      e->accept( false );
+      e->setAccepted( false );
 
     dropItem = 0;
 

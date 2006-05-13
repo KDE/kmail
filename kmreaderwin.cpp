@@ -2433,7 +2433,7 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress ) {
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
-    if ( me->button() == Qt::LeftButton && ( me->state() & Qt::ShiftModifier ) ) {
+    if ( me->button() == Qt::LeftButton && ( me->modifiers() & Qt::ShiftModifier ) ) {
       // special processing for shift+click
       mAtmCurrent = msgPartFromUrl( mUrlClicked );
       if ( mAtmCurrent < 0 ) return false; // not an attachment

@@ -89,9 +89,8 @@ static const struct {
 };
 
 
-KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name )
-  : KDialogBase( parent, name, true /*modal*/, caption,
-                 KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true /*sep*/ )
+KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent )
+  : KDialog( parent, caption, KDialog::Ok|KDialog::Cancel)
   , mUserIdFormat( userIdFormat )
 {
   QWidget *page = new QWidget( this );
@@ -317,8 +316,8 @@ void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList,
 
 ////
 
-KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ),
+KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent )
+  : FolderDiaTab( parent ),
     mImapAccount( 0 ),
     mUserRights( 0 ),
     mDlg( dlg ),

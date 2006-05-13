@@ -68,7 +68,7 @@ using KPIM::MailListDrag;
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
     if (e->provides(MailListDrag::format()))
-        e->accept(true);
+        e->setAccepted(true);
     else
         return KEdit::contentsDragEnterEvent(e);
 }
@@ -400,7 +400,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     } else {
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
-    if (k->key() == Qt::Key_Up && k->state() != Qt::ShiftModifier && currentLine() == 0
+    if (k->key() == Qt::Key_Up && k->modifiers() != Qt::ShiftModifier && currentLine() == 0
       && lineOfChar(0, currentColumn()) == 0)
     {
       deselect();
@@ -409,7 +409,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
     // ---sven's Arrow key navigation end ---
 
-    if (k->key() == Qt::Key_Backtab && k->state() == Qt::ShiftModifier)
+    if (k->key() == Qt::Key_Backtab && k->modifiers() == Qt::ShiftModifier)
     {
       deselect();
       emit focusUp();

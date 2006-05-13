@@ -2107,8 +2107,8 @@ void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
 // window is updated regardless of whether of not the selection has changed.
 void KMHeaders::keyPressEvent( QKeyEvent * e )
 {
-    bool cntrl = (e->state() & Qt::ControlModifier );
-    bool shft = (e->state() & Qt::ShiftModifier );
+    bool cntrl = (e->modifiers() & Qt::ControlModifier );
+    bool shft = (e->modifiers() & Qt::ShiftModifier );
     Q3ListViewItem *cur = currentItem();
 
     if (!firstChild())
@@ -2122,7 +2122,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     }
 
     // Handle space key press
-    if (cur->isSelectable() && e->ascii() == ' ' ) {
+    if (cur->isSelectable() && e->text() == " " ) {
         setSelected( cur, !cur->isSelected() );
         highlightMessage( cur, false);
         return;
@@ -2195,7 +2195,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   /* QListView's shift-select selects also invisible items. Until that is
      fixed, we have to deselect hidden items here manually, so the quick
      search doesn't mess things up. */
-  if ( e->state() & Qt::ShiftModifier ) {
+  if ( e->modifiers() & Qt::ShiftModifier ) {
     Q3ListViewItemIterator it( this, Q3ListViewItemIterator::Invisible );
     while ( it.current() ) {
       it.current()->setSelected( false );
@@ -2216,10 +2216,10 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
      * also select all children of closed threads when the parent is selected. */
 
     // unless ctrl mask, set selected if it isn't already
-    if ( !( e->state() & Qt::ControlModifier ) && !wasSelected )
+    if ( !( e->modifiers() & Qt::ControlModifier ) && !wasSelected )
       setSelected( lvi, true );
     // if ctrl mask, toggle selection
-    if ( e->state() & Qt::ControlModifier )
+    if ( e->modifiers() & Qt::ControlModifier )
       setSelected( lvi, !wasSelected );
 
     if ((e->button() == Qt::LeftButton) )

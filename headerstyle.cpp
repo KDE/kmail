@@ -504,7 +504,7 @@ namespace KMail {
             double ratio = ( double )photoHeight / ( double )photoWidth;
             photoHeight = 60;
             photoWidth = (int)( 60 / ratio );
-            photo = photo.smoothScale( photoWidth, photoHeight );
+            photo = photo.scaled( photoWidth, photoHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
           }
           photoURL = imgToDataUrl( photo );
         }

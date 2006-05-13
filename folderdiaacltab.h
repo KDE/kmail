@@ -34,8 +34,6 @@
 
 #include "kmfolderdia.h"
 #include "kmfoldertype.h"
-//Added by qt3to4:
-#include <QLabel>
 class KJob;
 class KMFolderImap;
 class KPushButton;
@@ -43,6 +41,7 @@ class QStackedWidget;
 class KHBox;
 class Q3VButtonGroup;
 class K3ListView;
+class QLabel;
 namespace KIO { class Job; }
 
 namespace KMail {
@@ -58,11 +57,11 @@ class ImapAccountBase;
  * "New Access Control Entry" dialog.
  * Internal class, only used by FolderDiaACLTab
  */
-class ACLEntryDialog :public KDialogBase {
+class ACLEntryDialog :public KDialog {
   Q_OBJECT
 
 public:
-  ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name = 0 );
+  ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent );
 
   void setValues( const QString& userId, unsigned int permissions );
 
@@ -89,7 +88,7 @@ class FolderDiaACLTab : public FolderDiaTab
   Q_OBJECT
 
 public:
-  FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
+  FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent );
 
   virtual void load();
   virtual bool save();

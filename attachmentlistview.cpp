@@ -69,7 +69,7 @@ AttachmentListView::~AttachmentListView()
 void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 {
   if( e->provides( MailListDrag::format() ) )
-    e->accept( true );
+    e->setAccepted( true );
   else
     K3ListView::dragEnterEvent( e );
 }
@@ -79,7 +79,7 @@ void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 {
   if( e->provides( MailListDrag::format() ) )
-    e->accept( true );
+    e->setAccepted( true );
   else
     K3ListView::dragMoveEvent( e );
 }

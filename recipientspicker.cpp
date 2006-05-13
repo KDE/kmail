@@ -69,7 +69,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
 
   QImage img = a.photo().data();
   if ( !img.isNull() )
-    mIcon = QPixmap::fromImage( img.smoothScale( 20, 20, Qt::KeepAspectRatio ) );
+    mIcon = QPixmap::fromImage( img.scaled( 20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
   else
     mIcon = KGlobal::iconLoader()->loadIcon( "personal", K3Icon::Small );
 
