@@ -2827,7 +2827,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 }
 
 void KMComposeWin::startPublicKeyExport() {
-  if ( mFingerprint.isEmpty() )
+  if ( mFingerprint.isEmpty() || !Kleo::CryptoBackendFactory::instance()->openpgp() )
     return;
   Kleo::ExportJob * job = Kleo::CryptoBackendFactory::instance()->openpgp()->publicKeyExportJob( true );
   assert( job );
