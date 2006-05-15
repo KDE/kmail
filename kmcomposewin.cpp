@@ -1408,7 +1408,7 @@ void KMComposeWin::setupActions(void)
            SLOT( slotListAction( const QString& ) ) );
   fontAction = new KFontAction( "Select Font", KShortcut(), actionCollection(),
                                "text_font" );
-  connect( fontAction, SIGNAL( activated( const QString& ) ),
+  connect( fontAction, SIGNAL( triggered( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
   fontSizeAction = new KFontSizeAction( "Select Size", KShortcut(), actionCollection(),
                                        "text_size" );
