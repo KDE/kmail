@@ -1,0 +1,13 @@
+KMail policy is decided by the KMail decision making group according 
+to the KMail decision making process, as was decided on the kde-core 
+development list and is reflected by the state of the KMail about 
+box.
+
+The KMail decision making group consists of all KMail core developers, 
+including maintainers. The decision making process is as follows:
+
+In the result of a conflict over a commit to the KMail section of KDE 
+CVS a resolution to this conflict, that is the decision to keep or 
+revert the commit can be decided by a unanimous agreement of the 
+maintainers, or failing that a resolution to the conflict will be 
+decided by a vote of KMail core developers.

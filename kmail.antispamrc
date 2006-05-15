@@ -1,0 +1,80 @@
+[General]
+tools=5
+
+[Spamtool #1]
+Ident=spamassassin
+Version=1
+VisibleName=&Spamassassin
+Executable=spamassassin -V
+URL=http://spamassassin.org
+PipeFilterName=SpamAssassin Check
+PipeCmdDetect=spamassassin -L
+ExecCmdSpam=sa-learn -L --spam --no-rebuild --single
+ExecCmdHam=sa-learn -L --ham --no-rebuild --single
+DetectionHeader=X-Spam-Flag
+DetectionPattern=yes
+UseRegExp=0
+SupportsBayes=1
+
+[Spamtool #2]
+Ident=bogofilter
+Version=2
+VisibleName=&Bogofilter
+Executable=bogofilter -V
+URL=http://bogofilter.sourceforge.net
+PipeFilterName=Bogofilter Check
+PipeCmdDetect=bogofilter -p -e -u
+ExecCmdSpam=bogofilter -N -s
+ExecCmdHam=bogofilter -S -n
+DetectionHeader=X-Bogosity
+DetectionPattern=(yes)|(\bspam\b)
+UseRegExp=1
+SupportsBayes=1
+
+[Spamtool #3]
+Ident=annoyance-filter
+Version=1
+VisibleName=&Annoyance-Filter
+Executable=$HOME/.annoyance-filter/annoyance-filter --version
+URL=http://www.fourmilab.ch/annoyance-filter
+PipeFilterName=Annoyance-Filter Check
+PipeCmdDetect=$HOME/.annoyance-filter/annoyance-filter --fread $HOME/.annoyance-filter/FastDict.bin --phrasemin 1 --phrasemax 2 --transcript - --test -
+ExecCmdSpam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --junk - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
+ExecCmdHam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --mail - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
+DetectionHeader=X-Annoyance-Filter-Classification
+DetectionPattern=Junk
+UseRegExp=0
+SupportsBayes=1
+
+[Spamtool #4]
+Ident=gmx-antispam
+Version=1
+VisibleName=&GMX Spam Filter
+Executable=echo
+URL=http://www.gmx.net/de/produkte/virenschutz/index.html
+PipeFilterName=
+PipeCmdDetect=
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-GMX-Antispam
+DetectionPattern=^[2345]
+DetectionOnly=1
+UseRegExp=1
+SupportsBayes=0
+
+[Spamtool #5]
+Ident=spambayes
+Version=1
+VisibleName=S&pamBayes
+Executable=sb_filter.py
+URL=http://spambayes.sourceforge.net
+PipeFilterName=SpamBayes Check
+PipeCmdDetect=sb_filter.py
+ExecCmdSpam=sb_filter.py -s
+ExecCmdHam=sb_filter.py -g
+DetectionHeader=X-Spambayes-Classification
+DetectionPattern=spam
+DetectionOnly=0
+UseRegExp=0
+SupportsBayes=1
+
