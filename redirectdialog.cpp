@@ -123,7 +123,7 @@ void RedirectDialog::slotAddrBook()
 
   mResentTo = mEditTo->text();
   if ( !mResentTo.isEmpty() ) {
-      QStringList lst = KPIM::splitEmailAddrList( mResentTo );
+      QStringList lst = EmailAddressTools::splitAddressList( mResentTo );
       dlg.setSelectedTo( lst );
   }
 

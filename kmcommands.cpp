@@ -559,7 +559,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KPIM::getEmailAddress(addr), addr ,
+  KAddrBookExternal::openEmail( EmailAddressTools::extractEmailAddress(addr), addr ,
                                 parentWidget() );
 
   return OK;
@@ -2679,7 +2679,7 @@ KMCommand::Result KMIMChatCommand::execute()
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-  KABC::Addressee::List addressees = addressBook->findByEmail( KPIM::getEmailAddress( addr ) ) ;
+  KABC::Addressee::List addressees = addressBook->findByEmail( EmailAddressTools::extractEmailAddress( addr ) ) ;
 
   // start chat
   if( addressees.count() == 1 ) {

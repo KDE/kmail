@@ -208,7 +208,7 @@ void RecipientLine::slotTypeModified()
 
 void RecipientLine::analyzeLine( const QString &text )
 {
-  QStringList r = KPIM::splitEmailAddrList( text );
+  QStringList r = EmailAddressTools::splitAddressList( text );
   if ( int( r.count() ) != mRecipientsCount ) {
     mRecipientsCount = r.count();
     emit countChanged();
@@ -873,7 +873,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
 
   int count = 1;
 
-  QStringList r = KPIM::splitEmailAddrList( str );
+  QStringList r = EmailAddressTools::splitAddressList( str );
   QStringList::ConstIterator it;
   for( it = r.begin(); it != r.end(); ++it ) {
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {

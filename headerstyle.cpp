@@ -469,7 +469,7 @@ namespace KMail {
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-    KABC::Addressee::List addresses = addressBook->findByEmail( KPIM::getFirstEmailAddress( message->from() ) );
+    KABC::Addressee::List addresses = addressBook->findByEmail( EmailAddressTools::firstEmailAddress( message->from() ) );
 
     QString photoURL;
     int photoWidth = 60;

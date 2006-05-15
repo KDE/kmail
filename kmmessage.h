@@ -386,7 +386,7 @@ public:
            requires moving expandAliases and all that
            it brings
   */
-  static KPIM::EmailParseResult isValidEmailAddressList( const QString& aStr,
+  static EmailAddressTools::EmailParseResult isValidEmailAddressList( const QString& aStr,
                                                          QString& brokenAddress );
 
   /**
