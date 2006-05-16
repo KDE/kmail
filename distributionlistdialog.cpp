@@ -22,6 +22,7 @@
 #include "distributionlistdialog.h"
 
 #include <libemailfunctions/email.h>
+#include <kabc/resource.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
@@ -127,7 +128,7 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
         if ( addressees.isEmpty() ) {
           KABC::Addressee a;
           a.setNameFromString( name );
-          a.insertEmail( name );
+          a.insertEmail( email );
           item->setTransientAddressee( a, email );
           item->setOn( true );
         } else {
@@ -146,7 +147,7 @@ void DistributionListDialog::slotUser1()
 {
   bool isEmpty = true;
 
-  KABC::StdAddressBook *ab = KABC::StdAddressBook::self( true );
+  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
 
   QListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
@@ -193,7 +194,6 @@ void DistributionListDialog::slotUser1()
     if ( item->isOn() ) {
       kdDebug() << "  " << item->addressee().fullEmail() << endl;
       if ( item->isTransient() ) {
-        // FIXME: Adding to the address book doesn't seem to work.
         ab->insertAddressee( item->addressee() );
       }
       if ( item->email() == item->addressee().preferredEmail() ) {
@@ -204,6 +204,18 @@ void DistributionListDialog::slotUser1()
     }
     i = i->nextSibling();
   }
+
+  // FIXME: Ask the user which resource to save to instead of the default
+  bool saveError = true;
+  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
+  if ( ticket )
+    if ( ab->save( ticket ) )
+      saveError = false;
+    else
+      ab->releaseSaveTicket( ticket );
+
+  if ( saveError )
+    kdWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;
 
   manager.save();
 
