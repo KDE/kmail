@@ -68,7 +68,9 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  QCString currentText = rule()->field();
+  KMSearchRule* srule = rule();
+  QCString currentText = srule->field();
+  delete srule;
   initFieldList( headersOnly, mAbsoluteDates );
   
   mRuleField->clear();
