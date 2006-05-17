@@ -71,7 +71,9 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  QByteArray currentText = rule()->field();
+  KMSearchRule* srule = rule();
+  QByteArray currentText = srule->field();
+  delete srule;
   initFieldList( headersOnly, mAbsoluteDates );
 
   mRuleField->clear();
