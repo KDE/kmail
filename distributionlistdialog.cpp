@@ -7,12 +7,12 @@
     modify it under the terms of the GNU Library General Public
     License as published by the Free Software Foundation; either
     version 2 of the License, or (at your option) any later version.
-    
+
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     Library General Public License for more details.
-    
+
     You should have received a copy of the GNU Library General Public License
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -24,6 +24,7 @@
 #include "distributionlistdialog.h"
 
 #include <libemailfunctions/email.h>
+#include <kabc/resource.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
@@ -73,17 +74,17 @@ class DistributionListItem : public Q3CheckListItem
     {
       return mAddressee;
     }
-    
+
     QString email() const
     {
       return mEmail;
     }
-    
+
     bool isTransient() const
     {
       return mIsTransient;
     }
-    
+
   private:
     KABC::Addressee mAddressee;
     QString mEmail;
@@ -96,20 +97,20 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
                  User1, parent, 0, false, false, i18n("Save List") )
 {
   QFrame *topFrame = plainPage();
-  
+
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );
-  
+
   QBoxLayout *titleLayout = new QHBoxLayout();
   topLayout->addItem( titleLayout );
-  
+
   QLabel *label = new QLabel( i18n("Name:"), topFrame );
   titleLayout->addWidget( label );
-  
+
   mTitleEdit = new QLineEdit( topFrame );
   titleLayout->addWidget( mTitleEdit );
   mTitleEdit->setFocus();
-  
+
   mRecipientsList = new K3ListView( topFrame );
   mRecipientsList->addColumn( QString() );
   mRecipientsList->addColumn( i18n("Name") );
@@ -134,7 +135,7 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
         if ( addressees.isEmpty() ) {
           KABC::Addressee a;
           a.setNameFromString( name );
-          a.insertEmail( name );
+          a.insertEmail( email );
           item->setTransientAddressee( a, email );
           item->setOn( true );
         } else {
@@ -153,7 +154,7 @@ void DistributionListDialog::slotUser1()
 {
   bool isEmpty = true;
 
-  KABC::StdAddressBook *ab = KABC::StdAddressBook::self( true );
+  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
 
   Q3ListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
@@ -200,7 +201,6 @@ void DistributionListDialog::slotUser1()
     if ( item->isOn() ) {
       kDebug() << "  " << item->addressee().fullEmail() << endl;
       if ( item->isTransient() ) {
-        // FIXME: Adding to the address book doesn't seem to work.
         ab->insertAddressee( item->addressee() );
       }
       if ( item->email() == item->addressee().preferredEmail() ) {
@@ -211,6 +211,18 @@ void DistributionListDialog::slotUser1()
     }
     i = i->nextSibling();
   }
+
+  // FIXME: Ask the user which resource to save to instead of the default
+  bool saveError = true;
+  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
+  if ( ticket )
+    if ( ab->save( ticket ) )
+      saveError = false;
+    else
+      ab->releaseSaveTicket( ticket );
+
+  if ( saveError )
+    kWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;
 
   manager.save();
 
