@@ -395,9 +395,13 @@ void MessageComposer::readFromComposeWin()
   // if the user made any modifications to the message then the Content-Type
   // of the message is no longer reliable (e. g. if he editted a draft/resent a
   // message and then removed all attachments or changed from PGP/MIME signed
-  // to clearsigned); therefore we reset the Content-Type to text/plain.
-  if ( mComposeWin->isModified() )
-    mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
+  // to clearsigned);
+  // even if the user didn't make any modifications to the message the
+  // Content-Type of the message might be wrong, e.g. when inline-forwarding
+  // an mp/alt message then the Content-Type is set to mp/alt although it should
+  // be text/plain (cf. bug 127526);
+  // therefore we reset the Content-Type to text/plain in any case.
+  mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
   mUseOpportunisticEncryption = GlobalSettings::self()->pgpAutoEncrypt();
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
