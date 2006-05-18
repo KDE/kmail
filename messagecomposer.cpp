@@ -400,8 +400,11 @@ void MessageComposer::readFromComposeWin()
   // Content-Type of the message might be wrong, e.g. when inline-forwarding
   // an mp/alt message then the Content-Type is set to mp/alt although it should
   // be text/plain (cf. bug 127526);
-  // therefore we reset the Content-Type to text/plain in any case.
-  mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
+  // OTOH we must not reset the Content-Type of inline invitations;
+  // therefore we reset the Content-Type to text/plain whenever the current
+  // Content-Type is multipart/*.
+  if ( mReferenceMessage->type() == DwMime::kTypeMultipart )
+    mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
   mUseOpportunisticEncryption = GlobalSettings::self()->pgpAutoEncrypt();
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
