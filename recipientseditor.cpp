@@ -630,14 +630,17 @@ void RecipientsView::clearModified()
 
 void RecipientsView::setFocus()
 {
-  if ( mLines.last()->isActive() ) setFocusBottom();
+  if ( !mLines.empty() && mLines.last()->isActive() ) setFocusBottom();
   else setFocusTop();
 }
 
 void RecipientsView::setFocusTop()
 {
-  RecipientLine *line = mLines.first();
-  if ( line ) line->activate();
+  if ( !mLines.empty() ) {
+    RecipientLine *line = mLines.first();
+    if ( line ) line->activate();
+    else kWarning() << "No first" << endl;
+  }
   else kWarning() << "No first" << endl;
 }
 
