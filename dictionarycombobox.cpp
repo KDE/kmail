@@ -67,6 +67,8 @@ namespace KMail {
 
   QString DictionaryComboBox::currentDictionary() const
   {
+    if ( mDictionaries.empty() )
+      return "<default>";
     QString dict = mDictionaries[ currentIndex() ];
     if ( dict.isEmpty() )
       return "<default>";
