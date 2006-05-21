@@ -153,7 +153,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
           mParentProgressItem,
           "ImapJobUploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          curMsg->subject(),
+          QStyleSheet::escape( curMsg->subject() ),
           true,
           account->useSSL() || account->useTLS() );
       jd.progressItem->setTotalItems( jd.total );
@@ -193,8 +193,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           "ImapJobCopyMove"+ProgressManager::getUniqueID(),
                           i18n("Server operation"),
                           i18n("Source folder: %1 - Destination folder: %2")
-                            .arg( msg_parent->prettyURL(),
-                                  mDestFolder->prettyURL() ),
+                            .arg( QStyleSheet::escape( msg_parent->prettyURL() ),
+                                  QStyleSheet::escape( mDestFolder->prettyURL() ) ),
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
@@ -311,12 +311,12 @@ void ImapJob::slotGetNextMessage()
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
-  const QString escapedSubject = QStyleSheet::escape( msg->subject() );
   jd.progressItem = ProgressManager::createProgressItem(
                           mParentProgressItem,
                           "ImapJobDownloading"+ProgressManager::getUniqueID(),
                           i18n("Downloading message data"),
-                          i18n("Message with subject: ") + escapedSubject,
+                          i18n("Message with subject: ") +
+                          QStyleSheet::escape( msg->subject() ),
                           true,
                           account->useSSL() || account->useTLS() );
   connect ( jd.progressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),

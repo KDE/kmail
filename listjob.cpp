@@ -44,6 +44,8 @@ using KPIM::ProgressManager;
 #include <kio/global.h>
 #include <klocale.h>
 
+#include <qstylesheet.h>
+
 #include <stdlib.h>
 
 using namespace KMail;
@@ -104,17 +106,18 @@ void ListJob::execute()
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
   jd.curNamespace = mNamespace;
-  QString status = mDestFolder ? mDestFolder->prettyURL() : QString::null;
   if ( mParentProgressItem )
   {
+    QString escapedStatus = mDestFolder ? QStyleSheet::escape( mDestFolder->prettyURL() )
+                                        : QString::null;
     jd.progressItem = ProgressManager::createProgressItem(
         mParentProgressItem,
         "ListDir" + ProgressManager::getUniqueID(),
-        status,
+        escapedStatus,
         i18n("retrieving folders"),
         false,
         mAccount->useSSL() || mAccount->useTLS() );
-    mParentProgressItem->setStatus( status );
+    mParentProgressItem->setStatus( escapedStatus );
   }
 
   // make the URL

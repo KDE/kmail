@@ -57,6 +57,7 @@ using KMail::RenameJob;
 
 #include <qbuffer.h>
 #include <qtextcodec.h>
+#include <qstylesheet.h>
 
 #include <assert.h>
 
@@ -227,8 +228,10 @@ void KMFolderImap::remove()
   ImapAccountBase::jobData jd(url.url());
   jd.progressItem = ProgressManager::createProgressItem(
                       "ImapFolderRemove" + ProgressManager::getUniqueID(),
+                      // FIXME Replace by i18n("Removing folder")
                       "Removing folder",
-                      "URL: " + folder()->prettyURL(),
+                      // FIXME Replace by i18n( "URL: %1" ).arg( ... )
+                      "URL: " + QStyleSheet::escape( folder()->prettyURL() ),
                       false,
                       mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
@@ -471,7 +474,8 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, QValueList<int>& aIndex_r
       mAddMessageProgressItem = ProgressManager::createProgressItem(
           "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: ") + folder()->prettyURL(),
+          // FIXME Replace by i18n("Destination folder: %1").arg( ... )
+          i18n("Destination folder: ") + QStyleSheet::escape( folder()->prettyURL() ),
           true,
           mAccount->useSSL() || mAccount->useTLS() );
       mAddMessageProgressItem->setTotalItems( msgList.count() );
@@ -1033,7 +1037,7 @@ void KMFolderImap::checkValidity()
     mMailCheckProgressItem = ProgressManager::createProgressItem(
               parent,
               "MailCheck" + folder()->prettyURL(),
-              folder()->prettyURL(),
+              QStyleSheet::escape( folder()->prettyURL() ),
               i18n("checking"),
               false,
               account()->useSSL() || account()->useTLS() );
@@ -1976,7 +1980,7 @@ bool KMFolderImap::processNewMail(bool)
   mMailCheckProgressItem = ProgressManager::createProgressItem(
               "MailCheckAccount" + account()->name(),
               "MailCheck" + folder()->prettyURL(),
-              folder()->prettyURL(),
+              QStyleSheet::escape( folder()->prettyURL() ),
               i18n("updating message counts"),
               false,
               account()->useSSL() || account()->useTLS() );

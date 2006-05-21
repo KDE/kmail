@@ -46,6 +46,8 @@ using KPIM::BroadcastStatus;
 #include <kconfig.h>
 using KIO::MetaData;
 
+#include <qstylesheet.h>
+
 static const unsigned short int pop3DefaultPort = 110;
 
 namespace KMail {
@@ -388,10 +390,11 @@ void PopAccount::startJob()
   indexOfCurrentMsg = -1;
 
   Q_ASSERT( !mMailCheckProgressItem );
+  QString escapedName = QStyleSheet::escape( mName );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
-    mName,
-    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    escapedName,
+    i18n("Preparing transmission from \"%1\"...").arg( escapedName ),
     true, // can be canceled
     useSSL() || useTLS() );
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),

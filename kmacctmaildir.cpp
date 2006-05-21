@@ -19,6 +19,8 @@ using KPIM::ProgressManager;
 #include <kdebug.h>
 #include <kconfig.h>
 
+#include <qstylesheet.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -108,10 +110,11 @@ void KMAcctMaildir::processNewMail(bool)
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
   Q_ASSERT( !mMailCheckProgressItem );
+  QString escapedName = QStyleSheet::escape( mName );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
-    mName,
-    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    escapedName,
+    i18n("Preparing transmission from \"%1\"...").arg( escapedName ),
     false, // cannot be canceled
     false ); // no tls/ssl
 

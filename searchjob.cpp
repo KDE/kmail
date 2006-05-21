@@ -46,6 +46,8 @@ using KPIM::ProgressManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <qstylesheet.h>
+
 namespace KMail {
 
 SearchJob::SearchJob( KMFolderImap* folder, ImapAccountBase* account,
@@ -252,7 +254,8 @@ void SearchJob::slotSearchFolder()
     mProgress = ProgressManager::createProgressItem(
         "ImapSearchDownload" + ProgressManager::getUniqueID(),
         i18n("Downloading emails from IMAP server"),
-        "URL: " + mFolder->folder()->prettyURL(),
+        // FIXME replace by i18n( "URL: %1" ).arg( ... )
+        "URL: " + QStyleSheet::escape( mFolder->folder()->prettyURL() ),
         true,
         mAccount->useSSL() || mAccount->useTLS() );
     mProgress->setTotalItems( numMsgs );

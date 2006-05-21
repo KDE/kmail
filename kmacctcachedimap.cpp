@@ -54,6 +54,7 @@ using KMail::AccountManager;
 #include <kapplication.h>
 #include <kconfig.h>
 
+#include <qstylesheet.h>
 
 KMAcctCachedImap::KMAcctCachedImap( AccountManager* aOwner,
 				    const QString& aAccountName, uint id )
@@ -249,7 +250,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + QString::number( id() ),
-    folder->label(), // will be changed immediately in serverSync anyway
+    QStyleSheet::escape( folder->label() ), // will be changed immediately in serverSync anyway
     QString::null,
     true, // can be cancelled
     useSSL() || useTLS() );

@@ -1190,7 +1190,7 @@ namespace KMail {
     {
       mListDirProgressItem = ProgressManager::createProgressItem(
           "ListDir" + name(),
-          name(),
+          QStyleSheet::escape( name() ),
           i18n("retrieving folders"),
           true,
           useSSL() || useTLS() );
