@@ -1439,6 +1439,10 @@ void KMComposeWin::setupActions(void)
                                      actionCollection(), "format_color");
 
   createGUI("kmcomposerui.rc");
+
+  connect( toolBar("htmlToolBar"), SIGNAL( visibilityChanged(bool) ),
+           this, SLOT( htmlToolBarVisibilityChanged(bool) ) );
+
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
   KAction* configureAction = actionCollection()->action("options_configure" );
@@ -4106,6 +4110,15 @@ void KMComposeWin::toggleMarkup(bool markup)
       mEditor->setModified(true);
       slotAutoSpellCheckingToggled(true);
     }
+  }
+}
+
+void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )
+{
+  // disable markup if the user hides the HTML toolbar
+  if ( !visible ) {
+    markupAction->setChecked( false );
+    toggleMarkup( false );
   }
 }
 

@@ -413,6 +413,7 @@ private slots:
 
   void slotToggleMarkup();
   void toggleMarkup(bool markup);
+  void htmlToolBarVisibilityChanged( bool visible );
 
 //  void slotSpellConfigure();
   void slotSpellcheckDone(int result);
