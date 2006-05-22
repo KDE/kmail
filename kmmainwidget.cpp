@@ -2503,12 +2503,12 @@ void KMMainWidget::setupActions()
 
   mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Qt::Key_F, this, SLOT(slotForwardAttachedMsg()), actionCollection(), "message_forward_as_attachment" );
-  mForwardActionMenu->insert( forwardAttachedAction() );
+  mForwardActionMenu->addAction( forwardAttachedAction() );
   mForwardAction = new KAction(KIcon("mail_forward"),  i18n("&Inline..."), actionCollection(), "message_forward_inline" );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardAction->setShortcut(Qt::SHIFT+Qt::Key_F);
 
-  mForwardActionMenu->insert( forwardAction() );
+  mForwardActionMenu->addAction( forwardAction() );
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), actionCollection(), "send_again" );
   connect(mSendAgainAction, SIGNAL(triggered(bool) ), SLOT(slotResendMsg()));
@@ -2522,24 +2522,24 @@ void KMMainWidget::setupActions()
   mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), actionCollection(), "reply" );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
   mReplyAction->setShortcut(Qt::Key_R);
-  mReplyActionMenu->insert( mReplyAction );
+  mReplyActionMenu->addAction( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
                                     Qt::SHIFT+Qt::Key_A, this, SLOT(slotReplyAuthorToMsg()), actionCollection(), "reply_author" );
-  mReplyActionMenu->insert( mReplyAuthorAction );
+  mReplyActionMenu->addAction( mReplyAuthorAction );
 
   mReplyAllAction = new KAction(KIcon("mail_replyall"),  i18n("Reply to &All..."), actionCollection(), "reply_all" );
   connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
   mReplyAllAction->setShortcut(Qt::Key_A);
-  mReplyActionMenu->insert( mReplyAllAction );
+  mReplyActionMenu->addAction( mReplyAllAction );
 
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
 				  "mail_replylist", Qt::Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
-  mReplyActionMenu->insert( mReplyListAction );
+  mReplyActionMenu->addAction( mReplyListAction );
 
   mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
                                  "mail_forward", Qt::Key_E, this, SLOT(slotRedirectMsg()), actionCollection(), "message_forward_redirect" );
-  mForwardActionMenu->insert( redirectAction() );
+  mForwardActionMenu->addAction( redirectAction() );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), actionCollection(), "noquotereply" );
   connect(mNoQuoteReplyAction, SIGNAL(triggered(bool) ), SLOT(slotNoQuoteReplyToMsg()));
@@ -2551,19 +2551,19 @@ void KMMainWidget::setupActions()
 	   SLOT(slotFilter()) );
   mSubjectFilterAction = new KAction( i18n("Filter on &Subject..."), actionCollection(), "subject_filter");
   connect(mSubjectFilterAction, SIGNAL(triggered(bool) ), SLOT(slotSubjectFilter()));
-  mFilterMenu->insert( mSubjectFilterAction );
+  mFilterMenu->addAction( mSubjectFilterAction );
 
   mFromFilterAction = new KAction( i18n("Filter on &From..."), actionCollection(), "from_filter");
   connect(mFromFilterAction, SIGNAL(triggered(bool) ), SLOT(slotFromFilter()));
-  mFilterMenu->insert( mFromFilterAction );
+  mFilterMenu->addAction( mFromFilterAction );
 
   mToFilterAction = new KAction( i18n("Filter on &To..."), actionCollection(), "to_filter");
   connect(mToFilterAction, SIGNAL(triggered(bool) ), SLOT(slotToFilter()));
-  mFilterMenu->insert( mToFilterAction );
+  mFilterMenu->addAction( mToFilterAction );
 
   mListFilterAction = new KAction( i18n("Filter on Mailing-&List..."), actionCollection(), "mlist_filter");
   connect(mListFilterAction, SIGNAL(triggered(bool) ), SLOT(slotMailingListFilter()));
-  mFilterMenu->insert( mListFilterAction );
+  mFilterMenu->addAction( mListFilterAction );
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
@@ -2577,33 +2577,33 @@ void KMMainWidget::setupActions()
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
                                  actionCollection(), "set_status" );
 
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
+  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
                                           i18n("Mark selected messages as read")),
                                  0, this, SLOT(slotSetMsgStatusRead()),
                                  actionCollection(), "status_read"));
 
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
+  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
                                           i18n("Mark selected messages as new")),
                                  0, this, SLOT(slotSetMsgStatusNew()),
                                  actionCollection(), "status_new" ));
 
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
+  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
                                           i18n("Mark selected messages as unread")),
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  mStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
+  mStatusMenu->addAction( new KSeparatorAction( actionCollection() ) );
 
   // -------- Toggle Actions
   mToggleFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Message as &Important"), actionCollection(), "status_flag");
   connect(mToggleFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusFlag()));
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
-  mStatusMenu->insert( mToggleFlagAction );
+  mStatusMenu->addAction( mToggleFlagAction );
 
   mToggleTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Message as &To-do"), actionCollection(), "status_todo");
   connect(mToggleTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusTodo()));
   mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
-  mStatusMenu->insert( mToggleTodoAction );
+  mStatusMenu->addAction( mToggleTodoAction );
 
   mToggleSentAction = new KToggleAction(KIcon("kmmsgsent"), i18n("Mark Message as &Sent"), actionCollection(), "status_sent");
   connect(mToggleSentAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusSent()));
@@ -2618,32 +2618,32 @@ void KMMainWidget::setupActions()
                                                 i18n("Mark all messages in the selected thread as read")),
                                                 0, this, SLOT(slotSetThreadStatusRead()),
                                                 actionCollection(), "thread_read");
-  mThreadStatusMenu->insert( mMarkThreadAsReadAction );
+  mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
   mMarkThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
                                                i18n("Mark all messages in the selected thread as new")),
                                                0, this, SLOT(slotSetThreadStatusNew()),
                                                actionCollection(), "thread_new");
-  mThreadStatusMenu->insert( mMarkThreadAsNewAction );
+  mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
   mMarkThreadAsUnreadAction = new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
                                                 i18n("Mark all messages in the selected thread as unread")),
                                                 0, this, SLOT(slotSetThreadStatusUnread()),
                                                 actionCollection(), "thread_unread");
-  mThreadStatusMenu->insert( mMarkThreadAsUnreadAction );
+  mThreadStatusMenu->addAction( mMarkThreadAsUnreadAction );
 
-  mThreadStatusMenu->insert( new KSeparatorAction( actionCollection() ) );
+  mThreadStatusMenu->addAction( new KSeparatorAction( actionCollection() ) );
 
   //----- "Mark Thread" toggle actions
   mToggleThreadFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Thread as &Important"), actionCollection(), "thread_flag");
   connect(mToggleThreadFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusFlag()));
   mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
-  mThreadStatusMenu->insert( mToggleThreadFlagAction );
+  mThreadStatusMenu->addAction( mToggleThreadFlagAction );
 
   mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), actionCollection(), "thread_todo");
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
-  mThreadStatusMenu->insert( mToggleThreadTodoAction );
+  mThreadStatusMenu->addAction( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(KIcon("kmmsgwatched"), i18n("&Watch Thread"), actionCollection(), "thread_watched");
@@ -2679,12 +2679,12 @@ void KMMainWidget::setupActions()
   mUnreadColumnToggle = new KToggleAction( i18nc("View->Unread Count", "View in &Separate Column"), 0, this,
 			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_column" );
   group->addAction( mUnreadColumnToggle );
-  unreadMenu->insert( mUnreadColumnToggle );
+  unreadMenu->addAction( mUnreadColumnToggle );
 
   mUnreadTextToggle = new KToggleAction( i18nc("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_text" );
   group->addAction( mUnreadTextToggle );
-  unreadMenu->insert( mUnreadTextToggle );
+  unreadMenu->addAction( mUnreadTextToggle );
 
   // toggle for total column
   mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"), 0, this,

@@ -519,31 +519,31 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   group->addAction( raction );
-  headerMenu->insert( raction );
+  headerMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->headers->", "&Brief Headers"), ac, "view_headers_brief" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotBriefHeaders()));
   raction->setToolTip( i18n("Show brief list of message headers") );
   group->addAction( raction );
-  headerMenu->insert( raction );
+  headerMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->headers->", "&Standard Headers"), ac, "view_headers_standard" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotStandardHeaders()));
   raction->setToolTip( i18n("Show standard list of message headers") );
   group->addAction( raction );
-  headerMenu->insert( raction );
+  headerMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->headers->", "&Long Headers"), ac, "view_headers_long" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotLongHeaders()));
   raction->setToolTip( i18n("Show long list of message headers") );
   group->addAction( raction );
-  headerMenu->insert( raction );
+  headerMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->headers->", "&All Headers"), ac, "view_headers_all" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotAllHeaders()));
   raction->setToolTip( i18n("Show all message headers") );
   group->addAction( raction );
-  headerMenu->insert( raction );
+  headerMenu->addAction( raction );
 
   // attachment style
   KActionMenu *attachmentMenu =
@@ -557,25 +557,25 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotIconicAttachments()));
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   group->addAction( raction );
-  attachmentMenu->insert( raction );
+  attachmentMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->attachments->", "&Smart"), ac, "view_attachments_smart" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotSmartAttachments()));
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   group->addAction( raction );
-  attachmentMenu->insert( raction );
+  attachmentMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->attachments->", "&Inline"), ac, "view_attachments_inline" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotInlineAttachments()));
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   group->addAction( raction );
-  attachmentMenu->insert( raction );
+  attachmentMenu->addAction( raction );
 
   raction = new KToggleAction( i18nc("View->attachments->", "&Hide"), ac, "view_attachments_hide" );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotHideAttachments()));
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
   group->addAction( raction );
-  attachmentMenu->insert( raction );
+  attachmentMenu->addAction( raction );
 
   // Set Encoding submenu
   mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
@@ -1591,7 +1591,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     << "trying to writeMsgHeader() without a header strategy set!" << endl;
   QString href;
   if (hasVCard)
-    href = QString("file:") + KUrl::encode_string( mTempFiles.last() );
+    href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
 
   return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
 }
@@ -2004,7 +2004,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
       htmlWriter()->write( "<img src=\"file:" +
-                           KUrl::encode_string( aFileName ) +
+                           KUrl::toPercentEncoding( aFileName ) +
                            "\" border=\"0\">\n"
                            "</body></html>\n" );
       htmlWriter()->end();
