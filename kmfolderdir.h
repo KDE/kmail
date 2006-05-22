@@ -36,7 +36,7 @@ public:
   QString label() const;
 
   /** URL of the node for visualization purposes. */
-  virtual QString prettyURL() const;
+  virtual QString prettyUrl() const;
 
   /** Create a mail folder in this directory with given name. If sysFldr==true
    the folder is marked as a (KMail) system folder.
@@ -78,7 +78,7 @@ public:
   /** set the absolute path */
   virtual void setPath(const QString&);
 
-  virtual QString prettyURL() const;
+  virtual QString prettyUrl() const;
 
   void setBaseURL( const Q3CString& baseURL );
 

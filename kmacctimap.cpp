@@ -388,7 +388,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->incCompletedItems();
     mMailCheckProgressItem->updateProgress();
-    mMailCheckProgressItem->setStatus( folder->prettyURL() + i18n(" completed") );
+    mMailCheckProgressItem->setStatus( folder->prettyUrl() + i18n(" completed") );
   }
   mCountRemainChecks--;
 

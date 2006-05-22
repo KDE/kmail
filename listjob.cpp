@@ -106,7 +106,7 @@ void ListJob::execute()
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
   jd.curNamespace = mNamespace;
-  QString status = mDestFolder ? mDestFolder->prettyURL() : QString();
+  QString status = mDestFolder ? mDestFolder->prettyUrl() : QString();
   if ( mParentProgressItem )
   {
     jd.progressItem = ProgressManager::createProgressItem(

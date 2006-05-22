@@ -883,7 +883,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
         summary += "<br>" + i18np( "1 new message in %1",
                                   "%n new messages in %1",
                                   newInFolder.find( *it ).data() ,
-                              folder->prettyURL() );
+                              folder->prettyUrl() );
       }
     }
   }
@@ -3429,7 +3429,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
   mFolderShortcutCommands.insert( folder->idString(), c );
 
-  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyURL() );
+  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyUrl() );
   QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
   KAction* action = new KAction(actionlabel, actionCollection(), normalizedName);

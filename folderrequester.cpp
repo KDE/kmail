@@ -95,7 +95,7 @@ void FolderRequester::setFolder( KMFolder *folder )
 {
   mFolder = folder;
   if ( mFolder ) {
-    edit->setText( mFolder->prettyURL() );
+    edit->setText( mFolder->prettyUrl() );
     mFolderId = mFolder->idString();
   }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected

@@ -197,8 +197,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           "ImapJobCopyMove"+ProgressManager::getUniqueID(),
                           i18n("Server operation"),
                           i18n("Source folder: %1 - Destination folder: %2",
-                               msg_parent->prettyURL(),
-                               mDestFolder->prettyURL() ),
+                               msg_parent->prettyUrl(),
+                               mDestFolder->prettyUrl() ),
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );

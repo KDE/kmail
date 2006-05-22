@@ -66,7 +66,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   setObjectName( "new_folder_dialog" );
   setAttribute( Qt::WA_DeleteOnClose );
   if ( folder ) {
-    setCaption( i18n("New Subfolder of %1", folder->prettyURL() ) );
+    setCaption( i18n("New Subfolder of %1", folder->prettyUrl() ) );
   }
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   QWidget* privateLayoutWidget = new QWidget( this );

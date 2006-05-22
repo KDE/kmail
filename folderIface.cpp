@@ -72,7 +72,7 @@ FolderIface::displayName() const
 QString
 FolderIface::displayPath() const
 {
-  return mFolder->prettyURL();
+  return mFolder->prettyUrl();
 }
 
 bool

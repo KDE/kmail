@@ -53,7 +53,7 @@ QString KMFolderRootDir::path() const
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderRootDir::prettyURL() const
+QString KMFolderRootDir::prettyUrl() const
 {
   if ( !mBaseURL.isEmpty() )
     return i18n( mBaseURL.data() );
@@ -157,11 +157,11 @@ QString KMFolderDir::label() const
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderDir::prettyURL() const
+QString KMFolderDir::prettyUrl() const
 {
   QString parentUrl;
   if ( parent() )
-    parentUrl = parent()->prettyURL();
+    parentUrl = parent()->prettyUrl();
   if ( !parentUrl.isEmpty() )
     return parentUrl + '/' + label();
   else

@@ -372,7 +372,7 @@ public:
   void setSystemLabel( const QString& l ) { mSystemLabel = l; }
 
   /** URL of the node for visualization purposes. */
-  virtual QString prettyURL() const;
+  virtual QString prettyUrl() const;
 
   /** Returns true if this folder is associated with a mailing-list. */
   void setMailingListEnabled( bool enabled );

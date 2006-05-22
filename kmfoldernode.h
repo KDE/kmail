@@ -62,7 +62,7 @@ public:
   virtual QString label() const;
 
   /** URL of the node for visualization purposes. */
-  virtual QString prettyURL() const = 0;
+  virtual QString prettyUrl() const = 0;
 
   /** ID of the node */
   uint id() const;

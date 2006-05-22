@@ -732,7 +732,7 @@ void PopAccount::slotJobFinished() {
         ids += *it;
       }
       url.setPath( "/remove/" + ids );
-      kDebug(5006) << "url: " << url.prettyURL() << endl;
+      kDebug(5006) << "url: " << url.prettyUrl() << endl;
     } else {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
@@ -741,7 +741,7 @@ void PopAccount::slotJobFinished() {
               numMsgs ,
           mHost ) );
       url.setPath( "/commit" );
-      kDebug(5006) << "url: " << url.prettyURL() << endl;
+      kDebug(5006) << "url: " << url.prettyUrl() << endl;
     }
     job = KIO::get( url, false, false );
     connectJob();

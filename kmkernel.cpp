@@ -266,7 +266,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewOnly = true;
     const QString filename =
       QString::fromLocal8Bit( args->getOption( "view" ) );
-    messageFile = KUrl::fromPathOrURL( filename );
+    messageFile = KUrl::fromPathOrUrl( filename );
     if ( !messageFile.isValid() ) {
       messageFile = KUrl();
       messageFile.setPath( filename );
@@ -1759,7 +1759,7 @@ void KMKernel::slotResult(KJob *job)
     {
       if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?",
-         (*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+         (*it).url.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, true);
     }

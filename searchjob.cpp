@@ -256,7 +256,7 @@ void SearchJob::slotSearchFolder()
     mProgress = ProgressManager::createProgressItem(
         "ImapSearchDownload" + ProgressManager::getUniqueID(),
         i18n("Downloading emails from IMAP server"),
-        "URL: " + mFolder->folder()->prettyURL(),
+        "URL: " + mFolder->folder()->prettyUrl(),
         true,
         mAccount->useSSL() || mAccount->useTLS() );
     mProgress->setTotalItems( numMsgs );

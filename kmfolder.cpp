@@ -563,11 +563,11 @@ QString KMFolder::label() const
 }
 
 //-----------------------------------------------------------------------------
-QString KMFolder::prettyURL() const
+QString KMFolder::prettyUrl() const
 {
   QString parentUrl;
   if ( parent() )
-    parentUrl = parent()->prettyURL();
+    parentUrl = parent()->prettyUrl();
   if ( !parentUrl.isEmpty() )
     return parentUrl + '/' + label();
   else

@@ -232,7 +232,7 @@ void KMFolderImap::remove()
   jd.progressItem = ProgressManager::createProgressItem(
                       "ImapFolderRemove" + ProgressManager::getUniqueID(),
                       "Removing folder",
-                      "URL: " + folder()->prettyURL(),
+                      "URL: " + folder()->prettyUrl(),
                       false,
                       mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
@@ -474,7 +474,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
       mAddMessageProgressItem = ProgressManager::createProgressItem(
           "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: ") + folder()->prettyURL(),
+          i18n("Destination folder: ") + folder()->prettyUrl(),
           true,
           mAccount->useSSL() || mAccount->useTLS() );
       mAddMessageProgressItem->setTotalItems( msgList.count() );
@@ -828,7 +828,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
       // update progress
       account()->listDirProgressItem()->incCompletedItems();
       account()->listDirProgressItem()->updateProgress();
-      account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
+      account()->listDirProgressItem()->setStatus( folder()->prettyUrl() + i18n(" completed") );
 
       f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
       f->setChildrenState( subfolderAttributes[i] );
@@ -1041,8 +1041,8 @@ void KMFolderImap::checkValidity()
         account()->mailCheckProgressItem() );
     mMailCheckProgressItem = ProgressManager::createProgressItem(
               parent,
-              "MailCheck" + folder()->prettyURL(),
-              folder()->prettyURL(),
+              "MailCheck" + folder()->prettyUrl(),
+              folder()->prettyUrl(),
               i18n("checking"),
               false,
               account()->useSSL() || account()->useTLS() );
@@ -1050,7 +1050,7 @@ void KMFolderImap::checkValidity()
     mMailCheckProgressItem->setProgress(0);
   }
   if ( account()->mailCheckProgressItem() ) {
-    account()->mailCheckProgressItem()->setStatus( folder()->prettyURL() );
+    account()->mailCheckProgressItem()->setStatus( folder()->prettyUrl() );
   }
   ImapAccountBase::jobData jd( url.url() );
   KIO::SimpleJob *job = KIO::get(url, false, false);
@@ -1970,8 +1970,8 @@ bool KMFolderImap::processNewMail(bool)
 
   mMailCheckProgressItem = ProgressManager::createProgressItem(
               "MailCheckAccount" + account()->name(),
-              "MailCheck" + folder()->prettyURL(),
-              folder()->prettyURL(),
+              "MailCheck" + folder()->prettyUrl(),
+              folder()->prettyUrl(),
               i18n("updating message counts"),
               false,
               account()->useSSL() || account()->useTLS() );

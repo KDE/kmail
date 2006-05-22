@@ -169,7 +169,7 @@ namespace KMail {
   {
     setObjectName( name );
     mUrl = findURL();
-    kDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
+    kDebug(5006) << "Vacation: found url \"" << mUrl.prettyUrl() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mSieveJob = SieveJob::get( mUrl );

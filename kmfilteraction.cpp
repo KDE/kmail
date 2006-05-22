@@ -330,7 +330,7 @@ const QString KMFilterActionWithFolder::displayString() const
 {
   QString result;
   if ( mFolder )
-    result = mFolder->prettyURL();
+    result = mFolder->prettyUrl();
   else
     result = mFolderName;
   return label() + " \"" + Qt::escape( result ) + "\"";

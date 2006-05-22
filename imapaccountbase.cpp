@@ -960,9 +960,9 @@ namespace KMail {
   {
     KUrl u(  url );
 #warning Port me!
-// I've changed htmlURL() to prettyURL() to make the file compile.
+// I've changed htmlURL() to prettyUrl() to make the file compile.
 // However I'm not sure this is really the correct replacement.
-    return u.prettyURL();
+    return u.prettyUrl();
   }
 
   //-----------------------------------------------------------------------------

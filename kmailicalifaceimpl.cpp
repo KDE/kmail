@@ -611,7 +611,7 @@ QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( co
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString() );
   if ( f ) {
-    subResources.append( SubResource( f->location(),  f->prettyURL(), !f->isReadOnly() ) );
+    subResources.append( SubResource( f->location(),  f->prettyUrl(), !f->isReadOnly() ) );
     kDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
@@ -622,7 +622,7 @@ QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( co
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t ) {
-      subResources.append( SubResource( f->location(), f->prettyURL(), !f->isReadOnly() ) );
+      subResources.append( SubResource( f->location(), f->prettyUrl(), !f->isReadOnly() ) );
       kDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
@@ -1249,7 +1249,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
-  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL() );
+  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyUrl() );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1393,7 +1393,7 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
     subresourceDeleted( contentsTypeStr, location );
 
-    subresourceAdded( contentsTypeStr, location, folder->prettyURL()  /*,
+    subresourceAdded( contentsTypeStr, location, folder->prettyUrl()  /*,
                       !folder->isReadOnly() , folderIsAlarmRelevant( folder ) TODO */ );
 
   }

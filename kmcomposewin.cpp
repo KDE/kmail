@@ -2152,7 +2152,7 @@ void KMComposeWin::addAttach(const KUrl aUrl)
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
                                  "<p>you have to specify the full path if you wish to attach a file.</p></qt>" ,
-                          aUrl.prettyURL() ) );
+                          aUrl.prettyUrl() ) );
     return;
   }
   KIO::TransferJob *job = KIO::get(aUrl);
@@ -2667,7 +2667,7 @@ void KMComposeWin::slotInsertFile()
       urls.clear();
       encodings.clear();
     }
-    urls.prepend( u.prettyURL() );
+    urls.prepend( u.prettyUrl() );
     encodings.prepend( encoding );
     group.writeEntry( "recent-urls", urls );
     group.writeEntry( "recent-encodings", encodings );
@@ -2693,7 +2693,7 @@ void KMComposeWin::slotInsertRecentFile(const KUrl& u)
     KConfigGroup group( config, "Composer" );
     QStringList urls = group.readEntry( "recent-urls" , QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
-    int index = urls.indexOf( u.prettyURL() );
+    int index = urls.indexOf( u.prettyUrl() );
     if (index != -1) {
       QString encoding = encodings[ index ];
       ld.encoding = encoding.toLatin1();

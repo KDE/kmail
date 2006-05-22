@@ -135,7 +135,7 @@ namespace {
     bool handleClick( const KUrl &, KMReaderWin * ) const;
     bool handleContextMenuRequest( const KUrl &, const QPoint &, KMReaderWin * ) const;
     QString statusBarMessage( const KUrl & url, KMReaderWin * ) const {
-      return url.prettyURL();
+      return url.prettyUrl();
     }
   };
 

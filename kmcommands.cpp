@@ -623,7 +623,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>",
-         saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+         saveUrl.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
         != KMessageBox::Continue)
       return Canceled;
   }
@@ -883,7 +883,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
     {
       if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?",
-         mUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+         mUrl.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue) {
         mOffset = 0;
 
@@ -2161,7 +2161,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" ,
-          mUrl.prettyURL() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
+          mUrl.prettyUrl() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl, mMainWidget );
@@ -2995,7 +2995,7 @@ static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
          KMessageBox::warningContinueCancel(
                                             w,
                                             i18n( "A file named \"%1\" already exists. "
-                                                  "Are you sure you want to overwrite it?", url.prettyURL() ),
+                                                  "Are you sure you want to overwrite it?", url.prettyUrl() ),
                                             i18n( "Overwrite File?" ),
                                             i18n( "&Overwrite" ) ) )
       return false;
