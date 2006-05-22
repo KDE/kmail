@@ -119,7 +119,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KIO::Job *job )
   bool found = false;
   GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
   const AnnotationList& lst = getJob->annotations();
-  for ( unsigned int i = 0 ; i < lst.size() ; ++ i ) {
+  for ( int i = 0 ; i < lst.size() ; ++ i ) {
     kDebug(5006) << "found annotation " << lst[i].name << " = " << lst[i].value << endl;
     if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
       found = true;

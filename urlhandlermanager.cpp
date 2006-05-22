@@ -202,7 +202,7 @@ static partNode * partNodeFromXKMailUrl( const KUrl & url, KMReaderWin * w, QStr
   const int part_id = urlParts[1].toInt( &ok );
   if ( !ok )
     return 0;
-  *path = KUrl::decode_string( urlParts[2] );
+  *path = KUrl::fromPercentEncoding( urlParts[2].toLatin1() );
   return w->partNodeForId( part_id );
 }
 

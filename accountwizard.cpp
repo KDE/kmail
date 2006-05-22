@@ -419,7 +419,7 @@ void AccountWizard::transportCreated()
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "transports", mTransportInfoList.count() );
 
-  for ( uint i = 0 ; i < mTransportInfoList.count() ; i++ )
+  for ( int i = 0 ; i < mTransportInfoList.count() ; i++ )
     mTransportInfo->writeConfig( i + 1 );
 
   qDeleteAll( mTransportInfoList );

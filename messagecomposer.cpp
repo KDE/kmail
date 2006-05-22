@@ -493,7 +493,7 @@ void MessageComposer::readFromComposeWin()
   mCc = EmailAddressTools::splitAddressList( mComposeWin->cc().trimmed() );
   mBccList = EmailAddressTools::splitAddressList( mBcc.trimmed() );
 
-  for ( unsigned int i = 0 ; i < mComposeWin->mAtmList.count() ; ++i )
+  for ( int i = 0 ; i < mComposeWin->mAtmList.count() ; ++i )
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),
 					mComposeWin->signFlagOfAttachment( i ),
 					mComposeWin->encryptFlagOfAttachment( i ) ) );
