@@ -3214,7 +3214,7 @@ QString KMMessage::encodeMailtoUrl( const QString& str )
   QString result;
   result = QString::fromLatin1( KMMsgBase::encodeRFC2047String( str,
                                                                 "utf-8" ) );
-  result = KUrl::encode_string( result );
+  result = KUrl::toPercentEncoding( result );
   return result;
 }
 
@@ -3223,7 +3223,7 @@ QString KMMessage::encodeMailtoUrl( const QString& str )
 QString KMMessage::decodeMailtoUrl( const QString& url )
 {
   QString result;
-  result = KUrl::decode_string( url );
+  result = KUrl::fromPercentEncoding( url.toLatin1() );
   result = KMMsgBase::decodeRFC2047String( result.toLatin1() );
   return result;
 }

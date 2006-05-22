@@ -1037,7 +1037,7 @@ KMSendSMTP::~KMSendSMTP()
 
 bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
   QString query = "headers=0&from=";
-  query += KUrl::encode_string( sender );
+  query += KUrl::toPercentEncoding( sender );
 
   if ( !to.empty() )
     query += "&to=" + to.join( "&to=" );
@@ -1049,7 +1049,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   KMTransportInfo * ti = mSender->transportInfo();
 
   if ( ti->specifyHostname )
-    query += "&hostname=" + KUrl::encode_string( ti->localHostname );
+    query += "&hostname=" + KUrl::toPercentEncoding( ti->localHostname );
 
   if ( !kmkernel->msgSender()->sendQuotedPrintable() )
     query += "&body=8bit";

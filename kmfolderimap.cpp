@@ -1673,14 +1673,14 @@ QTextCodec * KMFolderImap::utf7Codec()
 QString KMFolderImap::encodeFileName(const QString &name)
 {
   QString result = utf7Codec()->fromUnicode(name);
-  return KUrl::encode_string_no_slash(result);
+  return KUrl::toPercentEncoding(result, "/");
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMFolderImap::decodeFileName(const QString &name)
 {
-  QString result = KUrl::decode_string(name);
+  QString result = KUrl::fromPercentEncoding(name.toLatin1());
   return utf7Codec()->toUnicode(result.toLatin1());
 }
 
