@@ -345,8 +345,7 @@ private:
 
   /** popup for unread/total */
   KMenu* mPopup;
-  int mUnreadPop;
-  int mTotalPop;
+  QAction *mUnreadAction,*mTotalAction;
 
   KMMainWidget *mMainWidget;
   bool mReloading;

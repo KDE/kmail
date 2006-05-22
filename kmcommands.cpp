@@ -55,7 +55,7 @@
 #include <dcopclient.h>
 
 //Added by qt3to4:
-#include <q3popupmenu.h>
+#include <QMenu>
 #include <Q3CString>
 #include <kprogressdialog.h>
 
@@ -1586,12 +1586,12 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 
 
 void KMMenuCommand::folderToPopupMenu(bool move,
-  QObject *receiver, KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu )
+  QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu )
 {
 #warning Port me!
 /*  while ( menu->count() )
   {
-    Q3PopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
+    QMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
     if (popup)
       delete popup;
     else
@@ -1605,33 +1605,30 @@ void KMMenuCommand::folderToPopupMenu(bool move,
                     receiver, aMenuToFolder, menu );
   } else {
     // operate on top-level items
-    Q3PopupMenu* subMenu = new Q3PopupMenu(menu);
+    QMenu *subMenu = menu->addMenu( i18n( "Local Folders" ) );
     makeFolderMenu( &kmkernel->folderMgr()->dir(),
                     move, receiver, aMenuToFolder, subMenu );
-    menu->insertItem( i18n( "Local Folders" ), subMenu );
     KMFolderDir* fdir = &kmkernel->imapFolderMgr()->dir();
     KMFolderNode *node;
     QList<KMFolderNode*>::const_iterator it;
     for ( it = fdir->begin(); ( node = *it ) && it != fdir->end(); ++it ) {
       if (node->isDir())
         continue;
-      subMenu = new Q3PopupMenu(menu);
+      subMenu = menu->addMenu( node->label() );
       makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
-      menu->insertItem( node->label(), subMenu );
     }
     fdir = &kmkernel->dimapFolderMgr()->dir();
     for ( it = fdir->begin(); ( node = *it ) && it != fdir->end(); ++it ) {
       if (node->isDir())
         continue;
-      subMenu = new Q3PopupMenu(menu);
+      subMenu = menu->addMenu( node->label() );
       makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
-      menu->insertItem( node->label(), subMenu );
     }
   }
 }
 
 void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
-  QObject *receiver, KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu )
+  QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu )
 {
   // connect the signals
   if (move)
@@ -1680,10 +1677,9 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
     label.replace("&","&&");
     if (child->child() && child->child()->first()) {
       // descend
-      Q3PopupMenu *subMenu = new Q3PopupMenu(menu, "subMenu");
+      QMenu *subMenu = menu->addMenu( QString::null );
       makeFolderMenu( child, move, receiver,
                       aMenuToFolder, subMenu );
-      menu->insertItem( label, subMenu );
     } else {
       // insert an item
       int menuId = menu->insertItem( label );
@@ -2129,13 +2125,13 @@ KMCommand::Result KMUrlClickedCommand::execute()
       query = query.mid(queryPart.length());
 
       if (queryPart.left(9) == "?subject=")
-        msg->setSubject( KUrl::decode_string(queryPart.mid(9)) );
+        msg->setSubject( KUrl::fromPercentEncoding(queryPart.mid(9).toLatin1()) );
       else if (queryPart.left(6) == "?body=")
         // It is correct to convert to latin1() as URL should not contain
         // anything except ascii.
-        msg->setBody( KUrl::decode_string(queryPart.mid(6)).toLatin1() );
+        msg->setBody( KUrl::fromPercentEncoding(queryPart.mid(6).toLatin1()).toLatin1() );
       else if (queryPart.left(4) == "?cc=")
-        msg->setCc( KUrl::decode_string(queryPart.mid(4)) );
+        msg->setCc( KUrl::fromPercentEncoding(queryPart.mid(4).toLatin1()) );
     }
 
     KMail::Composer * win = KMail::makeComposer( msg, mIdentity );

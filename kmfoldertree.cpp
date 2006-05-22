@@ -343,8 +343,8 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mPopup = new KMenu(this);
   mPopup->addTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
-  mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
-  mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
+  mUnreadAction = mPopup->addAction(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
+  mTotalAction = mPopup->addAction(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
 }
 
 //-----------------------------------------------------------------------------
@@ -995,7 +995,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
     if (fti->folder() || (fti->text(0) != i18n("Searches")))
-        folderMenu->insertItem(SmallIconSet("folder_new"),
+        folderMenu->addAction( SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
 
@@ -1003,24 +1003,22 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addAction( mMainWidget->action("compact_all_folders") );
       folderMenu->addAction( mMainWidget->action("expire_all_folders") );
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
-      folderMenu->insertItem(SmallIconSet("mail_get"), i18n("Check &Mail"),
-        this,
-        SLOT(slotCheckMail()));
+      folderMenu->addAction(SmallIconSet("mail_get"), i18n("Check &Mail"),
+        this, SLOT(slotCheckMail()));
     }
   } else { // regular folders
 
     folderMenu->addSeparator();
     if ( !fti->folder()->noChildren() ) {
-      folderMenu->insertItem(SmallIconSet("folder_new"),
-                             i18n("&New Subfolder..."), this,
-                             SLOT(addChildFolder()));
+      folderMenu->addAction(SmallIconSet("folder_new"),
+                            i18n("&New Subfolder..."), this,
+                            SLOT(addChildFolder()));
     }
 
     if ( fti->folder()->isMoveable() )
     {
-      QMenu *moveMenu = new QMenu( folderMenu );
+      QMenu *moveMenu = folderMenu->addMenu( i18n("&Move Folder To") );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
-      folderMenu->insertItem( i18n("&Move Folder To"), moveMenu );
     }
 
     // Want to be able to display properties for ALL folders,
@@ -1047,7 +1045,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       (fti->folder()->folderType() == KMFolderTypeImap ||
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
-    folderMenu->insertItem(SmallIconSet("bookmark_folder"),
+    folderMenu->addAction(SmallIconSet("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
@@ -1055,15 +1053,14 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     {
       folderMenu->addAction( mMainWidget->action("refresh_folder") );
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
-        folderMenu->insertItem(SmallIconSet("reload"), i18n("Refresh Folder List"), this,
-            SLOT(slotResetFolderList()));
+        folderMenu->addAction( SmallIconSet("reload"), i18n("Refresh Folder List"),
+                               this, SLOT(slotResetFolderList()));
       }
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-      folderMenu->insertItem( SmallIconSet("wizard"),
-                              i18n("&Troubleshoot IMAP Cache..."),
-                              folder, SLOT(slotTroubleshoot()) );
+      folderMenu->addAction( SmallIconSet("wizard"), i18n("&Troubleshoot IMAP Cache..."),
+                             folder, SLOT(slotTroubleshoot()) );
     }
     folderMenu->addSeparator();
   }
@@ -1074,13 +1071,13 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
   if (fti->folder() && fti->parent())
   {
-    folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
+    folderMenu->addAction(SmallIconSet("configure_shortcuts"),
         i18n("&Assign Shortcut..."),
         fti,
         SLOT(assignShortcut()));
 
     if ( !fti->folder()->noContent() ) {
-      folderMenu->insertItem( i18n("Expire..."), fti,
+      folderMenu->addAction( i18n("Expire..."), fti,
                               SLOT( slotShowExpiryProperties() ) );
     }
     folderMenu->addAction( mMainWidget->action("modify") );
@@ -1587,8 +1584,8 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 
 void KMFolderTree::updatePopup() const
 {
-   mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
-   mPopup->setItemChecked( mTotalPop, isTotalActive() );
+   mUnreadAction->setChecked( isUnreadActive() );
+   mTotalAction->setChecked( isTotalActive() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1606,7 +1603,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       reload();
     }
     // toggle KMenu
-    mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
+    mUnreadAction->setChecked( isUnreadActive() );
 
   } else if (column == total) {
     // switch total
@@ -1619,7 +1616,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       reload(openFolders);
     }
     // toggle KMenu
-    mPopup->setItemChecked( mTotalPop, isTotalActive() );
+    mTotalAction->setChecked( isTotalActive() );
 
   } else kDebug(5006) << "unknown column:" << column << endl;
 

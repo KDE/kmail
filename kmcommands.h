@@ -13,8 +13,7 @@ using KPIM::MessageStatus;
 #include <QPointer>
 #include <QList>
 
-//Added by qt3to4:
-#include <Q3PopupMenu>
+#include <QMenu>
 
 class KMainWindow;
 class KAction;
@@ -646,10 +645,10 @@ class KDE_EXPORT KMMenuCommand : public KMCommand
 
 public:
   static void folderToPopupMenu(bool move, QObject *receiver,
-    KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu );
+    KMMenuToFolder *aMenuToFolder, QMenu *menu );
 
   static void makeFolderMenu(KMFolderNode* item, bool move,
-    QObject *receiver, KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu );
+    QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu );
 };
 
 class KDE_EXPORT KMCopyCommand : public KMMenuCommand
