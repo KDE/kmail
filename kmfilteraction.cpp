@@ -1855,7 +1855,7 @@ KMFilterActionWithUrl::~KMFilterActionWithUrl()
 QWidget* KMFilterActionWithUrl::createParamWidget( QWidget* parent ) const
 {
   KUrlRequester *le = new KUrlRequester(parent);
-  le->setURL( mParameter );
+  le->setUrl( mParameter );
   return le;
 }
 
@@ -1867,7 +1867,7 @@ void KMFilterActionWithUrl::applyParamWidgetValue( QWidget* paramWidget )
 
 void KMFilterActionWithUrl::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  ((KUrlRequester*)paramWidget)->setURL( mParameter );
+  ((KUrlRequester*)paramWidget)->setUrl( mParameter );
 }
 
 void KMFilterActionWithUrl::clearParamWidget( QWidget* paramWidget ) const

@@ -85,6 +85,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcombobox.h>
 #include <kstdaccel.h>
 #include <kmenu.h>
+#include <kmimetypetrader.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
@@ -104,7 +105,6 @@ using KRecentAddress::RecentAddresses;
 #include <kstdguiitem.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
-#include <kuserprofile.h>
 #include <krun.h>
 #include <ktempdir.h>
 #include <ktoggleaction.h>
@@ -3198,15 +3198,15 @@ void KMComposeWin::openAttach( int index )
   }
 
   KService::Ptr offer =
-    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+    KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
   if ( !offer || mimetype->name() == "application/octet-stream" ) {
-    if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
+    if ( ( !KRun::displayOpenWithDialog( url, this, autoDelete ) ) && autoDelete ) {
       QFile::remove(url.path());
     }
   }
   else {
-    if ( ( !KRun::run( *offer, url, autoDelete ) ) && autoDelete ) {
+    if ( ( !KRun::run( *offer, url, this, autoDelete ) ) && autoDelete ) {
         QFile::remove( url.path() );
     }
   }

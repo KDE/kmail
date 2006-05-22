@@ -96,7 +96,6 @@ using KMail::TeeHtmlWriter;
 #include <kactionmenu.h>
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
-#include <kuserprofile.h>
 #include <kcharsets.h>
 #include <kmenu.h>
 #include <kstandarddirs.h>  // Sven's : for access and getpid
@@ -105,6 +104,7 @@ using KMail::TeeHtmlWriter;
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kmimetypetrader.h>
 #include <kglobalsettings.h>
 #include <krun.h>
 #include <ktempfile.h>
@@ -2105,7 +2105,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   }
 
   KService::Ptr offer =
-    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+    KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
   QString open_text;
   QString filenameText = msgPart.fileName();

@@ -82,7 +82,7 @@ namespace KMail {
     connect( mLineEdit, SIGNAL( textChanged( const QString & ) ),
              this, SIGNAL( textChanged( const QString & ) ) );
 
-    if( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
+    if( !KServiceTypeTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
       mRegExpEditButton = new QPushButton( i18n("Edit..."), this );
       mRegExpEditButton->setObjectName( "mRegExpEditButton" );
       mRegExpEditButton->setSizePolicy( QSizePolicy::Minimum,

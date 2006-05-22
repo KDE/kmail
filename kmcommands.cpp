@@ -71,6 +71,7 @@
 #include <kdirselectdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kmimetypetrader.h>
 #include <kparts/browserextension.h>
 #include <kprogressbar.h>
 #include <krun.h>
@@ -78,7 +79,6 @@
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kimproxy.h>
-#include <kuserprofile.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/netaccess.h>
@@ -2827,7 +2827,7 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
     // nor the filename give us a clue
     mimetype = KMimeType::findByFileContent( mAtmName );
   }
-  return KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+  return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 }
 
 void KMHandleAttachmentCommand::atmOpen()
@@ -2851,7 +2851,7 @@ void KMHandleAttachmentCommand::atmOpen()
 
   url.setPath( fname );
   lst.append( url );
-  if ( (KRun::run( *mOffer, lst, autoDelete ) <= 0) && autoDelete ) {
+  if ( (KRun::run( *mOffer, lst, 0, autoDelete ) <= 0) && autoDelete ) {
       QFile::remove(url.path());
   }
 }
@@ -2870,7 +2870,7 @@ void KMHandleAttachmentCommand::atmOpenWith()
 
   url.setPath( fname );
   lst.append( url );
-  if ( (! KRun::displayOpenWithDialog(lst, autoDelete)) && autoDelete ) {
+  if ( (! KRun::displayOpenWithDialog(lst, 0, autoDelete)) && autoDelete ) {
     QFile::remove( url.path() );
   }
 }

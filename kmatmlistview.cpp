@@ -90,7 +90,6 @@ using KRecentAddress::RecentAddresses;
 #include <kstdguiitem.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
-#include <kuserprofile.h>
 #include <krun.h>
 #include <ktempdir.h>
 //#include <keditlistbox.h>
