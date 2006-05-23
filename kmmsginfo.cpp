@@ -465,7 +465,7 @@ void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 }
 
 //-----------------------------------------------------------------------------
-const MessageStatus& KMMsgInfo::status(void) const
+MessageStatus& KMMsgInfo::status(void)
 {
     if ( mStatus.isOfUnknownStatus() ) {
         mStatus.fromQInt32( getLongPart( MsgStatusPart ) );

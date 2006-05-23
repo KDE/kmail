@@ -75,7 +75,7 @@ public:
   virtual bool subjectIsPrefixed() const;
   virtual QString msgIdMD5(void) const;
   virtual QString fileName(void) const;
-  virtual const MessageStatus& status() const;
+  virtual MessageStatus& status();
   virtual KMMsgEncryptionState encryptionState() const;
   virtual KMMsgSignatureState signatureState() const;
   virtual KMMsgMDNSentState mdnSentState() const;
