@@ -794,7 +794,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
 
   KMFolderImap *f = 0;
   KMFolderNode *node = 0;
-  for ( uint i = 0; i < subfolderNames.count(); i++ )
+  for ( int i = 0; i < subfolderNames.count(); i++ )
   {
     bool settingsChanged = false;
     // create folders if necessary

@@ -544,7 +544,7 @@ void RecipientsView::activateLine( RecipientLine *line )
 
 void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )
 {
-  for( uint i = 0; i < mLines.count(); ++i ) {
+  for( int i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
 }
@@ -558,7 +558,7 @@ QSize RecipientsView::minimumSizeHint() const
 {
   int height;
 
-  uint numLines = 5;
+  int numLines = 5;
 
   if ( mLines.count() < numLines ) height = mLineHeight * mLines.count();
   else height = mLineHeight * numLines;

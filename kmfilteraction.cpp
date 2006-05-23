@@ -1862,7 +1862,7 @@ QWidget* KMFilterActionWithUrl::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionWithUrl::applyParamWidgetValue( QWidget* paramWidget )
 {
-  mParameter = ((KUrlRequester*)paramWidget)->url();
+  mParameter = ((KUrlRequester*)paramWidget)->url().toString();
 }
 
 void KMFilterActionWithUrl::setParamWidgetValue( QWidget* paramWidget ) const

@@ -266,7 +266,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewOnly = true;
     const QString filename =
       QString::fromLocal8Bit( args->getOption( "view" ) );
-    messageFile = KUrl::fromPathOrUrl( filename );
+    messageFile = KUrl( filename );
     if ( !messageFile.isValid() ) {
       messageFile = KUrl();
       messageFile.setPath( filename );
