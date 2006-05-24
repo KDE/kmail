@@ -387,12 +387,12 @@ private:
   /** Helper which finds the associated account if there is a current
    * folder and it is an imap or disconnected imap one.
    */
-  KMail::ImapAccountBase* KMMainWidget::findCurrentImapAccountBase();
+  KMail::ImapAccountBase* findCurrentImapAccountBase();
 
   /** Helper which finds the associated IMAP path if there is a current
    * folder and it is an imap or disconnected imap one.
    */
-  QString KMMainWidget::findCurrentImapPath();
+  QString findCurrentImapPath();
 
 private:
   // Message actions

@@ -50,7 +50,7 @@ using namespace KMail;
 
 class FolderDiaQuotaTab::QuotaWidget : public QWidget {
 public:
-    QuotaWidget::QuotaWidget( QWidget* parent, const char* name = 0 )
+    QuotaWidget( QWidget* parent, const char* name = 0 )
         :QWidget( parent, name )
     {
       QVBoxLayout *box = new QVBoxLayout(this);
@@ -177,7 +177,7 @@ void KMail::FolderDiaQuotaTab::slotConnectionResult( int errorCode, const QStrin
   disconnect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
               this, SLOT( slotConnectionResult(int, const QString&) ) );
   if ( errorCode ) {
-    if ( errorCode == -1 ) // unspecified error
+    if ( errorCode == -1 )  // unspecified error
       mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
     else
       // Connection error (error message box already shown by the account)
