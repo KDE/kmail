@@ -116,10 +116,14 @@ QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KURL
 
 void QuotaJobs::GetStorageQuotaJob::slotQuotarootResult( const QStringList& roots )
 {
-    if ( mStorageQuotaInfo.isValid() ) {
-      emit storageQuotaResult( mStorageQuotaInfo );
+    if ( !mStorageQuotaInfo.isValid() && !error() ) {
+      // No error, so the account supports quota, but no usable info
+      // was transmitted => no quota set on the folder. Make the info
+      // valid, bit leave it empty.
+      mStorageQuotaInfo.name = "STORAGE";
     }
-//    emitResult();
+    if ( mStorageQuotaInfo.isValid() )
+      emit storageQuotaResult( mStorageQuotaInfo );
 }
 
 void QuotaJobs::GetStorageQuotaJob::slotQuotaInfoReceived( const QuotaInfoList& infos )

@@ -2227,16 +2227,6 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
     }
     else
       kdWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
-  } else {
-    // There was no error, which means the server does support quota, but
-    // our info is not valid. That means that there is no quota on this folder,
-    // which we indicate by setting the name to something valid, but leaving the
-    // values invalid or setting them to invalid, in case we had info there before.
-    if ( !mQuotaInfo.isValid() ) {
-      mQuotaInfo = empty;
-      mQuotaInfo.name = "STORAGE";
-      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
-    }
   }
 
   if (mAccount->slave()) mAccount->removeJob(job);
