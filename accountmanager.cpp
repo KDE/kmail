@@ -129,7 +129,8 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 void AccountManager::processNextCheck( bool _newMail )
 {
   kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
-  mNewMailArrived |= _newMail;
+  if ( _newMail )
+    mNewMailArrived = true;
 
   for ( AccountList::Iterator it( mAcctChecking.begin() ), end( mAcctChecking.end() ); it != end;  ) {
     KMAccount* acct = *it;
