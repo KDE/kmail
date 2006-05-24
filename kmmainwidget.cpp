@@ -1459,6 +1459,8 @@ void KMMainWidget::slotCopyMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPrintMsg()
 {
+  // make sure the config is current
+  mMsgView->writeConfig();
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
