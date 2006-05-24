@@ -190,6 +190,7 @@ void KMMessagePart::setBodyEncoded(const Q3CString& aStr)
   default:
     kWarning(5006) << "setBodyEncoded: unknown encoding '" << cteStr()
 		    << "'. Assuming binary." << endl;
+    // fall through
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
@@ -268,6 +269,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   default:
     kWarning(5006) << "setBodyEncodedBinary: unknown encoding '" << cteStr()
 		    << "'. Assuming binary." << endl;
+    // fall through
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:

@@ -582,6 +582,7 @@ void PopAccount::slotJobFinished() {
         case Later:
           if (kmkernel->popFilterMgr()->showLaterMsgs())
             dlgPopup = true;
+          // fall through
         default:
           header->setAction( action );
           header->setRuleMatched( true );

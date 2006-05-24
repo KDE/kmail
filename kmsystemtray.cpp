@@ -170,6 +170,7 @@ void KMSystemTray::setMode(int newMode)
       hide();
     else if ( mCount > 0 && isHidden() )
       show();
+    break;
   default:
     kDebug(5006) << k_funcinfo << " Unknown systray mode " << mMode << endl;
   }
