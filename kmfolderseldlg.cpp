@@ -94,7 +94,10 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
   : KFolderTree( parent ), mFolderTree( folderTree )
 {
   setSelectionModeExt( Single );
-  mFolderColumn = addColumn( i18n( "Folder" ) );
+  mFolderColumn = addColumn( i18n( "Folder" ), 0 );
+  mPathColumn = addColumn( i18n( "Path" ), 0 );
+  setAllColumnsShowFocus( true );
+  setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
   mPathColumn = addColumn( i18n( "Path" ) );
   setAllColumnsShowFocus( true );
   setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
@@ -280,9 +283,9 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   KMenu *folderMenu = new KMenu;
   folderMenu->addTitle( folder->label() );
   folderMenu->addSeparator();
-  folderMenu->insertItem(SmallIconSet("folder_new"),
-                          i18n("&New Subfolder..."), this,
-                          SLOT(addChildFolder()));
+  folderMenu->addAction( SmallIconSet("folder_new"),
+                         i18n("&New Subfolder..."), this,
+                         SLOT(addChildFolder()) );
   kmkernel->setContextMenuShown( true );
   folderMenu->exec (p, 0);
   kmkernel->setContextMenuShown( false );
@@ -360,7 +363,7 @@ void SimpleFolderTree::recolorRows()
     ++it;
   }
 }
-
+    
 void SimpleFolderTree::applyFilter( const QString& filter )
 {
   // Reset all items to visible, enabled, and open
@@ -408,18 +411,22 @@ void SimpleFolderTree::applyFilter( const QString& filter )
     ++first;
   }
 
-  // Display the current filter
-  setColumnText( mPathColumn, i18n("Path") + "  ( " + filter + " )" );
+  // Display and save the current filter
+  if ( filter.length() > 0 )
+    setColumnText( mPathColumn, i18n("Path") + "  ( " + filter + " )" );
+  else
+    setColumnText( mPathColumn, i18n("Path") );
 
+  mFilter = filter;
 }
 
 //-----------------------------------------------------------------------------
 void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
-  int ch = e->ascii();
+  QString s = e->text();
+  int ch = s.isEmpty() ? 0 : s[0].toAscii();
 
   if ( ch >= 32 && ch <= 126 )
     applyFilter( mFilter + ch );
-
   else if ( ch == 8 || ch == 127 ) {
     if ( mFilter.length() > 0 ) {
       mFilter.truncate( mFilter.length()-1 );
@@ -430,6 +437,7 @@ void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
   else
     K3ListView::keyPressEvent( e );
 }
+
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
@@ -537,8 +545,21 @@ void KMFolderSelDlg::readConfig()
   KConfig *config = KGlobal::config();
   KConfigGroup group( config, "FolderSelectionDialog" );
   QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
-  if ( !size.isEmpty() ) resize( size );
-  else resize( 220, 300 );
+  if ( !size.isEmpty() )
+    resize( size );
+  else
+    resize( 500, 300 );
+
+  QList<int> widths = group.readEntry( "ColumnWidths", QList<int>() );
+  if ( !widths.isEmpty() ) {
+    mTreeView->setColumnWidth( mTreeView->mFolderColumn, widths[0] );
+    mTreeView->setColumnWidth( mTreeView->mPathColumn,   widths[1] );
+  }
+  else {
+    int colWidth = width() / 2;
+    mTreeView->setColumnWidth( mTreeView->mFolderColumn, colWidth );
+    mTreeView->setColumnWidth( mTreeView->mPathColumn,   colWidth );
+  }
 }
 
 void KMFolderSelDlg::writeConfig()
@@ -546,6 +567,11 @@ void KMFolderSelDlg::writeConfig()
   KConfig *config = KGlobal::config();
   KConfigGroup group( config, "FolderSelectionDialog" );
   group.writeEntry( "Size", size() );
+
+  QList<int> widths;
+  widths.push_back( mTreeView->columnWidth( mTreeView->mFolderColumn ) );
+  widths.push_back( mTreeView->columnWidth( mTreeView->mPathColumn ) );
+  group.writeEntry( "ColumnWidths", widths );
 }
 
 } // namespace KMail

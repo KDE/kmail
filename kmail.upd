@@ -158,6 +158,11 @@ Key=list-font,list-unread-font
 Id=3.4.1
 File=kmailrc
 Script=kmail-3.4.1-update-status-filters.pl,perl
+# Remove the stored size so that we get a reasonable default now that we have 2 columns in the folder selection dialog
+Id=3.5.4
+File=kmailrc
+Group=FolderSelectionDialog
+RemoveKey=Size
 #
 # Important notice:
 # If you add updates here, keep this text below them.

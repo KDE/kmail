@@ -49,10 +49,13 @@ namespace KMail {
       virtual void readColorConfig( void );
       virtual void keyPressEvent( QKeyEvent *e );
 
-    private:
-      KMFolderTree* mFolderTree;
+      /** Folder and path column IDs. */
+      friend class KMFolderSelDlg;
       int mFolderColumn;
       int mPathColumn;
+
+    private:
+      KMFolderTree* mFolderTree;
       QString mFilter;
       bool mLastMustBeReadWrite;
       bool mLastShowOutbox;
