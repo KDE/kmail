@@ -276,7 +276,7 @@ void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = msg ? static_cast<KMFolderImap*>(msg->storage()) : 0;
-  if ( !msgParent || msg->UID() == 0 )
+  if ( !msgParent || !msg || msg->UID() == 0 )
   {
     // broken message
     emit messageRetrieved( 0 );
