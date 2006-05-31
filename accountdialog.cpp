@@ -18,7 +18,7 @@
  *
  */
 #include <config.h>
-
+#include <config-kmail.h>
 #include "accountdialog.h"
 
 #include <q3buttongroup.h>
