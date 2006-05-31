@@ -18,7 +18,7 @@
  *
  */
 #include <config.h>
-
+#include <config-kmail.h>
 #include <QFileInfo>
 #include <QList>
 #include <QRegExp>
