@@ -1076,9 +1076,10 @@ static bool folderHasCreateRights( const KMFolder *folder )
 {
   bool createRights = true; // we don't have acls for local folders yet
   if ( folder && folder->folderType() == KMFolderTypeImap ) {
+    // for online IMAP we assume things will work out, initially
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
     createRights =
-      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
+      imapFolder->userRights() == 0 || ( imapFolder->userRights() & KMail::ACLJobs::Create );
   } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     createRights =
