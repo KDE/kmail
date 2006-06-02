@@ -667,6 +667,8 @@ void KMComposeWin::writeConfig(void)
 
   KConfigGroupSaver saver( KMKernel::config(), "Geometry" );
   saveMainWindowSettings( KMKernel::config(), "Composer" );
+  // make sure config changes are written to disk, cf. bug 127538
+  GlobalSettings::self()->writeConfig();
 }
 
 //-----------------------------------------------------------------------------
