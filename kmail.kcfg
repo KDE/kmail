@@ -255,4 +255,11 @@
       </entry>
     </group>
 
+    <group name="Composer">
+        <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
+            <default>true</default>
+            <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
+        </entry>
+    </group>
+
 </kcfg>

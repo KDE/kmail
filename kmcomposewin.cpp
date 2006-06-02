@@ -12,6 +12,8 @@
 
 #include "kmcomposewin.h"
 
+#include "globalsettings.h"
+
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
 #include "kmreadermainwin.h"
@@ -1447,6 +1449,12 @@ static QString cleanedUpHeaderString( const QString & s )
   return res.stripWhiteSpace();
 }
 
+static QString sanitizedSeparators( const QString& s )
+{
+    const bool allowSemicolon = GlobalSettings::allowSemicolonAsAddressSeparator();
+    return KPIM::splitEmailAddrList( s, allowSemicolon ).join( "," );
+}
+
 //-----------------------------------------------------------------------------
 QString KMComposeWin::subject() const
 {
@@ -1456,7 +1464,8 @@ QString KMComposeWin::subject() const
 //-----------------------------------------------------------------------------
 QString KMComposeWin::to() const
 {
-  return cleanedUpHeaderString( mEdtTo->text() );
+    kdDebug() << "TO: " << kdBacktrace() << endl;
+  return sanitizedSeparators( cleanedUpHeaderString( mEdtTo->text() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1465,7 +1474,7 @@ QString KMComposeWin::cc() const
   if ( mEdtCc->isHidden() )
     return QString::null;
   else
-    return cleanedUpHeaderString( mEdtCc->text() );
+    return sanitizedSeparators( cleanedUpHeaderString( mEdtCc->text() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1474,7 +1483,7 @@ QString KMComposeWin::bcc() const
   if ( mEdtBcc->isHidden() )
     return QString::null;
   else
-    return cleanedUpHeaderString( mEdtBcc->text() );
+    return sanitizedSeparators( cleanedUpHeaderString( mEdtBcc->text() ) );
 }
 
 //-----------------------------------------------------------------------------
