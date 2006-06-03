@@ -35,7 +35,12 @@ namespace KMail {
         isEncrypted( false ),
         isDecryptable( false ),
         technicalProblem( false ),
-        isEncapsulatedRfc822Message( false ) {}
+        isEncapsulatedRfc822Message( false )
+    {
+      creationTime.tm_year = 0;
+      creationTime.tm_mon  = 1;
+      creationTime.tm_mday = 1;
+    }
     bool isSigned;
     bool isGoodSignature;
     CryptPlugWrapper::SigStatusFlags sigStatusFlags;
