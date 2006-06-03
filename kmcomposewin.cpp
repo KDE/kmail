@@ -4030,7 +4030,7 @@ void KMComposeWin::slotCleanSpace()
   }
 
   // Squeeze tabs and spaces
-  QRegExp squeeze( "[\t, ]+" );
+  QRegExp squeeze( "[\t ]+" );
   s.replace( squeeze, QChar( ' ' ) );
 
   // Remove trailing whitespace
