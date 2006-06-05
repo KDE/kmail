@@ -869,4 +869,5 @@ private:
 
 */
 
-// DOXYGEN_REFERENCES = kdeui
+// DOXYGEN_REFERENCES = kdecore kdeui kparts kutils libkdepim
+// DOXYGEN_SET_IGNORE_PREFIX = KM K
