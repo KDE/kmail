@@ -245,7 +245,7 @@ static QString permissionsToUserString( unsigned int permissions, const QString&
       return i18nc( "Permissions", standardPermissions[i].userString );
   }
   if ( internalRightsList.isEmpty() )
-    return i18n( "Custom Permissions" ); // not very helpful, but shouldn't happen
+    return i18n( "Custom Permissions" ); // not very helpful, but should not happen
   else
     return i18n( "Custom Permissions (%1)", internalRightsList );
 }

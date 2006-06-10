@@ -274,7 +274,7 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
     setText( 1, mimetype );
     setPixmap( 0, SmallIcon("folder") );
   } else if ( mimetype == "application/octet-stream" ) {
-    setText( 1, i18n("Unspecified Binary Data") ); // don't show "Unknown"...
+    setText( 1, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
     setPixmap( 0, SmallIcon("unknown") );
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
