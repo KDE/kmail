@@ -39,6 +39,14 @@ class KMMainWidget;
 class KMAccount;
 template <typename T> class QGuardedPtr;
 
+namespace KMail {
+  class QuotaInfo;
+}
+
+namespace {
+  class ItemToolTip;
+}
+
 class KMFolderTreeItem : public QObject, public KFolderTreeItem
 
 {
@@ -73,6 +81,8 @@ public:
 
   /** dnd */
   virtual bool acceptDrag(QDropEvent* ) const;
+
+  QString toolTip( int column ) const;
 
 signals:
   /** Our icon changed */
@@ -239,6 +249,10 @@ public slots:
    */
   void slotResetFolderList( QListViewItem* item = 0, bool startList = true );
 
+  void slotReceivedQuotaInfo( KMFolder* folder, KIO::Job* job,
+                              const KMail::QuotaInfo& info );
+
+
 protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
@@ -344,6 +358,7 @@ private:
 
   /** Map menu id into a folder */
   KMMenuToFolder mMenuToFolder;
+  ItemToolTip *mToolTip;
 };
 
 #endif

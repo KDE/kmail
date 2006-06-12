@@ -31,12 +31,98 @@ using namespace KPIM;
 #include <qpainter.h>
 #include <qcursor.h>
 #include <qregexp.h>
+#include <qtooltip.h>
 
 #include <unistd.h>
 #include <assert.h>
 
 #include <X11/Xlib.h>
 #include <fixx11h.h>
+
+namespace {
+
+  class ItemToolTip : public QToolTip {
+  public:
+    ItemToolTip( KMFolderTree * parent );
+    virtual ~ItemToolTip(){ }
+    void updateTip( const QString & );
+  protected:
+    void maybeTip( const QPoint & p );
+  private:
+    KMFolderTree* mFolderTree;
+    KMFolderImap* mLastImapFolder;
+    QPoint mLastPoint;
+    QString mCurrentTip;
+  };
+
+  ItemToolTip::ItemToolTip( KMFolderTree * parent )
+    : QToolTip( parent->viewport() ), mFolderTree( parent )
+    , mLastImapFolder( 0 ) {}
+
+  void ItemToolTip::maybeTip( const QPoint & p ) {
+    if ( !mFolderTree )
+      return;
+
+    const QListViewItem * item = mFolderTree->itemAt( p );
+    if ( !item )
+      return;
+
+    const QRect itemRect = mFolderTree->itemRect( item );
+    if ( !itemRect.isValid() )
+      return;
+
+    const int col = mFolderTree->header()->sectionAt( p.x() );
+    if ( col == -1 )
+      return;
+
+    const QRect headerRect = mFolderTree->header()->sectionRect( col );
+    if ( !headerRect.isValid() )
+      return;
+
+    const QRect cellRect( headerRect.left(), itemRect.top(),
+			  headerRect.width(), itemRect.height() );
+
+    QString tipStr( mCurrentTip );
+    mCurrentTip = QString();
+    if ( tipStr.isEmpty() ) {
+      if ( const KMFolderTreeItem * klvi = dynamic_cast<const KMFolderTreeItem*>( item ) ) {
+        tipStr = klvi->toolTip( col );
+        if ( klvi->folder() && klvi->folder()->storage() ) {
+          KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>( klvi->folder()->storage() );
+          if ( mLastImapFolder && mLastImapFolder->account() ) {
+            QObject::disconnect( mLastImapFolder->account(),
+                SIGNAL(receivedStorageQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )),
+                mFolderTree,
+                SLOT(slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )) );
+          }
+          if ( imapFolder ) {
+            QObject::connect( imapFolder->account(),
+                SIGNAL(receivedStorageQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )),
+                mFolderTree,
+                SLOT(slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )) );
+          }
+          mLastImapFolder = imapFolder;
+        }
+      }
+      else
+        tipStr = item->text( col ) ;
+    }
+
+    if ( !tipStr.isEmpty() ) {
+      tip( cellRect, tipStr );
+      mLastPoint = p;
+    }
+  }
+
+  void ItemToolTip::updateTip( const QString& str )
+  {
+    mCurrentTip = str;
+    maybeTip( mLastPoint );
+  }
+
+} // anon namespace
+
+
 
 //=============================================================================
 
@@ -90,6 +176,30 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
   default:
     return KFolderTreeItem::NONE;
   }
+}
+
+
+QString KMFolderTreeItem::toolTip( int column ) const
+{
+  QString tip;
+  if ( column !=0 || !mFolder )
+    return tip;
+
+  tip = mFolder->label();
+
+  QString quotaInfo;
+  if ( KMFolderCachedImap* folder = dynamic_cast<KMFolderCachedImap*>( mFolder->storage() ) ) {
+    QuotaInfo info( folder->quotaInfo() );
+    quotaInfo = info.toString();
+  } else if ( KMFolderImap* imapFolder = dynamic_cast<KMFolderImap*>( mFolder->storage() ) ) {
+    imapFolder->account()->getStorageQuotaInfo( mFolder, imapFolder->imapPath() );
+    quotaInfo = i18n( "Retrieving quota information" );
+  }
+
+  if ( !quotaInfo.isEmpty() ) {
+    tip += " (" + quotaInfo  + ')';
+  }
+  return tip;
 }
 
 QPixmap KMFolderTreeItem::normalIcon(int size) const
@@ -283,6 +393,10 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
+
+  QToolTip::remove( this );
+  QToolTip::remove( viewport() ); // make double sure :)
+  mToolTip = new ItemToolTip( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -1808,6 +1922,20 @@ void KMFolderTree::moveOrCopyCurrentFolder( KMFolder* destination, bool move )
     kmkernel->folderMgr()->copyFolder( folder, parent );
   }
 }
+
+void KMFolderTree::slotReceivedQuotaInfo( KMFolder* folder,
+                                          KIO::Job*,
+                                          const KMail::QuotaInfo& info )
+{
+ // kdDebug( 5006 ) << "KMFolderTree::slotReceivedQuotaInfo() - Updating quota info!" << endl;
+  QString str( folder->label() );
+  QString infoString = info.toString();
+  if ( !infoString.isEmpty() ) {
+    str += " (" + infoString + ')';
+  }
+  mToolTip->updateTip( str );
+}
+
 
 #include "kmfoldertree.moc"
 
