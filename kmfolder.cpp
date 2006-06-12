@@ -821,5 +821,5 @@ void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
   emit iconsChanged();
 }
 
-#
+
 #include "kmfolder.moc"
