@@ -61,8 +61,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       mFolder( folder )
 {
   setWFlags( getWFlags() | WDestructiveClose );
-  if ( folder ) {
-    setCaption( i18n("New Subfolder of %1").arg( folder->prettyURL() ) );
+  if ( mFolder ) {
+    setCaption( i18n("New Subfolder of %1").arg( mFolder->prettyURL() ) );
   }
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
@@ -183,24 +183,30 @@ void NewFolderDialog::slotFolderNameChanged( const QString & _text)
 
 void NewFolderDialog::slotOk()
 {
-  const QString &fldName = mNameLineEdit->text();
+  const QString fldName = mNameLineEdit->text();
   if ( fldName.isEmpty() ) {
      KMessageBox::error( this, i18n("Please specify a name for the new folder."),
         i18n( "No Name Specified" ) );
      return;
   }
+
+  // names of local folders must not contain a '/'
   if ( fldName.find( '/' ) != -1 &&
-    ( !mFolder
-      || mFolder->folderType() == KMFolderTypeImap
-      || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
+       ( !mFolder ||
+         ( mFolder->folderType() != KMFolderTypeImap &&
+           mFolder->folderType() != KMFolderTypeCachedImap ) ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot contain the / (slash) character; please choose another folder name." ) );
     return;
   }
 
+  // folder names must not start with a '.'
   if ( fldName.startsWith( "." ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
-  } else if ( mFolder &&
+  }
+
+  // names of IMAP folders must not contain the folder delimiter
+  if ( mFolder &&
       ( mFolder->folderType() == KMFolderTypeImap ||
         mFolder->folderType() == KMFolderTypeCachedImap ) ) {
     QString delimiter;
