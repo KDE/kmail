@@ -35,6 +35,7 @@
 #include <qvariant.h>
 
 #include <kio/job.h>
+#include <klocale.h>
 #include <qvaluevector.h>
 
 namespace KMail {
@@ -45,8 +46,14 @@ struct QuotaInfo {
   QuotaInfo() {} // for QValueVector
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
     : name( _name ), root( _root ), current( _current ),max( _max )  {}
-  bool isValid() { return !name.isEmpty(); }
-  bool isEmpty() { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
+  bool isValid() const { return !name.isEmpty(); }
+  bool isEmpty() const { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
+  QString toString() const {
+    if ( isValid() && !isEmpty() ) {
+      return i18n("%1 of %2 KB used").arg( current.toInt() ).arg( max.toInt() );
+    }
+    return QString();
+  }
   QString name;  // e.g. STORAGE
   QString root; /// e.g. INBOX
   QVariant current;
