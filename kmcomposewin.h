@@ -433,6 +433,12 @@ public slots:
   void slotSubjectTextSpellChecked();
 
   /**
+   * Configure the text completion properties from Settings Menu.
+   */
+  void slotMenuTextCompletion();
+
+
+  /**
    * Configure the order of address completion sources.
    */
   void slotConfigureAddressCompletion();
@@ -803,6 +809,8 @@ protected:
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;
 
+  KSelectAction *mTextCompletionAction;
+ 
   QCString mCharset;
   QCString mDefCharset;
   QStringList mCharsets;
