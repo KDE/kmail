@@ -13,7 +13,7 @@
 #include "kmcomposewin.h"
 
 #include "globalsettings.h"
-#include "kmglobal.h" //for text completion mode struct
+#include "kmglobalns.h" //for text completion mode struct
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
@@ -152,13 +152,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mDictionaryAction( 0 ),
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
+    mTextCompletionAction( 0 ),
 #ifdef KLEO_CHIASMUS
     mEncryptChiasmusAction( 0 ),
     mEncryptBodyChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
     mEncryptBodyWithChiasmus( false ),
 #endif
-    mTextCompletionAction( 0 ),
     mComposer( 0 )
 {
   // Set this to be the group leader for all subdialogs - this means
@@ -1218,20 +1218,16 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
 
   //Adding the Menu Items to the "Text Completion" submenu (Settings)
   QStringList menuItems;
-  menuItems << "None" ;
-  menuItems << "Manual";
-  menuItems << "Automatic";
-  menuItems << "Dropdown List";
-  menuItems << "Short Automatic";
-  menuItems << "Dropdown List && Automatic";
+  for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i )
+    menuItems <<  i18n( KMGlobalNS::completionModes[i].displayName );
   
   mTextCompletionAction->setItems( menuItems );
 
   //Setting the menu to last selected option.
   KConfigGroup composer( KMKernel::config(), "Composer" );
   const int mode = composer.readNumEntry("Completion Mode", KGlobalSettings::completionMode() );
-  for ( int i=0; i < KMail::numCompletionModes; ++i ) {
-    if ( KMail::completionModes[i].mode == mode )
+  for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i ) {
+    if ( KMGlobalNS::completionModes[i].mode == mode )
       mTextCompletionAction->setCurrentItem( i );
   }
 
@@ -3768,7 +3764,7 @@ void KMComposeWin::slotMenuTextCompletion()
    //Set proper value for that item (NOTE the coversion, very important).
    KConfig *config = KMKernel::config();
    KConfigGroup composer( config, "Composer" );
-   composer.writeEntry( "Completion Mode", KMail::completionModes[ nItem ].mode );
+   composer.writeEntry( "Completion Mode", KMGlobalNS::completionModes[ nItem ].mode );
    config->sync();
 
    //trigger this to read config and set the lineEdits automatically.
@@ -3842,8 +3838,8 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     mEdtBcc->setCompletionMode( mode );
 
     // sync the Text Completion submenu if lineEdits are changed.
-    for ( int i=0; i < KMail::numCompletionModes; ++i ) {
-      if ( KMail::completionModes[i].mode == mode )
+    for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i ) {
+      if ( KMGlobalNS::completionModes[i].mode == mode )
        mTextCompletionAction->setCurrentItem( i );
     }
 

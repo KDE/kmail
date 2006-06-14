@@ -28,7 +28,7 @@
 #include "configuredialog_p.h"
 
 #include "globalsettings.h"
-#include "kmglobal.h" //for text completion modes struct
+#include "kmglobalns.h" //for text completion modes struct
 
 // other KMail headers:
 #include "simplestringlisteditor.h"
@@ -2453,8 +2453,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   // completion type and order
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mCompletionTypeCombo = new QComboBox( this );
-  for ( int i=0; i < KMail::numCompletionModes; ++i )
-    mCompletionTypeCombo->insertItem( KMail::completionModes[i].displayName );
+  for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i )
+    mCompletionTypeCombo->insertItem( i18n( KMGlobalNS::completionModes[i].displayName ) );
   connect( mCompletionTypeCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   label = new QLabel( i18n("Completion &mode:"), this );
@@ -2543,8 +2543,8 @@ void ComposerPage::GeneralTab::load() {
 
   // completion
   const int mode = composer.readNumEntry("Completion Mode", KGlobalSettings::completionMode() );
-  for ( int i=0; i < KMail::numCompletionModes; ++i ) {
-    if ( KMail::completionModes[i].mode == mode )
+  for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i ) {
+    if ( KMGlobalNS::completionModes[i].mode == mode )
       mCompletionTypeCombo->setCurrentItem( i );
   }
 
@@ -2605,7 +2605,7 @@ void ComposerPage::GeneralTab::save() {
   composer.writeEntry( "word-wrap", mWordWrapCheck->isChecked() );
   composer.writeEntry( "break-at", mWrapColumnSpin->value() );
   composer.writeEntry( "autosave", mAutoSave->value() );
-  composer.writeEntry( "Completion Mode", KMail::completionModes[ mCompletionTypeCombo->currentItem() ].mode );
+  composer.writeEntry( "Completion Mode", KMGlobalNS::completionModes[ mCompletionTypeCombo->currentItem() ].mode );
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )

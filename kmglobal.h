@@ -15,9 +15,6 @@
 #ifndef kmglobal_h
 #define kmglobal_h
 
-#include <kglobalsettings.h> //for KGlobalSettings
-#include <klocale.h> //for I18N_NOOP
-
 #include "kmkernel.h"
 
 typedef enum
@@ -62,25 +59,5 @@ typedef enum {
 /** The "about KMail" text. */
 extern const char* aboutText;
 
-/** Global Completion Modes*/
-// This struct comes from configuredialog.cpp. It is now being used by
-// kmcomposewin.cpp also.
-namespace KMail {
-
-static const struct {
-  KGlobalSettings::Completion mode;
-  const char* displayName;
-} completionModes[] = {
-  { KGlobalSettings::CompletionNone, I18N_NOOP("None") },
-  { KGlobalSettings::CompletionShell, I18N_NOOP("Manual") },
-  { KGlobalSettings::CompletionAuto, I18N_NOOP("Automatic") },
-  { KGlobalSettings::CompletionPopup, I18N_NOOP("Dropdown List") },
-  { KGlobalSettings::CompletionMan, I18N_NOOP("Short Automatic") },
-  { KGlobalSettings::CompletionPopupAuto, I18N_NOOP("Dropdown List && Automatic") }
-};
-
-static const int numCompletionModes = sizeof KMail::completionModes / sizeof *KMail::completionModes;
-
-}
 
 #endif
