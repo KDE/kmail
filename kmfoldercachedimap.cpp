@@ -2197,10 +2197,13 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
       QString type(annotation);
       int dot = annotation.find( '.' );
       if ( dot != -1 ) type.truncate( dot );
+      type = type.simplifyWhiteSpace();
 
-      if ( type.isEmpty()
-        || type.simplifyWhiteSpace() != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) {
-        folders.append( mSubfolderPaths.findIndex( folderPath ) );
+      const int idx = mSubfolderPaths.findIndex( folderPath );
+      const bool isNoContent =  mSubfolderMimeTypes[idx] == "inode/directory";
+      if ( ( isNoContent && type.isEmpty() )
+        || ( !type.isEmpty() && type != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) ) {
+        folders.append( idx );
         kdDebug(5006) << k_funcinfo << " subscribing to: " << folderPath << endl;
       } else {
         kdDebug(5006) << k_funcinfo << " automatically unsubscribing from: " << folderPath << endl;
