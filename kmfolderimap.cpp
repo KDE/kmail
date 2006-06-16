@@ -1444,6 +1444,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       if ( ok && exists < count() ) {
         kDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
+        open();
         reallyGetFolder( QString() );
         (*it).cdata.remove(0, pos);
         return;
