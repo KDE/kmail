@@ -231,8 +231,8 @@ void KMFolderImap::remove()
   ImapAccountBase::jobData jd(url.url());
   jd.progressItem = ProgressManager::createProgressItem(
                       "ImapFolderRemove" + ProgressManager::getUniqueID(),
-                      "Removing folder",
-                      "URL: " + folder()->prettyUrl(),
+                      i18n("Removing folder"),
+                      i18n( "URL: %1" ).arg( QStyleSheet::escape( folder()->prettyURL() ) ),
                       false,
                       mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
@@ -474,7 +474,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
       mAddMessageProgressItem = ProgressManager::createProgressItem(
           "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: ") + folder()->prettyUrl(),
+          i18n("Destination folder: %1").arg( QStyleSheet::escape( folder()->prettyURL() ) ),
           true,
           mAccount->useSSL() || mAccount->useTLS() );
       mAddMessageProgressItem->setTotalItems( msgList.count() );
