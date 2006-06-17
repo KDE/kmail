@@ -254,8 +254,7 @@ void SearchJob::slotSearchFolder()
     mProgress = ProgressManager::createProgressItem(
         "ImapSearchDownload" + ProgressManager::getUniqueID(),
         i18n("Downloading emails from IMAP server"),
-        // FIXME replace by i18n( "URL: %1" ).arg( ... )
-        "URL: " + QStyleSheet::escape( mFolder->folder()->prettyURL() ),
+        i18n( "URL: %1" ).arg( QStyleSheet::escape( mFolder->folder()->prettyURL() ) ),
         true,
         mAccount->useSSL() || mAccount->useTLS() );
     mProgress->setTotalItems( numMsgs );
