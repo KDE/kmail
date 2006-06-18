@@ -442,9 +442,11 @@ void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
     bool mustBeReadWrite, bool useGlobalSettings )
-  : KDialog( parent, caption, Ok|Cancel|User1 ), // mainwin as parent, modal
+  : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
 {
+  setCaption( caption );
+  setButtons( Ok|Cancel|User1 );
   setObjectName( "folder dialog" );
   setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder_new",
          i18n("Create a new subfolder under the currently selected folder")) );
@@ -463,9 +465,11 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
 //----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
-  : KDialog( parent, caption, Ok|Cancel|User1 ), // mainwin as parent, modal
+  : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
 {
+  setCaption( caption );
+  setButtons( Ok|Cancel|User1 );
   setObjectName( "folder dialog" );
   setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder_new",
          i18n("Create a new subfolder under the currently selected folder") ) );

@@ -187,9 +187,11 @@ namespace KMail
 {
 
 SieveDebugDialog::SieveDebugDialog( QWidget *parent )
-:   KDialog( parent, i18n( "Sieve Diagnostics" ), KDialog::Ok ),
+:   KDialog( parent ),
     mSieveJob( 0 )
 {
+    setCaption( i18n( "Sieve Diagnostics" ) );
+    setButtons( Ok );
     // Collect all accounts
     AccountManager *am = kmkernel->acctMgr();
     assert( am );

@@ -137,7 +137,7 @@ void KMSoundTestWidget::playSound()
     QString file = QString::fromLatin1("file:");
     if (parameter.startsWith(file))
         play = parameter.mid(file.length());
-    Phonon::SimplePlayer* player = new Phonon::SimplePlayer( this );
+    Phonon::SimplePlayer* player = new Phonon::SimplePlayer( Phonon::NotificationCategory, this );
     player->play( KUrl( QFile::encodeName(play) ) );
 }
 

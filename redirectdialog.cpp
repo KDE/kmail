@@ -57,8 +57,10 @@ using KRecentAddress::RecentAddresses;
 using namespace KMail;
 
 RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
-  : KDialog( parent, i18n( "Redirect Message" ), User1|User2|Cancel )
+  : KDialog( parent )
 {
+  setCaption( i18n( "Redirect Message" ) );
+  setButtons( User1|User2|Cancel );
   setDefaultButton( immediate ? User1 : User2 );
   QFrame *vbox = new KVBox( this );
   setMainWidget( vbox );

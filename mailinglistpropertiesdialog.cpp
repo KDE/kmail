@@ -50,10 +50,11 @@
 using namespace KMail;
 
 MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, KMFolder *folder )
-    : KDialog( parent, i18n( "Mailinglist Folder Properties" ), 
-                   KDialog::Ok|KDialog::Cancel ),
+    : KDialog( parent ),
       mFolder( folder )
 {
+  setCaption( i18n( "Mailinglist Folder Properties" ) );
+  setButtons( Ok | Cancel );
   setObjectName( "mailinglist_properties" );
   setModal( false );
   setAttribute( Qt::WA_DeleteOnClose );

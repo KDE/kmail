@@ -13,8 +13,10 @@
 ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& caption,
                                           const QStringList& keys, const QString& currentKey,
                                           const QString& lastOptions )
-  : KDialog( parent, caption, Ok|Cancel )
+  : KDialog( parent )
 {
+  setCaption( caption );
+  setButtons( Ok | Cancel );
   setObjectName( "chiasmusKeySelector" );
   QWidget *page = new QWidget( this );
   setMainWidget(page);

@@ -286,8 +286,10 @@ QString KMPopHeadersViewItem::key(int col, bool) const
 /////////////////////////////////////////
 KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders, const QString & aAccount,
                                           bool aShowLaterMsgs, QWidget *aParent )
-      : KDialog( aParent, i18n("POP Filter"), Ok | Help )
+      : KDialog( aParent )
 {
+  setCaption( i18n("POP Filter") );
+  setButtons( Ok | Help );
   unsigned int rulesetCount = 0;
   //mHeaders = aHeaders;
   mShowLaterMsgs = aShowLaterMsgs;

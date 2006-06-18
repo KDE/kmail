@@ -216,10 +216,13 @@ namespace {
 
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
-  : KCMultiDialog( KDialogBase::IconList, KGuiItem( i18n( "&Load Profile..." ) ),
-                   KGuiItem(), User2, i18n( "Configure" ), parent )
+  : KCMultiDialog( parent )
   , mProfileDialog( 0 )
 {
+  setFaceType( List );
+  setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
+  setButtons( User2 );
+  setCaption( i18n( "Configure" ) );
   setModal( modal );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );

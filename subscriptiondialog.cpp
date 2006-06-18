@@ -366,7 +366,7 @@ void SubscriptionDialog::slotConnectionResult( int errorCode, const QString& err
 
 void SubscriptionDialog::show()
 {
-  KDialogBase::show();
+  KDialog::show();
   KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
   if( account )
   {

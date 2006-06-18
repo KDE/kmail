@@ -55,8 +55,10 @@ using namespace KMail;
 
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
-: KDialog( parent, i18n( "Filter Log Viewer" ), User1|User2|Close )
+: KDialog( parent )
 {
+  setCaption( i18n( "Filter Log Viewer" ) );
+  setButtons( User1|User2|Close );
   setObjectName( "FilterLogDlg" );
   setModal( false );
   setDefaultButton( Close );

@@ -245,8 +245,10 @@ void KMTransportInfo::readPassword() const
 
 
 KMTransportSelDlg::KMTransportSelDlg( QWidget *parent )
-  : KDialog( parent, i18n("Add Transport"), Ok|Cancel )
+  : KDialog( parent )
 {
+  setCaption( i18n("Add Transport") );
+  setButtons( Ok|Cancel );
   QWidget *page = new QWidget( this );
   setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
@@ -288,11 +290,13 @@ int KMTransportSelDlg::selected( void ) const
 KMTransportDialog::KMTransportDialog( const QString & caption,
 				      KMTransportInfo *transportInfo,
 				      QWidget *parent )
-  : KDialog( parent, caption, Ok|Cancel ),
+  : KDialog( parent ),
     mServerTest( 0 ),
     mTransportInfo( transportInfo ),
     mAuthNone( AllAuth ), mAuthSSL( AllAuth ), mAuthTLS( AllAuth )
 {
+  setCaption( caption );
+  setButtons( Ok|Cancel );
   assert(transportInfo != 0);
 
   if( transportInfo->type == QString::fromLatin1("sendmail") )

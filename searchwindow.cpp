@@ -71,7 +71,7 @@ const int SearchWindow::MSGID_COLUMN = 4;
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
-  KDialog(0, i18n("Find Messages"), User1 | User2 | Close ),
+  KDialog(0),
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
@@ -81,6 +81,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLastFocus(0),
   mKMMainWidget(w)
 {
+  setCaption( i18n("Find Messages") );
+  setButtons( User1 | User2 | Close );
   setDefaultButton( User1 );
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "find" ) );
   setButtonGuiItem( User2, KStdGuiItem::stop() );

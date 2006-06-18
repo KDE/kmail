@@ -32,10 +32,11 @@ using namespace KMail;
  *
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* folder )
-    : KDialog( tree, i18n( "Mail Expiry Properties" ), 
-                   KDialog::Ok|KDialog::Cancel ),
+    : KDialog( tree ),
       mFolder( folder )
 {
+  setCaption( i18n( "Mail Expiry Properties" ) );
+  setButtons( Ok|Cancel );
   setModal( false );
   setObjectName( "expiry_properties" );
   setAttribute( Qt::WA_DeleteOnClose );

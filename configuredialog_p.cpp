@@ -45,8 +45,10 @@
 
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 				      QWidget *parent )
-  : KDialog( parent, i18n("New Identity"), Ok|Cancel|Help )
+  : KDialog( parent )
 {
+  setCaption( i18n("New Identity") );
+  setButtons( Ok|Cancel|Help );
   setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
   QWidget *page = new QWidget( this );
   setMainWidget( page );
@@ -204,8 +206,10 @@ static QString flagPng = QString::fromLatin1("/flag.png");
 
 NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
 				      QWidget *parent )
-  : KDialog( parent, i18n("New Language"), Ok|Cancel )
+  : KDialog( parent )
 {
+  setCaption( i18n("New Language") );
+  setButtons( Ok|Cancel );
   // layout the page (a combobox with label):
   QWidget *page = new QWidget( this );
   setMainWidget( page );
@@ -302,8 +306,10 @@ void LanguageComboBox::setLanguage( const QString & language )
 //
 
 ProfileDialog::ProfileDialog( QWidget * parent )
-  : KDialog( parent, i18n("Load Profile"), Ok|Cancel )
+  : KDialog( parent )
 {
+  setCaption( i18n("Load Profile") );
+  setButtons( Ok|Cancel );
   // tmp. vars:
   QWidget *page = new QWidget( this );
   setMainWidget( page );

@@ -58,10 +58,11 @@ using namespace KMail;
 FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                                             KMMainWidget *mainwidget,
                                             QWidget *parent )
-:  KDialog( parent, i18n( "Shortcut for Folder %1", folder->label() ),
-               KDialog::Ok | KDialog::Cancel ),
+:  KDialog( parent ),
    mFolder( folder ), mMainWidget( mainwidget )
 {
+  setCaption( i18n( "Shortcut for Folder %1", folder->label() ) );
+  setButtons( Ok | Cancel );
   QFrame *box = new KVBox( this );
   setMainWidget( box );
   Q3GroupBox *gb = new Q3GroupBox(1, Qt::Horizontal, i18n("Select Shortcut for Folder"), box );

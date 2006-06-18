@@ -14,10 +14,12 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
                                 const QString& caption,
                                 const QString& labelText,
                                 QWidget* parent )
-    : KDialog( parent, caption, Ok|Cancel ),
+    : KDialog( parent ),
       selectedString( _selectedString )
 
 {
+    setCaption( caption );
+    setButtons( Ok|Cancel );
     setObjectName( "KListBoxDialog" );
     resize( 400, 180 );
 

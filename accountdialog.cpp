@@ -268,7 +268,7 @@ ProcmailRCParser::expandVars(const QString &s)
 
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 			      QWidget *parent )
-  : KDialog( parent, caption, Ok|Cancel|Help ),
+  : KDialog( parent ),
     mAccount( account ),
     mServerTest( 0 ),
     mCurCapa( AllCapa ),
@@ -277,6 +277,8 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
     mCapaTLS( AllCapa ),
     mSieveConfigEditor( 0 )
 {
+  setCaption( caption );
+  setButtons( Ok|Cancel|Help );
   mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 );
   setHelp("receiving-mail");
 
@@ -2266,8 +2268,9 @@ void NamespaceLineEdit::setText( const QString& text )
 
 NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
-  : KDialog( parent, QString(), Ok|Cancel ), mType( type ), mNamespaceMap( map )
+  : KDialog( parent ), mType( type ), mNamespaceMap( map )
 {
+  setButtons( Ok|Cancel );
   setObjectName( "edit_namespace" );
   setModal( false );
   QFrame *page = new KVBox( this );

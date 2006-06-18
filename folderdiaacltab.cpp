@@ -90,9 +90,11 @@ static const struct {
 
 
 KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent )
-  : KDialog( parent, caption, KDialog::Ok|KDialog::Cancel)
+  : KDialog( parent )
   , mUserIdFormat( userIdFormat )
 {
+  setCaption( caption );
+  setButtons( Ok | Cancel );
   QWidget *page = new QWidget( this );
   setMainWidget(page);
   QGridLayout *topLayout = new QGridLayout( page );

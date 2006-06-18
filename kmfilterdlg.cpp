@@ -108,11 +108,14 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //=============================================================================
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter )
-  : KDialog( parent,
-		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
-		 Help|Ok|Apply|Cancel /* button mask */ ),
+  : KDialog( parent ),
   bPopFilter(popFilter)
 {
+  if ( popFilter )
+    setCaption( i18n("POP3 Filter Rules") );
+  else
+    setCaption( i18n("Filter Rules") );
+  setButtons( Help|Ok|Apply|Cancel );
   setModal( false );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );

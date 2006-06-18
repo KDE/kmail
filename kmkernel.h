@@ -18,7 +18,7 @@
 #include <kimproxy.h>
 #include <kdepimmacros.h>
 
-#include "kmailIface.h"
+//#include "kmailIface.h"
 #include "kmmsgbase.h"
 #include "globalsettings.h"
 

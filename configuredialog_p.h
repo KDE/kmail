@@ -18,8 +18,6 @@
 #include <QResizeEvent>
 #include <QStackedWidget>
 
-#include <dcopobject.h>
-
 #include <kdialog.h>
 #include <k3listview.h>
 #include <kcmodule.h>

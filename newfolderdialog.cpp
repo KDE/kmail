@@ -59,9 +59,11 @@
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-    : KDialog( parent, i18n( "New Folder" ), KDialog::Ok|KDialog::Cancel ),
+    : KDialog( parent ),
       mFolder( folder )
 {
+  setCaption( i18n( "New Folder" ) );
+  setButtons( Ok | Cancel );
   setModal( false );
   setObjectName( "new_folder_dialog" );
   setAttribute( Qt::WA_DeleteOnClose );

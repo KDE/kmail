@@ -34,8 +34,10 @@
 #include "kmacctseldlg.moc"
 
 KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
-  : KDialog( parent, i18n("Add Account"), Ok|Cancel )
+  : KDialog( parent )
 {
+  setCaption( i18n("Add Account") );
+  setButtons( Ok|Cancel );
   QWidget *page = new QWidget( this );
   setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
