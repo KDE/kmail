@@ -305,28 +305,8 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     emit renameDone( mNewName, true );
   } else
   {
-    kdDebug(5006) << "rollback - deleting folder" << endl;
     // move failed - rollback the last transaction
     kmkernel->undoStack()->undo();
-    // .. and delete the new folder
-    if ( mNewFolder->folderType() == KMFolderTypeImap )
-    {
-      kmkernel->imapFolderMgr()->remove( mNewFolder );
-    } else if ( mNewFolder->folderType() == KMFolderTypeCachedImap )
-    {
-      // tell the account (see KMFolderCachedImap::listDirectory2)
-      KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(mNewFolder->storage());
-      KMAcctCachedImap* acct = folder->account();
-      if ( acct )
-        acct->addDeletedFolder( folder->imapPath() );
-      kmkernel->dimapFolderMgr()->remove( mNewFolder );
-    } else if ( mNewFolder->folderType() == KMFolderTypeSearch )
-    {
-      // invalid
-      kdWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
-    } else {
-      kmkernel->folderMgr()->remove( mNewFolder );
-    }
 
     emit renameDone( mNewName, false );
   }
