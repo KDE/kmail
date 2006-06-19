@@ -254,9 +254,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setMainWidget(searchWidget);
   setButtonBoxOrientation(Qt::Vertical);
 
-  mBtnSearch = actionButton(KDialog::User1);
-  mBtnStop = actionButton(KDialog::User2);
-  mBtnStop->setEnabled(false);
+  enableButton(User2, false);
 
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
   connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
@@ -334,7 +332,7 @@ void SearchWindow::setEnabledSearchButton(bool)
   //Before when we selected a folder == "Local Folder" as that it was not a folder
   //search button was disable, and when we select "Search in all local folder"
   //Search button was never enabled :(
-  mBtnSearch->setEnabled( true );
+  enableButton( User1, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -392,7 +390,7 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
 void SearchWindow::slotFolderActivated( KMFolder* folder )
 {
     mChkbxSpecificFolders->setChecked(true);
-    mBtnSearch->setEnabled(folder);
+    enableButton( User1, folder != 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -406,14 +404,14 @@ void SearchWindow::activateFolder(KMFolder *curFolder)
 void SearchWindow::slotSearch()
 {
     mLastFocus = focusWidget();
-    mBtnSearch->setFocus();     // set focus so we don't miss key event
+    setButtonFocus( User1 );     // set focus so we don't miss key event
 
     mStopped = false;
     mFetchingInProgress = 0;
 
     mSearchFolderOpenBtn->setEnabled(true);
-    mBtnSearch->setEnabled(false);
-    mBtnStop->setEnabled(true);
+    enableButton(User1, false);
+    enableButton(User2, true);
 
     mLbxMatches->clear();
 
@@ -544,7 +542,7 @@ void SearchWindow::slotStop()
     if (mFolder)
       mFolder->stopSearch();
     mStopped = true;
-    mBtnStop->setEnabled(false);
+    enableButton(User2, false);
 }
 
 //-----------------------------------------------------------------------------
@@ -641,14 +639,14 @@ void SearchWindow::enableGUI()
 {
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
-    actionButton(KDialog::Close)->setEnabled(!searching);
+    enableButton(KDialog::Close, !searching);
     mCbxFolders->setEnabled(!searching);
     mChkSubFolders->setEnabled(!searching);
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);
-    mBtnSearch->setEnabled(!searching);
-    mBtnStop->setEnabled(searching);
+    enableButton(User1, !searching);
+    enableButton(User2, searching);
 }
 
 

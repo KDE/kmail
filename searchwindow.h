@@ -157,8 +157,6 @@ protected:
   QRadioButton *mChkbxAllFolders;
   QRadioButton *mChkbxSpecificFolders;
   KMail::FolderRequester *mCbxFolders;
-  QPushButton *mBtnSearch;
-  QPushButton *mBtnStop;
   QCheckBox *mChkSubFolders;
   K3ListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
