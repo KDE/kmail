@@ -184,7 +184,7 @@ void KMFolderDialog::slotOk()
   }
 
   if ( mDelayedSavingTabs )
-    enableButtonOK( false );
+    enableButtonOk( false );
   else
     KDialogBase::slotOk();
 }
@@ -199,7 +199,7 @@ void KMFolderDialog::slotReadyForAccept()
 void KMFolderDialog::slotCancelAccept()
 {
   mDelayedSavingTabs = -1;
-  enableButtonOK( true );
+  enableButtonOk( true );
   // Don't try to create it twice
   if ( !mFolder.isNull() )
     mIsNewFolder = false;
@@ -543,7 +543,7 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 //-----------------------------------------------------------------------------
 void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
 {
-  mDlg->enableButtonOK( !str.isEmpty() );
+  mDlg->enableButtonOk( !str.isEmpty() );
 }
 
 //-----------------------------------------------------------------------------

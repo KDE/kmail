@@ -365,7 +365,7 @@ void KMTransportDialog::makeSendmailPage()
 
 void KMTransportDialog::slotSendmailEditPath(const QString & _text)
 {
-  enableButtonOK( !_text.isEmpty() );
+  enableButtonOk( !_text.isEmpty() );
 }
 
 void KMTransportDialog::makeSmtpPage()

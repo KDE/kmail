@@ -213,7 +213,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
 void NewFolderDialog::slotFolderNameChanged( const QString & _text)
 {
-  enableButtonOK( !_text.isEmpty() );
+  enableButtonOk( !_text.isEmpty() );
 }
 
 void NewFolderDialog::slotOk()

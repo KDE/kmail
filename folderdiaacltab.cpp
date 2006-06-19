@@ -127,7 +127,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
   connect( kabBtn, SIGNAL( clicked() ), SLOT( slotSelectAddresses() ) );
   connect( mButtonGroup, SIGNAL( clicked( int ) ), SLOT( slotChanged() ) );
-  enableButtonOK( false );
+  enableButtonOk( false );
 
   mUserIdLineEdit->setFocus();
   // Ensure the lineedit is rather wide so that email addresses can be read in it
@@ -136,7 +136,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
 
 void KMail::ACLEntryDialog::slotChanged()
 {
-  enableButtonOK( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->selected() != 0 );
+  enableButtonOk( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->selected() != 0 );
 }
 
 static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat userIdFormat )
@@ -177,7 +177,7 @@ void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permi
 {
   mUserIdLineEdit->setText( userId );
   mButtonGroup->setButton( permissions );
-  enableButtonOK( !userId.isEmpty() );
+  enableButtonOk( !userId.isEmpty() );
 }
 
 QString KMail::ACLEntryDialog::userId() const

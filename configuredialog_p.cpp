@@ -109,7 +109,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   connect( radio, SIGNAL(toggled(bool)),
 	   mComboBox, SLOT(setEnabled(bool)) );
 
-  enableButtonOK( false ); // since line edit is empty
+  enableButtonOk( false ); // since line edit is empty
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
@@ -125,16 +125,16 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   QString name = proposedIdentityName.trimmed();
   // name isn't empty
   if ( name.isEmpty() ) {
-    enableButtonOK( false );
+    enableButtonOk( false );
     return;
   }
   // or name doesn't yet exist.
   for ( int i = 0 ; i < mComboBox->count() ; i++ )
     if ( mComboBox->itemText(i) == name ) {
-      enableButtonOK( false );
+      enableButtonOk( false );
       return;
     }
-  enableButtonOK( true );
+  enableButtonOk( true );
 }
 
 ListView::ListView( QWidget *parent, int visibleItem )
@@ -253,7 +253,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   }
   if ( !mComboBox->count() ) {
     mComboBox->addItem( i18n("No More Languages Available") );
-    enableButtonOK( false );
+    enableButtonOk( false );
   } else mComboBox->model()->sort( 0 );
 }
 
@@ -342,12 +342,12 @@ ProfileDialog::ProfileDialog( QWidget * parent )
   connect( this, SIGNAL(finished()), SLOT(deleteLater()) );
   connect( this, SIGNAL(okClicked()), SLOT( slotOk() ) );
 
-  enableButtonOK( false );
+  enableButtonOk( false );
 }
 
 void ProfileDialog::slotSelectionChanged()
 {
-  enableButtonOK( mListView->selectedItem() );
+  enableButtonOk( mListView->selectedItem() );
 }
 
 void ProfileDialog::setup() {
