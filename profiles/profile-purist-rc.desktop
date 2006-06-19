@@ -38,6 +38,7 @@ Name[uk]=Пуристичний
 Name[ven]=Zwo kunaho
 Name[xh]=isiPurist
 Name[zh_CN]=严格
+Name[zh_TW]=較安全
 Name[zu]=Okuhlanzekileyo
 Comment=Most features turned off, KDE global settings are used
 Comment[ar]=أغلب الميزات غبر عاملة, سيتم استخدام اعدادات KDE العامة
@@ -90,6 +91,7 @@ Comment[ven]=Zwithu zwinzhi zwo tsimiwa, mavhekanyelo a KDE a hothe na hothe a k
 Comment[vi]=Hầu hết các chức năng tắt, Thiết lập toàn cục của KDE được dùng 
 Comment[xh]=Imisebenzi emininzi icinyiwe, izicwangciso ezingqukuva ze KDE ziyasetyenziswa
 Comment[zh_CN]=关闭大多数特性，使用 KDE 全局设置
+Comment[zh_TW]=大部份功能都關閉，使用 KDE 全域設定
 Comment[zu]=Eziningi izinto azikhanyiswanga, ezezizwe izilungiselo ze KDE ziyasetshenziswa
 
 [Reader]

@@ -45,6 +45,7 @@ Name[tg]=Тазоди баланд
 Name[tr]=Yüksek Kontrast
 Name[uk]=Висока контрастність
 Name[zh_CN]=高对比
+Name[zh_TW]=高反差
 Comment=Increased font sizes for visually impaired users
 Comment[ar]=خطوط بأحجام أكبر لضعاف البصر
 Comment[az]=Görmə pozuqluğu olanlar üçün böyüdülmüş yazı növləri
@@ -97,6 +98,7 @@ Comment[ven]=Saizi ya fontu yo engedzhwaho uitela vhashumisi vha zwauvhona
 Comment[vi]=Tăng cỡ font cho người dùng tàn tật 
 Comment[xh]=Ubungakanani bobukhulu begama bunyusiwe kubasebenzisi ababonayo
 Comment[zh_CN]=对有视觉障碍的用户增加字体大小
+Comment[zh_TW]=遞增字型大小以適合視覺障礙者
 Comment[zu]=Abakhushululiweyo osayizi befont kwabantu abayizimpumputhe
 
 [Reader]
