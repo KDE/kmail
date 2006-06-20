@@ -30,7 +30,6 @@
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
 
-class QAccel;
 class QVBoxLayout;
 class QSplitter;
 
@@ -501,8 +500,6 @@ private:
   KXMLGUIClient *mGUIClient;
 
   static QValueList<KMMainWidget*>* s_mainWidgetList;
-
-  QAccel *mAccel;
 };
 
 #endif

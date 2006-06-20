@@ -38,6 +38,7 @@
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 #include <kaddrbook.h>
+#include <kaccel.h>
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
@@ -126,8 +127,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     QWidget(parent, name),
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
-    mShowingOfflineScreen( false ),
-    mAccel( 0 )
+    mShowingOfflineScreen( false )
 {
   // must be the first line of the constructor:
   mStartupDone = FALSE;
@@ -473,8 +473,6 @@ void KMMainWidget::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWidget::createWidgets(void)
 {
-  mAccel = new QAccel(this, "createWidgets()");
-
   // Create the splitters according to the layout settings
   QWidget *headerParent = 0, *folderParent = 0,
             *mimeParent = 0, *messageParent = 0;
@@ -544,9 +542,10 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
-  mAccel->connectItem(mAccel->insertItem(SHIFT+Key_Left),
+  QAccel *accel = actionCollection()->kaccel();
+  accel->connectItem(accel->insertItem(SHIFT+Key_Left),
                      mHeaders, SLOT(selectPrevMessage()));
-  mAccel->connectItem(mAccel->insertItem(SHIFT+Key_Right),
+  accel->connectItem(accel->insertItem(SHIFT+Key_Right),
                      mHeaders, SLOT(selectNextMessage()));
 
   if (mReaderWindowActive) {
@@ -562,33 +561,34 @@ void KMMainWidget::createWidgets(void)
         mMsgView, SLOT(clearCache()));
     connect(mMsgView, SIGNAL(noDrag()),
         mHeaders, SLOT(slotNoDrag()));
-    mAccel->connectItem(mAccel->insertItem(Key_Up),
+    accel->connectItem(accel->insertItem(Key_Up),
         mMsgView, SLOT(slotScrollUp()));
-    mAccel->connectItem(mAccel->insertItem(Key_Down),
+    accel->connectItem(accel->insertItem(Key_Down),
         mMsgView, SLOT(slotScrollDown()));
-    mAccel->connectItem(mAccel->insertItem(Key_Prior),
+    accel->connectItem(accel->insertItem(Key_Prior),
         mMsgView, SLOT(slotScrollPrior()));
-    mAccel->connectItem(mAccel->insertItem(Key_Next),
+    accel->connectItem(accel->insertItem(Key_Next),
         mMsgView, SLOT(slotScrollNext()));
   } else {
     mMsgView = NULL;
   }
 
-  new KAction( i18n("Move Message to Folder"), Key_M, this,
+  KAction *action;
+
+  action = new KAction( i18n("Move Message to Folder"), Key_M, this,
                SLOT(slotMoveMsg()), actionCollection(),
                "move_message_to_folder" );
-  new KAction( i18n("Copy Message to Folder"), Key_C, this,
+  action->plugAccel( actionCollection()->kaccel() );
+
+  action = new KAction( i18n("Copy Message to Folder"), Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(),
                "copy_message_to_folder" );
-  new KAction( i18n("Jump to Folder"), Key_J, this,
+  action->plugAccel( actionCollection()->kaccel() );
+
+  action = new KAction( i18n("Jump to Folder"), Key_J, this,
                SLOT(slotJumpToFolder()), actionCollection(),
                "jump_to_folder" );
-  mAccel->connectItem(mAccel->insertItem(Key_M),
-		     this, SLOT(slotMoveMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Key_C),
-		     this, SLOT(slotCopyMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Key_J),
-		     this, SLOT(slotJumpToFolder()) );
+  action->plugAccel( actionCollection()->kaccel() );
 
   // create list of folders
   mFolderTree = new KMFolderTree(this, folderParent, "folderTree");
@@ -607,50 +607,45 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotFolderTreeColumnsChanged()));
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  new KAction(
+  action = new KAction(
     i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
     i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
     SLOT(slotAbortAll()), actionCollection(), "cancel" );
-  mAccel->connectItem(mAccel->insertItem(Key_Escape),
-                     ProgressManager::instance(), SLOT(slotAbortAll()));
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Right),
-                     mFolderTree, SLOT(incCurrentFolder()));
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Left),
-                     mFolderTree, SLOT(decCurrentFolder()));
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
    i18n("Select Folder with Focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Space),
-                     mFolderTree, SLOT(selectCurrentFolder()));
-  new KAction(
+  action->plugAccel( actionCollection()->kaccel() );
+
+  action = new KAction(
     i18n("Focus on Next Message"), ALT+Key_Right, mHeaders,
     SLOT(incCurrentMessage()), actionCollection(), "inc_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Right ),
-                        mHeaders, SLOT( incCurrentMessage() ) );
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
     i18n("Focus on Previous Message"), ALT+Key_Left, mHeaders,
     SLOT(decCurrentMessage()), actionCollection(), "dec_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Left ),
-                        mHeaders, SLOT( decCurrentMessage() ) );
+  action->plugAccel( actionCollection()->kaccel() );
 
-  new KAction(
+  action = new KAction(
     i18n("Select Message with Focus"), ALT+Key_Space, mHeaders,
     SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Space ),
-                        mHeaders, SLOT( selectCurrentMessage() ) );
+  action->plugAccel( actionCollection()->kaccel() );
 
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
@@ -3516,8 +3511,7 @@ void KMMainWidget::updateFileMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::setAccelsEnabled( bool enabled )
 {
-  if ( mAccel )
-    mAccel->setEnabled( enabled );
+  actionCollection()->kaccel()->setEnabled( enabled );
 }
 
 
