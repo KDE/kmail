@@ -47,7 +47,7 @@ using KPIM::ProgressManager;
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   KMail::ImapAccountBase(aOwner, aAccountName, id),
-  mCountRemainChecks( 0 )
+  mCountRemainChecks( 0 ), mInteractive( true )
 {
   mFolder = 0;
   mNoopTimer.start( 60000 ); // // send a noop every minute
@@ -246,6 +246,20 @@ void KMAcctImap::processNewMail(bool interactive)
       return;
     }
   }
+
+  mInteractive = interactive;
+  // For full mailchecks trigger a folder listing, and continue when it's done
+  if ( mMailCheckFolders.count() > 1 ) {
+    connect( listDirProgressItem(), SIGNAL( progressItemCompleted( ProgressItem *) ),
+           this, SLOT( slotContinueMailCheck() ) );
+    listDirectory();
+  } else{
+    slotContinueMailCheck();
+  }
+}
+
+void KMAcctImap::slotContinueMailCheck()
+{
   // Ok, we're really checking, get a progress item;
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem =
@@ -295,7 +309,7 @@ void KMAcctImap::processNewMail(bool interactive)
         else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
-          bool ok = imapFolder->processNewMail(interactive);
+          bool ok = imapFolder->processNewMail(mInteractive);
           if (!ok)
           {
             // there was an error so cancel

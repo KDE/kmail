@@ -111,6 +111,8 @@ protected:
   QGuardedPtr<KMFolderImap> mFolder;
 
 protected slots:
+  // Triggers the second half of a full mail check, after folder listing.
+  void slotContinueMailCheck();
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
   /**
@@ -134,6 +136,7 @@ private:
   /** used to reset connection errors */
   QTimer mErrorTimer;
   int mCountRemainChecks;
+  bool mInteractive; // ongoing mailcheck is interactive
 };
 
 #endif /*KMAcctImap_h*/
