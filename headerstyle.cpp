@@ -247,14 +247,18 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
-    QString headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
+    QString headerStr;
 
     if ( strategy->headersToDisplay().isEmpty()
          && strategy->defaultPolicy() == HeaderStrategy::Display ) {
-      // crude way to emulate "all" headers:
+      // crude way to emulate "all" headers - Note: no strings have
+      // i18n(), so direction should always be ltr.
+      headerStr= QString("<div class=\"header\" dir=\"ltr\">");
       headerStr += formatAllMessageHeaders( message );
       return headerStr + "</div>";
     }
+
+    headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
 
     //case HdrLong:
     if ( strategy->showHeader( "subject" ) )
