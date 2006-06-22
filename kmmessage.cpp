@@ -1584,7 +1584,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   };
 
   receipt->setTo( receiptTo );
-  receipt->setSubject( "Message Disposition Notification" );
+  receipt->setSubject( i18n( "Message Disposition Notification" ) );
   receipt->setReplyToId( msgId() );
   receipt->setReferences( getRefStr() );
 
