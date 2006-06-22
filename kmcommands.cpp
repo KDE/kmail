@@ -1882,6 +1882,7 @@ KMCommand::Result KMMoveCommand::execute()
   int index;
   QPtrList<KMMessage> list;
   int undoId = -1;
+  mCompleteWithAddedMsg = false;
 
   if (mDestFolder) {
     connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
@@ -1927,6 +1928,11 @@ KMCommand::Result KMMoveCommand::execute()
         list.append(msg);
       } else {
         // We are moving to a local folder.
+        if ( srcFolder->folderType() == KMFolderTypeImap )
+        {
+          // do not complete here but wait until all messages are transferred
+          mCompleteWithAddedMsg = true;
+        }
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
@@ -1965,8 +1971,10 @@ KMCommand::Result KMMoveCommand::execute()
       it.key()->removeMsg(*it.data());
       delete it.data();
     }
-//    Result result = ( mLostBoys.isEmpty() ? OK : Failed );
-    completeMove( OK );
+    if ( !mCompleteWithAddedMsg ) {
+      // imap folders will be completed in slotMsgAddedToDestFolder
+      completeMove( OK );
+    }
   }
 
   return OK;
@@ -2008,6 +2016,9 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
+    }
+    if ( mCompleteWithAddedMsg ) {
+      completeMove( OK );
     }
   } else {
     if ( mProgressItem ) {
