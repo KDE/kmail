@@ -270,6 +270,7 @@ private:
 
   // The boundary is saved for later addition into mp/a body
   DwString  mSaveBoundary;
+  QCString mMultipartMixedBoundary;
 
   QValueList<MessageComposerJob*> mJobs;
   bool mEncryptWithChiasmus;

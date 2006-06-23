@@ -1406,25 +1406,30 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   kdDebug(5006) << "mEarlyAddAttachments=" << mEarlyAddAttachments << " mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody << endl;
 
   // if an html message is to be generated, make a text/plain and text/html part
-  if ( mIsRichText ) {
-    mOldBodyPart.setTypeStr(   "multipart");
-    mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "alternative");
-  }
-  else if( mEarlyAddAttachments ) {
+  mMultipartMixedBoundary = "";
+  if ( mEarlyAddAttachments ) {
     mOldBodyPart.setTypeStr( "multipart" );
     mOldBodyPart.setSubtypeStr( "mixed" );
-  } else
+    // calculate a boundary string
+    DwMediaType tmpCT;
+    tmpCT.CreateBoundary( ++mPreviousBoundaryLevel );
+    mMultipartMixedBoundary = tmpCT.Boundary().c_str();
+  }
+  else if ( mIsRichText ) {
+    mOldBodyPart.setTypeStr( "multipart" );
+    mOldBodyPart.setSubtypeStr( "alternative" );
+  }
+  else
     mOldBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
 
   mOldBodyPart.setContentDisposition( "inline" );
 
-  QCString boundaryCStr;
   if ( mIsRichText ) { // create a multipart body
     // calculate a boundary string
     QCString boundaryCStr;  // storing boundary string data
     QCString newbody;
     DwMediaType tmpCT;
-    tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
+    tmpCT.CreateBoundary( ++mPreviousBoundaryLevel );
     boundaryCStr = tmpCT.Boundary().c_str();
     QValueList<int> allowedCTEs;
 
@@ -1501,11 +1506,6 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   if( mEarlyAddAttachments ) {
-    // calculate a boundary string
-    ++mPreviousBoundaryLevel;
-    DwMediaType tmpCT;
-    tmpCT.CreateBoundary( mPreviousBoundaryLevel );
-    boundaryCStr = tmpCT.Boundary().c_str();
     // add the normal body text
     KMMessagePart innerBodyPart;
     if ( mIsRichText ) {
@@ -1535,11 +1535,11 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
           bStr += "\"";
           body = innerDwPart->AsString().c_str();
           body.insert( boundPos, bStr );
-          body = "--" + boundaryCStr + "\n" + body;
+          body = "--" + mMultipartMixedBoundary + "\n" + body;
         }
     }
     else
-      body = "--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
+      body = "--" + mMultipartMixedBoundary + "\n" + innerDwPart->AsString().c_str();
     delete innerDwPart;
     innerDwPart = 0;
     // add all matching Attachments
@@ -1548,12 +1548,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
-        body += "\n--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
+        body += "\n--" + mMultipartMixedBoundary + "\n" + innerDwPart->AsString().c_str();
         delete innerDwPart;
         innerDwPart = 0;
       }
     }
-    body += "\n--" + boundaryCStr + "--\n";
+    body += "\n--" + mMultipartMixedBoundary + "--\n";
   } else { // !earlyAddAttachments
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
@@ -1588,12 +1588,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     dwPart = 0;
 
     // manually add a boundary definition to the Content-Type header
-    if( !boundaryCStr.isEmpty() ) {
+    if( !mMultipartMixedBoundary.isEmpty() ) {
       int boundPos = mEncodedBody.find( '\n' );
       if( -1 < boundPos ) {
         // insert new "boundary" parameter
         QCString bStr( ";\n  boundary=\"" );
-        bStr += boundaryCStr;
+        bStr += mMultipartMixedBoundary;
         bStr += "\"";
         mEncodedBody.insert( boundPos, bStr );
       }
@@ -1858,8 +1858,14 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       msg->headers().ContentType().Parse();
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
-      msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
+      QCString ct = ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr();
+      if ( ct == "multipart/mixed" )
+        ct += ";\n\tboundary=\"" + mMultipartMixedBoundary + '"';
+      else if ( ct == "multipart/alternative" )
+        ct += ";\n\tboundary=\"" + QCString(mSaveBoundary.c_str()) + '"';
+      msg->headers().ContentType().FromString( ct );
+      msg->headers().ContentType().Parse();
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ct << endl;
     }
     if ( !ourFineBodyPart.charset().isEmpty() )
       msg->setCharset( ourFineBodyPart.charset() );
@@ -1874,10 +1880,6 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : top level headers and body adjusted" << endl;
 
     // set body content
-    if ( mIsRichText && !(doSign || doEncrypt) ) { // add the boundary to the header
-      msg->headers().ContentType().SetBoundary( mSaveBoundary );
-      msg->headers().ContentType().Assemble();
-    }
     msg->setBody(ourFineBodyPart.body() );
 
   }
