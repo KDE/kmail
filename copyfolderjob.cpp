@@ -61,8 +61,9 @@ CopyFolderJob::~CopyFolderJob()
  */
 void CopyFolderJob::execute()
 {
-  createTargetDir();
-  copyMessagesToTargetDir();
+  if ( createTargetDir() ) {
+    copyMessagesToTargetDir();
+  }
 }
 
 void CopyFolderJob::copyMessagesToTargetDir()
@@ -154,7 +155,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
 
 // FIXME factor into CreateFolderJob and make async, so it works with online imap
 // FIXME this is the same in renamejob. Refactor RenameJob to use a copy job and then delete
-void CopyFolderJob::createTargetDir()
+bool CopyFolderJob::createTargetDir()
 {
     KMFolderMgr* folderMgr = kmkernel->folderMgr();
     if ( mNewParent->type() == KMImapDir ) {
@@ -181,7 +182,7 @@ void CopyFolderJob::createTargetDir()
       kdWarning(5006) << k_funcinfo << "could not create folder" << endl;
       emit folderCopyComplete( false );
       deleteLater();
-      return;
+      return false;
     }
     // inherit the folder type
     // FIXME we should probably copy over most if not all settings
@@ -189,6 +190,7 @@ void CopyFolderJob::createTargetDir()
     mNewFolder->storage()->writeConfig();
     kdDebug(5006)<< "CopyJob::createTargetDir - " << mStorage->folder()->idString()
       << " |=> " << mNewFolder->idString() << endl;
+    return true;
 }
 
 

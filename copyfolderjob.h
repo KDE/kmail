@@ -62,8 +62,8 @@ public:
 
 protected slots:
 
-  /** Create the target directory under the new parent. */
-  void createTargetDir();
+  /** Create the target directory under the new parent. Returns success or failure.*/
+  bool createTargetDir();
 
   /** Copy all messages from the original folder to mNewFolder */
   void copyMessagesToTargetDir();
