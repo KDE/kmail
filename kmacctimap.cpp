@@ -290,7 +290,7 @@ void KMAcctImap::processNewMail(bool interactive)
   mMailCheckProgressItem =
     ProgressManager::createProgressItem(
         "MailCheckAccount" + name(),
-        i18n("Checking account: %1" ).arg( QStyleSheet::escape( name() ) ),
+        i18n( "Checking account: %1", QStyleSheet::escape( name() ) ),
         QString(), // status
         true, // can be canceled
         useSSL() || useTLS() );
