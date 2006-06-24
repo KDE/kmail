@@ -86,15 +86,20 @@ static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
 KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 			       KMFolderTree* aParent, const QString& aCap,
 			       const QString& aName):
-  KDialogBase( KDialogBase::Tabbed,
-               aCap, KDialogBase::Ok|KDialogBase::Cancel,
-               KDialogBase::Ok, aParent, "KMFolderDialog", true ),
+  KPageDialog( aParent ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
   mIsNewFolder( aFolder == 0 ),
   mFolderTree( aParent )
 {
+  setFaceType( Tabbed );
+  setCaption( aCap );
+  setButtons( Ok|Cancel );
+  setDefaultButton( Ok );
+  setObjectName( "KMFolderDialog" );
+  setModal( true );
+
   kDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QStringList folderNames;
@@ -118,7 +123,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   FolderDiaTab* tab;
   QFrame *box;
 
-  box = addVBoxPage( i18n("General") );
+  box = new KVBox( this );
+  addPage( box, i18n("General") );
   tab = new FolderDiaGeneralTab( this, aName, box );
   addTab( tab );
 
@@ -127,7 +133,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   bool noContent = mFolder ? mFolder->storage()->noContent() : false;
   if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
     if ( FolderDiaACLTab::supports( refFolder ) ) {
-      box = addVBoxPage( i18n("Access Control") );
+      box = new KVBox( this );
+      addPage( box, i18n("Access Control") );
       tab = new FolderDiaACLTab( this, box );
       addTab( tab );
     }

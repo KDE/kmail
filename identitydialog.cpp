@@ -86,10 +86,13 @@ using namespace KPIM;
 
 namespace KMail {
 
-  IdentityDialog::IdentityDialog( QWidget * parent, const char * name )
-    : KDialogBase( Plain, i18n("Edit Identity"), Ok|Cancel|Help, Ok,
-                   parent, name )
+  IdentityDialog::IdentityDialog( QWidget * parent )
+    : KDialog( parent )
   {
+    setCaption( i18n("Edit Identity") );
+    setButtons( Ok|Cancel|Help );
+    setDefaultButton( Ok );
+
     // tmp. vars:
     QWidget * tab;
     QLabel  * label;
@@ -101,10 +104,12 @@ namespace KMail {
     // Tab Widget: General
     //
     row = -1;
-    QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
+    QVBoxLayout * vlay = new QVBoxLayout( page );
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
-    QTabWidget *tabWidget = new QTabWidget( plainPage() );
+    QTabWidget *tabWidget = new QTabWidget( page );
     tabWidget->setObjectName( "config-identity-tab" );
     vlay->addWidget( tabWidget );
 
@@ -312,7 +317,8 @@ namespace KMail {
 
     // "Reply-To Address" line edit and label:
     ++row;
-    mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true, "mReplyToEdit" );
+    mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mReplyToEdit->setObjectName( "mReplyToEdit" );
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( i18n("&Reply-To address:"), tab );
     label->setBuddy( mReplyToEdit );
@@ -332,7 +338,8 @@ namespace KMail {
 
     // "BCC addresses" line edit and label:
     ++row;
-    mBccEdit = new KPIM::AddresseeLineEdit( tab, true, "mBccEdit" );
+    mBccEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mBccEdit->setObjectName( "mBccEdit" );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( i18n("&BCC addresses:"), tab );
     label->setBuddy( mBccEdit );
@@ -552,7 +559,7 @@ void IdentityDialog::slotOk() {
       }
     }
 
-    return KDialogBase::slotOk();
+    return;
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,

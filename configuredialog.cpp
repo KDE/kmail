@@ -252,7 +252,7 @@ void ConfigureDialog::hideEvent( QHideEvent *ev ) {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
   geometry.writeEntry( "ConfigureDialogWidth", width() );
   geometry.writeEntry( "ConfigureDialogHeight",height() );
-  KDialogBase::hideEvent( ev );
+  KDialog::hideEvent( ev );
 }
 
 ConfigureDialog::~ConfigureDialog() {
@@ -260,12 +260,10 @@ ConfigureDialog::~ConfigureDialog() {
 
 void ConfigureDialog::slotApply() {
   GlobalSettings::self()->writeConfig();
-  KCMultiDialog::slotApply();
 }
 
 void ConfigureDialog::slotOk() {
   GlobalSettings::self()->writeConfig();
-  KCMultiDialog::slotOk();
 }
 
 void ConfigureDialog::slotUser2() {
@@ -4106,8 +4104,9 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
 
-  if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
-                           "load()", false ) )
+#warning Port me!
+//   if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
+//                            "load()", false ) )
     kError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
 
 }
@@ -4320,7 +4319,8 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
-bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
+#warning WTF?!?! Hand-made DCOP stuff?!?!
+/*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {
     if ( fun == "load()" ) {
         replyType = "void";
@@ -4342,7 +4342,7 @@ DCOPCStringList SecurityPageSMimeTab::functions()
 {
   // Hide our slot, just because it's simpler to do so.
   return DCOPObject::functions();
-}
+}*/
 
 Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* componentName,
                                                                 const char* groupName,

@@ -32,7 +32,7 @@
 #ifndef __KMAIL_IDENTITYDIALOG_H__
 #define __KMAIL_IDENTITYDIALOG_H__
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QLineEdit;
@@ -56,10 +56,10 @@ namespace KMail {
 
 namespace KMail {
 
-  class IdentityDialog : public KDialogBase {
+  class IdentityDialog : public KDialog {
     Q_OBJECT
   public:
-    IdentityDialog( QWidget * parent=0, const char * name = 0 );
+    IdentityDialog( QWidget * parent=0 );
     virtual ~IdentityDialog();
 
     void setIdentity( /*_not_ const*/ KPIM::Identity & ident );

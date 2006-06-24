@@ -17,6 +17,7 @@
 #include <kdeversion.h>
 #include <kimproxy.h>
 #include <kdepimmacros.h>
+#include <kurl.h>
 
 //#include "kmailIface.h"
 #include "kmmsgbase.h"
@@ -85,7 +86,7 @@ class ConfigureDialog;
  * (singleton) objects such as the UndoStack, the folder managers and filter
  * manager, etc.
  */
-class KDE_EXPORT KMKernel : public QObject, virtual public KMailIface
+class KDE_EXPORT KMKernel : public QObject
 {
   Q_OBJECT
 
@@ -144,7 +145,8 @@ public:
                     const QByteArray &attachContDisp,
                     const QByteArray &attachCharset);
 
-  DCOPRef openComposer(const QString &to, const QString &cc,
+#warning Port DCOPRef usage!
+  /*DCOPRef*/ void openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
@@ -153,7 +155,8 @@ public:
   void setDefaultTransport( const QString & transport );
 
   /** DCOP call used by the Kontact plugin to create a new message. */
-  DCOPRef newMessage(const QString &to,
+#warning Port DCOPRef usage!
+  /*DCOPRef*/ void newMessage(const QString &to,
                      const QString &cc,
                      const QString &bcc,
                      bool hidden,
@@ -177,7 +180,8 @@ public:
                                 const QString & MsgStatusFlags = QString());
 
   QStringList folderList() const;
-  DCOPRef getFolder( const QString& vpath );
+#warning Port DCOPRef usage!
+  /*DCOPRef*/ void getFolder( const QString& vpath );
   void selectFolder( QString folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( quint32 serialNumber, QString messageId );

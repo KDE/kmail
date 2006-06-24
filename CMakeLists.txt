@@ -280,9 +280,9 @@ kde4_automoc(${dcoptest_SRCS})
 
 if(KDE4_BUILD_TESTS)
 
-kde4_add_executable(dcoptest ${dcoptest_SRCS})
+#kde4_add_executable(dcoptest ${dcoptest_SRCS})
 
-target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
+#target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
 
 endif(KDE4_BUILD_TESTS)
 

@@ -97,13 +97,17 @@ static KMFolderCachedImap::IncidencesFor incidencesForFromString( const QString&
   return KMFolderCachedImap::IncForAdmins; // by default
 }
 
-DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
-                                                  const char* name )
-  : KDialogBase( Plain, i18n( "Troubleshooting IMAP Cache" ),
-                 Cancel | User1 | User2, Cancel, parent, name, true ),
+DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent )
+  : KDialog( parent ),
     rc( Cancel )
 {
-  QFrame* page = plainPage();
+  setCaption( i18n( "Troubleshooting IMAP Cache" ) );
+  setButtons( Cancel | User1 | User2 );
+  setDefaultButton( Cancel );
+  setModal( true );
+
+  QFrame* page = new QFrame( this );
+  setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( 0 );
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
@@ -508,7 +512,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 {
   const int rc = DImapTroubleShootDialog::run();
 
-  if( rc == KDialogBase::User1 ) {
+  if( rc == KDialog::User1 ) {
     // Refresh cache
     if( !account() ) {
       KMessageBox::sorry( 0, i18n("No account setup for this folder.\n"
@@ -524,7 +528,7 @@ void KMFolderCachedImap::slotTroubleshoot()
     if( KMessageBox::warningContinueCancel( 0, str, s1, s2 ) ==
         KMessageBox::Continue )
       account()->invalidateIMAPFolders( this );
-  } else if( rc == KDialogBase::User2 ) {
+  } else if( rc == KDialog::User2 ) {
     // Rebuild index file
     createIndexFromContents();
     KMessageBox::information( 0, i18n( "The index of this folder has been "

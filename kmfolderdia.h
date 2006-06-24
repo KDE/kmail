@@ -32,7 +32,7 @@
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
-#include <kdialogbase.h>
+#include <kpagedialog.h>
 #include "configuredialog_p.h"
 
 //Added by qt3to4:
@@ -158,7 +158,7 @@ private:
 /**
  * Dialog for handling the properties of a mail folder
  */
-class KMFolderDialog : public KDialogBase
+class KMFolderDialog : public KPageDialog
 {
   Q_OBJECT
 

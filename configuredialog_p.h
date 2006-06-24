@@ -824,9 +824,9 @@ private:
   WarningConfiguration* mWidget;
 };
 
-class SecurityPageSMimeTab : public ConfigModuleTab, public DCOPObject {
+#warning This was a DCOPObject, so we probably need to port it to DBus!
+class SecurityPageSMimeTab : public ConfigModuleTab {
   Q_OBJECT
-  K_DCOP
 public:
   SecurityPageSMimeTab( QWidget * parent=0 );
   ~SecurityPageSMimeTab();

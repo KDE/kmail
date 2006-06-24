@@ -39,7 +39,7 @@
 #include "folderjob.h"
 #include "cachedimapjob.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kstandarddirs.h>
 
 #include <QDialog>
@@ -56,11 +56,11 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-class DImapTroubleShootDialog : public KDialogBase
+class DImapTroubleShootDialog : public KDialog
 {
   Q_OBJECT
 public:
-  DImapTroubleShootDialog( QWidget* parent=0, const char* name=0 );
+  DImapTroubleShootDialog( QWidget* parent=0 );
 
   static int run();
 
