@@ -159,14 +159,16 @@ void KMFolderDialog::addTab( FolderDiaTab* tab )
 void KMFolderDialog::slotApply()
 {
   if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
-    KDialogBase::slotApply();
+    //KDialog::slotApply();
+#warning "kde4: port it 'slotApply'"
     return;
   }
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
     mIsNewFolder = false; // so it's not new anymore :)
-  KDialogBase::slotApply();
+#warning "kde4: port it slotApply"
+  //KDialogBase::slotApply();
 }
 
 // Called when pressing Ok
@@ -175,7 +177,7 @@ void KMFolderDialog::slotApply()
 void KMFolderDialog::slotOk()
 {
   if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
-    KDialogBase::slotOk();
+    KDialog::accept();
     return;
   }
 
@@ -193,14 +195,14 @@ void KMFolderDialog::slotOk()
   if ( mDelayedSavingTabs )
     enableButtonOk( false );
   else
-    KDialogBase::slotOk();
+    KDialog::accept();
 }
 
 void KMFolderDialog::slotReadyForAccept()
 {
   --mDelayedSavingTabs;
   if ( mDelayedSavingTabs == 0 )
-    KDialogBase::slotOk();
+    KDialog::accept();
 }
 
 void KMFolderDialog::slotCancelAccept()

@@ -20,7 +20,7 @@
 #ifndef kmmsgpartdlg_h
 #define kmmsgpartdlg_h
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kio/global.h>
 //Added by qt3to4:
 #include <QLabel>
@@ -38,7 +38,7 @@ class QLineEdit;
 /** @short GUI for KMMsgPartDialog
     @author Marc Mutz <mutz@kde.org>
 */
-class KMMsgPartDialog: public KDialogBase
+class KMMsgPartDialog: public KDialog
 {
   Q_OBJECT
 

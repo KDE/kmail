@@ -1,7 +1,7 @@
 #ifndef __KMAIL__MANAGESIEVESCRIPTSDIALOG_H__
 #define __KMAIL__MANAGESIEVESCRIPTSDIALOG_H__
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
 #include <QMap>
 
@@ -14,7 +14,7 @@ namespace KMail {
 class SieveJob;
 class SieveEditor;
 
-class ManageSieveScriptsDialog : public KDialogBase {
+class ManageSieveScriptsDialog : public KDialog {
   Q_OBJECT
 public:
   ManageSieveScriptsDialog( QWidget * parent=0, const char * name=0 );

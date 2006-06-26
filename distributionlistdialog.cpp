@@ -93,10 +93,15 @@ class DistributionListItem : public Q3CheckListItem
 
 
 DistributionListDialog::DistributionListDialog( QWidget *parent )
-  : KDialogBase( Plain, i18n("Save Distribution List"), User1 | Cancel,
-                 User1, parent, 0, false, false, i18n("Save List") )
+  : KDialog( parent )
 {
-  QFrame *topFrame = plainPage();
+  QFrame *topFrame = new QFrame( this );
+  setMainWidget( topFrame );
+  setCaption( i18n("Save Distribution List") );
+  setButtons( User1 | Cancel );
+  setDefaultButton( User1 );
+  setModal( false );
+  setButtonText( User1, i18n("Save List") );
 
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );

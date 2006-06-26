@@ -49,10 +49,14 @@ static const int numEncodingTypes =
 
 KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
                                   QWidget * parent, const char * name )
-  : KDialogBase( Plain,
-                 caption.isEmpty() ? i18n("Message Part Properties") : caption,
-                 Ok|Cancel|Help, Ok, parent, name, true, true)
+  : KDialog( parent )
 {
+  setCaption( caption.isEmpty() ? i18n("Message Part Properties") : caption );
+  setButtons( Ok|Cancel|Help );
+  setDefaultButton( Ok );
+  setModal( true );
+  enableButtonSeparator( true );
+
   // tmp vars:
   QGridLayout * glay;
   QLabel      * label;
@@ -62,19 +66,20 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     mI18nizedEncodings << i18n( encodingTypes[i].displayName );
-
-  glay = new QGridLayout( plainPage() );
+  QFrame *frame = new QFrame( this );
+  setMainWidget( frame );
+  glay = new QGridLayout(frame );
   glay->setSpacing( spacingHint() );
   glay->setColumnStretch( 1, 1 );
   glay->setRowStretch( 8, 1 );
 
   // mimetype icon:
-  mIcon = new QLabel( plainPage() );
+  mIcon = new QLabel( frame );
   mIcon->setPixmap( DesktopIcon("unknown") );
   glay->addWidget( mIcon, 0, 0, 2, 1);
 
   // row 0: Type combobox:
-  mMimeType = new KComboBox( true, plainPage() );
+  mMimeType = new KComboBox( true, frame );
   mMimeType->setInsertPolicy( QComboBox::NoInsert );
   mMimeType->setValidator( new KMimeTypeValidator( mMimeType ) );
   mMimeType->addItems( QStringList()
@@ -98,7 +103,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mMimeType->setWhatsThis( msg );
 
   // row 1: Size label:
-  mSize = new QLabel( plainPage() );
+  mSize = new QLabel( frame );
   setSize( KIO::filesize_t(0) );
   glay->addWidget( mSize, 1, 1 );
 
@@ -111,8 +116,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mSize->setWhatsThis( msg );
 
   // row 2: "Name" lineedit and label:
-  mFileName = new KLineEdit( plainPage() );
-  label = new QLabel( i18n("&Name:"), plainPage() );
+  mFileName = new KLineEdit( frame );
+  label = new QLabel( i18n("&Name:"), frame );
   label->setBuddy( mFileName );
   glay->addWidget( label, 2, 0 );
   glay->addWidget( mFileName, 2, 1 );
@@ -126,8 +131,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mFileName->setWhatsThis( msg );
 
   // row 3: "Description" lineedit and label:
-  mDescription = new KLineEdit( plainPage() );
-  label = new QLabel( i18n("&Description:"), plainPage() );
+  mDescription = new KLineEdit( frame );
+  label = new QLabel( i18n("&Description:"), frame );
   label->setBuddy( mDescription );
   glay->addWidget( label, 3, 0 );
   glay->addWidget( mDescription, 3, 1 );
@@ -141,10 +146,10 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mDescription->setWhatsThis( msg );
 
   // row 4: "Encoding" combobox and label:
-  mEncoding = new QComboBox( plainPage() );
+  mEncoding = new QComboBox( frame );
   mEncoding->setEditable( false );
   mEncoding->addItems( mI18nizedEncodings );
-  label = new QLabel( i18n("&Encoding:"), plainPage() );
+  label = new QLabel( i18n("&Encoding:"), frame );
   label->setBuddy( mEncoding );
   glay->addWidget( label, 4, 0 );
   glay->addWidget( mEncoding, 4, 1 );
@@ -162,7 +167,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mEncoding->setWhatsThis( msg );
 
   // row 5: "Suggest automatic display..." checkbox:
-  mInline = new QCheckBox( i18n("Suggest &automatic display"), plainPage() );
+  mInline = new QCheckBox( i18n("Suggest &automatic display"), frame );
   glay->addWidget( mInline, 5, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want to suggest to the "
@@ -174,7 +179,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mInline->setWhatsThis( msg );
 
   // row 6: "Sign" checkbox:
-  mSigned = new QCheckBox( i18n("&Sign this part"), plainPage() );
+  mSigned = new QCheckBox( i18n("&Sign this part"), frame );
   glay->addWidget( mSigned, 6, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
@@ -184,7 +189,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   mSigned->setWhatsThis( msg );
 
   // row 7: "Encrypt" checkbox:
-  mEncrypted = new QCheckBox( i18n("Encr&ypt this part"), plainPage() );
+  mEncrypted = new QCheckBox( i18n("Encr&ypt this part"), frame );
   glay->addWidget( mEncrypted, 7, 0, 1, 2 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "

@@ -863,8 +863,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   delete mGrid;
   mGrid = new QGridLayout(mMainWidget);
-  mGrid->setSpacing(KDialogBase::spacingHint());
-  mGrid->setMargin(KDialogBase::marginHint()/2);
+  mGrid->setSpacing(KDialog::spacingHint());
+  mGrid->setMargin(KDialog::marginHint()/2);
   mGrid->setColumnStretch(0, 1);
   mGrid->setColumnStretch(1, 100);
   mGrid->setColumnStretch(2, 1);
@@ -4359,9 +4359,12 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  KDialogBase dlg(KDialogBase::Plain, i18n("Spellchecker"),
-                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok,
-                  this, 0, true, true );
+  KDialog dlg(this);
+  dlg.setCaption( i18n("Spellchecker") );
+  dlg.setButtons( KDialog::Ok|KDialog::Cancel );
+  dlg.setDefaultButton( KDialog::Ok );
+  dlg.setModal( true );
+  dlg.enableButtonSeparator( true );
   KWin kwin;
   Q3TabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);

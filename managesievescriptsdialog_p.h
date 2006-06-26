@@ -1,13 +1,13 @@
 #ifndef __KMAIL__MANAGESIEVESCRIPTSDIALOG_P_H__
 #define __KMAIL__MANAGESIEVESCRIPTSDIALOG_P_H__
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 #include <q3textedit.h>
 
 namespace KMail {
 
-class SieveEditor : public KDialogBase {
+class SieveEditor : public KDialog {
   Q_OBJECT
   Q_PROPERTY( QString script READ script WRITE setScript )
 public:

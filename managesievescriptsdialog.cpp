@@ -34,21 +34,26 @@ inline const Q3CheckListItem * qcli_cast( const Q3ListViewItem * lvi ) {
 }
 
 KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, const char * name )
-  : KDialogBase( Plain, i18n( "Manage Sieve Scripts" ), Close, Close,
-    parent, name, false ),
+  : KDialog( parent ),
     mSieveEditor( 0 ),
     mContextMenuItem( 0 ),
     mWasActive( false )
 {
+  setCaption( i18n( "Manage Sieve Scripts" ) );
+  setButtons( Close );
+  setDefaultButton(  Close );
+  setModal( false );
   setAttribute( Qt::WA_GroupLeader );
   setAttribute( Qt::WA_DeleteOnClose );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 
-  QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+  QFrame *frame =new QFrame( this );
+  setMainWidget( frame );
+  QVBoxLayout * vlay = new QVBoxLayout( frame );
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
 
-  mListView = new Q3ListView( plainPage() );
+  mListView = new Q3ListView( frame);
   mListView->addColumn( i18n( "Available Scripts" ) );
   mListView->setResizeMode( Q3ListView::LastColumn );
   mListView->setRootIsDecorated( true );
@@ -297,12 +302,18 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
 }
 
 KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
-  : KDialogBase( Plain, i18n( "Edit Sieve Script" ), Ok|Cancel, Ok, parent, name )
+  : KDialog( parent )
 {
-  QVBoxLayout * vlay = new QVBoxLayout( plainPage() );
+  setCaption( i18n( "Edit Sieve Script" ) );
+  setButtons( Ok|Cancel );
+  setDefaultButton( Ok );
+  setModal( true );
+  QFrame *frame = new Qframe( this );
+  setMainWidget( frame );
+  QVBoxLayout * vlay = new QVBoxLayout( frame );
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
-  mTextEdit = new Q3TextEdit( plainPage() );
+  mTextEdit = new Q3TextEdit( frame);
   vlay->addWidget( mTextEdit );
   mTextEdit->setTextFormat( Qt::PlainText );
   mTextEdit->setWordWrap( Q3TextEdit::NoWrap );

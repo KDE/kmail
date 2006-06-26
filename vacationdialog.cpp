@@ -44,14 +44,20 @@ namespace KMail {
 
   VacationDialog::VacationDialog( const QString & caption, QWidget * parent,
 				  const char * name, bool modal )
-    : KDialogBase( Plain, caption, Ok|Cancel|Default, Ok, parent, name, modal )
+    : KDialog( parent )
   {
+    setCaption( caption );
+    setButtons( Ok|Cancel|Default );
+    setDefaultButton(  Ok );
+    setModal( modal );
+    QFrame *frame = new QFrame( this );
+    setMainWidget( frame );
     KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 
     static const int rows = 4;
     int row = -1;
 
-    QGridLayout * glay = new QGridLayout( plainPage() );
+    QGridLayout * glay = new QGridLayout( frame );
     glay->setSpacing( spacingHint() );
     glay->setMargin( 0 );
     glay->setColumnStretch( 1, 1 );
@@ -60,26 +66,26 @@ namespace KMail {
     ++row;
     glay->addWidget( new QLabel( i18n("Configure vacation "
 					       "notifications to be sent:"),
-					  plainPage() ), row, 0, 1, 2 );
+					  frame ), row, 0, 1, 2 );
 
     // Activate checkbox:
     ++row;
-    mActiveCheck = new QCheckBox( i18n("&Activate vacation notifications"), plainPage() );
+    mActiveCheck = new QCheckBox( i18n("&Activate vacation notifications"), frame );
     glay->addWidget( mActiveCheck, row, 0, 1, 2 );
 
     // Message text edit:
     ++row;
     glay->setRowStretch( row, 1 );
-    mTextEdit = new Q3TextEdit( plainPage(), "mTextEdit" );
+    mTextEdit = new Q3TextEdit( frame, "mTextEdit" );
     mTextEdit->setTextFormat( Qt::PlainText );
     glay->addWidget( mTextEdit, row, 0, 1, 2 );
 
     // "Resent only after" spinbox and label:
     ++row;
-    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, plainPage() );
+    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, frame );
     mIntervalSpin->setObjectName( "mIntervalSpin" );
     connect(mIntervalSpin, SIGNAL( valueChanged( int )), SLOT( slotIntervalSpinChanged( int ) ) );
-    QLabel *label = new QLabel( i18n("&Resend notification only after:"), plainPage() );
+    QLabel *label = new QLabel( i18n("&Resend notification only after:"), frame );
     label->setBuddy( mIntervalSpin );
     glay->addWidget( label, row, 0 );
     glay->addWidget( mIntervalSpin, row, 1 );

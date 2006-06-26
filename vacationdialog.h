@@ -15,7 +15,7 @@
 #ifndef __KMAIL_VACATIONDIALOG_H__
 #define __KMAIL_VACATIONDIALOG_H__
 
-#include "kdialogbase.h"
+#include "kdialog.h"
 //Added by qt3to4:
 #include <QList>
 
@@ -36,7 +36,7 @@ namespace KMime {
 
 namespace KMail {
 
-  class VacationDialog : public KDialogBase {
+  class VacationDialog : public KDialog {
     Q_OBJECT
   public:
     VacationDialog( const QString & caption, QWidget * parent=0,
@@ -55,7 +55,7 @@ namespace KMail {
     KMime::Types::AddrSpecList mailAliases() const;
     virtual void setMailAliases( const KMime::Types::AddrSpecList & aliases );
     virtual void setMailAliases( const QString & aliases );
-    
+
   private slots:
     void slotIntervalSpinChanged( int value );
 

@@ -21,14 +21,14 @@
 #ifndef DISTRIBUTIONLISTDIALOG_H
 #define DISTRIBUTIONLISTDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 #include "recipientseditor.h"
 
 class QLineEdit;
 class K3ListView;
 
-class DistributionListDialog : public KDialogBase
+class DistributionListDialog : public KDialog
 {
   public:
     DistributionListDialog( QWidget *parent );
