@@ -17,7 +17,7 @@
 
 #include <kmime_mdn.h>
 
-#include<libemailfunctions/email.h>
+#include<emailfunctions/email.h>
 //Added by qt3to4:
 #include <QList>
 #include <Q3CString>

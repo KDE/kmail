@@ -26,7 +26,7 @@ using KMail::HeaderStrategy;
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>

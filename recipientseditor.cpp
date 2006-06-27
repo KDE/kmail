@@ -31,7 +31,7 @@
 #include "distributionlistdialog.h"
 #include "globalsettings.h"
 
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -332,7 +332,7 @@ RecipientsView::RecipientsView( QWidget *parent )
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
 
-  if(!mLines.isEmpty()) 
+  if(!mLines.isEmpty())
   	addLine();
   setResizePolicy( Q3ScrollView::Manual );
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );

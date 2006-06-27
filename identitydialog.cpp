@@ -58,7 +58,7 @@ using KMail::FolderRequester;
 #include <ui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>
 
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 // other KDE headers:
 #include <klocale.h>

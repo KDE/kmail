@@ -51,7 +51,7 @@
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 #include <ui/keyselectiondialog.h>
 #include <ui/keyapprovaldialog.h>

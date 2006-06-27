@@ -28,7 +28,7 @@
 using KPIM::MailListDrag;
 
 #include <libkdepim/kfileio.h>
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 #include <kcursor.h>
 #include <kprocess.h>

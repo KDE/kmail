@@ -14,7 +14,7 @@ using KMail::FilterLog;
 #include "kmmsgdict.h"
 #include "kmfolder.h"
 
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 
 #include <kglobal.h>
 #include <klocale.h>

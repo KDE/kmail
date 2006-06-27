@@ -42,7 +42,7 @@
 #include "spamheaderanalyzer.h"
 #include "globalsettings.h"
 
-#include <libemailfunctions/email.h>
+#include <emailfunctions/email.h>
 #include <libkdepim/kxface.h>
 using namespace KPIM;
 
