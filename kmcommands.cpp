@@ -56,6 +56,7 @@
 
 #include <qtextcodec.h>
 #include <qpopupmenu.h>
+#include <qeventloop.h>
 
 #include <libemailfunctions/email.h>
 #include <kdebug.h>
@@ -1472,13 +1473,17 @@ KMCommand::Result KMFilterActionCommand::execute()
     if( msg->parent() )
       kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
-  int counter = 0;
+  int msgCount = 0;
+  int msgCountToFilter = msgList.count();
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+    int diff = msgCountToFilter - ++msgCount;
+    if ( diff < 10 || !( msgCount % 20 ) ) {
+      QString statusMsg = i18n("Filtering message %1 of %2");
+      statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+      KApplication::kApplication()->eventLoop()->processEvents( QEventLoop::ExcludeUserInput, 50 );
+    }
     msg->setTransferInProgress(false);
-
-    if ( !( ++counter % 20 ) )
-      KApplication::kApplication()->processEvents( 50 );
-
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)

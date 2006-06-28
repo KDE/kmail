@@ -1,5 +1,5 @@
 [General]
-tools=8
+tools=10
 
 [Spamtool #1]
 Ident=spamassassin
@@ -71,7 +71,7 @@ SupportsUnsure=0
 [Spamtool #4]
 Ident=gmx-antispam
 Version=1
-Priority=60
+Priority=71
 VisibleName=GMX Spam Filter
 Executable=echo
 URL=http://www.gmx.net/de/produkte/virenschutz/index.html
@@ -142,7 +142,7 @@ ScoreThresholdRegexp=required=([\d\.-]+)\s
 [Spamtool #8]
 Ident=spamassassin
 Version=1
-Priority=40
+Priority=41
 VisibleName=SpamAssassin 3.x (Perl)
 Executable=spamassassin -V | grep "SpamAssassin version 3"
 URL=http://spamassassin.org
@@ -162,3 +162,46 @@ ScoreHeader=X-Spam-Status
 ScoreType=Adjusted
 ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
 ScoreThresholdRegexp=required=([\d\.-]+)\s
+
+[Spamtool #9]
+Ident=bsfilter
+Version=1
+Priority=55
+VisibleName=Bsfilter
+Executable=bsfilter --help > /dev/null
+URL=http://bsfilter.org/
+PipeFilterName=Bsfilter Check
+PipeCmdDetect=bsfilter --pipe --insert-flag --insert-probability
+ExecCmdSpam=bsfilter --add-spam --update
+ExecCmdHam=bsfilter --add-clean --update
+DetectionHeader=X-Spam-Flag
+DetectionPattern=Yes
+DetectionPattern2=
+DetectionOnly=0
+UseRegExp=0
+SupportsBayes=1
+SupportsUnsure=0
+ScoreName=Bsfilter
+ScoreHeader=X-Spam-Probability
+ScoreType=Decimal
+ScoreValueRegexp=(.+)
+ScoreThresholdRegexp=
+
+[Spamtool #10]
+Ident=dspam
+Version=1
+Priority=70
+VisibleName=DSpam 3.x
+URL=http://dspam.nuclearelephant.org
+HeadersOnly=yes
+DetectionHeader=X-DSPAM-Result
+DetectionPattern=Spam
+DetectionOnly=0
+UseRegExp=0
+ScoreName=DSpam
+SupportsUnsure=0
+ScoreHeader=X-DSPAM-Probability
+ConfidenceHeader=X-DSPAM-Confidence
+ScoreType=Decimal
+ScoreValueRegexp=([\d\.]+)\s*
+ScoreConfidenceRegexp=([\d\.]+)\s*

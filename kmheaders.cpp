@@ -37,6 +37,7 @@ using namespace KPIM;
 #include <kdebug.h>
 
 #include <qbuffer.h>
+#include <qeventloop.h>
 #include <qfile.h>
 #include <qheader.h>
 #include <qptrstack.h>
@@ -1354,10 +1355,16 @@ void KMHeaders::applyFiltersOnMsg()
     START_TIMER(filter);
 
     KCursorSaver busy( KBusyPtr::busy() );
-    int counter = 0;
+    int msgCount = 0;
+    int msgCountToFilter = msgList->count();
     for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-      if ( !( ++counter % 20 ) )
-        KApplication::kApplication()->processEvents( 50 );
+      int diff = msgCountToFilter - ++msgCount;
+      if ( diff < 10 || !( msgCount % 20 ) ) {
+        QString statusMsg = i18n("Filtering message %1 of %2");
+        statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+        KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+        KApplication::kApplication()->eventLoop()->processEvents( QEventLoop::ExcludeUserInput, 50 );
+      }
       int idx = msgBase->parent()->find(msgBase);
       assert(idx != -1);
       KMMessage * msg = msgBase->parent()->getMsg(idx);
@@ -1365,12 +1372,12 @@ void KMHeaders::applyFiltersOnMsg()
       msg->setTransferInProgress(true);
       if ( !msg->isComplete() )
       {
-	FolderJob *job = mFolder->createJob(msg);
-	connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-		SLOT(slotFilterMsg(KMMessage*)));
-	job->start();
+        FolderJob *job = mFolder->createJob(msg);
+        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+                     SLOT(slotFilterMsg(KMMessage*)));
+        job->start();
       } else {
-	if (slotFilterMsg(msg) == 2) break;
+        if (slotFilterMsg(msg) == 2) break;
       }
     }
     END_TIMER(filter);
