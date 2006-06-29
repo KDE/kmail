@@ -276,6 +276,7 @@ protected slots:
   void slotSetMsgStatusReplied();
   void slotSetMsgStatusForwarded();
   void slotSetMsgStatusQueued();
+  void slotSetMsgStatusTodo();
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
   void slotSetMsgStatusSpam();
@@ -383,7 +384,7 @@ private:
   QString overrideEncoding() const;
 
   void initializeIMAPActions( bool setState );
-  
+
   /** Helper which finds the associated account if there is a current
    * folder and it is an imap or disconnected imap one.
    */
@@ -430,6 +431,7 @@ private:
   KToggleAction *mToggleFlagAction;
   KAction *mMarkAsSpamAction;
   KAction *mMarkAsHamAction;
+  KToggleAction *mToggleTodoAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 

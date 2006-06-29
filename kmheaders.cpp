@@ -75,6 +75,10 @@ QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
 QPixmap* KMHeaders::pixAttachment = 0;
+QPixmap* KMHeaders::pixTodo = 0;
+QPixmap* KMHeaders::pixReadFwd = 0;
+QPixmap* KMHeaders::pixReadReplied = 0;
+QPixmap* KMHeaders::pixReadFwdReplied = 0;
 
 #define KMAIL_SORT_VERSION 1012
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
@@ -335,65 +339,136 @@ public:
       return res;
   }
 
+//Backported from 3.5
+//Helper methods
+ const QPixmap * cryptoIcon(KMMsgBase *msgBase) const
+ {
+   switch ( msgBase->encryptionState() )
+   {
+    case KMMsgFullyEncrypted        : return KMHeaders::pixFullyEncrypted;
+    case KMMsgPartiallyEncrypted    : return KMHeaders::pixPartiallyEncrypted;
+    case KMMsgEncryptionStateUnknown: return KMHeaders::pixUndefinedEncrypted;
+    case KMMsgEncryptionProblematic : return KMHeaders::pixEncryptionProblematic;
+    default                         : return 0;
+   }
+ }
 
-  const QPixmap * pixmap( int col) const
-  {
-    if(!col) {
-      KMHeaders *headers = static_cast<KMHeaders*>(listView());
-      KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+ const QPixmap * signatureIcon(KMMsgBase *msgBase) const
+ {
+   switch ( msgBase->signatureState() )
+   {
+    case KMMsgFullySigned          : return KMHeaders::pixFullySigned;
+    case KMMsgPartiallySigned      : return KMHeaders::pixPartiallySigned;
+    case KMMsgSignatureStateUnknown: return KMHeaders::pixUndefinedSigned;
+    case KMMsgSignatureProblematic : return KMHeaders::pixSignatureProblematic;
+    default                        : return 0;
+   }
+ }
 
-      PixmapList pixmaps;
+ const QPixmap * statusIcon(KMMsgBase *msgBase) const
+ {
+   // forwarded, replied have precedence over the other states
+   if (  msgBase->isForwarded() && !msgBase->isReplied() ) return KMHeaders::pixReadFwd;
+   if ( !msgBase->isForwarded() &&  msgBase->isReplied() ) return KMHeaders::pixReadReplied;
+   if (  msgBase->isForwarded() &&  msgBase->isReplied() ) return KMHeaders::pixReadFwdReplied;
 
+   // a queued or sent mail is usually also read
+   if ( msgBase->isQueued() ) return KMHeaders::pixQueued;
+   if ( msgBase->isSent()   ) return KMHeaders::pixSent;
+
+   if ( msgBase->isNew()                      ) return KMHeaders::pixNew;
+   if ( msgBase->isRead() || msgBase->isOld() ) return KMHeaders::pixRead;
+   if ( msgBase->isUnread()                   ) return KMHeaders::pixUns;
+   if ( msgBase->isDeleted()                  ) return KMHeaders::pixDel;
+
+   return 0;
+ }
+
+ //Backported from 3.5
+ const QPixmap * pixmap(int col) const
+ {
+   KMHeaders *headers = static_cast<KMHeaders*>(listView());
+   KMMsgBase *msgBase = headers->folder()->getMsgBase( mMsgId );
+
+   if ( col == headers->paintInfo()->subCol ) {
+
+    PixmapList pixmaps;
+
+    if ( !headers->mPaintInfo.showSpamHam ) {
       // Have the spam/ham and watched/ignored icons first, I guess.
-      if(mMsgBase->isSpam()) pixmaps << *KMHeaders::pixSpam;
-      if(mMsgBase->isHam()) pixmaps << *KMHeaders::pixHam;
-      if(mMsgBase->isIgnored()) pixmaps << *KMHeaders::pixIgnored;
-      if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
-
-      if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
-      if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
-
-      if(mMsgBase->isNew()) pixmaps << *KMHeaders::pixNew;
-      if(mMsgBase->isRead() || mMsgBase->isOld()) pixmaps << *KMHeaders::pixRead;
-      if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
-      if(mMsgBase->isDeleted()) pixmaps << *KMHeaders::pixDel;
-
-      // Only merge the attachment icon in if that is configured.
-      if( headers->paintInfo()->showAttachmentIcon &&
-          mMsgBase->attachmentState() == KMMsgHasAttachment )
-        pixmaps << *KMHeaders::pixAttachment;
-
-      // Only merge the crypto icons in if that is configured.
-      if( headers->paintInfo()->showCryptoIcons ) {
-          if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
-              pixmaps << *KMHeaders::pixFullyEncrypted;
-          else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
-              pixmaps << *KMHeaders::pixPartiallyEncrypted;
-          else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
-              pixmaps << *KMHeaders::pixUndefinedEncrypted;
-          else if( mMsgBase->encryptionState() == KMMsgEncryptionProblematic )
-              pixmaps << *KMHeaders::pixEncryptionProblematic;
-
-          if( mMsgBase->signatureState() == KMMsgFullySigned )
-              pixmaps << *KMHeaders::pixFullySigned;
-          else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
-              pixmaps << *KMHeaders::pixPartiallySigned;
-          else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
-              pixmaps << *KMHeaders::pixUndefinedSigned;
-          else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
-              pixmaps << *KMHeaders::pixSignatureProblematic;
-      }
-
-      if(mMsgBase->isImportant()) pixmaps << *KMHeaders::pixFlag;
-      if(mMsgBase->isReplied()) pixmaps << *KMHeaders::pixRep;
-      if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
-
-      static QPixmap mergedpix;
-      mergedpix = pixmapMerge( pixmaps );
-      return &mergedpix;
+      if ( msgBase->isSpam() ) pixmaps << *KMHeaders::pixSpam;
+      if ( msgBase->isHam()  ) pixmaps << *KMHeaders::pixHam;
     }
-    return 0;
-  }
+
+    if ( !headers->mPaintInfo.showWatchedIgnored ) {
+      if ( msgBase->isIgnored() ) pixmaps << *KMHeaders::pixIgnored;
+      if ( msgBase->isWatched() ) pixmaps << *KMHeaders::pixWatched;
+    }
+
+    if ( !headers->mPaintInfo.showStatus ) {
+      const QPixmap *pix = statusIcon(msgBase);
+      if ( pix ) pixmaps << *pix;
+    }
+
+    // Only merge the attachment icon in if that is configured.
+    if ( headers->paintInfo()->showAttachmentIcon &&
+        !headers->paintInfo()->showAttachment &&
+        msgBase->attachmentState() == KMMsgHasAttachment )
+      pixmaps << *KMHeaders::pixAttachment;
+
+    // Only merge the crypto icons in if that is configured.
+    if ( headers->paintInfo()->showCryptoIcons ) {
+      const QPixmap *pix;
+
+      if ( !headers->paintInfo()->showCrypto )
+        if ( (pix = cryptoIcon(msgBase))    ) pixmaps << *pix;
+
+       if ( !headers->paintInfo()->showSigned )
+         if ( (pix = signatureIcon(msgBase)) ) pixmaps << *pix;
+     }
+
+     if ( !headers->mPaintInfo.showImportant )
+       if ( msgBase->isImportant() ) pixmaps << *KMHeaders::pixFlag;
+
+     if ( !headers->mPaintInfo.showTodo )
+       if ( msgBase->isTodo() ) pixmaps << *KMHeaders::pixTodo;
+
+     static QPixmap mergedpix;
+     mergedpix = pixmapMerge( pixmaps );
+     return &mergedpix;
+   }
+   else if ( col == headers->paintInfo()->statusCol ) {
+     return statusIcon(msgBase);
+   }
+   else if ( col == headers->paintInfo()->attachmentCol ) {
+     if ( msgBase->attachmentState() == KMMsgHasAttachment )
+       return KMHeaders::pixAttachment;
+   }
+   else if ( col == headers->paintInfo()->importantCol ) {
+     if ( msgBase->isImportant() )
+       return KMHeaders::pixFlag;
+   }
+   else if ( col == headers->paintInfo()->todoCol ) {
+     if ( msgBase->isTodo() )
+       return KMHeaders::pixTodo;
+   }
+   else if ( col == headers->paintInfo()->spamHamCol ) {
+     if ( msgBase->isSpam() ) return KMHeaders::pixSpam;
+     if ( msgBase->isHam()  ) return KMHeaders::pixHam;
+   }
+   else if ( col == headers->paintInfo()->watchedIgnoredCol ) {
+     if ( msgBase->isWatched() ) return KMHeaders::pixWatched;
+     if ( msgBase->isIgnored() ) return KMHeaders::pixIgnored;
+   }
+   else if ( col == headers->paintInfo()->signedCol ) {
+     return signatureIcon(msgBase);
+   }
+   else if ( col == headers->paintInfo()->cryptoCol ) {
+     return cryptoIcon(msgBase);
+   }
+   return 0;
+ }
+
 
   void paintCell( QPainter * p, const QColorGroup & cg,
                                 int column, int width, int align )
@@ -413,6 +488,7 @@ public:
     if (mMsgBase->isUnread()) color = (QColor*)(&headers->paintInfo()->colUnread);
     if (mMsgBase->isNew()) color = (QColor*)(&headers->paintInfo()->colNew);
     if (mMsgBase->isImportant()) color = (QColor*)(&headers->paintInfo()->colFlag);
+    if (mMsgBase->isTodo()) color = (QColor*)(&headers->paintInfo()->colTodo);
 
     _cg.setColor( QColorGroup::Text, *color );
 
@@ -565,8 +641,18 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup = new KPopupMenu(this);
   mPopup->insertTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
-  mSizeColumn = mPopup->insertItem(i18n("Size"), this, SLOT(slotToggleSizeColumn()));
-  mPaintInfo.showSize = false;
+  mPopup->insertItem(i18n("Status"),          KPaintInfo::COL_STATUS);
+  mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);
+  mPopup->insertItem(i18n("Todo"),            KPaintInfo::COL_TODO);
+  mPopup->insertItem(i18n("Attachment"),      KPaintInfo::COL_ATTACHMENT);
+  mPopup->insertItem(i18n("Spam/Ham"),        KPaintInfo::COL_SPAM_HAM);
+  mPopup->insertItem(i18n("Watched/Ignored"), KPaintInfo::COL_WATCHED_IGNORED);
+  mPopup->insertItem(i18n("Signature"),       KPaintInfo::COL_SIGNED);
+  mPopup->insertItem(i18n("Encryption"),      KPaintInfo::COL_CRYPTO);
+  mPopup->insertItem(i18n("Size"),            KPaintInfo::COL_SIZE);
+  mPopup->insertItem(i18n("Receiver"),        KPaintInfo::COL_RECEIVER);
+
+  connect(mPopup, SIGNAL(activated(int)), this, SLOT(slotToggleColumn(int)));
 
   mPaintInfo.flagCol = -1;
   mPaintInfo.subCol    = mPaintInfo.flagCol   + 1;
@@ -605,11 +691,36 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
     pixAttachment  = new QPixmap( UserIcon( "kmmsgattachment" ) );
+    pixTodo                  = new QPixmap( UserIcon( "kmmsgtodo"                  ) );
+    pixReadFwd               = new QPixmap( UserIcon( "kmmsgread_fwd"              ) );
+    pixReadReplied           = new QPixmap( UserIcon( "kmmsgread_replied"          ) );
+    pixReadFwdReplied        = new QPixmap( UserIcon( "kmmsgread_fwd_replied"      ) );
   }
 
-  addColumn( i18n("Subject"), 310 );
-  addColumn( i18n("Sender"), 170 );
-  addColumn( i18n("Date"), 170 );
+  header()->setStretchEnabled( false );
+  header()->setResizeEnabled( false );
+
+  mPaintInfo.subCol      = addColumn( i18n("Subject"), 310 );
+  mPaintInfo.senderCol   = addColumn( i18n("Sender"),  170 );
+  mPaintInfo.dateCol     = addColumn( i18n("Date"),    170 );
+  mPaintInfo.sizeCol     = addColumn( i18n("Size"),      0 );
+  mPaintInfo.receiverCol = addColumn( i18n("Receiver"),  0 );
+
+  mPaintInfo.statusCol         = addColumn( *pixNew           , "", 0 );
+  mPaintInfo.importantCol      = addColumn( *pixFlag          , "", 0 );
+  mPaintInfo.todoCol           = addColumn( *pixTodo          , "", 0 );
+  mPaintInfo.attachmentCol     = addColumn( *pixAttachment    , "", 0 );
+  mPaintInfo.spamHamCol        = addColumn( *pixSpam          , "", 0 );
+  mPaintInfo.watchedIgnoredCol = addColumn( *pixWatched       , "", 0 );
+  mPaintInfo.signedCol         = addColumn( *pixFullySigned   , "", 0 );
+  mPaintInfo.cryptoCol         = addColumn( *pixFullyEncrypted, "", 0 );
+
+  setResizeMode( QListView::NoColumn );
+
+  // only the non-optional columns shall be resizeable
+  header()->setResizeEnabled( true, mPaintInfo.subCol );
+  header()->setResizeEnabled( true, mPaintInfo.senderCol );
+  header()->setResizeEnabled( true, mPaintInfo.dateCol );
 
   readConfig();
   restoreLayout(KMKernel::config(), "Header-Geometry");
@@ -638,6 +749,7 @@ KMHeaders::~KMHeaders ()
   writeConfig();
 }
 
+//Backported from 3.5
 //-----------------------------------------------------------------------------
 bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
@@ -645,33 +757,136 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
       static_cast<QMouseEvent*>(e)->button() == RightButton &&
       o->isA("QHeader") )
   {
+    // if we currently only show one of either sender/receiver column
+    // modify the popup text in the way, that it displays the text of the other of the two
+    if ( mPaintInfo.showReceiver )
+      mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+    else
+      if ( mFolder && (mFolder->whoField().lower() == "to") )
+        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Sender"));
+      else
+        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
   }
   return KListView::eventFilter(o, e);
 }
 
-//-----------------------------------------------------------------------------
-void KMHeaders::slotToggleSizeColumn(int mode)
+//Backported from 3.5 : void KMHeaders::slotToggleColumn(int id, int mode)
+void KMHeaders::slotToggleColumn(int id, int mode)
 {
-  bool old = mPaintInfo.showSize;
-  if (mode == -1)
-    mPaintInfo.showSize = !mPaintInfo.showSize;
-  else
-    mPaintInfo.showSize = mode;
+  bool *show = 0;
+  int  *col  = 0;
+  int  width = 0;
 
-  mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize);
-  if (mPaintInfo.showSize && !old)
-    mPaintInfo.sizeCol = addColumn(i18n("Size"), 80);
-  else if (!mPaintInfo.showSize && old) {
-    removeColumn(mPaintInfo.sizeCol);
-    mPaintInfo.sizeCol = -1;
+  switch ( static_cast<KPaintInfo::ColumnIds>(id) )
+  {
+    case KPaintInfo::COL_SIZE:
+    {
+      show  = &mPaintInfo.showSize;
+      col   = &mPaintInfo.sizeCol;
+      width = 80;
+      break;
+    }
+    case KPaintInfo::COL_ATTACHMENT:
+    {
+      show  = &mPaintInfo.showAttachment;
+      col   = &mPaintInfo.attachmentCol;
+      width = pixAttachment->width();
+      break;
+    }
+    case KPaintInfo::COL_IMPORTANT:
+    {
+      show  = &mPaintInfo.showImportant;
+      col   = &mPaintInfo.importantCol;
+      width = pixFlag->width();
+      break;
+    }
+    case KPaintInfo::COL_TODO:
+    {
+      show  = &mPaintInfo.showTodo;
+      col   = &mPaintInfo.todoCol;
+      width = pixTodo->width();
+      break;
+    }
+    case KPaintInfo::COL_SPAM_HAM:
+    {
+      show  = &mPaintInfo.showSpamHam;
+      col   = &mPaintInfo.spamHamCol;
+      width = pixSpam->width();
+      break;
+    }
+    case KPaintInfo::COL_WATCHED_IGNORED:
+    {
+      show  = &mPaintInfo.showWatchedIgnored;
+      col   = &mPaintInfo.watchedIgnoredCol;
+      width = pixWatched->width();
+      break;
+    }
+    case KPaintInfo::COL_STATUS:
+    {
+      show  = &mPaintInfo.showStatus;
+      col   = &mPaintInfo.statusCol;
+      width = pixNew->width();
+      break;
+    }
+    case KPaintInfo::COL_SIGNED:
+    {
+      show  = &mPaintInfo.showSigned;
+      col   = &mPaintInfo.signedCol;
+      width = pixFullySigned->width();
+      break;
+    }
+    case KPaintInfo::COL_CRYPTO:
+    {
+      show  = &mPaintInfo.showCrypto;
+      col   = &mPaintInfo.cryptoCol;
+      width = pixFullyEncrypted->width();
+      break;
+    }
+    case KPaintInfo::COL_RECEIVER:
+    {
+      show  = &mPaintInfo.showReceiver;
+      col   = &mPaintInfo.receiverCol;
+      width = 170;
+      break;
+    }
+    case KPaintInfo::COL_SCORE: ; // only used by KNode
+    // don't use default, so that the compiler tells us you forgot to code here for a new column
+  }
+
+  assert(show);
+
+  if (mode == -1)
+    *show = !*show;
+  else
+    *show = mode;
+
+  mPopup->setItemChecked(id, *show);
+
+  if (*show) {
+    header()->setResizeEnabled(true, *col);
+    setColumnWidth(*col, width);
+  }
+  else {
+    header()->setResizeEnabled(false, *col);
+    header()->setStretchEnabled(false, *col);
+    hideColumn(*col);
+  }
+
+  // if we change the visibility of the receiver column,
+  // the sender column has to show either the sender or the receiver
+  if ( static_cast<KPaintInfo::ColumnIds>(id) ==  KPaintInfo::COL_RECEIVER ) {
+    QString colText = i18n( "Sender" );
+    if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+      colText = i18n( "Receiver" );
+    setColumnText( mPaintInfo.senderCol, colText );
   }
 
   if (mode == -1)
     writeConfig();
 }
-
 
 //-----------------------------------------------------------------------------
 // Support for backing pixmap
@@ -752,11 +967,38 @@ void KMHeaders::readConfig (void)
     }
   }
 
+  //backported from 3.5
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     bool show = config->readBoolEntry("showMessageSize");
-    mPopup->setItemChecked(mSizeColumn, show);
-    slotToggleSizeColumn(show);
+    slotToggleColumn(KPaintInfo::COL_SIZE, show);
+
+    show = config->readBoolEntry("showAttachmentColumn");
+    slotToggleColumn(KPaintInfo::COL_ATTACHMENT, show);
+
+    show = config->readBoolEntry("showImportantColumn");
+    slotToggleColumn(KPaintInfo::COL_IMPORTANT, show);
+
+    show = config->readBoolEntry("showTodoColumn");
+    slotToggleColumn(KPaintInfo::COL_TODO, show);
+
+    show = config->readBoolEntry("showSpamHamColumn");
+    slotToggleColumn(KPaintInfo::COL_SPAM_HAM, show);
+
+    show = config->readBoolEntry("showWatchedIgnoredColumn");
+    slotToggleColumn(KPaintInfo::COL_WATCHED_IGNORED, show);
+
+    show = config->readBoolEntry("showStatusColumn");
+    slotToggleColumn(KPaintInfo::COL_STATUS, show);
+
+    show = config->readBoolEntry("showSignedColumn");
+    slotToggleColumn(KPaintInfo::COL_SIGNED, show);
+
+    show = config->readBoolEntry("showCryptoColumn");
+    slotToggleColumn(KPaintInfo::COL_CRYPTO, show);
+
+    show = config->readBoolEntry("showReceiverColumn");
+    slotToggleColumn(KPaintInfo::COL_RECEIVER, show);
 
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", false );
     mPaintInfo.showAttachmentIcon = config->readBoolEntry( "showAttachmentIcon", true );
@@ -790,7 +1032,6 @@ void KMHeaders::readConfig (void)
     mReaderWindowActive = config->readEntry( "readerWindowMode", "below" ) != "hide";
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMHeaders::reset(void)
@@ -877,13 +1118,23 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("Status", mPaintInfo.status);
 }
 
+//Backported from 3.5
 //-----------------------------------------------------------------------------
 void KMHeaders::writeConfig (void)
 {
   KConfig* config = KMKernel::config();
   saveLayout(config, "Header-Geometry");
   KConfigGroupSaver saver(config, "General");
-  config->writeEntry("showMessageSize", mPaintInfo.showSize);
+  config->writeEntry("showMessageSize"         , mPaintInfo.showSize);
+  config->writeEntry("showAttachmentColumn"    , mPaintInfo.showAttachment);
+  config->writeEntry("showImportantColumn"     , mPaintInfo.showImportant);
+  config->writeEntry("showTodoColumn"          , mPaintInfo.showTodo);
+  config->writeEntry("showSpamHamColumn"       , mPaintInfo.showSpamHam);
+  config->writeEntry("showWatchedIgnoredColumn", mPaintInfo.showWatchedIgnored);
+  config->writeEntry("showStatusColumn"        , mPaintInfo.showStatus);
+  config->writeEntry("showSignedColumn"        , mPaintInfo.showSigned);
+  config->writeEntry("showCryptoColumn"        , mPaintInfo.showCrypto);
+  config->writeEntry("showReceiverColumn"      , mPaintInfo.showReceiver);
 }
 
 //-----------------------------------------------------------------------------

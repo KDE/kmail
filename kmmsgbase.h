@@ -182,6 +182,9 @@ public:
   /** Returns TRUE if status is not spam. */
   virtual bool isHam(void) const;
 
+  /** Returns TRUE if status is todo. */
+  virtual bool isTodo(void) const;
+
 
   /** Status of the message. */
   virtual KMMsgStatus status(void) const = 0;

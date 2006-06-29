@@ -1903,6 +1903,12 @@ void KMMainWidget::slotSetMsgStatusQueued()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotSetMsgStatusTodo()
+{
+  mHeaders->setMsgStatus(KMMsgStatusTodo, true);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusSent()
 {
   mHeaders->setMsgStatus(KMMsgStatusSent, true);
@@ -2470,6 +2476,12 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_flag");
   mStatusMenu->insert( mToggleFlagAction );
 
+  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "mail_todo",
+                                 0, this, SLOT(slotSetMsgStatusTodo()),
+                                 actionCollection(), "status_todo");
+  mStatusMenu->insert( mToggleTodoAction );
+
+
   mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
@@ -2492,6 +2504,7 @@ void KMMainWidget::setupActions()
 
 #if KDE_IS_VERSION(3,2,90)
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
+  mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
   mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
   mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
   mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );

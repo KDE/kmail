@@ -47,7 +47,7 @@ public:
 
   /** A new folder has been selected update the list of headers shown
    * To override the global settings for jumping to the first unread msg
-   * use @p forceJumpToUnread 
+   * use @p forceJumpToUnread
    */
   virtual void setFolder(KMFolder *, bool forceJumpToUnread = false);
 
@@ -178,10 +178,10 @@ signals:
   /** emitted when the list of messages has been completely rebuilt */
   void messageListUpdated();
 
-  /** emitted after a new item has been fully built and added to the 
+  /** emitted after a new item has been fully built and added to the
    * list view. We can't use KListView::itemAdded, as that is emitted
    * from the ctor of the item, at which point the building of the item
-   * is not yet far enough along to update the quick search, which is 
+   * is not yet far enough along to update the quick search, which is
    * what is connected to this signal. */
   void msgAddedToListView( QListViewItem* );
 
@@ -241,7 +241,11 @@ public slots:
 
   /** switch size-column
       1 for activate, 0 for deactivate, -1 for toggle*/
-  void slotToggleSizeColumn(int mode = -1);
+  //void slotToggleSizeColumn(int mode = -1);
+
+  /** switch a column with the given id (see KPaintInfo enum)
+      1 for activate, 0 for deactivate, -1 for toggle*/
+  void slotToggleColumn(int id, int mode = -1);
 
   /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
@@ -252,7 +256,8 @@ protected:
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
       *pixFiller, *pixEncryptionProblematic,
-      *pixSignatureProblematic, *pixAttachment;
+      *pixSignatureProblematic, *pixAttachment,
+   *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixTodo;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);
@@ -371,7 +376,7 @@ private:
   /** */
   bool writeSortOrder();
   /** */
-  bool readSortOrder( bool set_selection = false, 
+  bool readSortOrder( bool set_selection = false,
       bool forceJumpToUnread = false );
 
   /** Updated as side effect of KMHeaders::getMsg */
@@ -404,6 +409,16 @@ private:
   /** popup to switch columns */
   KPopupMenu* mPopup;
   int mSizeColumn;
+
+  int mImportantColumnId;
+  int mTodoColumnId;
+  int mSpamHamColumnId;
+  int mWatchIgnoredColumnId;
+  int mSignColumnId;
+  int mReceiverColumnId;
+  int mStatusColumnId;
+  int mAttachmentColumnId;
+  int mEncryptColumnId;
 };
 
 #endif

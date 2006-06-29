@@ -462,6 +462,13 @@ bool KMMsgBase::isHam(void) const
 }
 
 //-----------------------------------------------------------------------------
+bool KMMsgBase::isTodo(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusTodo);
+}
+
+//-----------------------------------------------------------------------------
 QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 {
   QCString sstr;
