@@ -577,22 +577,32 @@ public:
     mKey = key;
   }
 
-  int compare( QListViewItem *i, int col, bool ascending ) const
-  {
-    int res = 0;
-    KMHeaders *headers = static_cast<KMHeaders*>(listView());
-    if ( col == headers->paintInfo()->sizeCol ) {
-        res = key( col, ascending ).compare( i->key( col, ascending ) );
-    } else if ( col == headers->paintInfo()->dateCol ) {
-        res = key( col, ascending ).compare( i->key( col, ascending ) );
-        if (i->parent() && !ascending)
-          res = -res;
-    } else if ( col == headers->paintInfo()->subCol
-      || col ==headers->paintInfo()->senderCol) {
-        res = key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
-    }
-    return res;
-  }
+ int compare( QListViewItem *i, int col, bool ascending ) const
+ {
+   kdDebug(5006) << k_funcinfo << col << " " << ascending << endl;
+   int res = 0;
+   KMHeaders *headers = static_cast<KMHeaders*>(listView());
+   if ( ( col == headers->paintInfo()->statusCol         ) ||
+       ( col == headers->paintInfo()->sizeCol           ) ||
+       ( col == headers->paintInfo()->attachmentCol     ) ||
+       ( col == headers->paintInfo()->importantCol      ) ||
+       ( col == headers->paintInfo()->todoCol           ) ||
+       ( col == headers->paintInfo()->spamHamCol        ) ||
+       ( col == headers->paintInfo()->signedCol         ) ||
+       ( col == headers->paintInfo()->cryptoCol         ) ||
+       ( col == headers->paintInfo()->watchedIgnoredCol ) ) {
+     res = key( col, ascending ).compare( i->key( col, ascending ) );
+   }  else if ( col == headers->paintInfo()->dateCol ) {
+     res = key( col, ascending ).compare( i->key( col, ascending ) );
+     if (i->parent() && !ascending)
+       res = -res;
+   } else if ( col == headers->paintInfo()->subCol ||
+       col == headers->paintInfo()->senderCol ||
+       col == headers->paintInfo()->receiverCol ) {
+     res = key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
+   }
+   return res;
+ }
 
   QListViewItem* firstChildNonConst() /* Non const! */ {
     enforceSortOrder(); // Try not to rely on QListView implementation details
@@ -2881,6 +2891,8 @@ const KMMsgBase* KMHeaders::getMsgBaseForItem( const QListViewItem *item ) const
 //-----------------------------------------------------------------------------
 void KMHeaders::setSorting( int column, bool ascending )
 {
+  kdDebug(5006) << k_funcinfo << column << " " << ascending << endl;
+
   if (column != -1) {
   // carsten: really needed?
 //    if (column != mSortCol)
