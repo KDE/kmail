@@ -505,54 +505,114 @@ public:
   }
 
   static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder )
-  {
-    // It appears, that QListView in Qt-3.0 asks for the key
-    // in QListView::clear(), which is called from
-    // readSortOrder()
-    if (!msg) return QString::null;
+{
+  // It appears, that QListView in Qt-3.0 asks for the key
+  // in QListView::clear(), which is called from
+  // readSortOrder()
+  if (!msg) return QString::null;
 
-    int column = sortOrder & ((1 << 5) - 1);
-    QString ret = QChar( (char)sortOrder );
-    QString sortArrival = QString( "%1" ).arg( msg->getMsgSerNum(), 0, 36 );
-    while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
+  int column = sortOrder & ((1 << 5) - 1);
+  QString ret = QChar( (char)sortOrder );
+  QString sortArrival = QString( "%1" ).arg( msg->getMsgSerNum(), 0, 36 );
+  while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
-    if (column == paintInfo->dateCol) {
-      if (paintInfo->orderOfArrival)
-        return ret + sortArrival;
-      else {
-        QString d = QString::number(msg->date());
-        while (d.length() <= 10) d = '0' + d;
-        return ret + d + sortArrival;
-      }
-    } else if (column == paintInfo->senderCol) {
-      QString tmp;
-      if (headers->folder()->whoField().lower() == "to")
-        tmp = msg->toStrip();
-      else
-        tmp = msg->fromStrip();
-      return ret + tmp.lower() + ' ' + sortArrival;
-    } else if (column == paintInfo->subCol) {
-      QString tmp;
-      tmp = ret;
-      if (paintInfo->status) {
-        tmp += msg->statusToSortRank() + ' ';
-      }
-      tmp += KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
-      return tmp;
+  if (column == paintInfo->dateCol) {
+    if (paintInfo->orderOfArrival)
+      return ret + sortArrival;
+    else {
+      QString d = QString::number(msg->date());
+      while (d.length() <= 10) d = '0' + d;
+      return ret + d + sortArrival;
     }
-    else if (column == paintInfo->sizeCol) {
-      QString len;
-      if ( msg->parent()->folderType() == KMFolderTypeImap )
-      {
-        len = QString::number( msg->msgSizeServer() );
-      } else {
-        len = QString::number( msg->msgSize() );
-      }
-      while (len.length() < 9) len = '0' + len;
-      return ret + len + sortArrival;
+  } else if (column == paintInfo->senderCol) {
+    QString tmp;
+    if ( (headers->folder()->whoField().lower() == "to") && !headers->paintInfo()->showReceiver )
+      tmp = msg->toStrip();
+    else
+      tmp = msg->fromStrip();
+    return ret + tmp.lower() + ' ' + sortArrival;
+  } else if (column == paintInfo->receiverCol) {
+    QString tmp = msg->toStrip();
+    return ret + tmp.lower() + ' ' + sortArrival;
+  } else if (column == paintInfo->subCol) {
+    QString tmp;
+    tmp = ret;
+    if (paintInfo->status) {
+      tmp += msg->statusToSortRank() + ' ';
     }
-    return ret + "missing key"; //you forgot something!!
+    tmp += KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
+    return tmp;
   }
+  else if (column == paintInfo->sizeCol) {
+    QString len;
+    if ( msg->parent()->folderType() == KMFolderTypeImap )
+    {
+      len = QString::number( msg->msgSizeServer() );
+    } else {
+      len = QString::number( msg->msgSize() );
+    }
+    while (len.length() < 9) len = '0' + len;
+    return ret + len + sortArrival;
+  }
+  else if (column == paintInfo->statusCol) {
+    QString s;
+    if      ( msg->isNew()                            ) s = "1";
+    else if ( msg->isUnread()                         ) s = "2";
+    else if (!msg->isForwarded() &&  msg->isReplied() ) s = "3";
+    else if ( msg->isForwarded() &&  msg->isReplied() ) s = "4";
+    else if ( msg->isForwarded() && !msg->isReplied() ) s = "5";
+    else if ( msg->isRead() || msg->isOld()           ) s = "6";
+    else if ( msg->isQueued()                         ) s = "7";
+    else if ( msg->isSent()                           ) s = "8";
+    else if ( msg->isDeleted()                        ) s = "9";
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->attachmentCol) {
+    QString s(msg->attachmentState() == KMMsgHasAttachment ? "1" : "0");
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->importantCol) {
+    QString s(msg->isImportant() ? "1" : "0");
+    return ret + s + sortArrival;
+  }
+  else if ( column == paintInfo->todoCol ) {
+    QString s( msg->isTodo() ? "1": "0" );
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->spamHamCol) {
+    QString s((msg->isSpam() || msg->isHam()) ? "1" : "0");
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->watchedIgnoredCol) {
+    QString s((msg->isWatched() || msg->isIgnored()) ? "1" : "0");
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->signedCol) {
+    QString s;
+    switch ( msg->signatureState() )
+    {
+      case KMMsgFullySigned          : s = "1"; break;
+      case KMMsgPartiallySigned      : s = "2"; break;
+      case KMMsgSignatureStateUnknown: s = "3"; break;
+      case KMMsgSignatureProblematic : s = "4"; break;
+      default                        : s = "5"; break;
+    }
+    return ret + s + sortArrival;
+  }
+  else if (column == paintInfo->cryptoCol) {
+    QString s;
+    switch ( msg->encryptionState() )
+    {
+      case KMMsgFullyEncrypted        : s = "1"; break;
+      case KMMsgPartiallyEncrypted    : s = "2"; break;
+      case KMMsgEncryptionStateUnknown: s = "3"; break;
+      case KMMsgEncryptionProblematic : s = "4"; break;
+      default                         : s = "5"; break;
+    }
+    return ret + s + sortArrival;
+  }
+  return ret + "missing key"; //you forgot something!!
+}
 
   virtual QString key( int column, bool /*ascending*/ ) const
   {
@@ -579,7 +639,7 @@ public:
 
  int compare( QListViewItem *i, int col, bool ascending ) const
  {
-   kdDebug(5006) << k_funcinfo << col << " " << ascending << endl;
+   //kdDebug(5006) << k_funcinfo << col << " " << ascending << endl;
    int res = 0;
    KMHeaders *headers = static_cast<KMHeaders*>(listView());
    if ( ( col == headers->paintInfo()->statusCol         ) ||
