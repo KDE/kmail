@@ -3020,6 +3020,7 @@ void KMMainWidget::updateMessageActions()
       mToggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
       mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
       mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
+      mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
       if (thread_actions) {
         mToggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
         mToggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
