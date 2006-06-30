@@ -272,7 +272,7 @@ public:
         tmp = QString( QChar( (char)mMsgBase->status() ));
 
     } else if(col == headers->paintInfo()->senderCol) {
-      if (headers->folder()->whoField().lower() == "to")
+       if ( (headers->folder()->whoField().lower() == "to") && !headers->paintInfo()->showReceiver )
         tmp = mMsgBase->toStrip();
       else
         tmp = mMsgBase->fromStrip();
@@ -280,6 +280,13 @@ public:
         tmp = i18n("Unknown");
       else
         tmp = tmp.simplifyWhiteSpace();
+
+    } else if ( col == headers->paintInfo()->receiverCol ) {
+       tmp = mMsgBase->toStrip();
+       if (tmp.isEmpty())
+         tmp = i18n("Unknown");
+       else
+         tmp = tmp.simplifyWhiteSpace();
 
     } else if(col == headers->paintInfo()->subCol) {
       tmp = mMsgBase->subject();
