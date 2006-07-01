@@ -33,6 +33,7 @@
 #include <klineedit.h>
 #include <klistbox.h>
 #include <klocale.h>
+#include <kstandarddirs.h>
 
 #include <QCheckBox>
 #include <QDir>
@@ -393,9 +394,20 @@ void AccountWizard::createTransport()
   mTransportInfo = new KMTransportInfo();
 
   if ( mLocalDelivery->isChecked() ) { // local delivery
+
+    QString pathToSendmail = KStandardDirs::findExe( "sendmail" );
+    if ( pathToSendmail.isEmpty() ) {
+      pathToSendmail = KStandardDirs::findExe( "sendmail", "/usr/sbin" );
+      if ( pathToSendmail.isEmpty() ) {
+        kWarning() << "Could not find the sendmail binary for local delivery" << endl;
+        // setting the path to the most likely location
+        pathToSendmail = "/usr/sbin/sendmail";
+      }
+    }
+
     mTransportInfo->type = "sendmail";
     mTransportInfo->name = i18n( "Sendmail" );
-    mTransportInfo->host = "/usr/sbin/sendmail"; // TODO: search for sendmail in PATH
+    mTransportInfo->host = pathToSendmail;
     mTransportInfo->auth = false;
     mTransportInfo->setStorePasswd( false );
 
