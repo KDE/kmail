@@ -4364,7 +4364,7 @@ void KMComposeWin::slotSpellcheckConfig()
   dlg.setButtons( KDialog::Ok|KDialog::Cancel );
   dlg.setDefaultButton( KDialog::Ok );
   dlg.setModal( true );
-  dlg.enableButtonSeparator( true );
+  dlg.showButtonSeparator( true );
   KWin kwin;
   Q3TabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);

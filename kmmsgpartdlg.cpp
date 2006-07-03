@@ -55,7 +55,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   setButtons( Ok|Cancel|Help );
   setDefaultButton( Ok );
   setModal( true );
-  enableButtonSeparator( true );
+  showButtonSeparator( true );
 
   // tmp vars:
   QGridLayout * glay;

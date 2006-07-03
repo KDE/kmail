@@ -119,7 +119,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent )
                       "you will loose all your local changes for this folder "
                       "and all its subfolders.</p>" );
   topLayout->addWidget( new QLabel( txt, page ) );
-  enableButtonSeparator( true );
+  showButtonSeparator( true );
 
   setButtonText( User1, i18n( "Refresh &Cache" ) );
   setButtonText( User2, i18n( "Rebuild &Index" ) );
