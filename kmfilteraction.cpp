@@ -41,6 +41,7 @@ using KMail::ActionScheduler;
 #include <qtextcodec.h>
 #include <qtimer.h>
 #include <qobject.h>
+#include <qstylesheet.h>
 #include <assert.h>
 
 
@@ -303,6 +304,16 @@ const QString KMFilterActionWithFolder::argsAsString() const
   else
     result = mFolderName;
   return result;
+}
+
+const QString KMFilterActionWithFolder::displayString() const
+{
+  QString result;
+  if ( mFolder )
+    result = mFolder->prettyURL();
+  else
+    result = mFolderName;
+  return label() + " \"" + QStyleSheet::escape( result ) + "\"";
 }
 
 bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
@@ -1310,6 +1321,70 @@ bool KMFilterActionMove::requiresBody(KMMsgBase*) const
     return false; //iff mFolder->folderMgr == msgBase->parent()->folderMgr;
 }
 
+
+//=============================================================================
+// KMFilterActionCopy - copy into folder
+// Copy message into another mail folder
+//=============================================================================
+class KMFilterActionCopy: public KMFilterActionWithFolder
+{
+public:
+  KMFilterActionCopy();
+  virtual ReturnCode process(KMMessage* msg) const;
+  virtual void processAsync(KMMessage* msg) const;
+  virtual bool requiresBody(KMMsgBase*) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionCopy::newAction(void)
+{
+  return (new KMFilterActionCopy);
+}
+
+KMFilterActionCopy::KMFilterActionCopy()
+  : KMFilterActionWithFolder( "copy", i18n("Copy Into Folder") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
+{
+  // TODO opening and closing the folder is a trade off.
+  // Perhaps Copy is a seldomly used action for now,
+  // but I gonna look at improvements ASAP.
+  if ( !mFolder && mFolder->open() != 0 )
+    return ErrorButGoOn;
+
+  // copy the message 1:1
+  KMMessage* msgCopy = new KMMessage;
+  msgCopy->fromDwString(msg->asDwString());
+
+  int index;
+  int rc = mFolder->addMsg(msgCopy, &index);
+  if (rc == 0 && index != -1)
+    mFolder->unGetMsg( index );
+  mFolder->close();
+
+  return GoOn;
+}
+
+void KMFilterActionCopy::processAsync(KMMessage* msg) const
+{
+  // FIXME remove the debug output
+  kdDebug(5006) << "##### KMFilterActionCopy::processAsync(KMMessage* msg)" << endl;
+  ActionScheduler *handler = MessageProperty::filterHandler( msg );
+
+  KMCommand *cmd = new KMCopyCommand( mFolder, msg );
+  QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
+                    handler, SLOT( copyMessageFinished( KMCommand * ) ) );
+  cmd->start();
+}
+
+bool KMFilterActionCopy::requiresBody(KMMsgBase*) const
+{
+    return true;
+}
+
+
 //=============================================================================
 // KMFilterActionForward - forward to
 // Forward message to another user
@@ -1734,6 +1809,7 @@ const QString KMFilterActionWithUrl::argsAsString() const
 void KMFilterActionDict::init(void)
 {
   insert( KMFilterActionMove::newAction );
+  insert( KMFilterActionCopy::newAction );
   insert( KMFilterActionIdentity::newAction );
   insert( KMFilterActionSetStatus::newAction );
   insert( KMFilterActionFakeDisposition::newAction );

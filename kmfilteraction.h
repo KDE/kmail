@@ -395,6 +395,11 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
+  /** Returns a translated string describing this filter for visualization
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
+
+
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns TRUE if a change was made.  */
