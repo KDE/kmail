@@ -2039,7 +2039,7 @@ bool KMComposeWin::userForgotAttachment()
   QRegExp rx ( QString::fromLatin1("\\b") +
                attachWordsList.join("\\b|\\b") +
                QString::fromLatin1("\\b") );
-  rx.setCaseSensitive( Qt::CaseInsensitive );
+  rx.setCaseSensitivity( Qt::CaseInsensitive );
 
   bool gotMatch = false;
 
