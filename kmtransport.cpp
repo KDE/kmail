@@ -634,7 +634,7 @@ void KMTransportDialog::saveSettings()
 
 void KMTransportDialog::slotSendmailChooser()
 {
-  KFileDialog dialog("/", QString(), this );
+  KFileDialog dialog(KUrl("/"), QString(), this );
   dialog.setCaption(i18n("Choose sendmail Location") );
 
   if( dialog.exec() == QDialog::Accepted )
