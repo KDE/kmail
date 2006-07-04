@@ -85,7 +85,7 @@ class KMFolderImap : public KMFolderMbox
 public:
 
   static QString cacheLocation() {
-     return locateLocal("data", "kmail/imap" );
+     return KStandardDirs::locateLocal("data", "kmail/imap" );
   }
 
   enum imapState {

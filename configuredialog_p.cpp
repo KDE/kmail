@@ -247,7 +247,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
       // not found:
       QString displayname = QString::fromLatin1("%1 (%2)")
 	.arg( name ).arg( acronym );
-      QPixmap flag( locate("locale", acronym + flagPng ) );
+      QPixmap flag( KStandardDirs::locate("locale", acronym + flagPng ) );
       mComboBox->addItem( flag, displayname );
     }
   }
@@ -273,11 +273,11 @@ LanguageComboBox::LanguageComboBox( QWidget *parent )
 int LanguageComboBox::insertLanguage( const QString & language )
 {
   static QString entryDesktop = QString::fromLatin1("/entry.desktop");
-  KSimpleConfig entry( locate("locale", language + entryDesktop) );
+  KSimpleConfig entry( KStandardDirs::locate("locale", language + entryDesktop) );
   KConfigGroup group( &entry, "KCM Locale" );
   QString name = group.readEntry( "Name" );
   QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
-  addItem( QPixmap( locate("locale", language + flagPng ) ), output );
+  addItem( QPixmap( KStandardDirs::locate("locale", language + flagPng ) ), output );
   return findText(output);
 }
 

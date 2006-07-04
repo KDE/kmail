@@ -523,7 +523,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
 
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
-  QString filename = locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
+  QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
   KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,
                                                                     false );
   KBookmarkGroup group = bookManager->root();
@@ -2786,7 +2786,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
     KPIM::kByteArrayToFile( data, mAtmName, false, false, false );
   }
 
-  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
+  KTempFile *linkFile = new KTempFile( KStandardDirs::locateLocal("tmp", atmFileInfo.fileName() +"_["),
                           "]."+ atmFileInfo.suffix() );
 
   linkFile->setAutoDelete(true);

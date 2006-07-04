@@ -69,7 +69,7 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   mErrorTimer.setSingleShot( true );
   connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
 
-  QString serNumUri = locateLocal( "data", "kmail/unfiltered." +
+  QString serNumUri = KStandardDirs::locateLocal( "data", "kmail/unfiltered." +
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums = config.readEntry( "unfiltered" , QStringList() );
@@ -87,7 +87,7 @@ KMAcctImap::~KMAcctImap()
 {
   killAllJobs( true );
 
-  QString serNumUri = locateLocal( "data", "kmail/unfiltered." +
+  QString serNumUri = KStandardDirs::locateLocal( "data", "kmail/unfiltered." +
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums;

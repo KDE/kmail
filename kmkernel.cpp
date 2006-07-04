@@ -1329,7 +1329,7 @@ void KMKernel::init()
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
   the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
 
-  the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
+  the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
     the_searchFolderMgr->remove( lsf );
@@ -1798,7 +1798,7 @@ void KMKernel::slotConfigChanged()
 //static
 QString KMKernel::localDataPath()
 {
-  return locateLocal( "data", "kmail/" );
+  return KStandardDirs::locateLocal( "data", "kmail/" );
 }
 
 //-------------------------------------------------------------------------------

@@ -1228,11 +1228,11 @@ void KMReaderWin::displaySplashPage( const QString &info )
   mMsgDisplay = false;
   adjustLayout();
 
-  QString location = locate("data", "kmail/about/main.html");
+  QString location = KStandardDirs::locate("data", "kmail/about/main.html");
   QString content = KPIM::kFileToByteArray( location );
-  content = content.arg( locate( "data", "libkdepim/about/kde_infopage.css" ) );
+  content = content.arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage.css" ) );
   if ( kapp->isRightToLeft() )
-    content = content.arg( "@import \"%1\";" ).arg( locate( "data", "libkdepim/about/kde_infopage_rtl.css" ) );
+    content = content.arg( "@import \"%1\";" ).arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage_rtl.css" ) );
   else
     content = content.arg( "" );
 
@@ -2414,7 +2414,7 @@ QString KMReaderWin::createAtmFileLink() const
 {
   QFileInfo atmFileInfo(mAtmCurrentName);
 
-  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
+  KTempFile *linkFile = new KTempFile( KStandardDirs::locateLocal("tmp", atmFileInfo.fileName() +"_["),
                           "]."+ atmFileInfo.suffix() );
 
   linkFile->setAutoDelete(true);

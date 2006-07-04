@@ -78,7 +78,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
 public:
   static QString cacheLocation() {
-     return locateLocal("data", "kmail/dimap" );
+     return KStandardDirs::locateLocal("data", "kmail/dimap" );
   }
 
   /** Usually a parent is given. But in some cases there is no

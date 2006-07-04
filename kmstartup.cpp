@@ -144,7 +144,7 @@ void lockOrDie() {
   if ( programName.isEmpty() )
     programName = i18n("KMail");
 
-  QString lockLocation = locateLocal("data", "kmail/lock");
+  QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
   KSimpleConfig config(lockLocation);
   int oldPid = config.readEntry("pid", -1 );
   const QString oldHostName = config.readEntry("hostname");
@@ -235,7 +235,7 @@ void insertLibraryCataloguesAndIcons() {
 
 void cleanup()
 {
-  const QString lockLocation = locateLocal("data", "kmail/lock");
+  const QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
   KSimpleConfig config(lockLocation);
   config.writeEntry("pid", -1);
   config.sync();

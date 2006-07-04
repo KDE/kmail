@@ -115,7 +115,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
     QString tmpName;
     tmpName.setNum( count );
     if (!tempFolderMgr)
-      tempFolderMgr = new KMFolderMgr(locateLocal("data","kmail/filter"));
+      tempFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/filter"));
     KMFolder *tempFolder = tempFolderMgr->findOrCreate( tmpName );
     tempFolder->expunge();
     mDeleteSrcFolder = true;
