@@ -194,7 +194,7 @@ kde4_add_ui3_files(kmailprivate_LIB_SRCS
 #   kmailIface.h 
 #   kmailicalIface.h 
 #   folderIface.h )
-qt4_add_dbus_adaptors( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 
@@ -228,7 +228,7 @@ install_targets(${PLUGIN_INSTALL_DIR} kcm_kmail )
 set(kmailpart_PART_SRCS kmail_part.cpp )
 
 kde4_automoc(${kmailpart_PART_SRCS})
-qt4_add_dbus_adaptors( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml )
+qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 
 kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
 
@@ -272,7 +272,7 @@ install_targets(/bin kmail )
 set(dcoptest_SRCS dcoptest.cpp )
 
 kde4_automoc(${dcoptest_SRCS})
-qt4_add_dbus_adaptors( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
+qt4_add_dbus_adaptor( dcoptest_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
 
 #kde4_add_dcop_skels(dcoptest_SRCS kmailIface.h )
