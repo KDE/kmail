@@ -4,7 +4,7 @@
 
 ########### install files ###############
 
-install_files( /bin FILES kmail_clamav.sh kmail_sav.sh kmail_fprot.sh kmail_antivir.sh )
+install( PROGRAMS kmail_clamav.sh kmail_sav.sh kmail_fprot.sh kmail_antivir.sh  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 

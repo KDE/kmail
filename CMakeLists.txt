@@ -205,7 +205,7 @@ kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal phononcore )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
-install_targets(${LIB_INSTALL_DIR} kmailprivate )
+install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
 
 
 ########### next target ###############
@@ -220,7 +220,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kcm_kmail )
 
 target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install_targets(${PLUGIN_INSTALL_DIR} kcm_kmail )
+install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### next target ###############
@@ -236,7 +236,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmailpart )
 
 target_link_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install_targets(${PLUGIN_INSTALL_DIR} kmailpart )
+install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### next target ###############
@@ -251,7 +251,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_applica
 
 target_link_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
 
-install_targets(${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_application_octetstream )
+install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### next target ###############
@@ -264,7 +264,7 @@ kde4_add_executable(kmail ${kmail_SRCS})
 
 target_link_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
-install_targets(/bin kmail )
+install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 ########### next target ###############
@@ -303,17 +303,17 @@ endif(KDE4_BUILD_TESTS)
 
 ########### install files ###############
 
-install_files( ${XDG_APPS_DIR} FILES KMail.desktop kmail_view.desktop )
-install_files( ${KCFG_INSTALL_DIR} FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg )
-install_files( ${CONFIG_INSTALL_DIR} FILES kmail.antispamrc kmail.antivirusrc )
-install_files( ${DATA_INSTALL_DIR}/kmail FILES tips )
-install_files( ${SERVICES_INSTALL_DIR} FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop )
-install_files( ${DATA_INSTALL_DIR}/kmail FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc kmail_part.rc )
-install_files( ${SERVICETYPES_INSTALL_DIR} FILES dcopmail.desktop dcopimap.desktop )
-install_files( /include FILES kmailIface.h kmailpartIface.h kmailicalIface.h )
-install_files( ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter FILES application_octetstream.desktop )
-install_files( ${KCONF_UPDATE_INSTALL_DIR} FILES kmail.upd )
-install_programs( ${KCONF_UPDATE_INSTALL_DIR} FILES upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl kmail-upd-identities.pl kmail-3.1-use-UOID-for-identities.pl kmail-3.1-update-new-mail-notification-settings.pl kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl kmail-3.2-update-loop-on-goto-unread-settings.sh kmail-3.2-misc.sh kmail-3.3-use-ID-for-accounts.pl kmail-3.3-move-identities.pl kmail-3.3-aegypten.pl kmail-3.3-split-sign-encr-keys.sh kmail-3.3-misc.pl kmail-3.3b1-misc.pl kmail-3.4-misc.pl kmail-3.4.1-update-status-filters.pl)
+install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_DIR})
+install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
+install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
+install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
+install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc kmail_part.rc  DESTINATION ${DATA_INSTALL_DIR}/kmail)
+install( FILES dcopmail.desktop dcopimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install( FILES kmailIface.h kmailpartIface.h kmailicalIface.h  DESTINATION ${INCLUDE_INSTALL_DIR} )
+install( FILES application_octetstream.desktop  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter)
+install( FILES kmail.upd  DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+install(PROGRAMS FILES upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl kmail-upd-identities.pl kmail-3.1-use-UOID-for-identities.pl kmail-3.1-update-new-mail-notification-settings.pl kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl kmail-3.2-update-loop-on-goto-unread-settings.sh kmail-3.2-misc.sh kmail-3.3-use-ID-for-accounts.pl kmail-3.3-move-identities.pl kmail-3.3-aegypten.pl kmail-3.3-split-sign-encr-keys.sh kmail-3.3-misc.pl kmail-3.3b1-misc.pl kmail-3.4-misc.pl kmail-3.4.1-update-status-filters.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
 
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
