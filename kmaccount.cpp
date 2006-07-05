@@ -444,8 +444,11 @@ void KMAccount::checkDone( bool newmail, CheckStatus status )
   if (mTimer)
     mTimer->start(mInterval*60000);
   if ( mMailCheckProgressItem ) {
-    mMailCheckProgressItem->setComplete(); // that will delete it
+    // set mMailCheckProgressItem = 0 before calling setComplete() to prevent
+    // a race condition
+    ProgressItem *savedMailCheckProgressItem = mMailCheckProgressItem;
     mMailCheckProgressItem = 0;
+    savedMailCheckProgressItem->setComplete(); // that will delete it
   }
 
   emit newMailsProcessed( mNewInFolder );

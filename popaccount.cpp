@@ -348,8 +348,9 @@ void PopAccount::slotProcessPendingMsgs()
 void PopAccount::slotAbortRequested()
 {
   if (stage == Idle) return;
-  disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
-           this, SLOT( slotAbortRequested() ) );
+  if ( mMailCheckProgressItem )
+    disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
+                this, SLOT( slotAbortRequested() ) );
   stage = Quit;
   if (job) job->kill();
   job = 0;
@@ -655,7 +656,8 @@ void PopAccount::slotJobFinished() {
     processMsgsTimer.start(processingDelay);
   }
   else if (stage == Retr) {
-    mMailCheckProgressItem->setProgress( 100 );
+    if ( mMailCheckProgressItem )
+      mMailCheckProgressItem->setProgress( 100 );
     processRemainingQueuedMessages();
 
     mHeaderDeleteUids.clear();
@@ -732,20 +734,22 @@ void PopAccount::slotJobFinished() {
     // If there are messages to delete then delete them
     if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
-      mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Deleting messages from server...",
-              "Fetched %n messages from %1. Deleting messages from server...",
-              numMsgs )
-        .arg( mHost ) );
+      if ( mMailCheckProgressItem )
+        mMailCheckProgressItem->setStatus(
+          i18n( "Fetched 1 message from %1. Deleting messages from server...",
+                "Fetched %n messages from %1. Deleting messages from server...",
+                numMsgs )
+          .arg( mHost ) );
       url.setPath("/remove/" + idsOfMsgsToDelete.join(","));
       kdDebug(5006) << "url: " << url.prettyURL() << endl;
     } else {
       stage = Quit;
-      mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Terminating transmission...",
-              "Fetched %n messages from %1. Terminating transmission...",
-              numMsgs )
-        .arg( mHost ) );
+      if ( mMailCheckProgressItem )
+        mMailCheckProgressItem->setStatus(
+          i18n( "Fetched 1 message from %1. Terminating transmission...",
+                "Fetched %n messages from %1. Terminating transmission...",
+                numMsgs )
+          .arg( mHost ) );
       url.setPath(QString("/commit"));
       kdDebug(5006) << "url: " << url.prettyURL() << endl;
     }
@@ -760,11 +764,12 @@ void PopAccount::slotJobFinished() {
       mUidsOfNextSeenMsgsDict.remove( mUidForIdMap[*it] );
     }
     idsOfMsgsToDelete.clear();
-    mMailCheckProgressItem->setStatus(
-      i18n( "Fetched 1 message from %1. Terminating transmission...",
-            "Fetched %n messages from %1. Terminating transmission...",
-            numMsgs )
-      .arg( mHost ) );
+    if ( mMailCheckProgressItem )
+      mMailCheckProgressItem->setStatus(
+        i18n( "Fetched 1 message from %1. Terminating transmission...",
+              "Fetched %n messages from %1. Terminating transmission...",
+              numMsgs )
+        .arg( mHost ) );
     KURL url = getUrl();
     url.setPath(QString("/commit"));
     job = KIO::get( url, false, false );
@@ -783,8 +788,11 @@ void PopAccount::slotJobFinished() {
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         this->name(), numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
-      mMailCheckProgressItem->setComplete();
+      // set mMailCheckProgressItem = 0 before calling setComplete() to prevent
+      // a race condition
+      ProgressItem *savedMailCheckProgressItem = mMailCheckProgressItem;
       mMailCheckProgressItem = 0;
+      savedMailCheckProgressItem->setComplete(); // that will delete it
       checkDone( ( numMessages > 0 ), canceled ? CheckAborted : CheckOK );
     }
   }
@@ -873,7 +881,9 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
       numMsgBytesRead = curMsgLen;
     numBytesRead += numMsgBytesRead - oldNumMsgBytesRead;
     dataCounter++;
-    if (dataCounter % 5 == 0)
+    if ( mMailCheckProgressItem &&
+         ( dataCounter % 5 == 0 ||
+           ( indexOfCurrentMsg + 1 == numMsgs && numMsgBytesRead == curMsgLen ) ) )
     {
       QString msg;
       if (numBytes != numBytesToRead && mLeaveOnServer)
