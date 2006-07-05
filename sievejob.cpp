@@ -49,8 +49,8 @@ namespace KMail {
     kDebug(5006) << "~SieveJob()" << endl;
   }
 
-  void SieveJob::kill( bool quiet ) {
-    if ( mJob ) mJob->kill( quiet );
+  void SieveJob::kill( KJob::KillVerbosity verbosity ) {
+    if ( mJob ) mJob->kill( verbosity );
   }
 
   void SieveJob::schedule( Command command ) {

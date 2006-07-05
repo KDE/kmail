@@ -65,7 +65,7 @@ namespace KMail {
 
     static SieveJob * activate( const KUrl & url );
 
-    void kill( bool quiet=true );
+    void kill( KJob::KillVerbosity verbosity = KJob::Quietly );
 
     const QStringList & sieveCapabilities() const {
       return mSieveCapabilities;
