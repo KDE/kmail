@@ -639,7 +639,7 @@ void KMTransportDialog::slotSendmailChooser()
 
   if( dialog.exec() == QDialog::Accepted )
   {
-    KUrl url = dialog.selectedURL();
+    KUrl url = dialog.selectedUrl();
     if( url.isEmpty() == true )
     {
       return;
