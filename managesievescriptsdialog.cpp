@@ -308,7 +308,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   setButtons( Ok|Cancel );
   setDefaultButton( Ok );
   setModal( true );
-  QFrame *frame = new Qframe( this );
+  QFrame *frame = new QFrame( this );
   setMainWidget( frame );
   QVBoxLayout * vlay = new QVBoxLayout( frame );
   vlay->setSpacing( spacingHint() );
