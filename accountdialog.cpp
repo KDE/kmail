@@ -1989,7 +1989,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  KUrl url = dialog.selectedURL();
+  KUrl url = dialog.selectedUrl();
   if( url.isEmpty() )
   {
     return;

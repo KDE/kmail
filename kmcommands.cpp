@@ -615,7 +615,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 {
   if ( mUrl.isEmpty() )
     return OK;
-  KUrl saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString(),
+  KUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
                                          parentWidget() );
   if ( saveUrl.isEmpty() )
     return Canceled;
@@ -714,7 +714,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 }
 
 static KUrl subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveURL( subject.trimmed()
+    return KFileDialog::getSaveUrl( subject.trimmed()
                                            .replace( QDir::separator(), '_' ),
                                     QString() );
 }
@@ -925,7 +925,7 @@ KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
   if ( mUrl.isEmpty() ) {
-    mUrl = KFileDialog::getOpenURL( ":OpenMessage", "message/rfc822",
+    mUrl = KFileDialog::getOpenUrl( KUrl(":OpenMessage"), "message/rfc822",
                                     parentWidget(), i18n("Open Message") );
   }
   if ( mUrl.isEmpty() ) {
@@ -2140,7 +2140,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
   }
   else if ( mUrl.protocol() == "im" )
   {
-    kmkernel->imProxy()->chatWithContact( mUrl.path() );
+#warning "port me"
+    //kmkernel->imProxy()->chatWithContact( mUrl.path() );
   }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
            (mUrl.protocol() == "ftp")  || (mUrl.protocol() == "file")  ||
@@ -2272,7 +2273,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
-    url = KFileDialog::getSaveURL( s, QString(), parentWidget(),
+    url = KFileDialog::getSaveUrl( s, QString(), parentWidget(),
                                    QString() );
     if ( url.isEmpty() ) {
       setResult( Canceled );
@@ -2679,7 +2680,8 @@ KMCommand::Result KMIMChatCommand::execute()
 
   // start chat
   if( addressees.count() == 1 ) {
-    kmkernel->imProxy()->chatWithContact( addressees[0].uid() );
+#warning "port me"
+    //kmkernel->imProxy()->chatWithContact( addressees[0].uid() );
     return OK;
   }
   else
@@ -3029,7 +3031,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
     return;
   }
 
-  const KUrl url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString(), parentWidget() );
+  const KUrl url = KFileDialog::getSaveUrl( chomp( mAtmName, ".xia", false ), QString(), parentWidget() );
   if ( url.isEmpty() )
     return;
 

@@ -119,7 +119,7 @@ void KMSoundTestWidget::openSoundDialog( KUrlRequester * )
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 ) {
                 soundURL.setPath( *it );
-                fileDialog->setURL( soundURL );
+                fileDialog->setUrl( soundURL );
                 break;
             }
             ++it;
