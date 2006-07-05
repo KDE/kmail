@@ -131,7 +131,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
 
   mUserIdLineEdit->setFocus();
   // Ensure the lineedit is rather wide so that email addresses can be read in it
-  incInitialSize( QSize( 200, 0 ) );
+  incrementInitialSize( QSize( 200, 0 ) );
 }
 
 void KMail::ACLEntryDialog::slotChanged()
