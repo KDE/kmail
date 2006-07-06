@@ -862,7 +862,8 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
-  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
+#warning port me
+  //kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 
   // build summary for new mail message
   bool showNotification = false;
