@@ -252,7 +252,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
     resize(mainWidth, mainHeight);
 
   setMainWidget(searchWidget);
-  setButtonBoxOrientation(Qt::Vertical);
+  setButtonsOrientation(Qt::Vertical);
 
   enableButton(User2, false);
 
