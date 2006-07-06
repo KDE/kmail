@@ -2494,7 +2494,7 @@ void KMComposeWin::slotAttachFile()
   fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
   fdlg.setMode(KFile::Files);
   fdlg.exec();
-  KUrl::List files = fdlg.selectedURLs();
+  KUrl::List files = fdlg.selectedUrls();
 
   for (KUrl::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
@@ -2648,7 +2648,7 @@ void KMComposeWin::slotInsertFile()
       == QTextCodec::codecForLocale()) combo->setCurrentIndex(i);
   if (!fdlg.exec()) return;
 
-  KUrl u = fdlg.selectedURL();
+  KUrl u = fdlg.selectedUrl();
   mRecentAction->addUrl(u);
   // Prevent race condition updating list when multiple composers are open
   {
@@ -3227,7 +3227,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KUrl url = KFileDialog::getSaveURL(QString(), QString(), 0, i18n("Save Attachment As"));
+  KUrl url = KFileDialog::getSaveUrl(QString(), QString(), 0, i18n("Save Attachment As"));
 
   if( url.isEmpty() )
     return;
