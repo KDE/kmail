@@ -1813,7 +1813,7 @@ const QString KMFilterActionWithTest::displayString() const
 KMFilterActionExecSound::KMFilterActionExecSound()
   : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
 {
-  mPlayer = new Phonon::SimplePlayer();
+  mPlayer = new Phonon::SimplePlayer(Phonon::NotificationCategory);
 }
 
 KMFilterActionExecSound::~KMFilterActionExecSound()
