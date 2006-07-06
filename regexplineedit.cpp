@@ -38,7 +38,7 @@
 
 #include <klocale.h>
 #include <klineedit.h>
-#include <kparts/componentfactory.h>
+#include <kservicetypetrader.h>
 #include <kregexpeditorinterface.h>
 #include <kdialog.h>
 
@@ -123,7 +123,7 @@ namespace KMail {
   void RegExpLineEdit::slotEditRegExp()
   {
     if ( !mRegExpEditDialog )
-      mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
+      mRegExpEditDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     KRegExpEditorInterface *iface =
      dynamic_cast<KRegExpEditorInterface *>( mRegExpEditDialog );
