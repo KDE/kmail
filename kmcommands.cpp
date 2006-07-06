@@ -636,7 +636,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->showErrorDialog();
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     setResult( Failed );
     emit completed( this );
   }
@@ -899,7 +899,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
     }
     else
     {
-      static_cast<KIO::Job*>(job)->showErrorDialog();
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
       setResult( Failed );
       emit completed( this );
       deleteLater();
@@ -954,7 +954,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 {
   if ( job->error() ) {
     // handle errors
-    static_cast<KIO::Job*>(job)->showErrorDialog();
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     setResult( Failed );
     emit completed( this );
   }
@@ -2923,7 +2923,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
   }
 
   if ( listjob->exec() ) {
-    listjob->showErrorDialog( parentWidget(), i18n( "Chiasmus Backend Error" ) );
+    listjob->ui()->showErrorDialog( i18n( "Chiasmus Backend Error" ) );
     return;
   }
 
@@ -2976,7 +2976,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 
   setDeletesItself( true ); // the job below is async, we have to cleanup ourselves
   if ( job->start() ) {
-    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
+    job->ui()->showErrorDialog( i18n( "Chiasmus Decryption Error" ) );
     return;
   }
 
@@ -3019,7 +3019,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   if ( err.isCanceled() )
     return;
   if ( err ) {
-    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
+    job->ui()->showErrorDialog( i18n( "Chiasmus Decryption Error" ) );
     return;
   }
 
@@ -3041,7 +3041,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
 
   d.setDisabled( true ); // we got this far, don't delete yet
   KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
-  uploadJob->setWindow( parentWidget() );
+  uploadJob->ui()->setWindow( parentWidget() );
   connect( uploadJob, SIGNAL(result(KJob*)),
            this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KJob*)) );
 }
@@ -3049,7 +3049,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
 void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KJob * job )
 {
   if ( job->error() )
-    static_cast<KIO::Job*>(job)->showErrorDialog();
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   LaterDeleterWithCommandCompletion d( this );
   d.setResult( OK );
 }
