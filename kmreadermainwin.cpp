@@ -278,8 +278,9 @@ void KMReaderMainWin::setupAccel()
   mReplyAction->setShortcut(Qt::Key_R);
   mReplyActionMenu->insert( mReplyAction );
 
-  mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    Qt::SHIFT+Qt::Key_A, this, SLOT(slotReplyAuthorToMsg()), actionCollection(), "reply_author" );
+  mReplyAuthorAction = new KAction(KIcon("mail_reply"),  i18n("Reply to A&uthor..."), actionCollection(), "reply_author" );
+  connect(mReplyAuthorAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAuthorToMsg()));
+  mReplyAuthorAction->setShortcut(Qt::SHIFT+Qt::Key_A);
   mReplyActionMenu->insert( mReplyAuthorAction );
 
   mReplyAllAction = new KAction(KIcon("mail_replyall"),  i18n("Reply to &All..."), actionCollection(), "reply_all" );
@@ -287,8 +288,9 @@ void KMReaderMainWin::setupAccel()
   mReplyAllAction->setShortcut(Qt::Key_A);
   mReplyActionMenu->insert( mReplyAllAction );
 
-  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Qt::Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
+  mReplyListAction = new KAction(KIcon("mail_replylist"),  i18n("Reply to Mailing-&List..."), actionCollection(), "reply_list" );
+  connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
+  mReplyListAction->setShortcut(Qt::Key_L);
   mReplyActionMenu->insert( mReplyListAction );
 
 
