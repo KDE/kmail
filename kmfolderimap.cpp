@@ -1060,7 +1060,8 @@ void KMFolderImap::checkValidity()
 //-----------------------------------------------------------------------------
 ulong KMFolderImap::lastUid()
 {
-  if (mLastUid) return mLastUid;
+  if ( mLastUid > 0 ) 
+      return mLastUid;
   open();
   if (count() > 0)
   {
@@ -1489,7 +1490,10 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       msg->fromString( (*it).cdata.mid(16, pos - 16) );
       flags = msg->headerField("X-Flags").toInt();
       ulong uid = msg->UID();
-      KMMsgMetaData *md =  mUidMetaDataMap[uid];
+      KMMsgMetaData *md =  0;
+      if ( mUidMetaDataMap.find( uid ) ) {
+          md =  mUidMetaDataMap[uid];
+      }
       ulong serNum = 0;
       if ( md ) {
         serNum = md->serNum();
