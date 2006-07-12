@@ -228,12 +228,12 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
   showButton( User1, true );
 
-  addModule ( "kmail_config_identity", false );
-  addModule ( "kmail_config_accounts", false );
-  addModule ( "kmail_config_appearance", false );
-  addModule ( "kmail_config_composer", false );
-  addModule ( "kmail_config_security", false );
-  addModule ( "kmail_config_misc", false );
+  addModule ( "kmail_config_identity" );
+  addModule ( "kmail_config_accounts" );
+  addModule ( "kmail_config_appearance" );
+  addModule ( "kmail_config_composer" );
+  addModule ( "kmail_config_security" );
+  addModule ( "kmail_config_misc" );
 
   // We store the size of the dialog on hide, because otherwise
   // the KCMultiDialog starts with the size of the first kcm, not
