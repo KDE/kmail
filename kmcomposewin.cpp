@@ -114,8 +114,9 @@ using KRecentAddress::RecentAddresses;
 #include "globalsettings.h"
 #include "replyphrases.h"
 
-#include <kspell.h>
-#include <kspelldlg.h>
+#include <k3spell.h>
+#include <k3sconfig.h>
+#include <k3spelldlg.h>
 #include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 #include <kcolordialog.h>
@@ -4367,7 +4368,7 @@ void KMComposeWin::slotSpellcheckConfig()
   dlg.showButtonSeparator( true );
   KWin kwin;
   Q3TabDialog qtd (this, "tabdialog", true);
-  KSpellConfig mKSpellConfig (&qtd);
+  K3SpellConfig mKSpellConfig (&qtd);
   mKSpellConfig.layout()->setMargin( KDialog::marginHint() );
 
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));

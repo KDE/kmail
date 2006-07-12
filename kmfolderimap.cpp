@@ -60,6 +60,7 @@ using KMail::RenameJob;
 #include <QTextCodec>
 //Added by qt3to4:
 #include <Q3CString>
+#include <Q3StyleSheet>
 
 #include <assert.h>
 
@@ -232,7 +233,7 @@ void KMFolderImap::remove()
   jd.progressItem = ProgressManager::createProgressItem(
                       "ImapFolderRemove" + ProgressManager::getUniqueID(),
                       i18n("Removing folder"),
-                      i18n( "URL: %1", QStyleSheet::escape( folder()->prettyURL() ) ),
+                      i18n( "URL: %1", Q3StyleSheet::escape( folder()->prettyUrl() ) ),
                       false,
                       mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
@@ -474,7 +475,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
       mAddMessageProgressItem = ProgressManager::createProgressItem(
           "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: %1", QStyleSheet::escape( folder()->prettyURL() ) ),
+          i18n("Destination folder: %1", Q3StyleSheet::escape( folder()->prettyUrl() ) ),
           true,
           mAccount->useSSL() || mAccount->useTLS() );
       mAddMessageProgressItem->setTotalItems( msgList.count() );

@@ -1133,7 +1133,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
 void KMSendSMTP::cleanup() {
   if(mJob)
   {
-    mJob->kill(true);
+    mJob->kill( KJob::EmitResult );
     mJob = 0;
     mSlave = 0;
   }

@@ -780,11 +780,12 @@ QString ActionScheduler::debug()
     int i = 1;
     for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
 	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );
-	if ((*it)->mAccount && kmkernel->find( (*it)->mAccountId )) {
+#warning Port DCOPObject usage!
+/*	if ((*it)->mAccount && kmkernel->find( (*it)->mAccountId )) {
 	    res.append( QString( "Account %1, Name %2.\n" )
 			.arg( (*it)->mAccountId )
 			.arg( kmkernel->acctMgr()->find( (*it)->mAccountId )->name() ) );
-	}
+	}*/
 	res.append( QString( "mExecuting %1, " ).arg( (*it)->mExecuting ? "true" : "false" ) );
 	res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
 	res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );

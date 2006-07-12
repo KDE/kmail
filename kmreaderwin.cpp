@@ -1008,10 +1008,11 @@ void KMReaderWin::contactStatusChanged( const QString &uid)
     DOM::Node n =  presenceNodes.item( i );
     kDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
     kDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
-    QString newPresence = kmkernel->imProxy()->presenceString( uid );
+#warning Port KIMProxy usage!
+/*    QString newPresence = kmkernel->imProxy()->presenceString( uid );
     if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString() )
       newPresence = QString::fromLatin1( "ENOIMRUNNING" );
-    n.firstChild().setNodeValue( newPresence );
+    n.firstChild().setNodeValue( newPresence );*/
 //    kDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
   }
 //  kDebug( 5006 ) << "and we updated the above presence nodes" << uid << endl;

@@ -1,7 +1,6 @@
 #ifndef MAILCOMPOSERIFACE_H
 #define MAILCOMPOSERIFACE_H
 
-#include <dcopobject.h>
 #include <kurl.h>
 //Added by qt3to4:
 #include <Q3CString>
@@ -12,10 +11,11 @@
   reference to the DCOP interface of the new composer window, which provides the
   functions defined in the MailComposerIface.
 */
-class MailComposerIface : virtual public DCOPObject
+#warning This was a DCOPObject and needs porting to DBus
+class MailComposerIface //: virtual public DCOPObject
 {
-    K_DCOP
-  k_dcop:
+//  k_dcop:
+public:
     /**
       Send message.      
 

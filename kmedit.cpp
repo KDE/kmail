@@ -47,8 +47,9 @@ using KPIM::MailListDrag;
 #include "globalsettings.h"
 #include "replyphrases.h"
 
-#include <kspell.h>
-#include <kspelldlg.h>
+#include <k3spell.h>
+#include <k3spelldlg.h>
+#include <k3sconfig.h>
 #include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 
@@ -206,7 +207,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 }
 
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
-               KSpellConfig* autoSpellConfig,
+               K3SpellConfig* autoSpellConfig,
                const char *name)
   : KEdit( parent ),
     mComposer( composer ),
@@ -559,8 +560,8 @@ void KMEdit::spellcheck()
 //                    SLOT(slotSpellcheck2(KSpell*)),0,true,false,KSpell::HTML);
 //  }
 //  else {
-    mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
-                      SLOT(slotSpellcheck2(KSpell*)));
+    mKSpell = new K3Spell(this, i18n("Spellcheck - KMail"), this,
+                      SLOT(slotSpellcheck2(K3Spell*)));
 //  }
 
   QStringList l = K3SpellingHighlighter::personalWords();
@@ -645,7 +646,7 @@ void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsi
 
 }
 
-void KMEdit::slotSpellcheck2(KSpell*)
+void KMEdit::slotSpellcheck2(K3Spell*)
 {
     if( !mSpellLineEdit)
     {
@@ -707,7 +708,7 @@ void KMEdit::slotSpellResult(const QString &s)
 void KMEdit::slotSpellDone()
 {
   kDebug(5006)<<" void KMEdit::slotSpellDone()\n";
-  KSpell::spellStatus status = mKSpell->status();
+  K3Spell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
 
@@ -715,7 +716,7 @@ void KMEdit::slotSpellDone()
   delete mSpellingFilter;
   mSpellingFilter = 0;
   mComposer->sujectLineWidget()->deselect();
-  if (status == KSpell::Error)
+  if (status == K3Spell::Error)
   {
      KMessageBox::sorry( topLevelWidget(),
                          i18n("ISpell/Aspell could not be started. Please "
@@ -723,7 +724,7 @@ void KMEdit::slotSpellDone()
                               "configured and in your PATH.") );
      emit spellcheck_done( KS_CANCEL );
   }
-  else if (status == KSpell::Crashed)
+  else if (status == K3Spell::Crashed)
   {
      spellcheck_stop();
      KMessageBox::sorry( topLevelWidget(),
@@ -734,7 +735,7 @@ void KMEdit::slotSpellDone()
   {
       if( mSpellLineEdit )
           spellcheck();
-      else if( !mComposer->subjectTextWasSpellChecked() && status == KSpell::FinishedNoMisspellingsEncountered )
+      else if( !mComposer->subjectTextWasSpellChecked() && status == K3Spell::FinishedNoMisspellingsEncountered )
           KMessageBox::information( topLevelWidget(),
                                     i18n("No misspellings encountered.") );
   }

@@ -96,8 +96,8 @@ using KRecentAddress::RecentAddresses;
 #include "globalsettings.h"
 #include "replyphrases.h"
 
-#include <kspell.h>
-#include <kspelldlg.h>
+#include <k3spell.h>
+#include <k3spelldlg.h>
 #include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 #include <kcolordialog.h>

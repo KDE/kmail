@@ -485,13 +485,14 @@ namespace KMail {
 
       if ( imProxy->initialize() ) {
           // im status
-          presence = imProxy->presenceString( kabcUid );
+#warning Port KIMProxy usage!
+/*          presence = imProxy->presenceString( kabcUid );
           if ( !presence.isEmpty() )
           {
             QString presenceIcon = QString::fromLatin1( " <img src=\"%1\"/>" )
                 .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).toImage() ) );
             presence += presenceIcon;
-          }
+          }*/
       }
       // picture
       if ( addresses[0].photo().isIntern() )

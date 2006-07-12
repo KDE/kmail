@@ -32,7 +32,6 @@
 #ifndef KMAILICALIFACE_H
 #define KMAILICALIFACE_H
 
-#include <dcopobject.h>
 #include <kurl.h>
 
 #include <QList>
@@ -44,12 +43,12 @@
 // The kmail/ is so that it can be found by the resources easily
 #include <kmail/kmailicalIface.h>
 
-class KMailICalIface : virtual public DCOPObject
+#warning This was a DCOPObject and needs porting to DBus!
+class KMailICalIface //: virtual public DCOPObject
 {
-  K_DCOP
 
 public:
-k_dcop:
+//k_dcop:
   struct SubResource {
     //dcopidl barfs on those constructors, but dcopidlng works
     SubResource() {} // for QValueList
@@ -114,7 +113,8 @@ k_dcop:
    */
   virtual bool triggerSync( const QString & ) = 0;
 
-k_dcop_signals:
+//k_dcop_signals:
+signals:
   void incidenceAdded( const QString& type, const QString& folder,
                        quint32 sernum, int format, const QString& entry );
   void asyncLoadResult( const QMap<quint32, QString>, const QString& type,

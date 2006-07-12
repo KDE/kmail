@@ -458,7 +458,6 @@ void KMMsgPartDialogCompat::applyChanges()
 void KMMsgPartDialogCompat::slotOk()
 {
   applyChanges();
-  KMMsgPartDialog::slotOk();
 }
 
 

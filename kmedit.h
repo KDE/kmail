@@ -18,8 +18,8 @@
 #include <QDropEvent>
 
 class KMComposeWin;
-class KSpellConfig;
-class KSpell;
+class K3SpellConfig;
+class K3Spell;
 class SpellingFilter;
 class KTempFile;
 class K3DictSpellingHighlighter;
@@ -31,7 +31,7 @@ class KMEdit : public KEdit {
   Q_OBJECT
 public:
   KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
-         KSpellConfig* spellConfig = 0,
+         K3SpellConfig* spellConfig = 0,
 	 const char *name=0);
   ~KMEdit();
 
@@ -83,7 +83,7 @@ signals:
   void focusChanged( bool );
 public slots:
   void initializeAutoSpellChecking();
-  void slotSpellcheck2(KSpell*);
+  void slotSpellcheck2(K3Spell*);
   void slotSpellResult(const QString&);
   void slotSpellDone();
   void slotExternalEditorDone(KProcess*);
@@ -110,8 +110,8 @@ private:
 private:
   KMComposeWin* mComposer;
 
-  KSpell *mKSpell;
-  KSpellConfig *mSpellConfig;
+  K3Spell *mKSpell;
+  K3SpellConfig *mSpellConfig;
   QMap<QString,QStringList> mReplacements;
   SpellingFilter* mSpellingFilter;
   KTempFile *mExtEditorTempFile;

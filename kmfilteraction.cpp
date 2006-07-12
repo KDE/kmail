@@ -39,7 +39,7 @@ using KMail::RegExpLineEdit;
 #include <klocale.h>
 #include <kprocess.h>
 #include <kurlrequester.h>
-#include <phonon/simpleplayer.h>
+#include <phonon/audioplayer.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -1757,7 +1757,7 @@ public:
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 private:
-  Phonon::SimplePlayer* mPlayer;
+  Phonon::AudioPlayer* mPlayer;
 };
 
 KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString aLabel )
@@ -1813,7 +1813,7 @@ const QString KMFilterActionWithTest::displayString() const
 KMFilterActionExecSound::KMFilterActionExecSound()
   : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
 {
-  mPlayer = new Phonon::SimplePlayer(Phonon::NotificationCategory);
+  mPlayer = new Phonon::AudioPlayer(Phonon::NotificationCategory);
 }
 
 KMFilterActionExecSound::~KMFilterActionExecSound()

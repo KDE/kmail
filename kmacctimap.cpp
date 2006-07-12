@@ -53,6 +53,7 @@ using KPIM::ProgressManager;
 #include <kdebug.h>
 
 #include <QList>
+#include <Q3StyleSheet>
 
 #include <errno.h>
 
@@ -290,7 +291,7 @@ void KMAcctImap::processNewMail(bool interactive)
   mMailCheckProgressItem =
     ProgressManager::createProgressItem(
         "MailCheckAccount" + name(),
-        i18n( "Checking account: %1", QStyleSheet::escape( name() ) ),
+        i18n( "Checking account: %1", Q3StyleSheet::escape( name() ) ),
         QString(), // status
         true, // can be canceled
         useSSL() || useTLS() );

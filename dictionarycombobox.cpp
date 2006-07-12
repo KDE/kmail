@@ -35,7 +35,7 @@
 
 #include "dictionarycombobox.h"
 
-#include <ksconfig.h>
+#include <k3sconfig.h>
 #include <kdebug.h>
 
 #include <QStringList>
@@ -125,7 +125,7 @@ namespace KMail {
     }
   }
 
-  KSpellConfig* DictionaryComboBox::spellConfig() const
+  K3SpellConfig* DictionaryComboBox::spellConfig() const
   {
     return mSpellConfig;
   }
@@ -133,7 +133,7 @@ namespace KMail {
   void DictionaryComboBox::reloadCombo()
   {
     delete mSpellConfig;
-    mSpellConfig = new KSpellConfig( 0, 0, false );
+    mSpellConfig = new K3SpellConfig( 0, 0, false );
     mSpellConfig->fillDicts( this, &mDictionaries );
     mDefaultDictionary = currentIndex();
   }
