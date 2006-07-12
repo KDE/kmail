@@ -255,8 +255,8 @@ void KMReaderMainWin::setupAccel()
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
   createGUI( "kmreadermainwin.rc" );
-  menuBar()->hide();
-  toolBar( "mainToolBar" )->hide();
+  //menuBar()->hide();
+  //toolBar( "mainToolBar" )->hide();
 }
 
 

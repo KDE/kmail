@@ -1580,6 +1580,11 @@ void KMMainWidget::slotLongHeaders() {
 				       HeaderStrategy::rich() );
 }
 
+void KMMainWidget::slotMinimalHeaders() {
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::minimal(),
+                                       HeaderStrategy::rich() );
+}
+
 void KMMainWidget::slotAllHeaders() {
   mMsgView->setHeaderStyleAndStrategy( HeaderStyle::plain(),
 				       HeaderStrategy::all() );
@@ -1596,6 +1601,9 @@ void KMMainWidget::slotCycleHeaderStyles() {
   } else if ( style == HeaderStyle::brief() ) {
     slotStandardHeaders();
     actionName = "view_headers_standard";
+  } else if ( style == HeaderStyle::minimal() ) {
+    slotMinimalHeaders();
+    actionName = "view_headers_minimal";
   } else if ( style == HeaderStyle::plain() ) {
     if ( strategy == HeaderStrategy::standard() ) {
       slotLongHeaders();
@@ -2175,6 +2183,8 @@ KRadioAction * KMMainWidget::actionForHeaderStyle( const HeaderStyle * style, co
     actionName = "view_headers_fancy";
   else if ( style == HeaderStyle::brief() )
     actionName = "view_headers_brief";
+  else if ( style == HeaderStyle::minimal() )
+    actionName == "view_headers_minimal";
   else if ( style == HeaderStyle::plain() ) {
     if ( strategy == HeaderStrategy::standard() )
       actionName = "view_headers_standard";
@@ -2661,6 +2671,14 @@ void KMMainWidget::setupActions()
   raction->setToolTip( i18n("Show long list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Minimal Headers"), 0, this,
+      SLOT(slotMinimalHeaders()),
+      actionCollection(), "view_headers_minimal" );
+  raction->setToolTip( i18n("Show the minimal headers in a fancy format") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
 
   raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0, this,
       SLOT(slotAllHeaders()),

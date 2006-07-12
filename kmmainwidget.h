@@ -300,6 +300,7 @@ protected slots:
   void slotStandardHeaders();
   void slotLongHeaders();
   void slotAllHeaders();
+  void slotMinimalHeaders();
   void slotIconicAttachments();
   void slotSmartAttachments();
   void slotInlineAttachments();
