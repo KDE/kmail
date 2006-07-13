@@ -52,7 +52,6 @@
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
 #include <kapplication.h>
-#include <dcopclient.h>
 
 //Added by qt3to4:
 #include <QMenu>
@@ -81,6 +80,7 @@
 #include <kimproxy.h>
 // KIO headers
 #include <kio/job.h>
+#include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
 #include "actionscheduler.h"
@@ -2923,7 +2923,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
   }
 
   if ( listjob->exec() ) {
-    listjob->ui()->showErrorDialog( i18n( "Chiasmus Backend Error" ) );
+    listjob->showErrorDialog( parentWidget(), i18n( "Chiasmus Backend Error" ) );
     return;
   }
 
@@ -2976,7 +2976,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 
   setDeletesItself( true ); // the job below is async, we have to cleanup ourselves
   if ( job->start() ) {
-    job->ui()->showErrorDialog( i18n( "Chiasmus Decryption Error" ) );
+    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
     return;
   }
 
@@ -3019,7 +3019,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   if ( err.isCanceled() )
     return;
   if ( err ) {
-    job->ui()->showErrorDialog( i18n( "Chiasmus Decryption Error" ) );
+    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
     return;
   }
 

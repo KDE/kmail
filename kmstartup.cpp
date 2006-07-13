@@ -27,7 +27,6 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
-#include <dcopclient.h>
 #include <kcrash.h>
 #include <kglobal.h>
 #include <kapplication.h>

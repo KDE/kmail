@@ -45,8 +45,9 @@
 
 namespace KMail {
 
+#warning Port me to DBus!
 FolderIface::FolderIface( const QString& vpath )
-  : DCOPObject( "FolderIface" ), mPath( vpath )
+  : /*DCOPObject( "FolderIface" ),*/ mPath( vpath )
 {
   //kDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );

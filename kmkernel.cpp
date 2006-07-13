@@ -48,7 +48,7 @@ using KRecentAddress::RecentAddresses;
 
 #include <kwin.h>
 #include "kmailicalifaceimpl.h"
-#include "mailserviceimpl.h"
+//#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "mailcomposerIface.h"
 #include "folderIface.h"
@@ -63,7 +63,6 @@ using KMail::FolderIface;
 #include <kconfig.h>
 #include <kprogressbar.h>
 #include <kpassivepopup.h>
-#include <dcopclient.h>
 #include <ksystemtray.h>
 #include <kpgp.h>
 #include <kdebug.h>
@@ -97,8 +96,9 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
+#warning Port DCOPObject -> DBus!
 KMKernel::KMKernel (QObject *parent, const char *name) :
-  DCOPObject("KMailIface"), QObject(parent),
+  /*DCOPObject("KMailIface"),*/ QObject(parent),
   mIdentityManager(0), mConfigureDialog(0),
   mContextMenuShown( false ), mWallet( 0 )
 {
@@ -164,10 +164,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   } else {
     netCodec = QTextCodec::codecForLocale();
   }
-  mMailService =  new MailServiceImpl();
+#warning Port me to DBus!
+/*  mMailService =  new MailServiceImpl();
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
-                     "selectFolder(QString)", false );
+                     "selectFolder(QString)", false );*/
 }
 
 KMKernel::~KMKernel ()
@@ -537,7 +538,8 @@ void KMKernel::setDefaultTransport( const QString & transport )
   GlobalSettings::self()->setDefaultTransport( transport );
 }
 
-DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
+#warning Port DCOPRef usage!
+/*DCOPRef*/ void KMKernel::openComposer(const QString &to, const QString &cc,
                                const QString &bcc, const QString &subject,
                                const QString &body,bool hidden)
 {
@@ -561,10 +563,12 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 #endif
   }
 
-  return DCOPRef( cWin->asMailComposerIFace() );
+#warning Port me!
+//  return DCOPRef( cWin->asMailComposerIFace() );
 }
 
-DCOPRef KMKernel::newMessage(const QString &to,
+#warning Port DCOPRef usage!
+/*DCOPRef*/ void KMKernel::newMessage(const QString &to,
                              const QString &cc,
                              const QString &bcc,
                              bool hidden,
@@ -599,7 +603,8 @@ DCOPRef KMKernel::newMessage(const QString &to,
   if(!hidden) {
     win->show();
   }
-  return DCOPRef( win->asMailComposerIFace() );
+#warning Port me!
+//  return DCOPRef( win->asMailComposerIFace() );
 }
 
 int KMKernel::viewMessage( const KUrl & messageFile )
@@ -929,9 +934,11 @@ QStringList KMKernel::folderList() const
   return folders;
 }
 
-DCOPRef KMKernel::getFolder( const QString& vpath )
+#warning Port DCOPRef usage!
+/*DCOPRef*/ void KMKernel::getFolder( const QString& vpath )
 {
-  const QString localPrefix = "/Local";
+#warning Port DCOPRef usage!
+/*  const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( vpath.startsWith( localPrefix ) &&
@@ -941,13 +948,14 @@ DCOPRef KMKernel::getFolder( const QString& vpath )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
-  return DCOPRef();
+  return DCOPRef();*/
 }
 
 void KMKernel::raise()
 {
-  DCOPRef kmail( "kmail", "kmail" );
-  kmail.call( "newInstance" );
+#warning Port DCOPRef usage!
+/*  DCOPRef kmail( "kmail", "kmail" );
+  kmail.call( "newInstance" );*/
 }
 
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
@@ -2074,7 +2082,7 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
 
 ::KIMProxy* KMKernel::imProxy()
 {
-  return KIMProxy::instance( kapp->dcopClient() );
+  return KIMProxy::instance();
 }
 
 void KMKernel::enableMailCheck()

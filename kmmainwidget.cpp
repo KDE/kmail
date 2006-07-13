@@ -48,7 +48,6 @@
 #include <kseparatoraction.h>
 #include <kstandarddirs.h>
 #include <kstdaction.h>
-#include <dcopclient.h>
 #include <kaddrbook.h>
 #include <ktoggleaction.h>
 

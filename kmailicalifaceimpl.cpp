@@ -67,7 +67,6 @@ using KMail::AccountManager;
 
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <dcopclient.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kurl.h>
@@ -136,8 +135,9 @@ const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContents
   the kmail interface is used from the groupware object in kmail.
 */
 
+#warning Port me to DBus!
 KMailICalIfaceImpl::KMailICalIfaceImpl()
-  : DCOPObject( "KMailICalIface" ), QObject( 0 ),
+  : /*DCOPObject( "KMailICalIface" ),*/ QObject( 0 ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
     mFolderLanguage( 0 ), mFolderParentDir( 0 ), mFolderType( KMFolderTypeUnknown ),
     mUseResourceIMAP( false ), mResourceQuiet( false ), mHideFolders( true )
