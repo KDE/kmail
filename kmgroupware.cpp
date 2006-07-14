@@ -39,7 +39,7 @@
 #include "kmgroupware.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "libkcal/incidenceformatter.h"
+#include <kcal/incidenceformatter.h>
 #include <kdebug.h>
 #include <mimelib/enum.h>
 #include <assert.h>
