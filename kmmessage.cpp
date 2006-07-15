@@ -2969,7 +2969,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 
   Q3CString charset  = aPart->charset();
   Q3CString type     = aPart->typeStr();
-  Q3CString subtype  = aPart->subtypeStr();
+  QString subtype  = aPart->subtypeStr();
   Q3CString cte      = aPart->cteStr();
   Q3CString contDesc = aPart->contentDescriptionEncoded();
   Q3CString contDisp = aPart->contentDisposition();
@@ -2985,7 +2985,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   if (!type.isEmpty() && !subtype.isEmpty())
   {
     ct.SetTypeStr(type.data());
-    ct.SetSubtypeStr(subtype.data());
+    ct.SetSubtypeStr(subtype/*.data()*/);
     if (!charset.isEmpty()){
       DwParameter *param;
       param=new DwParameter;

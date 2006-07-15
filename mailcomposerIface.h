@@ -16,6 +16,7 @@ class MailComposerIface //: virtual public DCOPObject
 {
 //  k_dcop:
 public:
+	virtual ~MailComposerIface() {}
     /**
       Send message.      
 

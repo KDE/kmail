@@ -73,7 +73,7 @@ void KMMessagePart::clear()
   mBody.truncate( 0 );
   mAdditionalCTypeParamStr = Q3CString();
   mName.clear();
-  mParameterAttribute = Q3CString();
+  mParameterAttribute = QString();
   mParameterValue.clear();
   mCharset = Q3CString();
   mPartSpecifier.clear();
@@ -437,7 +437,7 @@ QString KMMessagePart::parameterValue(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setParameter(const Q3CString &attribute,
+void KMMessagePart::setParameter(const QString &attribute,
                                  const QString &value)
 {
   mParameterAttribute = attribute;
