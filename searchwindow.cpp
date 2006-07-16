@@ -285,11 +285,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
            SLOT(slotForwardMsg()) );
   mForwardAction = new KAction(KIcon("mail_forward"),  i18n("&Inline..."), ac, "search_message_forward_inline" );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
-  mForwardActionMenu->insert( mForwardAction );
+  mForwardActionMenu->addAction( mForwardAction );
   mForwardAttachedAction = new KAction( KIcon("mail_forward"), i18nc("Message->Forward->","As &Attachment..."),
                                        ac, "search_message_forward_as_attachment" );
   connect(mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()));
-  mForwardActionMenu->insert( mForwardAttachedAction );
+  mForwardActionMenu->addAction( mForwardAttachedAction );
   mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
   mSaveAtchAction = new KAction(KIcon("attach"),  i18n("Save Attachments..."), ac, "search_save_attachments" );
   connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
