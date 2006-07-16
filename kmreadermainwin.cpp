@@ -265,8 +265,9 @@ void KMReaderMainWin::setupAccel()
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->insert( mForwardAttachedAction );
 
-  mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),
-				 Qt::Key_E, this, SLOT(slotRedirectMsg()), actionCollection(), "message_forward_redirect" );
+  mRedirectAction = new KAction( i18nc("Message->Forward->", "&Redirect..."), actionCollection(), "message_forward_redirect" );
+  connect(mRedirectAction, SIGNAL(triggered(bool)), SLOT(slotRedirectMsg()));
+  mRedirectAction->setShortcut(Qt::Key_E);
   mForwardActionMenu->insert( mRedirectAction );
 
   mReplyActionMenu = new KActionMenu( KIcon("mail_reply"), i18nc("Message->","&Reply"),
