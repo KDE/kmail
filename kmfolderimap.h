@@ -28,8 +28,8 @@
 #include "kmfoldermbox.h"
 #include "kmmsgbase.h"
 
-#include "kio/job.h"
-#include "kio/global.h"
+#include <kio/job.h>
+#include <kio/global.h>
 
 #include <kstandarddirs.h>
 
