@@ -48,7 +48,6 @@ using KRecentAddress::RecentAddresses;
 #include <kparts/mainwindow.h>
 #include <kparts/genericfactory.h>
 #include <knotifyclient.h>
-#include <dcopclient.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <ksettings/dispatcher.h>
@@ -62,7 +61,7 @@ typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
 
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &) :
-  DCOPObject("KMailIface"), KParts::ReadOnlyPart( parent ),
+  KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
   kDebug(5006) << "KMailPart()" << endl;
@@ -82,7 +81,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
 
   KMail::lockOrDie();
 
-  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
+#warning Port me!
+//  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
   KMKernel *mKMailKernel = new KMKernel();
@@ -96,7 +96,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   mKMailKernel->recoverDeadLetters();
 
   kmsetSignalHandler(kmsignalHandler);
-  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+#warning Port me!
+//  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );

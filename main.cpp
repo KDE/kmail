@@ -22,7 +22,6 @@
 #include <kuniqueapplication.h>
 #include <kglobal.h>
 #include <knotifyclient.h>
-#include <dcopclient.h>
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
 
@@ -87,14 +86,16 @@ int main(int argc, char *argv[])
   // using KMail without KDE)
   KNotifyClient::startDaemon();
 
-  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
+#warning Port me!
+//  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   KMail::lockOrDie();
 
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
-  kapp->dcopClient()->setDefaultObject( kmailKernel.objId() );
+#warning Port me!
+//  kapp->dcopClient()->setDefaultObject( kmailKernel.objId() );
 
   // and session management
   kmailKernel.doSessionManagement();
@@ -104,7 +105,8 @@ int main(int argc, char *argv[])
 
   kmsetSignalHandler(kmsignalHandler);
 
-  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+#warning Port me!
+//  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
   // Go!
   int ret = kapp->exec();

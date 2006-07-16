@@ -946,7 +946,8 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     if ( mInTransit.contains( uid ) ) {
       mInTransit.remove( uid );
     }
-    incidenceAdded( type, folder->location(), sernum, format, s );
+#warning Port DCOP signals!
+//    incidenceAdded( type, folder->location(), sernum, format, s );
   } else {
     // go get the rest of it, then try again
     // TODO: Till, port me
@@ -1000,7 +1001,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         kDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
                       << type << ", " << folder->location() << ", " << uid
                       << " )" << endl;
-        incidenceDeleted( type, folder->location(), uid );
+#warning Port DCOP signal!
+//        incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -1011,7 +1013,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
+#warning Port DCOP signal!
+//    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
     kDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
   }
 }
@@ -1211,7 +1214,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   ExtraFolder* ef = mExtraFolders.find( location );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
-    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
+#warning Port DCOP signal!
+//    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
@@ -1249,7 +1253,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
-  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyUrl() );
+#warning Port DCOP signals!
+//  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyUrl() );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1391,10 +1396,11 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
   if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
-    subresourceDeleted( contentsTypeStr, location );
+#warning Port DCOP signals!
+//    subresourceDeleted( contentsTypeStr, location );
 
-    subresourceAdded( contentsTypeStr, location, folder->prettyUrl()  /*,
-                      !folder->isReadOnly() , folderIsAlarmRelevant( folder ) TODO */ );
+//    subresourceAdded( contentsTypeStr, location, folder->prettyUrl()  /*,
+//                      !folder->isReadOnly() , folderIsAlarmRelevant( folder ) TODO */ );
 
   }
 }
@@ -1418,8 +1424,9 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
     mExtraFolders.setAutoDelete( true );
     mExtraFolders.insert( newLocation, ef );
   }
-  if (  folder )
-    subresourceDeleted( folderContentsType(  folder->storage()->contentsType() ), oldLocation );
+#warning Port DCOP signal!
+//  if (  folder )
+//    subresourceDeleted( folderContentsType(  folder->storage()->contentsType() ), oldLocation );
 
 }
 
@@ -1633,11 +1640,12 @@ void KMailICalIfaceImpl::readConfig()
 
   // END TILL TODO
 
-  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label() );
+#warning Port DCOP signals!
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label() );
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label() );
 
   reloadFolderTree();
 }

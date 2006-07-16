@@ -25,7 +25,7 @@
 #ifndef KMail_PART_H
 #define KMail_PART_H
 
-#include "kmailpartIface.h"
+//#include "kmailpartIface.h"
 
 #include <kdeversion.h>
 #include <kparts/browserextension.h>
@@ -51,7 +51,8 @@ class KMFolderTreeItem;
 
 class ActionManager;
 
-class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
+#warning Re-Add DBus interface!
+class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart //, virtual public KMailPartIface
 {
     Q_OBJECT
   public:
