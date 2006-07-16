@@ -34,6 +34,8 @@ class KURL;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
+class KRadioAction;
+class KActionCollection;
 namespace KMail {
   namespace Interface {
     class Observable;
@@ -352,6 +354,15 @@ protected slots:
   void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
   void slotAtmDecryptWithChiasmusUploadResult( KIO::Job * );
 
+   /** Message Header operations  */
+  void slotCycleHeaderStyles();
+  void slotBriefHeaders();
+  void slotFancyHeaders();
+  void slotStandardHeaders();
+  void slotLongHeaders();
+  void slotMinimalHeaders();
+  void slotAllHeaders();
+
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
@@ -407,6 +418,9 @@ private:
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
 
+  //helpers
+  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+                                       const KMail::HeaderStrategy * );
 
 private:
   bool mHtmlMail, mHtmlOverride;
@@ -451,6 +465,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
+  KActionCollection *mActionCollection;
   KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;

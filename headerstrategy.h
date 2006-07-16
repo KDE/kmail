@@ -46,7 +46,7 @@ namespace KMail {
     //
     // Factory methods:
     //
-    enum Type { All, Rich, Standard, Brief, Custom };
+    enum Type { All, Rich, Standard, Brief, Custom, Minimal };
 
     static const HeaderStrategy * create( Type type );
     static const HeaderStrategy * create( const QString & type );
@@ -56,7 +56,7 @@ namespace KMail {
     static const HeaderStrategy * standard();
     static const HeaderStrategy * brief();
     static const HeaderStrategy * custom();
-
+    static const HeaderStrategy * minimal();
     //
     // Methods for handling the strategies:
     //

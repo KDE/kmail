@@ -26,6 +26,11 @@
 #include "kmreaderwin.h"
 #include "kmfolder.h"
 
+#include <kkeydialog.h> //for KKeyDialog
+#include <kedittoolbar.h> //for saveMainWindowSettings() applyMainWindowSettings()
+#include <kmainwindow.h>
+#include <kcharsets.h>
+
 #include "kmreadermainwin.h"
 #include "kmreadermainwin.moc"
 
@@ -254,6 +259,10 @@ void KMReaderMainWin::setupAccel()
   mReplyActionMenu->insert( mReplyListAction );
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
+
+  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+
   createGUI( "kmreadermainwin.rc" );
   //menuBar()->hide();
   //toolBar( "mainToolBar" )->hide();
@@ -326,3 +335,29 @@ void KMReaderMainWin::copySelectedToFolder( int menuId )
   KMCommand *command = new KMCopyCommand( mMenuToFolder[menuId], mMsg );
   command->start();
 }
+
+//----------------------------------------------------------------------------
+void KMReaderMainWin::slotEditToolbars()
+{
+  saveMainWindowSettings(KMKernel::config(), "Reader");
+  KEditToolbar dlg(guiFactory(), this);
+
+  connect( &dlg, SIGNAL(newToolbarConfig()),
+           SLOT(slotUpdateToolbars()) );
+
+  dlg.exec();
+}
+
+void KMReaderMainWin::slotUpdateToolbars()
+{
+  createGUI("kmreadermainwin.rc");
+  applyMainWindowSettings(KMKernel::config(), "Reader");
+}
+
+void KMReaderMainWin::slotEditKeys()
+{
+   KKeyDialog::configure( actionCollection(),
+                         false /*don't allow one-letter shortcuts*/
+                         );
+}
+

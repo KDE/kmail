@@ -81,6 +81,7 @@ namespace KMail {
 			    const KMail::HeaderStrategy * strategy,
 			    const QString & vCardName,
 			    bool printing=false ) const = 0;
+
   };
 
 } // namespace KMail

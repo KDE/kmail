@@ -64,6 +64,12 @@ namespace KMail {
   };
   static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
 
+
+  static const char * minimalHeaders[] = {
+    "subject", "date", "from", "to"
+  };
+  static const int numMinimalHeaders = sizeof minimalHeaders / sizeof *minimalHeaders;
+
   //
   // Convenience function
   //
@@ -89,7 +95,7 @@ namespace KMail {
   public:
     const char * name() const { return "all"; }
     const HeaderStrategy * next() const { return rich(); }
-    const HeaderStrategy * prev() const { return custom(); }
+    const HeaderStrategy * prev() const { return minimal(); }
 
     DefaultPolicy defaultPolicy() const { return Display; }
 
@@ -187,7 +193,7 @@ namespace KMail {
 
   public:
     const char * name() const { return "custom"; }
-    const HeaderStrategy * next() const { return all(); }
+    const HeaderStrategy * next() const { return minimal(); }
     const HeaderStrategy * prev() const { return brief(); }
 
     QStringList headersToDisplay() const { return mHeadersToDisplay; }
@@ -220,6 +226,31 @@ namespace KMail {
 
     mDefaultPolicy = customHeader.readEntry( "default policy", "hide" ) == "display" ? Display : Hide ;
   }
+
+
+  //
+  // MinimalHeaderStrategy
+  //   Subject, Date, From, To
+  class MinimalHeaderStrategy : public HeaderStrategy {
+    friend class HeaderStrategy;
+  protected :
+     MinimalHeaderStrategy()
+      : HeaderStrategy(),
+        mHeadersToDisplay( stringList( standardHeaders, numStandardHeaders) ) {}
+    virtual ~MinimalHeaderStrategy() {}
+
+  public:
+    const char * name() const { return "minimal"; }
+    const HeaderStrategy * next() const { return all(); }
+    const HeaderStrategy * prev() const { return custom(); }
+
+    QStringList headersToDisplay() const { return mHeadersToDisplay; }
+    DefaultPolicy defaultPolicy() const { return Hide; }
+
+  private:
+    const QStringList mHeadersToDisplay;
+  };
+
 
   //
   // HeaderStrategy abstract base:
@@ -254,6 +285,7 @@ namespace KMail {
     case Standard: return standard();
     case Brief:  return brief();
     case Custom:  return custom();
+    case Minimal: return minimal();
     }
     kdFatal( 5006 ) << "HeaderStrategy::create(): Unknown header strategy ( type == "
 		    << (int)type << " ) requested!" << endl;
@@ -267,6 +299,7 @@ namespace KMail {
     //if ( lowerType == "standard" ) return standard(); // not needed, see below
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "custom" )  return custom();
+    if ( lowerType == "minimal" ) return minimal();
     // don't kdFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
     return standard();
@@ -277,6 +310,7 @@ namespace KMail {
   static const HeaderStrategy * standardStrategy = 0;
   static const HeaderStrategy * briefStrategy = 0;
   static const HeaderStrategy * customStrategy = 0;
+  static const HeaderStrategy * minimalStrategy = 0;
 
   const HeaderStrategy * HeaderStrategy::all() {
     if ( !allStrategy )
@@ -308,4 +342,9 @@ namespace KMail {
     return customStrategy;
   }
 
+  const HeaderStrategy * HeaderStrategy::minimal() {
+    if ( !minimalStrategy )
+      minimalStrategy = new MinimalHeaderStrategy();
+     return minimalStrategy;
+  }
 } // namespace KMail

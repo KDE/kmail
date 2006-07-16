@@ -46,6 +46,12 @@ private slots:
 
   void slotConfigChanged();
 
+ protected slots:
+  /** XML-GUI stuff */
+  void slotUpdateToolbars();
+  void slotEditKeys();
+  void slotEditToolbars();
+
 private:
   void setupAccel();
 

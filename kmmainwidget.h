@@ -207,12 +207,14 @@ protected:
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
   void updateFileMenu();
-  void updateViewMenu();
+  //void updateViewMenu();
 
   KActionCollection * actionCollection() { return mActionCollection; }
 
-  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+  /*KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
+   */
+
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
 
   /** @return the correct config dialog depending on whether the parent of the mainWidget
@@ -295,17 +297,17 @@ protected slots:
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
-  void slotBriefHeaders();
-  void slotFancyHeaders();
-  void slotStandardHeaders();
-  void slotLongHeaders();
-  void slotAllHeaders();
-  void slotMinimalHeaders();
+  //void slotBriefHeaders();
+  //void slotFancyHeaders();
+  //void slotStandardHeaders();
+  //void slotLongHeaders();
+  //void slotAllHeaders();
+  //void slotMinimalHeaders();
   void slotIconicAttachments();
   void slotSmartAttachments();
   void slotInlineAttachments();
   void slotHideAttachments();
-  void slotCycleHeaderStyles();
+  //void slotCycleHeaderStyles();
   void slotCycleAttachmentStrategy();
   void slotSendQueued();
   void slotOnlineStatus();

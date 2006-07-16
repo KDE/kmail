@@ -396,7 +396,7 @@ void KMMainWidget::readConfig(void)
   }
   updateMessageMenu();
   updateFileMenu();
-  updateViewMenu();
+  //updateViewMenu();
 }
 
 
@@ -1559,7 +1559,7 @@ void KMMainWidget::slotViewChange()
   //mMsgView->setInline(!mMsgView->isInline());
 }
 
-
+#if 0
 void KMMainWidget::slotFancyHeaders() {
   mMsgView->setHeaderStyleAndStrategy( HeaderStyle::fancy(),
 				       HeaderStrategy::rich() );
@@ -1620,7 +1620,7 @@ void KMMainWidget::slotCycleHeaderStyles() {
   if ( actionName )
     static_cast<KRadioAction*>( actionCollection()->action( actionName ) )->setChecked( true );
 }
-
+#endif
 
 void KMMainWidget::slotIconicAttachments() {
   mMsgView->setAttachmentStrategy( AttachmentStrategy::iconic() );
@@ -2176,6 +2176,7 @@ void KMMainWidget::getAccountMenu()
     mActMenu->insertItem((*it).replace("&", "&&"), id);
 }
 
+#if 0
 // little helper function
 KRadioAction * KMMainWidget::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
   const char * actionName = 0;
@@ -2198,6 +2199,7 @@ KRadioAction * KMMainWidget::actionForHeaderStyle( const HeaderStyle * style, co
   else
     return 0;
 }
+#endif
 
 KRadioAction * KMMainWidget::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
   const char * actionName = 0;
@@ -2633,8 +2635,12 @@ void KMMainWidget::setupActions()
 					    actionCollection(),
 					    "apply_filter_actions" );
 
-  //----- View Menu
   KRadioAction * raction = 0;
+
+#if 0
+   //TODO REMOVE THIS CODE : moved to kmreadermainwin.h/cpp
+  //----- View Menu
+
 
   // "Headers" submenu:
   KActionMenu * headerMenu =
@@ -2675,7 +2681,7 @@ void KMMainWidget::setupActions()
   raction = new KRadioAction( i18n("View->headers->", "&Minimal Headers"), 0, this,
       SLOT(slotMinimalHeaders()),
       actionCollection(), "view_headers_minimal" );
-  raction->setToolTip( i18n("Show the minimal headers in a fancy format") );
+  raction->setToolTip( i18n("Show the headers in a minimal format") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
@@ -2686,7 +2692,7 @@ void KMMainWidget::setupActions()
   raction->setToolTip( i18n("Show all message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
-
+#endif
 
 
   // "Attachments" submenu:
@@ -3537,6 +3543,7 @@ void KMMainWidget::updateFileMenu()
 }
 
 
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateViewMenu()
 {
@@ -3552,6 +3559,7 @@ void KMMainWidget::updateViewMenu()
   actionCollection()->action("view_headers")->setEnabled( previewPaneVisible );
   actionCollection()->action("view_attachments")->setEnabled( previewPaneVisible );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 KMSystemTray *KMMainWidget::systray() const

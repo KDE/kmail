@@ -607,8 +607,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mCSSHelper( 0 ),
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
-    mHtmlWriter( 0 ),
-    mSelectEncodingAction( 0 )
+    mActionCollection( actionCollection ),
+    mSelectEncodingAction( 0 ),
+    mHtmlWriter( 0 )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -642,6 +643,59 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 void KMReaderWin::createActions( KActionCollection * ac ) {
   if ( !ac )
       return;
+
+  KRadioAction *raction = 0;
+
+  // header style
+  KActionMenu *headerMenu =
+    new KActionMenu( i18n("View->", "&Headers"), ac, "view_headers" );
+  headerMenu->setToolTip( i18n("Choose display style of message headers") );
+
+  connect( headerMenu, SIGNAL(activated()),
+           this, SLOT(slotCycleHeaderStyles()) );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0,
+                              this, SLOT(slotFancyHeaders()),
+                              ac, "view_headers_fancy" );
+  raction->setToolTip( i18n("Show the list of headers in a fancy format") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Brief Headers"), 0,
+                              this, SLOT(slotBriefHeaders()),
+                              ac, "view_headers_brief" );
+  raction->setToolTip( i18n("Show brief list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Standard Headers"), 0,
+                              this, SLOT(slotStandardHeaders()),
+                              ac, "view_headers_standard" );
+  raction->setToolTip( i18n("Show standard list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Long Headers"), 0,
+                              this, SLOT(slotLongHeaders()),
+                              ac, "view_headers_long" );
+  raction->setToolTip( i18n("Show long list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Minimal Headers"), 0, this,
+      SLOT(slotMinimalHeaders()),
+      ac, "view_headers_minimal" );
+  raction->setToolTip( i18n("Show the headers in a minimal format") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0,
+                              this, SLOT(slotAllHeaders()),
+                              ac, "view_headers_all" );
+  raction->setToolTip( i18n("Show all message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
 
   // Set Encoding submenu
   mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
@@ -689,8 +743,8 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
   mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
 				    SLOT(slotIMChat()), ac, "start_im_chat" );
-}
 
+}
 
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
@@ -800,6 +854,10 @@ void KMReaderWin::readConfig(void)
   mHtmlMail = reader.readBoolEntry( "htmlMail", false );
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
+
+  KRadioAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
+  if ( raction )
+    raction->setChecked( true );
 
   mAttachmentStrategy =
     AttachmentStrategy::create( reader.readEntry( "attachment-strategy" ) );
@@ -988,6 +1046,93 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
     }
   }
   update( true );
+}
+
+//--------------------------------------------------------------------------
+void KMReaderWin::slotFancyHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::fancy(),
+                                       HeaderStrategy::rich() );
+}
+
+void KMReaderWin::slotBriefHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::brief(),
+                                       HeaderStrategy::brief() );
+}
+
+void KMReaderWin::slotStandardHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::plain(),
+                                       HeaderStrategy::standard());
+}
+
+void KMReaderWin::slotLongHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::plain(),
+                                       HeaderStrategy::rich() );
+}
+
+void KMReaderWin::slotMinimalHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::minimal(),
+                                       HeaderStrategy::rich() );
+}
+
+void KMReaderWin::slotAllHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::plain(),
+                                       HeaderStrategy::all() );
+}
+
+void KMReaderWin::slotCycleHeaderStyles() {
+  const HeaderStrategy * strategy = headerStrategy();
+  const HeaderStyle * style = headerStyle();
+
+  const char * actionName = 0;
+  if ( style == HeaderStyle::fancy() ) {
+    slotBriefHeaders();
+    actionName = "view_headers_brief";
+  } else if ( style == HeaderStyle::brief() ) {
+    slotStandardHeaders();
+    actionName = "view_headers_standard";
+  } else if ( style == HeaderStyle::minimal() ) {
+    slotMinimalHeaders();
+    actionName = "view_headers_minimal";
+  } else if ( style == HeaderStyle::plain() ) {
+    if ( strategy == HeaderStrategy::standard() ) {
+      slotLongHeaders();
+      actionName = "view_headers_long";
+    } else if ( strategy == HeaderStrategy::rich() ) {
+      slotAllHeaders();
+      actionName = "view_headers_all";
+    } else if ( strategy == HeaderStrategy::all() ) {
+      slotFancyHeaders();
+      actionName = "view_headers_fancy";
+    }
+  }
+
+  if ( actionName )
+    static_cast<KRadioAction*>( mActionCollection->action( actionName ) )->setChecked( true );
+}
+
+// little helper function
+KRadioAction * KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
+  if ( !mActionCollection )
+    return 0;
+  const char * actionName = 0;
+  if ( style == HeaderStyle::fancy() )
+    actionName = "view_headers_fancy";
+  else if ( style == HeaderStyle::brief() )
+    actionName = "view_headers_brief";
+  else if ( style == HeaderStyle::minimal() )
+    actionName == "view_headers_minimal";
+  else if ( style == HeaderStyle::plain() ) {
+    if ( strategy == HeaderStrategy::standard() )
+      actionName = "view_headers_standard";
+    else if ( strategy == HeaderStrategy::rich() )
+      actionName = "view_headers_long";
+    else if ( strategy == HeaderStrategy::all() )
+      actionName = "view_headers_all";
+  }
+  if ( actionName )
+    return static_cast<KRadioAction*>(mActionCollection->action(actionName));
+  else
+    return 0;
 }
 
 //-----------------------------------------------------------------------------

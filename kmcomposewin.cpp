@@ -1220,7 +1220,7 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
   QStringList menuItems;
   for ( int i=0; i < KMGlobalNS::numCompletionModes; ++i )
     menuItems <<  i18n( KMGlobalNS::completionModes[i].displayName );
-  
+
   mTextCompletionAction->setItems( menuItems );
 
   //Setting the menu to last selected option.
@@ -3769,7 +3769,7 @@ void KMComposeWin::slotMenuTextCompletion()
 
    //trigger this to read config and set the lineEdits automatically.
    slotConfigChanged();
- 
+
 }
 
 //-----------------------------------------------------------------------------

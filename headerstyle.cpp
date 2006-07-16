@@ -576,7 +576,7 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
                                     const QString & vCardName, bool printing ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
-      strategy = HeaderStrategy::rich();
+      strategy = HeaderStrategy::minimal();
 
     // ### from kmreaderwin begin
     // The direction of the header is determined according to the direction
@@ -610,6 +610,8 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     }
 
     QString userHTML;
+
+#if 0
     QString presence;
 
     // IM presence and kabc photo
@@ -689,6 +691,8 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );
     kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
+
+#endif
     //case HdrFancy:
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
@@ -713,9 +717,6 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
-                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) )
-                              ? "&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)"
-                              : QString("") )
                  + ( message->headerField("Organization").isEmpty()
                               ? QString("")
                               : "&nbsp;&nbsp;("
@@ -729,22 +730,6 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
                    "<td>%2</td></tr>\n")
                             .arg(i18n("To: "))
                             .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
-#if 0
-    // TODO completely remove this part
-    // cc line, if any
-    if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
-      headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                              .arg(i18n("CC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
-
-    // Bcc line, if any
-    if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
-      headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                              .arg(i18n("BCC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
-#endif
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
