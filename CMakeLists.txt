@@ -132,7 +132,7 @@ set(kmailprivate_LIB_SRCS ${libemailfunctions_SRCS}
    kmailicalifaceimpl.cpp 
    aboutdata.cpp 
    folderIface.cpp 
-   mailserviceimpl.cpp 
+#   mailserviceimpl.cpp 
    attachmentlistview.cpp 
    kmedit.cpp 
    kmlineeditspell.cpp 

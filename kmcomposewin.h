@@ -5,11 +5,12 @@
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
-#ifndef KDE_USE_FINAL
+// doesn't work for the DBus adaptor...
+/*#ifndef KDE_USE_FINAL
 # ifndef REALLY_WANT_KMCOMPOSEWIN_H
 #  error Do not include kmcomposewin.h anymore. Include composer.h instead.
 # endif
-#endif
+#endif*/
 
 #include "composer.h"
 #include "messagesender.h"
@@ -114,13 +115,13 @@ public: // mailserviceimpl
   void send(int how);
   void addAttachment(KUrl url,QString comment);
   void addAttachment(const QString &name,
-                    const QString &cte,
+                    const Q3CString &cte,
                     const QByteArray &data,
-                    const QString &type,
-                    const QString &subType,
-                    const QString &paramAttr,
+                    const Q3CString &type,
+                    const Q3CString &subType,
+                    const Q3CString &paramAttr,
                     const QString &paramValue,
-                    const QString &contDisp);
+                    const Q3CString &contDisp);
 public: // kmcommand
   void setBody (QString body);
 

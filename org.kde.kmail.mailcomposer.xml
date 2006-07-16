@@ -14,13 +14,13 @@
     </method>
     <method name="addAttachment">
       <arg name="name" type="s" direction="in"/>
-      <arg name="cte" type="s" direction="in"/>
+      <arg name="cte" type="ay" direction="in"/>
       <arg name="data" type="ay" direction="in"/>
-      <arg name="type" type="s" direction="in"/>
-      <arg name="subType" type="s" direction="in"/>
-      <arg name="paramAttr" type="s" direction="in"/>
+      <arg name="type" type="ay" direction="in"/>
+      <arg name="subType" type="ay" direction="in"/>
+      <arg name="paramAttr" type="ay" direction="in"/>
       <arg name="paramValue" type="s" direction="in"/>
-      <arg name="contDisp" type="s" direction="in"/>
+      <arg name="contDisp" type="ay" direction="in"/>
     </method>
   </interface>
 </node>

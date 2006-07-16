@@ -476,13 +476,13 @@ void KMComposeWin::addAttachment(KUrl url,QString /*comment*/)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment(const QString &name,
-                                 const QString &/*cte*/,
+                                 const Q3CString &/*cte*/,
                                  const QByteArray &data,
-                                 const QString &type,
-                                 const QString &subType,
-                                 const QString &paramAttr,
+                                 const Q3CString &type,
+                                 const Q3CString &subType,
+                                 const Q3CString &paramAttr,
                                  const QString &paramValue,
-                                 const QString &contDisp)
+                                 const Q3CString &contDisp)
 {
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;

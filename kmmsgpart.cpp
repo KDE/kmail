@@ -39,7 +39,7 @@ KMMessagePart::KMMessagePart()
 KMMessagePart::KMMessagePart( QDataStream & stream )
   : mParent(0), mLoadHeaders(false), mLoadPart(false)
 {
-  unsigned long size;
+  int size;
   stream >> mOriginalContentTypeStr >> mName >> mContentDescription
     >> mContentDisposition >> mCte >> size >> mPartSpecifier;
 
@@ -73,7 +73,7 @@ void KMMessagePart::clear()
   mBody.truncate( 0 );
   mAdditionalCTypeParamStr = Q3CString();
   mName.clear();
-  mParameterAttribute = QString();
+  mParameterAttribute = Q3CString();
   mParameterValue.clear();
   mCharset = Q3CString();
   mPartSpecifier.clear();
@@ -437,7 +437,7 @@ QString KMMessagePart::parameterValue(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setParameter(const QString &attribute,
+void KMMessagePart::setParameter(const Q3CString &attribute,
                                  const QString &value)
 {
   mParameterAttribute = attribute;

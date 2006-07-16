@@ -109,8 +109,8 @@ public:
   int type() const;
   void setType(int aType);
   /** Subtype */
-  QString subtypeStr() const { return mSubtype; }
-  void setSubtypeStr( const QString & aStr ) { mSubtype = aStr; }
+  Q3CString subtypeStr() const { return mSubtype; }
+  void setSubtypeStr( const Q3CString & aStr ) { mSubtype = aStr; }
   int subtype() const;
   void setSubtype(int aSubtype);
 
@@ -127,7 +127,7 @@ public:
     name and a corresponding value. */
   Q3CString parameterAttribute(void) const;
   QString parameterValue(void) const;
-  void setParameter(const QString &attribute, const QString &value);
+  void setParameter(const Q3CString &attribute, const QString &value);
 
   Q3CString additionalCTypeParamStr(void) const
   {
@@ -215,7 +215,7 @@ public:
 protected:
   Q3CString mOriginalContentTypeStr;
   Q3CString mType;
-  QString mSubtype;
+  Q3CString mSubtype;
   Q3CString mCte;
   Q3CString mContentDescription;
   Q3CString mContentDisposition;
@@ -223,7 +223,7 @@ protected:
   QByteArray mBody;
   Q3CString mAdditionalCTypeParamStr;
   QString mName;
-  QString mParameterAttribute;
+  Q3CString mParameterAttribute;
   QString mParameterValue;
   Q3CString mCharset;
   QString mPartSpecifier;
