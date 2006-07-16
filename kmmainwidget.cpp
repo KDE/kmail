@@ -2403,25 +2403,27 @@ void KMMainWidget::setupActions()
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
 
   //----- Edit Menu
-  mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
-                                       i18n("Move message to trashcan") ),
-                             Qt::Key_Delete, this, SLOT(slotTrashMsg()),
-                             actionCollection(), "move_to_trash" );
+  mTrashAction = new KAction( i18n("&Move to Trash"), actionCollection(), "move_to_trash" );
+  mTrashAction->setIcon(KIcon("edittrash"));
+  mTrashAction->setShortcut(Qt::Key_Delete);
+  mTrashAction->setToolTip(i18n("Move message to trashcan"));
+  connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashMsg()));
 
   /* The delete action is nowhere in the gui, by default, so we need to make
    * sure it is plugged into the KAccel now, since that won't happen on
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
-  mDeleteAction = new KAction(KIcon("editdelete"),  i18n("&Delete"), actionCollection(), "delete" );
+  mDeleteAction = new KAction(KIcon("editdelete"), i18n("&Delete"), actionCollection(), "delete" );
   connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
   mDeleteAction->setShortcut(Qt::SHIFT+Qt::Key_Delete);
 #warning Port me!
 //  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
-  mTrashThreadAction = new KAction( KGuiItem( i18n("M&ove Thread to Trash"), "edittrash",
-                                       i18n("Move thread to trashcan") ),
-                             Qt::CTRL+Qt::Key_Delete, this, SLOT(slotTrashThread()),
-                             actionCollection(), "move_thread_to_trash" );
+  mTrashThreadAction = new KAction( i18n("M&ove Thread to Trash"), actionCollection(), "move_thread_to_trash" );
+  mTrashThreadAction->setShortcut(Qt::CTRL+Qt::Key_Delete);
+  mTrashThreadAction->setIcon(KIcon("edittrash"));
+  mTrashThreadAction->setToolTip(i18n("Move thread to trashcan") );
+  connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
 
   mDeleteThreadAction = new KAction(KIcon("editdelete"),  i18n("Delete T&hread"), actionCollection(), "delete_thread" );
   connect(mDeleteThreadAction, SIGNAL(triggered(bool)), SLOT(slotDeleteThread()));
@@ -2448,7 +2450,9 @@ void KMMainWidget::setupActions()
   connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
 
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
-      /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ), actionCollection(), "folder_mailinglist_properties" );
+                                                    actionCollection(), "folder_mailinglist_properties" );
+  connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT( slotFolderMailingListProperties()));
+  // mFolderMailingListPropertiesAction->setIcon(KIcon("folder_mailinglist_properties"));
 
   mFolderShortCutCommandAction = new KAction(KIcon("configure_shortcuts"),  i18n("&Assign Shortcut..."), actionCollection(), "folder_shortcut_command" );
   connect(mFolderShortCutCommandAction, SIGNAL(triggered(bool) ), SLOT( slotFolderShortcutCommand() ));
@@ -2584,20 +2588,20 @@ void KMMainWidget::setupActions()
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
                                  actionCollection(), "set_status" );
 
-  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
-                                          i18n("Mark selected messages as read")),
-                                 0, this, SLOT(slotSetMsgStatusRead()),
-                                 actionCollection(), "status_read"));
+  action = new KAction(KIcon("kmmsgread"),i18n("Mark Message as &Read"), actionCollection(), "status_read");
+  action->setToolTip(i18n("Mark selected messages as read"));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusRead()));
+  mStatusMenu->addAction(action);
 
-  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
-                                          i18n("Mark selected messages as new")),
-                                 0, this, SLOT(slotSetMsgStatusNew()),
-                                 actionCollection(), "status_new" ));
+  action = new KAction(KIcon("kmmsgnew"), i18n("Mark Message as &New"), actionCollection(), "status_new" );
+  action->setToolTip(i18n("Mark selected messages as new"));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusNew()));
+  mStatusMenu->addAction(action);
 
-  mStatusMenu->addAction(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
-                                          i18n("Mark selected messages as unread")),
-                                 0, this, SLOT(slotSetMsgStatusUnread()),
-                                 actionCollection(), "status_unread"));
+  action = new KAction(KIcon("kmmsgunseen"), i18n("Mark Message as &Unread"), actionCollection(), "status_unread");
+  action->setToolTip(i18n("Mark selected messages as unread"));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusUnread()));
+  mStatusMenu->addAction(action);
 
   mStatusMenu->addAction( new KSeparatorAction( actionCollection() ) );
 
@@ -2621,22 +2625,22 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
 
-  mMarkThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
-                                                i18n("Mark all messages in the selected thread as read")),
-                                                0, this, SLOT(slotSetThreadStatusRead()),
+  mMarkThreadAsReadAction = new KAction( KIcon("kmmsgread"), i18n("Mark Thread as &Read"), 
                                                 actionCollection(), "thread_read");
+  connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusRead()));
+  mMarkThreadAsReadAction->setToolTip(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
-  mMarkThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
-                                               i18n("Mark all messages in the selected thread as new")),
-                                               0, this, SLOT(slotSetThreadStatusNew()),
+  mMarkThreadAsNewAction = new KAction( KIcon("kmmsgnew"), i18n("Mark Thread as &New"), 
                                                actionCollection(), "thread_new");
+  connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
+  mMarkThreadAsNewAction->setToolTip( i18n("Mark all messages in the selected thread as new"));
   mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
-  mMarkThreadAsUnreadAction = new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
-                                                i18n("Mark all messages in the selected thread as unread")),
-                                                0, this, SLOT(slotSetThreadStatusUnread()),
+  mMarkThreadAsUnreadAction = new KAction( KIcon("kmmsgunseen"), i18n("Mark Thread as &Unread"), 
                                                 actionCollection(), "thread_unread");
+  connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusUnread()));
+  mMarkThreadAsUnreadAction->setToolTip(i18n("Mark all messages in the selected thread as unread"));
   mThreadStatusMenu->addAction( mMarkThreadAsUnreadAction );
 
   mThreadStatusMenu->addAction( new KSeparatorAction( actionCollection() ) );
@@ -2700,29 +2704,25 @@ void KMMainWidget::setupActions()
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
 
-  (void)new KAction( KGuiItem( i18nc("View->","&Expand Thread"), QString(),
-			       i18n("Expand the current thread") ),
-		     Qt::Key_Period, this,
-		     SLOT(slotExpandThread()),
-		     actionCollection(), "expand_thread" );
+  action = new KAction( i18nc("View->","&Expand Thread"), actionCollection(), "expand_thread" );
+  action->setShortcut(Qt::Key_Period);
+  action->setToolTip(i18n("Expand the current thread"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandThread()));
 
-  (void)new KAction( KGuiItem( i18nc("View->","&Collapse Thread"), QString(),
-			       i18n("Collapse the current thread") ),
-		     Qt::Key_Comma, this,
-		     SLOT(slotCollapseThread()),
-		     actionCollection(), "collapse_thread" );
+  action = new KAction( i18nc("View->","&Collapse Thread"), actionCollection(), "collapse_thread" );
+  action->setShortcut(Qt::Key_Comma);
+  action->setToolTip( i18n("Collapse the current thread"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseThread()));
 
-  (void)new KAction( KGuiItem( i18nc("View->","Ex&pand All Threads"), QString(),
-			       i18n("Expand all threads in the current folder") ),
-		     Qt::CTRL+Qt::Key_Period, this,
-		     SLOT(slotExpandAllThreads()),
-		     actionCollection(), "expand_all_threads" );
+  action = new KAction( i18nc("View->","Ex&pand All Threads"), actionCollection(), "expand_all_threads" );
+  action->setShortcut(Qt::CTRL+Qt::Key_Period);
+  action->setToolTip( i18n("Expand all threads in the current folder"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandAllThreads()));
 
-  (void)new KAction( KGuiItem( i18nc("View->","C&ollapse All Threads"), QString(),
-			       i18n("Collapse all threads in the current folder") ),
-		     Qt::CTRL+Qt::Key_Comma, this,
-		     SLOT(slotCollapseAllThreads()),
-		     actionCollection(), "collapse_all_threads" );
+  action = new KAction( i18nc("View->","C&ollapse All Threads"), actionCollection(), "collapse_all_threads" );
+  action->setShortcut(Qt::CTRL+Qt::Key_Comma);
+  action->setToolTip( i18n("Collapse all threads in the current folder"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseAllThreads()));
 
   mViewSourceAction = new KAction( i18n("&View Source"), actionCollection(), "view_source" );
   connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
@@ -2735,16 +2735,16 @@ void KMMainWidget::setupActions()
 //  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
-  new KAction( KGuiItem( i18n("&Next Message"), QString(),
-                         i18n("Go to the next message") ),
-                         KShortcut( "N;Right" ), this, SLOT(slotNextMessage()),
-                         actionCollection(), "go_next_message" );
+  action = new KAction( i18n("&Next Message"), actionCollection(), "go_next_message" );
+  action->setShortcut(KShortcut( "N;Right" ));
+  action->setToolTip(i18n("Go to the next message"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextMessage()));
 
-  new KAction( KGuiItem( i18n("Next &Unread Message"),
-                         QApplication::isRightToLeft() ? "previous" : "next",
-                         i18n("Go to the next unread message") ),
-                         Qt::Key_Plus, this, SLOT(slotNextUnreadMessage()),
-                         actionCollection(), "go_next_unread_message" );
+  new KAction( i18n("Next &Unread Message"), actionCollection(), "go_next_unread_message" );
+  action->setShortcut(Qt::Key_Plus);
+  action->setIcon(KIcon(QApplication::isRightToLeft() ? "previous" : "next"));
+  action->setToolTip(i18n("Go to the next unread message"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadMessage()));
 
   /* ### needs better support from folders:
   new KAction( KGuiItem( i18n("Next &Important Message"), QString(),
@@ -2753,16 +2753,16 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_important_message" );
   */
 
-  new KAction( KGuiItem( i18n("&Previous Message"), 0,
-                         i18n("Go to the previous message") ),
-                         KShortcut( "P;Left" ), this, SLOT(slotPrevMessage()),
-                         actionCollection(), "go_prev_message" );
+  action = new KAction( i18n("&Previous Message"), actionCollection(), "go_prev_message" );
+  action->setToolTip(i18n("Go to the previous message"));
+  action->setShortcut(KShortcut( "P;Left" ));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevMessage()));
 
-  new KAction( KGuiItem( i18n("Previous Unread &Message"),
-                         QApplication::isRightToLeft() ? "next" : "previous",
-                         i18n("Go to the previous unread message") ),
-                         Qt::Key_Minus, this, SLOT(slotPrevUnreadMessage()),
-                         actionCollection(), "go_prev_unread_message" );
+  action = new KAction( i18n("Previous Unread &Message"), actionCollection(), "go_prev_unread_message" );
+  action->setShortcut(Qt::Key_Minus); 
+  action->setToolTip(i18n("Go to the previous unread message"));
+  action->setIcon(KIcon(QApplication::isRightToLeft() ? "next" : "previous"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadMessage()));
 
   /* needs better support from folders:
   new KAction( KGuiItem( i18n("Previous I&mportant Message"), QString(),
@@ -2771,31 +2771,29 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_prev_important_message" );
   */
 
-  action =
-    new KAction( KGuiItem( i18n("Next Unread &Folder"), QString(),
-                           i18n("Go to the next folder with unread messages") ),
-                           Qt::ALT+Qt::Key_Plus, this, SLOT(slotNextUnreadFolder()),
-                           actionCollection(), "go_next_unread_folder" );
+  action = new KAction( i18n("Next Unread &Folder"), actionCollection(), "go_next_unread_folder" );
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadFolder()));
+  action->setShortcut(Qt::ALT+Qt::Key_Plus);
+  action->setToolTip(i18n("Go to the next folder with unread messages"));
   KShortcut shortcut = action->shortcut();
   shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
   action->setShortcut( shortcut );
 
-  action =
-    new KAction( KGuiItem( i18n("Previous Unread F&older"), QString(),
-                           i18n("Go to the previous folder with unread messages") ),
-                           Qt::ALT+Qt::Key_Minus, this, SLOT(slotPrevUnreadFolder()),
-                           actionCollection(), "go_prev_unread_folder" );
+  action = new KAction( i18n("Previous Unread F&older"), actionCollection(), "go_prev_unread_folder" );
+  action->setShortcut(Qt::ALT+Qt::Key_Minus);
+  action->setToolTip(i18n("Go to the previous folder with unread messages"));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadFolder()));
   shortcut = action->shortcut();
   shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
-  new KAction( KGuiItem( i18nc("Go->","Next Unread &Text"), QString(),
-                         i18n("Go to the next unread text"),
-                         i18n("Scroll down current message. "
+  action = new KAction( i18nc("Go->","Next Unread &Text"), actionCollection(), "go_next_unread_text" );
+  action->setShortcut(Qt::Key_Space);
+  action->setToolTip(i18n("Go to the next unread text"));
+  action->setWhatsThis( i18n("Scroll down current message. "
                               "If at end of current message, "
-                              "go to next unread message.") ),
-                         Qt::Key_Space, this, SLOT(slotReadOn()),
-                         actionCollection(), "go_next_unread_text" );
+                              "go to next unread message."));
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotReadOn())); 
 
   //----- Settings Menu
   mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), actionCollection(), "show_quick_search");
