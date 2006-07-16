@@ -259,8 +259,10 @@ void KMReaderMainWin::setupAccel()
   mForwardAction->setShortcut(Qt::SHIFT+Qt::Key_F);
   mForwardActionMenu->insert( mForwardAction );
 
-  mForwardAttachedAction = new KAction( i18nc("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Qt::Key_F, this, SLOT(slotForwardAttachedMsg()), actionCollection(), "message_forward_as_attachment" );
+  mForwardAttachedAction = new KAction( KIcon("mail_forward"), i18nc("Message->Forward->","As &Attachment..."),
+				       actionCollection(), "message_forward_as_attachment" );
+  mForwardAttachedAction->setShortcut(Qt::Key_F);
+  connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->insert( mForwardAttachedAction );
 
   mRedirectAction = new KAction( i18nc("Message->Forward->","&Redirect..."),

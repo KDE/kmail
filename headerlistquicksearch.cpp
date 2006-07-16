@@ -57,13 +57,10 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KActionCollection *actionCollection )
   : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
-  KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
-                                           QApplication::isRightToLeft()
-                                           ? "clear_left"
-                                           : "locationbar_erase",
-                                           0, this,
-                                           SLOT( reset() ),
+  KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ), 
+                                           i18n( "Reset Quick Search" ), 
                                            actionCollection, "reset_quicksearch" );
+  connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
   parent->addAction( resetQuickSearch );
   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
                                         "Resets the quick search so that "

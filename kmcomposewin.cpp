@@ -1115,14 +1115,15 @@ void KMComposeWin::setupActions(void)
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    ( void )  new KAction( i18n("&Send Mail"), "mail_send", Qt::CTRL+Qt::Key_Return,
-                        this, SLOT(slotSendNow()), actionCollection(),"send_default");
+    KAction *action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_default");
+    action->setShortcut(Qt::CTRL+Qt::Key_Return);
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu ( KIcon( "mail_send"), i18n("&Send Mail Via"),
 		    actionCollection(), "send_default_via" );
 
-    KAction *action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_alternative");
+    action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_alternative");
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendLater()));
     actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_alternative_via" );
@@ -1131,14 +1132,14 @@ void KMComposeWin::setupActions(void)
   else //no, default = send later
   {
     //default = queue, alternative = send now
-    (void) new KAction (i18n("Send &Later"), "queue",
-                        Qt::CTRL+Qt::Key_Return,
-                        this, SLOT(slotSendLater()), actionCollection(),"send_default");
+    KAction *action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_default");
+    connect(action, SIGNAL(triggered(bool) ), SLOT(slotSendLater()));
+    action->setShortcut(Qt::CTRL+Qt::Key_Return);
     actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_default_via" );
 
-   ( void )  new KAction( i18n("&Send Mail"), "mail_send", 0,
-                        this, SLOT(slotSendNow()), actionCollection(),"send_alternative");
+    action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_alternative");
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow())); 
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu ( KIcon("mail_send"), i18n("&Send Mail Via"),
@@ -1172,12 +1173,10 @@ void KMComposeWin::setupActions(void)
 
 
 
-  (void) new KAction (i18n("Save in &Drafts Folder"), "filesave", 0,
-                      this, SLOT(slotSaveDraft()),
-                      actionCollection(), "save_in_drafts");
-  (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
-                      this,  SLOT(slotInsertFile()),
-                      actionCollection(), "insert_file");
+  KAction *action = new KAction(KIcon("filesave"), i18n("Save in &Drafts Folder"), actionCollection(), "save_in_drafts");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()));
+  action = new KAction(KIcon("fileopen"), i18n("&Insert File..."), actionCollection(), "insert_file");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
   mRecentAction = new KRecentFilesAction (i18n("&Insert File Recent"),
 		      "fileopen", 0,
 		      this,  SLOT(slotInsertRecentFile(const KUrl&)),
@@ -1185,19 +1184,16 @@ void KMComposeWin::setupActions(void)
 
   mRecentAction->loadEntries( KMKernel::config() );
 
-  (void) new KAction (i18n("&Address Book"), "contents",0,
-                      this, SLOT(slotAddrBook()),
-                      actionCollection(), "addressbook");
-  (void) new KAction (i18n("&New Composer"), "mail_new",
-                      KStdAccel::shortcut(KStdAccel::New),
-                      this, SLOT(slotNewComposer()),
-                      actionCollection(), "new_composer");
-  (void) new KAction (i18n("New Main &Window"), "window_new", 0,
-                      this, SLOT(slotNewMailReader()),
-                      actionCollection(), "open_mailreader");
+  action = new KAction(KIcon("contents"), i18n("&Address Book"), actionCollection(), "addressbook");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
+  action = new KAction(KIcon("mail_new"), i18n("&New Composer"), actionCollection(), "new_composer");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
+  action->setShortcut(KStdAccel::shortcut(KStdAccel::New));
+  action = new KAction(KIcon("window_new"), i18n("New Main &Window"), actionCollection(), "open_mailreader");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
   if ( !mClassicalRecipients ) {
-    KAction *action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
+    action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( selectRecipients() ));
     action->setShortcut(Qt::CTRL + Qt::Key_L);
     action = new KAction( i18n("Save &Distribution List..."), actionCollection(), "save_distribution_list" );
@@ -1224,7 +1220,7 @@ void KMComposeWin::setupActions(void)
   mPasteQuotation = new KAction(i18n("Pa&ste as Quotation"), actionCollection(), "paste_quoted");
   connect(mPasteQuotation, SIGNAL(triggered(bool) ), SLOT( slotPasteAsQuotation()));
 
-  KAction *action = new KAction(i18n("Paste as Attac&hment"), actionCollection(), "paste_att");
+  action = new KAction(i18n("Paste as Attac&hment"), actionCollection(), "paste_att");
   connect(action, SIGNAL(triggered(bool) ), SLOT( slotPasteAsAttachment()));
 
   mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), actionCollection(), "tools_quote");
@@ -1309,11 +1305,12 @@ void KMComposeWin::setupActions(void)
   connect(mAttachPK, SIGNAL(triggered(bool) ), SLOT(slotInsertPublicKey()));
   mAttachMPK = new KAction(i18n("Attach &My Public Key"), actionCollection(), "attach_my_public_key");
   connect(mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
-  (void) new KAction (i18n("&Attach File..."), "attach", 0, this, SLOT(slotAttachFile()), actionCollection(), "attach");
+  action = new KAction(KIcon("attach"), i18n("&Attach File..."), actionCollection(), "attach");
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAttachFile()));
   mAttachRemoveAction = new KAction(i18n("&Remove Attachment"), actionCollection(), "remove");
   connect(mAttachRemoveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachRemove()));
-  mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
-                      this, SLOT(slotAttachSave()), actionCollection(), "attach_save");
+  mAttachSaveAction = new KAction(KIcon("filesave"), i18n("&Save Attachment As..."), actionCollection(), "attach_save");
+  connect(mAttachSaveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachSave()));
   mAttachPropertiesAction = new KAction(i18n("Attachment Pr&operties"), actionCollection(), "attach_properties");
   connect(mAttachPropertiesAction, SIGNAL(triggered(bool) ), SLOT(slotAttachProperties()));
 
@@ -1434,16 +1431,13 @@ void KMComposeWin::setupActions(void)
   textUnderAction = new KToggleAction(KIcon("text_under"),  i18n("&Underline"), actionCollection(), "text_under");
   connect(textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()));
   textUnderAction->setShortcut(Qt::CTRL+Qt::Key_U);
-  actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
-                                     this, SLOT( slotFormatReset() ),
-                                     actionCollection(), "format_reset");
-  actionFormatColor = new KAction( i18n( "Text Color..." ), "colorize", 0,
-                                     this, SLOT( slotTextColor() ),
-                                     actionCollection(), "format_color");
+  actionFormatReset = new KAction(KIcon("eraser"),  i18n( "Reset Font Settings" ), actionCollection(), "format_reset");
+  connect(actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ));
+  actionFormatColor = new KAction(KIcon("colorize"),  i18n( "Text Color..." ), actionCollection(), "format_color");
+  connect(actionFormatColor, SIGNAL(triggered(bool) ), SLOT( slotTextColor() ));
 
   createGUI("kmcomposerui.rc");
-
-  connect( toolBar("htmlToolBar"), SIGNAL( visibilityChanged(bool) ),
+ connect( toolBar("htmlToolBar"), SIGNAL( visibilityChanged(bool) ),
            this, SLOT( htmlToolBarVisibilityChanged(bool) ) );
 
   // In Kontact, this entry would read "Configure Kontact", but bring
