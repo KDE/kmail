@@ -180,7 +180,8 @@ set(kmailprivate_LIB_SRCS ${libemailfunctions_SRCS}
    textsource.cpp 
    managesievescriptsdialog.cpp 
    chiasmuskeyselector.cpp 
-   util.cpp )
+   util.cpp
+   keditcl1.cpp keditcl2.cpp )
 
 kde4_automoc(${kmailprivate_LIB_SRCS})
 
