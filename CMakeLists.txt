@@ -21,7 +21,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkmime ${CMAKE_SOURCE_DIR}/libkpgp
 
 ########### next target ###############
 
-set(kmailprivate_LIB_SRCS ${libemailfunctions_SRCS} 
+set(kmailprivate_LIB_SRCS
    kmmessage.cpp 
    kmmainwin.cpp 
    configuredialog.cpp 
