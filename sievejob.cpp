@@ -19,6 +19,7 @@
 #include "sievejob.h"
 
 #include <kio/job.h>
+#include <kio/jobuidelegate.h>
 using KIO::Job;
 // <kio/global.h>
 using KIO::UDSEntryList;
@@ -183,7 +184,8 @@ namespace KMail {
 
     // check for errors:
     if ( job->error() ) {
-      static_cast<KIO::Job*>(job)->showErrorDialog( 0 );
+      static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
 
       emit result( this, false, mScript, mUrl.fileName() == mActiveScriptName );
 

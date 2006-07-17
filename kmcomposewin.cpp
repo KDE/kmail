@@ -52,7 +52,7 @@ using KRecentAddress::RecentAddresses;
 #include "objecttreeparser.h"
 
 #include "kmfoldermaildir.h"
-
+#include <kio/jobuidelegate.h>
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
 #include <libkpimidentities/identity.h>
@@ -2516,7 +2516,8 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   if (job->error())
   {
     mMapAtmLoadData.erase(it);
-    static_cast<KIO::Job*>(job)->showErrorDialog();
+	static_cast<KIO::Job*>(job)->ui()->setWindow( 0);
+	static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     return;
   }
   if ((*it).insert)

@@ -34,6 +34,7 @@
 #endif
 
 #include <errno.h>
+#include <kio/jobuidelegate.h>
 
 #include "kmfoldercachedimap.h"
 #include "undostack.h"
@@ -2000,9 +2001,12 @@ KMFolderCachedImap::slotMultiSetACLResult(KJob *job)
   if ( (*it).parent != folder() ) return; // Shouldn't happen
 
   if ( job->error() )
+  {		  
     // Display error but don't abort the sync just for this
     // PENDING(dfaure) reconsider using handleJobError now that it offers continue/cancel
-    static_cast<KIO::Job*>(job)->showErrorDialog();
+	static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
+	static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+  }	
   else
     kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
 

@@ -44,6 +44,7 @@ using KPIM::BroadcastStatus;
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
 #include <kconfig.h>
+#include <kio/jobuidelegate.h>
 using KIO::MetaData;
 
 static const unsigned short int pop3DefaultPort = 110;
@@ -976,7 +977,8 @@ void PopAccount::slotResult( KJob* )
       }
       // force the dialog to be shown next time the account is checked
       if (!mStorePasswd) mPasswd = "";
-      job->showErrorDialog();
+	  job->ui()->setWindow( 0 );
+	  job->ui()->showErrorMessage();
     }
     slotCancel();
   }

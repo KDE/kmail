@@ -42,6 +42,7 @@
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
+#include <kio/jobuidelegate.h>
 #ifdef KDEPIM_NEW_DISTRLISTS
 #include <libkdepim/distributionlist.h> // libkdepim
 #else
@@ -769,7 +770,8 @@ void KMail::FolderDiaACLTab::slotMultiSetACLResult(KJob* job)
   mImapAccount->removeJob( it );
 
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->showErrorDialog( this );
+	static_cast<KIO::Job*>(job)->ui()->setWindow( this );
+	static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     if ( mAccepting ) {
       emit cancelAccept();
       mAccepting = false; // don't emit readyForAccept anymore
