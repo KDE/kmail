@@ -203,7 +203,7 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra kcal phononcore )
+target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} khtml kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} phononcore )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
