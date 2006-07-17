@@ -1,3 +1,4 @@
+project(kmail)
 
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
