@@ -1238,24 +1238,20 @@ void KMComposeWin::setupActions(void)
   mFixedFontAction->setChecked( GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
-  mUrgentAction = new KToggleAction (i18n("&Urgent"), KShortcut(),
-                                    actionCollection(),
-                                    "urgent");
-  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), KShortcut(),
-                                         actionCollection(),
-                                         "options_request_mdn");
+  mUrgentAction = new KToggleAction (i18n("&Urgent"), actionCollection(), "urgent");
+  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 
+                                         actionCollection(), "options_request_mdn");
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
-                                      0, this, SLOT(slotSetCharset() ),
+  mEncodingAction = new KSelectAction( KIcon("charset"), i18n( "Se&t Encoding" ), 
                                       actionCollection(), "charsets" );
-  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), KShortcut(),
-                      actionCollection(), "wordwrap");
+  connect(mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()));
+  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), actionCollection(), "wordwrap");
   mWordWrapAction->setChecked(GlobalSettings::self()->wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   mAutoSpellCheckingAction =
-    new KToggleAction( i18n( "&Automatic Spellchecking" ), "spellcheck", 0,
+    new KToggleAction( KIcon("spellcheck"), i18n( "&Automatic Spellchecking" ), 
                        actionCollection(), "options_auto_spellchecking" );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
@@ -1401,17 +1397,14 @@ void KMComposeWin::setupActions(void)
   styleItems << i18n( "Ordered List (Alpha lower)" );
   styleItems << i18n( "Ordered List (Alpha upper)" );
 
-  listAction = new KSelectAction( i18n( "Select Style" ), KShortcut(), actionCollection(),
-                                 "text_list" );
+  listAction = new KSelectAction( i18n( "Select Style" ), actionCollection(), "text_list" );
   listAction->setItems( styleItems );
   connect( listAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotListAction( const QString& ) ) );
-  fontAction = new KFontAction( "Select Font", KShortcut(), actionCollection(),
-                               "text_font" );
+  fontAction = new KFontAction( i18n("Select Font"), actionCollection(), "text_font" );
   connect( fontAction, SIGNAL( triggered( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction( "Select Size", KShortcut(), actionCollection(),
-                                       "text_size" );
+  fontSizeAction = new KFontSizeAction( i18n("Select Size"), actionCollection(), "text_size" );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
