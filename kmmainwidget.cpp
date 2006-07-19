@@ -2344,7 +2344,7 @@ void KMMainWidget::setupActions()
 
   connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
 
-  mActMenu = actActionMenu->popupMenu();
+  mActMenu = actActionMenu->menu();
   connect(mActMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(mActMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
@@ -2359,7 +2359,7 @@ void KMMainWidget::setupActions()
                                        "send_queued_via" );
   sendActionMenu->setDelayed(true);
 
-  mSendMenu = sendActionMenu->popupMenu();
+  mSendMenu = sendActionMenu->menu();
   connect(mSendMenu,SIGNAL(activated(int)), this, SLOT(slotSendQueuedVia(int)));
   connect(mSendMenu,SIGNAL(aboutToShow()),this,SLOT(getTransportMenu()));
 
@@ -2932,10 +2932,8 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 void KMMainWidget::updateMessageMenu()
 {
   mMenuToFolder.clear();
-  folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
-      &mMenuToFolder, mMoveActionMenu->popupMenu() );
-  folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-      &mMenuToFolder, mCopyActionMenu->popupMenu() );
+  folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this, &mMenuToFolder, mMoveActionMenu->menu() );
+  folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, &mMenuToFolder, mCopyActionMenu->menu() );
   updateMessageActions();
 }
 
@@ -3303,7 +3301,7 @@ void KMMainWidget::clearFilterActions()
     qDeleteAll( mFilterTBarActions );
     mFilterTBarActions.clear();
   }
-  mApplyFilterActionsMenu->popupMenu()->clear();
+  mApplyFilterActionsMenu->menu()->clear();
   if ( !mFilterMenuActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
@@ -3343,7 +3341,7 @@ void KMMainWidget::initializeFilterActions()
   KAction *filterAction = 0;
 
   clearFilterActions();
-  mApplyFilterActionsMenu->popupMenu()->addAction( mApplyAllFiltersAction );
+  mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
   QList<KMFilter*>::const_iterator it = kmkernel->filterMgr()->filters().begin();
   for ( ;it != kmkernel->filterMgr()->filters().end(); ++it ) {
@@ -3362,11 +3360,11 @@ void KMMainWidget::initializeFilterActions()
       connect(filterAction, SIGNAL(triggered(bool) ), filterCommand, SLOT(start()));
       filterAction->setShortcut((*it)->shortcut());
       if(!addedSeparator) {
-        mApplyFilterActionsMenu->popupMenu()->addSeparator();
+        mApplyFilterActionsMenu->menu()->addSeparator();
         addedSeparator = !addedSeparator;
 	mFilterMenuActions.append( new KSeparatorAction() );
       }
-      mApplyFilterActionsMenu->popupMenu()->addAction( filterAction );
+      mApplyFilterActionsMenu->menu()->addAction( filterAction );
       mFilterMenuActions.append(filterAction);
       if ( (*it)->configureToolbar() )
         mFilterTBarActions.append(filterAction);

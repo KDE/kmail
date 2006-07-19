@@ -1157,8 +1157,8 @@ void KMComposeWin::setupActions(void)
 		    SLOT( slotSendLater() ) );
 
 
-  mActNowMenu = actActionNowMenu->popupMenu();
-  mActLaterMenu = actActionLaterMenu->popupMenu();
+  mActNowMenu = actActionNowMenu->menu();
+  mActLaterMenu = actActionLaterMenu->menu();
 
   connect(  mActNowMenu, SIGNAL(  activated( int ) ), this,
 		    SLOT( slotSendNowVia( int ) ) );
