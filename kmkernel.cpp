@@ -1569,6 +1569,7 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::closeAllKMailWindows()
 {
+  if (!KMainWindow::memberList) return;
   QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
