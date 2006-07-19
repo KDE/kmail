@@ -1381,9 +1381,8 @@ void KMComposeWin::setupActions(void)
   for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
     l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
 
-  mCryptoModuleAction = new KSelectAction( i18n( "&Cryptographic Message Format" ), 0,
-					   this, SLOT(slotSelectCryptoModule()),
-					   actionCollection(), "options_select_crypto" );
+  mCryptoModuleAction = new KSelectAction( i18n( "&Cryptographic Message Format" ), actionCollection(), "options_select_crypto" );
+  connect(mCryptoModuleAction, SIGNAL(triggered(bool)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
   slotSelectCryptoModule( true /* initialize */ );
