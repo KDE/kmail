@@ -27,14 +27,14 @@ class KMMsgBase;
 class KMReaderWin;
 class partNode;
 namespace KIO { class Job; }
-/*namespace KMail {
+
+#include "headerstrategy.h"
+#include "headerstyle.h"
+
+namespace KMail {
   class HeaderStrategy;
   class HeaderStyle;
-}*/
-#include "headerstrategy.h"
-using KMail::HeaderStrategy;
-#include "headerstyle.h"
-using KMail::HeaderStyle;
+}
 
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -544,8 +544,8 @@ public:
   KMPrintCommand( QWidget *parent, KMMessage *msg,
                   bool htmlOverride=false,
                   const QString & encoding = QString(),
-                  const KMail::HeaderStyle * style = HeaderStyle::fancy(),
-                  const KMail::HeaderStrategy * strategy = HeaderStrategy::rich() );
+                  const KMail::HeaderStyle * style = KMail::HeaderStyle::fancy(),
+                  const KMail::HeaderStrategy * strategy = KMail::HeaderStrategy::rich() );
 
 private:
   virtual Result execute();

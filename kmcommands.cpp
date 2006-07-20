@@ -1348,8 +1348,8 @@ KMCommand::Result KMBounceCommand::execute()
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
   KMMessage *msg, bool htmlOverride, const QString & encoding,
-  const KMail::HeaderStyle * style,
-  const KMail::HeaderStrategy * strategy )
+  const HeaderStyle * style,
+  const HeaderStrategy * strategy )
   : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mEncoding( encoding ),
     mStyle( style ), mStrategy( strategy )
 {
