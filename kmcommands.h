@@ -27,6 +27,15 @@ class KMMsgBase;
 class KMReaderWin;
 class partNode;
 namespace KIO { class Job; }
+/*namespace KMail {
+  class HeaderStrategy;
+  class HeaderStyle;
+}*/
+#include "headerstrategy.h"
+using KMail::HeaderStrategy;
+#include "headerstyle.h"
+using KMail::HeaderStyle;
+
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
@@ -302,7 +311,7 @@ class KMShowMsgSrcCommand
 {
 public:
   KMShowMsgSrcCommand( KMMessage *msg, bool fixedFont );
-		       
+
   void start();
 
 private:
@@ -532,15 +541,19 @@ class KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMessage *msg, 
+  KMPrintCommand( QWidget *parent, KMMessage *msg,
                   bool htmlOverride=false,
-                  const QString & encoding = QString() );
+                  const QString & encoding = QString(),
+                  const KMail::HeaderStyle * style = HeaderStyle::fancy(),
+                  const KMail::HeaderStrategy * strategy = HeaderStrategy::rich() );
 
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
   QString mEncoding;
+  const KMail::HeaderStyle * mStyle;
+  const KMail::HeaderStrategy * mStrategy;
 };
 
 class KMSetStatusCommand : public KMCommand

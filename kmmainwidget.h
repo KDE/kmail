@@ -207,13 +207,9 @@ protected:
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
   void updateFileMenu();
-  //void updateViewMenu();
 
   KActionCollection * actionCollection() { return mActionCollection; }
 
-  /*KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
-                                       const KMail::HeaderStrategy * );
-   */
 
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
 

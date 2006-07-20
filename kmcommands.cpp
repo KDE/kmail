@@ -92,6 +92,11 @@ using KPIM::ProgressItem;
 
 #include "broadcaststatus.h"
 
+#include "headerstrategy.h"
+using KMail::HeaderStrategy;
+#include "headerstyle.h"
+using KMail::HeaderStyle;
+
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
@@ -1342,8 +1347,11 @@ KMCommand::Result KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride, const QString & encoding )
-  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mEncoding( encoding )
+  KMMessage *msg, bool htmlOverride, const QString & encoding,
+  const KMail::HeaderStyle * style,
+  const KMail::HeaderStrategy * strategy )
+  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mEncoding( encoding ),
+    mStyle( style ), mStrategy( strategy )
 {
 }
 
@@ -1352,6 +1360,7 @@ KMCommand::Result KMPrintCommand::execute()
   KMReaderWin printWin( 0, 0, 0 );
   printWin.setPrinting(TRUE);
   printWin.readConfig();
+  printWin.setHeaderStyleAndStrategy( mStyle, mStrategy );
   printWin.setHtmlOverride( mHtmlOverride );
   printWin.setOverrideEncoding( mEncoding );
   printWin.setMsg(retrievedMessage(), TRUE);

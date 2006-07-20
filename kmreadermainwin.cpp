@@ -99,7 +99,8 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride(), mReaderWin->overrideEncoding() );
+      mReaderWin->htmlOverride(), mReaderWin->overrideEncoding(),
+      mReaderWin->headerStyle(), mReaderWin->headerStrategy() );
   command->start();
 }
 

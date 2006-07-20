@@ -1263,12 +1263,12 @@ KMMessage* KMMessage::createForward()
   QString id;
 
   // If this is a multipart mail or if the main part is only the text part,
-  // Make an identical copy of the mail, minus headers, so attachments are 
+  // Make an identical copy of the mail, minus headers, so attachments are
   // preserved
   if ( type() == DwMime::kTypeMultipart ||
      ( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypePlain ) ) {
     msg->fromDwString( this->asDwString() );
-    // remember the type and subtype, initFromMessage sets the contents type to 
+    // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
     const int type = msg->type();
     const int subtype = msg->subtype();
@@ -1281,7 +1281,7 @@ KMMessage* KMMessage::createForward()
     while (field)
     {
       nextField = field->Next();
-      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos ) 
+      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos )
         header.RemoveField(field);
       field = nextField;
     }
@@ -1613,7 +1613,19 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   QString result = s;
   QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
   Q_ASSERT( rx.isValid() );
+
+  QRegExp rxDate( "\\$\\{date\\}" );
+  Q_ASSERT( rxDate.isValid() );
+
+  KMime::DateFormatter mDate;
+  QString sDate = mDate.dateString( date() );
+
   int idx = 0;
+  if( ( idx = rxDate.search( result, idx ) ) != -1  ) {
+    result.replace( idx, rxDate.matchedLength(), sDate );
+  }
+
+  idx = 0;
   while ( ( idx = rx.search( result, idx ) ) != -1 ) {
     QString replacement = headerField( rx.cap(1).latin1() );
     result.replace( idx, rx.matchedLength(), replacement );
@@ -4313,7 +4325,7 @@ void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
 //-----------------------------------------------------------------------------
 void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
 {
-  Q_ASSERT( aStatus == KMMsgStatusReplied 
+  Q_ASSERT( aStatus == KMMsgStatusReplied
       || aStatus == KMMsgStatusForwarded || aStatus == KMMsgStatusDeleted );
 
   QString message = headerField( "X-KMail-Link-Message" );
