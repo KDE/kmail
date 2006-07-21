@@ -2327,7 +2327,9 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
           i18n( "KMail Error" ) );
       return Failed;
     }
-    fchmod( file.handle(), S_IRUSR | S_IWUSR );
+    // Don't attempt the below, it causes issues on nfs, among other things
+    // https://intevation.de/roundup/kolab/issue856
+    //fchmod( file.handle(), S_IRUSR | S_IWUSR );
     ds.setDevice( &file );
   } else
   {
