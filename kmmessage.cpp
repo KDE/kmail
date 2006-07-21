@@ -1617,7 +1617,7 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   QRegExp rxDate( "\\$\\{date\\}" );
   Q_ASSERT( rxDate.isValid() );
 
-  KMime::DateFormatter mDate( KMime::DateFormatter::CTime );
+  KMime::DateFormatter mDate( KMime::DateFormatter::Localized );
   QString sDate = mDate.dateString( date() );
 
   int idx = 0;
