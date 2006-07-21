@@ -220,13 +220,12 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   , mProfileDialog( 0 )
 {
   setFaceType( List );
+  setButtons( Help | Default | Cancel | Apply | Ok | User1 | User2 );
+  setButtonGuiItem( User1, KStdGuiItem::reset() );
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
-  setButtons( User2 );
-  setCaption( i18n( "Configure" ) );
   setModal( modal );
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
-  showButton( User1, true );
 
   addModule ( "kmail_config_identity" );
   addModule ( "kmail_config_accounts" );
@@ -234,6 +233,10 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   addModule ( "kmail_config_composer" );
   addModule ( "kmail_config_security" );
   addModule ( "kmail_config_misc" );
+
+  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+  connect( this, SIGNAL(applyClicked()), SLOT(slotApply()) );
+  connect( this, SIGNAL(user2Clicked()), SLOT(slotUser2()) );
 
   // We store the size of the dialog on hide, because otherwise
   // the KCMultiDialog starts with the size of the first kcm, not
