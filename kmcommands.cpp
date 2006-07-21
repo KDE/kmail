@@ -1360,7 +1360,8 @@ KMCommand::Result KMPrintCommand::execute()
   KMReaderWin printWin( 0, 0, 0 );
   printWin.setPrinting(TRUE);
   printWin.readConfig();
-  printWin.setHeaderStyleAndStrategy( mStyle, mStrategy );
+  if( mStyle != 0 && mStrategy != 0 )
+    printWin.setHeaderStyleAndStrategy( mStyle, mStrategy );
   printWin.setHtmlOverride( mHtmlOverride );
   printWin.setOverrideEncoding( mEncoding );
   printWin.setMsg(retrievedMessage(), TRUE);

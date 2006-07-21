@@ -544,8 +544,8 @@ public:
   KMPrintCommand( QWidget *parent, KMMessage *msg,
                   bool htmlOverride=false,
                   const QString & encoding = QString(),
-                  const KMail::HeaderStyle * style = KMail::HeaderStyle::fancy(),
-                  const KMail::HeaderStrategy * strategy = KMail::HeaderStrategy::rich() );
+                  const KMail::HeaderStyle * style = 0,
+                  const KMail::HeaderStrategy * strategy = 0 );
 
 private:
   virtual Result execute();
