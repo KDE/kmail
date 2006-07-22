@@ -1139,7 +1139,7 @@ void KMComposeWin::setupActions(void)
 		    actionCollection(), "send_default_via" );
 
     action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_alternative");
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow())); 
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu ( KIcon("mail_send"), i18n("&Send Mail Via"),
@@ -1239,11 +1239,11 @@ void KMComposeWin::setupActions(void)
 
   //these are checkable!!!
   mUrgentAction = new KToggleAction (i18n("&Urgent"), actionCollection(), "urgent");
-  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 
+  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"),
                                          actionCollection(), "options_request_mdn");
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction = new KSelectAction( KIcon("charset"), i18n( "Se&t Encoding" ), 
+  mEncodingAction = new KSelectAction( KIcon("charset"), i18n( "Se&t Encoding" ),
                                       actionCollection(), "charsets" );
   connect(mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()));
   mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), actionCollection(), "wordwrap");
@@ -1251,7 +1251,7 @@ void KMComposeWin::setupActions(void)
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   mAutoSpellCheckingAction =
-    new KToggleAction( KIcon("spellcheck"), i18n( "&Automatic Spellchecking" ), 
+    new KToggleAction( KIcon("spellcheck"), i18n( "&Automatic Spellchecking" ),
                        actionCollection(), "options_auto_spellchecking" );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
@@ -2583,7 +2583,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   msgPart->setTypeStr( mimeType.left( slash ).toLatin1() );
   msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).toLatin1() );
   msgPart->setContentDisposition(Q3CString("attachment;\n\tfilename")
-    + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
+     + ( RFC2231encoded ? "*=" + encName : "=\"" + encName + '"' ) );
 
   mMapAtmLoadData.erase(it);
 
