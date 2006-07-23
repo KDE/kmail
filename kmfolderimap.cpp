@@ -1383,13 +1383,21 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
   const KMMsgStatus oldStatus = msg->status();
+  // Set flags if they are new
+  if ( (flags & 4) && (oldStatus & KMMsgStatusFlag) == 0 )
+    msg->setStatus( KMMsgStatusFlag );
+  if ( (flags & 2) && (oldStatus & KMMsgStatusReplied) == 0 )
+    msg->setStatus( KMMsgStatusReplied );
+  if ( (flags & 1) && (oldStatus & KMMsgStatusOld) == 0 )
+    msg->setStatus( KMMsgStatusOld );
+
   // Toggle flags if they changed
-  if ( ( (flags & 4) > 0 ) != ( (oldStatus & KMMsgStatusFlag) > 0 ) )
-    msg->toggleStatus( KMMsgStatusFlag );
-  if ( ( (flags & 2) > 0 ) != ( (oldStatus & KMMsgStatusReplied) > 0 ) )
-    msg->toggleStatus( KMMsgStatusReplied );
-  if ( ( (flags & 1) > 0 ) != ( (oldStatus & KMMsgStatusOld) > 0 ) )
-    msg->toggleStatus( KMMsgStatusOld );
+//  if ( ( (flags & 4) > 0 ) != ( (oldStatus & KMMsgStatusFlag) > 0 ) )
+//    msg->toggleStatus( KMMsgStatusFlag );
+//  if ( ( (flags & 2) > 0 ) != ( (oldStatus & KMMsgStatusReplied) > 0 ) )
+//    msg->toggleStatus( KMMsgStatusReplied );
+//  if ( ( (flags & 1) > 0 ) != ( (oldStatus & KMMsgStatusOld) > 0 ) )
+//    msg->toggleStatus( KMMsgStatusOld );
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
