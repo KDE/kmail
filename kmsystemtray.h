@@ -18,10 +18,11 @@
 #ifndef KMSYSTEMTRAY_H
 #define KMSYSTEMTRAY_H
 
-#include <ksystemtray.h>
+#include <ksystemtrayicon.h>
 
 #include <QMap>
 #include <QPointer>
+#include <QVector>
 
 #include <QPixmap>
 #include <QImage>
@@ -40,7 +41,7 @@ class QPoint;
  * KMSystemTray extends KSystemTray and handles system
  * tray notification for KMail
  */
-class KMSystemTray : public KSystemTray
+class KMSystemTray : public KSystemTrayIcon
 {
   Q_OBJECT
 public:

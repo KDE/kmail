@@ -63,7 +63,7 @@ using KMail::FolderIface;
 #include <kconfig.h>
 #include <kprogressbar.h>
 #include <kpassivepopup.h>
-#include <ksystemtray.h>
+#include <ksystemtrayicon.h>
 #include <kpgp.h>
 #include <kdebug.h>
 #include <kio/netaccess.h>
@@ -1816,7 +1816,7 @@ bool KMKernel::haveSystemTrayApplet()
   return !systemTrayApplets.isEmpty();
 }
 
-bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
+bool KMKernel::registerSystemTrayApplet( const KSystemTrayIcon* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1826,7 +1826,7 @@ bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( const KSystemTray* applet )
+bool KMKernel::unregisterSystemTrayApplet( const KSystemTrayIcon* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }

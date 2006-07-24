@@ -1,7 +1,7 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /***************************************************************************
                           kmsystemtray.cpp  -  description
-                             -------------------
+                             ------------------
     begin                : Fri Aug 31 22:38:44 EDT 2001
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
@@ -62,7 +62,7 @@ using KMail::AccountManager;
  * to the first unread message in each folder.
  */
 KMSystemTray::KMSystemTray(QWidget *parent)
-  : KSystemTray( parent),
+  : KSystemTrayIcon( parent),
     mParentVisible( true ),
     mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),
@@ -71,7 +71,6 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mNewMessagePopupId(-1),
     mPopupMenu(0)
 {
-  setAlignment( Qt::AlignCenter );
   kDebug(5006) << "Initting systray" << endl;
 
   mLastUpdate = time( 0 );
@@ -80,10 +79,10 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
-  mDefaultIcon = loadIcon( "kmail" );
-  mLightIconImage = loadIcon( "kmaillight" ).toImage();
+  mDefaultIcon = loadIcon( "kmail" ).pixmap();
+  mLightIconImage = loadIcon( "kmaillight" ).pixmap().toImage();
 
-  setPixmap(mDefaultIcon);
+  setIcon(mDefaultIcon);
 
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -121,7 +120,7 @@ void KMSystemTray::buildPopupMenu()
   if ( !mainWidget )
     return;
 
-  mPopupMenu->addTitle(*(this->pixmap()), "KMail");
+  mPopupMenu->addTitle(this->icon(), "KMail");
   KAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
     mPopupMenu->addAction( action );
@@ -162,13 +161,13 @@ void KMSystemTray::setMode(int newMode)
 
   switch ( mMode ) {
   case GlobalSettings::EnumSystemTrayPolicy::ShowAlways:
-    if ( isHidden() )
+    if ( !isVisible() )
       show();
     break;
   case GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread:
-    if ( mCount == 0 && !isHidden() )
+    if ( mCount == 0 && isVisible() )
       hide();
-    else if ( mCount > 0 && isHidden() )
+    else if ( mCount > 0 && !isVisible() )
       show();
     break;
   default:
@@ -190,8 +189,8 @@ void KMSystemTray::updateCount()
 {
   if(mCount != 0)
   {
-    int oldPixmapWidth = pixmap()->size().width();
-    int oldPixmapHeight = pixmap()->size().height();
+    int oldPixmapWidth = mDefaultIcon.size().width();
+    int oldPixmapHeight = mDefaultIcon.size().height();
 
     QString countString = QString::number( mCount );
     QFont countFont = KGlobalSettings::generalFont();
@@ -238,10 +237,10 @@ void KMSystemTray::updateCount()
     QImage iconWithNumberImage = mLightIconImage.copy();
     KIconEffect::overlay( iconWithNumberImage, numberImage );
 
-    setPixmap( QPixmap::fromImage( iconWithNumberImage ) );
+    setIcon( QPixmap::fromImage( iconWithNumberImage ) );
   } else
   {
-    setPixmap( mDefaultIcon );
+    setIcon( mDefaultIcon );
   }
 }
 
@@ -512,7 +511,7 @@ void KMSystemTray::updateNewMessages()
 
     /** Make sure the icon will be displayed */
     if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread )
-         && isHidden() ) {
+         && !isVisible() ) {
       show();
     }
 

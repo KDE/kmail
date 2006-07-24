@@ -73,7 +73,7 @@ class KMMainWin;
 class KMainWindow;
 class KMailICalIfaceImpl;
 class KMReaderWin;
-class KSystemTray;
+class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
 
@@ -320,8 +320,8 @@ public:
    */
   bool haveSystemTrayApplet();
 
-  bool registerSystemTrayApplet( const KSystemTray* );
-  bool unregisterSystemTrayApplet( const KSystemTray* );
+  bool registerSystemTrayApplet( const KSystemTrayIcon* );
+  bool unregisterSystemTrayApplet( const KSystemTrayIcon* );
 
   /// Reimplemented from KMailIface
   bool handleCommandLine( bool noArgsOpensReader );
@@ -477,7 +477,7 @@ private:
   // context menus and the pinentry program
   bool mContextMenuShown;
 
-  QList<const KSystemTray*> systemTrayApplets;
+  QList<const KSystemTrayIcon*> systemTrayApplets;
 
   /* Weaver */
 //  KPIM::ThreadWeaver::Weaver *the_weaver;
