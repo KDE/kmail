@@ -95,7 +95,8 @@ using KRecentAddress::RecentAddresses;
 #include <kpushbutton.h>
 #include <kmenubar.h>
 #include <ktoolbarbutton.h>
-
+#include <kuserprofile.h> // for KServiceTypeProfile
+#include <krun.h>
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -2639,6 +2640,8 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
+     mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
+                             SLOT(slotAttachOpen()));
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
@@ -2657,6 +2660,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
     }
   }
 
+  mAttachMenu->setItemEnabled( mOpenId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
@@ -2724,6 +2728,18 @@ void KMComposeWin::slotAttachView()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAttachOpen()
+{
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      openAttach( i );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 bool KMComposeWin::inlineSigningEncryptionSelected() {
   if ( !mSignAction->isChecked() && !mEncryptAction->isChecked() )
     return false;
@@ -2750,6 +2766,45 @@ void KMComposeWin::viewAttach( int index )
   win->show();
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::openAttach( int index )
+{
+  KMMessagePart* msgPart = mAtmList.at(index);
+  const QString contentTypeStr =
+    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).lower();
+
+  KMimeType::Ptr mimetype;
+  mimetype = KMimeType::mimeType( contentTypeStr );
+
+  KTempFile* atmTempFile = new KTempFile();
+  mAtmTempList.append( atmTempFile );
+  const bool autoDelete = true;
+  atmTempFile->setAutoDelete( autoDelete );
+
+  KURL url;
+  url.setPath( atmTempFile->name() );
+
+  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
+    false );
+  if ( ::chmod( QFile::encodeName( atmTempFile->name() ), S_IRUSR ) != 0) {
+    QFile::remove(url.path());
+    return;
+  }
+
+  KService::Ptr offer =
+    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+
+  if ( !offer || mimetype->name() == "application/octet-stream" ) {
+    if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
+      QFile::remove(url.path());
+    }
+  }
+  else {
+    if ( ( !KRun::run( *offer, url, autoDelete ) ) && autoDelete ) {
+        QFile::remove( url.path() );
+    }
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachSave()
