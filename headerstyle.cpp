@@ -567,8 +567,6 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
             const QString & vCardName, bool printing ) const;
-    static QString imgToDataUrl( const QImage &image );
-
   };
 
   QString MinimalHeaderStyle::format( const KMMessage * message,
@@ -578,12 +576,10 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     if ( !strategy )
       strategy = HeaderStrategy::minimal();
 
-    // ### from kmreaderwin begin
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString headerStr = QString("<div class=\"fancy header\" dir=\"%1\">\n").arg(dir);
+    QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -592,7 +588,7 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     // direction.
 
     QString subjectDir;
-    if ( !message->subject().isEmpty() )
+    if (!message->subject().isEmpty())
       subjectDir = directionOf( message->cleanSubject() );
     else
       subjectDir = directionOf( i18n("No Subject") );
@@ -601,170 +597,43 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     QString dateString;
     if( printing ) {
       QDateTime dateTime;
-      KLocale* locale = KGlobal::locale();
+      KLocale * locale = KGlobal::locale();
       dateTime.setTime_t( message->date() );
       dateString = locale->formatDateTime( dateTime );
-    }
-    else {
+    } else {
       dateString = message->dateStr();
     }
 
-    QString userHTML;
+    QString headerStr = "<div class=\"header\" dir=\"" + dir + "\">\n";
 
-#if 0
-    QString presence;
-
-    // IM presence and kabc photo
-    // Check first that KIMProxy has any IM presence data, to save hitting KABC
-    // unless really necessary
-    ::KIMProxy *imProxy = KMKernel::self()->imProxy();
-    QString kabcUid;
-    if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) )
-    {
-      if ( imProxy->initialize() )
-      {
-        KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-        KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-
-        if( addresses.count() == 1 )
-        {
-          // kabcUid is embedded in im: URIs to indicate which IM contact to message
-          kabcUid = addresses[0].uid();
-
-          // im status
-          presence = imProxy->presenceString( kabcUid );
-          if ( !presence.isEmpty() )
-          {
-            QString presenceIcon = QString::fromLatin1( " <img src=\"%1\"/>" )
-                .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).convertToImage() ) );
-            presence += presenceIcon;
-          }
-          // picture
-          if ( strategy->showHeader( "statuspic" ) )
-          {
-            QString photoURL;
-            if ( addresses[0].photo().isIntern() )
-            {
-              // get photo data and convert to data: url
-              //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
-              QImage photo = addresses[0].photo().data();
-              if ( !photo.isNull() )
-              {
-                photoURL = imgToDataUrl( photo );
-              }
-            }
-            else
-            {
-              //kdDebug( 5006 ) << "URL found" << endl;
-              photoURL = addresses[0].photo().url();
-              if ( photoURL.startsWith("/") )
-                photoURL.prepend( "file:" );
-            }
-            if( !photoURL.isEmpty() )
-            {
-              //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
-              userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
-              if ( presence.isEmpty() )
-              {
-                userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
-              }
-              else
-                userHTML = QString( "<div class=\"senderpic\">"
-                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
-                                      "</div>" ).arg( kabcUid )
-                                                .arg( userHTML )
-                                                .arg( presence );
-            }
-          }
-        }
-        else
-        {
-          kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
-          userHTML = "&nbsp;";
-        }
-      }
-// Disabled 'Launch IM' link in headers - Will
-//      else
-//        if ( imProxy->imAppsAvailable() )
-//          presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
-    }
-    // do nothing - no im apps available, leave presence empty
-    //presence = i18n( "DCOP/InstantMessenger not installed" );
-    kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
-
-#endif
-    //case HdrFancy:
-    // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
-      headerStr += QString("<div dir=\"%1\">%2</div>\n")
-                        .arg(subjectDir)
-                        .arg(message->subject().isEmpty()?
-                             i18n("No Subject") :
-                             strToHtml(message->subject()));
-    headerStr += "<table class=\"outer\"><tr><td width=\"100%\"><table>\n";
-    //headerStr += "<table>\n";
-    // from line
-    // the mailto: URLs can contain %3 etc., therefore usage of multiple
-    // QString::arg is not possible
+      headerStr += "<div dir=\"" + subjectDir + "\">\n"
+                   "<b style=\"font-size:130%\">" +
+                           strToHtml( message->subject() ) +
+                           "</b></div>\n";
+
+    QStringList headerParts;
+
+
     if ( strategy->showHeader( "from" ) ) {
       QString fromStr = message->from();
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
-      headerStr += QString("<tr><th>%1</th>\n"
-                           "<td>")
-                           .arg(i18n("From: "))
-                 + KMMessage::emailAddrAsAnchor( fromStr, false )
-                 + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
-                                + i18n("[vCard]") + "</a>"
-                              : QString("") )
-                 + ( message->headerField("Organization").isEmpty()
-                              ? QString("")
-                              : "&nbsp;&nbsp;("
-                                + strToHtml(message->headerField("Organization"))
-                                + ")")
-                 + "</td></tr>\n";
+      headerStr.append(i18n("From: ") +
+          KMMessage::emailAddrAsAnchor( fromStr, false) + "<br>\n" );
     }
-    // to line
+
     if ( strategy->showHeader( "to" ) )
-      headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                            .arg(i18n("To: "))
-                            .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
+      headerStr.append(i18n("To: ")+
+                       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
 
     if ( strategy->showHeader( "date" ) )
-      headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td dir=\"%2\">%3</td></tr>\n")
-                            .arg(i18n("Date: "))
-                    .arg( directionOf( message->dateStr() ) )
-                            .arg(strToHtml(dateString)));
+      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
 
-    // FIXME: Show status in synthetic header style field.  Decide whether this or current in brackets style is best and remove one.
-    /*    if( strategy->showHeader( "status" ) )
-      headerStr.append( QString( "<tr><th>%1</th>\n"
-                                 "<td dir=\"%2\">%3</td></tr>\n")
-                                    .arg(i18n("Sender status: "))
-                                    .arg( directionOf( onlineStatus ) )
-                                    .arg(onlineStatus));
-    */
-    headerStr.append(
-          QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
-                     );
+    headerStr += "</div>\n";
 
-    headerStr += "</div>\n\n";
     return headerStr;
   }
-
-QString MinimalHeaderStyle::imgToDataUrl( const QImage &image )
-{
-  QByteArray ba;
-  QBuffer buffer( ba );
-  buffer.open( IO_WriteOnly );
-  image.save( &buffer, "PNG" );
-  return QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
-}
-
-
-
 
 
   //
