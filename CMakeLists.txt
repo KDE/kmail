@@ -318,7 +318,7 @@ install(PROGRAMS upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl 
 
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
-
+kde4_install_icons( ${ICON_INSTALL_DIR}  crystalsvg )
 
 
 
