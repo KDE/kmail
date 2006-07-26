@@ -520,6 +520,7 @@ public slots:
   void slotAttachSave();
   void slotAttachProperties();
   void slotAttachOpen();
+  void slotAttachOpenWith();
 
 
   /**
@@ -675,9 +676,9 @@ protected:
    void removeAttach(int idx);
 
    /**
-    * Open the attachment with the given index
+    * Open the attachment with the given index and "with" (Open with)
     */
-    void openAttach( int index );
+    void openAttach( int index, bool with );
 
    /**
     * Updates an item in the QListView to represnet a given message part
@@ -764,7 +765,7 @@ protected:
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
-  int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
   bool mSigningAndEncryptionExplicitlyDisabled;
