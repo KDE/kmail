@@ -59,6 +59,11 @@
 #include <qapplication.h>
 #include <qregexp.h>
 
+#include <kmime_header_parsing.h>
+using KMime::Types::AddrSpecList;
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
+
 namespace KMail {
 
   //
@@ -552,7 +557,6 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
 
   //
   // MinimalHeaderStyle:
-  //   Like FancyHeaderStyle, but with lesser contents.
   //
   class MinimalHeaderStyle : public HeaderStyle {
     friend class HeaderStyle;
@@ -614,21 +618,46 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
 
     QStringList headerParts;
 
-
     if ( strategy->showHeader( "from" ) ) {
       QString fromStr = message->from();
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
-      headerStr.append(i18n("From: ") +
-          KMMessage::emailAddrAsAnchor( fromStr, false) + "<br>\n" );
+      QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
+      if ( !vCardName.isEmpty() )
+        fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+      headerParts.append( i18n("From: ") + fromPart );
     }
 
-    if ( strategy->showHeader( "to" ) )
-      headerStr.append(i18n("To: ")+
-                       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
+    if ( strategy->showHeader( "to" ) ) {
+       KMime::Types::AddrSpecList toList = message->extractAddrSpecs("To");
+       if ( !toList.isEmpty() ) {
+         KMime::Types::AddrSpecList::iterator it;
+         QStringList strToList;
+         for( it  = toList.begin(); it != toList.end(); ++it ) {
+           strToList.append( (*it).asString() );
+         }
+         //kdDebug(5006) << strToList.join(",");
 
-    if ( strategy->showHeader( "date" ) )
-      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
+        KPIM::Identity ident;
+        QStringList tmpList;
+         for ( QStringList::Iterator it = strToList.begin();
+              it != strToList.end();
+              ++it ) {
+           ident = KMKernel::self()->identityManager()->identityForAddress( *it );
+           if ( !ident.isNull() && KMKernel::self()->identityManager()->thatIsMe( *it ) ) {
+             tmpList.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
+           }
+         }
+         headerParts.append( i18n("To: ") + tmpList.join(",") );
+       }
+    }
+
+    if ( strategy->showHeader( "date" ) ) {
+      headerParts.append(i18n("Date: ") + strToHtml(message->dateShortStr()) );
+    }
+
+    // remove all empty (modulo whitespace) entries and joins them via ", \n"
+    headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
     headerStr += "</div>\n";
 
