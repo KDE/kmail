@@ -633,22 +633,15 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
        if ( !toList.isEmpty() ) {
          KMime::Types::AddrSpecList::iterator it;
          QStringList strToList;
-         for( it  = toList.begin(); it != toList.end(); ++it ) {
-           strToList.append( (*it).asString() );
+         for ( it  = toList.begin(); it != toList.end(); ++it ) {
+            KPIM::Identity ident;
+            ident = KMKernel::self()->identityManager()->identityForAddress( (*it).asString() );
+            if ( !ident.isNull() &&
+                        KMKernel::self()->identityManager()->thatIsMe( (*it).asString() ) ) {
+              strToList.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
+            }
          }
-         //kdDebug(5006) << strToList.join(",");
-
-        KPIM::Identity ident;
-        QStringList tmpList;
-         for ( QStringList::Iterator it = strToList.begin();
-              it != strToList.end();
-              ++it ) {
-           ident = KMKernel::self()->identityManager()->identityForAddress( *it );
-           if ( !ident.isNull() && KMKernel::self()->identityManager()->thatIsMe( *it ) ) {
-             tmpList.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
-           }
-         }
-         headerParts.append( i18n("To: ") + tmpList.join(",") );
+         headerParts.append( i18n("To: ") + strToList.join(",") );
        }
     }
 
