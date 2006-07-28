@@ -682,10 +682,10 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
-  raction = new KRadioAction( i18n("View->headers->", "&Minimal Headers"), 0, this,
+  raction = new KRadioAction( i18n("View->headers->", "&Printing Headers"), 0, this,
       SLOT(slotMinimalHeaders()),
       ac, "view_headers_minimal" );
-  raction->setToolTip( i18n("Show the headers in a minimal format") );
+  raction->setToolTip( i18n("Show the headers for printing") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
