@@ -629,19 +629,26 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     }
 
     if ( strategy->showHeader( "to" ) ) {
+       bool addInToList = false;
+       QStringList strToList;
        KMime::Types::AddrSpecList toList = message->extractAddrSpecs("To");
        if ( !toList.isEmpty() ) {
          KMime::Types::AddrSpecList::iterator it;
-         QStringList strToList;
          for ( it  = toList.begin(); it != toList.end(); ++it ) {
             KPIM::Identity ident;
             ident = KMKernel::self()->identityManager()->identityForAddress( (*it).asString() );
             if ( !ident.isNull() &&
                         KMKernel::self()->identityManager()->thatIsMe( (*it).asString() ) ) {
               strToList.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
+              addInToList = true;
             }
          }
+       }
+       if ( addInToList ) {
          headerParts.append( i18n("To: ") + strToList.join(",") );
+       }
+       else {
+         headerParts.append( i18n("To: Cannot find appropriate identity.") );
        }
     }
 
