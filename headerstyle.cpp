@@ -629,26 +629,27 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
     }
 
     if ( strategy->showHeader( "to" ) ) {
-       bool addInToList = false;
-       QStringList strToList;
+       QStringList identities;
        KMime::Types::AddrSpecList toList = message->extractAddrSpecs("To");
+       toList += message->extractAddrSpecs("Cc");
        if ( !toList.isEmpty() ) {
          KMime::Types::AddrSpecList::iterator it;
          for ( it  = toList.begin(); it != toList.end(); ++it ) {
-            KPIM::Identity ident;
-            ident = KMKernel::self()->identityManager()->identityForAddress( (*it).asString() );
+            KPIM::Identity ident =
+                KMKernel::self()->identityManager()->identityForAddress( (*it).asString() );
             if ( !ident.isNull() &&
-                        KMKernel::self()->identityManager()->thatIsMe( (*it).asString() ) ) {
-              strToList.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
-              addInToList = true;
+                 KMKernel::self()->identityManager()->thatIsMe( (*it).asString() ) ) {
+              identities.append( KMMessage::emailAddrAsAnchor( ident.fullEmailAddr(), false ) );
             }
          }
        }
-       if ( addInToList ) {
-         headerParts.append( i18n("To: ") + strToList.join(",") );
-       }
-       else {
-         headerParts.append( i18n("To: Cannot find appropriate identity.") );
+       if ( !identities.isEmpty() ) {
+         headerParts.append( i18n("To: ") + identities.join(",") );
+       } else { 
+         // none of our identities found, let's use the full To header
+         // happens for example with mailing list mails
+         headerParts.append( i18n("To: ") + 
+                 KMMessage::emailAddrAsAnchor( message->to( ), false) );
        }
     }
 
