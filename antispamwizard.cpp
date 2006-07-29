@@ -900,6 +900,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
       "deleting the filter rules created by the wizard to get "
       "back to the former behavior."
       ) );
+  mIntroText->setWordWrap(true);
   layout->addWidget( mIntroText );
 
   mScanProgressText = new QLabel( this );
