@@ -164,6 +164,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
           this, SLOT(slotLogStateChanged(void)));
 
   setInitialSize( QSize( 500, 500 ) );
+  connect( this, SIGNAL( user1Clicked() ), SLOT( slotUser1() ) );
+  connect( this, SIGNAL( user2Clicked() ), SLOT( slotUser2() ) );
 }
 
 

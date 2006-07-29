@@ -61,10 +61,10 @@ namespace KMail {
       void slotSwitchLogState();
       void slotChangeLogMemLimit( int value );
       
-    protected:
-      virtual void slotUser1();
-      virtual void slotUser2();
-      
+      void slotUser1();
+      void slotUser2();
+
+  protected:
       Q3TextEdit * mTextEdit;
       QCheckBox * mLogActiveBox;
       Q3GroupBox * mLogDetailsBox;
