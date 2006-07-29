@@ -208,7 +208,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 #warning Port me!
 //  clearWState( WState_Polished );
   slotFolderNameChanged( mNameLineEdit->text());
-  
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 }
 
 void NewFolderDialog::slotFolderNameChanged( const QString & _text)

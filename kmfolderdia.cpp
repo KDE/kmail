@@ -142,6 +142,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
+  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 }
 
 void KMFolderDialog::addTab( FolderDiaTab* tab )

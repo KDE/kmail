@@ -57,8 +57,8 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KActionCollection *actionCollection )
   : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
-  KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ), 
-                                           i18n( "Reset Quick Search" ), 
+  KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ),
+                                           i18n( "Reset Quick Search" ),
                                            actionCollection, "reset_quicksearch" );
   connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
   parent->addAction( resetQuickSearch );
@@ -66,10 +66,10 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                         "Resets the quick search so that "
                                         "all messages are shown again." ) );
 
-  QLabel *label = new QLabel( i18n("Stat&us:"), parent );
+  QLabel *label = new QLabel( i18n("Stat&us:"), this );
   label->setObjectName( "kde toolbar widget" );
 
-  mStatusCombo = new QComboBox( parent );
+  mStatusCombo = new QComboBox( this );
   mStatusCombo->setObjectName( "quick search status combo box" );
   mStatusCombo->addItem( SmallIcon( "run" ), i18n("Any Status") );
 
