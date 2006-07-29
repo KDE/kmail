@@ -40,9 +40,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   setModal( false );
   setObjectName( "expiry_properties" );
   setAttribute( Qt::WA_DeleteOnClose );
-  
+
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-  
+
   QWidget* privateLayoutWidget = new QWidget( this );
   privateLayoutWidget->setObjectName( "globalVBox" );
   setMainWidget( privateLayoutWidget );
@@ -119,7 +119,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   actionsGroup = new Q3ButtonGroup( this );
   actionsGroup->hide(); // for mutual exclusion of the radio buttons
 
-  moveToHBox = new QHBoxLayout(); 
+  moveToHBox = new QHBoxLayout();
   moveToHBox->setMargin( 0 );
   moveToHBox->setSpacing( 6 );
   moveToHBox->setObjectName( "moveToHBox" );
@@ -158,14 +158,14 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   int daysToExpireRead, daysToExpireUnread;
   mFolder->daysToExpire( daysToExpireUnread, daysToExpireRead);
 
-  if ( expiryGloballyOn 
-      && mFolder->getReadExpireUnits() != expireNever 
+  if ( expiryGloballyOn
+      && mFolder->getReadExpireUnits() != expireNever
       && daysToExpireRead >= 0 ) {
     expireReadMailCB->setChecked( true );
     expireReadMailSB->setValue( daysToExpireRead );
   }
   if ( expiryGloballyOn
-      && mFolder->getUnreadExpireUnits() != expireNever 
+      && mFolder->getUnreadExpireUnits() != expireNever
       && daysToExpireUnread >= 0 ) {
     expireUnreadMailCB->setChecked( true );
     expireUnreadMailSB->setValue( daysToExpireUnread );
@@ -184,6 +184,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   }
   slotUpdateControls();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
+  connect( this, SIGNAL(okClicked() ),SLOT( slotOk() ) );
 #warning Port me!
 //  clearWState( WState_Polished );
 }
@@ -203,7 +204,7 @@ void ExpiryPropertiesDialog::slotOk()
     KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
         i18n( "No Folder Selected" ) );
     return;
-  } 
+  }
   mFolder->setAutoExpire( enableGlobally );
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
