@@ -2309,6 +2309,13 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
     }
     i++;
   }
+  if ( i == encodings.size() ) {
+    // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
+    kdWarning(5006) << "Unknown override character encoding \"" << currentOverrideEncoding
+                    << "\". Resetting to Auto." << endl;
+    mOverrideCharsetCombo->setCurrentItem( 0 );
+    GlobalSettings::self()->setOverrideCharacterEncoding( QString::null );
+  }
 }
 
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
