@@ -176,7 +176,7 @@ bool CopyFolderJob::createTargetDir()
     if ( mNewParent->owner() )
       typenew = mNewParent->owner()->folderType();
 
-    mNewFolder = folderMgr->createFolder( mStorage->name(), false, typenew, mNewParent );
+    mNewFolder = folderMgr->createFolder( mStorage->folder()->name(), false, typenew, mNewParent );
     if ( !mNewFolder )
     {
       kdWarning(5006) << k_funcinfo << "could not create folder" << endl;
