@@ -96,6 +96,7 @@ using KMime::DateFormatter;
 #include <kconfig.h>
 #include <kactivelabel.h>
 #include <kcmultidialog.h>
+#include <knotifyconfigwidget.h>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -1365,10 +1366,11 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-  if(kmkernel->xmlGuiInstance())
-    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
+  if(kmkernel->xmlGuiInstance()) 
+#warning "kde4: port it"
+    KNotifyConfigWidget::configure(this/*,  kmkernel->xmlGuiInstance()->aboutData()*/);
   else
-    KNotifyDialog::configure(this);
+    KNotifyConfigWidget::configure(this);
 }
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings() {

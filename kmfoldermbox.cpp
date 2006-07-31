@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <knotifyclient.h>
+#include <knotification.h>
 #include <kprocess.h>
 #include <kconfig.h>
 
@@ -109,7 +109,7 @@ int KMFolderMbox::open()
   mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
   if (!mStream)
   {
-    KNotifyClient::event( 0, "warning",
+    KNotification::event( "warning",
     i18n("Cannot open file \"%1\":\n%2", location(), strerror(errno)));
     kDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;

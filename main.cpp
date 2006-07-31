@@ -82,9 +82,6 @@ int main(int argc, char *argv[])
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
 
-  // Make sure that the KNotify Daemon is running (this is necessary for people
-  // using KMail without KDE)
-  KNotifyClient::startDaemon();
 
 #warning Port me!
 //  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet

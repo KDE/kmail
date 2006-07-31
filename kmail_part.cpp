@@ -75,9 +75,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
 
-  // Make sure that the KNotify Daemon is running (this is necessary for people
-  // using KMail without KDE)
-  KNotifyClient::startDaemon();
 
   KMail::lockOrDie();
 

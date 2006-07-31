@@ -50,6 +50,7 @@
 #include <kstdaction.h>
 #include <kaddrbook.h>
 #include <ktoggleaction.h>
+#include <knotification.h>
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
@@ -901,13 +902,14 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   }
 
   if(kmkernel->xmlGuiInstance()) {
-    KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
-    KNotifyClient::event( topLevelWidget()->winId(), "new-mail-arrived",
-                          summary );
+#warning "kde4 : port ?"
+    //KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
+    KNotification::event( "new-mail-arrived",
+                          summary,QPixmap() ,topLevelWidget() );
   }
   else
-    KNotifyClient::event( topLevelWidget()->winId(), "new-mail-arrived",
-                          summary );
+    KNotification::event( "new-mail-arrived",
+                          summary,QPixmap() ,topLevelWidget() );
 
   if (mBeepOnNew) {
     KNotification::beep();

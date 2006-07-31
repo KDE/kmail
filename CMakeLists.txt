@@ -204,7 +204,8 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} kmime kpgp kdepim kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} phononcore )
+target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} kmime kpgp kdepim
+  kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} phononcore knotifyconfig )
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
@@ -310,7 +311,7 @@ install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg  DESTINATION $
 install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
 install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
 install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
-install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc kmail_part.rc  DESTINATION ${DATA_INSTALL_DIR}/kmail)
+install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc kmail.notifyrc kmail_part.rc  DESTINATION ${DATA_INSTALL_DIR}/kmail)
 install( FILES dcopmail.desktop dcopimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install( FILES application_octetstream.desktop  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter)
 install( FILES kmail.upd  DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
