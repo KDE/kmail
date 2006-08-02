@@ -1366,7 +1366,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-  if(kmkernel->xmlGuiInstance()) 
+  if(kmkernel->xmlGuiInstance())
 #warning "kde4: port it"
     KNotifyConfigWidget::configure(this/*,  kmkernel->xmlGuiInstance()->aboutData()*/);
   else
@@ -2367,6 +2367,13 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
       break;
     }
     i++;
+  }
+  if ( i == encodings.size() ) {
+    // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
+    kWarning(5006) << "Unknown override character encoding \"" << currentOverrideEncoding
+                   << "\". Resetting to Auto." << endl;
+    mOverrideCharsetCombo->setCurrentItem( 0 );
+    GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
   }
 }
 

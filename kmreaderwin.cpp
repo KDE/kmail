@@ -1050,6 +1050,13 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
           break;
         }
       }
+      if ( i == encodings.size() ) {
+        // the value of encoding is unknown => use Auto
+        kWarning(5006) << "Unknown override character encoding \"" << encoding
+                       << "\". Using Auto instead." << endl;
+        mSelectEncodingAction->setCurrentItem( 0 );
+        mOverrideEncoding.clear();
+      }
     }
   }
   update( true );
