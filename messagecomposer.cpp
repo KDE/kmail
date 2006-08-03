@@ -76,7 +76,7 @@
 #include <ktoggleaction.h>
 #include <QFile>
 #include <QTextCodec>
-#include <q3textedit.h>
+#include <QTextEdit>
 #include <QTimer>
 //Added by qt3to4:
 #include <QList>
@@ -2045,11 +2045,12 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 //-----------------------------------------------------------------------------
 Q3CString MessageComposer::plainTextFromMarkup( const QString& markupText )
 {
-  Q3TextEdit *hackConspiratorTextEdit = new Q3TextEdit( markupText );
+  QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
   hackConspiratorTextEdit->setTextFormat(Qt::PlainText);
   if ( !mDisableBreaking ) {
-    hackConspiratorTextEdit->setWordWrap( Q3TextEdit::FixedColumnWidth );
-    hackConspiratorTextEdit->setWrapColumnOrWidth( mLineBreakColumn );
+    hackConspiratorTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
+#warning "kde4: port it"
+    //hackConspiratorTextEdit->setWrapColumnOrWidth( mLineBreakColumn );
   }
   QString text = hackConspiratorTextEdit->text();
   Q3CString textbody;

@@ -3,7 +3,7 @@
 
 #include <kdialog.h>
 
-#include <q3textedit.h>
+#include <QTextEdit>
 
 namespace KMail {
 
@@ -18,7 +18,7 @@ public:
   void setScript( const QString & script ) { mTextEdit->setText( script ); }
 
 private:
-  Q3TextEdit * mTextEdit;
+  QTextEdit * mTextEdit;
 };
 
 }
