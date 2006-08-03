@@ -32,7 +32,7 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QLayout>
-#include <q3textedit.h>
+#include <QTextEdit>
 
 #include <QStackedWidget>
 //Added by qt3to4:
@@ -109,12 +109,12 @@ namespace KMail {
 
     int pageno = 0;
     // page 0: input field for direct entering:
-    mTextEdit = new Q3TextEdit( widgetStack );
+    mTextEdit = new QTextEdit( widgetStack );
     mTextEdit->setWhatsThis(
         i18n("Use this field to enter an arbitrary static signature."));
     widgetStack->insertWidget( pageno,mTextEdit );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
-    mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
+    mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
     mTextEdit->setTextFormat( Qt::PlainText );
 
     widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0

@@ -26,7 +26,7 @@
 
 class QString;
 class QStringList;
-class Q3TextEdit;
+class QTextEdit;
 template <typename T> class QList;
 
 class KMAccount;
@@ -77,7 +77,7 @@ protected:
     KMail::SieveJob *mSieveJob;
     KUrl mUrl;
 
-    Q3TextEdit *mEdit;
+    QTextEdit *mEdit;
 
     // Copied from AccountManager, because we have to do an async iteration
     // WARNING: When copy/pasting this code, be aware that accounts may

@@ -37,7 +37,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <QLabel>
 #include <QCheckBox>
 #include <QLineEdit>
-#include <q3textedit.h>
+#include <QTextEdit>
 #include <kiconloader.h>
 
 namespace KMail {
@@ -76,7 +76,8 @@ namespace KMail {
     // Message text edit:
     ++row;
     glay->setRowStretch( row, 1 );
-    mTextEdit = new Q3TextEdit( frame, "mTextEdit" );
+    mTextEdit = new QTextEdit( frame );
+    mTextEdit->setObjectName( "mTextEdit" );
     mTextEdit->setTextFormat( Qt::PlainText );
     glay->addWidget( mTextEdit, row, 0, 1, 2 );
 

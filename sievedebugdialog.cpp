@@ -43,7 +43,7 @@
 using KMail::AccountManager;
 #include "kmkernel.h"
 #include "sievejob.h"
-#include <q3textedit.h>
+#include <QTextEdit>
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -198,7 +198,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     for ( KMAccount *a = am->first(); a; a = am->next() )
         mAccountList.append( a );
 
-    mEdit = new Q3TextEdit( this );
+    mEdit = new QTextEdit( this );
     setMainWidget( mEdit );
 
     mEdit->setText( i18n( "Collecting diagnostic information about Sieve support...\n\n" ) );

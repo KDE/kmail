@@ -22,7 +22,7 @@
 class QString;
 class QCheckBox;
 class QLineEdit;
-class Q3TextEdit;
+class QTextEdit;
 class KDateWidget;
 class KIntSpinBox;
 template <typename T> class QList;
@@ -63,7 +63,7 @@ namespace KMail {
     QCheckBox   * mActiveCheck;
     KIntSpinBox * mIntervalSpin;
     QLineEdit   * mMailAliasesEdit;
-    Q3TextEdit   * mTextEdit;
+    QTextEdit   * mTextEdit;
   };
 
 } // namespace KMail

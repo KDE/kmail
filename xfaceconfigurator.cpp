@@ -190,11 +190,12 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
     page_vlay->setSpacing( KDialog::spacingHint() );
-    mTextEdit = new Q3TextEdit( page );
+    mTextEdit = new QTextEdit( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
-    mTextEdit->setWrapPolicy( Q3TextEdit::Anywhere );
+    mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
+
     mTextEdit->setTextFormat( Qt::PlainText );
     label2 = new KActiveLabel( i18n("Examples are available at <a href=\"http://www.xs4all.nl/~ace/X-Faces/\">http://www.xs4all.nl/~ace/X-Faces/</a>."), page );
     page_vlay->addWidget( label2 );
