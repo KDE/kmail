@@ -349,7 +349,7 @@ If this box is checked, you will be warned if one of the CRLs you are using is a
                             <property name="suffix">
                                 <string> days</string>
                             </property>
-                            <property name="maxValue">
+                            <property name="maximum">
                                 <number>999</number>
                             </property>
                             <property name="value">
@@ -473,7 +473,7 @@ It is recommended to leave this option turned on for maximum integrity.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
                     <property name="value">
@@ -520,7 +520,7 @@ It is recommended to keep this option turned on to avoid using certificates that
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
                     <property name="value">

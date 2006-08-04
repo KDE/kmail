@@ -125,10 +125,10 @@ It is recommended to leave this option turned on for maximum security.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
@@ -153,10 +153,10 @@ The recommended SPHINX setting is 14 days.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
@@ -181,10 +181,10 @@ The recommended SPHINX setting is 14 days.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
@@ -209,10 +209,10 @@ The recommended SPHINX setting is 14 days.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
@@ -237,10 +237,10 @@ The recommended SPHINX setting is 14 days.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
@@ -265,10 +265,10 @@ The recommended SPHINX setting is 14 days.
                     <property name="suffix">
                         <string> days</string>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>999</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
                     <property name="value">
