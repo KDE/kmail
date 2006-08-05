@@ -7,7 +7,7 @@
 #endif
 
 #include <config-kmail.h>
-
+#include <kicon.h>
 #include <kwin.h>
 
 #ifdef MALLOC_DEBUG

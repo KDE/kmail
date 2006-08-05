@@ -40,7 +40,7 @@
 #include <kconfig.h>
 #include <kstdaction.h>
 #include <kpushbutton.h>
-
+#include <kicon.h>
 #include <QCheckBox>
 #include <QLayout>
 //Added by qt3to4:

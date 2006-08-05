@@ -23,6 +23,7 @@
 #include <kstdaction.h>
 #include <kdebug.h>
 #include <ktip.h>
+#include <kicon.h>
 
 #include "kmmainwin.moc"
 

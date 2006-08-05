@@ -60,7 +60,7 @@ using KMail::ISubject;
 using KMail::URLHandlerManager;
 #include "interfaces/observable.h"
 #include "util.h"
-
+#include <kicon.h>
 #include "broadcaststatus.h"
 
 #include <kmime_mdn.h>

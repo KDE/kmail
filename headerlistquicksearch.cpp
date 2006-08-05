@@ -44,7 +44,7 @@
 #include <kiconloader.h>
 #include <k3listview.h>
 #include <klocale.h>
-
+#include <kicon.h>
 #include "kmfolder.h"
 #include "kmheaders.h"
 #include "kmsearchpattern.h"
