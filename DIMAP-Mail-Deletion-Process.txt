@@ -1,0 +1,73 @@
+DIMAP deletion handling summary:
+----------------------------------------------------------
+
+local state is determined by:
+
+uidMap:  maps uid to folder index
+in-memory: QMap, filled and reloaded from folder.index
+on-disk: uid is kept in the folder.index file on disk and as a X-UID header in each mail
+
+mUidValidity: the last uidvalidity value seen from the server
+in-memory: QString, loaded from uidcache file on startup only
+on-disk: uidcache file, written at the end of each sync and from timers
+
+mLastUid: the highest uid seen on the server in this folder
+in-memory: ulong, read from uidcache file on startup only
+                    during sync the temporary mTentativeHighesUid is updated, then
+                    written to mLastUid when the sync is finished, reset on failure
+on-disk: uidcache file, written at the end of each sync and from timers
+
+server state is determined by:
+
+listMessages() fills by iterating over the listing received from the server:
+
+uidsOnServer
+mMsgsForDownload
+mUidsForDownload
+
+uidsForDeletionOnServer: 
+  added to if the uid is smaller than the highest seen one (and thus should 
+  be present locally) but isn't, as determined by whether it can be found 
+  in the uidMap
+
+Possible failures:
+     uid from server wrong
+       reused -> smaller than lastUid, but new => won't be downloaded
+       larger than it needs to be => no problem
+    uid from server is fine
+       mLastUid is too small 
+           => already seen uids might be downloaded again
+       mLastUid is too high
+           => listed new mail is thought to be already downloaded, not found locally
+                 and then deleted on the server
+        local deletion after server deletion does not depend on mLastUid, local
+        mail will only be deleted if it was not listed
+        uidMap wrong:
+            locally present uid not found in map => wrong deletion on the server
+            not locally present uid found => uid not downloaded, server unaffected
+       mUidValidity wrong:
+            empty => server uid is accepted, sync proceeds normally
+            different from server => local expunge, mLastUid set to 0, uidmap cleared
+                                                     local changes are lost, server state restored
+
+
+Dangerous paths for mail deletion:
+
+mLastUid higher than what is locally known:
+  initialized to 0
+  last value read from uidcache file
+  only set to a higher value when that value is seen from server, via mTentativeHighestUid
+  failure to read uidcache file => value remains 0
+  failure to write uidcache file => in memory value remains correct, next restart reads a too low value
+  => should not cause trouble, unless somehow a too large value ends up in mLastUid
+
+uidMap does not report mails that are really there:
+  QMap corruption unlikely, it's rebuilt defensively
+  on-disk mail header corruption unlikely
+  index file corruption more likely
+
+deleteMessages somehow called with an empty or incorrect uidsOnServer:
+  possible scenario:
+    uidsOnServer is emptied, in preparation of listing
+    listing somehow finishes without the job reporting an error, but without the
+    listing actually having taken place
