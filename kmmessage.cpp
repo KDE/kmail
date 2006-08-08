@@ -738,6 +738,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
   const QTextCodec * codec = 0;
 
   partNode * root = partNode::fromMessage( this );
+  if ( !root ) return QString::null;
   parseTextStringFromDwPart( root, parsedString, codec, isHTML );
   delete root;
 
