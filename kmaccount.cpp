@@ -377,7 +377,12 @@ void KMAccount::mailCheck()
 {
   if (mTimer)
     mTimer->stop();
-  kmkernel->acctMgr()->singleCheckMail(this, false);
+
+  if ( kmkernel ) {
+    AccountManager *acctmgr = kmkernel->acctMgr();
+    if ( acctmgr )
+      acctmgr->singleCheckMail(this, false);
+  }
 }
 
 //-----------------------------------------------------------------------------
