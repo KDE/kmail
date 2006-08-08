@@ -124,12 +124,18 @@ protected slots:
   /** Called when the user clicks the 'Delete' button. Deletes the
       current filter. */
   void slotDelete();
+  /** Called when the user clicks the 'Top' button. Moves the current
+      filter to the top line. */
+  void slotTop();
   /** Called when the user clicks the 'Up' button. Moves the current
       filter up one line. */
   void slotUp();
   /** Called when the user clicks the 'Down' button. Moves the current
       filter down one line. */
   void slotDown();
+  /** Called when the user clicks the 'Bottom' button. Moves the current
+      filter to the bottom line. */
+  void slotBottom();
   /** Called when the user clicks the 'Rename' button. Pops up a
       dialog prompting to enter the new name. */
   void slotRename();
@@ -140,14 +146,16 @@ protected:
   /** The listbox displaying the filter list. */
   QListBox *mListBox;
   /** The various action buttons. */
-  QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
+  QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnRename;
+  QPushButton *mBtnTop, *mBtnUp, *mBtnDown, *mBtnBot;
   /** The index of the currently selected item. */
   int mIdxSelItem;
   bool mShowLater;
 private:
   void enableControls();
   void insertFilter( KMFilter* aFilter );
-  void swapNeighbouringFilters( int untouchedOne, int movedOne);
+  void swapFilters( int from, int to );
+  void swapNeighbouringFilters( int untouchedOne, int movedOne );
   bool bPopFilter;
 };
 

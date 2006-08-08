@@ -69,6 +69,12 @@ I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently-"
 	   "it is deleted, but you can always leave the "
 	   "dialog by clicking <em>Cancel</em> to discard the "
 	   "changes made.</p></qt>" );
+const char * _wt_filterlist_top =
+I18N_NOOP( "<qt><p>Click this button to move the currently-"
+	   "selected filter to the <em>top</em> of the list above.</p>"
+	   "<p>This is useful since the order of the filters in the list "
+	   "determines the order in which they are tried on messages: "
+	   "The topmost filter gets tried first.</p></qt>" );
 const char * _wt_filterlist_up =
 I18N_NOOP( "<qt><p>Click this button to move the currently-"
 	   "selected filter <em>up</em> one in the list above.</p>"
@@ -85,6 +91,12 @@ I18N_NOOP( "<qt><p>Click this button to move the currently-"
 	   "The topmost filter gets tried first.</p>"
 	   "<p>If you have clicked this button accidentally, you can undo this "
 	   "by clicking on the <em>Up</em> button.</p></qt>" );
+const char * _wt_filterlist_bot =
+I18N_NOOP( "<qt><p>Click this button to move the currently-"
+	   "selected filter to the <em>bottom</em> of the list above.</p>"
+	   "<p>This is useful since the order of the filters in the list "
+	   "determines the order in which they are tried on messages: "
+	   "The topmost filter gets tried first.</p></qt>" );
 const char * _wt_filterlist_rename =
 I18N_NOOP( "<qt><p>Click this button to rename the currently-selected filter.</p>"
 	   "<p>Filters are named automatically, as long as they start with "
@@ -268,7 +280,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
   	     this, SLOT(slotApplicableAccountsChanged()) );
     connect( mAccountList, SIGNAL(spacePressed(QListViewItem*)),
   	     this, SLOT(slotApplicableAccountsChanged()) );
-    
+
     // transfer changes from the 'stop processing here'
     // check box to the filter
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
@@ -434,7 +446,7 @@ void KMFilterDlg::slotApplicabilityChanged()
       mFilter->setApplicability( KMFilter::ButImap );
     else if ( mApplyOnForChecked->isChecked() )
       mFilter->setApplicability( KMFilter::Checked );
-      
+
     mApplyOnForAll->setEnabled( mApplyOnIn->isChecked() );
     mApplyOnForTraditional->setEnabled(  mApplyOnIn->isChecked() );
     mApplyOnForChecked->setEnabled( mApplyOnIn->isChecked() );
@@ -566,6 +578,10 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
   hb->setSpacing(4);
+  mBtnTop = new KPushButton( QString::null, hb );
+  mBtnTop->setAutoRepeat( true );
+  mBtnTop->setIconSet( BarIconSet( "top", KIcon::SizeSmall ) );
+  mBtnTop->setMinimumSize( mBtnTop->sizeHint() * 1.2 );
   mBtnUp = new KPushButton( QString::null, hb );
   mBtnUp->setAutoRepeat( true );
   mBtnUp->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
@@ -574,10 +590,18 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown->setAutoRepeat( true );
   mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
+  mBtnBot = new KPushButton( QString::null, hb );
+  mBtnBot->setAutoRepeat( true );
+  mBtnBot->setIconSet( BarIconSet( "bottom", KIcon::SizeSmall ) );
+  mBtnBot->setMinimumSize( mBtnBot->sizeHint() * 1.2 );
+  QToolTip::add( mBtnTop, i18n("Top") );
   QToolTip::add( mBtnUp, i18n("Up") );
   QToolTip::add( mBtnDown, i18n("Down") );
+  QToolTip::add( mBtnBot, i18n("Bottom") );
+  QWhatsThis::add( mBtnTop, i18n(_wt_filterlist_top) );
   QWhatsThis::add( mBtnUp, i18n(_wt_filterlist_up) );
   QWhatsThis::add( mBtnDown, i18n(_wt_filterlist_down) );
+  QWhatsThis::add( mBtnBot, i18n(_wt_filterlist_bot) );
 
   //----------- the second row of buttons
   hb = new QHBox(this);
@@ -606,10 +630,14 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 	   this, SLOT(slotSelected(int)) );
   connect( mListBox, SIGNAL( doubleClicked ( QListBoxItem * )),
            this, SLOT( slotRename()) );
+  connect( mBtnTop, SIGNAL(clicked()),
+	   this, SLOT(slotTop()) );
   connect( mBtnUp, SIGNAL(clicked()),
 	   this, SLOT(slotUp()) );
   connect( mBtnDown, SIGNAL(clicked()),
 	   this, SLOT(slotDown()) );
+  connect( mBtnBot, SIGNAL(clicked()),
+	   this, SLOT(slotBottom()) );
   connect( mBtnNew, SIGNAL(clicked()),
 	   this, SLOT(slotNew()) );
   connect( mBtnCopy, SIGNAL(clicked()),
@@ -720,7 +748,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 		       "IMAP account. Such filters will only be applied "
 		       "when manually filtering and when filtering "
 		       "incoming online IMAP mail.");
-    KMessageBox::information( this, str, QString::null, 
+    KMessageBox::information( this, str, QString::null,
 			      "filterDlgOnlineImapCheck" );
   }
   // allow usage of the filters again.
@@ -811,6 +839,21 @@ void KMFilterListBox::slotDelete()
   enableControls();
 }
 
+void KMFilterListBox::slotTop()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug(5006) << "KMFilterListBox::slotTop called while no filter is selected, ignoring." << endl;
+    return;
+  }
+  if ( mIdxSelItem == 0 ) {
+    kdDebug(5006) << "KMFilterListBox::slotTop called while the _topmost_ filter is selected, ignoring." << endl;
+    return;
+  }
+
+  swapFilters( mIdxSelItem, 0 );
+  enableControls();
+}
+
 void KMFilterListBox::slotUp()
 {
   if ( mIdxSelItem < 0 ) {
@@ -838,6 +881,21 @@ void KMFilterListBox::slotDown()
   }
 
   swapNeighbouringFilters( mIdxSelItem, mIdxSelItem + 1);
+  enableControls();
+}
+
+void KMFilterListBox::slotBottom()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug(5006) << "KMFilterListBox::slotBottom called while no filter is selected, ignoring." << endl;
+    return;
+  }
+  if ( mIdxSelItem == (int)mListBox->count() - 1 ) {
+    kdDebug(5006) << "KMFilterListBox::slotBottom called while the _last_ filter is selected, ignoring." << endl;
+    return;
+  }
+
+  swapFilters( mIdxSelItem, mListBox->count()-1 );
   enableControls();
 }
 
@@ -888,8 +946,10 @@ void KMFilterListBox::enableControls()
   bool theLast = ( mIdxSelItem >= (int)mFilterList.count() - 1 );
   bool aFilterIsSelected = ( mIdxSelItem >= 0 );
 
+  mBtnTop->setEnabled( aFilterIsSelected && !theFirst );
   mBtnUp->setEnabled( aFilterIsSelected && !theFirst );
   mBtnDown->setEnabled( aFilterIsSelected && !theLast );
+  mBtnBot->setEnabled( aFilterIsSelected && !theLast );
   mBtnCopy->setEnabled( aFilterIsSelected );
   mBtnDelete->setEnabled( aFilterIsSelected );
   mBtnRename->setEnabled( aFilterIsSelected );
@@ -983,6 +1043,19 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
   mIdxSelItem += movedOne - untouchedOne;
 }
 
+void KMFilterListBox::swapFilters( int from, int to )
+{
+  QListBoxItem *item = mListBox->item( from );
+  mListBox->takeItem( item );
+  mListBox->insertItem( item, to );
+
+  KMFilter* filter = mFilterList.take( from );
+  mFilterList.insert( to, filter );
+
+  mIdxSelItem = to;
+  mListBox->setCurrentItem( mIdxSelItem );
+  mListBox->setSelected( mIdxSelItem, true );
+}
 
 //=============================================================================
 //
