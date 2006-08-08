@@ -1000,6 +1000,28 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     kdError(5006) << "Not an IMAP resource folder" << endl;
 }
 
+static QString uidFromXmlString( const QString& s )
+{
+    QString uid;
+    QString schedulingId;
+    QDomDocument doc;
+    if ( doc.setContent( s ) ) {
+        QDomElement top = doc.documentElement();
+        for ( QDomNode n = top.firstChild(); !n.isNull(); n = n.nextSibling() ) {
+            QDomElement e = n.toElement();
+            if ( e.tagName() == "uid" ) {
+                uid = e.text();
+            } else if ( e.tagName() == "x-kde-internaluid" ) {
+                schedulingId = e.text();
+            }
+            if ( !uid.isEmpty() && !schedulingId.isEmpty() )
+                break; // done for sure
+        }
+    }
+    return schedulingId.isEmpty() ? uid : schedulingId;
+}
+
+
 // KMail deleted a file
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
                                                Q_UINT32 sernum )
@@ -1031,17 +1053,10 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         break;
     case StorageXML:
         if ( kolabXMLFoundAndDecoded( *msg, folderKolabMimeType( folder->storage()->contentsType() ), s ) ) {
-            QDomDocument doc;
-            if ( doc.setContent( s ) ) {
-                QDomElement top = doc.documentElement();
-                for ( QDomNode n = top.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-                    QDomElement e = n.toElement();
-                    if ( e.tagName() == "uid" ) {
-                        uid = e.text();
-                        ok = true;
-                        break;
-                    }
-                }
+            uid = uidFromXmlString( s );
+            if ( !uid.isEmpty() ) {
+                ok = true;
+                break;
             }
         }
         break;
