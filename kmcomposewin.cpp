@@ -4126,14 +4126,16 @@ void KMComposeWin::slotSubjectTextSpellChecked()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
-  if ( mEditor->autoSpellChecking(on) == -1 )
+  if ( mEditor->autoSpellChecking(on) == -1 ) {
     mAutoSpellCheckingAction->setChecked(false); // set it to false again
+  }
+
   QString temp;
   if ( on )
-    temp = i18n( "on" );
+    temp = i18n( "Spellcheck: on" );
   else
-    temp = i18n( "off" );
-  statusBar()->changeItem( i18n( " Spellcheck: %1 " ).arg( temp ), 3 );
+    temp = i18n( "Spellcheck: off" );
+  statusBar()->changeItem( temp, 3 );
 }
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheck()
