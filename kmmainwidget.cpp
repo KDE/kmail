@@ -2572,13 +2572,13 @@ void KMMainWidget::setupActions()
   mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "mail_todo",
                                  0, this, SLOT(slotSetMsgStatusTodo()),
                                  actionCollection(), "status_todo");
-  mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
+  mToggleTodoAction->setCheckedState( i18n("Remove &To-do Message Mark") );
   mStatusMenu->insert( mToggleTodoAction );
 
   mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
-  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
+  mToggleSentAction->setCheckedState( i18n("Remove &Sent Mark") );
 
 
   //----- "Mark Thread" submenu
@@ -2615,7 +2615,7 @@ void KMMainWidget::setupActions()
   mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &To-do"), "mail_todo",
                                        0, this, SLOT(slotSetThreadStatusTodo()),
                                        actionCollection(), "thread_todo");
-  mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
+  mToggleThreadTodoAction->setCheckedState( i18n("Remove &To-do Thread Mark") );
   mThreadStatusMenu->insert( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
@@ -2876,7 +2876,7 @@ void KMMainWidget::slotCollapseAllThreads()
 void KMMainWidget::slotShowMsgSrc()
 {
   if ( mMsgView )
-    mMsgView->setUpdateAttachment( false );  
+    mMsgView->setUpdateAttachment( false );
   KMMessage *msg = mHeaders->currentMsg();
   if ( !msg )
     return;
@@ -3014,7 +3014,7 @@ void KMMainWidget::updateMessageActions()
 
     mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
-          || ( mFolder && mHeaders->currentMsg() && 
+          || ( mFolder && mHeaders->currentMsg() &&
               ( kmkernel->folderIsDraftOrOutbox( mFolder )
              || kmkernel->folderIsSentMailFolder( mFolder ) ) ) );
     mSaveAsAction->setEnabled( mass_actions );
