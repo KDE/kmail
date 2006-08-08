@@ -706,6 +706,8 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
                                            const QTextCodec*& codec,
                                            bool& isHTML ) const
 {
+  if ( !root ) return;
+
   isHTML = false;
   // initialy parse the complete message to decrypt any encrypted parts
   {
@@ -3819,7 +3821,7 @@ const QStringList &KMMessage::preferredCharsets()
 //-----------------------------------------------------------------------------
 QCString KMMessage::charset() const
 {
-  if ( mMsg->Headers().HasContentType() ) {  
+  if ( mMsg->Headers().HasContentType() ) {
     DwMediaType &mType=mMsg->Headers().ContentType();
     mType.Parse();
     DwParameter *param=mType.FirstParameter();
