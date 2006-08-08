@@ -1466,8 +1466,9 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
 
-  statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
-  statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
+  statusBar()->insertItem(i18n( " Spellcheck: %1 ").arg( "   " ), 3, 0, true );
+  statusBar()->insertItem(i18n( " Column: %1 ").arg("     "), 2, 0, true);
+  statusBar()->insertItem(i18n( " Line: %1 ").arg("     "), 1, 0, true);
 }
 
 
@@ -4127,6 +4128,12 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
   if ( mEditor->autoSpellChecking(on) == -1 )
     mAutoSpellCheckingAction->setChecked(false); // set it to false again
+  QString temp;
+  if ( on )
+    temp = i18n( "Spellcheck: on" );
+  else
+    temp = i18n( "Spellcheck: off" );
+  statusBar()->changeItem( temp, 3 );
 }
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheck()
@@ -4601,19 +4608,19 @@ void KMComposeWin::fontChanged( const QFont &f )
 {
   QFontDatabase *fontdb = new QFontDatabase();
 
-  if ( fontdb->bold(f.family(), "Bold") ) {
+  if ( fontdb->bold( f.family(), "Bold" ) ) {
     textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
-    textBoldAction->setEnabled(true);
+    textBoldAction->setEnabled( true );
+  } else {
+    textBoldAction->setEnabled( false );
   }
-  else
-    textBoldAction->setEnabled(false);
 
-  if ( fontdb->italic(f.family(), "Italic") ) {
+  if ( fontdb->italic( f.family(), "Italic" ) ) {
     textItalicAction->setChecked( f.italic() );
-    textItalicAction->setEnabled(true);
+    textItalicAction->setEnabled( true );
+  } else {
+    textItalicAction->setEnabled( false );
   }
-  else
-    textItalicAction->setEnabled(false);
 
   textUnderAction->setChecked( f.underline() );
 

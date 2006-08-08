@@ -248,8 +248,6 @@ void KMEdit::initializeAutoSpellChecking()
                                                 col1, col2, col3, col4,
                                                 mSpellConfig );
 
-  connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
-           mComposer, SLOT(slotStatusMessage(const QString &)));
   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
            this, SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
 }
