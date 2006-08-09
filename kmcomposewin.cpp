@@ -4307,24 +4307,30 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   QString edtText = mEditor->text();
-  bool appendNewSig = true;
-  // try to truncate the old sig
-  if( !mOldSigText.isEmpty() )
-  {
-    if( edtText.endsWith( mOldSigText ) )
-      edtText.truncate( edtText.length() - mOldSigText.length() );
-    else
-      appendNewSig = false;
+
+  if ( mOldSigText.isEmpty() ) {
+    const KPIM::Identity &id =
+      kmkernel->
+      identityManager()->
+      identityForUoidOrDefault( mMsg->headerField( "X-KMail-Identity" ).
+                                stripWhiteSpace().toUInt() );
+    mOldSigText = id.signatureText();
   }
+
+  // try to truncate the old sig
+  QString sigStr = mOldSigText + "\\s*$";  // because extra spaces are appended
+  QRegExp rx( sigStr );                    // to the signature in some cases.
+  if ( edtText.contains( rx ) ) {          // hey, that rhymes!
+    edtText.remove( rx );
+  }
+
   // now append the new sig
   mOldSigText = ident.signatureText();
-  if( appendNewSig )
-  {
-    if( (!mOldSigText.isEmpty()) &&
-                   (GlobalSettings::self()->autoTextSignature()=="auto") )
-      edtText.append( mOldSigText );
-    mEditor->setText( edtText );
+  if( ( !mOldSigText.isEmpty() ) &&
+      ( GlobalSettings::self()->autoTextSignature() == "auto" ) ) {
+    edtText.append( mOldSigText );
   }
+  mEditor->setText( edtText );
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
