@@ -173,7 +173,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   }
 
   //Ensure the message is correctly and fully parsed
-  
+
   /* The above was added by Marc and seems to be necessary to ensure
    * the mail is in a sane state before sending. The unGet makes the
    * attached unencrypted version of the mail (if there is one ) disappear.
@@ -331,10 +331,10 @@ void KMSender::doSendMsg()
         imapSentFolder =
           kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
     }
-    // No, or no usable sentFolder, and no, or no usable imapSentFolder, 
+    // No, or no usable sentFolder, and no, or no usable imapSentFolder,
     // let's try the on in the identity
     if ( ( sentFolder == 0 || sentFolder->isReadOnly() )
-      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() ) 
+      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() )
       && !id.fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
@@ -600,7 +600,7 @@ void KMSender::doSendMsgAux()
   QStringList to, cc, bcc;
   QString sender;
   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
-  
+
   // MDNs are required to have an empty envelope from as per RFC2298.
   if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
     sender = "<>";
@@ -1052,12 +1052,14 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   QString query = "headers=0&from=";
   query += KURL::encode_string( sender );
 
-  if ( !to.empty() )
-    query += "&to=" + to.join( "&to=" );
-  if ( !cc.empty() )
-    query += "&cc=" + cc.join( "&cc=" );
-  if ( !bcc.empty() )
-    query += "&bcc=" + bcc.join( "&bcc=" );
+  QStringList::ConstIterator it;
+
+  for ( it = to.begin(); it != to.end(); ++it )
+    query += "&to=" + KURL::encode_string(*it);
+  for ( it = cc.begin(); it != cc.end(); ++it )
+    query += "&cc=" + KURL::encode_string(*it);
+  for ( it = bcc.begin(); it != bcc.end(); ++it )
+    query += "&bcc=" + KURL::encode_string(*it);
 
   KMTransportInfo * ti = mSender->transportInfo();
 
