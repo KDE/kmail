@@ -2155,9 +2155,11 @@ void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageF
   }
 
   mSignature = signature;
-  Q_ASSERT( !mSignature.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
-  if ( mSignature.isNull() ) {
-    KMessageBox::error( mComposeWin, i18n( "The signing operation failed for an unknown reason." ) );
+  if ( mSignature.isEmpty() ) {
+    KMessageBox::sorry( mComposeWin,
+                        i18n( "The signing operation failed. "
+                              "Please make sure that the gpg-agent program "
+                              "is running." ) );
   }
 }
 
