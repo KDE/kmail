@@ -355,7 +355,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       return;
     }
 
-    if( !aMsg.parent()->isSent() && !aMsg.parent()->isDrafts() ) {
+    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() || aMsg.parent()->isDrafts() ) ) ) {
+      // add the reply and forward actions only if we are not in a sent-mail or drafts
+      // folder
       mReplyActionMenu->plug( menu );
       mForwardActionMenu->plug( menu );
       menu->insertSeparator();
