@@ -43,8 +43,9 @@ private slots:
   void slotReplyAllToMsg();
   void slotReplyAuthorToMsg();
   void slotReplyListToMsg();
-  void slotForwardMsg();
+  void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
+  void slotForwardDigestMsg();
   void slotRedirectMsg();
   void slotShowMsgSrc();
 
@@ -60,8 +61,8 @@ private:
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-          *mReplyListAction, *mForwardAction,
-          *mForwardAttachedAction, *mRedirectAction,
+          *mReplyListAction, *mForwardInlineAction,
+          *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
           *mViewSourceAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;

@@ -112,8 +112,9 @@ public:
   KAction *replyListAction() const { return mReplyListAction; }
   KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
-  KAction *forwardAction() const { return mForwardAction; }
+  KAction *forwardInlineAction() const { return mForwardInlineAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
+  KAction *forwardDigestAction() const { return mForwardDigestAction; }
   KAction *redirectAction() const { return mRedirectAction; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
@@ -373,8 +374,9 @@ protected slots:
   void slotReplyAuthorToMsg();
   void slotReplyListToMsg();
   void slotReplyAllToMsg();
-  void slotForwardMsg();
+  void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
+  void slotForwardDigestMsg();
   void slotRedirectMsg();
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
@@ -407,9 +409,10 @@ private:
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-      *mReplyListAction,
-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mNoQuoteReplyAction;
+    *mReplyListAction,
+    *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
+    *mRedirectAction,
+    *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions

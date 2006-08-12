@@ -86,13 +86,13 @@ public:
    * @param curFolder The folder to use as the new base for searches.
    */
   void activateFolder( KMFolder* curFolder );
-  
+
   /**
    * Provides access to the list of currently selected message in the listview.
    * @return The list of currenty selected search result messages.
    */
   KMMessageList selectedMessages();
-  
+
   /**
    * Provides access to the currently selected message.
    * @return the currently selected message.
@@ -120,7 +120,7 @@ protected slots:
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
-  void slotForwardMsg();
+  void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotSaveMsg();
   void slotSaveAttachments();
@@ -167,8 +167,8 @@ protected:
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<int,KMFolder*> mMenuToFolder;
   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-    *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-    *mSaveAtchAction;
+    *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction,
+    *mClearAction, *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 

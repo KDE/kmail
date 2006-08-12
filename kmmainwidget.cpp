@@ -1276,14 +1276,16 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotForwardMsg()
+void KMMainWidget::slotForwardInlineMsg()
 {
   KMMessageList* selected = mHeaders->selectedMsgs();
   KMCommand *command = 0L;
   if(selected && !selected->isEmpty()) {
-    command = new KMForwardCommand( this, *selected, mFolder->identity() );
+    command = new KMForwardInlineCommand( this, *selected,
+                                          mFolder->identity() );
   } else {
-    command = new KMForwardCommand( this, mHeaders->currentMsg(), mFolder->identity() );
+    command = new KMForwardInlineCommand( this, mHeaders->currentMsg(),
+                                          mFolder->identity() );
   }
 
   command->start();
@@ -1304,6 +1306,19 @@ void KMMainWidget::slotForwardAttachedMsg()
   command->start();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotForwardDigestMsg()
+{
+  KMMessageList* selected = mHeaders->selectedMsgs();
+  KMCommand *command = 0L;
+  if(selected && !selected->isEmpty()) {
+    command = new KMForwardDigestCommand( this, *selected, mFolder->identity() );
+  } else {
+    command = new KMForwardDigestCommand( this, mHeaders->currentMsg(), mFolder->identity() );
+  }
+
+  command->start();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditMsg()
@@ -2463,14 +2478,30 @@ void KMMainWidget::setupActions()
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
+					SLOT(slotForwardAttachedMsg()),
+                                        actionCollection(),
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( forwardAttachedAction() );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
+  mForwardInlineAction = new KAction( i18n("&Inline..."), "mail_forward",
+                                      SHIFT+Key_F, this,
+                                      SLOT(slotForwardInlineMsg()),
+                                      actionCollection(),
+                                      "message_forward_inline" );
 
-  mForwardActionMenu->insert( forwardAction() );
+  mForwardActionMenu->insert( forwardInlineAction() );
+  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotForwardDigestMsg()),
+                                      actionCollection(),
+                                      "message_forward_as_digest" );
+  mForwardActionMenu->insert( forwardDigestAction() );
+  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                 "mail_forward", Key_E, this,
+                                 SLOT(slotRedirectMsg()),
+				 actionCollection(),
+                                 "message_forward_redirect" );
+  mForwardActionMenu->insert( redirectAction() );
+
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
@@ -2501,12 +2532,6 @@ void KMMainWidget::setupActions()
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
-
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-                                 "mail_forward",
-				 Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
-  mForwardActionMenu->insert( redirectAction() );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
@@ -2959,6 +2984,10 @@ void KMMainWidget::updateMessageActions()
       allSelectedInCommonThread = true;
     }
 
+    QListViewItem *curItemParent = mHeaders->currentItem();
+    bool parent_thread = 0;
+    if ( curItemParent && curItemParent->firstChild() != 0 ) parent_thread = 1;
+
     bool mass_actions = count >= 1;
     bool thread_actions = mass_actions && allSelectedInCommonThread &&
                           mHeaders->isThreaded();
@@ -2993,8 +3022,9 @@ void KMMainWidget::updateMessageActions()
     mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mFindInMessageAction->setEnabled( mass_actions );
-    mForwardAction->setEnabled( mass_actions );
+    mForwardInlineAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );
+    mForwardDigestAction->setEnabled( count > 1 || parent_thread );
 
     forwardMenu()->setEnabled( mass_actions );
 

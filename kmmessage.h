@@ -33,7 +33,7 @@ class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
 class KMHeaders;
-class KMForwardCommand;
+class KMForwardDigestCommand;
 
 namespace KMime {
   class CharFreq;
@@ -66,7 +66,7 @@ namespace KMail {
 /** This is a Mime Message. */
 class KMMessage: public KMMsgBase, public KMail::ISubject
 {
-  friend class ::KMForwardCommand;    // needed for MIME Digest forward
+  friend class ::KMForwardDigestCommand; // needed for MIME Digest forward
 
 public:
   // promote some of KMMsgBase's methods to public:
@@ -811,7 +811,7 @@ public:
   bool transferInProgress() const;
   /** Set that the message shall not be deleted because it is still required */
   void setTransferInProgress(bool value, bool force = false);
-  
+
   /** Returns an mbox message separator line for this message, i.e. a
       string of the form
       "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".

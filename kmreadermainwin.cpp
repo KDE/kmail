@@ -164,14 +164,14 @@ void KMReaderMainWin::slotReplyListToMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::slotForwardMsg()
+void KMReaderMainWin::slotForwardInlineMsg()
 {
    KMCommand *command = 0;
    if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
-    command = new KMForwardCommand( this, mReaderWin->message(),
+    command = new KMForwardInlineCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
    } else {
-    command = new KMForwardCommand( this, mReaderWin->message() );
+    command = new KMForwardInlineCommand( this, mReaderWin->message() );
    }
    command->start();
 }
@@ -185,6 +185,19 @@ void KMReaderMainWin::slotForwardAttachedMsg()
         mReaderWin->message()->parent()->identity() );
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
+   }
+   command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotForwardDigestMsg()
+{
+   KMCommand *command = 0;
+   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
+     command = new KMForwardDigestCommand( this, mReaderWin->message(),
+        mReaderWin->message()->parent()->identity() );
+   } else {
+     command = new KMForwardDigestCommand( this, mReaderWin->message() );
    }
    command->start();
 }
@@ -247,20 +260,32 @@ void KMReaderMainWin::setupAccel()
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
            SLOT( slotForwardMsg() ) );
 
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
-  mForwardActionMenu->insert( mForwardAction );
-
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
+                                        "mail_forward", Key_F, this,
+					SLOT(slotForwardAttachedMsg()),
+                                        actionCollection(),
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
 
+  mForwardInlineAction = new KAction( i18n("&Inline..."),
+                                      "mail_forward", SHIFT+Key_F, this,
+                                      SLOT(slotForwardInlineMsg()),
+                                      actionCollection(),
+                                      "message_forward_inline" );
+  mForwardActionMenu->insert( mForwardInlineAction );
+
+  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotForwardDigestMsg()),
+                                      actionCollection(),
+                                      "message_forward_as_digest" );
+  mForwardActionMenu->insert( mForwardDigestAction );
+
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
+				 "mail_forward", Key_E, this,
+                                 SLOT(slotRedirectMsg()),
+				 actionCollection(),
+                                 "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
 
   mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),

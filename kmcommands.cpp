@@ -847,7 +847,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   if ( msg ) {
     QCString str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asString() );
-    str += "\n";
+    str += '\n';
     msg->setTransferInProgress(false);
 
     mData = str;
@@ -1124,143 +1124,72 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 }
 
 
-KMForwardCommand::KMForwardCommand( QWidget *parent,
+KMForwardInlineCommand::KMForwardInlineCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList, uint identity )
   : KMCommand( parent, msgList ),
     mIdentity( identity )
 {
 }
 
-KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
-                                    uint identity )
+KMForwardInlineCommand::KMForwardInlineCommand( QWidget *parent,
+  KMMessage *msg, uint identity )
   : KMCommand( parent, msg ),
     mIdentity( identity )
 {
 }
 
-KMCommand::Result KMForwardCommand::execute()
+KMCommand::Result KMForwardInlineCommand::execute()
 {
   QPtrList<KMMessage> msgList = retrievedMsgs();
 
-  if (msgList.count() >= 2) {
-    // ask if they want a mime digest forward
+  if (msgList.count() >= 2) { // Multiple forward
 
-    if (KMessageBox::questionYesNo( parentWidget(),
-                                    i18n("Forward selected messages as "
-                                         "a MIME digest?"), QString::null, i18n("Send Digest"), i18n("Send") )
-        == KMessageBox::Yes) {
-      uint id = 0;
-      KMMessage *fwdMsg = new KMMessage;
-      KMMessagePart *msgPart = new KMMessagePart;
-      QString msgPartText;
-      int msgCnt = 0; // incase there are some we can't forward for some reason
+    uint id = 0;
+    QCString msgText = "";
+    QPtrList<KMMessage> linklist;
+    for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
+      // set the identity
+      if (id == 0)
+        id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
 
-      // dummy header initialization; initialization with the correct identity
-      // is done below
-      fwdMsg->initHeader(id);
-      fwdMsg->setAutomaticFields(true);
-      fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
-      QCString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
-      msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
-                         " message is contained in the attachment(s).\n\n\n");
-      // iterate through all the messages to be forwarded
-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
-        // set the identity
-        if (id == 0)
-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-        // set the part header
-        msgPartText += "--";
-        msgPartText += QString::fromLatin1( boundary );
-        msgPartText += "\nContent-Type: MESSAGE/RFC822";
-        msgPartText += QString("; CHARSET=%1").arg(msg->charset());
-        msgPartText += "\n";
-        DwHeaders dwh;
-        dwh.MessageId().CreateDefault();
-        msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
-        msgPartText += QString("Content-Description: %1").arg(msg->subject());
-        if (!msg->subject().contains("(fwd)"))
-          msgPartText += " (fwd)";
-        msgPartText += "\n\n";
-        // remove headers that shouldn't be forwarded
-        msg->removePrivateHeaderFields();
-        msg->removeHeaderField("BCC");
-        // set the part
-        msgPartText += msg->headerAsString();
-        msgPartText += "\n";
-        msgPartText += msg->body();
-        msgPartText += "\n";     // eot
-        msgCnt++;
-        fwdMsg->link(msg, KMMsgStatusForwarded);
-      }
-      if ( id == 0 )
-        id = mIdentity; // use folder identity if no message had an id set
-      fwdMsg->initHeader(id);
-      msgPartText += "--";
-      msgPartText += QString::fromLatin1( boundary );
-      msgPartText += "--\n";
-      QCString tmp;
-      msgPart->setTypeStr("MULTIPART");
-      tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
-      msgPart->setSubtypeStr( tmp );
-      msgPart->setName("unnamed");
-      msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
-      msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
-      // THIS HAS TO BE AFTER setCte()!!!!
-      msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
-      KCursorSaver busy(KBusyPtr::busy());
+      msgText += msg->createForwardBody();
+      linklist.append( msg );
+    }
+    if ( id == 0 )
+      id = mIdentity; // use folder identity if no message had an id set
+    KMMessage *fwdMsg = new KMMessage;
+    fwdMsg->initHeader( id );
+    fwdMsg->setAutomaticFields( true );
+    fwdMsg->setCharset( "utf-8" );
+    fwdMsg->setBody( msgText );
+
+    for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() )
+      fwdMsg->link( msg, KMMsgStatusForwarded );
+
+    KCursorSaver busy( KBusyPtr::busy() );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+    win->setCharset("");
+    win->show();
+
+  } else { // forward a single message at most
+
+    KMMessage *msg = msgList.getFirst();
+    if ( !msg || !msg->codec() )
+      return Failed;
+
+    KCursorSaver busy( KBusyPtr::busy() );
+    KMMessage *fwdMsg = msg->createForward();
+
+    uint id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
+    if ( id == 0 )
+      id = mIdentity;
+    {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
-      win->addAttach(msgPart);
+      win->setCharset( fwdMsg->codec()->mimeName(), true );
+      win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
       win->show();
-      return OK;
-    } else {            // NO MIME DIGEST, Multiple forward
-      uint id = 0;
-      QCString msgText = "";
-      QPtrList<KMMessage> linklist;
-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
-        // set the identity
-        if (id == 0)
-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-
-        msgText += msg->createForwardBody();
-        linklist.append(msg);
-      }
-      if ( id == 0 )
-        id = mIdentity; // use folder identity if no message had an id set
-      KMMessage *fwdMsg = new KMMessage;
-      fwdMsg->initHeader(id);
-      fwdMsg->setAutomaticFields(true);
-      fwdMsg->setCharset("utf-8");
-      fwdMsg->setBody(msgText);
-
-      for (KMMessage *msg = linklist.first(); msg; msg = linklist.next())
-        fwdMsg->link(msg, KMMsgStatusForwarded);
-
-      KCursorSaver busy(KBusyPtr::busy());
-      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
-      win->setCharset("");
-      win->show();
-      return OK;
     }
   }
-
-  // forward a single message at most.
-  KMMessage *msg = msgList.getFirst();
-  if ( !msg || !msg->codec() )
-    return Failed;
-
-  KCursorSaver busy(KBusyPtr::busy());
-  KMMessage *fwdMsg = msg->createForward();
-
-  uint id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-  if ( id == 0 )
-    id = mIdentity;
-  {
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
-    win->setCharset( fwdMsg->codec()->mimeName(), true );
-    win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
-    win->show();
-  }
-
   return OK;
 }
 
@@ -1329,8 +1258,95 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 }
 
 
+KMForwardDigestCommand::KMForwardDigestCommand( QWidget *parent,
+           const QPtrList<KMMsgBase> &msgList, uint identity, KMail::Composer *win )
+  : KMCommand( parent, msgList ), mIdentity( identity ),
+    mWin( QGuardedPtr<KMail::Composer>( win ))
+{
+}
+
+KMForwardDigestCommand::KMForwardDigestCommand( QWidget *parent,
+           KMMessage * msg, uint identity, KMail::Composer *win )
+  : KMCommand( parent, msg ), mIdentity( identity ),
+    mWin( QGuardedPtr< KMail::Composer >( win ))
+{
+}
+
+KMCommand::Result KMForwardDigestCommand::execute()
+{
+  QPtrList<KMMessage> msgList = retrievedMsgs();
+
+  if ( msgList.count() < 2 )
+    return Undefined; // must have more than 1 for a digest
+
+  uint id = 0;
+  KMMessage *fwdMsg = new KMMessage;
+  KMMessagePart *msgPart = new KMMessagePart;
+  QString msgPartText;
+  int msgCnt = 0; // incase there are some we can't forward for some reason
+
+  // dummy header initialization; initialization with the correct identity
+  // is done below
+  fwdMsg->initHeader( id );
+  fwdMsg->setAutomaticFields( true );
+  fwdMsg->mMsg->Headers().ContentType().CreateBoundary( 1 );
+  QCString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+  msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
+                     " message is contained in the attachment(s).\n\n\n");
+  // iterate through all the messages to be forwarded
+  for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
+    // set the identity
+    if ( id == 0 )
+      id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
+    // set the part header
+    msgPartText += "--";
+    msgPartText += QString::fromLatin1( boundary );
+    msgPartText += "\nContent-Type: MESSAGE/RFC822";
+    msgPartText += QString( "; CHARSET=%1" ).arg( msg->charset() );
+    msgPartText += '\n';
+    DwHeaders dwh;
+    dwh.MessageId().CreateDefault();
+    msgPartText += QString( "Content-ID: %1\n" ).arg( dwh.MessageId().AsString().c_str() );
+    msgPartText += QString( "Content-Description: %1" ).arg( msg->subject() );
+    if ( !msg->subject().contains( "(fwd)" ) )
+      msgPartText += " (fwd)";
+    msgPartText += "\n\n";
+    // remove headers that shouldn't be forwarded
+    msg->removePrivateHeaderFields();
+    msg->removeHeaderField( "BCC" );
+    // set the part
+    msgPartText += msg->headerAsString();
+    msgPartText += '\n';
+    msgPartText += msg->body();
+    msgPartText += '\n';     // eot
+    msgCnt++;
+    fwdMsg->link( msg, KMMsgStatusForwarded );
+  }
+
+  if ( id == 0 )
+    id = mIdentity; // use folder identity if no message had an id set
+  fwdMsg->initHeader( id );
+  msgPartText += "--";
+  msgPartText += QString::fromLatin1( boundary );
+  msgPartText += "--\n";
+  QCString tmp;
+  msgPart->setTypeStr( "MULTIPART" );
+  tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
+  msgPart->setSubtypeStr( tmp );
+  msgPart->setName( "unnamed" );
+  msgPart->setCte( DwMime::kCte7bit );   // does it have to be 7bit?
+  msgPart->setContentDescription( QString( "Digest of %1 messages." ).arg( msgCnt ) );
+  // THIS HAS TO BE AFTER setCte()!!!!
+  msgPart->setBodyEncoded( QCString( msgPartText.ascii() ) );
+  KCursorSaver busy( KBusyPtr::busy() );
+  KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+  win->addAttach( msgPart );
+  win->show();
+  return OK;
+}
+
 KMRedirectCommand::KMRedirectCommand( QWidget *parent,
-  KMMessage *msg )
+                                      KMMessage *msg )
   : KMCommand( parent, msg )
 {
 }

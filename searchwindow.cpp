@@ -270,12 +270,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                         "search_message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-                                0, this, SLOT(slotForwardMsg()),
-                                ac, "search_message_forward_inline" );
-  mForwardActionMenu->insert( mForwardAction );
+  mForwardInlineAction = new KAction( i18n("&Inline..."), "mail_forward",
+                                      0, this, SLOT(slotForwardMsg()),
+                                      ac, "search_message_forward_inline" );
+  mForwardActionMenu->insert( mForwardInlineAction );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-                                       "mail_forward", 0, this,
+                                        "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()), ac,
                                         "search_message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
@@ -773,9 +773,9 @@ void SearchWindow::slotReplyListToMsg()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotForwardMsg()
+void SearchWindow::slotForwardInlineMsg()
 {
-    KMCommand *command = new KMForwardCommand(this, selectedMessages());
+    KMCommand *command = new KMForwardInlineCommand(this, selectedMessages());
     command->start();
 }
 

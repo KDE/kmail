@@ -460,15 +460,15 @@ private:
   QString mSelection;
 };
 
-class KDE_EXPORT KMForwardCommand : public KMCommand
+class KDE_EXPORT KMForwardInlineCommand : public KMCommand
 {
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
-                    uint identity = 0 );
-  KMForwardCommand( QWidget *parent, KMMessage * msg,
-                    uint identity = 0 );
+  KMForwardInlineCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+                          uint identity = 0 );
+  KMForwardInlineCommand( QWidget *parent, KMMessage * msg,
+                          uint identity = 0 );
 
 private:
   virtual Result execute();
@@ -485,6 +485,23 @@ public:
   KMForwardAttachedCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
 			    uint identity = 0, KMail::Composer *win = 0 );
   KMForwardAttachedCommand( QWidget *parent, KMMessage * msg,
+			    uint identity = 0, KMail::Composer *win = 0 );
+
+private:
+  virtual Result execute();
+
+  uint mIdentity;
+  QGuardedPtr<KMail::Composer> mWin;
+};
+
+class KDE_EXPORT KMForwardDigestCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMForwardDigestCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+			    uint identity = 0, KMail::Composer *win = 0 );
+  KMForwardDigestCommand( QWidget *parent, KMMessage * msg,
 			    uint identity = 0, KMail::Composer *win = 0 );
 
 private:
