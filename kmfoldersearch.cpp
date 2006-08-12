@@ -78,6 +78,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     mRoot = 0;
     mSearchPattern = 0;
     mFoundCount = 0;
+    mSearchCount = 0;
 
     mProcessNextBatchTimer = new QTimer();
     connect(mProcessNextBatchTimer, SIGNAL(timeout()), this, SLOT(slotProcessNextBatch()));
@@ -154,6 +155,7 @@ void KMSearch::start()
     }
 
     mFoundCount = 0;
+    mSearchCount = 0;
     mRunning = true;
     mRunByIndex = false;
     // check if this query can be done with the index
@@ -217,6 +219,7 @@ void KMSearch::stop()
                 account->ignoreJobsForFolder( folder );
             }
             folder->storage()->search( 0 );
+            mSearchCount += folder->count();
             folder->close();
         }
     }
@@ -282,6 +285,7 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
           SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
                                         const KMSearchPattern*, bool ) ) );
       --mRemainingFolders;
+      mSearchCount += folder->count();
       folder->close();
       mOpenedFolders.remove( folder );
       if ( mRemainingFolders <= 0 )
@@ -940,18 +944,18 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
-      connect( folder->storage(), 
+      connect( folder->storage(),
               SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
-                                               Q_UINT32 serNum, 
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
+                                               Q_UINT32 serNum,
                                                const KMSearchPattern* pattern,
                                                bool matches )
 {
@@ -1103,10 +1107,10 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
       unsigned int count = mFoldersCurrentlyBeingSearched[aFolder];
       mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
     } else {
-      connect( aFolder->storage(), 
+      connect( aFolder->storage(),
               SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
     }

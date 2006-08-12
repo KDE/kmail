@@ -71,6 +71,7 @@ public:
   bool running() const { return mRunning; }
   void stop();
   int foundCount() const { return mFoundCount; }
+  int searchCount() const { return mSearchCount; }
   QString currentFolder() const { return mLastFolder; }
 
 public slots:
@@ -101,6 +102,7 @@ private:
   SerNumList mSerNums;
   QString mLastFolder;
   int mFoundCount;
+  int mSearchCount;
   QTimer *mProcessNextBatchTimer;
 };
 
@@ -162,7 +164,7 @@ public slots:
   virtual int updateIndex();
 
   // Examine the message
-  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, 
+  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum,
                                  const KMSearchPattern*, bool );
 
 public:

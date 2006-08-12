@@ -339,33 +339,33 @@ void SearchWindow::setEnabledSearchButton(bool)
 //-----------------------------------------------------------------------------
 void SearchWindow::updStatus(void)
 {
-    QString genMsg, detailMsg;
-    int numMatches = 0, count = 0;
+    QString genMsg, detailMsg, procMsg;
+    int numMatches = 0, numProcessed = 0;
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     QString folderName;
     if (search) {
         numMatches = search->foundCount();
+        numProcessed = search->searchCount();
         folderName = search->currentFolder();
     }
 
     if (mFolder && mFolder->search() && !mFolder->search()->running()) {
+        procMsg = i18n("%n message searched", "%n messages searched",
+                       numProcessed);
         if(!mStopped) {
-            genMsg = i18n("Done");
-            detailMsg = i18n("%n match (%1)", "%n matches (%1)", numMatches)
-                        .arg(i18n("%n message processed",
-                                  "%n messages processed", count));
+            genMsg = i18n("Done.");
+            detailMsg = i18n("%n match in %1", "%n matches in %1",
+                             numMatches).arg(procMsg);
         } else {
-            genMsg = i18n("Search canceled");
-            detailMsg = i18n("%n match so far (%1)",
-                             "%n matches so far (%1)", numMatches)
-                        .arg(i18n("%n message processed",
-                                  "%n messages processed", count));
+            genMsg = i18n("Search canceled.");
+            detailMsg = i18n("%n match so far in %1", "%n matches so far in %1",
+                             numMatches).arg(procMsg);
         }
     } else {
+        procMsg = i18n("%n message", "%n messages", numProcessed);
         genMsg = i18n("%n match", "%n matches", numMatches);
-        detailMsg = i18n("Searching in %1 (message %2)")
-                    .arg(folderName)
-                    .arg(count);
+        detailMsg = i18n("Searching in %1. %2 searched so far")
+                    .arg(folderName).arg(procMsg);
     }
 
     mStatusBar->changeItem(genMsg, 0);
