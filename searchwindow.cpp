@@ -270,15 +270,26 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                         "search_message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
-  mForwardInlineAction = new KAction( i18n("&Inline..."), "mail_forward",
-                                      0, this, SLOT(slotForwardMsg()),
-                                      ac, "search_message_forward_inline" );
-  mForwardActionMenu->insert( mForwardInlineAction );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
                                         "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()), ac,
                                         "search_message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
+  mForwardInlineAction = new KAction( i18n("&Inline..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotForwardMsg()), ac,
+                                      "search_message_forward_inline" );
+  mForwardActionMenu->insert( mForwardInlineAction );
+  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotForwardDigestMsg()), ac,
+                                      "search_message_forward_as_digest" );
+  mForwardActionMenu->insert( mForwardDigestAction );
+  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotRedirectMsg()), ac,
+                                      "search_message_forward_redirect" );
+  mForwardActionMenu->insert( mRedirectAction );
   mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
   mSaveAtchAction = new KAction( i18n("Save Attachments..."), "attach", 0,
                                  this, SLOT(slotSaveAttachments()), ac, "search_save_attachments" );
@@ -705,6 +716,8 @@ void SearchWindow::updateContextMenuActions()
     mReplyAllAction->setEnabled( single_actions );
     mReplyListAction->setEnabled( single_actions );
     mPrintAction->setEnabled( single_actions );
+    mForwardDigestAction->setEnabled( !single_actions );
+    mRedirectAction->setEnabled( single_actions );
 }
 
 //-----------------------------------------------------------------------------
@@ -783,6 +796,20 @@ void SearchWindow::slotForwardInlineMsg()
 void SearchWindow::slotForwardAttachedMsg()
 {
     KMCommand *command = new KMForwardAttachedCommand(this, selectedMessages());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotForwardDigestMsg()
+{
+    KMCommand *command = new KMForwardDigestCommand(this, selectedMessages());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotRedirectMsg()
+{
+    KMCommand *command = new KMRedirectCommand(this, message());
     command->start();
 }
 

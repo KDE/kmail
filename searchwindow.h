@@ -122,6 +122,8 @@ protected slots:
   void slotReplyListToMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
+  void slotForwardDigestMsg();
+  void slotRedirectMsg();
   void slotSaveMsg();
   void slotSaveAttachments();
   void slotPrintMsg();
@@ -167,8 +169,8 @@ protected:
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<int,KMFolder*> mMenuToFolder;
   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-    *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction,
-    *mClearAction, *mSaveAtchAction;
+    *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
+    *mRedirectAction, *mPrintAction, *mClearAction, *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
