@@ -115,7 +115,7 @@ protected slots:
   virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
   virtual void copySelectedToFolder( int menuId );
   virtual void moveSelectedToFolder( int menuId );
-  virtual void slotFolderActivated( KMFolder* );
+  virtual void slotFolderActivated();
   void slotClearSelection();
   void slotReplyToMsg();
   void slotReplyAllToMsg();

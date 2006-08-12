@@ -388,10 +388,9 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
 
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotFolderActivated( KMFolder* folder )
+void SearchWindow::slotFolderActivated()
 {
     mChkbxSpecificFolders->setChecked(true);
-    mBtnSearch->setEnabled(folder);
 }
 
 //-----------------------------------------------------------------------------
