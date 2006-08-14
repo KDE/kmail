@@ -1144,14 +1144,16 @@ namespace KMail {
      ImapAccountBase::JobIterator it = findJob(job);
      if ( it == jobsEnd() ) return;
      int errorCode = job->error();
+     KMFolder * const parent = (*it).parent;
+     const QString path = (*it).path;
      if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
        bool cont = handleJobError( job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
-       emit imapStatusChanged( (*it).parent, (*it).path, cont );
+       emit imapStatusChanged( parent, path, cont );
      }
      else
      {
-       emit imapStatusChanged( (*it).parent, (*it).path, true );
+       emit imapStatusChanged( parent, path, true );
        removeJob(it);
      }
   }
