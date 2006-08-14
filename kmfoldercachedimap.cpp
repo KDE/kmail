@@ -1208,6 +1208,10 @@ void KMFolderCachedImap::uploadFlags()
 
 void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool cont)
 {
+  if ( mSyncState == SYNC_STATE_INITIAL ){
+      kdDebug(5006) << "IMAP status changed but reset " << endl;
+      return; // we were reset
+  }
   if ( folder->storage() == this ) {
     --mStatusFlagsJobs;
     if ( mStatusFlagsJobs == 0 || !cont ) // done or aborting
@@ -2010,6 +2014,7 @@ KMFolderCachedImap::slotACLChanged( const QString& userId, int permissions )
 // called by KMAcctCachedImap::killAllJobs
 void KMFolderCachedImap::resetSyncState()
 {
+  if ( mSyncState == SYNC_STATE_INITIAL ) return;
   mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
   close();
