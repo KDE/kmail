@@ -25,6 +25,8 @@
 #ifndef __KMAIL_NETWORKACCOUNT_H__
 #define __KMAIL_NETWORKACCOUNT_H__
 
+#include <qguardedptr.h>
+
 #include "kmaccount.h"
 
 #include "sieveconfig.h"
@@ -125,7 +127,7 @@ namespace KMail {
 
   protected:
     KMail::SieveConfig mSieveConfig;
-    KIO::Slave * mSlave;
+    QGuardedPtr<KIO::Slave> mSlave;
     QString mLogin, mPasswd, mAuth, mHost;
     unsigned short int mPort;
     bool mStorePasswd : 1;
