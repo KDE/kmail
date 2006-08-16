@@ -302,7 +302,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
           this, SLOT(folderInvalidated(KMFolder*)));
 
   connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
-          this, SLOT(slotFolderActivated(KMFolder*)));
+          this, SLOT(slotFolderActivated()));
 
 }
 
