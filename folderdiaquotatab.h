@@ -35,8 +35,10 @@
 #include "kmfolderdia.h"
 #include "kmfoldertype.h"
 #include "quotajobs.h"
-#include "folderdiaquotatab_p.h"
 
+namespace KMail {
+  class QuotaWidget;
+}
 class QVBox;
 class QWidgetStack;
 

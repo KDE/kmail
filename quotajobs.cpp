@@ -104,7 +104,7 @@ QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KURL
     QDataStream stream( packedArgs, IO_WriteOnly );
     stream << (int)'Q' << (int)'R' << url;
 
-    QuotaJobs::GetQuotarootJob *job = 
+    QuotaJobs::GetQuotarootJob *job =
         new QuotaJobs::GetQuotarootJob( url, packedArgs, false );
     connect(job, SIGNAL(quotaInfoReceived(const QuotaInfoList&)),
             SLOT(slotQuotaInfoReceived(const QuotaInfoList&)));
@@ -120,7 +120,7 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotarootResult( const QStringList& root
       // No error, so the account supports quota, but no usable info
       // was transmitted => no quota set on the folder. Make the info
       // valid, bit leave it empty.
-      mStorageQuotaInfo.name = "STORAGE";
+      mStorageQuotaInfo.setName( "STORAGE" );
     }
     if ( mStorageQuotaInfo.isValid() )
       emit storageQuotaResult( mStorageQuotaInfo );
@@ -131,7 +131,7 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotaInfoReceived( const QuotaInfoList& 
     QuotaInfoList::ConstIterator it( infos.begin() );
     while ( it != infos.end() ) {
       // FIXME we only use the first storage quota, for now
-      if ( it->name == "STORAGE" && !mStorageQuotaInfo.isValid() ) {
+      if ( it->getName() == "STORAGE" && !mStorageQuotaInfo.isValid() ) {
           mStorageQuotaInfo = *it;
       }
       ++it;

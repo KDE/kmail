@@ -46,16 +46,35 @@ namespace KMail {
 
 // One quota entry consisting of a name, the quota root,
 // the current value and the maximal value
-struct QuotaInfo {
+class QuotaInfo {
+  public :
   QuotaInfo() {} // for QValueVector
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
     : name( _name ), root( _root ), current( _current ),max( _max )  {}
   bool isValid() const { return !name.isEmpty(); }
   bool isEmpty() const { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
 
+  QString getName() const { return name; }
+  void setName( const QString& n ) { name = n; }
+  QString getRoot() const { return root; }
+  void setRoot( const QString& r ) { root = r; }
+  QVariant getMax() const { return max; }
+  void setMax( const QVariant& m ) { max = m; }
+  QVariant getCurrent() const { return current; }
+  void setCurrent( const QVariant& c ) { current = c; }
 
+  QString toString() const {
+    if ( isValid() && !isEmpty() ) {
+      readConfig();
+      int factor = static_cast<int> ( pow( 1000, mFactor ) );
+      return i18n("%1 of %2 %3 used").arg( current.toInt() / factor )
+                                .arg( max.toInt() / factor ).arg( mUnits );
+    }
+    return QString();
+  }
+
+ private:
   void readConfig() const {
-      //KConfigGroup general( KMKernel::config(), "General" );
       if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::KB )
       {
             mUnits = QString( i18n("KB") );
@@ -73,21 +92,11 @@ struct QuotaInfo {
            }
    }
 
-  QString toString() const {
-    if ( isValid() && !isEmpty() ) {
-      readConfig();
-      int factor = static_cast<int> ( pow( 1000, mFactor ) );
-      return i18n("%1 of %2 %3 used").arg( current.toInt() / factor )
-                                .arg( max.toInt() / factor ).arg( mUnits );
-    }
-    return QString();
-  }
-
   QString name;  // e.g. STORAGE
   QString root; /// e.g. INBOX
   QVariant current;
   QVariant max;
-  mutable QString mUnits;
+  mutable QString mUnits; //used by readConfig (const) privately and is modified
   mutable int mFactor;
 };
 

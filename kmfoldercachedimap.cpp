@@ -225,12 +225,13 @@ void KMFolderCachedImap::readConfig()
   int storageQutaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
   QString storageQuotaRoot = config->readEntry( "StorageQuotaRoot", QString::null );
   if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
-      mQuotaInfo.name = "STORAGE";
-      mQuotaInfo.root = storageQuotaRoot;
+      mQuotaInfo.setName( "STORAGE" );
+      mQuotaInfo.setRoot( storageQuotaRoot );
+
       if ( storageQutaUsage > -1 )
-        mQuotaInfo.current = storageQutaUsage;
+        mQuotaInfo.setCurrent( storageQutaUsage );
       if ( storageQutaLimit > -1 )
-        mQuotaInfo.max = storageQutaLimit;
+        mQuotaInfo.setMax( storageQutaLimit );
   }
 
   KMFolderMaildir::readConfig();
@@ -266,13 +267,13 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
   configGroup.writeEntry( "UserRights", mUserRights );
 
   if ( mQuotaInfo.isValid() ) {
-    if ( mQuotaInfo.current.isValid() ) {
-      configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current.toInt() );
+    if ( mQuotaInfo.getCurrent().isValid() ) {
+      configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.getCurrent().toInt() );
     }
-    if ( mQuotaInfo.max.isValid() ) {
-      configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max.toInt() );
+    if ( mQuotaInfo.getMax().isValid() ) {
+      configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.getMax().toInt() );
     }
-    configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root );
+    configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.getRoot() );
   } else {
     configGroup.deleteEntry( "StorageQuotaUsage");
     configGroup.deleteEntry( "StorageQuotaRoot");
@@ -395,7 +396,7 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
 /* Reimplemented from KMFolderMaildir */
 int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 {
-    /** 
+    /**
      * If the message is complete, remove the UID right away, if it isn't,
      * we still need it to fetch the message, and the second time through
      * will do it. */
@@ -1106,7 +1107,7 @@ void KMFolderCachedImap::deleteGhostMessages()
         && !mReadOnly
         && KMessageBox::warningYesNo( 0, i18n("At least one of the messages in folder %1 "
               "appears to be invalid, since it does not have a subject, a sender "
-              "or a receiver. Shall I remove it?" ).arg( folder()->prettyURL() ), 
+              "or a receiver. Shall I remove it?" ).arg( folder()->prettyURL() ),
             i18n("Removing ghost messages")  ) == KMessageBox::Yes ) {
         removeMsg( msgsForDeletion );
       } else {
@@ -1342,7 +1343,7 @@ bool KMFolderCachedImap::deleteMessages()
   /* Delete messages from the server that we dont have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
     if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) ) {
-        kdWarning(5006) << k_funcinfo << 
+        kdWarning(5006) << k_funcinfo <<
             "Mails ended up in the queue for being deleted on the "
             "server although the user does not have delete permissions. This should "
             "not happen." << endl;
@@ -1404,7 +1405,7 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
 void KMFolderCachedImap::listMessages() {
   bool groupwareOnly = GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
                && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
-               && folder()->isSystemFolder() 
+               && folder()->isSystemFolder()
                && mImapPath == "/INBOX/";
   // Don't list messages on the root folder, and skip the inbox, if this is
   // the inbox of a groupware-only dimap account
@@ -1494,7 +1495,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
        /*
         * If this message UID is not present locally, then it must
         * have been deleted by the user, so we delete it on the
-        * server also. If we don't have delete permissions on the server, 
+        * server also. If we don't have delete permissions on the server,
         * re-download the message, it must have vanished by some error, or
         * while we still thought we were allowed to delete (ACL change).
         *
@@ -1767,16 +1768,16 @@ void KMFolderCachedImap::listDirectory2() {
   }
 
   /* In case we are ignoring non-groupware folders, and this is the groupware
-   * main account, find out the contents types of folders that have newly 
+   * main account, find out the contents types of folders that have newly
    * appeared on the server. Otherwise just create them and finish listing.
    * If a folder is already known to be locally unsubscribed, it won't be
    * listed at all, on this level, so these are only folders that we are
    * seeing for the first time. */
-     
+
   /*  Note: We ask the globalsettings, and not the current state of the
-   *  kmkernel->iCalIface().isEnabled(), since that is false during the 
+   *  kmkernel->iCalIface().isEnabled(), since that is false during the
    *  very first sync, where we already want to filter. */
-  if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() 
+  if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
      && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
      && mAccount->hasAnnotationSupport()
      && GlobalSettings::self()->theIMAPResourceEnabled()
