@@ -50,25 +50,25 @@ class QuotaInfo {
   public :
   QuotaInfo() {} // for QValueVector
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
-    : name( _name ), root( _root ), current( _current ),max( _max )  {}
-  bool isValid() const { return !name.isEmpty(); }
-  bool isEmpty() const { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
+    : mName( _name ), mRoot( _root ), mCurrent( _current ),mMax( _max )  {}
+  bool isValid() const { return !mName.isEmpty(); }
+  bool isEmpty() const { return mName.isEmpty() || ( mRoot.isEmpty() && !mCurrent.isValid() && !mMax.isValid() ); }
 
-  QString getName() const { return name; }
-  void setName( const QString& n ) { name = n; }
-  QString getRoot() const { return root; }
-  void setRoot( const QString& r ) { root = r; }
-  QVariant getMax() const { return max; }
-  void setMax( const QVariant& m ) { max = m; }
-  QVariant getCurrent() const { return current; }
-  void setCurrent( const QVariant& c ) { current = c; }
+  QString name() const { return mName; }
+  void setName( const QString& n ) { mName = n; }
+  QString root() const { return mRoot; }
+  void setRoot( const QString& r ) { mRoot = r; }
+  QVariant max() const { return mMax; }
+  void setMax( const QVariant& m ) { mMax = m; }
+  QVariant current() const { return mCurrent; }
+  void setCurrent( const QVariant& c ) { mCurrent = c; }
 
   QString toString() const {
     if ( isValid() && !isEmpty() ) {
       readConfig();
       int factor = static_cast<int> ( pow( 1000, mFactor ) );
-      return i18n("%1 of %2 %3 used").arg( current.toInt() / factor )
-                                .arg( max.toInt() / factor ).arg( mUnits );
+      return i18n("%1 of %2 %3 used").arg( mCurrent.toInt() / factor )
+                                .arg( mMax.toInt() / factor ).arg( mUnits );
     }
     return QString();
   }
@@ -92,10 +92,10 @@ class QuotaInfo {
            }
    }
 
-  QString name;  // e.g. STORAGE
-  QString root; /// e.g. INBOX
-  QVariant current;
-  QVariant max;
+  QString mName;  // e.g. STORAGE
+  QString mRoot; /// e.g. INBOX
+  QVariant mCurrent;
+  QVariant mMax;
   mutable QString mUnits; //used by readConfig (const) privately and is modified
   mutable int mFactor;
 };

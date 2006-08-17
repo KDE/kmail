@@ -267,13 +267,13 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
   configGroup.writeEntry( "UserRights", mUserRights );
 
   if ( mQuotaInfo.isValid() ) {
-    if ( mQuotaInfo.getCurrent().isValid() ) {
-      configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.getCurrent().toInt() );
+    if ( mQuotaInfo.current().isValid() ) {
+      configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current().toInt() );
     }
-    if ( mQuotaInfo.getMax().isValid() ) {
-      configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.getMax().toInt() );
+    if ( mQuotaInfo.max().isValid() ) {
+      configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max().toInt() );
     }
-    configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.getRoot() );
+    configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
   } else {
     configGroup.deleteEntry( "StorageQuotaUsage");
     configGroup.deleteEntry( "StorageQuotaRoot");

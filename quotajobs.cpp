@@ -131,7 +131,7 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotaInfoReceived( const QuotaInfoList& 
     QuotaInfoList::ConstIterator it( infos.begin() );
     while ( it != infos.end() ) {
       // FIXME we only use the first storage quota, for now
-      if ( it->getName() == "STORAGE" && !mStorageQuotaInfo.isValid() ) {
+      if ( it->name() == "STORAGE" && !mStorageQuotaInfo.isValid() ) {
           mStorageQuotaInfo = *it;
       }
       ++it;
