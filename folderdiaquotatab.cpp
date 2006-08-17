@@ -44,18 +44,22 @@
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
 
+#include "folderdiaquotatab_p.h"
+
 #include <assert.h>
 
 using namespace KMail;
 
+/*
 class FolderDiaQuotaTab::QuotaWidget : public QWidget {
 public:
+
     QuotaWidget( QWidget* parent, const char* name = 0 )
         :QWidget( parent, name )
     {
       QVBoxLayout *box = new QVBoxLayout(this);
       QWidget *stuff = new QWidget( this );
-      QGridLayout* layout = 
+      QGridLayout* layout =
           new QGridLayout( stuff, 3, 3,
                            KDialog::marginHint(),
                            KDialog::spacingHint() );
@@ -89,7 +93,7 @@ private:
     QLabel* mRootLabel;
     QProgressBar* mProgressBar;
 };
-
+*/
 ///////////////////
 
 KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
@@ -107,7 +111,7 @@ KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* paren
   mLabel->setAlignment( AlignHCenter | AlignVCenter | WordBreak );
   mStack->addWidget( mLabel );
 
-  mQuotaWidget = new QuotaWidget( mStack );
+  mQuotaWidget = new KMail::QuotaWidget( mStack );
 }
 
 

@@ -61,7 +61,6 @@
         </choices>
         <default>DontSendOnCheck</default>
       </entry>
-
     </group>
 
     <group name="FolderSelectionDialog">
@@ -92,6 +91,17 @@
           "of newly arrived messages is shown in the new mail notification; "
           "otherwise, you will only get a simple 'New mail arrived' message."
           "</whatsthis>
+      </entry>
+
+      <entry name="QuotaUnit"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="KB"/>
+          <choice name="MB"/>
+          <choice name="GB"/>
+        </choices>
+        <default>KB</default>
       </entry>
     </group>
 
@@ -237,13 +247,13 @@
      <entry name="FallbackCharacterEncoding" type="String" key="FallbackCharacterEncoding">
        <default code="true"> QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp"? QCString("jis7") : QCString(QTextCodec::codecForLocale()->name()).lower()</default>
        <label></label>
-       <whatsthis>Some emails, especially those generated automatically, do not specify the character encoding which needs to be used to properly display them. In such cases a fallback character encoding will be used, which you can configure here. Set it to the character encoding most commonly used in your part of the world. As a default the encoding configured for the whole system is used.</whatsthis> 
+       <whatsthis>Some emails, especially those generated automatically, do not specify the character encoding which needs to be used to properly display them. In such cases a fallback character encoding will be used, which you can configure here. Set it to the character encoding most commonly used in your part of the world. As a default the encoding configured for the whole system is used.</whatsthis>
      </entry>
 
      <entry name="OverrideCharacterEncoding" type="String" key="encoding">
        <default></default>
        <label></label>
-       <whatsthis>Changing this from its default 'Auto' will force the use of the specified encoding for all emails, regardless of what they specify themselves.</whatsthis> 
+       <whatsthis>Changing this from its default 'Auto' will force the use of the specified encoding for all emails, regardless of what they specify themselves.</whatsthis>
      </entry>
     </group>
 
