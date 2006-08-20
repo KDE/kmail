@@ -371,7 +371,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     // I think only the "from"-field makes sense.
     msgContents = msg->headerField( field() );
     if ( msgContents.isEmpty() )
-      return false;
+      return ( function() == FuncIsInAddressbook ) ? false : true;
   }
 
   // these two functions need the kmmessage therefore they don't call matchesInternal
