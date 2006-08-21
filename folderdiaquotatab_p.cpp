@@ -77,4 +77,4 @@ void QuotaWidget::readConfig()
 }
 
 
-#include "folderdiaquotatab_p.moc.cpp"
+#include "folderdiaquotatab_p.moc"
