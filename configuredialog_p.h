@@ -867,7 +867,6 @@ protected:
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
   KMFolderComboBox *mOnStartupOpenFolder;
-  QComboBox    *mQuotaCmbBox;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {

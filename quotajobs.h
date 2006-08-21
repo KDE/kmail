@@ -38,66 +38,26 @@
 #include <klocale.h>
 #include <qvaluevector.h>
 
-#include <math.h>
-
-#include "globalsettings.h"
-
 namespace KMail {
 
 // One quota entry consisting of a name, the quota root,
 // the current value and the maximal value
-class QuotaInfo {
-  public :
+struct QuotaInfo {
   QuotaInfo() {} // for QValueVector
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
-    : mName( _name ), mRoot( _root ), mCurrent( _current ),mMax( _max )  {}
-  bool isValid() const { return !mName.isEmpty(); }
-  bool isEmpty() const { return mName.isEmpty() || ( mRoot.isEmpty() && !mCurrent.isValid() && !mMax.isValid() ); }
-
-  QString name() const { return mName; }
-  void setName( const QString& n ) { mName = n; }
-  QString root() const { return mRoot; }
-  void setRoot( const QString& r ) { mRoot = r; }
-  QVariant max() const { return mMax; }
-  void setMax( const QVariant& m ) { mMax = m; }
-  QVariant current() const { return mCurrent; }
-  void setCurrent( const QVariant& c ) { mCurrent = c; }
-
+    : name( _name ), root( _root ), current( _current ),max( _max )  {}
+  bool isValid() const { return !name.isEmpty(); }
+  bool isEmpty() const { return name.isEmpty() || ( root.isEmpty() && !current.isValid() && !max.isValid() ); }
   QString toString() const {
     if ( isValid() && !isEmpty() ) {
-      readConfig();
-      int factor = static_cast<int> ( pow( 1000, mFactor ) );
-      return i18n("%1 of %2 %3 used").arg( mCurrent.toInt() / factor )
-                                .arg( mMax.toInt() / factor ).arg( mUnits );
+      return i18n("%1 of %2 KB used").arg( current.toInt() ).arg( max.toInt() );
     }
     return QString();
   }
-
- private:
-  void readConfig() const {
-      if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::KB )
-      {
-            mUnits = QString( i18n("KB") );
-            mFactor = 0;
-      }
-      else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::MB )
-           {
-                mUnits = QString( i18n("MB") );
-                mFactor = 1;
-           }
-      else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::GB )
-           {
-               mUnits = QString( i18n("GB") );
-               mFactor = 2;
-           }
-   }
-
-  QString mName;  // e.g. STORAGE
-  QString mRoot; /// e.g. INBOX
-  QVariant mCurrent;
-  QVariant mMax;
-  mutable QString mUnits; //used by readConfig (const) privately and is modified
-  mutable int mFactor;
+  QString name;  // e.g. STORAGE
+  QString root; /// e.g. INBOX
+  QVariant current;
+  QVariant max;
 };
 
 typedef QValueVector<QuotaInfo> QuotaInfoList;
@@ -135,12 +95,12 @@ public:
   GetQuotarootJob( const KURL& url, const QByteArray &packedArgs, bool showProgressInfo );
 
 signals:
-  /** Emitted when the server returns a (potentially empty) list of
+  /** Emitted when the server returns a (potentially empty) list of 
    * quota roots for the specified mailbox.
    * @param roots List of quota roots for the mailbox
    */
   void quotaRootResult( const QStringList& roots );
-
+ 
   /**
    * Emitted when the server returns a list of quota infos for the specified
    * mailbox. This is an aggregate of all quotas for all applicable roots for
@@ -148,7 +108,7 @@ signals:
    * @param info List of quota infos for the mailbox
    */
   void quotaInfoReceived( const QuotaInfoList& info );
-
+ 
 protected slots:
   void slotInfoMessage( KIO::Job*, const QString& );
 };

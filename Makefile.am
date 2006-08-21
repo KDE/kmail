@@ -100,7 +100,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp kmglobalns.cpp configur
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
                 accountcombobox.cpp quotajobs.cpp folderdiaquotatab.cpp \
-	        localsubscriptiondialog.cpp folderdiaquotatab_p.cpp
+	        localsubscriptiondialog.cpp
 
 kmail_SOURCES = main.cpp
 
@@ -143,7 +143,7 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		kmail-3.3-aegypten.pl \
 		kmail-3.3-split-sign-encr-keys.sh \
 		kmail-3.3-misc.pl \
-		kmail-3.3b1-misc.pl
+		kmail-3.3b1-misc.pl 
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc kmail.antivirusrc

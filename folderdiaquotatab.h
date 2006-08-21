@@ -36,9 +36,6 @@
 #include "kmfoldertype.h"
 #include "quotajobs.h"
 
-namespace KMail {
-  class QuotaWidget;
-}
 class QVBox;
 class QWidgetStack;
 
@@ -53,6 +50,7 @@ class ImapAccountBase;
 class FolderDiaQuotaTab : public FolderDiaTab
 {
   Q_OBJECT
+  class QuotaWidget;
 
 public:
   FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
@@ -75,7 +73,7 @@ private slots:
 private:
 
   QLabel* mLabel;
-  KMail::QuotaWidget* mQuotaWidget;
+  QuotaWidget* mQuotaWidget;
   QWidgetStack* mStack;
   ImapAccountBase* mImapAccount;
   QString mImapPath;
