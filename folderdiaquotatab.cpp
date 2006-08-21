@@ -44,53 +44,11 @@
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
 
+#include "folderdiaquotatab_p.h"
+
 #include <assert.h>
 
 using namespace KMail;
-
-class FolderDiaQuotaTab::QuotaWidget : public QWidget {
-public:
-    QuotaWidget( QWidget* parent, const char* name = 0 )
-        :QWidget( parent, name )
-    {
-      QVBoxLayout *box = new QVBoxLayout(this);
-      QWidget *stuff = new QWidget( this );
-      QGridLayout* layout = 
-          new QGridLayout( stuff, 3, 3,
-                           KDialog::marginHint(),
-                           KDialog::spacingHint() );
-      mInfoLabel = new QLabel("", stuff );
-      mRootLabel = new QLabel("", stuff );
-      mProgressBar = new QProgressBar( stuff );
-      layout->addWidget( new QLabel( i18n("Root:" ), stuff ), 0, 0 );
-      layout->addWidget( mRootLabel, 0, 1 );
-      layout->addWidget( new QLabel( i18n("Usage:"), stuff ), 1, 0 );
-      //layout->addWidget( new QLabel( i18n("Status:"), stuff ), 2, 0 );
-      layout->addWidget( mInfoLabel, 1, 1 );
-      layout->addWidget( mProgressBar, 2, 1 );
-      box->addWidget( stuff );
-      box->addStretch( 2 );
-    }
-
-    ~QuotaWidget() { }
-
-    void setQuotaInfo( const QuotaInfo& info )
-    {
-      // we are assuming only to get STORAGE type info here, thus
-      // casting to int is safe
-      int current = info.current.toInt();
-      int max = info.max.toInt();
-      mProgressBar->setProgress( current, max );
-      mInfoLabel->setText( i18n("%1 of %2 KB used").arg( current ).arg( max ) );
-      mRootLabel->setText( info.root );
-    }
-private:
-    QLabel* mInfoLabel;
-    QLabel* mRootLabel;
-    QProgressBar* mProgressBar;
-};
-
-///////////////////
 
 KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ),
@@ -107,7 +65,7 @@ KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* paren
   mLabel->setAlignment( AlignHCenter | AlignVCenter | WordBreak );
   mStack->addWidget( mLabel );
 
-  mQuotaWidget = new QuotaWidget( mStack );
+  mQuotaWidget = new KMail::QuotaWidget( mStack );
 }
 
 
