@@ -1116,8 +1116,13 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
     msg->toggleStatus( KMMsgStatusFlag );
   if ( ( (flags & 2) > 0 ) != ( (oldStatus & KMMsgStatusReplied) > 0 ) )
     msg->toggleStatus( KMMsgStatusReplied );
-  if ( ( (flags & 1) > 0 ) != ( (oldStatus & KMMsgStatusOld) > 0 ) )
-    msg->toggleStatus( KMMsgStatusOld );
+
+  // if the SEEN flag is set, we are neither new nor unread
+  if ( ( (flags & 1) > 0 ) ) {
+      if ( oldStatus & KMMsgStatusNew || oldStatus & KMMsgStatusUnread ) {
+        msg->setStatus( KMMsgStatusOld );
+      }
+  }
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
