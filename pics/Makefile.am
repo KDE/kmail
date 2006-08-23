@@ -12,7 +12,8 @@ pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmgroupware_folder_contacts.png \
 	kmgroupware_folder_calendar.png kmgroupware_folder_notes.png \
 	kmgroupware_folder_tasks.png kmgroupware_folder_journals.png \
-	kmmsgtodo.png
+	kmmsgtodo.png kmmsgread_fwd.png kmmsgread_replied.png\
+	kmmsgread_fwd_replied.png
 
 
 picsdir = $(kde_datadir)/kmail/pics
