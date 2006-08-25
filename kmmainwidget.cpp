@@ -840,12 +840,16 @@ void KMMainWidget::slotCheckMail()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCheckOneAccount(int item)
+void KMMainWidget::slotCheckOneAccount(QAction* item)
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  kmkernel->acctMgr()->intCheckMail(item);
+
+  KMAccount* t = kmkernel->acctMgr()->findByName(item->text());
+
+  if (!t)
+    kmkernel->acctMgr()->singleCheckMail(t);
 }
 
 //-----------------------------------------------------------------------------
@@ -1735,16 +1739,15 @@ void KMMainWidget::slotSendQueued()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSendQueuedVia( int item )
+void KMMainWidget::slotSendQueuedVia( QAction* item )
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
 
   QStringList availTransports= KMail::TransportManager::transportNames();
-  QString customTransport = availTransports[ item ];
-
-  kmkernel->msgSender()->sendQueued( customTransport );
+  if (availTransports.contains(item->text()))
+    kmkernel->msgSender()->sendQueued( item->text() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2294,9 +2297,8 @@ void KMMainWidget::getAccountMenu()
   mActMenu->clear();
   actList = kmkernel->acctMgr()->getAccounts();
   QStringList::Iterator it;
-  int id = 0;
-  for(it = actList.begin(); it != actList.end() ; ++it, id++)
-    mActMenu->insertItem((*it).replace("&", "&&"), id);
+  for(it = actList.begin(); it != actList.end() ; ++it)
+    mActMenu->addAction((*it).replace("&", "&&"));
 }
 
 //-----------------------------------------------------------------------------
@@ -2307,9 +2309,8 @@ void KMMainWidget::getTransportMenu()
   mSendMenu->clear();
   availTransports = KMail::TransportManager::transportNames();
   QStringList::Iterator it;
-  int id = 0;
-  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++)
-    mSendMenu->insertItem((*it).replace("&", "&&"), id);
+  for(it = availTransports.begin(); it != availTransports.end() ; ++it)
+    mSendMenu->addAction((*it).replace("&", "&&"));
 }
 
 //-----------------------------------------------------------------------------
@@ -2347,8 +2348,9 @@ void KMMainWidget::setupActions()
   connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
 
   mActMenu = actActionMenu->menu();
-  connect(mActMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
-  connect(mActMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
+  connect(mActMenu,SIGNAL(triggered(QAction*)),
+          SLOT(slotCheckOneAccount(QAction*)));
+  connect(mActMenu,SIGNAL(aboutToShow()), SLOT(getAccountMenu()));
 
   action = new KAction(KIcon("mail_send"),  i18n("&Send Queued Messages"), actionCollection(), "send_queued");
   connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
@@ -2362,8 +2364,8 @@ void KMMainWidget::setupActions()
   sendActionMenu->setDelayed(true);
 
   mSendMenu = sendActionMenu->menu();
-  connect(mSendMenu,SIGNAL(activated(int)), this, SLOT(slotSendQueuedVia(int)));
-  connect(mSendMenu,SIGNAL(aboutToShow()),this,SLOT(getTransportMenu()));
+  connect(mSendMenu,SIGNAL(triggered(QAction*)), SLOT(slotSendQueuedVia(QAction*)));
+  connect(mSendMenu,SIGNAL(aboutToShow()),SLOT(getTransportMenu()));
 
   KAction *act;
   //----- Tools menu
@@ -2627,19 +2629,19 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
 
-  mMarkThreadAsReadAction = new KAction( KIcon("kmmsgread"), i18n("Mark Thread as &Read"), 
+  mMarkThreadAsReadAction = new KAction( KIcon("kmmsgread"), i18n("Mark Thread as &Read"),
                                                 actionCollection(), "thread_read");
   connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusRead()));
   mMarkThreadAsReadAction->setToolTip(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
-  mMarkThreadAsNewAction = new KAction( KIcon("kmmsgnew"), i18n("Mark Thread as &New"), 
+  mMarkThreadAsNewAction = new KAction( KIcon("kmmsgnew"), i18n("Mark Thread as &New"),
                                                actionCollection(), "thread_new");
   connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
   mMarkThreadAsNewAction->setToolTip( i18n("Mark all messages in the selected thread as new"));
   mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
-  mMarkThreadAsUnreadAction = new KAction( KIcon("kmmsgunseen"), i18n("Mark Thread as &Unread"), 
+  mMarkThreadAsUnreadAction = new KAction( KIcon("kmmsgunseen"), i18n("Mark Thread as &Unread"),
                                                 actionCollection(), "thread_unread");
   connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusUnread()));
   mMarkThreadAsUnreadAction->setToolTip(i18n("Mark all messages in the selected thread as unread"));
@@ -2690,19 +2692,28 @@ void KMMainWidget::setupActions()
   unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
   QActionGroup *group = new QActionGroup( this );
 
-  mUnreadColumnToggle = new KToggleAction( i18nc("View->Unread Count", "View in &Separate Column"), 0, this,
-			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_column" );
+  mUnreadColumnToggle = new KToggleAction(
+                          i18nc("View->Unread Count", "View in &Separate Column"),
+                          actionCollection(), "view_unread_column" );
+  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+          SLOT(slotToggleUnread()));
+
   group->addAction( mUnreadColumnToggle );
   unreadMenu->addAction( mUnreadColumnToggle );
 
-  mUnreadTextToggle = new KToggleAction( i18nc("View->Unread Count", "View After &Folder Name"), 0, this,
-			       SLOT(slotToggleUnread()), actionCollection(), "view_unread_text" );
+  mUnreadTextToggle = new KToggleAction(
+                        i18nc("View->Unread Count", "View After &Folder Name"),
+                        actionCollection(), "view_unread_text" );
+  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+          SLOT(slotToggleUnread()));
   group->addAction( mUnreadTextToggle );
   unreadMenu->addAction( mUnreadTextToggle );
 
   // toggle for total column
-  mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"), 0, this,
-			       SLOT(slotToggleTotalColumn()), actionCollection(), "view_columns_total" );
+  mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"),
+                                          actionCollection(), "view_columns_total" );
+  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+          SLOT(slotToggleTotalColumn()));
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
 
@@ -2761,7 +2772,7 @@ void KMMainWidget::setupActions()
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevMessage()));
 
   action = new KAction( i18n("Previous Unread &Message"), actionCollection(), "go_prev_unread_message" );
-  action->setShortcut(Qt::Key_Minus); 
+  action->setShortcut(Qt::Key_Minus);
   action->setToolTip(i18n("Go to the previous unread message"));
   action->setIcon(KIcon(QApplication::isRightToLeft() ? "next" : "previous"));
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadMessage()));
@@ -2795,7 +2806,7 @@ void KMMainWidget::setupActions()
   action->setWhatsThis( i18n("Scroll down current message. "
                               "If at end of current message, "
                               "go to next unread message."));
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotReadOn())); 
+  connect(action, SIGNAL(triggered(bool) ), SLOT(slotReadOn()));
 
   //----- Settings Menu
   mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), actionCollection(), "show_quick_search");
@@ -2814,7 +2825,7 @@ void KMMainWidget::setupActions()
   action = new KAction( i18n("KMail &Introduction"), actionCollection(), "help_kmail_welcomepage" );
   action->setToolTip( i18n("Display KMail's Welcome Page") );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotIntro()));
-  
+
 
   // ----- Standard Actions
 //  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());

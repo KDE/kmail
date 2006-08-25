@@ -3581,7 +3581,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // QWhat'sThis texts
-  htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
+  mHtmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
               "This option controls whether you want the HTML part or the plain "
               "text part to be displayed.</p>"
               "<p>Displaying the HTML part makes the message look better, "
@@ -3597,7 +3597,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "plain text.</p>"
               "<p><b>Note:</b> You can set this option on a per-folder basis "
               "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
-  externalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
+  mExternalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
               "and contain references to, for example, images that the advertisers"
               " employ to find out that you have read their message "
               "(&quot;web bugs&quot;).</p>"
@@ -3609,7 +3609,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "<p>However, if you wish to, for example, view images in HTML "
               "messages that were not attached to it, you can enable this "
               "option, but you should be aware of the possible problem.</p></qt>" );
-  receiptWhatsThis = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
+  mReceiptWhatsThis = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
               "<p>MDNs are a generalization of what is commonly called <b>read "
               "receipt</b>. The message author requests a disposition "
               "notification to be sent and the receiver's mail program "
@@ -3644,14 +3644,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vboxlayout = new QVBoxLayout( group );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
-  mHtmlMailCheck->setWhatsThis( htmlWhatsThis );
+  mHtmlMailCheck->setWhatsThis( mHtmlWhatsThis );
   connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   vboxlayout->addWidget( mHtmlMailCheck );
 
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
                                             "references from the Internet" ), group );
-  mExternalReferences->setWhatsThis( externalWhatsThis );
+  mExternalReferences->setWhatsThis( mExternalWhatsThis );
 
   connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -3702,7 +3702,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   mMDNGroup->insert( radio );
 
   for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
-      mMDNGroup->find( i )->setWhatsThis( receiptWhatsThis );
+      mMDNGroup->find( i )->setWhatsThis( mReceiptWhatsThis );
 
   w = new QWidget( hbox ); // spacer
   hbox->setStretchFactor( w, 1 );
@@ -3766,11 +3766,11 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link ) {
     if ( link == "whatsthis1" )
-        QWhatsThis::showText( QCursor::pos(), htmlWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mHtmlWhatsThis );
     else if (link == "whatsthis2")
-        QWhatsThis::showText( QCursor::pos(), externalWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mExternalWhatsThis );
     else if ( link == "whatsthis3" )
-        QWhatsThis::showText( QCursor::pos(), receiptWhatsThis );
+        QWhatsThis::showText( QCursor::pos(), mReceiptWhatsThis );
 }
 
 void SecurityPage::GeneralTab::doLoadOther() {
@@ -4712,7 +4712,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   QBoxLayout* vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
-  vlay->setAutoAdd( true );
 
   // IMAP resource setup
   Q3GroupBox * b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("&IMAP Resource Folder Options"),
@@ -4816,6 +4815,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
+  vlay->addWidget( b1 );
 
   // Groupware functionality compatibility setup
   b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("Groupware Compatibility && Legacy Options"), this );
@@ -4851,9 +4851,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
-  // Open space padding at the end
-  new QLabel( this );
+  vlay->addWidget( b1 );
+  vlay->addStretch( 10 ); // spacer
 }
 
 void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )

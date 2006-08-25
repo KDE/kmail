@@ -247,7 +247,7 @@ protected:
   KConfig * config();
 
 protected slots:
-  void slotCheckOneAccount(int);
+  void slotCheckOneAccount(QAction*);
   void slotMailChecked( bool newMail, bool sendOnCheck,
                         const QMap<QString, int> & newInFolder );
   void getAccountMenu();
@@ -321,7 +321,7 @@ protected slots:
   void slotToggleUnread();
   void slotToggleTotalColumn();
   void slotSendQueued();
-  void slotSendQueuedVia( int item );
+  void slotSendQueuedVia( QAction* );
   void slotOnlineStatus();
   void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
   void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
