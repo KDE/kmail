@@ -63,11 +63,13 @@ void AntiSpamConfig::readConfig()
   for ( unsigned int i = 1; i <= totalTools; ++i ) {
     KConfigGroup tool( &config, QString("Spamtool #%1").arg( i ) );
     if ( tool.hasKey( "ScoreHeader" ) ) {
-      QString name      = tool.readEntry( "ScoreName" );
+      QString name        = tool.readEntry( "ScoreName" );
       QByteArray header   = tool.readEntry( "ScoreHeader" ).toLatin1();
+      QByteArray cheader  = tool.readEntry( "ConfidenceHeader" ).toLatin1();
       QByteArray type     = tool.readEntry( "ScoreType" ).toLatin1();
-      QString score     = tool.readEntryUntranslated( "ScoreValueRegexp" );
-      QString threshold = tool.readEntryUntranslated( "ScoreThresholdRegexp" );
+      QString score       = tool.readEntryUntranslated( "ScoreValueRegexp" );
+      QString threshold   = tool.readEntryUntranslated( "ScoreThresholdRegexp" );
+      QString confidence  = tool.readEntryUntranslated( "ScoreConfidenceRegexp" );
       SpamAgentTypes typeE = SpamAgentNone;
       if ( kasciistricmp( type.data(), "bool" ) == 0 )
 	typeE = SpamAgentBool;
@@ -77,8 +79,8 @@ void AntiSpamConfig::readConfig()
 	typeE = SpamAgentFloatLarge;
       else if ( kasciistricmp( type.data(), "adjusted" ) == 0 )
 	typeE = SpamAgentAdjustedFloat;
-      mAgents.append( SpamAgent( name, typeE, header, QRegExp( score ),
-                                 QRegExp( threshold ) ) );
+      mAgents.append( SpamAgent( name, typeE, header, cheader, QRegExp( score ),
+                                 QRegExp( threshold ), QRegExp( confidence ) ) );
     }
   }
 }

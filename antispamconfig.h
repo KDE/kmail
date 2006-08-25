@@ -52,23 +52,27 @@ namespace KMail {
   class SpamAgent {
   public:
     SpamAgent() : mType( SpamAgentNone ) {}
-    SpamAgent( const QString & name, SpamAgentTypes type, const QByteArray & field,
-               const QRegExp & score, const QRegExp & threshold )
-      : mName( name ), mType( type ), mField( field ),
-        mScore( score ), mThreshold( threshold ) {}
+    SpamAgent( const QString & name, SpamAgentTypes type, const QByteArray & field, const QByteArray & cfield,
+               const QRegExp & score, const QRegExp & threshold, const QRegExp & confidence )
+      : mName( name ), mType( type ), mField( field ), mConfidenceField( cfield ),
+        mScore( score ), mThreshold( threshold ), mConfidence( confidence ) {}
 
     QString name() const { return mName; }
     SpamAgentTypes scoreType() const { return mType; }
     QByteArray header() const { return mField; }
+    QByteArray confidenceHeader() const { return mConfidenceField; }
     QRegExp scorePattern() const { return mScore; }
     QRegExp thresholdPattern() const { return mThreshold; }
+    QRegExp confidencePattern() const { return mConfidence; }
 
   private:
     QString mName;
     SpamAgentTypes mType;
     QByteArray mField;
+    QByteArray mConfidenceField;
     QRegExp mScore;
     QRegExp mThreshold;
+    QRegExp mConfidence;
   };
   typedef QList<SpamAgent> SpamAgents;
   typedef QList<SpamAgent>::Iterator SpamAgentsIterator;

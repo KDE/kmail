@@ -1367,7 +1367,7 @@ void KMHeaders::applyFiltersOnMsg()
     for ( it = msgList->begin(); it != msgList->end(); it++ ) {
       KMMsgBase* msgBase = (*it);
       int diff = msgCountToFilter - ++msgCount;
-      if ( diff < 10 || !( msgCount % 10 ) ) {
+      if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
         QString statusMsg = i18n( "Filtering message %1 of %2",
                                   msgCount, msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );

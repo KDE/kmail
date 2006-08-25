@@ -360,12 +360,13 @@ namespace KMail {
                                  const char *fmt = "PNG" );
 
   private:
-    static QString drawSpamMeter( double percent, const QString & filterHeader );
+    static QString drawSpamMeter( double percent, double confidence, 
+        const QString & filterHeader, const QString & confidenceHeader );
 
   };
 
-  QString FancyHeaderStyle::drawSpamMeter( double percent,
-                                           const QString & filterHeader )
+  QString FancyHeaderStyle::drawSpamMeter( double percent, double confidence,
+                                           const QString & filterHeader, const QString & confidenceHeader )
   {
     QImage meterBar( 20, 1, 8, 24 );
     const unsigned short gradient[20][3] = {
@@ -403,11 +404,12 @@ namespace KMail {
         meterBar.setPixel( i, 0, i+1 );
       }
     }
-    QString titleText = i18n("%1% probability of being spam.\n\nFull report:\n%2",
-                             percent, filterHeader );
+    QString confidenceString = ( confidence < 0.0 ) ? "" : QString::number( confidence ) + "% &nbsp;";
+    QString titleText = i18n("%1% probability of being spam with confidence %3%.\n\nFull report:\nProbability=%2\n Confidence=%4",
+                             percent, filterHeader, QString::number( confidence ), confidenceHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
-            QString::number( 5 ), titleText );
+            QString::number( 5 ), titleText ) + confidenceString;
   }
 
 
@@ -462,7 +464,7 @@ namespace KMail {
       SpamScores scores = SpamHeaderAnalyzer::getSpamScores( message );
       for ( SpamScoresIterator it = scores.begin(); it != scores.end(); ++it )
         spamHTML += (*it).agent() + ' ' +
-                    drawSpamMeter( (*it).score(), (*it).spamHeader() );
+                    drawSpamMeter( (*it).score(), (*it).confidence(), (*it).spamHeader(), (*it).confidenceHeader() );
     }
 
     QString userHTML;

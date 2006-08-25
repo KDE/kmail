@@ -55,7 +55,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
     if ( (*it).scoreType() == SpamAgentNone )
       continue;
 
-    // Do we have the needed field for this agent?
+    // Do we have the needed score field for this agent?
     QString mField = message->headerField( (*it).header() );
     if ( mField.isEmpty() )
       continue;
@@ -152,7 +152,25 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           break;
         }
     }
-    scores.append( SpamScore( (*it).name(), score, mField ) );
+    //Find the confidence
+    float confidence = -2.0;
+    QString confidenceString = "-2.0";
+    bool confidenceValid = false;
+    // Do we have the needed confidence field for this agent?
+    QString mCField = message->headerField( (*it).confidenceHeader() );
+    if ( ! mCField.isEmpty() ) {
+      // Can we extract the confidence?
+      QRegExp cScorePattern = (*it).confidencePattern();
+      if ( cScorePattern.search( mCField ) != -1 ) {
+        confidenceString = cScorePattern.cap( 1 );
+      }
+      confidence = confidenceString.toFloat( &confidenceValid );
+      if( !confidenceValid) {
+        kdDebug(5006) << "Unable to convert confidence to float: " << confidenceString << endl;
+        confidence = -3.0; 
+      }
+    }
+    scores.append( SpamScore( (*it).name(), score, ( confidence < 0.0 ) ? confidence : confidence*100, mField, mCField ) );
   }
 
   return scores;

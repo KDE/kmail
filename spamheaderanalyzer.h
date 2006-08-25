@@ -42,7 +42,7 @@ class KMMessage;
 namespace KMail {
 
   /**
-     @short A simple tupel of agent, score and header.
+     @short A simple tupel of agent, score, confidence and header.
 
      The score returned is positive if no error has occurred.
      Negative values indicate the following errors:
@@ -55,17 +55,23 @@ namespace KMail {
   */
   class SpamScore {
   public:
-    SpamScore() : mScore( -2.0 ) {}
-    SpamScore( const QString & agent, float score, const QString & header )
-      : mAgent( agent ), mScore( score ), mHeader( header ) {}
+    SpamScore() : mScore( -2.0 ), mConfidence( -2.0 ) {}
+    SpamScore( const QString & agent, float score, float confidence, 
+        const QString & header, const QString & cheader )
+      : mAgent( agent ), mScore( score ), mConfidence( confidence ), 
+          mHeader( header ), mConfidenceHeader( cheader ) {}
     QString agent() const { return mAgent; }
     float score() const { return mScore; }
+    float confidence() const { return mConfidence; }
     QString spamHeader() const { return mHeader; }
+    QString confidenceHeader() const { return mConfidenceHeader; }
 
   private:
     QString mAgent;
     float mScore;
+    float mConfidence;
     QString mHeader;
+    QString mConfidenceHeader;
   };
   typedef QList<SpamScore> SpamScores;
   typedef QList<SpamScore>::Iterator SpamScoresIterator;
