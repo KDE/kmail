@@ -111,6 +111,7 @@ using KMime::DateFormatter;
 #include <QToolTip>
 #include <QValidator>
 #include <QVBoxLayout>
+#include <QWhatsThis>
 
 //Added by qt3to4:
 #include <q3buttongroup.h>
@@ -2372,7 +2373,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
     // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
     kWarning(5006) << "Unknown override character encoding \"" << currentOverrideEncoding
                    << "\". Resetting to Auto." << endl;
-    mOverrideCharsetCombo->setCurrentItem( 0 );
+    mOverrideCharsetCombo->setCurrentIndex( 0 );
     GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
   }
 }
@@ -3136,14 +3137,14 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   if ( charset.toLower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QString( kmkernel->networkCodec()->mimeName() ).toLower() );
+      .arg( QString( kmkernel->networkCodec()->name() ).toLower() );
     return;
   }
 
   bool ok = false;
   QTextCodec *codec = KGlobal::charsets()->codecForName( charset, ok );
   if ( ok && codec ) {
-    charset = QString::fromLatin1( codec->mimeName() ).toLower();
+    charset = QString::fromLatin1( codec->name() ).toLower();
     return;
   }
 
@@ -3158,7 +3159,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
-      Q3CString cset = kmkernel->networkCodec()->mimeName();
+      Q3CString cset = kmkernel->networkCodec()->name();
       kAsciiToLower( cset.data() );
       (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }
@@ -3568,9 +3569,10 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   // tmp. vars:
   QVBoxLayout  *vlay;
   KHBox        *hbox;
-  Q3GroupBox    *group;
+  QGroupBox    *group;
+  QVBoxLayout  *vboxlayout;
   QRadioButton *radio;
-  KActiveLabel *label;
+  QLabel       *label;
   QWidget      *w;
   QString       msg;
 
@@ -3579,7 +3581,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // QWhat'sThis texts
-  QString htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
+  htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
               "This option controls whether you want the HTML part or the plain "
               "text part to be displayed.</p>"
               "<p>Displaying the HTML part makes the message look better, "
@@ -3595,8 +3597,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "plain text.</p>"
               "<p><b>Note:</b> You can set this option on a per-folder basis "
               "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
-
-  QString externalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
+  externalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
               "and contain references to, for example, images that the advertisers"
               " employ to find out that you have read their message "
               "(&quot;web bugs&quot;).</p>"
@@ -3608,9 +3609,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "<p>However, if you wish to, for example, view images in HTML "
               "messages that were not attached to it, you can enable this "
               "option, but you should be aware of the possible problem.</p></qt>" );
-
-  QString receiptWhatsThis = i18n( "<qt><h3>Message Disposition "
-              "Notification Policy</h3>"
+  receiptWhatsThis = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
               "<p>MDNs are a generalization of what is commonly called <b>read "
               "receipt</b>. The message author requests a disposition "
               "notification to be sent and the receiver's mail program "
@@ -3640,41 +3639,51 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "it has been made available.</li>"
               "</ul></qt>" );
 
-
   // "HTML Messages" group box:
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n( "HTML Messages" ), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
+  group = new QGroupBox(i18n( "HTML Messages" ), this );
+  vboxlayout = new QVBoxLayout( group );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
   mHtmlMailCheck->setWhatsThis( htmlWhatsThis );
   connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  vboxlayout->addWidget( mHtmlMailCheck );
+
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
                                             "references from the Internet" ), group );
   mExternalReferences->setWhatsThis( externalWhatsThis );
+
   connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  label = new KActiveLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
+  vboxlayout->addWidget( mExternalReferences );
+
+  label = new QLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
                            "increase the risk that your system will be "
                            "compromised by present and anticipated security "
-                           "exploits. <a href=\"whatsthis:%1\">More about "
-                           "HTML mails...</a> <a href=\"whatsthis:%2\">More "
-                           "about external references...</a>",
-                            htmlWhatsThis, externalWhatsThis),
+                           "exploits. <a href=\"whatsthis1\">More about "
+                           "HTML mails...</a> <a href=\"whatsthis2\">More "
+                           "about external references...</a>"),
                            group );
+  connect(label, SIGNAL(linkActivated ( const QString& )),
+          SLOT(slotLinkClicked( const QString& )));
 
+  label->setWordWrap( true );
+  label->setTextInteractionFlags( Qt::LinksAccessibleByMouse |
+          Qt::LinksAccessibleByKeyboard);
+  vboxlayout->addWidget( label );
   vlay->addWidget( group );
 
   // "Message Disposition Notification" groupbox:
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n("Message Disposition Notifications"), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
+  group = new QGroupBox( i18n("Message Disposition Notifications"), this );
+  vboxlayout = new QVBoxLayout( group );
 
   // "ignore", "ask", "deny", "always send" radiobutton line:
   mMDNGroup = new Q3ButtonGroup( group );
   mMDNGroup->hide();
   connect( mMDNGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  vboxlayout->addWidget( mMDNGroup );
+
   hbox = new KHBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
@@ -3697,6 +3706,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   w = new QWidget( hbox ); // spacer
   hbox->setStretchFactor( w, 1 );
+  vboxlayout->addWidget( hbox );
 
   // "Original Message quote" radiobutton line:
   mOrigQuoteGroup = new Q3ButtonGroup( group );
@@ -3720,31 +3730,47 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   w = new QWidget( hbox );
   hbox->setStretchFactor( w, 1 );
+  vboxlayout->addWidget( hbox );
 
-  mNoMDNsWhenEncryptedCheck = new QCheckBox( i18n("Do not send MDNs in response to encrypted messages"), group );
+  mNoMDNsWhenEncryptedCheck = new QCheckBox(
+          i18n("Do not send MDNs in response to encrypted messages"), group );
   connect( mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mNoMDNsWhenEncryptedCheck );
 
   // Warning label:
-  label = new KActiveLabel( i18n("<b>WARNING:</b> Unconditionally returning "
+  label = new QLabel( i18n("<b>WARNING:</b> Unconditionally returning "
                            "confirmations undermines your privacy. "
-                           "<a href=\"whatsthis:%1\">More...</a>",
-                              receiptWhatsThis),
+                           "<a href=\"whatsthis3\">More...</a>"),
                            group );
+  connect(label, SIGNAL(linkActivated ( const QString& )),
+          SLOT(slotLinkClicked( const QString& )));
+  label->setWordWrap(true);
+  label->setTextInteractionFlags( Qt::LinksAccessibleByMouse |
+          Qt::LinksAccessibleByKeyboard);
+  vboxlayout->addWidget( label );
 
   vlay->addWidget( group );
 
   // "Attached keys" group box:
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n( "Certificate && Key Bundle Attachments" ), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
-  mAutomaticallyImportAttachedKeysCheck = new QCheckBox( i18n("Automatically import keys and certificates"), group );
-  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  group = new QGroupBox(i18n( "Certificate && Key Bundle Attachments" ), this );
+  vboxlayout = new QVBoxLayout(group);
+  mAutomaticallyImportAttachedKeysCheck = new QCheckBox(
+          i18n("Automatically import keys and certificates"), group );
+  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
+           SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mAutomaticallyImportAttachedKeysCheck );
 
   vlay->addWidget( group );
-
-
-
   vlay->addStretch( 10 ); // spacer
+}
+
+void SecurityPageGeneralTab::slotLinkClicked( const QString & link ) {
+    if ( link == "whatsthis1" )
+        QWhatsThis::showText( QCursor::pos(), htmlWhatsThis );
+    else if (link == "whatsthis2")
+        QWhatsThis::showText( QCursor::pos(), externalWhatsThis );
+    else if ( link == "whatsthis3" )
+        QWhatsThis::showText( QCursor::pos(), receiptWhatsThis );
 }
 
 void SecurityPage::GeneralTab::doLoadOther() {

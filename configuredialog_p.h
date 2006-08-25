@@ -780,6 +780,12 @@ private:
   Q3ButtonGroup *mMDNGroup;
   Q3ButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
+  QString       htmlWhatsThis;
+  QString       externalWhatsThis;
+  QString       receiptWhatsThis;
+
+private slots:
+    void slotLinkClicked( const QString & link );
 };
 
 
