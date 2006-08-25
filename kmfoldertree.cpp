@@ -342,9 +342,12 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   header()->installEventFilter(this);
   mPopup = new KMenu(this);
   mPopup->addTitle(i18n("View Columns"));
-  mPopup->setCheckable(true);
-  mUnreadAction = mPopup->addAction(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
-  mTotalAction = mPopup->addAction(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
+  mUnreadAction = mPopup->addAction(i18n("Unread Column"), this,
+                                    SLOT(slotToggleUnreadColumn()));
+  mUnreadAction->setCheckable( true );
+  mTotalAction = mPopup->addAction(i18n("Total Column"), this,
+                                   SLOT(slotToggleTotalColumn()));
+  mTotalAction->setCheckable( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1642,7 +1645,7 @@ bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-      o->metaObject()->className() == "QHeader" )
+       QString(o->metaObject()->className()) == "Q3Header" )
   {
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;

@@ -28,9 +28,10 @@
 #include "kmmainwin.moc"
 
 KMMainWin::KMMainWin(QWidget *)
-    : KMainWindow( 0, "kmail-mainwindow#" ),
+    : KMainWindow( 0 ),
       mReallyClose( false )
 {
+  setObjectName("kmail-mainwindow#");
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
   setAttribute( Qt::WA_GroupLeader );
@@ -115,8 +116,9 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   if ( !statusBar() || !mLittleProgress) return;
   int statusWidth = statusBar()->width() - mLittleProgress->width()
                     - fontMetrics().maxWidth();
-  QString text = KStringHandler::rPixelSqueeze( ' ' + aText, fontMetrics(),
-                                                statusWidth );
+
+  QString text = fontMetrics().elidedText( ' ' + aText, Qt::ElideRight,
+                                           statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
   // but this code would double the size of the satus bar if the user hovers

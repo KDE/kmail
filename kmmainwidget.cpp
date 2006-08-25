@@ -536,7 +536,7 @@ void KMMainWidget::createWidgets(void)
   mPanner2->dumpObjectTree();
 #endif
 
-  mTopLayout->add( mPanner1 );
+  mTopLayout->addWidget( mPanner1 );
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
@@ -877,7 +877,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   for ( QStringList::const_iterator it = keys.begin();
         it != keys.end();
         ++it ) {
-    kDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
+    kDebug(5006) << newInFolder.find( *it ).value() << " new message(s) in "
                   << *it << endl;
 
     KMFolder *folder = kmkernel->findFolderById( *it );
@@ -887,7 +887,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18np( "1 new message in %1",
                                   "%n new messages in %1",
-                                  newInFolder.find( *it ).data() ,
+                                  newInFolder.find( *it ).value() ,
                               folder->prettyUrl() );
       }
     }
@@ -1751,21 +1751,23 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotViewChange()
-{
-  if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
-  {
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),false);
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),true);
-  }
-  else if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(1)))
-  {
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),false);
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),true);
-  }
 
-  //mMsgView->setInline(!mMsgView->isInline());
-}
+// Unused? TA20060825
+// void KMMainWidget::slotViewChange()
+// {
+//   if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
+//   {
+//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),false);
+//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),true);
+//   }
+//   else if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(1)))
+//   {
+//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),false);
+//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),true);
+//   }
+//
+//   //mMsgView->setInline(!mMsgView->isInline());
+// }
 
 
 //-----------------------------------------------------------------------------
@@ -2695,7 +2697,7 @@ void KMMainWidget::setupActions()
   mUnreadColumnToggle = new KToggleAction(
                           i18nc("View->Unread Count", "View in &Separate Column"),
                           actionCollection(), "view_unread_column" );
-  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+  connect(mUnreadColumnToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
           SLOT(slotToggleUnread()));
 
   group->addAction( mUnreadColumnToggle );
@@ -2704,7 +2706,7 @@ void KMMainWidget::setupActions()
   mUnreadTextToggle = new KToggleAction(
                         i18nc("View->Unread Count", "View After &Folder Name"),
                         actionCollection(), "view_unread_text" );
-  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+  connect(mUnreadTextToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
           SLOT(slotToggleUnread()));
   group->addAction( mUnreadTextToggle );
   unreadMenu->addAction( mUnreadTextToggle );
@@ -2712,7 +2714,7 @@ void KMMainWidget::setupActions()
   // toggle for total column
   mTotalColumnToggle = new KToggleAction( i18nc("View->", "&Total Column"),
                                           actionCollection(), "view_columns_total" );
-  connect(mTotalColumnToggle, SIGNAL(slotToggled(bool)),
+  connect(mTotalColumnToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
           SLOT(slotToggleTotalColumn()));
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );

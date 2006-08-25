@@ -258,7 +258,7 @@ protected slots:
   void slotManageSieveScripts();
   void slotAddrBook();
   void slotImport();
-  void slotViewChange();
+  // void slotViewChange();     // Unused? TA20060825
   void slotCompose();
   void slotPostToML();
   void slotModifyFolder();

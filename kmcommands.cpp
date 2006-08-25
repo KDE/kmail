@@ -487,7 +487,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
-  win->setCharset(msg->codec()->mimeName(), true);
+  win->setCharset(msg->codec()->name(), true);
   win->setReplyFocus();
   win->show();
 
@@ -509,7 +509,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( fmsg );
-  win->setCharset(msg->codec()->mimeName(), true);
+  win->setCharset(msg->codec()->name(), true);
   win->show();
 
   return OK;
@@ -1034,7 +1034,7 @@ KMCommand::Result KMReplyToCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), true );
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1054,7 +1054,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), true);
+  win->setCharset(msg->codec()->name(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1074,7 +1074,7 @@ KMCommand::Result KMReplyListCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), true);
+  win->setCharset(msg->codec()->name(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1094,7 +1094,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), true );
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1114,7 +1114,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), true );
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1256,7 +1256,7 @@ KMCommand::Result KMForwardCommand::execute()
     id = mIdentity;
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
-    win->setCharset( fwdMsg->codec()->mimeName(), true );
+    win->setCharset( fwdMsg->codec()->name(), true );
     win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
     win->show();
   }
@@ -2450,7 +2450,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       KMessageBox::error( parentWidget(),
           i18nc( "%2 is detailed error description",
             "Could not write the file %1:\n%2" ,
-            file.name() ,
+            file.fileName() ,
             QString::fromLocal8Bit( strerror( errno ) ) ),
           i18n( "KMail Error" ) );
       return Failed;
@@ -2566,7 +2566,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   KMMessage *msg = retrievedMessage();
 
   KMMessage *newMsg = new KMMessage(*msg);
-  newMsg->setCharset(msg->codec()->mimeName());
+  newMsg->setCharset(msg->codec()->name());
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
