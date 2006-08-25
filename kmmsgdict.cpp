@@ -210,7 +210,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
       << "null pointer to storage. Requested serial: " << msgSerNum
       << endl;
     kdDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl; 
+      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
     return 0;
   }
 
@@ -255,7 +255,7 @@ void KMMsgDict::replace(unsigned long msgSerNum,
       << "number, null pointer to storage. Requested serial: " << msgSerNum
       << endl;
     kdDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl; 
+      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
     return;
   }
 
@@ -345,9 +345,11 @@ void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int *
 unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 {
   unsigned long msn = 0;
-  KMMsgDictREntry *rentry = folder->storage()->rDict();
-  if (rentry)
-    msn = rentry->getMsn(index);
+  if ( folder ) {
+    KMMsgDictREntry *rentry = folder->storage()->rDict();
+    if (rentry)
+      msn = rentry->getMsn(index);
+  }
   return msn;
 }
 
