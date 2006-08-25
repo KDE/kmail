@@ -231,7 +231,7 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-      o->metaObject()->className() == "QHeader" )
+      QString(o->metaObject()->className()) == "Q3Header" )
   {
     // if we currently only show one of either sender/receiver column
     // modify the popup text in the way, that it displays the text of the other of the two

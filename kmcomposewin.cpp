@@ -1177,10 +1177,11 @@ void KMComposeWin::setupActions(void)
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()));
   action = new KAction(KIcon("fileopen"), i18n("&Insert File..."), actionCollection(), "insert_file");
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
-  mRecentAction = new KRecentFilesAction (i18n("&Insert File Recent"),
-		      "fileopen", 0,
-		      this,  SLOT(slotInsertRecentFile(const KUrl&)),
-		      actionCollection(), "insert_file_recent");
+
+  mRecentAction = new KRecentFilesAction (KIcon("fileopen"), i18n("&Insert File Recent"),
+                                          actionCollection(), "insert_file_recent");
+  connect(mRecentAction, SIGNAL(urlSelected (const KUrl &url)),
+          SLOT(slotInsertRecentFile(const KUrl&)));
 
   mRecentAction->loadEntries( KMKernel::config() );
 
@@ -1320,9 +1321,10 @@ void KMComposeWin::setupActions(void)
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()));
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
-    KToggleAction * a = new KToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
-                                           "chidecrypted", 0, actionCollection(),
-                                           "encrypt_message_chiasmus" );
+      KToggleAction * a = new KToggleAction( KIcon("chidecrypted"),
+                                             i18n( "Encrypt Message with Chiasmus..." ),
+                                             actionCollection(),
+                                             "encrypt_message_chiasmus" );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
     mEncryptChiasmusAction = a;
     connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
@@ -1331,11 +1333,9 @@ void KMComposeWin::setupActions(void)
     mEncryptChiasmusAction = 0;
   }
 
-  mEncryptAction = new KToggleAction (i18n("&Encrypt Message"),
-                                     "decrypted", 0,
+  mEncryptAction = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"),
                                      actionCollection(), "encrypt_message");
-  mSignAction = new KToggleAction (i18n("&Sign Message"),
-                                  "signature", 0,
+  mSignAction = new KToggleAction(KIcon("signature"), i18n("&Sign Message"),
                                   actionCollection(), "sign_message");
   // get PGP user id for the chosen identity
   const KPIM::Identity & ident =

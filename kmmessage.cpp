@@ -3807,7 +3807,7 @@ Q3CString KMMessage::defaultCharset()
     retval = sPrefCharsets[0].toLatin1();
 
   if (retval.isEmpty()  || (retval == "locale")) {
-    retval = Q3CString(kmkernel->networkCodec()->mimeName());
+    retval = Q3CString(kmkernel->networkCodec()->name());
     kAsciiToLower( retval.data() );
   }
 

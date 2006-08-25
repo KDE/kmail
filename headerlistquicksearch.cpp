@@ -57,19 +57,23 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KActionCollection *actionCollection )
   : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
-  KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ),
-                                           i18n( "Reset Quick Search" ),
-                                           actionCollection, "reset_quicksearch" );
-  connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
-  parent->addAction( resetQuickSearch );
-  resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
-                                        "Resets the quick search so that "
-                                        "all messages are shown again." ) );
+    // There is a clear button in the line, now, so this can go
+    // keeping it for now, maybe we need it when k3listviewsearchline changes
+    // TA20060825
 
-  QLabel *label = new QLabel( i18n("Stat&us:"), this );
+//   KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ),
+//                                            i18n( "Reset Quick Search" ),
+//                                            actionCollection, "reset_quicksearch" );
+//   connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
+//   parent->addAction( resetQuickSearch );
+//   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
+//                                         "Resets the quick search so that "
+//                                         "all messages are shown again." ) );
+
+  QLabel *label = new QLabel( i18n("Stat&us:"), parent );
   label->setObjectName( "kde toolbar widget" );
 
-  mStatusCombo = new QComboBox( this );
+  mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
   mStatusCombo->addItem( SmallIcon( "run" ), i18n("Any Status") );
 

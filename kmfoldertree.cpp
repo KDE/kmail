@@ -1347,13 +1347,13 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
         if ( dragAccepted ) {
             e->accept( itemRect(i) );
 
-            switch ( e->action() ) {
-                case QDropEvent::Copy:
+            switch ( e->dropAction() ) {
+                case Qt::CopyAction:
                 break;
-                case QDropEvent::Move:
+                case Qt::MoveAction:
                 e->acceptAction();
                 break;
-                case QDropEvent::Link:
+                case Qt::LinkAction:
                 e->acceptAction();
                 break;
                 default:

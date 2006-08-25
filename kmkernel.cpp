@@ -184,7 +184,8 @@ KMKernel::~KMKernel ()
 
   delete mICalIface;
   mICalIface = 0;
-  delete mMailService;
+#warning: mMailservice delete crashes for me...
+  //delete mMailService;
   mMailService = 0;
 
   GlobalSettings::self()->writeConfig();
