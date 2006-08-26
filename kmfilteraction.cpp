@@ -1067,7 +1067,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
 void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
   int idx = mParameterList.indexOf( mParameter );
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
   cb->clear();
   cb->addItems( mParameterList );
@@ -1077,28 +1077,28 @@ void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
   } else {
     cb->setCurrentIndex( idx );
   }
-  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
   Q_ASSERT( le );
   le->setText( mValue );
 }
 
 void KMFilterActionAddHeader::applyParamWidgetValue( QWidget* paramWidget )
 {
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
   mParameter = cb->currentText();
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
   Q_ASSERT( le );
   mValue = le->text();
 }
 
 void KMFilterActionAddHeader::clearParamWidget( QWidget* paramWidget ) const
 {
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
   cb->setCurrentIndex(0);
-  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
   Q_ASSERT( le );
   le->clear();
 }
@@ -1232,7 +1232,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
 void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
   int idx = mParameterList.indexOf( mParameter );
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
 
   cb->clear();
@@ -1244,41 +1244,41 @@ void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) co
     cb->setCurrentIndex( idx );
   }
 
-  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  RegExpLineEdit *rele = paramWidget->findChild<RegExpLineEdit*>("search");
   Q_ASSERT( rele );
   rele->setText( mRegExp.pattern() );
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("replace");
   Q_ASSERT( le );
   le->setText( mReplacementString );
 }
 
 void KMFilterActionRewriteHeader::applyParamWidgetValue( QWidget* paramWidget )
 {
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
   mParameter = cb->currentText();
 
-  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  RegExpLineEdit *rele = paramWidget->findChild<RegExpLineEdit*>("search");
   Q_ASSERT( rele );
   mRegExp.setPattern( rele->text() );
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("replace");
   Q_ASSERT( le );
   mReplacementString = le->text();
 }
 
 void KMFilterActionRewriteHeader::clearParamWidget( QWidget* paramWidget ) const
 {
-  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  QComboBox *cb = paramWidget->findChild<QComboBox*>("combo");
   Q_ASSERT( cb );
   cb->setCurrentIndex(0);
 
-  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  RegExpLineEdit *rele = paramWidget->findChild<RegExpLineEdit*>("search");
   Q_ASSERT( rele );
   rele->clear();
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = paramWidget->findChild<QLineEdit*>("replace");
   Q_ASSERT( le );
   le->clear();
 }

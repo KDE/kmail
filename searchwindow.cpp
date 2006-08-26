@@ -31,6 +31,7 @@
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
+#include "regexplineedit.h"
 
 #include <kactionmenu.h>
 #include <kapplication.h>
@@ -261,12 +262,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
 
   // give focus to the value field of the first search rule
-  object = mPatternEdit->child( "regExpLineEdit" );
-  if ( object && object->isWidgetType() ) {
-      static_cast<QWidget*>(object)->setFocus();
-      //kDebug(5006) << "SearchWindow: focus has been given to widget "
-      //              << object->name() << endl;
-  }
+  RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+  if ( r )
+      r->setFocus();
   else
       kDebug(5006) << "SearchWindow: regExpLineEdit not found" << endl;
 

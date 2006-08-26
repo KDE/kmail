@@ -578,9 +578,11 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   attachmentMenu->addAction( raction );
 
   // Set Encoding submenu
-  mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
-                                 this, SLOT( slotSetEncoding() ),
-                                 ac, "encoding" );
+  mSelectEncodingAction = new KSelectAction( KIcon("charset"),
+                                             i18n( "&Set Encoding" ), ac,
+                                             "encoding" );
+  connect(mSelectEncodingAction,SIGNAL( triggered(int)),
+          SLOT( slotSetEncoding() ));
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   mSelectEncodingAction->setItems( encodings );
@@ -1239,8 +1241,8 @@ void KMReaderWin::displaySplashPage( const QString &info )
   QString content = KPIM::kFileToByteArray( location );
   content = content.arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage.css" ) );
   if ( kapp->isRightToLeft() )
-    content = content.arg( "@import \"" +
-              KStandardDirs::locate( "data", "libkdepim/about/kde_infopage_rtl.css" ) );
+    content = content.arg( "@import \"" + KStandardDirs::locate( "data",
+                           "libkdepim/about/kde_infopage_rtl.css" ) +  "\";");
   else
     content = content.arg( "" );
 

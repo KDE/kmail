@@ -79,7 +79,7 @@ namespace KMail {
     // tmp. vars:
     QLabel * label;
     QLabel * label1;
-    KActiveLabel * label2;
+    QLabel * label2;
     QWidget * page;
     QVBoxLayout * vlay;
     QHBoxLayout * hlay;
@@ -195,9 +195,13 @@ namespace KMail {
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
+    mTextEdit->setAcceptRichText( false );
+    label2 = new QLabel( i18n("Examples are available at <a "
+            "href=\"http://www.xs4all.nl/~ace/X-Faces/\">"
+            "http://www.xs4all.nl/~ace/X-Faces/</a>."), page );
+    label2->setOpenExternalLinks(true);
+    label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
-    mTextEdit->setTextFormat( Qt::PlainText );
-    label2 = new KActiveLabel( i18n("Examples are available at <a href=\"http://www.xs4all.nl/~ace/X-Faces/\">http://www.xs4all.nl/~ace/X-Faces/</a>."), page );
     page_vlay->addWidget( label2 );
 
 
@@ -217,7 +221,7 @@ namespace KMail {
   }
 
   QString XFaceConfigurator::xface() const {
-    return mTextEdit->text();
+    return mTextEdit->toPlainText();
   }
 
   void XFaceConfigurator::setXFace( const QString & text ) {
@@ -279,7 +283,7 @@ namespace KMail {
 
   void XFaceConfigurator::slotUpdateXFace()
   {
-    QString str = mTextEdit->text();
+    QString str = mTextEdit->toPlainText();
 
     if ( !str.isEmpty() )
     {

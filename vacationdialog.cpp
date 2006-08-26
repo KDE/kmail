@@ -78,7 +78,7 @@ namespace KMail {
     glay->setRowStretch( row, 1 );
     mTextEdit = new QTextEdit( frame );
     mTextEdit->setObjectName( "mTextEdit" );
-    mTextEdit->setTextFormat( Qt::PlainText );
+    mTextEdit->setAcceptRichText( false );
     glay->addWidget( mTextEdit, row, 0, 1, 2 );
 
     // "Resent only after" spinbox and label:
@@ -95,7 +95,8 @@ namespace KMail {
     ++row;
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    mMailAliasesEdit = new QLineEdit( page, "mMailAliasesEdit" );
+    mMailAliasesEdit = new QLineEdit( page);
+    mMailAliasesEdit->setObjectName( "mMailAliasesEdit" );
     QLabel *tmpLabel = new QLabel( i18n("&Send responses for these addresses:"), page );
     tmpLabel->setBuddy( mMailAliasesEdit );
     glay->addWidget( tmpLabel, row, 0 );
@@ -118,7 +119,7 @@ namespace KMail {
   }
 
   QString VacationDialog::messageText() const {
-    return mTextEdit->text().trimmed();
+    return mTextEdit->toPlainText().trimmed();
   }
 
   void VacationDialog::setMessageText( const QString & text ) {

@@ -57,7 +57,7 @@ using KMail::FolderIface;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
-#include <knotifyclient.h>
+#include <knotification.h>
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
@@ -1518,7 +1518,10 @@ void KMKernel::closeAllKMailWindows()
     window = it.next();
     if ( window && ( window->metaObject()->className() == "KMMainWindow" ||
                      window->inherits("KMail::SecondaryWindow") ) )
-      window->close( true ); // close and delete the window
+    {
+      window->setAttribute(Qt::WA_DeleteOnClose);
+      window->close(); // close and delete the window
+    }
   }
 }
 
@@ -1844,7 +1847,7 @@ void KMKernel::emergencyExit( const QString& reason )
   }
 
   kWarning() << mesg << endl;
-  KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
+  KNotification::event(KNotification::Catastrophe, mesg);
 
   ::exit(1);
 }

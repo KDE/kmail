@@ -333,7 +333,7 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
     it != encodingNames.end(); it++)
   {
     QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
-    QString mimeName = (codec) ? QString(codec->mimeName()).toLower() : (*it);
+    QString mimeName = (codec) ? QString(codec->name()).toLower() : (*it);
     if (!mimeNames.contains(mimeName) )
     {
       encodings.append(KGlobal::charsets()->languageForEncoding(*it)
@@ -446,9 +446,10 @@ QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
       kFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
 
-      QByteArray in; in.setRawData( enc_start, pos - enc_start );
+      QByteArray in;
+      in.fromRawData( enc_start, pos - enc_start );
       const QByteArray enc = c->decode( in );
-      in.resetRawData( enc_start, pos - enc_start );
+      in.clear();
 
       const QTextCodec * codec = codecForName(charset);
       if (!codec) codec = kmkernel->networkCodec();
@@ -480,9 +481,10 @@ Q3CString KMMsgBase::encodeRFC2047Quoted( const Q3CString & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
   kFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
-  QByteArray in; in.setRawData( s.data(), s.length() );
+  QByteArray in;
+  in.fromRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
-  in.resetRawData( s.data(), s.length() );
+  in.clear();
   return Q3CString( result.data(), result.size() + 1 );
 }
 
@@ -497,7 +499,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
   Q3CString cset;
   if (charset.isEmpty())
   {
-    cset = kmkernel->networkCodec()->mimeName();
+    cset = kmkernel->networkCodec()->name();
     kAsciiToLower(cset.data());
   }
   else cset = charset;
@@ -588,7 +590,7 @@ Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
   Q3CString cset;
   if ( charset.isEmpty() )
   {
-    cset = kmkernel->networkCodec()->mimeName();
+    cset = kmkernel->networkCodec()->name();
     kAsciiToLower( cset.data() );
   }
   else
@@ -710,7 +712,7 @@ Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QString
        Q3CString encoding = (*it).toLatin1();
        if (encoding == "locale")
        {
-         encoding = kmkernel->networkCodec()->mimeName();
+         encoding = kmkernel->networkCodec()->name();
          kAsciiToLower(encoding.data());
        }
        if (text.isEmpty())

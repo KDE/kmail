@@ -115,7 +115,7 @@ namespace KMail {
     widgetStack->insertWidget( pageno,mTextEdit );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
-    mTextEdit->setTextFormat( Qt::PlainText );
+    mTextEdit->setAcceptRichText( false );
 
     widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0
 
@@ -212,7 +212,7 @@ namespace KMail {
   }
 
   QString SignatureConfigurator::inlineText() const {
-    return mTextEdit->text();
+    return mTextEdit->toPlainText();
   }
 
   void SignatureConfigurator::setInlineText( const QString & text ) {
