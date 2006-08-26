@@ -62,7 +62,7 @@ class MailSourceViewer : public KTextBrowser
 public:
   MailSourceViewer( QWidget *parent = 0, const char *name = 0 );
   ~MailSourceViewer();
-  void setText( const QString& text );
+
 private:
   MailSourceHighlighter *mSourceHighLighter;
 };

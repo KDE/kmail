@@ -39,7 +39,7 @@
 #include <kwin.h>
 
 #include <QRegExp>
-#include <q3accel.h>
+#include <QShortcut>
 #include <kiconloader.h>
 
 namespace KMail {
@@ -57,31 +57,29 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   : KTextBrowser( parent, name ), mSourceHighLighter( 0 )
 {
   setAttribute( Qt::WA_DeleteOnClose );
-  Q3Accel *accel = new Q3Accel( this, "browser close-accel" );
-  accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
-  accel->connectItem( accel->insertItem( Qt::Key_W+Qt::CTRL ), this , SLOT( close() ));
-#warning "kde4 port setWordWrap\n";
-  //setWordWrap( KTextBrowser::NoWrap );
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
-                  qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
+  setWordWrapMode( QTextOption::NoWrap );
+  setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard );
+
+  // combining the shortcuts in one qkeysequence() did not work...
+  QShortcut* shortcut = new QShortcut( this );
+  shortcut->setKey( Qt::Key_Escape );
+  connect( shortcut, SIGNAL( activated() ), SLOT( close() ) );
+
+  shortcut = new QShortcut( this );
+  shortcut->setKey( Qt::Key_W+Qt::CTRL );
+  connect( shortcut, SIGNAL( activated() ), SLOT( close() ) );
+
+  KWin::setIcons( winId(),
+                  qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ),
+                  IconSize( K3Icon::Desktop ) ),
+                  qApp->windowIcon().pixmap( IconSize( K3Icon::Small ),
+                  IconSize( K3Icon::Small ) ) );
+  mSourceHighLighter = new MailSourceHighlighter( this );
 }
 
 MailSourceViewer::~MailSourceViewer()
 {
   delete mSourceHighLighter; mSourceHighLighter = 0;
-}
-
-#warning "kde4 setText is deprecated"
-void MailSourceViewer::setText( const QString& text )
-{
-  delete mSourceHighLighter; mSourceHighLighter = 0;
-  if ( text.length() > 500000 ) {
-    setTextFormat( Qt::LogText );
-  } else {
-    setTextFormat( Qt::PlainText );
-    mSourceHighLighter = new MailSourceHighlighter( this );
-  }
-  KTextBrowser::setPlainText( text );
 }
 
 }

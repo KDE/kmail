@@ -360,7 +360,7 @@ namespace KMail {
                                  const char *fmt = "PNG" );
 
   private:
-    static QString drawSpamMeter( double percent, double confidence, 
+    static QString drawSpamMeter( double percent, double confidence,
         const QString & filterHeader, const QString & confidenceHeader );
 
   };
@@ -368,7 +368,9 @@ namespace KMail {
   QString FancyHeaderStyle::drawSpamMeter( double percent, double confidence,
                                            const QString & filterHeader, const QString & confidenceHeader )
   {
-    QImage meterBar( 20, 1, 8, 24 );
+    QImage meterBar( 20, 1, QImage::Format_Indexed8 );
+    meterBar.setNumColors( 24 );
+
     const unsigned short gradient[20][3] = {
       {   0, 255,   0 },
       {  27, 254,   0 },
