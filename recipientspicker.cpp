@@ -255,9 +255,10 @@ void SearchLine::keyPressEvent( QKeyEvent *ev )
 
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
-  : QDialog( parent, "RecipientsPicker" ),
+  : QDialog( parent ),
   mDistributionListManager( 0 )
 {
+  setObjectName("RecipientsPicker");
 //  KWin::setType( winId(), NET::Dock );
 
   setWindowTitle( i18n("Select Recipient") );

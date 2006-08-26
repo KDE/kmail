@@ -581,10 +581,11 @@ namespace {
   void TextRuleWidgetHandler::reset( QStackedWidget *functionStack,
                                      QStackedWidget *valueStack ) const
   {
+
     // reset the function combo box
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "textRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       funcCombo->setCurrentIndex( 0 );
@@ -593,8 +594,7 @@ namespace {
 
     // reset the value widget
     RegExpLineEdit *lineEdit =
-      dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                        0, false ) );
+            valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit");
     if ( lineEdit ) {
       lineEdit->blockSignals( true );
       lineEdit->clear();
@@ -604,8 +604,8 @@ namespace {
     }
 
     QComboBox *combo =
-      dynamic_cast<QComboBox*>( valueStack->child( "categoryCombo",
-                                                   0, false ) );
+            valueStack->findChild<QComboBox*>( "categoryCombo" );
+
     if (combo) {
       combo->blockSignals( true );
       combo->setCurrentIndex( 0 );
@@ -619,6 +619,7 @@ namespace {
                                        QStackedWidget *valueStack,
                                        const KMSearchRule *rule ) const
   {
+
     if ( !rule ) {
       reset( functionStack, valueStack );
       return false;
@@ -630,8 +631,8 @@ namespace {
       if ( func == TextFunctions[i].id )
         break;
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "textRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( i < TextFunctionCount )
@@ -649,15 +650,14 @@ namespace {
     if ( func == KMSearchRule::FuncIsInAddressbook ||
          func == KMSearchRule::FuncIsNotInAddressbook ) {
       QWidget *w =
-        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
-                                                  0, false ) );
+              valueStack->findChild<QWidget*>( "textRuleValueHider");
       valueStack->setCurrentWidget( w );
     }
     else if ( func == KMSearchRule::FuncIsInCategory ||
               func == KMSearchRule::FuncIsNotInCategory) {
       QComboBox *combo =
-        static_cast<QComboBox*>( valueStack->child( "categoryCombo",
-                                                    0, false ) );
+              valueStack->findChild<QComboBox*>( "categoryCombo" );
+
       combo->blockSignals( true );
       for ( i = 0; i < combo->count(); ++i )
         if ( rule->contents() == combo->itemText( i ) ) {
@@ -672,8 +672,8 @@ namespace {
     }
     else {
       RegExpLineEdit *lineEdit =
-        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                          0, false ) );
+              valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
       if ( lineEdit ) {
         lineEdit->blockSignals( true );
         lineEdit->setText( rule->contents() );
@@ -695,27 +695,24 @@ namespace {
   {
     // raise the correct function widget
     functionStack->setCurrentWidget(
-      static_cast<QWidget*>( functionStack->child( "textRuleFuncCombo",
-                                                   0, false ) ) );
+            functionStack->findChild<QWidget*>( "textRuleFuncCombo" ));
 
     // raise the correct value widget
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncIsInAddressbook ||
          func == KMSearchRule::FuncIsNotInAddressbook ) {
       valueStack->setCurrentWidget(
-        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
-                                                  0, false ) ) );
+              valueStack->findChild<QWidget*>( "textRuleValueHider" ));
     }
     else if ( func == KMSearchRule::FuncIsInCategory ||
               func == KMSearchRule::FuncIsNotInCategory) {
       valueStack->setCurrentWidget(
-        static_cast<QWidget*>( valueStack->child( "categoryCombo",
-                                                  0, false ) ) );
+              valueStack->findChild<QWidget*>( "categoryCombo" ));
     }
     else {
-      RegExpLineEdit *lineEdit =
-        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                          0, false ) );
+        RegExpLineEdit *lineEdit =
+                valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
       if ( lineEdit ) {
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
@@ -897,8 +894,8 @@ namespace {
   {
     // reset the function combo box
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       funcCombo->setCurrentIndex( 0 );
@@ -907,8 +904,8 @@ namespace {
 
     // reset the value widget
     RegExpLineEdit *lineEdit =
-      dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                        0, false ) );
+            valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
     if ( lineEdit ) {
       lineEdit->blockSignals( true );
       lineEdit->clear();
@@ -935,8 +932,8 @@ namespace {
       if ( func == MessageFunctions[i].id )
         break;
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "messageRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( i < MessageFunctionCount )
@@ -954,14 +951,14 @@ namespace {
     if ( func == KMSearchRule::FuncHasAttachment  ||
          func == KMSearchRule::FuncHasNoAttachment ) {
       QWidget *w =
-        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
-                                                  0, false ) );
+              valueStack->findChild<QWidget*>( "textRuleValueHider" );
+
       valueStack->setCurrentWidget( w );
     }
     else {
       RegExpLineEdit *lineEdit =
-        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                          0, false ) );
+              valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
       if ( lineEdit ) {
         lineEdit->blockSignals( true );
         lineEdit->setText( rule->contents() );
@@ -985,22 +982,20 @@ namespace {
       return false;
     // raise the correct function widget
     functionStack->setCurrentWidget(
-      static_cast<QWidget*>( functionStack->child( "messageRuleFuncCombo",
-                                                   0, false ) ) );
+            functionStack->findChild<QWidget*>( "messageRuleFuncCombo" ));
 
     // raise the correct value widget
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncHasAttachment  ||
          func == KMSearchRule::FuncHasNoAttachment ) {
-      QWidget *w =
-        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
-                                                  0, false ) );
+      QWidget *w = valueStack->findChild<QWidget*>( "textRuleValueHider" );
+
       valueStack->setCurrentWidget( w );
     }
     else {
       RegExpLineEdit *lineEdit =
-        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
-                                                          0, false ) );
+              valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+
       if ( lineEdit ) {
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
@@ -1165,8 +1160,8 @@ namespace {
   {
     // reset the function combo box
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       funcCombo->setCurrentIndex( 0 );
@@ -1175,8 +1170,8 @@ namespace {
 
     // reset the status value combo box
     QComboBox *statusCombo =
-      dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",
-                                                   0, false ) );
+            valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
       statusCombo->setCurrentIndex( 0 );
@@ -1202,8 +1197,8 @@ namespace {
       if ( func == StatusFunctions[funcIndex].id )
         break;
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "statusRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( funcIndex < StatusFunctionCount )
@@ -1226,8 +1221,8 @@ namespace {
                KMail::StatusValues[ valueIndex ].text ) )
         break;
     QComboBox *statusCombo =
-      dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",
-                                                   0, false ) );
+            valueStack->findChild<QComboBox*>( "statusRuleValueCombo" );
+
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
       if ( valueIndex < KMail::StatusValueCountWithoutHidden )
@@ -1256,13 +1251,12 @@ namespace {
 
     // raise the correct function widget
     functionStack->setCurrentWidget(
-      static_cast<QWidget*>( functionStack->child( "statusRuleFuncCombo",
-                                                   0, false ) ) );
+            functionStack->findChild<QWidget*>( "statusRuleFuncCombo" ));
 
     // raise the correct value widget
     valueStack->setCurrentWidget(
-      static_cast<QWidget*>( valueStack->child( "statusRuleValueCombo",
-                                                0, false ) ) );
+            valueStack->findChild<QWidget*>( "statusRuleValueCombo" ));
+
     return true;
   }
 
@@ -1413,8 +1407,8 @@ namespace {
   {
     // reset the function combo box
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       funcCombo->setCurrentIndex( 0 );
@@ -1423,8 +1417,8 @@ namespace {
 
     // reset the value widget
     KIntNumInput *numInput =
-      dynamic_cast<KIntNumInput*>( valueStack->child( "KIntNumInput",
-                                                      0, false ) );
+            valueStack->findChild<KIntNumInput*>( "KIntNumInput" );
+
     if ( numInput ) {
       numInput->blockSignals( true );
       numInput->setValue( 0 );
@@ -1464,8 +1458,8 @@ namespace {
       if ( func == NumericFunctions[funcIndex].id )
         break;
     QComboBox *funcCombo =
-      dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
-                                                      0, false ) );
+            functionStack->findChild<QComboBox*>( "numericRuleFuncCombo" );
+
     if ( funcCombo ) {
       funcCombo->blockSignals( true );
       if ( funcIndex < NumericFunctionCount )
@@ -1486,8 +1480,8 @@ namespace {
     if ( !ok )
       value = 0;
     KIntNumInput *numInput =
-      dynamic_cast<KIntNumInput*>( valueStack->child( "KIntNumInput",
-                                                      0, false ) );
+            valueStack->findChild<KIntNumInput*>( "KIntNumInput" );
+
     if ( numInput ) {
       initNumInput( numInput, rule->field() );
       numInput->blockSignals( true );
@@ -1510,13 +1504,12 @@ namespace {
 
     // raise the correct function widget
     functionStack->setCurrentWidget(
-      static_cast<QWidget*>( functionStack->child( "numericRuleFuncCombo",
-                                                   0, false ) ) );
+            functionStack->findChild<QWidget*>( "numericRuleFuncCombo" ));
 
     // raise the correct value widget
     KIntNumInput *numInput =
-      dynamic_cast<KIntNumInput*>( valueStack->child( "KIntNumInput",
-                                                      0, false ) );
+            valueStack->findChild<KIntNumInput*>( "KIntNumInput" );
+
     if ( numInput ) {
       initNumInput( numInput, field );
       valueStack->setCurrentWidget( numInput );

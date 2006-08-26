@@ -2046,13 +2046,13 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 Q3CString MessageComposer::plainTextFromMarkup( const QString& markupText )
 {
   QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
-  hackConspiratorTextEdit->setTextFormat(Qt::PlainText);
+  hackConspiratorTextEdit->setAcceptRichText( false );
   if ( !mDisableBreaking ) {
     hackConspiratorTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
-#warning "kde4: port it"
-    //hackConspiratorTextEdit->setWrapColumnOrWidth( mLineBreakColumn );
+    hackConspiratorTextEdit->setLineWrapMode( QTextEdit::FixedColumnWidth );
+    hackConspiratorTextEdit->setLineWrapColumnOrWidth( mLineBreakColumn );
   }
-  QString text = hackConspiratorTextEdit->text();
+  QString text = hackConspiratorTextEdit->toPlainText();
   Q3CString textbody;
 
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );

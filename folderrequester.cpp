@@ -53,13 +53,14 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   QHBoxLayout * hlay = new QHBoxLayout( this );
   hlay->setSpacing( KDialog::spacingHint() );
   hlay->setMargin( 0 );
-  hlay->setAutoAdd( true );
 
   edit = new KLineEdit( this );
   edit->setReadOnly( true );
+  hlay->addWidget( edit );
 
   QToolButton* button = new QToolButton( this );
   button->setIcon( KGlobal::iconLoader()->loadIconSet( "folder", K3Icon::Small, 0 ) );
+  hlay->addWidget( button );
   connect( button, SIGNAL(clicked()), this, SLOT(slotOpenDialog()) );
 
   setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
