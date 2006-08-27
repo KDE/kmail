@@ -130,10 +130,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   vbl->addWidget( spacer );
 
   mPatternEdit = new KMSearchPatternEdit( "", searchWidget , false, true );
-#warning Port me!
-//  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
-#warning Port me!
-//  mPatternEdit->setInsideMargin( 0 );
+  mPatternEdit->setFlat( true );
+  mPatternEdit->setContentsMargins( 0, 0, 0, 0 );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
   if (curFolder)

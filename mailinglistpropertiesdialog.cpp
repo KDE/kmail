@@ -31,7 +31,7 @@
 
 #include <QLabel>
 #include <QComboBox>
-#include <Q3GroupBox>
+#include <QGroupBox>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -60,7 +60,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   setAttribute( Qt::WA_DeleteOnClose );
   QLabel* label;
   mLastItem = 0;
-  
+
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 
   QVBoxLayout *topLayout = new QVBoxLayout();
@@ -68,10 +68,11 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   topLayout->setObjectName( "topLayout" );
   topLayout->setSpacing( spacingHint() );
 
-  Q3GroupBox *mlGroup = new Q3GroupBox( i18n("Associated Mailing List" ), this );
-  mlGroup->setColumnLayout( 0,  Qt::Vertical );
-  QGridLayout *groupLayout = new QGridLayout();
-  mlGroup->layout()->addItem( groupLayout );
+  QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), this );
+
+//  mlGroup->setColumnLayout( 0,  Qt::Vertical );
+  QGridLayout *groupLayout = new QGridLayout( mlGroup );
+  //mlGroup->layout()->addItem( groupLayout );
   groupLayout->setSpacing( spacingHint() );
   topLayout->addWidget( mlGroup );
   setMainWidget( mlGroup );

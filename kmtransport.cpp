@@ -27,7 +27,7 @@
 #include <QLayout>
 //Added by qt3to4:
 #include <QGridLayout>
-#include <Q3Frame>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <klineedit.h>
@@ -484,8 +484,8 @@ void KMTransportDialog::makeSmtpPage()
                   "if access to the configuration file is obtained."));
   grid->addWidget( mSmtp.storePasswordCheck, 10, 0, 1, 2 );
 
-  line = new Q3Frame( page1 );
-  line->setFrameStyle( Q3Frame::HLine | Q3Frame::Plain );
+  line = new QFrame( page1 );
+  line->setFrameStyle( QFrame::HLine | QFrame::Plain );
   grid->addWidget( line, 11, 0, 1, 2 );
 
   mSmtp.specifyHostnameCheck =

@@ -65,9 +65,8 @@
 #include <QLabel>
 #include <QToolTip>
 
-//Added by qt3to4:
 #include <QGridLayout>
-#include <Q3Frame>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QList>
 #include <QVBoxLayout>
@@ -235,11 +234,12 @@ void KMFolderDialog::setFolder( KMFolder* folder )
 
 static void addLine( QWidget *parent, QVBoxLayout* layout )
 {
-   Q3Frame *line = new Q3Frame( parent, "line" );
+   QFrame *line = new QFrame( parent );
+   line->setObjectName( "line" );
    line->setGeometry( QRect( 80, 150, 250, 20 ) );
-   line->setFrameShape( Q3Frame::HLine );
-   line->setFrameShadow( Q3Frame::Sunken );
-   line->setFrameShape( Q3Frame::HLine );
+   line->setFrameShape( QFrame::HLine );
+   line->setFrameShadow( QFrame::Sunken );
+   line->setFrameShape( QFrame::HLine );
    layout->addWidget( line );
 }
 
