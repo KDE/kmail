@@ -161,13 +161,13 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
     if ( ! mCField.isEmpty() ) {
       // Can we extract the confidence?
       QRegExp cScorePattern = (*it).confidencePattern();
-      if ( cScorePattern.search( mCField ) != -1 ) {
+      if ( cScorePattern.indexIn( mCField ) != -1 ) {
         confidenceString = cScorePattern.cap( 1 );
       }
       confidence = confidenceString.toFloat( &confidenceValid );
       if( !confidenceValid) {
-        kdDebug(5006) << "Unable to convert confidence to float: " << confidenceString << endl;
-        confidence = -3.0; 
+        kDebug(5006) << "Unable to convert confidence to float: " << confidenceString << endl;
+        confidence = -3.0;
       }
     }
     scores.append( SpamScore( (*it).name(), score, ( confidence < 0.0 ) ? confidence : confidence*100, mField, mCField ) );

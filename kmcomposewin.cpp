@@ -1098,11 +1098,10 @@ void KMComposeWin::getTransportMenu()
   mActLaterMenu->clear();
   availTransports = KMail::TransportManager::transportNames();
   QStringList::Iterator it;
-  int id = 0;
-  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++)
+  for(it = availTransports.begin(); it != availTransports.end() ; ++it)
   {
-    mActNowMenu->insertItem((*it).replace("&", "&&"), id);
-    mActLaterMenu->insertItem((*it).replace("&", "&&"), id);
+    mActNowMenu->addAction((*it).replace("&", "&&") );
+    mActLaterMenu->addAction((*it).replace("&", "&&") );
   }
 }
 
@@ -1121,9 +1120,10 @@ void KMComposeWin::setupActions(void)
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu ( KIcon( "mail_send"), i18n("&Send Mail Via"),
-		    actionCollection(), "send_default_via" );
+                                          actionCollection(), "send_default_via" );
 
-    action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_alternative");
+    action = new KAction(KIcon("queue"), i18n("Send &Later"),
+                         actionCollection(), "send_alternative");
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendLater()));
     actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_alternative_via" );
@@ -1160,14 +1160,14 @@ void KMComposeWin::setupActions(void)
   mActNowMenu = actActionNowMenu->menu();
   mActLaterMenu = actActionLaterMenu->menu();
 
-  connect(  mActNowMenu, SIGNAL(  activated( int ) ), this,
-		    SLOT( slotSendNowVia( int ) ) );
+  connect(  mActNowMenu, SIGNAL( triggered( QAction* ) ), this,
+		    SLOT( slotSendNowVia( QAction* ) ) );
   connect(  mActNowMenu, SIGNAL(  aboutToShow() ), this,
 		    SLOT( getTransportMenu() ) );
 
-  connect(  mActLaterMenu, SIGNAL(  activated( int ) ), this,
-		  SLOT( slotSendLaterVia( int ) ) );
-  connect(  mActLaterMenu, SIGNAL(  aboutToShow() ), this,
+  connect(  mActLaterMenu, SIGNAL( triggered( QAction* ) ), this,
+		  SLOT( slotSendLaterVia( QAction* ) ) );
+  connect(  mActLaterMenu, SIGNAL( aboutToShow() ), this,
 		  SLOT( getTransportMenu() ) );
 
 
@@ -3916,23 +3916,29 @@ void KMComposeWin::slotSaveDraft() {
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSendNowVia( int item )
+void KMComposeWin::slotSendNowVia( QAction* item )
 {
+#warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
+  QString temp = item->text().remove("&");
   QStringList availTransports= KMail::TransportManager::transportNames();
-  QString customTransport = availTransports[ item ];
-
-  mTransport->setItemText( mTransport->currentIndex(), customTransport );
-  slotSendNow();
+  if (availTransports.contains( temp ) )
+  {
+    mTransport->setItemText( mTransport->currentIndex(), temp);
+    slotSendNow();
+  }
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSendLaterVia( int item )
+void KMComposeWin::slotSendLaterVia( QAction* item )
 {
+#warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
+  QString temp = item->text().remove("&");
   QStringList availTransports= KMail::TransportManager::transportNames();
-  QString customTransport = availTransports[ item ];
-
-  mTransport->setItemText( mTransport->currentIndex(), customTransport );
-  slotSendLater();
+  if (availTransports.contains( temp ) )
+  {
+    mTransport->setItemText( mTransport->currentIndex(), temp  );
+    slotSendLater();
+  }
 }
 
 

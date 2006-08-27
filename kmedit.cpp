@@ -450,7 +450,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
           }
         }
         else {
-          p.insertItem( QString::fromLatin1("No Suggestions") );
+          p.addAction( i18n("No Suggestions") );
         }
 
         //Execute the popup inline

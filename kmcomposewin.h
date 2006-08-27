@@ -258,9 +258,9 @@ private slots:
 public slots: // kmkernel, callback
   void slotSendNow();
 private slots:
-  void slotSendNowVia( int item );
+  void slotSendNowVia( QAction* );
   void slotSendLater();
-  void slotSendLaterVia( int item );
+  void slotSendLaterVia( QAction* );
 
   void getTransportMenu();
 

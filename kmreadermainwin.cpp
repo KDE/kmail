@@ -95,10 +95,10 @@ void KMReaderMainWin::initKMReaderMainWin() {
   setupAccel();
   setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
   applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
-  if( ! mReaderWin->message() ) { 
-    menuBar()->hide(); 
-    toolBar( "mainToolBar" )->hide(); 
-  } 
+  if( ! mReaderWin->message() ) {
+    menuBar()->hide();
+    toolBar( "mainToolBar" )->hide();
+  }
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -372,14 +372,18 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     if ( mainwin )
       mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
           &mMenuToFolder, copyMenu );
-    menu->insertItem( i18n("&Copy To" ), copyMenu );
+    menu->addMenu( copyMenu );
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addSeparator();
     menu->addAction( mPrintAction );
-    menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );
-    menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );
+    QAction* act = menu->addAction( SmallIcon("filesaveas"), i18n( "Save &As..." ) );
+    connect(act, SIGNAL(triggered(QAction*)),
+            mReaderWin, SLOT( slotSaveMsg() ) );
+    act = menu->addAction( i18n("Save Attachments...") );
+    connect(act, SIGNAL(triggered(QAction*)),
+            mReaderWin, SLOT(slotSaveAttachments()) );
   }
   menu->exec(aPoint, 0);
   delete menu;
