@@ -34,7 +34,7 @@ namespace KMail { class Composer; }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
-typedef QMap<int,KMFolder*> KMMenuToFolder;
+typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
 
 class KDE_EXPORT KMCommand : public QObject

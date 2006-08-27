@@ -36,8 +36,8 @@ public:
 private slots:
   void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
 
-  /** Copy selected messages to folder with corresponding to given menuid */
-  void copySelectedToFolder( int menuId );
+  /** Copy selected messages to folder with corresponding to given QAction */
+  void copySelectedToFolder( QAction* );
   void slotPrintMsg();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
@@ -57,7 +57,7 @@ private:
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
   KUrl mUrl;
-  QMap<int,KMFolder*> mMenuToFolder;
+  QMap<QAction*,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
           *mReplyListAction, *mForwardAction,

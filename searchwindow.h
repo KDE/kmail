@@ -115,8 +115,8 @@ protected slots:
   virtual bool slotShowMsg(Q3ListViewItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int );
-  virtual void copySelectedToFolder( int menuId );
-  virtual void moveSelectedToFolder( int menuId );
+  virtual void copySelectedToFolder( QAction* );
+  virtual void moveSelectedToFolder( QAction* );
   virtual void slotFolderActivated( KMFolder* );
   void slotClearSelection();
   void slotReplyToMsg();
@@ -165,7 +165,7 @@ protected:
   QPushButton *mSearchFolderOpenBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
-  QMap<int,KMFolder*> mMenuToFolder;
+  QMap<QAction*,KMFolder*> mMenuToFolder;
   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction;

@@ -1655,13 +1655,13 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
 
   if (folder && !folder->noContent())
   {
-    int menuId;
+    QAction* act;
     if (move)
-      menuId = menu->insertItem(i18n("Move to This Folder"));
+      act = menu->addAction(i18n("Move to This Folder"));
     else
-      menuId = menu->insertItem(i18n("Copy to This Folder"));
-    aMenuToFolder->insert( menuId, folder );
-    menu->setItemEnabled( menuId, !folder->isReadOnly() );
+      act = menu->addAction(i18n("Copy to This Folder"));
+    aMenuToFolder->insert( act, folder );
+    act->setEnabled( !folder->isReadOnly() );
     menu->addSeparator();
   }
 
@@ -1682,9 +1682,9 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
                       aMenuToFolder, subMenu );
     } else {
       // insert an item
-      int menuId = menu->insertItem( label );
-      aMenuToFolder->insert( menuId, child );
-      menu->setItemEnabled( menuId, !child->isReadOnly() );
+      QAction* act = menu->addAction( label );
+      aMenuToFolder->insert( act, child );
+      act->setEnabled( !child->isReadOnly() );
     }
   }
   return;

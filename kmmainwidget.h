@@ -77,7 +77,7 @@ namespace KMail {
   class SearchWindow;
 }
 
-typedef QMap<int,KMFolder*> KMMenuToFolder;
+typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 
 
 class KDE_EXPORT KMMainWidget : public QWidget
@@ -355,10 +355,10 @@ protected slots:
   /** Update the undo action */
   void slotUpdateUndo();
 
-  /** Move selected messages to folder with corresponding to given menuid */
-  virtual void moveSelectedToFolder( int menuId );
-  /** Copy selected messages to folder with corresponding to given menuid */
-  virtual void copySelectedToFolder( int menuId );
+  /** Move selected messages to folder with corresponding to given qaction */
+  virtual void moveSelectedToFolder( QAction* );
+  /** Copy selected messages to folder with corresponding to given qaction */
+  virtual void copySelectedToFolder( QAction* );
   /** Update html and threaded messages preferences in Folder menu. */
   void updateFolderMenu();
   /** Enable or disable the "mark all as read" action. Needs to happen more

@@ -2928,18 +2928,18 @@ void KMMainWidget::slotShowMsgSrc()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::moveSelectedToFolder( int menuId )
+void KMMainWidget::moveSelectedToFolder( QAction* act )
 {
-  if (mMenuToFolder[menuId])
-    mHeaders->moveMsgToFolder( mMenuToFolder[menuId] );
+  if (mMenuToFolder[act])
+    mHeaders->moveMsgToFolder( mMenuToFolder[act] );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::copySelectedToFolder(int menuId )
+void KMMainWidget::copySelectedToFolder( QAction* act )
 {
-  if (mMenuToFolder[menuId])
-    mHeaders->copyMsgToFolder( mMenuToFolder[menuId] );
+  if (mMenuToFolder[act])
+    mHeaders->copyMsgToFolder( mMenuToFolder[act] );
 }
 
 

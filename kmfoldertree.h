@@ -48,7 +48,7 @@ class KMFolderTree;
 class KMMainWidget;
 class KMAccount;
 // duplication from kmcommands.h, to avoid the include
-typedef QMap<int,KMFolder*> KMMenuToFolder;
+typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 template <typename T> class QPointer;
 
 class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
@@ -296,7 +296,7 @@ protected slots:
   void slotNewMessageToMailingList();
 
   /** For RMB move folder */
-  virtual void moveSelectedToFolder( int menuId );
+  virtual void moveSelectedToFolder( QAction* );
 
 protected:
   /** Catch palette changes */

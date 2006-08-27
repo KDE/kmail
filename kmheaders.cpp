@@ -128,19 +128,38 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   header()->installEventFilter(this);
   mPopup = new KMenu(this);
   mPopup->addTitle(i18n("View Columns"));
-  mPopup->setCheckable(true);
-  mPopup->insertItem(i18n("Status"),          KPaintInfo::COL_STATUS);
-  mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);
-  mPopup->insertItem(i18n("Todo"),            KPaintInfo::COL_TODO);
-  mPopup->insertItem(i18n("Attachment"),      KPaintInfo::COL_ATTACHMENT);
-  mPopup->insertItem(i18n("Spam/Ham"),        KPaintInfo::COL_SPAM_HAM);
-  mPopup->insertItem(i18n("Watched/Ignored"), KPaintInfo::COL_WATCHED_IGNORED);
-  mPopup->insertItem(i18n("Signature"),       KPaintInfo::COL_SIGNED);
-  mPopup->insertItem(i18n("Encryption"),      KPaintInfo::COL_CRYPTO);
-  mPopup->insertItem(i18n("Size"),            KPaintInfo::COL_SIZE);
-  mPopup->insertItem(i18n("Receiver"),        KPaintInfo::COL_RECEIVER);
+  QAction* act = mPopup->addAction(i18n("Status"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_STATUS);
+  act = mPopup->addAction(i18n("Important"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_IMPORTANT);
+  act = mPopup->addAction(i18n("Todo"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_TODO);
+  act = mPopup->addAction(i18n("Attachment"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_ATTACHMENT);
+  act = mPopup->addAction(i18n("Spam/Ham"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_SPAM_HAM);
+  act = mPopup->addAction(i18n("Watched/Ignored"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_WATCHED_IGNORED);
+  act = mPopup->addAction(i18n("Signature"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_SIGNED);
+  act = mPopup->addAction(i18n("Encryption"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_CRYPTO);
+  act = mPopup->addAction(i18n("Size"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_SIZE);
+  act = mPopup->addAction(i18n("Receiver"));
+  act->setCheckable(true);
+  mColumns.insert(act, KPaintInfo::COL_RECEIVER);
 
-  connect(mPopup, SIGNAL(activated(int)), this, SLOT(slotToggleColumn(int)));
+  connect(mPopup, SIGNAL(triggered(QAction*)), SLOT(slotToggleColumn(QAction*)));
 
   setShowSortIndicator(true);
   setFocusPolicy( Qt::WheelFocus );
@@ -235,13 +254,14 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
   {
     // if we currently only show one of either sender/receiver column
     // modify the popup text in the way, that it displays the text of the other of the two
+    QAction* act = mColumns.key(KPaintInfo::COL_RECEIVER);
     if ( mPaintInfo.showReceiver )
-      mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+      act->setText(i18n("Receiver"));
     else
       if ( mFolder && (mFolder->whoField().toLower() == "to") )
-        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Sender"));
+          act->setText(i18n("Sender"));
       else
-        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+          act->setText(i18n("Receiver"));
 
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
@@ -251,13 +271,13 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 
 //-----------------------------------------------------------------------------
 
-void KMHeaders::slotToggleColumn(int id, int mode)
+void KMHeaders::slotToggleColumn(QAction* act, int mode)
 {
   bool *show = 0;
   int  *col  = 0;
   int  width = 0;
 
-  switch ( static_cast<KPaintInfo::ColumnIds>(id) )
+  switch ( mColumns[act] )
   {
     case KPaintInfo::COL_SIZE:
     {
@@ -340,7 +360,7 @@ void KMHeaders::slotToggleColumn(int id, int mode)
   else
     *show = mode;
 
-  mPopup->setItemChecked(id, *show);
+  act->setChecked(*show);
 
   if (*show) {
     header()->setResizeEnabled(true, *col);
@@ -354,7 +374,7 @@ void KMHeaders::slotToggleColumn(int id, int mode)
 
   // if we change the visibility of the receiver column,
   // the sender column has to show either the sender or the receiver
-  if ( static_cast<KPaintInfo::ColumnIds>(id) ==  KPaintInfo::COL_RECEIVER ) {
+  if ( mColumns[act] ==  KPaintInfo::COL_RECEIVER ) {
     QString colText = i18n( "Sender" );
     if ( mFolder && (mFolder->whoField().toLower() == "to") && !mPaintInfo.showReceiver)
       colText = i18n( "Receiver" );
@@ -447,34 +467,34 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroup config( KMKernel::config(), "General" );
     bool show = config.readEntry( "showMessageSize", false );
-    slotToggleColumn(KPaintInfo::COL_SIZE, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_SIZE), show);
 
     show = config.readEntry( "showAttachmentColumn", false );
-    slotToggleColumn(KPaintInfo::COL_ATTACHMENT, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_ATTACHMENT), show);
 
     show = config.readEntry( "showImportantColumn", false );
-    slotToggleColumn(KPaintInfo::COL_IMPORTANT, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_IMPORTANT), show);
 
     show = config.readEntry( "showTodoColumn", false );
-    slotToggleColumn(KPaintInfo::COL_TODO, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_TODO), show);
 
     show = config.readEntry( "showSpamHamColumn", false );
-    slotToggleColumn(KPaintInfo::COL_SPAM_HAM, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_SPAM_HAM), show);
 
     show = config.readEntry( "showWatchedIgnoredColumn", false );
-    slotToggleColumn(KPaintInfo::COL_WATCHED_IGNORED, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_WATCHED_IGNORED), show);
 
     show = config.readEntry( "showStatusColumn", false );
-    slotToggleColumn(KPaintInfo::COL_STATUS, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_STATUS), show);
 
     show = config.readEntry( "showSignedColumn", false );
-    slotToggleColumn(KPaintInfo::COL_SIGNED, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_SIGNED), show);
 
     show = config.readEntry( "showCryptoColumn", false );
-    slotToggleColumn(KPaintInfo::COL_CRYPTO, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_CRYPTO), show);
 
     show = config.readEntry( "showReceiverColumn", false );
-    slotToggleColumn(KPaintInfo::COL_RECEIVER, show);
+    slotToggleColumn(mColumns.key(KPaintInfo::COL_RECEIVER), show);
 
     mPaintInfo.showCryptoIcons = config.readEntry( "showCryptoIcons", false );
     mPaintInfo.showAttachmentIcon = config.readEntry( "showAttachmentIcon", true );
@@ -1434,10 +1454,10 @@ void KMHeaders::deleteMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::moveSelectedToFolder( int menuId )
+void KMHeaders::moveSelectedToFolder( QAction* act )
 {
-  if (mMenuToFolder[menuId])
-    moveMsgToFolder( mMenuToFolder[menuId] );
+  if (mMenuToFolder[act])
+    moveMsgToFolder( mMenuToFolder[act] );
 }
 
 //-----------------------------------------------------------------------------
@@ -1569,10 +1589,10 @@ void KMHeaders::undo()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::copySelectedToFolder(int menuId )
+void KMHeaders::copySelectedToFolder( QAction* act )
 {
-  if (mMenuToFolder[menuId])
-    copyMsgToFolder( mMenuToFolder[menuId] );
+  if (mMenuToFolder[act])
+    copyMsgToFolder( mMenuToFolder[act] );
 }
 
 
@@ -2310,16 +2330,18 @@ void KMHeaders::slotRMB()
   Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
   mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
       &mMenuToFolder, msgCopyMenu );
-  menu->insertItem(i18n("&Copy To"), msgCopyMenu);
+  msgCopyMenu->setTitle(i18n("&Copy To"));
+  menu->addMenu( msgCopyMenu );
 
   if ( mFolder->isReadOnly() ) {
-    int id = menu->insertItem( i18n("&Move To") );
-    menu->setItemEnabled( id, false );
+    QAction* act = menu->addAction( i18n("&Move To") );
+    act->setEnabled( false );
   } else {
     Q3PopupMenu *msgMoveMenu = new Q3PopupMenu(menu);
     mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
         &mMenuToFolder, msgMoveMenu );
-    menu->insertItem(i18n("&Move To"), msgMoveMenu);
+    msgMoveMenu->setTitle(i18n("&Move To"));
+    menu->addMenu( msgMoveMenu) ;
   }
   menu->addSeparator();
   menu->addAction( mOwner->statusMenu() ); // Mark Message menu

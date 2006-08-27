@@ -1752,15 +1752,15 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
   // connect the signals
   if ( action == MoveMessage || action == MoveFolder )
   {
-    disconnect( menu, SIGNAL(activated(int)), receiver,
-        SLOT(moveSelectedToFolder(int)) );
-    connect( menu, SIGNAL(activated(int)), receiver,
-        SLOT(moveSelectedToFolder(int)) );
+    disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
+        SLOT(moveSelectedToFolder(QAction*)) );
+    connect( menu, SIGNAL(triggered(QAction*)), receiver,
+        SLOT(moveSelectedToFolder(QAction*)) );
   } else {
-    disconnect( menu, SIGNAL(activated(int)), receiver,
-        SLOT(copySelectedToFolder(int)) );
-    connect( menu, SIGNAL(activated(int)), receiver,
-        SLOT(copySelectedToFolder(int)) );
+    disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
+        SLOT(copySelectedToFolder(QAction*)) );
+    connect( menu, SIGNAL(triggered(QAction*)), receiver,
+        SLOT(copySelectedToFolder(QAction*)) );
   }
   if ( !item ) {
     item = firstChild();
@@ -1795,6 +1795,7 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       // new level
       QMenu* popup = new QMenu( menu );
       popup->setObjectName( "subMenu" );
+      popup->setTitle(label);
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
       bool subMenu = false;
       if ( ( action == MoveMessage || action == CopyMessage ) &&
@@ -1805,26 +1806,26 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
         subMenu = true;
       if ( subMenu )
       {
-        int menuId;
+        QAction* act;
         if ( action == MoveMessage || action == MoveFolder )
-          menuId = popup->insertItem( i18n("Move to This Folder"), -1, 0 );
+          act = popup->addAction( i18n("Move to This Folder") );
         else
-          menuId = popup->insertItem( i18n("Copy to This Folder"), -1, 0 );
+          act = popup->addAction( i18n("Copy to This Folder") );
         popup->addSeparator();
-        aMenuToFolder->insert( menuId, fti->folder() );
+        aMenuToFolder->insert( act, fti->folder() );
       }
-      menu->insertItem( label, popup );
+      menu->addMenu( popup );
     } else
     {
       // insert an item
-      int menuId = menu->insertItem( label );
+      QAction* act = menu->addAction( label );
       if ( fti->folder() )
-        aMenuToFolder->insert( menuId, fti->folder() );
+        aMenuToFolder->insert( act, fti->folder() );
       bool enabled = (fti->folder() ? true : false);
       if ( fti->folder() &&
            ( fti->folder()->isReadOnly() || fti->folder()->noContent() ) )
         enabled = false;
-      menu->setItemEnabled( menuId, enabled );
+      act->setEnabled( enabled );
     }
 
     item = item->nextSibling();
@@ -1832,9 +1833,9 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::moveSelectedToFolder( int menuId )
+void KMFolderTree::moveSelectedToFolder( QAction* act )
 {
-  moveFolder( mMenuToFolder[menuId] );
+  moveFolder( mMenuToFolder[act] );
 }
 
 //-----------------------------------------------------------------------------

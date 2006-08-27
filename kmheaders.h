@@ -40,7 +40,7 @@ class QDateTime;
 
 typedef QList<KMMsgBase*> KMMessageList;
 typedef QList<quint32> SerNumList;
-typedef QMap<int,KMFolder*> KMMenuToFolder;
+typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
 
@@ -265,9 +265,9 @@ public slots:
    * recursively select their children. */
   void setSelectedByIndex(QList<int> items, bool selected);
 
-  /** switch a column with the given id (see KPaintInfo enum)
+  /** switch a column with the given QAction
       1 for activate, 0 for deactivate, -1 for toggle*/
-  void slotToggleColumn(int id, int mode = -1);
+  void slotToggleColumn(QAction*, int mode = -1);
 
   /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
@@ -329,10 +329,10 @@ protected:
 
 protected slots:
   /** Move messages corresponding to the selected items to the folder
-      corresponding to the given menuId */
-  virtual void moveSelectedToFolder( int menuId );
+      corresponding to the given QAction */
+  virtual void moveSelectedToFolder( QAction* act );
   /** Same thing but copy */
-  virtual void copySelectedToFolder( int menuId );
+  virtual void copySelectedToFolder( QAction* act );
   /** Apply the filter Rules to a single message */
   virtual int slotFilterMsg( KMMessage * );
   /** dirties the sort order */
@@ -361,6 +361,9 @@ private:
   unsigned long mCurrentItemSerNum;
   /** Map messages ids into HeaderItems */
   Q3MemArray<HeaderItem*> mItems;
+
+  /** map action to column, see KPaintInfo for the enum */
+  QMap<QAction*, int> mColumns;
 
   // ===== threading and sorting ==========
   bool mNested, mNestedOverride, mSubjThreading;

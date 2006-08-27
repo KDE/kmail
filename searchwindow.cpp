@@ -682,9 +682,9 @@ KMMessage* SearchWindow::message()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::moveSelectedToFolder( int menuId )
+void SearchWindow::moveSelectedToFolder( QAction* act )
 {
-    KMFolder *dest = mMenuToFolder[menuId];
+    KMFolder *dest = mMenuToFolder[act];
     if (!dest)
         return;
 
@@ -694,9 +694,9 @@ void SearchWindow::moveSelectedToFolder( int menuId )
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::copySelectedToFolder( int menuId )
+void SearchWindow::copySelectedToFolder( QAction* act )
 {
-    KMFolder *dest = mMenuToFolder[menuId];
+    KMFolder *dest = mMenuToFolder[act];
     if (!dest)
         return;
 
@@ -743,8 +743,10 @@ void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &
     menu->addAction( mReplyListAction );
     menu->addAction( mForwardActionMenu );
     menu->addSeparator();
-    menu->insertItem(i18n("&Copy To"), msgCopyMenu);
-    menu->insertItem(i18n("&Move To"), msgMoveMenu);
+    msgCopyMenu->setTitle(i18n("&Copy To"));
+    menu->addMenu( msgCopyMenu );
+    msgMoveMenu->setTitle(i18n("&Move To"));
+    menu->addMenu( msgMoveMenu );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtchAction );
     menu->addAction( mPrintAction );

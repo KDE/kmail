@@ -389,12 +389,12 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
   delete menu;
 }
 
-void KMReaderMainWin::copySelectedToFolder( int menuId )
+void KMReaderMainWin::copySelectedToFolder( QAction* act )
 {
-  if (!mMenuToFolder[menuId])
+  if (!mMenuToFolder[act])
     return;
 
-  KMCommand *command = new KMCopyCommand( mMenuToFolder[menuId], mMsg );
+  KMCommand *command = new KMCopyCommand( mMenuToFolder[act], mMsg );
   command->start();
 }
 
