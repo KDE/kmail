@@ -2151,7 +2151,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "news"))
   {
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
-    KMimeType::Ptr mime = KMimeType::findByURL( mUrl );
+    KMimeType::Ptr mime = KMimeType::findByUrl( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||
         mime->name() == "application/x-msdos-program" ||
