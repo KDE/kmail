@@ -269,7 +269,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                         "mail_forward", ac,
                                         "search_message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-           SLOT(slotForwardMsg()) );
+           SLOT(slotForwardInlineMsg()) );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
                                         "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()), ac,
@@ -277,7 +277,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mForwardActionMenu->insert( mForwardAttachedAction );
   mForwardInlineAction = new KAction( i18n("&Inline..."),
                                       "mail_forward", 0, this,
-                                      SLOT(slotForwardMsg()), ac,
+                                      SLOT(slotForwardInlineMsg()), ac,
                                       "search_message_forward_inline" );
   mForwardActionMenu->insert( mForwardInlineAction );
   mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
