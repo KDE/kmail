@@ -3985,6 +3985,9 @@ DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpe
 //-----------------------------------------------------------------------------
 void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & data)
 {
+  if ( !data.data() || !data.size() )
+    return;
+
   DwString content( data.data(), data.size() );
   if ( numBodyParts() > 0 &&
        partSpecifier != "0" &&
