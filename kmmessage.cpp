@@ -4013,7 +4013,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     {
       // update headers
       // get rid of EOL
-      content.resize( content.length()-2 );
+      content.resize( QMAX( content.length(), 2 ) - 2 );
       // we have to delete the fields first as they might have been created by
       // an earlier call to DwHeaders::FieldBody
       mLastUpdated->Headers().DeleteAllFields();
