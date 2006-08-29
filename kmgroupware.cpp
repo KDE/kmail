@@ -40,6 +40,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include <kcal/incidenceformatter.h>
+#include <ktnef/formatter.h>
 #include <kdebug.h>
 #include <mimelib/enum.h>
 #include <assert.h>
@@ -70,7 +71,7 @@ bool vPartFoundAndDecoded( KMMessage* msg, QString& s )
       // kDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
-      s = KCal::IncidenceFormatter::msTNEFToVPart( msgPart.bodyDecodedBinary() );
+      s = KTnef::Formatter::msTNEFToVPart( msgPart.bodyDecodedBinary() );
       return !s.isEmpty();
     } else {
       dwPart = msg->findDwBodyPart( DwMime::kTypeText, DwMime::kSubtypeVCal );
