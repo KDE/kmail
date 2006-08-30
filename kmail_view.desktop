@@ -1,7 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KMail
-Name[x-test]=xxKMailxx
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
