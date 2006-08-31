@@ -1,11 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KMail
+Name[x-test]=xxKMailxx
 Type=Application
 Exec=kmail -caption "%c"
 Icon=kmail
 DocPath=kmail/index.html
 GenericName=Mail Client
+GenericName[fr]=Logiciel de messagerie électronique
+GenericName[x-test]=xxMail Clientxx
 Terminal=false
 
 X-KDE-StartupNotify=true
