@@ -1830,11 +1830,7 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage*) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-  QString play = mParameter;
-  QString file = QString::fromLatin1("file:");
-  if (mParameter.startsWith(file))
-    play = mParameter.mid(file.length());
-  mPlayer->play( KUrl( QFile::encodeName(play) ) );
+  mPlayer->play( KUrl(mParameter) );
   return GoOn;
 }
 
@@ -1862,7 +1858,7 @@ QWidget* KMFilterActionWithUrl::createParamWidget( QWidget* parent ) const
 
 void KMFilterActionWithUrl::applyParamWidgetValue( QWidget* paramWidget )
 {
-  mParameter = ((KUrlRequester*)paramWidget)->url().toString();
+  mParameter = ((KUrlRequester*)paramWidget)->url().url();
 }
 
 void KMFilterActionWithUrl::setParamWidgetValue( QWidget* paramWidget ) const

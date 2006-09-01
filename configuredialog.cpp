@@ -2668,6 +2668,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   mEditorRequester->setFilter( "application/x-executable "
                                "application/x-shellscript "
                                "application/x-desktop" );
+  mEditorRequester->setMode(KFile::File|KFile::ExistingOnly|KFile::LocalOnly);
   mEditorRequester->setEnabled( false ); // !mExternalEditorCheck->isChecked()
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            label, SLOT(setEnabled(bool)) );
@@ -2698,7 +2699,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
-  mEditorRequester->setUrl( GlobalSettings::self()->externalEditor() );
+  mEditorRequester->setPath( GlobalSettings::self()->externalEditor() );
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2724,7 +2725,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked(
         general.readEntry( "use-external-editor", false ) );
-    mEditorRequester->setUrl( general.readPathEntry( "external-editor" ) );
+    mEditorRequester->setPath( general.readPathEntry( "external-editor" ) );
   }
 }
 
@@ -2740,7 +2741,7 @@ void ComposerPage::GeneralTab::save() {
 
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
-  GlobalSettings::self()->setExternalEditor( mEditorRequester->url().toString() );
+  GlobalSettings::self()->setExternalEditor( mEditorRequester->url().path() );
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
