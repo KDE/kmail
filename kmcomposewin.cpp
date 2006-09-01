@@ -2216,9 +2216,9 @@ void KMComposeWin::slotUpdateAttachActions()
 
 QString KMComposeWin::prettyMimeType( const QString& type )
 {
-  QString t = type.toLower();
-  KServiceType::Ptr st = KServiceType::serviceType( t );
-  return st ? st->comment() : t;
+  const QString t = type.toLower();
+  const KMimeType::Ptr st = KMimeType::mimeType( t );
+  return !st->isDefault() ? st->comment() : t;
 }
 
 void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
