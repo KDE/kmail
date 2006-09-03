@@ -2619,12 +2619,12 @@ void KMMainWidget::setupActions()
 
   mToggleTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Message as &To-do"), actionCollection(), "status_todo");
   connect(mToggleTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusTodo()));
-  mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
+  mToggleTodoAction->setCheckedState( i18n("Remove &To-do Message Mark") );
   mStatusMenu->addAction( mToggleTodoAction );
 
   mToggleSentAction = new KToggleAction(KIcon("kmmsgsent"), i18n("Mark Message as &Sent"), actionCollection(), "status_sent");
   connect(mToggleSentAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusSent()));
-  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
+  mToggleSentAction->setCheckedState( i18n("Remove &Sent Mark") );
 
 
   //----- "Mark Thread" submenu
@@ -2659,7 +2659,7 @@ void KMMainWidget::setupActions()
 
   mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), actionCollection(), "thread_todo");
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
-  mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
+  mToggleThreadTodoAction->setCheckedState( i18n("Remove &To-do Thread Mark") );
   mThreadStatusMenu->addAction( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
