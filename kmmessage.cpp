@@ -714,6 +714,9 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
                                            const QTextCodec*& codec,
                                            bool& isHTML ) const
 {
+  if ( !root )
+    return;
+
   isHTML = false;
   // initialy parse the complete message to decrypt any encrypted parts
   {
