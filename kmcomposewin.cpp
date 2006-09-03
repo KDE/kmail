@@ -1445,6 +1445,7 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
 
+  statusBar()->insertPermanentItem(i18n(" Spellcheck: %1 ", QString("     ")),3,0);
   statusBar()->insertPermanentItem(i18n(" Column: %1 ", QString("     ")),2,0);
   statusBar()->insertPermanentItem(i18n(" Line: %1 ", QString("     ")),1,0);
 }
@@ -4128,7 +4129,16 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
   if ( mEditor->autoSpellChecking(on) == -1 )
     mAutoSpellCheckingAction->setChecked(false); // set it to false again
+
+  QString temp;
+  if ( on ) {
+    temp = i18n( "Spellcheck: on" );
+  } else {
+    temp = i18n( "Spellcheck: off" );
+  }
+  statusBar()->changeItem( temp, 3 );
 }
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheck()
 {
@@ -4607,17 +4617,17 @@ void KMComposeWin::fontChanged( const QFont &f )
 
   if ( fontdb->bold(f.family(), "Bold") ) {
     textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
-    textBoldAction->setEnabled(true);
+    textBoldAction->setEnabled( true );
+  } else {
+    textBoldAction->setEnabled( false );
   }
-  else
-    textBoldAction->setEnabled(false);
 
   if ( fontdb->italic(f.family(), "Italic") ) {
     textItalicAction->setChecked( f.italic() );
-    textItalicAction->setEnabled(true);
+    textItalicAction->setEnabled( true );
+  } else {
+    textItalicAction->setEnabled( false );
   }
-  else
-    textItalicAction->setEnabled(false);
 
   textUnderAction->setChecked( f.underline() );
 
