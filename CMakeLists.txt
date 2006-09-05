@@ -271,7 +271,7 @@ install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 ########### next target ###############
-
+if(KDE4_BUILD_TESTS)
 set(dcoptest_SRCS dcoptest.cpp )
 
 kde4_automoc(${dcoptest_SRCS})
@@ -282,13 +282,10 @@ qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
 
 #kde4_add_dcop_stubs(dcoptest_SRCS kmailIface.h )
 
-if(KDE4_BUILD_TESTS)
-
 #kde4_add_executable(dcoptest ${dcoptest_SRCS})
 
 #target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
 
-endif(KDE4_BUILD_TESTS)
 
 ########### next target ###############
 
@@ -296,7 +293,6 @@ set(recipienteditortest_SRCS recipientseditortest.cpp )
 
 kde4_automoc(${recipienteditortest_SRCS})
 
-if(KDE4_BUILD_TESTS)
 
 kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
 
@@ -318,6 +314,5 @@ install( FILES kmail.upd  DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
 install(PROGRAMS upgrade-transport.pl kmail-pgpidentity.pl upgrade-signature.pl kmail-upd-identities.pl kmail-3.1-use-UOID-for-identities.pl kmail-3.1-update-new-mail-notification-settings.pl kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl kmail-3.2-update-loop-on-goto-unread-settings.sh kmail-3.2-misc.sh kmail-3.3-use-ID-for-accounts.pl kmail-3.3-move-identities.pl kmail-3.3-aegypten.pl kmail-3.3-split-sign-encr-keys.sh kmail-3.3-misc.pl kmail-3.3b1-misc.pl kmail-3.4-misc.pl kmail-3.4.1-update-status-filters.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
 
 
-kde4_install_icons( ${ICON_INSTALL_DIR} )
 kde4_install_icons( ${ICON_INSTALL_DIR} )
 
