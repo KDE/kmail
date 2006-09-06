@@ -30,6 +30,7 @@
 
 #include "folderjob.h"
 #include "imapaccountbase.h"
+#include "qguardedptr.h"
 
 class KMFolderImap;
 class KMFolderCachedImap;
@@ -131,7 +132,7 @@ protected:
   QString mPath;
   QStringList mSubfolderNames, mSubfolderPaths, 
               mSubfolderMimeTypes, mSubfolderAttributes;
-  KPIM::ProgressItem* mParentProgressItem;
+  QGuardedPtr<KPIM::ProgressItem> mParentProgressItem;
 };
 
 } // namespace

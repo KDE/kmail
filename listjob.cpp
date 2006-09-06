@@ -59,6 +59,7 @@ ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
 
 ListJob::~ListJob()
 {
+    kdDebug(5006 ) << k_funcinfo << kdBacktrace() << endl;
 }
 
 void ListJob::execute()
@@ -66,7 +67,7 @@ void ListJob::execute()
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
     kdWarning(5006) << "ListJob - got no connection" << endl;
-    delete this;
+    deleteLater();
     return;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
@@ -85,7 +86,7 @@ void ListJob::execute()
       mPath = static_cast<KMFolderCachedImap*>(mStorage)->imapPath();
     } else {
       kdError(5006) << "ListJob - no valid path and no folder given" << endl;
-      delete this;
+      deleteLater();
       return;
     }
   }
@@ -142,7 +143,7 @@ void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
   else {
     if ( mParentProgressItem )
       mParentProgressItem->setComplete();
-    delete this;
+    deleteLater();
   }
 }
 
@@ -151,7 +152,7 @@ void ListJob::slotListResult( KIO::Job* job )
   ImapAccountBase::JobIterator it = mAccount->findJob( job );
   if ( it == mAccount->jobsEnd() )
   {
-    delete this;
+    deleteLater();
     return;
   }
   if ( job->error() )
@@ -166,7 +167,7 @@ void ListJob::slotListResult( KIO::Job* job )
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
     mAccount->removeJob( it );
   }
-  delete this;
+  deleteLater();
 }
 
 void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
@@ -174,7 +175,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   ImapAccountBase::JobIterator it = mAccount->findJob( job );
   if ( it == mAccount->jobsEnd() )
   {
-    delete this;
+    deleteLater();
     return;
   }
   if( (*it).progressItem )
