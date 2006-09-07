@@ -115,6 +115,7 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
 {
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsg( msg, true );
+  mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;
   menuBar()->show();
