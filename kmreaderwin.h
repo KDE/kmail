@@ -354,7 +354,8 @@ public slots:
   void slotIMChat();
   void contactStatusChanged( const QString &uid);
 
-	void slotLevelQuote( int l );
+  void slotLevelQuote( int l );
+  void slotTouchMessage();
 
 protected slots:
   void slotCycleHeaderStyles();
@@ -373,7 +374,6 @@ protected slots:
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
   void slotDelayedResize();
-  void slotTouchMessage();
   void slotHandleAttachment( int );
 
 protected:
