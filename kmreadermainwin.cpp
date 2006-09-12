@@ -41,6 +41,7 @@
 #include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
+#include "kmmsgdict.h"
 
 #include "kmreadermainwin.h"
 
@@ -120,6 +121,24 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
   mMsg = msg;
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotTrashMsg()
+{
+  // find the real msg by its sernum
+  KMFolder* parent;
+  int index;
+  KMMsgDict::instance()->getLocation( mMsg->getMsgSerNum(), &parent, &index );
+  if (parent) {
+    KMMessage *msg = parent->getMsg( index );
+    if (msg) {
+      // now delete the msg and close this window
+      KMDeleteMsgCommand *command = new KMDeleteMsgCommand( parent, msg );
+      command->start();
+      close();
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -240,6 +259,11 @@ void KMReaderMainWin::setupAccel()
   //                             KStdAccel::shortcut( KStdAccel::Save ),
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
+
+  mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
+                                       i18n("Move message to trashcan") ),
+                             Key_Delete, this, SLOT(slotTrashMsg()),
+                             actionCollection(), "move_to_trash" );
 
   mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );

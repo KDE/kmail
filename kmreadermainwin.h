@@ -38,6 +38,7 @@ private slots:
 
   /** Copy selected messages to folder with corresponding to given menuid */
   void copySelectedToFolder( int menuId );
+  void slotTrashMsg();
   void slotPrintMsg();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
@@ -60,7 +61,7 @@ private:
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+  KAction *mTrashAction, *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
           *mReplyListAction, *mForwardInlineAction,
           *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
           *mViewSourceAction;
