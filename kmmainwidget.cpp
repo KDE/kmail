@@ -516,6 +516,7 @@ void KMMainWidget::createWidgets(void)
 #endif
   mSearchAndHeaders = new QVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
+  mSearchToolBar->setMovingEnabled(false);
   mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
 
