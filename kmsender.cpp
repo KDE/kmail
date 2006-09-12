@@ -1039,12 +1039,12 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   QString query = "headers=0&from=";
   query += KUrl::toPercentEncoding( sender );
 
-  if ( !to.empty() )
-    query += "&to=" + to.join( "&to=" );
-  if ( !cc.empty() )
-    query += "&cc=" + cc.join( "&cc=" );
-  if ( !bcc.empty() )
-    query += "&bcc=" + bcc.join( "&bcc=" );
+  foreach ( QString str, to )
+    query += "&to=" + KUrl::toPercentEncoding( str );
+  foreach ( QString str, cc )
+    query += "&cc=" + KUrl::toPercentEncoding( str );
+  foreach ( QString str, bcc )
+    query += "&bcc=" + KUrl::toPercentEncoding( str );
 
   KMTransportInfo * ti = mSender->transportInfo();
 
