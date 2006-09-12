@@ -10,6 +10,7 @@ Name[pa]=ਕੇ-ਪੱਤਰ
 Name[sv]=Kmail
 Name[ta]=Kஅஞ்சல்
 Name[th]=จัดการจดหมาย - K
+Name[zh_TW]=KMail 郵件軟體
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
