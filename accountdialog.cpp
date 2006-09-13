@@ -42,7 +42,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHash>
-
+#include <kglobalsettings.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -459,7 +459,7 @@ void AccountDialog::makeLocalAccountPage()
   label->setBuddy( mLocal.precommand );
   topLayout->addWidget( mLocal.precommand, 9, 1 );
 
-  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
 void AccountDialog::makeMaildirAccountPage()
@@ -561,7 +561,7 @@ void AccountDialog::makeMaildirAccountPage()
   label->setBuddy( mMaildir.precommand );
   topLayout->addWidget( label, 8, 0 );
 
-  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
 
@@ -836,7 +836,7 @@ void AccountDialog::makePopAccountPage()
 
   vlay->addStretch();
 
-  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
 
@@ -1139,7 +1139,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
   tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
 
-  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+  connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
 
