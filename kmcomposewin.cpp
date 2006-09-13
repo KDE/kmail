@@ -4318,11 +4318,15 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   // try to truncate the old sig
-  QString sigStr = mOldSigText + "\\s*$";  // because extra spaces are appended
-  QRegExp rx( sigStr );                    // to the signature in some cases.
-  if ( edtText.contains( rx ) ) {          // hey, that rhymes!
-    edtText.remove( rx );
-  }
+  // First remove any trailing whitespace
+  while ( !edtText.isEmpty() && edtText[edtText.length()-1].isSpace() )
+    edtText.truncate( edtText.length() - 1 );
+  // From the sig too, just in case
+  while ( !mOldSigText.isEmpty() && mOldSigText[mOldSigText.length()-1].isSpace() )
+    mOldSigText.truncate( mOldSigText.length() - 1 );
+
+  if( edtText.endsWith( mOldSigText ) )
+    edtText.truncate( edtText.length() - mOldSigText.length() );
 
   // now append the new sig
   mOldSigText = ident.signatureText();
