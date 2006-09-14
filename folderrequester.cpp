@@ -100,10 +100,14 @@ void FolderRequester::setFolder( KMFolder *folder )
 void FolderRequester::setFolder( const QString &idString )
 {
   KMFolder *folder = kmkernel->findFolderById( idString );
-  if ( folder )
+  if ( folder ) {
     setFolder( folder );
-  else {
-    edit->setText( i18n( "Unknown folder '%1'" ).arg( idString ) );
+  } else {
+    if ( !idString.isEmpty() ) {
+      edit->setText( i18n( "Unknown folder '%1'" ).arg( idString ) );
+    } else {
+      edit->setText( i18n( "Please select a folder" ) );
+    }
     mFolder = 0;
   }
   mFolderId = idString;
