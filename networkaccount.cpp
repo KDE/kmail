@@ -105,6 +105,9 @@ namespace KMail {
       mPasswdDirty = true;
     }
     setStorePasswd( storeInConfig );
+    if ( storeInConfig ) {
+      kmkernel->acctMgr()->writeConfig( true );
+    }
   }
 
   void NetworkAccount::clearPasswd() {
