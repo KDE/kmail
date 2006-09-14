@@ -35,6 +35,7 @@ using KPIM::BroadcastStatus;
 #include "protocols.h"
 #include "kmglobal.h"
 #include "util.h"
+#include "accountmanager.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
