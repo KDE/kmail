@@ -157,6 +157,9 @@ void PopAccount::processNewMail(bool _interactive)
         return;
       } else {
         setPasswd( passwd, b );
+        if ( b ) {
+          kmkernel->acctMgr()->writeConfig( true );
+        }
         mAskAgain = FALSE;
       }
     }
