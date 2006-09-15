@@ -2613,7 +2613,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   KConfigGroup composer(KMKernel::config(), "Composer");
   if ( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
     const KCursorSaver saver( QCursor::ArrowCursor );
-    KMMsgPartDialogCompat dlg;
+    KMMsgPartDialogCompat dlg(mMainWidget);
     int encodings = 0;
     for ( QValueListConstIterator<int> it = allowedCTEs.begin() ;
           it != allowedCTEs.end() ; ++it )
@@ -2945,7 +2945,7 @@ void KMComposeWin::slotAttachProperties()
   KMMessagePart* msgPart = mAtmList.at(idx);
   msgPart->setCharset(mCharset);
 
-  KMMsgPartDialogCompat dlg;
+  KMMsgPartDialogCompat dlg(mMainWidget);
   dlg.setMsgPart(msgPart);
   KMAtmListViewItem* listItem = (KMAtmListViewItem*)(mAtmItemList.at(idx));
   if( canSignEncryptAttachments() && listItem ) {

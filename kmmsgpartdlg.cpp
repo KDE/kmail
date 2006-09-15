@@ -331,8 +331,8 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
 
 
 
-KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool readOnly)
-  : KMMsgPartDialog(), mMsgPart( 0 )
+KMMsgPartDialogCompat::KMMsgPartDialogCompat( QWidget * parent, const char *, bool readOnly)
+  : KMMsgPartDialog(QString::null, parent ), mMsgPart( 0 )
 {
   setShownEncodings( SevenBit|EightBit|QuotedPrintable|Base64 );
   if (readOnly)

@@ -2906,7 +2906,7 @@ void KMHandleAttachmentCommand::atmSave()
 
 void KMHandleAttachmentCommand::atmProperties()
 {
-  KMMsgPartDialogCompat dlg( 0, true );
+  KMMsgPartDialogCompat dlg( parentWidget() , 0, true );
   KMMessagePart& msgPart = mNode->msgPart();
   dlg.setMsgPart( &msgPart );
   dlg.exec();
