@@ -1019,7 +1019,7 @@ void KMMainWidget::slotExpireFolder()
   if (group.readEntry("warn-before-expire", true ) ) {
     str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
-					   i18n("&Expire"))
+					   KGuiItem(i18n("&Expire")))
 	!= KMessageBox::Continue) return;
   }
 
@@ -1208,7 +1208,7 @@ void KMMainWidget::slotInvalidateIMAPFolders() {
           i18n("Are you sure you want to refresh the IMAP cache?\n"
 	       "This will remove all changes that you have done "
 	       "locally to your IMAP folders."),
-	  i18n("Refresh IMAP Cache"), i18n("&Refresh") ) == KMessageBox::Continue )
+	  i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue )
     kmkernel->acctMgr()->invalidateIMAPFolders();
 }
 
@@ -1222,7 +1222,7 @@ void KMMainWidget::slotExpireAll() {
   if (group.readEntry("warn-before-expire", true ) ) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
 			 i18n("Are you sure you want to expire all old messages?"),
-			 i18n("Expire Old Messages?"), i18n("Expire"));
+			 i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
     if (ret != KMessageBox::Continue) {
       return;
     }
@@ -1249,7 +1249,7 @@ void KMMainWidget::slotOverrideHtml()
         "\"spam\" and may increase the likelihood that your system will be "
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
-      i18n( "Use HTML" ),
+      KGuiItem(i18n( "Use HTML" )),
       "OverrideHtmlWarning", false);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlAction->setChecked( false );
@@ -1273,7 +1273,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
         "\"spam\" and may increase the likelihood that your system will be "
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
-      i18n( "Load External References" ),
+      KGuiItem(i18n( "Load External References" )),
       "OverrideHtmlLoadExtWarning", false);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlLoadExtAction->setChecked( false );
@@ -2614,17 +2614,17 @@ void KMMainWidget::setupActions()
   // -------- Toggle Actions
   mToggleFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Message as &Important"), actionCollection(), "status_flag");
   connect(mToggleFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusFlag()));
-  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
+  mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
   mStatusMenu->addAction( mToggleFlagAction );
 
   mToggleTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Message as &To-do"), actionCollection(), "status_todo");
   connect(mToggleTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusTodo()));
-  mToggleTodoAction->setCheckedState( i18n("Remove &To-do Message Mark") );
+  mToggleTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Message Mark")) );
   mStatusMenu->addAction( mToggleTodoAction );
 
   mToggleSentAction = new KToggleAction(KIcon("kmmsgsent"), i18n("Mark Message as &Sent"), actionCollection(), "status_sent");
   connect(mToggleSentAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusSent()));
-  mToggleSentAction->setCheckedState( i18n("Remove &Sent Mark") );
+  mToggleSentAction->setCheckedState( KGuiItem(i18n("Remove &Sent Mark")) );
 
 
   //----- "Mark Thread" submenu
@@ -2654,12 +2654,12 @@ void KMMainWidget::setupActions()
   //----- "Mark Thread" toggle actions
   mToggleThreadFlagAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Thread as &Important"), actionCollection(), "thread_flag");
   connect(mToggleThreadFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusFlag()));
-  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
+  mToggleThreadFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadFlagAction );
 
   mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), actionCollection(), "thread_todo");
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
-  mToggleThreadTodoAction->setCheckedState( i18n("Remove &To-do Thread Mark") );
+  mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions

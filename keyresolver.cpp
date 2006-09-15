@@ -972,7 +972,7 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
 			     "OpenPGP signing certificates for this identity.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
-					     i18n("Do Not OpenPGP-Sign"),
+					     KGuiItem(i18n("Do Not OpenPGP-Sign")),
 					     "signing will fail warning" )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
@@ -988,7 +988,7 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
 			     "S/MIME signing certificates for this identity.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
-					     i18n("Do Not S/MIME-Sign"),
+					     KGuiItem(i18n("Do Not S/MIME-Sign")),
 					     "signing will fail warning" )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
@@ -1208,7 +1208,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
 			     "your own message if you encrypt it.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Missing Key Warning"),
-					     i18n("&Encrypt") )
+					     KGuiItem(i18n("&Encrypt")) )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
     else
@@ -1232,7 +1232,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
                          "will not be encrypted.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Missing Key Warning"),
-					     i18n("Send &Unencrypted") )
+					     KGuiItem(i18n("Send &Unencrypted")) )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
   } else if ( emptyListCount > 0 ) {
@@ -1246,7 +1246,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
 						 i18n("Missing Key Warning"),
-						 i18n("&Encrypt") )
+						 KGuiItem(i18n("&Encrypt")) )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
   }

@@ -526,7 +526,7 @@ void KMFolderCachedImap::slotTroubleshoot()
                        "folders.", label() );
     QString s1 = i18n("Refresh IMAP Cache");
     QString s2 = i18n("&Refresh");
-    if( KMessageBox::warningContinueCancel( 0, str, s1, s2 ) ==
+    if( KMessageBox::warningContinueCancel( 0, str, s1, KGuiItem(s2) ) ==
         KMessageBox::Continue )
       account()->invalidateIMAPFolders( this );
   } else if( rc == KDialog::User2 ) {
@@ -540,7 +540,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), int( mSyncState ) ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), int( mSyncState ) ), QString(), KGuiItem(i18n("Reset && Sync")), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
@@ -1135,7 +1135,7 @@ void KMFolderCachedImap::uploadNewMessages()
             "Please contact your administrator to allow upload of new messages "
             "to you, or move them out of this folder.</p> "
             "<p>Do you want to move those messages to another folder now?</p>", folder()->prettyUrl() ) );
-      if ( KMessageBox::warningYesNo( 0, msg, QString(), i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
+      if ( KMessageBox::warningYesNo( 0, msg, QString(), KGuiItem(i18n("Move")), KGuiItem(i18n("Do Not Move")) ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Messages to Folder"), true );
         if ( dlg.exec() ) {

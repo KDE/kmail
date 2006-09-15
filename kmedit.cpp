@@ -534,7 +534,7 @@ bool KMEdit::checkExternalEditorFinished() {
            i18n("The external editor is still running.\n"
                 "Abort the external editor or leave it open?"),
            i18n("External Editor"),
-           i18n("Abort Editor"), i18n("Leave Editor Open") ) ) {
+           KGuiItem(i18n("Abort Editor")), KGuiItem(i18n("Leave Editor Open")) ) ) {
   case KMessageBox::Yes:
     killExternalEditor();
     return true;

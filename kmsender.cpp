@@ -488,7 +488,7 @@ void KMSender::doSendMsg()
         int result = KMessageBox::warningContinueCancel( 0,
         i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),
         i18n( "Security Warning" ),
-        i18n( "Send Unencrypted" ),
+        KGuiItem(i18n( "Send Unencrypted" )),
         "useCustomTransportWithoutAsking", false);
 
       if( result == KMessageBox::Cancel ) {
@@ -708,8 +708,8 @@ void KMSender::slotIdle()
              errString,
              mMethodStr);
           res = KMessageBox::warningYesNo( 0 , msg ,
-                  i18n( "Continue Sending" ), i18n( "&Continue Sending" ),
-                  i18n("&Abort Sending") );
+                  i18n( "Continue Sending" ), KGuiItem(i18n( "&Continue Sending" )),
+                  KGuiItem(i18n("&Abort Sending")) );
         } else {
           msg = i18n("Sending failed:\n%1\n"
             "The message will stay in the 'outbox' folder until you either "

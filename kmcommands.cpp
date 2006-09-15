@@ -623,7 +623,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>",
-         saveUrl.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
+         saveUrl.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         != KMessageBox::Continue)
       return Canceled;
   }
@@ -883,7 +883,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
     {
       if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?",
-         mUrl.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
+         mUrl.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         == KMessageBox::Continue) {
         mOffset = 0;
 
@@ -1145,7 +1145,7 @@ KMCommand::Result KMForwardCommand::execute()
 
     if (KMessageBox::questionYesNo( parentWidget(),
                                     i18n("Forward selected messages as "
-                                         "a MIME digest?"), QString(), i18n("Send Digest"), i18n("Send") )
+                                         "a MIME digest?"), QString(), KGuiItem(i18n("Send Digest")), KGuiItem(i18n("Send")) )
         == KMessageBox::Yes) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
@@ -2158,7 +2158,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" ,
-          mUrl.prettyUrl() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
+          mUrl.prettyUrl() ), QString(), KGuiItem(i18n("Execute")), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl, mMainWidget );
@@ -2341,7 +2341,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" ,
                 curUrl.fileName() ),
-              i18n( "File Already Exists" ), i18n("&Overwrite") ) == KMessageBox::Cancel) {
+              i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
           continue;
         }
       }
@@ -2365,7 +2365,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if( KMessageBox::questionYesNo( parentWidget(),
           i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" ,
            url.fileName() ),
-          i18n( "KMail Question" ), i18n("Keep Encryption"), i18n("Do Not Keep") ) ==
+          i18n( "KMail Question" ), KGuiItem(i18n("Keep Encryption")), KGuiItem(i18n("Do Not Keep")) ) ==
         KMessageBox::Yes )
       bSaveEncrypted = true;
 
@@ -2374,7 +2374,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if( KMessageBox::questionYesNo( parentWidget(),
           i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" ,
            url.fileName() ),
-          i18n( "KMail Question" ), i18n("Keep Signature"), i18n("Do Not Keep") ) !=
+          i18n( "KMail Question" ), KGuiItem(i18n("Keep Signature")), KGuiItem(i18n("Do Not Keep")) ) !=
         KMessageBox::Yes )
       bSaveWithSig = false;
 
@@ -2995,7 +2995,7 @@ static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
                                             i18n( "A file named \"%1\" already exists. "
                                                   "Are you sure you want to overwrite it?", url.prettyUrl() ),
                                             i18n( "Overwrite File?" ),
-                                            i18n( "&Overwrite" ) ) )
+                                            KGuiItem(i18n( "&Overwrite" )) ) )
       return false;
     overwrite = true;
   }

@@ -618,8 +618,8 @@ void MessageComposer::adjustCryptFlags()
                                                   "of attachments.\n"
                                                   "Really use deprecated inline OpenPGP?"),
                                              i18n("Insecure Message Format"),
-                                             i18n("Use Inline OpenPGP"),
-                                             i18n("Use OpenPGP/MIME") );
+                                             KGuiItem(i18n("Use Inline OpenPGP")),
+                                             KGuiItem(i18n("Use OpenPGP/MIME")) );
     }
     else {
       // if other crypto message formats are allowed then simply don't use
@@ -741,8 +741,8 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "Sign this message?");
       switch ( KMessageBox::questionYesNoCancel( mComposeWin, msg,
 						 i18n("Sign Message?"),
-						 i18nc("to sign","&Sign"),
-						 i18n("Do &Not Sign") ) ) {
+						 KGuiItem(i18nc("to sign","&Sign")),
+						 KGuiItem(i18n("Do &Not Sign")) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -764,8 +764,8 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "Sign this message?");
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
 						i18n("Sign Message?"),
-						i18nc("to sign","&Sign"),
-						i18n("Do &Not Sign") ) ) {
+						KGuiItem(i18nc("to sign","&Sign")),
+						KGuiItem(i18n("Do &Not Sign")) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -786,7 +786,7 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "for this identity.");
       if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
 					       i18n("Send Unsigned?"),
-                                               i18n("Send &Unsigned") )
+                                               KGuiItem(i18n("Send &Unsigned")) )
 	   == KMessageBox::Cancel ) {
 	mRc = false;
 	return false;
@@ -811,8 +811,8 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 	? i18n("&Sign All Parts") : i18n("&Sign") ;
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
 						i18n("Unsigned-Message Warning"),
-						buttonText,
-						i18n("Send &As Is") ) ) {
+						KGuiItem(buttonText),
+						KGuiItem(i18n("Send &As Is")) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -858,12 +858,12 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 	       "Encrypt this message?");
       switch ( KMessageBox::questionYesNoCancel( mComposeWin, msg,
 						 i18n("Encrypt Message?"),
-						 mDoSign
+						 KGuiItem( mDoSign
 						 ? i18n("Sign && &Encrypt")
-						 : i18n("&Encrypt"),
-						 mDoSign
+						 : i18n("&Encrypt")),
+						 KGuiItem( mDoSign
 						 ? i18n("&Sign Only")
-						 : i18n("&Send As-Is") ) ) {
+						 : i18n("&Send As-Is") ) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -885,8 +885,8 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 			       "Encrypt this message?");
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
 						i18n("Encrypt Message?"),
-						i18n("&Encrypt"),
-						i18n("Do &Not Encrypt") ) ) {
+						KGuiItem(i18n("&Encrypt")),
+						KGuiItem(i18n("Do &Not Encrypt")) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -908,7 +908,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 			       "configured for this identity.");
       if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
 					       i18n("Send Unencrypted?"),
-                                               i18n("Send &Unencrypted") )
+                                               KGuiItem(i18n("Send &Unencrypted")) )
 	   == KMessageBox::Cancel ) {
 	mRc = false;
 	return false;
@@ -935,10 +935,10 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 	? i18n("&Encrypt All Parts") : i18n("&Encrypt") ;
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
 						i18n("Unencrypted Message Warning"),
-						buttonText,
-						mDoSign
+						KGuiItem(buttonText),
+						KGuiItem(mDoSign
 						? i18n("&Sign Only")
-						: i18n("&Send As-Is") ) ) {
+						: i18n("&Send As-Is")) ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -2106,7 +2106,7 @@ Q3CString MessageComposer::breakLinesAndApplyCodec()
                                                i18n("<qt>Not all characters fit into the chosen"
                                                     " encoding.<br><br>Send the message anyway?</qt>"),
                                                i18n("Some Characters Will Be Lost"),
-                                               i18n("Lose Characters"), i18n("Change Encoding") ) == KMessageBox::Yes );
+                                               KGuiItem(i18n("Lose Characters")), KGuiItem(i18n("Change Encoding")) ) == KMessageBox::Yes );
     if( !anyway ) {
       mComposeWin->mEditor->setText(oldText);
       return Q3CString();

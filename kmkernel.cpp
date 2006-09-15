@@ -1116,8 +1116,8 @@ bool KMKernel::askToGoOnline()
                                 i18n("KMail is currently in offline mode. "
                                      "How do you want to proceed?"),
                                 i18n("Online/Offline"),
-                                i18n("Work Online"),
-                                i18n("Work Offline"));
+                                KGuiItem(i18n("Work Online")),
+                                KGuiItem(i18n("Work Offline")));
 
     if( rc == KMessageBox::No ) {
       return false;
@@ -1771,7 +1771,7 @@ void KMKernel::slotResult(KJob *job)
     {
       if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?",
-         (*it).url.prettyUrl()), i18n("Save to File"), i18n("&Replace"))
+         (*it).url.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, true);
     }

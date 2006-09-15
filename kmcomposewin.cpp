@@ -2058,8 +2058,8 @@ bool KMComposeWin::userForgotAttachment()
                   "attached file but you have not attached anything.\n"
                   "Do you want to attach a file to your message?"),
              i18n("File Attachment Reminder"),
-             i18n("&Attach File..."),
-             i18n("&Send as Is") );
+             KGuiItem(i18n("&Attach File...")),
+             KGuiItem(i18n("&Send as Is")) );
   if ( rc == KMessageBox::Cancel )
     return true;
   if ( rc == KMessageBox::Yes ) {
@@ -2991,7 +2991,7 @@ void KMComposeWin::compressAttach( int idx )
   zip.close();
   if ( array.size() >= decoded.size() ) {
     if ( KMessageBox::questionYesNo( this, i18n("The compressed file is larger "
-        "than the original. Do you want to keep the original one?" ), QString(), i18n("Keep"), i18n("Compress") )
+        "than the original. Do you want to keep the original one?" ), QString(), KGuiItem(i18n("Keep")), KGuiItem(i18n("Compress")) )
          == KMessageBox::Yes ) {
       static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
       return;
@@ -3734,8 +3734,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
                                       i18n("You did not specify a subject. "
                                            "Send message anyway?"),
                                       i18n("No Subject Specified"),
-                                      i18n("S&end as Is"),
-                                      i18n("&Specify the Subject"),
+                                      KGuiItem(i18n("S&end as Is")),
+                                      KGuiItem(i18n("&Specify the Subject")),
                                       "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
@@ -3952,8 +3952,8 @@ void KMComposeWin::slotSendNow() {
     int rc = KMessageBox::warningYesNoCancel( mMainWidget,
                                         i18n("About to send email..."),
                                         i18n("Send Confirmation"),
-                                        i18n("&Send Now"),
-                                        i18n("Send &Later") );
+                                        KGuiItem(i18n("&Send Now")),
+                                        KGuiItem(i18n("Send &Later")) );
 
     if ( rc == KMessageBox::Yes )
       doSend( KMail::MessageSender::SendImmediate );

@@ -376,7 +376,7 @@ void SubscriptionDialog::show()
       int result = KMessageBox::questionYesNoCancel( this,
               i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?",
                 account->name() ),
-            i18n("Enable Subscriptions?"), i18n("Enable"), i18n("Do Not Enable"));
+            i18n("Enable Subscriptions?"), KGuiItem(i18n("Enable")), KGuiItem(i18n("Do Not Enable")));
         switch(result) {
             case KMessageBox::Yes:
                 mForceSubscriptionEnable = true;

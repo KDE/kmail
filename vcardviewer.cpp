@@ -44,9 +44,9 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QByteArray& vCard)
   setButtons( User1|User2|User3|Close );
   setModal( false );
   setDefaultButton( Close );
-  setButtonGuiItem( User1, i18n("&Import") );
-  setButtonGuiItem( User2, i18n("&Next Card") );
-  setButtonGuiItem( User3, i18n("&Previous Card") );
+  setButtonGuiItem( User1, KGuiItem(i18n("&Import")) );
+  setButtonGuiItem( User2, KGuiItem(i18n("&Next Card")) );
+  setButtonGuiItem( User3, KGuiItem(i18n("&Previous Card")) );
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->enableLinks( 0 );
   mAddresseeView->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );

@@ -2131,7 +2131,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
                             "your system's security.",
                          filenameText );
   const int choice = KMessageBox::questionYesNoCancel( this, text,
-      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
+      i18n("Open Attachment?"), KStdGuiItem::saveAs(), KGuiItem(open_text),
       QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName
 
   if( choice == KMessageBox::Yes ) {		// Save

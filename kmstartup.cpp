@@ -202,8 +202,8 @@ void lockOrDie() {
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::No ==
          KMessageBox::warningYesNo( 0, msg, QString(),
-                                    i18n("Start %1", programName ),
-                                    i18n("Exit") ) ) {
+                                    KGuiItem(i18n("Start %1", programName )),
+                                    KGuiItem(i18n("Exit")) ) ) {
       exit(1);
     }
   }
