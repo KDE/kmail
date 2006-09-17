@@ -61,7 +61,6 @@ using KMail::FolderIface;
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
-#include <kprogressbar.h>
 #include <kpassivepopup.h>
 #include <ksystemtrayicon.h>
 #include <kpgp.h>

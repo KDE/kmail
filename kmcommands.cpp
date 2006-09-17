@@ -72,7 +72,6 @@
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
 #include <kparts/browserextension.h>
-#include <kprogressbar.h>
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
