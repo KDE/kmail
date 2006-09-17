@@ -309,7 +309,7 @@ protected:
   QValueList<KMMessage*> mReceipts;
   QPtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
-  ProgressItem *mMailCheckProgressItem;
+  QGuardedPtr<ProgressItem> mMailCheckProgressItem;
 
 private:
     /**
