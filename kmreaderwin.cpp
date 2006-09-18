@@ -985,7 +985,7 @@ void KMReaderWin::initHtmlWidget(void)
 #endif
 
   connect(mViewer->browserExtension(),
-          SIGNAL(openURLRequest(const KUrl &, const KParts::URLArgs &)),this,
+          SIGNAL(openUrlRequest(const KUrl &, const KParts::URLArgs &)),this,
           SLOT(slotUrlOpen(const KUrl &)));
   connect(mViewer->browserExtension(),
           SIGNAL(createNewWindow(const KUrl &, const KParts::URLArgs &)),this,
