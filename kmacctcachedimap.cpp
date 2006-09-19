@@ -209,7 +209,9 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
 
 void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
 {
-  assert( mFolder );
+  // assert( mFolder );
+  if ( !mFolder )
+    return;
 
   if ( mMailCheckFolders.isEmpty() )
     processNewMail( mFolder, true );
@@ -223,7 +225,10 @@ void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
                                        bool recurse )
 {
-  assert( folder );
+  //assert( folder );
+  if ( !folder )
+    return;
+
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
   mCountLastUnread = 0;
@@ -236,7 +241,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     QStringList nsToList = namespaces()[PersonalNS];
     QStringList otherNSToCheck = namespaces()[OtherUsersNS];
     otherNSToCheck += namespaces()[SharedNS];
-    for ( QStringList::Iterator it = otherNSToCheck.begin(); 
+    for ( QStringList::Iterator it = otherNSToCheck.begin();
           it != otherNSToCheck.end(); ++it ) {
       if ( (*it).isEmpty() ) {
         // empty namespaces are included in the "normal" listing
