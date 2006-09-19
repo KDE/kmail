@@ -209,9 +209,7 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
 
 void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
 {
-  // assert( mFolder );
-  if ( !mFolder )
-    return;
+  assert( mFolder );  // George says "better to crash then lose mail"
 
   if ( mMailCheckFolders.isEmpty() )
     processNewMail( mFolder, true );
@@ -225,9 +223,7 @@ void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
                                        bool recurse )
 {
-  //assert( folder );
-  if ( !folder )
-    return;
+  assert( folder ); // George says "better to crash then lose mail"
 
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
