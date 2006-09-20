@@ -1180,7 +1180,7 @@ void KMComposeWin::setupActions(void)
 
   mRecentAction = new KRecentFilesAction (KIcon("fileopen"), i18n("&Insert File Recent"),
                                           actionCollection(), "insert_file_recent");
-  connect(mRecentAction, SIGNAL(urlSelected (const KUrl &url)),
+  connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
 
   mRecentAction->loadEntries( KMKernel::config() );
