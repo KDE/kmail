@@ -61,6 +61,7 @@
 #include <QDesktopWidget>
 #include <QList>
 #include <QTextCodec>
+#include <QProgressBar>
 
 #include <emailfunctions/email.h>
 #include <kdebug.h>
