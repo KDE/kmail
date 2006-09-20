@@ -25,6 +25,7 @@
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
+#include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
@@ -104,6 +105,7 @@ using KRecentAddress::RecentAddresses;
 #include <spellingfilter.h>
 #include <ksyntaxhighlighter.h>
 #include <kcolordialog.h>
+#include <ksavefile.h>
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -160,7 +162,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEncryptWithChiasmus( false ),
     mEncryptBodyWithChiasmus( false ),
 #endif
-    mComposer( 0 )
+    mComposer( 0 ),
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
@@ -327,6 +330,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEditor->setUseExternalEditor(true);
     mEditor->setExternalEditorPath(mExtEditor);
   }
+
+  initAutoSave();
 
   mMsg = 0;
   if (aMsg)
@@ -652,12 +657,17 @@ void KMComposeWin::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::deadLetter()
+void KMComposeWin::autoSaveMessage()
 {
-  if (!mMsg || mComposer) return;
+  kdDebug(5006) << k_funcinfo << endl;
+  if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() )
+    return;
+  kdDebug(5006) << k_funcinfo << "autosaving message" << endl;
 
+  if ( mAutoSaveTimer )
+    mAutoSaveTimer->stop();
   connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueDeadLetter( bool ) ) );
+           this, SLOT( slotContinueAutoSave( bool ) ) );
   // This method is called when KMail crashed, so don't try signing/encryption
   // and don't disable controls because it is also called from a timer and
   // then the disabling is distracting.
@@ -672,38 +682,52 @@ void KMComposeWin::deadLetter()
     return;
   }
   KMMessage *msg = mComposedMessages.first();
-  if ( !msg )
-    return;
-  QCString msgStr = msg->asString();
-  QCString fname = getenv("HOME");
-  fname += "/dead.letter.tmp";
-  // Security: the file is created in the user's home directory, which
-  // might be readable by other users. So the file only gets read/write
-  // permissions for the user himself. Note that we create the file with
-  // correct permissions, we do not set them after creating the file!
-  // (dnaber, 2000-02-27):
-  int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
-  if (fd != -1)
-  {
-    QCString startStr( msg->mboxMessageSeparator() );
-    ::write(fd, startStr, startStr.length());
-    ::write(fd, msgStr, msgStr.length());
-    ::write(fd, "\n", 1);
-    ::close(fd);
-    fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
-  } else {
-    perror("cannot open ~/dead.letter.tmp for saving the current message");
-    kmkernel->emergencyExit( i18n("cannot open ~/dead.letter.tmp for saving the current message: ")  +
-                              QString::fromLocal8Bit(strerror(errno)));
+
+  kdDebug(5006) << k_funcinfo << "opening autoSaveFile " << mAutoSaveFilename
+                << endl;
+  const QString filename =
+    KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
+  KSaveFile autoSaveFile( filename, 0600 );
+  int status = autoSaveFile.status();
+  kdDebug(5006) << k_funcinfo << "autoSaveFile.status() = " << status << endl;
+  if ( status == 0 ) { // no error
+    kdDebug(5006) << "autosaving message in " << filename << endl;
+    int fd = autoSaveFile.handle();
+    QCString msgStr = msg->asString();
+    if ( ::write( fd, msgStr, msgStr.length() ) == -1 )
+      status = errno;
   }
+  if ( status == 0 ) {
+    kdDebug(5006) << k_funcinfo << "closing autoSaveFile" << endl;
+    autoSaveFile.close();
+    mLastAutoSaveErrno = 0;
+  }
+  else {
+    kdDebug(5006) << k_funcinfo << "autosaving failed" << endl;
+    autoSaveFile.abort();
+    if ( status != mLastAutoSaveErrno ) {
+      // don't show the same error message twice
+      KMessageBox::queuedMessageBox( 0, KMessageBox::Sorry,
+                                     i18n("Autosaving the message as %1 "
+                                          "failed.\n"
+                                          "Reason: %2" )
+                                     .arg( filename, strerror( status ) ),
+                                     i18n("Autosaving Failed") );
+      mLastAutoSaveErrno = status;
+    }
+  }
+
+  if ( autoSaveInterval() > 0 )
+    mAutoSaveTimer->start( autoSaveInterval() );
 }
 
-void KMComposeWin::slotContinueDeadLetter( bool )
+void KMComposeWin::slotContinueAutoSave( bool )
 {
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueDeadLetter( bool ) ) );
+              this, SLOT( slotContinueAutoSave( bool ) ) );
   qApp->exit_loop();
 }
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView(void)
@@ -1891,6 +1915,7 @@ bool KMComposeWin::queryClose ()
       return false;
     }
   }
+  cleanupAutoSave();
   return true;
 }
 
@@ -3489,6 +3514,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
+  cleanupAutoSave();
   close();
   return;
 }
@@ -3901,6 +3927,60 @@ void KMComposeWin::setFocusToSubject()
   mEdtSubject->setFocus();
 }
 
+int KMComposeWin::autoSaveInterval() const
+{
+  return GlobalSettings::self()->autosaveInterval() * 1000 * 60;
+}
+
+void KMComposeWin::initAutoSave()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  // make sure the autosave folder exists
+  KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
+  if ( mAutoSaveFilename.isEmpty() ) {
+    mAutoSaveFilename = KMFolderMaildir::constructValidFileName();
+  }
+
+  updateAutoSave();
+}
+
+void KMComposeWin::updateAutoSave()
+{
+  if ( autoSaveInterval() == 0 ) {
+    delete mAutoSaveTimer; mAutoSaveTimer = 0;
+  }
+  else {
+    if ( !mAutoSaveTimer ) {
+      mAutoSaveTimer = new QTimer( this );
+      connect( mAutoSaveTimer, SIGNAL( timeout() ),
+               this, SLOT( autoSaveMessage() ) );
+    }
+    mAutoSaveTimer->start( autoSaveInterval() );
+  }
+}
+
+void KMComposeWin::setAutoSaveFilename( const QString & filename )
+{
+  if ( !mAutoSaveFilename.isEmpty() )
+    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
+                                 mAutoSaveFilename );
+  mAutoSaveFilename = filename;
+}
+
+void KMComposeWin::cleanupAutoSave()
+{
+  delete mAutoSaveTimer; mAutoSaveTimer = 0;
+  if ( !mAutoSaveFilename.isEmpty() ) {
+    kdDebug(5006) << k_funcinfo << "deleting autosave file "
+                  << mAutoSaveFilename << endl;
+    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
+                                 mAutoSaveFilename );
+    mAutoSaveFilename = QString();
+  }
+}
+
+
+
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
     KConfig *config = KMKernel::config();
@@ -3926,6 +4006,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 void KMComposeWin::slotConfigChanged()
 {
     readConfig();
+    updateAutoSave();
 }
 
 /*

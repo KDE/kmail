@@ -78,6 +78,20 @@ public:
       c-library fopen call otherwise. */
   virtual int create(bool imap = FALSE);
 
+  /** Create the necessary folders for a maildir folder. Usually you will
+      want to use create() instead.
+
+      @param folderPath the full path of the folder as returned by location()
+      @return 0 on success and an error code (cf. man 3 errno) otherwise
+   */
+  static int createMaildirFolders( const QString & folderPath );
+
+  static QString constructValidFileName( QString file = QString(),
+                                  KMMsgStatus status = KMMsgStatusNew );
+
+  static bool removeFile( const QString & folderPath,
+                          const QString& filename );
+
   /** Remove some deleted messages from the folder. Returns zero on success
     and an errno on failure. This is only for use from MaildirCompactionJob. */
   int compact( unsigned int startIndex, int nbMessages, const QStringList& entryList, bool& done );
@@ -126,7 +140,6 @@ protected:
 
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
-  QString constructValidFileName(QString& file, KMMsgStatus status);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo* mi);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, QString& aFileName, KMMsgStatus status);
   bool removeFile(const QString& filename);

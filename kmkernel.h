@@ -242,6 +242,12 @@ public:
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
 
+  /** Returns the full path of the user's local data directory for KMail.
+      The path ends with '/'.
+  */
+  static QString localDataPath();
+
+
   /** Returns true if we have a system tray applet. This is needed in order
    *  to know whether the application should be allowed to exit in case the
    *  last visible composer or separate message window is closed.
@@ -370,8 +376,6 @@ private:
   QTextCodec *netCodec;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
-  QTimer *mDeadLetterTimer;
-  int mDeadLetterInterval;
   QTimer *mBackgroundTasksTimer;
   KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;

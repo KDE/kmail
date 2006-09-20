@@ -145,6 +145,40 @@ int KMFolderMaildir::open()
   return rc;
 }
 
+//-----------------------------------------------------------------------------
+int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
+{
+  // Make sure that neither a new, cur or tmp subfolder exists already.
+  QFileInfo dirinfo;
+  dirinfo.setFile( folderPath + "/new" );
+  if ( dirinfo.exists() ) return EEXIST;
+  dirinfo.setFile( folderPath + "/cur" );
+  if ( dirinfo.exists() ) return EEXIST;
+  dirinfo.setFile( folderPath + "/tmp" );
+  if ( dirinfo.exists() ) return EEXIST;
+
+  // create the maildir directory structure
+  if ( ::mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
+    kdDebug(5006) << "Could not create folder " << folderPath << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/new" ), S_IRWXU ) > 0 ) {
+    kdDebug(5006) << "Could not create folder " << folderPath << "/new" << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/cur" ), S_IRWXU ) > 0 ) {
+    kdDebug(5006) << "Could not create folder " << folderPath << "/cur" << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/tmp" ), S_IRWXU ) > 0 ) {
+    kdDebug(5006) << "Could not create folder " << folderPath << "/tmp" << endl;
+    return errno;
+  }
+
+  return 0; // no error
+}
+
+
 
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::create(bool imap)
@@ -155,36 +189,9 @@ int KMFolderMaildir::create(bool imap)
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
 
-  // Make sure that neither a new, cur or tmp subfolder exists already.
-  QFileInfo dirinfo;
-  dirinfo.setFile(location() + "/new");
-  if (dirinfo.exists()) return 1;
-  dirinfo.setFile(location() + "/cur");
-  if (dirinfo.exists()) return 1;
-  dirinfo.setFile(location() + "/tmp");
-  if (dirinfo.exists()) return 1;
-
-  // create the maildir directory structure
-  if (::mkdir(QFile::encodeName(location()), S_IRWXU) > 0)
-  {
-    kdDebug(5006) << "Could not create " << location() << " maildir" << endl;
-    return errno;
-  }
-  if (::mkdir(QFile::encodeName(location() + "/new"), S_IRWXU) > 0)
-  {
-    kdDebug(5006) << "Could not create " << location() << "/new" << endl;
-    return errno;
-  }
-  if (::mkdir(QFile::encodeName(location() + "/cur"), S_IRWXU) > 0)
-  {
-    kdDebug(5006) << "Could not create " << location() << "/cur" << endl;
-    return errno;
-  }
-  if (::mkdir(QFile::encodeName(location() + "/tmp"), S_IRWXU) > 0)
-  {
-    kdDebug(5006) << "Could not create " << location() << "/new" << endl;
-    return errno;
-  }
+  rc = createMaildirFolders( location() );
+  if ( rc != 0 )
+    return rc;
 
   if (!folder()->path().isEmpty())
   {
@@ -929,31 +936,34 @@ KMMessage* KMFolderMaildir::take(int idx)
     return 0;
 }
 
-bool KMFolderMaildir::removeFile(const QString& filename)
+// static
+bool KMFolderMaildir::removeFile( const QString & folderPath,
+                                  const QString & filename )
 {
   // we need to look in both 'new' and 'cur' since it's possible to
-  // delete a message before the folder is compacted.  since the file
+  // delete a message before the folder is compacted. Since the file
   // naming and moving is done in ::compact, we can't assume any
-  // location at this point
-  QCString abs_file(QFile::encodeName(location() + "/cur/"));
-  abs_file += QFile::encodeName(filename);
+  // location at this point.
+  QCString abs_file( QFile::encodeName( folderPath + "/cur/" + filename ) );
+  if ( ::unlink( abs_file ) == 0 )
+    return true;
 
-  if (::unlink( abs_file ) == 0)
+  if ( errno == ENOENT ) { // doesn't exist
+    abs_file = QFile::encodeName( folderPath + "/new/" + filename );
+    if ( ::unlink( abs_file ) == 0 )
       return true;
-
-  if (errno == ENOENT)  {// doesn't exist
-
-    abs_file = QFile::encodeName(location() + "/new/");
-    abs_file += QFile::encodeName(filename);
-
-    if (::unlink( abs_file ) == 0)
-        return true;
-
   }
 
   kdDebug(5006) << "Can't delete " << abs_file << " " << perror << endl;
   return false;
 }
+
+bool KMFolderMaildir::removeFile( const QString & filename )
+{
+  return removeFile( location(), filename );
+}
+
+
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -1007,7 +1017,7 @@ static QRegExp *suffix_regex = 0;
 static KStaticDeleter<QRegExp> suffix_regex_sd;
 
 //-----------------------------------------------------------------------------
-QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus status)
+QString KMFolderMaildir::constructValidFileName(QString aFileName, KMMsgStatus status)
 {
   if (aFileName.isEmpty())
   {

@@ -369,6 +369,13 @@ public:
     mSigningAndEncryptionExplicitlyDisabled = v;
   }
 
+public: // kmkernel
+  /**
+   * Set the filename which is used for autosaving.
+   */
+  void setAutoSaveFilename( const QString & filename );
+
+
 public slots:
   /**
    * Actions:
@@ -540,10 +547,7 @@ public slots:
   void slotSpellcheckDone(int result);
   void slotSpellcheckDoneClearStatus();
 
-  /**
-   * Append current message to ~/dead.letter
-   */
-  void deadLetter(void);
+  void autoSaveMessage();
 
   void updateCursorPosition();
 
@@ -587,9 +591,9 @@ public slots:
    void addAttach(const KMMessagePart* msgPart);
 
 public:
-  const KPIM::Identity & identity() const;
-  Kleo::CryptoMessageFormat cryptoMessageFormat() const;
-  bool encryptToSelf() const;
+   const KPIM::Identity & identity() const;
+   Kleo::CryptoMessageFormat cryptoMessageFormat() const;
+   bool encryptToSelf() const;
 
 signals:
   /**
@@ -736,6 +740,28 @@ private:
    */
   void doSend(int sendNow=-1, bool saveInDrafts = false);
 
+  /**
+   * Returns the autosave interval in milliseconds (as needed for QTimer).
+   */
+  int autoSaveInterval() const;
+
+  /**
+   * Initialize autosaving (timer and filename).
+   */
+  void initAutoSave();
+
+  /**
+   * Enables/disables autosaving depending on the value of the autosave
+   * interval.
+   */
+  void updateAutoSave();
+
+  /**
+   * Stop autosaving and delete the autosaved message.
+   */
+  void cleanupAutoSave();
+
+
 protected:
   QWidget   *mMainWidget;
   QComboBox *mTransport;
@@ -846,7 +872,7 @@ private slots:
 
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
-  void slotContinueDeadLetter( bool );
+  void slotContinueAutoSave( bool );
 
   void slotEncryptBodyChiasmusToggled( bool );
   void slotEncryptChiasmusToggled( bool );
@@ -897,6 +923,12 @@ private:
 
   // Temp var for slotInsert(My)PublicKey():
   QString mFingerprint;
+
+  QTimer *mAutoSaveTimer;
+  QString mAutoSaveFilename;
+  int mLastAutoSaveErrno; // holds the errno of the last try to autosave
+
+
 };
 
 #endif

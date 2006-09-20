@@ -270,6 +270,11 @@
             <default>true</default>
             <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
         </entry>
+      <entry name="AutosaveInterval" type="Int" key="autosave">
+        <label>Autosave interval:</label>
+        <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
+        <default>2</default>
+      </entry>
     </group>
 
 </kcfg>
