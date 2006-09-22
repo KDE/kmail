@@ -59,7 +59,7 @@ ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
 
 ListJob::~ListJob()
 {
-    kdDebug(5006 ) << k_funcinfo << kdBacktrace() << endl;
+//    kdDebug(5006 ) << k_funcinfo << kdBacktrace() << endl;
 }
 
 void ListJob::execute()
