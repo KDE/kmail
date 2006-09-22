@@ -308,7 +308,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 
     // construct a valid filename.  if it's already valid, then
     // nothing happens
-    constructValidFileName(filename, mi->status());
+    filename = constructValidFileName(filename, mi->status());
 
     // if the name changed, then we need to update the actual filename
     if (filename != mi->fileName())
@@ -423,12 +423,14 @@ if( fileD0.open( IO_WriteOnly ) ) {
 
   // make sure the filename has the correct extension
   QString filename(aMsg->fileName());
-  constructValidFileName(filename, aMsg->status());
+  filename = constructValidFileName(filename, aMsg->status());
 
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
 
-  if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, false))
+  kdDebug() << "Writing: " << tmp_file << endl;
+
+  if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, true ))
     kmkernel->emergencyExit( "" ); // KPIM::kCStringToFile already showed an errormessage
 
   QFile file(tmp_file);
@@ -1064,8 +1066,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
   // make sure that our destination filename doesn't already exist
   while (QFile::exists(dest))
   {
-    aFileName = "";
-    constructValidFileName(aFileName, status);
+    aFileName = constructValidFileName(aFileName, status);
 
     QFileInfo fi(dest);
     dest = fi.dirPath(true) + "/" + aFileName;
