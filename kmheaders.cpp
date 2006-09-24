@@ -1660,9 +1660,10 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
       KMSortCacheItem *sci = item->sortCacheItem();
       KMSortCacheItem *parent = findParent( sci );
-      if (!parent) parent = findParentBySubject( sci );
+      if ( !parent && mSubjThreading )
+        parent = findParentBySubject( sci );
       myParent->takeItem(lvi);
-      if (parent && parent->item() != item)
+      if ( parent && parent->item() != item && parent->item() != removedItem ) {
           parent->item()->insertItem(lvi);
       else
         insertItem(lvi);
@@ -1778,6 +1779,7 @@ void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 //-----------------------------------------------------------------------------
 int KMHeaders::slotFilterMsg(KMMessage *msg)
 {
+  if ( !msg ) return 2; // messageRetrieve(0) is always possible
   msg->setTransferInProgress(false);
   int filterResult = kmkernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
   if (filterResult == 2) {
@@ -2025,6 +2027,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   if ( destFolder == mFolder ) return; // Catch the noop case
 
   KMMessageList msgList = *selectedMsgs();
+  if ( msgList.isEmpty() ) return;
   if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          i18n("<qt>Do you really want to delete the selected message?<br>"
