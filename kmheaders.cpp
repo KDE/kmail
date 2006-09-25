@@ -1663,7 +1663,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       if ( !parent && mSubjThreading )
         parent = findParentBySubject( sci );
       myParent->takeItem(lvi);
-      if ( parent && parent->item() != item && parent->item() != removedItem ) {
+      if ( parent && parent->item() != item && parent->item() != removedItem )
           parent->item()->insertItem(lvi);
       else
         insertItem(lvi);
