@@ -46,7 +46,6 @@ using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "kcursorsaver.h"
 #include "accountmanager.h"
-#include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
 #include "folderrequester.h"

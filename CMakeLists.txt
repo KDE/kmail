@@ -188,9 +188,10 @@ kde4_automoc(${kmailprivate_LIB_SRCS})
 kde4_add_ui3_files(kmailprivate_LIB_SRCS 
    signatureconfigurationdialog.ui 
    encryptionconfigurationdialog.ui 
-   composercryptoconfiguration.ui 
    warningconfiguration.ui 
    smimeconfiguration.ui )
+
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui)
 
 #kde4_add_dcop_skels(kmailprivate_LIB_SRCS 
 #   kmailIface.h 
