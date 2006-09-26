@@ -1927,7 +1927,7 @@ KMCommand::Result KMMoveCommand::execute()
       msg = srcFolder->getMsg(idx);
     }
 
-    if ( msg->transferInProgress() &&
+    if ( msg && msg->transferInProgress() &&
          srcFolder->folderType() == KMFolderTypeImap )
     {
       // cancel the download
