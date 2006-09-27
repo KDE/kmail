@@ -27,6 +27,7 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 #include <QMouseEvent>
+#include <QSignalMapper>
 using KMail::MailSourceViewer;
 #include "partNode.h"
 #include "kmmsgdict.h"
@@ -1840,15 +1841,34 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   mAtmCurrent = id;
   mAtmCurrentName = name;
   KMenu *menu = new KMenu();
-  menu->insertItem(SmallIcon("fileopen"),i18nc("to open", "Open"), 1);
-  menu->insertItem(i18n("Open With..."), 2);
-  menu->insertItem(i18nc("to view something", "View"), 3);
-  menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+  QAction *action;
+
+  QSignalMapper *attachmentMapper = new QSignalMapper( menu );
+  connect( attachmentMapper, SIGNAL( mapped( int ) ),
+           this, SLOT( slotHandleAttachment( int ) ) );
+
+  action = menu->addAction(SmallIcon("fileopen"),i18nc("to open", "Open"));
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Open );
+  action = menu->addAction(i18n("Open With..."));
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::OpenWith );
+  action = menu->addAction(i18nc("to view something", "View") );
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
+  action = menu->addAction(SmallIcon("filesaveas"),i18n("Save As...") );
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
   if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
-       Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
-    menu->insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
-  menu->insertItem(i18n("Properties"), 5);
-  connect(menu, SIGNAL(activated(int)), this, SLOT(slotHandleAttachment(int)));
+       Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
+    action = menu->addAction( i18n( "Decrypt With Chiasmus..." ) );
+    connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::ChiasmusEncrypt );
+  }
+  action = menu->addAction(i18n("Properties") );
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Properties );
+
   menu->exec( p ,0 );
   delete menu;
 }
