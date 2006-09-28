@@ -555,8 +555,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KPIM::getEmailAddress(addr), addr ,
+  KAddrBookExternal::openEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
                                 parentWidget() );
 
   return OK;
