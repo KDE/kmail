@@ -1949,6 +1949,12 @@ void KMReaderWin::slotFind()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotFindNext()
+{
+  mViewer->findTextNext();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
   QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());

@@ -144,6 +144,29 @@ void KMReaderMainWin::slotTrashMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderMainWin::slotFind()
+{
+  mReaderWin->slotFind();
+}
+
+void KMReaderMainWin::slotFindNext()
+{
+  mReaderWin->slotFindNext();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotCopy()
+{
+  mReaderWin->slotCopySelectedText();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotMarkAll()
+{
+  mReaderWin->selectAll();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
@@ -262,11 +285,6 @@ void KMReaderMainWin::setupAccel()
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
-  mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
-                                       i18n("Move message to trashcan") ),
-                             Key_Delete, this, SLOT(slotTrashMsg()),
-                             actionCollection(), "move_to_trash" );
-
   mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
 
@@ -274,6 +292,16 @@ void KMReaderMainWin::setupAccel()
   KShortcut closeShortcut = closeAction->shortcut();
   closeShortcut.append( KKey(Key_Escape));
   closeAction->setShortcut(closeShortcut);
+
+  //----- Edit Menu
+  KStdAction::copy( this, SLOT( slotCopy() ), actionCollection() );
+  KStdAction::selectAll( this, SLOT( slotMarkAll() ), actionCollection() );
+  KStdAction::find( this, SLOT(slotFind()), actionCollection() );
+  KStdAction::findNext( this, SLOT( slotFindNext() ), actionCollection() );
+  mTrashAction = new KAction( KGuiItem( i18n( "&Move to Trash" ), "edittrash",
+                              i18n( "Move message to trashcan" ) ),
+                              Key_Delete, this, SLOT( slotTrashMsg() ),
+                              actionCollection(), "move_to_trash" );
 
   //----- View Menu
   mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,

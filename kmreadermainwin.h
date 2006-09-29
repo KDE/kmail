@@ -49,6 +49,10 @@ private slots:
   void slotForwardDigestMsg();
   void slotRedirectMsg();
   void slotShowMsgSrc();
+  void slotMarkAll();
+  void slotCopy();
+  void slotFind();
+  void slotFindNext();
 
   void slotConfigChanged();
 

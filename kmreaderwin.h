@@ -321,6 +321,8 @@ public slots:
 
   /** The user selected "Find" from the menu. */
   void slotFind();
+  /** The user selected "Find Next" from the menu. */
+  void slotFindNext();
 
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
