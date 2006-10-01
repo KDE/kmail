@@ -28,6 +28,7 @@
 
 #include "copyfolderjob.h"
 #include "folderstorage.h"
+#include "kmfoldercachedimap.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
 #include "kmfoldertype.h"
@@ -183,6 +184,11 @@ bool CopyFolderJob::createTargetDir()
       emit folderCopyComplete( false );
       deleteLater();
       return false;
+    }
+    if ( mNewParent->type() == KMDImapDir ) {
+        KMFolderCachedImap* cached = dynamic_cast<KMFolderCachedImap*>( mNewFolder->storage() );
+        cached->initializeFrom( dynamic_cast<KMFolderCachedImap*>( mNewParent->owner() ) );
+
     }
     // inherit the folder type
     // FIXME we should probably copy over most if not all settings
