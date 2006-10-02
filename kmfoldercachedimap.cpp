@@ -427,7 +427,7 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 int KMFolderCachedImap::rename( const QString& aName,
                                 KMFolderDir* /*aParent*/ )
 {
-  QString oldName = mAccount->renamedFolder( imapPath() );
+  QString oldName = account()->renamedFolder( imapPath() );
   if ( oldName.isEmpty() ) oldName = name();
   if ( aName == oldName )
     // Stupid user trying to rename it to it's old name :)
