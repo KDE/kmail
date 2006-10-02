@@ -171,6 +171,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   readUidCache();
 
   mProgress = 0;
+  initializeFrom( dynamic_cast<KMFolderCachedImap*>( folder->parent() ) );
 }
 
 KMFolderCachedImap::~KMFolderCachedImap()

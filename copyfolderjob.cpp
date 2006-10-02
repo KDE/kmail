@@ -185,10 +185,6 @@ bool CopyFolderJob::createTargetDir()
       deleteLater();
       return false;
     }
-    if ( typenew == KMFolderTypeCachedImap ) {
-        KMFolderCachedImap* cached = dynamic_cast<KMFolderCachedImap*>( mNewFolder->storage() );
-        cached->initializeFrom( dynamic_cast<KMFolderCachedImap*>( mNewParent->owner() ) );
-    }
     // inherit the folder type
     // FIXME we should probably copy over most if not all settings
     mNewFolder->storage()->setContentsType( mStorage->contentsType(), true /*quiet*/ );
