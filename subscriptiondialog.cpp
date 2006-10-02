@@ -316,6 +316,12 @@ void SubscriptionDialog::processNext()
     {
       mSubscribed = true;
       initPrefixList();
+      if ( mPrefixList.isEmpty() )
+      {
+          // still empty? then we have nothing to do here as this is an error
+          slotLoadingComplete();
+          return;
+      }
     } else {
       slotLoadingComplete();
       return;
