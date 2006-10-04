@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <kdepimmacros.h>
 #include "ui_composercryptoconfiguration.h"
+#include "ui_warningconfiguration.h"
 
 class QPushButton;
 class QLabel;
@@ -47,7 +48,6 @@ class KIntSpinBox;
 class SimpleStringListEditor;
 class KConfig;
 class QPoint;
-class WarningConfiguration;
 class SMimeConfiguration;
 
 namespace Kpgp {
@@ -64,6 +64,15 @@ namespace Kleo {
   class CryptoConfig;
   class CryptoConfigEntry;
 }
+
+class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
+{
+public:
+  WarningConfiguration( QWidget *parent ) : QWidget( parent ) {
+    setupUi( this );
+  }
+};
+
 
 class ComposerCryptoConfiguration : public QWidget, public Ui::ComposerCryptoConfiguration
 {
