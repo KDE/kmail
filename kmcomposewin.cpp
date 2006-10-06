@@ -4535,6 +4535,7 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
                        QWidget *parent, const char *name)
     : KPIM::AddresseeLineEdit(parent,useCompletion,name), mComposer(composer)
 {
+  AddresseeLineEdit::setUseSemiColonAsSeparator( GlobalSettings::allowSemicolonAsAddressSeparator() );
 }
 
 
