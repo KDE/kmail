@@ -398,7 +398,7 @@ private slots:
   void slotAttachRemove();
   void slotAttachSave();
   void slotAttachProperties();
-
+  void slotAttachOpenWith();
 
   /**
    * Select an email from the addressbook and add it to the line
@@ -546,9 +546,9 @@ private:
   virtual bool queryExit ();
 
   /**
-   * Open the attachment with the given index.
+   * Open the attachment with the given index and with ("Open with")
    */
-  void openAttach( int index );
+  void openAttach( int index, bool with );
 
   /**
    * View the attachment with the given index.
@@ -688,7 +688,7 @@ private:
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
-  int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
   bool mLastSignActionState, mLastEncryptActionState;

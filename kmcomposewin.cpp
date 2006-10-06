@@ -2898,6 +2898,8 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 
      mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
                              SLOT(slotAttachOpen()));
+     mOpenWithId = mAttachMenu->insertItem(i18n("Open with..."), this,
+                             SLOT(slotAttachOpenWith()));
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
@@ -3142,7 +3144,18 @@ void KMComposeWin::slotAttachOpen()
   int i = 0;
   for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
     if ( (*it)->isSelected() ) {
-      openAttach( i );
+      openAttach( i, false );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAttachOpenWith()
+{
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      openAttach( i, true );
     }
   }
 }
@@ -3175,7 +3188,7 @@ void KMComposeWin::viewAttach( int index )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::openAttach( int index )
+void KMComposeWin::openAttach( int index, bool with )
 {
   KMMessagePart* msgPart = mAtmList.at(index);
   const QString contentTypeStr =
@@ -3201,6 +3214,14 @@ void KMComposeWin::openAttach( int index )
 
   KService::Ptr offer =
     KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+
+  if ( with ) {
+    KURL::List lst;
+    lst.append(url);
+    if ( !KRun::displayOpenWithDialog(lst) )
+      QFile::remove(url.path());
+    return;
+  }
 
   if ( !offer || mimetype->name() == "application/octet-stream" ) {
     if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
