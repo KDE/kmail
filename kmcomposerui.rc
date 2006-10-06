@@ -18,6 +18,7 @@
    <text>&amp;Edit</text>
    <Action name="paste_quoted" append="edit_paste_merge"/>
    <Action name="clean_spaces" />
+   <Action name="prepend_signature" />
    <Separator/>
    <Action name="tools_quote"/>
    <Action name="tools_unquote"/>

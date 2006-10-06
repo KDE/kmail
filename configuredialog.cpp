@@ -2398,9 +2398,15 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   // some check buttons...
   mAutoAppSignFileCheck =
-    new QCheckBox( i18n("A&utomatically append signature"), this );
+    new QCheckBox( i18n("A&utomatically insert signature"), this );
   vlay->addWidget( mAutoAppSignFileCheck );
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  mTopQuoteCheck =
+    new QCheckBox( i18n("Put signature &before quoted text"), this );
+  vlay->addWidget( mTopQuoteCheck);
+  connect( mTopQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
@@ -2530,6 +2536,7 @@ void ComposerPage::GeneralTab::load() {
   // various check boxes:
   bool state = ( composer.readEntry("signature").lower() != "manual" );
   mAutoAppSignFileCheck->setChecked( state );
+  mTopQuoteCheck->setChecked( GlobalSettings::prependSignatures() );
   mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
   mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn", false ) );
   mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
@@ -2553,6 +2560,7 @@ void ComposerPage::GeneralTab::load() {
 void ComposerPageGeneralTab::defaults()
 {
   mAutoAppSignFileCheck->setChecked( true );
+  mTopQuoteCheck->setChecked( GlobalSettings::prependSignatures() );
   mSmartQuoteCheck->setChecked( true );
   mAutoRequestMDNCheck->setChecked( false );
   mWordWrapCheck->setChecked( true );
@@ -2599,6 +2607,7 @@ void ComposerPage::GeneralTab::save() {
   general.writePathEntry( "external-editor", mEditorRequester->url() );
 
   bool autoSignature = mAutoAppSignFileCheck->isChecked();
+  GlobalSettings::setPrependSignatures( mTopQuoteCheck->isChecked() );
   composer.writeEntry( "signature", autoSignature ? "auto" : "manual" );
   composer.writeEntry( "smart-quote", mSmartQuoteCheck->isChecked() );
   composer.writeEntry( "request-mdn", mAutoRequestMDNCheck->isChecked() );

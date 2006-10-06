@@ -275,6 +275,11 @@
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
         <default>2</default>
       </entry>
+
+      <entry name="PrependSignatures" type="Bool">
+        <label>Insert signatures above quoted text</label>
+        <default>false</default>
+      </entry>
     </group>
 
 </kcfg>

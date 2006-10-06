@@ -561,6 +561,7 @@ protected slots:
 
 protected:
   QCheckBox     *mAutoAppSignFileCheck;
+  QCheckBox     *mTopQuoteCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox     *mWordWrapCheck;

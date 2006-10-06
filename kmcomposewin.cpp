@@ -1212,6 +1212,11 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
   (void) new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
+
+  (void) new KAction (i18n("Prepend S&ignature"), 0, this,
+                      SLOT(slotPrependSignature()),
+                      actionCollection(), "prepend_signature");
+
   mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()),
                            actionCollection(), "attach_public_key");
@@ -1644,7 +1649,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
-  mOldSigText = ident.signatureText();
+  mOldSigText = GlobalSettings::prependSignatures()? ident.signature().rawText() : ident.signatureText();
 
   // check for the presence of a DNT header, indicating that MDN's were
   // requested
@@ -1875,7 +1880,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
+      if ( GlobalSettings::prependSignatures() ) {
+        QTimer::singleShot( 0, this, SLOT(slotPrependSignature()) );
+      } else {
+        QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
+      }
+
   }
   mEditor->setModified(isModified);
 }
@@ -3577,18 +3587,37 @@ void KMComposeWin::slotSendNow() {
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
+    insertSignature();
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotPrependSignature()
+{
+    insertSignature( true );
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::insertSignature( bool prepend )
+{
   bool mod = mEditor->isModified();
 
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  mOldSigText = ident.signatureText();
+  mOldSigText = prepend? ident.signature().rawText() : ident.signatureText();
   if( !mOldSigText.isEmpty() )
   {
     mEditor->sync();
-    mEditor->append(mOldSigText);
+    if ( prepend ) {
+      mEditor->insertAt(mOldSigText, 0, 0);
+    } else {
+      mEditor->append(mOldSigText);
+    }
     mEditor->update();
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
+    if ( prepend )
+      mEditor->setCursorPosition( 0, 0 );
   }
 }
 
@@ -3803,20 +3832,29 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
 
   QString edtText = mEditor->text();
   bool appendNewSig = true;
+  const bool prepended = GlobalSettings::prependSignatures();
   // try to truncate the old sig
   if( !mOldSigText.isEmpty() )
   {
-    if( edtText.endsWith( mOldSigText ) )
+    if( !prepended && edtText.endsWith( mOldSigText ) )
       edtText.truncate( edtText.length() - mOldSigText.length() );
+    else if ( prepended && edtText.find( mOldSigText ) != -1 ) {
+      edtText.remove(  mOldSigText );
+    }
     else
       appendNewSig = false;
   }
   // now append the new sig
-  mOldSigText = ident.signatureText();
+  mOldSigText = prepended ? ident.signature().rawText() : ident.signatureText();
   if( appendNewSig )
   {
-    if( !mOldSigText.isEmpty() && mAutoSign )
-      edtText.append( mOldSigText );
+    if( !mOldSigText.isEmpty() && mAutoSign ) {
+      if ( prepended ) {
+        edtText.prepend( mOldSigText );
+      } else {
+        edtText.append( mOldSigText );
+      }
+    }
     mEditor->setText( edtText );
   }
 
