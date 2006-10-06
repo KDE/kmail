@@ -3215,15 +3215,7 @@ void KMComposeWin::openAttach( int index, bool with )
   KService::Ptr offer =
     KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
 
-  if ( with ) {
-    KURL::List lst;
-    lst.append(url);
-    if ( !KRun::displayOpenWithDialog(lst) )
-      QFile::remove(url.path());
-    return;
-  }
-
-  if ( !offer || mimetype->name() == "application/octet-stream" ) {
+  if ( with || !offer || mimetype->name() == "application/octet-stream" ) {
     if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
       QFile::remove(url.path());
     }
