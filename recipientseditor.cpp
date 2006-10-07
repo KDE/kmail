@@ -327,7 +327,8 @@ void RecipientLine::setRemoveLineButtonEnabled( bool b )
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
-  : Q3ScrollView( parent ), mCurDelLine( 0 ), mModified( false )
+  : Q3ScrollView( parent ), mCurDelLine( 0 ), mModified( false ),
+    mFirstColumnWidth( 0 )
 {
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
