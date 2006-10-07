@@ -34,7 +34,7 @@ using KMail::RegExpLineEdit;
 // other KDE headers:
 #warning Port me!
 //#include <kregexp3.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
@@ -411,7 +411,7 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
-QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile*> & aTempFileList ) const
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTemporaryFile*> & aTempFileList ) const
 {
   QString result = mParameter;
   QList<int> argList;
@@ -437,16 +437,14 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   for ( QList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
     // setup temp files with check for duplicate %n's
     if ( (*it) != lastSeen ) {
-      KTempFile *tf = new KTempFile();
-      if ( tf->status() != 0 ) {
-        tf->close();
+      KTemporaryFile *tf = new KTemporaryFile();
+      if ( !tf->open() ) {
         delete tf;
         kDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
         return QString();
       }
-      tf->setAutoDelete(true);
       aTempFileList.append( tf );
-      tempFileName = tf->name();
+      tempFileName = tf->fileName();
       if ((*it) == -1)
         KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                           false, false, false );
@@ -491,10 +489,10 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // KProcess doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
-  KTempFile * inFile = new KTempFile;
-  inFile->setAutoDelete(true);
+  KTemporaryFile * inFile = new KTemporaryFile;
+  inFile->open();
 
-  QList<KTempFile*> atmList;
+  QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
@@ -508,10 +506,10 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // the user may have specified. In the long run, we
   // shouldn't be using tempfiles at all for this class, due
   // to security aspects. (mmutz)
-  commandLine =  '(' + commandLine + ") <" + inFile->name();
+  commandLine =  '(' + commandLine + ") <" + inFile->fileName();
 
   // write message to file
-  QString tempFileName = inFile->name();
+  QString tempFileName = inFile->fileName();
   KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                   false, false, false );
   inFile->close();
@@ -1711,10 +1709,11 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 {
 
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
-  KTempFile * inFile = new KTempFile;
-  inFile->setAutoDelete(false);
+  KTemporaryFile *inFile = new KTemporaryFile;
+  inFile->setAutoRemove(false);
+  inFile->open();
 
-  QList<KTempFile*> atmList;
+  QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
@@ -1730,10 +1729,10 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   // the user may have specified. In the long run, we
   // shouldn't be using tempfiles at all for this class, due
   // to security aspects. (mmutz)
-  commandLine =  '(' + commandLine + ") <" + inFile->name();
+  commandLine =  '(' + commandLine + ") <" + inFile->fileName();
 
   // write message to file
-  QString tempFileName = inFile->name();
+  QString tempFileName = inFile->fileName();
   KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
   inFile->close();

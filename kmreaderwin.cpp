@@ -108,7 +108,7 @@ using KMail::TeeHtmlWriter;
 #include <kmimetypetrader.h>
 #include <kglobalsettings.h>
 #include <krun.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <kprocess.h>
 #include <kdialog.h>
 #include <kaction.h>
@@ -1618,10 +1618,10 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     fileName = aMsgPart->name();
 
   //--- Sven's save attachments to /tmp start ---
-  KTempFile *tempFile = new KTempFile( QString(),
-                                       '.' + QString::number( aPartNum ) );
-  tempFile->setAutoDelete( true );
-  QString fname = tempFile->name();
+  KTemporaryFile *tempFile = new KTemporaryFile();
+  tempFile->setSuffix( '.' + QString::number( aPartNum ) );
+  tempFile->open();
+  QString fname = tempFile->fileName();
   delete tempFile;
 
   if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
@@ -2444,11 +2444,11 @@ QString KMReaderWin::createAtmFileLink() const
 {
   QFileInfo atmFileInfo(mAtmCurrentName);
 
-  KTempFile *linkFile = new KTempFile( KStandardDirs::locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.suffix() );
-
-  linkFile->setAutoDelete(true);
-  QString linkName = linkFile->name();
+  KTemporaryFile *linkFile = new KTemporaryFile();
+  linkFile->setPrefix(atmFileInfo.fileName() +"_[");
+  linkFile->setSuffix("]."+ atmFileInfo.suffix());
+  linkFile->open();
+  QString linkName = linkFile->fileName();
   delete linkFile;
 
   if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {

@@ -21,7 +21,7 @@ class KMComposeWin;
 class K3SpellConfig;
 class K3Spell;
 class SpellingFilter;
-class KTempFile;
+class KTemporaryFile;
 class K3DictSpellingHighlighter;
 class KDirWatch;
 class KProcess;
@@ -114,7 +114,7 @@ private:
   K3SpellConfig *mSpellConfig;
   QMap<QString,QStringList> mReplacements;
   SpellingFilter* mSpellingFilter;
-  KTempFile *mExtEditorTempFile;
+  KTemporaryFile *mExtEditorTempFile;
   KDirWatch *mExtEditorTempFileWatcher;
   KProcess  *mExtEditorProcess;
   bool      mUseExtEditor;

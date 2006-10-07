@@ -95,7 +95,7 @@ using KRecentAddress::RecentAddresses;
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstatusbar.h>
@@ -3153,10 +3153,10 @@ void KMComposeWin::viewAttach( int index )
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
-  KTempFile* atmTempFile = new KTempFile();
+  KTemporaryFile* atmTempFile = new KTemporaryFile();
+  atmTempFile->open();
   mAtmTempList.append( atmTempFile );
-  atmTempFile->setAutoDelete( true );
-  KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
+  KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
     false);
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
     atmTempFile->name(), pname, mCharset );
@@ -3173,17 +3173,18 @@ void KMComposeWin::openAttach( int index )
   KMimeType::Ptr mimetype;
   mimetype = KMimeType::mimeType( contentTypeStr );
 
-  KTempFile* atmTempFile = new KTempFile();
+  KTemporaryFile* atmTempFile = new KTemporaryFile();
+  atmTempFile->open();
   mAtmTempList.append( atmTempFile );
   const bool autoDelete = true;
-  atmTempFile->setAutoDelete( autoDelete );
+  atmTempFile->setAutoRemove( autoDelete );
 
   KUrl url;
-  url.setPath( atmTempFile->name() );
+  url.setPath( atmTempFile->fileName() );
 
-  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
+  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
     false );
-  if ( ::chmod( QFile::encodeName( atmTempFile->name() ), S_IRUSR ) != 0) {
+  if ( ::chmod( QFile::encodeName( atmTempFile->fileName() ), S_IRUSR ) != 0) {
     QFile::remove(url.path());
     return;
   }

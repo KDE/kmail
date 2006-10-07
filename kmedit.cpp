@@ -38,7 +38,7 @@ using KPIM::MailListDrag;
 #include <kmessagebox.h>
 #include <kurl.h>
 
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kdirwatch.h>
@@ -364,15 +364,17 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         return true;
       if (mExtEditorTempFile) return true;
       QString sysLine = mExtEditor;
-      mExtEditorTempFile = new KTempFile();
+      mExtEditorTempFile = new KTemporaryFile();
 
-      mExtEditorTempFile->setAutoDelete(true);
+      mExtEditorTempFile->open();
 
-      (*mExtEditorTempFile->textStream()) << text();
+      QTextStream stream ( mExtEditorTempFile );
+      stream << text();
+      stream.flush();
 
       mExtEditorTempFile->close();
       // replace %f in the system line
-      sysLine.replace( "%f", mExtEditorTempFile->name() );
+      sysLine.replace( "%f", mExtEditorTempFile->fileName() );
       mExtEditorProcess = new KProcess();
       mExtEditorProcess->setUseShell( true );
       sysLine += ' ';
@@ -393,7 +395,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         mExtEditorTempFileWatcher->setObjectName( "mExtEditorTempFileWatcher" );
         connect( mExtEditorTempFileWatcher, SIGNAL(dirty(const QString&)),
                  SLOT(slotExternalEditorTempFileChanged(const QString&)) );
-        mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
+        mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->fileName() );
       }
       return true;
     } else {
@@ -501,7 +503,7 @@ int KMEdit::autoSpellChecking( bool on )
 void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   if ( !mExtEditorTempFile )
     return;
-  if ( fileName != mExtEditorTempFile->name() )
+  if ( fileName != mExtEditorTempFile->fileName() )
     return;
   // read data back in from file
   setAutoUpdate(false);
@@ -516,7 +518,7 @@ void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
 void KMEdit::slotExternalEditorDone( KProcess * proc ) {
   assert(proc == mExtEditorProcess);
   // make sure, we update even when KDirWatcher is too slow:
-  slotExternalEditorTempFileChanged( mExtEditorTempFile->name() );
+  slotExternalEditorTempFileChanged( mExtEditorTempFile->fileName() );
   killExternalEditor();
 }
 

@@ -30,7 +30,7 @@
 class KMMsgBase;
 class KMMessage;
 class KMFolder;
-class KTempFile;
+class KTemporaryFile;
 
 class QWidget;
 
@@ -583,7 +583,7 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile*> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
 
   virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
 };

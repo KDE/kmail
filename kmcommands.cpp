@@ -76,7 +76,7 @@
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <kimproxy.h>
 // KIO headers
 #include <kio/job.h>
@@ -2439,8 +2439,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   }
   QDataStream ds;
   QFile file;
-  KTempFile tf;
-  tf.setAutoDelete( true );
+  KTemporaryFile tf;
   if ( url.isLocalFile() )
   {
     // save directly
@@ -2460,14 +2459,15 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   } else
   {
     // tmp file for upload
-    ds.setDevice( tf.file() );
+    tf.open();
+    ds.setDevice( &tf );
   }
 
   ds.writeRawData( data.data(), data.size() );
   if ( !url.isLocalFile() )
   {
     tf.close();
-    if ( !KIO::NetAccess::upload( tf.name(), url, parentWidget() ) )
+    if ( !KIO::NetAccess::upload( tf.fileName(), url, parentWidget() ) )
     {
       KMessageBox::error( parentWidget(),
           i18n( "Could not write the file %1." ,
@@ -2788,11 +2788,11 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
     KPIM::kByteArrayToFile( data, mAtmName, false, false, false );
   }
 
-  KTempFile *linkFile = new KTempFile( KStandardDirs::locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.suffix() );
-
-  linkFile->setAutoDelete(true);
-  QString linkName = linkFile->name();
+  KTemporaryFile *linkFile = new KTemporaryFile();
+  linkFile->setPrefix(atmFileInfo.fileName() +"_[");
+  linkFile->setSuffix("]."+ atmFileInfo.suffix());
+  linkFile->open();
+  QString linkName = linkFile->fileName();
   delete linkFile;
 
   if ( ::link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {

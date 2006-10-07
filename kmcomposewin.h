@@ -66,7 +66,7 @@ class KSelectAction;
 class KStatusBar;
 class KAction;
 class KToggleAction;
-class KTempFile;
+class KTemporaryFile;
 class KToggleAction;
 class KSelectColorAction;
 class KUrl;
@@ -703,7 +703,7 @@ private:
   bool mUseHTMLEditor;
   bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
-  QList<KTempFile*> mAtmTempList;
+  QList<KTemporaryFile*> mAtmTempList;
   QPalette mPalette;
   uint mId;
   QString mOldSigText;

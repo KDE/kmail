@@ -70,7 +70,7 @@ using KMail::AccountManager;
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kurl.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
@@ -855,10 +855,12 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
       msg->bodyPart( part, &aPart );
       QByteArray rawData( aPart.bodyDecodedBinary() );
 
-      KTempFile file;
-      file.file()->write( rawData.data(), rawData.size() );
+      KTemporaryFile file;
+      file.setAutoRemove(false);
+      file.open();
+      file.write( rawData.data(), rawData.size() );
 
-      url.setPath( file.name() );
+      url.setPath( file.fileName() );
 
       bOK = true;
     }
