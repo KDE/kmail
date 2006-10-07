@@ -809,11 +809,13 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
     MessageStatus status;
     int i;
     for ( i = 0 ; i < StatiCount ; i++ )
+    {
       status = stati[i];
       if ( status.getStatusStr()[0] == argsStr[0].toLatin1() ) {
         mParameter = mParameterList.at(i+1);
         return;
       }
+    }
   }
   mParameter = mParameterList.at(0);
 }
