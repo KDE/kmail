@@ -88,7 +88,8 @@ static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart 
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
-  : mMsg(aMsg),
+  : KMMsgBase(),
+    mMsg(aMsg),
     mNeedsAssembly(true),
     mDecodeHTML(false),
     mOverrideCodec(0),
