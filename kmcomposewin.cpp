@@ -4614,16 +4614,19 @@ void KMComposeWin::slotTextColor()
 
 void KMComposeWin::fontChanged( const QFont &f )
 {
-  QFontDatabase *fontdb = new QFontDatabase();
+  QFont fontTemp = f;
+  fontTemp.setBold( true );
+  fontTemp.setItalic( true );
+  QFontInfo fontInfo( fontTemp );
 
-  if ( fontdb->bold(f.family(), "Bold") ) {
-    textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
-    textBoldAction->setEnabled( true );
+  if ( fontInfo.bold() ) {
+    textBoldAction->setChecked( f.bold() );
+    textBoldAction->setEnabled( true ) ;
   } else {
     textBoldAction->setEnabled( false );
   }
 
-  if ( fontdb->italic(f.family(), "Italic") ) {
+  if ( fontInfo.italic() ) {
     textItalicAction->setChecked( f.italic() );
     textItalicAction->setEnabled( true );
   } else {
@@ -4634,7 +4637,6 @@ void KMComposeWin::fontChanged( const QFont &f )
 
   fontAction->setFont( f.family() );
   fontSizeAction->setFontSize( f.pointSize() );
-  delete fontdb;
 }
 
 void KMComposeWin::alignmentChanged( int a )
