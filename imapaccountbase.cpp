@@ -989,7 +989,8 @@ namespace KMail {
 
     QList<QPointer<KMFolder> > mSaveList = mMailCheckFolders;
     mMailCheckFolders = mFoldersQueuedForChecking;
-    kmkernel->acctMgr()->singleCheckMail(this, true);
+    if ( kmkernel->acctMgr() )
+      kmkernel->acctMgr()->singleCheckMail( this, true );
     mMailCheckFolders = mSaveList;
     mFoldersQueuedForChecking.clear();
   }
