@@ -298,7 +298,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
           this, SLOT(folderInvalidated(KMFolder*)));
 
   connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
-          this, SLOT(slotFolderActivated(KMFolder*)));
+          this, SLOT(slotFolderActivated()));
 
 }
 
@@ -384,10 +384,9 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
 
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotFolderActivated( KMFolder* folder )
+void SearchWindow::slotFolderActivated()
 {
     mChkbxSpecificFolders->setChecked(true);
-    enableButton( User1, folder != 0 );
 }
 
 //-----------------------------------------------------------------------------
