@@ -710,6 +710,7 @@ private:
   // Ticked off as they come in via msgAdded signals.
   QList<quint32> mLostBoys;
   KPIM::ProgressItem *mProgressItem;
+  bool mCompleteWithAddedMsg;
 };
 
 class KDE_EXPORT KMDeleteMsgCommand : public KMMoveCommand
