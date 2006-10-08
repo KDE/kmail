@@ -77,7 +77,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <khtml_part.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kmessagebox.h>

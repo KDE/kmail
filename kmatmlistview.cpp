@@ -80,7 +80,7 @@ using KRecentAddress::RecentAddresses;
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstatusbar.h>
