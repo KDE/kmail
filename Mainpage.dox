@@ -793,7 +793,7 @@ What happens when a message is to displayed in the reader window?
 
   - @em BodyPartFormatter
 	the formatter interface. Contains a single method format()
-	that takes a BodyPart to process and a HTMLWriter to write the
+	that takes a BodyPart to process and an HTMLWriter to write the
 	generated HTML to and returns a result code with which it can
 	request more information or delegate the formatting back to
 	some default processor. BodyPartFormatters are meant to be
