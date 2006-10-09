@@ -2247,9 +2247,15 @@ Wallet *KMKernel::wallet() {
   if ( !Wallet::isEnabled() || walletOpenFailed )
     return 0;
 
+  // find an appropriate parent window for the wallet dialog
+  WId window = 0;
+  if ( qApp->activeWindow() )
+    window = qApp->activeWindow()->winId();
+  else if ( getKMMainWidget() )
+    window = getKMMainWidget()->topLevelWidget()->winId();
+
   delete mWallet;
-  mWallet = Wallet::openWallet( Wallet::NetworkWallet(),
-        getKMMainWidget() ? getKMMainWidget()->topLevelWidget()->winId() : 0 );
+  mWallet = Wallet::openWallet( Wallet::NetworkWallet(), window );
 
   if ( !mWallet ) {
     walletOpenFailed = true;
