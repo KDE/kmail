@@ -263,9 +263,9 @@ public:
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+    if ( !mMsgBase ) return QString();
     QString tmp;
 
-    assert(mMsgBase);
 
     if(col == headers->paintInfo()->flagCol) {
       if (headers->paintInfo()->flagCol >= 0)
