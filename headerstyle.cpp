@@ -408,7 +408,7 @@ namespace KMail {
     }
     QString confidenceString = ( confidence < 0.0 ) ? "" : QString::number( confidence ) + "% &nbsp;";
     QString titleText = i18n("%1% probability of being spam with confidence %3%.\n\nFull report:\nProbability=%2\n Confidence=%4",
-                             percent, filterHeader, QString::number( confidence ), confidenceHeader );
+                             percent, filterHeader, confidence, confidenceHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
             QString::number( 5 ), titleText ) + confidenceString;
