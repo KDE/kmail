@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 //Added by qt3to4:
 #include <q3listview.h>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <Q3Dict>
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config

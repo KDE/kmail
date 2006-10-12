@@ -46,7 +46,7 @@ using namespace KPIM;
 #include <q3header.h>
 #include <q3ptrstack.h>
 #include <q3ptrqueue.h>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <Q3MemArray>
 #include <q3listview.h>
 
@@ -2307,7 +2307,7 @@ void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
 
-  Q3PopupMenu *menu = new Q3PopupMenu(this);
+  QMenu *menu = new QMenu(this);
 
   mMenuToFolder.clear();
 
@@ -2327,7 +2327,7 @@ void KMHeaders::slotRMB()
   }
   menu->addSeparator();
 
-  Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
+  QMenu *msgCopyMenu = new QMenu(menu);
   mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
       &mMenuToFolder, msgCopyMenu );
   msgCopyMenu->setTitle(i18n("&Copy To"));
@@ -2337,7 +2337,7 @@ void KMHeaders::slotRMB()
     QAction* act = menu->addAction( i18n("&Move To") );
     act->setEnabled( false );
   } else {
-    Q3PopupMenu *msgMoveMenu = new Q3PopupMenu(menu);
+    QMenu *msgMoveMenu = new QMenu(menu);
     mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
         &mMenuToFolder, msgMoveMenu );
     msgMoveMenu->setTitle(i18n("&Move To"));
