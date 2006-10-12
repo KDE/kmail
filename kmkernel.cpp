@@ -192,6 +192,7 @@ KMKernel::~KMKernel ()
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
   QString to, cc, bcc, subj, body;
+  QCStringList customHeaders;
   KURL messageFile;
   KURL::List attachURLs;
   bool mailto = false;
@@ -252,6 +253,8 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
          attachURLs += KURL( QString::fromLocal8Bit( *it ) );
   }
 
+  customHeaders = args->getOptionList("header");
+
   if (args->isSet("composer"))
     mailto = true;
 
@@ -302,7 +305,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewMessage( messageFile );
   else
     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
-            attachURLs );
+            attachURLs, customHeaders );
   return true;
 }
 
@@ -366,7 +369,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const KURL &messageFile,
-                            const KURL::List &attachURLs)
+                            const KURL::List &attachURLs,
+                            const QCStringList &customHeaders)
 {
   kdDebug(5006) << "KMKernel::openComposer called" << endl;
   KMMessage *msg = new KMMessage;
@@ -388,6 +392,23 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
   else if (!body.isEmpty())
     msg->setBody(body.utf8());
+
+  if (!customHeaders.isEmpty())
+  {
+    for ( QCStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
+      if ( !(*it).isEmpty() )
+      {
+        const int pos = (*it).find( ':' );
+        if ( pos > 0 )
+        {
+          QCString header, value;
+          header = (*it).left( pos ).stripWhiteSpace();
+          value = (*it).mid( pos+1 ).stripWhiteSpace();
+          if ( !header.isEmpty() && !value.isEmpty() )
+            msg->setHeaderField( header, value );
+        }
+      }
+  }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
@@ -1802,14 +1823,15 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QString &cc, const QString &bcc,
                       const QString &subj, const QString &body,
                       const KURL &messageFile,
-                      const KURL::List &attachURLs)
+                      const KURL::List &attachURLs,
+                      const QCStringList &customHeaders)
 {
-  if (mailto)
-    openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);
+  if ( mailto )
+    openComposer( to, cc, bcc, subj, body, 0, messageFile, attachURLs, customHeaders );
   else
     openReader( check );
 
-  if (check)
+  if ( check )
     checkMail();
   //Anything else?
 }

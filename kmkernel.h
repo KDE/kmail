@@ -96,7 +96,16 @@ public:
   /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KURL &messageFile, const KURL::List &attachURLs);
+                    const KURL &messageFile, const KURL::List &attachURLs,
+                    const QCStringList &customHeaders);
+  /** For backward compatibility */
+  int openComposer (const QString &to, const QString &cc, const QString &bcc,
+                    const QString &subject, const QString &body, int hidden,
+                    const KURL &messageFile, const KURL::List &attachURLs)
+  {
+    QCStringList noCustomHeaders;
+    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, attachURLs, noCustomHeaders);
+  }
   /** For backward compatibility */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
@@ -245,7 +254,8 @@ public:
   void setFirstInstance(bool value) { the_firstInstance = value; }
   void action (bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
-	       const KURL &messageFile, const KURL::List &attach);
+               const KURL &messageFile, const KURL::List &attach,
+               const QCStringList &customHeaders);
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
