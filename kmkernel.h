@@ -3,13 +3,12 @@
 #ifndef _KMCONTROL
 #define _KMCONTROL
 
+#include <QByteArray>
+#include <QLabel>
+#include <QList>
 #include <QObject>
 #include <QString>
 #include <QPointer>
-//Added by qt3to4:
-#include <QLabel>
-#include <QList>
-#include <QByteArray>
 //#include <weaver.h>
 //#include <weaverlogger.h>
 
@@ -25,6 +24,8 @@
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
+
+typedef QList<QByteArray> QByteArrayList;
 
 namespace KIO {
   class Job;
@@ -102,48 +103,8 @@ public:
   /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KUrl &messageFile, const KUrl::List &attachURLs);
-  /** For backward compatibility */
-  int openComposer (const QString &to, const QString &cc, const QString &bcc,
-                    const QString &subject, const QString &body, int hidden,
-                    const KUrl &messageFile, const KUrl& attachURL)
-  {
-    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KUrl::List(attachURL));
-  }
-  /** For backward compatibility */
-  int openComposer (const QString &to, const QString &cc, const QString &bcc,
-                    const QString &subject, const QString &body, int hidden,
-                    const KUrl &messageFile)
-  {
-    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KUrl::List());
-  }
-  /** For backward compatibility
-   * @deprecated
-   */
-  int openComposer (const QString &to, const QString &cc,
-                    const QString &bcc, const QString &subject,
-                    const QString &body, int hidden,
-                    const QString &attachName,
-                    const QByteArray &attachCte,
-                    const QByteArray &attachData,
-                    const QByteArray &attachType,
-                    const QByteArray &attachSubType,
-                    const QByteArray &attachParamAttr,
-                    const QString &attachParamValue,
-                    const QByteArray &attachContDisp);
-
-  int openComposer (const QString &to, const QString &cc,
-                    const QString &bcc, const QString &subject,
-                    const QString &body, int hidden,
-                    const QString &attachName,
-                    const QByteArray &attachCte,
-                    const QByteArray &attachData,
-                    const QByteArray &attachType,
-                    const QByteArray &attachSubType,
-                    const QByteArray &attachParamAttr,
-                    const QString &attachParamValue,
-                    const QByteArray &attachContDisp,
-                    const QByteArray &attachCharset);
+                    const KUrl &messageFile, const KUrl::List &attachURLs,
+                    const QByteArrayList &customHeaders);
 
 #warning Port DCOPRef usage!
   /*DCOPRef*/ void openComposer(const QString &to, const QString &cc,
@@ -250,11 +211,12 @@ public:
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
-  void action (bool mailto, bool check, const QString &to, const QString &cc,
+  void action( bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
-	       const KUrl &messageFile, const KUrl::List &attach);
-  void byteArrayToRemoteFile(const QByteArray&, const KUrl&,
-			     bool overwrite = false);
+               const KUrl &messageFile, const KUrl::List &attach,
+               const QByteArrayList &customHeaders );
+  void byteArrayToRemoteFile( const QByteArray&, const KUrl&,
+                              bool overwrite = false );
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
   bool folderIsTrash(KMFolder *);
