@@ -183,7 +183,7 @@ set(kmailprivate_LIB_SRCS
    util.cpp
    keditcl1.cpp keditcl2.cpp )
 
-kde4_automoc(${kmailprivate_LIB_SRCS})
+kde4_automoc(kmailprivate ${kmailprivate_LIB_SRCS})
 
 kde4_add_ui3_files(kmailprivate_LIB_SRCS 
    signatureconfigurationdialog.ui 
@@ -215,7 +215,7 @@ install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
 
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 
-kde4_automoc(${kcm_kmail_PART_SRCS})
+kde4_automoc(kcm_kmail ${kcm_kmail_PART_SRCS})
 
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
@@ -230,7 +230,7 @@ install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 set(kmailpart_PART_SRCS kmail_part.cpp )
 
-kde4_automoc(${kmailpart_PART_SRCS})
+kde4_automoc(kmailpart ${kmailpart_PART_SRCS})
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 
 kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
@@ -246,7 +246,7 @@ install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cpp )
 
-kde4_automoc(${kmail_bodypartformatter_application_octetstream_PART_SRCS})
+kde4_automoc(kmail_bodypartformatter_application_octetstream ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
 kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
@@ -261,7 +261,7 @@ install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${P
 
 set(kmail_SRCS main.cpp )
 
-kde4_automoc(${kmail_SRCS})
+kde4_automoc(kmail ${kmail_SRCS})
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
@@ -274,7 +274,7 @@ install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 if(KDE4_BUILD_TESTS)
 set(dcoptest_SRCS dcoptest.cpp )
 
-kde4_automoc(${dcoptest_SRCS})
+kde4_automoc(dcoptest ${dcoptest_SRCS})
 qt4_add_dbus_adaptor( dcoptest_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
 
@@ -291,7 +291,7 @@ qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
 
 set(recipienteditortest_SRCS recipientseditortest.cpp )
 
-kde4_automoc(${recipienteditortest_SRCS})
+kde4_automoc(recipienteditortest ${recipienteditortest_SRCS})
 
 
 kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
