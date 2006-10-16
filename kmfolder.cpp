@@ -526,9 +526,7 @@ QString KMFolder::mailingListPostAddress() const
     for( it = post.begin(); it != post.end(); ++it ) {
       // We check for isEmpty because before 3.3 postAddress was just an
       // email@kde.org and that leaves protocol() field in the kurl class
-      // TODO leaving mailto condition incase some artifact is missed, so as a
-      // fallback option. Remove the condition later.
-      if ( (*it).protocol() == "mailto" || (*it).protocol().isEmpty() || (*it).protocol() == "MAILTO")
+      if ( (*it).toUpper().protocol() == "mailto" || (*it).protocol().isEmpty() )
         return (*it).path();
     }
   }
