@@ -524,7 +524,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
   QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
-  KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,
+  KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, "konqueror",
                                                                     false );
   KBookmarkGroup group = bookManager->root();
   group.addBookmark( bookManager, mUrl.path(), KUrl( mUrl ) );
