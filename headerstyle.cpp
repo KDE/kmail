@@ -532,6 +532,40 @@ namespace KMail {
       userHTML = "&nbsp;";
     }
 
+    if( photoURL.isEmpty() ) {
+      // no photo, look for a Face header
+      QString faceheader = message->headerField( "Face" );
+      if ( !faceheader.isEmpty() ) {
+        QImage faceimage;
+
+        kDebug( 5006 ) << "Found Face: header" << endl;
+
+        QByteArray facestring = faceheader.toUtf8();
+        // Spec says header should be less than 998 bytes
+        // Face: is 5 characters
+        if ( facestring.length() < 993 ) {
+          QByteArray facearray;
+          KCodecs::base64Decode( facestring, facearray );
+
+          QImage faceimage;
+          if ( faceimage.loadFromData( facearray, "png" ) ) {
+            // Spec says image must be 48x48 pixels
+            if ( ( 48 == faceimage.width() ) && ( 48 == faceimage.height() ) ) {
+              photoURL = imgToDataUrl( faceimage );
+              photoWidth = 48;
+              photoHeight = 48;
+            } else {
+              kDebug( 5006 ) << "Face: header image is" << faceimage.width() << "by" << faceimage.height() <<"not 48x48 Pixels" << endl;
+            }
+          } else {
+            kDebug( 5006 ) << "Failed to load decoded png from Face: header" << endl;
+          }
+        } else {
+          kDebug( 5006 ) << "Face: header too long at " << facestring.length() << endl;
+        }
+      }
+    }
+
     if( photoURL.isEmpty() )
     {
       // no photo, look for a X-Face header
