@@ -893,6 +893,10 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     }
   }
 
+  // update folder menus in case some mail got filtered to trash/current folder
+  // and we can enable "empty trash/move all to trash" action etc.
+  updateFolderMenu();
+
   if ( !showNotification )
     return;
 
@@ -1061,6 +1065,10 @@ void KMMainWidget::slotEmptyFolder()
     BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
 
   updateMessageActions();
+
+  // Disable empty trash/move all to trash action - we've just deleted/moved
+  // all folder contents.
+  mEmptyFolderAction->setEnabled( false );
 }
 
 
