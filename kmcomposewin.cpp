@@ -715,10 +715,12 @@ void KMComposeWin::autoSaveMessage()
                 << endl;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
-  KSaveFile autoSaveFile( filename, 0600 );
-  int status = autoSaveFile.status();
-  kDebug(5006) << k_funcinfo << "autoSaveFile.status() = " << status << endl;
-  if ( status == 0 ) { // no error
+  KSaveFile autoSaveFile( filename );
+  int status = 0;
+  bool opened = autoSaveFile.open();
+  kDebug(5006) << k_funcinfo << "autoSaveFile.open() = " << opened << endl;
+  if ( opened ) { // no error
+    autoSaveFile.setPermissions(QFile::ReadUser|QFile::WriteUser);
     kDebug(5006) << "autosaving message in " << filename << endl;
     int fd = autoSaveFile.handle();
     Q3CString msgStr = msg->asString();
@@ -727,7 +729,7 @@ void KMComposeWin::autoSaveMessage()
   }
   if ( status == 0 ) {
     kDebug(5006) << k_funcinfo << "closing autoSaveFile" << endl;
-    autoSaveFile.close();
+    autoSaveFile.finalize();
     mLastAutoSaveErrno = 0;
   }
   else {
