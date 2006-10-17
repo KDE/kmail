@@ -51,7 +51,7 @@
       </entry>
       <entry name="ExcludeImportantMailFromExpiry"  type="Bool">
         <label></label>
-        <whatsthis></whatsthis>
+        <whatsthis>This prevents the automatic expiry of old messages in a folder from deleting (or moving to an archive folder) the messages that are marked 'Important' or 'Todo'</whatsthis>
         <default>true</default>
       </entry>
 

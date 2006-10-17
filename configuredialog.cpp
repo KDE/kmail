@@ -4478,6 +4478,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   mExcludeImportantFromExpiry =
     new QCheckBox( i18n("E&xclude important messages from expiry"), this );
+  mExcludeImportantFromExpiry->setWhatsThis( 
+    i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
   vlay->addWidget( mExcludeImportantFromExpiry );
   connect( mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
