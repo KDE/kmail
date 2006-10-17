@@ -620,16 +620,9 @@ void KMComposeWin::readConfig(void)
   while ( transportHistory.count() > (uint)GlobalSettings::self()->maxTransportEntries() )
     transportHistory.remove( transportHistory.last() );
   mTransport->insertStringList( transportHistory );
-  if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
-  {
-    for (int i = 0; i < mTransport->count(); i++)
-      if (mTransport->text(i) == currentTransport)
-        mTransport->setCurrentItem(i);
-    mTransport->setEditText( currentTransport );
-  }
-
-  if ( !mBtnTransport->isChecked() ) {
-    mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
+  mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
+  if ( mBtnTransport->isChecked() ) {
+    setTransport( currentTransport );
   }
 
   QString fccName = "";
@@ -1659,6 +1652,37 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::setTransport( const QString & transport )
+{
+  kdDebug(5006) << "KMComposeWin::setTransport( \"" << transport << "\" )" << endl;
+  // Don't change the transport combobox if transport is empty
+  if ( transport.isEmpty() )
+    return;
+
+  bool transportFound = false;
+  for ( int i = 0; i < mTransport->count(); ++i ) {
+    if ( mTransport->text(i) == transport ) {
+      transportFound = true;
+      mTransport->setCurrentItem(i);
+      kdDebug(5006) << "transport found, it's no. " << i << " in the list" << endl;
+      break;
+    }
+  }
+  if ( !transportFound ) { // unknown transport
+    kdDebug(5006) << "unknown transport \"" << transport << "\"" << endl;
+    if ( transport.startsWith("smtp://") || transport.startsWith("smtps://") ||
+         transport.startsWith("file://") ) {
+      // set custom transport
+      mTransport->setEditText( transport );
+    }
+    else {
+      // neither known nor custom transport -> use default transport
+      mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
                           bool allowDecryption, bool isModified)
 {
@@ -1778,12 +1802,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
-  {
-    for (int i = 0; i < mTransport->count(); i++)
-      if (mTransport->text(i) == transport)
-        mTransport->setCurrentItem(i);
-    mTransport->setEditText( transport );
-  }
+    setTransport( transport );
 
   if (!mBtnFcc->isChecked())
   {
@@ -4293,24 +4312,11 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     if ( transp.isEmpty() )
     {
       mMsg->removeHeaderField("X-KMail-Transport");
-      transp = mTransport->text(0);
+      transp = GlobalSettings::self()->defaultTransport();
     }
     else
       mMsg->setHeaderField("X-KMail-Transport", transp);
-    bool found = false;
-    int i;
-    for (i = 0; i < mTransport->count(); i++) {
-      if (mTransport->text(i) == transp) {
-        found = true;
-        mTransport->setCurrentItem(i);
-        break;
-      }
-    }
-    if (found == false) {
-      if (i == mTransport->maxCount()) mTransport->setMaxCount(i + 1);
-      mTransport->insertItem(transp,i);
-      mTransport->setCurrentItem(i);
-    }
+    setTransport( transp );
   }
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );

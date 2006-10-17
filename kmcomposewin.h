@@ -649,6 +649,14 @@ private:
    */
   static bool validateAddresses( QWidget * parent, const QString & addresses );
 
+  /**
+   * Sets the transport combobox to @p transport. If @p transport is empty
+   * then the combobox remains unchanged. If @p transport is neither a known transport
+   * nor a custom transport then the combobox is set to the default transport.
+   * @param transport the transport the combobox should be set to
+   */
+  void setTransport( const QString & transport );
+
 private slots:
    /**
     * Compress an attachemnt with the given index
