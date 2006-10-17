@@ -226,6 +226,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
+      mKeyButton->setEnabled( false );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
       mConfigureToolbar->setEnabled( false );
@@ -497,6 +498,7 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 {
   if ( mFilter ) {
     mFilter->setConfigureShortcut( aChecked );
+    mKeyButton->setEnabled( aChecked );
     mConfigureToolbar->setEnabled( aChecked );
     mFilterActionIconButton->setEnabled( aChecked );
     mFilterActionLabel->setEnabled( aChecked );
