@@ -44,6 +44,7 @@ using KMail::SieveJob;
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
 #include "kmmessage.h"
+#include "globalsettings.h"
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identity.h>
 
@@ -597,11 +598,11 @@ namespace KMail {
   }
 
   bool Vacation::defaultSendForSpam() {
-    return false;
+    return GlobalSettings::outOfOfficeReactToSpam();
   }
 
   QString Vacation::defaultDomainName() {
-    return QString::null;
+    return GlobalSettings::outOfOfficeDomain();
   }
 
   void Vacation::slotGetResult( SieveJob * job, bool success,

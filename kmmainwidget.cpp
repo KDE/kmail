@@ -2207,11 +2207,12 @@ void KMMainWidget::setupActions()
 		     SLOT(slotImport()), actionCollection(), "import" );
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
-  // @TODO (marc/bo): Test
-  (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
-		      "configure", 0, this, SLOT(slotEditVacation()),
-		      actionCollection(), "tools_edit_vacation" );
+  if ( GlobalSettings::allowOutOfOfficeSettings() ) {
+      (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
+              "configure", 0, this, SLOT(slotEditVacation()),
+              actionCollection(), "tools_edit_vacation" );
 
+  }
   (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
  		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
 

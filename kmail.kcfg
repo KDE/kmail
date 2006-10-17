@@ -282,4 +282,19 @@
       </entry>
     </group>
 
+    <group name="OutOfOffice">
+        <entry name="AllowOutOfOfficeSettings" type="Bool">
+            <default>true</default>
+            <label>Allow out-of-office settings to to be changeable by the user.</label>
+        </entry>
+        <entry name="OutOfOfficeDomain" type="String">
+            <default></default>
+            <label>Send out-of-office replies to mails coming from this domain only.</label>
+        </entry>
+        <entry name="OutOfOfficeReactToSpam" type="Bool">
+            <default>false</default>
+            <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
+        </entry>
+    </group>
+
 </kcfg>
