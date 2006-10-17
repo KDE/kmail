@@ -1217,6 +1217,10 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                       SLOT(slotPrependSignature()),
                       actionCollection(), "prepend_signature");
 
+  (void) new KAction (i18n("Insert Signature At C&ursor Position"), "insert_signature", 0, this,
+                      SLOT(slotInsertSignatureAtCursor()),
+                      actionCollection(), "insert_signature_at_cursor_position");
+
   mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()),
                            actionCollection(), "attach_public_key");
@@ -3585,30 +3589,36 @@ void KMComposeWin::slotAppendSignature()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotPrependSignature()
 {
-    insertSignature( true );
+    insertSignature( false );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotInsertSignatureAtCursor()
+{
+    insertSignature( true, mEditor->currentLine() );
 }
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::insertSignature( bool prepend )
+void KMComposeWin::insertSignature( bool append, int pos )
 {
   bool mod = mEditor->isModified();
 
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  mOldSigText = prepend? ident.signature().rawText() : ident.signatureText();
+  mOldSigText = append? ident.signature().rawText() : ident.signatureText();
   if( !mOldSigText.isEmpty() )
   {
     mEditor->sync();
-    if ( prepend ) {
-      mEditor->insertAt(mOldSigText, 0, 0);
+    if ( append ) {
+       mEditor->insertAt(mOldSigText, pos, 0);
     } else {
-      mEditor->append(mOldSigText);
+       mEditor->insertAt(mOldSigText, 0, 0);
     }
     mEditor->update();
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
-    if ( prepend )
+    if ( !append )
       mEditor->setCursorPosition( 0, 0 );
   }
 }

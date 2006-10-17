@@ -499,6 +499,11 @@ public slots:
   void slotPrependSignature();
 
   /**
+   * Insert signature file at the cursor position of the text in the editor.
+   */
+  void slotInsertSignatureAtCursor();
+
+  /**
    * Attach sender's public key.
    */
   void slotInsertMyPublicKey();
@@ -766,11 +771,11 @@ private:
    */
   void cleanupAutoSave();
 
-  /** 
+  /**
    * Helper to insert the signature of the current identy at the
    * beginning or end of the editor.
    */
-  void insertSignature( bool prepend = false );
+  void insertSignature( bool append = true, int pos = 0 );
 
 
 protected:

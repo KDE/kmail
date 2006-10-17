@@ -19,6 +19,7 @@
    <Action name="paste_quoted" append="edit_paste_merge"/>
    <Action name="clean_spaces" />
    <Action name="prepend_signature" />
+   <Action name="insert_signature_at_cursor_position" />
    <Separator/>
    <Action name="tools_quote"/>
    <Action name="tools_unquote"/>
@@ -89,6 +90,7 @@
   <Action name="edit_cut" />
   <Action name="edit_copy" />
   <Action name="edit_paste" />
+  <Action name="insert_signature_at_cursor_position" />
   <Separator/>
   <Action name="sign_message" />
   <Action name="encrypt_message" />
