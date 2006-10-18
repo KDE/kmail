@@ -3589,13 +3589,13 @@ void KMComposeWin::slotAppendSignature()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotPrependSignature()
 {
-    insertSignature();
+    insertSignature( false );
 }
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotInsertSignatureAtCursor()
 {
-    insertSignature( true, mEditor->currentLine() );
+    insertSignature( false, mEditor->currentLine() );
 }
 
 
@@ -3611,20 +3611,17 @@ void KMComposeWin::insertSignature( bool append, int pos )
   {
     mEditor->sync();
     if ( append ) {
-       mEditor->insertAt(mOldSigText, pos, 0);
+       mEditor->append(mOldSigText);
     } else {
-       mEditor->insertAt(mOldSigText, 0, 0);
+       mEditor->insertAt(mOldSigText, pos, 0);
     }
     mEditor->update();
     mEditor->setModified(mod);
-    mEditor->setContentsPos( 0, 0 );
-    if ( !append )
-    {
-      kdDebug(5006) << "NOT append" << endl;
-      mEditor->setCursorPosition( 0, 0 );
-    }
-    else     kdDebug(5006) << "append" << endl;
-
+    // for append and prepend, move the cursor to 0,0, for insertAt, 
+    // keep it in the same row, but move to first column
+    mEditor->setCursorPosition( pos, 0 );
+    if ( !append && pos == 0 )
+      mEditor->setContentsPos( 0, 0 );
   }
 }
 
