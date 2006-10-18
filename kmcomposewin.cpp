@@ -3589,7 +3589,7 @@ void KMComposeWin::slotAppendSignature()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotPrependSignature()
 {
-    insertSignature( false );
+    insertSignature();
 }
 
 //----------------------------------------------------------------------------
@@ -3606,7 +3606,7 @@ void KMComposeWin::insertSignature( bool append, int pos )
 
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  mOldSigText = append? ident.signature().rawText() : ident.signatureText();
+  mOldSigText = append? ident.signatureText() : ident.signature().rawText();
   if( !mOldSigText.isEmpty() )
   {
     mEditor->sync();
@@ -3619,7 +3619,12 @@ void KMComposeWin::insertSignature( bool append, int pos )
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
     if ( !append )
+    {
+      kdDebug(5006) << "NOT append" << endl;
       mEditor->setCursorPosition( 0, 0 );
+    }
+    else     kdDebug(5006) << "append" << endl;
+
   }
 }
 
