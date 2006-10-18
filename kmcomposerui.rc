@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="26" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="27" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
