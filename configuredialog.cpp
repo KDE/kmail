@@ -2654,7 +2654,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
                    hbox );
   mEditorRequester = new KUrlRequester( hbox );
   mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-  connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
+  connect( mEditorRequester, SIGNAL( urlSelected(const KUrl&) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mEditorRequester, SIGNAL( textChanged(const QString&) ),
            this, SLOT( slotEmitChanged( void ) ) );
