@@ -249,7 +249,8 @@ void FilterLogDialog::slotUser1()
 void FilterLogDialog::slotUser2()
 {
   QString fileName;
-  KFileDialog fdlg( KUrl(), QString::null, this);
+  KUrl url;
+  KFileDialog fdlg( url, QString(), this);
 
   fdlg.setMode( KFile::File );
   fdlg.setSelection( "kmail-filter.log" );
