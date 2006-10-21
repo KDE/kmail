@@ -75,6 +75,7 @@ using namespace KMail;
 #include <globalsettings.h>
 
 #define UIDCACHE_VERSION 1
+#define MAIL_LOSS_DEBUGGING 0
 
 static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
   switch (r) {
@@ -150,10 +151,22 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true )
+    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
+    mFoundAnIMAPDigest( false )
 {
   setUidValidity("");
-  readUidCache();
+  // if we fail to read a uid file but there is one, nuke it
+  if ( readUidCache() == -1 ) {
+    if ( QFile::exists( uidCacheLocation() ) ) {
+        KMessageBox::error( 0,
+        i18n( "The UID cache file for folder %1 could not be read. There "
+              "could be a problem with file system permission, or it is corrupted."
+              ).arg( folder->prettyURL() ) );
+        // try to unlink it, in case it was corruped. If it couldn't be read 
+        // because of permissions, this will fail, which is fine
+        unlink( QFile::encodeName( uidCacheLocation() ) );
+    }
+  }
 
   mProgress = 0;
 }
@@ -306,7 +319,7 @@ int KMFolderCachedImap::writeUidCache()
   if( uidValidity().isEmpty() || uidValidity() == "INVALID" ) {
     // No info from the server yet, remove the file.
     if( QFile::exists( uidCacheLocation() ) )
-      unlink( QFile::encodeName( uidCacheLocation() ) );
+      return unlink( QFile::encodeName( uidCacheLocation() ) );
     return 0;
   }
 
@@ -317,17 +330,23 @@ int KMFolderCachedImap::writeUidCache()
     str << uidValidity() << endl;
     str << lastUid() << endl;
     uidcache.flush();
-    fsync( uidcache.handle() ); /* this is probably overkill */
-    uidcache.close();
-    return 0;
-  } else {
-    return errno; /* does QFile set errno? */
+    if ( uidcache.status() == IO_Ok ) {
+      fsync( uidcache.handle() ); /* this is probably overkill */
+      uidcache.close();
+      if ( uidcache.status() == IO_Ok )
+        return 0;
+    }
   }
+  KMessageBox::error( 0,
+        i18n( "The UID cache file for folder %1 could not be written. There "
+              "could be a problem with file system permission." ).arg( folder()->prettyURL() ) );
+
+  return -1;
 }
 
 void KMFolderCachedImap::reloadUidMap()
 {
-  kdDebug(5006) << "Reloading Uid Map " << endl;
+  //kdDebug(5006) << "Reloading Uid Map " << endl;
   uidMap.clear();
   open();
   for( int i = 0; i < count(); ++i ) {
@@ -448,7 +467,8 @@ void KMFolderCachedImap::timerEvent( QTimerEvent* )
 {
   killTimer( uidWriteTimer );
   uidWriteTimer = -1;
-  writeUidCache();
+  if ( writeUidCache() == -1 )
+    unlink( QFile::encodeName( uidCacheLocation() ) );
 }
 
 ulong KMFolderCachedImap::lastUid()
@@ -467,10 +487,22 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
   QMap<ulong,int>::Iterator it = uidMap.find( uid );
   if( it != uidMap.end() ) {
     KMMsgBase *msg = getMsgBase( *it );
+#ifdef MAIL_LOSS_DEBUGGING
+    kdDebug(5006) << "UID " << uid << " is supposed to be in the map" << endl;
+    kdDebug(5006) << "UID's index is to be " << *it << endl;
+    kdDebug(5006) << "There is a message there? " << (msg != 0) << endl;
+    if ( msg ) {
+      kdDebug(5006) << "Its UID is: " << msg->UID() << endl;
+    }
+#endif
+
     if( msg && msg->UID() == uid )
       return msg;
+    kdDebug(5006) << "########## Didn't find uid: " << uid << "in cache athough it's supposed to be there!" << endl;
   } else {
+#ifdef MAIL_LOSS_DEBUGGING
     kdDebug(5006) << "Didn't find uid: " << uid << "in cache!" << endl;
+#endif
   }
   // Not found by now
  // if( mapReloaded )
@@ -482,8 +514,10 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
   if( it != uidMap.end() )
     // Since the uid map is just rebuilt, no need for the sanity check
     return getMsgBase( *it );
+#ifdef MAIL_LOSS_DEBUGGING
   else
     kdDebug(5006) << "Reloaded, but stil didn't find uid: " << uid << endl;
+#endif
   // Then it's not here
   return 0;
 }
@@ -841,9 +875,14 @@ void KMFolderCachedImap::serverSyncInternal()
            to be deleted on the server has been deleted, adjust our local notion of the
            highes uid seen thus far. */
         slotUpdateLastUid();
-        if( mLastUid == 0 && uidWriteTimer == -1 )
+        if( mLastUid == 0 && uidWriteTimer == -1 ) {
           // This is probably a new and empty folder. Write the UID cache
-          writeUidCache();
+          if ( writeUidCache() == -1 ) {
+            resetSyncState();
+            emit folderComplete( this, false );
+            return;
+          }
+        }
       }
     }
 
@@ -1209,9 +1248,10 @@ void KMFolderCachedImap::uploadFlags()
 void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool cont)
 {
   if ( mSyncState == SYNC_STATE_INITIAL ){
-      kdDebug(5006) << "IMAP status changed but reset " << endl;
+      //kdDebug(5006) << "IMAP status changed but reset " << endl;
       return; // we were reset
   }
+  //kdDebug(5006) << "IMAP status changed for folder: " << folder->prettyURL() << endl;
   if ( folder->storage() == this ) {
     --mStatusFlagsJobs;
     if ( mStatusFlagsJobs == 0 || !cont ) // done or aborting
@@ -1220,6 +1260,7 @@ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&,
     if ( mStatusFlagsJobs == 0 && cont ) {
       mProgress += 5;
       serverSyncInternal();
+      //kdDebug(5006) << "Proceeding with mailcheck." << endl;
     }
   }
 }
@@ -1288,15 +1329,24 @@ bool KMFolderCachedImap::deleteMessages()
   // them one by one because the index list can get resized under
   // us. So use msg pointers instead
 
+  QStringList uids;
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
   for( ; it != uidMap.end(); it++ ) {
     ulong uid ( it.key() );
-    if( uid!=0 && !uidsOnServer.find( uid ) )
+    if( uid!=0 && !uidsOnServer.find( uid ) ) {
+      uids << QString::number( uid );
       msgsForDeletion.append( getMsg( *it ) );
+    }
   }
 
   if( !msgsForDeletion.isEmpty() ) {
-    removeMsg( msgsForDeletion );
+#ifdef MAIL_LOSS_DEBUGGING
+      if ( KMessageBox::warningYesNo(
+             0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
+                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>" )
+             .arg( folder()->prettyURL() ).arg( uids.join(",") ) ) == KMessageBox::Yes )
+#endif
+        removeMsg( msgsForDeletion );
   }
 
   /* Delete messages from the server that we dont have anymore */
@@ -1370,6 +1420,8 @@ void KMFolderCachedImap::listMessages() {
   uidsForDeletionOnServer.clear();
   mMsgsForDownload.clear();
   mUidsForDownload.clear();
+  // listing is only considered successful if saw a syntactically correct imapdigest
+  mFoundAnIMAPDigest = false;
 
   CachedImapJob* job = new CachedImapJob( FolderJob::tListMessages, this );
   connect( job, SIGNAL( result(KMail::FolderJob *) ),
@@ -1415,6 +1467,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       setReadOnly( access == "Read only" );
     }
     (*it).cdata.remove(0, pos);
+    mFoundAnIMAPDigest = true;
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   // Start with something largish when rebuilding the cache
@@ -1432,7 +1485,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       if( uid != 0 ) {
         if ( uidsOnServer.count() == uidsOnServer.size() ) {
           uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
-          kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
+          //kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
         }
         uidsOnServer.insert( uid, &v );
       }
@@ -1451,7 +1504,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         KMMsgBase *existingMessage = findByUID(uid);
         if( !existingMessage ) {
           if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
-            // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
+#ifdef MAIL_LOSS_DEBUGGING
+            kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
+#endif
             uidsForDeletionOnServer << uid;
           } else {
             redownload = true;
@@ -1490,6 +1545,13 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet )
 {
   mProgress += 10;
+  if ( !job->error() && !mFoundAnIMAPDigest ) {
+      kdWarning(5006) << "######## Folderlisting did not complete, but there was no error! "
+          "Aborting sync of folder: " << folder()->prettyURL() << endl;
+#ifdef MAIL_LOSS_DEBUGGING
+      kmkernel->emergencyExit( i18n("Folder listing failed in interesting ways." ) );
+#endif
+  }
   if( job->error() ) { // error listing messages but the user chose to continue
     mContentState = imapNoInformation;
     mSyncState = SYNC_STATE_HANDLE_INBOX; // be sure not to continue in this folder
@@ -1741,7 +1803,7 @@ void KMFolderCachedImap::listDirectory2()
   KMFolderNode *node;
   bool root = ( this == mAccount->rootFolder() );
   if ( root && !mAccount->hasInbox() ) {
-    kdDebug(5006) << "check INBOX" << endl;
+    //kdDebug(5006) << "check INBOX" << endl;
     // create the INBOX
     for (node = folder()->child()->first(); node; node = folder()->child()->next())
       if (!node->isDir() && node->name() == "INBOX") break;
@@ -2216,7 +2278,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )
 {
-  kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
+  //kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
   if ( entry == KOLAB_FOLDERTYPE )
     mAnnotationFolderTypeChanged = false;
   else if ( entry == KOLAB_INCIDENCESFOR ) {

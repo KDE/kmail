@@ -445,6 +445,11 @@ private:
       mLastUid. See above for details. */
   ulong mTentativeHighestUid;
 
+  /** Used to determine whether listing messages yielded a sensible result.
+   * Only then is the deletion o messages (which relies on succesful
+   * listing) attempted, during the sync.  */
+  bool mFoundAnIMAPDigest;
+
   int mUserRights;
   ACLList mACLList;
 
