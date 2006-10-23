@@ -1367,6 +1367,8 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
   MessageStatus status;
 
+  if ( !msg ) return;
+
   if (flags & 4)
     status.setImportant();
   if (flags & 2)
@@ -1377,7 +1379,7 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
   // number of messages which actually show up as read can go out of sync.
-  if ( ( msg && msg->status().isOfUnknownStatus() ) || !(flags&1) ) {
+  if ( ( msg->status().isOfUnknownStatus() ) || !(flags&1) ) {
     if (newMsg)
       status.setNew();
     else
