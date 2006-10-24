@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="27" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="28" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -18,6 +18,7 @@
    <text>&amp;Edit</text>
    <Action name="paste_quoted" append="edit_paste_merge"/>
    <Action name="clean_spaces" />
+   <Action name="append_signature" />
    <Action name="prepend_signature" />
    <Action name="insert_signature_at_cursor_position" />
    <Separator/>
@@ -60,7 +61,6 @@
   </Menu>
   <Menu name="attach" >
    <text>&amp;Attach</text>
-   <Action name="append_signature" />
    <Action name="attach_public_key" />
    <Action name="attach_my_public_key" />
    <Separator/>
