@@ -648,6 +648,7 @@ namespace KMail {
     mDialog->setMailAliases( aliases.join(", ") );
     mDialog->setSendForSpam( sendForSpam );
     mDialog->setDomainName( domainName );
+    mDialog->enableDomainAndSendForSpam( !GlobalSettings::allowOutOfOfficeUploadButNoSettings() );
 
     connect( mDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
     connect( mDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCancel()) );

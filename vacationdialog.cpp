@@ -193,6 +193,14 @@ namespace KMail {
     mSpamCheck->setChecked( !enable );
   }
 
+
+  /* virtual*/ 
+  void KMail::VacationDialog::enableDomainAndSendForSpam( bool enable ) {
+      mDomainCheck->setEnabled( enable );
+      mDomainEdit->setEnabled( enable );
+      mSpamCheck->setEnabled( enable );
+  }
+
 } // namespace KMail
 
 #include "vacationdialog.moc"

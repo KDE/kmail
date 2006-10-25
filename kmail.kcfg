@@ -287,6 +287,10 @@
             <default>true</default>
             <label>Allow out-of-office settings to to be changeable by the user.</label>
         </entry>
+        <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
+            <default>false</default>
+            <label>Allow users to upload out-of-office sieve scripts, but disallow them changin any settings, such as the domain to react to and the spam reaction switch.</label>
+        </entry>
         <entry name="OutOfOfficeDomain" type="String">
             <default></default>
             <label>Send out-of-office replies to mails coming from this domain only.</label>

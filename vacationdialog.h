@@ -59,6 +59,8 @@ namespace KMail {
 		    const char * name=0, bool modal=true );
     virtual ~VacationDialog();
 
+    virtual void enableDomainAndSendForSpam( bool enable = true );
+
     bool activateVacation() const;
     virtual void setActivateVacation( bool activate );
 
