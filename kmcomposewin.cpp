@@ -1217,7 +1217,7 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                       SLOT(slotPrependSignature()),
                       actionCollection(), "prepend_signature");
 
-  (void) new KAction (i18n("Insert Signature At C&ursor Position"), "insert_signature", 0, this,
+  (void) new KAction (i18n("Insert Signature At C&ursor Position"), "edit", 0, this,
                       SLOT(slotInsertSignatureAtCursor()),
                       actionCollection(), "insert_signature_at_cursor_position");
 
@@ -3617,7 +3617,7 @@ void KMComposeWin::insertSignature( bool append, int pos )
     }
     mEditor->update();
     mEditor->setModified(mod);
-    // for append and prepend, move the cursor to 0,0, for insertAt, 
+    // for append and prepend, move the cursor to 0,0, for insertAt,
     // keep it in the same row, but move to first column
     mEditor->setCursorPosition( pos, 0 );
     if ( !append && pos == 0 )
