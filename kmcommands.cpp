@@ -810,22 +810,28 @@ void KMSaveMsgCommand::slotSaveDataReq()
     assert( idx >= 0 );
     msg = p->getMsg(idx);
 
-    if (msg->transferInProgress()) {
-      QByteArray data = QByteArray();
-      mJob->sendAsyncData( data );
-    }
-    msg->setTransferInProgress( true );
-    if (msg->isComplete() ) {
-      slotMessageRetrievedForSaving(msg);
-    } else {
-      // retrieve Message first
-      if (msg->parent()  && !msg->isComplete() ) {
-        FolderJob *job = msg->parent()->createJob(msg);
-        job->setCancellable( false );
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
-        job->start();
+    if ( msg ) {
+      if ( msg->transferInProgress() ) {
+        QByteArray data = QByteArray();
+        mJob->sendAsyncData( data );
       }
+      msg->setTransferInProgress( true );
+      if ( msg->isComplete() ) {
+        slotMessageRetrievedForSaving( msg );
+      } else {
+        // retrieve Message first
+        if ( msg->parent()  && !msg->isComplete() ) {
+          FolderJob *job = msg->parent()->createJob( msg );
+          job->setCancellable( false );
+          connect(job, SIGNAL( messageRetrieved( KMMessage* ) ),
+                  this, SLOT( slotMessageRetrievedForSaving( KMMessage* ) ) );
+          job->start();
+        }
+      }
+    } else {
+      mJob->slotError( KIO::ERR_ABORTED,
+                       i18n("The message was removed while saving it. "
+                            "It has not been saved.") );
     }
   } else {
     if ( mStandAloneMessage ) {
