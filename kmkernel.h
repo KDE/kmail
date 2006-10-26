@@ -9,8 +9,7 @@
 #include <QObject>
 #include <QString>
 #include <QPointer>
-//#include <weaver.h>
-//#include <weaverlogger.h>
+#include <threadweaver/ThreadWeaver.h>
 
 #include <kconfig.h>
 #include <kdeversion.h>
@@ -250,7 +249,7 @@ public:
   KMail::MessageSender *msgSender();
   KMMsgIndex *msgIndex();
 
-//  KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
+  ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
   KPIM::IdentityManager *identityManager();
 
@@ -442,8 +441,7 @@ private:
   QList<const KSystemTrayIcon*> systemTrayApplets;
 
   /* Weaver */
-//  KPIM::ThreadWeaver::Weaver *the_weaver;
-//  KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
+  ThreadWeaver::Weaver *the_weaver;
 
   KWallet::Wallet *mWallet;
 

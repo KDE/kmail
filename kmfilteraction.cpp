@@ -1612,32 +1612,33 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 // on stdin; altered message is expected on stdout.
 //=============================================================================
 
-#warning Port me!
-#if 0
-#include <weaver.h>
+#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/Job.h>
+#include <threadweaver/DebuggingAids.h>
 #include <QTextDocument>
-class PipeJob : public KPIM::ThreadWeaver::Job
+class PipeJob : public ThreadWeaver::Job
 {
   public:
-    PipeJob(QObject* parent = 0 , const char* name = 0, KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
-      : Job (parent, name),
-        mTempFileName(tempFileName),
-        mCmd(cmd),
+    PipeJob(QObject* parent = 0 , KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
+      : ThreadWeaver::Job ( parent ),
+        mTempFileName( tempFileName ),
+        mCmd( cmd ),
         mMsg( aMsg )
     {
     }
 
     ~PipeJob() {}
-    virtual void processEvent( KPIM::ThreadWeaver::Event *ev )
+
+    virtual void done( ThreadWeaver::Job *job )
     {
-      KPIM::ThreadWeaver::Job::processEvent( ev );
-      if ( ev->action() == KPIM::ThreadWeaver::Event::JobFinished )
-        deleteLater( );
+      ThreadWeaver::Job::done( job );
+      deleteLater( );
     }
+
   protected:
     void run()
     {
-      KPIM::ThreadWeaver::debug (1, "PipeJob::run: doing it .\n");
+      ThreadWeaver::debug (1, "PipeJob::run: doing it .\n");
       FILE *p;
       QByteArray ba;
 
@@ -1656,12 +1657,11 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       }
       pclose(p);
       if ( !ba.isEmpty() ) {
-        KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).toLatin1() );
+        ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).toLatin1() );
         KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
 
         mMsg->fromByteArray( ba );
-        if ( filterFolder ) {
         if ( !origSerNum.isEmpty() )
           mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );
         if ( filterFolder && handler ) {
@@ -1674,15 +1674,15 @@ class PipeJob : public KPIM::ThreadWeaver::Job
         }
       }
 
-      KPIM::ThreadWeaver::debug (1, "PipeJob::run: done.\n" );
+      ThreadWeaver::debug (1, "PipeJob::run: done.\n" );
       // unlink the tempFile
       QFile::remove(mTempFileName);
     }
+
     QString mTempFileName;
     QString mCmd;
     KMMessage *mMsg;
 };
-#endif
 
 class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
@@ -1739,10 +1739,9 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
       false, false, false );
   inFile->close();
 
-#warning Port me!
-//  PipeJob *job = new PipeJob(0, 0, aMsg, commandLine, tempFileName);
-//  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
-//  kmkernel->weaver()->enqueue(job);
+ PipeJob *job = new PipeJob(0, aMsg, commandLine, tempFileName);
+ QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
+ kmkernel->weaver()->enqueue(job);
 }
 
 //=============================================================================

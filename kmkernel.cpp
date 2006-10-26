@@ -7,10 +7,6 @@
 #include "config.h"
 #include "kmkernel.h"
 
-#warning Port me!
-//#include <weaver.h>
-//#include <weaverlogger.h>
-
 #include "globalsettings.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
@@ -1277,14 +1273,7 @@ void KMKernel::init()
   the_msgIndex = 0;
 #endif
 
-#if 0
-  the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
-  the_weaverLogger = new KPIM::ThreadWeaver::WeaverThreadLogger(this);
-  the_weaverLogger->attach (the_weaver);
-#else
-  // make it obvious that this instance has not been initialized
-  // the_weaver = 0;
-#endif
+  the_weaver =  new ThreadWeaver::Weaver( this );
 
   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SIGNAL( folderRemoved(KMFolder*) ) );
@@ -1446,10 +1435,8 @@ void KMKernel::cleanup(void)
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
 
-#if 0
   delete the_weaver;
   the_weaver = 0;
-#endif
 
   KConfig* config =  KMKernel::config();
   KConfigGroup group(config, "General");

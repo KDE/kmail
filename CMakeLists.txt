@@ -3,12 +3,12 @@ project(kmail)
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 
-add_subdirectory( interfaces ) 
-add_subdirectory( about ) 
-add_subdirectory( pics ) 
-add_subdirectory( profiles ) 
-add_subdirectory( avscripts ) 
-add_subdirectory( tests ) 
+add_subdirectory( interfaces )
+add_subdirectory( about )
+add_subdirectory( pics )
+add_subdirectory( profiles )
+add_subdirectory( avscripts )
+add_subdirectory( tests )
 
 include_directories( ${CMAKE_SOURCE_DIR}/libkmime ${CMAKE_SOURCE_DIR}/libkpgp
   ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities
@@ -22,179 +22,179 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkmime ${CMAKE_SOURCE_DIR}/libkpgp
 ########### next target ###############
 
 set(kmailprivate_LIB_SRCS
-   kmmessage.cpp 
-   kmmainwin.cpp 
-   configuredialog.cpp 
-   configuredialog_p.cpp 
-   klistviewindexedsearchline.cpp 
-   simplestringlisteditor.cpp 
-   index.cpp 
-   identitydrag.cpp 
-   identitylistview.cpp 
-   identitydialog.cpp 
-   kmfolderdia.cpp 
-   kmfoldertree.cpp 
-   kmtransport.cpp 
-   kmfoldercombobox.cpp 
-   kmaccount.cpp 
-   kmheaders.cpp 
-   headeritem.cpp 
-   listjob.cpp 
-   kmcomposewin.cpp 
-   kmfolder.cpp 
-   kmmsgpartdlg.cpp 
-   kmreaderwin.cpp 
-   htmlstatusbar.cpp 
-   kmmsgdict.cpp 
-   kmgroupware.cpp 
-   folderstorage.cpp 
-   csshelper.cpp 
-   klistboxdialog.cpp 
-   actionscheduler.cpp 
-   messageproperty.cpp 
-   kmmsgpart.cpp 
-   kmmsginfo.cpp 
-   accountmanager.cpp 
-   kmacctfolder.cpp 
-   kmdict.cpp 
-   kmsystemtray.cpp 
-   kmacctlocal.cpp 
-   kmfolderdir.cpp 
-   kmfoldermgr.cpp 
-   kmfoldernode.cpp 
-   kmsender.cpp 
-   kmacctseldlg.cpp 
-   kmfiltermgr.cpp 
-   kmsearchpatternedit.cpp 
-   kmfilteraction.cpp 
-   kmsearchpattern.cpp 
-   kmfolderseldlg.cpp 
-   kmfilter.cpp 
-   kmfilterdlg.cpp 
-   kmmsgbase.cpp 
-   kmmsglist.cpp 
-   kmaddrbook.cpp 
-   signatureconfigurator.cpp 
-   xfaceconfigurator.cpp 
-   networkaccount.cpp 
-   imapaccountbase.cpp 
-   kmservertest.cpp 
-   kmacctimap.cpp 
-   kmacctcachedimap.cpp 
-   kmfawidgets.cpp 
-   kmfoldermbox.cpp 
-   kmfolderimap.cpp 
-   undostack.cpp 
-   kmfoldercachedimap.cpp 
-   kmfoldermaildir.cpp 
-   popaccount.cpp 
-   colorlistbox.cpp 
-   kmkernel.cpp 
-   accountdialog.cpp 
-   searchwindow.cpp 
-   vcardviewer.cpp 
-   vacationdialog.cpp 
-   vacation.cpp 
-   sievedebugdialog.cpp 
-   sieveconfig.cpp 
-   sievejob.cpp 
-   kmpopheaders.cpp 
-   kmpopfiltercnfrmdlg.cpp 
-   kmmimeparttree.cpp 
-   mailinglist-magic.cpp 
-   kmacctmaildir.cpp 
-   attachmentstrategy.cpp 
-   headerstrategy.cpp 
-   headerstyle.cpp 
-   khtmlparthtmlwriter.cpp 
-   filehtmlwriter.cpp 
-   teehtmlwriter.cpp 
-   objecttreeparser.cpp 
-   attachmentcollector.cpp 
-   bodypartformatter.cpp 
-   bodypartformatterfactory.cpp 
-   partNode.cpp 
-   signatureconfigurationdialogimpl.cpp 
-   encryptionconfigurationdialogimpl.cpp 
-   mailsourceviewer.cpp 
-   kmcommands.cpp 
-   kmreadermainwin.cpp 
-   kmstartup.cpp 
-   kmmainwidget.cpp 
-   kmfolderindex.cpp 
-   kmfoldersearch.cpp 
-   transportmanager.cpp 
-   folderjob.cpp 
-   cachedimapjob.cpp 
-   maildirjob.cpp 
-   mboxjob.cpp 
-   imapjob.cpp 
-   subscriptiondialog.cpp 
-   kmailicalifaceimpl.cpp 
-   aboutdata.cpp 
-   folderIface.cpp 
-#   mailserviceimpl.cpp 
-   attachmentlistview.cpp 
-   kmedit.cpp 
-   kmlineeditspell.cpp 
-   kmatmlistview.cpp 
-   composer.cpp 
-   isubject.cpp 
-   bodyvisitor.cpp 
-   antispamwizard.cpp 
-   urlhandlermanager.cpp 
-   dictionarycombobox.cpp 
-   secondarywindow.cpp 
-   filterlog.cpp 
-   filterlogdlg.cpp 
-   messagecomposer.cpp 
-   keyresolver.cpp 
-   globalsettings.cpp 
-   regexplineedit.cpp 
-   rulewidgethandlermanager.cpp 
-   headerlistquicksearch.cpp 
-   acljobs.cpp 
-   folderdiaacltab.cpp 
-   partnodebodypart.cpp 
-   expirejob.cpp 
-   compactionjob.cpp 
-   jobscheduler.cpp 
-   callback.cpp 
-   searchjob.cpp 
-   renamejob.cpp 
-   annotationjobs.cpp 
-   accountcombobox.cpp 
-   redirectdialog.cpp 
-   foldershortcutdialog.cpp 
-   folderrequester.cpp 
-   spamheaderanalyzer.cpp 
-   antispamconfig.cpp 
-   recipientseditor.cpp 
-   recipientspicker.cpp 
-   kwindowpositioner.cpp 
-   distributionlistdialog.cpp 
-   expirypropertiesdialog.cpp 
-   mailinglistpropertiesdialog.cpp 
-   newfolderdialog.cpp 
-   accountwizard.cpp 
-   textsource.cpp 
-   managesievescriptsdialog.cpp 
-   chiasmuskeyselector.cpp 
+   kmmessage.cpp
+   kmmainwin.cpp
+   configuredialog.cpp
+   configuredialog_p.cpp
+   klistviewindexedsearchline.cpp
+   simplestringlisteditor.cpp
+   index.cpp
+   identitydrag.cpp
+   identitylistview.cpp
+   identitydialog.cpp
+   kmfolderdia.cpp
+   kmfoldertree.cpp
+   kmtransport.cpp
+   kmfoldercombobox.cpp
+   kmaccount.cpp
+   kmheaders.cpp
+   headeritem.cpp
+   listjob.cpp
+   kmcomposewin.cpp
+   kmfolder.cpp
+   kmmsgpartdlg.cpp
+   kmreaderwin.cpp
+   htmlstatusbar.cpp
+   kmmsgdict.cpp
+   kmgroupware.cpp
+   folderstorage.cpp
+   csshelper.cpp
+   klistboxdialog.cpp
+   actionscheduler.cpp
+   messageproperty.cpp
+   kmmsgpart.cpp
+   kmmsginfo.cpp
+   accountmanager.cpp
+   kmacctfolder.cpp
+   kmdict.cpp
+   kmsystemtray.cpp
+   kmacctlocal.cpp
+   kmfolderdir.cpp
+   kmfoldermgr.cpp
+   kmfoldernode.cpp
+   kmsender.cpp
+   kmacctseldlg.cpp
+   kmfiltermgr.cpp
+   kmsearchpatternedit.cpp
+   kmfilteraction.cpp
+   kmsearchpattern.cpp
+   kmfolderseldlg.cpp
+   kmfilter.cpp
+   kmfilterdlg.cpp
+   kmmsgbase.cpp
+   kmmsglist.cpp
+   kmaddrbook.cpp
+   signatureconfigurator.cpp
+   xfaceconfigurator.cpp
+   networkaccount.cpp
+   imapaccountbase.cpp
+   kmservertest.cpp
+   kmacctimap.cpp
+   kmacctcachedimap.cpp
+   kmfawidgets.cpp
+   kmfoldermbox.cpp
+   kmfolderimap.cpp
+   undostack.cpp
+   kmfoldercachedimap.cpp
+   kmfoldermaildir.cpp
+   popaccount.cpp
+   colorlistbox.cpp
+   kmkernel.cpp
+   accountdialog.cpp
+   searchwindow.cpp
+   vcardviewer.cpp
+   vacationdialog.cpp
+   vacation.cpp
+   sievedebugdialog.cpp
+   sieveconfig.cpp
+   sievejob.cpp
+   kmpopheaders.cpp
+   kmpopfiltercnfrmdlg.cpp
+   kmmimeparttree.cpp
+   mailinglist-magic.cpp
+   kmacctmaildir.cpp
+   attachmentstrategy.cpp
+   headerstrategy.cpp
+   headerstyle.cpp
+   khtmlparthtmlwriter.cpp
+   filehtmlwriter.cpp
+   teehtmlwriter.cpp
+   objecttreeparser.cpp
+   attachmentcollector.cpp
+   bodypartformatter.cpp
+   bodypartformatterfactory.cpp
+   partNode.cpp
+   signatureconfigurationdialogimpl.cpp
+   encryptionconfigurationdialogimpl.cpp
+   mailsourceviewer.cpp
+   kmcommands.cpp
+   kmreadermainwin.cpp
+   kmstartup.cpp
+   kmmainwidget.cpp
+   kmfolderindex.cpp
+   kmfoldersearch.cpp
+   transportmanager.cpp
+   folderjob.cpp
+   cachedimapjob.cpp
+   maildirjob.cpp
+   mboxjob.cpp
+   imapjob.cpp
+   subscriptiondialog.cpp
+   kmailicalifaceimpl.cpp
+   aboutdata.cpp
+   folderIface.cpp
+#   mailserviceimpl.cpp
+   attachmentlistview.cpp
+   kmedit.cpp
+   kmlineeditspell.cpp
+   kmatmlistview.cpp
+   composer.cpp
+   isubject.cpp
+   bodyvisitor.cpp
+   antispamwizard.cpp
+   urlhandlermanager.cpp
+   dictionarycombobox.cpp
+   secondarywindow.cpp
+   filterlog.cpp
+   filterlogdlg.cpp
+   messagecomposer.cpp
+   keyresolver.cpp
+   globalsettings.cpp
+   regexplineedit.cpp
+   rulewidgethandlermanager.cpp
+   headerlistquicksearch.cpp
+   acljobs.cpp
+   folderdiaacltab.cpp
+   partnodebodypart.cpp
+   expirejob.cpp
+   compactionjob.cpp
+   jobscheduler.cpp
+   callback.cpp
+   searchjob.cpp
+   renamejob.cpp
+   annotationjobs.cpp
+   accountcombobox.cpp
+   redirectdialog.cpp
+   foldershortcutdialog.cpp
+   folderrequester.cpp
+   spamheaderanalyzer.cpp
+   antispamconfig.cpp
+   recipientseditor.cpp
+   recipientspicker.cpp
+   kwindowpositioner.cpp
+   distributionlistdialog.cpp
+   expirypropertiesdialog.cpp
+   mailinglistpropertiesdialog.cpp
+   newfolderdialog.cpp
+   accountwizard.cpp
+   textsource.cpp
+   managesievescriptsdialog.cpp
+   chiasmuskeyselector.cpp
    util.cpp
    keditcl1.cpp keditcl2.cpp )
 
 kde4_automoc(${kmailprivate_LIB_SRCS})
 
-kde4_add_ui3_files(kmailprivate_LIB_SRCS 
-   signatureconfigurationdialog.ui 
-   encryptionconfigurationdialog.ui 
+kde4_add_ui3_files(kmailprivate_LIB_SRCS
+   signatureconfigurationdialog.ui
+   encryptionconfigurationdialog.ui
    smimeconfiguration.ui )
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui)
 
-#kde4_add_dcop_skels(kmailprivate_LIB_SRCS 
-#   kmailIface.h 
-#   kmailicalIface.h 
+#kde4_add_dcop_skels(kmailprivate_LIB_SRCS
+#   kmailIface.h
+#   kmailicalIface.h
 #   folderIface.h )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 
@@ -205,7 +205,8 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
 target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} kmime kpgp kdepim
-  kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} phononcore knotifyconfig ${KDE4_KTNEF_LIBS})
+  kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} phononcore knotifyconfig ${KDE4_KTNEF_LIBS}
+  threadweaver)
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
