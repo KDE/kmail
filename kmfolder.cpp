@@ -703,6 +703,7 @@ void KMFolder::setUnreadExpireUnits( ExpireUnits units )
 {
   if (units >= expireNever && units < expireMaxUnits)
     mUnreadExpireUnits = units;
+    mStorage->writeConfig();
 }
 
 void KMFolder::setReadExpireAge( int age )
@@ -717,6 +718,7 @@ void KMFolder::setReadExpireUnits( ExpireUnits units )
 {
   if (units >= expireNever && units <= expireMaxUnits)
     mReadExpireUnits = units;
+    mStorage->writeConfig();
 }
 
 
