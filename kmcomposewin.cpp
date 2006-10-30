@@ -508,7 +508,6 @@ void KMComposeWin::addImageFromClipboard()
     return;
 
   mTempDir = new KTempDir();
-  mTempDir->setAutoDelete( true );
 
   if ( attName.toLower().endsWith(".png") )
     tmpFile = new QFile(mTempDir->name() + attName );
