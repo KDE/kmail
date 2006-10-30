@@ -1,5 +1,5 @@
 [General]
-tools=10
+tools=11
 
 [Spamtool #1]
 Ident=spamassassin
@@ -210,3 +210,23 @@ ConfidenceHeader=X-DSPAM-Confidence
 ScoreType=Decimal
 ScoreValueRegexp=([\d\.]+)\s*
 ScoreConfidenceRegexp=([\d\.]+)\s*
+
+[Spamtool #11]
+Ident=crm114
+Version=1
+Priority=65
+VisibleName=CRM114
+Executeable=crm -v | grep "CRM114"
+URL=http://crm114.sourceforge.net
+PipeFilterName=CRM114 Check
+PipeCmdDetect=crm -u $HOME/.crm114 mailreaver.crm
+ExecCmdSpam=crm -u $HOME/.crm114 mailreaver.crm --spam
+ExecCmdHam=crm -u $HOME/.crm114 mailreaver.crm --good
+DetectionHeader=X-CRM114-Status
+DetectionPattern=SPAM
+DetectionPattern2=UNSURE
+DetectionOnly=0
+UseRegExp=0
+SupportsBayes=1
+SupportsUnsure=1
+
