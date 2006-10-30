@@ -229,6 +229,7 @@ Executeable=crm -v | grep "CRM114"
 URL=http://crm114.sourceforge.net
 PipeFilterName=CRM114 Check
 PipeCmdDetect=crm -u $HOME/.crm114 mailreaver.crm
+PipeCmdNoSpam=
 ExecCmdSpam=crm -u $HOME/.crm114 mailreaver.crm --spam
 ExecCmdHam=crm -u $HOME/.crm114 mailreaver.crm --good
 DetectionHeader=X-CRM114-Status
