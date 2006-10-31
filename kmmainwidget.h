@@ -433,7 +433,6 @@ private:
   KToggleAction *mToggleThreadTodoAction;
   KToggleAction *mToggleThreadFlagAction;
   KToggleAction *mToggleTodoAction;
-  KToggleAction *mToggleSentAction;
   KToggleAction *mToggleFlagAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
