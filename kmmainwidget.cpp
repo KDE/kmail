@@ -2609,12 +2609,6 @@ void KMMainWidget::setupActions()
   mToggleTodoAction->setCheckedState( i18n("Remove &To-do Message Mark") );
   mStatusMenu->insert( mToggleTodoAction );
 
-  mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
-                                 0, this, SLOT(slotSetMsgStatusSent()),
-                                 actionCollection(), "status_sent");
-  mToggleSentAction->setCheckedState( i18n("Remove &Sent Mark") );
-
-
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
@@ -3016,7 +3010,6 @@ void KMMainWidget::updateMessageActions()
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
       mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-      mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
       mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
       if (thread_actions) {
         mToggleThreadTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
