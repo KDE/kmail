@@ -2896,13 +2896,14 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
-    if (curpart && curpart->hasHeaders() ) {
+    if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
       kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
-		<< "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
+            << "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
     }
 
     if (curpart &&
 	curpart->hasHeaders() &&
+        curpart->Headers().HasContentType() &&
 	curpart->Headers().ContentType().Type() == type &&
 	curpart->Headers().ContentType().Subtype() == subtype) {
 	part = curpart;
