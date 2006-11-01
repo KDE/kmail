@@ -565,8 +565,10 @@ namespace KMail {
     messageText = vdx.messageText().stripWhiteSpace();
     notificationInterval = vdx.notificationInterval();
     aliases = vdx.aliases();
-    sendForSpam = !sdx.found();
-    domainName = drdx.domainName();
+    if ( !GlobalSettings::allowOutOfOfficeUploadButNoSettings() ) {
+      sendForSpam = !sdx.found();
+      domainName = drdx.domainName();
+    }
     return true;
   }
 
