@@ -12,15 +12,14 @@
 #include "globalsettings.h"
 
 #include <kascii.h>
-#include <kmime_charfreq.h>
-#include <kmime_codecs.h>
+#include <kmime/kmime_charfreq.h>
+#include <kmime/kmime_codecs.h>
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
 
 #include <kiconloader.h>
 #include <QTextCodec>
-//Added by qt3to4:
 #include <QList>
 #include <Q3CString>
 

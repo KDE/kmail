@@ -18,7 +18,7 @@
 
 #include "vacationdialog.h"
 
-#include <kmime_header_parsing.h>
+#include <kmime/kmime_header_parsing.h>
 //Added by qt3to4:
 #include <QGridLayout>
 #include <QByteArray>

@@ -20,7 +20,7 @@
 #ifndef kmfilteraction_h
 #define kmfilteraction_h
 
-#include <kmime_mdn.h>
+#include <kmime/kmime_mdn.h>
 
 #include <QList>
 #include <QMultiHash>

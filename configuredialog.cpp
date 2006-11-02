@@ -68,7 +68,7 @@ using KMail::IdentityDialog;
 
 // other kdenetwork headers:
 #include <libkpimidentities/identity.h>
-#include <kmime_util.h>
+#include <kmime/kmime_util.h>
 using KMime::DateFormatter;
 #include <kleo/cryptoconfig.h>
 #include <kleo/cryptobackendfactory.h>
@@ -4478,7 +4478,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
   mExcludeImportantFromExpiry =
     new QCheckBox( i18n("E&xclude important messages from expiry"), this );
-  mExcludeImportantFromExpiry->setWhatsThis( 
+  mExcludeImportantFromExpiry->setWhatsThis(
     i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
   vlay->addWidget( mExcludeImportantFromExpiry );
   connect( mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),

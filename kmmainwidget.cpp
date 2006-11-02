@@ -122,8 +122,8 @@ using KMail::HeaderListQuickSearch;
 #include <kstaticdeleter.h>
 #include <kaction.h>
 
-#include <kmime_mdn.h>
-#include <kmime_header_parsing.h>
+#include <kmime/kmime_mdn.h>
+#include <kmime/kmime_header_parsing.h>
 using namespace KMime;
 using KMime::Types::AddrSpecList;
 

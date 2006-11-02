@@ -62,8 +62,8 @@
 #include <kleo/signjob.h>
 #include <kleo/specialjob.h>
 
-#include <kmime_util.h>
-#include <kmime_codecs.h>
+#include <kmime/kmime_util.h>
+#include <kmime/kmime_codecs.h>
 #include <kpgpblock.h>
 
 #include <mimelib/mimepp.h>

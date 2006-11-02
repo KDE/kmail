@@ -15,7 +15,7 @@
 #include "kmmsgbase.h"
 #include "isubject.h"
 
-#include <kmime_mdn.h>
+#include <kmime/kmime_mdn.h>
 
 #include<emailfunctions/email.h>
 //Added by qt3to4:

@@ -3,7 +3,7 @@
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
-#include "kmime_util.h"
+#include <kmime/kmime_util.h>
 #include "headeritem.h"
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
@@ -21,7 +21,6 @@ using KPIM::MessageStatus;
 #include <QPixmap>
 #include <QPointer>
 #include <QWidget>
-//Added by qt3to4:
 #include <q3strlist.h>
 #include <q3memarray.h>
 #include <q3dragobject.h>

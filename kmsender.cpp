@@ -7,8 +7,7 @@
 #include "kmsender_p.h"
 #undef REALLY_WANT_KMSENDER
 
-#include <kmime_header_parsing.h>
-//Added by qt3to4:
+#include <kmime/kmime_header_parsing.h>
 #include <Q3CString>
 using namespace KMime::Types;
 

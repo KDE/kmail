@@ -45,13 +45,12 @@ using KMail::HeaderStrategy;
 #include <QCursor>
 #include <QMessageBox>
 #include <QTextCodec>
-//Added by qt3to4:
 #include <Q3StrList>
 #include <Q3CString>
 
-#include <kmime_util.h>
-#include <kmime_charfreq.h>
-#include <kmime_header_parsing.h>
+#include <kmime/kmime_util.h>
+#include <kmime/kmime_charfreq.h>
+#include <kmime/kmime_header_parsing.h>
 using KMime::HeaderParsing::parseAddressList;
 using namespace KMime::Types;
 

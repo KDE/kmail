@@ -31,7 +31,7 @@ using KMail::AccountManager;
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identity.h>
 
-#include <kmime_header_parsing.h>
+#include <kmime/kmime_header_parsing.h>
 using KMime::Types::AddrSpecList;
 
 #include <ksieve/parser.h>

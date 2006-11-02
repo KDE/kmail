@@ -11,7 +11,6 @@
 #include "kmheaders.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
-//Added by qt3to4:
 #include <Q3CString>
 using KMail::MessageProperty;
 
@@ -23,7 +22,7 @@ using KMail::MessageProperty;
 #include <krfcdate.h>
 
 #include <mimelib/mimepp.h>
-#include <kmime_codecs.h>
+#include <kmime/kmime_codecs.h>
 
 #include <QTextCodec>
 #include <q3deepcopy.h>

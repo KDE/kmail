@@ -123,7 +123,7 @@ using KMail::RedirectDialog;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
-#include <kmime_mdn.h>
+#include <kmime/kmime_mdn.h>
 using namespace KMime;
 
 #include <kleo/specialjob.h>

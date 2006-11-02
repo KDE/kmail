@@ -64,7 +64,7 @@ using KMail::URLHandlerManager;
 #include <kicon.h>
 #include "broadcaststatus.h"
 
-#include <kmime_mdn.h>
+#include <kmime/kmime_mdn.h>
 using namespace KMime;
 #ifdef KMAIL_READER_HTML_DEBUG
 #include "filehtmlwriter.h"
