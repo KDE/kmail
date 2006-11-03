@@ -2043,16 +2043,18 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
   } else {
     htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
     htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
+    htmlWriter()->queue( "<pre>" );
 
     QString str = aMsgPart->bodyDecoded();
     // A QString cannot handle binary data. So if it's shorter than the
     // attachment, we assume the attachment is binary:
     if( str.length() < aMsgPart->decodedSize() ) {
-      str += QString::fromLatin1("\n") + i18np("[KMail: Attachment contains binary data. Trying to show first character.]",
+      str.prepend( i18np("[KMail: Attachment contains binary data. Trying to show first character.]",
           "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
-          str.length());
+                               str.length()) + QChar::fromLatin1('\n') );
     }
-    htmlWriter()->write( Qt::escape( str ) );
+    htmlWriter()->queue( Qt::escape( str ) );
+    htmlWriter()->queue( "</pre>" );
     htmlWriter()->queue("</body></html>");
     htmlWriter()->flush();
     mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
