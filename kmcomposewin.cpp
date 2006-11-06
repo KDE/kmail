@@ -2273,6 +2273,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
+  lvi->setAttachmentSize(msgPart->decodedSize());
 
   if ( loadDefaults ) {
     if( canSignEncryptAttachments() ) {

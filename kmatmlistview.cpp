@@ -1,147 +1,30 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
-// kmcomposewin.cpp
+// kmatmlistview.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
 #include <config.h>
 
 #include "kmatmlistview.h"
-
-#include "kmmainwin.h"
-#include "kmreadermainwin.h"
-#include "messagesender.h"
-#include "kmmsgpartdlg.h"
-#include <kpgpblock.h>
-#include <kaddrbook.h>
-#include "kmaddrbook.h"
-#include "kmmsgdict.h"
-#include "kmfolderimap.h"
-#include "kmfoldermgr.h"
-#include "kmfoldercombobox.h"
-#include "kmtransport.h"
-#include "kmcommands.h"
-#include "kcursorsaver.h"
-#include "partNode.h"
-#include "attachmentlistview.h"
-#include "transportmanager.h"
-using KMail::AttachmentListView;
-#include "dictionarycombobox.h"
-using KMail::DictionaryComboBox;
-#include "addressesdialog.h"
-using KPIM::AddressesDialog;
-#include "addresseeemailselection.h"
-using KPIM::AddresseeEmailSelection;
-using KPIM::AddresseeSelectorDialog;
-#include <maillistdrag.h>
-using KPIM::MailListDrag;
-#include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
-#include "kleo_util.h"
-#include "stl_util.h"
-#include "recipientseditor.h"
-
-#include "attachmentcollector.h"
-#include "objecttreeparser.h"
-
-#include "kmfoldermaildir.h"
-
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identitycombo.h>
-#include <libkpimidentities/identity.h>
-#include <libkdepim/kfileio.h>
-#include <libemailfunctions/email.h>
-#include <kleo/cryptobackendfactory.h>
-#include <kleo/exportjob.h>
-#include <ui/progressdialog.h>
-#include <ui/keyselectiondialog.h>
-
-#include <gpgmepp/context.h>
-#include <gpgmepp/key.h>
-
-#include <kabc/vcardconverter.h>
-#include <libkdepim/kvcarddrag.h>
-#include <kio/netaccess.h>
-
-
-#include "klistboxdialog.h"
-
-#include "messagecomposer.h"
-
-#include <kcharsets.h>
-#include <kcompletionbox.h>
-#include <kcursor.h>
-#include <kcombobox.h>
-#include <kstdaccel.h>
-#include <kpopupmenu.h>
-#include <kedittoolbar.h>
-#include <kkeydialog.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kwin.h>
-#include <kinputdialog.h>
-#include <kmessagebox.h>
-#include <kurldrag.h>
-#include <kio/scheduler.h>
-#include <ktempfile.h>
-#include <klocale.h>
-#include <kapplication.h>
-#include <kstatusbar.h>
-#include <kaction.h>
-#include <kstdaction.h>
-#include <kdirwatch.h>
-#include <kstdguiitem.h>
-#include <kiconloader.h>
-#include <kpushbutton.h>
-#include <kuserprofile.h>
-#include <krun.h>
-#include <ktempdir.h>
-//#include <keditlistbox.h>
-#include "globalsettings.h"
-#include "replyphrases.h"
-
-#include <kspell.h>
-#include <kspelldlg.h>
-#include <spellingfilter.h>
-#include <ksyntaxhighlighter.h>
-#include <kcolordialog.h>
-#include <kzip.h>
-#include <ksavefile.h>
-
-#include <qtabdialog.h>
-#include <qregexp.h>
-#include <qbuffer.h>
-#include <qtooltip.h>
-#include <qtextcodec.h>
+#include <qcheckbox.h>
 #include <qheader.h>
-#include <qwhatsthis.h>
-#include <qfontdatabase.h>
 
-#include <mimelib/mimepp.h>
-
-#include <algorithm>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <assert.h>
-
-KMAtmListViewItem::KMAtmListViewItem(QListView *parent)
+KMAtmListViewItem::KMAtmListViewItem( QListView *parent )
   : QObject(),
-    QListViewItem( parent ),
-    mListview( parent ),
-    mCBSignEnabled( false ),
-    mCBEncryptEnabled( false )
+    QListViewItem( parent )
 {
-  mCBEncrypt = new QCheckBox( mListview->viewport() );
-  mCBSign = new QCheckBox( mListview->viewport() );
-  mCBCompress = new QCheckBox( mListview->viewport() );
-  connect( mCBCompress, SIGNAL( clicked() ), this, SLOT( slotCompress() ) );
+  mCBCompress = new QCheckBox( listView()->viewport() );
+  mCBEncrypt = new QCheckBox( listView()->viewport() );
+  mCBSign = new QCheckBox( listView()->viewport() );
+  mCBCompress->setShown( true );
+  updateAllCheckBoxes();
 
-  mCBEncrypt->hide();
-  mCBSign->hide();
+  connect( mCBCompress, SIGNAL( clicked() ), this, SLOT( slotCompress() ) );
+  connect( listView()->header(), SIGNAL( sizeChange(int, int, int) ),
+           SLOT( slotHeaderChange( int, int, int ) ) );
+  connect( listView()->header(), SIGNAL( indexChange(int, int, int) ),
+           SLOT( slotHeaderChange( int, int, int ) ) );
+  connect( listView()->header(), SIGNAL( clicked( int ) ), SLOT( slotHeaderClick( int ) ) );
 }
 
 KMAtmListViewItem::~KMAtmListViewItem()
@@ -154,118 +37,110 @@ KMAtmListViewItem::~KMAtmListViewItem()
   mCBCompress = 0;
 }
 
-void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
-                                  int column, int width, int align )
+void KMAtmListViewItem::updateCheckBox( int headerSection, QCheckBox *cb )
 {
-  // this is also called for the encrypt/sign columns to assure that the
-  // background is cleared
+  //Calculate some values to determine the x-position where the checkbox
+  //will be drawn
+  int sectionWidth = listView()->header()->sectionSize( headerSection );
+  int sectionPos = listView()->header()->sectionPos( headerSection );
+  int sectionOffset = sectionWidth / 2 - height() / 4;
+
+  //Resize and move the checkbox
+  cb->resize( sectionWidth - sectionOffset - 1, height() - 2 );
+  listView()->moveChild( cb, sectionPos + sectionOffset, itemPos() + 1 );
+
+  //Set the correct background color
+  QColor bg;
+  if ( isSelected() ) {
+    bg = listView()->colorGroup().highlight();
+  } else {
+    bg = listView()->colorGroup().base();
+  }
+  cb->setPaletteBackgroundColor( bg );
+}
+
+void KMAtmListViewItem::updateAllCheckBoxes()
+{
+  updateCheckBox( 4, mCBCompress );
+  updateCheckBox( 5, mCBEncrypt );
+  updateCheckBox( 6, mCBSign );
+}
+
+// Each time a cell is about to be painted, the item's checkboxes are updated
+// as well. This is necessary to keep the positions of the checkboxes
+// up-to-date. The signals which are, in the constructor of this class,
+// connected to the update slots are not sufficent because unfortunatly,
+// Qt does not provide a signal for changed item positions, e.g. during
+// deleting or adding items. The problem with this is that this function does
+// not catch updates which are off-screen, which means under some circumstances
+// checkboxes have invalid positions. This should not happen anymore, but was
+// the cause of bug 113458. Therefore, both the signals connected in the
+// constructor and this function are necessary to keep the checkboxes'
+// positions in sync, and hopefully is enough.
+void KMAtmListViewItem::paintCell ( QPainter * p, const QColorGroup &cg,
+                                    int column, int width, int align )
+{
+  switch ( column ) {
+    case 4: updateCheckBox( 4, mCBCompress ); break;
+    case 5: updateCheckBox( 5, mCBEncrypt ); break;
+    case 6: updateCheckBox( 6, mCBSign ); break;
+  }
+
   QListViewItem::paintCell( p, cg, column, width, align );
-  if ( 4 == column ) {
-    QRect r = mListview->itemRect( this );
-    if ( !r.size().isValid() ) {
-        mListview->ensureItemVisible( this );
-        mListview->repaintContents( FALSE );
-        r = mListview->itemRect( this );
-    }
-    int colWidth = mListview->header()->sectionSize( column );
-    r.setX( mListview->header()->sectionPos( column )
-            - mListview->header()->offset()
-            + colWidth / 2
-            - r.height() / 2
-            - 1 );
-    r.setY( r.y() + 1 );
-    r.setWidth(  r.height() - 2 );
-    r.setHeight( r.height() - 2 );
-    r = QRect( mListview->viewportToContents( r.topLeft() ), r.size() );
-
-    mCBCompress->resize( r.size() );
-    mListview->moveChild( mCBCompress, r.x(), r.y() );
-
-    QColor bg;
-    if (isSelected())
-      bg = cg.highlight();
-    else
-      bg = cg.base();
-
-    mCBCompress->setPaletteBackgroundColor(bg);
-    mCBCompress->show();
-  }
-  if( 5 == column || 6 == column ) {
-    QRect r = mListview->itemRect( this );
-    if ( !r.size().isValid() ) {
-        mListview->ensureItemVisible( this );
-        mListview->repaintContents( FALSE );
-        r = mListview->itemRect( this );
-    }
-    int colWidth = mListview->header()->sectionSize( column );
-    r.setX( mListview->header()->sectionPos( column )
-            + colWidth / 2
-            - r.height() / 2
-            - 1 );
-    r.setY( r.y() + 1 );
-    r.setWidth(  r.height() - 2 );
-    r.setHeight( r.height() - 2 );
-    r = QRect( mListview->viewportToContents( r.topLeft() ), r.size() );
-
-    QCheckBox* cb = (5 == column) ? mCBEncrypt : mCBSign;
-    cb->resize( r.size() );
-    mListview->moveChild( cb, r.x(), r.y() );
-
-    QColor bg;
-    if (isSelected())
-      bg = cg.highlight();
-    else
-      bg = cg.base();
-
-    bool enabled = (5 == column) ? mCBEncryptEnabled : mCBSignEnabled;
-    cb->setPaletteBackgroundColor(bg);
-    if (enabled) cb->show();
-  }
 }
 
-void KMAtmListViewItem::enableCryptoCBs(bool on)
+int KMAtmListViewItem::compare( QListViewItem *i, int col, bool ascending ) const
 {
-  if( mCBEncrypt ) {
-    mCBEncryptEnabled = on;
-    mCBEncrypt->setEnabled( on );
-    mCBEncrypt->setShown( on );
+  if ( col != 1 ) {
+    return QListViewItem::compare( i, col, ascending );
   }
-  if( mCBSign ) {
-    mCBSignEnabled = on;
-    mCBSign->setEnabled( on );
-    mCBSign->setShown( on );
-  }
+
+  return mAttachmentSize -
+    (static_cast<KMAtmListViewItem*>(i))->mAttachmentSize;
 }
 
-void KMAtmListViewItem::setEncrypt(bool on)
+void KMAtmListViewItem::enableCryptoCBs( bool on )
 {
-  if( mCBEncrypt )
+  // Show/Hide the appropriate checkboxes.
+  // This should not be necessary because the caller hides the columns
+  // containing the checkboxes anyway.
+  mCBEncrypt->setShown( on );
+  mCBSign->setShown( on );
+}
+
+void KMAtmListViewItem::setEncrypt( bool on )
+{
+  if ( mCBEncrypt ) {
     mCBEncrypt->setChecked( on );
+  }
 }
 
 bool KMAtmListViewItem::isEncrypt()
 {
-  if( mCBEncrypt )
+  if ( mCBEncrypt ) {
     return mCBEncrypt->isChecked();
-  else
+  } else {
     return false;
+  }
 }
 
-void KMAtmListViewItem::setSign(bool on)
+void KMAtmListViewItem::setSign( bool on )
 {
-  if( mCBSign )
+  if ( mCBSign ) {
     mCBSign->setChecked( on );
+  }
 }
 
 bool KMAtmListViewItem::isSign()
 {
-  if( mCBSign )
+  if ( mCBSign ) {
     return mCBSign->isChecked();
-  else
+  } else {
     return false;
+  }
 }
 
-void KMAtmListViewItem::setCompress(bool on)
+void KMAtmListViewItem::setCompress( bool on )
 {
   mCBCompress->setChecked( on );
 }
@@ -277,10 +152,24 @@ bool KMAtmListViewItem::isCompress()
 
 void KMAtmListViewItem::slotCompress()
 {
-    if ( mCBCompress->isChecked() )
-        emit compress( itemPos() );
-    else
-        emit uncompress( itemPos() );
+  if ( mCBCompress->isChecked() ) {
+    emit compress( itemPos() );
+  } else {
+    emit uncompress( itemPos() );
+  }
+}
+
+// Update the item's checkboxes when the position of those change
+// due to different column positions
+void KMAtmListViewItem::slotHeaderChange ( int, int, int )
+{
+  updateAllCheckBoxes();
+}
+
+//Update the item's checkboxes when the list is being sorted
+void KMAtmListViewItem::slotHeaderClick( int )
+{
+  updateAllCheckBoxes();
 }
 
 #include "kmatmlistview.moc"
