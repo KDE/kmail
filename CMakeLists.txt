@@ -220,7 +220,7 @@ kde4_automoc(${kcm_kmail_PART_SRCS})
 
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kcm_kmail )
+
 
 target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
@@ -236,7 +236,7 @@ qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcompo
 
 kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmailpart )
+
 
 target_link_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
@@ -251,7 +251,7 @@ kde4_automoc(${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
 kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kmail_bodypartformatter_application_octetstream )
+
 
 target_link_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
 
