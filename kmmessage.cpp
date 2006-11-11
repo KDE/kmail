@@ -2144,7 +2144,7 @@ AddrSpecList KMMessage::extractAddrSpecs( const Q3CString & header ) const {
   AddrSpecList result;
   for ( AddressList::const_iterator ait = al.begin() ; ait != al.end() ; ++ait )
     for ( MailboxList::const_iterator mit = (*ait).mailboxList.begin() ; mit != (*ait).mailboxList.end() ; ++mit )
-      result.push_back( (*mit).addrSpec );
+      result.push_back( (*mit).addrSpec() );
   return result;
 }
 

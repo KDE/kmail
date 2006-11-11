@@ -144,7 +144,7 @@ namespace KMail {
     for ( AddressList::const_iterator it = al.begin() ; it != al.end() ; ++it ) {
       const MailboxList & mbl = (*it).mailboxList;
       for ( MailboxList::const_iterator jt = mbl.begin() ; jt != mbl.end() ; ++jt )
-	asl.push_back( (*jt).addrSpec );
+	asl.push_back( (*jt).addrSpec() );
     }
     return asl;
   }
