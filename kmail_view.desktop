@@ -10,5 +10,5 @@ NoDisplay=true
 MimeType=message/rfc822
 
 X-KDE-StartupNotify=true
-X-DCOP-ServiceType=Unique
+X-DBUS-StartupType=Unique
 X-DCOP-ServiceName=kmail
