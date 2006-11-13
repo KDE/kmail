@@ -3,7 +3,7 @@
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
-#include <kmime/kmime_util.h>
+#include <kmime/kmime_dateformatter.h>
 #include "headeritem.h"
 using KMail::SortCacheItem;
 using KMail::HeaderItem;

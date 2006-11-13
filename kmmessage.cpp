@@ -48,7 +48,7 @@ using KMail::HeaderStrategy;
 #include <Q3StrList>
 #include <Q3CString>
 
-#include <kmime/kmime_util.h>
+#include <kmime/kmime_dateformatter.h>
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_header_parsing.h>
 using KMime::HeaderParsing::parseAddressList;

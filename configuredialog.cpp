@@ -68,7 +68,7 @@ using KMail::IdentityDialog;
 
 // other kdenetwork headers:
 #include <libkpimidentities/identity.h>
-#include <kmime/kmime_util.h>
+#include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;
 #include <kleo/cryptoconfig.h>
 #include <kleo/cryptobackendfactory.h>
