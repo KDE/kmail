@@ -74,7 +74,7 @@ namespace KMail {
     // clear the widget:
     mHtmlPart->view()->setUpdatesEnabled( false );
     mHtmlPart->view()->viewport()->setUpdatesEnabled( false );
-    static_cast<Q3ScrollView *>(mHtmlPart->widget())->ensureVisible( 0, 0 );
+    mHtmlPart->view()->ensureVisible( 0, 0 );
 
     mHtmlPart->begin( KUrl( "file:/" ) );
     if ( !css.isEmpty() )
