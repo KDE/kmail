@@ -18,7 +18,7 @@
 #ifndef KMSTARTUP
 #define KMSTARTUP
 
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 extern "C" {
 

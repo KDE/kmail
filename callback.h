@@ -38,7 +38,7 @@
 class KMMessage;
 class KMReaderWin;
 
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 namespace KMail {
 

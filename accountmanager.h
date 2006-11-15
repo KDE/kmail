@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include "kmaccount.h"
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 class QString;
 class QStringList;

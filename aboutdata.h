@@ -33,7 +33,7 @@
 #define __KMAIL_ABOUTDATA_H__
 
 #include <kaboutdata.h>
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 namespace KMail {
 

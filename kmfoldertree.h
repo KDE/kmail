@@ -20,7 +20,7 @@
 
 #include <klocale.h>
 #include <kfoldertree.h>
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 #include <QWidget>
 #include <QTimer>

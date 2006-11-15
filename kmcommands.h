@@ -6,7 +6,7 @@
 #include <mimelib/string.h>
 #include <messagestatus.h>
 using KPIM::MessageStatus;
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 #include <kservice.h>
 #include <kio/job.h>
 

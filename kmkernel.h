@@ -14,7 +14,7 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kimproxy.h>
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 #include <kurl.h>
 
 //#include "kmailIface.h"

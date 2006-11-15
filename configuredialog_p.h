@@ -22,7 +22,7 @@
 #include <k3listview.h>
 #include <kcmodule.h>
 #include <klocale.h>
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 

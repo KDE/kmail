@@ -37,7 +37,7 @@
 #include <QWidget>
 //Added by qt3to4:
 #include <QPixmap>
-#include <kdepimmacros.h>
+#include <kdemacros.h>
 
 class KInstance;
 class KAboutData;
