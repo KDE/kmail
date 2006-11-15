@@ -45,8 +45,9 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
   setModal( false );
   setAttribute( Qt::WA_GroupLeader );
   setAttribute( Qt::WA_DeleteOnClose );
+#ifdef Q_OS_UNIX  
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
-
+#endif
   QFrame *frame =new QFrame( this );
   setMainWidget( frame );
   QVBoxLayout * vlay = new QVBoxLayout( frame );

@@ -117,7 +117,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     setCaption( i18n("Filter Rules") );
   setButtons( Help|Ok|Apply|Cancel );
   setModal( false );
+#ifdef Q_OS_UNIX  
   KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
+#endif  
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget( this );

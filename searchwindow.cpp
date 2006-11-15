@@ -87,7 +87,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setDefaultButton( User1 );
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "find" ) );
   setButtonGuiItem( User2, KStdGuiItem::stop() );
+#ifdef Q_OS_UNIX
   KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
+#endif
 
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );

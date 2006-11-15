@@ -4374,15 +4374,16 @@ void KMComposeWin::slotSpellcheckConfig()
   dlg.setDefaultButton( KDialog::Ok );
   dlg.setModal( true );
   dlg.showButtonSeparator( true );
-  KWin kwin;
   Q3TabDialog qtd (this, "tabdialog", true);
   K3SpellConfig mKSpellConfig (&qtd);
   mKSpellConfig.layout()->setMargin( KDialog::marginHint() );
 
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
   qtd.setCancelButton ();
-
+#ifdef Q_OS_UNIX
+  KWin kwin;
   kwin.setIcons (qtd.winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
+#endif
   qtd.setCancelButton(KStdGuiItem::cancel().text());
   qtd.setOkButton(KStdGuiItem::ok().text());
 

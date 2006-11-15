@@ -52,8 +52,9 @@ namespace KMail {
     setModal( modal );
     QFrame *frame = new QFrame( this );
     setMainWidget( frame );
+#ifdef Q_OS_UNIX    
     KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
-
+#endif
     static const int rows = 4;
     int row = -1;
 

@@ -224,9 +224,10 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtonGuiItem( User1, KStdGuiItem::reset() );
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
+#ifdef Q_OS_UNIX  
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
-
+#endif
   addModule ( "kmail_config_identity" );
   addModule ( "kmail_config_accounts" );
   addModule ( "kmail_config_appearance" );
