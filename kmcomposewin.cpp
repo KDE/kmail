@@ -146,6 +146,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mId( id ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
+    mAppendSignatureAction( 0 ), mPrependSignatureAction( 0 ), mInsertSignatureAction( 0 ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
     mUrgentAction( 0 ), mAllFieldsAction( 0 ), mFromAction( 0 ),
     mReplyToAction( 0 ), mToAction( 0 ), mCcAction( 0 ), mBccAction( 0 ),
@@ -332,6 +333,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   }
 
   initAutoSave();
+
+  slotUpdateSignatureActions();
 
   mMsg = 0;
   if (aMsg)
@@ -1209,15 +1212,15 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                                      actionCollection(), "show_subject");
   //end of checkable
 
-  (void) new KAction (i18n("Append S&ignature"), 0, this,
+  mAppendSignatureAction =  new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
 
-  (void) new KAction (i18n("Prepend S&ignature"), 0, this,
+  mPrependSignatureAction =  new KAction (i18n("Prepend S&ignature"), 0, this,
                       SLOT(slotPrependSignature()),
                       actionCollection(), "prepend_signature");
 
-  (void) new KAction (i18n("Insert Signature At C&ursor Position"), "edit", 0, this,
+  mInsertSignatureAction =  new KAction (i18n("Insert Signature At C&ursor Position"), "edit", 0, this,
                       SLOT(slotInsertSignatureAtCursor()),
                       actionCollection(), "insert_signature_at_cursor_position");
 
@@ -3780,6 +3783,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
     kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) return;
 
+  //Turn on/off signature actions if identity has no signature.
+  slotUpdateSignatureActions();
+
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
   // make sure the From field is shown if it's empty
@@ -4330,7 +4336,25 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
 }
 
 
+void KMComposeWin::slotUpdateSignatureActions()
+{
+  //Check if an identity has signature or not and turn on/off actions in the
+  //edit menu accordingly.
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  QString sig = ident.signatureText();
 
+  if ( sig.isEmpty() ) {
+     mAppendSignatureAction->setEnabled( false );
+     mPrependSignatureAction->setEnabled( false );
+     mInsertSignatureAction->setEnabled( false );
+  }
+  else {
+      mAppendSignatureAction->setEnabled( true );
+      mPrependSignatureAction->setEnabled( true );
+      mInsertSignatureAction->setEnabled( true );
+  }
+}
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {

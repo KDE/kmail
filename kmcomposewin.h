@@ -838,6 +838,8 @@ protected:
   KAction *mAttachPK, *mAttachMPK,
           *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
 
+  KAction *mAppendSignatureAction, *mPrependSignatureAction, *mInsertSignatureAction;
+
   KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
   KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
   KToggleAction *mReplyToAction, *mToAction, *mCcAction, *mBccAction;
@@ -892,6 +894,8 @@ private slots:
 
   void slotEncryptBodyChiasmusToggled( bool );
   void slotEncryptChiasmusToggled( bool );
+
+  void slotUpdateSignatureActions();
 
   /**
    * Helper method (you could call is a bottom-half :) for
