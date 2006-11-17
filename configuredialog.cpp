@@ -46,7 +46,6 @@ using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "kcursorsaver.h"
 #include "accountmanager.h"
-#include <smimeconfiguration.h>
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"

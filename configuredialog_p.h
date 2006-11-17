@@ -25,6 +25,8 @@
 #include <kdemacros.h>
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
+#include "ui_smimeconfiguration.h"
+
 
 class QPushButton;
 class QLabel;
@@ -69,6 +71,14 @@ class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
 {
 public:
   WarningConfiguration( QWidget *parent ) : QWidget( parent ) {
+    setupUi( this );
+  }
+};
+
+class SMimeConfiguration : public QWidget, public Ui::SMimeConfiguration
+{
+public:
+  SMimeConfiguration( QWidget *parent ) : QWidget( parent ) {
     setupUi( this );
   }
 };

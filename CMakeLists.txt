@@ -11,7 +11,7 @@ add_subdirectory( avscripts )
 add_subdirectory( tests )
 
 include_directories( ${CMAKE_SOURCE_DIR}/libkpgp
-  ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities
+  ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/indexlib
@@ -187,10 +187,9 @@ kde4_automoc(${kmailprivate_LIB_SRCS})
 
 kde4_add_ui3_files(kmailprivate_LIB_SRCS
    signatureconfigurationdialog.ui
-   encryptionconfigurationdialog.ui
-   smimeconfiguration.ui )
+   )
 
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui)
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui encryptionconfigurationdialog.ui)
 
 #kde4_add_dcop_skels(kmailprivate_LIB_SRCS
 #   kmailIface.h

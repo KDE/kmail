@@ -22,8 +22,8 @@
  *  Constructs a EncryptionConfigurationDialogImpl which is a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'
  */
-EncryptionConfigurationDialogImpl::EncryptionConfigurationDialogImpl( QWidget* parent,  const char* name, Qt::WFlags fl )
-    : EncryptionConfigurationDialog( parent, name, fl )
+EncryptionConfigurationDialogImpl::EncryptionConfigurationDialogImpl( QWidget* parent )
+    : EncryptionConfigurationDialog( parent )
 {
 }
 
