@@ -330,11 +330,11 @@ RecipientsView::RecipientsView( QWidget *parent )
   : Q3ScrollView( parent ), mCurDelLine( 0 ), mModified( false ),
     mFirstColumnWidth( 0 ), mLineHeight( 0 )
 {
+  mCompletionMode = KGlobalSettings::completionMode();
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
 
-  if(!mLines.isEmpty())
-  	addLine();
+  addLine();
   setResizePolicy( Q3ScrollView::Manual );
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 }
@@ -358,6 +358,7 @@ RecipientLine *RecipientsView::addLine()
 {
   RecipientLine *line = new RecipientLine( viewport() );
   addChild( line, 0, mLines.count() * mLineHeight );
+  line->mEdit->setCompletionMode( mCompletionMode );
   line->show();
   connect( line, SIGNAL( returnPressed( RecipientLine * ) ),
     SLOT( slotReturnPressed( RecipientLine * ) ) );
@@ -371,8 +372,10 @@ RecipientLine *RecipientsView::addLine()
   connect( line, SIGNAL( countChanged() ), SLOT( calculateTotal() ) );
   connect( line, SIGNAL( typeModified( RecipientLine * ) ),
     SLOT( slotTypeModified( RecipientLine * ) ) );
+  connect( line->mEdit, SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
+    SLOT( setCompletionMode( KGlobalSettings::Completion ) ) );
 
-  if ( mLines.last() ) {
+  if ( !mLines.isEmpty() ) {
     if ( mLines.count() == 1 ) {
       if ( GlobalSettings::self()->secondRecipientTypeDefault() ==
          GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
@@ -581,6 +584,22 @@ Recipient::List RecipientsView::recipients() const
   }
 
   return recipients;
+}
+
+void RecipientsView::setCompletionMode ( KGlobalSettings::Completion mode )
+{
+  if ( mCompletionMode == mode )
+    return;
+  mCompletionMode = mode;
+
+  QListIterator<RecipientLine*> it( mLines );
+  while( it.hasNext() ) {
+    RecipientLine *line = it.next();
+    line->mEdit->blockSignals( true );
+    line->mEdit->setCompletionMode( mode );
+    line->mEdit->blockSignals( false );
+  }
+  emit completionModeChanged( mode ); //report change to RecipientsEditor
 }
 
 void RecipientsView::removeRecipient( const QString & recipient,
@@ -821,6 +840,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   topLayout->addWidget( mRecipientsView );
   connect( mRecipientsView, SIGNAL( focusUp() ), SIGNAL( focusUp() ) );
   connect( mRecipientsView, SIGNAL( focusDown() ), SIGNAL( focusDown() ) );
+  connect( mRecipientsView, SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
+    SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ) );
 
   mSideWidget = new SideWidget( mRecipientsView, this );
   topLayout->addWidget( mSideWidget );
@@ -961,4 +982,8 @@ void RecipientsEditor::selectRecipients()
   mSideWidget->pickRecipient();
 }
 
+void RecipientsEditor::setCompletionMode( KGlobalSettings::Completion mode )
+{
+  mRecipientsView->setCompletionMode( mode );
+}
 #include "recipientseditor.moc"

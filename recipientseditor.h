@@ -163,6 +163,7 @@ class RecipientLine : public QWidget
     void slotTypeModified();
 
   private:
+    friend class RecipientsView;
     QComboBox *mCombo;
     RecipientLineEdit *mEdit;
     QPushButton *mRemoveButton;
@@ -211,6 +212,7 @@ class RecipientsView : public Q3ScrollView
     int setFirstColumnWidth( int );
 
   public slots:
+    void setCompletionMode( KGlobalSettings::Completion );
     RecipientLine *addLine();
 
     void setFocus();
@@ -222,6 +224,7 @@ class RecipientsView : public Q3ScrollView
     void focusUp();
     void focusDown();
     void focusRight();
+    void completionModeChanged( KGlobalSettings::Completion );
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
@@ -242,6 +245,7 @@ class RecipientsView : public Q3ScrollView
     int mLineHeight;
     int mFirstColumnWidth;
     bool mModified;
+    KGlobalSettings::Completion mCompletionMode;
 };
 
 class RecipientsToolTip : public QToolTip
@@ -333,6 +337,11 @@ class KDE_EXPORT RecipientsEditor : public QWidget
       */
     int setFirstColumnWidth( int );
 
+    /**
+      * Set completion mode for all lines
+      */
+    void setCompletionMode( KGlobalSettings::Completion );
+
   public slots:
     void setFocus();
     void setFocusTop();
@@ -344,6 +353,7 @@ class KDE_EXPORT RecipientsEditor : public QWidget
   signals:
     void focusUp();
     void focusDown();
+    void completionModeChanged( KGlobalSettings::Completion );
 
   protected slots:
     void slotPickedRecipient( const Recipient & );

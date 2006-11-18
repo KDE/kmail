@@ -270,6 +270,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     //mBtnFrom = 0;
 
     mRecipientsEditor = new RecipientsEditor( mMainWidget );
+    connect( mRecipientsEditor,
+             SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
+             SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
 
     mRecipientsEditor->setFocus();
   }
@@ -594,6 +597,8 @@ void KMComposeWin::readConfig(void)
     mEdtCc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
     mEdtBcc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   }
+  else
+    mRecipientsEditor->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
 
   readColorConfig();
 
@@ -4495,7 +4500,8 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     mEdtTo->setCompletionMode( mode );
     mEdtCc->setCompletionMode( mode );
     mEdtBcc->setCompletionMode( mode );
-  }
+  } else
+    mRecipientsEditor->setCompletionMode( mode );
 }
 
 void KMComposeWin::slotConfigChanged()
