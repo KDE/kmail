@@ -147,12 +147,12 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mIsSelected( false ),
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
+    mFoundAnIMAPDigest( false ),
     mUserRights( 0 ), mSilentUpload( false ),
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
-    mFoundAnIMAPDigest( false )
+    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true )
 {
   setUidValidity("");
   // if we fail to read a uid file but there is one, nuke it
@@ -162,7 +162,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
         i18n( "The UID cache file for folder %1 could not be read. There "
               "could be a problem with file system permission, or it is corrupted."
               ).arg( folder->prettyURL() ) );
-        // try to unlink it, in case it was corruped. If it couldn't be read 
+        // try to unlink it, in case it was corruped. If it couldn't be read
         // because of permissions, this will fail, which is fine
         unlink( QFile::encodeName( uidCacheLocation() ) );
     }
@@ -2278,6 +2278,8 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )
 {
+  Q_UNUSED( attribute );
+  Q_UNUSED( value );
   //kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
   if ( entry == KOLAB_FOLDERTYPE )
     mAnnotationFolderTypeChanged = false;

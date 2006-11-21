@@ -1096,7 +1096,7 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
     }
     else {
       QStringList encodings = mSelectEncodingAction->items();
-      int i = 0;
+      uint i = 0;
       for ( QStringList::const_iterator it = encodings.begin(), end = encodings.end(); it != end; ++it, ++i ) {
         if ( KGlobal::charsets()->encodingForName( *it ) == encoding ) {
           mSelectEncodingAction->setCurrentItem( i );

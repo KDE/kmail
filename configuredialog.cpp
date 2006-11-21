@@ -2299,7 +2299,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   encodings.prepend( i18n( "Auto" ) );
   QStringList::Iterator it( encodings.begin() );
   QStringList::Iterator end( encodings.end() );
-  int i = 0;
+  uint i = 0;
   for( ; it != end; ++it)
   {
     if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
