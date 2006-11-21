@@ -223,7 +223,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtonGuiItem( User1, KStdGuiItem::reset() );
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
-#ifdef Q_OS_UNIX  
+#ifdef Q_OS_UNIX
   KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
 #endif
@@ -872,6 +872,8 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   Q3ListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
+  const QString& originalTransport = item->text(0);
+
   QList<KMTransportInfo*>::const_iterator it;
   for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
     if ( (*it)->name == item->text(0) ) break;
@@ -900,6 +902,25 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   // and insert the new name at the position of the old in the list of
   // strings; then broadcast the new list:
   transportNames.insert( entryLocation, (*it)->name );
+  const QString& newTransportName = (*it)->name;
+
+  QStringList changedIdents;
+  KPIM::IdentityManager * im = kmkernel->identityManager();
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( originalTransport == (*it).transport() ) {
+      (*it).setTransport( newTransportName );
+      changedIdents += (*it).identityName();
+    }
+  }
+
+  if ( !changedIdents.isEmpty() ) {
+    QString information =
+      i18nc( "This identity has been changed to use the modified transport:",
+             "These %n identities have been changed to use the modified transport:",
+             changedIdents.count() );
+    KMessageBox::informationList( this, information, changedIdents );
+  }
+
   emit transportListChanged( transportNames );
   emit changed( true );
 }
