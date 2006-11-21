@@ -841,6 +841,8 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
+  const QString& originalTransport = item->text(0);
+
   QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->name == item->text(0) ) break;
@@ -869,6 +871,24 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   // and insert the new name at the position of the old in the list of
   // strings; then broadcast the new list:
   transportNames.insert( transportNames.at( entryLocation ), (*it)->name );
+  const QString& newTransportName = (*it)->name;
+
+  QStringList changedIdents;
+  KPIM::IdentityManager * im = kmkernel->identityManager();
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( originalTransport == (*it).transport() ) {
+      (*it).setTransport( newTransportName );
+      changedIdents += (*it).identityName();
+    }
+  }
+
+  if ( !changedIdents.isEmpty() ) {
+    QString information = i18n( "This identity has been changed to use the modified transport:",
+                          "These %n identities have been changed to use the modified transport:",
+                          changedIdents.count() );
+    KMessageBox::informationList( this, information, changedIdents );
+  }
+
   emit transportListChanged( transportNames );
   emit changed( true );
 }
