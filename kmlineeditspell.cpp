@@ -89,42 +89,41 @@ void KMLineEdit::insertEmails( const QStringList & emails )
 
 void KMLineEdit::dropEvent(QDropEvent *event)
 {
-  if ( KVCardDrag::canDecode( event ) ) {
+  const QMimeData *md = event->mimeData();
+  if ( KVCardDrag::canDecode( md ) ) {
     KABC::Addressee::List list;
-    KVCardDrag::decode( event, list );
+    KVCardDrag::fromMimeData( md, list );
 
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
       insertEmails( (*ait).emails() );
     }
-  } else {
-    KUrl::List urls = KUrl::List::fromMimeData( event->mimeData() );
-    if ( !urls.isEmpty() ) {
-      //kDebug(5006) << "urlList" << endl;
-      KUrl::List::Iterator it = urls.begin();
-      KABC::VCardConverter converter;
-      KABC::Addressee::List list;
-      QString fileName;
-      QString caption( i18n( "vCard Import Failed" ) );
-      for ( it = urls.begin(); it != urls.end(); ++it ) {
-        if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
-          QFile file( fileName );
-          file.open( QIODevice::ReadOnly );
-          const QByteArray data = file.readAll();
-          file.close();
-          list += converter.parseVCards( data );
-          KIO::NetAccess::removeTempFile( fileName );
-        } else {
-          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>", (*it).url() );
-          KMessageBox::error( parentWidget(), text, caption );
-        }
-        KABC::Addressee::List::Iterator ait;
-        for ( ait = list.begin(); ait != list.end(); ++ait )
-          insertEmails((*ait).emails());
+  } else if ( KUrl::List::canDecode( md ) ) {
+    KUrl::List urls = KUrl::List::fromMimeData( md );
+    //kDebug(5006) << "urlList" << endl;
+    KUrl::List::Iterator it = urls.begin();
+    KABC::VCardConverter converter;
+    KABC::Addressee::List list;
+    QString fileName;
+    QString caption( i18n( "vCard Import Failed" ) );
+    for ( it = urls.begin(); it != urls.end(); ++it ) {
+      if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
+        QFile file( fileName );
+        file.open( QIODevice::ReadOnly );
+        const QByteArray data = file.readAll();
+        file.close();
+        list += converter.parseVCards( data );
+        KIO::NetAccess::removeTempFile( fileName );
+      } else {
+        QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>", (*it).url() );
+        KMessageBox::error( parentWidget(), text, caption );
       }
-    } else {
-      KPIM::AddresseeLineEdit::dropEvent( event );
+      KABC::Addressee::List::Iterator ait;
+      for ( ait = list.begin(); ait != list.end(); ++ait )
+        insertEmails((*ait).emails());
     }
+  } else {
+    KPIM::AddresseeLineEdit::dropEvent( event );
   }
 }
 
