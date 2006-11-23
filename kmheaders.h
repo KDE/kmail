@@ -23,7 +23,6 @@ using KPIM::MessageStatus;
 #include <QWidget>
 #include <q3strlist.h>
 #include <q3memarray.h>
-#include <q3dragobject.h>
 #include <q3dict.h>
 
 class KMFolder;
