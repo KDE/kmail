@@ -13,9 +13,10 @@
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
+#include "kmfoldermgr.h"
+#include "kmmsgdict.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
-#include "kmfoldermgr.h"
 
 // other KDE headers
 #include <kdebug.h>
@@ -208,6 +209,62 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
   return result;
 }
 
+int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
+  bool stopIt = false;
+  int result = 1;
+
+  if ( !filter)
+    return 1;
+
+  if ( isMatching( serNum, filter ) ) {
+    KMFolder *folder = 0;
+    int idx = -1;
+    // get the message with the serNum
+    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
+    if (!folder || (idx == -1) || (idx >= folder->count())) {
+      return 1;
+    }
+    bool opened = folder->isOpened();
+    if ( !opened )
+      folder->open();
+    KMMsgBase *msgBase = folder->getMsgBase(idx);
+    bool unGet = !msgBase->isMessage();
+    KMMessage *msg = folder->getMsg(idx);
+    // do the actual filtering stuff
+    if ( !msg || !beginFiltering( msg ) ) {
+      if (unGet)
+        folder->unGetMsg(idx);
+      if ( !opened )
+        folder->close();
+      return 1;
+    }
+    if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError) {
+      if (unGet)
+        folder->unGetMsg(idx);
+      if ( !opened )
+        folder->close();
+      return 2;
+    }
+
+    KMFolder *targetFolder = MessageProperty::filterFolder( msg );
+
+    endFiltering( msg );
+    if (targetFolder) {
+      tempOpenFolder( targetFolder );
+      msg->setTransferInProgress(false);
+      result = targetFolder->moveMsg( msg );
+      msg->setTransferInProgress(true);
+    }
+    if (unGet)
+      folder->unGetMsg(idx);
+    if ( !opened )
+      folder->close();
+  } else {
+    result = 1;
+  }
+  return result;
+}
+
 int KMFilterMgr::process( KMMessage * msg, FilterSet set,
                           bool account, uint accountId ) {
   if ( bPopFilter )
@@ -269,6 +326,24 @@ bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
     FilterLog::instance()->add( logText, FilterLog::patternDesc );
   }
   if ( filter->pattern()->matches( msg ) ) {
+    if ( FilterLog::instance()->isLogging() ) {
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
+                                  FilterLog::patternResult );
+    }
+    result = true;
+  }
+  return result;
+}
+
+bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
+{
+  bool result = false;
+  if ( FilterLog::instance()->isLogging() ) {
+    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
+    logText.append( filter->pattern()->asString() );
+    FilterLog::instance()->add( logText, FilterLog::patternDesc );
+  }
+  if ( filter->pattern()->matches( serNum ) ) {
     if ( FilterLog::instance()->isLogging() ) {
       FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                   FilterLog::patternResult );

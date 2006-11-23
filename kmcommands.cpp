@@ -1469,40 +1469,46 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
+  QList<KMMsgBase*>::const_iterator it;
+  for ( it = msgList.begin(); it != msgList.end(); it++ )
+    serNumList.append( (*it)->getMsgSerNum() );
 }
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
   KCursorSaver busy( KBusyPtr::busy() );
-  QList<KMMessage*> msgList = retrievedMsgs();
-
-  QList<KMMessage*>::const_iterator it;
-  for ( it = msgList.begin(); it != msgList.end(); it++ )
-    if( (*it)->parent() )
-      kmkernel->filterMgr()->tempOpenFolder( (*it)->parent() );
 
   int msgCount = 0;
-  int msgCountToFilter = msgList.count();
-  for ( it = msgList.begin(); it != msgList.end(); it++ ) {
-    KMMessage *msg = *it;
+  int msgCountToFilter = serNumList.count();
+  ProgressItem* progressItem =
+     ProgressManager::createProgressItem (
+         "filter"+ProgressManager::getUniqueID(),
+         i18n( "Filtering messages" ) );
+  progressItem->setTotalItems( msgCountToFilter );
+
+  QList<quint32>::const_iterator it;
+  for ( it = serNumList.begin(); it != serNumList.end(); it++ ) {
+    quint32 serNum = *it;
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
+      progressItem->updateProgress();
       QString statusMsg = i18n( "Filtering message %1 of %2",
                                 msgCount, msgCountToFilter );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
       KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
-    msg->setTransferInProgress(false);
 
-    int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
+    int filterResult = kmkernel->filterMgr()->process( serNum, mFilter );
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       perror("Critical error");
       kmkernel->emergencyExit( i18n("Not enough free disk space?" ));
     }
-    msg->setTransferInProgress(true);
+    progressItem->incCompletedItems();
   }
 
+  progressItem->setComplete();
+  progressItem = 0;
   return OK;
 }
 
@@ -1537,7 +1543,7 @@ void KMMetaFilterActionCommand::start()
       scheduler->execFilters( msg );
   } else {
     KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
-    *mHeaders->selectedMsgs(), mFilter);
+        *mHeaders->selectedMsgs(), mFilter);
     filterCommand->start();
     int contentX, contentY;
     HeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );

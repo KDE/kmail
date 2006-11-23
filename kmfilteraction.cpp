@@ -1615,7 +1615,6 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/Job.h>
 #include <threadweaver/DebuggingAids.h>
-#include <QTextDocument>
 class PipeJob : public ThreadWeaver::Job
 {
   public:

@@ -113,8 +113,14 @@ public:
 	       bool account = false, uint accountId = 0 );
 
   /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
-      are as with the above method. */
+      are as with the above method.
+      @deprecated Use int process( quint32, const KMFilter * )
+  */
   int process( KMMessage * msg, const KMFilter * filter );
+
+  /** For ad-hoc filters. Applies @p filter to message with @p serNum .
+      Return codes are as with the above method. */
+  int process( quint32 serNum, const KMFilter * filter );
 
   void cleanup();
 
@@ -175,6 +181,7 @@ private:
   int processPop( KMMessage * msg ) const;
   /** Find out if a message matches the filter criteria */
   bool isMatching( KMMessage * msg, const KMFilter * filter );
+  bool isMatching( quint32 serNum, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;
   QVector<KMFolder *> mOpenFolders;

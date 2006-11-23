@@ -17,10 +17,13 @@ using KMail::HeaderItem;
 #include "kmfoldertree.h"
 #include "folderjob.h"
 using KMail::FolderJob;
-#include "broadcaststatus.h"
-using KPIM::BroadcastStatus;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
+#include "progressmanager.h"
+using KPIM::ProgressManager;
+using KPIM::ProgressItem;
 #include <maillistdrag.h>
 #include "globalsettings.h"
 using namespace KPIM;
@@ -1383,11 +1386,17 @@ void KMHeaders::applyFiltersOnMsg()
     KCursorSaver busy( KBusyPtr::busy() );
     int msgCount = 0;
     int msgCountToFilter = msgList->count();
+    ProgressItem* progressItem =
+      ProgressManager::createProgressItem (
+          "filter"+ProgressManager::getUniqueID(),
+          i18n( "Filtering messages" ) );
+    progressItem->setTotalItems( msgCountToFilter );
     QList<KMMsgBase*>::const_iterator it;
     for ( it = msgList->begin(); it != msgList->end(); it++ ) {
       KMMsgBase* msgBase = (*it);
       int diff = msgCountToFilter - ++msgCount;
       if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
+        progressItem->updateProgress();
         QString statusMsg = i18n( "Filtering message %1 of %2",
                                   msgCount, msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -1407,7 +1416,10 @@ void KMHeaders::applyFiltersOnMsg()
       } else {
 	if (slotFilterMsg(msg) == 2) break;
       }
+      progressItem->incCompletedItems();
     }
+    progressItem->setComplete();
+    progressItem = 0;
     END_TIMER(filter);
     SHOW_TIMER(filter);
   }
