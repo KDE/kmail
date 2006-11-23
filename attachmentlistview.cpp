@@ -25,15 +25,14 @@
 #include "kmcommands.h"
 #include "kmmsgdict.h"
 #include "composer.h"
+#include <maillistdrag.h>
 
 // other module headers
 #include <maillistdrag.h>
-//Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QKeyEvent>
 #include <QDropEvent>
-using KPIM::MailListDrag;
 
 // other KDE headers
 #include <kurl.h>
@@ -68,7 +67,7 @@ AttachmentListView::~AttachmentListView()
 
 void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 {
-  if( e->provides( MailListDrag::format() ) )
+  if( KPIM::MailList::canDecode( e->mimeData() ) )
     e->setAccepted( true );
   else
     K3ListView::dragEnterEvent( e );
@@ -78,7 +77,7 @@ void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 
 void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 {
-  if( e->provides( MailListDrag::format() ) )
+  if( KPIM::MailList::canDecode( e->mimeData() ) )
     e->setAccepted( true );
   else
     K3ListView::dragMoveEvent( e );
@@ -88,10 +87,11 @@ void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 
 void AttachmentListView::contentsDropEvent( QDropEvent* e )
 {
-  if( e->provides( MailListDrag::format() ) ) {
+  const QMimeData *md = e->mimeData();
+  if( KPIM::MailList::canDecode( md ) ) {
+    e->accept();
     // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums;
-    MailListDrag::decode( e, serNums );
+    QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
     QBuffer serNumBuffer( &serNums );
     serNumBuffer.open( QIODevice::ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
@@ -115,8 +115,9 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     command->start();
   }
   else {
-    KUrl::List urlList = KUrl::List::fromMimeData( e->mimeData() );
+    KUrl::List urlList = KUrl::List::fromMimeData( md );
     if ( !urlList.isEmpty() ) {
+      e->accept();
       for( KUrl::List::Iterator it = urlList.begin();
            it != urlList.end(); ++it ) {
         mComposer->addAttach( *it );

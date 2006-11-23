@@ -2290,7 +2290,9 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
           mailList.append( mailSummary );
           ++count;
         }
-      MailListDrag *d = new MailListDrag( mailList, viewport(), new KMTextSource );
+      QDrag *drag = new QDrag( viewport() );
+      drag->setMimeData( new QMimeData );
+      mailList.populateMimeData( drag->mimeData(), new KMTextSource );
 
       // Set pixmap
       QPixmap pixmap;
@@ -2301,10 +2303,10 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 
       // Calculate hotspot (as in Konqueror)
       if( !pixmap.isNull() ) {
-        QPoint hotspot( pixmap.width() / 2, pixmap.height() / 2 );
-        d->setPixmap( pixmap, hotspot );
+        drag->setHotSpot( QPoint( pixmap.width() / 2, pixmap.height() / 2 ) );
+        drag->setPixmap( pixmap );
       }
-      d->drag();
+      drag->start();
     }
   }
 }

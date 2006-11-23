@@ -329,7 +329,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 
   mUpdateCountTimer= new QTimer( this );
 
-  addAcceptableDropMimetype(MailListDrag::format(), false);
+  addAcceptableDropMimetype( qPrintable(MailList::mimeDataType()), false);
 
   int namecol = addColumn( i18n("Folder"), 250 );
   header()->setStretchEnabled( true, namecol );

@@ -16,7 +16,6 @@
 #include "kmcommands.h"
 
 #include <maillistdrag.h>
-//Added by qt3to4:
 #include <QFocusEvent>
 #include <QDragMoveEvent>
 #include <QKeyEvent>
@@ -25,7 +24,6 @@
 #include <Q3PopupMenu>
 #include <QDragEnterEvent>
 #include <QTextStream>
-using KPIM::MailListDrag;
 
 #include <libkdepim/kfileio.h>
 #include <emailfunctions/email.h>
@@ -68,7 +66,7 @@ using KPIM::MailListDrag;
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
-    if (e->provides(MailListDrag::format()))
+    if( KPIM::MailList::canDecode( e->mimeData() ) )
         e->setAccepted(true);
     else
         return KEdit::contentsDragEnterEvent(e);
@@ -76,7 +74,7 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 {
-    if (e->provides(MailListDrag::format()))
+    if( KPIM::MailList::canDecode( e->mimeData() ) )
         e->accept();
     else
         return KEdit::contentsDragMoveEvent(e);
@@ -147,10 +145,11 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
 
 void KMEdit::contentsDropEvent(QDropEvent *e)
 {
-    if (e->provides(MailListDrag::format())) {
+    const QMimeData *md = e->mimeData();
+    if( KPIM::MailList::canDecode( md ) ) {
+        e->accept();
         // Decode the list of serial numbers stored as the drag data
-        QByteArray serNums;
-        MailListDrag::decode( e, serNums );
+        QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
         QBuffer serNumBuffer(&serNums);
         serNumBuffer.open(QIODevice::ReadOnly);
         QDataStream serNumStream(&serNumBuffer);
@@ -175,8 +174,9 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         command->start();
     }
     else {
-      KUrl::List urlList = KUrl::List::fromMimeData( e->mimeData() );
+      KUrl::List urlList = KUrl::List::fromMimeData( md );
       if ( !urlList.isEmpty() ) {
+        e->accept();
         KMenu p;
         const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
         const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
@@ -194,10 +194,9 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
           }
         }
       }
-      else if ( Q3TextDrag::canDecode( e ) ) {
-        QString s;
-        if ( Q3TextDrag::decode( e, s ) )
-          insert( s );
+      else if ( md->hasText() ) {
+        insert( md->text() );
+        e->accept();
       }
       else {
         kDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
