@@ -29,7 +29,6 @@ set(kmailprivate_LIB_SRCS
    klistviewindexedsearchline.cpp
    simplestringlisteditor.cpp
    index.cpp
-   identitydrag.cpp
    identitylistview.cpp
    identitydialog.cpp
    kmfolderdia.cpp

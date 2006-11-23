@@ -35,15 +35,14 @@
 
 #include "identitylistview.h"
 
-#include "identitydrag.h"
 #include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identity.h>
 #include "kmkernel.h"
 
 #include <klocale.h> // i18n
 #include <kiconloader.h> // SmallIcon
 
 #include <cassert>
-//Added by qt3to4:
 #include <QDropEvent>
 
 namespace KMail {
@@ -130,16 +129,21 @@ namespace KMail {
 
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {
     // disallow moving:
-    return e->source() != viewport() && IdentityDrag::canDecode( e );
+    return e->source() != viewport() && KPIM::Identity::canDecode( e->mimeData() );
   }
 
   Q3DragObject * IdentityListView::dragObject() {
     IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
     if ( !item ) return 0;
 
-    IdentityDrag * drag = new IdentityDrag( item->identity(), viewport() );
+    return 0;
+#warning enable the QDrag-based code once the list view does no longer derive from Q3ListView...
+    QDrag * drag = new QDrag( viewport() );
+    QMimeData *md = new QMimeData;
+    drag->setMimeData( md );
+    item->identity().populateMimeData( md );
     drag->setPixmap( SmallIcon("identity") );
-    return drag;
+    //return drag;
   }
 
 } // namespace KMail
