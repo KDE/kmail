@@ -91,7 +91,7 @@ void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
   if ( sc == mKeyButton->shortcut() ) return;
   if ( sc.toString().isNull() ) {
     // null is fine, that's reset, but sc.іsNull() will be false :/
-    mKeyButton->setShortcut( KShortcut::null() );
+    mKeyButton->setShortcut( KShortcut() );
   } else {
     if( !mMainWidget->shortcutIsValid( sc ) ) {
       QString msg( i18n( "The selected shortcut is already used, "

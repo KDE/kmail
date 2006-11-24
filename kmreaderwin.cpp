@@ -602,7 +602,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
   mSelectAllAction = new KAction( i18n("Select All Text"), ac, "mark_all_text" );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
-  mSelectAllAction->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_A);
+  mSelectAllAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_A));
   mCopyURLAction = new KAction( i18n("Copy Link Address"), ac, "copy_url" );
   connect(mCopyURLAction, SIGNAL(triggered(bool) ), SLOT(slotUrlCopy()));
   mUrlOpenAction = new KAction( i18n("Open URL"), ac, "open_url" );
@@ -614,7 +614,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"), ac, "toggle_fixedfont" );
   connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
-  mToggleFixFontAction->setShortcut(Qt::Key_X);
+  mToggleFixFontAction->setShortcut(QKeySequence(Qt::Key_X));
 
   mStartIMChatAction = new KAction( i18n("Chat &With..."), ac, "start_im_chat" );
   connect(mStartIMChatAction, SIGNAL(triggered(bool) ), SLOT(slotIMChat()));

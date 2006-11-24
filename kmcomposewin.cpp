@@ -1120,7 +1120,7 @@ void KMComposeWin::setupActions(void)
   {
     //default = send now, alternative = queue
     KAction *action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_default");
-    action->setShortcut(Qt::CTRL+Qt::Key_Return);
+    action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Return));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
@@ -1139,7 +1139,7 @@ void KMComposeWin::setupActions(void)
     //default = queue, alternative = send now
     KAction *action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_default");
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSendLater()));
-    action->setShortcut(Qt::CTRL+Qt::Key_Return);
+    action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Return));
     actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
 		    actionCollection(), "send_default_via" );
 
@@ -1201,7 +1201,7 @@ void KMComposeWin::setupActions(void)
   if ( !mClassicalRecipients ) {
     action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( selectRecipients() ));
-    action->setShortcut(Qt::CTRL + Qt::Key_L);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     action = new KAction( i18n("Save &Distribution List..."), actionCollection(), "save_distribution_list" );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( saveDistributionList() ));
   }
@@ -1421,13 +1421,13 @@ void KMComposeWin::setupActions(void)
   connect(alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()));
   textBoldAction = new KToggleAction(KIcon("text_bold"),  i18n("&Bold"), actionCollection(), "text_bold");
   connect(textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold()));
-  textBoldAction->setShortcut(Qt::CTRL+Qt::Key_B);
+  textBoldAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_B));
   textItalicAction = new KToggleAction(KIcon("text_italic"),  i18n("&Italic"), actionCollection(), "text_italic");
   connect(textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic()));
-  textItalicAction->setShortcut(Qt::CTRL+Qt::Key_I);
+  textItalicAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_I));
   textUnderAction = new KToggleAction(KIcon("text_under"),  i18n("&Underline"), actionCollection(), "text_under");
   connect(textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()));
-  textUnderAction->setShortcut(Qt::CTRL+Qt::Key_U);
+  textUnderAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_U));
   actionFormatReset = new KAction(KIcon("eraser"),  i18n( "Reset Font Settings" ), actionCollection(), "format_reset");
   connect(actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ));
   actionFormatColor = new KAction(KIcon("colorize"),  i18n( "Text Color..." ), actionCollection(), "format_color");
