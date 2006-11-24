@@ -28,7 +28,6 @@
 #include <maillistdrag.h>
 
 // other module headers
-#include <maillistdrag.h>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QKeyEvent>
