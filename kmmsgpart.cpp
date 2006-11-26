@@ -386,8 +386,19 @@ QString KMMessagePart::iconName() const
 {
   QCString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
+
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString::null, false );
+  if ( fileName.isEmpty() )
+  { 
+    fileName = this->fileName(); 
+    if ( fileName.isEmpty() ) fileName = this->name(); 
+    if ( !fileName.isEmpty() )
+    {
+      fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->icon( QString::null, true );
+    }
+  } 
+
   fileName =
     KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
   return fileName;
