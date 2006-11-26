@@ -1790,7 +1790,8 @@ void KMMessage::setDate(const QCString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  return KPIM::normalizeAddressesAndDecodeIDNs( headerField("To") );
+  // handle To same as Cc below, bug 80747 
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerFields( "To" ).join( ", " ) ); 
 }
 
 
