@@ -308,7 +308,7 @@ void KMReaderMainWin::setupAccel()
                      mReaderWin, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Qt::Key_PageDown),
                      mReaderWin, SLOT(slotScrollNext()));
-  accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
+  accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy).primary()), // ###### misses alternate(). Should be ported away from Q3Accel anyway.
                      mReaderWin, SLOT(slotCopySelectedText()));
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
 	  this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));
