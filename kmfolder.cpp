@@ -214,7 +214,7 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
-  if ( !mShortcut.isNull() )
+  if ( !mShortcut.isEmpty() )
     config->writeEntry( "Shortcut", mShortcut.toString() );
   else
     config->deleteEntry( "Shortcut" );

@@ -340,7 +340,7 @@ void KMFilter::writeConfig(KConfigGroup & config) const
 
     config.writeEntry( "StopProcessingHere", bStopProcessingHere );
     config.writeEntry( "ConfigureShortcut", bConfigureShortcut );
-    if ( !mShortcut.isNull() )
+    if ( !mShortcut.isEmpty() )
       config.writeEntry( "Shortcut", mShortcut.toString() );
     config.writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config.writeEntry( "Icon", mIcon );

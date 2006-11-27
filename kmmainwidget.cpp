@@ -2796,7 +2796,7 @@ void KMMainWidget::setupActions()
   action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
   action->setToolTip(i18n("Go to the next folder with unread messages"));
   KShortcut shortcut = action->shortcut();
-  shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
+  shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
   action->setShortcut( shortcut );
 
   action = new KAction( i18n("Previous Unread F&older"), actionCollection(), "go_prev_unread_folder" );
@@ -2804,7 +2804,7 @@ void KMMainWidget::setupActions()
   action->setToolTip(i18n("Go to the previous folder with unread messages"));
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadFolder()));
   shortcut = action->shortcut();
-  shortcut.append( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
+  shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
   action = new KAction( i18nc("Go->","Next Unread &Text"), actionCollection(), "go_next_unread_text" );
@@ -3447,7 +3447,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 {
   // remove the old one, autodelete
   mFolderShortcutCommands.remove( folder->idString() );
-  if ( folder->shortcut().isNull() )
+  if ( folder->shortcut().isEmpty() )
     return;
 
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
