@@ -1285,6 +1285,18 @@ KMMessage* KMMessage::createForward()
         header.RemoveField(field);
       field = nextField;
     }
+    // strip blacklisted parts
+    QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
+    for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
+      QString entry = (*it);
+      int sep = entry.find( '/' );
+      QCString type = entry.left( sep ).latin1();
+      QCString subtype = entry.mid( sep+1 ).latin1();
+      kdDebug( 5006 ) << "Looking for blacklisted type: " << type << "/" << subtype << endl;
+      while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
+        msg->mMsg->Body().RemoveBodyPart( part );
+      }
+    }
     msg->mMsg->Assemble();
 
     msg->initFromMessage( this );
@@ -2920,6 +2932,56 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
   }
   return part;
 }
+
+//-----------------------------------------------------------------------------
+DwBodyPart * KMMessage::findDwBodyPart( const QCString& type, const QCString&  subtype ) const
+{
+  DwBodyPart *part, *curpart;
+  QPtrList< DwBodyPart > parts;
+  // Get the DwBodyPart for this index
+
+  curpart = getFirstDwBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+    //dive into multipart messages
+    while(curpart
+	  && curpart->hasHeaders()
+	  && curpart->Headers().HasContentType()
+      && curpart->Body().FirstBodyPart()
+	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
+	parts.append( curpart );
+	curpart = curpart->Body().FirstBodyPart();
+    }
+    // this is where curPart->msgPart contains a leaf message part
+
+    // pending(khz): Find out WHY this look does not travel down *into* an
+    //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
+    if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
+      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+            << "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
+    }
+
+    if (curpart &&
+	curpart->hasHeaders() &&
+        curpart->Headers().HasContentType() &&
+	curpart->Headers().ContentType().TypeStr().c_str() == type &&
+	curpart->Headers().ContentType().SubtypeStr().c_str() == subtype) {
+	part = curpart;
+    } else {
+      // go up in the tree until reaching a node with next
+      // (or the last top-level node)
+      while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
+	curpart = parts.getLast();
+	parts.removeLast();
+      } ;
+      if (curpart)
+	curpart = curpart->Next();
+    }
+  }
+  return part;
+}
+
 
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
