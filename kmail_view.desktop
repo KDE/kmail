@@ -11,4 +11,4 @@ MimeType=message/rfc822
 
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
-X-DCOP-ServiceName=kmail
+X-DBUS-ServiceName=org.kde.kmail
