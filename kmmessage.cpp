@@ -1481,23 +1481,23 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // message/rfc822 or text/rfc822-headers body part:
   int num = mdnConfig.readEntry( "quote-message", 0 );
   if ( num < 0 || num > 2 ) num = 0;
-  MDN::ReturnContent returnContent = static_cast<MDN::ReturnContent>( num );
+  /* 0=> Nothing, 1=>Full Message, 2=>HeadersOnly*/
 
   KMMessagePart thirdMsgPart;
-  switch ( returnContent ) {
-  case MDN::All:
+  switch ( num ) {
+  case 1:
     thirdMsgPart.setTypeStr( "message" );
     thirdMsgPart.setSubtypeStr( "rfc822" );
     thirdMsgPart.setBody( asSendableString() );
     receipt->addBodyPart( &thirdMsgPart );
     break;
-  case MDN::HeadersOnly:
+  case 2:
     thirdMsgPart.setTypeStr( "text" );
     thirdMsgPart.setSubtypeStr( "rfc822-headers" );
     thirdMsgPart.setBody( headerAsSendableString() );
     receipt->addBodyPart( &thirdMsgPart );
     break;
-  case MDN::Nothing:
+  case 0:
   default:
     break;
   };
@@ -1797,7 +1797,7 @@ void KMMessage::setDate(const Q3CString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  // handle To same as Cc below, bug 80747 
+  // handle To same as Cc below, bug 80747
   return EmailAddressTools::normalizeAddressesAndDecodeIdn( headerFields( "To" ).join( ", " ) );
 }
 
