@@ -388,7 +388,18 @@ QString KMMessagePart::iconName() const
   Q3CString mimeType( mType + '/' + mSubtype );
   kAsciiToLower( mimeType.data() );
   QString fileName =
-    KMimeType::mimeType( mimeType )->iconName( QString() );
+    KMimeType::mimeType( mimeType )->iconName();
+
+  if ( fileName.isEmpty() ) 
+  { 
+    fileName = this->fileName(); 
+    if ( fileName.isEmpty() ) fileName = this->name(); 
+    if ( !fileName.isEmpty() ) 
+    { 
+      fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->iconName(); 
+    } 
+  } 
+ 
   fileName =
     KGlobal::instance()->iconLoader()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
