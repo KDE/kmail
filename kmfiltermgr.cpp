@@ -13,9 +13,10 @@
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
+#include "kmfoldermgr.h"
+#include "kmmsgdict.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
-#include "kmfoldermgr.h"
 
 // other KDE headers
 #include <kdebug.h>
@@ -57,7 +58,7 @@ KMFilterMgr::~KMFilterMgr()
 void KMFilterMgr::clear()
 {
   mDirtyBufferedFolderTarget = true;
-  for ( QValueListIterator<KMFilter*> it = mFilters.begin() ; 
+  for ( QValueListIterator<KMFilter*> it = mFilters.begin() ;
         it != mFilters.end() ; ++it ) {
     delete *it;
   }
@@ -113,7 +114,7 @@ void KMFilterMgr::writeConfig(bool withSync)
   // Now, write out the new stuff:
   int i = 0;
   QString grpName;
-  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin() ; 
+  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin() ;
         it != mFilters.constEnd() ; ++it ) {
     if ( !(*it)->isEmpty() ) {
       if ( bPopFilter )
@@ -200,7 +201,7 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
 
   if (filter->pattern()->matches( msg )) {
     if ( FilterLog::instance()->isLogging() ) {
-      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                   FilterLog::patternResult );
     }
     if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
@@ -215,6 +216,63 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
     }
   } else {
     endFiltering( msg );
+    result = 1;
+  }
+  return result;
+}
+
+int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
+{
+  bool stopIt = false;
+  int result = 1;
+
+  if ( !filter )
+    return 1;
+
+  if ( isMatching( serNum, filter ) ) {
+    KMFolder *folder = 0;
+    int idx = -1;
+    // get the message with the serNum
+    KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+    if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
+      return 1;
+    }
+    bool opened = folder->isOpened();
+    if ( !opened )
+      folder->open();
+    KMMsgBase *msgBase = folder->getMsgBase( idx );
+    bool unGet = !msgBase->isMessage();
+    KMMessage *msg = folder->getMsg( idx );
+    // do the actual filtering stuff
+    if ( !msg || !beginFiltering( msg ) ) {
+      if ( unGet )
+        folder->unGetMsg( idx );
+      if ( !opened )
+        folder->close();
+      return 1;
+    }
+    if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
+      if ( unGet )
+        folder->unGetMsg( idx );
+      if ( !opened )
+        folder->close();
+      return 2;
+    }
+
+    KMFolder *targetFolder = MessageProperty::filterFolder( msg );
+
+    endFiltering( msg );
+    if ( targetFolder ) {
+      tempOpenFolder( targetFolder );
+      msg->setTransferInProgress( false );
+      result = targetFolder->moveMsg( msg );
+      msg->setTransferInProgress( true );
+    }
+    if ( unGet )
+      folder->unGetMsg( idx );
+    if ( !opened )
+      folder->close();
+  } else {
     result = 1;
   }
   return result;
@@ -240,7 +298,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
         !stopIt && it != mFilters.constEnd() ; ++it ) {
 
     if ( ( ( (set&Inbound) && (*it)->applyOnInbound() ) &&
-	   ( !account || 
+	   ( !account ||
 	     ( account && (*it)->applyOnAccount( accountId ) ) ) ) ||
          ( (set&Outbound)  && (*it)->applyOnOutbound() ) ||
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
@@ -254,7 +312,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
       if ( (*it)->pattern()->matches( msg ) ) {
         // filter matches
         if ( FilterLog::instance()->isLogging() ) {
-          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                       FilterLog::patternResult );
         }
         atLeastOneRuleMatched = true;
@@ -266,8 +324,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
   }
 
   KMFolder *folder = MessageProperty::filterFolder( msg );
-  /* endFilter does a take() and addButKeepUID() to ensure the changed 
-   * message is on disk. This is unnessecary if nothing matched, so just 
+  /* endFilter does a take() and addButKeepUID() to ensure the changed
+   * message is on disk. This is unnessecary if nothing matched, so just
    * reset state and don't update the listview at all. */
   if ( atLeastOneRuleMatched )
     endFiltering( msg );
@@ -281,6 +339,23 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
   return 1;
 }
 
+bool KMFilterMgr::isMatching( Q_UINT32 serNum, const KMFilter *filter )
+{
+  bool result = false;
+  if ( FilterLog::instance()->isLogging() ) {
+    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
+    logText.append( filter->pattern()->asString() );
+    FilterLog::instance()->add( logText, FilterLog::patternDesc );
+  }
+  if ( filter->pattern()->matches( serNum ) ) {
+    if ( FilterLog::instance()->isLogging() ) {
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
+                                  FilterLog::patternResult );
+    }
+    result = true;
+  }
+  return result;
+}
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
@@ -308,9 +383,9 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
 {
   if (!mDirtyBufferedFolderTarget)
     return mBufferedFolderTarget;
-  
+
   mDirtyBufferedFolderTarget = false;
-      
+
   QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
     KMFilter *filter = *it;
@@ -375,7 +450,7 @@ void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
     // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
-    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter, 
+    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter,
                                    checkForEmptyFilterList );
   }
   mEditDialog->show();
@@ -396,7 +471,7 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
   QString uniqueName = name;
   int counter = 0;
   bool found = true;
-  
+
   while ( found ) {
     found = false;
     for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
@@ -405,7 +480,7 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
         found = true;
         ++counter;
         uniqueName = name;
-        uniqueName += QString( " (" ) + QString::number( counter ) 
+        uniqueName += QString( " (" ) + QString::number( counter )
                     + QString( ")" );
         break;
       }
@@ -456,7 +531,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
   bool rem = false;
   QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it )
-    if ( (*it)->folderRemoved(aFolder, aNewFolder) ) 
+    if ( (*it)->folderRemoved(aFolder, aNewFolder) )
       rem = true;
 
   return rem;
@@ -467,7 +542,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 #ifndef NDEBUG
 void KMFilterMgr::dump(void) const
 {
-  
+
   QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
     kdDebug(5006) << (*it)->asString() << endl;

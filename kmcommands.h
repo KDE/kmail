@@ -586,7 +586,7 @@ public:
 
 private:
   virtual Result execute();
-
+  QValueList<Q_UINT32> serNumList;
   KMFilter *mFilter;
 };
 
