@@ -1797,7 +1797,8 @@ void KMMessage::setDate(const Q3CString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  return EmailAddressTools::normalizeAddressesAndDecodeIdn( headerField("To") );
+  // handle To same as Cc below, bug 80747 
+  return EmailAddressTools::normalizeAddressesAndDecodeIdn( headerFields( "To" ).join( ", " ) );
 }
 
 
