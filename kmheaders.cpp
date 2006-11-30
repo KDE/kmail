@@ -2363,11 +2363,6 @@ void KMHeaders::slotRMB()
     menu->addAction( mOwner->threadStatusMenu() ); // Mark Thread menu
   }
 
-  if (!out_folder && !mFolder->isSent() && mOwner->watchThreadAction()->isEnabled() ) {
-    menu->addAction( mOwner->watchThreadAction() );
-    menu->addAction( mOwner->ignoreThreadAction() );
-  }
-
   if ( !out_folder ) {
     menu->addSeparator();
     menu->addAction( mOwner->filterMenu() ); // Create Filter menu
@@ -2375,9 +2370,9 @@ void KMHeaders::slotRMB()
   }
 
   menu->addSeparator();
+  menu->addAction( mOwner->printAction() );
   menu->addAction( mOwner->saveAsAction() );
   menu->addAction( mOwner->saveAttachmentsAction() );
-  menu->addAction( mOwner->printAction() );
   menu->addSeparator();
   if ( mFolder->isTrash() ) {
     menu->addAction( mOwner->deleteAction() );

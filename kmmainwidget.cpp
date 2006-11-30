@@ -2465,7 +2465,7 @@ void KMMainWidget::setupActions()
   mModifyFolderAction = new KAction(KIcon("configure"),  i18n("&Properties"), actionCollection(), "modify" );
   connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
 
-  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
+  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management..."),
                                                     actionCollection(), "folder_mailinglist_properties" );
   connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT( slotFolderMailingListProperties()));
   // mFolderMailingListPropertiesAction->setIcon(KIcon("folder_mailinglist_properties"));
@@ -2673,6 +2673,10 @@ void KMMainWidget::setupActions()
 
   mIgnoreThreadAction = new KToggleAction(KIcon("mail_ignore"), i18n("&Ignore Thread"), actionCollection(), "thread_ignored");
   connect(mIgnoreThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusIgnored()));
+
+  mThreadStatusMenu->addAction( new KSeparatorAction( actionCollection() ) );
+  mThreadStatusMenu->addAction( mWatchThreadAction ); 
+  mThreadStatusMenu->addAction( mIgnoreThreadAction ); 
 
   mSaveAttachmentsAction = new KAction(KIcon("attach"),  i18n("Save A&ttachments..."), actionCollection(), "file_save_attachments" );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
