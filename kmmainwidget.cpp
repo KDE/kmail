@@ -2428,7 +2428,7 @@ void KMMainWidget::setupActions()
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
-  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
+  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management..."),
       /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ),
       actionCollection(), "folder_mailinglist_properties" );
 
@@ -2654,6 +2654,10 @@ void KMMainWidget::setupActions()
   mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "mail_ignore",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
+
+  mThreadStatusMenu->insert( new KActionSeparator( this ) ); 
+  mThreadStatusMenu->insert( mWatchThreadAction ); 
+  mThreadStatusMenu->insert( mIgnoreThreadAction ); 
 
   mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
                                 0, this, SLOT(slotSaveAttachments()),

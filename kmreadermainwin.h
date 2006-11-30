@@ -65,8 +65,8 @@ private:
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
-  KAction *mTrashAction, *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-          *mReplyListAction, *mForwardInlineAction,
+  KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mReplyAction,
+          *mReplyAllAction, *mReplyAuthorAction, *mReplyListAction, *mForwardInlineAction,
           *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
           *mViewSourceAction;
   KActionMenu *mReplyActionMenu;

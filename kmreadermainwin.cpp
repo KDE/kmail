@@ -285,6 +285,9 @@ void KMReaderMainWin::setupAccel()
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
+  mSaveAsAction = KStdAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
+				      actionCollection() ); 
+  mSaveAsAction->setShortcut( KStdAccel::shortcut( KStdAccel::Save ) );
   mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
 
@@ -423,6 +426,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();
+    mReplyActionMenu->plug( menu ); 
+    menu->insertSeparator(); 
+
     mReaderWin->copyAction()->plug( menu );
     mReaderWin->selectAllAction()->plug( menu );
   } else if ( !urlMenuAdded )
@@ -454,7 +460,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     mReaderWin->toggleFixFontAction()->plug( menu );
     menu->insertSeparator();
     mPrintAction->plug( menu );
-    menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );
+    mSaveAsAction->plug( menu );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );
   }
   menu->exec(aPoint, 0);
