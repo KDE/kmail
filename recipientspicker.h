@@ -178,7 +178,6 @@ class RecipientsPicker : public QDialog
     void slotPicked( Q3ListViewItem * );
     void slotPicked();
     void setFocusList();
-    void resetSearch();
     void insertAddressBook( AddressBook * );
 
   private:

@@ -285,12 +285,6 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   QBoxLayout *searchLayout = new QHBoxLayout();
   topLayout->addItem( searchLayout );
 
-  QToolButton *button = new QToolButton( this );
-  button->setIcon( KGlobal::iconLoader()->loadIconSet(
-              KApplication::isRightToLeft() ? "clear_left":"locationbar_erase", K3Icon::Small, 0 ) );
-  searchLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );
-
   label = new QLabel( i18n("&Search:"), this );
   searchLayout->addWidget( label );
 
@@ -693,9 +687,5 @@ void RecipientsPicker::setFocusList()
   mRecipientList->setFocus();
 }
 
-void RecipientsPicker::resetSearch()
-{
-  mSearchLine->setText( QString() );
-}
 
 #include "recipientspicker.moc"
