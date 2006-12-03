@@ -26,8 +26,6 @@
 #include <q3popupmenu.h>
 #include <Q3CString>
 
-#include <kopenwith.h>
-
 #include <kmessagebox.h>
 
 #include <kactionmenu.h>
