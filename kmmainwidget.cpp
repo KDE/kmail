@@ -9,7 +9,7 @@
 #include <config-kmail.h>
 #include <kicon.h>
 #include <kwin.h>
-
+#include <krun.h>
 #ifdef MALLOC_DEBUG
 #include <malloc.h>
 #endif
