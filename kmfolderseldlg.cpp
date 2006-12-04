@@ -490,7 +490,7 @@ void KMFolderSelDlg::init()
            this, SLOT( slotSelect() ) );
   connect( mTreeView, SIGNAL( selectionChanged() ),
            this, SLOT( slotUpdateBtnStatus() ) );
-
+  connect(this, SIGNAL(user1Clicked()),this,SLOT(slotUser1()));
   readConfig();
 }
 
