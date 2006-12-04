@@ -390,7 +390,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );
     QAction* act = menu->addAction( i18n("Save Attachments...") );
-    connect(act, SIGNAL(triggered(QAction*)),
+    connect(act, SIGNAL(triggered(bool)),
             mReaderWin, SLOT(slotSaveAttachments()) );
   }
   menu->exec(aPoint, 0);
