@@ -3438,9 +3438,12 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
 
 bool KMMainWidget::shortcutIsValid( const KShortcut &sc ) const
 {
-  QList<KAction*> actions = actionCollection()->actions();
-  foreach ( KAction *a, actions ) {
-    if ( a->shortcut() == sc ) return false;
+  QList<QAction*> actions = actionCollection()->actions();
+  foreach ( QAction *a, actions ) {
+    KAction *ka = qobject_cast<KAction *>( a );
+    if ( !a )
+      continue;
+    if ( ka->shortcut() == sc ) return false;
   }
   return true;
 }

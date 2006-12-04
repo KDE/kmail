@@ -113,7 +113,7 @@ public:
 
   static void cleanup();
 
-  KAction *action( const char *name ) { return mActionCollection->action( name ); }
+  QAction *action( const char *name ) { return mActionCollection->action( name ); }
   KAction *replyAction() const { return mReplyAction; }
   KAction *replyAuthorAction() const { return mReplyAuthorAction; }
   KAction *replyAllAction() const { return mReplyAllAction; }
@@ -496,8 +496,8 @@ private:
   KSeparatorAction  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
-  QList<KAction*> mFilterMenuActions;
-  QList<KAction*> mFilterTBarActions;
+  QList<QAction*> mFilterMenuActions;
+  QList<QAction*> mFilterTBarActions;
   QList<KMMetaFilterActionCommand*> mFilterCommands;
   Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
   QPointer <KMail::FolderJob> mJob;

@@ -1656,7 +1656,7 @@ class PipeJob : public ThreadWeaver::Job
       }
       pclose(p);
       if ( !ba.isEmpty() ) {
-        ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).toLatin1() );
+        ThreadWeaver::debug (1, "PipeJob::run: %s", ba.constData() );
         KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
 

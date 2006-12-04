@@ -121,7 +121,7 @@ void KMSystemTray::buildPopupMenu()
     return;
 
   mPopupMenu->addTitle(this->icon(), "KMail");
-  KAction * action;
+  QAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
     mPopupMenu->addAction( action );
   if ( ( action = mainWidget->action("check_mail_in") ) )
