@@ -41,6 +41,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QBoxLayout>
+#include "distributionlistdialog.moc"
 
 class DistributionListItem : public Q3CheckListItem
 {
@@ -121,6 +122,7 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   mRecipientsList->addColumn( i18n("Name") );
   mRecipientsList->addColumn( i18n("Email") );
   topLayout->addWidget( mRecipientsList );
+  connect(this,SIGNAL(user1Clicked()),this,SLOT(slotUser1()));
 }
 
 void DistributionListDialog::setRecipients( const Recipient::List &recipients )

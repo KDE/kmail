@@ -30,12 +30,13 @@ class K3ListView;
 
 class DistributionListDialog : public KDialog
 {
+  Q_OBJECT
   public:
     DistributionListDialog( QWidget *parent );
   
     void setRecipients( const Recipient::List & );
 
-  protected:
+  public slots:
     void slotUser1();
     
   private:
