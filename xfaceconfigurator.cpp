@@ -35,7 +35,6 @@
 #endif
 
 #include "xfaceconfigurator.h"
-#include <kactivelabel.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
