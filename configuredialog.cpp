@@ -91,7 +91,6 @@ using KMime::DateFormatter;
 #include <kwin.h>
 #include <knotifydialog.h>
 #include <kconfig.h>
-#include <kactivelabel.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
 
