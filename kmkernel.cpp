@@ -334,7 +334,7 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
 
 void KMKernel::openReader( bool onlyCheck )
 {
-  KMMainWin *mWin = 0;
+  mWin = 0;
   KMainWindow *ktmw = 0;
   kDebug(5006) << "KMKernel::openReader called" << endl;
 
@@ -1488,7 +1488,8 @@ void KMKernel::cleanup(void)
   the_searchFolderMgr = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
-  delete mWin;
+  // do not delete, because mWin may point to an existing window
+  // delete mWin;
   mWin = 0;
 
   if ( RecentAddresses::exists() )
