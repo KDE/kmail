@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>449</width>
-            <height>450</height>
+            <width>541</width>
+            <height>586</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -26,298 +26,279 @@
             <height>450</height>
         </size>
     </property>
-    <property name="caption">
-        <string>Form1</string>
-    </property>
-    <widget class="QLayoutWidget">
+    <vbox>
         <property name="name">
-            <cstring>layout3</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>430</width>
-                <height>430</height>
-            </rect>
-        </property>
-        <vbox>
+        <widget class="QToolBox">
             <property name="name">
-                <cstring>unnamed</cstring>
+                <cstring>toolBox1</cstring>
             </property>
-            <widget class="QToolBox">
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>3</horstretch>
+                    <verstretch>3</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="frameShape">
+                <enum>Panel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="currentIndex">
+                <number>0</number>
+            </property>
+            <widget class="QWidget">
                 <property name="name">
-                    <cstring>toolBox1</cstring>
+                    <cstring>page_new</cstring>
                 </property>
-                <property name="sizePolicy">
-                    <sizepolicy>
-                        <hsizetype>7</hsizetype>
-                        <vsizetype>7</vsizetype>
-                        <horstretch>3</horstretch>
-                        <verstretch>3</verstretch>
-                    </sizepolicy>
+                <property name="backgroundMode">
+                    <enum>PaletteBackground</enum>
                 </property>
-                <property name="minimumSize">
-                    <size>
-                        <width>0</width>
-                        <height>0</height>
-                    </size>
-                </property>
-                <property name="frameShape">
-                    <enum>Panel</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Sunken</enum>
-                </property>
-                <property name="currentIndex">
-                    <number>2</number>
-                </property>
-                <widget class="QWidget">
-                    <property name="name">
-                        <cstring>page_new</cstring>
-                    </property>
-                    <property name="backgroundMode">
-                        <enum>PaletteBackground</enum>
-                    </property>
-                    <attribute name="label">
-                        <string>New Message</string>
-                    </attribute>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QTextEdit">
-                            <property name="name">
-                                <cstring>textEdit_new</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>7</vsizetype>
-                                    <horstretch>3</horstretch>
-                                    <verstretch>3</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                                <size>
-                                    <width>0</width>
-                                    <height>0</height>
-                                </size>
-                            </property>
-                            <property name="font">
-                                <font>
-                                    <family>Monospace</family>
-                                </font>
-                            </property>
-                            <property name="resizePolicy">
-                                <enum>Manual</enum>
-                            </property>
-                            <property name="vScrollBarMode">
-                                <enum>Auto</enum>
-                            </property>
-                            <property name="hScrollBarMode">
-                                <enum>Auto</enum>
-                            </property>
-                            <property name="textFormat">
-                                <enum>PlainText</enum>
-                            </property>
-                            <property name="wordWrap">
-                                <enum>NoWrap</enum>
-                            </property>
-                            <property name="autoFormatting">
-                                <set>AutoNone</set>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QWidget">
-                    <property name="name">
-                        <cstring>page_reply</cstring>
-                    </property>
-                    <property name="backgroundMode">
-                        <enum>PaletteBackground</enum>
-                    </property>
-                    <attribute name="label">
-                        <string>Reply to Sender</string>
-                    </attribute>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QTextEdit">
-                            <property name="name">
-                                <cstring>textEdit_reply</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>3</hsizetype>
-                                    <vsizetype>3</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="font">
-                                <font>
-                                    <family>Monospace</family>
-                                </font>
-                            </property>
-                            <property name="textFormat">
-                                <enum>PlainText</enum>
-                            </property>
-                            <property name="wordWrap">
-                                <enum>NoWrap</enum>
-                            </property>
-                            <property name="autoFormatting">
-                                <set>AutoNone</set>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QWidget">
-                    <property name="name">
-                        <cstring>page_reply_all</cstring>
-                    </property>
-                    <property name="backgroundMode">
-                        <enum>PaletteBackground</enum>
-                    </property>
-                    <attribute name="label">
-                        <string>Reply to All</string>
-                    </attribute>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QTextEdit">
-                            <property name="name">
-                                <cstring>textEdit_reply_all</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>3</hsizetype>
-                                    <vsizetype>3</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="font">
-                                <font>
-                                    <family>Monospace</family>
-                                </font>
-                            </property>
-                            <property name="textFormat">
-                                <enum>PlainText</enum>
-                            </property>
-                            <property name="wordWrap">
-                                <enum>NoWrap</enum>
-                            </property>
-                            <property name="autoFormatting">
-                                <set>AutoNone</set>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QWidget">
-                    <property name="name">
-                        <cstring>page_forward</cstring>
-                    </property>
-                    <property name="backgroundMode">
-                        <enum>PaletteBackground</enum>
-                    </property>
-                    <attribute name="label">
-                        <string>Forward Message</string>
-                    </attribute>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QTextEdit">
-                            <property name="name">
-                                <cstring>textEdit_forward</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>3</hsizetype>
-                                    <vsizetype>3</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="font">
-                                <font>
-                                    <family>Monospace</family>
-                                </font>
-                            </property>
-                            <property name="textFormat">
-                                <enum>PlainText</enum>
-                            </property>
-                            <property name="wordWrap">
-                                <enum>NoWrap</enum>
-                            </property>
-                            <property name="autoFormatting">
-                                <set>AutoNone</set>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-            </widget>
-            <widget class="QLayoutWidget">
-                <property name="name">
-                    <cstring>layout2</cstring>
-                </property>
+                <attribute name="label">
+                    <string>New Message</string>
+                </attribute>
                 <hbox>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QPushButton">
+                    <widget class="QTextEdit">
                         <property name="name">
-                            <cstring>button_insert</cstring>
+                            <cstring>textEdit_new</cstring>
                         </property>
                         <property name="sizePolicy">
                             <sizepolicy>
-                                <hsizetype>1</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>1</horstretch>
-                                <verstretch>0</verstretch>
+                                <hsizetype>7</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>3</horstretch>
+                                <verstretch>3</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="text">
-                            <string>&amp;Insert command...</string>
+                        <property name="minimumSize">
+                            <size>
+                                <width>0</width>
+                                <height>0</height>
+                            </size>
                         </property>
-                        <property name="accel">
-                            <string>Alt+I</string>
+                        <property name="font">
+                            <font>
+                                <family>Monospace</family>
+                            </font>
                         </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>textLabel1</cstring>
+                        <property name="resizePolicy">
+                            <enum>Manual</enum>
                         </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>5</hsizetype>
-                                <vsizetype>5</vsizetype>
-                                <horstretch>2</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
+                        <property name="vScrollBarMode">
+                            <enum>Auto</enum>
                         </property>
-                        <property name="text">
-                            <string>&amp;Quote indicator:</string>
+                        <property name="hScrollBarMode">
+                            <enum>Auto</enum>
                         </property>
-                        <property name="alignment">
-                            <set>AlignVCenter|AlignRight</set>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
                         </property>
-                        <property name="buddy" stdset="0">
-                            <cstring>lineEdit_quote</cstring>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
                         </property>
-                    </widget>
-                    <widget class="QLineEdit">
-                        <property name="name">
-                            <cstring>lineEdit_quote</cstring>
+                        <property name="autoFormatting">
+                            <set>AutoNone</set>
                         </property>
                     </widget>
                 </hbox>
             </widget>
-        </vbox>
-    </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>page_reply</cstring>
+                </property>
+                <property name="backgroundMode">
+                    <enum>PaletteBackground</enum>
+                </property>
+                <attribute name="label">
+                    <string>Reply to Sender</string>
+                </attribute>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit">
+                        <property name="name">
+                            <cstring>textEdit_reply</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>3</hsizetype>
+                                <vsizetype>3</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Monospace</family>
+                            </font>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                        <property name="autoFormatting">
+                            <set>AutoNone</set>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>page_reply_all</cstring>
+                </property>
+                <property name="backgroundMode">
+                    <enum>PaletteBackground</enum>
+                </property>
+                <attribute name="label">
+                    <string>Reply to All</string>
+                </attribute>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit">
+                        <property name="name">
+                            <cstring>textEdit_reply_all</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>3</hsizetype>
+                                <vsizetype>3</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Monospace</family>
+                            </font>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                        <property name="autoFormatting">
+                            <set>AutoNone</set>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>page_forward</cstring>
+                </property>
+                <property name="backgroundMode">
+                    <enum>PaletteBackground</enum>
+                </property>
+                <attribute name="label">
+                    <string>Forward Message</string>
+                </attribute>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit">
+                        <property name="name">
+                            <cstring>textEdit_forward</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>3</hsizetype>
+                                <vsizetype>3</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Monospace</family>
+                            </font>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                        <property name="autoFormatting">
+                            <set>AutoNone</set>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout2</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>button_insert</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>1</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Insert command...</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>2</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Quote indicator:</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignVCenter|AlignRight</set>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>lineEdit_quote</cstring>
+                    </property>
+                </widget>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>lineEdit_quote</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
 </widget>
 <connections>
     <connection>
