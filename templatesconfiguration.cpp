@@ -390,7 +390,7 @@ QString TemplatesConfiguration::convertPhrases( QString &str )
       ch = str[i++];
       switch ( (char)ch ) {
       case 'D':
-        result += "%DATE";
+        result += "%ODATE";
         break;
       case 'e':
         result += "%OFROMADDR";
