@@ -109,6 +109,7 @@ using KMail::SecondaryWindow;
 #include "redirectdialog.h"
 using KMail::RedirectDialog;
 #include "util.h"
+#include "templateparser.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -1191,7 +1192,7 @@ KMCommand::Result KMForwardInlineCommand::execute()
     {
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset( fwdMsg->codec()->mimeName(), true );
-      win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+      // win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
       win->show();
     }
   }

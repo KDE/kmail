@@ -29,6 +29,7 @@
 
 #include "globalsettings.h"
 #include "replyphrases.h"
+#include "templatesconfiguration_kfg.h"
 
 // other KMail headers:
 #include "kmkernel.h"
@@ -49,6 +50,7 @@ using KMail::IdentityListViewItem;
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
+#include "templatesconfigurationimpl.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"
@@ -2466,9 +2468,15 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   //
   // "Phrases" tab:
   //
-  mPhrasesTab = new PhrasesTab();
-  addTab( mPhrasesTab, i18n("&Phrases") );
+  // mPhrasesTab = new PhrasesTab();
+  // addTab( mPhrasesTab, i18n("&Phrases") );
 
+  //
+  // "Templates" tab:
+  //
+  mTemplatesTab = new TemplatesTab();
+  addTab( mTemplatesTab, i18n("&Templates") );
+  
   //
   // "Subject" tab:
   //
@@ -2921,6 +2929,31 @@ void ComposerPage::PhrasesTab::save() {
     replyPhrases.setIndentPrefix( (*it).mIndentPrefix );
     replyPhrases.writeConfig();
   }
+}
+
+QString ComposerPage::TemplatesTab::helpAnchor() const {
+  return QString::fromLatin1("configure-composer-templates");
+}
+
+ComposerPageTemplatesTab::ComposerPageTemplatesTab( QWidget * parent, const char * name )
+  : ConfigModuleTab ( parent, name )
+{
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+
+  mWidget = new TemplatesConfiguration( this );
+  vlay->addWidget( mWidget );
+  vlay->addStretch(100);
+
+  connect( mWidget, SIGNAL( changed() ),
+           this, SLOT( slotEmitChanged( void ) ) );
+}
+
+void ComposerPage::TemplatesTab::doLoadFromGlobalSettings() {
+    mWidget->loadFromGlobal();
+}
+
+void ComposerPage::TemplatesTab::save() {
+    mWidget->saveToGlobal();
 }
 
 QString ComposerPage::SubjectTab::helpAnchor() const {

@@ -93,6 +93,7 @@ using KMail::FilterLogDialog;
 using KMail::HeaderListQuickSearch;
 #include "kmheaders.h"
 #include "mailinglistpropertiesdialog.h"
+#include "templateparser.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -885,9 +886,15 @@ void KMMainWidget::slotCompose()
 
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
+      TemplateParser parser( msg, TemplateParser::NewMessage, 
+	"", false, false, false, false );
+      parser.process( NULL, mFolder );
       win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
+      TemplateParser parser( msg, TemplateParser::NewMessage, 
+	"", false, false, false, false );
+      parser.process( NULL, NULL );
       win = KMail::makeComposer( msg );
   }
 

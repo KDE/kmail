@@ -5,6 +5,8 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <include>kmglobal.h</include>
   <include>qtextcodec.h</include>
+  <include>templatesconfiguration.h</include>
+  <include>templatesconfigurationimpl.h</include>
   <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
       <entry name="DelayedMarkAsRead"  type="Bool">
@@ -450,5 +452,33 @@
         <whatsthis>Send Message Disposition Notifications with an empty sender string. Some servers might be configure to reject such messages, so if you are experiencing problems sending MDNs, uncheck this option.</whatsthis>
       </entry>
     </group>
+
+  <group name="GlobalTemplates">
+    <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
+      <label>Message template for new message</label>
+      <whatsthis></whatsthis>
+      <default code="true">TemplatesConfiguration::defaultNewMessage()</default>
+    </entry>
+    <entry name="TemplateReply" type="String" key="TemplateReply">
+      <label>Message template for reply</label>
+      <whatsthis></whatsthis>
+      <default code="true">TemplatesConfiguration::defaultReply()</default>
+    </entry>
+    <entry name="TemplateReplyAll" type="String" key="TemplateReplyAll">
+      <label>Message template for reply to all</label>
+      <whatsthis></whatsthis>
+      <default code="true">TemplatesConfiguration::defaultReplyAll()</default>
+    </entry>
+    <entry name="TemplateForward" type="String" key="TemplateForward">
+      <label>Message template for forward</label>
+      <whatsthis></whatsthis>
+      <default code="true">TemplatesConfiguration::defaultForward()</default>
+    </entry>
+    <entry name="QuoteString" type="String" key="QuoteString">
+      <label>Quote characters</label>
+      <whatsthis></whatsthis>
+      <default code="true">TemplatesConfiguration::defaultQuoteString()</default>
+    </entry>
+  </group>
 
 </kcfg>

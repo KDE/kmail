@@ -23,6 +23,7 @@ using KMail::ObjectTreeParser;
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
+#include "templateparser.h"
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
@@ -155,6 +156,7 @@ void KMMessage::init()
   mDate    = 0;
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
+  mCursorPos = 0;
 }
 
 void KMMessage::assign( const KMMessage& other )
@@ -848,6 +850,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   QString str, replyStr, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   QCString refStr, headerName;
+  bool replyAll = true;
 
   msg->initFromMessage(this);
 
@@ -887,6 +890,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       // doesn't seem to be a mailing list, reply to From: address
       toStr = from();
       replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+      replyAll = false;
     }
     // strip all my addresses from the list of recipients
     QStringList recipients = KPIM::splitEmailAddrList( toStr );
@@ -1016,6 +1020,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       toStr = from();
     }
     replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+    replyAll = false;
     break;
   }
   case KMail::ReplyNone : {
@@ -1031,17 +1036,21 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   //In-Reply-To = original msg-id
   msg->setReplyToId(msgId());
 
-  if (!noQuote) {
-    if( selectionIsBody ){
-      QCString cStr = selection.latin1();
-      msg->setBody( cStr );
-    }else{
-      msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
-				  sSmartQuote, allowDecryption).utf8());
-    }
-  }
+//   if (!noQuote) {
+//     if( selectionIsBody ){
+//       QCString cStr = selection.latin1();
+//       msg->setBody( cStr );
+//     }else{
+//       msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
+// 				  sSmartQuote, allowDecryption).utf8());
+//     }
+//   }
 
   msg->setSubject( replySubject() );
+
+  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply), 
+    selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
+  parser.process( this );
 
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
@@ -1234,12 +1243,18 @@ KMMessage* KMMessage::createForward()
     msg->mNeedsAssembly = true;
     msg->cleanupHeader();
   }
-  QString st = QString::fromUtf8(createForwardBody());
-  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
-  if (encoding.isEmpty()) encoding = "utf-8";
-  msg->setCharset(encoding);
+  // QString st = QString::fromUtf8(createForwardBody());
 
   msg->setSubject( forwardSubject() );
+  
+  TemplateParser parser( msg, TemplateParser::Forward, 
+    this->body(), false, false, false, false);
+  parser.process( this );
+  
+  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
+  if (encoding.isEmpty()) encoding = "utf-8";
+  msg->setCharset(encoding);
+  
   msg->link(this, KMMsgStatusForwarded);
   return msg;
 }

@@ -842,6 +842,12 @@ public:
   /** Return the textual content of the message as plain text,
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
+  
+  /** Get stored cursor position */
+  int getCursorPos() { return mCursorPos; };
+  /** Set cursor position as offset from message start */
+  void setCursorPos(int pos) { mCursorPos = pos; };
+  
 private:
 
   /** Initialization shared by the ctors. */
@@ -868,6 +874,7 @@ private:
   KMMsgMDNSentState mMDNSentState;
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
+  int mCursorPos;
 };
 
 

@@ -45,6 +45,7 @@ class QPoint;
 class ComposerCryptoConfiguration;
 class WarningConfiguration;
 class SMimeConfiguration;
+class TemplatesConfiguration;
 
 namespace Kpgp {
   class Config;
@@ -632,6 +633,23 @@ private:
   LanguageItemList mLanguageList;
 };
 
+class ComposerPageTemplatesTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageTemplatesTab( QWidget * parent=0, const char * name=0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private slots:
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
+    TemplatesConfiguration* mWidget;
+};
+
 class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -734,6 +752,7 @@ public:
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef ComposerPageGeneralTab GeneralTab;
   typedef ComposerPagePhrasesTab PhrasesTab;
+  typedef ComposerPageTemplatesTab TemplatesTab;
   typedef ComposerPageSubjectTab SubjectTab;
   typedef ComposerPageCharsetTab CharsetTab;
   typedef ComposerPageHeadersTab HeadersTab;
@@ -742,6 +761,7 @@ public:
 private:
   GeneralTab  *mGeneralTab;
   PhrasesTab  *mPhrasesTab;
+  TemplatesTab  *mTemplatesTab;
   SubjectTab  *mSubjectTab;
   CharsetTab  *mCharsetTab;
   HeadersTab  *mHeadersTab;

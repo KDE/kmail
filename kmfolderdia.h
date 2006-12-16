@@ -51,6 +51,8 @@ namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
 template <typename T> class QGuardedPtr;
+class TemplatesConfiguration;
+class KPushButton;
 
 namespace KMail {
   class FolderRequester; 
@@ -145,6 +147,39 @@ private:
   KLineEdit   *mNameEdit;
 
   KPIM::IdentityCombo *mIdentityComboBox;
+
+  KMFolderDialog* mDlg;
+  bool mIsLocalSystemFolder;
+};
+
+/**
+ * "Templates" tab in the folder dialog
+ * Internal class, only used by KMFolderDialog
+ */
+class FolderDiaTemplatesTab : public FolderDiaTab
+{
+  Q_OBJECT
+
+public:
+  FolderDiaTemplatesTab( KMFolderDialog* dlg,
+                       const QString& aName,
+                       QWidget* parent, const char* name = 0 );
+
+  virtual void load();
+  virtual bool save();
+
+public slots:
+  void slotEmitChanged(); // do nothing for now
+  
+  void slotCopyGlobal();
+
+private:
+  void initializeWithValuesFromFolder( KMFolder* folder );
+
+private:
+  QCheckBox* mCustom;
+  TemplatesConfiguration* mWidget;
+  KPushButton* mCopyGlobal;
 
   KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;

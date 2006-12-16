@@ -4447,8 +4447,13 @@ void KMComposeWin::slotEditKeys()
 void KMComposeWin::setReplyFocus( bool hasMessage )
 {
   mEditor->setFocus();
-  if ( hasMessage )
-    mEditor->setCursorPosition( 1, 0 );
+  if ( hasMessage ) {
+    if( mMsg->getCursorPos() ) {
+      mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
+    } else {
+      mEditor->setCursorPosition( 1, 0 );
+    }
+  }
 }
 
 void KMComposeWin::setFocusToSubject()
