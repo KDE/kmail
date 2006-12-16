@@ -186,6 +186,7 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
+                     const QCString& prefCharset,
              off_t aFolderOffset, size_t aMsgSize,
              size_t aMsgSizeServer, ulong aUID)
 {
@@ -194,9 +195,9 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     if(!kd)
         kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
-    kd->subject = decodeRFC2047String(aSubject);
-    kd->from = decodeRFC2047String( KMMessage::stripEmailAddr( aFrom ) );
-    kd->to = decodeRFC2047String( KMMessage::stripEmailAddr( aTo ) );
+    kd->subject = decodeRFC2047String(aSubject, prefCharset);
+    kd->from = decodeRFC2047String( KMMessage::stripEmailAddr( aFrom ), prefCharset );
+    kd->to = decodeRFC2047String( KMMessage::stripEmailAddr( aTo ), prefCharset );
     kd->replyToIdMD5 = base64EncodedMD5( replyToId );
     kd->replyToAuxIdMD5 = base64EncodedMD5( replyToAuxId );
     kd->strippedSubjectMD5 = base64EncodedMD5( KMMessage::stripOffPrefixes( kd->subject ), true /*utf8*/ );
@@ -224,12 +225,13 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
+                     const QCString& prefCharset,
                      size_t aMsgSize,
              size_t aMsgSizeServer, ulong aUID)
 {
   // use the "normal" init for most stuff
   init( aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, replyToAuxId,
-        msgId, encryptionState, signatureState, mdnSentState,
+        msgId, encryptionState, signatureState, mdnSentState, prefCharset,
         (unsigned long)0, aMsgSize, aMsgSizeServer, aUID );
   kd->file = aFileName;
 }

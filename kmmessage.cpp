@@ -2216,7 +2216,9 @@ QString KMMessage::headerField(const QCString& aName) const
   if ( !mMsg->Headers().FindField( aName ) )
     return QString::null;
 
-  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
+  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str(),
+                              charset() );
+
 }
 
 QStringList KMMessage::headerFields( const QCString& field ) const
@@ -2227,7 +2229,7 @@ QStringList KMMessage::headerFields( const QCString& field ) const
   std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
   QStringList headerFields;
   for ( uint i = 0; i < v.size(); ++i ) {
-    headerFields.append( decodeRFC2047String( v[i]->AsString().c_str() ) );
+    headerFields.append( decodeRFC2047String( v[i]->AsString().c_str(), charset() ) );
   }
 
   return headerFields;

@@ -390,14 +390,14 @@ QString KMMessagePart::iconName() const
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString::null, false );
   if ( fileName.isEmpty() )
-  { 
-    fileName = this->fileName(); 
-    if ( fileName.isEmpty() ) fileName = this->name(); 
+  {
+    fileName = this->fileName();
+    if ( fileName.isEmpty() ) fileName = this->name();
     if ( !fileName.isEmpty() )
     {
       fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->icon( QString::null, true );
     }
-  } 
+  }
 
   fileName =
     KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
@@ -487,7 +487,7 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::contentDescription(void) const
 {
-  return KMMsgBase::decodeRFC2047String(mContentDescription);
+  return KMMsgBase::decodeRFC2047String(mContentDescription, charset());
 }
 
 
@@ -538,7 +538,7 @@ QString KMMessagePart::fileName(void) const
   if (bRFC2231encoded)
     return KMMsgBase::decodeRFC2231String(str);
   else
-    return KMMsgBase::decodeRFC2047String(str);
+    return KMMsgBase::decodeRFC2047String(str, charset());
 }
 
 

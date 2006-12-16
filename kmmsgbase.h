@@ -32,7 +32,7 @@ class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
 
-/** The new status format. These can be or'd together. 
+/** The new status format. These can be or'd together.
     Note, that the KMMsgStatusIgnored implies the
     status to be Read even if the flags are set
     to Unread or New. This is done in KMMsgBase::isRead()
@@ -341,7 +341,7 @@ public:
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static QString decodeRFC2047String(const QCString& aStr);
+  static QString decodeRFC2047String(const QCString& aStr, const QCString prefCharset = "");
 
   /** Encode given string as described in RFC2047:
     using quoted-printable. */

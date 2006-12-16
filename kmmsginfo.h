@@ -46,6 +46,7 @@ public:
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
+                    const QCString& prefCharset,
 		    off_t folderOffset=0, size_t msgSize=0,
             size_t msgSizeServer = 0, ulong UID = 0);
 
@@ -60,7 +61,8 @@ public:
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
-		    size_t msgSize=0,
+		    const QCString& prefCharset,
+                    size_t msgSize=0,
             size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Inherited methods (see KMMsgBase for description): */

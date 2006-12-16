@@ -552,6 +552,7 @@ int KMFolderMbox::createIndexFromContents()
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
   QCString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
   QCString sizeServerStr, uidStr;
+  QCString contentTypeStr, charset;
   bool atEof = false;
   bool inHeader = true;
   KMMsgInfo* mi;
@@ -652,6 +653,29 @@ int KMFolderMbox::createIndexFromContents()
               replyToAuxIdStr.truncate( rightAngle + 1 );
           }
 
+          contentTypeStr = contentTypeStr.stripWhiteSpace();
+          charset = "";
+          if ( !contentTypeStr.isEmpty() )
+          {
+            int cidx = contentTypeStr.find( "charset=" );
+            if ( cidx != -1 ) {
+              charset = contentTypeStr.mid( cidx + 8 );
+              if ( charset[0] == '"' ) {
+                charset = charset.mid( 1 );
+              }
+              cidx = 0;
+              while ( (unsigned int) cidx < charset.length() ) {
+                if ( charset[cidx] == '"' || ( !isalnum(charset[cidx]) &&
+                    charset[cidx] != '-' && charset[cidx] != '_' ) )
+                  break;
+                ++cidx;
+              }
+              charset.truncate( cidx );
+              // kdDebug() << "KMFolderMaildir::readFileHeaderIntern() charset found: " <<
+              //              charset << " from " << contentTypeStr << endl;
+            }
+          }
+
           mi = new KMMsgInfo(folder());
           mi->init( subjStr.stripWhiteSpace(),
                     fromStr.stripWhiteSpace(),
@@ -660,7 +684,7 @@ int KMFolderMbox::createIndexFromContents()
                     xmarkStr.stripWhiteSpace(),
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-                    KMMsgMDNStateUnknown, offs, size, sizeServer, uid );
+                    KMMsgMDNStateUnknown, charset, offs, size, sizeServer, uid );
           mi->setStatus(status, xstatus);
           mi->setDate( dateStr.stripWhiteSpace() );
           mi->setDirty(false);
@@ -765,6 +789,11 @@ int KMFolderMbox::createIndexFromContents()
       uidStr = QCString(line+6);
       uid = uidStr.toULong();
       lastStr = &uidStr;
+    }
+    else if (strncasecmp(line, "Content-Type:", 13) == 0)
+    {
+      contentTypeStr = QCString(line+13);
+      lastStr = &contentTypeStr;
     }
   }
 
@@ -1071,10 +1100,10 @@ if( fileD1.open( IO_WriteOnly ) ) {
   }
   ++mTotalMsgs;
 
-  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown && 
+  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
     aMsg->updateAttachmentState();
-  
+
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setFolderOffset(offs);

@@ -426,7 +426,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   tmp_file += filename;
 
   if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, false))
-    kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") ); 
+    kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") );
 
   QFile file(tmp_file);
   size = msgText.length();
@@ -477,10 +477,10 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
   ++mTotalMsgs;
 
-  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown && 
+  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
     aMsg->updateAttachmentState();
-  
+
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setMsgSize(size);
@@ -653,6 +653,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   QCString dateStr, fromStr, toStr, subjStr;
   QCString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
   QCString statusStr, replyToAuxIdStr, uidStr;
+  QCString contentTypeStr, charset;
 
   // iterate through this file until done
   while (!atEof)
@@ -725,6 +726,29 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
           status |= KMMsgStatusFlag;
       }
 
+      contentTypeStr = contentTypeStr.stripWhiteSpace();
+      charset = "";
+      if ( !contentTypeStr.isEmpty() )
+      {
+        int cidx = contentTypeStr.find( "charset=" );
+        if ( cidx != -1 ) {
+          charset = contentTypeStr.mid( cidx + 8 );
+          if ( charset[0] == '"' ) {
+            charset = charset.mid( 1 );
+          }
+          cidx = 0;
+          while ( (unsigned int) cidx < charset.length() ) {
+            if ( charset[cidx] == '"' || ( !isalnum(charset[cidx]) &&
+                 charset[cidx] != '-' && charset[cidx] != '_' ) )
+              break;
+            ++cidx;
+          }
+          charset.truncate( cidx );
+          // kdDebug() << "KMFolderMaildir::readFileHeaderIntern() charset found: " <<
+          //              charset << " from " << contentTypeStr << endl;
+        }
+      }
+
       KMMsgInfo *mi = new KMMsgInfo(folder());
       mi->init( subjStr.stripWhiteSpace(),
                 fromStr.stripWhiteSpace(),
@@ -734,7 +758,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
 				file.local8Bit(),
                 KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-                KMMsgMDNStateUnknown, f.size() );
+                KMMsgMDNStateUnknown, charset, f.size() );
 
       dateStr = dateStr.stripWhiteSpace();
       if (!dateStr.isEmpty())
@@ -822,6 +846,11 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     {
       uidStr = QCString(line+6);
       lastStr = &uidStr;
+    }
+    else if (strncasecmp(line, "Content-Type:", 13) == 0)
+    {
+      contentTypeStr = QCString(line+13);
+      lastStr = &contentTypeStr;
     }
 
   }

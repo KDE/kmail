@@ -646,7 +646,7 @@ namespace {
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
+QString KMMsgBase::decodeRFC2047String(const QCString& aStr, QCString prefCharset)
 {
   if ( aStr.isEmpty() )
     return QString::null;
@@ -656,9 +656,19 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   if ( str.isEmpty() )
     return QString::null;
 
-  if ( str.find( "=?" ) < 0 )
-    return KMMsgBase::codecForName( GlobalSettings::self()->
-                                    fallbackCharacterEncoding().latin1() )->toUnicode( str );
+  if ( str.find( "=?" ) < 0 ) {
+    if ( !prefCharset.isEmpty() ) {
+      if ( prefCharset == "us-ascii" ) {
+        // isn`t this foolproof?
+        return KMMsgBase::codecForName( "utf-8" )->toUnicode( str );
+      } else {
+        return KMMsgBase::codecForName( prefCharset )->toUnicode( str );
+      }
+    } else {
+      return KMMsgBase::codecForName( GlobalSettings::self()->
+                                      fallbackCharacterEncoding().latin1() )->toUnicode( str );
+    }
+  }
 
   QString result;
   QCString LWSP_buffer;
