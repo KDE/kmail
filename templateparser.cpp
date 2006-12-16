@@ -869,66 +869,70 @@ QString TemplateParser::findTemplate()
 
   QString tmpl;
 
-  if ( !mFolder ) {
+  if ( !mFolder ) {					// find folder message belongs to
     mFolder = mMsg->parent();
     if ( !mFolder ) {
       if ( mOrigMsg ) {
         mFolder = mOrigMsg->parent();
       }
       if ( !mFolder ) {
-        kdDebug() << "Oops! No folder for message" << endl;
-        return "";
+        kdDebug(5006) << "Oops! No folder for message" << endl;
+      }
+    }
+  }
+  kdDebug(5006) << "Folder found: " << mFolder << endl;
+
+  if ( mFolder )					// only if a folder was found
+  {
+    QString fid = mFolder->idString();
+    Templates fconf( fid );
+    if ( fconf.useCustomTemplates() ) {			// does folder use custom templates?
+      switch( mMode ) {
+      case NewMessage:
+	tmpl = fconf.templateNewMessage();
+	break;
+      case Reply:
+	tmpl = fconf.templateReply();
+	break;
+      case ReplyAll:
+	tmpl = fconf.templateReplyAll();
+	break;
+      case Forward:
+	tmpl = fconf.templateForward();
+	break;
+      default:
+	kdDebug(5006) << "Unknown message mode: " << mMode << endl;
+	return "";
+      }
+      mQuoteString = fconf.quoteString();
+      if ( !tmpl.isEmpty() ) {
+	return tmpl;					// use folder-specific template
       }
     }
   }
 
-  if ( !mIdentity ) {
+  if ( !mIdentity ) {					// find identity message belongs to
     mIdentity = mMsg->identityUoid();
     if ( !mIdentity && mOrigMsg ) {
       mIdentity = mOrigMsg->identityUoid();
     }
     mIdentity = kmkernel->identityManager()->identityForUoidOrDefault( mIdentity ).uoid();
     if ( !mIdentity ) {
-      kdDebug() << "Oops! No identity for message" << endl;
+      kdDebug(5006) << "Oops! No identity for message" << endl;
     }
   }
+  kdDebug(5006) << "Identity found: " << mIdentity << endl;
 
-  kdDebug() << "Identity found: " << mIdentity << endl;
-
-  QString fid = mFolder->idString();
   QString iid;
   if ( mIdentity ) {
-    iid = QString("IDENTITY_%1").arg( mIdentity );
+    iid = QString("IDENTITY_%1").arg( mIdentity );	// templates ID for that identity
   }
   else {
-    iid = "IDENTITY_NO_IDENTITY";
+    iid = "IDENTITY_NO_IDENTITY";			// templates ID for no identity
   }
-  Templates fconf( fid );
-  if ( fconf.useCustomTemplates() ) {
-    switch( mMode ) {
-    case NewMessage:
-      tmpl = fconf.templateNewMessage();
-      break;
-    case Reply:
-      tmpl = fconf.templateReply();
-      break;
-    case ReplyAll:
-      tmpl = fconf.templateReplyAll();
-      break;
-    case Forward:
-      tmpl = fconf.templateForward();
-      break;
-    default:
-      kdDebug() << "Unknown message mode: " << mMode << endl;
-      return "";
-    }
-    mQuoteString = fconf.quoteString();
-    if ( !tmpl.isEmpty() ) {
-      return tmpl;
-    }
-  }
+
   Templates iconf( iid );
-  if ( iconf.useCustomTemplates() ) {
+  if ( iconf.useCustomTemplates() ) {			// does identity use custom templates?
     switch( mMode ) {
     case NewMessage:
       tmpl = iconf.templateNewMessage();
@@ -943,15 +947,16 @@ QString TemplateParser::findTemplate()
       tmpl = iconf.templateForward();
       break;
     default:
-      kdDebug() << "Unknown message mode: " << mMode << endl;
+      kdDebug(5006) << "Unknown message mode: " << mMode << endl;
       return "";
     }
     mQuoteString = iconf.quoteString();
     if ( !tmpl.isEmpty() ) {
-      return tmpl;
+      return tmpl;					// use identity-specific template
     }
   }
-  switch( mMode ) {
+
+  switch( mMode ) {					// use the global template
   case NewMessage:
     tmpl = GlobalSettings::self()->templateNewMessage();
     break;
@@ -965,9 +970,10 @@ QString TemplateParser::findTemplate()
     tmpl = GlobalSettings::self()->templateForward();
     break;
   default:
-    kdDebug() << "Unknown message mode: " << mMode << endl;
+    kdDebug(5006) << "Unknown message mode: " << mMode << endl;
     return "";
   }
+
   mQuoteString = GlobalSettings::self()->quoteString();
   return tmpl;
 }
