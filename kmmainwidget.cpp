@@ -39,6 +39,7 @@
 #include <dcopclient.h>
 #include <kaddrbook.h>
 #include <kaccel.h>
+#include <kstringhandler.h>
 
 #include <qvaluevector.h>
 
@@ -915,6 +916,28 @@ void KMMainWidget::slotCompose()
 
 }
 
+//-----------------------------------------------------------------------------
+// TODO: do we want the list sorted alphabetically?
+void KMMainWidget::slotShowNewFromTemplate()
+{
+  if ( mFolder ) {
+    const KPIM::Identity & ident =
+      kmkernel->identityManager()->identityForUoidOrDefault( mFolder->identity() );
+    mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
+  }
+  else mTemplateFolder = kmkernel->templatesFolder();
+  if ( !mTemplateFolder )
+    return;
+  mTemplateMenu->popupMenu()->clear();
+  for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
+    KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
+
+    QString subj = mb->subject();
+    if ( subj.isEmpty() ) subj = i18n("No Subject");
+    mTemplateMenu->popupMenu()->insertItem(
+      KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ), idx );
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPostToML()
