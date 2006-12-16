@@ -225,6 +225,8 @@ public slots:
   /** Add, remove or adjust the folder's shortcut. */
   void slotShortcutChanged( KMFolder *folder );
 
+  void updateCustomTemplateMenus();
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -349,10 +351,6 @@ protected slots:
   void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
-  void slotShowCustomReply();
-  void slotShowCustomReplyAll();
-  void slotShowCustomForward();
-
   /** Update the undo action */
   void slotUpdateUndo();
 
@@ -434,6 +432,10 @@ private:
   KActionMenu *mCustomReplyActionMenu,
               *mCustomReplyAllActionMenu,
               *mCustomForwardActionMenu;
+  // Signal mappers for custom template actions
+  QSignalMapper *mCustomReplyMapper,
+                *mCustomReplyAllMapper,
+                *mCustomForwardMapper;
 
   KActionMenu *mStatusMenu, *mThreadStatusMenu,
     *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
@@ -513,6 +515,7 @@ private:
   QGuardedPtr <KMail::FolderJob> mJob;
 
   QValueVector<QString> mCustomTemplates;
+  QPtrList<KAction> mCustomTemplateActions;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;

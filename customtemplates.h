@@ -28,6 +28,7 @@
 
 struct CustomTemplateItem;
 typedef QDict<CustomTemplateItem> CustomTemplateItemList;
+class KShortcut;
 
 class CustomTemplates : public CustomTemplatesBase
 {
@@ -57,6 +58,7 @@ class CustomTemplates : public CustomTemplatesBase
     void slotRemoveClicked();
     void slotListSelectionChanged();
     void slotTypeActivated( int index );
+    void slotShortcutCaptured( const KShortcut &shortcut );
 
   signals:
 
@@ -67,6 +69,10 @@ class CustomTemplates : public CustomTemplatesBase
     QListViewItem *mCurrentItem;
     CustomTemplateItemList mItemList;
 
+    QPixmap mReplyPix;
+    QPixmap mReplyAllPix;
+    QPixmap mForwardPix;
+
 };
 
 struct CustomTemplateItem
@@ -74,10 +80,12 @@ struct CustomTemplateItem
   CustomTemplateItem() {}
   CustomTemplateItem( const QString &name,
                       const QString &content,
+                      KShortcut &shortcut,
                       CustomTemplates::Type type ) :
-    mName( name ), mContent( content ), mType( type ) {}
+    mName( name ), mContent( content ), mShortcut(shortcut), mType( type ) {}
 
   QString mName, mContent;
+  KShortcut mShortcut;
   CustomTemplates::Type mType;
 };
 

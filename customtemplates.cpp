@@ -34,10 +34,15 @@
 #include <klistview.h>
 #include <klineedit.h>
 #include <qcombobox.h>
+#include <kshortcut.h>
+#include <kmessagebox.h>
+#include <kkeybutton.h>
 
 #include "customtemplates_base.h"
 #include "customtemplates_kfg.h"
 #include "globalsettings.h"
+#include "kmkernel.h"
+#include "kmmainwidget.h"
 
 #include "customtemplates.h"
 
@@ -52,6 +57,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
   mList->setColumnWidth( 0, 50 );
   mList->setColumnWidth( 1, 100 );
+
+  mEditFrame->setEnabled( false );
 
   connect( mEdit, SIGNAL( textChanged() ),
            this, SLOT( slotTextChanged( void ) ) );
@@ -68,6 +75,18 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mType, SIGNAL( activated( int ) ),
            this, SLOT( slotTypeActivated( int ) ) );
 
+  connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
+           this, SLOT( slotShortcutCaptured( const KShortcut& ) ) );
+
+  mReplyPix = KIconLoader().loadIcon( "mail_reply", KIcon::Small );
+  mReplyAllPix = KIconLoader().loadIcon( "mail_replyall", KIcon::Small );
+  mForwardPix = KIconLoader().loadIcon( "mail_forward", KIcon::Small );
+
+  mType->clear();
+  mType->insertItem( QPixmap(), i18n( "Message->", "Universal" ), TUniversal );
+  mType->insertItem( mReplyPix, i18n( "Message->", "Reply" ), TReply );
+  mType->insertItem( mReplyAllPix, i18n( "Message->", "Reply to All" ), TReplyAll );
+  mType->insertItem( mForwardPix, i18n( "Message->", "Forward" ), TForward );
 }
 
 CustomTemplates::~CustomTemplates()
@@ -86,17 +105,18 @@ QString CustomTemplates::indexToType( int index )
   QString typeStr;
   switch ( index ) {
   case TUniversal:
-    typeStr = i18n( "Any" ); break;
+    // typeStr = i18n( "Any" ); break;
+    break;
 /*  case TNewMessage:
     typeStr = i18n( "New Message" ); break;*/
   case TReply:
-    typeStr = i18n( "Reply" ); break;
+    typeStr = i18n( "Message->", "Reply" ); break;
   case TReplyAll:
-    typeStr = i18n( "Reply to All" ); break;
+    typeStr = i18n( "Message->", "Reply to All" ); break;
   case TForward:
-    typeStr = i18n( "Forward" ); break;
+    typeStr = i18n( "Message->", "Forward" ); break;
   default:
-    typeStr = i18n( "Unknown" ); break;
+    typeStr = i18n( "Message->", "Unknown" ); break;
   }
   return typeStr;
 }
@@ -111,11 +131,30 @@ void CustomTemplates::load()
   QStringList list = GlobalSettings::self()->customTemplates();
   for ( QStringList::iterator it = list.begin(); it != list.end(); ++it ) {
     CTemplates t(*it);
-    QString typeStr = indexToType( t.type() );
+    // QString typeStr = indexToType( t.type() );
+    QString typeStr;
+    KShortcut shortcut( t.shortcut() );
     CustomTemplateItem *vitem =
-      new CustomTemplateItem( *it, t.content(), static_cast<Type>( t.type() ) );
+      new CustomTemplateItem( *it, t.content(),
+        shortcut,
+        static_cast<Type>( t.type() ) );
     mItemList.insert( *it, vitem );
-    (void) new QListViewItem( mList, typeStr, *it, t.content() );
+    QListViewItem *item = new QListViewItem( mList, typeStr, *it, t.content() );
+    switch ( t.type() ) {
+    case TReply:
+      item->setPixmap( 0, mReplyPix );
+      break;
+    case TReplyAll:
+      item->setPixmap( 0, mReplyAllPix );
+      break;
+    case TForward:
+      item->setPixmap( 0, mForwardPix );
+      break;
+    default:
+      item->setPixmap( 0, QPixmap() );
+      item->setText( 0, indexToType( t.type() ) );
+      break;
+    };
   }
 }
 
@@ -125,19 +164,30 @@ void CustomTemplates::save()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
+      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
   QStringList list;
-  QDictIterator<CustomTemplateItem> it(mItemList);
+  QListViewItemIterator lit( mList );
+  while ( lit.current() ) {
+    list.append( (*lit)->text( 1 ) );
+    ++lit;
+  }
+  QDictIterator<CustomTemplateItem> it( mItemList );
   for ( ; it.current() ; ++it ) {
-    list.append( (*it)->mName );
+    // list.append( (*it)->mName );
     CTemplates t( (*it)->mName );
     t.setContent( (*it)->mContent );
+    t.setShortcut( (*it)->mShortcut.toString() );
     t.setType( (*it)->mType );
     t.writeConfig();
   }
   GlobalSettings::self()->setCustomTemplates( list );
   GlobalSettings::self()->writeConfig();
+
+  // update kmail menus related to custom templates
+  if ( kmkernel->getKMMainWidget() )
+    kmkernel->getKMMainWidget()->updateCustomTemplateMenus();
 }
 
 void CustomTemplates::slotInsertCommand( QString cmd, int adjustCursor )
@@ -157,11 +207,12 @@ void CustomTemplates::slotAddClicked()
   if ( !str.isEmpty() ) {
     CustomTemplateItem *vitem = mItemList[ str ];
     if ( !vitem ) {
-      vitem = new CustomTemplateItem( str, "", TUniversal );
+      vitem = new CustomTemplateItem( str, "", KShortcut::null(), TUniversal );
       mItemList.insert( str, vitem );
       QListViewItem *item =
         new QListViewItem( mList, indexToType( TUniversal ), str, "" );
       mList->setSelected( item, true );
+      mKeyButton->setEnabled( false );
       emit changed();
     }
   }
@@ -186,10 +237,12 @@ void CustomTemplates::slotListSelectionChanged()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
+      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
   QListViewItem *item = mList->selectedItem();
   if ( item ) {
+    mEditFrame->setEnabled( true );
     mCurrentItem = item;
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
@@ -198,14 +251,24 @@ void CustomTemplates::slotListSelectionChanged()
                   this, SLOT( slotTextChanged( void ) ) );
 
       mEdit->setText( vitem->mContent );
+      mKeyButton->setShortcut( vitem->mShortcut, false );
       mType->setCurrentItem( vitem->mType );
 
       connect( mEdit, SIGNAL( textChanged() ),
               this, SLOT( slotTextChanged( void ) ) );
+
+      if ( vitem->mType == TUniversal )
+      {
+        mKeyButton->setEnabled( false );
+      } else {
+        mKeyButton->setEnabled( true );
+      }
     }
   } else {
+    mEditFrame->setEnabled( false );
     mCurrentItem = 0;
     mEdit->clear();
+    mKeyButton->setShortcut( KShortcut::null(), false );
     mType->setCurrentItem( 0 );
   }
 }
@@ -213,11 +276,76 @@ void CustomTemplates::slotListSelectionChanged()
 void CustomTemplates::slotTypeActivated( int index )
 {
   if ( mCurrentItem ) {
-    mCurrentItem->setText( 0, indexToType( index ) );
+    // mCurrentItem->setText( 0, indexToType( index ) );
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mType = static_cast<Type>(index);
     }
+    switch ( vitem->mType ) {
+    case TReply:
+      mCurrentItem->setPixmap( 0, mReplyPix );
+      break;
+    case TReplyAll:
+      mCurrentItem->setPixmap( 0, mReplyAllPix );
+      break;
+    case TForward:
+      mCurrentItem->setPixmap( 0, mForwardPix );
+      break;
+    default:
+      mCurrentItem->setPixmap( 0, QPixmap() );
+      break;
+    };
+    if ( index == TUniversal )
+    {
+      mKeyButton->setEnabled( false );
+    } else {
+      mKeyButton->setEnabled( true );
+    }
+    emit changed();
+  }
+}
+
+void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
+{
+  KShortcut sc( shortcut );
+  if ( sc == mKeyButton->shortcut() )
+    return;
+  if ( sc.isNull() || sc.toString().isEmpty() )
+    sc.clear();
+  bool assign = true;
+  bool customused = false;
+  // check if shortcut is already used for custom templates
+  QDictIterator<CustomTemplateItem> it(mItemList);
+  for ( ; it.current() ; ++it ) {
+    if ( !mCurrentItem || (*it)->mName != mCurrentItem->text( 1 ) )
+    {
+      if ( (*it)->mShortcut == sc )
+      {
+        QString title( I18N_NOOP("Key Conflict") );
+        QString msg( I18N_NOOP("The selected shortcut is already used "
+              "for another custom template, "
+              "would you still like to continue with the assignment?" ) );
+        assign = ( KMessageBox::warningYesNo( this, msg, title )
+                    == KMessageBox::Yes );
+        if ( assign )
+        {
+          (*it)->mShortcut = KShortcut::null();
+        }
+        customused = true;
+      }
+    }
+  }
+  // check if shortcut is used somewhere else
+  if ( !customused && !sc.isNull() &&
+       !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
+    QString title( I18N_NOOP("Key Conflict") );
+    QString msg( I18N_NOOP("The selected shortcut is already used, "
+          "would you still like to continue with the assignment?" ) );
+    assign = ( KMessageBox::warningYesNo( this, msg, title )
+                == KMessageBox::Yes );
+  }
+  if ( assign ) {
+    mKeyButton->setShortcut( sc, false );
     emit changed();
   }
 }

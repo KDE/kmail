@@ -21,7 +21,7 @@
         </property>
         <widget class="QSplitter">
             <property name="name">
-                <cstring>splitter4</cstring>
+                <cstring>splitter2</cstring>
             </property>
             <property name="orientation">
                 <enum>Horizontal</enum>
@@ -127,7 +127,7 @@
             </widget>
             <widget class="QFrame">
                 <property name="name">
-                    <cstring>frame3</cstring>
+                    <cstring>mEditFrame</cstring>
                 </property>
                 <property name="sizePolicy">
                     <sizepolicy>
@@ -171,46 +171,54 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout12</cstring>
+                            <cstring>layout8</cstring>
                         </property>
-                        <hbox>
+                        <grid>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="TemplatesInsertCommand">
+                            <widget class="TemplatesInsertCommand" row="1" column="0">
                                 <property name="name">
                                     <cstring>mInsertCommand</cstring>
                                 </property>
                             </widget>
-                            <spacer>
+                            <widget class="QLabel" row="0" column="1">
                                 <property name="name">
-                                    <cstring>spacer1</cstring>
+                                    <cstring>textLabel1_2</cstring>
                                 </property>
-                                <property name="orientation">
-                                    <enum>Horizontal</enum>
+                                <property name="text">
+                                    <string>Shortc&amp;ut:</string>
                                 </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
+                                <property name="alignment">
+                                    <set>AlignVCenter|AlignRight</set>
                                 </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>150</width>
-                                        <height>20</height>
-                                    </size>
+                                <property name="buddy" stdset="0">
+                                    <cstring>mKeyButton</cstring>
                                 </property>
-                            </spacer>
-                            <widget class="QLabel">
+                            </widget>
+                            <widget class="QLabel" row="1" column="1">
                                 <property name="name">
                                     <cstring>textLabel1</cstring>
                                 </property>
                                 <property name="text">
                                     <string>&amp;Template type:</string>
                                 </property>
+                                <property name="alignment">
+                                    <set>AlignVCenter|AlignRight</set>
+                                </property>
                                 <property name="buddy" stdset="0">
                                     <cstring>mType</cstring>
                                 </property>
                             </widget>
-                            <widget class="QComboBox">
+                            <widget class="KKeyButton" row="0" column="2">
+                                <property name="name">
+                                    <cstring>mKeyButton</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Нет</string>
+                                </property>
+                            </widget>
+                            <widget class="QComboBox" row="1" column="2">
                                 <item>
                                     <property name="text">
                                         <string>Universal</string>
@@ -235,7 +243,7 @@
                                     <cstring>mType</cstring>
                                 </property>
                             </widget>
-                        </hbox>
+                        </grid>
                     </widget>
                 </vbox>
             </widget>
@@ -245,9 +253,10 @@
 <customwidgets>
     <customwidget>
         <class>TemplatesInsertCommand</class>
+        <header location="local">templatesinsertcommand.h</header>
         <sizehint>
-            <width>-1</width>
-            <height>-1</height>
+            <width>50</width>
+            <height>10</height>
         </sizehint>
         <container>0</container>
         <sizepolicy>
@@ -275,5 +284,6 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>templatesinsertcommand.h</includehint>
+    <includehint>kkeybutton.h</includehint>
 </includehints>
 </UI>
