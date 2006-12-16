@@ -52,6 +52,7 @@ using KMail::MailServiceImpl;
 #include "folderIface.h"
 using KMail::FolderIface;
 #include "jobscheduler.h"
+#include "templateparser.h"
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -349,8 +350,7 @@ void KMKernel::openReader( bool onlyCheck )
     activate = !onlyCheck; // existing window: only activate if not --check
     if ( activate )
        mWin->show();
-  }
-  else {
+  } else {
     mWin = new KMMainWin;
     mWin->show();
     activate = false; // new window: no explicit activation (#73591)
@@ -387,11 +387,24 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QCString str = KPIM::kFileToString( messageFile.path(), true, false );
-    if( !str.isEmpty() )
+    if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str ).utf8() );
+    } else {
+      TemplateParser parser( msg, TemplateParser::NewMessage,
+	"", false, false, false, false );
+      parser.process( NULL, NULL );
+    }
   }
   else if (!body.isEmpty())
+  {
     msg->setBody(body.utf8());
+  }
+  else
+  {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
 
   if (!customHeaders.isEmpty())
   {
@@ -469,7 +482,13 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !bcc.isEmpty() ) msg->setBcc(bcc);
   if ( !subject.isEmpty() ) msg->setSubject(subject);
   if ( !to.isEmpty() ) msg->setTo(to);
-  if ( !body.isEmpty() ) msg->setBody(body.utf8());
+  if ( !body.isEmpty() ) {
+    msg->setBody(body.utf8());
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
 
   bool iCalAutoSend = false;
   bool noWordWrap = false;
@@ -564,7 +583,13 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!bcc.isEmpty()) msg->setBcc(bcc);
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
-  if (!body.isEmpty()) msg->setBody(body.utf8());
+  if (!body.isEmpty()) {
+    msg->setBody(body.utf8());
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
@@ -590,16 +615,16 @@ DCOPRef KMKernel::newMessage(const QString &to,
 {
   KMail::Composer * win = 0;
   KMMessage *msg = new KMMessage;
+  KMFolder *folder = NULL;
+  uint id;
 
   if ( useFolderId ) {
     //create message with required folder identity
-    KMFolder *folder = currentFolder();
-    uint id = folder ? folder->identity() : 0;
+    folder = currentFolder();
+    id = folder ? folder->identity() : 0;
     msg->initHeader( id );
-    win = makeComposer( msg, id );
   } else {
     msg->initHeader();
-    win = makeComposer( msg );
   }
   msg->setCharset("utf-8");
   //set basic headers
@@ -607,10 +632,23 @@ DCOPRef KMKernel::newMessage(const QString &to,
   if (!cc.isEmpty()) msg->setCc(cc);
   if (!bcc.isEmpty()) msg->setBcc(bcc);
 
+  if ( useFolderId ) {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, folder );
+    win = makeComposer( msg, id );
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, folder );
+    win = makeComposer( msg );
+  }
+
   //Add the attachment if we have one
   if(!attachURL.isEmpty() && attachURL.isValid()) {
     win->addAttach(attachURL);
   }
+
   //only show window when required
   if(!hidden) {
     win->show();
@@ -782,8 +820,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
               tmp_fname = "/" + *it;
             }
             else return -1;
-          }
-          else {
+          } else {
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
@@ -797,8 +834,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
         mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
         if(!folder) return -1;
 
-      }
-      else {
+      } else {
         mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
       }
     }
@@ -962,8 +998,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
               tmp_fname = "/" + *it;
             }
             else return -1;
-          }
-          else {
+          } else {
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
@@ -976,8 +1011,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
       mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
       if(!folder) return -1;
 
-      }
-      else {
+      } else {
         mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
       }
     }
@@ -1731,8 +1765,7 @@ bool KMKernel::transferMail( QString & destinationDir )
                 "files now?</strong></qt>" )
           .arg( kmailName, kmailName, kmailName )
           .arg( dir, destinationDir, dir, destinationDir );
-  }
-  else {
+  } else {
     msg = i18n( "%1-%3 is the application name, %4-%6 are folder path",
                 "<qt>The <i>%4</i> folder exists. "
                 "%1 now uses the <i>%5</i> folder for "
@@ -1960,8 +1993,7 @@ void KMKernel::emergencyExit( const QString& reason )
   QString mesg;
   if ( reason.length() == 0 ) {
     mesg = i18n("KMail encountered a fatal error and will terminate now");
-  }
-  else {
+  } else {
     mesg = i18n("KMail encountered a fatal error and will "
                       "terminate now.\nThe error was:\n%1").arg( reason );
   }
