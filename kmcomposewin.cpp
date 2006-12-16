@@ -1971,6 +1971,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
   }
   setModified( isModified );
+
+  // do this even for new messages
+  mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
 }
 
 
@@ -4014,7 +4017,9 @@ void KMComposeWin::slotAppendSignature()
   {
     mEditor->append(mOldSigText);
     mEditor->setModified(mod);
-    mEditor->setContentsPos( 0, 0 );
+    // interfere with %CURSOR template command
+    // mEditor->setContentsPos( 0, 0 );
+    mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
     mEditor->sync();
   }
 }

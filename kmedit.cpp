@@ -732,7 +732,7 @@ void KMEdit::slotSpellDone()
   }
 }
 
-void KMEdit::setCursorPositionFromStart(unsigned int pos) {
+void KMEdit::setCursorPositionFromStart( unsigned int pos ) {
   unsigned int l = 0;
   unsigned int c = 0;
   posToRowCol( pos, l, c );
