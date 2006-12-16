@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>541</width>
-            <height>586</height>
+            <width>400</width>
+            <height>300</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -22,9 +22,12 @@
     </property>
     <property name="minimumSize">
         <size>
-            <width>430</width>
-            <height>450</height>
+            <width>400</width>
+            <height>300</height>
         </size>
+    </property>
+    <property name="caption">
+        <string>TemplatesConfiguration</string>
     </property>
     <vbox>
         <property name="name">
@@ -267,6 +270,9 @@
                     </property>
                     <property name="text">
                         <string>&amp;Insert command...</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+I</string>
                     </property>
                 </widget>
                 <widget class="QLabel">

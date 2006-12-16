@@ -366,17 +366,6 @@ void AccountWizard::accept()
 
 void AccountWizard::createTransport()
 {
-  // create outgoing account
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  uint numTransports = general.readNumEntry( "transports", 0 );
-
-  for ( uint i = 1 ; i <= numTransports ; i++ ) {
-    KMTransportInfo *info = new KMTransportInfo();
-    info->readConfig( i );
-    mTransportInfoList.append( info );
-  }
-
   mTransportInfo = new KMTransportInfo();
 
   if ( mLocalDelivery->isChecked() ) { // local delivery
@@ -402,12 +391,24 @@ void AccountWizard::createTransport()
 void AccountWizard::transportCreated()
 {
   mTransportInfoList.append( mTransportInfo );
-
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "transports", mTransportInfoList.count() );
 
   for ( uint i = 0 ; i < mTransportInfoList.count() ; i++ )
     mTransportInfo->writeConfig( i + 1 );
+
+    // No default transport? => set the first transport as the default
+  if ( GlobalSettings::self()->defaultTransport().isEmpty() ) {
+    KConfigGroup general( KMKernel::config(), "General" );
+
+    if ( mTransportInfoList.count() > 0 ) {
+      KMTransportInfo info;
+      info.readConfig( 1 );
+      KConfigGroup composer( KMKernel::config(), "Composer" );
+      composer.writeEntry( "default-transport", info.name );
+      composer.writeEntry( "current-transport", info.name );
+    }
+  }
 
   mTransportInfoList.setAutoDelete( true );
   mTransportInfoList.clear();

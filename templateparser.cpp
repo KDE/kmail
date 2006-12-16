@@ -38,16 +38,17 @@
 #include "kmfolder.h"
 #include "templatesconfiguration_kfg.h"
 #include "globalsettings_base.h"
+#include "kmkernel.h"
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 
 #include "templateparser.h"
-
-#define QUOTERE "\"(.*)\""
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString aselection,
                                 bool asmartQuote, bool anoQuote,
                                 bool aallowDecryption, bool aselectionIsBody ) :
-  mode( amode ), selection( aselection ),
+  mode( amode ), folder( NULL ), identity( 0 ), selection( aselection ),
   smartQuote( asmartQuote ), noQuote( anoQuote ),
   allowDecryption( aallowDecryption ), selectionIsBody( aselectionIsBody ),
   debug( false ), quoteString( "> " )
@@ -169,7 +170,7 @@ QString TemplateParser::getLName( QString str )
   return res;
 };
 
-void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder )
+void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder, bool append )
 {
   orig_msg = aorig_msg;
   folder = afolder;
@@ -367,6 +368,30 @@ void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder )
           body.append( quote );
         };
 
+      } else if ( cmd.startsWith( "CCADDR" ) ) {
+        kdDebug() << "Command: CCADDR" << endl;
+        i += strlen( "CCADDR" );
+        QString str = msg->cc();
+        body.append( str );
+
+      } else if ( cmd.startsWith( "CCNAME" ) ) {
+        kdDebug() << "Command: CCNAME" << endl;
+        i += strlen( "CCNAME" );
+        QString str = msg->ccStrip();
+        body.append( str );
+
+      } else if ( cmd.startsWith( "CCFNAME" ) ) {
+        kdDebug() << "Command: CCFNAME" << endl;
+        i += strlen( "CCFNAME" );
+        QString str = msg->ccStrip();
+        body.append( getFName( str ) );
+
+      } else if ( cmd.startsWith( "CCLNAME" ) ) {
+        kdDebug() << "Command: CCLNAME" << endl;
+        i += strlen( "CCLNAME" );
+        QString str = msg->ccStrip();
+        body.append( getLName( str ) );
+
       } else if ( cmd.startsWith( "TOADDR" ) ) {
         kdDebug() << "Command: TOADDR" << endl;
         i += strlen( "TOADDR" );
@@ -475,6 +500,38 @@ void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder )
           QString hdr = re.cap( 1 );
           QString str = msg->headerFields( hdr.local8Bit() ).join( ", " );
           body.append( str );
+        };
+
+      } else if ( cmd.startsWith( "OCCADDR" ) ) {
+        kdDebug() << "Command: OCCADDR" << endl;
+        i += strlen( "OCCADDR" );
+        if ( orig_msg ) {
+          QString str = orig_msg->cc();
+          body.append( str );
+        };
+
+      } else if ( cmd.startsWith( "OCCNAME" ) ) {
+        kdDebug() << "Command: OCCNAME" << endl;
+        i += strlen( "OCCNAME" );
+        if ( orig_msg ) {
+          QString str = orig_msg->ccStrip();
+          body.append( str );
+        };
+
+      } else if ( cmd.startsWith( "OCCFNAME" ) ) {
+        kdDebug() << "Command: OCCFNAME" << endl;
+        i += strlen( "OCCFNAME" );
+        if ( orig_msg ) {
+          QString str = orig_msg->ccStrip();
+          body.append( getFName( str ) );
+        };
+
+      } else if ( cmd.startsWith( "OCCLNAME" ) ) {
+        kdDebug() << "Command: OCCLNAME" << endl;
+        i += strlen( "OCCLNAME" );
+        if ( orig_msg ) {
+          QString str = orig_msg->ccStrip();
+          body.append( getLName( str ) );
         };
 
       } else if ( cmd.startsWith( "OTOADDR" ) ) {
@@ -765,11 +822,22 @@ void TemplateParser::process( KMMessage *aorig_msg, KMFolder *afolder )
 
   // kdDebug() << "Message body: " << body << endl;
 
-  msg->setBody( body.utf8() );
+  if ( append ) {
+    QCString msg_body = msg->body();
+    msg_body.append( body.utf8() );
+    msg->setBody( msg_body );
+  }
+  else {
+    msg->setBody( body.utf8() );
+  }
 };
 
 QString TemplateParser::findTemplate()
 {
+  // import 'Phrases' if it not done yet
+  if ( !GlobalSettings::self()->phrasesConverted() ) {
+    TemplatesConfiguration::importFromPhrases();
+  }
 
   // kdDebug() << "Trying to find template for mode " << mode << endl;
 
@@ -787,8 +855,28 @@ QString TemplateParser::findTemplate()
       };
     };
   };
+  
+  if ( !identity ) {
+    identity = msg->identityUoid();
+    if ( !identity && orig_msg ) {
+      identity = orig_msg->identityUoid();
+    }
+    identity = kmkernel->identityManager()->identityForUoidOrDefault( identity ).uoid();
+    if ( !identity ) {
+			kdDebug() << "Oops! No identity for message" << endl;
+    }
+  }
+  
+  kdDebug() << "Identity found: " << identity << endl;
 
   QString fid = folder->idString();
+  QString iid;
+  if ( identity ) {
+    iid = QString("IDENTITY_%1").arg( identity );
+  }
+  else {
+    iid = "IDENTITY_NO_IDENTITY";
+  }
   Templates fconf( fid );
   if ( fconf.useCustomTemplates() ) {
     switch( mode ) {
@@ -809,6 +897,30 @@ QString TemplateParser::findTemplate()
       return "";
     };
     quoteString = fconf.quoteString();
+    if ( !tmpl.isEmpty() ) {
+      return tmpl;
+    };
+  };
+  Templates iconf( iid );
+  if ( iconf.useCustomTemplates() ) {
+    switch( mode ) {
+    case NewMessage:
+      tmpl = iconf.templateNewMessage();
+      break;
+    case Reply:
+      tmpl = iconf.templateReply();
+      break;
+    case ReplyAll:
+      tmpl = iconf.templateReplyAll();
+      break;
+    case Forward:
+      tmpl = iconf.templateForward();
+      break;
+    default:
+      kdDebug() << "Unknown message mode: " << mode << endl;
+      return "";
+    };
+    quoteString = iconf.quoteString();
     if ( !tmpl.isEmpty() ) {
       return tmpl;
     };

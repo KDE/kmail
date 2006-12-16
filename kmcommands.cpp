@@ -1151,14 +1151,14 @@ KMCommand::Result KMForwardInlineCommand::execute()
   if (msgList.count() >= 2) { // Multiple forward
 
     uint id = 0;
-    QCString msgText = "";
+    // QCString msgText = "";
     QPtrList<KMMessage> linklist;
     for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
       // set the identity
       if (id == 0)
         id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
 
-      msgText += msg->createForwardBody();
+      // msgText += msg->createForwardBody();
       linklist.append( msg );
     }
     if ( id == 0 )
@@ -1167,10 +1167,15 @@ KMCommand::Result KMForwardInlineCommand::execute()
     fwdMsg->initHeader( id );
     fwdMsg->setAutomaticFields( true );
     fwdMsg->setCharset( "utf-8" );
-    fwdMsg->setBody( msgText );
+    // fwdMsg->setBody( msgText );
 
-    for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() )
+    for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
+			TemplateParser parser( fwdMsg, TemplateParser::Forward, 
+				msg->body(), false, false, false, false);
+				parser.process( msg, false, true );
+
       fwdMsg->link( msg, KMMsgStatusForwarded );
+    }
 
     KCursorSaver busy( KBusyPtr::busy() );
     KMail::Composer * win = KMail::makeComposer( fwdMsg, id );

@@ -48,7 +48,7 @@ class TemplateParser : public QObject
                     bool aSmartQuote, bool anoQuote, bool aallowDecryption,
                     bool aselectionIsBody );
 
-    virtual void process( KMMessage *aorig_msg, KMFolder *afolder = NULL );
+    virtual void process( KMMessage *aorig_msg, KMFolder *afolder = NULL, bool append = false );
     virtual QString findTemplate();
     virtual QString pipe( const QString cmd, const QString buf );
 
@@ -58,6 +58,7 @@ class TemplateParser : public QObject
   protected:
     Mode mode;
     KMFolder *folder;
+    uint identity;
     KMMessage *msg;
     KMMessage *orig_msg;
     QString selection;

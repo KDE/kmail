@@ -46,6 +46,8 @@ using KMail::FolderRequester;
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
+#include "templatesconfigurationimpl.h"
+#include "templatesconfiguration_kfg.h"
 
 // other kdepim headers:
 // libkdepim
@@ -64,6 +66,7 @@ using KMail::FolderRequester;
 #include <kfileitem.h>
 #include <kurl.h>
 #include <kdebug.h>
+#include <kpushbutton.h>
 
 // Qt headers:
 #include <qtabwidget.h>
@@ -364,7 +367,29 @@ namespace KMail {
              mTransportCombo, SLOT(setEnabled(bool)) );
 
     // the last row is a spacer
-
+    
+    // 
+    // Tab Widget: Templates
+    // 
+		tab = new QWidget( tabWidget );
+    tabWidget->addTab( tab, i18n("&Templates") );
+    vlay = new QVBoxLayout( tab, marginHint(), spacingHint() );
+		mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
+		vlay->addWidget( mCustom );
+		mWidget = new TemplatesConfiguration( tab );
+		mWidget->setEnabled( false );
+		vlay->addWidget( mWidget );
+		QHBoxLayout *btns = new QHBoxLayout( vlay, spacingHint() );
+		mCopyGlobal = new KPushButton( i18n("&Copy global templates"), tab );
+		mCopyGlobal->setEnabled( false );
+		btns->addWidget( mCopyGlobal );
+		connect( mCustom, SIGNAL( toggled( bool ) ),
+					mWidget, SLOT( setEnabled( bool ) ) );
+		connect( mCustom, SIGNAL( toggled( bool ) ),
+					mCopyGlobal, SLOT( setEnabled( bool ) ) );
+		connect( mCopyGlobal, SIGNAL(clicked()),
+					this, SLOT(slotCopyGlobal()) );
+		
     //
     // Tab Widget: Signature
     //
@@ -400,6 +425,10 @@ namespace KMail {
       mSMIMEEncryptionKeyRequester->setInitialQuery( email );
       mSMIMESigningKeyRequester->setInitialQuery( email );
     }
+  }
+  
+  void IdentityDialog::slotCopyGlobal() {
+    mWidget->loadFromGlobal();
   }
 
   namespace {
@@ -584,7 +613,14 @@ void IdentityDialog::slotOk() {
       mDraftsCombo->setFolder( kmkernel->draftsFolder() );
     else
       mDraftsCombo->setFolder( ident.drafts() );
-
+    
+    // "Templates" tab:
+    uint identity = ident.uoid();
+		QString iid = QString("IDENTITY_%1").arg( identity );
+		Templates t( iid );
+		mCustom->setChecked(t.useCustomTemplates());
+		mWidget->loadFromIdentity( identity );
+    
     // "Signature" tab:
     mSignatureConfigurator->setSignature( ident.signature() );
     mXFaceConfigurator->setXFace( ident.xface() );
@@ -613,6 +649,14 @@ void IdentityDialog::slotOk() {
                   mFccCombo->folder()->idString() : QString::null );
     ident.setDrafts( mDraftsCombo->folder() ?
                      mDraftsCombo->folder()->idString() : QString::null );
+    // "Templates" tab:
+    uint identity = ident.uoid();
+    QString iid = QString("IDENTITY_%1").arg( identity );
+    Templates t( iid );
+		kdDebug() << "use custom templates for identity " << identity << ": " << mCustom->isChecked() << endl;
+		t.setUseCustomTemplates(mCustom->isChecked());
+		t.writeConfig();
+		mWidget->saveToIdentity( identity );
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
     ident.setXFace( mXFaceConfigurator->xface() );

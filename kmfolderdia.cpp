@@ -669,7 +669,7 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
   
-  mCustom = new QCheckBox( i18n("&Use custom message templates"), this);
+  mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
   topLayout->addWidget( mCustom );
   
   mWidget = new TemplatesConfiguration( this );
@@ -677,12 +677,10 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
   topLayout->addWidget( mWidget );
   
   QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
-  mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this);
+  mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this );
   mCopyGlobal->setEnabled( false );
   btns->addWidget( mCopyGlobal );
   
-  topLayout->addStretch( 200 ); // we are more important than general tab
-
   connect( mCustom, SIGNAL(toggled(bool)),
         mWidget, SLOT(setEnabled(bool)) );
   connect( mCustom, SIGNAL(toggled(bool)),
@@ -705,14 +703,18 @@ void FolderDiaTemplatesTab::load()
 void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
+  
+  mFolder = folder;
 
   QString fid = folder->idString();
   
-  Templates t(fid);
+  Templates t( fid );
 
   mCustom->setChecked(t.useCustomTemplates());
   
-  mWidget->loadFromFolder(fid);
+  mIdentity = folder->identity();
+  
+  mWidget->loadFromFolder( fid, mIdentity );
 }
 
 //-----------------------------------------------------------------------------
@@ -736,5 +738,10 @@ bool FolderDiaTemplatesTab::save()
 void FolderDiaTemplatesTab::slotEmitChanged() {};
 
 void FolderDiaTemplatesTab::slotCopyGlobal() {
-  mWidget->loadFromGlobal();
+  if ( mIdentity ) {
+    mWidget->loadFromIdentity( mIdentity );
+  }
+  else {
+    mWidget->loadFromGlobal();
+  }
 };

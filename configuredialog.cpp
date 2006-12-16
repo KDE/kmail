@@ -2938,11 +2938,10 @@ QString ComposerPage::TemplatesTab::helpAnchor() const {
 ComposerPageTemplatesTab::ComposerPageTemplatesTab( QWidget * parent, const char * name )
   : ConfigModuleTab ( parent, name )
 {
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
   mWidget = new TemplatesConfiguration( this );
   vlay->addWidget( mWidget );
-  vlay->addStretch(100);
 
   connect( mWidget, SIGNAL( changed() ),
            this, SLOT( slotEmitChanged( void ) ) );

@@ -27,45 +27,57 @@
 
 class TemplatesConfiguration: public TemplatesConfigurationStub {
     Q_OBJECT
+	
+  public:
     
-    public:
+		TemplatesConfiguration( QWidget *parent = 0, const char *name = 0 );
+		
+		void loadFromGlobal();
+		void saveToGlobal();
+		void loadFromIdentity( uint id );
+		void saveToIdentity( uint id );
+		void loadFromFolder( QString id, uint identity = 0 );
+		void saveToFolder( QString id );
+		
+		/** Do import settings from 'Phrases' configuration */
+		void loadFromPhrases();
+		
+		/** Do import 'Phrases' settings and store them as global templates */
+		static void importFromPhrases();
+		
+		/** Convert 'Phrases'-like placeholders into 'Templates' compatible */
+		static QString convertPhrases( QString str );
+		
+		void insertCommand( QString cmd, int adjustCursor = 0 );
+		
+		static QString defaultNewMessage();
+		static QString defaultReply();
+		static QString defaultReplyAll();
+		static QString defaultForward();
+		static QString defaultQuoteString();
+	
+  public slots:
     
-	TemplatesConfiguration(QWidget *parent = 0, const char *name = 0);
+    void button_insert_clicked();
 	
-	void loadFromGlobal();
-	void saveToGlobal();
-	void loadFromFolder(QString id);
-	void saveToFolder(QString id);
-	
-	void insertCommand(QString cmd, int adjustCursor = 0);
-	
-	static QString defaultNewMessage();
-	static QString defaultReply();
-	static QString defaultReplyAll();
-	static QString defaultForward();
-	static QString defaultQuoteString();
-	
-    public slots:
-    
-	void button_insert_clicked();
-	
-	void slotTextChanged();
+    void slotTextChanged();
 
-    protected:
+  protected:
     
-        enum {CDnl = 1, CRem, CInsert, CSystem, CQuotePipe, CQuote, CQHeaders, CHeaders, 
-            CTextPipe, CMsgPipe, CBodyPipe, CClearPipe, CText, 
-            CToAddr, CToName, CFromAddr, CFromName, CFullSubject, CMsgId, 
-            COHeader, CHeader, COToAddr, COToName, COFromAddr, COFromName, COFullSubject, 
-            COMsgId, CDateEn, CDateShort, CDate, CDow, CTimeLongEn, CTimeLong, CTime, 
-            CODateEn, CODateShort, CODate, CODow, COTimeLongEn, COTimeLong, COTime, 
-            CBlank, CNop, CClear, CDebug, CDebugOff, CToFName, CToLName, CFromFName, CFromLName, 
-            COToFName, COToLName, COFromFName, COFromLName, CCursor};
+		enum {CDnl = 1, CRem, CInsert, CSystem, CQuotePipe, CQuote, CQHeaders, CHeaders, 
+				CTextPipe, CMsgPipe, CBodyPipe, CClearPipe, CText, 
+				CToAddr, CToName, CFromAddr, CFromName, CFullSubject, CMsgId, 
+				COHeader, CHeader, COToAddr, COToName, COFromAddr, COFromName, COFullSubject, 
+				COMsgId, CDateEn, CDateShort, CDate, CDow, CTimeLongEn, CTimeLong, CTime, 
+				CODateEn, CODateShort, CODate, CODow, COTimeLongEn, COTimeLong, COTime, 
+				CBlank, CNop, CClear, CDebug, CDebugOff, CToFName, CToLName, CFromFName, CFromLName, 
+				COToFName, COToLName, COFromFName, COFromLName, CCursor, 
+				CCCAddr, CCCName, CCCFName, CCCLName, COCCAddr, COCCName, COCCFName, COCCLName, };
     
-    signals:
+  signals:
     
-        void changed();
+		void changed();
     
 };
 
-#endif
+#endif // TEMPLATESCONFIGURATIONIMPL_H

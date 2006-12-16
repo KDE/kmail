@@ -180,6 +180,8 @@ private:
   QCheckBox* mCustom;
   TemplatesConfiguration* mWidget;
   KPushButton* mCopyGlobal;
+  KMFolder* mFolder;
+  uint mIdentity;
 
   KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;
