@@ -91,20 +91,18 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
   QString help =
       i18n( "<qt>"
-            "<p>There you can add, edit and delete custom message "
-            "templates used when you "
-            "compose an answer to message sender or to all recipients "
-            "of original message, or forward message with using "
-            "custom template by selecting it from right mouse button "
-            "menu or toolbar menu. Also you can bind a keyboard combination to "
-            "template for faster operations.</p>"
-            "<p>Inside message templates you can use substitution commands "
+            "<p>Here you can add, edit, and delete custom message "
+            "templates to use when you compose a reply or forwarding message. "
+            "Create the custom template by selecting it using the right mouse "
+            " button menu or toolbar menu. Also, you can bind a keyboard "
+            "combination to the template for faster operations.</p>"
+            "<p>Message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
-            "<p>There are four types of custom templates: used only to "
-            "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i> message, and "
+            "<p>There are four types of custom templates: used to "
+            "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i>, and "
             "<i>Universal</i> which can be used for all kind of operations. "
-            "You can`t bind keyboard shortcut to <i>Universal</i> templates.</p>"
+            "You cannot bind keyboard shortcut to <i>Universal</i> templates.</p>"
             "</qt>" );
   mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>" ).arg( help ) );
 }

@@ -68,46 +68,37 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
   if ( QString( name ) == "folder-templates" ) {
     help =
       i18n( "<qt>"
-            "<p>There you can input message templates used when you "
-            "compose new message, compose answer to message sender or to "
-            "all recipients mentioned in original message, or when you "
-            "forward message.</p>"
-            "<p>Inside message templates you can use substitution commands "
+            "<p>Here you can create message templates to use when you "
+            "compose new messages or replies, or when you forward messages.</p>"
+            "<p>The message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
-            "<p>Templates specified there are folder-specific. "
+            "<p>Templates specified here are folder-specific. "
             "They override both global templates and per-identity "
-            "templates.</p>"
-            "<p>Templates specified there are folder-specific. "
-            "They override both global templates and per-identity "
-            "templates.</p>"
+            "templates if they are specified.</p>"
             "</qt>" );
   } else if ( QString( name ) == "identity-templates" ) {
     help =
       i18n( "<qt>"
-            "<p>There you can input message templates used when you "
-            "compose new message, compose answer to message sender or to "
-            "all recipients mentioned in original message, or when you "
-            "forward message.</p>"
-            "<p>Inside message templates you can use substitution commands "
+            "<p>Here you can create message templates to use when you "
+            "compose new messages or replies, or when you forward messages.</p>"
+            "<p>The message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
             "<p>Templates specified there are mail identity-wide. "
-            "They override global templates and being overriden by per-folder "
+            "They override global templates and per-folder "
             "templates if they are specified.</p>"
             "</qt>" );
   } else {
     help =
       i18n( "<qt>"
-            "<p>There you can input message templates used when you "
-            "compose new message, compose answer to message sender or to "
-            "all recipients mentioned in original message, or when you "
-            "forward message.</p>"
-            "<p>Inside message templates you can use substitution commands "
+            "<p>Here you can create message templates to use when you "
+            "compose new messages or replies, or when you forward messages.</p>"
+            "<p>The message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
-            "<p>This is global (default) templates. They can be overriden "
-            "by per-identity templates and by per-folder templates "
+            "<p>This is a global (default) template. They override "
+            "both per-identity templates and by per-folder templates "
             "if they are specified.</p>"
             "</qt>" );
   }
@@ -311,7 +302,7 @@ void TemplatesConfiguration::loadFromFolder( QString id, uint identity )
 void TemplatesConfiguration::saveToFolder( QString id )
 {
   Templates t( id );
-  
+
   t.setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
   t.setTemplateReply( strOrBlank( textEdit_reply->text() ) );
   t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
@@ -369,7 +360,7 @@ void TemplatesConfiguration::loadFromPhrases()
   }
 }
 
-void TemplatesConfiguration::importFromPhrases() 
+void TemplatesConfiguration::importFromPhrases()
 {
   kdDebug() << "TemplatesConfiguration::importFromPhrases()" << endl;
 
@@ -428,7 +419,7 @@ void TemplatesConfiguration::importFromPhrases()
   GlobalSettings::self()->writeConfig();
 }
 
-QString TemplatesConfiguration::convertPhrases( QString &str ) 
+QString TemplatesConfiguration::convertPhrases( QString &str )
 {
   QString result;
   QChar ch;

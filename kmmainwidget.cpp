@@ -2436,7 +2436,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   delete mCustomForwardMapper;
 
   mCustomForwardActionMenu =
-    new KActionMenu( i18n("Forward with template"),
+    new KActionMenu( i18n("Forward with custom template"),
                      "mail_custom_forward",
                      actionCollection(), "custom_forward" );
   QSignalMapper *mCustomForwardMapper = new QSignalMapper( this );
@@ -2445,7 +2445,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   mForwardActionMenu->insert( mCustomForwardActionMenu );
 
   mCustomReplyActionMenu =
-    new KActionMenu( i18n("Reply with template"), "mail_custom_reply",
+    new KActionMenu( i18n("Reply with custom template"), "mail_custom_reply",
                      actionCollection(), "custom_reply" );
   QSignalMapper *mCustomReplyMapper = new QSignalMapper( this );
   connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
@@ -2453,7 +2453,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   mReplyActionMenu->insert( mCustomReplyActionMenu );
 
   mCustomReplyAllActionMenu =
-    new KActionMenu( i18n("Reply to All with template"),
+    new KActionMenu( i18n("Reply to All with custom template"),
                      "mail_custom_reply_all",
                      actionCollection(), "custom_reply_all" );
   QSignalMapper *mCustomReplyAllMapper = new QSignalMapper( this );
@@ -2548,15 +2548,15 @@ void KMMainWidget::updateCustomTemplateMenus()
     ++idx;
   }
   if ( !replyc ) {
-      mCustomReplyActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomReplyActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomReplyActionMenu->popupMenu()->setItemEnabled( 0, false );
   }
   if ( !replyallc ) {
-      mCustomReplyAllActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomReplyAllActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomReplyAllActionMenu->popupMenu()->setItemEnabled( 0, false );
   }
   if ( !forwardc ) {
-      mCustomForwardActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomForwardActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomForwardActionMenu->popupMenu()->setItemEnabled( 0, false );
   }
 
