@@ -235,7 +235,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( str );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Can't insert content from file %1: %2" ).
+                              i18n( "Cannot insert content from file %1: %2" ).
                               arg( path ).arg( file.errorString() ) );
         }
 
@@ -268,7 +268,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( QString::fromLocal8Bit( content, content.size() ) );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Can't insert content from file %1: %2").
+                              i18n( "Cannot insert content from file %1: %2").
                               arg( path ).arg(file.errorString() ));
         }
 
@@ -1056,10 +1056,10 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
       if ( mDebug ) {
         if ( mPipeErr.isEmpty() ) {
           KMessageBox::error( 0,
-                              i18n( "Can't write to process stdin: %1" ).arg( cmd ) );
+                              i18n( "Cannot write to process stdin: %1" ).arg( cmd ) );
         } else {
           KMessageBox::detailedError( 0,
-                                      i18n( "Can't write to process stdin: %1" ).
+                                      i18n( "Cannot write to process stdin: %1" ).
                                       arg( cmd ), mPipeErr );
         }
       }
@@ -1067,7 +1067,7 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
 
   } else if ( mDebug ) {
     KMessageBox::error( 0,
-                        i18n( "Can't start pipe command from template: %1" ).
+                        i18n( "Cannot start pipe command from template: %1" ).
                         arg( cmd ) );
   }
 
