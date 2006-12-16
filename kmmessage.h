@@ -309,25 +309,29 @@ public:
 
   /** Get or set the 'ReplyTo' header field */
   QString replyTo() const;
-  void setReplyTo(const QString& aStr);
+  void setReplyTo( const QString &aStr );
   void setReplyTo(KMMessage*);
 
   /** Get or set the 'Cc' header field */
   QString cc() const;
-  void setCc(const QString& aStr);
+  void setCc( const QString &aStr );
   QString ccStrip() const;
 
   /** Get or set the 'Bcc' header field */
   QString bcc() const;
-  void setBcc(const QString& aStr);
+  void setBcc( const QString &aStr );
 
   /** Get or set the 'Fcc' header field */
   QString fcc() const;
-  void setFcc(const QString& aStr);
+  void setFcc( const QString &aStr );
 
   /** Get or set the 'Drafts' folder */
   QString drafts() const { return mDrafts; }
-  void setDrafts(const QString& aStr);
+  void setDrafts( const QString &aStr );
+
+  /** Get or set the 'Templates' folder */
+  QString templates() const { return mTemplates; }
+  void setTemplates( const QString &aStr );
 
   /** Get or set the 'From' header field */
   QString from() const;
@@ -843,12 +847,12 @@ public:
   /** Return the textual content of the message as plain text,
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
-  
+
   /** Get stored cursor position */
   int getCursorPos() { return mCursorPos; };
   /** Set cursor position as offset from message start */
   void setCursorPos(int pos) { mCursorPos = pos; };
-  
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -857,6 +861,7 @@ private:
   void assign( const KMMessage& other );
 
   QString mDrafts;
+  QString mTemplates;
   mutable DwMessage* mMsg;
   mutable bool       mNeedsAssembly :1;
   bool mDecodeHTML :1;

@@ -168,7 +168,7 @@ public:
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }
-  
+
   int dcopAddMessage(const QString & foldername, const QString & messagefile,
                      const QString & MsgStatusFlags = QString());
   int dcopAddMessage(const QString & foldername, const KURL & messagefile,
@@ -179,7 +179,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
   int dcopAddMessage_fastImport(const QString & foldername, const KURL & messagefile,
                                 const QString & MsgStatusFlags = QString());
-  
+
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
@@ -202,9 +202,9 @@ public:
   */
   virtual void resumeBackgroundJobs();
 
-  /** 
-   * Stops all network related jobs and enter offline mode 
-   * New network jobs cannot be started. 
+  /**
+   * Stops all network related jobs and enter offline mode
+   * New network jobs cannot be started.
   */
   void stopNetworkJobs();
 
@@ -222,7 +222,7 @@ public:
   static bool askToGoOnline();
 
   /** Checks if the current network state is online or offline
-   * @return true if the network state is offline 
+   * @return true if the network state is offline
    * @return false if the network state is online
    */
   static bool isOffline();
@@ -258,9 +258,10 @@ public:
                const QCStringList &customHeaders);
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
 			     bool overwrite = FALSE);
-  bool folderIsDraftOrOutbox(const KMFolder *);
-  bool folderIsDrafts(const KMFolder *);
-  bool folderIsTrash(KMFolder *);
+  bool folderIsDraftOrOutbox( const KMFolder * );
+  bool folderIsDrafts( const KMFolder * );
+  bool folderIsTemplates( const KMFolder * );
+  bool folderIsTrash( KMFolder * );
   /**
    * Returns true if the folder is one of the sent-mail folders.
    */
@@ -278,6 +279,7 @@ public:
   KMFolder *sentFolder() { return the_sentFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
+  KMFolder *templatesFolder() { return the_templatesFolder; }
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
@@ -401,7 +403,7 @@ public slots:
 
   void slotShowConfigurationDialog();
   void slotRunBackgroundTasks();
-  
+
   void slotConfigChanged();
 
 protected slots:
@@ -423,6 +425,7 @@ private:
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
+  KMFolder *the_templatesFolder;
 
   KMFolderMgr *the_folderMgr;
   KMFolderMgr *the_imapFolderMgr;

@@ -112,6 +112,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_sentFolder = 0;
   the_trashFolder = 0;
   the_draftsFolder = 0;
+  the_templatesFolder = 0;
 
   the_folderMgr = 0;
   the_imapFolderMgr = 0;
@@ -1409,7 +1410,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
-  the_trashFolder->setSystemFolder(TRUE);
+  the_trashFolder->setSystemFolder( TRUE );
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString::null );
   // the_trashFolder->open();
@@ -1418,10 +1419,21 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
-  the_draftsFolder->setSystemFolder(TRUE);
+  the_draftsFolder->setSystemFolder( TRUE );
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString::null );
   the_draftsFolder->open();
+
+  the_templatesFolder =
+    the_folderMgr->findOrCreate( cfg->readEntry( "templatesFolder",
+                                                 I18N_NOOP("templates") ) );
+  if ( the_templatesFolder->canAccess() != 0 ) {
+    emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
+  }
+  the_templatesFolder->setSystemFolder( TRUE );
+  if ( the_templatesFolder->userWhoField().isEmpty() )
+    the_templatesFolder->setUserWhoField( QString::null );
+  the_templatesFolder->open();
 }
 
 
@@ -2022,12 +2034,32 @@ bool KMKernel::folderIsDrafts(const KMFolder * folder)
     return true;
 
   QString idString = folder->idString();
-  if ( idString.isEmpty() ) return false;
+  if ( idString.isEmpty() )
+    return false;
 
   // search the identities if the folder matches the drafts-folder
-  const KPIM::IdentityManager * im = identityManager();
-  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
-    if ( (*it).drafts() == idString ) return true;
+  const KPIM::IdentityManager *im = identityManager();
+  for ( KPIM::IdentityManager::ConstIterator it=im->begin(); it != im->end(); ++it )
+    if ( (*it).drafts() == idString )
+      return true;
+  return false;
+}
+
+bool KMKernel::folderIsTemplates( const KMFolder *folder )
+{
+  assert( folder );
+  if ( folder == the_templatesFolder )
+    return true;
+
+  QString idString = folder->idString();
+  if ( idString.isEmpty() )
+    return false;
+
+  // search the identities if the folder matches the templates-folder
+  const KPIM::IdentityManager *im = identityManager();
+  for ( KPIM::IdentityManager::ConstIterator it=im->begin(); it != im->end(); ++it )
+    if ( (*it).templates() == idString )
+      return true;
   return false;
 }
 

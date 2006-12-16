@@ -185,6 +185,7 @@ void KMMessage::assign( const KMMessage& other )
   else
     mUnencryptedMsg = 0;
   setDrafts( other.drafts() );
+  setTemplates( other.templates() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //KMMsgBase::assign( &other );
 }
@@ -1049,7 +1050,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
   msg->setSubject( replySubject() );
 
-  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply), 
+  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
     selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
   if ( !tmpl.isEmpty() ) {
     parser.process( tmpl, this );
@@ -1251,8 +1252,8 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   // QString st = QString::fromUtf8(createForwardBody());
 
   msg->setSubject( forwardSubject() );
-  
-  TemplateParser parser( msg, TemplateParser::Forward, 
+
+  TemplateParser parser( msg, TemplateParser::Forward,
     asPlainText( false, false ),
     false, false, false, false);
   if ( !tmpl.isEmpty() ) {
@@ -1260,11 +1261,11 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   } else {
     parser.process( this );
   }
-  
+
   // QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
   // if (encoding.isEmpty()) encoding = "utf-8";
   // msg->setCharset(encoding);
-  
+
   // force utf-8
   // msg->setCharset( "utf-8" );
 
@@ -1620,20 +1621,26 @@ void KMMessage::applyIdentity( uint id )
   else
     setHeaderField("X-KMail-Identity", QString::number( ident.uoid() ));
 
-  if (ident.transport().isEmpty())
-    removeHeaderField("X-KMail-Transport");
+  if ( ident.transport().isEmpty() )
+    removeHeaderField( "X-KMail-Transport" );
   else
-    setHeaderField("X-KMail-Transport", ident.transport());
+    setHeaderField( "X-KMail-Transport", ident.transport() );
 
-  if (ident.fcc().isEmpty())
+  if ( ident.fcc().isEmpty() )
     setFcc( QString::null );
   else
     setFcc( ident.fcc() );
 
-  if (ident.drafts().isEmpty())
+  if ( ident.drafts().isEmpty() )
     setDrafts( QString::null );
   else
     setDrafts( ident.drafts() );
+
+  if ( ident.templates().isEmpty() )
+    setTemplates( QString::null );
+  else
+    setTemplates( ident.templates() );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1818,8 +1825,8 @@ void KMMessage::setDate(const QCString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  // handle To same as Cc below, bug 80747 
-  return KPIM::normalizeAddressesAndDecodeIDNs( headerFields( "To" ).join( ", " ) ); 
+  // handle To same as Cc below, bug 80747
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerFields( "To" ).join( ", " ) );
 }
 
 
@@ -1900,15 +1907,21 @@ QString KMMessage::fcc() const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setFcc(const QString& aStr)
+void KMMessage::setFcc( const QString &aStr )
 {
   setHeaderField( "X-KMail-Fcc", aStr );
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setDrafts(const QString& aStr)
+void KMMessage::setDrafts( const QString &aStr )
 {
   mDrafts = aStr;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setTemplates( const QString &aStr )
+{
+  mTemplates = aStr;
 }
 
 //-----------------------------------------------------------------------------

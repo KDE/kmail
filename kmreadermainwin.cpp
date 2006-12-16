@@ -285,8 +285,8 @@ void KMReaderMainWin::setupAccel()
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
-  mSaveAsAction = KStdAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
-				      actionCollection() ); 
+  mSaveAsAction = KStdAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
+				      actionCollection() );
   mSaveAsAction->setShortcut( KStdAccel::shortcut( KStdAccel::Save ) );
   mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
@@ -426,8 +426,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();
-    mReplyActionMenu->plug( menu ); 
-    menu->insertSeparator(); 
+    mReplyActionMenu->plug( menu );
+    menu->insertSeparator();
 
     mReaderWin->copyAction()->plug( menu );
     mReaderWin->selectAllAction()->plug( menu );
@@ -441,9 +441,14 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       return;
     }
 
-    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() || aMsg.parent()->isDrafts() ) ) ) {
-      // add the reply and forward actions only if we are not in a sent-mail or drafts
-      // folder
+    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
+                                aMsg.parent()->isDrafts() ||
+                                aMsg.parent()->isTemplates() ) ) ) {
+      // add the reply and forward actions only if we are not in a sent-mail,
+      // templates or drafts folder
+      //
+      // FIXME: needs custom templates added to menu
+      // (see KMMainWidget::updateCustomTemplateMenus)
       mReplyActionMenu->plug( menu );
       mForwardActionMenu->plug( menu );
       menu->insertSeparator();

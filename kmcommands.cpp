@@ -656,12 +656,13 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
 KMCommand::Result KMEditMsgCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-  if (!msg || !msg->parent() ||
-      !kmkernel->folderIsDraftOrOutbox( msg->parent() ))
+  if ( !msg || !msg->parent() ||
+       ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
+         !kmkernel->folderIsTemplates( msg->parent() ) ) )
     return Failed;
 
   // Remember the old parent, we need it a bit further down to be able
-  // to put the unchanged messsage back in the drafts folder if the nth
+  // to put the unchanged messsage back in the original folder if the nth
   // edit is discarded, for n > 1.
   KMFolder *parent = msg->parent();
   if ( parent )
@@ -676,6 +677,30 @@ KMCommand::Result KMEditMsgCommand::execute()
   return OK;
 }
 
+KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
+  :KMCommand( parent, msg )
+{
+}
+
+KMCommand::Result KMUseTemplateCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->parent() ||
+       !kmkernel->folderIsTemplates( msg->parent() ) )
+    return Failed;
+
+  // Take a copy of the original message, which remains unchanged.
+  KMMessage *newMsg = new KMMessage;
+  newMsg->setComplete( msg->isComplete() );
+  newMsg->fromString( msg->asString() );
+
+  KMail::Composer *win = KMail::makeComposer();
+  newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+  win->setMsg( newMsg, FALSE, TRUE );
+  win->show();
+
+  return OK;
+}
 
 KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
   KMMessage *msg, bool fixedFont )
@@ -819,9 +844,9 @@ void KMSaveMsgCommand::slotSaveDataReq()
       }
       msg->setTransferInProgress( true );
       if (msg->isComplete() ) {
-        slotMessageRetrievedForSaving( msg );
+      slotMessageRetrievedForSaving( msg );
       } else {
-      // retrieve Message first
+        // retrieve Message first
         if ( msg->parent()  && !msg->isComplete() ) {
           FolderJob *job = msg->parent()->createJob( msg );
           job->setCancellable( false );

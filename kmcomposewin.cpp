@@ -1153,9 +1153,12 @@ void KMComposeWin::setupActions(void)
 
 
 
-  (void) new KAction (i18n("Save in &Drafts Folder"), "filesave", 0,
+  (void) new KAction (i18n("Save as &Draft"), "filesave", 0,
                       this, SLOT(slotSaveDraft()),
                       actionCollection(), "save_in_drafts");
+  (void) new KAction (i18n("Save as &Template"), "filesave", 0,
+                      this, SLOT(slotSaveTemplate()),
+                      actionCollection(), "save_in_templates");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
@@ -1455,7 +1458,7 @@ void KMComposeWin::setupActions(void)
   // up KMail's config dialog. That's sensible, though, so fix the label.
   KAction* configureAction = actionCollection()->action("options_configure" );
   if ( configureAction )
-    configureAction->setText( i18n("Configure KMail" ) );
+    configureAction->setText( i18n("Configure KMail..." ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -2029,22 +2032,34 @@ bool KMComposeWin::queryClose ()
 {
   if ( !mEditor->checkExternalEditorFinished() )
     return false;
-  if (kmkernel->shuttingDown() || kapp->sessionSaving())
+  if ( kmkernel->shuttingDown() || kapp->sessionSaving() )
     return true;
 
   if ( isModified() ) {
-    const int rc = KMessageBox::warningYesNoCancel(this,
+    bool istemplate = ( mFolder!=0 && mFolder->isTemplates() );
+    const QString savebut = ( istemplate ?
+                              i18n("Re&save as Template") :
+                              i18n("&Save as Draft") );
+    const QString savetext = ( istemplate ?
+                               i18n("Resave this message in the Templates folder. "
+                                    "It can then be used at a later time.") :
+                               i18n("Save this message in the Drafts folder. "
+                                    "It can then be edited and sent at a later time.") );
+
+    const int rc = KMessageBox::warningYesNoCancel( this,
            i18n("Do you want to save the message for later or discard it?"),
            i18n("Close Composer"),
-           KGuiItem(i18n("&Save as Draft"), "filesave", QString::null,
-                  i18n("Save this message in the Drafts folder. It can "
-                  "then be edited and sent at a later time.")),
+           KGuiItem(savebut, "filesave", QString::null, savetext),
            KStdGuiItem::discard() );
-    if (rc == KMessageBox::Cancel)
+    if ( rc == KMessageBox::Cancel )
       return false;
-    else if (rc == KMessageBox::Yes) {
+    else if ( rc == KMessageBox::Yes ) {
       // doSend will close the window. Just return false from this method
-      slotSaveDraft();
+      if ( istemplate ) {
+        slotSaveTemplate();
+      } else {
+        slotSaveDraft();
+      }
       return false;
     }
   }
@@ -2926,7 +2941,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 
      mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
                              SLOT(slotAttachOpen()));
-     mOpenWithId = mAttachMenu->insertItem(i18n("Open with..."), this,
+     mOpenWithId = mAttachMenu->insertItem(i18n("Open With..."), this,
                              SLOT(slotAttachOpenWith()));
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
@@ -2947,6 +2962,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   }
 
   mAttachMenu->setItemEnabled( mOpenId, selectedCount > 0 );
+  mAttachMenu->setItemEnabled( mOpenWithId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
@@ -3495,7 +3511,7 @@ void KMComposeWin::slotCopy()
 #undef KeyPress
 #endif
 
-  QKeyEvent k(QEvent::KeyPress, Key_C , 0 , ControlButton);
+  QKeyEvent k(QEvent::KeyPress, Key_C, 0, ControlButton);
   kapp->notify(fw, &k);
 }
 
@@ -3515,7 +3531,7 @@ void KMComposeWin::slotPaste()
 #undef KeyPress
 #endif
 
-    QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
+    QKeyEvent k(QEvent::KeyPress, Key_V, 0, ControlButton);
     kapp->notify(fw, &k);
   }
 
@@ -3722,7 +3738,8 @@ bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresse
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInDrafts)
+void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
+                           KMComposeWin::SaveIn saveIn )
 {
   if ( method != KMail::MessageSender::SendLater && kmkernel->isOffline() ) {
     KMessageBox::information( this,
@@ -3733,10 +3750,9 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
   } else {
     mSendMethod = method;
   }
-  mSaveInDrafts = saveInDrafts;
+  mSaveIn = saveIn;
 
-  if (!saveInDrafts)
-  {
+  if ( saveIn == KMComposeWin::None ) {
     if ( KPIM::getFirstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
@@ -3806,9 +3822,9 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
       (!hf.isEmpty() && (hf != mTransport->text(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
-  mDisableBreaking = saveInDrafts;
+  mDisableBreaking = ( saveIn != KMComposeWin::None );
 
-  const bool neverEncrypt = ( saveInDrafts && GlobalSettings::self()->neverEncryptDrafts() )
+  const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() )
                            || mSigningAndEncryptionExplicitlyDisabled;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
@@ -3848,6 +3864,59 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
   applyChanges( neverEncrypt );
 }
 
+bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
+                                        KMMessage *msg )
+{
+  KMFolder *theFolder = 0, *imapTheFolder = 0;
+  // get the draftsFolder
+  if ( !folderName.isEmpty() ) {
+    theFolder = kmkernel->folderMgr()->findIdString( folderName );
+    if ( theFolder == 0 )
+      // This is *NOT* supposed to be "imapDraftsFolder", because a
+      // dIMAP folder works like a normal folder
+      theFolder = kmkernel->dimapFolderMgr()->findIdString( folderName );
+    if ( theFolder == 0 )
+      imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
+    if ( !theFolder && !imapTheFolder ) {
+      const KPIM::Identity & id = kmkernel->identityManager()
+        ->identityForUoidOrDefault( msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+      KMessageBox::information( 0,
+                                i18n("The custom drafts or templates folder for "
+                                     "identify \"%1\" does not exist (anymore); "
+                                     "therefore, the default drafts or templates "
+                                     "folder will be used.")
+                                .arg( id.identityName() ) );
+    }
+  }
+  if ( imapTheFolder && imapTheFolder->noContent() )
+    imapTheFolder = 0;
+
+  if ( theFolder == 0 ) {
+    theFolder = ( mSaveIn==KMComposeWin::Drafts ?
+                  kmkernel->draftsFolder() : kmkernel->templatesFolder() );
+  } else {
+    theFolder->open();
+  }
+  kdDebug(5006) << k_funcinfo << "theFolder=" << theFolder->name() << endl;
+  if ( imapTheFolder )
+    kdDebug(5006) << k_funcinfo << "imapTheFolder=" << imapTheFolder->name() << endl;
+
+  bool sentOk = !( theFolder->addMsg( msg ) );
+
+  // Ensure the message is correctly and fully parsed
+  theFolder->unGetMsg( theFolder->count() - 1 );
+  msg = theFolder->getMsg( theFolder->count() - 1 );
+  // Does that assignment needs to be propagated out to the caller?
+  // Assuming the send is OK, the iterator is set to 0 immediately afterwards.
+  if ( imapTheFolder ) {
+    // move the message to the imap-folder and highlight it
+    imapTheFolder->moveMsg( msg );
+    (static_cast<KMFolderImap*>( imapTheFolder->storage() ))->getFolder();
+  }
+
+  return sentOk;
+}
+
 void KMComposeWin::slotContinueDoSend( bool sentOk )
 {
   kdDebug(5006) << "KMComposeWin::slotContinueDoSend( " << sentOk << " )"
@@ -3868,52 +3937,10 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     // needed for imap
     (*it)->setComplete( true );
 
-    if (mSaveInDrafts) {
-      KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
-      // get the draftsFolder
-      if ( !(*it)->drafts().isEmpty() ) {
-        draftsFolder = kmkernel->folderMgr()->findIdString( (*it)->drafts() );
-        if ( draftsFolder == 0 )
-          // This is *NOT* supposed to be "imapDraftsFolder", because a
-          // dIMAP folder works like a normal folder
-          draftsFolder = kmkernel->dimapFolderMgr()->findIdString( (*it)->drafts() );
-        if ( draftsFolder == 0 )
-          imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
-        if ( !draftsFolder && !imapDraftsFolder ) {
-          const KPIM::Identity & id = kmkernel->identityManager()
-            ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
-          KMessageBox::information(0, i18n("The custom drafts folder for identity "
-                                           "\"%1\" does not exist (anymore); "
-                                           "therefore, the default drafts folder "
-                                           "will be used.")
-                                   .arg( id.identityName() ) );
-        }
-      }
-      if (imapDraftsFolder && imapDraftsFolder->noContent())
-	imapDraftsFolder = 0;
-
-      if ( draftsFolder == 0 ) {
-	draftsFolder = kmkernel->draftsFolder();
-      } else {
-	draftsFolder->open();
-      }
-      kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
-      if (imapDraftsFolder)
-	kdDebug(5006) << "saveindrafts: imapdrafts="
-		      << imapDraftsFolder->name() << endl;
-
-      sentOk = !(draftsFolder->addMsg((*it)));
-
-      //Ensure the drafts message is correctly and fully parsed
-      draftsFolder->unGetMsg(draftsFolder->count() - 1);
-      (*it) = draftsFolder->getMsg(draftsFolder->count() - 1);
-
-      if (imapDraftsFolder) {
-	// move the message to the imap-folder and highlight it
-	imapDraftsFolder->moveMsg((*it));
-	(static_cast<KMFolderImap*>(imapDraftsFolder->storage()))->getFolder();
-      }
-
+    if ( mSaveIn==KMComposeWin::Drafts ) {
+      sentOk = saveDraftOrTemplate( (*it)->drafts(), (*it) );
+    } else if ( mSaveIn==KMComposeWin::Templates ) {
+      sentOk = saveDraftOrTemplate( (*it)->templates(), (*it) );
     } else {
       (*it)->setTo( KMMessage::expandAliases( to() ));
       (*it)->setCc( KMMessage::expandAliases( cc() ));
@@ -3958,9 +3985,14 @@ void KMComposeWin::slotSendLater()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSaveDraft() {
   if ( mEditor->checkExternalEditorFinished() )
-    doSend( KMail::MessageSender::SendLater, true );
+    doSend( KMail::MessageSender::SendLater, KMComposeWin::Drafts );
 }
 
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSaveTemplate() {
+  if ( mEditor->checkExternalEditorFinished() )
+    doSend( KMail::MessageSender::SendLater, KMComposeWin::Templates );
+}
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNowVia( int item )
@@ -4004,7 +4036,6 @@ void KMComposeWin::slotSendNow() {
     doSend( KMail::MessageSender::SendImmediate );
 }
 
-
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
@@ -4017,7 +4048,6 @@ void KMComposeWin::slotAppendSignature()
   {
     mEditor->append(mOldSigText);
     mEditor->setModified(mod);
-    // interfere with %CURSOR template command
     // mEditor->setContentsPos( 0, 0 );
     mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
     mEditor->sync();
@@ -4546,6 +4576,7 @@ void KMComposeWin::slotConfigChanged()
 */
 void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 {
+  // TODO: need to handle templates here?
   if ( (mFolder) && (folder->idString() == mFolder->idString()) )
   {
     mFolder = kmkernel->draftsFolder();

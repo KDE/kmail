@@ -119,6 +119,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
       case Drafts: icon = "edit"; break;
+      case Templates: icon = "filenew"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
     // non-root search folders
@@ -151,9 +152,10 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 {
   QPixmap pm;
 
-  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder()
-    || kmkernel->folderIsTrash( mFolder )
-    || kmkernel->folderIsDraftOrOutbox( mFolder ) )
+  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() ||
+       kmkernel->folderIsTrash( mFolder ) ||
+       kmkernel->folderIsTemplates( mFolder ) ||
+       kmkernel->folderIsDraftOrOutbox( mFolder ) )
     pm = normalIcon( size );
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
@@ -202,6 +204,8 @@ void KMFolderTreeItem::init()
       setType( SentMail );
     else if ( kmkernel->folderIsTrash( mFolder ) )
       setType( Trash );
+    else if ( kmkernel->folderIsTemplates( mFolder ) )
+      setType( Templates );
     else if( kmkernel->iCalIface().isResourceFolder(mFolder) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
     // System folders on dimap or imap which are not resource folders are
@@ -810,11 +814,12 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
       return false;
 
     if (confirm) {
-      // Skip drafts and sent mail as well, when reading mail with the space bar
-      // but not when changing into the next folder with unread mail via ctrl+ or
-      // ctrl- so we do this only if (confirm == true), which means we are doing
-      // readOn.
+      // Skip drafts, sent mail and templates as well, when reading mail with
+      // the space bar but not when changing into the next folder with unread
+      // mail via ctrl+ or ctrl- so we do this only if (confirm == true),
+      // which means we are doing readOn.
       if ( fti->type() == KFolderTreeItem::Drafts ||
+           fti->type() == KFolderTreeItem::Templates ||
            fti->type() == KFolderTreeItem::SentMail )
         return false;
 
@@ -1548,7 +1553,7 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   if (folder && folder->noContent()) // always empty
     count = -1;
   else {
-    if ( fti->folder() ) 
+    if ( fti->folder() )
       count = fti->folder()->countUnread();
   }
 

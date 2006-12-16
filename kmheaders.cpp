@@ -675,12 +675,14 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled(mFolder ?
-        (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ?
-        mFolder->isMailingListEnabled() : false);
-    if (mFolder)
-    {
+    mOwner->editAction()->setEnabled( mFolder ?
+                         ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
+                           kmkernel->folderIsTemplates( mFolder ) ) : false );
+    mOwner->useAction()->setEnabled( mFolder ?
+                         ( kmkernel->folderIsTemplates( mFolder ) ) : false );
+    mOwner->replyListAction()->setEnabled( mFolder ?
+                         mFolder->isMailingListEnabled() : false );
+    if ( mFolder ) {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
               this, SLOT(msgHeaderChanged(KMFolder*,int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
@@ -1152,7 +1154,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
-  kdDebug() << k_funcinfo << endl;
+  //  kdDebug() << k_funcinfo << endl;
   SerNumList serNums;
   QListViewItemIterator it(this, QListViewItemIterator::Selected|QListViewItemIterator::Visible);
   while( it.current() ) {
@@ -2291,17 +2293,22 @@ void KMHeaders::slotRMB()
 
   mOwner->updateMessageMenu();
 
-  bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
-  if ( out_folder )
-     mOwner->editAction()->plug(menu);
-  else {
-     // show most used actions
-     if( !mFolder->isSent() )
-       mOwner->replyMenu()->plug(menu);
-     mOwner->forwardMenu()->plug(menu);
-     if(mOwner->sendAgainAction()->isEnabled()) {
-       mOwner->sendAgainAction()->plug(menu);
-     }
+  bool out_folder = kmkernel->folderIsDraftOrOutbox( mFolder );
+  bool tem_folder = kmkernel->folderIsTemplates( mFolder );
+  if ( out_folder ) {
+    mOwner->editAction()->plug(menu);
+  } else if ( tem_folder ) {
+     mOwner->useAction()->plug( menu );
+     mOwner->editAction()->plug( menu );
+  } else {
+    // show most used actions
+    if( !mFolder->isSent() ) {
+      mOwner->replyMenu()->plug( menu );
+    }
+    mOwner->forwardMenu()->plug( menu );
+    if( mOwner->sendAgainAction()->isEnabled() ) {
+      mOwner->sendAgainAction()->plug( menu );
+    }
   }
   menu->insertSeparator();
 
@@ -2325,10 +2332,10 @@ void KMHeaders::slotRMB()
     mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
   }
 
-  if ( !out_folder ) {
+  if ( !out_folder && !tem_folder ) {
     menu->insertSeparator();
     mOwner->filterMenu()->plug( menu ); // Create Filter menu
-    mOwner->action("apply_filter_actions")->plug(menu);
+    mOwner->action( "apply_filter_actions" )->plug( menu );
   }
 
   menu->insertSeparator();

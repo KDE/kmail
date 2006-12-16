@@ -284,6 +284,17 @@ private:
   virtual Result execute();
 };
 
+class KDE_EXPORT KMUseTemplateCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMUseTemplateCommand( QWidget *parent, KMMessage *msg );
+
+private:
+  virtual Result execute();
+};
+
 class KDE_EXPORT KMShowMsgSrcCommand : public KMCommand
 {
   Q_OBJECT

@@ -266,6 +266,7 @@ private slots:
    * Returns true when saving was successful.
    */
   void slotSaveDraft();
+  void slotSaveTemplate();
   void slotNewComposer();
   void slotNewMailReader();
   void slotClose();
@@ -614,12 +615,19 @@ private:
    * This function is for example used to restore the unencrypted/unsigned
    * message text for editting.
    */
-   static void decryptOrStripOffCleartextSignature( QCString& );
+  static void decryptOrStripOffCleartextSignature( QCString& );
+
+  /**
+   * Save the message into the Drafts or Templates folder.
+   */
+  bool saveDraftOrTemplate( const QString &folderName, KMMessage *msg );
 
   /**
    * Send the message. Returns true if the message was sent successfully.
    */
-  void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault, bool saveInDrafts = false);
+  enum SaveIn { None, Drafts, Templates };
+  void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault,
+               KMComposeWin::SaveIn saveIn = KMComposeWin::None );
 
   /**
    * Returns the autosave interval in milliseconds (as needed for QTimer).
@@ -801,7 +809,7 @@ private:
 
   // These are for passing on methods over the applyChanges calls
   KMail::MessageSender::SendMethod mSendMethod;
-  bool mSaveInDrafts;
+  KMComposeWin::SaveIn mSaveIn;
 
   KToggleAction *mEncryptChiasmusAction;
   bool mEncryptWithChiasmus;

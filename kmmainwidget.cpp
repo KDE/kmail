@@ -76,6 +76,8 @@ using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 
+#include <qsignalmapper.h>
+
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
 #include "attachmentstrategy.h"
@@ -102,6 +104,9 @@ using KMail::HeaderListQuickSearch;
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
 #endif
+
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -141,6 +146,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mSearchWin = 0;
   mIntegrated  = TRUE;
   mFolder = 0;
+  mTemplateFolder = 0;
   mFolderThreadPref = false;
   mFolderThreadSubjPref = true;
   mReaderWindowActive = true;
@@ -900,13 +906,13 @@ void KMMainWidget::slotCompose()
 
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
-      TemplateParser parser( msg, TemplateParser::NewMessage, 
+      TemplateParser parser( msg, TemplateParser::NewMessage,
 	"", false, false, false, false );
       parser.process( NULL, mFolder );
       win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
-      TemplateParser parser( msg, TemplateParser::NewMessage, 
+      TemplateParser parser( msg, TemplateParser::NewMessage,
 	"", false, false, false, false );
       parser.process( NULL, NULL );
       win = KMail::makeComposer( msg );
@@ -928,6 +934,7 @@ void KMMainWidget::slotShowNewFromTemplate()
   else mTemplateFolder = kmkernel->templatesFolder();
   if ( !mTemplateFolder )
     return;
+
   mTemplateMenu->popupMenu()->clear();
   for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
     KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
@@ -937,6 +944,23 @@ void KMMainWidget::slotShowNewFromTemplate()
     mTemplateMenu->popupMenu()->insertItem(
       KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ), idx );
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotNewFromTemplate( int id )
+{
+  if ( !mTemplateFolder )
+    return;
+  newFromTemplate(mTemplateFolder->getMsg( id ) );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::newFromTemplate( KMMessage *msg )
+{
+  if ( !msg )
+    return;
+  KMCommand *command = new KMUseTemplateCommand( this, msg );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
@@ -1377,6 +1401,12 @@ void KMMainWidget::slotEditMsg()
 {
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotUseTemplate()
+{
+  newFromTemplate( mHeaders->currentMsg() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2218,18 +2248,20 @@ void KMMainWidget::slotDisplayCurrentMessage()
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
   if ( !msg ) return;
-  if (msg->parent() && !msg->isComplete())
-  {
-    FolderJob *job = msg->parent()->createJob(msg);
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotMsgActivated(KMMessage*)));
+  if ( msg->parent() && !msg->isComplete() ) {
+    FolderJob *job = msg->parent()->createJob( msg );
+    connect( job, SIGNAL( messageRetrieved( KMMessage* ) ),
+             SLOT( slotMsgActivated( KMMessage* ) ) );
     job->start();
     return;
   }
 
-  if (kmkernel->folderIsDraftOrOutbox(mFolder))
-  {
+  if (kmkernel->folderIsDraftOrOutbox( mFolder ) ) {
     slotEditMsg();
+    return;
+  }
+  if ( kmkernel->folderIsTemplates( mFolder ) ) {
+    slotUseTemplate();
     return;
   }
 
@@ -2319,11 +2351,13 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 
     if ( mFolder->isDrafts() || mFolder->isOutbox() ) {
       mEditAction->plug(menu);
-    }
-    else {
-      if( !mFolder->isSent() )
-        mReplyActionMenu->plug(menu);
-      mForwardActionMenu->plug(menu);
+    } else if ( mFolder->isTemplates() ) {
+      mUseAction->plug( menu );
+      mEditAction->plug( menu );
+    } else {
+      if ( !mFolder->isSent() )
+        mReplyActionMenu->plug( menu );
+      mForwardActionMenu->plug( menu );
     }
     menu->insertSeparator();
 
@@ -2712,6 +2746,14 @@ void KMMainWidget::setupActions()
   //----- Message Menu
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
+  mTemplateMenu =
+    new KActionMenu( i18n("New Message From &Template"), "filenew",
+                     actionCollection(), "new_from_template" );
+  mTemplateMenu->setDelayed( true );
+  connect( mTemplateMenu->popupMenu(), SIGNAL( aboutToShow() ), this,
+           SLOT( slotShowNewFromTemplate() ) );
+  connect( mTemplateMenu->popupMenu(), SIGNAL( activated(int) ), this,
+           SLOT( slotNewFromTemplate(int) ) );
 
   (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
                       CTRL+SHIFT+Key_N, this,
@@ -2811,6 +2853,10 @@ void KMMainWidget::setupActions()
   mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
   mEditAction->plugAccel( actionCollection()->kaccel() );
+  mUseAction = new KAction( i18n("New Message From &Template"), "filenew",
+                            Key_N, this, SLOT( slotUseTemplate() ),
+                            actionCollection(), "use_template" );
+  mUseAction->plugAccel( actionCollection()->kaccel() );
 
   //----- "Mark Message" submenu
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
@@ -2892,9 +2938,9 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
 
-  mThreadStatusMenu->insert( new KActionSeparator( this ) ); 
-  mThreadStatusMenu->insert( mWatchThreadAction ); 
-  mThreadStatusMenu->insert( mIgnoreThreadAction ); 
+  mThreadStatusMenu->insert( new KActionSeparator( this ) );
+  mThreadStatusMenu->insert( mWatchThreadAction );
+  mThreadStatusMenu->insert( mIgnoreThreadAction );
 
   mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
                                 0, this, SLOT(slotSaveAttachments()),
@@ -3274,7 +3320,10 @@ void KMMainWidget::updateMessageActions()
 
     bool single_actions = count == 1;
     mEditAction->setEnabled( single_actions &&
-    kmkernel->folderIsDraftOrOutbox(mFolder));
+                             ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
+                               kmkernel->folderIsTemplates( mFolder ) ) );
+    mUseAction->setEnabled( single_actions &&
+                            kmkernel->folderIsTemplates( mFolder ) );
     replyMenu()->setEnabled( single_actions );
     filterMenu()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
