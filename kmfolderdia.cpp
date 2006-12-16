@@ -672,7 +672,7 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
   mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
   topLayout->addWidget( mCustom );
   
-  mWidget = new TemplatesConfiguration( this );
+  mWidget = new TemplatesConfiguration( this , "folder-templates" );
   mWidget->setEnabled( false );
   topLayout->addWidget( mWidget );
   

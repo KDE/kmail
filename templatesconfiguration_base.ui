@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>400</width>
-            <height>300</height>
+            <height>316</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -58,7 +58,7 @@
                 <enum>Sunken</enum>
             </property>
             <property name="currentIndex">
-                <number>2</number>
+                <number>3</number>
             </property>
             <widget class="QWidget">
                 <property name="name">
@@ -248,6 +248,14 @@
                 </hbox>
             </widget>
         </widget>
+        <widget class="KActiveLabel">
+            <property name="name">
+                <cstring>mHelp</cstring>
+            </property>
+            <property name="text">
+                <string>How does this work?</string>
+            </property>
+        </widget>
         <widget class="QLayoutWidget">
             <property name="name">
                 <cstring>layout5</cstring>
@@ -295,9 +303,10 @@
 <customwidgets>
     <customwidget>
         <class>TemplatesInsertCommand</class>
+        <header location="local">templatesinsertcommand.h</header>
         <sizehint>
-            <width>-1</width>
-            <height>-1</height>
+            <width>50</width>
+            <height>10</height>
         </sizehint>
         <container>0</container>
         <sizepolicy>
@@ -317,6 +326,7 @@
 </images>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kactivelabel.h</includehint>
     <includehint>templatesinsertcommand.h</includehint>
 </includehints>
 </UI>

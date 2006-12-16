@@ -12,6 +12,9 @@
             <height>480</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -156,7 +159,7 @@
                                 <hsizetype>7</hsizetype>
                                 <vsizetype>7</vsizetype>
                                 <horstretch>3</horstretch>
-                                <verstretch>0</verstretch>
+                                <verstretch>1</verstretch>
                             </sizepolicy>
                         </property>
                         <property name="textFormat">
@@ -168,53 +171,12 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout8</cstring>
+                            <cstring>layout4</cstring>
                         </property>
                         <grid>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="TemplatesInsertCommand" row="1" column="0">
-                                <property name="name">
-                                    <cstring>mInsertCommand</cstring>
-                                </property>
-                            </widget>
-                            <widget class="QLabel" row="0" column="1">
-                                <property name="name">
-                                    <cstring>textLabel1_2</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Shortc&amp;ut:</string>
-                                </property>
-                                <property name="alignment">
-                                    <set>AlignVCenter|AlignRight</set>
-                                </property>
-                                <property name="buddy" stdset="0">
-                                    <cstring>mKeyButton</cstring>
-                                </property>
-                            </widget>
-                            <widget class="QLabel" row="1" column="1">
-                                <property name="name">
-                                    <cstring>textLabel1</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>&amp;Template type:</string>
-                                </property>
-                                <property name="alignment">
-                                    <set>AlignVCenter|AlignRight</set>
-                                </property>
-                                <property name="buddy" stdset="0">
-                                    <cstring>mType</cstring>
-                                </property>
-                            </widget>
-                            <widget class="KKeyButton" row="0" column="2">
-                                <property name="name">
-                                    <cstring>mKeyButton</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Нет</string>
-                                </property>
-                            </widget>
                             <widget class="QComboBox" row="1" column="2">
                                 <item>
                                     <property name="text">
@@ -238,6 +200,63 @@
                                 </item>
                                 <property name="name">
                                     <cstring>mType</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="1">
+                                <property name="name">
+                                    <cstring>textLabel1_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Shortc&amp;ut:</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>AlignVCenter|AlignRight</set>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>mKeyButton</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="1">
+                                <property name="name">
+                                    <cstring>textLabel1</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>5</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>1</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Template type:</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>AlignVCenter|AlignRight</set>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>mType</cstring>
+                                </property>
+                            </widget>
+                            <widget class="TemplatesInsertCommand" row="1" column="0">
+                                <property name="name">
+                                    <cstring>mInsertCommand</cstring>
+                                </property>
+                            </widget>
+                            <widget class="KKeyButton" row="0" column="2">
+                                <property name="name">
+                                    <cstring>mKeyButton</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Нет</string>
+                                </property>
+                            </widget>
+                            <widget class="KActiveLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>mHelp</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>How does this work?</string>
                                 </property>
                             </widget>
                         </grid>
@@ -282,5 +301,6 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>templatesinsertcommand.h</includehint>
     <includehint>kkeybutton.h</includehint>
+    <includehint>kactivelabel.h</includehint>
 </includehints>
 </UI>

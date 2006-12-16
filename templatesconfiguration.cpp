@@ -29,6 +29,7 @@
 #include <qtoolbox.h>
 #include <kdebug.h>
 #include <qfont.h>
+#include <kactivelabel.h>
 
 #include "templatesconfiguration_base.h"
 #include "templatesconfiguration_kfg.h"
@@ -62,6 +63,55 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
 
   connect( mInsertCommand, SIGNAL( insertCommand(QString, int) ),
            this, SLOT( slotInsertCommand(QString, int) ) );
+
+  QString help;
+  if ( QString( name ) == "folder-templates" ) {
+    help =
+      i18n( "<qt>"
+            "<p>There you can input message templates used when you "
+            "compose new message, compose answer to message sender or to "
+            "all recipients mentioned in original message, or when you "
+            "forward message.</p>"
+            "<p>Inside message templates you can use substitution commands "
+            "by simple typing them or selecting them from menu "
+            "<i>Insert command</i>.</p>"
+            "<p>Templates specified there are folder-specific. "
+            "They override both global templates and per-identity "
+            "templates.</p>"
+            "<p>Templates specified there are folder-specific. "
+            "They override both global templates and per-identity "
+            "templates.</p>"
+            "</qt>" );
+  } else if ( QString( name ) == "identity-templates" ) {
+    help =
+      i18n( "<qt>"
+            "<p>There you can input message templates used when you "
+            "compose new message, compose answer to message sender or to "
+            "all recipients mentioned in original message, or when you "
+            "forward message.</p>"
+            "<p>Inside message templates you can use substitution commands "
+            "by simple typing them or selecting them from menu "
+            "<i>Insert command</i>.</p>"
+            "<p>Templates specified there are mail identity-wide. "
+            "They override global templates and being overriden by per-folder "
+            "templates if they are specified.</p>"
+            "</qt>" );
+  } else {
+    help =
+      i18n( "<qt>"
+            "<p>There you can input message templates used when you "
+            "compose new message, compose answer to message sender or to "
+            "all recipients mentioned in original message, or when you "
+            "forward message.</p>"
+            "<p>Inside message templates you can use substitution commands "
+            "by simple typing them or selecting them from menu "
+            "<i>Insert command</i>.</p>"
+            "<p>This is global (default) templates. They can be overriden "
+            "by per-identity templates and by per-folder templates "
+            "if they are specified.</p>"
+            "</qt>" );
+  }
+  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>" ).arg( help ) );
 }
 
 void TemplatesConfiguration::slotTextChanged()
@@ -111,10 +161,10 @@ void TemplatesConfiguration::loadFromGlobal()
 
 void TemplatesConfiguration::saveToGlobal()
 {
-  GlobalSettings::self()->setTemplateNewMessage( textEdit_new->text() );
-  GlobalSettings::self()->setTemplateReply( textEdit_reply->text() );
-  GlobalSettings::self()->setTemplateReplyAll( textEdit_reply_all->text() );
-  GlobalSettings::self()->setTemplateForward( textEdit_forward->text() );
+  GlobalSettings::self()->setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
+  GlobalSettings::self()->setTemplateReply( strOrBlank( textEdit_reply->text() ) );
+  GlobalSettings::self()->setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
+  GlobalSettings::self()->setTemplateForward( strOrBlank( textEdit_forward->text() ) );
   GlobalSettings::self()->setQuoteString( lineEdit_quote->text() );
   GlobalSettings::self()->setPhrasesConverted( true );
   GlobalSettings::self()->writeConfig();
@@ -176,10 +226,10 @@ void TemplatesConfiguration::saveToIdentity( uint id )
 {
   Templates t( QString("IDENTITY_%1").arg( id ) );
 
-  t.setTemplateNewMessage( textEdit_new->text() );
-  t.setTemplateReply( textEdit_reply->text() );
-  t.setTemplateReplyAll( textEdit_reply_all->text() );
-  t.setTemplateForward( textEdit_forward->text() );
+  t.setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
+  t.setTemplateReply( strOrBlank( textEdit_reply->text() ) );
+  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
+  t.setTemplateForward( strOrBlank( textEdit_forward->text() ) );
   t.setQuoteString( lineEdit_quote->text() );
   t.writeConfig();
 }
@@ -261,11 +311,11 @@ void TemplatesConfiguration::loadFromFolder( QString id, uint identity )
 void TemplatesConfiguration::saveToFolder( QString id )
 {
   Templates t( id );
-
-  t.setTemplateNewMessage( textEdit_new->text() );
-  t.setTemplateReply( textEdit_reply->text() );
-  t.setTemplateReplyAll( textEdit_reply_all->text() );
-  t.setTemplateForward( textEdit_forward->text() );
+  
+  t.setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
+  t.setTemplateReply( strOrBlank( textEdit_reply->text() ) );
+  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
+  t.setTemplateForward( strOrBlank( textEdit_forward->text() ) );
   t.setQuoteString( lineEdit_quote->text() );
   t.writeConfig();
 }
@@ -508,6 +558,13 @@ QString TemplatesConfiguration::defaultForward() {
 
 QString TemplatesConfiguration::defaultQuoteString() {
   return "> ";
+}
+
+QString TemplatesConfiguration::strOrBlank( QString str ) {
+  if ( str.stripWhiteSpace().isEmpty() ) {
+    return QString( "%BLANK" );
+  }
+  return str;
 }
 
 #include "templatesconfiguration.moc"

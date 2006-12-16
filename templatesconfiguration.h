@@ -66,6 +66,10 @@ class TemplatesConfiguration : public TemplatesConfigurationBase
 
     void changed();
 
+  protected:
+
+    QString strOrBlank( QString str );
+
 };
 
 #endif // TEMPLATESCONFIGURATION_H

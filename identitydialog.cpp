@@ -385,7 +385,7 @@ namespace KMail {
     vlay = new QVBoxLayout( tab, marginHint(), spacingHint() );
 		mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
 		vlay->addWidget( mCustom );
-		mWidget = new TemplatesConfiguration( tab );
+		mWidget = new TemplatesConfiguration( tab , "identity-templates" );
 		mWidget->setEnabled( false );
 		vlay->addWidget( mWidget );
 		QHBoxLayout *btns = new QHBoxLayout( vlay, spacingHint() );
