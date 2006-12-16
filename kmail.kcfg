@@ -456,7 +456,7 @@
   <group name="GlobalTemplates">
     <entry name="PhrasesConverted" type="Bool" key="PhrasesConverted">
       <label>Phrases has been converted to templates</label>
-      <whatsthis>Mean what old phrases has beeb converted to templates</whatsthis>
+      <whatsthis>Old phrases have been converted to templates</whatsthis>
       <default>false</default>
     </entry>
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
