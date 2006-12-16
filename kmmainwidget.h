@@ -25,6 +25,7 @@
 #include <kxmlguiclient.h>
 #include <qlistview.h>
 #include <qvbox.h>
+#include <qvaluevector.h>
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
@@ -110,12 +111,15 @@ public:
   KAction *replyAuthorAction() const { return mReplyAuthorAction; }
   KAction *replyAllAction() const { return mReplyAllAction; }
   KAction *replyListAction() const { return mReplyListAction; }
+  KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
+  KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
   KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
   KAction *forwardInlineAction() const { return mForwardInlineAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *forwardDigestAction() const { return mForwardDigestAction; }
   KAction *redirectAction() const { return mRedirectAction; }
+  KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
@@ -345,6 +349,10 @@ protected slots:
   void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
+  void slotShowCustomReply();
+  void slotShowCustomReplyAll();
+  void slotShowCustomForward();
+
   /** Update the undo action */
   void slotUpdateUndo();
 
@@ -374,10 +382,13 @@ protected slots:
   void slotReplyAuthorToMsg();
   void slotReplyListToMsg();
   void slotReplyAllToMsg();
+  void slotCustomReplyToMsg( int tid );
+  void slotCustomReplyAllToMsg( int tid );
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotForwardDigestMsg();
   void slotRedirectMsg();
+  void slotCustomForwardMsg( int tid );
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -411,14 +422,18 @@ private:
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
     *mReplyListAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
-    *mRedirectAction,
-    *mNoQuoteReplyAction;
+    *mRedirectAction, *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions
   KActionMenu *mFilterMenu;
   KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
       *mListFilterAction;
+
+  // Custom template actions menu
+  KActionMenu *mCustomReplyActionMenu,
+              *mCustomReplyAllActionMenu,
+              *mCustomForwardActionMenu;
 
   KActionMenu *mStatusMenu, *mThreadStatusMenu,
     *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
@@ -496,6 +511,8 @@ private:
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
   QDict<FolderShortcutCommand> mFolderShortcutCommands;
   QGuardedPtr <KMail::FolderJob> mJob;
+
+  QValueVector<QString> mCustomTemplates;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;

@@ -6,7 +6,6 @@
   <include>kmglobal.h</include>
   <include>qtextcodec.h</include>
   <include>templatesconfiguration.h</include>
-  <include>templatesconfigurationimpl.h</include>
   <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
       <entry name="DelayedMarkAsRead"  type="Bool">
@@ -362,6 +361,7 @@
         <label>Maximum number of recipient editor lines.</label>
         <default>200</default>
       </entry>
+      <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
     </group>
 <!-- Composer -->
 

@@ -366,6 +366,17 @@ void AccountWizard::accept()
 
 void AccountWizard::createTransport()
 {
+  // create outgoing account
+  KConfigGroup general( KMKernel::config(), "General" );
+
+  uint numTransports = general.readNumEntry( "transports", 0 );
+
+  for ( uint i = 1 ; i <= numTransports ; i++ ) {
+    KMTransportInfo *info = new KMTransportInfo();
+    info->readConfig( i );
+    mTransportInfoList.append( info );
+  }
+
   mTransportInfo = new KMTransportInfo();
 
   if ( mLocalDelivery->isChecked() ) { // local delivery
@@ -391,6 +402,7 @@ void AccountWizard::createTransport()
 void AccountWizard::transportCreated()
 {
   mTransportInfoList.append( mTransportInfo );
+
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "transports", mTransportInfoList.count() );
 
@@ -405,8 +417,8 @@ void AccountWizard::transportCreated()
       KMTransportInfo info;
       info.readConfig( 1 );
       KConfigGroup composer( KMKernel::config(), "Composer" );
-      composer.writeEntry( "default-transport", info.name );
-      composer.writeEntry( "current-transport", info.name );
+      GlobalSettings::self()->setDefaultTransport( info.name );
+      GlobalSettings::self()->setCurrentTransport( info.name );
     }
   }
 

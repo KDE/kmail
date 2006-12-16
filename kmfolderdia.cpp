@@ -72,7 +72,7 @@
 #include <qradiobutton.h>
 #include <qtextedit.h>
 
-#include "templatesconfigurationimpl.h"
+#include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 
 #include "kmfolderdia.moc"

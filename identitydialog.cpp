@@ -46,7 +46,7 @@ using KMail::FolderRequester;
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
-#include "templatesconfigurationimpl.h"
+#include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
 
 // other kdepim headers:

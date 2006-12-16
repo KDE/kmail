@@ -49,30 +49,35 @@ class TemplateParser : public QObject
                     bool aselectionIsBody );
 
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = NULL, bool append = false );
+    virtual void process( const QString &tmplName, KMMessage *aorig_msg,
+                          KMFolder *afolder = NULL, bool append = false );
+    virtual void processWithTemplate( const QString &tmpl );
     virtual QString findTemplate();
-    virtual QString pipe( const QString cmd, const QString buf );
+    virtual QString findCustomTemplate( const QString &tmpl );
+    virtual QString pipe( const QString &cmd, const QString &buf );
 
-    virtual QString getFName( const QString str );
-    virtual QString getLName( const QString str );
+    virtual QString getFName( const QString &str );
+    virtual QString getLName( const QString &str );
 
   protected:
-    Mode mode;
-    KMFolder *folder;
-    uint identity;
-    KMMessage *msg;
-    KMMessage *orig_msg;
-    QString selection;
-    bool smartQuote;
-    bool noQuote;
-    bool allowDecryption;
-    bool selectionIsBody;
-    int pipe_rc;
-    QString pipe_out;
-    QString pipe_err;
-    bool debug;
-    QString quoteString;
+    Mode mMode;
+    KMFolder *mFolder;
+    uint mIdentity;
+    KMMessage *mMsg;
+    KMMessage *mOrigMsg;
+    QString mSelection;
+    bool mSmartQuote;
+    bool mNoQuote;
+    bool mAllowDecryption;
+    bool mSelectionIsBody;
+    int mPipeRc;
+    QString mPipeOut;
+    QString mPipeErr;
+    bool mDebug;
+    QString mQuoteString;
+    bool mAppend;
 
-    int parseQuotes( const QString prefix, const QString str,
+    int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
 
   protected slots:

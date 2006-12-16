@@ -46,6 +46,17 @@ class ComposerCryptoConfiguration;
 class WarningConfiguration;
 class SMimeConfiguration;
 class TemplatesConfiguration;
+class CustomTemplates;
+class QGroupBox;
+class QVGroupBox;
+#include <qdict.h>
+class QLineEdit;
+class KMMsgTagDesc;
+class KListBox;
+class KColorCombo;
+class KFontRequester;
+class KIconButton;
+class KKeyButton;
 
 namespace Kpgp {
   class Config;
@@ -650,6 +661,23 @@ private:
     TemplatesConfiguration* mWidget;
 };
 
+class ComposerPageCustomTemplatesTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageCustomTemplatesTab( QWidget * parent=0, const char * name=0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private slots:
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
+    CustomTemplates* mWidget;
+};
+
 class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -753,6 +781,7 @@ public:
   typedef ComposerPageGeneralTab GeneralTab;
   typedef ComposerPagePhrasesTab PhrasesTab;
   typedef ComposerPageTemplatesTab TemplatesTab;
+  typedef ComposerPageCustomTemplatesTab CustomTemplatesTab;
   typedef ComposerPageSubjectTab SubjectTab;
   typedef ComposerPageCharsetTab CharsetTab;
   typedef ComposerPageHeadersTab HeadersTab;
@@ -762,6 +791,7 @@ private:
   GeneralTab  *mGeneralTab;
   PhrasesTab  *mPhrasesTab;
   TemplatesTab  *mTemplatesTab;
+  CustomTemplatesTab  *mCustomTemplatesTab;
   SubjectTab  *mSubjectTab;
   CharsetTab  *mCharsetTab;
   HeadersTab  *mHeadersTab;

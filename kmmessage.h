@@ -162,7 +162,8 @@ public:
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                           QString selection=QString::null, bool noQuote=FALSE,
-                          bool allowDecryption=TRUE, bool selectionIsBody=FALSE);
+                          bool allowDecryption=TRUE, bool selectionIsBody=FALSE,
+                          const QString &tmpl = QString::null );
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -179,7 +180,7 @@ public:
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMMessage* createForward();
+  KMMessage* createForward( const QString &tmpl = QString::null );
 
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The

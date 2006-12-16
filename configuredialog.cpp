@@ -50,7 +50,8 @@ using KMail::IdentityListViewItem;
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
-#include "templatesconfigurationimpl.h"
+#include "templatesconfiguration.h"
+#include "customtemplates.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "accountcombobox.h"
@@ -2476,7 +2477,13 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   //
   mTemplatesTab = new TemplatesTab();
   addTab( mTemplatesTab, i18n("&Templates") );
-  
+
+  //
+  // "Custom Templates" tab:
+  //
+  mCustomTemplatesTab = new CustomTemplatesTab();
+  addTab( mCustomTemplatesTab, i18n("&Custom Templates") );
+
   //
   // "Subject" tab:
   //
@@ -2953,6 +2960,30 @@ void ComposerPage::TemplatesTab::doLoadFromGlobalSettings() {
 
 void ComposerPage::TemplatesTab::save() {
     mWidget->saveToGlobal();
+}
+
+QString ComposerPage::CustomTemplatesTab::helpAnchor() const {
+  return QString::fromLatin1("configure-composer-custom-templates");
+}
+
+ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent, const char * name )
+  : ConfigModuleTab ( parent, name )
+{
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+
+  mWidget = new CustomTemplates( this );
+  vlay->addWidget( mWidget );
+
+  connect( mWidget, SIGNAL( changed() ),
+           this, SLOT( slotEmitChanged( void ) ) );
+}
+
+void ComposerPage::CustomTemplatesTab::doLoadFromGlobalSettings() {
+    mWidget->load();
+}
+
+void ComposerPage::CustomTemplatesTab::save() {
+    mWidget->save();
 }
 
 QString ComposerPage::SubjectTab::helpAnchor() const {

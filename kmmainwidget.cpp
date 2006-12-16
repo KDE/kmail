@@ -40,6 +40,8 @@
 #include <kaddrbook.h>
 #include <kaccel.h>
 
+#include <qvaluevector.h>
+
 #include "globalsettings.h"
 #include "kcursorsaver.h"
 #include "broadcaststatus.h"
@@ -115,6 +117,9 @@ using KPIM::ProgressManager;
 
 #include "managesievescriptsdialog.h"
 #include <qstylesheet.h>
+
+#include "customtemplates.h"
+#include "customtemplates_kfg.h"
 
 #include "kmmainwidget.moc"
 
@@ -1421,6 +1426,131 @@ void KMMainWidget::slotReplyListToMsg()
   command->start();
 }
 
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowCustomReply()
+{
+  mCustomTemplates.clear();
+  mCustomReplyActionMenu->popupMenu()->clear();
+
+  QStringList list = GlobalSettingsBase::self()->customTemplates();
+  QStringList::iterator it = list.begin();
+  int idx = 0;
+  for ( ; it != list.end(); ++it ) {
+    CTemplates t( *it );
+    if ( t.type() == CustomTemplates::TUniversal ||
+      t.type() == CustomTemplates::TReply ) {
+      mCustomTemplates.append( *it );
+      mCustomReplyActionMenu->popupMenu()->insertItem(
+        QString( *it ).replace( "&", "&&" ), idx );
+      ++idx;
+    }
+  }
+  if ( mCustomTemplates.isEmpty() ) {
+      mCustomReplyActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomReplyActionMenu->popupMenu()->setItemEnabled( 0, false );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotCustomReplyToMsg( int tid )
+{
+  QString text = mMsgView? mMsgView->copyText() : "";
+  QString tmpl = mCustomTemplates[ tid ];
+  kdDebug() << "Reply with template: " << tmpl << " (" << tid << ")" << endl;
+  KMCommand *command = new KMCustomReplyToCommand( this,
+                                                   mHeaders->currentMsg(),
+                                                   text,
+                                                   tmpl );
+  command->start();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowCustomReplyAll()
+{
+  mCustomTemplates.clear();
+  mCustomReplyAllActionMenu->popupMenu()->clear();
+
+  QStringList list = GlobalSettingsBase::self()->customTemplates();
+  QStringList::iterator it = list.begin();
+  int idx = 0;
+  for ( ; it != list.end(); ++it ) {
+    CTemplates t( *it );
+    if ( t.type() == CustomTemplates::TUniversal ||
+      t.type() == CustomTemplates::TReplyAll ) {
+      mCustomTemplates.append( *it );
+      mCustomReplyAllActionMenu->popupMenu()->insertItem(
+        QString( *it ).replace( "&", "&&" ), idx );
+      ++idx;
+    }
+  }
+  if ( mCustomTemplates.isEmpty() ) {
+      mCustomReplyAllActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomReplyAllActionMenu->popupMenu()->setItemEnabled( 0, false );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotCustomReplyAllToMsg( int tid )
+{
+  QString text = mMsgView? mMsgView->copyText() : "";
+  QString tmpl = mCustomTemplates[ tid ];
+  kdDebug() << "Reply to All with template: " << tmpl << " (" << tid << ")" << endl;
+  KMCommand *command = new KMCustomReplyAllToCommand( this,
+                                                   mHeaders->currentMsg(),
+                                                   text,
+                                                   tmpl );
+  command->start();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowCustomForward()
+{
+  mCustomTemplates.clear();
+  mCustomForwardActionMenu->popupMenu()->clear();
+
+  QStringList list = GlobalSettingsBase::self()->customTemplates();
+  QStringList::iterator it = list.begin();
+  int idx = 0;
+  for ( ; it != list.end(); ++it ) {
+    CTemplates t( *it );
+    if ( t.type() == CustomTemplates::TUniversal ||
+      t.type() == CustomTemplates::TForward ) {
+      mCustomTemplates.append( *it );
+      mCustomForwardActionMenu->popupMenu()->insertItem(
+        QString( *it ).replace( "&", "&&" ), idx );
+      ++idx;
+    }
+  }
+  if ( mCustomTemplates.isEmpty() ) {
+      mCustomForwardActionMenu->popupMenu()->insertItem( i18n( "(no templates)" ), 0 );
+      mCustomForwardActionMenu->popupMenu()->setItemEnabled( 0, false );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotCustomForwardMsg( int tid )
+{
+  QString tmpl = mCustomTemplates[ tid ];
+  kdDebug() << "Forward with template: " << tmpl << " (" << tid << ")" << endl;
+  KMMessageList* selected = mHeaders->selectedMsgs();
+  KMCommand *command = 0L;
+  if(selected && !selected->isEmpty()) {
+    command = new KMCustomForwardCommand( this, *selected,
+                                          mFolder->identity(), tmpl );
+  } else {
+    command = new KMCustomForwardCommand( this, mHeaders->currentMsg(),
+                                          mFolder->identity(), tmpl );
+  }
+  command->start();
+}
+
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNoQuoteReplyToMsg()
 {
@@ -2518,6 +2648,16 @@ void KMMainWidget::setupActions()
                                  "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
 
+  mCustomForwardActionMenu =
+    new KActionMenu( i18n("Forward with custom template..."),
+                     "mail_custom_forward",
+                     actionCollection(), "custom_forward" );
+  mCustomForwardActionMenu->setDelayed( true );
+  connect( mCustomForwardActionMenu->popupMenu(), SIGNAL( aboutToShow() ), this,
+           SLOT( slotShowCustomForward() ) );
+  connect( mCustomForwardActionMenu->popupMenu(), SIGNAL( activated(int) ), this,
+           SLOT( slotCustomForwardMsg(int) ) );
+  mForwardActionMenu->insert( mCustomForwardActionMenu );
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
@@ -2548,6 +2688,27 @@ void KMMainWidget::setupActions()
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
+
+  mCustomReplyActionMenu =
+    new KActionMenu( i18n("Reply with custom template..."), "mail_custom_reply",
+                     actionCollection(), "custom_reply" );
+  mCustomReplyActionMenu->setDelayed( true );
+  connect( mCustomReplyActionMenu->popupMenu(), SIGNAL( aboutToShow() ), this,
+           SLOT( slotShowCustomReply() ) );
+  connect( mCustomReplyActionMenu->popupMenu(), SIGNAL( activated(int) ), this,
+           SLOT( slotCustomReplyToMsg(int) ) );
+  mReplyActionMenu->insert( mCustomReplyActionMenu );
+
+  mCustomReplyAllActionMenu =
+    new KActionMenu( i18n("Reply to All with custom template..."),
+                     "mail_custom_reply_all",
+                     actionCollection(), "custom_reply_all" );
+  mCustomReplyAllActionMenu->setDelayed( true );
+  connect( mCustomReplyAllActionMenu->popupMenu(), SIGNAL( aboutToShow() ), this,
+           SLOT( slotShowCustomReplyAll() ) );
+  connect( mCustomReplyAllActionMenu->popupMenu(), SIGNAL( activated(int) ), this,
+           SLOT( slotCustomReplyAllToMsg(int) ) );
+  mReplyActionMenu->insert( mCustomReplyAllActionMenu );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );

@@ -844,7 +844,8 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /* = QString::null */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
-                                   bool selectionIsBody /* = false */)
+                                   bool selectionIsBody /* = false */,
+                                   const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
@@ -1050,7 +1051,11 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
   TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply), 
     selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
-  parser.process( this );
+  if ( !tmpl.isEmpty() ) {
+    parser.process( tmpl, this );
+  } else {
+    parser.process( this );
+  }
 
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
@@ -1179,7 +1184,7 @@ QCString KMMessage::createForwardBody()
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward()
+KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage();
   QString id;
@@ -1248,13 +1253,21 @@ KMMessage* KMMessage::createForward()
   msg->setSubject( forwardSubject() );
   
   TemplateParser parser( msg, TemplateParser::Forward, 
-    this->body(), false, false, false, false);
-  parser.process( this );
+    asPlainText( false, false ),
+    false, false, false, false);
+  if ( !tmpl.isEmpty() ) {
+    parser.process( tmpl, this );
+  } else {
+    parser.process( this );
+  }
   
-  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
-  if (encoding.isEmpty()) encoding = "utf-8";
-  msg->setCharset(encoding);
+  // QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
+  // if (encoding.isEmpty()) encoding = "utf-8";
+  // msg->setCharset(encoding);
   
+  // force utf-8
+  // msg->setCharset( "utf-8" );
+
   msg->link(this, KMMsgStatusForwarded);
   return msg;
 }

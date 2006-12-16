@@ -97,10 +97,10 @@ k_dcop:
         =-4, Message already exists in folder.
   */
   virtual int dcopAddMessage(const QString & foldername,
-                             const QString & messagefile, 
+                             const QString & messagefile,
                              const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage(const QString & foldername,
-                             const KURL & messagefile, 
+                             const KURL & messagefile,
                              const QString & MsgStatusFlags = QString()) = 0;
 
   virtual QStringList folderList() const =0;
@@ -144,16 +144,16 @@ k_dcop_signals:
   void unreadCountChanged( const QString& folderURL, int numUnread );
 
 k_dcop_hidden:
-  /** DCOP call which is used by the Kontact plugin to create a new message. 
+  /** DCOP call which is used by the Kontact plugin to create a new message.
    *
    *  @TODO Rename to newMessageInternal()
-   *  @TODO Merge this and the various openComposer methods for better code reuse 
+   *  @TODO Merge this and the various openComposer methods for better code reuse
   */
-  virtual DCOPRef newMessage(const QString &to, 
-                             const QString &cc, 
-                             const QString& bcc, 
-                             bool hidden, 
-                             bool useFolderId, 
+  virtual DCOPRef newMessage(const QString &to,
+                             const QString &cc,
+                             const QString& bcc,
+                             bool hidden,
+                             bool useFolderId,
                              const KURL &messageFile,
                              const KURL &attachURL) = 0;
 
@@ -174,6 +174,7 @@ k_dcop_hidden:
    * not handled (due to noArgsOpensReader==false).
    */
   virtual bool handleCommandLine( bool noArgsOpensReader ) = 0;
+  virtual bool firstStart() = 0;
   /**
    *
    * DCOP-enabled for use in kaddressbook drop
@@ -201,10 +202,10 @@ k_dcop_hidden:
         =-4, Message already exists in folder.
   */
   virtual int dcopAddMessage_fastImport(const QString & foldername,
-                                        const QString & messagefile, 
+                                        const QString & messagefile,
                                         const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage_fastImport(const QString & foldername,
-                                        const KURL & messagefile, 
+                                        const KURL & messagefile,
                                         const QString & MsgStatusFlags = QString()) = 0;
 
   /** Clears the list of added message ids which is used to filter out

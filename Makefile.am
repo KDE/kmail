@@ -124,8 +124,13 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 mailinglistpropertiesdialog.cpp newfolderdialog.cpp \
                 accountwizard.cpp textsource.cpp \
                 managesievescriptsdialog.cpp chiasmuskeyselector.cpp \
-                util.cpp templatesconfiguration_kfg.kcfgc templatesconfiguration.ui \
-                templateparser.cpp templatesconfigurationimpl.cpp
+                util.cpp templatesinsertcommand.cpp \
+                customtemplates_base.ui customtemplates.cpp \
+                customtemplates_kfg.kcfgc \
+                templatesconfiguration_base.ui templatesconfiguration.cpp \
+                templatesconfiguration_kfg.kcfgc \
+                templateparser.cpp \
+                kmmsgtag.cpp
 
 kmail_SOURCES = main.cpp
 
@@ -197,7 +202,8 @@ messages: rc.cpp
 	$(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
 	rm -f tips.cpp
 
-kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg templatesconfiguration_kfg.kcfg
+kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg \
+		templatesconfiguration_kfg.kcfg customtemplates_kfg.kcfg
 
 DOXYGEN_REFERENCES = kdeui
 include $(top_srcdir)/admin/Doxyfile.am
