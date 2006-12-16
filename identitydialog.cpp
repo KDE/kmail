@@ -288,9 +288,9 @@ namespace KMail {
     row = -1;
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&Advanced") );
-    glay = new QGridLayout( tab, 7, 2, marginHint(), spacingHint() );
+    glay = new QGridLayout( tab, 8, 2, marginHint(), spacingHint() );
     // the last (empty) row takes all the remaining space
-    glay->setRowStretch( 7-1, 1 );
+    glay->setRowStretch( 8-1, 1 );
     glay->setColStretch( 1, 1 );
 
     // "Reply-To Address" line edit and label:
@@ -353,6 +353,15 @@ namespace KMail {
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts folder:"), tab ),
+                     row, 0 );
+
+    // "Templates Folder" combo box and label:
+    ++row;
+    mTemplatesCombo = new FolderRequester( tab,
+        kmkernel->getKMMainWidget()->folderTree() );
+    mTemplatesCombo->setShowOutbox( false );
+    glay->addWidget( mTemplatesCombo, row, 1 );
+    glay->addWidget( new QLabel( mTemplatesCombo, i18n("&Templates folder:"), tab ),
                      row, 0 );
 
     // "Special transport" combobox and label:
@@ -614,6 +623,17 @@ void IdentityDialog::slotOk() {
     else
       mDraftsCombo->setFolder( ident.drafts() );
     
+    if ( ident.templates().isEmpty() ||
+         !checkFolderExists( ident.templates(),
+                             i18n("The custom templates folder for identity "
+                                  "\"%1\" does not exist (anymore); "
+                                  "therefore, the default templates folder "
+                                  "will be used.")
+                             .arg( ident.identityName() ) ) )
+      mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
+    else
+      mTemplatesCombo->setFolder( ident.templates() );
+    
     // "Templates" tab:
     uint identity = ident.uoid();
 		QString iid = QString("IDENTITY_%1").arg( identity );
@@ -649,6 +669,8 @@ void IdentityDialog::slotOk() {
                   mFccCombo->folder()->idString() : QString::null );
     ident.setDrafts( mDraftsCombo->folder() ?
                      mDraftsCombo->folder()->idString() : QString::null );
+    ident.setTemplates( mTemplatesCombo->folder() ?
+                     mTemplatesCombo->folder()->idString() : QString::null );
     // "Templates" tab:
     uint identity = ident.uoid();
     QString iid = QString("IDENTITY_%1").arg( identity );

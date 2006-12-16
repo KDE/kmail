@@ -100,6 +100,7 @@ namespace KMail {
     KMail::DictionaryComboBox    *mDictionaryCombo;
     FolderRequester              *mFccCombo;
     FolderRequester              *mDraftsCombo;
+    FolderRequester              *mTemplatesCombo;
     QCheckBox                    *mTransportCheck;
     QComboBox                    *mTransportCombo; // should be a KMTransportCombo...
     // "templates" tab:
