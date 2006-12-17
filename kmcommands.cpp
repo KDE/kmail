@@ -1560,7 +1560,6 @@ FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
 
 FolderShortcutCommand::~FolderShortcutCommand()
 {
-  if ( mAction ) mAction->unplugAll();
   delete mAction;
 }
 
