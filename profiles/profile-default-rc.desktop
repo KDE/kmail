@@ -1,6 +1,6 @@
 [KMail Profile]
 Name=Default
-Name[ar]=افتراضي
+Name[ar]=الإفتراضي
 Name[az]=Əsas
 Name[be]=Па ўмаўчаньні
 Name[bg]=Стандартен
@@ -64,7 +64,6 @@ Name[zh_CN]=默认
 Name[zh_TW]=預設
 Name[zu]=Engaqedekanga
 Comment=Standard profile
-Comment[ar]=التشكيل القياسي
 Comment[az]=Standard profil
 Comment[be]=Стандартны профіль
 Comment[bg]=Стандартен профил

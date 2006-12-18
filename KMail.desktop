@@ -1,7 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KMail
-Name[ar]=البريد
 Name[be]=K Пошта
 Name[eo]=Retpoŝto
 Name[hi]=के-मेल
@@ -16,7 +15,7 @@ Exec=kmail -caption "%c" %i %m
 Icon=kmail
 DocPath=kmail/index.html
 GenericName=Mail Client
-GenericName[ar]=البريد الألكتروني
+GenericName[ar]=زبون البريد
 GenericName[az]=Poçt Alıcısı
 GenericName[be]=Паштовы кліент
 GenericName[bg]=Пощенски клиент
@@ -32,7 +31,7 @@ GenericName[eo]=Legi kaj sendi retpoŝton
 GenericName[es]=Cliente de correo
 GenericName[et]=E-posti klient
 GenericName[eu]=Posta bezeroa
-GenericName[fa]=کارخواه نامه
+GenericName[fa]=کارخواه‌نامه
 GenericName[fi]=Sähköpostiohjelma
 GenericName[fr]=Logiciel de messagerie électronique
 GenericName[ga]=Cliant Ríomhphoist
