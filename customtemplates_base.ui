@@ -245,7 +245,7 @@
                                     <cstring>mKeyButton</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Нет</string>
+                                    <string>None</string>
                                 </property>
                             </widget>
                             <widget class="KActiveLabel" row="0" column="0">
