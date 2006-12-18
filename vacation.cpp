@@ -38,6 +38,7 @@ using KMime::Types::AddrSpecList;
 #include <ksieve/scriptbuilder.h>
 #include <ksieve/error.h>
 
+#include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

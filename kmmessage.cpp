@@ -32,7 +32,7 @@ using KMail::HeaderStrategy;
 #include <kpgpblock.h>
 #include <kaddrbook.h>
 
-#include <kapplication.h>
+#include <kglobal.h>
 #include <kascii.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
