@@ -36,7 +36,7 @@
 #include <kwin.h>
 #include <kaction.h>
 #include <kiconloader.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
@@ -226,7 +226,7 @@ void KMReaderMainWin::setupAccel()
     setInstance( kmkernel->xmlGuiInstance() );
 
   //----- File Menu
-  //mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
+  //mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
   //                                actionCollection() );
 
   //mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
@@ -234,14 +234,14 @@ void KMReaderMainWin::setupAccel()
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
-  mSaveAsAction = KStdAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
+  mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
 				      actionCollection() ); 
   mSaveAsAction->setShortcut( KStdAccel::shortcut( KStdAccel::Save ) ); 
 
-  mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
+  mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
 
-  KAction *closeAction = KStdAction::close( this, SLOT( close() ), actionCollection() );
+  KAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = closeAction->shortcut();
   closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
   closeAction->setShortcut(closeShortcut);

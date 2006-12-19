@@ -20,7 +20,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <kstringhandler.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kdebug.h>
 #include <ktip.h>
 #include <kicon.h>
@@ -53,13 +53,13 @@ KMMainWin::KMMainWin(QWidget *)
 
   setStandardToolBarMenuEnabled(true);
 
-  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
+  KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()),
 				actionCollection());
 
-  KStdAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
+  KStandardAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
                           actionCollection());
 
-  KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
+  KStandardAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!

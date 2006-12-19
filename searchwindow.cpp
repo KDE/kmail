@@ -39,7 +39,7 @@
 #include <kstatusbar.h>
 #include <kwin.h>
 #include <kconfig.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kpushbutton.h>
 #include <kicon.h>
 #include <QCheckBox>
@@ -288,11 +288,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
                                        ac, "search_message_forward_as_attachment" );
   connect(mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( mForwardAttachedAction );
-  mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
+  mSaveAsAction = KStandardAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
   mSaveAtchAction = new KAction(KIcon("attach"),  i18n("Save Attachments..."), ac, "search_save_attachments" );
   connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
 
-  mPrintAction = KStdAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
+  mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
   mClearAction = new KAction( i18n("Clear Selection"), ac, "search_clear_selection" );
   connect(mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()));
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));

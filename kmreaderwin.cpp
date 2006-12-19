@@ -116,7 +116,7 @@ using KMail::TeeHtmlWriter;
 #include <kcodecs.h>
 #include <kascii.h>
 #include <kselectaction.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktoggleaction.h>
 
 #include <QClipboard>
@@ -599,7 +599,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect(mAddAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoAddAddrBook()));
   mOpenAddrBookAction = new KAction( i18n("Open in Address Book"), ac, "openin_addr_book" );
   connect(mOpenAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoOpenAddrBook()));
-  mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
+  mCopyAction = KStandardAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
   mSelectAllAction = new KAction( i18n("Select All Text"), ac, "mark_all_text" );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
   mSelectAllAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_A));

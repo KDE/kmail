@@ -99,7 +99,7 @@ using KRecentAddress::RecentAddresses;
 #include <kapplication.h>
 #include <kstatusbar.h>
 #include <kaction.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kdirwatch.h>
 #include <kstdguiitem.h>
 #include <kiconloader.h>
@@ -1206,22 +1206,22 @@ void KMComposeWin::setupActions(void)
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( saveDistributionList() ));
   }
 
-  //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
-  KStdAction::print (this, SLOT(slotPrint()), actionCollection());
-  KStdAction::close (this, SLOT(slotClose()), actionCollection());
+  //KStandardAction::save(this, SLOT(), actionCollection(), "save_message");
+  KStandardAction::print (this, SLOT(slotPrint()), actionCollection());
+  KStandardAction::close (this, SLOT(slotClose()), actionCollection());
 
-  KStdAction::undo (this, SLOT(slotUndo()), actionCollection());
-  KStdAction::redo (this, SLOT(slotRedo()), actionCollection());
-  KStdAction::cut (this, SLOT(slotCut()), actionCollection());
-  KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
-  KStdAction::pasteText (this, SLOT(slotPaste()), actionCollection());
-  KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
+  KStandardAction::undo (this, SLOT(slotUndo()), actionCollection());
+  KStandardAction::redo (this, SLOT(slotRedo()), actionCollection());
+  KStandardAction::cut (this, SLOT(slotCut()), actionCollection());
+  KStandardAction::copy (this, SLOT(slotCopy()), actionCollection());
+  KStandardAction::pasteText (this, SLOT(slotPaste()), actionCollection());
+  KStandardAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
 
-  KStdAction::find (this, SLOT(slotFind()), actionCollection());
-  KStdAction::findNext(this, SLOT(slotSearchAgain()), actionCollection());
+  KStandardAction::find (this, SLOT(slotFind()), actionCollection());
+  KStandardAction::findNext(this, SLOT(slotSearchAgain()), actionCollection());
 
-  KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
-  KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
+  KStandardAction::replace (this, SLOT(slotReplace()), actionCollection());
+  KStandardAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
   mPasteQuotation = new KAction(i18n("Pa&ste as Quotation"), actionCollection(), "paste_quoted");
   connect(mPasteQuotation, SIGNAL(triggered(bool) ), SLOT( slotPasteAsQuotation()));
@@ -1318,9 +1318,9 @@ void KMComposeWin::setupActions(void)
 
   setStandardToolBarMenuEnabled(true);
 
-  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
-  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-  KStdAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
+  KStandardAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
+  KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  KStandardAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
   action = new KAction(i18n("&Spellchecker..."), actionCollection(), "setup_spellchecker");
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()));

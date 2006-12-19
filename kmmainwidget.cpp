@@ -45,7 +45,7 @@
 #include <knotifydialog.h>
 #include <kseparatoraction.h>
 #include <kstandarddirs.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kaddrbook.h>
 #include <ktoggleaction.h>
 #include <knotification.h>
@@ -2331,7 +2331,7 @@ void KMMainWidget::setupActions()
   connect(mSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveMsg()));
   mSaveAsAction->setShortcut(KStdAccel::shortcut(KStdAccel::Save));
 
-  mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
+  mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
 
   KAction *action = new KAction( i18n("&Compact All Folders"), actionCollection(), "compact_all_folders" );
@@ -2590,7 +2590,7 @@ void KMMainWidget::setupActions()
   connect(mListFilterAction, SIGNAL(triggered(bool) ), SLOT(slotMailingListFilter()));
   mFilterMenu->addAction( mListFilterAction );
 
-  mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
+  mPrintAction = KStandardAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
   mEditAction = new KAction(KIcon("edit"),  i18n("&Edit Message"), actionCollection(), "edit" );
   connect(mEditAction, SIGNAL(triggered(bool)), SLOT(slotEditMsg()));
@@ -2837,16 +2837,16 @@ void KMMainWidget::setupActions()
 
 
   // ----- Standard Actions
-//  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
+//  KStandardAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
   action = new KAction(KIcon("knotify"),  i18n("Configure &Notifications..."), actionCollection(), "kmail_configure_notifications" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditNotifications()));
-//  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
+//  KStandardAction::preferences(this, SLOT(slotSettings()), actionCollection());
   action = new KAction(KIcon("configure"),  i18n("&Configure KMail..."), actionCollection(), "kmail_configure_kmail" );
   connect(action, SIGNAL(triggered(bool) ), kmkernel, SLOT(slotShowConfigurationDialog()));
 
-  KStdAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
+  KStandardAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
 
-  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
+  KStandardAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 
   menutimer = new QTimer( this );
   menutimer->setObjectName( "menutimer" );
