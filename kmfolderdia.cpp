@@ -735,7 +735,7 @@ bool FolderDiaTemplatesTab::save()
 }
 
 
-void FolderDiaTemplatesTab::slotEmitChanged() {};
+void FolderDiaTemplatesTab::slotEmitChanged() {}
 
 void FolderDiaTemplatesTab::slotCopyGlobal() {
   if ( mIdentity ) {
@@ -744,4 +744,4 @@ void FolderDiaTemplatesTab::slotCopyGlobal() {
   else {
     mWidget->loadFromGlobal();
   }
-};
+}
