@@ -740,6 +740,6 @@ void KMEdit::setCursorPositionFromStart( unsigned int pos ) {
   // kdDebug() << "Position " << pos << " converted to " << l << ":" << c << endl;
   setCursorPosition( l, c );
   ensureCursorVisible();
-};
+}
 
 #include "kmedit.moc"
