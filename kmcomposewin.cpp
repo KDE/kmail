@@ -82,7 +82,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kcombobox.h>
-#include <kstdaccel.h>
+#include <kstandardshortcut.h>
 #include <kmenu.h>
 #include <kmimetypetrader.h>
 #include <kedittoolbar.h>
@@ -101,7 +101,7 @@ using KRecentAddress::RecentAddresses;
 #include <kaction.h>
 #include <kstandardaction.h>
 #include <kdirwatch.h>
-#include <kstdguiitem.h>
+#include <KStandardGuiItem>
 #include <kiconloader.h>
 #include <kpushbutton.h>
 #include <krun.h>
@@ -1194,7 +1194,7 @@ void KMComposeWin::setupActions(void)
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
   action = new KAction(KIcon("mail_new"), i18n("&New Composer"), actionCollection(), "new_composer");
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
-  action->setShortcut(KStdAccel::shortcut(KStdAccel::New));
+  action->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::New));
   action = new KAction(KIcon("window_new"), i18n("New Main &Window"), actionCollection(), "open_mailreader");
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
@@ -1497,9 +1497,9 @@ void KMComposeWin::setupEditor(void)
   menu = new QPopupMenu(this);
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
-                   SLOT(undo()), KStdAccel::shortcut(KStdAccel::Undo));
+                   SLOT(undo()), KStandardShortcut::shortcut(KStandardShortcut::Undo));
   menu->insertItem(i18n("Redo"),mEditor,
-                   SLOT(redo()), KStdAccel::shortcut(KStdAccel::Redo));
+                   SLOT(redo()), KStandardShortcut::shortcut(KStandardShortcut::Redo));
   menu->addSeparator();
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
@@ -1995,7 +1995,7 @@ bool KMComposeWin::queryClose ()
            KGuiItem(i18n("&Save as Draft"), "filesave", QString(),
                   i18n("Save this message in the Drafts folder. It can "
                   "then be edited and sent at a later time.")),
-           KStdGuiItem::discard() );
+           KStandardGuiItem::discard() );
     if (rc == KMessageBox::Cancel)
       return false;
     else if (rc == KMessageBox::Yes) {
@@ -4388,8 +4388,8 @@ void KMComposeWin::slotSpellcheckConfig()
   KWin kwin;
   kwin.setIcons (qtd.winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 #endif
-  qtd.setCancelButton(KStdGuiItem::cancel().text());
-  qtd.setOkButton(KStdGuiItem::ok().text());
+  qtd.setCancelButton(KStandardGuiItem::cancel().text());
+  qtd.setOkButton(KStandardGuiItem::ok().text());
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();

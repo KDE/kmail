@@ -32,7 +32,7 @@
 #include <kactionmenu.h>
 #include <kapplication.h>
 #include <klocale.h>
-#include <kstdaccel.h>
+#include <kstandardshortcut.h>
 #include <kwin.h>
 #include <kaction.h>
 #include <kiconloader.h>
@@ -230,13 +230,13 @@ void KMReaderMainWin::setupAccel()
   //                                actionCollection() );
 
   //mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
-  //                             KStdAccel::shortcut( KStdAccel::Save ),
+  //                             KStandardShortcut::shortcut( KStandardShortcut::Save ),
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
   mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
 				      actionCollection() ); 
-  mSaveAsAction->setShortcut( KStdAccel::shortcut( KStdAccel::Save ) ); 
+  mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) ); 
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
@@ -312,7 +312,7 @@ void KMReaderMainWin::setupAccel()
                      mReaderWin, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Qt::Key_PageDown),
                      mReaderWin, SLOT(slotScrollNext()));
-  accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy).primary()), // ###### misses alternate(). Should be ported away from Q3Accel anyway.
+  accel->connectItem(accel->insertItem(KStandardShortcut::shortcut(KStandardShortcut::Copy).primary()), // ###### misses alternate(). Should be ported away from Q3Accel anyway.
                      mReaderWin, SLOT(slotCopySelectedText()));
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
 	  this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));

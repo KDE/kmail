@@ -32,7 +32,7 @@
 #include <kmenu.h>
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
-#include <kstdaccel.h>
+#include <kstandardshortcut.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
 #include <knotifyclient.h>
@@ -2329,7 +2329,7 @@ void KMMainWidget::setupActions()
   //----- File Menu
   mSaveAsAction = new KAction(KIcon("filesave"),  i18n("Save &As..."), actionCollection(), "file_save_as" );
   connect(mSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveMsg()));
-  mSaveAsAction->setShortcut(KStdAccel::shortcut(KStdAccel::Save));
+  mSaveAsAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Save));
 
   mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
@@ -2450,11 +2450,11 @@ void KMMainWidget::setupActions()
 
   mFindInMessageAction = new KAction(KIcon("find"),  i18n("&Find in Message..."), actionCollection(), "find_in_messages" );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
-  mFindInMessageAction->setShortcut(KStdAccel::shortcut(KStdAccel::Find));
+  mFindInMessageAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Find));
 
   action = new KAction( i18n("Select &All Messages"), actionCollection(), "mark_all_messages" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
-  action->setShortcut(KStdAccel::selectAll());
+  action->setShortcut(KStandardShortcut::selectAll());
 
   //----- Folder Menu
   action = new KAction(KIcon("folder_new"),  i18n("&New Folder..."), actionCollection(), "new_folder" );
@@ -2483,7 +2483,7 @@ void KMMainWidget::setupActions()
 
   mRefreshFolderAction = new KAction(KIcon("reload"),  i18n("Check Mail &in This Folder"), actionCollection(), "refresh_folder" );
   connect(mRefreshFolderAction, SIGNAL(triggered(bool) ), SLOT(slotRefreshFolder()));
-  mRefreshFolderAction->setShortcut(KStdAccel::shortcut( KStdAccel::Reload ));
+  mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
   mEmptyFolderAction = new KAction(KIcon("edittrash"),  "foo", actionCollection(), "empty" );
@@ -2508,7 +2508,7 @@ void KMMainWidget::setupActions()
   //----- Message Menu
   action = new KAction(KIcon("mail_new"),  i18n("&New Message..."), actionCollection(), "new_message" );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
-  action->setShortcut(KStdAccel::shortcut(KStdAccel::New));
+  action->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::New));
 
   action = new KAction(KIcon("mail_post_to"),  i18n("New Message t&o Mailing-List..."), actionCollection(), "post_message" );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));

@@ -219,7 +219,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
 {
   setFaceType( List );
   setButtons( Help | Default | Cancel | Apply | Ok | User1 | User2 );
-  setButtonGuiItem( User1, KStdGuiItem::reset() );
+  setButtonGuiItem( User1, KStandardGuiItem::reset() );
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
 #ifdef Q_OS_UNIX
@@ -2177,7 +2177,7 @@ void AppearancePage::HeadersTab::save() {
     int result = KMessageBox::warningContinueCancel( this,
                    i18n("Changing the global threading setting will override "
                         "all folder specific values."),
-                   QString(), KStdGuiItem::cont(), "threadOverride" );
+                   QString(), KStandardGuiItem::cont(), "threadOverride" );
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
@@ -3850,7 +3850,7 @@ void SecurityPage::GeneralTab::save() {
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString(),
-      KStdGuiItem::cont(), "htmlMailOverride") == KMessageBox::Continue)
+      KStandardGuiItem::cont(), "htmlMailOverride") == KMessageBox::Continue)
     {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
       QStringList names;

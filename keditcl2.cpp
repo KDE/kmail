@@ -109,7 +109,7 @@ again:
 			srchdialog,
                         i18n("End of document reached.\n"\
                              "Continue from the beginning?"),
-                        i18n("Find"),KStdGuiItem::cont(),KStdGuiItem::stop());
+                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
       if (query == KMessageBox::Yes){
 	line = 0;
 	col = 0;
@@ -122,7 +122,7 @@ again:
 			srchdialog,
                         i18n("Beginning of document reached.\n"\
                              "Continue from the end?"),
-                        i18n("Find"),KStdGuiItem::cont(),KStdGuiItem::stop());
+                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
       if (query == KMessageBox::Yes){
 	QString string = textLine( numLines() - 1 );
 	line = numLines() - 1;
@@ -379,7 +379,7 @@ again:
 			srchdialog,
                         i18n("End of document reached.\n"\
                              "Continue from the beginning?"),
-                        i18n("Find"),KStdGuiItem::cont(),KStdGuiItem::cont());
+                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::cont());
     if (query == KMessageBox::Yes){
       replace_all_line = 0;
       replace_all_col = 0;
@@ -392,7 +392,7 @@ again:
 			srchdialog,
                         i18n("Beginning of document reached.\n"\
                              "Continue from the end?"),
-                        i18n("Find"),KStdGuiItem::cont(),KStdGuiItem::stop());
+                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
     if (query == KMessageBox::Yes){
       QString string = textLine( numLines() - 1 );
       replace_all_line = numLines() - 1;
@@ -458,7 +458,7 @@ again:
 			replace_dialog,
                         i18n("End of document reached.\n"\
                              "Continue from the beginning?"),
-                        i18n("Replace"),KStdGuiItem::cont(),KStdGuiItem::stop());
+                        i18n("Replace"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
      if (query == KMessageBox::Yes){
 	line = 0;
 	col = 0;
@@ -471,7 +471,7 @@ again:
 			replace_dialog,
                         i18n("Beginning of document reached.\n"\
                              "Continue from the end?"),
-                        i18n("Replace"),KStdGuiItem::cont(),KStdGuiItem::stop());
+                        i18n("Replace"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
       if (query == KMessageBox::Yes){
 	QString string = textLine( numLines() - 1 );
 	line = numLines() - 1;
@@ -707,7 +707,7 @@ KEdFind::KEdFind( QWidget *parent, bool modal )
 //  setWFlags( Qt::WType_TopLevel );
   setCaption(i18n("Find"));
   setButtons( modal ? User1|Cancel : User1|Close );
-  setButtonGuiItem( User1, KStdGuiItem::find() );
+  setButtonGuiItem( User1, KStandardGuiItem::find() );
   setModal(modal);
   showButtonSeparator(false);
   setDefaultButton(User1);
@@ -845,7 +845,7 @@ KEdReplace::KEdReplace( QWidget *parent, bool modal )
   setButtons( modal ? User3|User2|User1|Cancel : User3|User2|User1|Close );
   setButtonGuiItem( User1, KGuiItem(i18n("Replace &All")) );
   setButtonGuiItem( User2, KGuiItem(i18n("&Replace")) );
-  setButtonGuiItem( User3, KStdGuiItem::find() );
+  setButtonGuiItem( User3, KStandardGuiItem::find() );
   setModal(modal);
   setDefaultButton(User3);
   setButtonsOrientation( Qt::Vertical );

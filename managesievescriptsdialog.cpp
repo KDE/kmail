@@ -245,7 +245,7 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
 
   if ( KMessageBox::warningContinueCancel( this, i18n( "Really delete script \"%1\" from the server?", u.fileName() ),
                                    i18n( "Delete Sieve Script Confirmation" ),
-                                   KStdGuiItem::del() )
+                                   KStandardGuiItem::del() )
        != KMessageBox::Continue )
     return;
 

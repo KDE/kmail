@@ -62,8 +62,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   setObjectName( "FilterLogDlg" );
   setModal( false );
   setDefaultButton( Close );
-  setButtonGuiItem( User1, KStdGuiItem::clear() );
-  setButtonGuiItem( User2, KStdGuiItem::saveAs() );
+  setButtonGuiItem( User1, KStandardGuiItem::clear() );
+  setButtonGuiItem( User2, KStandardGuiItem::saveAs() );
   setAttribute( Qt::WA_DeleteOnClose );
   QFrame *page = new KVBox( this );
   setMainWidget( page );

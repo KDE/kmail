@@ -1570,7 +1570,7 @@ void KMailICalIfaceImpl::readConfig()
     }
 
     if( KMessageBox::questionYesNo( 0, msg,
-                                    i18n("Standard Groupware Folders"), KStdGuiItem::cont(), KStdGuiItem::cancel() ) == KMessageBox::No ) {
+                                    i18n("Standard Groupware Folders"), KStandardGuiItem::cont(), KStandardGuiItem::cancel() ) == KMessageBox::No ) {
 
       GlobalSettings::self()->setTheIMAPResourceEnabled( false );
       mUseResourceIMAP = false;

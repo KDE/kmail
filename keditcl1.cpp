@@ -27,7 +27,7 @@
 #include <kfontdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstdaccel.h>
+#include <kstandardshortcut.h>
 #include <QKeyEvent>
 #include <QMenu>
 
@@ -454,76 +454,76 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
 
   killing = false;
 
-  if ( KStdAccel::copy().contains( key ) )
+  if ( KStandardShortcut::copy().contains( key ) )
     copy();
   else if ( isReadOnly() )
     Q3MultiLineEdit::keyPressEvent( e );
   // If this is an unmodified printable key, send it directly to QMultiLineEdit.
   else if ( !(key & (Qt::CTRL | Qt::ALT)) && !e->text().isEmpty() && e->text().unicode()->isPrint() )
     Q3MultiLineEdit::keyPressEvent( e );
-  else if ( KStdAccel::paste().contains( key ) ) {
+  else if ( KStandardShortcut::paste().contains( key ) ) {
     paste();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::cut().contains( key ) ) {
+  else if ( KStandardShortcut::cut().contains( key ) ) {
     cut();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::undo().contains( key ) ) {
+  else if ( KStandardShortcut::undo().contains( key ) ) {
     undo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::redo().contains( key ) ) {
+  else if ( KStandardShortcut::redo().contains( key ) ) {
     redo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordBack().contains( key ) ) {
+  else if ( KStandardShortcut::deleteWordBack().contains( key ) ) {
     moveCursor(MoveWordBackward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordForward().contains( key ) ) {
+  else if ( KStandardShortcut::deleteWordForward().contains( key ) ) {
     moveCursor(MoveWordForward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::backwardWord().contains( key ) ) {
+  else if ( KStandardShortcut::backwardWord().contains( key ) ) {
     moveCursor(MoveWordBackward, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::forwardWord().contains( key ) ) {
+  else if ( KStandardShortcut::forwardWord().contains( key ) ) {
     moveCursor( MoveWordForward, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::next().contains( key ) ) {
+  else if ( KStandardShortcut::next().contains( key ) ) {
     moveCursor( MovePgDown, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::prior().contains( key ) ) {
+  else if ( KStandardShortcut::prior().contains( key ) ) {
     moveCursor( MovePgUp, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::home().contains( key ) ) {
+  else if ( KStandardShortcut::home().contains( key ) ) {
     moveCursor( MoveHome, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::end().contains( key ) ) {
+  else if ( KStandardShortcut::end().contains( key ) ) {
     moveCursor( MoveEnd, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::beginningOfLine().contains( key ) ) {
+  else if ( KStandardShortcut::beginningOfLine().contains( key ) ) {
     moveCursor( MoveLineStart, false);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::endOfLine().contains( key ) ) {
+  else if ( KStandardShortcut::endOfLine().contains( key ) ) {
     moveCursor( MoveLineEnd, false);
     slotCursorPositionChanged();
   }

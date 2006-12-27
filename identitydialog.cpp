@@ -544,7 +544,7 @@ void IdentityDialog::slotOk() {
     if ( err )
       if ( KMessageBox::warningContinueCancel( this, msg,
                                           i18n("Email Address Not Found in Key/Certificates"),
-                                          KStdGuiItem::cont(), "warn_email_not_in_certificate" )
+                                          KStandardGuiItem::cont(), "warn_email_not_in_certificate" )
 	 != KMessageBox::Continue)
         return;
 

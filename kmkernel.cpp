@@ -1847,7 +1847,7 @@ void KMKernel::slotEmptyTrash()
   QString title = i18n("Empty Trash");
   QString text = i18n("Are you sure you want to empty the trash folders of all accounts?");
   if (KMessageBox::warningContinueCancel(0, text, title,
-                                         KStdGuiItem::cont(), "confirm_empty_trash")
+                                         KStandardGuiItem::cont(), "confirm_empty_trash")
       != KMessageBox::Continue)
   {
     return;

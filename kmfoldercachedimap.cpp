@@ -540,7 +540,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), int( mSyncState ) ), QString(), KGuiItem(i18n("Reset && Sync")), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?", imapPath(), int( mSyncState ) ), QString(), KGuiItem(i18n("Reset && Sync")), KStandardGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
@@ -1817,7 +1817,7 @@ void KMFolderCachedImap::listDirectory2()
       // (could be that the folder was deleted & recreated meanwhile from another client...)
       if ( !locallyDeleted && mAccount->isPreviouslyDeletedFolder( subfolderPath ) ) {
            locallyDeleted = KMessageBox::warningYesNo(
-             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>", mSubfolderNames[i] ), QString(), KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
+             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>", mSubfolderNames[i] ), QString(), KStandardGuiItem::del(), KStandardGuiItem::cancel() ) == KMessageBox::Yes;
       }
 
       if ( locallyDeleted ) {
