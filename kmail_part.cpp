@@ -64,7 +64,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   mParentWidget( parentWidget )
 {
   (void) new KmailpartAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMail", this);
+  QDBusConnection::sessionBus().registerObject("/KMailPart", this);
 
   kDebug(5006) << "KMailPart()" << endl;
   kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
