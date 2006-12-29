@@ -85,8 +85,8 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "<p>The message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
-            "<p>Templates specified there are mail identity-wide. "
-            "They override global templates and per-folder "
+            "<p>Templates specified here are mail identity-wide. "
+            "They override global templates and are being overridden by per-folder "
             "templates if they are specified.</p>"
             "</qt>" );
   } else {
@@ -97,8 +97,8 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "<p>The message templates support substitution commands "
             "by simple typing them or selecting them from menu "
             "<i>Insert command</i>.</p>"
-            "<p>This is a global (default) template. They override "
-            "both per-identity templates and by per-folder templates "
+            "<p>This is a global (default) template. They can be overridden "
+            "by per-identity templates and by per-folder templates "
             "if they are specified.</p>"
             "</qt>" );
   }
