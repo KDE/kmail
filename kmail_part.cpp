@@ -50,7 +50,7 @@ using KRecentAddress::RecentAddresses;
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <ksettings/dispatcher.h>
-
+#include <kmailpartadaptor.h>
 
 #include <QLayout>
 #include <kglobal.h>
@@ -63,6 +63,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
+  (void) new KmailpartAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/KMail", this);
+
   kDebug(5006) << "KMailPart()" << endl;
   kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 

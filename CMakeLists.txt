@@ -231,6 +231,7 @@ set(kmailpart_PART_SRCS kmail_part.cpp )
 
 kde4_automoc(${kmailpart_PART_SRCS})
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
+qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.kmailpart.xml kmail_part.h  KMailPart)
 
 kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
 
