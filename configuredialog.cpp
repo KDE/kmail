@@ -89,7 +89,6 @@ using KMime::DateFormatter;
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kwin.h>
-#include <knotifydialog.h>
 #include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>

@@ -47,7 +47,6 @@ using KRecentAddress::RecentAddresses;
 #include <kapplication.h>
 #include <kparts/mainwindow.h>
 #include <kparts/genericfactory.h>
-#include <knotifyclient.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <ksettings/dispatcher.h>

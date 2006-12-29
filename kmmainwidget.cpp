@@ -35,20 +35,18 @@
 #include <kstandardshortcut.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
-#include <knotifyclient.h>
-#include <knotification.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
 #include <ktoolbar.h>
 #include <ktip.h>
-#include <knotifydialog.h>
 #include <kseparatoraction.h>
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
 #include <kaddrbook.h>
 #include <ktoggleaction.h>
 #include <knotification.h>
+#include <knotifyconfigwidget.h>
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
@@ -2862,10 +2860,10 @@ void KMMainWidget::setupActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-  if(kmkernel->xmlGuiInstance())
-    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
-  else
-    KNotifyDialog::configure(this);
+//  if(kmkernel->xmlGuiInstance())
+//    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
+//  else
+    KNotifyConfigWidget::configure(this);
 }
 
 void KMMainWidget::slotEditKeys()

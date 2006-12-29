@@ -21,7 +21,6 @@
 
 #include <kuniqueapplication.h>
 #include <kglobal.h>
-#include <knotifyclient.h>
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
 
