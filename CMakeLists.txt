@@ -182,6 +182,7 @@ set(kmailprivate_LIB_SRCS
    util.cpp
    keditcl1.cpp keditcl2.cpp )
 
+
 kde4_automoc(${kmailprivate_LIB_SRCS})
 
 kde4_add_ui3_files(kmailprivate_LIB_SRCS
@@ -195,6 +196,7 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 #   kmailicalIface.h
 #   folderIface.h )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.kmail.xml kmkernel.h  KMKernel)
 
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 

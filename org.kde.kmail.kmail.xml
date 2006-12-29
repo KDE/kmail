@@ -1,0 +1,37 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.kde.kmail.kmail">
+    <method name="checkMail"/>
+    <method name="openReader"/>
+    <method name="compactAllFolders"/>
+    <method name="pauseBackgroundJobs"/>
+    <method name="resumeBackgroundJobs"/>
+    <method name="stopNetworkJobs"/>
+    <method name="resumeNetworkJobs"/>
+    <method name="folderList">
+      <arg type="as" direction="out"/>
+    </method>
+    <method name="accounts">
+      <arg type="as" direction="out"/>
+    </method>
+    <method name="selectFolder">
+      <arg name="folder" type="s" direction="in"/>
+    </method>
+    <method name="canQueryClose">
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="setDefaultTransport">
+      <arg name="transport" type="s" direction="in"/>
+    </method>
+    <method name="timeOfLastMessageCountChange">
+      <arg type="i" direction="out"/>
+    </method>
+    <method name="dcopAddMessage">
+      <arg type="i" direction="out"/>
+      <arg name="foldername" type="s" direction="in"/>
+      <arg name="messagefile" type="s" direction="in"/>
+      <arg name="MsgStatusFlags" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

@@ -85,7 +85,7 @@ using KWallet::Wallet;
 
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
-
+#include <kmailadaptor.h>
 KMKernel *KMKernel::mySelf = 0;
 
 /********************************************************************/
@@ -93,10 +93,12 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 #warning Port DCOPObject -> DBus!
 KMKernel::KMKernel (QObject *parent, const char *name) :
-  /*DCOPObject("KMailIface"),*/ QObject(parent),
+  QObject(parent),
   mIdentityManager(0), mConfigureDialog(0),
   mContextMenuShown( false ), mWallet( 0 )
 {
+  (void) new KmailAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/KMail", this);
   kDebug(5006) << "KMKernel::KMKernel" << endl;
   setObjectName( name );
   mySelf = this;
