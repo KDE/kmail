@@ -46,7 +46,6 @@ using KRecentAddress::RecentAddresses;
 #include "kmailicalifaceimpl.h"
 //#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "mailcomposerIface.h"
 #include "folderIface.h"
 using KMail::FolderIface;
 #include "jobscheduler.h"

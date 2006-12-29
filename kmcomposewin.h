@@ -37,7 +37,6 @@
 #include <keditcl.h>
 #include <ktempdir.h>
 
-#include "mailcomposerIface.h"
 
 #include <libkdepim/addresseelineedit.h>
 #include <mimelib/mediatyp.h>
@@ -93,7 +92,7 @@ namespace GpgME {
 }
 
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMail::Composer, virtual public MailComposerIface
+class KMComposeWin : public KMail::Composer
 {
   Q_OBJECT
   friend class ::KMEdit;
@@ -104,9 +103,6 @@ private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
   ~KMComposeWin();
 public:
   static Composer * create( KMMessage * msg = 0, uint identity = 0 );
-
-  MailComposerIface * asMailComposerIFace() { return this; }
-  const MailComposerIface * asMailComposerIFace() const { return this; }
 
 public: // mailserviceimpl
   /**

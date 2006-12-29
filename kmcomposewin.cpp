@@ -153,6 +153,7 @@ using KRecentAddress::RecentAddresses;
 #include <assert.h>
 #include <krecentfilesaction.h>
 #include "kmcomposewin.moc"
+#include "mailcomposeradaptor.h"
 
 KMail::Composer * KMail::makeComposer( KMMessage * msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
@@ -164,7 +165,7 @@ KMail::Composer * KMComposeWin::create( KMMessage * msg, uint identitiy ) {
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
-  : MailComposerIface(), KMail::Composer( "kmail-composer#" ),
+  : KMail::Composer( "kmail-composer#" ),
     mSpellCheckInProgress( false ),
     mDone( false ),
     mAtmModified( false ),
@@ -191,6 +192,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
+  (void) new MailcomposerAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/Composer", this);         
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
 

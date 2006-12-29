@@ -54,8 +54,6 @@ namespace KMail {
   public: // kmcommand
     virtual void setBody( QString body ) = 0;
 
-    virtual const MailComposerIface * asMailComposerIFace() const = 0;
-    virtual MailComposerIface * asMailComposerIFace() = 0;
 
   public: // kmkernel, kmcommands, callback
     /**

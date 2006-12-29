@@ -33,5 +33,9 @@
       <arg name="messagefile" type="s" direction="in"/>
       <arg name="MsgStatusFlags" type="s" direction="in"/>
     </method>
+    <method name="sendCertificate">
+      <arg type="i" direction="out"/>
+      <arg name="to" type="s" direction="in"/>
+      <arg name="certData" type="ay" direction="in"/>
   </interface>
 </node>
