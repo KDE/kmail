@@ -18,7 +18,6 @@
 #include <kdemacros.h>
 #include <kurl.h>
 
-//#include "kmailIface.h"
 #include "kmmsgbase.h"
 #include "globalsettings.h"
 
