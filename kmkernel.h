@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QString>
 #include <QPointer>
+#include <QDBusObjectPath>
 #include <threadweaver/ThreadWeaver.h>
 
 #include <kconfig.h>
@@ -105,8 +106,7 @@ public:
                     const KUrl &messageFile, const KUrl::List &attachURLs,
                     const QByteArrayList &customHeaders);
 
-#warning Port DCOPRef usage!
-  /*DCOPRef*/ void openComposer(const QString &to, const QString &cc,
+  QDBusObjectPath openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
@@ -140,8 +140,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
 
   QStringList folderList() const;
-#warning Port DCOPRef usage!
-  /*DCOPRef*/ void getFolder( const QString& vpath );
+  QDBusObjectPath getFolder( const QString& vpath );
   void selectFolder( QString folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( quint32 serialNumber, QString messageId );

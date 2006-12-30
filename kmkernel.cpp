@@ -438,8 +438,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
   GlobalSettings::self()->setDefaultTransport( transport );
 }
 
-#warning Port DCOPRef usage!
-/*DCOPRef*/ void KMKernel::openComposer(const QString &to, const QString &cc,
+QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
                                const QString &bcc, const QString &subject,
                                const QString &body,bool hidden)
 {
@@ -465,6 +464,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
 
 #warning Port me!
 //  return DCOPRef( cWin->asMailComposerIFace() );
+   return QDBusObjectPath();
 }
 
 #warning Port DCOPRef usage!
@@ -834,8 +834,7 @@ QStringList KMKernel::folderList() const
   return folders;
 }
 
-#warning Port DCOPRef usage!
-/*DCOPRef*/ void KMKernel::getFolder( const QString& vpath )
+QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 {
 #warning Port DCOPRef usage!
 /*  const QString localPrefix = "/Local";
@@ -849,6 +848,7 @@ QStringList KMKernel::folderList() const
   else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   return DCOPRef();*/
+  return QDBusObjectPath();
 }
 
 void KMKernel::raise()

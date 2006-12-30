@@ -37,5 +37,38 @@
       <arg type="i" direction="out"/>
       <arg name="to" type="s" direction="in"/>
       <arg name="certData" type="ay" direction="in"/>
+    </method>
+    <method name="handleCommandLine">
+      <arg type="b" direction="out"/>
+      <arg name="noArgsOpensReader" type="b" direction="in"/>
+    </method>
+    <method name="debugScheduler">
+      <arg type="s" direction="out"/>
+    </method>
+    <method name="dcopResetAddMessage"/>
+    <method name="dcopAddMessage_fastImport">
+      <arg type="i" direction="out"/>
+      <arg name="foldername" type="s" direction="in"/>
+      <arg name="messagefile" type="s" direction="in"/>
+      <arg name="MsgStatusFlags" type="s" direction="in"/>
+    </method>
+    <signal name="unreadCountChanged" />
+    <signal name="unreadCountChanged">
+      <arg name="folderURL" type="s" direction="out"/>
+      <arg name="numUnread" type="i" direction="out"/>
+    </signal>
+    <method name="getFolder">
+      <arg type="o" direction="out"/>
+      <arg name="vpath" type="s" direction="in"/>
+    </method>
+    <method name="openComposer">
+      <arg type="o" direction="out"/>
+      <arg name="to" type="s" direction="in"/>
+      <arg name="cc" type="s" direction="in"/>
+      <arg name="bcc" type="s" direction="in"/>
+      <arg name="subject" type="s" direction="in"/>
+      <arg name="body" type="s" direction="in"/>
+      <arg name="hidden" type="b" direction="in"/>
+    </method>
   </interface>
 </node>
