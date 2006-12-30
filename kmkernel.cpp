@@ -90,7 +90,6 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
-#warning Port DCOPObject -> DBus!
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0),
