@@ -70,5 +70,15 @@
       <arg name="body" type="s" direction="in"/>
       <arg name="hidden" type="b" direction="in"/>
     </method>
+    <method name="newMessage">
+      <arg type="o" direction="out"/>
+      <arg name="to" type="s" direction="in"/>
+      <arg name="cc" type="s" direction="in"/>
+      <arg name="bcc" type="s" direction="in"/>
+      <arg name="hidden" type="b" direction="in"/>
+      <arg name="useFolderId" type="b" direction="in"/>
+      <arg name="messageFile" type="s" direction="in"/>
+      <arg name="attachURL" type="s" direction="in"/>
+    </method>
   </interface>
 </node>

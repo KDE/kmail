@@ -467,14 +467,15 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
 }
 
 #warning Port DCOPRef usage!
-/*DCOPRef*/ void KMKernel::newMessage(const QString &to,
+QDBusObjectPath KMKernel::newMessage(const QString &to,
                              const QString &cc,
                              const QString &bcc,
                              bool hidden,
                              bool useFolderId,
-                             const KUrl & /*messageFile*/,
-                             const KUrl &attachURL)
+                             const QString & /*messageFile*/,
+                             const QString &_attachURL)
 {
+  KUrl attachURL(_attachURL);
   KMail::Composer * win = 0;
   KMMessage *msg = new KMMessage;
 
@@ -504,6 +505,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   }
 #warning Port me!
 //  return DCOPRef( win->asMailComposerIFace() );
+  return QDBusObjectPath();
 }
 
 int KMKernel::viewMessage( const KUrl & messageFile )

@@ -110,19 +110,18 @@ public:
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
-  /** DCOP call used to set the default transport. */
+  /** D-Bus call used to set the default transport. */
 
   void setDefaultTransport( const QString & transport );
 
-  /** DCOP call used by the Kontact plugin to create a new message. */
-#warning Port DCOPRef usage!
-  /*DCOPRef*/ void newMessage(const QString &to,
+  /** D-Bus call used by the Kontact plugin to create a new message. */
+   QDBusObjectPath newMessage(const QString &to,
                      const QString &cc,
                      const QString &bcc,
                      bool hidden,
                      bool useFolderId,
-                     const KUrl &messageFile,
-                     const KUrl &attachURL);
+                     const QString &messageFile,
+                     const QString &attachURL);
 
   int sendCertificate( const QString& to, const QByteArray& certData );
 
