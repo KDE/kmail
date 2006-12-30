@@ -80,5 +80,18 @@
       <arg name="messageFile" type="s" direction="in"/>
       <arg name="attachURL" type="s" direction="in"/>
     </method>
+    <method name="showMail">
+      <arg type="b" direction="out"/>
+      <arg name="serialNumber" type="u" direction="in"/>
+      <arg name="messageId" type="s" direction="in"/>
+    </method>
+    <method name="getFrom">
+      <arg type="s" direction="out"/>
+      <arg name="serialNumber" type="u" direction="in"/>
+    </method>
+    <method name="debugSernum">
+      <arg type="s" direction="out"/>
+      <arg name="serialNumber" type="u" direction="in"/>
+    </method>
   </interface>
 </node>

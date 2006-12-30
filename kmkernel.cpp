@@ -85,6 +85,7 @@ using KWallet::Wallet;
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
+#include "kmailinterface.h"
 KMKernel *KMKernel::mySelf = 0;
 
 /********************************************************************/
@@ -466,7 +467,6 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
    return QDBusObjectPath();
 }
 
-#warning Port DCOPRef usage!
 QDBusObjectPath KMKernel::newMessage(const QString &to,
                              const QString &cc,
                              const QString &bcc,
@@ -854,9 +854,11 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-#warning Port DCOPRef usage!
-/*  DCOPRef kmail( "kmail", "kmail" );
-  kmail.call( "newInstance" );*/
+#warning "port to dbus"
+/*
+     	org::kde::kmail::kmail kmail("org.kde.kmail", "/KMail", QDBusConnection::sessionBus());
+   kmail.newInstance();
+*/
 }
 
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )

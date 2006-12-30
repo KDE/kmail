@@ -182,6 +182,7 @@ set(kmailprivate_LIB_SRCS
    util.cpp
    keditcl1.cpp keditcl2.cpp )
 
+qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
 
 kde4_automoc(${kmailprivate_LIB_SRCS})
 
