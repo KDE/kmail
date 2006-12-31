@@ -283,7 +283,7 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   KMenu *folderMenu = new KMenu;
   folderMenu->addTitle( folder->label() );
   folderMenu->addSeparator();
-  folderMenu->addAction( SmallIconSet("folder_new"),
+  folderMenu->addAction( KIcon("folder_new"),
                          i18n("&New Subfolder..."), this,
                          SLOT(addChildFolder()) );
   kmkernel->setContextMenuShown( true );

@@ -998,7 +998,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
     if (fti->folder() || (fti->text(0) != i18n("Searches")))
-        folderMenu->addAction( SmallIconSet("folder_new"),
+        folderMenu->addAction( KIcon("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
 
@@ -1006,14 +1006,14 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addAction( mMainWidget->action("compact_all_folders") );
       folderMenu->addAction( mMainWidget->action("expire_all_folders") );
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
-      folderMenu->addAction(SmallIconSet("mail_get"), i18n("Check &Mail"),
+      folderMenu->addAction(KIcon("mail_get"), i18n("Check &Mail"),
         this, SLOT(slotCheckMail()));
     }
   } else { // regular folders
 
     folderMenu->addSeparator();
     if ( !fti->folder()->noChildren() ) {
-      folderMenu->addAction(SmallIconSet("folder_new"),
+      folderMenu->addAction(KIcon("folder_new"),
                             i18n("&New Subfolder..."), this,
                             SLOT(addChildFolder()));
     }
@@ -1046,7 +1046,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       (fti->folder()->folderType() == KMFolderTypeImap ||
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
-    folderMenu->addAction(SmallIconSet("bookmark_folder"),
+    folderMenu->addAction(KIcon("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
@@ -1054,13 +1054,13 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     {
       folderMenu->addAction( mMainWidget->action("refresh_folder") );
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
-        folderMenu->addAction( SmallIconSet("reload"), i18n("Refresh Folder List"),
+        folderMenu->addAction( KIcon("reload"), i18n("Refresh Folder List"),
                                this, SLOT(slotResetFolderList()));
       }
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-      folderMenu->addAction( SmallIconSet("wizard"), i18n("&Troubleshoot IMAP Cache..."),
+      folderMenu->addAction( KIcon("wizard"), i18n("&Troubleshoot IMAP Cache..."),
                              folder, SLOT(slotTroubleshoot()) );
     }
     folderMenu->addSeparator();
@@ -1072,7 +1072,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
   if (fti->folder() && fti->parent())
   {
-    folderMenu->addAction(SmallIconSet("configure_shortcuts"),
+    folderMenu->addAction(KIcon("configure_shortcuts"),
         i18n("&Assign Shortcut..."),
         fti,
         SLOT(assignShortcut()));

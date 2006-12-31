@@ -1144,15 +1144,15 @@ Q3PopupMenu *KEdit::createPopupMenu( const QPoint& pos )
     {
         enum { UndoAct = 0, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
         if ( isReadOnly() )
-            lstAction[0]->setIcon( SmallIconSet("editcopy") );
+            lstAction[0]->setIcon( KIcon("editcopy") );
         else
         {
-            lstAction[UndoAct]->setIcon( SmallIconSet("undo") );
-            lstAction[RedoAct]->setIcon( SmallIconSet("redo") );
-            lstAction[CutAct]->setIcon( SmallIconSet("editcut") );
-            lstAction[CopyAct]->setIcon( SmallIconSet("editcopy") );
-            lstAction[PasteAct]->setIcon( SmallIconSet("editpaste") );
-            lstAction[ClearAct]->setIcon( SmallIconSet("editclear") );
+            lstAction[UndoAct]->setIcon( KIcon("undo") );
+            lstAction[RedoAct]->setIcon( KIcon("redo") );
+            lstAction[CutAct]->setIcon( KIcon("editcut") );
+            lstAction[CopyAct]->setIcon( KIcon("editcopy") );
+            lstAction[PasteAct]->setIcon( KIcon("editpaste") );
+            lstAction[ClearAct]->setIcon( KIcon("editclear") );
         }
     }
     return menu;
