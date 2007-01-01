@@ -60,7 +60,7 @@ foreach my $accountGroup (@accountGroups) {
 }
 
 # we need the directory where the imap cache is stored
-open(CMD, "kde-config --localprefix|");
+open(CMD, "kde4-config --localprefix|");
 my $basedir = <CMD>;
 chomp( $basedir );
 $basedir = $basedir."share/apps/kmail";
