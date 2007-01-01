@@ -854,11 +854,15 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-#warning "port to dbus"
-/*
-     	org::kde::kmail::kmail kmail("org.kde.kmail", "/KMail", QDBusConnection::sessionBus());
-   kmail.newInstance();
-*/
+  QDBusInterface iface("org.kde.kmail", "/MainApplication", "org.kde.KUniqueApplication", QDBusConnection::sessionBus());
+  QDBusReply<int> reply;
+  if (!iface.isValid() || !(reply = iface.call("newInstance")).isValid())
+  {
+       QDBusError err = iface.lastError();
+       kError() << "Communication problem with kmail" 
+                 << "Error message was: " << err.name() << ": \"" << err.message() << "\"" << endl;
+  }
+ 
 }
 
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
