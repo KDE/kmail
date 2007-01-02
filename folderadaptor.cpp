@@ -37,7 +37,7 @@
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
-#include <dbus/qdbusconnection.h>
+#include <qdbusconnection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 
@@ -48,7 +48,7 @@ namespace KMail {
 FolderAdaptor::FolderAdaptor( const QString& vpath )
   : mPath( vpath )
 {
-  QDBus::sessionBus().registerObject("/Folder", this, QDBusConnection::ExportSlots);
+  QDBusConnection::sessionBus().registerObject("/Folder", this);
   //kDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
   if ( !mFolder )

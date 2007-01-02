@@ -46,10 +46,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmailicalifaceimpl.h"
 //#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "folderIface.h"
-using KMail::FolderIface;
 #include "jobscheduler.h"
-
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -87,6 +84,7 @@ using KWallet::Wallet;
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
 KMKernel *KMKernel::mySelf = 0;
+#include "folderadaptor.h"
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
@@ -837,6 +835,24 @@ QStringList KMKernel::folderList() const
 
 QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 {
+#if 0	
+  QString adaptorName;
+  const QString localPrefix = "/Local";
+  if ( the_folderMgr->getFolderByURL( vpath ) )
+    adaptorName=vpath;
+  else if ( vpath.startsWith( localPrefix ) && the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
+    adaptorName=vpath.mid( localPrefix.length() );
+  else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
+   adaptorName=vpath;
+  else if (the_dimapFolderMgr->getFolderByURL( vpath ) )
+   adaptorName=vpath;
+  if( !adaptorName.isEmpty())
+  {
+	  KMail::FolderAdaptor *adaptor = new KMail::FolderAdaptor(adaptorName);
+    QDBusConnection::sessionBus().registerObject( vpath, this );
+    return QDBusObjectPath(vpath);
+  }
+#endif  
 #warning Port DCOPRef usage!
 /*  const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )

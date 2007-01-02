@@ -131,7 +131,6 @@ set(kmailprivate_LIB_SRCS
    subscriptiondialog.cpp
    kmailicalifaceimpl.cpp
    aboutdata.cpp
-   folderIface.cpp
 #   mailserviceimpl.cpp
    attachmentlistview.cpp
    kmedit.cpp
@@ -180,7 +179,7 @@ set(kmailprivate_LIB_SRCS
    managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp
    util.cpp
-   keditcl1.cpp keditcl2.cpp )
+   keditcl1.cpp keditcl2.cpp folderadaptor.cpp )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
 
