@@ -11,7 +11,7 @@
 #include <Q3CString>
 using namespace KMime::Types;
 
-#include <kio/passdlg.h>
+#include <kio/passworddialog.h>
 #include <kio/scheduler.h>
 #include <kapplication.h>
 #include <kmessagebox.h>

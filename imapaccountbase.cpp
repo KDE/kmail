@@ -56,7 +56,7 @@ using KPIM::ProgressManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 using KIO::MetaData;
-#include <kio/passdlg.h>
+#include <kio/passworddialog.h>
 using KIO::PasswordDialog;
 #include <kio/scheduler.h>
 #include <kio/slave.h>

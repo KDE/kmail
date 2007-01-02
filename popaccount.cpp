@@ -43,7 +43,7 @@ using KPIM::BroadcastStatus;
 #include <kmessagebox.h>
 #include <kmainwindow.h>
 #include <kio/scheduler.h>
-#include <kio/passdlg.h>
+#include <kio/passworddialog.h>
 #include <kconfig.h>
 #include <kio/jobuidelegate.h>
 using KIO::MetaData;

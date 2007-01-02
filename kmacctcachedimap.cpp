@@ -45,7 +45,7 @@ using KMail::SieveConfig;
 using KMail::AccountManager;
 #include "progressmanager.h"
 
-#include <kio/passdlg.h>
+#include <kio/passworddialog.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
