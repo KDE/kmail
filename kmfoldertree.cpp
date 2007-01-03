@@ -145,7 +145,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
   if (mFolder && mFolder->useCustomIcons() ) {
     icon = mFolder->normalIconPath();
   }
-  KIconLoader * il = KGlobal::instance()->iconLoader();
+  KIconLoader * il = kapp->iconLoader();
   QPixmap pm = il->loadIcon( icon, K3Icon::Small, size,
                              K3Icon::DefaultState, 0, true );
   if ( mFolder && pm.isNull() ) {
@@ -165,7 +165,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
     || kmkernel->folderIsDraftOrOutbox( mFolder ) )
     pm = normalIcon( size );
 
-  KIconLoader * il = KGlobal::instance()->iconLoader();
+  KIconLoader * il = kapp->iconLoader();
   if ( mFolder && mFolder->useCustomIcons() ) {
     pm = il->loadIcon( mFolder->unreadIconPath(), K3Icon::Small, size,
                        K3Icon::DefaultState, 0, true );

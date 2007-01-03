@@ -224,7 +224,7 @@ void insertLibraryCataloguesAndIcons() {
   };
 
   KLocale * l = KGlobal::locale();
-  KIconLoader * il = KGlobal::iconLoader();
+  KIconLoader * il = kapp->iconLoader();
   for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i ) {
     l->insertCatalog( catalogues[i] );
     il->addAppDir( catalogues[i] );

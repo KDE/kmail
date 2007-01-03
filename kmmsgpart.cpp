@@ -401,7 +401,7 @@ QString KMMessagePart::iconName() const
   } 
  
   fileName =
-    KGlobal::instance()->iconLoader()->iconPath( fileName, K3Icon::Desktop );
+    kapp->iconLoader()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
 }
 

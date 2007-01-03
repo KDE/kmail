@@ -2581,11 +2581,11 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       // Cache Icons
       if ( mCollapseIcon.isEmpty() ) {
         mCollapseIcon= LinkLocator::pngToDataUrl(
-            KGlobal::instance()->iconLoader()->iconPath( "quotecollapse",0 ));
+            kapp->iconLoader()->iconPath( "quotecollapse",0 ));
       }
       if ( mExpandIcon.isEmpty() )
         mExpandIcon= LinkLocator::pngToDataUrl(
-            KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
+            kapp->iconLoader()->iconPath( "quoteexpand",0 ));
     }
 
     for (int p=0; p<line.length(); p++) {

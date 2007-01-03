@@ -102,7 +102,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   QWidget *canvas = new QWidget( parentWidget );
   canvas->setFocusPolicy(Qt::ClickFocus);
   setWidget(canvas);
-  KGlobal::iconLoader()->addAppDir("kmail");
+  kapp->iconLoader()->addAppDir("kmail");
 #if 0
   //It's also possible to make a part out of a readerWin
   KMReaderWin *mReaderWin = new KMReaderWin( canvas, canvas, actionCollection() );
@@ -117,7 +117,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   mReaderWin->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
-  KGlobal::iconLoader()->addAppDir("kmail");
+  kapp->iconLoader()->addAppDir("kmail");
   setXMLFile( "kmail_part.rc" );
   kmkernel->inboxFolder()->close();
 #else
@@ -135,7 +135,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
 
-  KGlobal::iconLoader()->addAppDir( "kmail" );
+  kapp->iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmail_part.rc" );
 #endif
 

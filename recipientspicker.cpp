@@ -56,7 +56,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
 
-  mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", K3Icon::Small );
+  mIcon = kapp->iconLoader()->loadIcon( "kdmconfig", K3Icon::Small );
 
   mKey = 'D' + list->name();
 }
@@ -71,7 +71,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   if ( !img.isNull() )
     mIcon = QPixmap::fromImage( img.scaled( 20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
   else
-    mIcon = KGlobal::iconLoader()->loadIcon( "personal", K3Icon::Small );
+    mIcon = kapp->iconLoader()->loadIcon( "personal", K3Icon::Small );
 
   mKey = 'A' + a.preferredEmail();
 }
