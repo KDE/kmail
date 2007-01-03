@@ -50,7 +50,6 @@
 #include <knuminput.h>
 #include <kseparator.h>
 #include <kapplication.h>
-#include <kmessagebox.h>
 #include <kprotocolinfo.h>
 #include <kiconloader.h>
 #include <kmenu.h>

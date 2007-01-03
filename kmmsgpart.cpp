@@ -5,6 +5,7 @@
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kcodecs.h>
+#include <kapplication.h>
 
 #include "kmmsgpart.h"
 #include "kmkernel.h"
