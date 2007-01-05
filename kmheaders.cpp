@@ -1476,9 +1476,9 @@ HeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
 void KMHeaders::finalizeMove( HeaderItem *item, int contentX, int contentY )
 {
   emit selected( 0 );
+  clearSelection();
 
   if ( item ) {
-    clearSelection();
     setCurrentItem( item );
     setSelected( item, true );
     setSelectionAnchor( currentItem() );
