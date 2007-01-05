@@ -1079,7 +1079,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   default:
     kDebug(5006) << "KMFolderCachedImap::serverSyncInternal() WARNING: no such state "
-              << mSyncState << endl;
+              << int(mSyncState) << endl;
   }
 }
 
