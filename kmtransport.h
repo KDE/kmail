@@ -28,8 +28,11 @@ class QCheckBox;
 class QLabel;
 class QLineEdit;
 class QRadioButton;
-class KMServerTest;
 class Q3ButtonGroup;
+
+namespace KPIM {
+class ServerTest;
+}
 
 class KMTransportInfo : public QObject
 {
@@ -145,7 +148,7 @@ private:
   static unsigned int authMethodsFromString( const QString & s );
   static unsigned int authMethodsFromStringList( const QStringList & sl );
 
-  KMServerTest    *mServerTest;
+  KPIM::ServerTest    *mServerTest;
   SmtpWidgets     mSmtp;
   SendmailWidgets mSendmail;
   KMTransportInfo *mTransportInfo;

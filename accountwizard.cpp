@@ -56,11 +56,11 @@
 using KMail::AccountManager;
 
 #include "globalsettings.h"
-#include "kmservertest.h"
 #include "kmtransport.h"
 #include "libkpimidentities/identity.h"
 #include "libkpimidentities/identitymanager.h"
 #include "protocols.h"
+#include <libkdepim/servertest.h>
 
 #include "accountwizard.h"
 
@@ -520,7 +520,7 @@ void AccountWizard::finished()
 void AccountWizard::checkPopCapabilities( const QString &server, int port )
 {
   delete mServerTest;
-  mServerTest = new KMServerTest( POP_PROTOCOL, server, port );
+  mServerTest = new KPIM::ServerTest( POP_PROTOCOL, server, port );
 
   connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
            this, SLOT( popCapabilities( const QStringList&, const QStringList& ) ) );
@@ -531,7 +531,7 @@ void AccountWizard::checkPopCapabilities( const QString &server, int port )
 void AccountWizard::checkImapCapabilities( const QString &server, int port )
 {
   delete mServerTest;
-  mServerTest = new KMServerTest( IMAP_PROTOCOL, server, port );
+  mServerTest = new KPIM::ServerTest( IMAP_PROTOCOL, server, port );
 
   connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
            this, SLOT( imapCapabilities( const QStringList&, const QStringList& ) ) );
@@ -542,7 +542,7 @@ void AccountWizard::checkImapCapabilities( const QString &server, int port )
 void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
 {
   delete mServerTest;
-  mServerTest = new KMServerTest( SMTP_PROTOCOL, server, port );
+  mServerTest = new KPIM::ServerTest( SMTP_PROTOCOL, server, port );
 
   connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList&,
                                               const QString&, const QString&, const QString& ) ),

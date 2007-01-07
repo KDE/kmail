@@ -37,6 +37,7 @@
 #include <QLabel>
 #include <QPushButton>
 
+#include <libkdepim/servertest.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -48,7 +49,6 @@ using KWallet::Wallet;
 #include <kprotocolinfo.h>
 
 #include "kmkernel.h"
-#include "kmservertest.h"
 #include "kmaccount.h"
 #include "protocols.h"
 #include "transportmanager.h"
@@ -736,7 +736,7 @@ unsigned int KMTransportDialog::authMethodsFromStringList( const QStringList & s
 void KMTransportDialog::slotCheckSmtpCapabilities()
 {
   delete mServerTest;
-  mServerTest = new KMServerTest(SMTP_PROTOCOL, mSmtp.hostEdit->text(),
+  mServerTest = new KPIM::ServerTest(SMTP_PROTOCOL, mSmtp.hostEdit->text(),
     mSmtp.portEdit->text().toInt());
   connect( mServerTest,
            SIGNAL( capabilities( const QStringList &, const QStringList &,

@@ -43,8 +43,11 @@ class QToolButton;
 class KIntNumInput;
 class KMAccount;
 class KMFolder;
-class KMServerTest;
 class Q3ButtonGroup;
+
+namespace KPIM {
+class ServerTest;
+}
 
 namespace KMail {
 
@@ -259,7 +262,7 @@ class AccountDialog : public KDialog
     KMAccount    *mAccount;
     QList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
-    KMServerTest *mServerTest;
+    KPIM::ServerTest *mServerTest;
     enum EncryptionMethods {
       NoEncryption = 0,
       SSL = 1,

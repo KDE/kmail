@@ -77,7 +77,6 @@ set(kmailprivate_LIB_SRCS
    xfaceconfigurator.cpp
    networkaccount.cpp
    imapaccountbase.cpp
-   kmservertest.cpp
    kmacctimap.cpp
    kmacctcachedimap.cpp
    kmfawidgets.cpp

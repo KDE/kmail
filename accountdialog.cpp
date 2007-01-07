@@ -55,6 +55,8 @@
 #include <kmenu.h>
 #include <kvbox.h>
 
+#include <libkdepim/servertest.h>
+
 #include <netdb.h>
 #include <netinet/in.h>
 
@@ -66,7 +68,6 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
-#include "kmservertest.h"
 #include "protocols.h"
 #include "folderrequester.h"
 #include "kmmainwidget.h"
@@ -1539,7 +1540,7 @@ void AccountDialog::slotCheckPopCapabilities()
      return;
   }
   delete mServerTest;
-  mServerTest = new KMServerTest(POP_PROTOCOL, mPop.hostEdit->text(),
+  mServerTest = new KPIM::ServerTest(POP_PROTOCOL, mPop.hostEdit->text(),
     mPop.portEdit->text().toInt());
   connect( mServerTest, SIGNAL( capabilities( const QStringList &,
                                               const QStringList & ) ),
@@ -1558,7 +1559,7 @@ void AccountDialog::slotCheckImapCapabilities()
      return;
   }
   delete mServerTest;
-  mServerTest = new KMServerTest(IMAP_PROTOCOL, mImap.hostEdit->text(),
+  mServerTest = new KPIM::ServerTest(IMAP_PROTOCOL, mImap.hostEdit->text(),
     mImap.portEdit->text().toInt());
   connect( mServerTest, SIGNAL( capabilities( const QStringList &,
                                               const QStringList & ) ),

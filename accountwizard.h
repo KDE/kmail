@@ -41,9 +41,12 @@ class QPushButton;
 
 class KMAccount;
 class KMKernel;
-class KMServerTest;
 class AccountTypeBox;
 class KMTransportInfo;
+
+namespace KPIM {
+class ServerTest;
+}
 
 class AccountWizard : public K3Wizard
 {
@@ -135,7 +138,7 @@ class AccountWizard : public K3Wizard
     KMAccount *mAccount;
     KMTransportInfo *mTransportInfo;
     QList<KMTransportInfo*> mTransportInfoList;
-    KMServerTest *mServerTest;
+    KPIM::ServerTest *mServerTest;
 };
 
 #endif
