@@ -166,7 +166,7 @@ protected:
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<QAction*,KMFolder*> mMenuToFolder;
-  KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
+  QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;

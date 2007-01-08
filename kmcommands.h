@@ -611,12 +611,12 @@ public slots:
   /** Assign a KActio to the command which is used to trigger it. This
    * action will be deleted along with the command, so you don't need to
    * keep track of it separately. */
-  void setAction( KAction* );
+  void setAction( QAction* );
 
 private:
   KMMainWidget *mMainWidget;
   KMFolder *mFolder;
-  KAction *mAction;
+  QAction *mAction;
 };
 
 

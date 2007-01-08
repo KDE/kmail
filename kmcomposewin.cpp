@@ -1122,36 +1122,39 @@ void KMComposeWin::setupActions(void)
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    KAction *action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_default");
+    QAction *action  = new KAction(KIcon("mail_send"), i18n("&Send Mail"), this);
+    actionCollection()->addAction("send_default", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Return));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu =  new KActionMenu ( KIcon( "mail_send"), i18n("&Send Mail Via"),
-                                          actionCollection(), "send_default_via" );
+    actActionNowMenu  = new KActionMenu(KIcon( "mail_send"), i18n("&Send Mail Via"), this);
+    actionCollection()->addAction("send_default_via", actActionNowMenu );
 
-    action = new KAction(KIcon("queue"), i18n("Send &Later"),
-                         actionCollection(), "send_alternative");
+    action  = new KAction(KIcon("queue"), i18n("Send &Later"), this);
+    actionCollection()->addAction("send_alternative", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendLater()));
-    actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
-		    actionCollection(), "send_alternative_via" );
+    actActionLaterMenu  = new KActionMenu(KIcon("queue"), i18n("Send &Later Via"), this);
+    actionCollection()->addAction("send_alternative_via", actActionLaterMenu );
 
   }
   else //no, default = send later
   {
     //default = queue, alternative = send now
-    KAction *action = new KAction(KIcon("queue"), i18n("Send &Later"), actionCollection(), "send_default");
+    QAction *action  = new KAction(KIcon("queue"), i18n("Send &Later"), this);
+    actionCollection()->addAction("send_default", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotSendLater()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Return));
-    actActionLaterMenu = new KActionMenu ( KIcon("queue"), i18n("Send &Later Via"),
-		    actionCollection(), "send_default_via" );
+    actActionLaterMenu  = new KActionMenu(KIcon("queue"), i18n("Send &Later Via"), this);
+    actionCollection()->addAction("send_default_via", actActionLaterMenu );
 
-    action = new KAction( KIcon("mail_send"), i18n("&Send Mail"), actionCollection(),"send_alternative");
+    action  = new KAction(KIcon("mail_send"), i18n("&Send Mail"), this);
+    actionCollection()->addAction("send_alternative", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu =  new KActionMenu ( KIcon("mail_send"), i18n("&Send Mail Via"),
-		    actionCollection(), "send_alternative_via" );
+    actActionNowMenu  = new KActionMenu(KIcon("mail_send"), i18n("&Send Mail Via"), this);
+    actionCollection()->addAction("send_alternative_via", actActionNowMenu );
 
   }
 
@@ -1181,31 +1184,38 @@ void KMComposeWin::setupActions(void)
 
 
 
-  KAction *action = new KAction(KIcon("filesave"), i18n("Save in &Drafts Folder"), actionCollection(), "save_in_drafts");
+  QAction *action  = new KAction(KIcon("filesave"), i18n("Save in &Drafts Folder"), this);
+  actionCollection()->addAction("save_in_drafts", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()));
-  action = new KAction(KIcon("fileopen"), i18n("&Insert File..."), actionCollection(), "insert_file");
+  action  = new KAction(KIcon("fileopen"), i18n("&Insert File..."), this);
+  actionCollection()->addAction("insert_file", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
 
-  mRecentAction = new KRecentFilesAction (KIcon("fileopen"), i18n("&Insert File Recent"),
-                                          actionCollection(), "insert_file_recent");
+  mRecentAction  = new KRecentFilesAction(KIcon("fileopen"), i18n("&Insert File Recent"), this);
+  actionCollection()->addAction("insert_file_recent", mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
 
   mRecentAction->loadEntries( KMKernel::config() );
 
-  action = new KAction(KIcon("contents"), i18n("&Address Book"), actionCollection(), "addressbook");
+  action  = new KAction(KIcon("contents"), i18n("&Address Book"), this);
+  actionCollection()->addAction("addressbook", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
-  action = new KAction(KIcon("mail_new"), i18n("&New Composer"), actionCollection(), "new_composer");
+  action  = new KAction(KIcon("mail_new"), i18n("&New Composer"), this);
+  actionCollection()->addAction("new_composer", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
-  action->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::New));
-  action = new KAction(KIcon("window_new"), i18n("New Main &Window"), actionCollection(), "open_mailreader");
+  action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
+  action  = new KAction(KIcon("window_new"), i18n("New Main &Window"), this);
+  actionCollection()->addAction("open_mailreader", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
   if ( !mClassicalRecipients ) {
-    action = new KAction( i18n("Select &Recipients..."), actionCollection(), "select_recipients" );
+    action  = new KAction(i18n("Select &Recipients..."), this);
+    actionCollection()->addAction("select_recipients", action );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( selectRecipients() ));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
-    action = new KAction( i18n("Save &Distribution List..."), actionCollection(), "save_distribution_list" );
+    action  = new KAction(i18n("Save &Distribution List..."), this);
+    actionCollection()->addAction("save_distribution_list", action );
     connect(action, SIGNAL(triggered(bool) ), mRecipientsEditor, SLOT( saveDistributionList() ));
   }
 
@@ -1224,44 +1234,51 @@ void KMComposeWin::setupActions(void)
   KStandardAction::findNext(this, SLOT(slotSearchAgain()), actionCollection());
 
   KStandardAction::replace (this, SLOT(slotReplace()), actionCollection());
-  KStandardAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
+  actionCollection()->addAction(KStandardAction::Spelling ,  "spellcheck", this, SLOT(slotSpellcheck()));
 
-  mPasteQuotation = new KAction(i18n("Pa&ste as Quotation"), actionCollection(), "paste_quoted");
+  mPasteQuotation  = new KAction(i18n("Pa&ste as Quotation"), this);
+  actionCollection()->addAction("paste_quoted", mPasteQuotation );
   connect(mPasteQuotation, SIGNAL(triggered(bool) ), SLOT( slotPasteAsQuotation()));
 
-  action = new KAction(i18n("Paste as Attac&hment"), actionCollection(), "paste_att");
+  action  = new KAction(i18n("Paste as Attac&hment"), this);
+  actionCollection()->addAction("paste_att", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT( slotPasteAsAttachment()));
 
-  mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), actionCollection(), "tools_quote");
+  mAddQuoteChars  = new KAction(i18n("Add &Quote Characters"), this);
+  actionCollection()->addAction("tools_quote", mAddQuoteChars );
   connect(mAddQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotAddQuotes()));
 
-  mRemQuoteChars = new KAction(i18n("Re&move Quote Characters"), actionCollection(), "tools_unquote");
+  mRemQuoteChars  = new KAction(i18n("Re&move Quote Characters"), this);
+  actionCollection()->addAction("tools_unquote", mRemQuoteChars );
   connect(mRemQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotRemoveQuotes()));
 
 
-  action = new KAction(i18n("Cl&ean Spaces"), actionCollection(), "clean_spaces");
+  action  = new KAction(i18n("Cl&ean Spaces"), this);
+  actionCollection()->addAction("clean_spaces", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotCleanSpace()));
 
-  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), actionCollection(), "toggle_fixedfont" );
+  mFixedFontAction  = new KToggleAction(i18n("Use Fi&xed Font"), this);
+  actionCollection()->addAction("toggle_fixedfont", mFixedFontAction );
   connect(mFixedFontAction, SIGNAL(triggered(bool) ), SLOT(slotUpdateFont()));
   mFixedFontAction->setChecked( GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
-  mUrgentAction = new KToggleAction (i18n("&Urgent"), actionCollection(), "urgent");
-  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"),
-                                         actionCollection(), "options_request_mdn");
+  mUrgentAction  = new KToggleAction(i18n("&Urgent"), this);
+  actionCollection()->addAction("urgent", mUrgentAction );
+  mRequestMDNAction  = new KToggleAction(i18n("&Request Disposition Notification"), this);
+  actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction = new KSelectAction( KIcon("charset"), i18n( "Se&t Encoding" ),
-                                      actionCollection(), "charsets" );
+  mEncodingAction  = new KSelectAction(KIcon("charset"), i18n("Se&t Encoding"), this);
+  actionCollection()->addAction("charsets", mEncodingAction );
   connect(mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()));
-  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), actionCollection(), "wordwrap");
+  mWordWrapAction  = new KToggleAction(i18n("&Wordwrap"), this);
+  actionCollection()->addAction("wordwrap", mWordWrapAction );
   mWordWrapAction->setChecked(GlobalSettings::self()->wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
-  mAutoSpellCheckingAction =
-    new KToggleAction( KIcon("spellcheck"), i18n( "&Automatic Spellchecking" ),
-                       actionCollection(), "options_auto_spellchecking" );
+  mAutoSpellCheckingAction  = new KToggleAction(KIcon("spellcheck"), i18n("&Automatic Spellchecking"), this);
+  actionCollection()->addAction("options_auto_spellchecking", mAutoSpellCheckingAction );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
   mAutoSpellCheckingAction->setChecked( !GlobalSettings::self()->useExternalEditor() && spellChecking );
@@ -1275,48 +1292,67 @@ void KMComposeWin::setupActions(void)
   mEncodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
-  markupAction = new KToggleAction(i18n("Formatting (HTML)"), actionCollection(), "html");
+  markupAction  = new KToggleAction(i18n("Formatting (HTML)"), this);
+  actionCollection()->addAction("html", markupAction );
   connect(markupAction, SIGNAL(triggered(bool) ), SLOT(slotToggleMarkup()));
 
-  mAllFieldsAction = new KToggleAction(i18n("&All Fields"), actionCollection(), "show_all_fields");
+  mAllFieldsAction  = new KToggleAction(i18n("&All Fields"), this);
+  actionCollection()->addAction("show_all_fields", mAllFieldsAction );
   connect(mAllFieldsAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mIdentityAction = new KToggleAction(i18n("&Identity"), actionCollection(), "show_identity");
+  mIdentityAction  = new KToggleAction(i18n("&Identity"), this);
+  actionCollection()->addAction("show_identity", mIdentityAction );
   connect(mIdentityAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mDictionaryAction = new KToggleAction(i18n("&Dictionary"), actionCollection(), "show_dictionary");
+  mDictionaryAction  = new KToggleAction(i18n("&Dictionary"), this);
+  actionCollection()->addAction("show_dictionary", mDictionaryAction );
   connect(mDictionaryAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), actionCollection(), "show_fcc");
+  mFccAction  = new KToggleAction(i18n("&Sent-Mail Folder"), this);
+  actionCollection()->addAction("show_fcc", mFccAction );
   connect(mFccAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mTransportAction = new KToggleAction(i18n("&Mail Transport"), actionCollection(), "show_transport");
+  mTransportAction  = new KToggleAction(i18n("&Mail Transport"), this);
+  actionCollection()->addAction("show_transport", mTransportAction );
   connect(mTransportAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mFromAction = new KToggleAction(i18n("&From"), actionCollection(), "show_from");
+  mFromAction  = new KToggleAction(i18n("&From"), this);
+  actionCollection()->addAction("show_from", mFromAction );
   connect(mFromAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-  mReplyToAction = new KToggleAction(i18n("&Reply To"), actionCollection(), "show_reply_to");
+  mReplyToAction  = new KToggleAction(i18n("&Reply To"), this);
+  actionCollection()->addAction("show_reply_to", mReplyToAction );
   connect(mReplyToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   if ( mClassicalRecipients ) {
-    mToAction = new KToggleAction(i18n("&To"), actionCollection(), "show_to");
+    mToAction  = new KToggleAction(i18n("&To"), this);
+    actionCollection()->addAction("show_to", mToAction );
     connect(mToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-    mCcAction = new KToggleAction(i18n("&CC"), actionCollection(), "show_cc");
+    mCcAction  = new KToggleAction(i18n("&CC"), this);
+    actionCollection()->addAction("show_cc", mCcAction );
     connect(mCcAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
-    mBccAction = new KToggleAction(i18n("&BCC"), actionCollection(), "show_bcc");
+    mBccAction  = new KToggleAction(i18n("&BCC"), this);
+    actionCollection()->addAction("show_bcc", mBccAction );
     connect(mBccAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   }
-  mSubjectAction = new KToggleAction(i18n("S&ubject"), actionCollection(), "show_subject");
+    mSubjectAction  = new KToggleAction(i18n("S&ubject"), this);
+    actionCollection()->addAction("show_subject", mSubjectAction );
   connect(mSubjectAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
   //end of checkable
 
-  action = new KAction(i18n("Append S&ignature"), actionCollection(), "append_signature");
+  action  = new KAction(i18n("Append S&ignature"), this);
+  actionCollection()->addAction("append_signature", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAppendSignature()));
-  mAttachPK = new KAction(i18n("Attach &Public Key..."), actionCollection(), "attach_public_key");
+  mAttachPK  = new KAction(i18n("Attach &Public Key..."), this);
+  actionCollection()->addAction("attach_public_key", mAttachPK );
   connect(mAttachPK, SIGNAL(triggered(bool) ), SLOT(slotInsertPublicKey()));
-  mAttachMPK = new KAction(i18n("Attach &My Public Key"), actionCollection(), "attach_my_public_key");
+  mAttachMPK  = new KAction(i18n("Attach &My Public Key"), this);
+  actionCollection()->addAction("attach_my_public_key", mAttachMPK );
   connect(mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
-  action = new KAction(KIcon("attach"), i18n("&Attach File..."), actionCollection(), "attach");
+  action  = new KAction(KIcon("attach"), i18n("&Attach File..."), this);
+  actionCollection()->addAction("attach", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAttachFile()));
-  mAttachRemoveAction = new KAction(i18n("&Remove Attachment"), actionCollection(), "remove");
+  mAttachRemoveAction  = new KAction(i18n("&Remove Attachment"), this);
+  actionCollection()->addAction("remove", mAttachRemoveAction );
   connect(mAttachRemoveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachRemove()));
-  mAttachSaveAction = new KAction(KIcon("filesave"), i18n("&Save Attachment As..."), actionCollection(), "attach_save");
+  mAttachSaveAction  = new KAction(KIcon("filesave"), i18n("&Save Attachment As..."), this);
+  actionCollection()->addAction("attach_save", mAttachSaveAction );
   connect(mAttachSaveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachSave()));
-  mAttachPropertiesAction = new KAction(i18n("Attachment Pr&operties"), actionCollection(), "attach_properties");
+  mAttachPropertiesAction  = new KAction(i18n("Attachment Pr&operties"), this);
+  actionCollection()->addAction("attach_properties", mAttachPropertiesAction );
   connect(mAttachPropertiesAction, SIGNAL(triggered(bool) ), SLOT(slotAttachProperties()));
 
   setStandardToolBarMenuEnabled(true);
@@ -1325,14 +1361,13 @@ void KMComposeWin::setupActions(void)
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStandardAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
-  action = new KAction(i18n("&Spellchecker..."), actionCollection(), "setup_spellchecker");
+  action  = new KAction(i18n("&Spellchecker..."), this);
+  actionCollection()->addAction("setup_spellchecker", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()));
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
-      KToggleAction * a = new KToggleAction( KIcon("chidecrypted"),
-                                             i18n( "Encrypt Message with Chiasmus..." ),
-                                             actionCollection(),
-                                             "encrypt_message_chiasmus" );
+    KToggleAction * a  = new KToggleAction(KIcon("chidecrypted"), i18n("Encrypt Message with Chiasmus..."), this);
+    actionCollection()->addAction("encrypt_message_chiasmus", a );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
     mEncryptChiasmusAction = a;
     connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
@@ -1341,10 +1376,10 @@ void KMComposeWin::setupActions(void)
     mEncryptChiasmusAction = 0;
   }
 
-  mEncryptAction = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"),
-                                     actionCollection(), "encrypt_message");
-  mSignAction = new KToggleAction(KIcon("signature"), i18n("&Sign Message"),
-                                  actionCollection(), "sign_message");
+  mEncryptAction  = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"), this);
+  actionCollection()->addAction("encrypt_message", mEncryptAction );
+  mSignAction  = new KToggleAction(KIcon("signature"), i18n("&Sign Message"), this);
+  actionCollection()->addAction("sign_message", mSignAction );
   // get PGP user id for the chosen identity
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
@@ -1389,7 +1424,8 @@ void KMComposeWin::setupActions(void)
   for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
     l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
 
-  mCryptoModuleAction = new KSelectAction( i18n( "&Cryptographic Message Format" ), actionCollection(), "options_select_crypto" );
+    mCryptoModuleAction  = new KSelectAction(i18n("&Cryptographic Message Format"), this);
+    actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
   connect(mCryptoModuleAction, SIGNAL(triggered(bool)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
@@ -1404,36 +1440,47 @@ void KMComposeWin::setupActions(void)
   styleItems << i18n( "Ordered List (Alpha lower)" );
   styleItems << i18n( "Ordered List (Alpha upper)" );
 
-  listAction = new KSelectAction( i18n( "Select Style" ), actionCollection(), "text_list" );
+  listAction  = new KSelectAction(i18n("Select Style"), this);
+  actionCollection()->addAction("text_list", listAction );
   listAction->setItems( styleItems );
   connect( listAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotListAction( const QString& ) ) );
-  fontAction = new KFontAction( i18n("Select Font"), actionCollection(), "text_font" );
+  fontAction  = new KFontAction(i18n("Select Font"), this);
+  actionCollection()->addAction("text_font", fontAction );
   connect( fontAction, SIGNAL( triggered( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction( i18n("Select Size"), actionCollection(), "text_size" );
+  fontSizeAction  = new KFontSizeAction(i18n("Select Size"), this);
+  actionCollection()->addAction("text_size", fontSizeAction );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  alignLeftAction = new KToggleAction(KIcon("text_left"), i18n("Align Left"), actionCollection(), "align_left");
+  alignLeftAction  = new KToggleAction(KIcon("text_left"), i18n("Align Left"), this);
+  actionCollection()->addAction("align_left", alignLeftAction );
   connect(alignLeftAction, SIGNAL(triggered(bool) ), SLOT(slotAlignLeft()));
   alignLeftAction->setChecked( true );
-  alignRightAction = new KToggleAction(KIcon("text_right"), i18n("Align Right"), actionCollection(), "align_right");
+  alignRightAction  = new KToggleAction(KIcon("text_right"), i18n("Align Right"), this);
+  actionCollection()->addAction("align_right", alignRightAction );
   connect(alignRightAction, SIGNAL(triggered(bool) ), SLOT(slotAlignRight()));
-  alignCenterAction = new KToggleAction(KIcon("text_center"), i18n("Align Center"), actionCollection(), "align_center");
+  alignCenterAction  = new KToggleAction(KIcon("text_center"), i18n("Align Center"), this);
+  actionCollection()->addAction("align_center", alignCenterAction );
   connect(alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()));
-  textBoldAction = new KToggleAction(KIcon("text_bold"),  i18n("&Bold"), actionCollection(), "text_bold");
+  textBoldAction  = new KToggleAction(KIcon("text_bold"), i18n("&Bold"), this);
+  actionCollection()->addAction("text_bold", textBoldAction );
   connect(textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold()));
   textBoldAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_B));
-  textItalicAction = new KToggleAction(KIcon("text_italic"),  i18n("&Italic"), actionCollection(), "text_italic");
+  textItalicAction  = new KToggleAction(KIcon("text_italic"), i18n("&Italic"), this);
+  actionCollection()->addAction("text_italic", textItalicAction );
   connect(textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic()));
   textItalicAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_I));
-  textUnderAction = new KToggleAction(KIcon("text_under"),  i18n("&Underline"), actionCollection(), "text_under");
+  textUnderAction  = new KToggleAction(KIcon("text_under"), i18n("&Underline"), this);
+  actionCollection()->addAction("text_under", textUnderAction );
   connect(textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()));
   textUnderAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_U));
-  actionFormatReset = new KAction(KIcon("eraser"),  i18n( "Reset Font Settings" ), actionCollection(), "format_reset");
+  actionFormatReset  = new KAction(KIcon("eraser"), i18n("Reset Font Settings"), this);
+  actionCollection()->addAction("format_reset", actionFormatReset );
   connect(actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ));
-  actionFormatColor = new KAction(KIcon("colorize"),  i18n( "Text Color..." ), actionCollection(), "format_color");
+  actionFormatColor  = new KAction(KIcon("colorize"), i18n("Text Color..."), this);
+  actionCollection()->addAction("format_color", actionFormatColor );
   connect(actionFormatColor, SIGNAL(triggered(bool) ), SLOT( slotTextColor() ));
 
   createGUI("kmcomposerui.rc");

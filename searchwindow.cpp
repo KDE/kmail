@@ -270,30 +270,35 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   //set up actions
   KActionCollection *ac = actionCollection();
-  mReplyAction = new KAction(KIcon("mail_reply"),  i18n("&Reply..."), ac, "search_reply" );
+  mReplyAction  = new KAction(KIcon("mail_reply"), i18n("&Reply..."), this);
+  actionCollection()->addAction("search_reply", mReplyAction );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
-  mReplyAllAction = new KAction(KIcon("mail_replyall"),  i18n("Reply to &All..."), ac, "search_reply_all" );
+  mReplyAllAction  = new KAction(KIcon("mail_replyall"), i18n("Reply to &All..."), this);
+  actionCollection()->addAction("search_reply_all", mReplyAllAction );
   connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
-  mReplyListAction = new KAction(KIcon("mail_replylist"),  i18n("Reply to Mailing-&List..."), ac, "search_reply_list" );
+  mReplyListAction  = new KAction(KIcon("mail_replylist"), i18n("Reply to Mailing-&List..."), this);
+  actionCollection()->addAction("search_reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
-  mForwardActionMenu = new KActionMenu( KIcon("mail_forward"),
-                                        i18nc("Message->","&Forward"),
-                                        ac, "search_message_forward" );
+  mForwardActionMenu  = new KActionMenu(KIcon("mail_forward"), i18nc("Message->","&Forward"), this);
+  actionCollection()->addAction("search_message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
            SLOT(slotForwardMsg()) );
-  mForwardAction = new KAction(KIcon("mail_forward"),  i18n("&Inline..."), ac, "search_message_forward_inline" );
+  mForwardAction  = new KAction(KIcon("mail_forward"), i18n("&Inline..."), this);
+  actionCollection()->addAction("search_message_forward_inline", mForwardAction );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardActionMenu->addAction( mForwardAction );
-  mForwardAttachedAction = new KAction( KIcon("mail_forward"), i18nc("Message->Forward->","As &Attachment..."),
-                                       ac, "search_message_forward_as_attachment" );
+  mForwardAttachedAction  = new KAction(KIcon("mail_forward"), i18nc("Message->Forward->","As &Attachment..."), this);
+  actionCollection()->addAction("search_message_forward_as_attachment", mForwardAttachedAction );
   connect(mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( mForwardAttachedAction );
-  mSaveAsAction = KStandardAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
-  mSaveAtchAction = new KAction(KIcon("attach"),  i18n("Save Attachments..."), ac, "search_save_attachments" );
+  mSaveAsAction = actionCollection()->addAction(KStandardAction::SaveAs,  "search_file_save_as", this, SLOT(slotSaveMsg()));
+  mSaveAtchAction  = new KAction(KIcon("attach"), i18n("Save Attachments..."), this);
+  actionCollection()->addAction("search_save_attachments", mSaveAtchAction );
   connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
 
-  mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
-  mClearAction = new KAction( i18n("Clear Selection"), ac, "search_clear_selection" );
+  mPrintAction = actionCollection()->addAction(KStandardAction::Print,  "search_print", this, SLOT(slotPrintMsg()));
+  mClearAction  = new KAction(i18n("Clear Selection"), this);
+  actionCollection()->addAction("search_clear_selection", mClearAction );
   connect(mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()));
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),

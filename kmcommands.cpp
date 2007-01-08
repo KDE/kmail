@@ -1568,7 +1568,7 @@ void FolderShortcutCommand::start()
   mMainWidget->slotSelectFolder( mFolder );
 }
 
-void FolderShortcutCommand::setAction( KAction* action )
+void FolderShortcutCommand::setAction( QAction* action )
 {
   mAction = action;
 }

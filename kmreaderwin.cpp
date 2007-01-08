@@ -508,80 +508,88 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   KToggleAction *raction = 0;
 
   // header style
-  KActionMenu *headerMenu =
-    new KActionMenu( i18nc("View->", "&Headers"), ac, "view_headers" );
+  KActionMenu *headerMenu  = new KActionMenu(i18nc("View->", "&Headers"), this);
+  ac->addAction("view_headers", headerMenu );
   headerMenu->setToolTip( i18n("Choose display style of message headers") );
 
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
 
   QActionGroup *group = new QActionGroup( this );
-  raction = new KToggleAction( i18nc("View->headers->", "&Fancy Headers"), ac, "view_headers_fancy" );
+  raction  = new KToggleAction(i18nc("View->headers->", "&Fancy Headers"), this);
+  ac->addAction("view_headers_fancy", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotFancyHeaders()));
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Brief Headers"), ac, "view_headers_brief" );
+  raction  = new KToggleAction(i18nc("View->headers->", "&Brief Headers"), this);
+  ac->addAction("view_headers_brief", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotBriefHeaders()));
   raction->setToolTip( i18n("Show brief list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Standard Headers"), ac, "view_headers_standard" );
+  raction  = new KToggleAction(i18nc("View->headers->", "&Standard Headers"), this);
+  ac->addAction("view_headers_standard", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotStandardHeaders()));
   raction->setToolTip( i18n("Show standard list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&Long Headers"), ac, "view_headers_long" );
+  raction  = new KToggleAction(i18nc("View->headers->", "&Long Headers"), this);
+  ac->addAction("view_headers_long", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotLongHeaders()));
   raction->setToolTip( i18n("Show long list of message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->headers->", "&All Headers"), ac, "view_headers_all" );
+  raction  = new KToggleAction(i18nc("View->headers->", "&All Headers"), this);
+  ac->addAction("view_headers_all", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotAllHeaders()));
   raction->setToolTip( i18n("Show all message headers") );
   group->addAction( raction );
   headerMenu->addAction( raction );
 
   // attachment style
-  KActionMenu *attachmentMenu =
-    new KActionMenu( i18nc("View->", "&Attachments"), ac, "view_attachments" );
+  KActionMenu *attachmentMenu  = new KActionMenu(i18nc("View->", "&Attachments"), this);
+  ac->addAction("view_attachments", attachmentMenu );
   attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
   connect( attachmentMenu, SIGNAL(activated()),
            this, SLOT(slotCycleAttachmentStrategy()) );
 
   group = new QActionGroup( this );
-  raction = new KToggleAction( i18nc("View->attachments->", "&As Icons"), ac, "view_attachments_as_icons" );
+  raction  = new KToggleAction(i18nc("View->attachments->", "&As Icons"), this);
+  ac->addAction("view_attachments_as_icons", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotIconicAttachments()));
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Smart"), ac, "view_attachments_smart" );
+  raction  = new KToggleAction(i18nc("View->attachments->", "&Smart"), this);
+  ac->addAction("view_attachments_smart", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotSmartAttachments()));
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Inline"), ac, "view_attachments_inline" );
+  raction  = new KToggleAction(i18nc("View->attachments->", "&Inline"), this);
+  ac->addAction("view_attachments_inline", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotInlineAttachments()));
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
-  raction = new KToggleAction( i18nc("View->attachments->", "&Hide"), ac, "view_attachments_hide" );
+  raction  = new KToggleAction(i18nc("View->attachments->", "&Hide"), this);
+  ac->addAction("view_attachments_hide", raction );
   connect(raction, SIGNAL(triggered(bool) ), SLOT(slotHideAttachments()));
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
   group->addAction( raction );
   attachmentMenu->addAction( raction );
 
   // Set Encoding submenu
-  mSelectEncodingAction = new KSelectAction( KIcon("charset"),
-                                             i18n( "&Set Encoding" ), ac,
-                                             "encoding" );
+  mSelectEncodingAction  = new KSelectAction(KIcon("charset"), i18n("&Set Encoding"), this);
+  ac->addAction("encoding", mSelectEncodingAction );
   connect(mSelectEncodingAction,SIGNAL( triggered(int)),
           SLOT( slotSetEncoding() ));
   QStringList encodings = KMMsgBase::supportedEncodings( false );
@@ -589,34 +597,46 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mSelectEncodingAction->setItems( encodings );
   mSelectEncodingAction->setCurrentItem( 0 );
 
-  mMailToComposeAction = new KAction( i18n("New Message To..."), ac, "mailto_compose" );
+  mMailToComposeAction  = new KAction(i18n("New Message To..."), this);
+  ac->addAction("mailto_compose", mMailToComposeAction );
   connect(mMailToComposeAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoCompose()));
-  mMailToReplyAction = new KAction( i18n("Reply To..."), ac, "mailto_reply" );
+  mMailToReplyAction  = new KAction(i18n("Reply To..."), this);
+  ac->addAction("mailto_reply", mMailToReplyAction );
   connect(mMailToReplyAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoReply()));
-  mMailToForwardAction = new KAction( i18n("Forward To..."), ac, "mailto_forward" );
+  mMailToForwardAction  = new KAction(i18n("Forward To..."), this);
+  ac->addAction("mailto_forward", mMailToForwardAction );
   connect(mMailToForwardAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoForward()));
-  mAddAddrBookAction = new KAction( i18n("Add to Address Book"), ac, "add_addr_book" );
+  mAddAddrBookAction  = new KAction(i18n("Add to Address Book"), this);
+  ac->addAction("add_addr_book", mAddAddrBookAction );
   connect(mAddAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoAddAddrBook()));
-  mOpenAddrBookAction = new KAction( i18n("Open in Address Book"), ac, "openin_addr_book" );
+  mOpenAddrBookAction  = new KAction(i18n("Open in Address Book"), this);
+  ac->addAction("openin_addr_book", mOpenAddrBookAction );
   connect(mOpenAddrBookAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoOpenAddrBook()));
-  mCopyAction = KStandardAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
-  mSelectAllAction = new KAction( i18n("Select All Text"), ac, "mark_all_text" );
+  mCopyAction = ac->addAction(KStandardAction::Copy,  "kmail_copy", this, SLOT(slotCopySelectedText()));
+  mSelectAllAction  = new KAction(i18n("Select All Text"), this);
+  ac->addAction("mark_all_text", mSelectAllAction );
   connect(mSelectAllAction, SIGNAL(triggered(bool) ), SLOT(selectAll()));
   mSelectAllAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_A));
-  mCopyURLAction = new KAction( i18n("Copy Link Address"), ac, "copy_url" );
+  mCopyURLAction  = new KAction(i18n("Copy Link Address"), this);
+  ac->addAction("copy_url", mCopyURLAction );
   connect(mCopyURLAction, SIGNAL(triggered(bool) ), SLOT(slotUrlCopy()));
-  mUrlOpenAction = new KAction( i18n("Open URL"), ac, "open_url" );
+  mUrlOpenAction  = new KAction(i18n("Open URL"), this);
+  ac->addAction("open_url", mUrlOpenAction );
   connect(mUrlOpenAction, SIGNAL(triggered(bool) ), SLOT(slotUrlOpen()));
-  mAddBookmarksAction = new KAction(KIcon("bookmark_add"),  i18n("Bookmark This Link"), ac, "add_bookmarks" );
+  mAddBookmarksAction  = new KAction(KIcon("bookmark_add"), i18n("Bookmark This Link"), this);
+  ac->addAction("add_bookmarks", mAddBookmarksAction );
   connect(mAddBookmarksAction, SIGNAL(triggered(bool) ), SLOT(slotAddBookmarks()));
-  mUrlSaveAsAction = new KAction( i18n("Save Link As..."), ac, "saveas_url" );
+  mUrlSaveAsAction  = new KAction(i18n("Save Link As..."), this);
+  ac->addAction("saveas_url", mUrlSaveAsAction );
   connect(mUrlSaveAsAction, SIGNAL(triggered(bool) ), SLOT(slotUrlSave()));
 
-  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"), ac, "toggle_fixedfont" );
+  mToggleFixFontAction  = new KToggleAction(i18n("Use Fi&xed Font"), this);
+  ac->addAction("toggle_fixedfont", mToggleFixFontAction );
   connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
   mToggleFixFontAction->setShortcut(QKeySequence(Qt::Key_X));
 
-  mStartIMChatAction = new KAction( i18n("Chat &With..."), ac, "start_im_chat" );
+  mStartIMChatAction  = new KAction(i18n("Chat &With..."), this);
+  ac->addAction("start_im_chat", mStartIMChatAction );
   connect(mStartIMChatAction, SIGNAL(triggered(bool) ), SLOT(slotIMChat()));
 }
 

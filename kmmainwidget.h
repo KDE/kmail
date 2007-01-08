@@ -493,7 +493,7 @@ private:
   QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
 #endif
   KActionCollection *mActionCollection;
-  KSeparatorAction  *mToolbarActionSeparator;
+  QAction  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
   QList<QAction*> mFilterMenuActions;
