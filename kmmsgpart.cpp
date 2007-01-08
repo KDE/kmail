@@ -5,7 +5,6 @@
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kcodecs.h>
-#include <kapplication.h>
 
 #include "kmmsgpart.h"
 #include "kmkernel.h"
@@ -402,7 +401,7 @@ QString KMMessagePart::iconName() const
   } 
  
   fileName =
-    kapp->iconLoader()->iconPath( fileName, K3Icon::Desktop );
+    KIconLoader::global()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
 }
 

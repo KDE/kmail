@@ -29,7 +29,6 @@
 #include <kmessagebox.h>
 #include <kcrash.h>
 #include <kglobal.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
 
@@ -224,7 +223,7 @@ void insertLibraryCataloguesAndIcons() {
   };
 
   KLocale * l = KGlobal::locale();
-  KIconLoader * il = kapp->iconLoader();
+  KIconLoader * il = KIconLoader::global();
   for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i ) {
     l->insertCatalog( catalogues[i] );
     il->addAppDir( catalogues[i] );

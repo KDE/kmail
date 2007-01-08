@@ -79,7 +79,6 @@
 #include <khtml_part.h>
 #include <ktemporaryfile.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
@@ -2581,11 +2580,11 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       // Cache Icons
       if ( mCollapseIcon.isEmpty() ) {
         mCollapseIcon= LinkLocator::pngToDataUrl(
-            kapp->iconLoader()->iconPath( "quotecollapse",0 ));
+            KIconLoader::global()->iconPath( "quotecollapse",0 ));
       }
       if ( mExpandIcon.isEmpty() )
         mExpandIcon= LinkLocator::pngToDataUrl(
-            kapp->iconLoader()->iconPath( "quoteexpand",0 ));
+            KIconLoader::global()->iconPath( "quoteexpand",0 ));
     }
 
     for (int p=0; p<line.length(); p++) {

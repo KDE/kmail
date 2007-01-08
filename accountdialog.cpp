@@ -49,7 +49,6 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kseparator.h>
-#include <kapplication.h>
 #include <kprotocolinfo.h>
 #include <kiconloader.h>
 #include <kmenu.h>
@@ -926,7 +925,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
   button->setIcon(
-      kapp->iconLoader()->loadIconSet( "reload", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "reload", K3Icon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
   button->setWhatsThis(
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
@@ -940,7 +939,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
   mImap.editPNS->setIcon(
-      kapp->iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editPNS->setAutoRaise( true );
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editPNS->setFixedSize( 22, 22 );
@@ -952,7 +951,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
   mImap.editONS->setIcon(
-      kapp->iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editONS->setAutoRaise( true );
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editONS->setFixedSize( 22, 22 );
@@ -964,7 +963,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
   mImap.editSNS->setIcon(
-      kapp->iconLoader()->loadIconSet( "edit", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "edit", K3Icon::Small, 0 ) );
   mImap.editSNS->setAutoRaise( true );
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editSNS->setFixedSize( 22, 22 );
@@ -2297,7 +2296,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     edit->setText( it.key() );
     QToolButton* button = new QToolButton( grid );
     button->setIcon(
-      kapp->iconLoader()->loadIconSet( "editdelete", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "editdelete", K3Icon::Small, 0 ) );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     button->setFixedSize( 22, 22 );
