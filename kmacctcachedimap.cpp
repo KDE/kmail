@@ -51,7 +51,6 @@ using KMail::AccountManager;
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
 #include <kconfig.h>
 
 #include <QList>

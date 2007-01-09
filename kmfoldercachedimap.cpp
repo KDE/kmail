@@ -64,7 +64,6 @@ using KMail::ListJob;
 #include "kmfolderseldlg.h"
 #include "kmcommands.h"
 
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>

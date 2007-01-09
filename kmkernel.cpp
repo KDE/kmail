@@ -47,13 +47,13 @@ using KRecentAddress::RecentAddresses;
 //#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <knotification.h>
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kpassivepopup.h>
+#include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kpgp.h>
 #include <kdebug.h>
@@ -1097,7 +1097,7 @@ void KMKernel::slotSenderFinished()
   good, Folder manager go compact sent-mail and outbox
   clean up stage1 (release folders and config, unregister from dcop)
     -- another kmail may start now ---
-  kapp->quit();
+  qApp->quit();
 }
 */
 
@@ -1554,7 +1554,7 @@ bool KMKernel::transferMail( QString & destinationDir )
 
 #if 0
   // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
-  const QString kmailName = kapp->aboutData()->programName();
+  const QString kmailName = KGlobal::instance()->aboutData()()->programName();
   QString msg;
   if ( KIO::NetAccess::exists( destinationDir, true, 0 ) ) {
     // if destinationDir exists, we need to warn about possible
@@ -1931,7 +1931,7 @@ void KMKernel::selectFolder( QString folderPath )
 KMMainWidget *KMKernel::getKMMainWidget()
 {
   //This could definitely use a speadup
-  QWidgetList l = kapp->topLevelWidgets();
+  QWidgetList l = QApplication::topLevelWidgets();
   QWidget *wid;
 
   Q_FOREACH( wid, l ) {

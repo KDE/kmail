@@ -24,7 +24,6 @@ using KMail::AccountManager;
 #include <maillistdrag.h>
 using namespace KPIM;
 
-#include <kapplication.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -419,9 +418,9 @@ void KMFolderTree::readColorConfig (void)
 {
   // Custom/System color support
   KConfigGroup conf( KMKernel::config(), "Reader" );
-  QColor c1=QColor(kapp->palette().color( QPalette::Text ));
+  QColor c1=QColor(qApp->palette().color( QPalette::Text ));
   QColor c2=QColor("blue");
-  QColor c4=QColor(kapp->palette().color( QPalette::Base ));
+  QColor c4=QColor(qApp->palette().color( QPalette::Base ));
 
   if (!conf.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = conf.readEntry( "ForegroundColor",
@@ -436,7 +435,7 @@ void KMFolderTree::readColorConfig (void)
     mPaintInfo.colUnread = c2;
     mPaintInfo.colBack = c4;
   }
-  QPalette newPal = kapp->palette();
+  QPalette newPal = qApp->palette();
   newPal.setColor( QPalette::Base, mPaintInfo.colBack );
   newPal.setColor( QPalette::Text, mPaintInfo.colFore );
   setPalette( newPal );
@@ -1389,7 +1388,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
     {
-      int keybstate = kapp->keyboardModifiers();
+      int keybstate = qApp->keyboardModifiers();
       if ( keybstate & Qt::ControlModifier ) {
         emit folderDropCopy(fti->folder());
       } else if ( keybstate & Qt::ShiftModifier ) {

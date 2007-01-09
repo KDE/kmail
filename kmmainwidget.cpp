@@ -36,7 +36,6 @@
 #include <kkeydialog.h>
 #include <kcharsets.h>
 #include <kdebug.h>
-#include <kapplication.h>
 #include <kfiledialog.h>
 #include <ktoolbar.h>
 #include <ktip.h>

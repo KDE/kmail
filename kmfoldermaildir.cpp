@@ -24,7 +24,6 @@ using KMail::MaildirJob;
 #include "kmmsgdict.h"
 #include "util.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstaticdeleter.h>

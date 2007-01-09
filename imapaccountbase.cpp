@@ -50,7 +50,6 @@ using KPIM::ProgressManager;
 #include "kmfoldermgr.h"
 #include "listjob.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
@@ -889,7 +888,7 @@ namespace KMail {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
           msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.",
              name() );
-          KMessageBox::information( kapp->activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
+          KMessageBox::information( QApplication::activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
           // Show it in the status bar, in case the user has ticked "don't show again"
           if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
             KPIM::BroadcastStatus::instance()->setStatusMsg(
@@ -899,9 +898,9 @@ namespace KMail {
                 i18n(  "The connection to account %1 timed out.", name() ) );
         } else {
           if ( !errors.isEmpty() )
-              KMessageBox::detailedError( kapp->activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
+              KMessageBox::detailedError( QApplication::activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
           else
-              KMessageBox::error( kapp->activeWindow(), msg, caption );
+              KMessageBox::error( QApplication::activeWindow(), msg, caption );
           }
       }
       else { // i.e. we have a chance to continue, ask the user about it
@@ -909,7 +908,7 @@ namespace KMail {
           msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
           caption = errors[0];
         }
-        int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
+        int ret = KMessageBox::warningContinueCancel( QApplication::activeWindow(), msg, caption );
         if ( ret == KMessageBox::Cancel ) {
           jobsKilled = true;
           killAllJobs( false );

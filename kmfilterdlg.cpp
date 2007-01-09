@@ -20,7 +20,6 @@ using KMail::AccountManager;
 #include <klocale.h>
 #include <kinputdialog.h>
 #include <kiconloader.h>
-#include <kapplication.h>
 #include <kwin.h>
 #include <kconfig.h>
 #include <kicondialog.h>

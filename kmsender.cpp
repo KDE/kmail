@@ -13,7 +13,6 @@ using namespace KMime::Types;
 
 #include <kio/passworddialog.h>
 #include <kio/scheduler.h>
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kdeversion.h>
 #include <klocale.h>

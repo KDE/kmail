@@ -44,7 +44,6 @@ using KMail::AccountManager;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
-#include <kapplication.h>
 #include <kparts/mainwindow.h>
 #include <kparts/genericfactory.h>
 #include <kiconloader.h>
@@ -67,12 +66,12 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   QDBusConnection::sessionBus().registerObject("/KMailPart", this);
 
   kDebug(5006) << "KMailPart()" << endl;
-  kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
+  kDebug(5006) << "  InstanceName: " << KGlobal::instance()->instanceName() << endl;
 
   setInstance(KMailFactory::instance());
 
   kDebug(5006) << "KMailPart()..." << endl;
-  kDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
+  kDebug(5006) << "  InstanceName: " << KGlobal::instance()->instanceName() << endl;
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();

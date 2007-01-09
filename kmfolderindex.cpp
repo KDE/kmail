@@ -53,7 +53,6 @@
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
 #endif
-#include <kapplication.h>
 #include <kcursor.h>
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -332,14 +331,14 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       createIndexFromContents();
       return false;
   } else if(indexVersion > INDEX_VERSION) {
-      kapp->setOverrideCursor(KCursor::arrowCursor());
+      QApplication::setOverrideCursor(KCursor::arrowCursor());
       int r = KMessageBox::questionYesNo(0,
 					 i18n(
 					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
 					    "This index can be regenerated from your mail folder, but some "
 					    "information, including status flags, may be lost. Do you wish "
 					    "to downgrade your index file?" , objectName() , indexVersion), QString(), KGuiItem(i18n("Downgrade")), KGuiItem(i18n("Do Not Downgrade")) );
-      kapp->restoreOverrideCursor();
+      QApplication::restoreOverrideCursor();
       if (r == KMessageBox::Yes)
 	  createIndexFromContents();
       return false;

@@ -12,7 +12,6 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kwin.h>
-#include <kapplication.h>
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>

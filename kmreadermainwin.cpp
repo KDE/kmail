@@ -30,7 +30,6 @@
 //Added by qt3to4:
 #include <Q3PopupMenu>
 #include <kactionmenu.h>
-#include <kapplication.h>
 #include <klocale.h>
 #include <kstandardshortcut.h>
 #include <kwin.h>

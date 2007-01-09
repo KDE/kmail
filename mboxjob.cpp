@@ -37,7 +37,6 @@
 #include "kmfoldermbox.h"
 #include "kmfolder.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 
 #include <QDateTime>

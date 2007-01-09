@@ -39,7 +39,6 @@
 #ifndef KMAIL_TESTING
 #include "kmkernel.h"
 #else
-#include <kapplication.h>
 #endif
 
 #include <klocale.h>

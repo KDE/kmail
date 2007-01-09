@@ -70,12 +70,13 @@ using KRecentAddress::RecentAddresses;
 #include <libkdepim/kvcarddrag.h>
 #include <kio/netaccess.h>
 
-#include <kicon.h>
 #include "klistboxdialog.h"
 
 #include "messagecomposer.h"
 #include "chiasmuskeyselector.h"
 
+#include <kapplication.h>
+#include <kicon.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kcharsets.h>
@@ -96,7 +97,6 @@ using KRecentAddress::RecentAddresses;
 #include <kio/scheduler.h>
 #include <ktemporaryfile.h>
 #include <klocale.h>
-#include <kapplication.h>
 #include <kstatusbar.h>
 #include <kaction.h>
 #include <kstandardaction.h>
@@ -549,15 +549,15 @@ bool KMComposeWin::event(QEvent *e)
 void KMComposeWin::readColorConfig(void)
 {
   if ( GlobalSettings::self()->useDefaultColors() ) {
-    mForeColor = QColor(kapp->palette().color( QPalette::Text ));
-    mBackColor = QColor(kapp->palette().color( QPalette::Base ));
+    mForeColor = QColor(qApp->palette().color( QPalette::Text ));
+    mBackColor = QColor(qApp->palette().color( QPalette::Base ));
   } else {
     mForeColor = GlobalSettings::self()->foregroundColor();
     mBackColor = GlobalSettings::self()->backgroundColor();
   }
 
   // Color setup
-  mPalette = kapp->palette();
+  mPalette = qApp->palette();
   mPalette.setColor( QPalette::Base, mBackColor );
   mPalette.setColor( QPalette::Text, mForeColor );
   # warning "FIXME: Do we need to call setDisabled/setActive/setInactive or are the setColor calls enough??"
@@ -3506,7 +3506,7 @@ void KMComposeWin::slotCopy()
 #endif
 
   QKeyEvent k(QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier);
-  kapp->notify(fw, &k);
+  qApp->notify(fw, &k);
 }
 
 
@@ -3526,7 +3526,7 @@ void KMComposeWin::slotPaste()
 #endif
 
     QKeyEvent k(QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier);
-    kapp->notify(fw, &k);
+    qApp->notify(fw, &k);
   }
 
 }

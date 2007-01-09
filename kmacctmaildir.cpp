@@ -13,7 +13,6 @@ using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 
-#include <kapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
@@ -179,7 +178,7 @@ void KMAcctMaildir::processNewMail(bool)
     }
 
     if (t.elapsed() >= 200) { //hardwired constant
-      kapp->processEvents();
+      qApp->processEvents();
       t.start();
     }
 

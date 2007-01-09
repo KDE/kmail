@@ -39,7 +39,6 @@
 #include "kmfolderdir.h"
 
 #include <kdebug.h>
-#include <kapplication.h>
 
 #include <QFile>
 #include <QFileInfo>
@@ -264,7 +263,7 @@ void KMMsgIndex::clear() {
 
 void KMMsgIndex::maintenance() {
 #ifdef HAVE_INDEXLIB
-	if ( mState != s_idle || kapp->hasPendingEvents() ) {
+	if ( mState != s_idle || qApp->hasPendingEvents() ) {
 		QTimer::singleShot( 8000, this, SLOT( maintenance() ) );
 		return;
 	}
@@ -305,7 +304,7 @@ int KMMsgIndex::addMessage( quint32 serNum ) {
 
 void KMMsgIndex::act() {
 	kDebug( 5006 ) << "KMMsgIndex::act()" << endl;
-	if ( kapp->hasPendingEvents() ) {
+	if ( qApp->hasPendingEvents() ) {
 		//nah, some other time..
 		mTimer->start( 500 );
 		mSlowDown = true;
@@ -563,7 +562,7 @@ void KMMsgIndex::Search::act() {
 			mState = s_emitting;
 			// fall throu
 		case s_emitting:
-			if ( kapp->hasPendingEvents() ) {
+			if ( qApp->hasPendingEvents() ) {
 				//nah, some other time..
 				mTimer->start( 250 );
 				mState = s_emitstopped;

@@ -43,7 +43,6 @@
 #include "folderrequester.h"
 
 #include <kaction.h>
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
@@ -52,6 +51,7 @@
 #include <kprocess.h>
 #include <ktoolinvocation.h>
 
+#include <QApplication>
 #include <qdom.h>
 #include <QLabel>
 #include <QLayout>
@@ -531,7 +531,7 @@ void AntiSpamWizard::checkToolAvailability()
     }
     else {
       // check the availability of the application
-      KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 200 );
+      qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 200 );
       if ( !checkForProgram( (*it).getExecutable() ) ) {
         mInfoPage->addAvailableTool( (*it).getVisibleName() );
         found = true;

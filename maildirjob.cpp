@@ -36,7 +36,6 @@
 #include "kmfoldermaildir.h"
 #include "kmfolder.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 
 #include <QTimer>

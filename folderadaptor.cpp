@@ -38,7 +38,6 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include <qdbusconnection.h>
-#include <kapplication.h>
 #include <kdebug.h>
 
 #include <stdlib.h>

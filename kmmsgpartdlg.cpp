@@ -14,13 +14,13 @@
 
 // other KDE includes:
 #include <kmimetype.h>
-#include <kapplication.h>
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kstringvalidator.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kinstance.h>
 
 // other Qt includes:
 #include <QLabel>
@@ -99,7 +99,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
              "<p>normally, you do not need to touch this setting, since the "
              "type of the file is automatically checked; but, sometimes, %1 "
              "may not detect the type correctly -- here is where you can fix "
-             "that.</p></qt>", kapp->aboutData()->programName() );
+             "that.</p></qt>", KGlobal::instance()->aboutData()->programName() );
   mMimeType->setWhatsThis( msg );
 
   // row 1: Size label:
@@ -112,7 +112,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
              "because calculating the exact size would take too much time; "
              "when this is the case, it will be made visible by adding "
              "\"(est.)\" to the size displayed.</p></qt>",
-      kapp->aboutData()->programName() );
+      KGlobal::instance()->aboutData()->programName() );
   mSize->setWhatsThis( msg );
 
   // row 2: "Name" lineedit and label:
@@ -162,7 +162,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
              "binary data, but consists of pure text -- in this case, choosing "
              "\"quoted-printable\" over the default \"base64\" will save up "
              "to 25% in resulting message size.</p></qt>",
-      kapp->aboutData()->programName() );
+      KGlobal::instance()->aboutData()->programName() );
   label->setWhatsThis( msg );
   mEncoding->setWhatsThis( msg );
 

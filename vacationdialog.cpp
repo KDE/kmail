@@ -19,8 +19,8 @@
 #include "vacationdialog.h"
 
 #include <kmime/kmime_header_parsing.h>
-//Added by qt3to4:
 #include <QGridLayout>
+#include <QApplication>
 #include <QByteArray>
 using KMime::Types::AddrSpecList;
 using KMime::Types::AddressList;
@@ -31,7 +31,6 @@ using KMime::HeaderParsing::parseAddressList;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kwin.h>
-#include <kapplication.h>
 
 #include <QLayout>
 #include <QLabel>

@@ -32,7 +32,6 @@
 using KMail::AccountManager;
 #include "globalsettings.h"
 
-#include <kapplication.h>
 #include <kmainwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>

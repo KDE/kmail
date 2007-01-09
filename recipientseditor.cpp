@@ -33,7 +33,6 @@
 
 #include <emailfunctions/email.h>
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -48,10 +47,9 @@
 #include <QTimer>
 #include <QPushButton>
 #include <q3stylesheet.h>
-//Added by qt3to4:
 #include <QKeyEvent>
 #include <QHBoxLayout>
-#include <QBoxLayout>
+#include <QApplication>
 #include <QResizeEvent>
 #include <QVBoxLayout>
 #include <QTextDocument>
@@ -183,7 +181,7 @@ RecipientLine::RecipientLine( QWidget *parent )
            this, SLOT( slotTypeModified() ) );
 
   mRemoveButton = new QPushButton( this );
-  mRemoveButton->setIcon( KApplication::isRightToLeft() ? KIcon("locationbar_erase") : KIcon( "clear_left" ) );
+  mRemoveButton->setIcon( QApplication::isRightToLeft() ? KIcon("locationbar_erase") : KIcon( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
   connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
   mRemoveButton->setToolTip( i18n("Remove recipient line") );

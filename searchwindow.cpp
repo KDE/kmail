@@ -34,7 +34,6 @@
 #include "regexplineedit.h"
 
 #include <kactionmenu.h>
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kstatusbar.h>
 #include <kwin.h>

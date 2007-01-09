@@ -23,7 +23,6 @@
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

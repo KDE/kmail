@@ -20,7 +20,6 @@
 
 #include "kmtransport.h"
 #include "kmkernel.h"
-#include <kapplication.h>
 #include <kconfig.h>
 //Added by qt3to4:
 #include <QList>

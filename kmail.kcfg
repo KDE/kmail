@@ -387,10 +387,10 @@
        <default>true</default>
      </entry>
      <entry name="ForegroundColor" type="Color" key="ForegroundColor">
-       <default code="true">kapp->palette().active().text()</default>
+       <default code="true">qApp->palette().active().text()</default>
      </entry>
      <entry name="BackgroundColor" type="Color" key="BackgroundColor">
-       <default code="true">kapp->palette().active().base()</default>
+       <default code="true">qApp->palette().active().base()</default>
      </entry>
      <entry name="FallbackCharacterEncoding" type="String" key="FallbackCharacterEncoding">
        <default code="true"> QString( QTextCodec::codecForLocale()->name() ).toLower() == "eucjp" ? QString("jis7") : QString( QTextCodec::codecForLocale()->name() ).toLower()</default>

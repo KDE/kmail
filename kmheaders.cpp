@@ -29,7 +29,6 @@ using KPIM::ProgressItem;
 using namespace KPIM;
 
 #include <kactionmenu.h>
-#include <kapplication.h>
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
@@ -53,6 +52,7 @@ using namespace KPIM;
 #include <Q3MemArray>
 #include <q3listview.h>
 
+#include <QApplication>
 #include <QBuffer>
 #include <QEvent>
 #include <QFile>
@@ -417,10 +417,10 @@ void KMHeaders::readColorConfig (void)
 {
   // Custom/System colors
   KConfigGroup config( KMKernel::config(), "Reader" );
-  QColor c1=QColor(kapp->palette().color( QPalette::Text ));
+  QColor c1=QColor(qApp->palette().color( QPalette::Text ));
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
-  QColor c4=QColor(kapp->palette().color( QPalette::Base ));
+  QColor c4=QColor(qApp->palette().color( QPalette::Base ));
   QColor c5=QColor(0,0x7F,0);
   QColor c6=QColor(0,0x98,0);
   QColor c7=KGlobalSettings::alternateBackgroundColor();
@@ -428,7 +428,7 @@ void KMHeaders::readColorConfig (void)
   if (!config.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = config.readEntry( "ForegroundColor", QVariant( &c1 ) ).value<QColor>();
     mPaintInfo.colBack = config.readEntry( "BackgroundColor", QVariant( &c4 ) ).value<QColor>();
-    QPalette newPal = kapp->palette();
+    QPalette newPal = qApp->palette();
     newPal.setColor( QPalette::Base, mPaintInfo.colBack );
     newPal.setColor( QPalette::Text, mPaintInfo.colFore );
     setPalette( newPal );
@@ -441,7 +441,7 @@ void KMHeaders::readColorConfig (void)
   else {
     mPaintInfo.colFore = c1;
     mPaintInfo.colBack = c4;
-    QPalette newPal = kapp->palette();
+    QPalette newPal = qApp->palette();
     newPal.setColor( QPalette::Base, c4 );
     newPal.setColor( QPalette::Text, c1 );
     setPalette( newPal );
@@ -1400,7 +1400,7 @@ void KMHeaders::applyFiltersOnMsg()
         QString statusMsg = i18n( "Filtering message %1 of %2",
                                   msgCount, msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-        KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
+        qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
       }
       int idx = msgBase->parent()->find(msgBase);
       assert(idx != -1);

@@ -20,7 +20,6 @@ using KPIM::ProgressManager;
 
 using KMail::FolderJob;
 
-#include <kapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

@@ -23,7 +23,6 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kapplication.h>
 #include <krandom.h>
 
 #include "kmmainwin.h"

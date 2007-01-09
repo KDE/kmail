@@ -95,7 +95,6 @@ using KMail::TeeHtmlWriter;
 
 
 #include <kactionmenu.h>
-#include <kapplication.h>
 // for the click on attachment stuff (dnaber):
 #include <kcharsets.h>
 #include <kmenu.h>
@@ -1261,7 +1260,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
   QString location = KStandardDirs::locate("data", "kmail/about/main.html");
   QString content = KPIM::kFileToByteArray( location );
   content = content.arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage.css" ) );
-  if ( kapp->isRightToLeft() )
+  if ( QApplication::isRightToLeft() )
     content = content.arg( "@import \"" + KStandardDirs::locate( "data",
                            "libkdepim/about/kde_infopage_rtl.css" ) +  "\";");
   else
@@ -1950,7 +1949,7 @@ void KMReaderWin::slotToggleFixedFont()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotCopySelectedText()
 {
-  kapp->clipboard()->setText( mViewer->selectedText() );
+  QApplication::clipboard()->setText( mViewer->selectedText() );
 }
 
 
@@ -2250,7 +2249,7 @@ void KMReaderWin::slotDocumentChanged()
 void KMReaderWin::slotTextSelected(bool)
 {
   QString temp = mViewer->selectedText();
-  kapp->clipboard()->setText(temp);
+  QApplication::clipboard()->setText(temp);
 }
 
 //-----------------------------------------------------------------------------

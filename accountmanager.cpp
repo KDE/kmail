@@ -21,7 +21,6 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kconfig.h>
-#include <kapplication.h>
 
 #include <QRegExp>
 #include <krandom.h>

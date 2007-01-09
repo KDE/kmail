@@ -51,13 +51,13 @@
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
-#include <kapplication.h>
 
 //Added by qt3to4:
 #include <QMenu>
 #include <Q3CString>
 #include <kprogressdialog.h>
 
+#include <QApplication>
 #include <QDesktopWidget>
 #include <QList>
 #include <QTextCodec>
@@ -1495,7 +1495,7 @@ KMCommand::Result KMFilterActionCommand::execute()
       QString statusMsg = i18n( "Filtering message %1 of %2",
                                 msgCount, msgCountToFilter );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-      KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
+      qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
     int filterResult = kmkernel->filterMgr()->process( serNum, mFilter );

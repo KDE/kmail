@@ -38,7 +38,6 @@
 
 #include <ktemporaryfile.h>
 #include <klocale.h>
-#include <kapplication.h>
 #include <kdirwatch.h>
 #include <kiconloader.h>
 
@@ -236,7 +235,7 @@ void KMEdit::initializeAutoSpellChecking()
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
-  QColor defaultForeground( kapp->palette().color( QPalette::Text ) );
+  QColor defaultForeground( qApp->palette().color( QPalette::Text ) );
 
   QColor c = Qt::red;
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
