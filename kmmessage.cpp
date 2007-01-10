@@ -2866,6 +2866,15 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
+  // TODO: Instead of manually implementing RFC2231 header encoding (i.e. 
+  //       possibly multiple values given as paramname*0=..; parmaname*1=..;... 
+  //       or par as paramname*0*=..; parmaname*1*=..;..., which should be
+  //       concatenated), use a generic method to decode the header, using RFC
+  //       2047 or 2231, or whatever future RFC might be appropriate!
+  //       Right now, some fields are decoded, while others are not. E.g.
+  //       Content-Disposition is not decoded here, rather only on demand in
+  //       KMMsgPart::fileName; Name however is decoded here and stored as a 
+  //       decoded String in KMMsgPart...
   // Content-type
   QCString additionalCTypeParams;
   if (headers.HasContentType())
@@ -2880,8 +2889,7 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
       if (!qstricmp(param->Attribute().c_str(), "charset"))
         aPart->setCharset(QCString(param->Value().c_str()).lower());
       else if (!qstrnicmp(param->Attribute().c_str(), "name*", 5))
-        aPart->setName(KMMsgBase::decodeRFC2231String(
-              param->Value().c_str()));
+        aPart->setName(KMMsgBase::decodeRFC2231String(KMMsgBase::extractRFC2231HeaderField( param->Value().c_str(), "name" )));
       else {
         additionalCTypeParams += ';';
         additionalCTypeParams += param->AsString().c_str();
