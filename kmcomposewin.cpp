@@ -2442,7 +2442,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setTypeStr( mimeType.left( slash ).latin1() );
   msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).latin1() );
   msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
-    + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
+    + ( RFC2231encoded ? "*=" + encName : "=\"" + encName + '"' ));
 
   mMapAtmLoadData.remove(it);
 
