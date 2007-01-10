@@ -1,7 +1,6 @@
 // kmmsgpart.cpp
 
 #include <config.h>
-#include <kmimemagic.h>
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kcodecs.h>
@@ -370,12 +369,10 @@ Q3CString KMMessagePart::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::magicSetType(bool aAutoDecode)
 {
-  KMimeMagic::self()->setFollowLinks( true ); // is it necessary ?
-
   const QByteArray body = ( aAutoDecode ) ? bodyDecodedBinary() : mBody ;
-  KMimeMagicResult * result = KMimeMagic::self()->findBufferType( body );
+  KMimeType::Ptr mime = KMimeType::findByContent( body );
 
-  QString mimetype = result->mimeType();
+  QString mimetype = mime->name();
   const int sep = mimetype.indexOf('/');
   mType = mimetype.left(sep).toLatin1();
   mSubtype = mimetype.mid(sep+1).toLatin1();
@@ -390,16 +387,16 @@ QString KMMessagePart::iconName() const
   QString fileName =
     KMimeType::mimeType( mimeType )->iconName();
 
-  if ( fileName.isEmpty() ) 
-  { 
-    fileName = this->fileName(); 
-    if ( fileName.isEmpty() ) fileName = this->name(); 
-    if ( !fileName.isEmpty() ) 
-    { 
-      fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->iconName(); 
-    } 
-  } 
- 
+  if ( fileName.isEmpty() )
+  {
+    fileName = this->fileName();
+    if ( fileName.isEmpty() ) fileName = this->name();
+    if ( !fileName.isEmpty() )
+    {
+      fileName = KMimeType::findByPath( "/tmp/"+fileName, 0, true )->iconName();
+    }
+  }
+
   fileName =
     KIconLoader::global()->iconPath( fileName, K3Icon::Desktop );
   return fileName;
