@@ -158,7 +158,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   } else {
     netCodec = QTextCodec::codecForLocale();
   }
+#ifdef __GNUC__
 #warning Port me to DBus!
+#endif
 /*  mMailService =  new MailServiceImpl();
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
@@ -178,7 +180,9 @@ KMKernel::~KMKernel ()
 
   delete mICalIface;
   mICalIface = 0;
+#ifdef __GNUC__
 #warning: mMailservice delete crashes for me...
+#endif
   //delete mMailService;
   mMailService = 0;
 
@@ -460,7 +464,9 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
 #endif
   }
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  return DCOPRef( cWin->asMailComposerIFace() );
    return QDBusObjectPath();
 }
@@ -501,7 +507,9 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
   if(!hidden) {
     win->show();
   }
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  return DCOPRef( win->asMailComposerIFace() );
   return QDBusObjectPath();
 }
@@ -853,7 +861,9 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
     return QDBusObjectPath(vpath);
   }
 #endif  
+#ifdef __GNUC__
 #warning Port DCOPRef usage!
+#endif
 /*  const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );

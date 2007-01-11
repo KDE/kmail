@@ -384,7 +384,9 @@ void SubscriptionDialog::show()
             case KMessageBox::No:
                 break;
             case KMessageBox::Cancel:
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //                cancel();
                 break;
         }

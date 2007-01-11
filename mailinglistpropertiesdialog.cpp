@@ -159,7 +159,9 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 
   load();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  clearWState( WState_Polished );
 }
 

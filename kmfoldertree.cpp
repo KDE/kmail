@@ -1737,7 +1737,9 @@ void KMFolderTree::showFolder( KMFolder* folder )
 void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, QMenu *menu, Q3ListViewItem *item )
 {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 /*  while ( menu->count() )
   {
     Q3PopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();

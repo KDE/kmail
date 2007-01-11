@@ -874,7 +874,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
+#ifdef __GNUC__
 #warning port me
+#endif
   //kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 
   // build summary for new mail message
@@ -918,7 +920,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   }
 
   if(kmkernel->xmlGuiInstance()) {
+#ifdef __GNUC__
 #warning "kde4 : port ?"
+#endif
     //KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
     KNotification::event( "new-mail-arrived",
                           summary,QPixmap() ,topLevelWidget() );
@@ -2455,7 +2459,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete", mDeleteAction );
   connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
   mDeleteAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_Delete));
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
   mTrashThreadAction  = new KAction(i18n("M&ove Thread to Trash"), this);
@@ -2651,7 +2657,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("edit", mEditAction );
   connect(mEditAction, SIGNAL(triggered(bool)), SLOT(slotEditMsg()));
   mEditAction->setShortcut(QKeySequence(Qt::Key_T));
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  mEditAction->plugAccel( actionCollection()->kaccel() );
 
   //----- "Mark Message" submenu
@@ -2822,7 +2830,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("display_message", dukeOfMonmoth );
   connect(dukeOfMonmoth, SIGNAL(triggered(bool) ), SLOT( slotDisplayCurrentMessage() ));
   dukeOfMonmoth->setShortcut(QKeySequence(Qt::Key_Return));
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
@@ -3422,7 +3432,9 @@ void KMMainWidget::initializeFolderShortcutActions()
   // If we are loaded as a part, this will be set to fals, since the part
   // does xml loading. Temporarily set to true, in that case, so the
   // accels are added to the collection as expected.
+#ifdef __GNUC__
 #warning Port me: *AutoConnectShortcuts has beeen removed from KActionCollection
+#endif
 //  bool old = actionCollection()->isAutoConnectShortcuts();
 
 //  actionCollection()->setAutoConnectShortcuts( true );

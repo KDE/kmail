@@ -1384,7 +1384,9 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
   if(kmkernel->xmlGuiInstance())
+#ifdef __GNUC__
 #warning "kde4: port it"
+#endif
     KNotifyConfigWidget::configure(this/*,  kmkernel->xmlGuiInstance()->aboutData()*/);
   else
     KNotifyConfigWidget::configure(this);
@@ -4159,7 +4161,9 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //   if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
 //                            "load()", false ) )
     kError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
@@ -4374,7 +4378,9 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
+#ifdef __GNUC__
 #warning WTF?!?! Hand-made DCOP stuff?!?!
+#endif
 /*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {
     if ( fun == "load()" ) {

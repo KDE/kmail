@@ -684,7 +684,9 @@ int RecipientsView::setFirstColumnWidth( int w )
   return mFirstColumnWidth;
 }
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 #if 0
 RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
   : QToolTip( parent ), mView( view )
@@ -751,7 +753,9 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   mTotalLabel->hide();
 
   topLayout->addStretch( 1 );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 #if 0
   new RecipientsToolTip( view, mTotalLabel );
 #endif

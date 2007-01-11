@@ -205,7 +205,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   }
 
   resize( QSize(282, 108).expandedTo(minimumSizeHint()) );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  clearWState( WState_Polished );
   slotFolderNameChanged( mNameLineEdit->text());
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );

@@ -1534,7 +1534,9 @@ void KMMetaFilterActionCommand::start()
 
     int contentX, contentY;
     HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
+#ifdef __GNUC__
 #warning Port me!
+#endif
     QList<KMMsgBase*> msgList = *mHeaders->selectedMsgs(true);
     mHeaders->finalizeMove( nextItem, contentX, contentY );
 
@@ -1599,7 +1601,9 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 void KMMenuCommand::folderToPopupMenu(bool move,
   QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu )
 {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 /*  while ( menu->count() )
   {
     QMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
@@ -2161,7 +2165,9 @@ KMCommand::Result KMUrlClickedCommand::execute()
   }
   else if ( mUrl.protocol() == "im" )
   {
+#ifdef __GNUC__
 #warning "port me"
+#endif
     //kmkernel->imProxy()->chatWithContact( mUrl.path() );
   }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
@@ -2701,7 +2707,9 @@ KMCommand::Result KMIMChatCommand::execute()
 
   // start chat
   if( addressees.count() == 1 ) {
+#ifdef __GNUC__
 #warning "port me"
+#endif
     //kmkernel->imProxy()->chatWithContact( addressees[0].uid() );
     return OK;
   }

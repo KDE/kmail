@@ -79,7 +79,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
 
   KMail::lockOrDie();
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
@@ -94,7 +96,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   mKMailKernel->recoverDeadLetters();
 
   kmsetSignalHandler(kmsignalHandler);
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
 
   // create a canvas to insert our widget

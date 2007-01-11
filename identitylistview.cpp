@@ -137,7 +137,9 @@ namespace KMail {
     if ( !item ) return 0;
 
     return 0;
+#ifdef __GNUC__
 #warning enable the QDrag-based code once the list view does no longer derive from Q3ListView...
+#endif
     QDrag * drag = new QDrag( viewport() );
     QMimeData *md = new QMimeData;
     drag->setMimeData( md );

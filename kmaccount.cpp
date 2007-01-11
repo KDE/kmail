@@ -361,7 +361,9 @@ bool KMAccount::runPrecommand(const QString &precommand)
   kDebug(5006) << "Running precommand " << precommand << endl;
   if (!precommandProcess.start()) return false;
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->eventLoop()->enterLoop();
 
   return mPrecommandSuccess;
@@ -371,7 +373,9 @@ bool KMAccount::runPrecommand(const QString &precommand)
 void KMAccount::precommandExited(bool success)
 {
   mPrecommandSuccess = success;
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->eventLoop()->exitLoop();
 }
 

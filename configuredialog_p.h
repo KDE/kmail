@@ -858,7 +858,9 @@ private:
   WarningConfiguration* mWidget;
 };
 
+#ifdef __GNUC__
 #warning This was a DCOPObject, so we probably need to port it to DBus!
+#endif
 class SecurityPageSMimeTab : public ConfigModuleTab {
   Q_OBJECT
 public:

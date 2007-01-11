@@ -82,7 +82,9 @@ int main(int argc, char *argv[])
   KMail::insertLibraryCataloguesAndIcons();
 
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   KMail::lockOrDie();
@@ -90,7 +92,9 @@ int main(int argc, char *argv[])
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->dcopClient()->setDefaultObject( kmailKernel.objId() );
 
   // and session management
@@ -101,7 +105,9 @@ int main(int argc, char *argv[])
 
   kmsetSignalHandler(kmsignalHandler);
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
   // Go!

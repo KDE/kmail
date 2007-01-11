@@ -3548,7 +3548,9 @@ void KMComposeWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotClose()
 {
+#ifdef __GNUC__
   #warning "Port me: make sure to set/unset the  Qt::WA_DeleteOnClose flag to match the old behavior of close(false)"
+#endif
   close();
 }
 
@@ -3978,7 +3980,9 @@ void KMComposeWin::slotSaveDraft() {
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNowVia( QAction* item )
 {
+#ifdef __GNUC__
 #warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
+#endif
   QString temp = item->text().remove("&");
   QStringList availTransports= KMail::TransportManager::transportNames();
   if (availTransports.contains( temp ) )
@@ -3991,7 +3995,9 @@ void KMComposeWin::slotSendNowVia( QAction* item )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLaterVia( QAction* item )
 {
+#ifdef __GNUC__
 #warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
+#endif
   QString temp = item->text().remove("&");
   QStringList availTransports= KMail::TransportManager::transportNames();
   if (availTransports.contains( temp ) )
@@ -4212,7 +4218,9 @@ void KMComposeWin::slotSpellcheck()
   mEditor->spellcheck();
 }
 
+#ifdef __GNUC__
 #warning "ensurePolished() should be a const method, but we call non-const method"
+#endif
 void KMComposeWin::ensurePolished()
 {
   // Ensure the html toolbar is appropriately shown/hidden

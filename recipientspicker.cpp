@@ -164,7 +164,9 @@ RecipientItem *RecipientViewItem::recipientItem() const
 }
 
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 #if 0
 RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
   K3ListView *listView )
@@ -301,7 +303,9 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mRecipientList, SIGNAL( returnPressed( Q3ListViewItem * ) ),
     SLOT( slotPicked() ) );
 
+#ifdef __GNUC__
 #warning Port me!
+#endif
 #if 0
   new RecipientsListToolTip( mRecipientList->viewport(), mRecipientList );
 #endif

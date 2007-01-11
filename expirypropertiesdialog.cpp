@@ -185,7 +185,9 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   slotUpdateControls();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
   connect( this, SIGNAL(okClicked() ),SLOT( slotOk() ) );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  clearWState( WState_Polished );
 }
 

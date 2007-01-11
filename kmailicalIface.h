@@ -43,7 +43,9 @@
 // The kmail/ is so that it can be found by the resources easily
 #include <kmail/kmailicalIface.h>
 
+#ifdef __GNUC__
 #warning This was a DCOPObject and needs porting to DBus!
+#endif
 class KMailICalIface //: virtual public DCOPObject
 {
 

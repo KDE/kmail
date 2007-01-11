@@ -135,7 +135,9 @@ const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContents
   the kmail interface is used from the groupware object in kmail.
 */
 
+#ifdef __GNUC__
 #warning Port me to DBus!
+#endif
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : /*DCOPObject( "KMailICalIface" ),*/ QObject( 0 ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
@@ -948,7 +950,9 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     if ( mInTransit.contains( uid ) ) {
       mInTransit.remove( uid );
     }
+#ifdef __GNUC__
 #warning Port DCOP signals!
+#endif
 //    incidenceAdded( type, folder->location(), sernum, format, s );
   } else {
     // go get the rest of it, then try again
@@ -1003,7 +1007,9 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         kDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
                       << type << ", " << folder->location() << ", " << uid
                       << " )" << endl;
+#ifdef __GNUC__
 #warning Port DCOP signal!
+#endif
 //        incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
@@ -1015,7 +1021,9 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
+#ifdef __GNUC__
 #warning Port DCOP signal!
+#endif
 //    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
     kDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
   }
@@ -1216,7 +1224,9 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   ExtraFolder* ef = mExtraFolders.find( location );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
+#ifdef __GNUC__
 #warning Port DCOP signal!
+#endif
 //    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
 
     if ( contentsType == 0 ) {
@@ -1255,7 +1265,9 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
+#ifdef __GNUC__
 #warning Port DCOP signals!
+#endif
 //  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyUrl() );
 }
 
@@ -1398,7 +1410,9 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
   if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
+#ifdef __GNUC__
 #warning Port DCOP signals!
+#endif
 //    subresourceDeleted( contentsTypeStr, location );
 
 //    subresourceAdded( contentsTypeStr, location, folder->prettyUrl()  /*,
@@ -1426,7 +1440,9 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
     mExtraFolders.setAutoDelete( true );
     mExtraFolders.insert( newLocation, ef );
   }
+#ifdef __GNUC__
 #warning Port DCOP signal!
+#endif
 //  if (  folder )
 //    subresourceDeleted( folderContentsType(  folder->storage()->contentsType() ), oldLocation );
 
@@ -1642,7 +1658,9 @@ void KMailICalIfaceImpl::readConfig()
 
   // END TILL TODO
 
+#ifdef __GNUC__
 #warning Port DCOP signals!
+#endif
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );

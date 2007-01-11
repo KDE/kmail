@@ -160,14 +160,18 @@ void KMFolderDialog::slotApply()
 {
   if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
     //KDialog::slotApply();
+#ifdef __GNUC__
 #warning "kde4: port it 'slotApply'"
+#endif
     return;
   }
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
     mIsNewFolder = false; // so it's not new anymore :)
+#ifdef __GNUC__
 #warning "kde4: port it slotApply"
+#endif
   //KDialogBase::slotApply();
 }
 

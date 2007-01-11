@@ -489,7 +489,9 @@ namespace KMail {
 
       if ( imProxy->initialize() ) {
           // im status
+#ifdef __GNUC__
 #warning Port KIMProxy usage!
+#endif
 /*          presence = imProxy->presenceString( kabcUid );
           if ( !presence.isEmpty() )
           {
