@@ -307,6 +307,7 @@ KMTransportDialog::KMTransportDialog( const QString & caption,
   }
 
   setupSettings();
+  connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
 }
 
 

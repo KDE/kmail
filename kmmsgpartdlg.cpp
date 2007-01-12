@@ -360,6 +360,7 @@ KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool readOnly)
     mEncrypted->setEnabled(false);
     mSigned->setEnabled(false);
   }
+  connect(this,SIGNAL(okClicked()),SLOT(slotOk()));
 }
 
 KMMsgPartDialogCompat::~KMMsgPartDialogCompat() {}

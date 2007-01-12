@@ -416,6 +416,7 @@ namespace KMail {
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
 	     SLOT(slotAboutToShow(QWidget*)) );
+    connect( this, SIGNAL(okClicked()),SLOT(slotOk()));
   }
 
   IdentityDialog::~IdentityDialog() {
