@@ -364,7 +364,6 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "TEXT" );
         if ( mOrigMsg ) {
           QString quote = mOrigMsg->asPlainText( false, mAllowDecryption );
-          kdDebug() << "TEXT: " << quote << endl;
           body.append( quote );
         }
 
