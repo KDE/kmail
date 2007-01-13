@@ -311,6 +311,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   }
 
   setupSettings();
+  connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
 }
 
 AccountDialog::~AccountDialog()

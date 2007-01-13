@@ -259,7 +259,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
   connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
   connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
-
+  connect(this,SIGNAL(closeClicked()),this,SLOT(slotClose()));
   // give focus to the value field of the first search rule
   RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
   if ( r )

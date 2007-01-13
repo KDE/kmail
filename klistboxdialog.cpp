@@ -48,7 +48,7 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
     connect( entriesLB, SIGNAL( highlighted( const QString& ) ),
              this,      SLOT(   highlighted( const QString& ) ) );
     connect( entriesLB, SIGNAL( selected(int) ),
-                        SLOT(   slotOk() ) );
+                        SLOT(   accept() ) );
     // buddies
     labelAboveLA->setBuddy( entriesLB );
 }
