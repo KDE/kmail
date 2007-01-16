@@ -389,9 +389,7 @@ static QString canonicalAddress( const QString & _address ) {
   const QString address = EmailAddressTools::extractEmailAddress( _address );
   if ( !address.contains('@') ) {
     // local address
-    //char hostname[1024];
-    //gethostname(hostname,1024);
-    //return address + '@' + hostname;
+    //return address + '@' + KNetwork::KResolver::localHostName();
     return address + "@localdomain";
   }
   else

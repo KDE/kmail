@@ -1,5 +1,7 @@
 project(kmail)
 
+check_include_files(fcntl.h HAVE_FCNTL_H)
+check_include_files(byteswap.h HAVE_BYTESWAP_H)
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 

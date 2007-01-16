@@ -40,6 +40,7 @@ using KMail::HeaderStrategy;
 #include <khtml_part.h>
 #include <kuser.h>
 #include <kidna.h>
+#include <kresolver.h>
 
 #include <QList>
 #include <QCursor>
@@ -3740,15 +3741,9 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
   if ( loginName.isEmpty() )
     return QString();
 
-  char hostnameC[256];
-  // null terminate this C string
-  hostnameC[255] = '\0';
-  // set the string to 0 length if gethostname fails
-  if ( gethostname( hostnameC, 255 ) )
-    hostnameC[0] = '\0';
   QString address = loginName;
   address += '@';
-  address += QString::fromLocal8Bit( hostnameC );
+  address += KNetwork::KResolver::localHostName();
 
   // try to determine the real name
   const KUser user( loginName );

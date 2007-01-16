@@ -91,6 +91,7 @@ using KMime::DateFormatter;
 #include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
+#include <kresolver.h>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -1035,18 +1036,8 @@ void AccountsPage::SendingTab::doLoadOther() {
   mConfirmSendCheck->setChecked(
       composer.readEntry( "confirm-before-send", false ) );
   QString str = general.readEntry( "Default domain" );
-  if( str.isEmpty() )
-  {
-    //### FIXME: Use the global convenience function instead of the homebrewed
-    //           solution once we can rely on HEAD kdelibs.
-    //str = KGlobal::hostname(); ???????
-    char buffer[256];
-    if ( !gethostname( buffer, 255 ) )
-      // buffer need not be NUL-terminated if it has full length
-      buffer[255] = 0;
-    else
-      buffer[0] = 0;
-    str = QString::fromLatin1( *buffer ? buffer : "localhost" );
+  if( str.isEmpty() ) {
+    str = KNetwork::KResolver::localHostName();
   }
   mDefaultDomainEdit->setText( str );
 }

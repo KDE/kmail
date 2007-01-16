@@ -32,6 +32,7 @@
 #include <kglobal.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
+#include <kresolver.h>
 
 #include <errno.h>
 #include <sys/types.h>
@@ -76,18 +77,6 @@ void kmsetSignalHandler(void (*handler)(int))
 
 }
 //-----------------------------------------------------------------------------
-
-namespace {
-  QString getMyHostName() {
-    char hostNameC[256];
-    // null terminate this C string
-    hostNameC[255] = 0;
-    // set the string to 0 length if gethostname fails
-    if(gethostname(hostNameC, 255))
-      hostNameC[0] = 0;
-    return QString::fromLocal8Bit(hostNameC);
-  }
-} // anon namespace
 
 namespace KMail {
 
@@ -149,7 +138,7 @@ void lockOrDie() {
   const QString oldHostName = config.readEntry("hostname");
   const QString oldAppName = config.readEntry( "appName", appName );
   const QString oldProgramName = config.readEntry( "programName", programName );
-  const QString hostName = getMyHostName();
+  const QString hostName = KNetwork::KResolver::localHostName();
   bool first_instance = false;
   if ( oldPid == -1 )
       first_instance = true;
