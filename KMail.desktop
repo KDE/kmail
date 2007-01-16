@@ -7,6 +7,7 @@ Exec=kmail -caption "%c"
 Icon=kmail
 DocPath=kmail/index.html
 GenericName=Mail Client
+GenericName[el]=Πελάτης mail
 GenericName[fr]=Logiciel de messagerie électronique
 GenericName[x-test]=xxMail Clientxx
 Terminal=false

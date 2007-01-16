@@ -13,11 +13,14 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Misc
+Name[el]=Διάφορα
 Name[fr]=Divers
 Name[x-test]=xxMiscxx
 Comment=Settings that don't fit elsewhere
+Comment[el]=Ρυθμίσεις που δεν ταιριάζουν κάπου αλλού
 Comment[fr]=Paramètres qui ne rentrent dans aucune autre catégorie
 Comment[x-test]=xxSettings that don't fit elsewherexx
 Keywords=kmail,misc
+Keywords[el]=kmail,διάφορα
 Keywords[fr]=KMail,divers
 Keywords[x-test]=xxkmail,miscxx

@@ -1,8 +1,10 @@
 [KMail Profile]
 Name=Default
+Name[el]=Προκαθορισμένο
 Name[fr]=Défaut
 Name[x-test]=xxDefaultxx
 Comment=Standard profile
+Comment[el]=Τυπικό προφίλ
 Comment[fr]=Profil standard
 Comment[x-test]=xxStandard profilexx
 

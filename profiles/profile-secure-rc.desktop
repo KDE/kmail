@@ -1,8 +1,10 @@
 [KMail Profile]
 Name=Most Secure
+Name[el]=Πιο ασφαλές
 Name[fr]=Le plus sécurisé
 Name[x-test]=xxMost Securexx
 Comment=Sets all necessary options to achieve maximum security
+Comment[el]=Ενεργοποιεί όλες τις απαραίτητες επιλογές για την επίτευξη της μέγιστης ασφάλειας
 Comment[fr]=Règle toutes les options nécessaires pour atteindre une sécurité maximale
 Comment[x-test]=xxSets all necessary options to achieve maximum securityxx
 

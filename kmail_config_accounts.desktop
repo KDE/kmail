@@ -13,11 +13,14 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Accounts
+Name[el]=Λογαριασμοί
 Name[fr]=Comptes
 Name[x-test]=xxAccountsxx
 Comment=Setup for Sending and Receiving Messages
+Comment[el]=Ρυθμίσεις για αποστολή και λήψη μηνυμάτων
 Comment[fr]=Configuration de l'envoi et de la réception de messages
 Comment[x-test]=xxSetup for Sending and Receiving Messagesxx
 Keywords=kmail,accounts
+Keywords[el]=kmail,λογαριασμοί
 Keywords[fr]=KMail,comptes
 Keywords[x-test]=xxkmail,accountsxx

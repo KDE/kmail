@@ -13,11 +13,13 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Composer
+Name[el]=Συνταξη μηνυμάτων
 Name[fr]=Éditeur
 Name[x-test]=xxComposerxx
 Comment=Phrases & General Behavior
 Comment[fr]=Phrases et comportement général
 Comment[x-test]=xxPhrases & General Behaviorxx
 Keywords=kmail,composer
+Keywords[el]=kmail,συντάκτης
 Keywords[fr]=KMail,éditeur
 Keywords[x-test]=xxkmail,composerxx
