@@ -854,11 +854,11 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   // QStrings in Qt3 expect host ordering.
   // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
 
-#ifndef WORDS_BIGENDIAN
-  // #warning Byte order is little endian (swap is true)
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+  // Byte order is little endian (swap is true)
   swapEndian(ret);
 #else
-  // #warning Byte order is big endian (swap is false)
+  // Byte order is big endian (swap is false)
 #endif
 
   return ret;
@@ -940,7 +940,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
          if (!swapByteOrder)
          {
             // Index file order is the same as the order of this CPU.
-#ifndef WORDS_BIGENDIAN
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
             // Index file order is little endian
             ret = ret_1; // We drop the 4 most significant bytes
 #else
@@ -951,7 +951,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
          else
          {
             // Index file order is different from this CPU.
-#ifndef WORDS_BIGENDIAN
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
             // Index file order is big endian
             ret = ret_2; // We drop the 4 most significant bytes
 #else
@@ -974,7 +974,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   return ret;
 }
 
-#ifndef WORDS_BIGENDIAN
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 // We need to use swab to swap bytes to network byte order
 #define memcpy_networkorder(to, from, len)  swab((char *)(from), (char *)(to), len)
 #else
