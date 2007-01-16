@@ -2590,7 +2590,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   KCursorSaver busy(KBusyPtr::busy());
   QString name( (*it).url.fileName() );
   // ask the job for the mime type of the file
-  QString mimeType = static_cast<KIO::MimetypeJob*>(job)->mimetype();
+  QString mimeType = static_cast<KIO::TransferJob*>(job)->mimetype();
 
   if ( name.isEmpty() ) {
     // URL ends with '/' (e.g. http://www.kde.org/)
