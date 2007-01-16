@@ -96,7 +96,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->setSigningAndEncryptionDisabled( true );
 
   if ( options.readEntry( "AutomaticSending", true ) ) {
-    cWin->setAutoDeleteWindow(  true );
+    cWin->setAttribute( Qt::WA_DeleteOnClose );
     cWin->slotSendNow();
   } else {
     cWin->show();

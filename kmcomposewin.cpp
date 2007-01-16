@@ -452,11 +452,6 @@ KMComposeWin::~KMComposeWin()
   qDeleteAll( mAtmTempList );
 }
 
-void KMComposeWin::setAutoDeleteWindow( bool f )
-{
-  setAttribute( Qt::WA_DeleteOnClose, f );
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::send(int how)
 {

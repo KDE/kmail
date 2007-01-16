@@ -76,12 +76,6 @@ namespace KMail {
      */
     virtual void setAutoDelete( bool f ) = 0;
 
-    /**
-     * If this flag is set, the compose window will delete itself after
-     * the window has been closed.
-     */
-    virtual void setAutoDeleteWindow( bool f ) = 0;
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after

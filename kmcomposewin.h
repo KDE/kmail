@@ -182,12 +182,6 @@ public: // kmkernel, callback
    */
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
-  /**
-   * If this flag is set, the compose window will delete itself after
-   * the window has been closed.
-   */
-  void setAutoDeleteWindow( bool f );
-
 public: // kmcommand
   /**
    * If this folder is set, the original message is inserted back after
