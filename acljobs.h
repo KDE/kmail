@@ -156,7 +156,7 @@ namespace ACLJobs {
 
   protected slots:
     virtual void slotStart();
-    virtual void slotResult( KIO::Job *job );
+    virtual void slotResult( KJob *job );
 
   private:
     KIO::Slave* mSlave;

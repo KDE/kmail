@@ -144,7 +144,7 @@ bool KMAcctImap::handleError( int errorCode, const QString &errorMsg, KIO::Job* 
 //-----------------------------------------------------------------------------
 void KMAcctImap::killAllJobs( bool disconnectSlave )
 {
-  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   for ( ; it != mapJobData.end(); ++it)
   {
     QList<KMMessage*> msgList = (*it).msgList;
@@ -227,9 +227,9 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
 {
   // Make sure the folder is not referenced in any kio slave jobs
-  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   while ( it != mapJobData.end() ) {
-     QMap<KIO::Job*, jobData>::Iterator i = it;
+     QMap<KJob*, jobData>::Iterator i = it;
      it++;
      if ( (*i).parent ) {
         if ( (*i).parent == folder ) {
@@ -244,7 +244,7 @@ void KMAcctImap::cancelMailCheck()
 {
   // Make list of folders to reset, like in killAllJobs
   QList<KMFolderImap*> folderList;
-  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ( (*it).cancellable && (*it).parent ) {
       folderList << static_cast<KMFolderImap*>((*it).parent->storage());

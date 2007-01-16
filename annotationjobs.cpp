@@ -107,7 +107,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotStart()
   }
 }
 
-void AnnotationJobs::MultiGetAnnotationJob::slotResult( KIO::Job *job )
+void AnnotationJobs::MultiGetAnnotationJob::slotResult( KJob *job )
 {
   if ( job->error() ) {
     KIO::Job::slotResult( job ); // will set the error and emit result(this)
@@ -166,7 +166,7 @@ void AnnotationJobs::MultiSetAnnotationJob::slotStart()
   }
 }
 
-void AnnotationJobs::MultiSetAnnotationJob::slotResult( KIO::Job *job )
+void AnnotationJobs::MultiSetAnnotationJob::slotResult( KJob *job )
 {
   if ( job->error() ) {
     KIO::Job::slotResult( job ); // will set the error and emit result(this)

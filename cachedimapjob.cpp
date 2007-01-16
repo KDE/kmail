@@ -323,15 +323,15 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
   KIO::SimpleJob *simpleJob = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
-  connect(simpleJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
-          this, SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
+  connect(simpleJob, SIGNAL(processedSize(KJob *, KIO::filesize_t)),
+          this, SLOT(slotProcessedSize(KJob *, KIO::filesize_t)));
   connect(simpleJob, SIGNAL(result(KJob *)),
           this, SLOT(slotGetNextMessage(KJob *)));
   connect(simpleJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
           mFolder, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
 }
 
-void CachedImapJob::slotProcessedSize(KIO::Job *, KIO::filesize_t processed)
+void CachedImapJob::slotProcessedSize(KJob *, KIO::filesize_t processed)
 {
   emit progress( mSentBytes + processed, mTotalBytes );
 }

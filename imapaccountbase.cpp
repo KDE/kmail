@@ -927,12 +927,12 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::cancelMailCheck()
   {
-    QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+    QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
     while ( it != mapJobData.end() ) {
       kDebug(5006) << "cancelMailCheck: job is cancellable: " << (*it).cancellable << endl;
       if ( (*it).cancellable ) {
         it.key()->kill();
-        QMap<KIO::Job*, jobData>::Iterator rmit = it;
+        QMap<KJob*, jobData>::Iterator rmit = it;
         ++it;
         mapJobData.erase( rmit );
         // We killed a job -> this kills the slave

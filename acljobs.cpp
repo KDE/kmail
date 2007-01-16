@@ -240,7 +240,7 @@ void ACLJobs::MultiSetACLJob::slotStart()
   }
 }
 
-void ACLJobs::MultiSetACLJob::slotResult( KIO::Job *job )
+void ACLJobs::MultiSetACLJob::slotResult( KJob *job )
 {
   if ( job->error() ) {
     KIO::Job::slotResult( job ); // will set the error and emit result(this)

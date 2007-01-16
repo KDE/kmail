@@ -163,17 +163,17 @@ namespace KMail {
       bool onlySubscribed, quiet, cancellable;
     };
 
-    typedef QMap<KIO::Job *, jobData>::Iterator JobIterator;
+    typedef QMap<KJob *, jobData>::Iterator JobIterator;
     /**
      * Call this when starting a new job
      */
-    void insertJob( KIO::Job* job, const jobData& data ) {
+    void insertJob( KJob* job, const jobData& data ) {
       mapJobData.insert( job, data );
     }
     /**
      * Look for the jobData related to a given job. Compare with end()
      */
-    JobIterator findJob( KIO::Job* job ) { return mapJobData.find( job ); }
+    JobIterator findJob( KJob* job ) { return mapJobData.find( job ); }
     JobIterator jobsEnd() { return mapJobData.end(); }
     /**
      * Call this when a job is finished.
@@ -477,7 +477,7 @@ namespace KMail {
     QList<QPointer<KMFolder>* > mOpenFolders;
     QStringList mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes;
-    QMap<KIO::Job *, jobData> mapJobData;
+    QMap<KJob *, jobData> mapJobData;
     /** used to detect when the slave has not been used for a while */
     QTimer mIdleTimer;
     /** used to send a noop to the slave in regular intervals to keep it from disonnecting */

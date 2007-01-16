@@ -130,7 +130,7 @@ QList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnec
   // Make list of folders to reset. This must be done last, since folderComplete
   // can trigger the next queued mail check already.
   QList<KMFolderCachedImap*> folderList;
-  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ((*it).parent)
       folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
@@ -160,7 +160,7 @@ void KMAcctCachedImap::cancelMailCheck()
 {
   // Make list of folders to reset, like in killAllJobs
   QList<KMFolderCachedImap*> folderList;
-  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ( (*it).cancellable && (*it).parent )
       folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
@@ -181,7 +181,7 @@ void KMAcctCachedImap::cancelMailCheck()
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
 {
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
+  QMap<KJob *, jobData>::Iterator it = mapJobData.begin();
   while (it != mapJobData.end())
   {
     if (it.value().parent == fti->folder())

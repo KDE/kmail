@@ -172,8 +172,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
           SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)) );
       connect( job, SIGNAL(infoMessage(KJob *, const QString &, const QString &)),
           SLOT(slotPutMessageInfoData(KJob *, const QString &, const QString &)) );
-      connect( job, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
-          SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
+      connect( job, SIGNAL(processedSize(KJob *, KIO::filesize_t)),
+          SLOT(slotProcessedSize(KJob *, KIO::filesize_t)));
     }
   }
   else if ( jt == tCopyMessage || jt == tMoveMessage )
@@ -345,8 +345,8 @@ void ImapJob::slotGetNextMessage()
            msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)) );
   if ( jd.total > 1 )
   {
-    connect(mJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
-        this, SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
+    connect(mJob, SIGNAL(processedSize(KJob *, KIO::filesize_t)),
+        this, SLOT(slotProcessedSize(KJob *, KIO::filesize_t)));
   }
 }
 
@@ -660,7 +660,7 @@ void ImapJob::setParentFolder( const KMFolderImap* parent )
 }
 
 //-----------------------------------------------------------------------------
-void ImapJob::slotProcessedSize(KIO::Job * job, KIO::filesize_t processed)
+void ImapJob::slotProcessedSize(KJob * job, KIO::filesize_t processed)
 {
   KMMessage *msg = mMsgList.first();
   if (!msg || !job) {
