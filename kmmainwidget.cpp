@@ -136,7 +136,8 @@ using KPIM::ProgressManager;
 #include <q3stylesheet.h>
 #include <kvbox.h>
 #include <QTextDocument>
-
+#include <QDBusConnection>
+#include <QDBusMessage>
 #include "customtemplates.h"
 #include "customtemplates_kfg.h"
 
@@ -894,10 +895,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
-#ifdef __GNUC__
-#warning port me
-#endif
-  //kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
+  QDBusMessage message =
+      QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
+  QDBusConnection::sessionBus().send(message);
 
   // build summary for new mail message
   bool showNotification = false;

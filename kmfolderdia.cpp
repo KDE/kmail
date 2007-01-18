@@ -125,7 +125,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   FolderDiaTab* tab;
   QFrame *box;
 
-  box = new KVBox( this );
+  box = new KVBox;
   addPage( box, i18n("General") );
   tab = new FolderDiaGeneralTab( this, aName, box );
   addTab( tab );
@@ -143,7 +143,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   bool noContent = mFolder ? mFolder->storage()->noContent() : false;
   if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
     if ( FolderDiaACLTab::supports( refFolder ) ) {
-      box = new KVBox( this );
+      box = new KVBox;
       addPage( box, i18n("Access Control") );
       tab = new FolderDiaACLTab( this, box );
       addTab( tab );
