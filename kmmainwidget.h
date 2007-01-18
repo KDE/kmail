@@ -30,6 +30,8 @@
 #include <q3listview.h>
 #include <QMenu>
 #include <Q3Dict>
+#include <Q3PtrList>
+#include <Q3ValueVector>
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
@@ -39,6 +41,7 @@
 class Q3Accel;
 class QVBoxLayout;
 class QSplitter;
+class QSignalMapper;
 
 class KActionMenu;
 class KSeparatorAction;
@@ -118,11 +121,14 @@ public:
   KAction *replyAuthorAction() const { return mReplyAuthorAction; }
   KAction *replyAllAction() const { return mReplyAllAction; }
   KAction *replyListAction() const { return mReplyListAction; }
+  KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
+  KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
   KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
   KAction *forwardAction() const { return mForwardAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *redirectAction() const { return mRedirectAction; }
+  KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
@@ -132,6 +138,7 @@ public:
   KAction *deleteThreadAction() const { return mDeleteThreadAction; }
   KAction *saveAsAction() const { return mSaveAsAction; }
   KAction *editAction() const { return mEditAction; }
+  KAction *useAction() const { return mUseAction; }
   KAction *sendAgainAction() const { return mSendAgainAction; }
   KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
   KAction *findInMessageAction() const { return mFindInMessageAction; }
@@ -228,6 +235,9 @@ public slots:
   /** Add, remove or adjust the folder's shortcut. */
   void slotShortcutChanged( KMFolder *folder );
 
+  /** Update the custom template menus. */
+  void updateCustomTemplateMenus();
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -238,6 +248,7 @@ protected:
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
   void updateFileMenu();
+  void newFromTemplate( KMMessage *msg );
 
   KActionCollection * actionCollection() const { return mActionCollection; }
 
@@ -280,6 +291,7 @@ protected slots:
   void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
+  void slotUseTemplate();
   //void slotTrashMsg();   // move to trash
   void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
   void slotTrashThread();
@@ -352,6 +364,9 @@ protected slots:
   void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
+  void slotShowNewFromTemplate();
+  void slotNewFromTemplate( int );
+
   /** Update the undo action */
   void slotUpdateUndo();
 
@@ -381,9 +396,12 @@ protected slots:
   void slotReplyAuthorToMsg();
   void slotReplyListToMsg();
   void slotReplyAllToMsg();
+  void slotCustomReplyToMsg( int tid );
+  void slotCustomReplyAllToMsg( int tid );
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
+  void slotCustomForwardMsg( int tid );
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -410,7 +428,7 @@ private:
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
-    *mDeleteThreadAction, *mSaveAsAction, *mEditAction,
+    *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
   // Composition actions
@@ -424,6 +442,17 @@ private:
   KActionMenu *mFilterMenu;
   KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
       *mListFilterAction;
+
+  KActionMenu *mTemplateMenu;
+
+  // Custom template actions menu
+  KActionMenu *mCustomReplyActionMenu,
+              *mCustomReplyAllActionMenu,
+              *mCustomForwardActionMenu;
+  // Signal mappers for custom template actions
+  QSignalMapper *mCustomReplyMapper,
+                *mCustomReplyAllMapper,
+                *mCustomForwardMapper;
 
   KActionMenu *mStatusMenu, *mThreadStatusMenu,
     *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
@@ -452,6 +481,7 @@ private:
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
+  KMFolder     *mTemplateFolder;
   QMenu         *mViewMenu, *mBodyPartsMenu;
   KAction       *mlistFilterAction;
   bool		mIntegrated;
@@ -501,6 +531,9 @@ private:
   QList<KMMetaFilterActionCommand*> mFilterCommands;
   Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
   QPointer <KMail::FolderJob> mJob;
+
+  Q3ValueVector<QString> mCustomTemplates;
+  Q3PtrList<KAction> mCustomTemplateActions;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;

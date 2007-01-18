@@ -699,10 +699,13 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled(mFolder ?
-        (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ?
-        mFolder->isMailingListEnabled() : false);
+    mOwner->editAction()->setEnabled( mFolder ?
+                         ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
+                           kmkernel->folderIsTemplates( mFolder ) ) : false );
+    mOwner->useAction()->setEnabled( mFolder ?
+                         ( kmkernel->folderIsTemplates( mFolder ) ) : false );
+    mOwner->replyListAction()->setEnabled( mFolder ?
+                         mFolder->isMailingListEnabled() : false );
     if (mFolder)
     {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -2327,9 +2330,15 @@ void KMHeaders::slotRMB()
 
   mOwner->updateMessageMenu();
 
-  bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
-  if ( out_folder )
+  bool out_folder = kmkernel->folderIsDraftOrOutbox( mFolder );
+  bool tem_folder = kmkernel->folderIsTemplates( mFolder );
+  if ( out_folder ) {
      menu->addAction( mOwner->editAction() );
+  }
+  else if (tem_folder) {
+     menu->addAction( mOwner->useAction() );
+     menu->addAction( mOwner->editAction() );
+  }
   else {
      // show most used actions
      if( !mFolder->isSent() )

@@ -29,6 +29,7 @@
 
 #include "globalsettings.h"
 #include "replyphrases.h"
+#include "templatesconfiguration_kfg.h"
 
 // other KMail headers:
 #include "kmkernel.h"
@@ -59,6 +60,9 @@ using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
 #include "index.h"
+
+#include "templatesconfiguration.h"
+#include "customtemplates.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -2337,7 +2341,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
   currentEncoding = currentEncoding.replace( "iso ", "iso-", Qt::CaseInsensitive );
   ///kDebug(5006) << "Looking for encoding: " << currentEncoding << endl;
-  int i = 0;
+  uint i = 0;
   int indexOfLatin9 = 0;
   bool found = false;
   for( ; it != end; ++it)
@@ -2368,7 +2372,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   encodings.prepend( i18n( "Auto" ) );
   QStringList::Iterator it( encodings.begin() );
   QStringList::Iterator end( encodings.end() );
-  int i = 0;
+  uint i = 0;
   for( ; it != end; ++it)
   {
     if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
@@ -2516,8 +2520,20 @@ ComposerPage::ComposerPage( KInstance *instance, QWidget *parent, const QStringL
   //
   // "Phrases" tab:
   //
-  mPhrasesTab = new PhrasesTab();
-  addTab( mPhrasesTab, i18n("&Phrases") );
+  // mPhrasesTab = new PhrasesTab();
+  // addTab( mPhrasesTab, i18n("&Phrases") );
+
+  //
+  // "Templates" tab:
+  //
+  mTemplatesTab = new TemplatesTab();
+  addTab( mTemplatesTab, i18n("&Templates") );
+
+  //
+  // "Custom Templates" tab:
+  //
+  mCustomTemplatesTab = new CustomTemplatesTab();
+  addTab( mCustomTemplatesTab, i18n("&Custom Templates") );
 
   //
   // "Subject" tab:
@@ -3002,6 +3018,54 @@ void ComposerPage::PhrasesTab::save() {
     replyPhrases.setIndentPrefix( (*it).mIndentPrefix );
     replyPhrases.writeConfig();
   }
+}
+
+QString ComposerPage::TemplatesTab::helpAnchor() const {
+  return QString::fromLatin1("configure-composer-templates");
+}
+
+ComposerPageTemplatesTab::ComposerPageTemplatesTab( QWidget * parent )
+  : ConfigModuleTab ( parent )
+{
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+
+  mWidget = new TemplatesConfiguration( this );
+  vlay->addWidget( mWidget );
+
+  connect( mWidget, SIGNAL( changed() ),
+           this, SLOT( slotEmitChanged( void ) ) );
+}
+
+void ComposerPage::TemplatesTab::doLoadFromGlobalSettings() {
+    mWidget->loadFromGlobal();
+}
+
+void ComposerPage::TemplatesTab::save() {
+    mWidget->saveToGlobal();
+}
+
+QString ComposerPage::CustomTemplatesTab::helpAnchor() const {
+  return QString::fromLatin1("configure-composer-custom-templates");
+}
+
+ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent )
+  : ConfigModuleTab ( parent )
+{
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+
+  mWidget = new CustomTemplates( this );
+  vlay->addWidget( mWidget );
+
+  connect( mWidget, SIGNAL( changed() ),
+           this, SLOT( slotEmitChanged( void ) ) );
+}
+
+void ComposerPage::CustomTemplatesTab::doLoadFromGlobalSettings() {
+    mWidget->load();
+}
+
+void ComposerPage::CustomTemplatesTab::save() {
+    mWidget->save();
 }
 
 QString ComposerPage::SubjectTab::helpAnchor() const {

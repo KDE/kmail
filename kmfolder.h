@@ -103,20 +103,26 @@ public:
   bool isOutbox() {
     return this == KMKernel::self()->outboxFolder();
   }
-  /** Retuns true if this folder is the sent-mail box of the local account,
+  /** Returns true if this folder is the sent-mail box of the local account,
     or is configured to be the sent mail box of any of the users identities */
   bool isSent() {
     return KMKernel::self()->folderIsSentMailFolder( this );
   }
-  /** Retuns true if this folder is configured as a trash folder, localy or
+  /** Returns true if this folder is configured as a trash folder, localy or
     for one of the accounts. */
   bool isTrash() {
     return KMKernel::self()->folderIsTrash( this );
   }
-  /** Retuns true if this folder is the drafts box of the local account,
+  /** Returns true if this folder is the drafts box of the local account,
     or is configured to be the drafts box of any of the users identities */
   bool isDrafts() {
     return KMKernel::self()->folderIsDrafts( this );
+  }
+
+  /** Returns true if this folder is the templates folder of the local account,
+    or is configured to be the templates folder of any of the users identities */
+  bool isTemplates() {
+    return KMKernel::self()->folderIsTemplates( this );
   }
 
   void setAcctList( AccountList* list ) { mAcctList = list; }
@@ -357,11 +363,11 @@ public:
   bool isReadOnly() const;
 
   /** Returns true if the folder is a kmail system folder. These are
-    the folders 'inbox', 'outbox', 'sent', 'trash'. The name of these
-    folders is nationalized in the folder display and they cannot have
-    accounts associated. Deletion is also forbidden. Etc. */
+    the folders 'inbox', 'outbox', 'sent', 'trash', 'drafts', 'templates'.
+    The name of these folders is nationalized in the folder display and
+    they cannot have accounts associated. Deletion is also forbidden. Etc. */
   bool isSystemFolder() const { return mIsSystemFolder; }
-  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
+  void setSystemFolder(bool itIs) { mIsSystemFolder = itIs; }
 
   /** Returns the label of the folder for visualization. */
   virtual QString label() const;

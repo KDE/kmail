@@ -24,6 +24,7 @@ using KPIM::CollectingProcess;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmmsgbase.h"
+#include "templateparser.h"
 #include "messageproperty.h"
 #include "actionscheduler.h"
 using KMail::MessageProperty;
@@ -1479,14 +1480,18 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   msg->initFromMessage( aMsg );
 
-  QString st = QString::fromUtf8( aMsg->createForwardBody() );
+  // QString st = QString::fromUtf8( aMsg->createForwardBody() );
+  TemplateParser parser( msg, TemplateParser::Forward, 
+			 aMsg->body(), false, false, false, false);
+  parser.process( aMsg );
+  
   QByteArray
     encoding = KMMsgBase::autoDetectCharset( aMsg->charset(),
                                              KMMessage::preferredCharsets(),
-                                             st );
+                                             msg->body() );
   if( encoding.isEmpty() )
     encoding = "utf-8";
-  QByteArray str = KMMsgBase::codecForName( encoding )->fromUnicode( st );
+  QByteArray str = KMMsgBase::codecForName( encoding )->fromUnicode( msg->body() );
 
   msg->setCharset( encoding );
   msg->setTo( mParameter );

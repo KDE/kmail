@@ -158,7 +158,9 @@ public:
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                           QString selection=QString(), bool noQuote=false,
-                          bool allowDecryption=true, bool selectionIsBody=false);
+                          bool allowDecryption=true, bool selectionIsBody=false,
+                          const QString &tmpl = QString::null );
+
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -175,7 +177,7 @@ public:
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMMessage* createForward();
+  KMMessage* createForward( const QString &tmpl = QString::null );
 
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The
@@ -323,6 +325,10 @@ public:
   /** Get or set the 'Drafts' folder */
   QString drafts() const { return mDrafts; }
   void setDrafts(const QString& aStr);
+
+  /** Get or set the 'Templates' folder */
+  QString templates() const { return mTemplates; }
+  void setTemplates(const QString& aStr);
 
   /** Get or set the 'From' header field */
   QString from() const;
@@ -838,6 +844,12 @@ public:
   /** Return the textual content of the message as plain text,
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
+
+  /** Get stored cursor position */
+  int getCursorPos() { return mCursorPos; };
+  /** Set cursor position as offset from message start */
+  void setCursorPos(int pos) { mCursorPos = pos; };
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -846,6 +858,7 @@ private:
   void assign( const KMMessage& other );
 
   QString mDrafts;
+  QString mTemplates;
   mutable DwMessage* mMsg;
   mutable bool       mNeedsAssembly :1;
   bool mDecodeHTML :1;
@@ -864,6 +877,7 @@ private:
   KMMsgMDNSentState mMDNSentState;
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
+  int mCursorPos;
 };
 
 

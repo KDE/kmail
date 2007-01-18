@@ -26,7 +26,7 @@
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
-
+#include "ui_customtemplates_base.h"
 
 class QPushButton;
 class QLabel;
@@ -51,6 +51,8 @@ class SimpleStringListEditor;
 class KConfig;
 class QPoint;
 class SMimeConfiguration;
+class TemplatesConfiguration;
+class CustomTemplates;
 
 namespace Kpgp {
   class Config;
@@ -665,10 +667,44 @@ private:
   LanguageItemList mLanguageList;
 };
 
+class ComposerPageTemplatesTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageTemplatesTab( QWidget * parent = 0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private slots:
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
+    TemplatesConfiguration* mWidget;
+};
+
+class ComposerPageCustomTemplatesTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageCustomTemplatesTab( QWidget * parent = 0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private slots:
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
+    CustomTemplates* mWidget;
+};
+
 class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageSubjectTab( QWidget * parent=0 );
+  ComposerPageSubjectTab( QWidget * parent = 0 );
   QString helpAnchor() const;
 
   void save();
@@ -767,6 +803,8 @@ public:
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef ComposerPageGeneralTab GeneralTab;
   typedef ComposerPagePhrasesTab PhrasesTab;
+  typedef ComposerPageTemplatesTab TemplatesTab;
+  typedef ComposerPageCustomTemplatesTab CustomTemplatesTab;
   typedef ComposerPageSubjectTab SubjectTab;
   typedef ComposerPageCharsetTab CharsetTab;
   typedef ComposerPageHeadersTab HeadersTab;
@@ -775,6 +813,8 @@ public:
 private:
   GeneralTab  *mGeneralTab;
   PhrasesTab  *mPhrasesTab;
+  TemplatesTab  *mTemplatesTab;
+  CustomTemplatesTab  *mCustomTemplatesTab;
   SubjectTab  *mSubjectTab;
   CharsetTab  *mCharsetTab;
   HeadersTab  *mHeadersTab;

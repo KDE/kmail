@@ -23,6 +23,7 @@ using KMail::ObjectTreeParser;
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
+#include "templateparser.h"
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
@@ -158,6 +159,7 @@ void KMMessage::init()
   mDate    = 0;
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
+  mCursorPos = 0;
 }
 
 void KMMessage::assign( const KMMessage& other )
@@ -186,6 +188,7 @@ void KMMessage::assign( const KMMessage& other )
   else
     mUnencryptedMsg = 0;
   setDrafts( other.drafts() );
+  setTemplates( other.templates() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //KMMsgBase::assign( &other );
 }
@@ -851,12 +854,14 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /*.clear() */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
-                                   bool selectionIsBody /* = false */)
+                                   bool selectionIsBody /* = false */,
+                                   const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
   Q3CString refStr, headerName;
+  bool replyAll = true;
 
   msg->initFromMessage(this);
 
@@ -896,6 +901,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       // doesn't seem to be a mailing list, reply to From: address
       toStr = from();
       replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+      replyAll = false;
     }
     // strip all my addresses from the list of recipients
     QStringList recipients = EmailAddressTools::splitAddressList( toStr );
@@ -1025,6 +1031,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       toStr = from();
     }
     replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+    replyAll = false;
     break;
   }
   case KMail::ReplyNone : {
@@ -1040,17 +1047,23 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   //In-Reply-To = original msg-id
   msg->setReplyToId(msgId());
 
-  if (!noQuote) {
-    if( selectionIsBody ){
-      Q3CString cStr = selection.toLatin1();
-      msg->setBody( cStr );
-    }else{
-      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
-				  sSmartQuote, allowDecryption).toUtf8());
-    }
-  }
+//  if (!noQuote) {
+//    if( selectionIsBody ){
+//      Q3CString cStr = selection.toLatin1();
+//      msg->setBody( cStr );
+//    }else{
+//      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
+//				  sSmartQuote, allowDecryption).toUtf8());
+//    }
+//  }
 
   msg->setSubject( replySubject() );
+
+  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
+			 selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
+  if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
+  else parser.process( this );
+
   msg->link( this, MessageStatus::statusReplied() );
 
   if ( parent() && parent()->putRepliesInSameFolder() )
@@ -1177,7 +1190,7 @@ Q3CString KMMessage::createForwardBody()
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward()
+KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage();
   QString id;
@@ -1211,6 +1224,14 @@ KMMessage* KMMessage::createForward()
     //restore type
     msg->setType( type );
     msg->setSubtype( subtype );
+  } else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
+    // This is non-multipart html mail. Let`s make it text/plain and allow
+    // template parser do the hard job.
+    msg->initFromMessage( this );
+    msg->setType( DwMime::kTypeText );
+    msg->setSubtype( DwMime::kSubtypeHtml );
+    msg->mNeedsAssembly = true;
+    msg->cleanupHeader();
   } else {
     // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
     // a multipart/mixed mail and add the original body as an attachment.
@@ -1241,12 +1262,22 @@ KMMessage* KMMessage::createForward()
     msg->mNeedsAssembly = true;
     msg->cleanupHeader();
   }
-  QString st = QString::fromUtf8(createForwardBody());
-  Q3CString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
-  if (encoding.isEmpty()) encoding = "utf-8";
-  msg->setCharset(encoding);
 
+//  QString st = QString::fromUtf8(createForwardBody());
   msg->setSubject( forwardSubject() );
+
+  TemplateParser parser( msg, TemplateParser::Forward,
+    asPlainText( false, false ),
+    false, false, false, false);
+  if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
+  else parser.process( this );
+
+  // QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
+  // if (encoding.isEmpty()) encoding = "utf-8";
+  // msg->setCharset(encoding);
+  // force utf-8
+  // msg->setCharset( "utf-8" );
+
   msg->link( this, MessageStatus::statusForwarded() );
   return msg;
 }
@@ -1613,6 +1644,11 @@ void KMMessage::applyIdentity( uint id )
     setDrafts( QString() );
   else
     setDrafts( ident.drafts() );
+
+  if (ident.templates().isEmpty())
+    setTemplates( QString() );
+  else
+    setTemplates( ident.templates() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1889,6 +1925,12 @@ void KMMessage::setFcc(const QString& aStr)
 void KMMessage::setDrafts(const QString& aStr)
 {
   mDrafts = aStr;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setTemplates(const QString& aStr)
+{
+  mTemplates = aStr;
 }
 
 //-----------------------------------------------------------------------------

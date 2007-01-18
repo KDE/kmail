@@ -47,6 +47,8 @@ using KRecentAddress::RecentAddresses;
 //#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
+#include "templateparser.h"
+
 #include <kmessagebox.h>
 #include <knotification.h>
 #include <kstaticdeleter.h>
@@ -109,6 +111,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_sentFolder = 0;
   the_trashFolder = 0;
   the_draftsFolder = 0;
+  the_templatesFolder = 0;
 
   the_folderMgr = 0;
   the_imapFolderMgr = 0;
@@ -393,11 +396,23 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QByteArray str = KPIM::kFileToByteArray( messageFile.path(), true, false );
-    if( !str.isEmpty() )
+    if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
+    }
+    else {
+      TemplateParser parser( msg, TemplateParser::NewMessage,
+			     "", false, false, false, false );
+      parser.process( NULL, NULL );
+    }
   }
-  else if (!body.isEmpty())
+  else if (!body.isEmpty()) {
     msg->setBody(body.toUtf8());
+  }
+  else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+			   "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
 
   if (!customHeaders.isEmpty())
   {
@@ -407,8 +422,8 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
         const int pos = (*it).find( ':' );
         if ( pos > 0 )
         {
-          Q3CString header = (*it).left( pos ).stripWhiteSpace();
-          QString value = (*it).mid( pos+1 ).stripWhiteSpace();
+          Q3CString header = (*it).left( pos ).trimmed();
+          QString value = (*it).mid( pos+1 ).trimmed();
           if ( !header.isEmpty() && !value.isEmpty() )
             msg->setHeaderField( header, value );
         }
@@ -451,7 +466,13 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   if (!bcc.isEmpty()) msg->setBcc(bcc);
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
-  if (!body.isEmpty()) msg->setBody(body.toUtf8());
+  if ( !body.isEmpty() ) {
+    msg->setBody(body.utf8());
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+			   "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", true);
@@ -482,11 +503,13 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
   KUrl attachURL(_attachURL);
   KMail::Composer * win = 0;
   KMMessage *msg = new KMMessage;
+  KMFolder *folder = NULL;
+  uint id = 0;
 
   if ( useFolderId ) {
     //create message with required folder identity
-    KMFolder *folder = currentFolder();
-    uint id = folder ? folder->identity() : 0;
+    folder = currentFolder();
+    id = folder ? folder->identity() : 0;
     msg->initHeader( id );
     win = makeComposer( msg, id );
   } else {
@@ -499,10 +522,23 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
   if (!cc.isEmpty()) msg->setCc(cc);
   if (!bcc.isEmpty()) msg->setBcc(bcc);
 
+  if ( useFolderId ) {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, folder );
+    win = makeComposer( msg, id );
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, NULL );
+    win = makeComposer( msg );
+  }
+
   //Add the attachment if we have one
   if(!attachURL.isEmpty() && attachURL.isValid()) {
     win->addAttach(attachURL);
   }
+
   //only show window when required
   if(!hidden) {
     win->show();
@@ -1237,6 +1273,15 @@ void KMKernel::initFolders(KConfig* cfg)
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString() );
   the_draftsFolder->open();
+
+  the_templatesFolder = the_folderMgr->findOrCreate(cfg->readEntry("templatesFolder", I18N_NOOP("templates")));
+  if (the_templatesFolder->canAccess() != 0) {
+    emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
+  }
+  the_templatesFolder->setSystemFolder(true);
+  if ( the_templatesFolder->userWhoField().isEmpty() )
+    the_templatesFolder->setUserWhoField( QString() );
+  the_templatesFolder->open();
 }
 
 
@@ -1801,6 +1846,22 @@ bool KMKernel::folderIsDrafts(const KMFolder * folder)
   const KPIM::IdentityManager * im = identityManager();
   for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).drafts() == idString ) return true;
+  return false;
+}
+
+bool KMKernel::folderIsTemplates(const KMFolder * folder)
+{
+  assert( folder );
+  if ( folder == the_templatesFolder )
+    return true;
+
+  QString idString = folder->idString();
+  if ( idString.isEmpty() ) return false;
+
+  // search the identities if the folder matches the templates-folder
+  const KPIM::IdentityManager * im = identityManager();
+  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+    if ( (*it).templates() == idString ) return true;
   return false;
 }
 

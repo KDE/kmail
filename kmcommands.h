@@ -286,6 +286,17 @@ private:
   virtual Result execute();
 };
 
+class KDE_EXPORT KMUseTemplateCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMUseTemplateCommand( QWidget *parent, KMMessage *msg );
+
+private:
+  virtual Result execute();
+};
+
 class KDE_EXPORT KMShowMsgSrcCommand : public KMCommand
 {
   Q_OBJECT
@@ -505,6 +516,57 @@ public:
 
 private:
   virtual Result execute();
+};
+
+class KDE_EXPORT KMCustomReplyToCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
+                          const QString &selection,
+                          const QString &tmpl );
+
+private:
+  virtual Result execute();
+
+private:
+  QString mSelection;
+  QString mTemplate;
+};
+
+class KDE_EXPORT KMCustomReplyAllToCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMCustomReplyAllToCommand( QWidget *parent, KMMessage *msg,
+                          const QString &selection,
+                          const QString &tmpl );
+
+private:
+  virtual Result execute();
+
+private:
+  QString mSelection;
+  QString mTemplate;
+};
+
+class KDE_EXPORT KMCustomForwardCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMCustomForwardCommand( QWidget *parent, const QList<KMMsgBase *> &msgList,
+                          uint identity, const QString &tmpl );
+  KMCustomForwardCommand( QWidget *parent, KMMessage * msg,
+                          uint identity, const QString &tmpl );
+
+private:
+  virtual Result execute();
+
+  uint mIdentity;
+  QString mTemplate;
 };
 
 class KDE_EXPORT KMPrintCommand : public KMCommand

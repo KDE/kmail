@@ -215,6 +215,7 @@ public:
                               bool overwrite = false );
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsDrafts(const KMFolder *);
+  bool folderIsTemplates(const KMFolder *);
   bool folderIsTrash(KMFolder *);
   /**
    * Returns true if the folder is one of the sent-mail folders.
@@ -233,6 +234,7 @@ public:
   KMFolder *sentFolder() { return the_sentFolder; }
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
+  KMFolder *templatesFolder() { return the_templatesFolder; }
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
@@ -377,6 +379,7 @@ private:
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
+  KMFolder *the_templatesFolder;
 
   KMFolderMgr *the_folderMgr;
   KMFolderMgr *the_imapFolderMgr;

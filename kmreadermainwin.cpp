@@ -239,6 +239,9 @@ void KMReaderMainWin::setupAccel()
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
+  mSaveAtmAction  = new KAction(KIcon("attach"), i18n("Save A&ttachments..."), actionCollection() );
+  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
+
   QAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = KShortcut(closeAction->shortcuts());
   closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
@@ -371,9 +374,14 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
       return;
     }
 
-    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() || aMsg.parent()->isDrafts() ) ) ) {
-      // add the reply and forward actions only if we are not in a sent-mail
-      // or drafts folder
+    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
+				aMsg.parent()->isDrafts() ||
+				aMsg.parent()->isTemplates() ) ) ) {
+      // add the reply and forward actions only if we are not in a sent-mail,
+      // drafts or templates folder
+      //
+      // FIXME: needs custom templates added to menu
+      // (see KMMainWidget::updateCustomTemplateMenus)
       menu->addAction( mReplyActionMenu );
       menu->addAction( mForwardActionMenu );
       menu->addSeparator();
@@ -391,9 +399,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     menu->addSeparator();
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );
-    QAction* act = menu->addAction( i18n("Save Attachments...") );
-    connect(act, SIGNAL(triggered(bool)),
-            mReaderWin, SLOT(slotSaveAttachments()) );
+    menu->addAction( mSaveAtmAction );
   }
   menu->exec(aPoint, 0);
   delete menu;

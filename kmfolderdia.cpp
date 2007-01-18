@@ -75,6 +75,9 @@
 #include <q3buttongroup.h>
 #include <QRadioButton>
 
+#include "templatesconfiguration.h"
+#include "templatesconfiguration_kfg.h"
+ 
 #include "kmfolderdia.moc"
 
 using namespace KMail;
@@ -126,6 +129,14 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   addPage( box, i18n("General") );
   tab = new FolderDiaGeneralTab( this, aName, box );
   addTab( tab );
+
+  if (!mFolder->isSystemFolder() || mFolder->isMainInbox())
+  {							// not for special folders
+    box = new KVBox( this );
+    addPage( box, i18n("Templates") );
+    tab = new FolderDiaTemplatesTab( this, aName, box );
+    addTab( tab );
+  }
 
   KMFolder* refFolder = mFolder ? mFolder : mParentFolder;
   KMFolderType folderType = refFolder ? refFolder->folderType() : KMFolderTypeUnknown;
@@ -676,4 +687,94 @@ bool FolderDiaGeneralTab::save()
 void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
 {
     mUnreadIconButton->setIcon( icon );
+}
+
+//----------------------------------------------------------------------------
+KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
+                                                 const QString& aName,
+                                                 QWidget* parent, const char* name )
+  : FolderDiaTab( parent, name ), mDlg( dlg )
+{
+
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
+       mDlg->folder()->folderType() != KMFolderTypeImap &&
+       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
+
+  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  
+  mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
+  topLayout->addWidget( mCustom );
+  
+  mWidget = new TemplatesConfiguration( this , "folder-templates" );
+  mWidget->setEnabled( false );
+  topLayout->addWidget( mWidget );
+  
+  QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
+  mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this );
+  mCopyGlobal->setEnabled( false );
+  btns->addWidget( mCopyGlobal );
+  
+  connect( mCustom, SIGNAL(toggled(bool)),
+        mWidget, SLOT(setEnabled(bool)) );
+  connect( mCustom, SIGNAL(toggled(bool)),
+        mCopyGlobal, SLOT(setEnabled(bool)) );
+  
+  connect( mCopyGlobal, SIGNAL(clicked()),
+        this, SLOT(slotCopyGlobal()) );
+
+  initializeWithValuesFromFolder( mDlg->folder() );
+
+  connect( mWidget, SIGNAL( changed() ),
+           this, SLOT( slotEmitChanged( void ) ) );
+}
+
+void FolderDiaTemplatesTab::load()
+{
+  
+}
+
+void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
+  if ( !folder )
+    return;
+  
+  mFolder = folder;
+
+  QString fid = folder->idString();
+  
+  Templates t( fid );
+
+  mCustom->setChecked(t.useCustomTemplates());
+  
+  mIdentity = folder->identity();
+  
+  mWidget->loadFromFolder( fid, mIdentity );
+}
+
+//-----------------------------------------------------------------------------
+bool FolderDiaTemplatesTab::save()
+{
+  KMFolder* folder = mDlg->folder();
+  
+  QString fid = folder->idString();
+  Templates t(fid);
+  
+  kdDebug() << "use custom templates for folder " << fid << ": " << mCustom->isChecked() << endl;
+  t.setUseCustomTemplates(mCustom->isChecked());
+  t.writeConfig();
+  
+  mWidget->saveToFolder(fid);
+  
+  return true;
+}
+
+
+void FolderDiaTemplatesTab::slotEmitChanged() {}
+
+void FolderDiaTemplatesTab::slotCopyGlobal() {
+  if ( mIdentity ) {
+    mWidget->loadFromIdentity( mIdentity );
+  }
+  else {
+    mWidget->loadFromGlobal();
+  }
 }

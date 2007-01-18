@@ -114,6 +114,7 @@ using KMail::SecondaryWindow;
 #include "redirectdialog.h"
 using KMail::RedirectDialog;
 #include "util.h"
+#include "templateparser.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -656,11 +657,12 @@ KMCommand::Result KMEditMsgCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
-      !kmkernel->folderIsDraftOrOutbox( msg->parent() ))
+      ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
+	!kmkernel->folderIsTemplates( msg->parent() ) ) )
     return Failed;
 
   // Remember the old parent, we need it a bit further down to be able
-  // to put the unchanged messsage back in the drafts folder if the nth
+  // to put the unchanged messsage back in the original folder if the nth
   // edit is discarded, for n > 1.
   KMFolder *parent = msg->parent();
   if ( parent )
@@ -670,6 +672,32 @@ KMCommand::Result KMEditMsgCommand::execute()
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.
   win->setMsg(msg, false, true);
   win->setFolder( parent );
+  win->show();
+
+  return OK;
+}
+
+
+KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
+  :KMCommand( parent, msg )
+{
+}
+
+KMCommand::Result KMUseTemplateCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->parent() ||
+       !kmkernel->folderIsTemplates( msg->parent() ) )
+    return Failed;
+
+  // Take a copy of the original message, which remains unchanged.
+  KMMessage *newMsg = new KMMessage;
+  newMsg->setComplete( msg->isComplete() );
+  newMsg->fromString( msg->asString() );
+
+  KMail::Composer *win = KMail::makeComposer();
+  newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+  win->setMsg( newMsg, FALSE, TRUE );
   win->show();
 
   return OK;
@@ -1219,7 +1247,7 @@ KMCommand::Result KMForwardCommand::execute()
       return OK;
     } else {            // NO MIME DIGEST, Multiple forward
       uint id = 0;
-      Q3CString msgText = "";
+      // Q3CString msgText = "";
       QList<KMMessage*> linklist;
       QList<KMMessage*>::const_iterator it;
       for ( it = msgList.begin(); it != msgList.end(); it++ ) {
@@ -1227,7 +1255,7 @@ KMCommand::Result KMForwardCommand::execute()
         if (id == 0)
           id = (*it)->headerField("X-KMail-Identity").trimmed().toUInt();
 
-        msgText += (*it)->createForwardBody();
+        // msgText += (*it)->createForwardBody();
         linklist.append( (*it) );
       }
       if ( id == 0 )
@@ -1236,11 +1264,19 @@ KMCommand::Result KMForwardCommand::execute()
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->setCharset("utf-8");
-      fwdMsg->setBody(msgText);
+      // fwdMsg->setBody(msgText);
 
-      for ( it = linklist.begin(); it != linklist.end(); it++ )
+      for ( QList<KMMessage*>::const_iterator it2 = linklist.begin();
+	    it2 != linklist.end(); ++it2 )
+      {
+	KMMessage *msg = *it;
+	TemplateParser parser( fwdMsg, TemplateParser::Forward,
+			       msg->body(), false, false, false, false);
+        parser.process( msg, 0, true );
+ 
         fwdMsg->link( (*it), MessageStatus::statusForwarded() );
-
+      }
+    
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset("");
@@ -1263,7 +1299,7 @@ KMCommand::Result KMForwardCommand::execute()
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
     win->setCharset( fwdMsg->codec()->name(), true );
-    win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+    // win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
     win->show();
   }
 
@@ -1361,6 +1397,128 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
     kDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
     return Failed; // error: couldn't send
+  }
+  return OK;
+}
+
+
+KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
+                                                const QString &selection,
+                                                const QString &tmpl )
+  : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
+{
+}
+
+KMCommand::Result KMCustomReplyToCommand::execute()
+{
+  KCursorSaver busy(KBusyPtr::busy());
+  KMMessage *msg = retrievedMessage();
+  KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
+                                       false, true, false, mTemplate );
+  KMail::Composer * win = KMail::makeComposer( reply );
+  win->setCharset( msg->codec()->name(), TRUE );
+  win->setReplyFocus();
+  win->show();
+
+  return OK;
+}
+
+
+KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, KMMessage *msg,
+                                                      const QString &selection,
+                                                      const QString &tmpl )
+  : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl )
+{
+}
+
+KMCommand::Result KMCustomReplyAllToCommand::execute()
+{
+  KCursorSaver busy(KBusyPtr::busy());
+  KMMessage *msg = retrievedMessage();
+  KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
+                                       false, true, false, mTemplate );
+  KMail::Composer * win = KMail::makeComposer( reply );
+  win->setCharset( msg->codec()->name(), TRUE );
+  win->setReplyFocus();
+  win->show();
+
+  return OK;
+}
+
+
+KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
+  const QList<KMMsgBase*> &msgList, uint identity, const QString &tmpl )
+  : KMCommand( parent, msgList ),
+    mIdentity( identity ), mTemplate( tmpl )
+{
+}
+
+KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
+  KMMessage *msg, uint identity, const QString &tmpl )
+  : KMCommand( parent, msg ),
+    mIdentity( identity ), mTemplate( tmpl )
+{
+}
+
+KMCommand::Result KMCustomForwardCommand::execute()
+{
+  QList<KMMessage*> msgList = retrievedMsgs();
+
+  if (msgList.count() >= 2) { // Multiple forward
+
+    uint id = 0;
+    // QCString msgText = "";
+    QList<KMMessage*> linklist;
+    for ( QList<KMMessage*>::const_iterator it = msgList.begin(); it != msgList.end(); ++it )
+    {
+      KMMessage *msg = *it;
+      // set the identity
+      if (id == 0)
+        id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
+
+      // msgText += msg->createForwardBody();
+      linklist.append( msg );
+    }
+    if ( id == 0 )
+      id = mIdentity; // use folder identity if no message had an id set
+    KMMessage *fwdMsg = new KMMessage;
+    fwdMsg->initHeader( id );
+    fwdMsg->setAutomaticFields( true );
+    fwdMsg->setCharset( "utf-8" );
+    // fwdMsg->setBody( msgText );
+
+    for ( QList<KMMessage*>::const_iterator it = linklist.begin(); it != linklist.end(); ++it )
+    {
+      KMMessage *msg = *it;
+      TemplateParser parser( fwdMsg, TemplateParser::Forward,
+        msg->body(), false, false, false, false);
+        parser.process( msg, 0, true );
+
+      fwdMsg->link( msg, MessageStatus::statusForwarded() );
+    }
+
+    KCursorSaver busy( KBusyPtr::busy() );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+    win->setCharset("");
+    win->show();
+
+  } else { // forward a single message at most
+
+    KMMessage *msg = msgList.first();
+    if ( !msg || !msg->codec() )
+      return Failed;
+
+    KCursorSaver busy( KBusyPtr::busy() );
+    KMMessage *fwdMsg = msg->createForward( mTemplate );
+
+    uint id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
+    if ( id == 0 )
+      id = mIdentity;
+    {
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+      win->setCharset( fwdMsg->codec()->name(), true );
+      win->show();
+    }
   }
   return OK;
 }

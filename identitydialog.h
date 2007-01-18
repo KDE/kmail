@@ -40,6 +40,9 @@ class QCheckBox;
 class QComboBox;
 class QString;
 class QStringList;
+class TemplatesConfiguration;
+class KPushButton;
+
 namespace Kleo {
   class EncryptionKeyRequester;
   class SigningKeyRequester;
@@ -74,6 +77,9 @@ namespace KMail {
     /*! \reimp */
     void slotOk();
 
+    // copy default templates to identity templates
+    void slotCopyGlobal();
+
   private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
@@ -96,8 +102,13 @@ namespace KMail {
     KMail::DictionaryComboBox    *mDictionaryCombo;
     FolderRequester              *mFccCombo;
     FolderRequester              *mDraftsCombo;
+    FolderRequester              *mTemplatesCombo;
     QCheckBox                    *mTransportCheck;
     QComboBox                    *mTransportCombo; // should be a KMTransportCombo...
+    // "templates" tab:
+    TemplatesConfiguration       *mWidget;
+    QCheckBox                    *mCustom;
+    KPushButton                  *mCopyGlobal;
     // "signature" tab:
     KMail::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:

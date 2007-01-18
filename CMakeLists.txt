@@ -180,6 +180,8 @@ set(kmailprivate_LIB_SRCS
    managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp
    util.cpp
+   templateparser.cpp templatesconfiguration.cpp templatesinsertcommand.cpp
+   customtemplates.cpp
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
@@ -190,7 +192,7 @@ kde4_add_ui3_files(kmailprivate_LIB_SRCS
    signatureconfigurationdialog.ui
    )
 
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui encryptionconfigurationdialog.ui)
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui encryptionconfigurationdialog.ui templatesconfiguration_base.ui customtemplates_base.ui )
 
 #kde4_add_dcop_skels(kmailprivate_LIB_SRCS
 #   kmailIface.h
@@ -201,7 +203,7 @@ qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.kmail.xml kmkernel.h  
 
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 
-kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc )
+kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
@@ -306,7 +308,7 @@ endif(KDE4_BUILD_TESTS)
 ########### install files ###############
 
 install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_DIR})
-install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
 install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
 install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})

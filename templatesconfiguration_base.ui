@@ -1,0 +1,355 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>TemplatesConfigurationBase</class>
+ <widget class="QWidget" name="TemplatesConfigurationBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>316</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy>
+    <hsizetype>7</hsizetype>
+    <vsizetype>7</vsizetype>
+    <horstretch>3</horstretch>
+    <verstretch>3</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>TemplatesConfiguration</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>11</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <widget class="QToolBox" name="toolBox1" >
+     <property name="sizePolicy" >
+      <sizepolicy>
+       <hsizetype>7</hsizetype>
+       <vsizetype>7</vsizetype>
+       <horstretch>3</horstretch>
+       <verstretch>3</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="currentIndex" >
+      <number>3</number>
+     </property>
+     <widget class="QWidget" name="page_new" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>96</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <attribute name="label" >
+       <string>New Message</string>
+      </attribute>
+      <layout class="QHBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="Q3TextEdit" name="textEdit_new" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>7</hsizetype>
+           <vsizetype>7</vsizetype>
+           <horstretch>3</horstretch>
+           <verstretch>3</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font" >
+          <font>
+           <family>Monospace</family>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="resizePolicy" >
+          <enum>Q3ScrollView::Manual</enum>
+         </property>
+         <property name="vScrollBarMode" >
+          <enum>Q3ScrollView::Auto</enum>
+         </property>
+         <property name="hScrollBarMode" >
+          <enum>Q3ScrollView::Auto</enum>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <enum>Q3TextEdit::NoWrap</enum>
+         </property>
+         <property name="autoFormatting" >
+          <set>Q3TextEdit::AutoNone</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_reply" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>96</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <attribute name="label" >
+       <string>Reply to Sender</string>
+      </attribute>
+      <layout class="QHBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="Q3TextEdit" name="textEdit_reply" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>3</hsizetype>
+           <vsizetype>3</vsizetype>
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <family>Monospace</family>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <enum>Q3TextEdit::NoWrap</enum>
+         </property>
+         <property name="autoFormatting" >
+          <set>Q3TextEdit::AutoNone</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_reply_all" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>96</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <attribute name="label" >
+       <string>Reply to All / Reply to List</string>
+      </attribute>
+      <layout class="QHBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="Q3TextEdit" name="textEdit_reply_all" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>3</hsizetype>
+           <vsizetype>3</vsizetype>
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <family>Monospace</family>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <enum>Q3TextEdit::NoWrap</enum>
+         </property>
+         <property name="autoFormatting" >
+          <set>Q3TextEdit::AutoNone</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_forward" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>376</width>
+        <height>118</height>
+       </rect>
+      </property>
+      <attribute name="label" >
+       <string>Forward Message</string>
+      </attribute>
+      <layout class="QHBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="Q3TextEdit" name="textEdit_forward" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>3</hsizetype>
+           <vsizetype>3</vsizetype>
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <family>Monospace</family>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <enum>Q3TextEdit::NoWrap</enum>
+         </property>
+         <property name="autoFormatting" >
+          <set>Q3TextEdit::AutoNone</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="mHelp" />
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="TemplatesInsertCommand" name="mInsertCommand" />
+     </item>
+     <item>
+      <widget class="QLabel" name="textLabel1" >
+       <property name="sizePolicy" >
+        <sizepolicy>
+         <hsizetype>5</hsizetype>
+         <vsizetype>5</vsizetype>
+         <horstretch>2</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text" >
+        <string>&amp;Quote indicator:</string>
+       </property>
+       <property name="alignment" >
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="buddy" >
+        <cstring>lineEdit_quote</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_quote" />
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction></pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>TemplatesInsertCommand</class>
+   <extends>QWidget</extends>
+   <header>templatesinsertcommand.h</header>
+   <container>0</container>
+   <pixmap></pixmap>
+  </customwidget>
+  <customwidget>
+   <class>Q3TextEdit</class>
+   <extends>Q3Frame</extends>
+   <header>q3textedit.h</header>
+   <container>0</container>
+   <pixmap></pixmap>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
