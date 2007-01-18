@@ -27,7 +27,7 @@
     <method name="timeOfLastMessageCountChange">
       <arg type="i" direction="out"/>
     </method>
-    <method name="dcopAddMessage">
+    <method name="dbusAddMessage">
       <arg type="i" direction="out"/>
       <arg name="foldername" type="s" direction="in"/>
       <arg name="messagefile" type="s" direction="in"/>
@@ -45,8 +45,8 @@
     <method name="debugScheduler">
       <arg type="s" direction="out"/>
     </method>
-    <method name="dcopResetAddMessage"/>
-    <method name="dcopAddMessage_fastImport">
+    <method name="dbusResetAddMessage"/>
+    <method name="dbusAddMessage_fastImport">
       <arg type="i" direction="out"/>
       <arg name="foldername" type="s" direction="in"/>
       <arg name="messagefile" type="s" direction="in"/>

@@ -126,15 +126,15 @@ public:
 
   void openReader() { openReader( false ); }
 
-  int dcopAddMessage(const QString & foldername, const QString & messagefile,
+  int dbusAddMessage(const QString & foldername, const QString & messagefile,
                      const QString & MsgStatusFlags = QString());
-  int dcopAddMessage(const QString & foldername, const KUrl & messagefile,
+  int dbusAddMessage(const QString & foldername, const KUrl & messagefile,
                      const QString & MsgStatusFlags = QString());
-  void dcopResetAddMessage();
+  void dbusResetAddMessage();
   /** add messages without rejecting duplicates */
-  int dcopAddMessage_fastImport(const QString & foldername, const QString & messagefile,
+  int dbusAddMessage_fastImport(const QString & foldername, const QString & messagefile,
                                 const QString & MsgStatusFlags = QString());
-  int dcopAddMessage_fastImport(const QString & foldername, const KUrl & messagefile,
+  int dbusAddMessage_fastImport(const QString & foldername, const KUrl & messagefile,
                                 const QString & MsgStatusFlags = QString());
 
   QStringList folderList() const;

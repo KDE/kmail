@@ -588,16 +588,16 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   return 1;
 }
 
-int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrlString,
+int KMKernel::dbusAddMessage( const QString & foldername, const QString & msgUrlString,
                               const QString & MsgStatusFlags)
 {
-  return dcopAddMessage(foldername, KUrl(msgUrlString), MsgStatusFlags);
+  return dbusAddMessage(foldername, KUrl(msgUrlString), MsgStatusFlags);
 }
 
-int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
+int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
                               const QString & MsgStatusFlags)
 {
-  kDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
+  kDebug(5006) << "KMKernel::dbusAddMessage called" << endl;
 
   if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
@@ -757,26 +757,26 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KUrl & msgUrl,
   return retval;
 }
 
-void KMKernel::dcopResetAddMessage()
+void KMKernel::dbusResetAddMessage()
 {
   mAddMessageMsgIds.clear();
   mAddMessageLastFolder.clear();
 }
 
-int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
+int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
                                          const QString & msgUrlString,
                                          const QString & MsgStatusFlags)
 {
-  return dcopAddMessage_fastImport(foldername, KUrl(msgUrlString), MsgStatusFlags);
+  return dbusAddMessage_fastImport(foldername, KUrl(msgUrlString), MsgStatusFlags);
 }
 
-int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
+int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
                                          const KUrl & msgUrl,
                                          const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
   // search for already existing emails.
-  kDebug(5006) << "KMKernel::dcopAddMessage_fastImport called" << endl;
+  kDebug(5006) << "KMKernel::dbusAddMessage_fastImport called" << endl;
 
   if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
