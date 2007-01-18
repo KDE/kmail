@@ -308,7 +308,7 @@ endif(KDE4_BUILD_TESTS)
 ########### install files ###############
 
 install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_DIR})
-install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg templatesconfiguration_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
 install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
 install( FILES kmail_config_misc.desktop kmail_config_appearance.desktop     kmail_config_identity.desktop kmail_config_accounts.desktop kmail_config_composer.desktop     kmail_config_security.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
