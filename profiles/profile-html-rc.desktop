@@ -1,10 +1,11 @@
 [KMail Profile]
 Name=HTML
+Name[ar]=لغة علامات النص الفائق
 Name[bg]=Поддръжка на HTML
 Name[fa]=زنگام
 Comment=Standard profile with HTML preview enabled - less secure!
 Comment[af]=Standaard profiel, met HTML voorskou geaktiveer. Dis minder veilig!
-Comment[ar]=تشكيل قياسي مع تمكين استعراض HTML - أقل أمانا!
+Comment[ar]=الشاكلة المعيارية مع تمكين معاينة لغة  علامة النص الفائق HTML - أقل أمناً !
 Comment[az]=HTML nümayişli standard - ən az etibarlı!
 Comment[bg]=Стандартен профил с поддръжка на HTML в писмата (по-малко сигурен)
 Comment[bs]=Standardni profil sa omogućenim HTML pregledom - manje siguran!

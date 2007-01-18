@@ -13,6 +13,7 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Appearance
+Name[ar]=المظهر
 Name[be]=Зьнешні выгляд
 Name[bg]=Външен вид
 Name[br]=Neuziadur
