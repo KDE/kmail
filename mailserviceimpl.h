@@ -30,39 +30,24 @@
 #ifndef MAILSERVICEIMPL_H
 #define MAILSERVICEIMPL_H
 
-#include "interfaces/MailTransportServiceIface.h"
-
 class QByteArray;
 class QString;
 class KUrl;
-
+#include <QObject>
 
 namespace KMail {
 
-  class MailServiceImpl : virtual public KPim::MailTransportServiceIface
+  class MailServiceImpl : public QObject 
   {
+    Q_OBJECT
   public:
     MailServiceImpl();
     bool sendMessage( const QString& from, const QString& to,
                       const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
-                      const KUrl::List& attachments );
-
-    // FIXME KDE 4.0: Remove this.
-    // (cf. libkdepim/interfaces/MailTransportServiceIface.h)
-    bool sendMessage( const QString& to,
-                      const QString& cc, const QString& bcc,
-                      const QString& subject, const QString& body,
-                      const KUrl::List& attachments );
+                      const QStringList& attachments );
 
     bool sendMessage( const QString& from, const QString& to,
-                      const QString& cc, const QString& bcc,
-                      const QString& subject, const QString& body,
-                      const QByteArray& attachment );
-
-    // FIXME KDE 4.0: Remove this.
-    // (cf. libkdepim/interfaces/MailTransportServiceIface.h)
-    bool sendMessage( const QString& to,
                       const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const QByteArray& attachment );

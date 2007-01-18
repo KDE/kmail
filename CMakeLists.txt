@@ -132,7 +132,7 @@ set(kmailprivate_LIB_SRCS
    subscriptiondialog.cpp
    kmailicalifaceimpl.cpp
    aboutdata.cpp
-#   mailserviceimpl.cpp
+   mailserviceimpl.cpp
    attachmentlistview.cpp
    kmedit.cpp
    kmlineeditspell.cpp
@@ -185,6 +185,7 @@ set(kmailprivate_LIB_SRCS
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)  
 
 kde4_automoc(${kmailprivate_LIB_SRCS})
 

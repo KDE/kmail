@@ -44,7 +44,7 @@ using KRecentAddress::RecentAddresses;
 
 #include <kwin.h>
 #include "kmailicalifaceimpl.h"
-//#include "mailserviceimpl.h"
+#include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
@@ -161,10 +161,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   } else {
     netCodec = QTextCodec::codecForLocale();
   }
+  mMailService =  new MailServiceImpl();
 #ifdef __GNUC__
 #warning Port me to DBus!
 #endif
-/*  mMailService =  new MailServiceImpl();
+  /*
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );*/
