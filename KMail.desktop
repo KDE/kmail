@@ -15,6 +15,7 @@ Exec=kmail -caption "%c" %i %m
 Icon=kmail
 DocPath=kmail/index.html
 GenericName=Mail Client
+GenericName[af]=E-pos kliënt
 GenericName[ar]=زبون البريد
 GenericName[az]=Poçt Alıcısı
 GenericName[be]=Паштовы кліент

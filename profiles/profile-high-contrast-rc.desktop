@@ -1,5 +1,6 @@
 [KMail Profile]
 Name=High Contrast
+Name[af]=Hoë kontras
 Name[bg]=Висок контраст
 Name[br]=Dargemm huel
 Name[bs]=Visoki kontrast
@@ -12,7 +13,7 @@ Name[el]=Μεγάλη αντίθεση
 Name[es]=Alto contraste
 Name[et]=Suur kontrast
 Name[eu]=Kontraste altua
-Name[fa]=سایه‌روشن زیاد
+Name[fa]=سایه روشن زیاد
 Name[fi]=Korkea kontrasti
 Name[fr]=Contraste élevé
 Name[ga]=Ardchodarsnacht
@@ -48,6 +49,7 @@ Name[uk]=Висока контрастність
 Name[zh_CN]=高对比
 Name[zh_TW]=高反差
 Comment=Increased font sizes for visually impaired users
+Comment[af]=Vergroot die skrif tipe vir visueel gestremde gebruikers
 Comment[ar]=محارف بقياسات أكبر للمستخدمين ذوي البصر الضعيف
 Comment[az]=Görmə pozuqluğu olanlar üçün böyüdülmüş yazı növləri
 Comment[bg]=Увеличаване на размера на шрифта за потребители със зрителни увреждания

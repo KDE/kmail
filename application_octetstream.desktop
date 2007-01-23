@@ -1,6 +1,7 @@
 [Misc]
 Encoding=UTF-8
 Name=Application Octetstream
+Name[af]=Application/Octet-stream
 Name[ca]=Aplicació Octetstream
 Name[cs]=Aplikace octetstream
 Name[da]=Program oktetstrøm
@@ -30,6 +31,7 @@ Name[tg]=Миқдори зиёди бинарии барномот
 Name[tr]=Uygulama Sekizli Akışı
 Name[zh_CN]=应用程序 Octetstream
 Comment=A bodypart formatter plugin for application/octet-stream
+Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
 Comment[bg]=Приставка за форматиране на двоични данни
 Comment[bs]=Dodatak za formatiranje tijela poruke za application/octet-stream
 Comment[ca]=Un endollable formatador del cos per application/octet-stream

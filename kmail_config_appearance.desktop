@@ -13,6 +13,7 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Appearance
+Name[ar]=المظهر
 Name[be]=Зьнешні выгляд
 Name[bg]=Външен вид
 Name[br]=Neuziadur
@@ -63,6 +64,7 @@ Name[uk]=Вигляд
 Name[uz]=Кўриниши
 Name[zh_CN]=外观
 Comment=Customize Visual Appearance
+Comment[af]=Pasmaak die visuele voorkoms
 Comment[bg]=Настройки на външния вид
 Comment[bs]=Prilagodi izgled
 Comment[ca]=Personalitza l'aparença visual

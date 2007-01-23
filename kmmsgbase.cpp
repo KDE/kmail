@@ -948,6 +948,42 @@ QString KMMsgBase::decodeRFC2231String(const QCString& _str)
   return codec->toUnicode( st );
 }
 
+QCString KMMsgBase::extractRFC2231HeaderField( const QCString &aStr, const QCString &field )
+{
+  int n=-1;
+  QCString str;
+  bool found = false;
+  while ( n<=0 || found ) {
+    QString pattern( field );
+    pattern += "[*]"; // match a literal * after the fieldname, as defined by RFC 2231
+    if ( n>=0 ) { // If n<0, check for fieldname*=..., otherwise for fieldname*n=
+      pattern += QString::number(n) + "[*]?";
+    }
+    pattern += "=";
+    
+    QRegExp fnamePart( pattern, FALSE );
+    int startPart = fnamePart.search( aStr );
+    int endPart;
+    found = ( startPart >= 0 );
+    if ( found ) {
+      startPart += fnamePart.matchedLength();
+      // Quoted values end at the ending quote
+      if ( aStr[startPart] == '"' ) {
+        startPart++; // the double quote isn't part of the filename
+        endPart = aStr.find('"', startPart) - 1;
+      }
+      else {
+        endPart = aStr.find(';', startPart) - 1;
+      }
+      if (endPart < 0)
+        endPart = 32767;
+      str += aStr.mid( startPart, endPart-startPart+1).stripWhiteSpace();
+    }
+    n++;
+  }
+  return str;
+}
+
 QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
   if (s.stripWhiteSpace().isEmpty()) return "";
   if ( utf8 )

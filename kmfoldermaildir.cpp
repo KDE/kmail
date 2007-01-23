@@ -28,6 +28,7 @@ using KMail::MaildirJob;
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
 
+#include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
 #include <stdlib.h>

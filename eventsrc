@@ -9,6 +9,7 @@ Comment[ta]=kஅஞ்சல்
 
 [new-mail-arrived]
 Name=New Mail Arrived
+Name[af]=Nuwe pos het gearriveer
 Name[ar]=وصل بريد جديد
 Name[bg]=Имате ново писмо
 Name[br]=Deuet eo ur postel nevez
@@ -56,6 +57,7 @@ Name[uz]=Янги хат келди
 Name[zh_CN]=新邮件到达
 Name[zh_TW]=您有新郵件
 Comment=New mail arrived
+Comment[af]=Nuwe pos het gearriveer
 Comment[ar]=وصل بريد جديد
 Comment[bg]=Имате ново писмо
 Comment[br]=Deuet eo ur postel nevez

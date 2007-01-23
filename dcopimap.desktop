@@ -3,6 +3,7 @@ Encoding=UTF-8
 Type=ServiceType
 X-KDE-ServiceType=DCOP/ResourceBackend/IMAP
 Comment=Mail program with a DCOP interface
+Comment[af]=E-pos program met 'n DCOP koppelvlak
 Comment[be]=Паштовая праграма з DCOP інтэрфэйсам
 Comment[bg]=Клиент на електронна поща за КДЕ
 Comment[bs]=Mail program sa DCOP interfejsom

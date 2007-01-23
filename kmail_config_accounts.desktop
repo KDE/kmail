@@ -13,6 +13,7 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Accounts
+Name[af]=Rekeninge
 Name[ar]=الحسابات
 Name[be]=Рахункі
 Name[bg]=Сметки
@@ -62,6 +63,7 @@ Name[uz]=Ҳисоблар
 Name[zh_CN]=账户
 Name[zh_TW]=帳號
 Comment=Setup for Sending and Receiving Messages
+Comment[af]=Opstel vir die stuur en ontvang van boodskappe
 Comment[ar]=تعيينات إرسال و إستقبال الرسائل
 Comment[bg]=Настройки на мрежата, сървърите и сметките
 Comment[bs]=Postavke za slanje i prijem poruka

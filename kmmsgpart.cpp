@@ -504,41 +504,44 @@ void KMMessagePart::setContentDescription(const QString &aStr)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::fileName(void) const
 {
-  bool bRFC2231encoded = false;
-
-  // search the start of the filename
-  int startOfFilename = mContentDisposition.find("filename*=", 0, FALSE);
-  if (startOfFilename >= 0) {
-    bRFC2231encoded = true;
-    startOfFilename += 10;
-  }
-  else {
-    startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
+  QCString str;
+  
+  // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231) 
+  // in the Content-Disposision
+  if ( mContentDisposition.contains( "filename*", FALSE ) ) {
+  
+    // It's RFC 2231 encoded, so extract the file name with the 2231 method
+    str = KMMsgBase::extractRFC2231HeaderField( mContentDisposition, "filename" );
+    return KMMsgBase::decodeRFC2231String(str);
+  
+  } else {
+    
+    // Standard RFC 2047-encoded
+    // search the start of the filename
+    int startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
     if (startOfFilename < 0)
       return QString::null;
     startOfFilename += 9;
-  }
 
-  // search the end of the filename
-  int endOfFilename;
-  if ( '"' == mContentDisposition[startOfFilename] ) {
-    startOfFilename++; // the double quote isn't part of the filename
-    endOfFilename = mContentDisposition.find('"', startOfFilename) - 1;
-  }
-  else {
-    endOfFilename = mContentDisposition.find(';', startOfFilename) - 1;
-  }
-  if (endOfFilename < 0)
-    endOfFilename = 32767;
+    // search the end of the filename
+    int endOfFilename;
+    if ( '"' == mContentDisposition[startOfFilename] ) {
+      startOfFilename++; // the double quote isn't part of the filename
+      endOfFilename = mContentDisposition.find('"', startOfFilename) - 1;
+    }
+    else {
+      endOfFilename = mContentDisposition.find(';', startOfFilename) - 1;
+    }
+    if (endOfFilename < 0)
+      endOfFilename = 32767;
 
-  const QCString str = mContentDisposition.mid(startOfFilename,
+    const QCString str = mContentDisposition.mid(startOfFilename,
                                 endOfFilename-startOfFilename+1)
                            .stripWhiteSpace();
-
-  if (bRFC2231encoded)
-    return KMMsgBase::decodeRFC2231String(str);
-  else
     return KMMsgBase::decodeRFC2047String(str, charset());
+  }
+  
+  return QString::null;
 }
 
 

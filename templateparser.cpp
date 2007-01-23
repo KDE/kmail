@@ -364,7 +364,6 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "TEXT" );
         if ( mOrigMsg ) {
           QString quote = mOrigMsg->asPlainText( false, mAllowDecryption );
-          kdDebug() << "TEXT: " << quote << endl;
           body.append( quote );
         }
 
@@ -659,53 +658,50 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "DATEEN" );
         QDateTime date = QDateTime::currentDateTime();
         KLocale locale( "C" );
-        QString str = QString( "%1, %2 %3, %4" )
-          .arg(locale.calendar()->weekDayName(date.date(), false) )
-          .arg(locale.calendar()->monthName(date.date(), false) )
-          .arg(date.date().day() )
-          .arg(date.date().year() );
+        QString str = locale.formatDate( date.date(), false );
         body.append( str );
 
       } else if ( cmd.startsWith( "DATESHORT" ) ) {
         kdDebug() << "Command: DATESHORT" << endl;
         i += strlen( "DATESHORT" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = date.date().toString(Qt::LocalDate);
+        QString str = KGlobal::locale()->formatDate( date.date(), true );
         body.append( str );
 
       } else if ( cmd.startsWith( "DATE" ) ) {
         kdDebug() << "Command: DATE" << endl;
         i += strlen( "DATE" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = date.date().toString(Qt::TextDate);
+        QString str = KGlobal::locale()->formatDate( date.date(), false );
         body.append( str );
 
       } else if ( cmd.startsWith( "DOW" ) ) {
         kdDebug() << "Command: DOW" << endl;
         i += strlen( "DOW" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = QDate::longDayName(date.date().dayOfWeek() );
+        QString str = KGlobal::locale()->calendar()->weekDayName( date.date(), false );
         body.append( str );
 
       } else if ( cmd.startsWith( "TIMELONGEN" ) ) {
         kdDebug() << "Command: TIMELONGEN" << endl;
         i += strlen( "TIMELONGEN" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = date.time().toString( "hh:mm:ss AP" );
+        KLocale locale( "C");
+        QString str = locale.formatTime( date.time(), true );
         body.append( str );
 
       } else if ( cmd.startsWith( "TIMELONG" ) ) {
         kdDebug() << "Command: TIMELONG" << endl;
         i += strlen( "TIMELONG" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = date.time().toString(Qt::TextDate);
+        QString str = KGlobal::locale()->formatTime( date.time(), true );
         body.append( str );
 
       } else if ( cmd.startsWith( "TIME" ) ) {
         kdDebug() << "Command: TIME" << endl;
         i += strlen( "TIME" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = date.time().toString(Qt::LocalDate);
+        QString str = KGlobal::locale()->formatTime( date.time(), false );
         body.append( str );
 
       } else if ( cmd.startsWith( "ODATEEN" ) ) {
@@ -715,11 +711,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
           KLocale locale( "C");
-          QString str = QString( "%1, %2 %3, %4")
-            .arg(locale.calendar()->weekDayName(date.date(), false) )
-            .arg(locale.calendar()->monthName(date.date(), false) )
-            .arg(date.date().day() )
-            .arg(date.date().year() );
+          QString str = locale.formatDate( date.date(), false );
           body.append( str );
         }
 
@@ -729,7 +721,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = date.date().toString(Qt::LocalDate);
+          QString str = KGlobal::locale()->formatDate( date.date(), true );
           body.append( str );
         }
 
@@ -739,7 +731,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = date.date().toString(Qt::TextDate);
+          QString str = KGlobal::locale()->formatDate( date.date(), false );
           body.append( str );
         }
 
@@ -749,7 +741,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = QDate::longDayName(date.date().dayOfWeek() );
+          QString str = KGlobal::locale()->calendar()->weekDayName( date.date(), false );
           body.append( str );
         }
 
@@ -759,7 +751,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = date.time().toString( "hh:mm:ss AP");
+          KLocale locale( "C");
+          QString str = locale.formatTime( date.time(), true );
           body.append( str );
         }
 
@@ -769,7 +762,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = date.time().toString(Qt::TextDate);
+          QString str = KGlobal::locale()->formatTime( date.time(), true );
           body.append( str );
         }
 
@@ -779,7 +772,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = date.time().toString( Qt::LocalDate );
+          QString str = KGlobal::locale()->formatTime( date.time(), false );
           body.append( str );
         }
 

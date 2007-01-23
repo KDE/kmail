@@ -13,6 +13,7 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Misc
+Name[af]=Allerlei
 Name[be]=Рознае
 Name[bg]=Разни
 Name[br]=A bep seurt
@@ -61,6 +62,7 @@ Name[uz]=Ҳар хил
 Name[zh_CN]=杂项
 Name[zh_TW]=其他
 Comment=Settings that don't fit elsewhere
+Comment[af]=Opstelling wat nêrens anders pas nie
 Comment[bg]=Разни настройки
 Comment[bs]=Postavke koje ne spadaju nigdje drugo
 Comment[ca]=Opcions que no van bé enlloc

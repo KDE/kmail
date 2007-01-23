@@ -13,6 +13,7 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Security
+Name[af]=Sekuriteit
 Name[be]=Бясьпека
 Name[bg]=Сигурност
 Name[br]=Surentez
@@ -62,6 +63,7 @@ Name[uz]=Хавфсизлик
 Name[zh_CN]=安全
 Name[zh_TW]=安全性
 Comment=Security & Privacy Settings
+Comment[af]=Sekuriteit en provaatheid opstelling
 Comment[be]=Настройкі бясьпекі і прыватнасьці
 Comment[bg]=Настройки на сигурността
 Comment[br]=Kefluniadur surentez ar buhez prevez

@@ -1,5 +1,7 @@
 [KMail Profile]
 Name=Most Secure
+Name[af]=Veiligste
+Name[ar]=الأكثر آمن
 Name[bg]=Сигурност
 Name[bs]=Najsigurniji
 Name[ca]=Més segur
@@ -48,6 +50,7 @@ Name[uz]=Жуда хавфсиз
 Name[zh_CN]=最安全
 Name[zh_TW]=最安全
 Comment=Sets all necessary options to achieve maximum security
+Comment[af]=Stel al die nodige opsies om die maksimum sekuriteit te hê
 Comment[bg]=Режим, в който всички настройки за сигурност за включени
 Comment[bs]=Postavlja sve potrebne opcije radi maksimalne sigurnosti
 Comment[ca]=Estableix totes les opcions necessàries per aconseguir una seguretat màxima

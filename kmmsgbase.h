@@ -355,6 +355,11 @@ public:
 
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String(const QCString& aStr);
+  /** Extract a given param from the RFC2231-encoded header field, in particular
+      concatenate possibly multiple entries, which are given as paramname*0=..;
+      paramname*1=..; ... or paramname*0*=..; paramname*1*=..; ... and return 
+      their value as one string. That string will still be encoded */
+  static QCString extractRFC2231HeaderField( const QCString &aStr, const QCString &field );
 
   /** Calculate the base64 encoded md5sum (sans the trailing equal
       signs). If @p utf8 is false, uses QString::latin1() to calculate
