@@ -264,6 +264,9 @@ void KMReaderMainWin::setupAccel()
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
 
+  mSelectAllAction = KStdAction::selectAll( mReaderWin, SLOT(selectAll()), actionCollection(), "mark_all_text");
+  mCopyAction = KStdAction::copy( mReaderWin, SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
+
   createGUI( "kmreadermainwin.rc" );
   //menuBar()->hide();
   //toolBar( "mainToolBar" )->hide();
@@ -319,6 +322,11 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     menu->insertSeparator();
     mReaderWin->toggleFixFontAction()->plug( menu );
     mReaderWin->viewSourceAction()->plug( menu );
+
+    menu->insertSeparator();
+    mSelectAllAction->plug( menu );
+    mCopyAction->plug( menu );
+    menu->insertSeparator();
 
     mPrintAction->plug( menu );
     menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );

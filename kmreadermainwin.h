@@ -63,6 +63,7 @@ private:
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
           *mReplyListAction, *mForwardAction,
           *mForwardAttachedAction, *mRedirectAction, *mBounceAction;
+  KAction *mCopyAction, *mSelectAllAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
 
