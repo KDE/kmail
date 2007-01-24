@@ -2071,6 +2071,11 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mThreadStatusMenu->plug( menu );
     }
 
+    menu->insertSeparator();
+    mSelectAllTextAction->plug( menu );
+    mCopyMsgTextAction->plug( menu );
+    menu->insertSeparator();
+
     mCopyActionMenu->plug( menu );
     mMoveActionMenu->plug( menu );
 
@@ -2239,9 +2244,10 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
-  (void) new KAction( i18n("Select Message &Text"),
+  mSelectAllTextAction = new KAction( i18n("Select Message &Text"),
 		      CTRL+SHIFT+Key_A, mMsgView,
 		      SLOT(selectAll()), actionCollection(), "mark_all_text" );
+  mCopyMsgTextAction = KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
 
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,

@@ -440,6 +440,7 @@ private:
   KToggleAction* mTotalColumnToggle;
 
   KToggleAction *mToggleShowQuickSearchAction;
+  KAction *mSelectAllTextAction, *mCopyMsgTextAction;
 private:
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
