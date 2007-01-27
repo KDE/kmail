@@ -635,7 +635,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   //----------- now connect everything
   connect( mListWidget, SIGNAL(currentRowChanged(int)),
 	   this, SLOT(slotSelected(int)) );
-  connect( mListWidget, SIGNAL( doubleClicked ( Q3ListBoxItem * )),
+  connect( mListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
            this, SLOT( slotRename()) );
   connect( mBtnUp, SIGNAL(clicked()),
 	   this, SLOT(slotUp()) );
