@@ -634,11 +634,13 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
         mWhoField = "From";
       if ( this == kmkernel->outboxFolder() ||
            this == kmkernel->sentFolder() ||
+           this == kmkernel->templatesFolder() ||
            this == kmkernel->draftsFolder() )
         mWhoField = "To";
-    } else if ( identity.drafts() == idString()
-                || identity.fcc() == idString() )
-      // drafts or sent of the identity
+    } else if ( identity.drafts() == idString() ||
+                identity.templates() == idString() ||
+                identity.fcc() == idString() )
+      // drafts, templates or sent of the identity
       mWhoField = "To";
     else
       mWhoField = "From";
