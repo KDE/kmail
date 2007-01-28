@@ -597,7 +597,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mSelectEncodingAction->setCurrentItem( 0 );
 
   mMailToComposeAction  = new KAction(i18n("New Message To..."), this);
-  ac->addAction("mailto_compose", mMailToComposeAction );
+  ac->addAction("mail_new", mMailToComposeAction );
   connect(mMailToComposeAction, SIGNAL(triggered(bool) ), SLOT(slotMailtoCompose()));
   mMailToReplyAction  = new KAction(i18n("Reply To..."), this);
   ac->addAction("mailto_reply", mMailToReplyAction );
