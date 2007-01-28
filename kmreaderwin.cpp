@@ -636,13 +636,13 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mSelectEncodingAction->setItems( encodings );
   mSelectEncodingAction->setCurrentItem( 0 );
 
-  mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
-                                      SLOT(slotMailtoCompose()), ac,
+  mMailToComposeAction = new KAction( i18n("New Message To..."), "mail_new",
+                                      0, this, SLOT(slotMailtoCompose()), ac,
                                       "mailto_compose" );
-  mMailToReplyAction = new KAction( i18n("Reply To..."), 0, this,
-				    SLOT(slotMailtoReply()), ac,
+  mMailToReplyAction = new KAction( i18n("Reply To..."), "mail_reply",
+                                    0, this, SLOT(slotMailtoReply()), ac,
 				    "mailto_reply" );
-  mMailToForwardAction = new KAction( i18n("Forward To..."),
+  mMailToForwardAction = new KAction( i18n("Forward To..."), "mail_forward",
                                       0, this, SLOT(slotMailtoForward()), ac,
                                       "mailto_forward" );
   mAddAddrBookAction = new KAction( i18n("Add to Address Book"),
