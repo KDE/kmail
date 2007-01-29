@@ -2724,10 +2724,10 @@ void KMMainWidget::setupActions()
                                       actionCollection(), "refresh_folder" );
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction = new KAction( "foo", "edittrash", 0, this,
+  mEmptyFolderAction = new KAction( "foo" /*set in updateFolderMenu*/, "edittrash", 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  mRemoveFolderAction = new KAction( "foo", "editdelete", 0, this,
+  mRemoveFolderAction = new KAction( "foo" /*set in updateFolderMenu*/, "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
@@ -3127,6 +3127,7 @@ void KMMainWidget::setupActions()
   initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
   updateCustomTemplateMenus();
+  updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
@@ -3397,10 +3398,8 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() );
-  if(mFolder) {
-    mRemoveFolderAction->setText( mFolder->folderType() == KMFolderTypeSearch
+  mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  }
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
