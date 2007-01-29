@@ -42,6 +42,7 @@
 #include <knotification.h>
 #include <kprocess.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QDateTime>
 

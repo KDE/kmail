@@ -43,6 +43,7 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QColor>
 #include <QString>

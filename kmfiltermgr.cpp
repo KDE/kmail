@@ -22,6 +22,7 @@ using KMail::MessageProperty;
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 // other Qt headers
 #include <QRegExp>

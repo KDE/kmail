@@ -46,8 +46,8 @@ KMMainWin::KMMainWin(QWidget *)
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
-  if (kmkernel->xmlGuiInstance())
-    setInstance( kmkernel->xmlGuiInstance() );
+  if (kmkernel->xmlGuiInstance().isValid())
+    setComponentData( kmkernel->xmlGuiInstance() );
 
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );

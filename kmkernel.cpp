@@ -57,6 +57,7 @@ using KMail::MailServiceImpl;
 #include <kpassivepopup.h>
 #include <kapplication.h>
 #include <ksystemtrayicon.h>
+#include <kconfiggroup.h>
 #include <kpgp.h>
 #include <kdebug.h>
 #include <kio/netaccess.h>
@@ -138,7 +139,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   mJobScheduler = new JobScheduler( this );
 
-  mXmlGuiInstance = 0;
+  mXmlGuiInstance = KComponentData();
 
   new Kpgp::Module();
 
@@ -169,6 +170,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );*/
+
 }
 
 KMKernel::~KMKernel ()
@@ -1610,7 +1612,7 @@ bool KMKernel::transferMail( QString & destinationDir )
 
 #if 0
   // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
-  const QString kmailName = KGlobal::instance()->aboutData()()->programName();
+  const QString kmailName = KGlobal::mainComponent().aboutData()()->programName();
   QString msg;
   if ( KIO::NetAccess::exists( destinationDir, true, 0 ) ) {
     // if destinationDir exists, we need to warn about possible

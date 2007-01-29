@@ -54,6 +54,7 @@ using KMail::RenameJob;
 #include <kio/scheduler.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kconfiggroup.h>
 
 #include <QBuffer>
 #include <QList>

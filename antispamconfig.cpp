@@ -38,6 +38,7 @@
 
 #include <kstaticdeleter.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <QStringList>
 
 using namespace KMail;

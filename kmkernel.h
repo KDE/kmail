@@ -20,6 +20,7 @@
 
 #include "kmmsgbase.h"
 #include "globalsettings.h"
+#include <kcomponentdata.h>
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -65,7 +66,7 @@ namespace KPIM {
 class KMKernel;
 class KProcess;
 class KProgressDialog;
-class KInstance;
+class KComponentData;
 class QTimer;
 class KProgress;
 class KPassivePopup;
@@ -226,8 +227,8 @@ public:
    */
   KMFolder* findFolderById( const QString& idString );
 
-  KInstance *xmlGuiInstance() { return mXmlGuiInstance; }
-  void setXmlGuiInstance( KInstance *instance ) { mXmlGuiInstance = instance; }
+  const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
+  void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
@@ -418,7 +419,7 @@ private:
   static KMKernel *mySelf;
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
-  KInstance* mXmlGuiInstance;
+  KComponentData mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
 
   QTimer *mBackgroundTasksTimer;

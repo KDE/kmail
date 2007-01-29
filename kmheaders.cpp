@@ -39,6 +39,7 @@ using namespace KPIM;
 #include <klocale.h>
 #include <kdebug.h>
 #include <ktoggleaction.h>
+#include <kconfiggroup.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>

@@ -24,6 +24,7 @@
 //Added by qt3to4:
 #include <QList>
 #include <krandom.h>
+#include <kconfiggroup.h>
 
 namespace KMail {
 

@@ -117,6 +117,7 @@ using KMail::TeeHtmlWriter;
 #include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
+#include <kconfiggroup.h>
 
 #include <QClipboard>
 

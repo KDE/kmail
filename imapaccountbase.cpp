@@ -51,6 +51,7 @@ using KPIM::ProgressManager;
 #include "listjob.h"
 
 #include <kdebug.h>
+#include <kconfiggroup.h>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kmessagebox.h>

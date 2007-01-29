@@ -30,6 +30,7 @@ using namespace KPIM;
 #include <kconfig.h>
 #include <kmenu.h>
 #include <kdebug.h>
+#include <kconfiggroup.h>
 
 #include <QCursor>
 #include <QDragEnterEvent>

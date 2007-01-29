@@ -221,8 +221,8 @@ void KMReaderMainWin::slotConfigChanged()
 
 void KMReaderMainWin::setupAccel()
 {
-  if ( kmkernel->xmlGuiInstance() )
-    setInstance( kmkernel->xmlGuiInstance() );
+  if ( kmkernel->xmlGuiInstance().isValid() )
+    setComponentData( kmkernel->xmlGuiInstance() );
 
   //----- File Menu
   //mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),

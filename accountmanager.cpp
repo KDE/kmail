@@ -24,6 +24,7 @@
 
 #include <QRegExp>
 #include <krandom.h>
+#include <kconfiggroup.h>
 
 using namespace KMail;
 

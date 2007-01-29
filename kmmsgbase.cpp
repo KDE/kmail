@@ -20,6 +20,7 @@ using KMail::MessageProperty;
 #include <kascii.h>
 #include <kcodecs.h>
 #include <krfcdate.h>
+#include <kconfiggroup.h>
 
 #include <mimelib/mimepp.h>
 #include <kmime/kmime_codecs.h>

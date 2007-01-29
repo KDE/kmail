@@ -30,6 +30,7 @@
 
 #include <kcursor.h>
 #include <kprocess.h>
+#include <kconfiggroup.h>
 
 #include <kmenu.h>
 #include <kdebug.h>

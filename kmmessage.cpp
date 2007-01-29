@@ -42,6 +42,7 @@ using KMail::HeaderStrategy;
 #include <kuser.h>
 #include <kidna.h>
 #include <kresolver.h>
+#include <kconfiggroup.h>
 
 #include <QList>
 #include <QCursor>

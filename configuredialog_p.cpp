@@ -24,6 +24,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kconfiggroup.h>
 
 // Qt headers:
 #include <q3header.h>
@@ -393,7 +394,7 @@ void ProfileDialog::slotOk() {
 }
 
 
-ConfigModuleWithTabs::ConfigModuleWithTabs( KInstance *instance, QWidget *parent, const QStringList &args )
+ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModule( instance, parent, args )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this );

@@ -24,7 +24,7 @@
 #include "kcursorsaver.h"
 
 #include <klocale.h>
-#include <kinstance.h>
+#include <kcomponentdata.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
@@ -33,6 +33,7 @@
 #include <kaboutdata.h>
 #include <kiconloader.h>
 #include <kresolver.h>
+#include <kconfiggroup.h>
 
 #include <errno.h>
 #include <sys/types.h>
@@ -121,12 +122,12 @@ void checkConfigUpdates() {
 
 void lockOrDie() {
 // Check and create a lock file to prevent concurrent access to kmail files
-  QString appName = KGlobal::instance()->instanceName();
+  QString appName = KGlobal::mainComponent().componentName();
   if ( appName.isEmpty() )
     appName = "kmail";
 
   QString programName;
-  const KAboutData *about = KGlobal::instance()->aboutData();
+  const KAboutData *about = KGlobal::mainComponent().aboutData();
   if ( about )
     programName = about->programName();
   if ( programName.isEmpty() )

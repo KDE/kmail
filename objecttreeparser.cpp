@@ -82,6 +82,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
+#include <kconfiggroup.h>
 
 // other Qt headers
 #include <QApplication>

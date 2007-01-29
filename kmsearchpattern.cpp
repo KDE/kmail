@@ -20,6 +20,7 @@ using KMail::FilterLog;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <kabc/stdaddressbook.h>
 

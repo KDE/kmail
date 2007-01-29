@@ -96,6 +96,7 @@ using KMime::DateFormatter;
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
 #include <kresolver.h>
+#include <kconfiggroup.h>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -292,7 +293,7 @@ QString IdentityPage::helpAnchor() const {
   return QString::fromLatin1("configure-identity");
 }
 
-IdentityPage::IdentityPage( KInstance *instance, QWidget *parent, const QStringList &args )
+IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModule( instance, parent, args ),
     mIdentityDialog( 0 )
 {
@@ -567,7 +568,7 @@ QString AccountsPage::helpAnchor() const {
   return QString::fromLatin1("configure-accounts");
 }
 
-AccountsPage::AccountsPage( KInstance *instance, QWidget *parent, const QStringList &args )
+AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModuleWithTabs( instance, parent, args )
 {
   //
@@ -1378,7 +1379,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-  if(kmkernel->xmlGuiInstance())
+  if(kmkernel->xmlGuiInstance().isValid())
 #ifdef __GNUC__
 #warning "kde4: port it"
 #endif
@@ -1484,7 +1485,7 @@ QString AppearancePage::helpAnchor() const {
   return QString::fromLatin1("configure-appearance");
 }
 
-AppearancePage::AppearancePage( KInstance *instance, QWidget *parent, const QStringList &args )
+AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModuleWithTabs( instance, parent, args )
 {
   //
@@ -2507,7 +2508,7 @@ QString ComposerPage::helpAnchor() const {
   return QString::fromLatin1("configure-composer");
 }
 
-ComposerPage::ComposerPage( KInstance *instance, QWidget *parent, const QStringList &args )
+ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModuleWithTabs( instance, parent, args )
 {
   //
@@ -3590,7 +3591,7 @@ QString SecurityPage::helpAnchor() const {
   return QString::fromLatin1("configure-security");
 }
 
-SecurityPage::SecurityPage( KInstance *instance, QWidget *parent, const QStringList &args )
+SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModuleWithTabs( instance, parent, args )
 {
   //
@@ -4519,7 +4520,7 @@ QString MiscPage::helpAnchor() const {
   return QString::fromLatin1("configure-misc");
 }
 
-MiscPage::MiscPage( KInstance *instance, QWidget *parent, const QStringList &args )
+MiscPage::MiscPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModuleWithTabs( instance, parent, args )
 {
   mFolderTab = new FolderTab();

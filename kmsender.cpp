@@ -18,6 +18,7 @@ using namespace KMime::Types;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <assert.h>
 #include <stdio.h>

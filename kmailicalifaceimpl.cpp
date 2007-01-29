@@ -71,6 +71,7 @@ using KMail::AccountManager;
 #include <kconfig.h>
 #include <kurl.h>
 #include <ktemporaryfile.h>
+#include <kconfiggroup.h>
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );

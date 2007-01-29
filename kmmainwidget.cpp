@@ -47,6 +47,7 @@
 #include <knotification.h>
 #include <knotifyconfigwidget.h>
 #include <kstringhandler.h>
+#include <kconfiggroup.h>
 
 #include <qsignalmapper.h>
 
@@ -939,7 +940,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     summary = i18n( "New mail arrived" );
   }
 
-  if(kmkernel->xmlGuiInstance()) {
+  if(kmkernel->xmlGuiInstance().isValid()) {
 #ifdef __GNUC__
 #warning "kde4 : port ?"
 #endif

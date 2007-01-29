@@ -39,6 +39,7 @@
 #include "kmfolderdir.h"
 
 #include <kdebug.h>
+#include <kconfiggroup.h>
 
 #include <QFile>
 #include <QFileInfo>

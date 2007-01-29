@@ -26,6 +26,7 @@ using KMail::AccountManager;
 #include <kkeybutton.h>
 #include <k3listview.h>
 #include <kpushbutton.h>
+#include <kconfiggroup.h>
 #include <kvbox.h>
 
 // Qt headers:

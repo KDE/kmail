@@ -38,6 +38,7 @@ using KPIM::BroadcastStatus;
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kconfiggroup.h>
 
 using namespace KMail;
 

@@ -35,6 +35,7 @@
 #include <kwin.h>
 #include <kabc/distributionlist.h>
 #include <kmessagebox.h>
+#include <kconfiggroup.h>
 
 #include <QBoxLayout>
 #include <QComboBox>
@@ -665,7 +666,7 @@ void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
 
 void RecipientsPicker::readConfig()
 {
-  KConfig *cfg = KGlobal::config();
+  KSharedConfig::Ptr cfg = KGlobal::config();
   KConfigGroup group( cfg, "RecipientsPicker" );
   QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
   if ( !size.isEmpty() ) {
@@ -680,7 +681,7 @@ void RecipientsPicker::readConfig()
 
 void RecipientsPicker::writeConfig()
 {
-  KConfig *cfg = KGlobal::config();
+  KSharedConfig::Ptr cfg = KGlobal::config();
   KConfigGroup group( cfg, "RecipientsPicker" );
   group.writeEntry( "Size", size() );
   group.writeEntry( "CurrentCollection", mCollectionCombo->currentIndex() );

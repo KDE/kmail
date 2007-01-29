@@ -24,6 +24,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <krandom.h>
+#include <kconfiggroup.h>
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"

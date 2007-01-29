@@ -122,6 +122,7 @@ using KRecentAddress::RecentAddresses;
 #include <kzip.h>
 #include <ksavefile.h>
 #include <ktoolinvocation.h>
+#include <kconfiggroup.h>
 
 
 //Added by qt3to4:
@@ -198,8 +199,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     GlobalSettings::EnumRecipientsEditorType::Classic;
 
   mSubjectTextWasSpellChecked = false;
-  if (kmkernel->xmlGuiInstance())
-    setInstance( kmkernel->xmlGuiInstance() );
+  if (kmkernel->xmlGuiInstance().isValid())
+    setComponentData( kmkernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );

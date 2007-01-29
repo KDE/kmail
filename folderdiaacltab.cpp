@@ -53,6 +53,7 @@
 #include <kpushbutton.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kconfiggroup.h>
 
 #include <QLayout>
 #include <QLabel>

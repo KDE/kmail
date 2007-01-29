@@ -37,7 +37,7 @@
 #include <QPixmap>
 #include <kdemacros.h>
 
-class KInstance;
+class KComponentData;
 class KAboutData;
 class KMailStatusBarExtension;
 class KMKernel;

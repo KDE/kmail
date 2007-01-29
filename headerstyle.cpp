@@ -51,6 +51,7 @@ using namespace KPIM;
 #include <mimelib/headers.h>
 
 #include <kdebug.h>
+#include <kconfiggroup.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kimproxy.h>

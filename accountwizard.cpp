@@ -34,6 +34,7 @@
 #include <klistbox.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kconfiggroup.h>
 
 #include <QCheckBox>
 #include <QDir>

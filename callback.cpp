@@ -48,6 +48,7 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kconfiggroup.h>
 
 using namespace KMail;
 

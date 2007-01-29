@@ -38,6 +38,7 @@
 #include <kstatusbar.h>
 #include <kwin.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kstandardaction.h>
 #include <kpushbutton.h>
 #include <kicon.h>

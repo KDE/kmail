@@ -44,6 +44,7 @@
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <kdebug.h>
+#include <kconfiggroup.h>
 #include <kwallet.h>
 using KWallet::Wallet;
 #include <kprotocolinfo.h>

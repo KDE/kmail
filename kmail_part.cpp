@@ -66,12 +66,12 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   QDBusConnection::sessionBus().registerObject("/KMailPart", this);
 
   kDebug(5006) << "KMailPart()" << endl;
-  kDebug(5006) << "  InstanceName: " << KGlobal::instance()->instanceName() << endl;
+  kDebug(5006) << "  InstanceName: " << KGlobal::mainComponent().componentName() << endl;
 
-  setInstance(KMailFactory::instance());
+  setComponentData(KMailFactory::componentData());
 
   kDebug(5006) << "KMailPart()..." << endl;
-  kDebug(5006) << "  InstanceName: " << KGlobal::instance()->instanceName() << endl;
+  kDebug(5006) << "  InstanceName: " << KGlobal::mainComponent().componentName() << endl;
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
@@ -87,7 +87,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   //local, do the init
   KMKernel *mKMailKernel = new KMKernel();
   mKMailKernel->init();
-  mKMailKernel->setXmlGuiInstance( KMailFactory::instance() );
+  mKMailKernel->setXmlGuiInstance( KMailFactory::componentData() );
 
   // and session management
   mKMailKernel->doSessionManagement();
@@ -125,7 +125,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   kmkernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
-                                 KGlobal::config());
+                                 KGlobal::config().data());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
@@ -142,7 +142,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   setXMLFile( "kmail_part.rc" );
 #endif
 
-  KSettings::Dispatcher::self()->registerInstance( KMailFactory::instance(), mKMailKernel,
+  KSettings::Dispatcher::self()->registerComponent( KMailFactory::componentData(), mKMailKernel,
                                                    SLOT( slotConfigChanged() ) );
 }
 

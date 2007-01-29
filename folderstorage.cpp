@@ -51,6 +51,7 @@ using KMail::ListJob;
 #include <klocale.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kconfiggroup.h>
 
 //Added by qt3to4:
 #include <QFile>

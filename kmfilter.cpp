@@ -39,6 +39,7 @@ using KMail::FilterLog;
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 // other headers
 #include <assert.h>

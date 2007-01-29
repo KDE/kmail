@@ -50,6 +50,7 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <ktoolinvocation.h>
+#include <kconfiggroup.h>
 
 #include <QApplication>
 #include <qdom.h>

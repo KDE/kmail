@@ -65,6 +65,7 @@
 #include <kmime/kmime_util.h>
 #include <kmime/kmime_codecs.h>
 #include <kpgpblock.h>
+#include <kconfiggroup.h>
 
 #include <mimelib/mimepp.h>
 

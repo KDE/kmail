@@ -68,6 +68,7 @@ using KMail::ListJob;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kio/global.h>
 #include <kio/scheduler.h>
 #include <QBuffer>

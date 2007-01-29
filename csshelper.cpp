@@ -37,6 +37,7 @@
 #include "globalsettings.h"
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QColor>
 #include <QFont>

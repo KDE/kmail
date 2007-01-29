@@ -43,6 +43,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kmessagebox.h>
+#include <kconfiggroup.h>
 
 #include "newfolderdialog.h"
 #include "kmfolder.h"

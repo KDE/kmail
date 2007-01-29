@@ -49,6 +49,7 @@ using KMail::AccountManager;
 
 #include <kconfig.h>
 #include <kstandarddirs.h>
+#include <kconfiggroup.h>
 
 #include <QTimer>
 

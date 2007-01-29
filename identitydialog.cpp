@@ -70,6 +70,7 @@ using KMail::FolderRequester;
 #include <kurl.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
+#include <kconfiggroup.h>
 
 // Qt headers:
 #include <QTabWidget>
