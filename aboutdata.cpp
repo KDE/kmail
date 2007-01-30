@@ -212,7 +212,7 @@ namespace KMail {
     : KAboutData( "kmail", I18N_NOOP("KMail"),KMAIL_VERSION,
                   I18N_NOOP("KDE Email Client"), License_GPL,
                   I18N_NOOP("(c) 1997-2005, The KMail developers"), 0,
-                  "http://kmail.kde.org" )
+                  "http://kontact.kde.org/kmail/" )
   {
     using KMail::authors;
     using KMail::credits;

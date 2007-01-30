@@ -1354,7 +1354,7 @@ void KMReaderWin::displayAboutPage()
 	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
-    .arg("http://kmail.kde.org/") // KMail homepage URL
+    .arg("http://kontact.kde.org/kmail/") // KMail homepage URL
     .arg("1.8").arg("3.4"); // prior KMail and KDE version
 
   QString featureItems;
