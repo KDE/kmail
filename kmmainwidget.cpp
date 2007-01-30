@@ -796,9 +796,9 @@ void KMMainWidget::slotSearch()
   }
 
   mSearchWin->show();
-#ifdef Q_OS_UNIX  
+#ifdef Q_OS_UNIX
   KWin::activateWindow( mSearchWin->winId() );
-#endif  
+#endif
 }
 
 
@@ -2804,11 +2804,13 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction  = new KAction(KIcon("edittrash"), "foo", this);
+  mEmptyFolderAction  = new KAction(KIcon("edittrash"),
+                                    "foo" /*set in updateFolderMenu*/, this);
   actionCollection()->addAction("empty", mEmptyFolderAction );
   connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
 
-  mRemoveFolderAction  = new KAction(KIcon("editdelete"), "foo", this);
+  mRemoveFolderAction  = new KAction(KIcon("editdelete"),
+                                     "foo" /*set in updateFolderMenu*/, this);
   actionCollection()->addAction("delete_folder", mRemoveFolderAction );
   connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
 
@@ -2843,7 +2845,7 @@ void KMMainWidget::setupActions()
            SLOT( slotShowNewFromTemplate() ) );
   connect( mTemplateMenu->popupMenu(), SIGNAL( activated(int) ), this,
            SLOT( slotNewFromTemplate(int) ) );
- 
+
   action  = new KAction(KIcon("mail_post_to"), i18n("New Message t&o Mailing-List..."), this);
   actionCollection()->addAction("post_message", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));
@@ -3041,8 +3043,8 @@ void KMMainWidget::setupActions()
   connect(mIgnoreThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusIgnored()));
 
   mThreadStatusMenu->addSeparator();
-  mThreadStatusMenu->addAction( mWatchThreadAction ); 
-  mThreadStatusMenu->addAction( mIgnoreThreadAction ); 
+  mThreadStatusMenu->addAction( mWatchThreadAction );
+  mThreadStatusMenu->addAction( mIgnoreThreadAction );
 
   mSaveAttachmentsAction  = new KAction(KIcon("attach"), i18n("Save A&ttachments..."), this);
   actionCollection()->addAction("file_save_attachments", mSaveAttachmentsAction );
@@ -3246,6 +3248,7 @@ void KMMainWidget::setupActions()
   initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
   updateCustomTemplateMenus();
+  updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
@@ -3512,10 +3515,7 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() );
-  if(mFolder) {
-    mRemoveFolderAction->setText( mFolder->folderType() == KMFolderTypeSearch
-        ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  }
+  mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
