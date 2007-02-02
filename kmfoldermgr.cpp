@@ -1,14 +1,7 @@
 // kmfoldermgr.cpp
 
-#ifdef HAVE_CONFIG_H
-	#include <config.h>
-#endif
-
 #include <sys/types.h>
-
-#ifdef HAVE_SYS_STAT_H
-	#include <sys/stat.h>
-#endif
+#include <sys/stat.h>
 
 #include <assert.h>
 #include <fcntl.h>

@@ -664,8 +664,7 @@ void IdentityDialog::slotOk() {
                              i18n("The custom templates folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
-                                  "will be used.")
-                             .arg( ident.identityName() ) ) )
+                                  "will be used.", ident.identityName()) ) )
       mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
     else
       mTemplatesCombo->setFolder( ident.templates() );

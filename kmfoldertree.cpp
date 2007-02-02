@@ -1779,7 +1779,8 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
         item = item->nextSibling();
         fti = static_cast<KMFolderTreeItem*>( item );
       }
-      folderToPopupMenu( action, receiver, aMenuToFolder, menu, fti->firstChild() );
+      if ( fti->firstChild() )
+        folderToPopupMenu( action, receiver, aMenuToFolder, menu, fti->firstChild() );
       return;
     }
   }
