@@ -129,7 +129,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
 
 void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 {
-   QMenu *popup = KLineEdit::createStandardContextMenu();
+   QMenu *popup = createStandardContextMenu();
    popup->addSeparator();
    QAction* act = popup->addAction( i18n( "Edit Recent Addresses..." ));
    connect(act,SIGNAL(triggered(bool)), SLOT( editRecentAddresses() ) );
