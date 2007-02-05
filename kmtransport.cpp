@@ -138,7 +138,7 @@ void KMTransportInfo::writeConfig(int id)
         mStorePasswdInConfig = false;
       }
     } else {
-      passwdStored = wallet ? !mStorePasswdInConfig /*already in the wallet*/ : config->hasKey("pass");
+      passwdStored = wallet ? !mStorePasswdInConfig /*already in the wallet*/ : config.hasKey("pass");
     }
     // wallet not available, ask the user if we should use the config file instead
     if ( !passwdStored && ( mStorePasswdInConfig ||  KMessageBox::warningYesNo( 0,
