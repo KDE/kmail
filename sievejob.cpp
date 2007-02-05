@@ -19,6 +19,7 @@
 #include "sievejob.h"
 
 #include <kio/job.h>
+#include <kio/deletejob.h>
 #include <kio/jobuidelegate.h>
 using KIO::Job;
 // <kio/global.h>
