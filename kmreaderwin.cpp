@@ -1322,7 +1322,7 @@ void KMReaderWin::displayAboutPage()
 	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
            .subs( KMAIL_VERSION ) // KMail version
            .subs( "help:/kmail/index.html" ) // KMail help:// URL
-           .subs( "http://kmail.kde.org/" ); // KMail homepage URL
+           .subs( "http://kontact.kde.org/kmail/" ); // KMail homepage URL
 
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
     QString featuresText =
