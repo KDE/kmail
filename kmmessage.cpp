@@ -1217,20 +1217,14 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 
     msg->initFromMessage( this );
     //restore type
-    // msg->setType( type );
-    // msg->setSubtype( subtype );
-
-    // set plain text content type for forwarded message
-    // of you change this, please test how templates work on forward
-    msg->setType( DwMime::kTypeText );
-    msg->setSubtype( DwMime::kSubtypePlain );
+    msg->setType( type );
+    msg->setSubtype( subtype );
   } else if( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypeHtml ) {
     // This is non-multipart html mail. Let`s make it text/plain and allow
     // template parser do the hard job.
     msg->initFromMessage( this );
     msg->setType( DwMime::kTypeText );
-    // msg->setSubtype( DwMime::kSubtypeHtml );
-    msg->setSubtype( DwMime::kSubtypePlain );
+    msg->setSubtype( DwMime::kSubtypeHtml );
     msg->mNeedsAssembly = true;
     msg->cleanupHeader();
   } else {
