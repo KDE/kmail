@@ -337,7 +337,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   QString tmp = mimeType; // get rid of const'ness
   if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy )
        == QValidator::Acceptable )
-    mIcon->setPixmap( KMimeType::mimeType( mimeType )->pixmap( K3Icon::Desktop ) );
+    mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( KMimeType::mimeType( mimeType )->iconName(), K3Icon::Desktop ) );
   else
     mIcon->setPixmap( DesktopIcon("unknown") );
 }
