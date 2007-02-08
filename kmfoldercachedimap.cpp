@@ -1801,15 +1801,18 @@ void KMFolderCachedImap::listDirectory2()
   KMFolderCachedImap *f = 0;
   kmkernel->dimapFolderMgr()->quiet(true);
 
-  KMFolderNode *node;
+  KMFolderNode *node = 0;
   bool root = ( this == mAccount->rootFolder() );
   if ( root && !mAccount->hasInbox() ) {
     kDebug(5006) << "check INBOX" << endl;
     // create the INBOX
-    QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin();
-        ( node = *it ) && it != folder()->child()->end(); ++it )
-      if (!node->isDir() && node->name() == "INBOX") break;
+    QList<KMFolderNode*>::const_iterator it = folder()->child()->begin();
+    for ( ; it != folder()->child()->end(); ++it ) {
+      if (!(*it)->isDir() && (*it)->name() == "INBOX") {
+        node = *it;
+        break;
+      }
+    }
     if (node) {
       f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     } else {
@@ -1846,10 +1849,14 @@ void KMFolderCachedImap::listDirectory2()
   for (int i = 0; i < mSubfolderNames.count(); i++) {
 
     // Find the subdir, if already present
-    QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin();
-        ( node = *it ) && it != folder()->child()->end(); ++it )
-      if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
+    node = 0;
+    QList<KMFolderNode*>::const_iterator it = folder()->child()->begin();
+    for ( ; it != folder()->child()->end(); ++it ) {
+      if (!(*it)->isDir() && (*it)->name() == mSubfolderNames[i]) {
+        node = *it;
+        break;
+      }
+    }
 
     if (!node) {
       // This folder is not present here
