@@ -58,13 +58,13 @@ const unsigned int MaintenanceLimit = 1000;
 const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
 
+#ifdef HAVE_INDEXLIB
 static
 QValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
 	QValueList<int> res;
 	std::copy( input.begin(), input.end(), std::back_inserter( res ) );
 	return res;
 }
-
 
 static
 std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
@@ -75,6 +75,7 @@ std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
 	}
 	return res;
 }
+#endif
 
 KMMsgIndex::KMMsgIndex( QObject* parent ):
 	QObject( parent, "index" ),
