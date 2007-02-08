@@ -153,7 +153,7 @@ void KMail::FolderDiaQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
                                                       const KMail::QuotaInfo& info )
 {
   if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
-    KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
+    //KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
 
     disconnect( mImapAccount, SIGNAL(receivedStorageQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )),
                 this, SLOT(slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& )) );

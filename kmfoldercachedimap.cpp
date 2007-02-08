@@ -221,17 +221,17 @@ void KMFolderCachedImap::readConfig()
 
   mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
 
-  int storageQutaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
-  int storageQutaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
+  int storageQuotaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
+  int storageQuotaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
   QString storageQuotaRoot = config->readEntry( "StorageQuotaRoot", QString::null );
   if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
       mQuotaInfo.setName( "STORAGE" );
       mQuotaInfo.setRoot( storageQuotaRoot );
 
-      if ( storageQutaUsage > -1 )
-        mQuotaInfo.setCurrent( storageQutaUsage );
-      if ( storageQutaLimit > -1 )
-        mQuotaInfo.setMax( storageQutaLimit );
+      if ( storageQuotaUsage > -1 )
+        mQuotaInfo.setCurrent( storageQuotaUsage );
+      if ( storageQuotaLimit > -1 )
+        mQuotaInfo.setMax( storageQuotaLimit );
   }
 
   KMFolderMaildir::readConfig();
