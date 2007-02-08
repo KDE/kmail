@@ -174,7 +174,7 @@ public:
 
 public slots:
   void slotEmitChanged(); // do nothing for now
-  
+
   void slotCopyGlobal();
 
 private:
@@ -211,7 +211,7 @@ public:
   // If Apply is clicked, or OK proceeeds half-way, then next time "new folder" will be false.
   bool isNewFolder() const { return mIsNewFolder; }
 
-  KMFolderDir* folderDir() const { return mFolderDir; }
+  KMFolderDir* folderDir() const;
   typedef QList<QPointer<KMFolder> > FolderList;
 
   KMFolder* parentFolder() const { return mParentFolder; }

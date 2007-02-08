@@ -61,13 +61,15 @@ namespace {
 const unsigned int MaintenanceLimit = 1000;
 const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
+
+#ifdef HAVE_INDEXLIB
+
 static
 QList<int> vectorToQValueList( const std::vector<quint32>& input ) {
 	QList<int> res;
 	std::copy( input.begin(), input.end(), std::back_inserter( res ) );
 	return res;
 }
-
 
 static
 std::vector<quint32> QValueListToVector( const QList<int>& input ) {
@@ -78,6 +80,8 @@ std::vector<quint32> QValueListToVector( const QList<int>& input ) {
 	}
 	return res;
 }
+#endif
+
 KMMsgIndex::KMMsgIndex( QObject* parent ):
 	QObject( parent ),
 	mState( s_idle ),

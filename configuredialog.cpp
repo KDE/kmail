@@ -4665,9 +4665,10 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Empty &trash on program exit" option:
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
   mEmptyTrashCheck = new QCheckBox( i18n("Empty local &trash folder on program exit"),
                                     this );
-  vlay->addWidget( mEmptyTrashCheck );
+  hlay->addWidget( mEmptyTrashCheck );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -4679,7 +4680,18 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 #endif
 
-
+  // "Quota Units"
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mQuotaCmbBox = new QComboBox( false, this );
+  label = new QLabel( mQuotaCmbBox,
+                      i18n("Quota Units: "), this );
+  mQuotaCmbBox->insertStringList( QStringList()
+                   << i18n("KB")
+                   << i18n("MB")
+                   << i18n("GB") );
+  hlay->addWidget( label );
+  hlay->addWidget( mQuotaCmbBox, 1 );
+  connect( mQuotaCmbBox, SIGNAL( activated( int )  ), this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addStretch( 1 );
 
@@ -4741,6 +4753,7 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings() {
   mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
   mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
   mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
+  mQuotaCmbBox->setCurrentItem( GlobalSettings::self()->quotaUnit() );
 }
 
 void MiscPage::FolderTab::doLoadOther() {
@@ -4778,6 +4791,7 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
+  GlobalSettings::self()->setQuotaUnit( mQuotaCmbBox->currentItem() );
 #ifdef HAVE_INDEXLIB
   if ( kmkernel->msgIndex() ) kmkernel->msgIndex()->setEnabled( mIndexingEnabled->isChecked() );
 #endif

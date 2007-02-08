@@ -1003,6 +1003,7 @@ private:
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
   KMail::FolderRequester *mOnStartupOpenFolder;
+  QComboBox    *mQuotaCmbBox;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {
