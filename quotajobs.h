@@ -77,17 +77,17 @@ class QuotaInfo {
   void readConfig() const {
       if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::KB )
       {
-            mUnits = QString( i18n("KB") );
+            mUnits = i18n("KB");
             mFactor = 0;
       }
       else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::MB )
            {
-                mUnits = QString( i18n("MB") );
+                mUnits = i18n("MB");
                 mFactor = 1;
            }
       else if( GlobalSettings::self()->quotaUnit() == GlobalSettings::EnumQuotaUnit::GB )
            {
-               mUnits = QString( i18n("GB") );
+               mUnits = i18n("GB");
                mFactor = 2;
            }
    }
