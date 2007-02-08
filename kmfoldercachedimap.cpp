@@ -71,6 +71,7 @@ using KMail::ListJob;
 #include <qlayout.h>
 #include <qvaluelist.h>
 #include "annotationjobs.h"
+#include "quotajobs.h"
 using namespace KMail;
 #include <globalsettings.h>
 
@@ -152,7 +153,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true )
+    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
+    mQuotaInfo()
 {
   setUidValidity("");
   // if we fail to read a uid file but there is one, nuke it
@@ -216,6 +218,21 @@ void KMFolderCachedImap::readConfig()
 //  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
+  mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
+
+  int storageQuotaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
+  int storageQuotaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
+  QString storageQuotaRoot = config->readEntry( "StorageQuotaRoot", QString::null );
+  if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
+      mQuotaInfo.setName( "STORAGE" );
+      mQuotaInfo.setRoot( storageQuotaRoot );
+
+      if ( storageQuotaUsage > -1 )
+        mQuotaInfo.setCurrent( storageQuotaUsage );
+      if ( storageQuotaLimit > -1 )
+        mQuotaInfo.setMax( storageQuotaLimit );
+  }
+
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally =
@@ -242,11 +259,11 @@ void KMFolderCachedImap::writeConfig()
       configGroup.deleteEntry( "ImapPathCreation" );
     }
   }
-  writeAnnotationConfig();
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
   KMFolderMaildir::writeConfig();
 }
 
-void KMFolderCachedImap::writeAnnotationConfig()
+void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig()
 {
   KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
   if ( !folder()->noContent() )
@@ -255,6 +272,21 @@ void KMFolderCachedImap::writeAnnotationConfig()
     configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
     configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+    configGroup.writeEntry( "UserRights", mUserRights );
+
+    if ( mQuotaInfo.isValid() ) {
+      if ( mQuotaInfo.current().isValid() ) {
+        configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current().toInt() );
+      }
+      if ( mQuotaInfo.max().isValid() ) {
+        configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max().toInt() );
+      }
+      configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
+    } else {
+      configGroup.deleteEntry( "StorageQuotaUsage");
+      configGroup.deleteEntry( "StorageQuotaRoot");
+      configGroup.deleteEntry( "StorageQuotaLimit");
+    }
   }
 }
 
@@ -618,6 +650,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
   case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
   case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
+  case SYNC_STATE_GET_QUOTA:         return "SYNC_STATE_GET_QUOTA";
   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
@@ -1027,8 +1060,7 @@ void KMFolderCachedImap::serverSyncInternal()
     }
 
   case SYNC_STATE_GET_ACLS:
-    // Continue with the subfolders
-    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+    mSyncState = SYNC_STATE_GET_QUOTA;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       newState( mProgress, i18n( "Retrieving permissions" ) );
@@ -1037,7 +1069,22 @@ void KMFolderCachedImap::serverSyncInternal()
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
       break;
     }
-
+  case SYNC_STATE_GET_QUOTA:
+    // Continue with the subfolders
+    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+    if( !noContent() && mAccount->hasQuotaSupport() ) {
+      newState( mProgress, i18n("Getting quota information"));
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      KIO::Job* job = KMail::QuotaJobs::getStorageQuota( mAccount->slave(), url );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      mAccount->insertJob(job, jd);
+      connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
+          SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
+      connect( job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotQuotaResult(KIO::Job *)) );
+      break;
+    }
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
       mProgress = 98;
@@ -1996,6 +2043,7 @@ void
 KMFolderCachedImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void
@@ -2031,6 +2079,13 @@ KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job*, const KMail::A
     mACLList = aclList;
     serverSyncInternal();
   }
+}
+
+void
+KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
+{
+    mQuotaInfo = info;
+    writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void
@@ -2169,7 +2224,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was (" << oldType << " " << oldSubType << ") => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }
   // Ensure that further readConfig()s don't lose mAnnotationFolderType
-  writeAnnotationConfig();
+  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
 void KMFolderCachedImap::setIncidencesFor( IncidencesFor incfor )
@@ -2225,7 +2280,7 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
             markUnreadAsRead();
 
           // Ensure that further readConfig()s don't lose mAnnotationFolderType
-          writeAnnotationConfig();
+          writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
           break;
         }
       }
@@ -2274,6 +2329,33 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
   mProgress += 2;
   serverSyncInternal();
 }
+
+void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  Q_ASSERT( it != mAccount->jobsEnd() );
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  Q_ASSERT( (*it).parent == folder() );
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  QuotaJobs::GetStorageQuotaJob* quotajob = static_cast<QuotaJobs::GetStorageQuotaJob *>( job );
+  QuotaInfo empty;
+  if ( quotajob->error() ) {
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
+      // that's when the imap server doesn't support quota
+      mAccount->setHasNoQuotaSupport();
+      mQuotaInfo = empty;
+    }
+    else
+      kdWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
+  }
+
+  if (mAccount->slave()) mAccount->removeJob(job);
+  mProgress += 2;
+  serverSyncInternal();
+}
+
+
 
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )

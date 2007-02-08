@@ -109,6 +109,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 keyresolver.cpp globalsettings.cpp globalsettings_base.kcfgc \
                 regexplineedit.cpp rulewidgethandlermanager.cpp \
                 headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
+                quotajobs.cpp folderdiaquotatab.cpp folderdiaquotatab_p.cpp \
                 partnodebodypart.cpp \
                 expirejob.cpp compactionjob.cpp jobscheduler.cpp callback.cpp \
                 searchjob.cpp renamejob.cpp \

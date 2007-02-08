@@ -66,13 +66,23 @@
         </choices>
         <default>DontSendOnCheck</default>
       </entry>
-
     </group>
 
     <group name="FolderSelectionDialog">
       <entry name="LastSelectedFolder" type="String">
         <whatsthis>The most recently selected folder in the folder selection dialog.</whatsthis>
         <default>inbox</default>
+      </entry>
+
+      <entry name="QuotaUnit"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="KB"/>
+          <choice name="MB"/>
+          <choice name="GB"/>
+        </choices>
+        <default>KB</default>
       </entry>
     </group>
 

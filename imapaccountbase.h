@@ -49,6 +49,7 @@ namespace KPIM {
 
 namespace KMail {
   struct ACLListEntry;
+  struct QuotaInfo;
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
@@ -200,6 +201,13 @@ namespace KMail {
     void getACL( KMFolder* folder, const QString& imapPath );
 
     /**
+     * Retrieve the the quota inforamiton on the folder
+     * identified by @p imapPath.
+     * Emits receivedQuotaInfo signal on success/error.
+     */
+    void getStorageQuotaInfo( KMFolder* folder, const QString& imapPath );
+
+    /**
      * Set the status on the server
      * Emits imapStatusChanged signal on success/error.
      */
@@ -271,6 +279,17 @@ namespace KMail {
      * Called if the annotation command failed due to 'unsupported'
      */
     void setHasNoAnnotationSupport() { mAnnotationSupport = false; }
+
+    /**
+     * Returns false if the IMAP server for this account doesn't support quotas.
+     * (and true if it does, or if we didn't try yet).
+     */
+    bool hasQuotaSupport() const { return mQuotaSupport; }
+
+    /**
+     * Called if the quota command failed due to 'unsupported'
+     */
+    void setHasNoQuotaSupport() { mQuotaSupport = false; }
 
     /**
      * React to an error from the job. Uses job->error and job->errorString and calls
@@ -400,6 +419,9 @@ namespace KMail {
     /// Result of getACL() job
     void slotGetACLResult( KIO::Job* _job );
 
+    /// Result of getStorageQuotaInfo() job
+    void slotGetStorageQuotaInfoResult( KIO::Job* _job );
+
     /**
      * Send a NOOP command regularly to keep the slave from disconnecting
      */
@@ -490,6 +512,7 @@ namespace KMail {
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;
     bool mAnnotationSupport : 1;
+    bool mQuotaSupport : 1;
     bool mSlaveConnected : 1;
     bool mSlaveConnectionError : 1;
     bool mCheckingSingleFolder : 1;
@@ -554,6 +577,16 @@ namespace KMail {
      * @param entries the ACL list. Make your copy of it, it comes from the job.
      */
     void receivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& entries );
+
+    /**
+     * Emitted when the getQuotaInfo job is done,
+     * as a result of a getQuotaInfo call.
+     * @param folder The folder for which we were getting quota info (can be 0)
+     * @param job The job that was used for doing so (can be used to display errors)
+     * @param info The quota information for this folder. Make your copy of it,
+     * it comes from the job.
+     */
+    void receivedStorageQuotaInfo( KMFolder* folder, KIO::Job* job, const KMail::QuotaInfo& entries );
 
     /**
      * Emitted when we got the namespaces

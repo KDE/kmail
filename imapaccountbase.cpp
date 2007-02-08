@@ -94,6 +94,7 @@ namespace KMail {
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
       mAnnotationSupport( true ),
+      mQuotaSupport( true ),
       mSlaveConnected( false ),
       mSlaveConnectionError( false ),
       mCheckingSingleFolder( false ),
@@ -473,6 +474,35 @@ namespace KMail {
     if (mSlave) removeJob(job);
   }
 
+  //-----------------------------------------------------------------------------
+  // Do not remove imapPath, FolderDiaQuotaTab needs to call this with parent==0.
+  void ImapAccountBase::getStorageQuotaInfo( KMFolder* parent, const QString& imapPath )
+  {
+    if ( !mSlave ) return;
+    KURL url = getUrl();
+    url.setPath(imapPath);
+
+    QuotaJobs::GetStorageQuotaJob* job = QuotaJobs::getStorageQuota( mSlave, url );
+    jobData jd( url.url(), parent );
+    jd.cancellable = true;
+    insertJob(job, jd);
+
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotGetStorageQuotaInfoResult(KIO::Job *)));
+  }
+
+  void ImapAccountBase::slotGetStorageQuotaInfoResult( KIO::Job* _job )
+  {
+    QuotaJobs::GetStorageQuotaJob* job = static_cast<QuotaJobs::GetStorageQuotaJob *>( _job );
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
+    if ( job->error() && job->error() == KIO::ERR_UNSUPPORTED_ACTION )
+      setHasNoQuotaSupport();
+
+    KMFolder* folder = (*it).parent; // can be 0
+    emit receivedStorageQuotaInfo( folder, job, job->storageQuotaInfo() );
+    if (mSlave) removeJob(job);
+  }
 
   void ImapAccountBase::slotNoopTimeout()
   {
