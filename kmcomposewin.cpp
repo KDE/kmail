@@ -194,7 +194,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   (void) new MailcomposerAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/Composer", this);         
+  QDBusConnection::sessionBus().registerObject("/Composer", this);
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
 
@@ -770,9 +770,9 @@ void KMComposeWin::slotView(void)
 
   //This sucks awfully, but no, I cannot get an activated(int id) from
   // actionContainer()
-  if ( sender()->metaObject()->className() != "KToggleAction")
+  KToggleAction *act = ::qobject_cast<KToggleAction *>( sender() );
+  if ( !act )
     return;
-  KToggleAction *act = (KToggleAction *) sender();
 
   if (act == mAllFieldsAction)
     id = 0;

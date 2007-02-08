@@ -349,7 +349,7 @@ void KMKernel::openReader( bool onlyCheck )
 
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it ) {
-    if ( (*it)->metaObject()->className() == "KMMainWin" ) {
+    if ( ::qobject_cast<KMMainWin *>(*it) ) {
       ktmw = (*it);
       break;
     }
@@ -882,7 +882,7 @@ QStringList KMKernel::folderList() const
 
 QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 {
-#if 0	
+#if 0
   QString adaptorName;
   const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
@@ -899,7 +899,7 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
     QDBusConnection::sessionBus().registerObject( vpath, this );
     return QDBusObjectPath(vpath);
   }
-#endif  
+#endif
 #ifdef __GNUC__
 #warning Port DCOPRef usage!
 #endif
@@ -924,10 +924,10 @@ void KMKernel::raise()
   if (!iface.isValid() || !(reply = iface.call("newInstance")).isValid())
   {
        QDBusError err = iface.lastError();
-       kError() << "Communication problem with kmail" 
+       kError() << "Communication problem with kmail"
                  << "Error message was: " << err.name() << ": \"" << err.message() << "\"" << endl;
   }
- 
+
 }
 
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
@@ -1489,8 +1489,8 @@ void KMKernel::closeAllKMailWindows()
   KMainWindow *window = 0;
   while ( it.hasNext() ) {
     window = it.next();
-    if ( window && ( window->metaObject()->className() == "KMMainWindow" ||
-                     window->inherits("KMail::SecondaryWindow") ) )
+    if ( ::qobject_cast<KMMainWin *>(window) ||
+         ::qobject_cast<KMail::SecondaryWindow *>(window) )
     {
       window->setAttribute(Qt::WA_DeleteOnClose);
       window->close(); // close and delete the window
@@ -1918,7 +1918,7 @@ KMainWindow* KMKernel::mainWin()
   // First look for a KMMainWin.
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it )
-    if ( (*it)->metaObject()->className() == "KMMainWin" )
+    if ( ::qobject_cast<KMMainWin *>(*it) )
       return kmWin;
 
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in

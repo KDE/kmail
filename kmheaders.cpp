@@ -254,7 +254,7 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-      QString(o->metaObject()->className()) == "Q3Header" )
+       ::qobject_cast<Q3Header *>(o) )
   {
     // if we currently only show one of either sender/receiver column
     // modify the popup text in the way, that it displays the text of the other of the two
@@ -1321,9 +1321,11 @@ void KMHeaders::setStyleDependantFrameWidth()
 {
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style()->metaObject()->className() == "KeramikStyle" )
+#if 0 // is this hack still needed with kde4?
+  if( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
+#endif
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
   if ( frameWidth < 0 )
     frameWidth = 0;

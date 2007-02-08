@@ -185,9 +185,11 @@ void KMMimePartTree::setStyleDependantFrameWidth()
 {
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style()->metaObject()->className() == "KeramikStyle" )
+#if 0 // is this hack still needed with kde4?
+  if( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
+#endif
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
   if ( frameWidth < 0 )
     frameWidth = 0;

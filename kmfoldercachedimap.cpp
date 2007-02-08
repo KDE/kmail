@@ -1572,7 +1572,7 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
 
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
-  assert( aAccount->metaObject()->className() == "KMAcctCachedImap" );
+  assert( ::qobject_cast<KMAcctCachedImap *>(aAccount) );
   mAccount = aAccount;
   if( imapPath()=="/" ) aAccount->setFolder( folder() );
 

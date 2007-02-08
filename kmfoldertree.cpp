@@ -1648,7 +1648,7 @@ bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
       static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
-       QString(o->metaObject()->className()) == "Q3Header" )
+       ::qobject_cast<Q3Header *>(o) )
   {
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
