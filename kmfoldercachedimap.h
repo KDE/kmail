@@ -45,8 +45,10 @@
 #include "kmfoldertype.h"
 #include "folderjob.h"
 #include "cachedimapjob.h"
+#include "quotajobs.h"
 
 using KMail::FolderJob;
+using KMail::QuotaInfo;
 class KMAcctCachedImap;
 
 namespace KMail {
@@ -93,14 +95,14 @@ public:
   virtual void readConfig();
   virtual void writeConfig();
 
-  void writeAnnotationConfig();
+  void writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
 
   /** @reimpl */
   virtual int create();
-  
+
   /** Remove this folder */
   virtual void remove();
 
@@ -214,6 +216,17 @@ public:
   /// Set the user's rights on this folder - called by getUserRights
   void setUserRights( unsigned int userRights );
 
+  /**
+   * The quota information for this folder.
+   * @return an invalid info if we haven't synced yet, or the server
+   * doesn't support quota. The difference can be figured out by
+   * asking the account whether it supports quota. If we have
+   * synced, the account supports quota, but there is no quota
+   * on the folder, the return info will be valid, but empty.
+   * @see QuotaInfo::isEmpty(), QuotaInfo::isValid()
+   */
+  const QuotaInfo quotaInfo() const { return mQuotaInfo; }
+
   /// Return the list of ACL for this folder
   typedef QValueVector<KMail::ACLListEntry> ACLList;
   const ACLList& aclList() const { return mACLList; }
@@ -247,7 +260,7 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
-  /** 
+  /**
    * List of namespaces that need to be queried
    * Is set by the account for the root folder when the listing starts
    */
@@ -287,6 +300,8 @@ protected slots:
   void slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value );
   void slotDeleteMessagesResult(KMail::FolderJob *);
   void slotImapStatusChanged(KMFolder* folder, const QString&, bool);
+  void slotStorageQuotaResult( const QuotaInfo& );
+  void slotQuotaResult( KIO::Job* job );
 
 protected:
   /* returns true if there were messages to delete
@@ -322,7 +337,7 @@ protected:
   void newState( int progress, const QString& syncStatus );
 
   /** See if there is a better parent then this folder */
-  KMFolderCachedImap* findParent( const QString& path, const QString& name );  
+  KMFolderCachedImap* findParent( const QString& path, const QString& name );
 
 public slots:
   /**
@@ -389,6 +404,7 @@ private:
     SYNC_STATE_SET_ANNOTATIONS,
     SYNC_STATE_GET_ACLS,
     SYNC_STATE_SET_ACLS,
+    SYNC_STATE_GET_QUOTA,
     SYNC_STATE_FIND_SUBFOLDERS,
     SYNC_STATE_SYNC_SUBFOLDERS,
     SYNC_STATE_CHECK_UIDVALIDITY,
@@ -471,6 +487,8 @@ private:
   int mNamespacesToCheck;
   bool mPersonalNamespacesCheckDone;
   QString mImapPathCreation;
+
+  QuotaInfo mQuotaInfo;
 };
 
 #endif /*kmfoldercachedimap_h*/

@@ -94,6 +94,7 @@ namespace KMail {
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
       mAnnotationSupport( true ),
+      mQuotaSupport( true ),
       mSlaveConnected( false ),
       mSlaveConnectionError( false ),
       mCheckingSingleFolder( false ),
@@ -201,7 +202,7 @@ namespace KMail {
     // read namespace - delimiter
     namespaceDelim entries = config.entryMap( config.group() );
     namespaceDelim namespaceToDelimiter;
-    for ( namespaceDelim::ConstIterator it = entries.begin(); 
+    for ( namespaceDelim::ConstIterator it = entries.begin();
           it != entries.end(); ++it ) {
       if ( it.key().startsWith( "Namespace:" ) ) {
         QString key = it.key().right( it.key().length() - 10 );
@@ -231,7 +232,7 @@ namespace KMail {
       }
     }
     QString key;
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it ) {
       key = "Namespace:" + it.key();
       config.writeEntry( key, it.data() );
@@ -254,7 +255,7 @@ namespace KMail {
     return m;
   }
 
-  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() 
+  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
   {
     if ( mSlave && mSlaveConnected ) {
       return Connected;
@@ -276,7 +277,7 @@ namespace KMail {
       QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
-      
+
       PasswordDialog dlg( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
       dlg.setPlainCaption( i18n("Authorization Dialog") );
       dlg.addCommentLine( i18n("Account:"), name() );
@@ -357,7 +358,7 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if ( makeConnection() != Connected ) 
+    if ( makeConnection() != Connected )
       return;// ## doesn't handle Connecting
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
@@ -473,6 +474,35 @@ namespace KMail {
     if (mSlave) removeJob(job);
   }
 
+  //-----------------------------------------------------------------------------
+  // Do not remove imapPath, FolderDiaQuotaTab needs to call this with parent==0.
+  void ImapAccountBase::getStorageQuotaInfo( KMFolder* parent, const QString& imapPath )
+  {
+    if ( !mSlave ) return;
+    KURL url = getUrl();
+    url.setPath(imapPath);
+
+    QuotaJobs::GetStorageQuotaJob* job = QuotaJobs::getStorageQuota( mSlave, url );
+    jobData jd( url.url(), parent );
+    jd.cancellable = true;
+    insertJob(job, jd);
+
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotGetStorageQuotaInfoResult(KIO::Job *)));
+  }
+
+  void ImapAccountBase::slotGetStorageQuotaInfoResult( KIO::Job* _job )
+  {
+    QuotaJobs::GetStorageQuotaJob* job = static_cast<QuotaJobs::GetStorageQuotaJob *>( _job );
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
+    if ( job->error() && job->error() == KIO::ERR_UNSUPPORTED_ACTION )
+      setHasNoQuotaSupport();
+
+    KMFolder* folder = (*it).parent; // can be 0
+    emit receivedStorageQuotaInfo( folder, job, job->storageQuotaInfo() );
+    if (mSlave) removeJob(job);
+  }
 
   void ImapAccountBase::slotNoopTimeout()
   {
@@ -582,13 +612,13 @@ namespace KMail {
       }
       return;
     }
-    
+
     QByteArray packedArgs;
     QDataStream stream( packedArgs, IO_WriteOnly);
     stream << (int) 'n';
     jobData jd;
     jd.total = 1; jd.done = 0; jd.cancellable = true;
-    jd.progressItem = ProgressManager::createProgressItem( 
+    jd.progressItem = ProgressManager::createProgressItem(
         ProgressManager::getUniqueID(),
         i18n("Retrieving Namespaces"),
         QString::null, true, useSSL() || useTLS() );
@@ -631,7 +661,7 @@ namespace KMail {
     kdDebug(5006) << "namespaces fetched" << endl;
     emit namespacesFetched( map );
   }
-    
+
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map )
   {
@@ -718,7 +748,7 @@ namespace KMail {
         }
         KMessageBox::information( kmkernel->getKMMainWidget(), msg );
       }
-    } else 
+    } else
     {
       kdDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
@@ -753,7 +783,7 @@ namespace KMail {
       }
     }
     return QString::null;
-  }  
+  }
 
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
@@ -766,12 +796,12 @@ namespace KMail {
 
     // then try if the prefix is part of a namespace
     // exclude empty namespace
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it ) {
       // the namespace definition sometimes contains the delimiter
       // make sure we also match this version
       QString stripped = it.key().left( it.key().length() - 1 );
-      if ( !it.key().isEmpty() && 
+      if ( !it.key().isEmpty() &&
           ( prefix.contains( it.key() ) || prefix.contains( stripped ) ) ) {
         return it.data();
       }
@@ -875,7 +905,7 @@ namespace KMail {
       mErrorDialogIsActive = true;
       QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
       QString caption = i18n("Error");
-      
+
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
           msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.").
@@ -1128,7 +1158,7 @@ namespace KMail {
 
      stream << (int) 'S' << url << flags;
 
-     if ( makeConnection() != Connected ) 
+     if ( makeConnection() != Connected )
        return; // can't happen with dimap
 
      KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
@@ -1269,10 +1299,10 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( const QString& parent, 
+  QString ImapAccountBase::createImapPath( const QString& parent,
                                            const QString& folderName )
   {
-    kdDebug(5006) << "createImapPath parent="<<parent<<", folderName="<<folderName<<endl;  
+    kdDebug(5006) << "createImapPath parent="<<parent<<", folderName="<<folderName<<endl;
     QString newName = parent;
     // strip / at the end
     if ( newName.endsWith("/") ) {
@@ -1284,7 +1314,7 @@ namespace KMail {
     if ( delim.isEmpty() ) {
       delim = "/";
     }
-    if ( !newName.isEmpty() && 
+    if ( !newName.isEmpty() &&
          !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
       newName = newName + delim;
     }
@@ -1298,7 +1328,7 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( FolderStorage* parent, 
+  QString ImapAccountBase::createImapPath( FolderStorage* parent,
                                            const QString& folderName )
   {
     QString path;
@@ -1310,7 +1340,7 @@ namespace KMail {
       // error
       return path;
     }
-    
+
     return createImapPath( path, folderName );
   }
 

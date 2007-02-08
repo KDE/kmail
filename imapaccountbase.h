@@ -49,6 +49,7 @@ namespace KPIM {
 
 namespace KMail {
   struct ACLListEntry;
+  struct QuotaInfo;
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
@@ -93,16 +94,16 @@ namespace KMail {
     virtual void readConfig( KConfig& config );
     virtual void writeConfig( KConfig& config );
 
-    /** 
+    /**
      * The state of the kioslave connection
      */
     enum ConnectionState { Error = 0, Connected, Connecting };
 
     // possible list types
-    enum ListType { 
-      List, 
-      ListSubscribed, 
-      ListSubscribedNoCheck, 
+    enum ListType {
+      List,
+      ListSubscribed,
+      ListSubscribedNoCheck,
       ListFolderOnly,
       ListFolderOnlySubscribed
     };
@@ -200,6 +201,13 @@ namespace KMail {
     void getACL( KMFolder* folder, const QString& imapPath );
 
     /**
+     * Retrieve the the quota inforamiton on the folder
+     * identified by @p imapPath.
+     * Emits receivedQuotaInfo signal on success/error.
+     */
+    void getStorageQuotaInfo( KMFolder* folder, const QString& imapPath );
+
+    /**
      * Set the status on the server
      * Emits imapStatusChanged signal on success/error.
      */
@@ -273,6 +281,17 @@ namespace KMail {
     void setHasNoAnnotationSupport() { mAnnotationSupport = false; }
 
     /**
+     * Returns false if the IMAP server for this account doesn't support quotas.
+     * (and true if it does, or if we didn't try yet).
+     */
+    bool hasQuotaSupport() const { return mQuotaSupport; }
+
+    /**
+     * Called if the quota command failed due to 'unsupported'
+     */
+    void setHasNoQuotaSupport() { mQuotaSupport = false; }
+
+    /**
      * React to an error from the job. Uses job->error and job->errorString and calls
      * the protected virtual handleJobError with them. See handleError below for details.
      */
@@ -294,21 +313,21 @@ namespace KMail {
      */
     virtual unsigned int folderCount() const;
 
-    /** 
-     * @return defined namespaces 
+    /**
+     * @return defined namespaces
      */
     nsMap namespaces() const { return mNamespaces; }
 
     /**
      * Set defined namespaces
-     */ 
-    virtual void setNamespaces( nsMap map ) 
+     */
+    virtual void setNamespaces( nsMap map )
     { mNamespaces = map; }
 
     /**
      * Full blown section - namespace - delimiter map
      * Do not call this very often as the map is constructed on the fly
-     */ 
+     */
     nsDelimMap namespacesWithDelimiter();
 
     /**
@@ -341,11 +360,11 @@ namespace KMail {
       * Set the namespace - delimiter map
       */
      void setNamespaceToDelimiter( namespaceDelim map )
-     { mNamespaceToDelimiter = map; } 
+     { mNamespaceToDelimiter = map; }
 
      /**
       * Returns true if the given string is a namespace
-      */ 
+      */
      bool isNamespaceFolder( QString& name );
 
      /**
@@ -357,7 +376,7 @@ namespace KMail {
      /**
       * Create an IMAP path for a parent folder and a foldername
       * Parent and folder are separated with the delimiter of the account
-      * The path starts and ends with '/' 
+      * The path starts and ends with '/'
       */
      QString createImapPath( FolderStorage* parent, const QString& folderName );
 
@@ -371,7 +390,7 @@ namespace KMail {
     /**
      * Call this to get the namespaces
      * You are notified by the signal namespacesFetched
-     */ 
+     */
     void getNamespaces();
 
   private slots:
@@ -400,6 +419,9 @@ namespace KMail {
     /// Result of getACL() job
     void slotGetACLResult( KIO::Job* _job );
 
+    /// Result of getStorageQuotaInfo() job
+    void slotGetStorageQuotaInfoResult( KIO::Job* _job );
+
     /**
      * Send a NOOP command regularly to keep the slave from disconnecting
      */
@@ -424,11 +446,11 @@ namespace KMail {
 
     /**
      * Saves the fetched namespaces
-     */ 
+     */
     void slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map );
 
-    /** 
-     * Saves the capabilities list 
+    /**
+     * Saves the capabilities list
      */
     void slotCapabilitiesResult( KIO::Job*, const QString& result );
 
@@ -490,6 +512,7 @@ namespace KMail {
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;
     bool mAnnotationSupport : 1;
+    bool mQuotaSupport : 1;
     bool mSlaveConnected : 1;
     bool mSlaveConnectionError : 1;
     bool mCheckingSingleFolder : 1;
@@ -554,6 +577,16 @@ namespace KMail {
      * @param entries the ACL list. Make your copy of it, it comes from the job.
      */
     void receivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& entries );
+
+    /**
+     * Emitted when the getQuotaInfo job is done,
+     * as a result of a getQuotaInfo call.
+     * @param folder The folder for which we were getting quota info (can be 0)
+     * @param job The job that was used for doing so (can be used to display errors)
+     * @param info The quota information for this folder. Make your copy of it,
+     * it comes from the job.
+     */
+    void receivedStorageQuotaInfo( KMFolder* folder, KIO::Job* job, const KMail::QuotaInfo& entries );
 
     /**
      * Emitted when we got the namespaces
