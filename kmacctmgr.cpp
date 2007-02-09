@@ -273,6 +273,7 @@ void KMAcctMgr::add(KMAccount *account)
   if (account) {
     mAcctList.append( account );
     emit accountAdded( account );
+    account->installTimer();
   }
 }
 

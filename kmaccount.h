@@ -254,12 +254,14 @@ protected:
    */
   virtual void sendReceipt(KMMessage* msg);
 
+public:
   /**
    * Install/deinstall automatic new-mail checker timer.
    */
   virtual void installTimer();
   virtual void deinstallTimer();
 
+protected:
   /**
    * Call this to increase the number of new messages in a folder for
    * messages which are _not_ processed with processNewMsg().
@@ -268,7 +270,6 @@ protected:
    */
   void addToNewInFolder( QString folderId, int num );
 
-protected:
   QString       mPrecommand;
   QString       mTrash;
   KMAcctMgr*    mOwner;

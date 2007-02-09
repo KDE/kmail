@@ -324,6 +324,7 @@ class NetworkPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   NetworkPageReceivingTab( QWidget * parent=0, const char * name=0 );
+  ~NetworkPageReceivingTab();
   QString helpAnchor() const;
   void load();
   void save();
@@ -357,7 +358,7 @@ protected:
     QGuardedPtr< KMAccount > oldAccount;
     QGuardedPtr< KMAccount > newAccount;
   };
-  // ### make this a qptrlist:
+  // ### make this value-based:
   QValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
