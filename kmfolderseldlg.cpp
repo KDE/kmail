@@ -549,7 +549,7 @@ void KMFolderSelDlg::readConfig()
 {
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, "FolderSelectionDialog" );
-  QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
+  QSize size = group.readEntry( "Size", QSize() );
   if ( !size.isEmpty() )
     resize( size );
   else

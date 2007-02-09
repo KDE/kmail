@@ -340,7 +340,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   const char * configKey
     = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
   if ( geometry.hasKey( configKey ) )
-    resize( geometry.readEntry( configKey, QVariant( QSize() ) ).toSize() );
+    resize( geometry.readEntry( configKey, QSize() ));
   else
     adjustSize();
 

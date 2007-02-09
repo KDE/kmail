@@ -57,41 +57,41 @@ namespace KMail {
 
     if ( !reader.readEntry( "defaultColors", true ) ) {
       mForegroundColor =
-          reader.readEntry( "ForegroundColor", QVariant( &mForegroundColor ) ).value<QColor>();
+        reader.readEntry( "ForegroundColor", mForegroundColor );
       mLinkColor =
-          reader.readEntry( "LinkColor", QVariant( &mLinkColor ) ).value<QColor>();
+        reader.readEntry( "LinkColor", mLinkColor );
       mVisitedLinkColor =
-          reader.readEntry( "FollowedColor", QVariant( &mVisitedLinkColor ) ).value<QColor>();
+        reader.readEntry( "FollowedColor", mVisitedLinkColor );
       mBackgroundColor =
-          reader.readEntry( "BackgroundColor", QVariant( &mBackgroundColor ) ).value<QColor>();
+        reader.readEntry( "BackgroundColor", mBackgroundColor );
       cPgpEncrH =
-          reader.readEntry( "PGPMessageEncr", QVariant( &cPgpEncrH ) ).value<QColor>();
+        reader.readEntry( "PGPMessageEncr", cPgpEncrH );
       cPgpOk1H  =
-          reader.readEntry( "PGPMessageOkKeyOk", QVariant( &cPgpOk1H ) ).value<QColor>();
+        reader.readEntry( "PGPMessageOkKeyOk", cPgpOk1H );
       cPgpOk0H  =
-          reader.readEntry( "PGPMessageOkKeyBad", QVariant( &cPgpOk0H ) ).value<QColor>();
+        reader.readEntry( "PGPMessageOkKeyBad", cPgpOk0H );
       cPgpWarnH =
-          reader.readEntry( "PGPMessageWarn", QVariant( &cPgpWarnH ) ).value<QColor>();
+        reader.readEntry( "PGPMessageWarn", cPgpWarnH );
       cPgpErrH  =
-          reader.readEntry( "PGPMessageErr", QVariant( &cPgpErrH ) ).value<QColor>();
+        reader.readEntry( "PGPMessageErr", cPgpErrH );
       cHtmlWarning =
-          reader.readEntry( "HTMLWarningColor", QVariant( &cHtmlWarning ) ).value<QColor>();
+        reader.readEntry( "HTMLWarningColor", cHtmlWarning );
       for ( int i = 0 ; i < 3 ; ++i ) {
         const QString key = "QuotedText" + QString::number( i+1 );
-        mQuoteColor[i] = reader.readEntry( key, QVariant( &mQuoteColor[i] ) ).value<QColor>();
+        mQuoteColor[i] = reader.readEntry( key, mQuoteColor[i] );
       }
     }
 
     if ( !fonts.readEntry( "defaultFonts", true ) ) {
-      mBodyFont = fonts.readEntry(  "body-font",  QVariant( &mBodyFont ) ).value<QFont>();
-      mPrintFont = fonts.readEntry( "print-font", QVariant( &mPrintFont ) ).value<QFont>();
-      mFixedFont = fonts.readEntry( "fixed-font", QVariant( &mFixedFont ) ).value<QFont>();
+      mBodyFont = fonts.readEntry(  "body-font",  mBodyFont );
+      mPrintFont = fonts.readEntry( "print-font", mPrintFont );
+      mFixedFont = fonts.readEntry( "fixed-font", mFixedFont );
       mFixedPrintFont = mFixedFont; // FIXME when we have a separate fixed print font
       QFont defaultFont = mBodyFont;
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i ) {
         const QString key = QString( "quote%1-font" ).arg( i+1 );
-        mQuoteFont[i] = fonts.readEntry( key, QVariant( defaultFont ) ).value<QFont>();
+        mQuoteFont[i] = fonts.readEntry( key, defaultFont );
       }
     }
 
