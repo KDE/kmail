@@ -349,6 +349,7 @@ class AccountsPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AccountsPageReceivingTab( QWidget * parent=0, const char * name=0 );
+  ~AccountsPageReceivingTab();
   QString helpAnchor() const;
   void save();
 
@@ -384,7 +385,7 @@ private:
     QGuardedPtr< KMAccount > oldAccount;
     QGuardedPtr< KMAccount > newAccount;
   };
-  // ### make this a qptrlist:
+  // ### make this value-based:
   QValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 

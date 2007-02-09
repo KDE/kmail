@@ -1147,6 +1147,28 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
            this, SLOT(slotEditNotifications()) );
 }
 
+AccountsPageReceivingTab::~AccountsPageReceivingTab()
+{
+  // When hitting Cancel or closing the dialog with the window-manager-button,
+  // we have a number of things to clean up:
+
+  // The newly created accounts
+  QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
+    delete (*it);
+  }
+  mNewAccounts.clear();
+
+  // The modified accounts
+  QValueList<ModifiedAccountsType*>::Iterator j;
+  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
+    delete (*j)->newAccount;
+    delete (*j);
+  }
+  mModifiedAccounts.clear();
+
+
+}
 
 void AccountsPage::ReceivingTab::slotAccountSelected()
 {
@@ -1398,8 +1420,7 @@ void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    kmkernel->acctMgr()->add( *it );
-    (*it)->installTimer();
+    kmkernel->acctMgr()->add( *it ); // calls installTimer too
   }
 
   // Update accounts that have been modified
