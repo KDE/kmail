@@ -1660,7 +1660,7 @@ void AppearancePage::FontsTab::doLoadOther() {
   QFont fixedFont = KGlobalSettings::fixedFont();
   for ( int i = 0 ; i < numFontNames ; i++ )
     mFont[i] = fonts.readEntry( fontNames[i].configName,
-      QVariant( (fontNames[i].onlyFixed) ? &fixedFont : &mFont[0] ) ).value<QFont>();
+      QVariant( (fontNames[i].onlyFixed) ? fixedFont : mFont[0] ) ).value<QFont>();
 
   mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentIndex( 0 );

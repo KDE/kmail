@@ -88,7 +88,7 @@ public:
   /**
    * Returns the root folder of this account
    */
-  virtual FolderStorage* const rootFolder() const;
+  virtual FolderStorage* rootFolder() const;
 
   /**
    * Queues a message for automatic filtering

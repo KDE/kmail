@@ -537,7 +537,7 @@ void KMAcctImap::slotMailCheckCanceled()
 }
 
 //-----------------------------------------------------------------------------
-FolderStorage* const KMAcctImap::rootFolder() const
+FolderStorage* KMAcctImap::rootFolder() const
 {
   return mFolder;
 }

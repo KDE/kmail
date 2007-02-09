@@ -305,7 +305,7 @@ namespace KMail {
     /**
      * Returns the root folder of this account
      */
-    virtual FolderStorage* const rootFolder() const = 0;
+    virtual FolderStorage* rootFolder() const = 0;
 
     /**
      * Progress item for listDir

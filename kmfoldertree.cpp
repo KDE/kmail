@@ -429,11 +429,11 @@ void KMFolderTree::readColorConfig (void)
 
   if (!conf.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = conf.readEntry( "ForegroundColor",
-                                        QVariant( &c1 ) ).value<QColor>();
+                                        QVariant( c1 ) ).value<QColor>();
     mPaintInfo.colUnread = conf.readEntry( "UnreadMessage",
-                                        QVariant( &c2 ) ).value<QColor>();
+                                        QVariant( c2 ) ).value<QColor>();
     mPaintInfo.colBack = conf.readEntry( "BackgroundColor",
-                                        QVariant( &c4 ) ).value<QColor>();
+                                        QVariant( c4 ) ).value<QColor>();
   }
   else {
     mPaintInfo.colFore = c1;
@@ -457,7 +457,7 @@ void KMFolderTree::readConfig (void)
     if (!conf.readEntry( "defaultFonts", true ) ) {
       QFont folderFont( KGlobalSettings::generalFont() );
       setFont(conf.readEntry("folder-font",
-          QVariant( &folderFont ) ).value<QFont>() );
+          QVariant( folderFont ) ).value<QFont>() );
     }
     else
       setFont(KGlobalSettings::generalFont());

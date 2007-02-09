@@ -427,17 +427,17 @@ void KMHeaders::readColorConfig (void)
   QColor c7=KGlobalSettings::alternateBackgroundColor();
 
   if (!config.readEntry( "defaultColors", true ) ) {
-    mPaintInfo.colFore = config.readEntry( "ForegroundColor", QVariant( &c1 ) ).value<QColor>();
-    mPaintInfo.colBack = config.readEntry( "BackgroundColor", QVariant( &c4 ) ).value<QColor>();
+    mPaintInfo.colFore = config.readEntry( "ForegroundColor", QVariant( c1 ) ).value<QColor>();
+    mPaintInfo.colBack = config.readEntry( "BackgroundColor", QVariant( c4 ) ).value<QColor>();
     QPalette newPal = qApp->palette();
     newPal.setColor( QPalette::Base, mPaintInfo.colBack );
     newPal.setColor( QPalette::Text, mPaintInfo.colFore );
     setPalette( newPal );
-    mPaintInfo.colNew = config.readEntry( "NewMessage", QVariant( &c2 ) ).value<QColor>();
-    mPaintInfo.colUnread = config.readEntry( "UnreadMessage", QVariant( &c3 ) ).value<QColor>();
-    mPaintInfo.colFlag = config.readEntry( "FlagMessage", QVariant( &c5 ) ).value<QColor>();
-    mPaintInfo.colTodo = config.readEntry( "TodoMessage", QVariant( &c6 ) ).value<QColor>();
-    c7 = config.readEntry( "AltBackgroundColor", QVariant( &c7 ) ).value<QColor>();
+    mPaintInfo.colNew = config.readEntry( "NewMessage", QVariant( c2 ) ).value<QColor>();
+    mPaintInfo.colUnread = config.readEntry( "UnreadMessage", QVariant( c3 ) ).value<QColor>();
+    mPaintInfo.colFlag = config.readEntry( "FlagMessage", QVariant( c5 )).value<QColor>();
+    mPaintInfo.colTodo = config.readEntry( "TodoMessage", QVariant( c6 ) ).value<QColor>();
+    c7 = config.readEntry( "AltBackgroundColor", QVariant( c7 ) ).value<QColor>();
   }
   else {
     mPaintInfo.colFore = c1;
@@ -518,14 +518,14 @@ void KMHeaders::readConfig (void)
     if ( !( config.readEntry( "defaultFonts", true ) ) )
     {
       QFont listFont( KGlobalSettings::generalFont() );
-      listFont = config.readEntry( "list-font", QVariant( &listFont ) ).value<QFont>();
+      listFont = config.readEntry( "list-font", QVariant ( listFont ) ).value<QFont>();
       setFont( listFont );
-      mNewFont = config.readEntry( "list-new-font", QVariant( &listFont ) ).value<QFont>();
-      mUnreadFont = config.readEntry( "list-unread-font", QVariant( &listFont ) ).value<QFont>();
-      mImportantFont = config.readEntry( "list-important-font", QVariant( &listFont ) ).value<QFont>();
-      mTodoFont = config.readEntry( "list-todo-font", QVariant( &listFont ) ).value<QFont>();
+      mNewFont = config.readEntry( "list-new-font", QVariant ( listFont ) ).value<QFont>();
+      mUnreadFont = config.readEntry( "list-unread-font", QVariant ( listFont ) ).value<QFont>();
+      mImportantFont = config.readEntry( "list-important-font", QVariant( listFont )).value<QFont>();
+      mTodoFont = config.readEntry( "list-todo-font", QVariant( listFont ) ).value<QFont>();
       mDateFont = KGlobalSettings::fixedFont();
-      mDateFont = config.readEntry( "list-date-font", QVariant( &mDateFont ) ).value<QFont>();
+      mDateFont = config.readEntry( "list-date-font", QVariant( mDateFont ) ).value<QFont>();
     } else {
       mNewFont= mUnreadFont = mImportantFont = mDateFont = mTodoFont =
         KGlobalSettings::generalFont();

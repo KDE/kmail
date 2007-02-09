@@ -460,7 +460,7 @@ void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
   }
 }
 
-FolderStorage* const KMAcctCachedImap::rootFolder() const
+FolderStorage* KMAcctCachedImap::rootFolder() const
 {
   return mFolder;
 }

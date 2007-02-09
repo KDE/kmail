@@ -91,7 +91,7 @@ namespace KMail {
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i ) {
         const QString key = QString( "quote%1-font" ).arg( i+1 );
-        mQuoteFont[i] = fonts.readEntry( key, QVariant( &defaultFont ) ).value<QFont>();
+        mQuoteFont[i] = fonts.readEntry( key, QVariant( defaultFont ) ).value<QFont>();
       }
     }
 

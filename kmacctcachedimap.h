@@ -180,7 +180,7 @@ public:
   /**
    * Returns the root folder of this account
    */
-  virtual FolderStorage* const rootFolder() const;
+  virtual FolderStorage* rootFolder() const;
 
   /** return if the account passed the annotation test  */
   bool annotationCheckPassed(){ return mAnnotationCheckPassed;};

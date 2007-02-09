@@ -1328,7 +1328,7 @@ static const int numMdnMessageBoxes
 
 static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
-    if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) )
+    if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
       if ( mdnMessageBoxes[i].canDeny ) {
 	const KCursorSaver saver( Qt::ArrowCursor );
 	int answer = QMessageBox::information( 0,
@@ -1344,6 +1344,7 @@ static int requestAdviceOnMDN( const char * what ) {
 			 i18n("&Ignore"), i18n("&Send") );
 	return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
       }
+    }
   kWarning(5006) << "didn't find data for message box \""
 		  << what << "\"" << endl;
   return 0;
