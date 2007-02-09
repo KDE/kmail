@@ -372,6 +372,7 @@ class AccountsPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AccountsPageReceivingTab( QWidget * parent=0 );
+  ~AccountsPageReceivingTab();
   QString helpAnchor() const;
   void save();
 

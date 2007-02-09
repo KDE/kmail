@@ -154,6 +154,11 @@ void KMAccount::readConfig(KConfig& config)
   {
     setFolder(kmkernel->folderMgr()->findIdString(folderName), true);
   }
+
+  if (mInterval == 0)
+    deinstallTimer();
+  else
+    installTimer();
 }
 
 
@@ -280,15 +285,10 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 void KMAccount::setCheckInterval(int aInterval)
 {
   if (aInterval <= 0)
-  {
     mInterval = 0;
-    deinstallTimer();
-  }
   else
-  {
     mInterval = aInterval;
-    installTimer();
-  }
+  // Don't call installTimer from here! See #117935.
 }
 
 //----------------------------------------------------------------------------
