@@ -211,8 +211,7 @@ void PopAccount::readConfig(KConfig& config)
   mLeaveOnServerCount = config.readEntry("leave-on-server-count", -1 );
   mLeaveOnServerSize = config.readEntry("leave-on-server-size", -1 );
   mFilterOnServer = config.readEntry("filter-on-server", false );
-  mFilterOnServerCheckSize =
-      config.readEntry("filter-os-check-size", QVariant( (uint) 50000 ) ).toUInt();
+  mFilterOnServerCheckSize = config.readEntry("filter-os-check-size", (uint) 50000 );
 }
 
 

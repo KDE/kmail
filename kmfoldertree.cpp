@@ -429,11 +429,11 @@ void KMFolderTree::readColorConfig (void)
 
   if (!conf.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = conf.readEntry( "ForegroundColor",
-                                        QVariant( c1 ) ).value<QColor>();
+                                        c1);
     mPaintInfo.colUnread = conf.readEntry( "UnreadMessage",
-                                        QVariant( c2 ) ).value<QColor>();
+                                        c2);
     mPaintInfo.colBack = conf.readEntry( "BackgroundColor",
-                                        QVariant( c4 ) ).value<QColor>();
+                                        c4 );
   }
   else {
     mPaintInfo.colFore = c1;

@@ -367,7 +367,7 @@ void KMMainWidget::readConfig(void)
     mThreadPref = group.readEntry( "nestedMessages", false );
     // size of the mainwin
     QSize defaultSize(750,560);
-    siz = group.readEntry("MainWin", QVariant( defaultSize ) ).toSize();
+    siz = group.readEntry("MainWin", defaultSize );
     if (!siz.isEmpty())
       resize(siz);
     // default width of the foldertree

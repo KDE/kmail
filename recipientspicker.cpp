@@ -668,7 +668,7 @@ void RecipientsPicker::readConfig()
 {
   KSharedConfig::Ptr cfg = KGlobal::config();
   KConfigGroup group( cfg, "RecipientsPicker" );
-  QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
+  QSize size = group.readEntry( "Size", QSize() );
   if ( !size.isEmpty() ) {
     resize( size );
   }

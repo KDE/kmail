@@ -73,7 +73,7 @@ KMTransportInfo::~KMTransportInfo()
 void KMTransportInfo::readConfig(int id)
 {
   KConfigGroup config( KMKernel::config(), "Transport " + QString::number(id) );
-  mId = config.readEntry( "id", QVariant( (uint) 0 ) ).toUInt();
+  mId = config.readEntry( "id", 0 );
   type = config.readEntry("type", "smtp");
   name = config.readEntry("name", i18n("Unnamed"));
   host = config.readEntry("host", "localhost");

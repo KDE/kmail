@@ -405,7 +405,7 @@ MailingList::readConfig( KConfig* config )
 {
   mFeatures =  config->readEntry( "MailingListFeatures", 0 );
   mHandler = static_cast<MailingList::Handler>(
-    config->readEntry( "MailingListHandler", QVariant( MailingList::KMail ) ).toInt() );
+    config->readEntry( "MailingListHandler", (int)MailingList::KMail ) );
 
   mId = config->readEntry("MailingListId");
   mPostURLS        = config->readEntry( "MailingListPostingAddress" , QStringList() );

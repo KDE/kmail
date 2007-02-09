@@ -155,11 +155,10 @@ void KMFolder::readConfig( KConfig* config )
     mSystemLabel = config->readEntry( "SystemLabel" );
   mExpireMessages = config->readEntry( "ExpireMessages", false );
   mReadExpireAge = config->readEntry( "ReadExpireAge", 3 );
-  mReadExpireUnits = (ExpireUnits)
-      config->readEntry( "ReadExpireUnits", QVariant( expireMonths ) ).toInt();
+  mReadExpireUnits = (ExpireUnits)config->readEntry( "ReadExpireUnits", (int)expireMonths );
   mUnreadExpireAge = config->readEntry( "UnreadExpireAge", 12 );
   mUnreadExpireUnits = (ExpireUnits)
-      config->readEntry( "UnreadExpireUnits", QVariant( expireNever ) ).toInt();
+      config->readEntry( "UnreadExpireUnits", (int)expireNever );
   mExpireAction = config->readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
   mExpireToFolderId = config->readEntry( "ExpireToFolder" );
 
@@ -170,10 +169,10 @@ void KMFolder::readConfig( KConfig* config )
   mMailingListEnabled = config->readEntry( "MailingListEnabled", false );
   mMailingList.readConfig( config );
 
-  mIdentity = config->readEntry("Identity", QVariant( (uint) 0 ) ).toUInt();
+  mIdentity = config->readEntry("Identity", 0 );
 
   setUserWhoField( config->readEntry( "WhoField" ), false );
-  uint savedId = config->readEntry( "Id" , QVariant( (uint) 0 ) ).toUInt();
+  uint savedId = config->readEntry( "Id" , 0 );
   // make sure that we don't overwrite a valid id
   if ( savedId != 0 && mId == 0 )
     mId = savedId;

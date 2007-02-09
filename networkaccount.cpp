@@ -184,7 +184,7 @@ namespace KMail {
 
     setHost( config.readEntry( "host" ) );
 
-    unsigned int port = config.readEntry( "port", QVariant( (uint) defaultPort() ) ).toUInt();
+    unsigned int port = config.readEntry( "port", (uint)defaultPort() );
     if ( port > USHRT_MAX ) port = defaultPort();
     setPort( port );
 
