@@ -447,7 +447,7 @@ namespace KMail {
 
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
-      resize( geometry.readEntry( "Identity Dialog size", QVariant( QSize() ) ).toSize() );
+      resize( geometry.readEntry( "Identity Dialog size", QSize() ));
     mNameEdit->setFocus();
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),

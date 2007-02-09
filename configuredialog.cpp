@@ -372,7 +372,7 @@ void IdentityPage::save() {
     // have more than one identity, so better show the combo in the
     // composer now:
     KConfigGroup composer( KMKernel::config(), "Composer" );
-    int showHeaders = composer.readEntry( "headers", QVariant( HDR_STANDARD ) ).toInt();
+    int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
     showHeaders |= HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
   }
@@ -380,7 +380,7 @@ void IdentityPage::save() {
   if( mOldNumberOfIdentities > 1 && mIdentityList->childCount() < 2 ) {
     // have only one identity, so remove the combo in the composer:
     KConfigGroup composer( KMKernel::config(), "Composer" );
-    int showHeaders = composer.readEntry( "headers", QVariant( HDR_STANDARD ) ).toInt();
+    int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
     showHeaders &= ~HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
   }
@@ -1660,7 +1660,7 @@ void AppearancePage::FontsTab::doLoadOther() {
   QFont fixedFont = KGlobalSettings::fixedFont();
   for ( int i = 0 ; i < numFontNames ; i++ )
     mFont[i] = fonts.readEntry( fontNames[i].configName,
-      QVariant( (fontNames[i].onlyFixed) ? fixedFont : mFont[0] ) ).value<QFont>();
+      (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
 
   mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentIndex( 0 );
@@ -1675,7 +1675,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
   for ( int i = 0 ; i < numFontNames ; i++ )
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
-      mFont[i] = fonts.readEntry( fontNames[i].configName, QVariant( QFont() ) ).value<QFont>();
+      mFont[i] = fonts.readEntry( fontNames[i].configName, QFont() );
       kDebug(5006) << "got font \"" << fontNames[i].configName
                 << "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
@@ -1811,8 +1811,7 @@ void AppearancePage::ColorsTab::doLoadOther() {
 
   for ( int i = 0 ; i < numColorNames ; i++ )
     mColorList->setColor( i,
-      reader.readEntry( colorNames[i].configName, QVariant( &defaultColor[i] ) )
-          .value<QColor>() );
+      reader.readEntry( colorNames[i].configName, defaultColor[i] ));
   connect( mColorList, SIGNAL( changed( ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1828,7 +1827,7 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
   for ( int i = 0 ; i < numColorNames ; i++ )
     if ( reader.hasKey( colorNames[i].configName ) )
       mColorList->setColor( i,
-          reader.readEntry( colorNames[i].configName, QVariant( QColor() ) ).value<QColor>() );
+          reader.readEntry( colorNames[i].configName, QColor() ));
 }
 
 void AppearancePage::ColorsTab::save() {
@@ -2118,7 +2117,7 @@ void AppearancePage::HeadersTab::doLoadOther() {
 
   // "Date Display":
   setDateDisplay( general.readEntry( "dateFormat",
-                                     QVariant( DateFormatter::Fancy ) ).toInt(),
+                                     (int) DateFormatter::Fancy ),
                   general.readEntry( "customDateFormat" ) );
 }
 
