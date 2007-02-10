@@ -84,8 +84,8 @@ void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
       int factor = static_cast<int> ( pow( 1000, mFactor ) );
       mProgressBar->setMaximum( max );
       mProgressBar->setValue( current );
-      mInfoLabel->setText( i18n("%1 of %2 %3 used").arg( current/factor )
-                                .arg( max/factor ).arg( mUnits ) );
+      mInfoLabel->setText( i18n("%1 of %2 %3 used", current/factor,
+                                max/factor, mUnits ) );
       mRootLabel->setText( info.root() );
 }
 

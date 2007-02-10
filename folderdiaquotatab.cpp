@@ -118,7 +118,7 @@ void KMail::FolderDiaQuotaTab::load()
   KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
   if ( folder && folder->storage() == mImapAccount->rootFolder() )
     return; // nothing to be done for the (virtual) account folder
-  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
+  mLabel->setText( i18n( "Connecting to server %1, please wait...", mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
     slotConnectionResult( -1, QString::null );
@@ -137,7 +137,7 @@ void KMail::FolderDiaQuotaTab::slotConnectionResult( int errorCode, const QStrin
               this, SLOT( slotConnectionResult(int, const QString&) ) );
   if ( errorCode ) {
     if ( errorCode == -1 )  // unspecified error
-      mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
+      mLabel->setText( i18n( "Error connecting to server %1", mImapAccount->host() ) );
     else
       // Connection error (error message box already shown by the account)
       mLabel->setText( KIO::buildErrorString( errorCode, errorMsg ) );
@@ -163,7 +163,7 @@ void KMail::FolderDiaQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
       if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION )
         mLabel->setText( i18n( "This account does not have support for quota information." ) );
       else
-        mLabel->setText( i18n( "Error retrieving quota information from server\n%1" ).arg( job->errorString() ) );
+        mLabel->setText( i18n( "Error retrieving quota information from server\n%1", job->errorString() ) );
     } else {
       mQuotaInfo = info;
     }

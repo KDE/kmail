@@ -107,7 +107,7 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
             "You cannot bind a keyboard shortcut to <i>Universal</i> templates.</p>"
             "</qt>" );
 
-  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>" ).arg( help ) );
+  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
   mHelp->setOpenExternalLinks(true);
   mHelp->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::LinksAccessibleByKeyboard);
 }

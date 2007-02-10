@@ -104,7 +104,7 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "</qt>" );
   }
 
-  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>" ).arg( help ) );
+  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
   mHelp->setOpenExternalLinks(true);
   mHelp->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::LinksAccessibleByKeyboard);
 }
@@ -343,12 +343,12 @@ void TemplatesConfiguration::loadFromPhrases()
 
   str = replyPhrases.phraseForward();
   if ( !str.isEmpty() ) {
-    textEdit_forward->setText( QString( i18n(
+    textEdit_forward->setText( i18n(
     "%REM=\"Default forward template\"%-\n"
     "----------  %1  ----------\n"
     "%TEXT\n"
-    "-------------------------------------------------------\n"
-    ) ).arg( convertPhrases( str ) ) );
+    "-------------------------------------------------------\n",
+    convertPhrases( str ) ) );
   }
   else {
     textEdit_forward->setText( defaultForward() );
@@ -392,7 +392,7 @@ void TemplatesConfiguration::importFromPhrases()
 
   str = replyPhrases.phraseForward();
   if ( !str.isEmpty() ) {
-    GlobalSettings::self()->setTemplateForward( QString( i18n(
+    GlobalSettings::self()->setTemplateForward( i18n(
     "%REM=\"Default forward template\"%-\n"
     "\n"
     "----------  %1  ----------\n"
@@ -403,8 +403,8 @@ void TemplatesConfiguration::importFromPhrases()
     "To: %OTOADDR\n"
     "\n"
     "%TEXT\n"
-    "-------------------------------------------------------\n"
-    ) ).arg( convertPhrases( str ) ) );
+    "-------------------------------------------------------\n",
+    convertPhrases( str ) ) );
   }
   else {
     GlobalSettings::self()->setTemplateForward( defaultForward() );

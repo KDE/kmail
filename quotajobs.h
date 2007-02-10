@@ -67,8 +67,8 @@ class QuotaInfo {
     if ( isValid() && !isEmpty() ) {
       readConfig();
       int factor = static_cast<int> ( pow( 1000, mFactor ) );
-      return i18n("%1 of %2 %3 used").arg( mCurrent.toInt() / factor )
-                                .arg( mMax.toInt() / factor ).arg( mUnits );
+      return i18n("%1 of %2 %3 used", mCurrent.toInt() / factor,
+                                      mMax.toInt() / factor, mUnits );
     }
     return QString();
   }

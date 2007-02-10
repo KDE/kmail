@@ -918,7 +918,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
 
   if ( !changedIdents.isEmpty() ) {
     QString information =
-      i18nc( "This identity has been changed to use the modified transport:",
+      i18np( "This identity has been changed to use the modified transport:",
              "These %n identities have been changed to use the modified transport:",
              changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );

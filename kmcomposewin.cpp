@@ -3892,8 +3892,8 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
                                 i18n("The custom drafts or templates folder for "
                                      "identify \"%1\" does not exist (anymore); "
                                      "therefore, the default drafts or templates "
-                                     "folder will be used.")
-                                .arg( id.identityName() ) );
+                                     "folder will be used.",
+                                     id.identityName() ) );
     }
   }
   if ( imapTheFolder && imapTheFolder->noContent() )

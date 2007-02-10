@@ -475,7 +475,7 @@ void PopAccount::slotJobFinished() {
       "the UIDL command: this command is required to determine, in a reliable way, "
       "which of the mails on the server KMail has already seen before;\n"
       "the feature to leave the mails on the server will therefore not "
-      "work properly.").arg(NetworkAccount::name()) );
+      "work properly.", NetworkAccount::name()) );
       // An attempt to work around buggy pop servers, these seem to be popular.
       mUidsOfNextSeenMsgsDict = mUidsOfSeenMsgsDict;
     }

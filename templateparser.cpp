@@ -234,8 +234,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( str );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Cannot insert content from file %1: %2" ).
-                              arg( path ).arg( file.errorString() ) );
+                              i18n( "Cannot insert content from file %1: %2",
+                                    path, file.errorString() ) );
         }
 
       } else if ( cmd.startsWith( "SYSTEM=" ) ) {
@@ -267,8 +267,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           body.append( QString::fromLocal8Bit( content, content.size() ) );
         } else if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Cannot insert content from file %1: %2").
-                              arg( path ).arg(file.errorString() ));
+                              i18n( "Cannot insert content from file %1: %2",
+                                    path, file.errorString() ));
         }
 
       } else if ( cmd.startsWith( "QUOTEPIPE=" ) ) {
@@ -1005,12 +1005,12 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
           if ( mPipeRc != 0 && mDebug ) {
             if ( mPipeErr.isEmpty() ) {
               KMessageBox::error( 0,
-                                  i18n( "Pipe command exit with status %1: %2").
-                                  arg( mPipeRc ).arg( cmd ) );
+                                  i18n( "Pipe command exit with status %1: %2",
+                                        mPipeRc, cmd ) );
             } else {
               KMessageBox::detailedError( 0,
-                                          i18n( "Pipe command exit with status %1: %2" ).
-                                          arg( mPipeRc ).arg( cmd ), mPipeErr );
+                                          i18n( "Pipe command exit with status %1: %2",
+                                                mPipeRc, cmd ), mPipeErr );
             }
           }
 
@@ -1020,12 +1020,12 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
           if ( mPipeRc != 0 && mDebug ) {
             if ( mPipeErr.isEmpty() ) {
               KMessageBox::error( 0,
-                                  i18n( "Pipe command killed by signal %1: %2" ).
-                                  arg( -(mPipeRc) ).arg( cmd ) );
+                                  i18n( "Pipe command killed by signal %1: %2",
+                                        -(mPipeRc), cmd ) );
             } else {
               KMessageBox::detailedError( 0,
-                                          i18n( "Pipe command killed by signal %1: %2" ).
-                                          arg( -(mPipeRc) ).arg( cmd ), mPipeErr );
+                                          i18n( "Pipe command killed by signal %1: %2",
+                                                -(mPipeRc), cmd ), mPipeErr );
             }
           }
         }
@@ -1036,8 +1036,8 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
         proc.detach();
         if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Pipe command did not finish within %1 seconds: %2" ).
-                              arg( PipeTimeout ).arg( cmd ) );
+                              i18n( "Pipe command did not finish within %1 seconds: %2",
+                                    PipeTimeout, cmd ) );
         }
       }
 
@@ -1048,19 +1048,19 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
       if ( mDebug ) {
         if ( mPipeErr.isEmpty() ) {
           KMessageBox::error( 0,
-                              i18n( "Cannot write to process stdin: %1" ).arg( cmd ) );
+                              i18n( "Cannot write to process stdin: %1", cmd ) );
         } else {
           KMessageBox::detailedError( 0,
-                                      i18n( "Cannot write to process stdin: %1" ).
-                                      arg( cmd ), mPipeErr );
+                                      i18n( "Cannot write to process stdin: %1",
+                                            cmd ), mPipeErr );
         }
       }
     }
 
   } else if ( mDebug ) {
     KMessageBox::error( 0,
-                        i18n( "Cannot start pipe command from template: %1" ).
-                        arg( cmd ) );
+                        i18n( "Cannot start pipe command from template: %1",
+                              cmd ) );
   }
 
   return mPipeOut;
