@@ -726,8 +726,8 @@ void PopAccount::slotJobFinished() {
     if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
       mMailCheckProgressItem->setStatus(
-        i18np( "Fetched 1 message from %1. Deleting messages from server...",
-              "Fetched %n messages from %1. Deleting messages from server...",
+        i18np( "Fetched 1 message from %2. Deleting messages from server...",
+              "Fetched %1 messages from %2. Deleting messages from server...",
               numMsgs ,
           mHost ) );
       QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
@@ -742,8 +742,8 @@ void PopAccount::slotJobFinished() {
     } else {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
-        i18np( "Fetched 1 message from %1. Terminating transmission...",
-              "Fetched %n messages from %1. Terminating transmission...",
+        i18np( "Fetched 1 message from %2. Terminating transmission...",
+              "Fetched %1 messages from %2. Terminating transmission...",
               numMsgs ,
           mHost ) );
       url.setPath( "/commit" );
@@ -761,8 +761,8 @@ void PopAccount::slotJobFinished() {
     }
     idsOfMsgsToDelete.clear();
     mMailCheckProgressItem->setStatus(
-      i18np( "Fetched 1 message from %1. Terminating transmission...",
-            "Fetched %n messages from %1. Terminating transmission...",
+      i18np( "Fetched 1 message from %2. Terminating transmission...",
+            "Fetched %1 messages from %2. Terminating transmission...",
             numMsgs ,
         mHost ) );
     KUrl url = getUrl();

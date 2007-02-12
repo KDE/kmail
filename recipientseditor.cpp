@@ -805,7 +805,7 @@ void SideWidget::setTotal( int recipients, int lines )
 
   QString labelText;
   if ( recipients == 0 ) labelText = i18n("No recipients");
-  else labelText = i18np("1 recipient","%n recipients", recipients );
+  else labelText = i18np("1 recipient","%1 recipients", recipients );
   mTotalLabel->setText( labelText );
 
   if ( lines > 3 ) mTotalLabel->show();

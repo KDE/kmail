@@ -255,8 +255,8 @@ void KMAcctLocal::postProcess()
     if( mMailCheckProgressItem ) { // do this only once...
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, mNumMsgs );
       mMailCheckProgressItem->setStatus(
-        i18np( "Fetched 1 message from mailbox %1.",
-              "Fetched %n messages from mailbox %1.",
+        i18np( "Fetched 1 message from mailbox %2.",
+              "Fetched %1 messages from mailbox %2.",
               mNumMsgs, mMailFolder->location() ) );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;

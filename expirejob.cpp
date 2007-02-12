@@ -163,8 +163,8 @@ void ExpireJob::done()
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
       moving = true;
-      str = i18np( "Removing 1 old message from folder %1...",
-                  "Removing %n old messages from folder %1...", count ,
+      str = i18np( "Removing 1 old message from folder %2...",
+                  "Removing %1 old messages from folder %2...", count ,
               mSrcFolder->label() );
     } else {
       // Expire by moving
@@ -185,8 +185,8 @@ void ExpireJob::done()
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
         moving = true;
-        str = i18np( "Moving 1 old message from folder %1 to folder %2...",
-                     "Moving %n old messages from folder %1 to folder %2...",
+        str = i18np( "Moving 1 old message from folder %2 to folder %3...",
+                     "Moving %1 old messages from folder %2 to folder %3...",
                      count, mSrcFolder->label(), mMoveToFolder->label() );
       }
     }
@@ -212,14 +212,14 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
   switch ( command->result() ) {
   case KMCommand::OK:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
-      msg = i18np( "Removed 1 old message from folder %1.",
-                  "Removed %n old messages from folder %1.",
+      msg = i18np( "Removed 1 old message from folder %2.",
+                  "Removed %1 old messages from folder %2.",
                   mRemovedMsgs.count() ,
               mSrcFolder->label() );
     }
     else {
-      msg = i18np( "Moved 1 old message from folder %1 to folder %2.",
-                   "Moved %n old messages from folder %1 to folder %2.",
+      msg = i18np( "Moved 1 old message from folder %2 to folder %3.",
+                   "Moved %1 old messages from folder %2 to folder %3.",
                    mRemovedMsgs.count(), mSrcFolder->label(), mMoveToFolder->label() );
     }
     break;

@@ -93,7 +93,7 @@ QString RecipientItem::email() const
 {
   if ( mAddressee.isEmpty() &&  mDistributionList ) {
     int count = mDistributionList->entries().count();
-    return i18np( "1 email address", "%n email addresses", count );
+    return i18np( "1 email address", "%1 email addresses", count );
   } else {
     return mEmail;
   }
@@ -636,9 +636,9 @@ void RecipientsPicker::pick( Recipient::Type type )
   if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
         i18np("You selected 1 recipient. The maximum supported number of "
-             "recipients is %1. Please adapt the selection.",
-             "You selected %n recipients. The maximum supported number of "
-             "recipients is %1. Please adapt the selection.", count,
+             "recipients is %2. Please adapt the selection.",
+             "You selected %1 recipients. The maximum supported number of "
+             "recipients is %2. Please adapt the selection.", count,
         GlobalSettings::self()->maximumRecipients() ) );
     return;
   }

@@ -2074,7 +2074,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     // attachment, we assume the attachment is binary:
     if( str.length() < aMsgPart->decodedSize() ) {
       str.prepend( i18np("[KMail: Attachment contains binary data. Trying to show first character.]",
-          "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
+          "[KMail: Attachment contains binary data. Trying to show first %1 characters.]",
                                str.length()) + QChar::fromLatin1('\n') );
     }
     htmlWriter()->queue( Qt::escape( str ) );

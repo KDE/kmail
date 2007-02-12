@@ -187,8 +187,8 @@ void KMAcctMaildir::processNewMail(bool)
   if( mMailCheckProgressItem ) { // do this only once...
     BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
     mMailCheckProgressItem->setStatus(
-      i18np( "Fetched 1 message from maildir folder %1.",
-            "Fetched %n messages from maildir folder %1.",
+      i18np( "Fetched 1 message from maildir folder %2.",
+            "Fetched %1 messages from maildir folder %2.",
             num , mailFolder.location() ) );
 
     mMailCheckProgressItem->setComplete();

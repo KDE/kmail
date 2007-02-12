@@ -919,7 +919,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   if ( !changedIdents.isEmpty() ) {
     QString information =
       i18np( "This identity has been changed to use the modified transport:",
-             "These %n identities have been changed to use the modified transport:",
+             "These %1 identities have been changed to use the modified transport:",
              changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );
   }
@@ -950,7 +950,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 
   if ( !changedIdents.isEmpty() ) {
     QString information = i18np( "This identity has been changed to use the default transport:",
-                          "These %n identities have been changed to use the default transport:",
+                          "These %1 identities have been changed to use the default transport:",
                           changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );
   }

@@ -607,7 +607,7 @@ int KMFolderMbox::createIndexFromContents()
       {
         if (numStatus <= 0)
         {
-          msgStr = i18np("Creating index file: one message done", "Creating index file: %n messages done", num);
+          msgStr = i18np("Creating index file: one message done", "Creating index file: %1 messages done", num);
           emit statusMsg(msgStr);
           numStatus = 10;
         }

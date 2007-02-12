@@ -435,8 +435,8 @@ void KMSender::doSendMsg()
         sentFolder->close();
     if ( someSent ) {
       if ( mSentMessages == mTotalMessages ) {
-        setStatusMsg(i18np("%n queued message successfully sent.",
-                          "%n queued messages successfully sent.",
+        setStatusMsg(i18np("%1 queued message successfully sent.",
+                          "%1 queued messages successfully sent.",
                           mSentMessages));
       } else {
         setStatusMsg(i18n("%1 of %2 queued messages successfully sent.",

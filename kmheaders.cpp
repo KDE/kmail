@@ -1347,11 +1347,11 @@ void KMHeaders::setFolderInfoStatus ()
   QString str;
   const int unread = mFolder->countUnread();
   if ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
-    str = unread ? i18np( "1 unsent", "%n unsent", unread ) : i18n( "0 unsent" );
+    str = unread ? i18np( "1 unsent", "%1 unsent", unread ) : i18n( "0 unsent" );
   else
-    str = unread ? i18np( "1 unread", "%n unread", unread ) : i18n( "0 unread" );
+    str = unread ? i18np( "1 unread", "%1 unread", unread ) : i18n( "0 unread" );
   const int count = mFolder->count();
-  str = count ? i18np( "1 message, %1.", "%n messages, %1.", count, str )
+  str = count ? i18np( "1 message, %2.", "%1 messages, %2.", count, str )
               : i18n( "0 messages" ); // no need for "0 unread" to be added here
   if ( mFolder->isReadOnly() )
     str = i18nc("%1 = n messages, m unread.", "%1 Folder is read-only.", str );
@@ -1537,7 +1537,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
        KMessageBox::warningContinueCancel(this,
          i18np("<qt>Do you really want to delete the selected message?<br>"
               "Once deleted, it cannot be restored.</qt>",
-              "<qt>Do you really want to delete the %n selected messages?<br>"
+              "<qt>Do you really want to delete the %1 selected messages?<br>"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
 	 msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), KStandardGuiItem::del(),
 	 "NoConfirmDelete") == KMessageBox::Cancel )

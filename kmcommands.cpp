@@ -295,7 +295,7 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog = new KProgressDialog(mParent,
       i18n("Please wait"),
       i18np("Please wait while the message is transferred",
-        "Please wait while the %n messages are transferred", mMsgList.count()),
+        "Please wait while the %1 messages are transferred", mMsgList.count()),
       true);
     mProgressDialog->setMinimumDuration(1000);
   }
@@ -398,7 +398,7 @@ void KMCommand::slotJobFinished()
   // update the progressbar
   if ( mProgressDialog ) {
     mProgressDialog->setLabel(i18np("Please wait while the message is transferred",
-          "Please wait while the %n messages are transferred", KMCommand::mCountJobs));
+          "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
   }
   if (KMCommand::mCountJobs == 0)
   {

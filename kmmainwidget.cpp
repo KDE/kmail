@@ -916,8 +916,8 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     if ( !folder->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-        summary += "<br>" + i18np( "1 new message in %1",
-                                  "%n new messages in %1",
+        summary += "<br>" + i18np( "1 new message in %2",
+                                  "%1 new messages in %2",
                                   newInFolder.find( *it ).value() ,
                               folder->prettyUrl() );
       }
@@ -3691,8 +3691,8 @@ void KMMainWidget::removeDuplicates()
   mHeaders->setFolder(oFolder);
   QString msg;
   if ( numDuplicates )
-    msg = i18np("Removed %n duplicate message.",
-               "Removed %n duplicate messages.", numDuplicates );
+    msg = i18np("Removed %1 duplicate message.",
+               "Removed %1 duplicate messages.", numDuplicates );
     else
       msg = i18n("No duplicate messages found.");
   BroadcastStatus::instance()->setStatusMsg( msg );

@@ -354,18 +354,18 @@ void SearchWindow::updStatus(void)
     if (mFolder && mFolder->search() && !mFolder->search()->running()) {
         if(!mStopped) {
             genMsg = i18n("Done");
-            detailMsg = i18np("%n match (%1)", "%n matches (%1)", numMatches,
-                         i18np("%n message processed",
-                                  "%n messages processed", count));
+            detailMsg = i18np("%1 match (%2)", "%1 matches (%2)", numMatches,
+                         i18np("%1 message processed",
+                                  "%1 messages processed", count));
         } else {
             genMsg = i18n("Search canceled");
-            detailMsg = i18np("%n match so far (%1)",
-                             "%n matches so far (%1)", numMatches,
-                         i18np("%n message processed",
-                                  "%n messages processed", count));
+            detailMsg = i18np("%1 match so far (%2)",
+                             "%1 matches so far (%2)", numMatches,
+                         i18np("%1 message processed",
+                                  "%1 messages processed", count));
         }
     } else {
-        genMsg = i18np("%n match", "%n matches", numMatches);
+        genMsg = i18np("%1 match", "%1 matches", numMatches);
         detailMsg = i18n("Searching in %1 (message %2)",
                      folderName,
                      count);
