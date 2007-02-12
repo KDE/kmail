@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <string.h>
 #include <errno.h>
 
 #include <config.h>
@@ -76,8 +77,7 @@ public:
   KMMsgDictREntry(int size = 0)
   {
     array.resize(size);
-    for (int i = 0; i < size; i++)
-      array.at(i) = 0;
+    memset(array.data(), 0, array.size() * sizeof(KMMsgDictEntry *));  // faster than a loop
     fp = 0;
     swapByteOrder = false;
     baseOffset = 0;
@@ -412,6 +412,19 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   }
   if (swapByteOrder)
      count = kmail_swap_32(count);
+
+  // quick consistency check to avoid allocating huge amount of memory
+  // due to reading corrupt file (#71549)
+  long pos = ftell(fp);       // store current position
+  fseek(fp, 0, SEEK_END);
+  long fileSize = ftell(fp);  // how large is the file ?
+  fseek(fp, pos, SEEK_SET);   // back to previous position
+
+  // the file must at least contain what we try to read below
+  if ( (fileSize - pos) < (count * sizeof(Q_UINT32)) ) {
+    fclose(fp);
+    return -1;
+  }
 
   KMMsgDictREntry *rentry = new KMMsgDictREntry(count);
 
