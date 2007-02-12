@@ -98,8 +98,11 @@ namespace KMail {
     /** Configure the slave by adding to the meta data map */
     virtual KIO::MetaData slaveConfig() const;
 
-    virtual void readConfig( /*const*/ KConfig/*Base*/ & config );
-    virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
+    // This class is the reason that readConfig can't take a const KConfigGroup
+    // (it deletes entries from it when migrating to kwallet),
+    // and writeConfig can't be const (it sets member vars).
+    virtual void readConfig( KConfigGroup & config );
+    virtual void writeConfig( KConfigGroup & config );
 
     /** @return an URL for this account */
     virtual KUrl getUrl() const;

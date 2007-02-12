@@ -45,6 +45,7 @@ using KPIM::BroadcastStatus;
 #include <kio/scheduler.h>
 #include <kio/passworddialog.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kio/jobuidelegate.h>
 using KIO::MetaData;
 
@@ -201,7 +202,7 @@ void PopAccount::processNewMail(bool _interactive)
 
 
 //-----------------------------------------------------------------------------
-void PopAccount::readConfig(KConfig& config)
+void PopAccount::readConfig(KConfigGroup& config)
 {
   NetworkAccount::readConfig(config);
 
@@ -216,7 +217,7 @@ void PopAccount::readConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void PopAccount::writeConfig(KConfig& config)
+void PopAccount::writeConfig(KConfigGroup& config)
 {
   NetworkAccount::writeConfig(config);
 

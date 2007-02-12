@@ -97,8 +97,8 @@ public:
   virtual void setImapFolder(KMFolderCachedImap *);
   KMFolderCachedImap* imapFolder() const { return mFolder; }
 
-  virtual void readConfig( /*const*/ KConfig/*Base*/ & config );
-  virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
+  virtual void readConfig( KConfigGroup & config );
+  virtual void writeConfig( KConfigGroup & config );
 
   /**
    * Invalidate the local cache.

@@ -183,7 +183,7 @@ namespace KMail {
   //
   //
 
-  void ImapAccountBase::readConfig( /*const*/ KConfig/*Base*/ & config ) {
+  void ImapAccountBase::readConfig( KConfigGroup& config ) {
     NetworkAccount::readConfig( config );
 
     setAutoExpunge( config.readEntry( "auto-expunge", false ) );
@@ -204,7 +204,7 @@ namespace KMail {
       map[SharedNS] = list.replaceInStrings( "\"", "" );
     setNamespaces( map );
     // read namespace - delimiter
-    namespaceDelim entries = config.entryMap( config.group() );
+    const namespaceDelim entries = config.entryMap();
     namespaceDelim namespaceToDelimiter;
     for ( namespaceDelim::ConstIterator it = entries.begin();
           it != entries.end(); ++it )
@@ -222,7 +222,7 @@ namespace KMail {
     }
   }
 
-  void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
+  void ImapAccountBase::writeConfig( KConfigGroup& config ) {
     NetworkAccount::writeConfig( config );
 
     config.writeEntry( "auto-expunge", autoExpunge() );

@@ -35,7 +35,6 @@ class QTimer;
 
 class KMFolder;
 class KMAcctFolder;
-class KConfig;
 class KMFolderJob;
 class KMFolderCachedImap;
 class AccountsPageReceivingTab;
@@ -141,16 +140,14 @@ public:
 
   /**
    * Read config file entries. This method is called by the account
-   * manager when a new account is created. The config group is
-   * already properly set by the caller.
+   * manager when a new account is created.
    */
-  virtual void readConfig(KConfig& config);
+  virtual void readConfig(KConfigGroup& config);
 
   /**
-   * Write all account information to given config file. The config group
-   * is already properly set by the caller.
+   * Write all account information to given config file.
    */
-  virtual void writeConfig(KConfig& config);
+  virtual void writeConfig(KConfigGroup& config);
 
   /**
    * Set/get interval for checking if new mail arrived (in minutes).

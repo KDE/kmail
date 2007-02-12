@@ -26,8 +26,8 @@ public:
 
   virtual QString type(void) const;
   virtual void processNewMail(bool);
-  virtual void readConfig(KConfig&);
-  virtual void writeConfig(KConfig&);
+  virtual void readConfig(KConfigGroup&);
+  virtual void writeConfig(KConfigGroup&);
 
 protected:
   QString mLocation;

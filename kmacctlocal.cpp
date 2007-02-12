@@ -18,7 +18,7 @@ using KPIM::ProgressManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QFileInfo>
 #include <QTime>
@@ -274,7 +274,7 @@ void KMAcctLocal::postProcess()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::readConfig(KConfig& config)
+void KMAcctLocal::readConfig(KConfigGroup& config)
 {
   KMAccount::readConfig(config);
   mLocation = config.readPathEntry("Location", mLocation);
@@ -295,7 +295,7 @@ void KMAcctLocal::readConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::writeConfig(KConfig& config)
+void KMAcctLocal::writeConfig(KConfigGroup& config)
 {
   KMAccount::writeConfig(config);
 

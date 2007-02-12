@@ -37,7 +37,7 @@
 
 class AccountManager;
 class KMFolder;
-class KConfig/*Base*/;
+class KConfigGroup;
 class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
@@ -96,8 +96,8 @@ namespace KMail {
     /** Configure the slave by adding to the meta data map */
     virtual KIO::MetaData slaveConfig() const;
 
-    virtual void readConfig( KConfig& config );
-    virtual void writeConfig( KConfig& config );
+    virtual void readConfig( KConfigGroup& config );
+    virtual void writeConfig( KConfigGroup& config );
 
     /**
      * The state of the kioslave connection

@@ -90,8 +90,8 @@ public:
    * Inherited methods.
    */
   virtual QString type(void) const;
-  virtual void readConfig(KConfig&);
-  virtual void writeConfig(KConfig&);
+  virtual void readConfig(KConfigGroup&);
+  virtual void writeConfig(KConfigGroup&);
   virtual void processNewMail(bool _interactive);
 
   virtual void killAllJobs( bool disconnectSlave=false ); // NOOP currently

@@ -140,7 +140,7 @@ void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::readConfig(KConfig& config)
+void KMAccount::readConfig(KConfigGroup& config)
 {
   QString folderName;
   mFolder = 0;
@@ -163,7 +163,7 @@ void KMAccount::readConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::writeConfig(KConfig& config)
+void KMAccount::writeConfig(KConfigGroup& config)
 {
   // ID, Name
   KAccount::writeConfig(config);

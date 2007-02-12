@@ -83,7 +83,7 @@ public:
    * manager when a new account is created. The config group is
    * already properly set by the caller.
    */
-  virtual void readConfig(KConfig& config);
+  virtual void readConfig(KConfigGroup& config);
 
   /**
    * Returns the root folder of this account

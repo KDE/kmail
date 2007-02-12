@@ -51,7 +51,7 @@ using KMail::AccountManager;
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QList>
 
@@ -316,7 +316,7 @@ void KMAcctCachedImap::addLastUnreadMsgCount( const KMFolderCachedImap *folder,
 //
 //
 
-void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
+void KMAcctCachedImap::readConfig( KConfigGroup & config ) {
   ImapAccountBase::readConfig( config );
   // Apparently this method is only ever called once (from KMKernel::init) so this is ok
   mPreviouslyDeletedFolders = config.readEntry( "deleted-folders" , QStringList() );
@@ -330,7 +330,7 @@ void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   }
 }
 
-void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
+void KMAcctCachedImap::writeConfig( KConfigGroup & config ) {
   ImapAccountBase::writeConfig( config );
   config.writeEntry( "deleted-folders", mDeletedFolders + mPreviouslyDeletedFolders );
   config.writeEntry( "renamed-folders-paths", mRenamedFolders.keys() );

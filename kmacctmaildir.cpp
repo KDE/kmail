@@ -16,7 +16,7 @@ using KPIM::ProgressManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <QTime>
 
@@ -210,7 +210,7 @@ void KMAcctMaildir::processNewMail(bool)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::readConfig(KConfig& config)
+void KMAcctMaildir::readConfig(KConfigGroup& config)
 {
   KMAccount::readConfig(config);
   mLocation = config.readPathEntry("Location", mLocation);
@@ -218,7 +218,7 @@ void KMAcctMaildir::readConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::writeConfig(KConfig& config)
+void KMAcctMaildir::writeConfig(KConfigGroup& config)
 {
   KMAccount::writeConfig(config);
   config.writePathEntry("Location", mLocation);

@@ -523,7 +523,7 @@ void KMAcctImap::listDirectory()
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::readConfig(KConfig& config)
+void KMAcctImap::readConfig(KConfigGroup& config)
 {
   ImapAccountBase::readConfig( config );
 }
@@ -572,7 +572,7 @@ void KMAcctImap::execFilters(quint32 serNum)
   if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
   if ( mFilterSerNums.contains( serNum ) )
       return;
-  
+
   mFilterSerNums.append( serNum );
   mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), 1 );
 }

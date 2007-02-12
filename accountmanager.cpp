@@ -65,7 +65,7 @@ void AccountManager::writeConfig( bool withSync )
   for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
     groupName.sprintf("Account %d", i);
     KConfigGroup group(config, groupName);
-    (*it)->writeConfig(*config);
+    (*it)->writeConfig(group);
   }
   if (withSync) config->sync();
 }
@@ -102,7 +102,7 @@ void AccountManager::readConfig(void)
     acct = create(acctType, acctName, id);
     if (!acct) continue;
     add(acct);
-    acct->readConfig(*config);
+    acct->readConfig(group);
   }
 }
 

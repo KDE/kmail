@@ -32,7 +32,7 @@
 #include "kmkernel.h"
 #include "globalsettings.h"
 
-#include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kio/global.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -147,7 +147,7 @@ namespace KMail {
   //
   //
 
-  void NetworkAccount::readConfig( /*const*/ KConfig/*Base*/ & config ) {
+  void NetworkAccount::readConfig( KConfigGroup & config ) {
     KMAccount::readConfig( config );
 
     setLogin( config.readEntry( "login" ) );
@@ -195,24 +195,24 @@ namespace KMail {
     mSieveConfig.readConfig( config );
   }
 
-  void NetworkAccount::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
+  void NetworkAccount::writeConfig( KConfigGroup & config ) {
     KMAccount::writeConfig( config );
 
     config.writeEntry( "login", login() );
     config.writeEntry( "store-passwd", storePasswd() );
 
     if ( storePasswd() ) {
-      // write password to the wallet if possbile and necessary
+      // write password to the wallet if possible and necessary
       bool passwdStored = false;
+      Wallet *wallet = kmkernel->wallet();
       if ( mPasswdDirty ) {
-        Wallet *wallet = kmkernel->wallet();
         if ( wallet && wallet->writePassword( "account-" + QString::number(mId), passwd() ) == 0 ) {
           passwdStored = true;
           mPasswdDirty = false;
           mStorePasswdInConfig = false;
         }
       } else {
-        passwdStored = !mStorePasswdInConfig; // already in the wallet
+        passwdStored = wallet ? !mStorePasswdInConfig /*already in the wallet*/ : config.hasKey("pass");
       }
       // if wallet is not available, write to config file, since the account
       // manager deletes this group, we need to write it always
