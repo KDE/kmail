@@ -4077,7 +4077,7 @@ void KMComposeWin::insertSignature( bool append, int pos )
      kmkernel->identityManager()->
      identityForUoidOrDefault( mIdentity->currentIdentity() );
 
-   mOldSigText = GlobalSettings::self()->prependSignature()? ident.signatureRawText() : ident.signatureText();
+   mOldSigText = GlobalSettings::self()->prependSignature()? ident.signature().rawText() : ident.signatureText();
 
    if( !mOldSigText.isEmpty() )
    {
