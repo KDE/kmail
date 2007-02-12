@@ -1036,8 +1036,8 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
         proc.detach();
         if ( mDebug ) {
           KMessageBox::error( 0,
-                              i18n( "Pipe command did not finish within %1 seconds: %2" ).
-                                    arg( PipeTimeout ).arg( cmd ) );
+                              i18n( "Pipe command did not finish within %1 seconds: %2",
+                              PipeTimeout, cmd ) );
         }
       }
 
