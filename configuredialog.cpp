@@ -2557,6 +2557,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mTopQuoteCheck =
+    new QCheckBox( GlobalSettings::self()->prependSignatureItem()->label(), this );
+  vlay->addWidget( mTopQuoteCheck);
+  connect( mTopQuoteCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mSmartQuoteCheck = new QCheckBox(
            GlobalSettings::self()->smartQuoteItem()->label(),
            this, "kcfg_SmartQuote" );
@@ -2674,6 +2680,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   mAutoAppSignFileCheck->setChecked(
            GlobalSettings::self()->autoTextSignature()=="auto" );
+  mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
@@ -2694,6 +2701,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     bool state = composer.readBoolEntry("signature");
     mAutoAppSignFileCheck->setChecked( state );
   }
+  if ( composer.hasKey( "prepend-signature" ) )
+    mTopQuoteCheck->setChecked( composer.readBoolEntry( "prepend-signature" ) );
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote" ) );
   if ( composer.hasKey( "request-mdn" ) )
@@ -2715,6 +2724,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
+  GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked());
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );

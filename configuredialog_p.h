@@ -604,6 +604,7 @@ private:
 
 private:
   QCheckBox     *mAutoAppSignFileCheck;
+  QCheckBox     *mTopQuoteCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox	*mShowRecentAddressesInComposer;

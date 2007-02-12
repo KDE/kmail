@@ -163,6 +163,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mId( id ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
+    mAppendSignatureAction( 0 ), mPrependSignatureAction( 0 ), mInsertSignatureAction( 0 ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
     mUrgentAction( 0 ), mAllFieldsAction( 0 ), mFromAction( 0 ),
     mReplyToAction( 0 ), mToAction( 0 ), mCcAction( 0 ), mBccAction( 0 ),
@@ -1299,9 +1300,17 @@ void KMComposeWin::setupActions(void)
                                      actionCollection(), "show_subject");
   //end of checkable
 
-  (void) new KAction (i18n("Append S&ignature"), 0, this,
+  mAppendSignatureAction = new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
+  mPrependSignatureAction =  new KAction (i18n("Prepend S&ignature"), 0, this,
+                      SLOT(slotPrependSignature()),
+                      actionCollection(), "prepend_signature");
+
+  mInsertSignatureAction =  new KAction (i18n("Insert Signature At C&ursor Position"), "edit", 0, this,
+                      SLOT(slotInsertSignatureAtCursor()),
+                      actionCollection(), "insert_signature_at_cursor_position");
+
   mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()),
                            actionCollection(), "attach_public_key");
@@ -1971,7 +1980,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
+    //QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
+      if ( GlobalSettings::self()->prependSignature() ) {
+        QTimer::singleShot( 0, this, SLOT(slotPrependSignature()) );
+      } else {
+        QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
+      }
   }
   setModified( isModified );
 
@@ -4039,21 +4053,50 @@ void KMComposeWin::slotSendNow() {
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  bool mod = mEditor->isModified();
-
-  const KPIM::Identity & ident =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  mOldSigText = ident.signatureText();
-  if( !mOldSigText.isEmpty() )
-  {
-    mEditor->append(mOldSigText);
-    mEditor->setModified(mod);
-    // mEditor->setContentsPos( 0, 0 );
-    mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
-    mEditor->sync();
-  }
+    insertSignature();
 }
 
+//----------------------------------------------------------------------------
+void KMComposeWin::slotPrependSignature()
+{
+    insertSignature( false );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotInsertSignatureAtCursor()
+{
+    insertSignature( false, mEditor->currentLine() );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::insertSignature( bool append, int pos )
+{
+   bool mod = mEditor->isModified();
+
+   const KPIM::Identity &ident =
+     kmkernel->identityManager()->
+     identityForUoidOrDefault( mIdentity->currentIdentity() );
+
+   mOldSigText = GlobalSettings::self()->prependSignature()? ident.signature().rawText() : ident.signatureText();
+
+   if( !mOldSigText.isEmpty() )
+   {
+      mEditor->sync();
+      if ( append ) {
+       mEditor->append(mOldSigText);
+    } else {
+       mEditor->insertAt(mOldSigText, pos, 0);
+    }
+    mEditor->update();
+    mEditor->setModified(mod);
+    // for append and prepend, move the cursor to 0,0, for insertAt,
+    // keep it in the same row, but move to first column
+    mEditor->setCursorPosition( pos, 0 );
+    if ( !append && pos == 0 )
+      mEditor->setContentsPos( 0, 0 );
+  }
+
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
@@ -4223,6 +4266,26 @@ void KMComposeWin::slotSpellcheck()
 
   mEditor->spellcheck();
 }
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotUpdateSignatureActions()
+{
+  //Check if an identity has signature or not and turn on/off actions in the
+  //edit menu accordingly.
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  QString sig = ident.signatureText();
+
+  if ( sig.isEmpty() ) {
+     mAppendSignatureAction->setEnabled( false );
+     mPrependSignatureAction->setEnabled( false );
+     mInsertSignatureAction->setEnabled( false );
+  }
+  else {
+      mAppendSignatureAction->setEnabled( true );
+      mPrependSignatureAction->setEnabled( true );
+      mInsertSignatureAction->setEnabled( true );
+  }
+}
 
 void KMComposeWin::polish()
 {
@@ -4268,6 +4331,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoid( uoid );
   if( ident.isNull() ) return;
+
+  //Turn on/off signature actions if identity has no signature.
+  slotUpdateSignatureActions();
 
   if( !ident.fullEmailAddr().isNull() )
     mEdtFrom->setText(ident.fullEmailAddr());

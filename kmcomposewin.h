@@ -366,6 +366,16 @@ private slots:
   void slotAppendSignature();
 
   /**
+   * Prepend signature file at the beginning of the text in the editor.
+   */
+  void slotPrependSignature();
+
+  /**
+   * Insert signature file at the cursor position of the text in the editor.
+   */
+  void slotInsertSignatureAtCursor();
+
+  /**
    * Attach sender's public key.
    */
   void slotInsertMyPublicKey();
@@ -665,6 +675,11 @@ private:
    */
   void setTransport( const QString & transport );
 
+  /**
+   * Helper to insert the signature of the current identy at the
+   * beginning or end of the editor.
+   */
+  void insertSignature( bool append = true, int pos = 0 );
 private slots:
    /**
     * Compress an attachemnt with the given index
@@ -726,6 +741,8 @@ private:
           *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction,
           *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
   KRecentFilesAction *mRecentAction;
+
+  KAction *mAppendSignatureAction, *mPrependSignatureAction, *mInsertSignatureAction;
 
   KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
   KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
@@ -794,6 +811,10 @@ private slots:
    */
   void slotAutoSpellCheckingToggled(bool);
 
+  /**
+   *  Updates signature actions when identity changes.
+   */
+  void slotUpdateSignatureActions();
 private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
