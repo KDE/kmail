@@ -67,7 +67,7 @@ void KMAtmListViewItem::updateAllCheckBoxes()
 // Each time a cell is about to be painted, the item's checkboxes are updated
 // as well. This is necessary to keep the positions of the checkboxes
 // up-to-date. The signals which are, in the constructor of this class,
-// connected to the update slots are not sufficent because unfortunately,
+// connected to the update slots are not sufficient because unfortunately,
 // Qt does not provide a signal for changed item positions, e.g. during
 // deleting or adding items. The problem with this is that this function
 // does not catch updates which are off-screen, which means under some

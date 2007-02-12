@@ -105,6 +105,7 @@ using KMail::HeaderListQuickSearch;
 #include "kmheaders.h"
 #include "mailinglistpropertiesdialog.h"
 #include "templateparser.h"
+using KMail::TemplateParser;
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"

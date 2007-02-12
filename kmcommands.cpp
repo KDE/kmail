@@ -115,6 +115,7 @@ using KMail::SecondaryWindow;
 using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
+using KMail::TemplateParser;
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -697,7 +698,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
 
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
-  win->setMsg( newMsg, FALSE, TRUE );
+  win->setMsg( newMsg, false, true );
   win->show();
 
   return OK;
@@ -1273,10 +1274,10 @@ KMCommand::Result KMForwardCommand::execute()
 	TemplateParser parser( fwdMsg, TemplateParser::Forward,
 			       msg->body(), false, false, false, false);
         parser.process( msg, 0, true );
- 
+
         fwdMsg->link( (*it), MessageStatus::statusForwarded() );
       }
-    
+
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset("");
@@ -1416,7 +1417,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->name(), TRUE );
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1438,7 +1439,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->name(), TRUE );
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 

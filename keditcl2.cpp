@@ -551,8 +551,8 @@ int KEdit::doReplace(const QString &s_pattern, Qt::CaseSensitivity case_sensitiv
 	if(replace_all){ // automatic
 
           stringnew = string;
-          do 
-          {  
+          do
+          {
 	    stringnew.replace(pos,length,replacement);
 
 	    replace_all_col = pos + replacement.length();
@@ -560,7 +560,7 @@ int KEdit::doReplace(const QString &s_pattern, Qt::CaseSensitivity case_sensitiv
 
             pos = stringnew.indexOf(s_pattern, replace_all_col, case_sensitive);
           }
-          while( pos != -1); 
+          while( pos != -1);
 
 	  removeLine(line_counter);
 	  insertLine(stringnew,line_counter);
@@ -894,7 +894,7 @@ KEdReplace::KEdReplace( QWidget *parent, bool modal )
   gbox->addWidget( sensitive, 1, 0 );
   gbox->addWidget( direction, 1, 1 );
   gbox->setRowStretch( 2, 10 );
-  
+
   connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotUser1() ) );
   connect( this, SIGNAL( user2Clicked() ), this, SLOT( slotUser2() ) );
   connect( this, SIGNAL( user3Clicked() ), this, SLOT( slotUser3() ) );
@@ -917,7 +917,7 @@ void KEdReplace::textSearchChanged ( const QString &text )
 }
 
 void KEdReplace::slotCancel( void )
-{ 
+{
 	emit done();
 	d->searchCombo->clearEditText();
 	d->replaceCombo->clearEditText();

@@ -466,7 +466,7 @@ QString TemplatesConfiguration::convertPhrases( const QString &str )
         result += ' ';
         break;
       case 'L':
-        result += "\n";
+        result += '\n';
         break;
       case '%':
         result += "%%";

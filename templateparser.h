@@ -29,6 +29,8 @@ class KMFolder;
 class QObject;
 class KProcess;
 
+namespace KMail {
+
 class TemplateParser : public QObject
 {
   Q_OBJECT
@@ -40,8 +42,6 @@ class TemplateParser : public QObject
       ReplyAll,
       Forward
     };
-
-    static const int PipeTimeout = 15;
 
   public:
     TemplateParser( KMMessage *amsg, const Mode amode, const QString aselection,
@@ -80,11 +80,15 @@ class TemplateParser : public QObject
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
 
+    static const int PipeTimeout;
+
   protected slots:
     void onProcessExited( KProcess *proc );
     void onReceivedStdout( KProcess *proc, char *buffer, int buflen );
     void onReceivedStderr( KProcess *proc, char *buffer, int buflen );
     void onWroteStdin( KProcess *proc );
 };
+
+} // namespace KMail
 
 #endif // __KMAIL_TEMPLATEPARSER_H__

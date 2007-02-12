@@ -1744,7 +1744,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
 
     QString comment = msgPart->contentDescription();
     comment = KMMessage::quoteHtmlChars( comment, true );
-    if ( label == comment ) comment = QString::null; 
+    if ( label == comment ) comment.clear();
 
     QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
 

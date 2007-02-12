@@ -24,6 +24,7 @@ using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
 #include "templateparser.h"
+using KMail::TemplateParser;
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>

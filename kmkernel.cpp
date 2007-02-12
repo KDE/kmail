@@ -48,6 +48,7 @@ using KRecentAddress::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
+using KMail::TemplateParser;
 
 #include <kmessagebox.h>
 #include <knotification.h>

@@ -45,6 +45,10 @@
 
 #include "templateparser.h"
 
+namespace KMail {
+
+const int TemplateParser::PipeTimeout = 15;
+
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString aselection,
                                 bool asmartQuote, bool anoQuote,
@@ -1088,5 +1092,7 @@ void TemplateParser::onWroteStdin( KProcess *proc )
 {
   proc->closeStdin();
 }
+
+} // namespace KMail
 
 #include "templateparser.moc"
