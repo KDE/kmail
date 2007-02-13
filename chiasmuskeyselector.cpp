@@ -3,7 +3,7 @@
 #include "chiasmuskeyselector.h"
 
 #include <klineedit.h>
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <klocale.h>
 
 #include <QLayout>
@@ -27,7 +27,7 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
   mLabel = new QLabel( i18n( "Please select the Chiasmus key file to use:" ), page );
   layout->addWidget( mLabel );
 
-  mListBox = new KListBox( page );
+  mListBox = new K3ListBox( page );
   mListBox->insertStringList( keys );
   const int current = keys.indexOf( currentKey );
   mListBox->setSelected( qMax( 0, current ), true );

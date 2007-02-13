@@ -908,7 +908,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   mScanProgressText->setText( "" ) ;
   layout->addWidget( mScanProgressText );
 
-  mToolsList = new KListBox( this );
+  mToolsList = new K3ListBox( this );
   mToolsList->hide();
   mToolsList->setSelectionMode( Q3ListBox::Multi );
   mToolsList->setRowMode( Q3ListBox::FixedNumber );

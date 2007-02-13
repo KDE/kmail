@@ -21,14 +21,14 @@
 #ifndef _COLOR_LISTBOX_H_
 #define _COLOR_LISTBOX_H_
 
-#include <klistbox.h>
+#include <k3listbox.h>
 //Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
 
-class ColorListBox : public KListBox
+class ColorListBox : public K3ListBox
 {
   Q_OBJECT
 

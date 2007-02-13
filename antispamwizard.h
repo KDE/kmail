@@ -30,7 +30,7 @@
 #define KMAIL_ANTISPAMWIZARD_H
 
 #include <kconfig.h>
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <k3wizard.h>
 
 #include <QCheckBox>
@@ -326,7 +326,7 @@ namespace KMail {
       QLabel *mIntroText;
       QLabel *mScanProgressText;
       QLabel *mSelectionHint;
-      KListBox *mToolsList;
+      K3ListBox *mToolsList;
   };
 
   //---------------------------------------------------------------------------

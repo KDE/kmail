@@ -31,7 +31,7 @@
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <klineedit.h>
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
@@ -83,13 +83,13 @@ enum Capabilities
   AllCapa    = 0xffffffff
 };
 
-class AccountTypeBox : public KListBox
+class AccountTypeBox : public K3ListBox
 {
   public:
     enum Type { Local, POP3, IMAP, dIMAP, Maildir };
 
     AccountTypeBox( QWidget *parent )
-      : KListBox( parent, "AccountTypeBox" )
+      : K3ListBox( parent, "AccountTypeBox" )
     {
       mTypeList << i18n( "Local mailbox" );
       mTypeList << i18n( "POP3" );

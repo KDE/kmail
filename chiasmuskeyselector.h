@@ -3,7 +3,7 @@
 
 #include <kdialog.h>
 #include <QLabel>
-class KListBox;
+class K3ListBox;
 class KLineEdit;
 class QLabel;
 
@@ -21,7 +21,7 @@ public:
 
 private:
   QLabel* mLabel;
-  KListBox* mListBox;
+  K3ListBox* mListBox;
   KLineEdit* mOptions;
 };
 

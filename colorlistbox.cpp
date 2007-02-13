@@ -35,7 +35,7 @@
 #include "colorlistbox.h"
 
 ColorListBox::ColorListBox( QWidget *parent, const char *name, Qt::WFlags f )
-  :KListBox( parent, name, f ), mCurrentOnDragEnter(-1)
+  :K3ListBox( parent, name, f ), mCurrentOnDragEnter(-1)
 {
   connect( this, SIGNAL(selected(int)), this, SLOT(newColor(int)) );
   setAcceptDrops( true);

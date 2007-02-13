@@ -4,7 +4,7 @@
 #endif
 
 #include "klistboxdialog.h"
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <QLabel>
 #include <QLayout>
 //Added by qt3to4:
