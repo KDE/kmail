@@ -22,6 +22,7 @@
 #include <kfoldertree.h>
 #include <kdepimmacros.h>
 
+#include <qguardedptr.h>
 #include <qwidget.h>
 #include <qtimer.h>
 #include <qheader.h>
@@ -38,7 +39,7 @@ class KMFolderTree;
 class KMMainWidget;
 class KMAccount;
 // duplication from kmcommands.h, to avoid the include
-typedef QMap<int,KMFolder*> KMMenuToFolder; 
+typedef QMap<int,KMFolder*> KMMenuToFolder;
 template <typename T> class QGuardedPtr;
 
 class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
@@ -73,7 +74,7 @@ public:
   void adjustUnreadCount( int newUnreadCount );
 
   /** dnd */
-  virtual bool acceptDrag(QDropEvent* ) const;
+  virtual bool acceptDrag(QDropEvent* e) const;
 
 signals:
   /** Our icon changed */
@@ -122,7 +123,7 @@ public:
      else
        return 0;
   }
-  
+
   /** create a folderlist */
   void createFolderList( QStringList *str,
                          QValueList<QGuardedPtr<KMFolder> > *folders,
@@ -179,13 +180,14 @@ public:
   enum MenuAction {
     CopyMessage,
     MoveMessage,
+    CopyFolder,
     MoveFolder
   };
-  
+
   /** Generate a popup menu that contains all folders that can have content */
-  void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *, 
+  void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *,
       QPopupMenu *menu, QListViewItem *start = 0 );
-  
+
 signals:
   /** The selected folder has changed */
   void folderSelected(KMFolder*);
@@ -243,6 +245,15 @@ public slots:
   /** Create a child folder */
   void addChildFolder( KMFolder *folder = 0, QWidget * parent = 0 );
 
+  /** Copies the currently selected folder. */
+  void copyFolder();
+
+  /** Cuts the currently selected folder. */
+  void cutFolder();
+
+  /** Pastes a previously copied/cutted folder below the currently selected folder. */
+  void pasteFolder();
+
 protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
@@ -287,6 +298,11 @@ protected slots:
 
   /** For RMB move folder */
   virtual void moveSelectedToFolder( int menuId );
+  /** For RMB copy folder */
+  virtual void copySelectedToFolder( int menuId );
+
+  /** Updates copy/cut/paste actions */
+  void updateCopyActions();
 
 protected:
   /** Catch palette changes */
@@ -310,6 +326,7 @@ protected:
   void contentsDragMoveEvent( QDragMoveEvent *e );
   void contentsDragLeaveEvent( QDragLeaveEvent *e );
   void contentsDropEvent( QDropEvent *e );
+  virtual QDragObject* dragObject();
 
   /** Drag and drop variables */
   QListViewItem *oldCurrent, *oldSelected;
@@ -326,8 +343,8 @@ protected:
   /** connect all signals */
   void connectSignals();
 
-  /** Move the current folder to destination */
-  void moveFolder( KMFolder* destination );
+  /** Move or copy the folder @p source to @p destination. */
+  void moveOrCopyFolder( KMFolder* source, KMFolder* destination, bool move=false );
 
 private:
   /** total column */
@@ -341,6 +358,8 @@ private:
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
+  QGuardedPtr<KMFolder> mCopySourceFolder;
+  bool mCutFolder;
 
   QTimer *mUpdateCountTimer;
   QMap<QString,KMFolder*> mFolderToUpdateCount;

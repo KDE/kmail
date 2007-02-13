@@ -188,10 +188,10 @@ signals:
   /** emitted when the list of messages has been completely rebuilt */
   void messageListUpdated();
 
-  /** emitted after a new item has been fully built and added to the 
+  /** emitted after a new item has been fully built and added to the
    * list view. We can't use KListView::itemAdded, as that is emitted
    * from the ctor of the item, at which point the building of the item
-   * is not yet far enough along to update the quick search, which is 
+   * is not yet far enough along to update the quick search, which is
    * what is connected to this signal. */
   void msgAddedToListView( QListViewItem* );
 
@@ -336,6 +336,13 @@ protected slots:
 private slots:
   void slotMoveCompleted( KMCommand * );
 
+  void copyMessages();
+  void cutMessages();
+  void pasteMessages();
+
+  void updateActions();
+  void copyCompleted( KMCommand *command );
+
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */
@@ -429,5 +436,9 @@ private:
   /** popup to switch columns */
   KPopupMenu* mPopup;
 
+  // copied messages
+  QValueList<Q_UINT32> mCopiedMessages;
+  bool mMoveMessages;
+  QMap<KMCommand*, QGuardedPtr<KMFolder> > mOpenFolders;
 }; // class
 #endif

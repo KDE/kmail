@@ -51,6 +51,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mIsSystemFolder( false ),
     mHasIndex( withIndex ),
     mExportsSernums( exportedSernums ),
+    mMoveInProgress( false ),
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
@@ -836,7 +837,7 @@ void KMFolder::setShortcut( const KShortcut &sc )
 
 bool KMFolder::isMoveable() const
 {
-  return mStorage->isMoveable();
+  return !isSystemFolder();
 }
 
 void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )

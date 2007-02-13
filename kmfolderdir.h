@@ -52,7 +52,7 @@ public:
   /** Returns the folder whose children we are holding */
   KMFolder* owner() const { return mOwner; }
 
-  virtual KMFolderDirType type() { return mDirType; }
+  virtual KMFolderDirType type() const { return mDirType; }
 
 protected:
   KMFolder * mOwner;

@@ -2742,6 +2742,19 @@ void KMMainWidget::setupActions()
   mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
 		      SLOT(slotToggleSubjectThreading()), actionCollection(), "thread_messages_by_subject" );
 
+  new KAction( i18n("Copy Folder"), "editcopy", SHIFT+CTRL+Key_C, folderTree(),
+               SLOT(copyFolder()), actionCollection(), "copy_folder" );
+  new KAction( i18n("Cut Folder"), "editcut", SHIFT+CTRL+Key_X, folderTree(),
+               SLOT(cutFolder()), actionCollection(), "cut_folder" );
+  new KAction( i18n("Paste Folder"), "editpaste", SHIFT+CTRL+Key_V, folderTree(),
+               SLOT(pasteFolder()), actionCollection(), "paste_folder" );
+
+  new KAction( i18n("Copy Messages"), "editcopy", ALT+CTRL+Key_C, headers(),
+               SLOT(copyMessages()), actionCollection(), "copy_messages" );
+  new KAction( i18n("Cut Messages"), "editcut", ALT+CTRL+Key_X, headers(),
+               SLOT(cutMessages()), actionCollection(), "cut_messages" );
+  new KAction( i18n("Paste Messages"), "editpaste", ALT+CTRL+Key_V, headers(),
+               SLOT(pasteMessages()), actionCollection(), "paste_messages" );
 
   //----- Message Menu
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
