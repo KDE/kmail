@@ -341,6 +341,13 @@ protected slots:
 private slots:
   void slotMoveCompleted( KMCommand * );
 
+  void copyMessages();
+  void cutMessages();
+  void pasteMessages();
+
+  void updateActions();
+  void copyCompleted( KMCommand *command );
+
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */
@@ -437,5 +444,9 @@ private:
   /** popup to switch columns */
   KMenu* mPopup;
 
+  // copied messages
+  QList<quint32> mCopiedMessages;
+  bool mMoveMessages;
+  QMap<KMCommand*, QPointer<KMFolder> > mOpenFolders;
 }; // class
 #endif

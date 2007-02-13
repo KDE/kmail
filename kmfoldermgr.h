@@ -117,6 +117,9 @@ public:
   /** Rename or move a folder */
   void renameFolder( KMFolder* folder, const QString& newName,
       KMFolderDir* newParent = 0 );
+  
+  /** Copy a folder */
+  void copyFolder( KMFolder* folder, KMFolderDir* newParent );
 
 public slots:
   /** GUI action: compact all folders that need to be compacted */

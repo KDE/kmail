@@ -42,6 +42,8 @@ class KJob;
 
 namespace KMail {
 
+class CopyFolderJob;
+
 /**
  * Rename and move (d)imap folders
  * They can be moved everywhere (except search folders) as a new folder is
@@ -68,21 +70,14 @@ protected slots:
   /** Rename the folder */
   void slotRenameResult( KJob* job );
 
-  /** Move all messages from the original folder to mNewFolder */
-  void slotMoveMessages();
-
-  /** All messages are moved so remove the original folder */
-  void slotMoveCompleted( KMCommand *command );
-
-  void slotMoveSubFolders( QString newName, bool success );
+  /** All messages are copied so remove the original folder */
+  void folderCopyComplete( bool success );
 
 signals:
   /** Emitted when the job is done, check the success bool */
   void renameDone( QString newName, bool success );
 
 protected:
-  void moveSubFoldersBeforeMessages();
-
   FolderStorage* mStorage;
   FolderStorage* mStorageTempOpened;
   KMFolderDir* mNewParent;
@@ -91,6 +86,7 @@ protected:
   QString mOldName;
   QString mOldImapPath;
   KMFolder* mNewFolder;
+  CopyFolderJob *mCopyFolderJob;
 };
 
 } // namespace KMail

@@ -233,6 +233,9 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   resetCurrentTime();
 
   mSubjectLists.setAutoDelete( true );
+
+  mMoveMessages = false;
+  connect( this, SIGNAL(selectionChanged()), SLOT(updateActions()) );
 }
 
 
@@ -776,6 +779,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
   }
+
+  updateActions();
 
   END_TIMER(set_folder);
   SHOW_TIMER(set_folder);
@@ -3381,6 +3386,102 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
   }
   // Not found. Maybe we should select the last item instead?
   kDebug(5006) << "KMHeaders::setCurrentItem item with serial number " << serialNum << " NOT FOUND" << endl;
+}
+
+void KMHeaders::copyMessages()
+{
+  mCopiedMessages.clear();
+  KMMessageList* list = selectedMsgs();
+  for ( int i = 0; i < list->count(); ++ i )
+    mCopiedMessages << list->at( i )->getMsgSerNum();
+  mMoveMessages = false;
+  updateActions();
+}
+
+void KMHeaders::cutMessages()
+{
+  mCopiedMessages.clear();
+  KMMessageList* list = selectedMsgs();
+  for ( int i = 0; i < list->count(); ++ i )
+    mCopiedMessages << list->at( i )->getMsgSerNum();
+  mMoveMessages = true;
+  updateActions();
+}
+
+void KMHeaders::pasteMessages()
+{
+  if ( mCopiedMessages.isEmpty() || !folder() )
+    return;
+
+  KMFolder *sourceFolder = 0, *f = 0;
+  int index;
+  QList<KMMsgBase*> list;
+
+  for ( QList<quint32>::ConstIterator it = mCopiedMessages.constBegin(); it != mCopiedMessages.constEnd(); ++it ) {
+    KMMsgDict::instance()->getLocation( *it, &f, &index );
+    if ( !f ) // not found
+      continue;
+    if ( !sourceFolder ) {
+      sourceFolder = f;
+      sourceFolder->open();
+    }
+    if ( f != sourceFolder ) { // should not happen...
+      sourceFolder->close();
+      kWarning() << k_funcinfo << "Found messages from diffrent source folders - aborting" << endl;
+      return;
+    }
+    if ( sourceFolder == folder() ) {
+      KMessageBox::error( this, i18n("The selected messages are already in this folder.") );
+      sourceFolder->close();
+      return;
+    }
+    KMMsgBase *msgBase = f->getMsgBase( index );
+    if ( msgBase )
+      list.append( msgBase );
+  }
+
+  KMCommand *command;
+  if ( mMoveMessages ) {
+    command = new KMMoveCommand( folder(), list );
+    mCopiedMessages.clear();
+    updateActions();
+  } else {
+    command = new KMCopyCommand( folder(), list );
+  }
+  mOpenFolders.insert( command, sourceFolder );
+  connect( command, SIGNAL(completed(KMCommand*)), SLOT(copyCompleted(KMCommand*)) );
+  command->start();
+}
+
+void KMHeaders::updateActions()
+{
+  QAction *copy = owner()->action( "copy_messages" );
+  QAction *cut = owner()->action( "cut_messages" );
+  QAction *paste = owner()->action( "paste_messages" );
+
+  if ( selectedItems().isEmpty() ) {
+    copy->setEnabled( false );
+    cut->setEnabled( false );
+  } else {
+    copy->setEnabled( true );
+    if ( folder() && folder()->isReadOnly() )
+      cut->setEnabled( false );
+    else
+      cut->setEnabled( true );
+  }
+
+  if ( mCopiedMessages.isEmpty() || !folder() || folder()->isReadOnly() )
+    paste->setEnabled( false );
+  else
+    paste->setEnabled( true );
+}
+
+void KMHeaders::copyCompleted(KMCommand * command)
+{
+  if ( mOpenFolders.contains( command ) ) {
+    mOpenFolders[command]->close();
+    mOpenFolders.remove( command );
+  }
 }
 
 #include "kmheaders.moc"

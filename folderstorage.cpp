@@ -1070,11 +1070,12 @@ void FolderStorage::setNoChildren( bool aNoChildren )
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setContentsType( KMail::FolderContentsType type )
+void FolderStorage::setContentsType( KMail::FolderContentsType type, bool quiet )
 {
   if ( type != mContentsType ) {
     mContentsType = type;
-    emit contentsTypeChanged( type );
+    if ( !quiet )
+       emit contentsTypeChanged( type );
   }
 }
 

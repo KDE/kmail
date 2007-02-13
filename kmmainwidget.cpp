@@ -2831,6 +2831,35 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("thread_messages_by_subject", mThreadBySubjectAction );
   connect(mThreadBySubjectAction, SIGNAL(triggered(bool) ), SLOT(slotToggleSubjectThreading()));
 
+  action = new KAction(KIcon("editcopy"), i18n("Copy Folder"), this);
+  action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
+  actionCollection()->addAction("copy_folder", action);
+  connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(copyFolder()));
+
+  action = new KAction(KIcon("editcut"), i18n("Cut Folder"), this);
+  action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_X));
+  actionCollection()->addAction("cut_folder", action);
+  connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(cutFolder()));
+
+  action = new KAction(KIcon("editpaste"), i18n("Paste Folder"), this);
+  action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
+  actionCollection()->addAction("paste_folder", action);
+  connect(action, SIGNAL(triggered(bool)), folderTree(), SLOT(pasteFolder()));
+
+  action = new KAction(KIcon("editcopy"), i18n("Copy Messages"), this);
+  action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
+  actionCollection()->addAction("copy_messages", action);
+  connect(action, SIGNAL(triggered(bool)), headers(), SLOT(copyMessages()));
+
+  action = new KAction(KIcon("editcut"), i18n("Cut Messages"), this);
+  action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
+  actionCollection()->addAction("cut_messages", action);
+  connect(action, SIGNAL(triggered(bool)), headers(), SLOT(cutMessages()));
+
+  action = new KAction(KIcon("editpaste"), i18n("Paste Messages"), this);
+  action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_V));
+  actionCollection()->addAction("paste_messages", action);
+  connect(action, SIGNAL(triggered(bool)), headers(), SLOT(pasteMessages()));
 
   //----- Message Menu
   action  = new KAction(KIcon("mail_new"), i18n("&New Message..."), this);

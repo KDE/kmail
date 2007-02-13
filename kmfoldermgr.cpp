@@ -24,7 +24,10 @@
 #include "kmfoldermgr.h"
 #include "folderstorage.h"
 #include "renamejob.h"
+#include "copyfolderjob.h"
+
 using KMail::RenameJob;
+using KMail::CopyFolderJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
@@ -533,6 +536,14 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
   connect( job, SIGNAL( renameDone( QString, bool ) ),
       this, SLOT( slotRenameDone( QString, bool ) ) );
+  job->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
+{
+  kDebug(5006) << "Copy folder: " << folder->prettyUrl() << endl;
+  CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
   job->start();
 }
 

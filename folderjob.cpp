@@ -38,6 +38,7 @@
 #include "folderstorage.h"
 
 #include <kdebug.h>
+#include <kio/global.h>
 
 namespace KMail {
 
@@ -112,6 +113,7 @@ void FolderJob::start()
 //----------------------------------------------------------------------------
 void FolderJob::kill()
 {
+  mErrorCode = KIO::ERR_USER_CANCELED;
   delete this;
 }
 

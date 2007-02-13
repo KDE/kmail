@@ -35,6 +35,8 @@
 #include <QResizeEvent>
 #include <QDragEnterEvent>
 #include <QMouseEvent>
+#include <Q3DragObject>
+#include <QPointer>
 
 class QDropEvent;
 class QPixmap;
@@ -83,7 +85,7 @@ public:
   void adjustUnreadCount( int newUnreadCount );
 
   /** dnd */
-  virtual bool acceptDrag(QDropEvent* ) const;
+  virtual bool acceptDrag(QDropEvent* e) const;
 
 signals:
   /** Our icon changed */
@@ -189,6 +191,7 @@ public:
   enum MenuAction {
     CopyMessage,
     MoveMessage,
+    CopyFolder,
     MoveFolder
   };
 
@@ -253,6 +256,15 @@ public slots:
   /** Create a child folder */
   void addChildFolder( KMFolder *folder = 0, QWidget * parent = 0 );
 
+  /** Copies the currently selected folder. */
+  void copyFolder();
+
+  /** Cuts the currently selected folder. */
+  void cutFolder();
+
+  /** Pastes a previously copied/cutted folder below the currently selected folder. */
+  void pasteFolder();
+
 protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
@@ -296,7 +308,12 @@ protected slots:
   void slotNewMessageToMailingList();
 
   /** For RMB move folder */
-  virtual void moveSelectedToFolder( QAction* );
+  virtual void moveSelectedToFolder( QAction* act );
+  /** For RMB copy folder */
+  virtual void copySelectedToFolder( QAction* act );
+
+  /** Updates copy/cut/paste actions */
+  void updateCopyActions();
 
 protected:
   /** Catch palette changes */
@@ -320,6 +337,7 @@ protected:
   void contentsDragMoveEvent( QDragMoveEvent *e );
   void contentsDragLeaveEvent( QDragLeaveEvent *e );
   void contentsDropEvent( QDropEvent *e );
+  virtual Q3DragObject* dragObject();
 
   /** Drag and drop variables */
   Q3ListViewItem *oldCurrent, *oldSelected;
@@ -336,8 +354,8 @@ protected:
   /** connect all signals */
   void connectSignals();
 
-  /** Move the current folder to destination */
-  void moveFolder( KMFolder* destination );
+  /** Move or copy the folder @p source to @p destination. */
+  void moveOrCopyFolder( KMFolder* source, KMFolder* destination, bool move=false );
 
 private:
   /** total column */
@@ -350,6 +368,8 @@ private:
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
+  QPointer<KMFolder> mCopySourceFolder;
+  bool mCutFolder;
 
   QTimer *mUpdateCountTimer;
   QMap<QString,KMFolder*> mFolderToUpdateCount;

@@ -532,6 +532,14 @@ public:
   /** Returns true if this folder can be moved */
   bool isMoveable() const;
 
+  /** Returns true if there is currently a move or copy operation going
+      on with this folder as target.
+  */
+  bool moveInProgress() const { return mMoveInProgress; }
+
+  /** Sets the move-in-progress flag. */
+  void setMoveInProgress( bool b ) { mMoveInProgress = b; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -605,6 +613,7 @@ private:
   bool mIsSystemFolder;
   bool mHasIndex :1;
   bool mExportsSernums :1;
+  bool mMoveInProgress :1;
 
   /** nationalized label or QString() (then name() should be used) */
   QString mLabel;

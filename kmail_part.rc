@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="8" name="kmail_part" >
+<kpartgui version="14" name="kmail_part" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -39,6 +39,14 @@
    <Action name="kmail_redo" />
    <Separator/>
    <Action name="kmail_copy" />
+   <Separator/>
+   <Action name="copy_folder"/>
+   <Action name="cut_folder"/>
+   <Action name="paste_folder"/>
+   <Separator/>
+   <Action name="copy_messages"/>
+   <Action name="cut_messages"/>
+   <Action name="paste_messages"/>
    <Separator/>
    <Action name="move_to_trash" />
    <Action name="move_thread_to_trash" />
@@ -124,14 +132,14 @@
    <Separator/>
    <Action name="copy_to" />
    <Action name="move_to" />
-   <Separator/> 
+   <Separator/>
    <Action name="set_status" />
    <Action name="thread_status" />
    <Separator/>
    <Action name="create_filter"/>
    <Menu name="apply_filter_actions" >
      <text>A&amp;pply Filter</text>
-     <Action name="apply_filters" /> 
+     <Action name="apply_filters" />
      <ActionList name="menu_filter_actions" />
    </Menu>
   </Menu>

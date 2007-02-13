@@ -30,7 +30,10 @@ class KMReaderWin;
 class partNode;
 
 namespace KIO { class Job; }
-namespace KMail { class Composer; }
+namespace KMail {
+  class Composer;
+  class FolderJob;
+}
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
@@ -723,18 +726,16 @@ public:
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 protected slots:
-  void slotMsgAdded( KMFolder*, quint32 );
+  void slotJobFinished( KMail::FolderJob *job );
 
-  void slotFolderComplete();
+  void slotFolderComplete( KMFolderImap*, bool success );
 
 private:
   virtual Result execute();
 
   KMFolder *mDestFolder;
   QList<KMMsgBase*> mMsgList;
-  // List of serial numbers that need to be loaded
-  // Ticked off as they come in via msgAdded signals.
-  QList<quint32> mWaitingForMsgs;
+  QList<KMail::FolderJob*> mPendingJobs;
 };
 
 namespace KPIM {

@@ -113,7 +113,7 @@ public:
   virtual KMMessage* getMsg(int idx);
   /** The path to the imap folder on the server */
   void setImapPath( const QString &path );
-  QString imapPath() { return mImapPath; }
+  QString imapPath() const { return mImapPath; }
 
   /** The highest UID in the folder */
   ulong lastUid();
@@ -124,7 +124,7 @@ public:
 
   /** The imap account associated with this folder */
   void setAccount(KMAcctImap *acct);
-  KMAcctImap* account() const { return mAccount; }
+  KMAcctImap* account() const;
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = false);
@@ -173,220 +173,227 @@ public:
    * that contain messages _or_ folders the new folder is set to "contains messages"
    * by default
    */
-  void createFolder(const QString &name,
-      const QString& imapPath = QString(), bool askUser = true);
+void createFolder(const QString &name,
+const QString& imapPath = QString(), bool askUser = true);
 
-  /**
-   * Delete a message
-   */
-  void deleteMessage(KMMessage * msg);
-  void deleteMessage(const QList<KMMessage*>& msgList);
+/**
+* Delete a message
+*/
+void deleteMessage(KMMessage * msg);
+void deleteMessage(const QList<KMMessage*>& msgList);
 
-  /**
-   * Change the status of the message indicated by @p index
-   * Overloaded function for the following one
-   */
-  virtual void setStatus(int idx, const MessageStatus& status, bool toggle);
+/**
+* Change the status of the message indicated by @p index
+* Overloaded function for the following one
+*/
+virtual void setStatus(int idx, const MessageStatus& status, bool toggle);
 
-  /**
-   * Change the status of several messages indicated by @p ids
-   */
-  virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle);
+/**
+* Change the status of several messages indicated by @p ids
+*/
+virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle);
 
-  /** generates sets of uids */
-  static QStringList makeSets( QList<ulong>&, bool sort = true);
-  static QStringList makeSets(const QStringList&, bool sort = true);
+/** generates sets of uids */
+static QStringList makeSets( QList<ulong>&, bool sort = true);
+static QStringList makeSets(const QStringList&, bool sort = true);
 
-  /** splits the message list according to sets. Modifies the @msgList. */
-  static QList<KMMessage*> splitMessageList(const QString& set,
-                                              QList<KMMessage*>& msgList);
+/** splits the message list according to sets. Modifies the @msgList. */
+static QList<KMMessage*> splitMessageList(const QString& set,
+				      QList<KMMessage*>& msgList);
 
-  /** gets the uids of the given ids */
-  void getUids(QList<int>& ids, QList<ulong>& uids);
+/** gets the uids of the given ids */
+void getUids(QList<int>& ids, QList<ulong>& uids);
 
-  /** same as above but accepts a Message-List */
-  void getUids(const QList<KMMessage*>& msgList, QList<ulong>& uids);
+/** same as above but accepts a Message-List */
+void getUids(const QList<KMMessage*>& msgList, QList<ulong>& uids);
 
-  /**
-   * Expunge deleted messages from the folder
-   */
-  void expungeFolder(KMFolderImap * aFolder, bool quiet);
+/**
+* Expunge deleted messages from the folder
+*/
+void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
-  virtual int compact( bool ) { expungeFolder(this, false); return 0; };
+virtual int compact( bool ) { expungeFolder(this, false); return 0; };
 
-  /**
-   * Emit the folderComplete signal
-   */
-  void sendFolderComplete(bool success)
-  { emit folderComplete(this, success); }
+/**
+* Emit the folderComplete signal
+*/
+void sendFolderComplete(bool success)
+{ emit folderComplete(this, success); }
 
-  /**
-   * Refresh the number of unseen mails
-   * Returns false in an error condition
-   */
-  bool processNewMail(bool interactive);
+/**
+* Refresh the number of unseen mails
+* Returns false in an error condition
+*/
+bool processNewMail(bool interactive);
 
-  /**
-   * Tell the folder, this it is selected and shall also display new mails,
-   * not only their number, when checking for mail.
-   */
-  void setSelected(bool selected) { mIsSelected = selected; }
-  bool isSelected() { return mIsSelected; }
+/**
+* Tell the folder, this it is selected and shall also display new mails,
+* not only their number, when checking for mail.
+*/
+void setSelected(bool selected) { mIsSelected = selected; }
+bool isSelected() { return mIsSelected; }
 
-  /**
-   * Encode the given string in a filename save 7 bit string
-   */
-  static QString encodeFileName(const QString &);
-  static QString decodeFileName(const QString &);
-  static QTextCodec * utf7Codec();
+/**
+* Encode the given string in a filename save 7 bit string
+*/
+static QString encodeFileName(const QString &);
+static QString decodeFileName(const QString &);
+static QTextCodec * utf7Codec();
 
-  /**
-   * Convert message status to a list of IMAP flags
-   */
-  static QString statusToFlags( const MessageStatus& status );
+/**
+* Convert message status to a list of IMAP flags
+*/
+static QString statusToFlags( const MessageStatus& status );
 
-  /**
-   * Return the filename of the folder (reimplemented from KFolder)
-   */
-  virtual QString fileName() const {
-    return encodeFileName( KMFolderMbox::fileName() ); }
+/**
+* Return the filename of the folder (reimplemented from KFolder)
+*/
+virtual QString fileName() const {
+return encodeFileName( KMFolderMbox::fileName() ); }
 
-  /**
-   * Get the serial number for the given UID (if available)
-   */
-   const ulong serNumForUID( ulong uid );
+/**
+* Get the serial number for the given UID (if available)
+*/
+const ulong serNumForUID( ulong uid );
 
-  /**
-   * Save the metadata for the UID
-   * If the UID is not supplied the one from the message is taken
-   */
-  void saveMsgMetaData( KMMessage* msg, ulong uid = 0 );
+/**
+* Save the metadata for the UID
+* If the UID is not supplied the one from the message is taken
+*/
+void saveMsgMetaData( KMMessage* msg, ulong uid = 0 );
 
-  /**
-   * Splits a uid-set into single uids
-   */
-  static QList<ulong> splitSets(const QString);
+/**
+* Splits a uid-set into single uids
+*/
+static QList<ulong> splitSets(const QString);
 
-  virtual void ignoreJobsForMessage( KMMessage* );
+virtual void ignoreJobsForMessage( KMMessage* );
 
-  /**
-   * If this folder should be included in new-mail-check
-   */
-  bool includeInMailCheck() { return mCheckMail; }
-  void setIncludeInMailCheck( bool check );
+/**
+* If this folder should be included in new-mail-check
+*/
+bool includeInMailCheck() { return mCheckMail; }
+void setIncludeInMailCheck( bool check );
 
-  /** Inherited */
-  virtual int create();
+/** Inherited */
+virtual int create();
 
-  /** imap folders cannot expire */
-  virtual bool isAutoExpire() const { return false; }
+/** imap folders cannot expire */
+virtual bool isAutoExpire() const { return false; }
 
-  /** Close folder. If force is true the files are closed even if
-    others still use it (e.g. other mail reader windows). This also
-    cancels all pending jobs. */
-  virtual void close(bool force=false);
+/** Close folder. If force is true the files are closed even if
+others still use it (e.g. other mail reader windows). This also
+cancels all pending jobs. */
+virtual void close(bool force=false);
 
-  void setCheckingValidity( bool val ) { mCheckingValidity = val; }
+void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
-  /** Return the trash folder. */
-  KMFolder* trashFolder() const;
+/** Return the trash folder. */
+KMFolder* trashFolder() const;
 
-  /**
-   * Mark the folder as already removed from the server
-   * If set to true the folder will only be deleted locally
-   * This will recursively be applied to all children
-   */
-  void setAlreadyRemoved(bool removed);
+/**
+* Mark the folder as already removed from the server
+* If set to true the folder will only be deleted locally
+* This will recursively be applied to all children
+*/
+void setAlreadyRemoved(bool removed);
 
-  /// Is the folder readonly?
-  bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
+/// Is the folder readonly?
+bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
 
-  /**
-   * The user's rights on this folder - see bitfield in ACLJobs namespace.
-   * @return 0 when not known yet
-   */
-  unsigned int userRights() const { return mUserRights; }
+/**
+* The user's rights on this folder - see bitfield in ACLJobs namespace.
+* @return 0 when not known yet
+*/
+unsigned int userRights() const { return mUserRights; }
 
-  /** Set the user's rights on this folder - called by getUserRights */
-  void setUserRights( unsigned int userRights );
+/** Set the user's rights on this folder - called by getUserRights */
+void setUserRights( unsigned int userRights );
 
-  /**
-    * Search for messages
-    * The actual search is done in slotSearch and the end
-    * is signaled with searchDone()
-    */
-  virtual void search( const KMSearchPattern* );
-  virtual void search( const KMSearchPattern*, quint32 serNum );
+/**
+* Search for messages
+* The actual search is done in slotSearch and the end
+* is signaled with searchDone()
+*/
+virtual void search( const KMSearchPattern* );
+virtual void search( const KMSearchPattern*, quint32 serNum );
 
-  /** Returns true if this folder can be moved */
-  virtual bool isMoveable() const;
+/** Returns true if this folder can be moved */
+virtual bool isMoveable() const;
 
-  /** Initialize this storage from another one. Used when creating a child folder */
-  void initializeFrom( KMFolderImap* parent, QString path, QString mimeType );
+/** Initialize this storage from another one. Used when creating a child folder */
+void initializeFrom( KMFolderImap* parent, QString path, QString mimeType );
 
 signals:
-  void folderComplete(KMFolderImap *folder, bool success);
+void folderComplete(KMFolderImap *folder, bool success);
 
-  /**
-   * Emitted, when the account is deleted
-   */
-  void deleted(KMFolderImap*);
+/**
+* Emitted, when the account is deleted
+*/
+void deleted(KMFolderImap*);
 
-  /**
-   * Emitted at the end of the directory listing
-   */
-  void directoryListingFinished(KMFolderImap*);
+/**
+* Emitted at the end of the directory listing
+*/
+void directoryListingFinished(KMFolderImap*);
+
+/**
+* Emitted when a folder creation has finished.
+* @param name The name of the folder that should have been created.
+* @param success True if the folder was created, false otherwise.
+*/
+void folderCreationResult( const QString &name, bool success );
 
 public slots:
-  /** Add a message to a folder after is has been added on an IMAP server */
-  virtual void addMsgQuiet(KMMessage *);
-  virtual void addMsgQuiet(QList<KMMessage*>);
+/** Add a message to a folder after is has been added on an IMAP server */
+virtual void addMsgQuiet(KMMessage *);
+virtual void addMsgQuiet(QList<KMMessage*>);
 
-  /** Add the given message to the folder. Usually the message
-    is added at the end of the folder. Returns zero on success and
-    an errno error code on failure. The index of the new message
-    is stored in index_return if given.
-    Please note that the message is added as is to the folder and the folder
-    takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int addMsg(QList<KMMessage*>&, QList<int>& index_return);
+/** Add the given message to the folder. Usually the message
+is added at the end of the folder. Returns zero on success and
+an errno error code on failure. The index of the new message
+is stored in index_return if given.
+Please note that the message is added as is to the folder and the folder
+takes ownership of the message (deleting it in the destructor).*/
+virtual int addMsg(KMMessage* msg, int* index_return = 0);
+virtual int addMsg(QList<KMMessage*>&, QList<int>& index_return);
 
-  /** Copy the messages to this folder */
-  void copyMsg(QList<KMMessage*>& msgList/*, KMFolder* parent*/);
+/** Copy the messages to this folder */
+void copyMsg(QList<KMMessage*>& msgList/*, KMFolder* parent*/);
 
 
-  /** Detach message from this folder. Usable to call addMsg() afterwards.
-    Loads the message if it is not loaded up to now. */
-  virtual KMMessage* take(int idx);
-  virtual void take(QList<KMMessage*>);
+/** Detach message from this folder. Usable to call addMsg() afterwards.
+Loads the message if it is not loaded up to now. */
+virtual KMMessage* take(int idx);
+virtual void take(QList<KMMessage*>);
 
-  /**
-   * Add the data a KIO::Job retrieves to the buffer
-   */
-  void slotSimpleData(KIO::Job * job, const QByteArray & data);
+/**
+* Add the data a KIO::Job retrieves to the buffer
+*/
+void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
-  /**
-   * Convert IMAP flags to a message status
-   * @param newMsg specifies whether unseen messages are new or unread
-   */
-  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = true);
+/**
+* Convert IMAP flags to a message status
+* @param newMsg specifies whether unseen messages are new or unread
+*/
+static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = true);
 
-  /**
-   * Connected to the result signal of the copy/move job
-   */
-  void slotCopyMsgResult( KMail::FolderJob* job );
+/**
+* Connected to the result signal of the copy/move job
+*/
+void slotCopyMsgResult( KMail::FolderJob* job );
 
-  /**
-   * Called from the SearchJob when the folder is done or messages where found
-   */
-  void slotSearchDone( QList<quint32> serNums,
-                       const KMSearchPattern* pattern,
-                       bool complete );
+/**
+* Called from the SearchJob when the folder is done or messages where found
+*/
+void slotSearchDone( QList<quint32> serNums,
+	       const KMSearchPattern* pattern,
+	       bool complete );
 
-  /**
-   * Called from the SearchJob when the message was searched
-   */
-  void slotSearchDone( quint32 serNum, const KMSearchPattern* pattern, bool matches );
+/**
+* Called from the SearchJob when the message was searched
+*/
+void slotSearchDone( quint32 serNum, const KMSearchPattern* pattern, bool matches );
 
   /**
    * Connected to ListJob::receivedFolders
@@ -501,7 +508,7 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   bool        mCheckMail;
-  QPointer<KMAcctImap> mAccount;
+  mutable QPointer<KMAcctImap> mAccount;
   // the current uidvalidity
   QString mUidValidity;
   unsigned int mUserRights;
