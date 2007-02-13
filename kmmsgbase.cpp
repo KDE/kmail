@@ -118,7 +118,7 @@ KMMsgBase::KMMsgBase( const KMMsgBase& other )
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isMessage(void) const
 {
-  return FALSE;
+  return false;
 }
 //-----------------------------------------------------------------------------
 void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
@@ -152,7 +152,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 {
-  mDirty = TRUE;
+  mDirty = true;
   KMMsgStatus oldStatus = status();
   switch (aStatus) {
     case KMMsgStatusRead:
@@ -300,7 +300,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int idx )
 {
     //kdDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
-    mDirty = TRUE;
+    mDirty = true;
     if (storage())
         storage()->headerOfMsgChanged(this, idx);
 }
@@ -325,7 +325,7 @@ void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 void KMMsgBase::setSignatureState( const KMMsgSignatureState /*status*/, int idx )
 {
     //kdDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
-    mDirty = TRUE;
+    mDirty = true;
     if (storage())
          storage()->headerOfMsgChanged(this, idx);
 }
@@ -542,7 +542,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
   QString str = aStr;
 
   while (str[0] == ' ') str.remove(0,1);
-  if (hasKeyword) *hasKeyword=FALSE;
+  if (hasKeyword) *hasKeyword=false;
 
   unsigned int strLength(str.length());
   for (i=0; i < strLength && i < maxChars; i++)
@@ -555,7 +555,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
     do {
       i++;
     } while (str[i] == ' ');
-    if (hasKeyword) *hasKeyword=TRUE;
+    if (hasKeyword) *hasKeyword=true;
     return str.mid(i);
   }
   return str;
@@ -604,7 +604,7 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
     {
       encodings.append(KGlobal::charsets()->languageForEncoding(*it)
         + " ( " + mimeName + " )");
-      mimeNames.insert(mimeName, TRUE);
+      mimeNames.insert(mimeName, true);
     }
   }
   encodings.sort();
@@ -686,7 +686,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr, QCString prefCharse
     if (pos[0]!='=' || pos[1]!='?') {
       result += LWSP_buffer + pos[0];
       LWSP_buffer = 0;
-      lastWasEncodedWord = FALSE;
+      lastWasEncodedWord = false;
       continue;
     }
     // found possible encoded-word
@@ -789,7 +789,7 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
 
   unsigned int start, stop, p, pos = 0, encLength;
   QCString result;
-  bool breakLine = FALSE;
+  bool breakLine = false;
   const unsigned int maxLen = 75 - 7 - cset.length();
 
   while (pos < strLength)
@@ -960,8 +960,8 @@ QCString KMMsgBase::extractRFC2231HeaderField( const QCString &aStr, const QCStr
       pattern += QString::number(n) + "[*]?";
     }
     pattern += "=";
-    
-    QRegExp fnamePart( pattern, FALSE );
+
+    QRegExp fnamePart( pattern, false );
     int startPart = fnamePart.search( aStr );
     int endPart;
     found = ( startPart >= 0 );
@@ -1112,19 +1112,19 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   QString ret;
 
   g_chunk_offset = 0;
-  bool using_mmap = FALSE;
+  bool using_mmap = false;
   bool swapByteOrder = storage()->indexSwapByteOrder();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
-	free(g_chunk);
-    using_mmap = TRUE;
+      free(g_chunk);
+    using_mmap = true;
     g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
     if(!storage()->mIndexStream)
       return ret;
     if (g_chunk_length < mIndexLength)
-	g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
+      g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     off_t first_off=ftell(storage()->mIndexStream);
     fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
@@ -1181,13 +1181,13 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   off_t ret = 0;
 
   g_chunk_offset = 0;
-  bool using_mmap = FALSE;
+  bool using_mmap = false;
   int sizeOfLong = storage()->indexSizeOfLong();
   bool swapByteOrder = storage()->indexSwapByteOrder();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
       free(g_chunk);
-    using_mmap = TRUE;
+    using_mmap = true;
     g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
@@ -1371,7 +1371,7 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 bool KMMsgBase::syncIndexString() const
 {
   if(!dirty())
-    return TRUE;
+    return true;
   int len;
   const uchar *buffer = asIndexString(len);
   if (len == mIndexLength) {
@@ -1379,9 +1379,9 @@ bool KMMsgBase::syncIndexString() const
     fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     assert( mIndexOffset > 0 );
     fwrite( buffer, len, 1, storage()->mIndexStream);
-    return TRUE;
+    return true;
   }
-  return FALSE;
+  return false;
 }
 
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
