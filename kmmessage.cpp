@@ -64,6 +64,7 @@ using namespace KMime::Types;
 #include <klocale.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "util.h"
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
@@ -212,7 +213,7 @@ QCString KMMessage::id() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
-    return header.MessageId().AsString().c_str();
+    return KMail::Util::CString( header.MessageId().AsString() );
   else
     return "";
 }
@@ -306,14 +307,14 @@ const DwMessage *KMMessage::asDwMessage()
 
 //-----------------------------------------------------------------------------
 QCString KMMessage::asString() const {
-  return asDwString().c_str();
+  return KMail::Util::CString( asDwString() );
 }
 
 
 QCString KMMessage::asSendableString() const
 {
   KMMessage msg;
-  msg.fromString(asString());
+  msg.fromDwString(asDwString()); // slow!
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.asString();
@@ -322,7 +323,7 @@ QCString KMMessage::asSendableString() const
 QCString KMMessage::headerAsSendableString() const
 {
   KMMessage msg;
-  msg.fromString(asString());
+  msg.fromDwString(asDwString());
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.headerAsString().latin1();
@@ -392,7 +393,7 @@ void KMMessage::fromByteArray( const QByteArray & ba, bool setStatus ) {
 }
 
 void KMMessage::fromString( const QCString & str, bool aSetStatus ) {
-  return fromDwString( DwString( str.data() ), aSetStatus );
+  return fromDwString( KMail::Util::dwString( str ), aSetStatus );
 }
 
 void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
@@ -1250,7 +1251,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     KMMessagePart secondPart;
     secondPart.setType( type() );
     secondPart.setSubtype( subtype() );
-    secondPart.setBody( mMsg->Body().AsString().c_str() );
+    secondPart.setBody( mMsg->Body().AsString() );
     // use the headers of the original mail
     applyHeadersToMessagePart( mMsg->Headers(), &secondPart );
     msg->addBodyPart(&secondPart);
@@ -1761,9 +1762,9 @@ QCString KMMessage::dateShortStr() const
   unixTime = header.Date().AsUnixTime();
 
   QCString result = ctime(&unixTime);
-
-  if (result[result.length()-1]=='\n')
-    result.truncate(result.length()-1);
+  int len = result.length();
+  if (result[len-1]=='\n')
+    result.truncate(len-1);
 
   return result;
 }
@@ -2469,10 +2470,11 @@ void KMMessage::setNeedsAssembly()
 //-----------------------------------------------------------------------------
 QCString KMMessage::body() const
 {
-  DwString body = mMsg->Body().AsString();
-  QCString str = body.c_str();
-  kdWarning( str.length() != body.length(), 5006 )
-    << "KMMessage::body(): body is binary but used as text!" << endl;
+  const DwString& body = mMsg->Body().AsString();
+  QCString str = KMail::Util::CString( body );
+  // Calls length() -> slow
+  //kdWarning( str.length() != body.length(), 5006 )
+  //  << "KMMessage::body(): body is binary but used as text!" << endl;
   return str;
 }
 
@@ -2481,7 +2483,7 @@ QCString KMMessage::body() const
 QByteArray KMMessage::bodyDecodedBinary() const
 {
   DwString dwstr;
-  DwString dwsrc = mMsg->Body().AsString();
+  const DwString& dwsrc = mMsg->Body().AsString();
 
   switch (cte())
   {
@@ -2522,13 +2524,13 @@ QCString KMMessage::bodyDecoded() const
     break;
   }
 
-  unsigned int len = dwstr.size();
-  QCString result(len+1);
-  memcpy(result.data(),dwstr.data(),len);
-  result[len] = 0;
-  kdWarning(result.length() != len, 5006)
-    << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
-  return result;
+  return KMail::Util::CString( dwstr );
+
+  // Calling QCString::length() is slow
+  //QCString result = KMail::Util::CString( dwstr );
+  //kdWarning(result.length() != len, 5006)
+  //  << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
+  //return result;
 }
 
 
@@ -2609,7 +2611,7 @@ void KMMessage::setBodyAndGuessCte( const QCString& aBuf,
                                     bool allow8Bit,
                                     bool willBeSigned )
 {
-  CharFreq cf( aBuf.data(), aBuf.length() ); // it's safe to pass null strings
+  CharFreq cf( aBuf.data(), aBuf.size()-1 ); // it's safe to pass null strings
 
   allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
@@ -2676,7 +2678,17 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setBody(const QCString& aStr)
 {
-  mMsg->Body().FromString(aStr.data());
+  mMsg->Body().FromString(KMail::Util::dwString(aStr));
+  mNeedsAssembly = TRUE;
+}
+void KMMessage::setBody(const DwString& aStr)
+{
+  mMsg->Body().FromString(aStr);
+  mNeedsAssembly = TRUE;
+}
+void KMMessage::setBody(const char* aStr)
+{
+  mMsg->Body().FromString(aStr);
   mNeedsAssembly = TRUE;
 }
 
@@ -2874,14 +2886,14 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
-  // TODO: Instead of manually implementing RFC2231 header encoding (i.e. 
-  //       possibly multiple values given as paramname*0=..; parmaname*1=..;... 
+  // TODO: Instead of manually implementing RFC2231 header encoding (i.e.
+  //       possibly multiple values given as paramname*0=..; parmaname*1=..;...
   //       or par as paramname*0*=..; parmaname*1*=..;..., which should be
   //       concatenated), use a generic method to decode the header, using RFC
   //       2047 or 2231, or whatever future RFC might be appropriate!
   //       Right now, some fields are decoded, while others are not. E.g.
   //       Content-Disposition is not decoded here, rather only on demand in
-  //       KMMsgPart::fileName; Name however is decoded here and stored as a 
+  //       KMMsgPart::fileName; Name however is decoded here and stored as a
   //       decoded String in KMMsgPart...
   // Content-type
   QCString additionalCTypeParams;
@@ -2964,9 +2976,9 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 
     // Body
     if (withBody)
-      aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+      aPart->setBody( aDwBodyPart->Body().AsString() );
     else
-      aPart->setBody( "" );
+      aPart->setBody( QCString("") );
 
     // Content-id
     if ( headers.HasContentId() ) {
@@ -2987,7 +2999,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
     //aPart->setName(" ");
     aPart->setContentDescription("");
     aPart->setContentDisposition("");
-    aPart->setBody("");
+    aPart->setBody(QCString(""));
     aPart->setContentId("");
   }
 }
@@ -3135,8 +3147,9 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   if (!contDisp.isEmpty())
     headers.ContentDisposition().FromString(contDisp);
 
-  if (!aPart->body().isNull())
-    part->Body().FromString(aPart->body());
+  const DwString bodyStr = aPart->dwBody();
+  if (!bodyStr.empty())
+    part->Body().FromString(bodyStr);
   else
     part->Body().FromString("");
 
@@ -3194,7 +3207,7 @@ QString KMMessage::generateMessageId( const QString& addr )
 //-----------------------------------------------------------------------------
 QCString KMMessage::html2source( const QCString & src )
 {
-  QCString result( 1 + 6*src.length() );  // maximal possible length
+  QCString result( 1 + 6*(src.size()-1) );  // maximal possible length
 
   QCString::ConstIterator s = src.begin();
   QCString::Iterator d = result.begin();

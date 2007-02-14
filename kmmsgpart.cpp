@@ -10,6 +10,7 @@
 #include "kmkernel.h"
 #include "kmmessage.h"
 #include "globalsettings.h"
+#include "util.h"
 
 #include <kasciistringtools.h>
 #include <kmime_charfreq.h>
@@ -102,7 +103,18 @@ int KMMessagePart::decodedSize(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBody(const QCString &aStr)
 {
-  mBody.duplicate( aStr.data(), aStr.length() );
+  KMail::Util::setFromQCString( mBody, aStr );
+
+  int enc = cte();
+  if (enc == DwMime::kCte7bit || enc == DwMime::kCte8bit || enc == DwMime::kCteBinary)
+    mBodyDecodedSize = mBody.size();
+  else
+    mBodyDecodedSize = -1; // Can't know the decoded size
+}
+
+void KMMessagePart::setBody(const DwString &aStr)
+{
+  mBody.duplicate( aStr.c_str(), aStr.length() );
 
   int enc = cte();
   if (enc == DwMime::kCte7bit || enc == DwMime::kCte8bit || enc == DwMime::kCteBinary)
@@ -161,8 +173,7 @@ void KMMessagePart::setCharset( const QCString & c ) {
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QCString& aStr)
 {
-  mBodyDecodedSize = aStr.length();
-
+  mBodyDecodedSize = aStr.size() - 1; // same as aStr.length() but faster - assuming no embedded nuls
   switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
@@ -191,6 +202,7 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
+    // This is slow and memory hungry - consider using setBodyEncodedBinary instead!
     mBody.duplicate( aStr.data(), mBodyDecodedSize );
     break;
   }
@@ -224,7 +236,7 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
 				       bool allow8Bit,
                                        bool willBeSigned )
 {
-  mBodyDecodedSize = aBuf.length();
+  mBodyDecodedSize = aBuf.size() - 1; // same as aStr.length() but faster - assuming no embedded nuls
 
   CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass null strings
 
@@ -270,7 +282,9 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    mBody.duplicate( aStr );
+    //mBody.duplicate( aStr );
+    mBody = aStr;
+    // Caller has to detach before it modifies aStr!
     break;
   }
 }
@@ -348,13 +362,12 @@ QCString KMMessagePart::bodyDecoded(void) const
 
   if ( decodeBinary ) {
     len = mBody.size();
-    result.resize( len+1 /* trailing NUL */ );
-    memcpy(result.data(), mBody.data(), len);
-    result[len] = 0;
+    KMail::Util::setFromByteArray( result, mBody );
   }
 
-  kdWarning( result.length() != (unsigned int)len, 5006 )
-    << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
+  // Calls length -> slow
+  //kdWarning( result.length() != (unsigned int)len, 5006 )
+  //  << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
 
   result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 
@@ -505,17 +518,17 @@ void KMMessagePart::setContentDescription(const QString &aStr)
 QString KMMessagePart::fileName(void) const
 {
   QCString str;
-  
-  // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231) 
+
+  // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231)
   // in the Content-Disposision
   if ( mContentDisposition.contains( "filename*", FALSE ) ) {
-  
+
     // It's RFC 2231 encoded, so extract the file name with the 2231 method
     str = KMMsgBase::extractRFC2231HeaderField( mContentDisposition, "filename" );
     return KMMsgBase::decodeRFC2231String(str);
-  
+
   } else {
-    
+
     // Standard RFC 2047-encoded
     // search the start of the filename
     int startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
@@ -540,14 +553,16 @@ QString KMMessagePart::fileName(void) const
                            .stripWhiteSpace();
     return KMMsgBase::decodeRFC2047String(str, charset());
   }
-  
+
   return QString::null;
 }
-
-
 
 QCString KMMessagePart::body() const
 {
   return QCString( mBody.data(), mBody.size() + 1 ); // space for trailing NUL
 }
 
+DwString KMMessagePart::dwBody() const
+{
+  return KMail::Util::dwString( mBody );
+}

@@ -37,6 +37,7 @@
 #include <mimelib/utility.h>
 #include <qregexp.h>
 #include <kasciistricmp.h>
+#include "util.h"
 
 /*
   ===========================================================================
@@ -179,7 +180,7 @@ const QCString & partNode::encodedBody() {
     return mEncodedBody;
 
   if ( mDwPart )
-    mEncodedBody = mDwPart->Body().AsString().c_str();
+    mEncodedBody = KMail::Util::CString( mDwPart->Body().AsString() );
   else
     mEncodedBody = 0;
   mEncodedOk = true;

@@ -1614,13 +1614,13 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
       unencryptedMessage->setParent( 0 );
       // because this did not work:
       /*
-      DwMessage dwMsg( DwString( aMsg->asString() ) );
+      DwMessage dwMsg( aMsg->asDwString() );
       dwMsg.Body() = DwBody( DwString( resultString.data() ) );
       dwMsg.Body().Parse();
       KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
       */
-kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
-kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
+      //kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
+      kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
       aMsg->setUnencryptedMsg( unencryptedMessage );
       emitReplaceMsgByUnencryptedVersion = true;
     }

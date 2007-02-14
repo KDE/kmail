@@ -707,8 +707,8 @@ void KMComposeWin::autoSaveMessage()
   if ( status == 0 ) { // no error
     kdDebug(5006) << "autosaving message in " << filename << endl;
     int fd = autoSaveFile.handle();
-    QCString msgStr = msg->asString();
-    if ( ::write( fd, msgStr, msgStr.length() ) == -1 )
+    const DwString& msgStr = msg->asDwString();
+    if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 )
       status = errno;
   }
   if ( status == 0 ) {

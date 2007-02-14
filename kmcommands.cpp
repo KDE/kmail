@@ -692,7 +692,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
   // Take a copy of the original message, which remains unchanged.
   KMMessage *newMsg = new KMMessage;
   newMsg->setComplete( msg->isComplete() );
-  newMsg->fromString( msg->asString() );
+  newMsg->fromDwString( msg->asDwString() );
 
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
@@ -1923,7 +1923,7 @@ KMCommand::Result KMCopyCommand::execute()
       // make sure the attachment state is only calculated when it's complete
       if (!newMsg->isComplete())
         newMsg->setReadyToShow(false);
-      newMsg->fromString(msg->asString());
+      newMsg->fromDwString(msg->asDwString());
       newMsg->setStatus(msg->status());
 
       if (srcFolder && !newMsg->isComplete())
