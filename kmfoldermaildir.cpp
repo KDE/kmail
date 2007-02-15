@@ -405,7 +405,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->removeHeaderField( "X-UID" );
 
-  msgText = aMsg->asString();
+  msgText = aMsg->asString(); // TODO use asDwString instead
   len = msgText.length();
 
   // Re-add the uid so that the take can make use of it, in case the

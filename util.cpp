@@ -39,6 +39,7 @@
 
 #include <stdlib.h>
 #include <qcstring.h>
+#include <mimelib/string.h>
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -72,7 +73,7 @@ size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 
 QCString KMail::Util::lf2crlf( const QCString & src )
 {
-    QCString result( 1 + 2*src.length() );  // maximal possible length
+    QCString result( 1 + 2*src.size() );  // maximal possible length
 
     QCString::ConstIterator s = src.begin();
     QCString::Iterator d = result.begin();
@@ -86,4 +87,108 @@ QCString KMail::Util::lf2crlf( const QCString & src )
     }
     result.truncate( d - result.begin() ); // adds trailing NUL
     return result;
+}
+
+QByteArray KMail::Util::lf2crlf( const QByteArray & src )
+{
+    const char* s = src.data();
+    if ( !s )
+      return QByteArray();
+
+    QByteArray result( 2 * src.size() );  // maximal possible length
+    QByteArray::Iterator d = result.begin();
+    // we use cPrev to make sure we insert '\r' only there where it is missing
+    char cPrev = '?';
+    const char* end = src.end();
+    while ( s != end ) {
+        if ( ('\n' == *s) && ('\r' != cPrev) )
+            *d++ = '\r';
+        cPrev = *s;
+        *d++ = *s++;
+    }
+    result.truncate( d - result.begin() ); // does not add trailing NUL, as expected
+    return result;
+}
+
+QCString KMail::Util::CString( const DwString& str )
+{
+  const int strLen = str.size();
+  QCString cstr( strLen + 1 );
+  memcpy( cstr.data(), str.data(), strLen );
+  cstr[ strLen ] = 0;
+  return cstr;
+}
+
+QByteArray KMail::Util::ByteArray( const DwString& str )
+{
+  const int strLen = str.size();
+  QByteArray arr( strLen );
+  memcpy( arr.data(), str.data(), strLen );
+  return arr;
+}
+
+DwString KMail::Util::dwString( const QCString& str )
+{
+  if ( !str.data() ) // DwString doesn't like char*=0
+    return DwString();
+  return DwString( str.data(), str.size() - 1 );
+}
+
+DwString KMail::Util::dwString( const QByteArray& str )
+{
+  if ( !str.data() ) // DwString doesn't like char*=0
+    return DwString();
+  return DwString( str.data(), str.size() );
+}
+
+void KMail::Util::append( QByteArray& that, const QByteArray& str )
+{
+  that.detach();
+  uint len1 = that.size();
+  uint len2 = str.size();
+  if ( that.resize( len1 + len2, QByteArray::SpeedOptim ) )
+    memcpy( that.data() + len1, str.data(), len2 );
+}
+
+void KMail::Util::append( QByteArray& that, const char* str )
+{
+  if ( !str )
+    return; // nothing to append
+  that.detach();
+  uint len1 = that.size();
+  uint len2 = qstrlen(str);
+  if ( that.resize( len1 + len2, QByteArray::SpeedOptim ) )
+    memcpy( that.data() + len1, str, len2 );
+}
+
+void KMail::Util::append( QByteArray& that, const QCString& str )
+{
+  that.detach();
+  uint len1 = that.size();
+  uint len2 = str.size() - 1;
+  if ( that.resize( len1 + len2, QByteArray::SpeedOptim ) )
+    memcpy( that.data() + len1, str.data(), len2 );
+}
+
+// Code taken from QCString::insert, but trailing nul removed
+void KMail::Util::insert( QByteArray& that, uint index, const char* s )
+{
+  int len = qstrlen(s);
+  if ( len == 0 )
+    return;
+  uint olen = that.size();
+  int nlen = olen + len;
+  if ( index >= olen ) {                      // insert after end of string
+    that.detach();
+    if ( that.resize(nlen+index-olen, QByteArray::SpeedOptim ) ) {
+      memset( that.data()+olen, ' ', index-olen );
+      memcpy( that.data()+index, s, len );
+    }
+  } else {
+    that.detach();
+    if ( that.resize(nlen, QByteArray::SpeedOptim ) ) {    // normal insert
+      memmove( that.data()+index+len, that.data()+index, olen-index );
+      memcpy( that.data()+index, s, len );
+    }
+  }
 }

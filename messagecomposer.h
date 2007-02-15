@@ -135,9 +135,7 @@ private:
    * Get message ready for sending or saving.
    * This must be done _before_ signing and/or encrypting it.
    */
-  QCString breakLinesAndApplyCodec();
-  /// Same as above but ensure \n termination
-  QCString bodyText();
+  QByteArray breakLinesAndApplyCodec();
 
   /**
    * Create a plain text version of a marked up mail for use as the plain
@@ -149,13 +147,13 @@ private:
    * Get signature for a message (into mMessage).
    * To build nice S/MIME objects signing and encoding must be separated.
    */
-  void pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageFormat f );
+  void pgpSignedMsg( const QByteArray& cText, Kleo::CryptoMessageFormat f );
   /**
    * Get encrypted message.
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpEncryptedMsg( QByteArray& rEncryptedBody,
-                                const QCString & cText,
+                                const QByteArray& cText,
                                 const std::vector<GpgME::Key> & encryptionKeys,
 				Kleo::CryptoMessageFormat f );
 
@@ -164,7 +162,7 @@ private:
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray& rEncryptedBody,
-					 const QCString & cText,
+					 const QByteArray& cText,
 					 const std::vector<GpgME::Key> & signingKeys,
 					 const std::vector<GpgME::Key> & encryptionKeys,
 					 Kleo::CryptoMessageFormat f );
@@ -192,7 +190,7 @@ private:
                                const QCString contentSubtypeClear,
                                const QCString contentDispClear,
                                const QCString contentTEncClear,
-                               const QCString& bodytext,
+                               const QByteArray& bodytext,
                                const QString contentDescriptionCiph,
                                const QByteArray& ciphertext,
                                KMMessagePart& resultingPart,
@@ -213,6 +211,7 @@ private slots:
 
 private:
   void doNextJob();
+  void emitDone( bool ok );
 
   int encryptionPossible( const QStringList & recipients, bool openPGP );
   bool determineWhetherToSign( bool doSignCompletely );
@@ -256,14 +255,14 @@ private:
   bool mRc; // Set this to false, if something fails during the processes
   bool mHoldJobs; // Don't run the next job yet
 
-  QCString mText; // textual representation of the message text, encoded
+  QByteArray mText; // textual representation of the message text, encoded
   unsigned int mLineBreakColumn; // used for line breaking
 
   // These are the variables of the big composeMessage(X,Y,Z) message
   KMMessagePart* mNewBodyPart;
   QByteArray mSignature;
 
-  QCString mEncodedBody; // Only needed if signing and/or encrypting
+  QByteArray mEncodedBody; // Only needed if signing and/or encrypting
   bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
   KMMessagePart mOldBodyPart;
   int mPreviousBoundaryLevel;

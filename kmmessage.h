@@ -526,6 +526,8 @@ public:
 
   /** Set the message body. Does not encode the body. */
   void setBody(const QCString& aStr);
+  void setBody(const DwString& aStr);
+  void setBody(const char* aStr); // avoid ambiguous calls
 
   /** Hack to enable structured body parts to be set as flat text... */
   void setMultiPartBody( const QCString & aStr );

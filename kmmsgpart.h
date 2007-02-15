@@ -27,6 +27,7 @@
 template <typename T>
 class QValueList;
 class QTextCodec;
+class DwString;
 
 class KMMessagePart
 {
@@ -45,6 +46,8 @@ public:
   /** Get or set the message body */
   QCString body(void) const;
   void setBody(const QCString &aStr);
+  DwString dwBody() const;
+  void setBody(const DwString &aStr);
 
   /** Sets this body part's content to @p str. @p str is subject to
       automatic charset and CTE detection.
@@ -58,11 +61,11 @@ public:
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
     No trailing 0 is appended. */
-  virtual QByteArray bodyDecodedBinary(void) const;
+  QByteArray bodyDecodedBinary(void) const;
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
       contains the correct encoding. This routine is meant for text strings! */
-  virtual QCString bodyDecoded(void) const;
+  QCString bodyDecoded(void) const;
 
   /** Sets body, encoded in the best fitting
       content-transfer-encoding, which is determined by character
@@ -73,26 +76,33 @@ public:
       @param allow8Bit  whether "8bit" is allowed as cte.
       @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
   */
-  virtual void setBodyAndGuessCte(const QByteArray& aBuf,
+  void setBodyAndGuessCte(const QByteArray& aBuf,
 				  QValueList<int>& allowedCte,
 				  bool allow8Bit = false,
                                   bool willBeSigned = false);
   /** Same for text */
-  virtual void setBodyAndGuessCte(const QCString& aBuf,
+  void setBodyAndGuessCte(const QCString& aBuf,
 				  QValueList<int>& allowedCte,
 				  bool allow8Bit = false,
                                   bool willBeSigned = false);
 
   /** Sets body, encoded according to the content-transfer-encoding.
-      BEWARE: The entire aStr is used including trailing 0 of text strings! */
-  virtual void setBodyEncodedBinary(const QByteArray& aStr);
+      BEWARE: The entire aStr is used including trailing 0 of text strings!
+      This version is faster than setBodyEncoded, no duplication necessary.
+    */
+  void setBodyEncodedBinary(const QByteArray& aStr);
 
   /** Sets body, encoded according to the content-transfer-encoding.
-      This one is for text strings, the trailing 0 is not used. */
-  virtual void setBodyEncoded(const QCString& aStr);
+      This one is for text strings, the trailing 0 is not used.
+
+      For speed reasons, prefer setBodyEncodedBinary.
+      When possible (the QCString isn't used afterwards), change setBodyEncoded(myQCString) into:
+       setBodyEncodedBinary(byteArrayFromQCStringNoDetach(myQCString));
+  */
+ void setBodyEncoded(const QCString& aStr);
 
   /** Returns decoded length of body. */
-  virtual int decodedSize(void) const;
+  int decodedSize(void) const;
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)

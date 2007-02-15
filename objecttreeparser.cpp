@@ -401,7 +401,7 @@ namespace KMail {
 
     if ( doCheck && cryptPlug ) {
       if ( data ) {
-        cleartext = data->dwPart()->AsString().c_str();
+        cleartext = KMail::Util::CString( data->dwPart()->AsString() );
 
         dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
                     cleartext.data(), cleartext.length() );
