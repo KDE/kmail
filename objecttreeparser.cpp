@@ -1715,7 +1715,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
   return true;
 }
 
-  void ObjectTreeParser::writeBodyString( const Q3CString & bodyString,
+  void ObjectTreeParser::writeBodyString( const QByteArray & bodyString,
                                           const QString & fromAddress,
                                           const QTextCodec * codec,
                                           ProcessResult & result,
@@ -2363,7 +2363,7 @@ QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
 }
 
 //-----------------------------------------------------------------------------
-void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aCodec,
+void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress )
 {
   KMMsgSignatureState dummy1;
@@ -2372,7 +2372,7 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
 }
 
 //-----------------------------------------------------------------------------
-void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aCodec,
+void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress,
                                 KMMsgSignatureState&  inlineSignatureState,
                                 KMMsgEncryptionState& inlineEncryptionState,

@@ -1245,7 +1245,7 @@ static const int numKMailNewFeatures =
 //static
 QString KMReaderWin::newFeaturesMD5()
 {
-  Q3CString str;
+  QByteArray str;
   for ( int i = 0 ; i < numKMailChanges ; ++i )
     str += kmailChanges[i];
   for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
@@ -2018,7 +2018,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
         htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
         mColorBar->setHtmlMode();
       } else { // plain text
-        const Q3CString str = aMsgPart->bodyDecoded();
+        const QByteArray str = aMsgPart->bodyDecoded();
         ObjectTreeParser otp( this );
         otp.writeBodyStr( str,
                           overrideCodec() ? overrideCodec() : aMsgPart->codec(),
@@ -2136,7 +2136,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     return;
   }
 
-  Q3CString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
+  QByteArray contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
   kAsciiToLower( contentTypeStr.data() );
 
   if ( ( qstrcmp( contentTypeStr, "text/directory" ) == 0 ) ||

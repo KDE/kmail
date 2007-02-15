@@ -225,7 +225,7 @@ namespace KMail {
 
   private:
     bool decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText );
-    void writeBodyString( const Q3CString & bodyString,
+    void writeBodyString( const QByteArray & bodyString,
                           const QString & fromAddress,
                           const QTextCodec * codec,
                           ProcessResult & result, bool decorate );
@@ -243,14 +243,14 @@ namespace KMail {
                                 const QString & filename = QString() );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
-    void writeBodyStr( const Q3CString & bodyString,
+    void writeBodyStr( const QByteArray & bodyString,
                        const QTextCodec * aCodec,
                        const QString & fromAddress,
                        KMMsgSignatureState &  inlineSignatureState,
                        KMMsgEncryptionState & inlineEncryptionState,
                        bool decorate );
   public: // KMReaderWin still needs this...
-    void writeBodyStr( const Q3CString & bodyString,
+    void writeBodyStr( const QByteArray & bodyString,
                        const QTextCodec * aCodec,
                        const QString & fromAddress );
 

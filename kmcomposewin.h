@@ -15,8 +15,7 @@
 #include "composer.h"
 #include "messagesender.h"
 
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <q3listview.h>
 
 #include <QCheckBox>
@@ -48,7 +47,7 @@ class QComboBox;
 class QGridLayout;
 class Q3ListView;
 class QPushButton;
-class Q3CString;
+class QByteArray;
 class KCompletion;
 class KMEdit;
 class KMComposeWin;
@@ -111,13 +110,13 @@ public: // mailserviceimpl
   void send(int how);
   void addAttachment(KUrl url,QString comment);
   void addAttachment(const QString &name,
-                    const Q3CString &cte,
+                    const QByteArray &cte,
                     const QByteArray &data,
-                    const Q3CString &type,
-                    const Q3CString &subType,
-                    const Q3CString &paramAttr,
+                    const QByteArray &type,
+                    const QByteArray &subType,
+                    const QByteArray &paramAttr,
                     const QString &paramValue,
-                    const Q3CString &contDisp);
+                    const QByteArray &contDisp);
 public: // kmcommand
   void setBody (QString body);
 
@@ -607,7 +606,7 @@ private:
    * This function is for example used to restore the unencrypted/unsigned
    * message text for editting.
    */
-   static void decryptOrStripOffCleartextSignature( Q3CString& );
+   static void decryptOrStripOffCleartextSignature( QByteArray& );
 
 
    /**
@@ -733,8 +732,8 @@ private:
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;
 
-  Q3CString mCharset;
-  Q3CString mDefCharset;
+  QByteArray mCharset;
+  QByteArray mDefCharset;
   QStringList mCharsets;
   bool mAutoCharset;
 
@@ -789,7 +788,7 @@ private:
     KUrl url;
     QByteArray data;
     bool insert;
-    Q3CString encoding;
+    QByteArray encoding;
   };
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
 

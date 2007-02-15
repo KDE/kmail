@@ -439,7 +439,7 @@ void ActionScheduler::messageFetched( KMMessage *msg )
     QString serNumS;
     serNumS.setNum( msg->getMsgSerNum() );
     KMMessage *newMsg = new KMMessage;
-    newMsg->fromString(msg->asString());
+    newMsg->fromDwString(msg->asDwString());
     newMsg->setStatus(msg->status());
     newMsg->setComplete(msg->isComplete());
     newMsg->setHeaderField( "X-KMail-Filtered", serNumS );

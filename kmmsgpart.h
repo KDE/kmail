@@ -45,8 +45,8 @@ public:
   void duplicate( const KMMessagePart & msgPart );
 
   /** Get or set the message body */
-  Q3CString body(void) const;
-  void setBody(const Q3CString &aStr);
+  QByteArray body(void) const;
+  void setBody(const QByteArray &aStr);
 
   /** Sets this body part's content to @p str. @p str is subject to
       automatic charset and CTE detection.
@@ -60,11 +60,11 @@ public:
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
     No trailing 0 is appended. */
-  virtual QByteArray bodyDecodedBinary(void) const;
+  QByteArray bodyDecodedBinary(void) const;
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
       contains the correct encoding. This routine is meant for text strings! */
-  virtual Q3CString bodyDecoded(void) const;
+  QByteArray bodyDecoded(void) const;
 
   /** Sets body, encoded in the best fitting
       content-transfer-encoding, which is determined by character
@@ -75,48 +75,43 @@ public:
       @param allow8Bit  whether "8bit" is allowed as cte.
       @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
   */
-  virtual void setBodyAndGuessCte(const QByteArray& aBuf,
-				  QList<int>& allowedCte,
-				  bool allow8Bit = false,
-                                  bool willBeSigned = false);
-  /** Same for text */
-  virtual void setBodyAndGuessCte(const Q3CString& aBuf,
+  void setBodyAndGuessCte(const QByteArray& aBuf,
 				  QList<int>& allowedCte,
 				  bool allow8Bit = false,
                                   bool willBeSigned = false);
 
   /** Sets body, encoded according to the content-transfer-encoding.
       BEWARE: The entire aStr is used including trailing 0 of text strings! */
-  virtual void setBodyEncodedBinary(const QByteArray& aStr);
+  void setBodyEncodedBinary(const QByteArray& aStr);
 
   /** Sets body, encoded according to the content-transfer-encoding.
       This one is for text strings, the trailing 0 is not used. */
-  virtual void setBodyEncoded(const Q3CString& aStr);
+  void setBodyEncoded(const QByteArray& aStr);
 
   /** Returns decoded length of body. */
-  virtual int decodedSize(void) const;
+  int decodedSize() const;
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  Q3CString originalContentTypeStr(void) const { return mOriginalContentTypeStr; }
-  void setOriginalContentTypeStr( const Q3CString& txt )
+  QByteArray originalContentTypeStr(void) const { return mOriginalContentTypeStr; }
+  void setOriginalContentTypeStr( const QByteArray& txt )
   {
     mOriginalContentTypeStr = txt;
   }
-  Q3CString typeStr() const { return mType; }
-  void setTypeStr( const Q3CString & aStr ) { mType = aStr; }
+  QByteArray typeStr() const { return mType; }
+  void setTypeStr( const QByteArray & aStr ) { mType = aStr; }
   int type() const;
   void setType(int aType);
   /** Subtype */
-  Q3CString subtypeStr() const { return mSubtype; }
-  void setSubtypeStr( const Q3CString & aStr ) { mSubtype = aStr; }
+  QByteArray subtypeStr() const { return mSubtype; }
+  void setSubtypeStr( const QByteArray & aStr ) { mSubtype = aStr; }
   int subtype() const;
   void setSubtype(int aSubtype);
 
   /** Content-Id */
-  Q3CString contentId() const { return mContentId; }
-  void setContentId( const Q3CString & aStr ) { mContentId = aStr; }
+  QByteArray contentId() const { return mContentId; }
+  void setContentId( const QByteArray & aStr ) { mContentId = aStr; }
 
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
     If autoDecode is true the decoded body will be used for mime type
@@ -125,15 +120,15 @@ public:
 
   /** Get or set a custom content type parameter, consisting of an attribute
     name and a corresponding value. */
-  Q3CString parameterAttribute(void) const;
+  QByteArray parameterAttribute(void) const;
   QString parameterValue(void) const;
-  void setParameter(const Q3CString &attribute, const QString &value);
+  void setParameter(const QByteArray &attribute, const QString &value);
 
-  Q3CString additionalCTypeParamStr(void) const
+  QByteArray additionalCTypeParamStr(void) const
   {
     return mAdditionalCTypeParamStr;
   }
-  void setAdditionalCTypeParamStr( const Q3CString &param )
+  void setAdditionalCTypeParamStr( const QByteArray &param )
   {
     mAdditionalCTypeParamStr = param;
   }
@@ -146,33 +141,33 @@ public:
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
     will work only for well-known encodings. */
-  Q3CString contentTransferEncodingStr(void) const;
+  QByteArray contentTransferEncodingStr(void) const;
   int  contentTransferEncoding(void) const;
-  void setContentTransferEncodingStr(const Q3CString &aStr);
+  void setContentTransferEncodingStr(const QByteArray &aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  Q3CString cteStr(void) const { return contentTransferEncodingStr(); }
+  QByteArray cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
-  void setCteStr(const Q3CString& aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QByteArray& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
 
   /** Get or set the 'Content-Description' header field */
   QString contentDescription() const;
-  Q3CString contentDescriptionEncoded() const { return mContentDescription; }
+  QByteArray contentDescriptionEncoded() const { return mContentDescription; }
   void setContentDescription(const QString &aStr);
 
   /** Get or set the 'Content-Disposition' header field */
-  Q3CString contentDisposition() const { return mContentDisposition; }
-  void setContentDisposition( const Q3CString & cd ) { mContentDisposition = cd; }
+  QByteArray contentDisposition() const { return mContentDisposition; }
+  void setContentDisposition( const QByteArray & cd ) { mContentDisposition = cd; }
 
   /** Get the message part charset.*/
-  Q3CString charset() const { return mCharset; }
+  QByteArray charset() const { return mCharset; }
 
   /** Set the message part charset. */
-  void setCharset( const Q3CString & c );
+  void setCharset( const QByteArray & c );
 
   /** Get a QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
@@ -213,19 +208,19 @@ public:
   void setLoadPart( bool load ) { mLoadPart = load; }
 
 protected:
-  Q3CString mOriginalContentTypeStr;
-  Q3CString mType;
-  Q3CString mSubtype;
-  Q3CString mCte;
-  Q3CString mContentDescription;
-  Q3CString mContentDisposition;
-  Q3CString mContentId;
+  QByteArray mOriginalContentTypeStr;
+  QByteArray mType;
+  QByteArray mSubtype;
+  QByteArray mCte;
+  QByteArray mContentDescription;
+  QByteArray mContentDisposition;
+  QByteArray mContentId;
   QByteArray mBody;
-  Q3CString mAdditionalCTypeParamStr;
+  QByteArray mAdditionalCTypeParamStr;
   QString mName;
-  Q3CString mParameterAttribute;
+  QByteArray mParameterAttribute;
   QString mParameterValue;
-  Q3CString mCharset;
+  QByteArray mCharset;
   QString mPartSpecifier;
   mutable int mBodyDecodedSize;
   KMMessagePart* mParent;

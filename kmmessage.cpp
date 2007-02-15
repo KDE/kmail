@@ -50,7 +50,7 @@ using KMail::TemplateParser;
 #include <QMessageBox>
 #include <QTextCodec>
 #include <Q3StrList>
-#include <Q3CString>
+#include <QByteArray>
 
 #include <kmime/kmime_dateformatter.h>
 #include <kmime/kmime_charfreq.h>
@@ -71,6 +71,7 @@ using namespace KMime::Types;
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
+#include "util.h"
 #endif
 
 using namespace KMime;
@@ -204,7 +205,7 @@ KMMessage::~KMMessage()
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setReferences(const Q3CString& aStr)
+void KMMessage::setReferences(const QByteArray& aStr)
 {
   if (aStr.isNull()) return;
   mMsg->Headers().References().FromString(aStr);
@@ -213,7 +214,7 @@ void KMMessage::setReferences(const Q3CString& aStr)
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::id() const
+QByteArray KMMessage::id() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
@@ -315,19 +316,19 @@ QByteArray KMMessage::asString() const {
 }
 
 
-Q3CString KMMessage::asSendableString() const
+QByteArray KMMessage::asSendableString() const
 {
   KMMessage msg;
-  msg.fromString(asString());
+  msg.fromDwString(asDwString());
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.asString();
 }
 
-Q3CString KMMessage::headerAsSendableString() const
+QByteArray KMMessage::headerAsSendableString() const
 {
   KMMessage msg;
-  msg.fromString(asString());
+  msg.fromDwString(asDwString());
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.headerAsString().toLatin1();
@@ -392,12 +393,8 @@ DwMediaType& KMMessage::dwContentType()
   return mMsg->Headers().ContentType();
 }
 
-void KMMessage::fromByteArray( const QByteArray & ba, bool setStatus ) {
+void KMMessage::fromString( const QByteArray & ba, bool setStatus ) {
   return fromDwString( DwString( ba.data(), ba.size() ), setStatus );
-}
-
-void KMMessage::fromString( const Q3CString & str, bool aSetStatus ) {
-  return fromDwString( DwString( str.data() ), aSetStatus );
 }
 
 void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
@@ -716,7 +713,7 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
 
 //-----------------------------------------------------------------------------
 void KMMessage::parseTextStringFromDwPart( partNode * root,
-                                           Q3CString& parsedString,
+                                           QByteArray& parsedString,
                                            const QTextCodec*& codec,
                                            bool& isHTML ) const
 {
@@ -748,7 +745,7 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
 //-----------------------------------------------------------------------------
 
 QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const {
-  Q3CString parsedString;
+  QByteArray parsedString;
   bool isHTML = false;
   const QTextCodec * codec = 0;
 
@@ -862,7 +859,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
   QStringList mailingListAddresses;
-  Q3CString refStr, headerName;
+  QByteArray refStr, headerName;
   bool replyAll = true;
 
   msg->initFromMessage(this);
@@ -1051,7 +1048,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
 //  if (!noQuote) {
 //    if( selectionIsBody ){
-//      Q3CString cStr = selection.toLatin1();
+//      QByteArray cStr = selection.toLatin1();
 //      msg->setBody( cStr );
 //    }else{
 //      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
@@ -1082,9 +1079,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::getRefStr() const
+QByteArray KMMessage::getRefStr() const
 {
-  Q3CString firstRef, lastRef, refStr, retRefStr;
+  QByteArray firstRef, lastRef, refStr, retRefStr;
   int i, j;
 
   refStr = headerField("References").trimmed().toLatin1();
@@ -1163,10 +1160,10 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::createForwardBody()
+QByteArray KMMessage::createForwardBody()
 {
   QString s;
-  Q3CString str;
+  QByteArray str;
 
   if (sHeaderStrategy == HeaderStrategy::all()) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1756,7 +1753,7 @@ QString KMMessage::dateStr() const
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::dateShortStr() const
+QByteArray KMMessage::dateShortStr() const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1764,7 +1761,7 @@ Q3CString KMMessage::dateShortStr() const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  Q3CString result = ctime(&unixTime);
+  QByteArray result = ctime(&unixTime);
 
   if (result[result.length()-1]=='\n')
     result.truncate(result.length()-1);
@@ -1820,7 +1817,7 @@ void KMMessage::setDate(time_t aDate)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setDate(const Q3CString& aStr)
+void KMMessage::setDate(const QByteArray& aStr)
 {
   DwHeaders& header = mMsg->Headers();
 
@@ -2151,7 +2148,7 @@ size_t KMMessage::msgSizeServer() const {
 //-----------------------------------------------------------------------------
 void KMMessage::setMsgSizeServer(size_t size)
 {
-  setHeaderField("X-Length", Q3CString().setNum(size));
+  setHeaderField("X-Length", QByteArray::number((qlonglong)size));
   mDirty = true;
 }
 
@@ -2164,12 +2161,12 @@ ulong KMMessage::UID() const {
 //-----------------------------------------------------------------------------
 void KMMessage::setUID(ulong uid)
 {
-  setHeaderField("X-UID", Q3CString().setNum(uid));
+  setHeaderField("X-UID", QByteArray::number((qlonglong)uid));
   mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
-AddressList KMMessage::splitAddrField( const Q3CString & str )
+AddressList KMMessage::splitAddrField( const QByteArray & str )
 {
   AddressList result;
   const char * scursor = str.begin();
@@ -2182,11 +2179,11 @@ AddressList KMMessage::splitAddrField( const Q3CString & str )
   return result;
 }
 
-AddressList KMMessage::headerAddrField( const Q3CString & aName ) const {
+AddressList KMMessage::headerAddrField( const QByteArray & aName ) const {
   return KMMessage::splitAddrField( rawHeaderField( aName ) );
 }
 
-AddrSpecList KMMessage::extractAddrSpecs( const Q3CString & header ) const {
+AddrSpecList KMMessage::extractAddrSpecs( const QByteArray & header ) const {
   AddressList al = headerAddrField( header );
   AddrSpecList result;
   for ( AddressList::const_iterator ait = al.begin() ; ait != al.end() ; ++ait )
@@ -2195,24 +2192,24 @@ AddrSpecList KMMessage::extractAddrSpecs( const Q3CString & header ) const {
   return result;
 }
 
-Q3CString KMMessage::rawHeaderField( const Q3CString & name ) const {
-  if ( name.isEmpty() ) return Q3CString();
+QByteArray KMMessage::rawHeaderField( const QByteArray & name ) const {
+  if ( name.isEmpty() ) return QByteArray();
 
   DwHeaders & header = mMsg->Headers();
   DwField * field = header.FindField( name );
 
-  if ( !field ) return Q3CString();
+  if ( !field ) return QByteArray();
 
   return header.FieldBody( name.data() ).AsString().c_str();
 }
 
-QList<Q3CString> KMMessage::rawHeaderFields( const Q3CString& field ) const
+QList<QByteArray> KMMessage::rawHeaderFields( const QByteArray& field ) const
 {
   if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
-    return QList<Q3CString>();
+    return QList<QByteArray>();
 
   std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
-  QList<Q3CString> headerFields;
+  QList<QByteArray> headerFields;
   for ( uint i = 0; i < v.size(); ++i ) {
     headerFields.append( v[i]->AsString().c_str() );
   }
@@ -2220,7 +2217,7 @@ QList<Q3CString> KMMessage::rawHeaderFields( const Q3CString& field ) const
   return headerFields;
 }
 
-QString KMMessage::headerField(const Q3CString& aName) const
+QString KMMessage::headerField(const QByteArray& aName) const
 {
   if ( aName.isEmpty() )
     return QString();
@@ -2231,7 +2228,7 @@ QString KMMessage::headerField(const Q3CString& aName) const
   return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
 }
 
-QStringList KMMessage::headerFields( const Q3CString& field ) const
+QStringList KMMessage::headerFields( const QByteArray& field ) const
 {
   if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
     return QStringList();
@@ -2246,7 +2243,7 @@ QStringList KMMessage::headerFields( const Q3CString& field ) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::removeHeaderField(const Q3CString& aName)
+void KMMessage::removeHeaderField(const QByteArray& aName)
 {
   DwHeaders & header = mMsg->Headers();
   DwField * field = header.FindField(aName);
@@ -2258,7 +2255,7 @@ void KMMessage::removeHeaderField(const Q3CString& aName)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
+void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
                                 HeaderFieldType type, bool prepend )
 {
 #if 0
@@ -2272,7 +2269,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
 
   DwString str;
   DwField* field;
-  Q3CString aValue;
+  QByteArray aValue;
   if (!bValue.isEmpty())
   {
     QString value = bValue;
@@ -2282,7 +2279,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
     if ( type != Unstructured )
       kDebug(5006) << "value: \"" << value << "\"" << endl;
 #endif
-    Q3CString encoding = autoDetectCharset( charset(), sPrefCharsets, value );
+    QByteArray encoding = autoDetectCharset( charset(), sPrefCharsets, value );
     if (encoding.isEmpty())
        encoding = "utf-8";
     aValue = encodeRFC2047String( value, encoding );
@@ -2311,7 +2308,7 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::typeStr() const
+QByteArray KMMessage::typeStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().TypeStr().c_str();
@@ -2329,7 +2326,7 @@ int KMMessage::type() const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setTypeStr(const Q3CString& aStr)
+void KMMessage::setTypeStr(const QByteArray& aStr)
 {
   dwContentType().SetTypeStr(DwString(aStr));
   dwContentType().Parse();
@@ -2348,7 +2345,7 @@ void KMMessage::setType(int aType)
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::subtypeStr() const
+QByteArray KMMessage::subtypeStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().SubtypeStr().c_str();
@@ -2366,7 +2363,7 @@ int KMMessage::subtype() const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setSubtypeStr(const Q3CString& aStr)
+void KMMessage::setSubtypeStr(const QByteArray& aStr)
 {
   dwContentType().SetSubtypeStr(DwString(aStr));
   dwContentType().Parse();
@@ -2385,8 +2382,8 @@ void KMMessage::setSubtype(int aSubtype)
 
 //-----------------------------------------------------------------------------
 void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
-                                     const Q3CString& attr,
-                                     const Q3CString& val )
+                                     const QByteArray& attr,
+                                     const QByteArray& val )
 {
   mType.Parse();
   DwParameter *param = mType.FirstParameter();
@@ -2409,7 +2406,7 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setContentTypeParam(const Q3CString& attr, const Q3CString& val)
+void KMMessage::setContentTypeParam(const QByteArray& attr, const QByteArray& val)
 {
   if (mNeedsAssembly) mMsg->Assemble();
   mNeedsAssembly = false;
@@ -2419,7 +2416,7 @@ void KMMessage::setContentTypeParam(const Q3CString& attr, const Q3CString& val)
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::contentTransferEncodingStr() const
+QByteArray KMMessage::contentTransferEncodingStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
@@ -2439,7 +2436,7 @@ int KMMessage::contentTransferEncoding() const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setContentTransferEncodingStr(const Q3CString& aStr)
+void KMMessage::setContentTransferEncodingStr(const QByteArray& aStr)
 {
   mMsg->Headers().ContentTransferEncoding().FromString(aStr);
   mMsg->Headers().ContentTransferEncoding().Parse();
@@ -2470,10 +2467,10 @@ void KMMessage::setNeedsAssembly()
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::body() const
+QByteArray KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
-  Q3CString str = body.c_str();
+  QByteArray str = body.c_str();
   kWarning( str.length() != static_cast<int>( body.length() ), 5006 )
     << "KMMessage::body(): body is binary but used as text!" << endl;
   return str;
@@ -2507,7 +2504,7 @@ QByteArray KMMessage::bodyDecodedBinary() const
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::bodyDecoded() const
+QByteArray KMMessage::bodyDecoded() const
 {
   DwString dwstr;
   DwString dwsrc = mMsg->Body().AsString();
@@ -2525,12 +2522,9 @@ Q3CString KMMessage::bodyDecoded() const
     break;
   }
 
-  int len = dwstr.size();
-  Q3CString result(len+1);
-  memcpy(result.data(),dwstr.data(),len);
-  result[len] = 0;
-  kWarning(result.length() != len, 5006)
-    << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
+  QByteArray result = KMail::Util::ByteArray( dwstr );
+  //kWarning(qstrlen(result) != dwstr.size(), 5006)
+  //  << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
   return result;
 }
 
@@ -2605,57 +2599,17 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
   setBodyEncodedBinary( aBuf );
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyAndGuessCte( const Q3CString& aBuf,
-                                    QList<int> & allowedCte,
-                                    bool allow8Bit,
-                                    bool willBeSigned )
+void KMMessage::setBodyEncoded(const QByteArray& aStr)
 {
-  CharFreq cf( aBuf.data(), aBuf.length() ); // it's safe to pass null strings
-
-  allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
-
-#ifndef NDEBUG
-  DwString dwCte;
-  DwCteEnumToStr(allowedCte[0], dwCte);
-  kDebug(5006) << "CharFreq returned " << cf.type() << "/"
-                << cf.printableRatio() << " and I chose "
-                << dwCte.c_str() << endl;
-#endif
-
-  setCte( allowedCte[0] ); // choose best fitting
-  setBodyEncoded( aBuf );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessage::setBodyEncoded(const Q3CString& aStr)
-{
-  DwString dwSrc(aStr.data(), aStr.size()-1 /* not the trailing NUL */);
-  DwString dwResult;
-
-  switch (cte())
-  {
-  case DwMime::kCteBase64:
-    DwEncodeBase64(dwSrc, dwResult);
-    break;
-  case DwMime::kCteQuotedPrintable:
-    DwEncodeQuotedPrintable(dwSrc, dwResult);
-    break;
-  default:
-    dwResult = dwSrc;
-    break;
-  }
-
-  mMsg->Body().FromString(dwResult);
-  mNeedsAssembly = true;
+  // Qt4: QCString and QByteArray have been merged; this method can be cleaned up
+  setBodyEncodedBinary( aStr );
 }
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
 {
-  DwString dwSrc(aStr.data(), aStr.size());
+  DwString dwSrc = KMail::Util::dwString(aStr);
   DwString dwResult;
 
   switch (cte())
@@ -2677,13 +2631,13 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBody(const Q3CString& aStr)
+void KMMessage::setBody(const QByteArray& aStr)
 {
   mMsg->Body().FromString(aStr.data());
   mNeedsAssembly = true;
 }
 
-void KMMessage::setMultiPartBody( const Q3CString & aStr ) {
+void KMMessage::setMultiPartBody( const QByteArray & aStr ) {
   setBody( aStr );
   mMsg->Body().Parse();
   mNeedsAssembly = true;
@@ -2878,7 +2832,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
   // Content-type
-  Q3CString additionalCTypeParams;
+  QByteArray additionalCTypeParams;
   if (headers.HasContentType())
   {
     DwMediaType& ct = headers.ContentType();
@@ -2889,7 +2843,7 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
     while(param)
     {
       if (!qstricmp(param->Attribute().c_str(), "charset"))
-        aPart->setCharset(Q3CString(param->Value().c_str()).toLower());
+        aPart->setCharset(QByteArray(param->Value().c_str()).toLower());
       else if (!qstrnicmp(param->Attribute().c_str(), "name*", 5))
         aPart->setName(KMMsgBase::decodeRFC2231String(
               param->Value().c_str()));
@@ -2965,7 +2919,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 
     // Content-id
     if ( headers.HasContentId() ) {
-      const Q3CString contentId = headers.ContentId().AsString().c_str();
+      const QByteArray contentId = headers.ContentId().AsString().c_str();
       // ignore leading '<' and trailing '>'
       aPart->setContentId( contentId.mid( 1, contentId.length() - 2 ) );
     }
@@ -3018,17 +2972,17 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   if ( !aPart )
     return part;
 
-  Q3CString charset  = aPart->charset();
-  Q3CString type     = aPart->typeStr();
-  Q3CString subtype  = aPart->subtypeStr();
-  Q3CString cte      = aPart->cteStr();
-  Q3CString contDesc = aPart->contentDescriptionEncoded();
-  Q3CString contDisp = aPart->contentDisposition();
-  Q3CString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
+  QByteArray charset  = aPart->charset();
+  QByteArray type     = aPart->typeStr();
+  QByteArray subtype  = aPart->subtypeStr();
+  QByteArray cte      = aPart->cteStr();
+  QByteArray contDesc = aPart->contentDescriptionEncoded();
+  QByteArray contDisp = aPart->contentDisposition();
+  QByteArray encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
   if (encoding.isEmpty()) encoding = "utf-8";
-  Q3CString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
+  QByteArray name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
   bool RFC2231encoded = aPart->name() != QString(name);
-  Q3CString paramAttr  = aPart->parameterAttribute();
+  QByteArray paramAttr  = aPart->parameterAttribute();
 
   DwHeaders& headers = part->Headers();
 
@@ -3103,10 +3057,10 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 
   if (!paramAttr.isEmpty())
   {
-    Q3CString encoding = autoDetectCharset(charset, sPrefCharsets,
+    QByteArray encoding = autoDetectCharset(charset, sPrefCharsets,
 					  aPart->parameterValue());
     if (encoding.isEmpty()) encoding = "utf-8";
-    Q3CString paramValue;
+    QByteArray paramValue;
     paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
 						encoding);
     DwParameter *param = new DwParameter;
@@ -3187,11 +3141,11 @@ QString KMMessage::generateMessageId( const QString& addr )
 
 
 //-----------------------------------------------------------------------------
-QByteArray KMMessage::html2source( const Q3CString & src )
+QByteArray KMMessage::html2source( const QByteArray & src )
 {
   QByteArray result( 1 + 6*src.length(), '\0' );  // maximal possible length
 
-  Q3CString::ConstIterator s = src.begin();
+  QByteArray::ConstIterator s = src.begin();
   QByteArray::Iterator d = result.begin();
   while ( *s ) {
     switch ( *s ) {
@@ -3281,22 +3235,22 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
+QByteArray KMMessage::stripEmailAddr( const QByteArray& aStr )
 {
   //kDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
-    return Q3CString();
+    return QByteArray();
 
-  Q3CString result;
+  QByteArray result;
 
   // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
   // The purpose is to extract a displayable string from the mailboxes.
   // Comments in the addr-spec are not handled. No error checking is done.
 
-  Q3CString name;
-  Q3CString comment;
-  Q3CString angleAddress;
+  QByteArray name;
+  QByteArray comment;
+  QByteArray angleAddress;
   enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
   bool inQuotedString = false;
   int commentLevel = 0;
@@ -3354,9 +3308,9 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
                    else if ( !angleAddress.isEmpty() ) {
                      result += angleAddress;
                    }
-                   name = Q3CString();
-                   comment = Q3CString();
-                   angleAddress = Q3CString();
+                   name = QByteArray();
+                   comment = QByteArray();
+                   angleAddress = QByteArray();
                  }
                  else
                    name += *p;
@@ -3844,15 +3798,15 @@ void KMMessage::readConfig()
   }
 }
 
-Q3CString KMMessage::defaultCharset()
+QByteArray KMMessage::defaultCharset()
 {
-  Q3CString retval;
+  QByteArray retval;
 
   if (!sPrefCharsets.isEmpty())
     retval = sPrefCharsets[0].toLatin1();
 
   if (retval.isEmpty()  || (retval == "locale")) {
-    retval = Q3CString(kmkernel->networkCodec()->name());
+    retval = QByteArray(kmkernel->networkCodec()->name());
     kAsciiToLower( retval.data() );
   }
 
@@ -3867,7 +3821,7 @@ const QStringList &KMMessage::preferredCharsets()
 }
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::charset() const
+QByteArray KMMessage::charset() const
 {
   if ( mMsg->Headers().HasContentType() ) {
     DwMediaType &mType=mMsg->Headers().ContentType();
@@ -3883,7 +3837,7 @@ Q3CString KMMessage::charset() const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setCharset(const Q3CString& bStr)
+void KMMessage::setCharset(const QByteArray& bStr)
 {
   kWarning( type() != DwMime::kTypeText )
     << "KMMessage::setCharset(): trying to set a charset for a non-textual mimetype." << endl
@@ -3891,7 +3845,7 @@ void KMMessage::setCharset(const Q3CString& bStr)
     << "====================================================================" << endl
     << kBacktrace( 5 ) << endl
     << "====================================================================" << endl;
-  Q3CString aStr = bStr;
+  QByteArray aStr = bStr;
   kAsciiToLower( aStr.data() );
   DwMediaType &mType = dwContentType();
   mType.Parse();
@@ -4158,7 +4112,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
 }
 
 void KMMessage::setBodyFromUnicode( const QString & str ) {
-  Q3CString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  QByteArray encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
@@ -4196,12 +4150,12 @@ QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
 }
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::mboxMessageSeparator()
+QByteArray KMMessage::mboxMessageSeparator()
 {
-  Q3CString str( EmailAddressTools::firstEmailAddress( rawHeaderField("From") ) );
+  QByteArray str( EmailAddressTools::firstEmailAddress( rawHeaderField("From") ) );
   if ( str.isEmpty() )
     str = "unknown@unknown.invalid";
-  Q3CString dateStr( dateShortStr() );
+  QByteArray dateStr( dateShortStr() );
   if ( dateStr.isEmpty() ) {
     time_t t = ::time( 0 );
     dateStr = ctime( &t );

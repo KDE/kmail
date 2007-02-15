@@ -41,7 +41,7 @@
 #include "util.h"
 
 #include <stdlib.h>
-#include <q3cstring.h>
+#include <mimelib/string.h>
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -73,20 +73,37 @@ size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
     return target - str;
 }
 
-Q3CString KMail::Util::lf2crlf( const Q3CString & src )
+QByteArray KMail::Util::lf2crlf( const QByteArray & src )
 {
-    Q3CString result( 1 + 2*src.length() );  // maximal possible length
+    QByteArray result( 2*src.size() );  // maximal possible length
 
-    Q3CString::ConstIterator s = src.begin();
-    Q3CString::Iterator d = result.begin();
+    QByteArray::ConstIterator s = src.begin();
+    QByteArray::Iterator d = result.begin();
   // we use cPrev to make sure we insert '\r' only there where it is missing
     char cPrev = '?';
-    while ( *s ) {
+    const char* end = src.end();
+    while ( s != end ) {
         if ( ('\n' == *s) && ('\r' != cPrev) )
             *d++ = '\r';
         cPrev = *s;
         *d++ = *s++;
     }
-    result.truncate( d - result.begin() ); // adds trailing NUL
+    result.truncate( d - result.begin() );
     return result;
 }
+
+QByteArray KMail::Util::ByteArray( const DwString& str )
+{
+  const int strLen = str.size();
+  QByteArray arr( strLen );
+  memcpy( arr.data(), str.data(), strLen );
+  return arr;
+}
+
+DwString KMail::Util::dwString( const QByteArray& str )
+{
+  if ( !str.data() ) // DwString doesn't like char*=0
+    return DwString();
+  return DwString( str.data(), str.size() );
+}
+

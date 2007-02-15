@@ -36,9 +36,8 @@
 
 #include <QObject>
 
-//Added by qt3to4:
 #include <QList>
-#include <Q3CString>
+#include <QByteArray>
 
 #include <mimelib/mediatyp.h>
 #include <kleo/cryptobackend.h>
@@ -138,27 +137,25 @@ private:
    * Get message ready for sending or saving.
    * This must be done _before_ signing and/or encrypting it.
    */
-  Q3CString breakLinesAndApplyCodec();
-  /// Same as above but ensure \n termination
-  Q3CString bodyText();
+  QByteArray breakLinesAndApplyCodec();
 
   /**
    * Create a plain text version of a marked up mail for use as the plain
    * part in a multipart/alternative mail.
    */
-  Q3CString plainTextFromMarkup( const QString& markupText );
+  QByteArray plainTextFromMarkup( const QString& markupText );
 
   /**
    * Get signature for a message (into mMessage).
    * To build nice S/MIME objects signing and encoding must be separated.
    */
-  void pgpSignedMsg( const Q3CString & cText, Kleo::CryptoMessageFormat f );
+  void pgpSignedMsg( const QByteArray & cText, Kleo::CryptoMessageFormat f );
   /**
    * Get encrypted message.
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpEncryptedMsg( QByteArray& rEncryptedBody,
-                                const Q3CString & cText,
+                                const QByteArray & cText,
                                 const std::vector<GpgME::Key> & encryptionKeys,
 				Kleo::CryptoMessageFormat f );
 
@@ -167,7 +164,7 @@ private:
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray& rEncryptedBody,
-					 const Q3CString & cText,
+					 const QByteArray & cText,
 					 const std::vector<GpgME::Key> & signingKeys,
 					 const std::vector<GpgME::Key> & encryptionKeys,
 					 Kleo::CryptoMessageFormat f );
@@ -176,7 +173,7 @@ private:
    * Check for expiry of various certificates.
    */
   bool checkForEncryptCertificateExpiry( const QString& recipient,
-                                         const Q3CString& certFingerprint );
+                                         const QByteArray& certFingerprint );
 
   /**
    * Build a MIME object (or a flat text resp.) based upon
@@ -191,11 +188,11 @@ private:
    */
   bool processStructuringInfo( const QString bugURL,
                                const QString contentDescriptionClear,
-                               const Q3CString contentTypeClear,
-                               const Q3CString contentSubtypeClear,
-                               const Q3CString contentDispClear,
-                               const Q3CString contentTEncClear,
-                               const Q3CString& bodytext,
+                               const QByteArray contentTypeClear,
+                               const QByteArray contentSubtypeClear,
+                               const QByteArray contentDispClear,
+                               const QByteArray contentTEncClear,
+                               const QByteArray& bodytext,
                                const QString contentDescriptionCiph,
                                const QByteArray& ciphertext,
                                KMMessagePart& resultingPart,
@@ -216,6 +213,7 @@ private slots:
 
 private:
   void doNextJob();
+  void emitDone( bool );
 
   int encryptionPossible( const QStringList & recipients, bool openPGP );
   bool determineWhetherToSign( bool doSignCompletely );
@@ -230,7 +228,7 @@ private:
 
   Kleo::KeyResolver * mKeyResolver;
 
-  Q3CString mSignCertFingerprint;
+  QByteArray mSignCertFingerprint;
 
   struct Attachment {
     Attachment( KMMessagePart * p=0, bool s=false, bool e=false )
@@ -253,20 +251,20 @@ private:
   QStringList mTo, mCc, mBccList;
   bool mDebugComposerCrypto;
   bool mAutoCharset;
-  Q3CString mCharset;
+  QByteArray mCharset;
   bool mIsRichText;
   uint mIdentityUid;
   bool mRc; // Set this to false, if something fails during the processes
   bool mHoldJobs; // Don't run the next job yet
 
-  Q3CString mText; // textual representation of the message text, encoded
+  QByteArray mText; // textual representation of the message text, encoded
   unsigned int mLineBreakColumn; // used for line breaking
 
   // These are the variables of the big composeMessage(X,Y,Z) message
   KMMessagePart* mNewBodyPart;
   QByteArray mSignature;
 
-  Q3CString mEncodedBody; // Only needed if signing and/or encrypting
+  QByteArray mEncodedBody; // Only needed if signing and/or encrypting
   bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
   KMMessagePart mOldBodyPart;
   int mPreviousBoundaryLevel;

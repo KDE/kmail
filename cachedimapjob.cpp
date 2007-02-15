@@ -277,7 +277,7 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
       (*it).data.resize( dataSize );
 
       mMsg->setComplete( true );
-      mMsg->fromByteArray( (*it).data );
+      mMsg->fromString( (*it).data );
       mMsg->setUID(uid);
       mMsg->setMsgSizeServer(size);
       mMsg->setTransferInProgress( false );

@@ -430,7 +430,7 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
   // when piping through external programs
   uint newSize = Util::crlf2lf( curMsgData.data(), curMsgData.size() );
   curMsgData.resize( newSize );
-  msg->fromByteArray( curMsgData , true );
+  msg->fromString( curMsgData , true );
   if ( stage == Head ) {
     KMPopHeaders *header = mHeadersOnServer[ mHeaderIndex ];
     int size = mMsgsPendingDownload[ header->id() ];

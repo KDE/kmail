@@ -40,7 +40,8 @@
 
 #include <stdlib.h>
 #include <QObject>
-#include <q3cstring.h>
+#include <QByteArray>
+class DwString;
 
 namespace KMail
 {
@@ -59,19 +60,29 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-    
+
     /**
      * Convert "\n" line endings to "\r\n".
      * @param src The source string to convert.
      * @return The result string.
      */
-    Q3CString lf2crlf( const Q3CString & src );
+    QByteArray lf2crlf( const QByteArray & src );
+
+    /**
+     * Construct a QByteArray from a DwString
+     */
+    QByteArray ByteArray( const DwString& str );
+
+    /**
+     * Construct a DwString from a QByteArray
+     */
+    DwString dwString( const QByteArray& str );
 
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisiation is Initialization ) paradigm. When an instance of it
-     * goes out of scope it deletes the associated object  It can be 
-     * disabled, in case the deletion needs to be avoided for some 
+     * goes out of scope it deletes the associated object  It can be
+     * disabled, in case the deletion needs to be avoided for some
      * reason, since going out-of-scope cannot be avoided.
      */
     class LaterDeleter

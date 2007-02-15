@@ -11,7 +11,6 @@
 #include <kglobalsettings.h>
 
 #include <QString>
-#include <q3cstring.h>
 
 class KMMessage;
 class KMFolder;
@@ -44,13 +43,13 @@ namespace KMail {
     virtual void send( int how ) = 0;
     virtual void addAttachment( KUrl url, QString comment ) = 0;
     virtual void addAttachment( const QString & name,
-                                const Q3CString & cte,
+                                const QByteArray & cte,
                                 const QByteArray & data,
-                                const Q3CString & type,
-                                const Q3CString & subType,
-                                const Q3CString & paramAttr,
+                                const QByteArray & type,
+                                const QByteArray & subType,
+                                const QByteArray & paramAttr,
                                 const QString & paramValue,
-                                const Q3CString & contDisp) = 0;
+                                const QByteArray & contDisp) = 0;
   public: // kmcommand
     virtual void setBody( QString body ) = 0;
 

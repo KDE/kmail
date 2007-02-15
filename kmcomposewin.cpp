@@ -5,7 +5,6 @@
 
 #undef GrayScale
 #undef Color
-#include <config.h>
 
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
@@ -126,7 +125,7 @@ using KRecentAddress::RecentAddresses;
 
 
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <q3header.h>
 #include <q3tabdialog.h>
 
@@ -477,13 +476,13 @@ void KMComposeWin::addAttachment(KUrl url,QString /*comment*/)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment(const QString &name,
-                                 const Q3CString &/*cte*/,
+                                 const QByteArray &/*cte*/,
                                  const QByteArray &data,
-                                 const Q3CString &type,
-                                 const Q3CString &subType,
-                                 const Q3CString &paramAttr,
+                                 const QByteArray &type,
+                                 const QByteArray &subType,
+                                 const QByteArray &paramAttr,
                                  const QString &paramValue,
-                                 const Q3CString &contDisp)
+                                 const QByteArray &contDisp)
 {
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
@@ -725,8 +724,8 @@ void KMComposeWin::autoSaveMessage()
     autoSaveFile.setPermissions(QFile::ReadUser|QFile::WriteUser);
     kDebug(5006) << "autosaving message in " << filename << endl;
     int fd = autoSaveFile.handle();
-    Q3CString msgStr = msg->asString();
-    if ( ::write( fd, msgStr, msgStr.length() ) == -1 )
+    const DwString& msgStr = msg->asDwString();
+    if ( ::write( fd, msgStr.data(), msgStr.length() ) == -1 )
       status = errno;
   }
   if ( status == 0 ) {
@@ -1660,7 +1659,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::decryptOrStripOffCleartextSignature( Q3CString& body )
+void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray& body )
 {
   QList<Kpgp::Block> pgpBlocks;
   QList<QByteArray> nonPgpBlocks;
@@ -1863,7 +1862,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
 
-    Q3CString bodyDecoded = mMsg->bodyDecoded();
+    QByteArray bodyDecoded = mMsg->bodyDecoded();
 
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -1918,7 +1917,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       if ( mCharset.isEmpty() || mCharset == "default" )
         mCharset = mDefCharset;
 
-      Q3CString bodyDecoded = bodyPart.bodyDecoded();
+      QByteArray bodyDecoded = bodyPart.bodyDecoded();
 
       if( allowDecryption )
         decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -1940,7 +1939,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     {
       KMMessagePart *msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
-      Q3CString mimeType = msgPart->typeStr().toLower() + '/'
+      QByteArray mimeType = msgPart->typeStr().toLower() + '/'
                         + msgPart->subtypeStr().toLower();
       // don't add the detached signature as attachment when editting a
       // PGP/MIME signed message
@@ -1953,7 +1952,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
 
-    Q3CString bodyDecoded = mMsg->bodyDecoded();
+    QByteArray bodyDecoded = mMsg->bodyDecoded();
 
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -2588,9 +2587,9 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
     mMapAtmLoadData.erase(it);
     return;
   }
-  const Q3CString partCharset = (*it).url.fileEncoding().isEmpty()
+  const QByteArray partCharset = (*it).url.fileEncoding().isEmpty()
                              ? mCharset
-                             : Q3CString((*it).url.fileEncoding().toLatin1());
+                             : QByteArray((*it).url.fileEncoding().toLatin1());
 
   KMMessagePart* msgPart;
 
@@ -2622,11 +2621,11 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
 
   name.truncate( 256 ); // is this needed?
 
-  Q3CString encoding = KMMsgBase::autoDetectCharset(partCharset,
+  QByteArray encoding = KMMsgBase::autoDetectCharset(partCharset,
     KMMessage::preferredCharsets(), name);
   if (encoding.isEmpty()) encoding = "utf-8";
 
-  Q3CString encName;
+  QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -2647,7 +2646,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
     slash = mimeType.length();
   msgPart->setTypeStr( mimeType.left( slash ).toLatin1() );
   msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).toLatin1() );
-  msgPart->setContentDisposition(Q3CString("attachment;\n\tfilename")
+  msgPart->setContentDisposition(QByteArray("attachment;\n\tfilename")
      + ( RFC2231encoded ? "*=" + encName : "=\"" + encName + '"' ) );
 
   mMapAtmLoadData.erase(it);
@@ -2678,7 +2677,7 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
     }
   }
   mAtmModified = true;
-  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(Q3CString());
+  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(QByteArray());
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2915,7 +2914,7 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
   msgPart->setSubtypeStr("pgp-keys");
   QList<int> dummy;
   msgPart->setBodyAndGuessCte(keydata, dummy, false);
-  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + Q3CString( mFingerprint.toLatin1() ) + ".asc" );
+  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + QByteArray( mFingerprint.toLatin1() ) + ".asc" );
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -3019,7 +3018,7 @@ void KMComposeWin::slotAttachProperties()
       }
     }
   }
-  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(Q3CString());
+  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(QByteArray());
 }
 
 //-----------------------------------------------------------------------------
@@ -3071,13 +3070,13 @@ void KMComposeWin::compressAttach( int idx )
 
   msgPart->setName( name );
 
-  Q3CString cDisp = "attachment;";
-  Q3CString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
+  QByteArray cDisp = "attachment;";
+  QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
     KMMessage::preferredCharsets(), name );
   kDebug(5006) << "encoding: " << encoding << endl;
   if ( encoding.isEmpty() ) encoding = "utf-8";
   kDebug(5006) << "encoding after: " << encoding << endl;
-  Q3CString encName;
+  QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -3146,12 +3145,12 @@ void KMComposeWin::uncompressAttach( int idx )
 
   zip.close();
 
-  Q3CString cDisp = "attachment;";
-  Q3CString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
+  QByteArray cDisp = "attachment;";
+  QByteArray encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
     KMMessage::preferredCharsets(), name );
   if ( encoding.isEmpty() ) encoding = "utf-8";
 
-  Q3CString encName;
+  QByteArray encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -3164,7 +3163,7 @@ void KMComposeWin::uncompressAttach( int idx )
     cDisp += "=\"" + encName + '"';
   msgPart->setContentDisposition( cDisp );
 
-  Q3CString type, subtype;
+  QByteArray type, subtype;
   static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->uncompressedMimeType( type,
         subtype );
 
@@ -3383,7 +3382,7 @@ void KMComposeWin::slotPasteAsAttachment()
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(attName);
     QList<int> dummy;
-    msgPart->setBodyAndGuessCte(Q3CString(QApplication::clipboard()->text().toLatin1()), dummy,
+    msgPart->setBodyAndGuessCte(QByteArray(QApplication::clipboard()->text().toLatin1()), dummy,
                                 kmkernel->msgSender()->sendQuotedPrintable());
     addAttach(msgPart);
   }

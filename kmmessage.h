@@ -20,7 +20,7 @@
 #include<emailfunctions/email.h>
 //Added by qt3to4:
 #include <QList>
-#include <Q3CString>
+#include <QByteArray>
 
 template <typename T>
 class QList;
@@ -172,7 +172,7 @@ public:
   KMMessage* createRedirect( const QString &toStr );
 
   /** Create the forwarded body for the message. */
-  Q3CString createForwardBody();
+  QByteArray createForwardBody();
 
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
@@ -204,8 +204,7 @@ public:
 
   /** Parse the string and create this message from it. */
   void fromDwString(const DwString& str, bool setStatus=false);
-  void fromString(const Q3CString& str, bool setStatus=false);
-  void fromByteArray( const QByteArray & ba, bool setStatus=false );
+  void fromString( const QByteArray & ba, bool setStatus=false );
 
   /** Return the entire message contents in the DwString. This function
       is *fast* even for large message since it does *not* involve a
@@ -227,13 +226,13 @@ public:
    * Return the message contents with the headers that should not be
    * sent stripped off.
    */
-  Q3CString asSendableString() const;
+  QByteArray asSendableString() const;
 
   /**
    * Return the message header with the headers that should not be
    * sent stripped off.
    */
-  Q3CString headerAsSendableString() const;
+  QByteArray headerAsSendableString() const;
 
   /**
    * Remove all private header fields: *Status: and X-KMail-*
@@ -251,7 +250,7 @@ public:
     THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
     (khz, June 05 2002)*/
   void parseTextStringFromDwPart( partNode * root,
-                                          Q3CString& parsedString,
+                                          QByteArray& parsedString,
                                           const QTextCodec*& codec,
                                           bool& isHTML ) const;
 
@@ -290,10 +289,10 @@ public:
   QString dateStr() const;
   /** Returns the message date in asctime format or an empty string if the
       message lacks a Date header. */
-  Q3CString dateShortStr() const;
+  QByteArray dateShortStr() const;
   QString dateIsoStr() const;
   time_t date() const;
-  void setDate(const Q3CString& str);
+  void setDate(const QByteArray& str);
   void setDate(time_t aUnixTime);
 
   /** Set the 'Date' header field to the current date. */
@@ -411,10 +410,10 @@ public:
 
   /** Get or set the references for this message */
   QString references() const;
-  void setReferences(const Q3CString& aStr);
+  void setReferences(const QByteArray& aStr);
 
   /** Returns the message ID, useful for followups */
-  Q3CString id() const;
+  QByteArray id() const;
 
   /** Sets the message serial number. If defaulted to zero, the
     serial number will be assigned using the dictionary. Note that
@@ -426,7 +425,7 @@ public:
       header fields with the given name might exist then you should use
       headerFields() instead.
   */
-  QString headerField(const Q3CString& name) const;
+  QString headerField(const QByteArray& name) const;
 
   enum HeaderFieldType { Unstructured, Structured, Address };
 
@@ -434,54 +433,54 @@ public:
       If prepend is set to true, the header is inserted at the beginning
       and does not overwrite an existing header field with the same name.
   */
-  void setHeaderField( const Q3CString& name, const QString& value,
+  void setHeaderField( const QByteArray& name, const QString& value,
                        HeaderFieldType type = Unstructured,
                        bool prepend = false );
 
   /** Returns a list of the values of all header fields with the given name. */
-  QStringList headerFields( const Q3CString& name ) const;
+  QStringList headerFields( const QByteArray& name ) const;
 
   /** Returns the raw value of a header field with the given name. If multiple
       header fields with the given name might exist then you should use
       rawHeaderFields() instead.
   */
-  Q3CString rawHeaderField( const Q3CString & name ) const;
+  QByteArray rawHeaderField( const QByteArray & name ) const;
 
   /** Returns a list of the raw values of all header fields with the given
       name.
   */
-  QList<Q3CString> rawHeaderFields( const Q3CString & field ) const;
+  QList<QByteArray> rawHeaderFields( const QByteArray & field ) const;
 
   /** Splits the given address list into separate addresses. */
-  static KMime::Types::AddressList splitAddrField( const Q3CString & str );
+  static KMime::Types::AddressList splitAddrField( const QByteArray & str );
 
   /** Returns header address list as string list.
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
       ResentCc, ResentReplyTo, ResentTo */
-  KMime::Types::AddressList headerAddrField(const Q3CString& name) const;
-  KMime::Types::AddrSpecList extractAddrSpecs( const Q3CString & headerNames ) const;
+  KMime::Types::AddressList headerAddrField(const QByteArray& name) const;
+  KMime::Types::AddrSpecList extractAddrSpecs( const QByteArray & headerNames ) const;
 
   /** Remove header field with given name */
-  void removeHeaderField(const Q3CString& name);
+  void removeHeaderField(const QByteArray& name);
 
   /** Get or set the 'Content-Type' header field
       The member functions that involve enumerated types (ints)
       will work only for well-known types or subtypes. */
-  Q3CString typeStr() const;
+  QByteArray typeStr() const;
   int type() const;
-  void setTypeStr(const Q3CString& aStr);
+  void setTypeStr(const QByteArray& aStr);
   void setType(int aType);
   /** Subtype */
-  Q3CString subtypeStr() const;
+  QByteArray subtypeStr() const;
   int subtype() const;
-  void setSubtypeStr(const Q3CString& aStr);
+  void setSubtypeStr(const QByteArray& aStr);
   void setSubtype(int aSubtype);
   /** add or change a parameter of a DwMediaType field */
   static void setDwMediaTypeParam( DwMediaType &mType,
-                                   const Q3CString& attr,
-                                   const Q3CString& val );
+                                   const QByteArray& attr,
+                                   const QByteArray& val );
   /** add or change a parameter of the Content-Type field */
-  void setContentTypeParam(const Q3CString& attr, const Q3CString& val);
+  void setContentTypeParam(const QByteArray& attr, const QByteArray& val);
 
   /** get the DwHeaders
       (make sure to call setNeedsAssembly() function after directly
@@ -497,16 +496,16 @@ public:
   /** Get or set the 'Content-Transfer-Encoding' header field
       The member functions that involve enumerated types (ints)
       will work only for well-known encodings. */
-  Q3CString contentTransferEncodingStr() const;
+  QByteArray contentTransferEncodingStr() const;
   int  contentTransferEncoding() const;
-  void setContentTransferEncodingStr(const Q3CString& aStr);
+  void setContentTransferEncodingStr(const QByteArray& aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  Q3CString cteStr() const { return contentTransferEncodingStr(); }
+  QByteArray cteStr() const { return contentTransferEncodingStr(); }
   int cte() const { return contentTransferEncoding(); }
-  void setCteStr(const Q3CString& aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QByteArray& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
   /** Sets this body part's content to @p str. @p str is subject to
@@ -519,18 +518,18 @@ public:
   QString bodyToUnicode(const QTextCodec* codec=0) const;
 
   /** Get the message body. Does not decode the body. */
-  Q3CString body() const;
+  QByteArray body() const;
 
   /** Set the message body. Does not encode the body. */
-  void setBody(const Q3CString& aStr);
+  void setBody(const QByteArray& aStr);
 
   /** Hack to enable structured body parts to be set as flat text... */
-  void setMultiPartBody( const Q3CString & aStr );
+  void setMultiPartBody( const QByteArray & aStr );
 
   /** Set the message body, encoding it according to the current content
       transfer encoding. The first method for null terminated strings,
       the second for binary data */
-  void setBodyEncoded(const Q3CString& aStr);
+  void setBodyEncoded(const QByteArray& aStr);
   void setBodyEncodedBinary(const QByteArray& aStr);
 
   /** Returns a list of content-transfer-encodings that can be used with
@@ -553,15 +552,11 @@ public:
                                  QList<int>& allowedCte,
                                  bool allow8Bit = false,
                                  bool willBeSigned = false );
-  void setBodyAndGuessCte( const Q3CString& aBuf,
-                                   QList<int>& allowedCte,
-                                   bool allow8Bit = false,
-                                   bool willBeSigned = false );
 
   /** Returns a decoded version of the body from the current content transfer
       encoding. The first method returns a null terminated string, the second
       method is meant for binary data, not null is appended */
-  Q3CString bodyDecoded() const;
+  QByteArray bodyDecoded() const;
   QByteArray bodyDecodedBinary() const;
 
   /** Number of body parts the message has. This is one for plain messages
@@ -627,7 +622,7 @@ public:
     * Does *not* use the Qt replace function but runs a very fast C code
     * the same way as lf2crlf() does.
    */
-  static QByteArray html2source( const Q3CString & src );
+  static QByteArray html2source( const QByteArray & src );
 
   /** Encodes an email address as mailto URL
    */
@@ -643,7 +638,7 @@ public:
       Output: comma separated list of display name resp. comment resp.
               address
   */
-  static Q3CString stripEmailAddr(const Q3CString& emailAddr);
+  static QByteArray stripEmailAddr(const QByteArray& emailAddr);
 
   /** Does the same as the above function. Shouldn't be used.
    */
@@ -699,7 +694,7 @@ public:
   static QString smartQuote( const QString &msg, int maxLineLength );
 
   /** Get the default message charset.*/
-  static Q3CString defaultCharset();
+  static QByteArray defaultCharset();
 
   /** Get a list of preferred message charsets.*/
   static const QStringList &preferredCharsets();
@@ -708,10 +703,10 @@ public:
   QString replaceHeadersInString( const QString & s ) const;
 
   /** Get the message charset.*/
-  Q3CString charset() const;
+  QByteArray charset() const;
 
   /** Set the message charset. */
-  void setCharset(const Q3CString& aStr);
+  void setCharset(const QByteArray& aStr);
 
   /** Get a QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
@@ -730,7 +725,7 @@ public:
   /** Creates reference string for reply to messages.
    *  reference = original first reference + original last reference + original msg-id
    */
-  Q3CString getRefStr() const;
+  QByteArray getRefStr() const;
 
   /** Get/set offset in mail folder. */
   off_t folderOffset() const { return mFolderOffset; }
@@ -818,7 +813,7 @@ public:
       string of the form
       "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".
   */
-  Q3CString mboxMessageSeparator();
+  QByteArray mboxMessageSeparator();
 
   /** Returns message body with quoting header and indented by the
     given indentation string. This is suitable for including the message

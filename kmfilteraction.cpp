@@ -548,7 +548,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
        using that, and look it up in the message. When the (new) message
        is uploaded, the header is stripped anyhow. */
       QString uid = aMsg->headerField("X-UID");
-      aMsg->fromByteArray( msgText );
+      aMsg->fromString( msgText );
       aMsg->setHeaderField("X-UID",uid);
     }
     else {
@@ -1672,7 +1672,7 @@ class PipeJob : public ThreadWeaver::Job
         KMFolder *filterFolder =  mMsg->parent();
         ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
 
-        mMsg->fromByteArray( ba );
+        mMsg->fromString( ba );
         if ( !origSerNum.isEmpty() )
           mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );
         if ( filterFolder && handler ) {

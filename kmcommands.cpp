@@ -878,7 +878,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
   if ( msg ) {
-    Q3CString str( msg->mboxMessageSeparator() );
+    QByteArray str( msg->mboxMessageSeparator() );
     str += KMFolderMbox::escapeFrom( msg->asString() );
     str += '\n';
     msg->setTransferInProgress(false);
@@ -1193,7 +1193,7 @@ KMCommand::Result KMForwardCommand::execute()
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
-      Q3CString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+      QByteArray boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
       msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
                          " message is contained in the attachment(s).\n\n\n");
       // iterate through all the messages to be forwarded
@@ -1240,7 +1240,7 @@ KMCommand::Result KMForwardCommand::execute()
       msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
-      msgPart->setBodyEncoded(Q3CString(msgPartText.toAscii()));
+      msgPart->setBodyEncoded(msgPartText.toAscii());
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->addAttach(msgPart);
@@ -1248,7 +1248,6 @@ KMCommand::Result KMForwardCommand::execute()
       return OK;
     } else {            // NO MIME DIGEST, Multiple forward
       uint id = 0;
-      // Q3CString msgText = "";
       QList<KMMessage*> linklist;
       QList<KMMessage*>::const_iterator it;
       for ( it = msgList.begin(); it != msgList.end(); it++ ) {
@@ -2586,9 +2585,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   {
     // This does not decode the Message Content-Transfer-Encoding
     // but saves the _original_ content of the message part
-    Q3CString cstr( node->msgPart().body() );
-    data = cstr;
-    data.resize(data.size() - 1);
+    data = node->msgPart().body();
   }
   else
   {

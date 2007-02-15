@@ -391,7 +391,7 @@ void ImapJob::slotGetMessageResult( KJob * job )
         if ( size > 0 && mPartSpecifier.isEmpty() )
           (*it).done = size;
         ulong uid = msg->UID();
-        // must set this first so that msg->fromByteArray sets the attachment status
+        // must set this first so that msg->fromString sets the attachment status
         if ( mPartSpecifier.isEmpty() )
           msg->setComplete( true );
         else
@@ -406,7 +406,7 @@ void ImapJob::slotGetMessageResult( KJob * job )
         // not have a uid. Therefore we have to make sure that no connected
         // slots are called, since they would operate on uid == 0.
         msg->parent()->storage()->blockSignals( true );
-        msg->fromByteArray( (*it).data );
+        msg->fromString( (*it).data );
         // now let others react
         msg->parent()->storage()->blockSignals( false );
         if ( size > 0 && msg->msgSizeServer() == 0 ) {
