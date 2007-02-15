@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2005  Till Adam <adam@kde.org>
+ * Copyright (C)  2007  David Faure <faure@kde.org>
  *
  * This file is subject to the GPL version 2.
  */
