@@ -30,8 +30,6 @@
     your version.
 */
 
-#include <config.h>
-
 // my header file
 #include "objecttreeparser.h"
 
@@ -83,15 +81,13 @@
 #include <kiconloader.h>
 #include <kcodecs.h>
 #include <kconfiggroup.h>
+#include <kstyle.h>
 
 // other Qt headers
 #include <QApplication>
 #include <QFile>
 #include <QTextCodec>
-//Added by qt3to4:
-#include <Q3CString>
-
-#include <kstyle.h>
+#include <QByteArray>
 #include <QBuffer>
 #include <QPixmap>
 #include <QPainter>
@@ -347,7 +343,7 @@ namespace KMail {
                                                       partNode& sign,
                                                       const QString& fromAddress,
                                                       bool doCheck,
-                                                      Q3CString* cleartextData,
+                                                      QByteArray* cleartextData,
                                                       CryptPlug::SignatureMetaData* paramSigMeta,
                                                       bool hideErrors )
   {
@@ -394,7 +390,7 @@ namespace KMail {
       }
     }
 
-    Q3CString cleartext;
+    QByteArray cleartext;
     char* new_cleartext = 0;
     QByteArray signaturetext;
     bool signatureIsBinary = false;
@@ -402,7 +398,7 @@ namespace KMail {
 
     if ( doCheck && cryptPlug ) {
       if ( data ) {
-        cleartext = data->dwPart()->AsString().c_str();
+        cleartext = KMail::Util::ByteArray( data->dwPart()->AsString() );
 
         dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
                     cleartext.data(), cleartext.length() );
@@ -435,7 +431,7 @@ namespace KMail {
     }
     CryptPlug::SignatureMetaData* sigMeta = doCheck ? &localSigMeta : paramSigMeta;
 
-    const char* cleartextP = cleartext;
+    const char* cleartextP = cleartext.data();
     PartMetaData messagePart;
     messagePart.isSigned = true;
     messagePart.technicalProblem = ( cryptPlug == 0 );
@@ -623,7 +619,7 @@ namespace KMail {
 
 
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
-                                      Q3CString& decryptedData,
+                                      QByteArray& decryptedData,
                                       bool& signatureFound,
                                       CryptPlug::SignatureMetaData& sigMeta,
                                       bool showWarning,
@@ -667,7 +663,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
 
 #ifdef MARCS_DEBUG
-    Q3CString deb;
+    QByteArray deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
     if ( cipherIsBinary )
       deb += "[binary data]";
@@ -795,7 +791,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
-    QByteArray cstr( curNode->msgPart().bodyDecoded() );
+    const QByteArray cstr( curNode->msgPart().bodyDecoded() );
 
     mRawReplyString = cstr;
     if ( curNode->isFirstTextPart() ) {
@@ -980,9 +976,8 @@ namespace KMail {
   }
 
   bool ObjectTreeParser::processTextPlainSubtype( partNode * curNode, ProcessResult & result ) {
-    const Q3CString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
-      mRawReplyString = cstr;
+      mRawReplyString = curNode->msgPart().bodyDecoded();
       if ( curNode->isFirstTextPart() ) {
         mTextualContent += curNode->msgPart().bodyToUnicode();
         mTextualContentCharset = curNode->msgPart().charset();
@@ -990,13 +985,12 @@ namespace KMail {
       return true;
     }
 
-    //resultingRawData += cstr;
     if ( !curNode->isFirstTextPart() &&
          attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
          !showOnlyOneMimePart() )
       return false;
 
-    mRawReplyString = cstr;
+    mRawReplyString = curNode->msgPart().bodyDecoded();
     if ( curNode->isFirstTextPart() ) {
       mTextualContent += curNode->msgPart().bodyToUnicode();
       mTextualContentCharset = curNode->msgPart().charset();
@@ -1039,7 +1033,7 @@ namespace KMail {
     // enable verification of the embedded messages' signatures
     if ( !isMailmanMessage( curNode ) ||
          !processMailmanMessage( curNode ) )
-      writeBodyString( cstr, curNode->trueFromAddress(),
+      writeBodyString( mRawReplyString, curNode->trueFromAddress(),
                        codecFor( curNode ), result, !bDrawFrame );
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
@@ -1157,7 +1151,7 @@ namespace KMail {
 
     if ( keepEncryptions() ) {
       node->setEncryptionState( KMMsgFullyEncrypted );
-      const Q3CString cstr = node->msgPart().bodyDecoded();
+      const QByteArray cstr = node->msgPart().bodyDecoded();
       if ( mReader )
         writeBodyString( cstr, node->trueFromAddress(),
                          codecFor( node ), result, false );
@@ -1203,7 +1197,7 @@ namespace KMail {
     kDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
     PartMetaData messagePart;
     node->setEncryptionState( KMMsgFullyEncrypted );
-    Q3CString decryptedData;
+    QByteArray decryptedData;
     bool signatureFound;
     CryptPlug::SignatureMetaData sigMeta;
     sigMeta.status              = 0;
@@ -1303,7 +1297,7 @@ namespace KMail {
                                                node->trueFromAddress(),
                                                filename ) );
     }
-    Q3CString rfc822messageStr( node->msgPart().bodyDecoded() );
+    QByteArray rfc822messageStr( node->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
     DwMessage* rfc822DwMessage = new DwMessage(); // will be deleted by c'tor of rfc822headers
     rfc822DwMessage->FromString( rfc822messageStr );
@@ -1344,7 +1338,7 @@ namespace KMail {
       kDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       node->setEncryptionState( KMMsgFullyEncrypted );
       if ( keepEncryptions() ) {
-        const Q3CString cstr = node->msgPart().bodyDecoded();
+        const QByteArray cstr = node->msgPart().bodyDecoded();
         if ( mReader )
           writeBodyString( cstr, node->trueFromAddress(),
                            codecFor( node ), result, false );
@@ -1355,7 +1349,7 @@ namespace KMail {
         */
         PartMetaData messagePart;
         setCryptPlugWrapper( KMail::CryptPlugFactory::instance()->openpgp() );
-        Q3CString decryptedData;
+        QByteArray decryptedData;
         bool signatureFound;
         CryptPlug::SignatureMetaData sigMeta;
         sigMeta.status              = 0;
@@ -1514,7 +1508,7 @@ namespace KMail {
         kDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
       else
         kDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
-      Q3CString decryptedData;
+      QByteArray decryptedData;
       PartMetaData messagePart;
       messagePart.isEncrypted = true;
       messagePart.isSigned = false;
@@ -1763,7 +1757,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
       }
     }
 
-    Q3CString contentId = msgPart->contentId();
+    QByteArray contentId = msgPart->contentId();
     if ( !contentId.isEmpty() ) {
       htmlWriter()->embedPart( contentId, href );
     }
@@ -2397,7 +2391,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
       bool firstNonPgpBlock = true;
       bool couldDecrypt = false;
       QString signer;
-      Q3CString keyId;
+      QByteArray keyId;
       QString decryptionError;
       Kpgp::Validity keyTrust = Kpgp::KPGP_VALIDITY_FULL;
 
@@ -2416,7 +2410,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
             // block as fully signed/encrypted
             if( firstNonPgpBlock ) {
               // check whether str only consists of \n
-              for( Q3CString::ConstIterator c = str.begin(); *c; ++c ) {
+              for( QByteArray::ConstIterator c = str.begin(); *c; ++c ) {
                 if( *c != '\n' ) {
                   fullySignedOrEncrypted = false;
                   break;
@@ -2508,7 +2502,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
       }
 
       // add the last Non-OpenPGP block
-      Q3CString str( nonPgpBlocks.last() );
+      QByteArray str( nonPgpBlocks.last() );
       if( !str.isEmpty() ) {
         htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
         // Even if the trailing Non-OpenPGP block isn't empty we still

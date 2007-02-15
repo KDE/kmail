@@ -879,7 +879,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
   if ( msg ) {
     QByteArray str( msg->mboxMessageSeparator() );
-    str += KMFolderMbox::escapeFrom( msg->asString() );
+    str += KMFolderMbox::escapeFrom( msg->asDwString() );
     str += '\n';
     msg->setTransferInProgress(false);
 

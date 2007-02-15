@@ -108,13 +108,13 @@ namespace KMail {
                       KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
-    Q3CString rawReplyString() const { return mRawReplyString; }
+    QByteArray rawReplyString() const { return mRawReplyString; }
 
     /*! @return the text of the message, ie. what would appear in the
         composer's text editor if this was edited. */
     QString textualContent() const { return mTextualContent; }
 
-    Q3CString textualContentCharset() const { return mTextualContentCharset; }
+    QByteArray textualContentCharset() const { return mTextualContentCharset; }
 
     void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
       mCryptPlugWrapper = wrapper;
@@ -183,14 +183,14 @@ namespace KMail {
                                            partNode & sign,
                                            const QString & fromAddress,
                                            bool doCheck=true,
-                                           Q3CString * cleartextData=0,
+                                           QByteArray * cleartextData=0,
                                            CryptPlug::SignatureMetaData * paramSigMeta=0,
                                            bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
-                        Q3CString& decryptedData,
+                        QByteArray& decryptedData,
                         bool& signatureFound,
                         CryptPlug::SignatureMetaData& sigMeta,
                         bool showWarning,
@@ -269,8 +269,8 @@ namespace KMail {
 
   private:
     KMReaderWin * mReader;
-    Q3CString mRawReplyString;
-    Q3CString mTextualContentCharset;
+    QByteArray mRawReplyString;
+    QByteArray mTextualContentCharset;
     QString mTextualContent;
     CryptPlugWrapper * mCryptPlugWrapper;
     bool mShowOnlyOneMimePart;

@@ -26,8 +26,6 @@
 #include <sys/types.h> // for size_t
 
 #include <QList>
-//Added by qt3to4:
-#include <Q3CString>
 
 namespace KMail {
   class FolderJob;
@@ -113,7 +111,7 @@ public:
 
   void setProcmailLockFileName( const QString& );
 
-  static Q3CString escapeFrom( const Q3CString & str );
+  static QByteArray escapeFrom( const DwString & str );
 
   virtual IndexStatus indexStatus();
 

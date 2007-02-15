@@ -75,7 +75,8 @@ size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 
 QByteArray KMail::Util::lf2crlf( const QByteArray & src )
 {
-    QByteArray result( 2*src.size() );  // maximal possible length
+    QByteArray result;
+    result.resize( 2*src.size() );  // maximal possible length
 
     QByteArray::ConstIterator s = src.begin();
     QByteArray::Iterator d = result.begin();
@@ -95,7 +96,8 @@ QByteArray KMail::Util::lf2crlf( const QByteArray & src )
 QByteArray KMail::Util::ByteArray( const DwString& str )
 {
   const int strLen = str.size();
-  QByteArray arr( strLen );
+  QByteArray arr;
+  arr.resize( strLen );
   memcpy( arr.data(), str.data(), strLen );
   return arr;
 }

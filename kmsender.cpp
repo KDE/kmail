@@ -963,7 +963,7 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
     return false;
   }
   mMsgPos  = mMsgStr.data();
-  mMsgRest = mMsgStr.length();
+  mMsgRest = mMsgStr.size();
   wroteStdin( mMailerProc );
 
   return true;
@@ -1103,7 +1103,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
 
   // dotstuffing is now done by the slave (see setting of metadata)
   mMessage = message;
-  mMessageLength = mMessage.length();
+  mMessageLength = mMessage.size();
   mMessageOffset = 0;
 
   if ( mMessageLength )

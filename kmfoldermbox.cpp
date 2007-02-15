@@ -22,7 +22,6 @@
 #include <QFileInfo>
 #include <QList>
 #include <QRegExp>
-//Added by qt3to4:
 #include <Q3CString>
 
 #include "kmfoldermbox.h"
@@ -323,7 +322,7 @@ int KMFolderMbox::lock()
   fl.l_start=0;
   fl.l_len=0;
   fl.l_pid=-1;
-  Q3CString cmd_str;
+  QByteArray cmd_str;
   assert(mStream != 0);
   mFilesLocked = false;
   mReadOnly = false;
@@ -474,7 +473,7 @@ int KMFolderMbox::unlock()
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-  Q3CString cmd_str;
+  QByteArray cmd_str;
 
   assert(mStream != 0);
   mFilesLocked = false;
@@ -846,12 +845,12 @@ static size_t unescapeFrom( char* str, size_t strLen ) {
 }
 
 //static
-Q3CString KMFolderMbox::escapeFrom( const Q3CString & str ) {
+QByteArray KMFolderMbox::escapeFrom( const DwString & str ) {
   const unsigned int strLen = str.length();
   if ( strLen <= STRDIM("From ") )
-    return str;
+    return KMail::Util::ByteArray(str);
   // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
-  Q3CString result( int( strLen + 5 ) / 6 * 7 + 1 );
+  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1 );
 
   const char * s = str.data();
   const char * const e = s + strLen - STRDIM("From ");
@@ -937,7 +936,7 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
   bool opened = false;
-  Q3CString msgText;
+  QByteArray msgText;
   char endStr[3];
   int idx = -1, rc;
   KMFolder* msgParent;
@@ -994,8 +993,8 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
-  msgText = escapeFrom( aMsg->asString() );
-  size_t len = msgText.length();
+  msgText = escapeFrom( aMsg->asDwString() );
+  size_t len = msgText.size();
 
   assert(mStream != 0);
   clearerr(mStream);
@@ -1032,10 +1031,10 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     return error;
   }
 
-  Q3CString messageSeparator( aMsg->mboxMessageSeparator() );
+  QByteArray messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
   off_t offs = ftell(mStream);
-  fwrite(msgText, len, 1, mStream);
+  fwrite(msgText.data(), len, 1, mStream);
   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size_t size = ftell(mStream) - offs;
@@ -1160,7 +1159,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
 {
   int rc = 0;
-  Q3CString mtext;
+  QByteArray mtext;
   int stopIndex = nbMessages == -1 ? mMsgList.count() :
                            qMin( (int)mMsgList.count(), startIndex + nbMessages );
   //kDebug(5006) << "KMFolderMbox: compacting from " << startIndex << " to " << stopIndex << endl;
