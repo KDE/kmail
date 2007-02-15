@@ -605,7 +605,7 @@ void KMSender::doSendMsgAux()
   if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
     sender = "<>";
 
-  const QCString message = mCurrentMsg->asSendableString();
+  const QByteArray message = mCurrentMsg->asSendableString();
   if ( sender.isEmpty() || !mSendProc->send( sender, to, cc, bcc, message ) ) {
     if ( mCurrentMsg )
       mCurrentMsg->setTransferInProgress( false );
@@ -963,7 +963,7 @@ void KMSendSendmail::abort()
   idle();
 }
 
-bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host
                << "-i" << "-f" << sender
@@ -977,7 +977,7 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
     return false;
   }
   mMsgPos  = mMsgStr.data();
-  mMsgRest = mMsgStr.length();
+  mMsgRest = mMsgStr.size();
   wroteStdin( mMailerProc );
 
   return true;
@@ -1048,7 +1048,7 @@ KMSendSMTP::~KMSendSMTP()
   if (mJob) mJob->kill();
 }
 
-bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
   QString query = "headers=0&from=";
   query += KURL::encode_string( sender );
 
@@ -1119,7 +1119,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
 
   // dotstuffing is now done by the slave (see setting of metadata)
   mMessage = message;
-  mMessageLength = mMessage.length();
+  mMessageLength = mMessage.size();
   mMessageOffset = 0;
 
   if ( mMessageLength )

@@ -970,9 +970,8 @@ namespace KMail {
   }
 
   bool ObjectTreeParser::processTextPlainSubtype( partNode * curNode, ProcessResult & result ) {
-    const QCString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
-      mRawReplyString = cstr;
+      mRawReplyString = curNode->msgPart().bodyDecoded();
       if ( curNode->isFirstTextPart() ) {
         mTextualContent += curNode->msgPart().bodyToUnicode();
         mTextualContentCharset = curNode->msgPart().charset();
@@ -980,13 +979,12 @@ namespace KMail {
       return true;
     }
 
-    //resultingRawData += cstr;
     if ( !curNode->isFirstTextPart() &&
          attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
          !showOnlyOneMimePart() )
       return false;
 
-    mRawReplyString = cstr;
+    mRawReplyString = curNode->msgPart().bodyDecoded();
     if ( curNode->isFirstTextPart() ) {
       mTextualContent += curNode->msgPart().bodyToUnicode();
       mTextualContentCharset = curNode->msgPart().charset();
@@ -1029,7 +1027,7 @@ namespace KMail {
     // enable verification of the embedded messages' signatures
     if ( !isMailmanMessage( curNode ) ||
          !processMailmanMessage( curNode ) )
-      writeBodyString( cstr, curNode->trueFromAddress(),
+      writeBodyString( mRawReplyString, curNode->trueFromAddress(),
                        codecFor( curNode ), result, !bDrawFrame );
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );

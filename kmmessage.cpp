@@ -311,19 +311,24 @@ QCString KMMessage::asString() const {
 }
 
 
-QCString KMMessage::asSendableString() const
+QByteArray KMMessage::asSendableString() const
 {
   KMMessage msg;
-  msg.fromDwString(asDwString()); // slow!
+  // Much faster than msg.fromDwString(asDwString()):
+  delete msg.mMsg;
+  msg.mMsg = new DwMessage( *mMsg );
+
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
-  return msg.asString();
+  return KMail::Util::ByteArray( msg.asDwString() ); // and another copy again!
 }
 
 QCString KMMessage::headerAsSendableString() const
 {
   KMMessage msg;
-  msg.fromDwString(asDwString());
+  // Much faster than msg.fromDwString(asDwString()):
+  delete msg.mMsg;
+  msg.mMsg = new DwMessage( *mMsg );
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.headerAsString().latin1();
@@ -2886,14 +2891,14 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
-  // TODO: Instead of manually implementing RFC2231 header encoding (i.e. 
-  //       possibly multiple values given as paramname*0=..; parmaname*1=..;... 
+  // TODO: Instead of manually implementing RFC2231 header encoding (i.e.
+  //       possibly multiple values given as paramname*0=..; parmaname*1=..;...
   //       or par as paramname*0*=..; parmaname*1*=..;..., which should be
   //       concatenated), use a generic method to decode the header, using RFC
   //       2047 or 2231, or whatever future RFC might be appropriate!
   //       Right now, some fields are decoded, while others are not. E.g.
   //       Content-Disposition is not decoded here, rather only on demand in
-  //       KMMsgPart::fileName; Name however is decoded here and stored as a 
+  //       KMMsgPart::fileName; Name however is decoded here and stored as a
   //       decoded String in KMMsgPart...
   // Content-type
   QCString additionalCTypeParams;

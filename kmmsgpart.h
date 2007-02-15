@@ -48,6 +48,8 @@ public:
   void setBody(const QCString &aStr);
   DwString dwBody() const;
   void setBody(const DwString &aStr);
+  // warning, doesn't detach from 'arr'
+  void setBody(const QByteArray &arr);
 
   /** Sets this body part's content to @p str. @p str is subject to
       automatic charset and CTE detection.

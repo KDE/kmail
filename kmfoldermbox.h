@@ -109,7 +109,7 @@ public:
 
   void setProcmailLockFileName( const QString& );
 
-  static QCString escapeFrom( const QCString & str );
+  static QByteArray escapeFrom( const DwString & str );
 
   virtual IndexStatus indexStatus();
 

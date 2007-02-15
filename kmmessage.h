@@ -230,7 +230,7 @@ public:
    * Return the message contents with the headers that should not be
    * sent stripped off.
    */
-  QCString asSendableString() const;
+  QByteArray asSendableString() const;
 
   /**
    * Return the message header with the headers that should not be
