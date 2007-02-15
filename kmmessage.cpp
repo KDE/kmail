@@ -311,19 +311,24 @@ QCString KMMessage::asString() const {
 }
 
 
-QCString KMMessage::asSendableString() const
+QByteArray KMMessage::asSendableString() const
 {
   KMMessage msg;
-  msg.fromDwString(asDwString()); // slow!
+  // Much faster than msg.fromDwString(asDwString()):
+  delete msg.mMsg;
+  msg.mMsg = new DwMessage( *mMsg );
+
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
-  return msg.asString();
+  return KMail::Util::ByteArray( msg.asDwString() ); // and another copy again!
 }
 
 QCString KMMessage::headerAsSendableString() const
 {
   KMMessage msg;
-  msg.fromDwString(asDwString());
+  // Much faster than msg.fromDwString(asDwString()):
+  delete msg.mMsg;
+  msg.mMsg = new DwMessage( *mMsg );
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.headerAsString().latin1();

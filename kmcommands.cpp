@@ -876,13 +876,11 @@ void KMSaveMsgCommand::slotSaveDataReq()
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
   if ( msg ) {
-    QCString str( msg->mboxMessageSeparator() );
-    str += KMFolderMbox::escapeFrom( msg->asString() );
-    str += '\n';
+    mData = KMFolderMbox::escapeFrom( msg->asDwString() );
+    KMail::Util::insert( mData, 0, msg->mboxMessageSeparator() );
+    KMail::Util::append( mData, "\n" );
     msg->setTransferInProgress(false);
 
-    mData = str;
-    mData.resize(mData.size() - 1);
     mOffset = 0;
     QByteArray data;
     int size;
@@ -1176,7 +1174,6 @@ KMCommand::Result KMForwardInlineCommand::execute()
   if (msgList.count() >= 2) { // Multiple forward
 
     uint id = 0;
-    // QCString msgText = "";
     QPtrList<KMMessage> linklist;
     for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
       // set the identity
@@ -1476,7 +1473,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
   if (msgList.count() >= 2) { // Multiple forward
 
     uint id = 0;
-    // QCString msgText = "";
     QPtrList<KMMessage> linklist;
     for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
       // set the identity
@@ -2580,9 +2576,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   {
     // This does not decode the Message Content-Transfer-Encoding
     // but saves the _original_ content of the message part
-    QCString cstr( node->msgPart().body() );
-    data = cstr;
-    data.resize(data.size() - 1);
+    data = KMail::Util::ByteArray( node->msgPart().dwBody() );
   }
   else
   {

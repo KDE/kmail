@@ -870,12 +870,12 @@ static size_t unescapeFrom( char* str, size_t strLen ) {
 }
 
 //static
-QCString KMFolderMbox::escapeFrom( const QCString & str ) {
+QByteArray KMFolderMbox::escapeFrom( const DwString & str ) {
   const unsigned int strLen = str.length();
   if ( strLen <= STRDIM("From ") )
-    return str;
+    return KMail::Util::ByteArray( str );
   // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
-  QCString result( int( strLen + 5 ) / 6 * 7 + 1 );
+  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1 );
 
   const char * s = str.data();
   const char * const e = s + strLen - STRDIM("From ");
@@ -961,7 +961,7 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
   bool opened = false;
-  QCString msgText;
+  QByteArray msgText;
   char endStr[3];
   int idx = -1, rc;
   KMFolder* msgParent;
@@ -1018,8 +1018,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
-  msgText = escapeFrom( aMsg->asString() );
-  size_t len = msgText.length();
+  msgText = escapeFrom( aMsg->asDwString() );
+  size_t len = msgText.size();
 
   assert(mStream != 0);
   clearerr(mStream);
@@ -1059,7 +1059,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   QCString messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
   off_t offs = ftell(mStream);
-  fwrite(msgText, len, 1, mStream);
+  fwrite(msgText.data(), len, 1, mStream);
   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size_t size = ftell(mStream) - offs;

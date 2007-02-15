@@ -123,6 +123,17 @@ void KMMessagePart::setBody(const DwString &aStr)
     mBodyDecodedSize = -1; // Can't know the decoded size
 }
 
+void KMMessagePart::setBody(const QByteArray &aStr)
+{
+  mBody = aStr;
+
+  int enc = cte();
+  if (enc == DwMime::kCte7bit || enc == DwMime::kCte8bit || enc == DwMime::kCteBinary)
+    mBodyDecodedSize = mBody.size();
+  else
+    mBodyDecodedSize = -1; // Can't know the decoded size
+}
+
 void KMMessagePart::setBodyFromUnicode( const QString & str ) {
   QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )

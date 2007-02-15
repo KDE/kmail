@@ -65,8 +65,6 @@ void UtilTester::test_escapeFrom()
 
 }
 
-// TODO port KMSender to DwString, port asSendableString
-
 void UtilTester::test_append()
 {
   QCString test;
