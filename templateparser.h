@@ -80,8 +80,6 @@ class TemplateParser : public QObject
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
 
-    static const int PipeTimeout;
-
   protected slots:
     void onProcessExited( KProcess *proc );
     void onReceivedStdout( KProcess *proc, char *buffer, int buflen );
