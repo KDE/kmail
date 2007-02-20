@@ -97,7 +97,7 @@ void AccountManager::readConfig(void)
     if (acctType == "advanced pop" || acctType == "experimental pop")
       acctType = "pop";
     acctName = group.readEntry("Name");
-    id = config->readEntry( "Id", 0 );
+    id = group.readEntry( "Id", 0 );
     if (acctName.isEmpty()) acctName = i18n("Account %1", i);
     acct = create(acctType, acctName, id);
     if (!acct) continue;
