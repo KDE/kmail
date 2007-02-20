@@ -954,7 +954,7 @@ void KMReaderWin::adjustLayout() {
 }
 
 
-void KMReaderWin::saveSplitterSizes( KConfigBase & c ) const {
+void KMReaderWin::saveSplitterSizes( KConfigGroup & c ) const {
   if ( !mSplitter || !mMimePartTree )
     return;
   if ( mMimePartTree->isHidden() )

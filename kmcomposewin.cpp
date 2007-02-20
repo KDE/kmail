@@ -369,7 +369,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupActions();
   setupEditor();
 
-  applyMainWindowSettings(KMKernel::config(), "Composer");
+  applyMainWindowSettings(KMKernel::config()->group( "Composer") );
 
   connect( mEdtSubject, SIGNAL( subjectTextSpellChecked() ),
            SLOT( slotSubjectTextSpellChecked() ) );
@@ -679,8 +679,7 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::self()->setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::self()->setComposerSize( size() );
 
-  KConfigGroup group( KMKernel::config(), "Geometry" );
-  saveMainWindowSettings( KMKernel::config(), "Composer" );
+  saveMainWindowSettings( KMKernel::config()->group( "Composer" ) );
   // make sure config changes are written to disk, cf. bug 127538
   GlobalSettings::self()->writeConfig();
 }
@@ -1193,7 +1192,7 @@ void KMComposeWin::setupActions(void)
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
 
-  mRecentAction->loadEntries( KMKernel::config() );
+  mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
 
   action  = new KAction(KIcon("contents"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
@@ -2654,7 +2653,6 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   msgPart->setCharset(partCharset);
 
   // show message part dialog, if not configured away (default):
-  KConfigGroup composer(KMKernel::config(), "Composer");
   if ( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
     const KCursorSaver saver( Qt::ArrowCursor );
     KMMsgPartDialogCompat dlg;
@@ -2726,7 +2724,7 @@ void KMComposeWin::slotInsertFile()
     encodings.prepend( encoding );
     group.writeEntry( "recent-urls", urls );
     group.writeEntry( "recent-encodings", encodings );
-    mRecentAction->saveEntries( config );
+    mRecentAction->saveEntries( config->group( QString() ) );
   }
   slotInsertRecentFile(u);
 }
@@ -4488,7 +4486,7 @@ void KMComposeWin::slotStatusMessage(const QString &message)
 
 void KMComposeWin::slotEditToolbars()
 {
-  saveMainWindowSettings(KMKernel::config(), "Composer");
+  saveMainWindowSettings(KMKernel::config()->group( "Composer") );
   KEditToolbar dlg(guiFactory(), this);
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -4500,7 +4498,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
-  applyMainWindowSettings(KMKernel::config(), "Composer");
+  applyMainWindowSettings( KMKernel::config()->group( "Composer") );
 }
 
 void KMComposeWin::slotEditKeys()

@@ -695,9 +695,9 @@ AntiSpamWizard::ConfigReader::ConfigReader( WizardMode mode,
     mMode( mode )
 {
   if ( mMode == AntiSpam )
-    mConfig = new KConfig( "kmail.antispamrc", true );
+    mConfig = new KConfig( "kmail.antispamrc" );
   else
-    mConfig = new KConfig( "kmail.antivirusrc", true );
+    mConfig = new KConfig( "kmail.antivirusrc" );
 }
 
 AntiSpamWizard::ConfigReader::~ConfigReader( )

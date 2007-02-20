@@ -430,7 +430,7 @@ private:
   void adjustLayout();
   void createWidgets();
   void createActions( KActionCollection * ac );
-  void saveSplitterSizes( KConfigBase & c ) const;
+  void saveSplitterSizes( KConfigGroup & c ) const;
   QString createAtmFileLink() const;
 
   KToggleAction * actionForHeaderStyle( const KMail::HeaderStyle *,

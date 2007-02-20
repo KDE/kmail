@@ -93,7 +93,7 @@ void KMReaderMainWin::initKMReaderMainWin() {
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
-  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
+  applyMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
   if( ! mReaderWin->message() ) {
     menuBar()->hide();
     toolBar( "mainToolBar" )->hide();
@@ -106,7 +106,7 @@ void KMReaderMainWin::initKMReaderMainWin() {
 //-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
-  saveMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
+  saveMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -233,9 +233,9 @@ void KMReaderMainWin::setupAccel()
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
 
-  mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ), 
-				      actionCollection() ); 
-  mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) ); 
+  mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
+				      actionCollection() );
+  mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
@@ -359,8 +359,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
   if(!mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->addSeparator();
-    menu->addAction( mReplyActionMenu ); 
-    menu->insertSeparator(); 
+    menu->addAction( mReplyActionMenu );
+    menu->insertSeparator();
 
     menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );

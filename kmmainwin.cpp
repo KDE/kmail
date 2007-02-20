@@ -65,7 +65,7 @@ KMMainWin::KMMainWin(QWidget *)
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
-  applyMainWindowSettings(KMKernel::config(), "Main Window");
+  applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
            this, SLOT( displayStatusMsg(const QString&) ) );
@@ -85,7 +85,7 @@ KMMainWin::KMMainWin(QWidget *)
 
 KMMainWin::~KMMainWin()
 {
-  saveMainWindowSettings(KMKernel::config(), "Main Window");
+  saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
   KMKernel::config()->sync();
   KGlobal::deref();
 
@@ -144,7 +144,7 @@ void KMMainWin::slotNewMailReader()
 
 void KMMainWin::slotEditToolbars()
 {
-  saveMainWindowSettings(KMKernel::config(), "Main Window");
+  saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -159,7 +159,7 @@ void KMMainWin::slotUpdateToolbars()
   mKMMainWidget->clearFilterActions();
 
   createGUI("kmmainwin.rc");
-  applyMainWindowSettings(KMKernel::config(), "Main Window");
+  applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   // plug dynamically created actions again
   mKMMainWidget->initializeFilterActions();

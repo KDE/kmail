@@ -20,7 +20,7 @@
 // other kdenetwork headers: (none)
 
 // other KDE headers:
-#include <ksimpleconfig.h>
+#include <kconfig.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -236,7 +236,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   for ( QStringList::ConstIterator it = pathList.begin();
 	it != pathList.end(); ++it )
   {
-    KSimpleConfig entry( *it );
+    KConfig entry( *it, KConfig::OnlyLocal);
     KConfigGroup group( &entry, "KCM Locale" );
     // full name:
     QString name = group.readEntry( "Name" );
@@ -274,7 +274,7 @@ LanguageComboBox::LanguageComboBox( QWidget *parent )
 int LanguageComboBox::insertLanguage( const QString & language )
 {
   static QString entryDesktop = QString::fromLatin1("/entry.desktop");
-  KSimpleConfig entry( KStandardDirs::locate("locale", language + entryDesktop) );
+  KConfig entry( KStandardDirs::locate("locale", language + entryDesktop) );
   KConfigGroup group( &entry, "KCM Locale" );
   QString name = group.readEntry( "Name" );
   QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
@@ -364,8 +364,8 @@ void ProfileDialog::setup() {
   Q3ListViewItem * listItem = 0;
   for ( QStringList::const_iterator it = mProfileList.begin() ;
 	it != mProfileList.end() ; ++it ) {
-    KConfig profile( *it, true /* read-only */, false /* no KDE global */ );
-    profile.setGroup("KMail Profile");
+    KConfig _profile( *it, KConfig::NoGlobals  );
+    KConfigGroup profile(&_profile, "KMail Profile");
     QString name = profile.readEntry( "Name" );
     if ( name.isEmpty() ) {
       kWarning(5006) << "File \"" << (*it)
@@ -389,7 +389,7 @@ void ProfileDialog::slotOk() {
 
   assert( index < mProfileList.count() );
 
-  KConfig profile( mProfileList.at(index), true, false );
+  KConfig profile( mProfileList.at( index), KConfig::NoGlobals );
   emit profileSelected( &profile );
 }
 

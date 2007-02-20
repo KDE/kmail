@@ -159,7 +159,7 @@ namespace {
     I18N_NOOP("<qt><p>This setting has been fixed by your administrator.</p>"
               "<p>If you think this is an error, please contact him.</p></qt>");
 
-  void checkLockDown( QWidget * w, const KConfigBase & c, const char * key ) {
+  void checkLockDown( QWidget * w, const KConfigGroup & c, const char * key ) {
     if ( c.entryIsImmutable( key ) ) {
       w->setEnabled( false );
       w->setToolTip( i18n( lockedDownWarning ) );
@@ -179,13 +179,13 @@ namespace {
     b->setText( i18n( e.desc ) );
   }
 
-  void loadWidget( QCheckBox * b, const KConfigBase & c, const BoolConfigEntry & e ) {
+  void loadWidget( QCheckBox * b, const KConfigGroup & c, const BoolConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     checkLockDown( b, c, e.key );
     b->setChecked( c.readEntry( e.key, e.defaultValue ) );
   }
 
-  void loadWidget( Q3ButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
+  void loadWidget( Q3ButtonGroup * g, const KConfigGroup & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     checkLockDown( g, c, e.key );
@@ -198,19 +198,19 @@ namespace {
     g->setButton( e.defaultItem );
   }
 
-  void saveCheckBox( QCheckBox * b, KConfigBase & c, const BoolConfigEntry & e ) {
+  void saveCheckBox( QCheckBox * b, KConfigGroup & c, const BoolConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     c.writeEntry( e.key, b->isChecked() );
   }
 
-  void saveButtonGroup( Q3ButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
+  void saveButtonGroup( Q3ButtonGroup * g, KConfigGroup & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     c.writeEntry( e.key, e.items[ g->id( g->selected() ) ].key );
   }
 
   template <typename T_Widget, typename T_Entry>
-  inline void loadProfile( T_Widget * g, const KConfigBase & c, const T_Entry & e ) {
+  inline void loadProfile( T_Widget * g, const KConfigGroup & c, const T_Entry & e ) {
     if ( c.hasKey( e.key ) )
       loadWidget( g, c, e );
   }

@@ -57,7 +57,7 @@ AntiSpamConfig * AntiSpamConfig::instance() {
 void AntiSpamConfig::readConfig()
 {
   mAgents.clear();
-  KConfig config( "kmail.antispamrc", true );
+  KConfig config( "kmail.antispamrc" );
   config.setReadDefaults( true );
   KConfigGroup general( &config, "General" );
   unsigned int totalTools = general.readEntry( "tools", 0 );

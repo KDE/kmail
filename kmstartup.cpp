@@ -25,7 +25,7 @@
 
 #include <klocale.h>
 #include <kcomponentdata.h>
-#include <ksimpleconfig.h>
+#include <kconfig.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 #include <kcrash.h>
@@ -134,7 +134,7 @@ void lockOrDie() {
     programName = i18n("KMail");
 
   QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
-  KSimpleConfig config(lockLocation);
+  KConfig config(lockLocation, KConfig::OnlyLocal);
   int oldPid = config.readEntry("pid", -1 );
   const QString oldHostName = config.readEntry("hostname");
   const QString oldAppName = config.readEntry( "appName", appName );
@@ -225,7 +225,7 @@ void insertLibraryCataloguesAndIcons() {
 void cleanup()
 {
   const QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
-  KSimpleConfig config(lockLocation);
+  KConfig config(lockLocation, KConfig::OnlyLocal);
   config.writeEntry("pid", -1);
   config.sync();
 }
