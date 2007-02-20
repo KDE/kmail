@@ -1916,8 +1916,7 @@ void KMFolderTree::moveOrCopyFolder( KMFolder* source, KMFolder* destination, bo
   if ( destination )
     parent = destination->createChildFolder();
   if ( parent->hasNamedFolder( sourceFolderName ) ) {
-    KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>")
-        .arg( sourceFolderName ) );
+    KMessageBox::error( this, i18n( "<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>", sourceFolderName ) );
     return;
   }
 
@@ -1925,8 +1924,7 @@ void KMFolderTree::moveOrCopyFolder( KMFolder* source, KMFolder* destination, bo
   KMFolder *f = source;
   while ( f ) {
     if ( f->moveInProgress() ) {
-      KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>")
-          .arg( sourceFolderName ) );
+      KMessageBox::error( this, i18n( "<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>", sourceFolderName ) );
       return;
     }
     if ( f->parent() )
