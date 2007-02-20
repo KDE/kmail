@@ -33,7 +33,7 @@
 
 namespace KMail {
 
-  void SieveConfig::readConfig( const KConfigBase & config ) {
+  void SieveConfig::readConfig( const KConfigGroup & config ) {
     mManagesieveSupported = config.readEntry( "sieve-support", false );
     mReuseConfig = config.readEntry( "sieve-reuse-config", true );
 
@@ -45,7 +45,7 @@ namespace KMail {
     mVacationFileName = config.readEntry( "sieve-vacation-filename", "kmail-vacation.siv" );
   }
 
-  void SieveConfig::writeConfig( KConfigBase & config ) const {
+  void SieveConfig::writeConfig( KConfigGroup & config ) const {
     config.writeEntry( "sieve-support", managesieveSupported() );
     config.writeEntry( "sieve-reuse-config", reuseConfig() );
     config.writeEntry( "sieve-port", (int)port() );

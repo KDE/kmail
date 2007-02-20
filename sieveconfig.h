@@ -22,7 +22,7 @@
 class QCheckBox;
 class QLineEdit;
 class KIntSpinBox;
-class KConfigBase;
+class KConfigGroup;
 
 namespace KMail {
 
@@ -72,8 +72,8 @@ namespace KMail {
 
     QString vacationFileName() const { return mVacationFileName; }
 
-    void readConfig( const KConfigBase & config );
-    void writeConfig( KConfigBase & config ) const;
+    void readConfig( const KConfigGroup & config );
+    void writeConfig( KConfigGroup & config ) const;
 
   protected:
     bool mManagesieveSupported;
