@@ -1755,7 +1755,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
       label = att->name();
     label = KMMessage::quoteHtmlChars( label, true );
 
-    QString dir = mReader->createTempDir( QString::number( i ) );
+    QString dir = mReader->createTempDir( "ktnef-" + QString::number( i ) );
     parser.extractFileTo( att->name(), dir );
     mReader->mTempFiles.append( dir + QDir::separator() + att->name() );
     QString href = "file:" + KURL::encode_string( dir + QDir::separator() + att->name() );
