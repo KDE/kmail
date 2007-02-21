@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <Q3CString>
 /*  -*- c++ -*-
     interfaces/htmlwriter.h
 
@@ -35,7 +33,7 @@
 #ifndef __KMAIL_INTERFACES_HTMLWRITER_H__
 #define __KMAIL_INTERFACES_HTMLWRITER_H__
 
-class Q3CString;
+class QByteArray;
 class QString;
 
 namespace KMail {
@@ -113,7 +111,7 @@ namespace KMail {
     /**
      * Embed a part with Content-ID @p contentId, using url @p url.
      */
-    virtual void embedPart( const Q3CString & contentId, const QString & url ) = 0;
+    virtual void embedPart( const QByteArray & contentId, const QString & url ) = 0;
   };
 
 } // namespace KMail

@@ -16,8 +16,7 @@
 
 #include <QDir>
 #include <QList>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 //=============================================================================
 //=============================================================================
@@ -63,7 +62,7 @@ QString KMFolderRootDir::prettyUrl() const
 
 
 //-----------------------------------------------------------------------------
-void KMFolderRootDir::setBaseURL( const Q3CString &baseURL )
+void KMFolderRootDir::setBaseURL( const QByteArray &baseURL )
 {
   mBaseURL = baseURL;
 }

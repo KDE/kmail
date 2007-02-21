@@ -43,8 +43,7 @@
 #include <dom/html_misc.h>
 
 #include <cassert>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 namespace KMail {
 
@@ -131,7 +130,7 @@ namespace KMail {
     }
   }
 
-  void KHtmlPartHtmlWriter::embedPart( const Q3CString & contentId,
+  void KHtmlPartHtmlWriter::embedPart( const QByteArray & contentId,
                                        const QString & contentURL ) {
     mEmbeddedPartMap[QString(contentId)] = contentURL;
   }

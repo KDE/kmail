@@ -23,7 +23,7 @@
 #include <config.h>
 #include <sys/types.h>
 #include "kmmsgbase.h"
-#include <Q3CString>
+#include <QByteArray>
 
 class KMMessage;
 
@@ -38,12 +38,12 @@ public:
 
 
   /** Initialize with given values and set dirty flag to false. */
-  virtual void init(const Q3CString& subject, const Q3CString& from,
-                    const Q3CString& to, time_t date,
-                    const MessageStatus& status, const Q3CString& xmark,
-                    const Q3CString& replyToId,
-                    const Q3CString& replyToAuxId,
-                    const Q3CString& msgId,
+  virtual void init(const QByteArray& subject, const QByteArray& from,
+                    const QByteArray& to, time_t date,
+                    const MessageStatus& status, const QByteArray& xmark,
+                    const QByteArray& replyToId,
+                    const QByteArray& replyToAuxId,
+                    const QByteArray& msgId,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
@@ -51,13 +51,13 @@ public:
             size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Initialize with given values and set dirty flag to false. */
-  virtual void init(const Q3CString& subject, const Q3CString& from,
-                    const Q3CString& to, time_t date,
-                    const MessageStatus& status, const Q3CString& xmark,
-                    const Q3CString& replyToId,
-                    const Q3CString& replyToAuxId,
-                    const Q3CString& msgId,
-		    const Q3CString& fileName,
+  virtual void init(const QByteArray& subject, const QByteArray& from,
+                    const QByteArray& to, time_t date,
+                    const MessageStatus& status, const QByteArray& xmark,
+                    const QByteArray& replyToId,
+                    const QByteArray& replyToAuxId,
+                    const QByteArray& msgId,
+		    const QByteArray& fileName,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,

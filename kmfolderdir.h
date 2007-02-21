@@ -2,8 +2,7 @@
 #define kmfolderdir_h
 
 #include <QString>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include "kmfoldernode.h"
 #include "kmfoldertype.h"
 
@@ -80,14 +79,14 @@ public:
 
   virtual QString prettyUrl() const;
 
-  void setBaseURL( const Q3CString& baseURL );
+  void setBaseURL( const QByteArray& baseURL );
 
   virtual KMFolderMgr* manager() const;
 
 protected:
   QString mPath;
   KMFolderMgr *mManager;
-  Q3CString mBaseURL;
+  QByteArray mBaseURL;
 };
 
 #endif /*kmfolderdir_h*/

@@ -69,8 +69,7 @@ using KIO::PasswordDialog;
 #include <QList>
 #include <QRegExp>
 #include <QTextDocument>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <q3stylesheet.h>
 
 namespace KMail {
@@ -1156,7 +1155,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const Q3CString& flags )
+  void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const QByteArray& flags )
   {
      // set the status on the server, the uids are integrated in the path
      kDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;

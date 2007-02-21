@@ -46,6 +46,7 @@
 using KMail::FolderJob;
 
 #include <QList>
+#include <QByteArray>
 
 #include "mimelib/string.h"
 

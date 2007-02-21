@@ -32,8 +32,7 @@
 #include <QPointer>
 #include <QTimer>
 
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 class AccountManager;
 class KMFolder;
@@ -155,7 +154,7 @@ namespace KMail {
       QString url;
       QString curNamespace;
       QByteArray data;
-      Q3CString cdata;
+      QByteArray cdata;
       QStringList items;
       KMFolder *parent;
       QList<KMMessage*> msgList;
@@ -216,7 +215,7 @@ namespace KMail {
      * Set the status on the server
      * Emits imapStatusChanged signal on success/error.
      */
-    void setImapStatus( KMFolder* folder, const QString& path, const Q3CString& flags );
+    void setImapStatus( KMFolder* folder, const QString& path, const QByteArray& flags );
 
     /**
      * The KIO-Slave died

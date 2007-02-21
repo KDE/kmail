@@ -13,8 +13,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <mimelib/datetime.h>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 /** The old status format, only one at a time possible. Needed
     for upgrade path purposes. */
@@ -198,11 +197,11 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
-                     const Q3CString& aTo, time_t aDate,
-                     const MessageStatus& aStatus, const Q3CString& aXMark,
-                     const Q3CString& replyToId, const Q3CString& replyToAuxId,
-                     const Q3CString& msgId,
+void KMMsgInfo::init(const QByteArray& aSubject, const QByteArray& aFrom,
+                     const QByteArray& aTo, time_t aDate,
+                     const MessageStatus& aStatus, const QByteArray& aXMark,
+                     const QByteArray& replyToId, const QByteArray& replyToAuxId,
+                     const QByteArray& msgId,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
@@ -235,12 +234,12 @@ void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
     mDirty     = false;
 }
 
-void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
-                     const Q3CString& aTo, time_t aDate,
-                     const MessageStatus& aStatus, const Q3CString& aXMark,
-                     const Q3CString& replyToId, const Q3CString& replyToAuxId,
-                     const Q3CString& msgId,
-                     const Q3CString& aFileName,
+void KMMsgInfo::init(const QByteArray& aSubject, const QByteArray& aFrom,
+                     const QByteArray& aTo, time_t aDate,
+                     const MessageStatus& aStatus, const QByteArray& aXMark,
+                     const QByteArray& replyToId, const QByteArray& replyToAuxId,
+                     const QByteArray& msgId,
+                     const QByteArray& aFileName,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,

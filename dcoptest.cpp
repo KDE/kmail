@@ -10,8 +10,7 @@
 
 #include <kmailIface_stub.h>
 #include <mailcomposerIface_stub.h>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 int main(int argc,char **argv)
 {
@@ -31,7 +30,7 @@ int main(int argc,char **argv)
   DCOPRef ref = kmailStub.openComposer("to 2","","","Second test",
                                        "DCOP ref call",0);
   MailComposerIface_stub composerStub(ref.app(),ref.object());
-  Q3CString data = "BEGIN:VCALENDAR\nEND:VCALENDAR";
+  QByteArray data = "BEGIN:VCALENDAR\nEND:VCALENDAR";
   composerStub.addAttachment("test.ics","7bit",data,"text","calendar","method",
                              "publish","attachement;");
   composerStub.send(2);
