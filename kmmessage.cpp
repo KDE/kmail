@@ -1747,7 +1747,7 @@ QString KMMessage::dateStr() const
 
   return KMime::DateFormatter::formatDate(
       static_cast<KMime::DateFormatter::FormatType>(general.readEntry( "dateFormat",
-          QVariant( KMime::DateFormatter::Fancy ) ).toInt()),
+          int( KMime::DateFormatter::Fancy ) )),
       unixTime, general.readEntry( "customDateFormat" ));
 }
 
