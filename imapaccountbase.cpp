@@ -988,12 +988,7 @@ namespace KMail {
   QString ImapAccountBase::jobData::htmlURL() const
   {
     KUrl u(  url );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-// I've changed htmlURL() to prettyUrl() to make the file compile.
-// However I'm not sure this is really the correct replacement.
-    return u.prettyUrl();
+    return Qt::escape(u.prettyUrl());
   }
 
   //-----------------------------------------------------------------------------
