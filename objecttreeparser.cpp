@@ -1712,6 +1712,8 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
 bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessResult &result )
 {
   Q_UNUSED( result );
+  if ( !mReader )
+    return false;
 
   const QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
   KTNEFParser parser;
