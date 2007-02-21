@@ -473,11 +473,8 @@ void KMFolderTree::readConfig (void)
   // Custom/Ssystem font support
   {
     KConfigGroup conf( KMKernel::config(), "Fonts" );
-    if (!conf.readEntry( "defaultFonts", true ) ) {
-      QFont folderFont( KGlobalSettings::generalFont() );
-      setFont(conf.readEntry("folder-font",
-          QVariant( folderFont ) ).value<QFont>() );
-    }
+    if (!conf.readEntry( "defaultFonts", true ) )
+      setFont(conf.readEntry("folder-font", KGlobalSettings::generalFont()));
     else
       setFont(KGlobalSettings::generalFont());
   }
