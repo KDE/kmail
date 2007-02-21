@@ -407,6 +407,13 @@ protected:
   */
   QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
 
+  /**
+    Creates a temporary dir for saving attachments, etc.
+    Will be automatically deleted when another message is viewed.
+    @param param Optional part of the directory name.
+  */
+  QString createTempDir( const QString &param = QString() );
+
   /** show window containing infos about a vCard. */
   void showVCard(KMMessagePart *msgPart);
 

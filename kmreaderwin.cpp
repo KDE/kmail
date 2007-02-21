@@ -1640,21 +1640,10 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     fileName = aMsgPart->name();
 
   //--- Sven's save attachments to /tmp start ---
-  KTemporaryFile *tempFile = new KTemporaryFile();
-  tempFile->setSuffix( '.' + QString::number( aPartNum ) );
-  tempFile->open();
-  QString fname = tempFile->fileName();
-  delete tempFile;
+  QString fname = createTempDir( QString::number( aPartNum ) );
+  if ( fname.isEmpty() )
+    return QString();
 
-  if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
-    // Not there or not writable
-    if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
-        || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
-      return QString(); //failed create
-
-  assert( !fname.isNull() );
-
-  mTempDirs.append( fname );
   // strip off a leading path
   int slashPos = fileName.lastIndexOf( '/' );
   if( -1 != slashPos )
@@ -1680,6 +1669,25 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
   return fname;
 }
 
+QString KMReaderWin::createTempDir( const QString &param )
+{
+  KTemporaryFile *tempFile = new KTemporaryFile();
+  tempFile->setSuffix( '.' + param );
+  tempFile->open();
+  QString fname = tempFile->name();
+  delete tempFile;
+
+  if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
+    // Not there or not writable
+    if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
+        || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
+      return QString::null; //failed create
+
+  assert( !fname.isNull() );
+
+  mTempDirs.append( fname );
+  return fname;
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::showVCard( KMMessagePart * msgPart ) {

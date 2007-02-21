@@ -70,9 +70,14 @@
 #include <kpgp.h>
 #include <linklocator.h>
 
+#include <ktnef/ktnefparser.h>
+#include <ktnef/ktnefmessage.h>
+#include <ktnef/ktnefattach.h>
+
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmimetype.h>
 #include <kglobal.h>
 #include <khtml_part.h>
 #include <ktemporaryfile.h>
@@ -85,6 +90,7 @@
 
 // other Qt headers
 #include <QApplication>
+#include <QDir>
 #include <QFile>
 #include <QTextCodec>
 #include <QByteArray>
@@ -1706,6 +1712,73 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
   result.setInlineEncryptionState( KMMsgFullyEncrypted );
   if ( mReader )
     htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+  return true;
+}
+
+bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessResult &result )
+{
+  Q_UNUSED( result );
+  if ( !mReader )
+    return false;
+
+  const QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
+  KTnef::KTNEFParser parser;
+  if ( !parser.openFile( fileName ) || !parser.message()) {
+    kDebug() << k_funcinfo << "Could not parse " << fileName << endl;
+    return false;
+  }
+
+  QList<KTnef::KTNEFAttach*> tnefatts = parser.message()->attachmentList();
+  if ( tnefatts.isEmpty() ) {
+    kDebug() << k_funcinfo << "No attachments found in " << fileName << endl;
+    return false;
+  }
+
+  if ( !showOnlyOneMimePart() ) {
+    QString label = node->msgPart().fileName().trimmed();
+    if ( label.isEmpty() )
+      label = node->msgPart().name().trimmed();
+    label = KMMessage::quoteHtmlChars( label, true );
+    const QString comment = KMMessage::quoteHtmlChars( node->msgPart().contentDescription(), true );
+    const QString dir = QApplication::isRightToLeft() ? "rtl" : "ltr" ;
+
+    QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
+                "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
+    if ( !fileName.isEmpty() )
+      htmlStr += "<a href=\"" + QString("file:")
+        + KUrl::toPercentEncoding( fileName ) + "\">"
+        + label + "</a>";
+    else
+      htmlStr += label;
+    if ( !comment.isEmpty() )
+      htmlStr += "<br>" + comment;
+    htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
+    htmlWriter()->queue( htmlStr );
+  }
+
+  for ( int i = 0; i < tnefatts.count(); ++i ) {
+    KTnef::KTNEFAttach *att = tnefatts.at( i );
+    QString label = att->displayName();
+    if( label.isEmpty() )
+      label = att->name();
+    label = KMMessage::quoteHtmlChars( label, true );
+
+    QString dir = mReader->createTempDir( "ktnef-" + QString::number( i ) );
+    parser.extractFileTo( att->name(), dir );
+    mReader->mTempFiles.append( dir + QDir::separator() + att->name() );
+    QString href = "file:" + KUrl::toPercentEncoding( dir + QDir::separator() + att->name() );
+
+    KMimeType::Ptr mimeType = KMimeType::mimeType( att->mimeTag() );
+    QString iconName = KIconLoader::global()->iconPath( mimeType->iconName(), K3Icon::Desktop );
+
+    htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
+                          iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +
+                          "</a></div><br>" );
+  }
+
+  if ( !showOnlyOneMimePart() )
+    htmlWriter()->queue( "</td></tr></table>" );
+
   return true;
 }
 
