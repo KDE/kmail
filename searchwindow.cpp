@@ -31,6 +31,7 @@
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
+#include "textsource.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -38,6 +39,7 @@
 #include <kwin.h>
 #include <kconfig.h>
 #include <kstdaction.h>
+#include <kiconloader.h>
 
 #include <qcheckbox.h>
 #include <qlayout.h>
@@ -50,6 +52,9 @@
 #include <qcursor.h>
 #include <qpopupmenu.h>
 
+#include <maillistdrag.h>
+using namespace KPIM;
+
 #include <mimelib/enum.h>
 #include <mimelib/boyermor.h>
 
@@ -59,6 +64,44 @@
 namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
+
+// KListView sub-class for dnd support
+class MatchListView : public KListView
+{
+  public:
+    MatchListView( QWidget *parent, SearchWindow* sw, const char* name = 0 ) :
+      KListView( parent, name ),
+      mSearchWindow( sw )
+    {}
+
+  protected:
+    virtual QDragObject* dragObject()
+    {
+      KMMessageList list = mSearchWindow->selectedMessages();
+      MailList mailList;
+      for ( KMMsgBase* msg = list.first(); msg; msg = list.next() ) {
+        if ( !msg )
+          continue;
+        MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
+                                 msg->subject(), msg->fromStrip(),
+                                 msg->toStrip(), msg->date() );
+        mailList.append( mailSummary );
+      }
+      MailListDrag *d = new MailListDrag( mailList, viewport(), new KMTextSource );
+
+      QPixmap pixmap;
+      if( mailList.count() == 1 )
+        pixmap = QPixmap( DesktopIcon("message", KIcon::SizeSmall) );
+      else
+        pixmap = QPixmap( DesktopIcon("kmultiple", KIcon::SizeSmall) );
+
+      d->setPixmap( pixmap );
+      return d;
+    }
+
+  private:
+    SearchWindow* mSearchWindow;
+};
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
@@ -157,7 +200,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
-  mLbxMatches = new KListView(searchWidget, "Find Messages");
+  mLbxMatches = new MatchListView(searchWidget, this, "Find Messages");
 
   /*
      Default is to sort by date. TODO: Unfortunately this sorts *while*
@@ -189,6 +232,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLbxMatches->setColumnWidthMode( MSGID_COLUMN, QListView::Manual );
   mLbxMatches->setColumnWidth(MSGID_COLUMN, 0);
   mLbxMatches->header()->setResizeEnabled(false, MSGID_COLUMN);
+
+  mLbxMatches->setDragEnabled( true );
 
   connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
           this, SLOT(slotShowMsg(QListViewItem *)));
