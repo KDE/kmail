@@ -2247,7 +2247,10 @@ void KMMainWidget::setupActions()
   mSelectAllTextAction = new KAction( i18n("Select Message &Text"),
 		      CTRL+SHIFT+Key_A, mMsgView,
 		      SLOT(selectAll()), actionCollection(), "mark_all_text" );
-  mCopyMsgTextAction = KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
+  mCopyMsgTextAction = new KAction( i18n("Copy Text"),
+                                  "editcopy", CTRL + Key_C, mMsgView,
+                                  SLOT(slotCopySelectedText()), actionCollection(),
+                                  "kmail_copy" );
 
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,

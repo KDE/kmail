@@ -267,7 +267,10 @@ void KMReaderMainWin::setupAccel()
   mSelectAllTextAction = new KAction( i18n("Select Message &Text"),
                       CTRL+SHIFT+Key_A, mReaderWin,
                       SLOT(selectAll()), actionCollection(), "mark_all_text" );
-  mCopyMsgTextAction = KStdAction::copy( mReaderWin, SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
+  mCopyMsgTextAction = new KAction( i18n("Copy Text"),
+                                  "editcopy", CTRL + Key_C, mReaderWin,
+                                  SLOT(slotCopySelectedText()), actionCollection(),
+                                  "kmail_copy" );
 
   createGUI( "kmreadermainwin.rc" );
   //menuBar()->hide();
