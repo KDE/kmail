@@ -14,6 +14,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
 	-I$(top_srcdir)/certmanager/lib \
         -I$(top_srcdir)/certmanager/lib/ui \
         -I$(top_srcdir)/indexlib \
+        -I$(top_srcdir)/ktnef \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
         $(all_includes)
