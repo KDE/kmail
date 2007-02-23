@@ -690,9 +690,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
     return Failed;
 
   // Take a copy of the original message, which remains unchanged.
-  KMMessage *newMsg = new KMMessage;
+  KMMessage *newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
   newMsg->setComplete( msg->isComplete() );
-  newMsg->fromDwString( msg->asDwString() );
 
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
@@ -1914,12 +1913,11 @@ KMCommand::Result KMCopyCommand::execute()
       // imap => imap with same account
       list.append(msg);
     } else {
-      newMsg = new KMMessage;
+      newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
       newMsg->setComplete(msg->isComplete());
       // make sure the attachment state is only calculated when it's complete
       if (!newMsg->isComplete())
         newMsg->setReadyToShow(false);
-      newMsg->fromDwString(msg->asDwString());
       newMsg->setStatus(msg->status());
 
       if (srcFolder && !newMsg->isComplete())
