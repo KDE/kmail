@@ -19,6 +19,8 @@ using KMail::HeaderItem;
 using KMail::FolderJob;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
+#include "messagecopyhelper.h"
+using KMail::MessageCopyHelper;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
@@ -3359,47 +3361,11 @@ void KMHeaders::cutMessages()
 
 void KMHeaders::pasteMessages()
 {
-  if ( mCopiedMessages.isEmpty() || !folder() )
-    return;
-
-  KMFolder *sourceFolder = 0, *f = 0;
-  int index;
-  QPtrList<KMMsgBase> list;
-
-  for ( QValueList<Q_UINT32>::ConstIterator it = mCopiedMessages.constBegin(); it != mCopiedMessages.constEnd(); ++it ) {
-    KMMsgDict::instance()->getLocation( *it, &f, &index );
-    if ( !f ) // not found
-      continue;
-    if ( !sourceFolder ) {
-      sourceFolder = f;
-      sourceFolder->open();
-    }
-    if ( f != sourceFolder ) { // should not happen...
-      sourceFolder->close();
-      kdWarning() << k_funcinfo << "Found messages from diffrent source folders - aborting" << endl;
-      return;
-    }
-    if ( sourceFolder == folder() ) {
-      KMessageBox::error( this, i18n("The selected messages are already in this folder.") );
-      sourceFolder->close();
-      return;
-    }
-    KMMsgBase *msgBase = f->getMsgBase( index );
-    if ( msgBase )
-      list.append( msgBase );
-  }
-
-  KMCommand *command;
+  new MessageCopyHelper( mCopiedMessages, folder(), mMoveMessages, this );
   if ( mMoveMessages ) {
-    command = new KMMoveCommand( folder(), list );
     mCopiedMessages.clear();
     updateActions();
-  } else {
-    command = new KMCopyCommand( folder(), list );
   }
-  mOpenFolders.insert( command, sourceFolder );
-  connect( command, SIGNAL(completed(KMCommand*)), SLOT(copyCompleted(KMCommand*)) );
-  command->start();
 }
 
 void KMHeaders::updateActions()
@@ -3423,14 +3389,6 @@ void KMHeaders::updateActions()
     paste->setEnabled( false );
   else
     paste->setEnabled( true );
-}
-
-void KMHeaders::copyCompleted(KMCommand * command)
-{
-  if ( mOpenFolders.contains( command ) ) {
-    mOpenFolders[command]->close();
-    mOpenFolders.remove( command );
-  }
 }
 
 #include "kmheaders.moc"

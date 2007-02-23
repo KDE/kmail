@@ -341,7 +341,6 @@ private slots:
   void pasteMessages();
 
   void updateActions();
-  void copyCompleted( KMCommand *command );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for
@@ -439,6 +438,5 @@ private:
   // copied messages
   QValueList<Q_UINT32> mCopiedMessages;
   bool mMoveMessages;
-  QMap<KMCommand*, QGuardedPtr<KMFolder> > mOpenFolders;
 }; // class
 #endif

@@ -10,6 +10,7 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolderdia.h"
+#include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "accountmanager.h"
@@ -20,6 +21,8 @@ using KMail::AccountManager;
 #include "expirypropertiesdialog.h"
 #include "newfolderdialog.h"
 #include "acljobs.h"
+#include "messagecopyhelper.h"
+using KMail::MessageCopyHelper;
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -1434,10 +1437,21 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
           moveOrCopyFolder( mCopySourceFolder, fti->folder(), (action == DRAG_MOVE) );
         }
       } else {
-        if ( action == DRAG_MOVE && fti->folder() )
-          emit folderDrop( fti->folder() );
-        else if ( action == DRAG_COPY && fti->folder() )
-          emit folderDropCopy( fti->folder() );
+        if ( e->source() == mMainWidget->headers()->viewport() ) {
+          // KMHeaders does copy/move itself
+          if ( action == DRAG_MOVE && fti->folder() )
+            emit folderDrop( fti->folder() );
+          else if ( action == DRAG_COPY && fti->folder() )
+            emit folderDropCopy( fti->folder() );
+        } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
+          MailList list;
+          if ( !MailListDrag::decode( e, list ) ) {
+            kdWarning() << k_funcinfo << "Could not decode drag data!" << endl;
+          } else {
+            QValueList<Q_UINT32> serNums = MessageCopyHelper::serNumListFromMailList( list );
+            new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
+          }
+        }
       }
       e->accept( true );
     } else
