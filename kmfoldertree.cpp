@@ -1410,7 +1410,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-    if (fti && (fti != oldSelected) && acceptDrag(e))
+    if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
     {
       int action = -1;
       int keybstate = kapp->keyboardModifiers();
