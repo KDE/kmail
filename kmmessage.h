@@ -208,7 +208,7 @@ public:
   /** Parse the string and create this message from it. */
   void fromDwString(const DwString& str, bool setStatus=FALSE);
   void fromString(const QCString& str, bool setStatus=FALSE);
-  void fromByteArray( const QByteArray & ba, bool setStatus=false );
+  void fromByteArray(const QByteArray & ba, bool setStatus=false);
 
   /** Return the entire message contents in the DwString. This function
       is *fast* even for large message since it does *not* involve a
@@ -858,7 +858,7 @@ public:
 private:
 
   /** Initialization shared by the ctors. */
-  void init();
+  void init( DwMessage* aMsg = 0 );
   /** Assign the values of @param other to this message. Used in the copy c'tor. */
   void assign( const KMMessage& other );
 

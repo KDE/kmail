@@ -88,21 +88,11 @@ static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart 
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
-  : KMMsgBase(),
-    mMsg(aMsg),
-    mNeedsAssembly(true),
-    mDecodeHTML(false),
-    mOverrideCodec(0),
-    mFolderOffset( 0 ),
-    mMsgSize(0),
-    mMsgLength( 0 ),
-    mDate( 0 ),
-    mEncryptionState( KMMsgEncryptionStateUnknown ),
-    mSignatureState( KMMsgSignatureStateUnknown ),
-    mMDNSentState( KMMsgMDNStateUnknown ),
-    mUnencryptedMsg(0),
-    mLastUpdated( 0 )
+  : KMMsgBase()
 {
+  init( aMsg );
+  // aMsg might need assembly
+  mNeedsAssembly = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -139,10 +129,14 @@ KMMessage::KMMessage(const KMMessage& other) :
   assign( other );
 }
 
-void KMMessage::init()
+void KMMessage::init( DwMessage* aMsg )
 {
   mNeedsAssembly = false;
+  if ( aMsg ) {
+    mMsg = aMsg;
+  } else {
   mMsg = new DwMessage;
+  }
   mOverrideCodec = 0;
   mDecodeHTML = false;
   mComplete = true;
@@ -295,7 +289,7 @@ const DwString& KMMessage::asDwString() const
 }
 
 //-----------------------------------------------------------------------------
-const DwMessage *KMMessage::asDwMessage()
+const DwMessage* KMMessage::asDwMessage()
 {
   if (mNeedsAssembly)
   {
@@ -313,11 +307,7 @@ QCString KMMessage::asString() const {
 
 QByteArray KMMessage::asSendableString() const
 {
-  KMMessage msg;
-  // Much faster than msg.fromDwString(asDwString()):
-  delete msg.mMsg;
-  msg.mMsg = new DwMessage( *mMsg );
-
+  KMMessage msg( new DwMessage( *this->mMsg ) );
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return KMail::Util::ByteArray( msg.asDwString() ); // and another copy again!
@@ -325,10 +315,7 @@ QByteArray KMMessage::asSendableString() const
 
 QCString KMMessage::headerAsSendableString() const
 {
-  KMMessage msg;
-  // Much faster than msg.fromDwString(asDwString()):
-  delete msg.mMsg;
-  msg.mMsg = new DwMessage( *mMsg );
+  KMMessage msg( new DwMessage( *this->mMsg ) );
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.headerAsString().latin1();
@@ -1111,11 +1098,9 @@ QCString KMMessage::getRefStr() const
 
 KMMessage* KMMessage::createRedirect( const QString &toStr )
 {
-  KMMessage* msg = new KMMessage;
-  KMMessagePart msgPart;
-
   // copy the message 1:1
-  msg->fromDwString(this->asDwString());
+  KMMessage* msg = new KMMessage( new DwMessage( *this->mMsg ) );
+  KMMessagePart msgPart;
 
   uint id = 0;
   QString strId = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace();
@@ -1201,6 +1186,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   // preserved
   if ( type() == DwMime::kTypeMultipart ||
      ( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypePlain ) ) {
+    // ## slow, we could probably use: delete msg->mMsg; msg->mMsg = new DwMessage( this->mMsg );
     msg->fromDwString( this->asDwString() );
     // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
