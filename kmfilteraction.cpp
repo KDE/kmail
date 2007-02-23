@@ -20,6 +20,7 @@
 #include <libkdepim/kfileio.h>
 #include <libkdepim/collectingprocess.h>
 using KPIM::CollectingProcess;
+#include <mimelib/message.h>
 #include "kmfawidgets.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
@@ -1409,8 +1410,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
     return ErrorButGoOn;
 
   // copy the message 1:1
-  KMMessage* msgCopy = new KMMessage;
-  msgCopy->fromDwString(msg->asDwString());
+  KMMessage* msgCopy = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
 
   int index;
   int rc = mFolder->addMsg(msgCopy, &index);

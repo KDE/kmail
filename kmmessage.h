@@ -848,7 +848,7 @@ public:
 private:
 
   /** Initialization shared by the ctors. */
-  void init();
+  void init( DwMessage* aMsg = 0 );
   /** Assign the values of @param other to this message. Used in the copy c'tor. */
   void assign( const KMMessage& other );
 
