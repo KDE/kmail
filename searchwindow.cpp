@@ -301,6 +301,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
 
   //set up actions
   KActionCollection *ac = actionCollection();
+  ac->setWidget( this );
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", 0, this,
                               SLOT(slotReplyToMsg()), ac, "search_reply" );
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
