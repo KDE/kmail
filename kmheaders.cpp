@@ -3391,4 +3391,11 @@ void KMHeaders::updateActions()
     paste->setEnabled( true );
 }
 
+void KMHeaders::setCopiedMessages(const QValueList< Q_UINT32 > & msgs, bool move)
+{
+  mCopiedMessages = msgs;
+  mMoveMessages = move;
+  updateActions();
+}
+
 #include "kmheaders.moc"

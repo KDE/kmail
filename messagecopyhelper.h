@@ -22,11 +22,13 @@
 
 #include <qguardedptr.h>
 #include <qobject.h>
+#include <qptrlist.h>
 
 #include <maillistdrag.h>
 
 class KMCommand;
 class KMFolder;
+class KMMsgBase;
 
 namespace KMail {
 
@@ -54,6 +56,11 @@ class MessageCopyHelper : public QObject
       Converts a MailList into a serial number list.
     */
     static QValueList<Q_UINT32> serNumListFromMailList( const KPIM::MailList &list );
+
+    /**
+      Converts a KMMsgsBase* list into a serial number list.
+    */
+    static QValueList<Q_UINT32> serNumListFromMsgList( QPtrList<KMMsgBase> list );
 
   private slots:
     void copyCompleted( KMCommand *cmd );

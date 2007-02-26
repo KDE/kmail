@@ -87,4 +87,15 @@ QValueList< Q_UINT32 > MessageCopyHelper::serNumListFromMailList(const KPIM::Mai
   return rv;
 }
 
+QValueList< Q_UINT32 > MessageCopyHelper::serNumListFromMsgList(QPtrList< KMMsgBase > list)
+{
+  QValueList<Q_UINT32> rv;
+  KMMsgBase* msg = list.first();
+  while( msg ) {
+    rv.append( msg->getMsgSerNum() );
+    msg = list.next();
+  }
+  return rv;
+}
+
 #include "messagecopyhelper.moc"

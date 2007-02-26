@@ -28,9 +28,11 @@
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
 #include "kmfoldertree.h"
+#include "kmheaders.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
+#include "messagecopyhelper.h"
 #include "textsource.h"
 
 #include <kapplication.h>
@@ -343,6 +345,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mPrintAction = KStdAction::print( this, SLOT(slotPrintMsg()), ac, "search_print" );
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
                               SLOT(slotClearSelection()), ac, "search_clear_selection" );
+
+  mCopyAction = KStdAction::copy( this, SLOT(slotCopyMsgs()), ac, "search_copy_messages" );
+  mCutAction = KStdAction::cut( this, SLOT(slotCutMsgs()), ac, "search_cut_messages" );
+
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
           this, SLOT(folderInvalidated(KMFolder*)));
@@ -763,6 +769,8 @@ void SearchWindow::updateContextMenuActions()
     mPrintAction->setEnabled( single_actions );
     mForwardDigestAction->setEnabled( !single_actions );
     mRedirectAction->setEnabled( single_actions );
+    mCopyAction->setEnabled( count > 0 );
+    mCutAction->setEnabled( count > 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -792,8 +800,11 @@ void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &,
     mReplyListAction->plug(menu);
     mForwardActionMenu->plug(menu);
     menu->insertSeparator();
+    mCopyAction->plug(menu);
+    mCutAction->plug(menu);
     menu->insertItem(i18n("&Copy To"), msgCopyMenu);
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
+    menu->insertSeparator();
     mSaveAsAction->plug(menu);
     mSaveAtchAction->plug(menu);
     mPrintAction->plug(menu);
@@ -882,6 +893,18 @@ void SearchWindow::slotPrintMsg()
 {
     KMCommand *command = new KMPrintCommand(this, message());
     command->start();
+}
+
+void SearchWindow::slotCopyMsgs()
+{
+  QValueList<Q_UINT32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
+  mKMMainWidget->headers()->setCopiedMessages( list, false );
+}
+
+void SearchWindow::slotCutMsgs()
+{
+  QValueList<Q_UINT32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
+  mKMMainWidget->headers()->setCopiedMessages( list, true );
 }
 
 } // namespace KMail
