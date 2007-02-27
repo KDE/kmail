@@ -41,8 +41,7 @@
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <QTextStream>
 #include <QTimerEvent>
 #include <QVBoxLayout>
@@ -1243,7 +1242,7 @@ void KMFolderCachedImap::uploadFlags()
     }
     QMap< QString, QStringList >::Iterator dit;
     for( dit = groups.begin(); dit != groups.end(); ++dit ) {
-      Q3CString flags = dit.key().toLatin1();
+      QByteArray flags = dit.key().toLatin1();
       QStringList sets = KMFolderImap::makeSets( (*dit), true );
       mStatusFlagsJobs += sets.count(); // ### that's not in kmfolderimap....
       // Send off a status setting job for each set.
@@ -1453,7 +1452,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
     return;
   }
-  (*it).cdata += Q3CString(data, data.size() + 1);
+  (*it).cdata += QByteArray(data, data.size());
   int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if (pos > 0) {
     int a = (*it).cdata.indexOf("\r\nX-uidValidity:");

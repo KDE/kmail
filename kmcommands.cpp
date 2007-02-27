@@ -54,7 +54,7 @@
 
 //Added by qt3to4:
 #include <QMenu>
-#include <Q3CString>
+#include <QByteArray>
 #include <kprogressdialog.h>
 
 #include <QApplication>
@@ -1231,10 +1231,10 @@ KMCommand::Result KMForwardCommand::execute()
       msgPartText += "--";
       msgPartText += QString::fromLatin1( boundary );
       msgPartText += "--\n";
-      Q3CString tmp;
+      QString tmp;
       msgPart->setTypeStr("MULTIPART");
       tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
-      msgPart->setSubtypeStr( tmp );
+      msgPart->setSubtypeStr( tmp.toAscii() );
       msgPart->setName("unnamed");
       msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
@@ -1740,7 +1740,7 @@ KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
 
 KMCommand::Result KMMailingListFilterCommand::execute()
 {
-  Q3CString name;
+  QByteArray name;
   QString value;
   KMMessage *msg = retrievedMessage();
   if (!msg)

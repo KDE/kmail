@@ -35,8 +35,7 @@
 
 #include <QDateTime>
 #include <QFile>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #include <sys/stat.h>
 
@@ -155,8 +154,8 @@ bool FilterLog::saveToFile( QString fileName )
               it != mLogEntries.end(); ++it )
         {
           QString tmpString = *it + '\n';
-          Q3CString cstr( tmpString.toLocal8Bit() );
-          ds.writeRawData( cstr, cstr.size() );
+          QByteArray cstr( tmpString.toLocal8Bit() );
+          ds.writeRawData( cstr.data(), cstr.size() );
         }
       }
       return true;

@@ -50,8 +50,7 @@ using KPIM::ProgressManager;
 
 #include <QList>
 #include <QTextDocument>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <q3stylesheet.h>
 
 namespace KMail {
@@ -135,7 +134,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       jd.total = ( curMsg->msgSizeServer() > 0 ) ?
         curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
-      Q3CString cstr( curMsg->asString() );
+      QByteArray cstr( curMsg->asString() );
       int a = cstr.indexOf("\nX-UID: ");
       int b = cstr.indexOf('\n', a);
       if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);

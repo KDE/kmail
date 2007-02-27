@@ -52,8 +52,7 @@
 #include <kdebug.h>
 
 #include <QList>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 
 namespace KMail {
@@ -374,11 +373,11 @@ void CachedImapJob::slotPutNextMessage()
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
 
   mMsg->setUID( 0 ); // for the index
-  Q3CString cstr(mMsg->asString());
+  QByteArray cstr(mMsg->asString());
   int a = cstr.indexOf("\nX-UID: ");
   int b = cstr.indexOf('\n', a);
   if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);
-  Q3CString mData(cstr.length() + cstr.count('\n'));
+  QByteArray mData(cstr.length() + cstr.count('\n'));
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
     if ( *ch == '\n' ) {
@@ -623,7 +622,7 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
   }
 
   // Check the uidValidity
-  Q3CString cstr((*it).data.data(), (*it).data.size() + 1);
+  QByteArray cstr((*it).data.data(), (*it).data.size());
   int a = cstr.indexOf("X-uidValidity: ");
   if (a < 0) {
     // Something is seriously rotten here!

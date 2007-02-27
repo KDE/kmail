@@ -3254,7 +3254,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
-      Q3CString cset = kmkernel->networkCodec()->name();
+      QByteArray cset = kmkernel->networkCodec()->name();
       kAsciiToLower( cset.data() );
       (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }

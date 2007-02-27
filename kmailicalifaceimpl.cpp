@@ -46,8 +46,7 @@
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <QList>
 using KMail::AccountManager;
 #include "kmfolderimap.h"
@@ -245,11 +244,11 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart.setName( attachmentName );
 
       const int iSlash = attachmentMimetype.indexOf('/');
-      const Q3CString sType    = attachmentMimetype.left( iSlash   ).toLatin1();
-      const Q3CString sSubtype = attachmentMimetype.mid(  iSlash+1 ).toLatin1();
+      const QByteArray sType    = attachmentMimetype.left( iSlash   ).toLatin1();
+      const QByteArray sSubtype = attachmentMimetype.mid(  iSlash+1 ).toLatin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
-      Q3CString ctd("attachment;\n  filename=\"");
+      QByteArray ctd("attachment;\n  filename=\"");
       ctd.append( attachmentName.toLatin1() );
       ctd.append("\"");
       msgPart.setContentDisposition( ctd );
@@ -294,8 +293,8 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s )
 {
   const int iSlash = mimetype.indexOf('/');
-  const Q3CString sType    = mimetype.left( iSlash   ).toLatin1();
-  const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
+  const QByteArray sType    = mimetype.left( iSlash   ).toLatin1();
+  const QByteArray sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
   DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype, true /* starts with sSubtype, to accept application/x-vnd.kolab.contact.distlist */ );
   if ( part ) {
     KMMessagePart msgPart;
@@ -530,8 +529,8 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
 #endif
     if ( msg ) {
       const int iSlash = mimetype.indexOf('/');
-      const Q3CString sType    = mimetype.left( iSlash   ).toLatin1();
-      const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
+      const QByteArray sType    = mimetype.left( iSlash   ).toLatin1();
+      const QByteArray sSubtype = mimetype.mid(  iSlash+1 ).toLatin1();
       if ( sType.isEmpty() || sSubtype.isEmpty() ) {
         kError(5006) << mimetype << " not an type/subtype combination" << endl;
       } else {
@@ -544,8 +543,8 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
           // Check if the whole message has the right types. This is what
           // happens in the case of ical storage, where the whole mail is
           // the data
-          const Q3CString type( msg->typeStr() );
-          const Q3CString subtype( msg->subtypeStr() );
+          const QByteArray type( msg->typeStr() );
+          const QByteArray subtype( msg->subtypeStr() );
           if (type.lower() == sType && subtype.lower() == sSubtype ) {
             aMap.insert( msg->getMsgSerNum(), msg->bodyToUnicode() );
           }
@@ -756,8 +755,8 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     const KMail::FolderContentsType t = f->storage()->contentsType();
-    const Q3CString type = msg->typeStr();
-    const Q3CString subtype = msg->subtypeStr();
+    const QByteArray type = msg->typeStr();
+    const QByteArray subtype = msg->subtypeStr();
     const bool messageWasIcalVcardFormat = ( type.toLower() == "text" &&
         ( subtype.toLower() == "calendar" || subtype.toLower() == "x-vcard" ) );
 

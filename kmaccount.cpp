@@ -28,8 +28,7 @@ using KMail::FolderJob;
 
 #include <QList>
 #include <QEventLoop>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -418,8 +417,8 @@ QString KMAccount::importPassword(const QString &aStr)
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
-  Q3CString result;
-  result.resize(len+1);
+  QByteArray result;
+  result.resize(len);
 
   for (i=0; i<len; i++)
   {

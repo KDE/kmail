@@ -59,8 +59,8 @@ using KMail::RenameJob;
 #include <QBuffer>
 #include <QList>
 #include <QTextCodec>
+#include <QByteArray>
 //Added by qt3to4:
-#include <Q3CString>
 #include <Q3StyleSheet>
 
 #include <assert.h>
@@ -1130,7 +1130,7 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
     emit folderComplete(this, false);
     close();
   } else {
-    Q3CString cstr((*it).data.data(), (*it).data.size() + 1);
+    QByteArray cstr((*it).data.data(), (*it).data.size());
     int a = cstr.indexOf("X-uidValidity: ");
     int b = cstr.indexOf("\r\n", a);
     QString uidv;
@@ -1457,7 +1457,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   if ( data.isEmpty() ) return; // optimization
   ImapAccountBase::JobIterator it = account()->findJob(job);
   if ( it == account()->jobsEnd() ) return;
-  (*it).cdata += Q3CString(data, data.size() + 1);
+  (*it).cdata += QByteArray(data, data.size());
   int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if ( pos == -1 ) {
     // if we do not find the pattern in the complete string we will not find
@@ -1847,7 +1847,7 @@ void KMFolderImap::setStatus(QList<int>& ids, const MessageStatus& status, bool 
   }
   QMap< QString, QStringList >::Iterator dit;
   for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
-     Q3CString flags = dit.key().toLatin1();
+     QByteArray flags = dit.key().toLatin1();
      QStringList sets = makeSets( (*dit), true );
      // Send off a status setting job for each set.
      for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
