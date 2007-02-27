@@ -1457,7 +1457,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   if ( data.isEmpty() ) return; // optimization
   ImapAccountBase::JobIterator it = account()->findJob(job);
   if ( it == account()->jobsEnd() ) return;
-  (*it).cdata += QByteArray(data, data.size());
+  (*it).cdata += data;
   int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if ( pos == -1 ) {
     // if we do not find the pattern in the complete string we will not find

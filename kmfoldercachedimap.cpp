@@ -1452,7 +1452,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
     return;
   }
-  (*it).cdata += QByteArray(data, data.size());
+  (*it).cdata += data;
   int pos = (*it).cdata.indexOf("\r\n--IMAPDIGEST");
   if (pos > 0) {
     int a = (*it).cdata.indexOf("\r\nX-uidValidity:");
