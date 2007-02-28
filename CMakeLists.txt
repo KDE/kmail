@@ -188,7 +188,7 @@ set(kmailprivate_LIB_SRCS
    folderdiaquotatab.cpp
    folderdiaquotatab_p.cpp
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp 
-   copyfolderjob.cpp )
+   copyfolderjob.cpp messagecopyhelper.cpp )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)  
