@@ -32,6 +32,7 @@
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
 #include "regexplineedit.h"
+#include "textsource.h"
 
 #include <kactionmenu.h>
 #include <kdebug.h>
@@ -59,6 +60,9 @@
 #include <QCursor>
 #include <q3popupmenu.h>
 
+#include <maillistdrag.h>
+using namespace KPIM;
+
 #include <mimelib/enum.h>
 #include <mimelib/boyermor.h>
 
@@ -69,6 +73,49 @@
 namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
+
+// KListView sub-class for dnd support
+class MatchListView : public K3ListView
+{
+  public:
+    MatchListView( QWidget *parent, SearchWindow* sw ) :
+      K3ListView( parent ),
+      mSearchWindow( sw )
+    {}
+
+  protected:
+    virtual Q3DragObject* dragObject()
+    {
+      QList<KMMsgBase*> list = mSearchWindow->selectedMessages();
+      MailList mailList;
+      foreach ( KMMsgBase* msg, list ) {
+        if ( !msg )
+          continue;
+        MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
+                                 msg->subject(), msg->fromStrip(),
+                                 msg->toStrip(), msg->date() );
+        mailList.append( mailSummary );
+      }
+      QDrag *drag = new QDrag( viewport() );
+      drag->setMimeData( new QMimeData );
+      mailList.populateMimeData( drag->mimeData(), new KMTextSource );
+
+      QPixmap pixmap;
+      if( mailList.count() == 1 )
+        pixmap = QPixmap( DesktopIcon("message", K3Icon::SizeSmall) );
+      else
+        pixmap = QPixmap( DesktopIcon("kmultiple", K3Icon::SizeSmall) );
+
+      drag->setPixmap( pixmap );
+#warning Fix me: QDrag incompatible with K3ListView::dragObject!
+//      return drag;
+      drag->start();
+      return 0;
+    }
+
+  private:
+    SearchWindow* mSearchWindow;
+};
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
@@ -172,7 +219,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
-  mLbxMatches = new K3ListView( searchWidget );
+  mLbxMatches = new MatchListView(searchWidget, this);
   mLbxMatches->setObjectName( "Find Messages" );
 
   /*
@@ -210,6 +257,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
           this, SLOT(slotShowMsg(Q3ListViewItem *)));
   connect( mLbxMatches, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int )),
            this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int )));
+  mLbxMatches->setDragEnabled( true );
+
   vbl->addWidget(mLbxMatches);
 
   QHBoxLayout *hbl2 = new QHBoxLayout();
