@@ -1418,7 +1418,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     int action = -1;
 
-    if (fti && (fti != oldSelected) && acceptDrag(e))
+    if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
     {
       int keybstate = qApp->keyboardModifiers();
       if ( keybstate & Qt::ControlModifier ) {

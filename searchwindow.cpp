@@ -28,10 +28,12 @@
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
 #include "kmfoldertree.h"
+#include "kmheaders.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
 #include "regexplineedit.h"
+#include "messagecopyhelper.h"
 #include "textsource.h"
 
 #include <kactionmenu.h>
@@ -319,6 +321,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   //set up actions
   KActionCollection *ac = actionCollection();
+  ac->setAssociatedWidget( this );
   mReplyAction  = new KAction(KIcon("mail_reply"), i18n("&Reply..."), this);
   actionCollection()->addAction("search_reply", mReplyAction );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
@@ -349,6 +352,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mClearAction  = new KAction(i18n("Clear Selection"), this);
   actionCollection()->addAction("search_clear_selection", mClearAction );
   connect(mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()));
+
+  mCopyAction = ac->addAction( KStandardAction::Copy, "search_copy_messages", this, SLOT(slotCopyMsgs()) );
+  mCutAction = ac->addAction( KStandardAction::Cut, "search_cut_messages", this, SLOT(slotCutMsgs()) );
+
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
           this, SLOT(folderInvalidated(KMFolder*)));
@@ -767,6 +774,8 @@ void SearchWindow::updateContextMenuActions()
     mReplyAllAction->setEnabled( single_actions );
     mReplyListAction->setEnabled( single_actions );
     mPrintAction->setEnabled( single_actions );
+    mCopyAction->setEnabled( count > 0 );
+    mCutAction->setEnabled( count > 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -796,9 +805,12 @@ void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &
     menu->addAction( mReplyListAction );
     menu->addAction( mForwardActionMenu );
     menu->addSeparator();
+    menu->addAction( mCopyAction );
+    menu->addAction( mCutAction );
     msgCopyMenu->setTitle(i18n("&Copy To"));
     menu->addMenu( msgCopyMenu );
     msgMoveMenu->setTitle(i18n("&Move To"));
+    menu->addSeparator();
     menu->addMenu( msgMoveMenu );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtchAction );
@@ -874,6 +886,18 @@ void SearchWindow::slotPrintMsg()
 {
     KMCommand *command = new KMPrintCommand(this, message());
     command->start();
+}
+
+void SearchWindow::slotCopyMsgs()
+{
+  QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
+  mKMMainWidget->headers()->setCopiedMessages( list, false );
+}
+
+void SearchWindow::slotCutMsgs()
+{
+  QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
+  mKMMainWidget->headers()->setCopiedMessages( list, true );
 }
 
 } // namespace KMail

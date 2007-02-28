@@ -181,6 +181,13 @@ public:
   QFont todoFont() const { return mTodoFont; }
   QFont dateFont() const { return mDateFont; }
 
+  /**
+    Sets the list of copied/cutted messages.
+    @param msgs A list of serial numbers.
+    @param move if true, the messages were cutted
+  */
+  void setCopiedMessages( const QList<quint32> &msgs, bool move );
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */
