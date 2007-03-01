@@ -2027,22 +2027,25 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList)
-  : mDestFolder( destFolder ), mMsgList( msgList ), mProgressItem( 0 )
+  : mDestFolder( destFolder ), mProgressItem( 0 )
 {
+  QPtrList<KMMsgBase> tmp = msgList;
+  for ( KMMsgBase *msgBase = tmp.first(); msgBase; msgBase = tmp.next() )
+    mSerNumList.append( msgBase->getMsgSerNum() );
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMessage *msg )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  mMsgList.append( &msg->toMsgBase() );
+  mSerNumList.append( msg->getMsgSerNum() );
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMsgBase *msgBase )
   : mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  mMsgList.append( msgBase );
+  mSerNumList.append( msgBase->getMsgSerNum() );
 }
 
 KMMoveCommand::KMMoveCommand( Q_UINT32 )
@@ -2073,7 +2076,6 @@ KMCommand::Result KMMoveCommand::execute()
            this, SLOT( slotMoveCanceled() ) );
 
   KMMessage *msg;
-  KMMsgBase *msgBase;
   int rc = 0;
   int index;
   QPtrList<KMMessage> list;
@@ -2083,24 +2085,27 @@ KMCommand::Result KMMoveCommand::execute()
   if (mDestFolder) {
     connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
-    for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
-      mLostBoys.append( msgBase->getMsgSerNum() );
-    }
+    mLostBoys = mSerNumList;
   }
-  mProgressItem->setTotalItems( mMsgList.count() );
+  mProgressItem->setTotalItems( mSerNumList.count() );
 
-  for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
-    KMFolder *srcFolder = msgBase->parent();
+  for ( QValueList<Q_UINT32>::ConstIterator it = mSerNumList.constBegin(); it != mSerNumList.constEnd(); ++it ) {
+    KMFolder *srcFolder;
+    int idx = -1;
+    KMMsgDict::instance()->getLocation( *it, &srcFolder, &idx );
     if (srcFolder == mDestFolder)
       continue;
-    bool undo = msgBase->enableUndo();
-    int idx = srcFolder->find(msgBase);
     assert(idx != -1);
-    if ( msgBase->isMessage() ) {
-      msg = static_cast<KMMessage*>(msgBase);
-    } else {
-      msg = srcFolder->getMsg(idx);
+    if ( !srcFolder->isOpened() ) {
+      srcFolder->open();
+      mOpenedFolders.append( srcFolder );
     }
+    msg = srcFolder->getMsg(idx);
+    if ( !msg ) {
+      kdDebug(5006) << k_funcinfo << "No message found for serial number " << *it << endl;
+      continue;
+    }
+    bool undo = msg->enableUndo();
 
     if ( msg && msg->transferInProgress() &&
          srcFolder->folderType() == KMFolderTypeImap )
