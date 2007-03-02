@@ -835,7 +835,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
   // kDebug() << "Message body: " << body << endl;
 
   if ( mAppend ) {
-    Q3CString msg_body = mMsg->body();
+    QByteArray msg_body = mMsg->body();
     msg_body.append( body.utf8() );
     mMsg->setBody( msg_body );
   } else {
@@ -981,7 +981,7 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   mPipeRc = 0;
 
   KProcess proc;
-  Q3CString data = buf.local8Bit();
+  QByteArray data = buf.local8Bit();
 
   // kDebug() << "Command data: " << data << endl;
 

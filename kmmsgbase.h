@@ -27,11 +27,9 @@ using KPIM::MessageStatus;
 #include <config.h>
 #include <sys/types.h>
 #include <QString>
-//Added by qt3to4:
-#include <Q3CString>
 #include <time.h>
 
-class Q3CString;
+class QByteArray;
 class QStringList;
 class QTextCodec;
 class KMFolder;
@@ -164,7 +162,7 @@ public:
   virtual QString xmark(void) const = 0;
 
   /** Set date. */
-  virtual void setDate(const Q3CString &aStrDate);
+  virtual void setDate(const QByteArray &aStrDate);
   virtual void setDate(time_t aUnixTime) = 0;
 
   /** Returns true if changed since last folder-sync. */
@@ -220,12 +218,12 @@ public:
 
   /** Return a QTextCodec for the specified charset.
    * This function is a bit more tolerant, than QTextCodec::codecForName */
-  static const QTextCodec* codecForName(const Q3CString& _str);
+  static const QTextCodec* codecForName(const QByteArray& _str);
 
   /** Convert all non-ascii characters to question marks
     * If ok is non-null, *ok will be set to true if all characters
     * where ascii, *ok will be set to false otherwise */
-  static Q3CString toUsAscii(const QString& _str, bool *ok=0);
+  static QByteArray toUsAscii(const QString& _str, bool *ok=0);
 
   /** Return a list of the supported encodings */
   static QStringList supportedEncodings(bool usAscii);
@@ -240,24 +238,24 @@ public:
   KMMsgBase( const KMMsgBase& other );
 
   /** Helper function for encodeRFC2047String */
-  static Q3CString encodeRFC2047Quoted(const Q3CString& aStr, bool base64);
+  static QByteArray encodeRFC2047Quoted(const QByteArray& aStr, bool base64);
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static QString decodeRFC2047String(const Q3CString& aStr);
+  static QString decodeRFC2047String(const QByteArray& aStr);
 
   /** Encode given string as described in RFC2047:
     using quoted-printable. */
-  static Q3CString encodeRFC2047String(const QString& aStr,
-    const Q3CString& charset);
+  static QByteArray encodeRFC2047String(const QString& aStr,
+    const QByteArray& charset);
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */
-  static Q3CString encodeRFC2231String(const QString& aStr,
-    const Q3CString& charset);
+  static QByteArray encodeRFC2231String(const QString& aStr,
+    const QByteArray& charset);
 
   /** Decode given string as described in RFC2231 */
-  static QString decodeRFC2231String(const Q3CString& aStr);
+  static QString decodeRFC2231String(const QByteArray& aStr);
 
   /** Calculate the base64 encoded md5sum (sans the trailing equal
       signs). If @p utf8 is false, uses QString::latin1() to calculate
@@ -271,7 +269,7 @@ public:
    * First @p encoding is tried and if that one is not suitable,
    * the encodings in @p encodingList are tried.
    */
-  static Q3CString autoDetectCharset(const Q3CString &encoding, const QStringList &encodingList, const QString &text);
+  static QByteArray autoDetectCharset(const QByteArray &encoding, const QStringList &encodingList, const QString &text);
 
   /** Returns the message serial number for the message. */
   virtual unsigned long getMsgSerNum() const;

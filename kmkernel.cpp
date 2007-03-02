@@ -426,7 +426,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
         const int pos = (*it).find( ':' );
         if ( pos > 0 )
         {
-          Q3CString header = (*it).left( pos ).trimmed();
+          QByteArray header = (*it).left( pos ).trimmed();
           QString value = (*it).mid( pos+1 ).trimmed();
           if ( !header.isEmpty() && !value.isEmpty() )
             msg->setHeaderField( header, value );

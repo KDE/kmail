@@ -22,8 +22,7 @@
 #include <config-kmail.h>
 #include <QFileInfo>
 #include <QTimer>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <kdebug.h>
 
 #include <QDateTime>
@@ -250,7 +249,7 @@ bool KMFolderIndex::readIndex()
     }
     else
     {
-      Q3CString line(MAX_LINE);
+      QByteArray line(MAX_LINE);
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {

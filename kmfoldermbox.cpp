@@ -22,7 +22,7 @@
 #include <QFileInfo>
 #include <QList>
 #include <QRegExp>
-#include <Q3CString>
+#include <QByteArray>
 
 #include "kmfoldermbox.h"
 #include "folderstorage.h"
@@ -554,9 +554,9 @@ int KMFolderMbox::createIndexFromContents()
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  Q3CString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
-  Q3CString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
-  Q3CString sizeServerStr, uidStr;
+  QByteArray subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
+  QByteArray replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
+  QByteArray sizeServerStr, uidStr;
   bool atEof = false;
   bool inHeader = true;
   KMMsgInfo* mi;
@@ -726,48 +726,48 @@ int KMFolderMbox::createIndexFromContents()
       needStatus &= ~2;
     }
     else if (strncasecmp(line,"X-KMail-Mark:",13)==0)
-        xmarkStr = Q3CString(line+13);
+        xmarkStr = QByteArray(line+13);
     else if (strncasecmp(line,"In-Reply-To:",12)==0) {
-      replyToIdStr = Q3CString(line+12);
+      replyToIdStr = QByteArray(line+12);
       lastStr = &replyToIdStr;
     }
     else if (strncasecmp(line,"References:",11)==0) {
-      referencesStr = Q3CString(line+11);
+      referencesStr = QByteArray(line+11);
       lastStr = &referencesStr;
     }
     else if (strncasecmp(line,"Message-Id:",11)==0) {
-      msgIdStr = Q3CString(line+11);
+      msgIdStr = QByteArray(line+11);
       lastStr = &msgIdStr;
     }
     else if (strncasecmp(line,"Date:",5)==0)
     {
-      dateStr = Q3CString(line+5);
+      dateStr = QByteArray(line+5);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line,"From:", 5)==0)
     {
-      fromStr = Q3CString(line+5);
+      fromStr = QByteArray(line+5);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line,"To:", 3)==0)
     {
-      toStr = Q3CString(line+3);
+      toStr = QByteArray(line+3);
       lastStr = &toStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0)
     {
-      subjStr = Q3CString(line+8);
+      subjStr = QByteArray(line+8);
       lastStr = &subjStr;
     }
     else if (strncasecmp(line,"X-Length:",9)==0)
     {
-      sizeServerStr = Q3CString(line+9);
+      sizeServerStr = QByteArray(line+9);
       sizeServer = sizeServerStr.toULong();
       lastStr = &sizeServerStr;
     }
     else if (strncasecmp(line,"X-UID:",6)==0)
     {
-      uidStr = Q3CString(line+6);
+      uidStr = QByteArray(line+6);
       uid = uidStr.toULong();
       lastStr = &uidStr;
     }

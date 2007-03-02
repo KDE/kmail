@@ -22,9 +22,9 @@
 #include <QLabel>
 #include <QList>
 #include <QVBoxLayout>
+#include <QByteArray>
 //Added by qt3to4:
 #include <q3popupmenu.h>
-#include <Q3CString>
 #include <q3ptrlist.h>
 
 #include <kmessagebox.h>
@@ -1646,7 +1646,7 @@ void KMMainWidget::slotToFilter()
 void KMMainWidget::updateListFilterAction()
 {
   //Proxy the mListFilterAction to update the action text
-  Q3CString name;
+  QByteArray name;
   QString value;
   QString lname = MailingList::name( mHeaders->currentMsg(), name, value );
   mListFilterAction->setText( i18n("Filter on Mailing-List...") );

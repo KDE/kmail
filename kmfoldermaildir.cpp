@@ -8,8 +8,7 @@
 
 #include <QDir>
 #include <QRegExp>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #include <libkdepim/kfileio.h>
 #include "kmfoldermaildir.h"
@@ -646,11 +645,11 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   char line[MAX_LINE];
   bool atEof    = false;
   bool inHeader = true;
-  Q3CString *lastStr = 0;
+  QByteArray *lastStr = 0;
 
-  Q3CString dateStr, fromStr, toStr, subjStr;
-  Q3CString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
-  Q3CString statusStr, replyToAuxIdStr, uidStr;
+  QByteArray dateStr, fromStr, toStr, subjStr;
+  QByteArray xmarkStr, replyToIdStr, msgIdStr, referencesStr;
+  QByteArray statusStr, replyToAuxIdStr, uidStr;
 
   // iterate through this file until done
   while (!atEof)
@@ -775,50 +774,50 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
 
     if (strncasecmp(line, "Date:", 5) == 0)
     {
-      dateStr = Q3CString(line+5);
+      dateStr = QByteArray(line+5);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line, "From:", 5) == 0)
     {
-      fromStr = Q3CString(line+5);
+      fromStr = QByteArray(line+5);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line, "To:", 3) == 0)
     {
-      toStr = Q3CString(line+3);
+      toStr = QByteArray(line+3);
       lastStr = &toStr;
     }
     else if (strncasecmp(line, "Subject:", 8) == 0)
     {
-      subjStr = Q3CString(line+8);
+      subjStr = QByteArray(line+8);
       lastStr = &subjStr;
     }
     else if (strncasecmp(line, "References:", 11) == 0)
     {
-      referencesStr = Q3CString(line+11);
+      referencesStr = QByteArray(line+11);
       lastStr = &referencesStr;
     }
     else if (strncasecmp(line, "Message-Id:", 11) == 0)
     {
-      msgIdStr = Q3CString(line+11);
+      msgIdStr = QByteArray(line+11);
       lastStr = &msgIdStr;
     }
     else if (strncasecmp(line, "X-KMail-Mark:", 13) == 0)
     {
-      xmarkStr = Q3CString(line+13);
+      xmarkStr = QByteArray(line+13);
     }
     else if (strncasecmp(line, "X-Status:", 9) == 0)
     {
-      statusStr = Q3CString(line+9);
+      statusStr = QByteArray(line+9);
     }
     else if (strncasecmp(line, "In-Reply-To:", 12) == 0)
     {
-      replyToIdStr = Q3CString(line+12);
+      replyToIdStr = QByteArray(line+12);
       lastStr = &replyToIdStr;
     }
     else if (strncasecmp(line, "X-UID:", 6) == 0)
     {
-      uidStr = Q3CString(line+6);
+      uidStr = QByteArray(line+6);
       lastStr = &uidStr;
     }
 
@@ -957,7 +956,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
   // delete a message before the folder is compacted. Since the file
   // naming and moving is done in ::compact, we can't assume any
   // location at this point.
-  Q3CString abs_file( QFile::encodeName( folderPath + "/cur/" + filename ) );
+  QByteArray abs_file( QFile::encodeName( folderPath + "/cur/" + filename ) );
   if ( ::unlink( abs_file ) == 0 )
     return true;
 
