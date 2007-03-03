@@ -8,7 +8,7 @@
 #undef REALLY_WANT_KMSENDER
 
 #include <kmime/kmime_header_parsing.h>
-#include <Q3CString>
+#include <QByteArray>
 using namespace KMime::Types;
 
 #include <kio/passworddialog.h>
@@ -287,7 +287,7 @@ void KMSender::doSendMsg()
       KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
       mCurrentMsg->dwContentType() = newMsg.dwContentType();
       mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
-      Q3CString newDispo = newMsg.headerField("Content-Disposition").toLatin1();
+      QByteArray newDispo = newMsg.headerField("Content-Disposition").toLatin1();
       if( newDispo.isEmpty() )
         mCurrentMsg->removeHeaderField( "Content-Disposition" );
       else
@@ -591,7 +591,7 @@ void KMSender::doSendMsgAux()
   if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
     sender = "<>";
 
-  const Q3CString message = mCurrentMsg->asSendableString();
+  const QByteArray message = mCurrentMsg->asSendableString();
   if ( sender.isEmpty() || !mSendProc->send( sender, to, cc, bcc, message ) ) {
     if ( mCurrentMsg )
       mCurrentMsg->setTransferInProgress( false );
@@ -949,7 +949,7 @@ void KMSendSendmail::abort()
   idle();
 }
 
-bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
+bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host
                << "-i" << "-f" << sender
@@ -1034,7 +1034,7 @@ KMSendSMTP::~KMSendSMTP()
   if (mJob) mJob->kill();
 }
 
-bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
+bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
   QString query = "headers=0&from=";
   query += KUrl::toPercentEncoding( sender );
 

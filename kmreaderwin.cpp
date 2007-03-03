@@ -19,8 +19,7 @@
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
 #include "mailsourceviewer.h"
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <QImageReader>
 #include <QCloseEvent>
 #include <QEvent>
@@ -1472,14 +1471,12 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 #endif
 
   KMMessagePart msgPart;
-  Q3CString subtype, contDisp;
-  QByteArray str;
 
   assert(aMsg!=0);
 
   delete mRootNode;
   mRootNode = partNode::fromMessage( aMsg );
-  const Q3CString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
+  const QByteArray mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
   QString cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )

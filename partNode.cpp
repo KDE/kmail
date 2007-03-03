@@ -36,8 +36,7 @@
 #include "kmmimeparttree.h"
 #include <mimelib/utility.h>
 #include <QRegExp>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <kascii.h>
 
 /*
@@ -176,7 +175,7 @@ void partNode::dump( int chars ) const {
 void partNode::dump( int ) const {}
 #endif
 
-const Q3CString & partNode::encodedBody() {
+const QByteArray & partNode::encodedBody() {
   if ( mEncodedOk )
     return mEncodedBody;
 
@@ -219,13 +218,13 @@ void partNode::buildObjectTree( bool processSiblings )
     }
 }
 
-Q3CString partNode::typeString() const {
+QByteArray partNode::typeString() const {
   DwString s;
   DwTypeEnumToStr( type(), s );
   return s.c_str();
 }
 
-Q3CString partNode::subTypeString() const {
+QByteArray partNode::subTypeString() const {
   DwString s;
   DwSubtypeEnumToStr( subType(), s );
   return s.c_str();

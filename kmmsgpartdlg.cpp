@@ -28,7 +28,7 @@
 
 //Added by qt3to4:
 #include <QGridLayout>
-#include <Q3CString>
+#include <QByteArray>
 #include <klineedit.h>
 #include <QCheckBox>
 
@@ -370,7 +370,7 @@ void KMMsgPartDialogCompat::setMsgPart( KMMessagePart * aMsgPart )
   mMsgPart = aMsgPart;
   assert( mMsgPart );
 
-  Q3CString enc = mMsgPart->cteStr();
+  QByteArray enc = mMsgPart->cteStr();
   if ( enc == "7bit" )
     setEncoding( SevenBit );
   else if ( enc == "8bit" )
@@ -396,7 +396,7 @@ void KMMsgPartDialogCompat::applyChanges()
   KCursorSaver busy(KBusyPtr::busy());
 
   // apply Content-Disposition:
-  Q3CString cDisp;
+  QByteArray cDisp;
   if ( isInline() )
     cDisp = "inline;";
   else
@@ -405,10 +405,10 @@ void KMMsgPartDialogCompat::applyChanges()
   QString name = fileName();
   if ( !name.isEmpty() || !mMsgPart->name().isEmpty()) {
     mMsgPart->setName( name );
-    Q3CString encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
+    QByteArray encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
       KMMessage::preferredCharsets(), name );
     if ( encoding.isEmpty() ) encoding = "utf-8";
-    Q3CString encName = KMMsgBase::encodeRFC2231String( name, encoding );
+    QByteArray encName = KMMsgBase::encodeRFC2231String( name, encoding );
 
     cDisp += "\n\tfilename";
     if ( name != QString( encName ) )
@@ -424,8 +424,8 @@ void KMMsgPartDialogCompat::applyChanges()
     mMsgPart->setContentDescription( desc );
 
   // apply Content-Type:
-  Q3CString type = mimeType().toLatin1();
-  Q3CString subtype;
+  QByteArray type = mimeType().toLatin1();
+  QByteArray subtype;
   int idx = type.indexOf('/');
   if ( idx < 0 )
     subtype = "";

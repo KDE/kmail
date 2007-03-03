@@ -6,7 +6,7 @@
 #define __KMAIL_SENDER_P_H__
 #include "kmsender.h"
 
-#include <q3cstring.h>
+#include <QByteArray>
 #include <QString>
 #include <QStringList>
 #include <QObject>
@@ -34,7 +34,7 @@ public:
   void start() { emit started( doStart() ); }
 
   /** Send given message. May return before message is sent. */
-  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
+  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
     reset(); return doSend( sender, to, cc, bcc, message );
   }
 
@@ -73,7 +73,7 @@ private:
 
 private:
   virtual void doFinish() = 0;
-  virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) = 0;
+  virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) = 0;
   virtual bool doStart() = 0;
 
 protected:
@@ -103,12 +103,12 @@ private:
   /** implemented from KMSendProc */
   void doFinish();
   /** implemented from KMSendProc */
-  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message );
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message );
   /** implemented from KMSendProc */
   bool doStart();
 
 private:
-  Q3CString mMsgStr;
+  QByteArray mMsgStr;
   char* mMsgPos;
   int mMsgRest;
   KProcess* mMailerProc;
@@ -133,14 +133,14 @@ private:
   /** implemented from KMSendProc */
   void doFinish();
   /** implemented from KMSendProc */
-  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message );
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message );
   /** implemented from KMSendProc */
   bool doStart() { return true; }
 
   void cleanup();
 
 private:
-  Q3CString mMessage;
+  QByteArray mMessage;
   uint mMessageLength;
   uint mMessageOffset;
 

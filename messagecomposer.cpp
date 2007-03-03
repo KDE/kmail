@@ -427,7 +427,7 @@ void MessageComposer::readFromComposeWin()
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if( mAutoCharset ) {
-    Q3CString charset = KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), mComposeWin->mEditor->text() );
+    QByteArray charset = KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), mComposeWin->mEditor->text() );
     if( charset.isEmpty() )
     {
       KMessageBox::sorry( mComposeWin,

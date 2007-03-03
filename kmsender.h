@@ -27,7 +27,7 @@
 # endif
 #endif
 
-#include <q3cstring.h>
+#include <QByteArray>
 #include <QString>
 #include <QStringList>
 #include <QObject>
