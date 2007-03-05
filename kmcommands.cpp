@@ -1758,17 +1758,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 void KMMenuCommand::folderToPopupMenu(bool move,
   QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu )
 {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-/*  while ( menu->count() )
-  {
-    QMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
-    if (popup)
-      delete popup;
-    else
-      menu->removeItemAt( 0 );
-  }*/
+  menu->clear ();
 
   if (!kmkernel->imapFolderMgr()->dir().first() &&
       !kmkernel->dimapFolderMgr()->dir().first())
