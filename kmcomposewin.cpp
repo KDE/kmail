@@ -176,7 +176,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
+    mPreserveUserCursorPosition( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -1972,6 +1973,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // composer.
     //
     QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
+  }
+
+  if ( mMsg->getCursorPos() > 0 ) {
+    // The message has a cursor position explicitly set, so avoid
+    // changing it when appending the signature.
+    mPreserveUserCursorPosition = true;
   }
   setModified( isModified );
 
@@ -4049,7 +4056,14 @@ void KMComposeWin::slotAppendSignature()
     mEditor->append(mOldSigText);
     mEditor->setModified(mod);
     // mEditor->setContentsPos( 0, 0 );
-    mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
+    if (  mPreserveUserCursorPosition ) {
+      mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
+      // Only keep the cursor from the mMsg *once* based on the
+      // preserve-cursor-position setting; this handles the case where
+      // the message comes from a template with a specific cursor
+      // position set and the signature is appended automatically.
+      mPreserveUserCursorPosition = false;
+    }
     mEditor->sync();
   }
 }
