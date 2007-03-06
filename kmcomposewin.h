@@ -823,6 +823,15 @@ private:
 
   QMenu *mActNowMenu;
   QMenu *mActLaterMenu;
+
+  /** If the message in this composer has a cursor position set (for
+   *   instance because it comes from a template containing %CURSOR)
+   *   then we need to preserve that cursor position even when auto-
+   *   appending (or prepending) the signature during composer setup.
+   *   Set to true *once* (and only in setMsg() at that) to avoid
+   *   accidentally moving the cursor.
+   */
+  bool mPreserveUserCursorPosition;
 };
 
 #endif
