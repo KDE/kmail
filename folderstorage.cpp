@@ -734,8 +734,10 @@ void FolderStorage::remove()
   clearIndex( true, mExportsSernums ); // delete and remove from dict if necessary
   close(true);
 
-  if ( mExportsSernums )
+  if ( mExportsSernums ) {
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
+    mExportsSernums = false;	// do not writeFolderIds after removal
+  }
   unlink(QFile::encodeName(indexLocation()) + ".sorted");
   unlink(QFile::encodeName(indexLocation()));
 
