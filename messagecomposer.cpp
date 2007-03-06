@@ -1066,7 +1066,7 @@ static inline bool includeCleartextWhenSigning( Kleo::CryptoMessageFormat f ) {
 static inline const char * nestedContentType( Kleo::CryptoMessageFormat f, bool signing ) {
   switch ( f ) {
   case Kleo::OpenPGPMIMEFormat:
-    return signing ? "application/pgp-signature" : "application/octet-stream" ;
+    return signing ? "application/pgp-signature; name=signature.asc \nContent-Description: This is a digitally signed message part." : "application/octet-stream" ;
   case Kleo::SMIMEFormat:
     if ( signing )
       return "application/pkcs7-signature; name=\"smime.p7s\"";
