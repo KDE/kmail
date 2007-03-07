@@ -399,7 +399,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   }
 
   initAutoSave();
-
+  slotUpdateSignatureActions();
   mMsg = 0;
   if (aMsg)
     setMsg(aMsg);
