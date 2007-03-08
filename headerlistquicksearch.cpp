@@ -75,7 +75,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
-  mStatusCombo->addItem( SmallIcon( "run" ), i18n("Any Status") );
+  mStatusCombo->addItem( SmallIcon( "system-run" ), i18n("Any Status") );
 
   insertStatus( StatusUnread );
   insertStatus( StatusNew );

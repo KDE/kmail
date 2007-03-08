@@ -119,7 +119,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case KFolderTreeItem::News:
         icon = "server"; break;
       case KFolderTreeItem::Search:
-        icon = "viewmag";break;
+        icon = "zoom-original";break;
       default:
         icon = "folder";break;
     }
@@ -129,9 +129,9 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Inbox: icon = "folder_inbox"; break;
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
-      case Trash: icon = "trashcan_empty"; break;
+      case Trash: icon = "user-trash"; break;
       case Drafts: icon = "edit"; break;
-      case Templates: icon = "filenew"; break;
+      case Templates: icon = "document-new"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
     // non-root search folders
@@ -186,7 +186,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
                          K3Icon::Small, size, K3Icon::DefaultState, 0, true );
       if ( pm.isNull() )
-        pm = il->loadIcon( "folder_open", K3Icon::Small, size,
+        pm = il->loadIcon( "folder-open", K3Icon::Small, size,
                            K3Icon::DefaultState, 0, true );
     }
   }
@@ -1023,7 +1023,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
     if (fti->folder() || (fti->text(0) != i18n("Searches")))
-        folderMenu->addAction( KIcon("folder_new"),
+        folderMenu->addAction( KIcon("folder-new"),
                                createChild, this,
                                SLOT(addChildFolder()));
 
@@ -1038,7 +1038,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
     folderMenu->addSeparator();
     if ( !fti->folder()->noChildren() ) {
-      folderMenu->addAction(KIcon("folder_new"),
+      folderMenu->addAction(KIcon("folder-new"),
                             i18n("&New Subfolder..."), this,
                             SLOT(addChildFolder()));
     }
@@ -1083,7 +1083,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     {
       folderMenu->addAction( mMainWidget->action("refresh_folder") );
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
-        folderMenu->addAction( KIcon("reload"), i18n("Refresh Folder List"),
+        folderMenu->addAction( KIcon("view-refresh"), i18n("Refresh Folder List"),
                                this, SLOT(slotResetFolderList()));
       }
     }
@@ -1101,7 +1101,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
   if (fti->folder() && fti->parent())
   {
-    folderMenu->addAction(KIcon("configure_shortcuts"),
+    folderMenu->addAction(KIcon("configure-shortcuts"),
         i18n("&Assign Shortcut..."),
         fti,
         SLOT(assignShortcut()));
@@ -1429,7 +1429,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         if ( GlobalSettings::self()->showPopupAfterDnD() ) {
           KMenu *menu = new KMenu( this );
           const QAction *dragMove = menu->addAction( i18n("&Move Here") );
-          const QAction *dragCopy = menu->addAction( SmallIcon("editcopy"), i18n("&Copy Here") );
+          const QAction *dragCopy = menu->addAction( SmallIcon("edit-copy"), i18n("&Copy Here") );
           menu->addSeparator();
           menu->addAction( SmallIcon("cancel"), i18n("C&ancel") );
           const QAction *selectedAction = menu->exec( QCursor::pos() );

@@ -1117,13 +1117,13 @@ void KMComposeWin::setupActions(void)
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    QAction *action  = new KAction(KIcon("mail_send"), i18n("&Send Mail"), this);
+    QAction *action  = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_default", action );
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Return));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu  = new KActionMenu(KIcon( "mail_send"), i18n("&Send Mail Via"), this);
+    actActionNowMenu  = new KActionMenu(KIcon( "mail-send"), i18n("&Send Mail Via"), this);
     actionCollection()->addAction("send_default_via", actActionNowMenu );
 
     action  = new KAction(KIcon("queue"), i18n("Send &Later"), this);
@@ -1143,12 +1143,12 @@ void KMComposeWin::setupActions(void)
     actActionLaterMenu  = new KActionMenu(KIcon("queue"), i18n("Send &Later Via"), this);
     actionCollection()->addAction("send_default_via", actActionLaterMenu );
 
-    action  = new KAction(KIcon("mail_send"), i18n("&Send Mail"), this);
+    action  = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_alternative", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu  = new KActionMenu(KIcon("mail_send"), i18n("&Send Mail Via"), this);
+    actActionNowMenu  = new KActionMenu(KIcon("mail-send"), i18n("&Send Mail Via"), this);
     actionCollection()->addAction("send_alternative_via", actActionNowMenu );
 
   }
@@ -1176,33 +1176,33 @@ void KMComposeWin::setupActions(void)
   connect(  mActLaterMenu, SIGNAL( aboutToShow() ), this,
 		  SLOT( getTransportMenu() ) );
 
-  QAction *action  = new KAction(KIcon("filesave"), i18n("Save as &Draft"), this);
+  QAction *action  = new KAction(KIcon("document-save"), i18n("Save as &Draft"), this);
   actionCollection()->addAction("save_in_drafts", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()));
 
-  action  = new KAction(KIcon("filesave"), i18n("Save as &Template"), this);
+  action  = new KAction(KIcon("document-save"), i18n("Save as &Template"), this);
   actionCollection()->addAction("save_in_templates", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotSaveTemplate()));
 
-  action  = new KAction(KIcon("fileopen"), i18n("&Insert File..."), this);
+  action  = new KAction(KIcon("document-open"), i18n("&Insert File..."), this);
   actionCollection()->addAction("insert_file", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
 
-  mRecentAction  = new KRecentFilesAction(KIcon("fileopen"), i18n("&Insert File Recent"), this);
+  mRecentAction  = new KRecentFilesAction(KIcon("document-open"), i18n("&Insert File Recent"), this);
   actionCollection()->addAction("insert_file_recent", mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
 
   mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
 
-  action  = new KAction(KIcon("contents"), i18n("&Address Book"), this);
+  action  = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
   action  = new KAction(KIcon("mail_new"), i18n("&New Composer"), this);
   actionCollection()->addAction("new_composer", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
   action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
-  action  = new KAction(KIcon("window_new"), i18n("New Main &Window"), this);
+  action  = new KAction(KIcon("window-new"), i18n("New Main &Window"), this);
   actionCollection()->addAction("open_mailreader", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
@@ -1266,7 +1266,7 @@ void KMComposeWin::setupActions(void)
   actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction  = new KSelectAction(KIcon("charset"), i18n("Se&t Encoding"), this);
+  mEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("Se&t Encoding"), this);
   actionCollection()->addAction("charsets", mEncodingAction );
   connect(mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()));
   mWordWrapAction  = new KToggleAction(i18n("&Wordwrap"), this);
@@ -1274,7 +1274,7 @@ void KMComposeWin::setupActions(void)
   mWordWrapAction->setChecked(GlobalSettings::self()->wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
-  mAutoSpellCheckingAction  = new KToggleAction(KIcon("spellcheck"), i18n("&Automatic Spellchecking"), this);
+  mAutoSpellCheckingAction  = new KToggleAction(KIcon("tools-check-spelling"), i18n("&Automatic Spellchecking"), this);
   actionCollection()->addAction("options_auto_spellchecking", mAutoSpellCheckingAction );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
@@ -1345,7 +1345,7 @@ void KMComposeWin::setupActions(void)
   mAttachRemoveAction  = new KAction(i18n("&Remove Attachment"), this);
   actionCollection()->addAction("remove", mAttachRemoveAction );
   connect(mAttachRemoveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachRemove()));
-  mAttachSaveAction  = new KAction(KIcon("filesave"), i18n("&Save Attachment As..."), this);
+  mAttachSaveAction  = new KAction(KIcon("document-save"), i18n("&Save Attachment As..."), this);
   actionCollection()->addAction("attach_save", mAttachSaveAction );
   connect(mAttachSaveAction, SIGNAL(triggered(bool) ), SLOT(slotAttachSave()));
   mAttachPropertiesAction  = new KAction(i18n("Attachment Pr&operties"), this);
@@ -1461,15 +1461,15 @@ void KMComposeWin::setupActions(void)
   alignCenterAction  = new KToggleAction(KIcon("text_center"), i18n("Align Center"), this);
   actionCollection()->addAction("align_center", alignCenterAction );
   connect(alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()));
-  textBoldAction  = new KToggleAction(KIcon("text_bold"), i18n("&Bold"), this);
+  textBoldAction  = new KToggleAction(KIcon("format-text-bold"), i18n("&Bold"), this);
   actionCollection()->addAction("text_bold", textBoldAction );
   connect(textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold()));
   textBoldAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_B));
-  textItalicAction  = new KToggleAction(KIcon("text_italic"), i18n("&Italic"), this);
+  textItalicAction  = new KToggleAction(KIcon("format-text-italic"), i18n("&Italic"), this);
   actionCollection()->addAction("text_italic", textItalicAction );
   connect(textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic()));
   textItalicAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_I));
-  textUnderAction  = new KToggleAction(KIcon("text_under"), i18n("&Underline"), this);
+  textUnderAction  = new KToggleAction(KIcon("format-text-underline"), i18n("&Underline"), this);
   actionCollection()->addAction("text_under", textUnderAction );
   connect(textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()));
   textUnderAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_U));
@@ -2055,7 +2055,7 @@ bool KMComposeWin::queryClose ()
     const int rc = KMessageBox::warningYesNoCancel( this,
            i18n("Do you want to save the message for later or discard it?"),
            i18n("Close Composer"),
-	   KGuiItem(savebut, "filesave", QString::null, savetext),
+	   KGuiItem(savebut, "document-save", QString::null, savetext),
            KStandardGuiItem::discard() );
     if ( rc == KMessageBox::Cancel )
       return false;
@@ -2548,7 +2548,7 @@ void KMComposeWin::slotAttachFile()
   KFileDialog fdlg( url, QString(), this );
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption(i18n("Attach File"));
-  fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
+  fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"document-open"));
   fdlg.setMode(KFile::Files);
   fdlg.exec();
   KUrl::List files = fdlg.selectedUrls();
@@ -2957,7 +2957,7 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
      mViewId = mAttachMenu->addAction(i18nc("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->addAction(i18n("Remove"), this, SLOT(slotAttachRemove()));
-     mSaveAsId = mAttachMenu->addAction( KIcon("filesaveas"), i18n("Save As..."), this,
+     mSaveAsId = mAttachMenu->addAction( KIcon("document-save-as"), i18n("Save As..."), this,
                                           SLOT( slotAttachSave() ) );
      mPropertiesId = mAttachMenu->addAction( i18n("Properties"), this,
                                               SLOT( slotAttachProperties() ) );

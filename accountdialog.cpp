@@ -926,7 +926,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
   button->setIcon(
-      KIconLoader::global()->loadIconSet( "reload", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "view-refresh", K3Icon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
   button->setWhatsThis(
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
@@ -2297,7 +2297,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     edit->setText( it.key() );
     QToolButton* button = new QToolButton( grid );
     button->setIcon(
-      KIconLoader::global()->loadIconSet( "editdelete", K3Icon::Small, 0 ) );
+      KIconLoader::global()->loadIconSet( "edit-delete", K3Icon::Small, 0 ) );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     button->setFixedSize( 22, 22 );

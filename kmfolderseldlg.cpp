@@ -284,7 +284,7 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   KMenu *folderMenu = new KMenu;
   folderMenu->addTitle( folder->label() );
   folderMenu->addSeparator();
-  folderMenu->addAction( KIcon("folder_new"),
+  folderMenu->addAction( KIcon("folder-new"),
                          i18n("&New Subfolder..."), this,
                          SLOT(addChildFolder()) );
   kmkernel->setContextMenuShown( true );
@@ -449,7 +449,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
   setCaption( caption );
   setButtons( Ok|Cancel|User1 );
   setObjectName( "folder dialog" );
-  setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder_new",
+  setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder-new",
          i18n("Create a new subfolder under the currently selected folder")) );
   KMFolderTree * ft = parent->folderTree();
   assert( ft );
@@ -472,7 +472,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
   setCaption( caption );
   setButtons( Ok|Cancel|User1 );
   setObjectName( "folder dialog" );
-  setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder_new",
+  setButtonGuiItem( User1, KGuiItem(i18n("&New Subfolder..."), "folder-new",
          i18n("Create a new subfolder under the currently selected folder") ) );
   QString preSelection = mUseGlobalSettings ?
     GlobalSettings::self()->lastSelectedFolder() : QString();

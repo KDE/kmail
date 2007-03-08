@@ -587,7 +587,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   attachmentMenu->addAction( raction );
 
   // Set Encoding submenu
-  mSelectEncodingAction  = new KSelectAction(KIcon("charset"), i18n("&Set Encoding"), this);
+  mSelectEncodingAction  = new KSelectAction(KIcon("character-set"), i18n("&Set Encoding"), this);
   ac->addAction("encoding", mSelectEncodingAction );
   connect(mSelectEncodingAction,SIGNAL( triggered(int)),
           SLOT( slotSetEncoding() ));
@@ -622,7 +622,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mUrlOpenAction  = new KAction(i18n("Open URL"), this);
   ac->addAction("open_url", mUrlOpenAction );
   connect(mUrlOpenAction, SIGNAL(triggered(bool) ), SLOT(slotUrlOpen()));
-  mAddBookmarksAction  = new KAction(KIcon("bookmark_add"), i18n("Bookmark This Link"), this);
+  mAddBookmarksAction  = new KAction(KIcon("bookmark-new"), i18n("Bookmark This Link"), this);
   ac->addAction("add_bookmarks", mAddBookmarksAction );
   connect(mAddBookmarksAction, SIGNAL(triggered(bool) ), SLOT(slotAddBookmarks()));
   mUrlSaveAsAction  = new KAction(i18n("Save Link As..."), this);
@@ -1874,7 +1874,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   connect( attachmentMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotHandleAttachment( int ) ) );
 
-  action = menu->addAction(SmallIcon("fileopen"),i18nc("to open", "Open"));
+  action = menu->addAction(SmallIcon("document-open"),i18nc("to open", "Open"));
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Open );
   action = menu->addAction(i18n("Open With..."));
@@ -1883,7 +1883,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18nc("to view something", "View") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
-  action = menu->addAction(SmallIcon("filesaveas"),i18n("Save As...") );
+  action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
   if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&

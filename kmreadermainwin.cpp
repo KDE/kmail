@@ -228,7 +228,7 @@ void KMReaderMainWin::setupAccel()
   //mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
   //                                actionCollection() );
 
-  //mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
+  //mSaveAsAction = new KAction( i18n("Save &As..."), "document-save",
   //                             KStandardShortcut::shortcut( KStandardShortcut::Save ),
   //                             this, SLOT( slotSaveMsg() ),
   //                             actionCollection(), "file_save_as" );
@@ -254,18 +254,18 @@ void KMReaderMainWin::setupAccel()
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
 
-  mForwardActionMenu  = new KActionMenu(KIcon("mail_forward"), i18nc("Message->","&Forward"), this);
+  mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
            SLOT( slotForwardMsg() ) );
 
-  mForwardAction  = new KAction(KIcon("mail_forward"), i18n("&Inline..."), this);
+  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
   actionCollection()->addAction("message_forward_inline", mForwardAction );
   connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
   mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
   mForwardActionMenu->addAction( mForwardAction );
 
-  mForwardAttachedAction  = new KAction(KIcon("mail_forward"), i18nc("Message->Forward->","As &Attachment..."), this);
+  mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
   actionCollection()->addAction("message_forward_as_attachment", mForwardAttachedAction );
   mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
@@ -277,24 +277,24 @@ void KMReaderMainWin::setupAccel()
   mRedirectAction->setShortcut(QKeySequence(Qt::Key_E));
   mForwardActionMenu->addAction( mRedirectAction );
 
-  mReplyActionMenu  = new KActionMenu(KIcon("mail_reply"), i18nc("Message->","&Reply"), this);
+  mReplyActionMenu  = new KActionMenu(KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this);
   actionCollection()->addAction("message_reply_menu", mReplyActionMenu );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
 
-  mReplyAction  = new KAction(KIcon("mail_reply"), i18n("&Reply..."), this);
+  mReplyAction  = new KAction(KIcon("mail-reply-sender"), i18n("&Reply..."), this);
   actionCollection()->addAction("reply", mReplyAction );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
   mReplyAction->setShortcut(QKeySequence(Qt::Key_R));
   mReplyActionMenu->addAction( mReplyAction );
 
-  mReplyAuthorAction  = new KAction(KIcon("mail_reply"), i18n("Reply to A&uthor..."), this);
+  mReplyAuthorAction  = new KAction(KIcon("mail-reply-sender"), i18n("Reply to A&uthor..."), this);
   actionCollection()->addAction("reply_author", mReplyAuthorAction );
   connect(mReplyAuthorAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAuthorToMsg()));
   mReplyAuthorAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAuthorAction );
 
-  mReplyAllAction  = new KAction(KIcon("mail_replyall"), i18n("Reply to &All..."), this);
+  mReplyAllAction  = new KAction(KIcon("mail-reply-all"), i18n("Reply to &All..."), this);
   actionCollection()->addAction("reply_all", mReplyAllAction );
   connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));

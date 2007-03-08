@@ -409,7 +409,7 @@ void AntiSpamWizard::accept()
 
     // Classify messages manually as not Spam / as Ham
     KMFilter* classHamFilter = new KMFilter();
-    classHamFilter->setIcon( "mail_ham" );
+    classHamFilter->setIcon( "mail-mark-notjunk" );
     QList<KMFilterAction*> *classHamFilterActions = classHamFilter->actions();
     KMFilterAction* classHamFilterActionFirst = dict.value( "set status" )->create();
     classHamFilterActionFirst->argsFromString( "H" );

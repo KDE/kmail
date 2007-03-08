@@ -38,7 +38,7 @@ KMMainWin::KMMainWin(QWidget *)
 
   KGlobal::ref();
 
-  KAction *action  = new KAction(KIcon("window_new"), i18n("New &Window"), this);
+  KAction *action  = new KAction(KIcon("window-new"), i18n("New &Window"), this);
   actionCollection()->addAction("new_mail_client", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 

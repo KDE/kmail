@@ -55,8 +55,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   QFont f = KGlobalSettings::fixedFont();
   mEdit->setFont( f );
 
-  mAdd->setIcon( KIcon( "add" ) );
-  mRemove->setIcon( KIcon( "remove" ) );
+  mAdd->setIcon( KIcon( "list-add" ) );
+  mRemove->setIcon( KIcon( "list-remove" ) );
 
   mList->setColumnWidth( 0, 50 );
   mList->setColumnWidth( 1, 100 );
@@ -81,9 +81,9 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
            this, SLOT( slotShortcutCaptured( const KShortcut& ) ) );
 
-  mReplyPix = KIconLoader().loadIcon( "mail_reply", K3Icon::Small );
-  mReplyAllPix = KIconLoader().loadIcon( "mail_replyall", K3Icon::Small );
-  mForwardPix = KIconLoader().loadIcon( "mail_forward", K3Icon::Small );
+  mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", K3Icon::Small );
+  mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", K3Icon::Small );
+  mForwardPix = KIconLoader().loadIcon( "mail-forward", K3Icon::Small );
 
   mType->clear();
   mType->insertItem( QPixmap(), i18nc( "Message->", "Universal" ), TUniversal );

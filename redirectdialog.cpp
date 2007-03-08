@@ -74,7 +74,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
 
   mBtnTo = new QPushButton( QString(), hbox );
   mBtnTo->setObjectName( "toBtn" );
-  mBtnTo->setIcon( BarIconSet( "contents", K3Icon::SizeSmall ) );
+  mBtnTo->setIcon( BarIconSet( "help-contents", K3Icon::SizeSmall ) );
   mBtnTo->setMinimumSize( mBtnTo->sizeHint() * 1.2 );
   mBtnTo->setToolTip( i18n("Use the Address-Selection Dialog") );
   mBtnTo->setWhatsThis( i18n("This button opens a separate dialog "
@@ -86,7 +86,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
   mLabelTo->setBuddy( mBtnTo );
   mEditTo->setFocus();
 
-  setButtonGuiItem( User1, KGuiItem( i18n("&Send Now"), "mail_send" ) );
+  setButtonGuiItem( User1, KGuiItem( i18n("&Send Now"), "mail-send" ) );
   setButtonGuiItem( User2, KGuiItem( i18n("Send &Later"), "queue" ) );
   connect(this,SIGNAL(user1Clicked()),this, SLOT(slotUser1()));
   connect(this,SIGNAL(user2Clicked()),this, SLOT(slotUser2()));

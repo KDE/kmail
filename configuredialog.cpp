@@ -466,7 +466,7 @@ void IdentityPage::slotRemoveIdentity()
   QString msg = i18n("<qt>Do you really want to remove the identity named "
                      "<b>%1</b>?</qt>", item->identity().identityName() );
   if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
-   KGuiItem(i18n("&Remove"),"editdelete") ) == KMessageBox::Continue )
+   KGuiItem(i18n("&Remove"),"edit-delete") ) == KMessageBox::Continue )
     if ( im->removeIdentity( item->identity().identityName() ) ) {
       delete item;
       mIdentityList->setSelected( mIdentityList->currentItem(), true );

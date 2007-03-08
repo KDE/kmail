@@ -352,7 +352,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mUnreadIconButton->setStrictIconSize( true );
     mUnreadIconButton->setFixedSize( 28, 28 );
     // Can't use iconset here
-    mUnreadIconButton->setIcon( "folder_open" );
+    mUnreadIconButton->setIcon( "folder-open" );
     mUnreadIconButton->setEnabled( false );
     ihl->addWidget( mUnreadIconButton );
     ihl->addStretch( 1 );
