@@ -1769,6 +1769,7 @@ bool KMFolderCachedImap::listDirectory()
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
   KMail::ListJob* job = new KMail::ListJob( mAccount, type, this );
+  job->setHonorLocalSubscription( true );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
