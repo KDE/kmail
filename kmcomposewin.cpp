@@ -477,9 +477,13 @@ void KMComposeWin::addAttachment(const QString &name,
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(name);
-    QValueList<int> dummy;
-    msgPart->setBodyAndGuessCte(data, dummy,
-                                kmkernel->msgSender()->sendQuotedPrintable());
+    if( type == "message" && subType == "rfc822" ) {
+       msgPart->setMessageBody( data );
+    } else {
+       QValueList<int> dummy;
+       msgPart->setBodyAndGuessCte(data, dummy,
+              kmkernel->msgSender()->sendQuotedPrintable());
+    }
     msgPart->setTypeStr(type);
     msgPart->setSubtypeStr(subType);
     msgPart->setParameter(paramAttr,paramValue);
@@ -2651,9 +2655,15 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   QValueList<int> allowedCTEs;
-  msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
-                              !kmkernel->msgSender()->sendQuotedPrintable());
-  kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
+  if ( mimeType == "message/rfc822" ) {
+    msgPart->setMessageBody( (*it).data );
+    allowedCTEs << DwMime::kCte7bit;
+    allowedCTEs << DwMime::kCte8bit;
+  } else {
+    msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
+                               !kmkernel->msgSender()->sendQuotedPrintable());
+    kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
+  }
   int slash = mimeType.find( '/' );
   if( slash == -1 )
     slash = mimeType.length();

@@ -103,6 +103,12 @@ public:
   */
  void setBodyEncoded(const QCString& aStr);
 
+  /** Set a full message string as the body of the message part,
+      disallowing anything but 7bit or 8bit encoding.
+      (RFC 1521 section 7.3)
+  */
+ void setMessageBody( const QByteArray & aBuf );
+
   /** Returns decoded length of body. */
   int decodedSize(void) const;
 
