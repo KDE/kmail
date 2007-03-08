@@ -39,7 +39,7 @@ if [ "`ps -eo comm|grep clamd`" = "clamd" ]; then
     chmod a+r $TEMPFILE
     CLAMCOMANDO="clamdscan --stdout --no-summary "
 else
-    CLAMCOMANDO="clamscan --stdout --no-summary --mbox"
+    CLAMCOMANDO="clamscan --stdout --no-summary"
 fi
 
 # analyze the message
