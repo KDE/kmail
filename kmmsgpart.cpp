@@ -300,6 +300,30 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMessagePart::setMessageBody( const QByteArray& aBuf )
+{
+  CharFreq cf( aBuf ); // it's safe to pass null arrays
+  mBodyDecodedSize = aBuf.size();
+
+  int cte;
+  switch ( cf.type() ) {
+  case CharFreq::SevenBitText:
+  case CharFreq::SevenBitData:
+     cte = DwMime::kCte7bit;
+     break;
+  case CharFreq::EightBitText:
+  case CharFreq::EightBitData:
+     cte = DwMime::kCte8bit;
+     break;
+  default:
+     kdWarning(5006) << "Calling " << k_funcinfo
+         << " with something containing neither 7 nor 8 bit text!"
+         << " Fix this caller: " << kdBacktrace() << endl;
+  }
+  setCte( cte );
+  setBodyEncodedBinary( aBuf );
+}
 
 //-----------------------------------------------------------------------------
 QByteArray KMMessagePart::bodyDecodedBinary() const
@@ -529,17 +553,17 @@ void KMMessagePart::setContentDescription(const QString &aStr)
 QString KMMessagePart::fileName(void) const
 {
   QCString str;
-  
-  // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231) 
+
+  // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231)
   // in the Content-Disposision
   if ( mContentDisposition.contains( "filename*", FALSE ) ) {
-  
+
     // It's RFC 2231 encoded, so extract the file name with the 2231 method
     str = KMMsgBase::extractRFC2231HeaderField( mContentDisposition, "filename" );
     return KMMsgBase::decodeRFC2231String(str);
-  
+
   } else {
-    
+
     // Standard RFC 2047-encoded
     // search the start of the filename
     int startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
@@ -564,7 +588,7 @@ QString KMMessagePart::fileName(void) const
                            .stripWhiteSpace();
     return KMMsgBase::decodeRFC2047String(str, charset());
   }
-  
+
   return QString::null;
 }
 
