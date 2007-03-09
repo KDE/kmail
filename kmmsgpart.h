@@ -88,6 +88,12 @@ public:
       This one is for text strings, the trailing 0 is not used. */
   void setBodyEncoded( const QByteArray &aStr );
 
+  /** Set a full message string as the body of the message part,
+      disallowing anything but 7bit or 8bit encoding.
+      (RFC 1521 section 7.3)
+  */
+   void setMessageBody( const QByteArray &aBuf );
+
   /** Returns decoded length of body. */
   int decodedSize() const;
 

@@ -221,6 +221,30 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMessagePart::setMessageBody( const QByteArray &aBuf )
+{
+  CharFreq cf( aBuf ); // it's safe to pass null arrays
+  mBodyDecodedSize = aBuf.size();
+
+  int cte;
+  switch ( cf.type() ) {
+  case CharFreq::SevenBitText:
+  case CharFreq::SevenBitData:
+    cte = DwMime::kCte7bit;
+    break;
+  case CharFreq::EightBitText:
+  case CharFreq::EightBitData:
+    cte = DwMime::kCte8bit;
+    break;
+  default:
+    kWarning(5006) << "Calling " << k_funcinfo
+                   << " with something containing neither 7 nor 8 bit text!"
+                   << " Fix this caller: " << kdBacktrace() << endl;
+  }
+  setCte( cte );
+  setBodyEncodedBinary( aBuf );
+}
 
 //-----------------------------------------------------------------------------
 QByteArray KMMessagePart::bodyDecodedBinary() const
