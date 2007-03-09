@@ -158,8 +158,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mUserRights( 0 ), mSilentUpload( false ),
+    /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
-    /*mHoldSyncs( false ),*/ mRecurse( true ),
+    mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
     mQuotaInfo()

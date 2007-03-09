@@ -72,6 +72,8 @@ using KMail::AccountManager;
 #include <ktemporaryfile.h>
 #include <kconfiggroup.h>
 
+using namespace KMail;
+
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();

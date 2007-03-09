@@ -53,7 +53,7 @@ class KMMessage;
 class KMFolderDir;
 class KMFolderTreeItem;
 
-namespace {
+namespace KMail {
 
   // Local helper class
 class ExtraFolder {
@@ -278,9 +278,9 @@ private:
 
   // The extra IMAP resource folders
   // Key: folder location. Data: folder.
-  Q3Dict<ExtraFolder> mExtraFolders;
+  Q3Dict<KMail::ExtraFolder> mExtraFolders;
   // used for collecting incidences during async loading
-  Q3Dict<Accumulator> mAccumulators;
+  Q3Dict<KMail::Accumulator> mAccumulators;
   // More info for each folder we care about (mContacts etc. as well as the extra folders)
   // The reason for storing it here is that it can be shared between
   // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.

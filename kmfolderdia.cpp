@@ -135,7 +135,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   {							// not for special folders
     box = new KVBox( this );
     addPage( box, i18n("Templates") );
-    tab = new FolderDiaTemplatesTab( this, aName, box );
+    tab = new FolderDiaTemplatesTab( this, box );
     addTab( tab );
   }
 
@@ -705,10 +705,9 @@ void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-re
 }
 
 //----------------------------------------------------------------------------
-KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
-                                                 const QString& aName,
-                                                 QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ), mDlg( dlg )
+KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog *dlg,
+                                                     QWidget *parent )
+  : FolderDiaTab( parent, 0 ), mDlg( dlg )
 {
 
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&

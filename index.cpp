@@ -97,10 +97,10 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	kDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
 	setObjectName( "index" );
 
-	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
-	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( quint32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( quint32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( quint32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( quint32 ) ) );
 
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 	//connect( mSyncTimer, SIGNAL( timeout() ), SLOT( syncIndex() ) );
@@ -486,7 +486,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	return false;
 }
 
-void KMMsgIndex::slotAddMessage( KMFolder* folder, quint32 serNum ) {
+void KMMsgIndex::slotAddMessage( quint32 serNum ) {
 	kDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 
@@ -497,7 +497,7 @@ void KMMsgIndex::slotAddMessage( KMFolder* folder, quint32 serNum ) {
 	scheduleAction();
 }
 
-void KMMsgIndex::slotRemoveMessage( KMFolder* folder, quint32 serNum ) {
+void KMMsgIndex::slotRemoveMessage( quint32 serNum ) {
 	kDebug( 5006 ) << "KMMsgIndex::slotRemoveMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 

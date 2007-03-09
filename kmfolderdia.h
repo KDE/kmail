@@ -165,9 +165,7 @@ class FolderDiaTemplatesTab : public FolderDiaTab
   Q_OBJECT
 
 public:
-  FolderDiaTemplatesTab( KMFolderDialog* dlg,
-                       const QString& aName,
-                       QWidget* parent, const char* name = 0 );
+  FolderDiaTemplatesTab( KMFolderDialog *dlg, QWidget *parent );
 
   virtual void load();
   virtual bool save();
