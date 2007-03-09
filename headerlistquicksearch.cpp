@@ -52,7 +52,7 @@
 
 namespace KMail {
 
-HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
+HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
                                               K3ListView *listView,
                                               KActionCollection *actionCollection )
   : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
@@ -69,13 +69,17 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 //   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
 //                                         "Resets the quick search so that "
 //                                         "all messages are shown again." ) );
+  setClickMessage( i18n("Search") );
+  parent->addWidget (this);
 
   QLabel *label = new QLabel( i18n("Stat&us:"), parent );
   label->setObjectName( "kde toolbar widget" );
+  parent->addWidget (label);
 
   mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
   mStatusCombo->addItem( SmallIcon( "system-run" ), i18n("Any Status") );
+  parent->addWidget (mStatusCombo);
 
   insertStatus( StatusUnread );
   insertStatus( StatusNew );

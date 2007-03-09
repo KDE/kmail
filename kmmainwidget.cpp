@@ -23,6 +23,7 @@
 #include <QList>
 #include <QVBoxLayout>
 #include <QByteArray>
+#include <QToolBar>
 //Added by qt3to4:
 #include <q3popupmenu.h>
 #include <q3ptrlist.h>
@@ -38,7 +39,6 @@
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
-#include <ktoolbar.h>
 #include <ktip.h>
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
@@ -554,6 +554,7 @@ void KMMainWidget::createWidgets(void)
   mPanner2->dumpObjectTree();
 #endif
 
+  mTopLayout->setMargin (0);
   mTopLayout->addWidget( mPanner1 );
 
   // BUG -sanders these accelerators stop working after switching
@@ -565,12 +566,10 @@ void KMMainWidget::createWidgets(void)
   headerParent->dumpObjectTree();
 #endif
   mSearchAndHeaders = new KVBox( headerParent );
-  mSearchToolBar = new KToolBar( mSearchAndHeaders);
+  mSearchToolBar = new QToolBar( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
+  mSearchToolBar->setMaximumHeight (mSearchToolBar->minimumHeight ());
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
-  QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar );
-  label->setObjectName( "kde toolbar widget" );
-
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );
@@ -582,7 +581,7 @@ void KMMainWidget::createWidgets(void)
                                                 actionCollection() );
 #endif
   mQuickSearchLine->setObjectName( "headers quick search line" );
-  label->setBuddy( mQuickSearchLine );
+  
   mSearchToolBar->addWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );

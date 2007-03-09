@@ -40,7 +40,7 @@
 
 using KMail::HeaderListQuickSearch;
 
-KListViewIndexedSearchLine::KListViewIndexedSearchLine( QWidget* parent, K3ListView* listView, KActionCollection* actionCollection ):
+KListViewIndexedSearchLine::KListViewIndexedSearchLine( QToolBar* parent, K3ListView* listView, KActionCollection* actionCollection ):
 	HeaderListQuickSearch( parent, listView, actionCollection ),
 	mFiltering( false )
 {

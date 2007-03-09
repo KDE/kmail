@@ -42,6 +42,7 @@ class Q3Accel;
 class QVBoxLayout;
 class QSplitter;
 class QSignalMapper;
+class QToolBar;
 
 class KActionMenu;
 class KSeparatorAction;
@@ -49,7 +50,6 @@ class KConfig;
 class KToggleAction;
 class KToggleAction;
 class KMenuBar;
-class KToolBar;
 
 class KMFolder;
 class KMFolderDir;
@@ -478,7 +478,7 @@ private:
   QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
   KVBox        *mSearchAndHeaders;
-  KToolBar     *mSearchToolBar;
+  QToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
   KMFolder     *mTemplateFolder;

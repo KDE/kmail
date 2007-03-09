@@ -38,6 +38,7 @@
 //Added by qt3to4:
 #include <QLabel>
 #include <QEvent>
+#include <QToolBar>
 class QComboBox;
 class QLabel;
 class K3ListView;
@@ -49,7 +50,7 @@ class HeaderListQuickSearch : public K3ListViewSearchLine
 {
 Q_OBJECT
 public:
-    HeaderListQuickSearch( QWidget *parent,
+    HeaderListQuickSearch( QToolBar *parent,
                                              K3ListView *listView,
                                              KActionCollection *actionCollection );
     virtual ~HeaderListQuickSearch();

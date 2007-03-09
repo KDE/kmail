@@ -34,6 +34,7 @@
 #include <k3listviewsearchline.h>
 #include "headerlistquicksearch.h"
 #include <q3hbox.h>
+#include <QToolBar>
 
 #include <vector>
 
@@ -52,7 +53,7 @@ class KDEUI_EXPORT KListViewIndexedSearchLine: public KMail::HeaderListQuickSear
 
 public:
 
-    explicit KListViewIndexedSearchLine( QWidget *parent, K3ListView *listView, KActionCollection* action );
+    explicit KListViewIndexedSearchLine( QToolBar *parent, K3ListView *listView, KActionCollection* action );
     ~KListViewIndexedSearchLine();
 
 public slots:
