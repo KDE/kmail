@@ -1479,8 +1479,8 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     if( it->sign || it->encrypt ) {
       QByteArray cte = it->part->cteStr().toLower();
        if( ( "8bit" == cte && it->part->type() != DwMime::kTypeMessage )
-          || ( ( it->part->type() == DwMime::kTypeText )
-               && ( "7bit" == cte ) ) ) {
+           || ( ( it->part->type() == DwMime::kTypeText )
+                && ( "7bit" == cte ) ) ) {
         const QByteArray body = it->part->bodyDecodedBinary();
         QList<int> dummy;
         it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
