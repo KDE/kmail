@@ -14,6 +14,7 @@ X-KDE-CfgDlgHierarchy=KMail
 
 Name=Composer
 Name[ar]=المحرر
+Name[bg]=Редактор
 Name[br]=Skridaozer
 Name[ca]=Editor
 Name[cs]=Editor
@@ -62,6 +63,7 @@ Name[zh_TW]=編寫器
 Comment=Phrases & General Behavior
 Comment[x-test]=xxPhrases & General Behaviorxx
 Keywords=kmail,composer
+Keywords[bg]=пощенски, клиент, е-поща, редактор, съставител, форматиране, текст, kmail, komposer
 Keywords[ca]=kmail,editor
 Keywords[cs]=kmail,editor
 Keywords[da]=kmail,brevskriver
