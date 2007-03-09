@@ -70,6 +70,8 @@ using KMail::AccountManager;
 #include <kurl.h>
 #include <ktempfile.h>
 
+using namespace KMail;
+
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
@@ -634,7 +636,7 @@ bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
   kdDebug(5006) << k_funcinfo << endl;
   QValueList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
   for ( QValueList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
-                                                                    end( folderList.end() ); 
+                                                                    end( folderList.end() );
         it != end ; ++it ) {
     KMFolder * const f = findResourceFolder( (*it).location );
     if ( !f ) continue;
@@ -751,7 +753,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     const KMail::FolderContentsType t = f->storage()->contentsType();
     const QCString type = msg->typeStr();
     const QCString subtype = msg->subtypeStr();
-    const bool messageWasIcalVcardFormat = ( type.lower() == "text" && 
+    const bool messageWasIcalVcardFormat = ( type.lower() == "text" &&
         ( subtype.lower() == "calendar" || subtype.lower() == "x-vcard" ) );
 
     if ( storageFormat( f ) == StorageIcalVcard ) {

@@ -122,7 +122,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   tab = new FolderDiaGeneralTab( this, aName, box );
   addTab( tab );
   box = addVBoxPage( i18n("Templates") );
-  tab = new FolderDiaTemplatesTab( this, aName, box );
+  tab = new FolderDiaTemplatesTab( this, box );
   addTab( tab );
 
   KMFolder* refFolder = mFolder ? mFolder : mParentFolder;
@@ -666,9 +666,8 @@ void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-re
 
 //----------------------------------------------------------------------------
 KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
-                                                 const QString& aName,
-                                                 QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ), mDlg( dlg )
+                                                 QWidget* parent )
+  : FolderDiaTab( parent, 0 ), mDlg( dlg )
 {
 
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
@@ -676,24 +675,24 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
        mDlg->folder()->folderType() != KMFolderTypeCachedImap;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
-  
+
   mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
   topLayout->addWidget( mCustom );
-  
+
   mWidget = new TemplatesConfiguration( this , "folder-templates" );
   mWidget->setEnabled( false );
   topLayout->addWidget( mWidget );
-  
+
   QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
   mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this );
   mCopyGlobal->setEnabled( false );
   btns->addWidget( mCopyGlobal );
-  
+
   connect( mCustom, SIGNAL(toggled(bool)),
         mWidget, SLOT(setEnabled(bool)) );
   connect( mCustom, SIGNAL(toggled(bool)),
         mCopyGlobal, SLOT(setEnabled(bool)) );
-  
+
   connect( mCopyGlobal, SIGNAL(clicked()),
         this, SLOT(slotCopyGlobal()) );
 
@@ -705,23 +704,23 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
 
 void FolderDiaTemplatesTab::load()
 {
-  
+
 }
 
 void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
-  
+
   mFolder = folder;
 
   QString fid = folder->idString();
-  
+
   Templates t( fid );
 
   mCustom->setChecked(t.useCustomTemplates());
-  
+
   mIdentity = folder->identity();
-  
+
   mWidget->loadFromFolder( fid, mIdentity );
 }
 
@@ -729,16 +728,16 @@ void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 bool FolderDiaTemplatesTab::save()
 {
   KMFolder* folder = mDlg->folder();
-  
+
   QString fid = folder->idString();
   Templates t(fid);
-  
+
   kdDebug() << "use custom templates for folder " << fid << ": " << mCustom->isChecked() << endl;
   t.setUseCustomTemplates(mCustom->isChecked());
   t.writeConfig();
-  
+
   mWidget->saveToFolder(fid);
-  
+
   return true;
 }
 

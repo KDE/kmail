@@ -66,7 +66,6 @@ QValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
 	return res;
 }
 
-
 static
 std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
 	std::vector<Q_UINT32> res;
@@ -92,10 +91,10 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	mSlowDown( false ) {
 	kdDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
 
-	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( KMFolder*, Q_UINT32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( Q_UINT32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( Q_UINT32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( Q_UINT32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( Q_UINT32 ) ) );
 
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 	//connect( mSyncTimer, SIGNAL( timeout() ), SLOT( syncIndex() ) );
@@ -483,8 +482,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	return false;
 }
 
-void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
-	Q_UNUSED( folder );
+void KMMsgIndex::slotAddMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 
@@ -495,8 +493,7 @@ void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	scheduleAction();
 }
 
-void KMMsgIndex::slotRemoveMessage( KMFolder* folder, Q_UINT32 serNum ) {
-	Q_UNUSED( folder );
+void KMMsgIndex::slotRemoveMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotRemoveMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 
