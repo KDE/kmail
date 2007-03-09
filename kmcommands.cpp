@@ -1359,11 +1359,11 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
     QList<int> dummy;
-    msgPart->setBodyAndGuessCte(msg->asString(), dummy, true);
-    msgPart->setCharset("");
+    msgPart->setBodyAndGuessCte( msg->asString(), dummy, true );
+    msgPart->setCharset( "" );
 
     fwdMsg->link( msg, MessageStatus::statusForwarded() );
-    mWin->addAttach(msgPart);
+    mWin->addAttach( msgPart );
   }
 
   mWin->show();

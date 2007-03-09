@@ -618,27 +618,29 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
 {
   // we keep our current directory to restore it later
   char path_buffer[PATH_MAX];
-  if (!::getcwd(path_buffer, PATH_MAX - 1))
+  if ( !::getcwd( path_buffer, PATH_MAX - 1 ) ) {
     return;
-  ::chdir(QFile::encodeName(dir));
+  }
+
+  ::chdir( QFile::encodeName( dir ) );
 
   // messages in the 'cur' directory are Read by default.. but may
   // actually be some other state (but not New)
-  if ( status.isRead() )
-  {
-    if ( !file.contains(":2,") )
+  if ( status.isRead() ) {
+    if ( !file.contains(":2,") ) {
       status.setUnread();
-    else if ( file.right(5) == ":2,RS" )
+    } else if ( file.right(5) == ":2,RS" ) {
       status.setReplied();
+    }
   }
 
   // open the file and get a pointer to it
-  QFile f(file);
+  QFile f( file );
   if ( f.open( QIODevice::ReadOnly ) == false ) {
     kWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
-                    << "' could not be opened for reading the message. "
-                       "Please check ownership and permissions."
-                    << endl;
+                   << "' could not be opened for reading the message. "
+                   << "Please check ownership and permissions."
+                   << endl;
     return;
   }
 
@@ -650,13 +652,14 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   QByteArray dateStr, fromStr, toStr, subjStr;
   QByteArray xmarkStr, replyToIdStr, msgIdStr, referencesStr;
   QByteArray statusStr, replyToAuxIdStr, uidStr;
+  QByteArray contentTypeStr, charset;
 
   // iterate through this file until done
-  while (!atEof)
-  {
+  while (!atEof) {
     // if the end of the file has been reached or if there was an error
-    if ( f.atEnd() || ( -1 == f.readLine(line, MAX_LINE) ) )
+    if ( f.atEnd() || ( -1 == f.readLine(line, MAX_LINE) ) ) {
       atEof = true;
+    }
 
     // are we done with this file?  if so, compile our info and store
     // it in a KMMsgInfo object
@@ -722,6 +725,28 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
           status.setImportant();
       }
 
+      contentTypeStr = contentTypeStr.stripWhiteSpace();
+      charset = "";
+      if ( !contentTypeStr.isEmpty() ) {
+        int cidx = contentTypeStr.find( "charset=" );
+        if ( cidx != -1 ) {
+          charset = contentTypeStr.mid( cidx + 8 );
+          if ( charset[0] == '"' ) {
+            charset = charset.mid( 1 );
+          }
+          cidx = 0;
+          while ( (unsigned int) cidx < charset.length() ) {
+            if ( charset[cidx] == '"' ||
+                 ( !isalnum(charset[cidx] ) &&
+                   charset[cidx] != '-' && charset[cidx] != '_' ) ) {
+              break;
+            }
+            ++cidx;
+          }
+          charset.truncate( cidx );
+        }
+      }
+
       KMMsgInfo *mi = new KMMsgInfo(folder());
       mi->init( subjStr.trimmed(),
                 fromStr.trimmed(),
@@ -731,7 +756,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
 				file.toLocal8Bit(),
                 KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-                KMMsgMDNStateUnknown, f.size() );
+                KMMsgMDNStateUnknown, charset, f.size() );
 
       dateStr = dateStr.trimmed();
       if (!dateStr.isEmpty())
@@ -772,53 +797,37 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
     if (!inHeader)
       continue;
 
-    if (strncasecmp(line, "Date:", 5) == 0)
-    {
-      dateStr = QByteArray(line+5);
+    if ( strncasecmp(line, "Date:", 5) == 0) {
+      dateStr = QByteArray( line + 5 );
       lastStr = &dateStr;
-    }
-    else if (strncasecmp(line, "From:", 5) == 0)
-    {
-      fromStr = QByteArray(line+5);
+    } else if ( strncasecmp( line, "From:", 5 ) == 0 ) {
+      fromStr = QByteArray( line + 5 );
       lastStr = &fromStr;
-    }
-    else if (strncasecmp(line, "To:", 3) == 0)
-    {
-      toStr = QByteArray(line+3);
+    } else if ( strncasecmp( line, "To:", 3 ) == 0 ) {
+      toStr = QByteArray( line + 3 );
       lastStr = &toStr;
-    }
-    else if (strncasecmp(line, "Subject:", 8) == 0)
-    {
-      subjStr = QByteArray(line+8);
+    } else if ( strncasecmp( line, "Subject:", 8 ) == 0 ) {
+      subjStr = QByteArray( line + 8 );
       lastStr = &subjStr;
-    }
-    else if (strncasecmp(line, "References:", 11) == 0)
-    {
-      referencesStr = QByteArray(line+11);
+    } else if ( strncasecmp( line, "References:", 11 ) == 0 ) {
+      referencesStr = QByteArray( line + 11 );
       lastStr = &referencesStr;
-    }
-    else if (strncasecmp(line, "Message-Id:", 11) == 0)
-    {
-      msgIdStr = QByteArray(line+11);
+    } else if ( strncasecmp( line, "Message-Id:", 11 ) == 0 ) {
+      msgIdStr = QByteArray( line + 11 );
       lastStr = &msgIdStr;
-    }
-    else if (strncasecmp(line, "X-KMail-Mark:", 13) == 0)
-    {
-      xmarkStr = QByteArray(line+13);
-    }
-    else if (strncasecmp(line, "X-Status:", 9) == 0)
-    {
-      statusStr = QByteArray(line+9);
-    }
-    else if (strncasecmp(line, "In-Reply-To:", 12) == 0)
-    {
-      replyToIdStr = QByteArray(line+12);
+    } else if ( strncasecmp( line, "X-KMail-Mark:", 13 ) == 0 ) {
+      xmarkStr = QByteArray( line + 13 );
+    } else if ( strncasecmp( line, "X-Status:", 9 ) == 0 ) {
+      statusStr = QByteArray( line + 9 );
+    } else if ( strncasecmp( line, "In-Reply-To:", 12 ) == 0 ) {
+      replyToIdStr = QByteArray( line + 12 );
       lastStr = &replyToIdStr;
-    }
-    else if (strncasecmp(line, "X-UID:", 6) == 0)
-    {
-      uidStr = QByteArray(line+6);
+    } else if ( strncasecmp( line, "X-UID:", 6 ) == 0 ) {
+      uidStr = QByteArray( line + 6 );
       lastStr = &uidStr;
+    } else if ( strncasecmp( line, "Content-Type:", 13 ) == 0) {
+      contentTypeStr = QByteArray( line + 13 );
+      lastStr = &contentTypeStr;
     }
 
   }

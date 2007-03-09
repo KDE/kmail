@@ -557,6 +557,7 @@ int KMFolderMbox::createIndexFromContents()
   QByteArray subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
   QByteArray replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
   QByteArray sizeServerStr, uidStr;
+  QByteArray contentTypeStr, charset;
   bool atEof = false;
   bool inHeader = true;
   KMMsgInfo* mi;
@@ -657,6 +658,28 @@ int KMFolderMbox::createIndexFromContents()
               replyToAuxIdStr.truncate( rightAngle + 1 );
           }
 
+          contentTypeStr = contentTypeStr.trimmed();
+          charset = "";
+          if ( !contentTypeStr.isEmpty() ) {
+            int cidx = contentTypeStr.find( "charset=" );
+            if ( cidx != -1 ) {
+              charset = contentTypeStr.mid( cidx + 8 );
+              if ( charset[0] == '"' ) {
+                charset = charset.mid( 1 );
+              }
+              cidx = 0;
+              while ( (unsigned int) cidx < charset.length() ) {
+                if ( charset[cidx] == '"' ||
+                     ( !isalnum(charset[cidx]) &&
+                       charset[cidx] != '-' && charset[cidx] != '_' ) ) {
+                  break;
+                }
+                ++cidx;
+              }
+              charset.truncate( cidx );
+            }
+          }
+
           mi = new KMMsgInfo(folder());
           mi->init( subjStr.trimmed(),
                     fromStr.trimmed(),
@@ -665,7 +688,7 @@ int KMFolderMbox::createIndexFromContents()
                     xmarkStr.trimmed(),
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-                    KMMsgMDNStateUnknown, offs, size, sizeServer, uid );
+                    KMMsgMDNStateUnknown, charset, offs, size, sizeServer, uid );
           mi->setStatus(status, xstatus);
           mi->setDate( dateStr.trimmed().constData() );
           mi->setDirty(false);
@@ -711,82 +734,73 @@ int KMFolderMbox::createIndexFromContents()
     /* -sanders Make all messages read when auto-recreating index */
     /* Reverted, as it breaks reading the sent mail status, for example.
        -till */
-    if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0)
-    {
-      for(i=0; i<4 && line[i+8] > ' '; i++)
+    if ( ( needStatus & 1) && strncasecmp( line, "Status:", 7 ) == 0 )  {
+      for ( i=0; i<4 && line[i+8] > ' '; i++ ) {
         status[i] = line[i+8];
+      }
       status[i] = '\0';
       needStatus &= ~1;
-    }
-    else if ((needStatus & 2) && strncasecmp(line, "X-Status:", 9)==0)
-    {
-      for(i=0; i<4 && line[i+10] > ' '; i++)
+    } else if ( ( needStatus & 2 ) &&
+                strncasecmp( line, "X-Status:", 9 ) == 0 ) {
+      for ( i=0; i<4 && line[i+10] > ' '; i++ ) {
         xstatus[i] = line[i+10];
+      }
       xstatus[i] = '\0';
       needStatus &= ~2;
-    }
-    else if (strncasecmp(line,"X-KMail-Mark:",13)==0)
-        xmarkStr = QByteArray(line+13);
-    else if (strncasecmp(line,"In-Reply-To:",12)==0) {
-      replyToIdStr = QByteArray(line+12);
+    } else if ( strncasecmp( line, "X-KMail-Mark:", 13 ) == 0 ) {
+        xmarkStr = QByteArray( line + 13 );
+    } else if ( strncasecmp( line, "In-Reply-To:", 12 ) == 0 ) {
+      replyToIdStr = QByteArray( line + 12 );
       lastStr = &replyToIdStr;
-    }
-    else if (strncasecmp(line,"References:",11)==0) {
-      referencesStr = QByteArray(line+11);
+    } else if ( strncasecmp( line, "References:", 11 ) == 0 ) {
+      referencesStr = QByteArray( line + 11 );
       lastStr = &referencesStr;
-    }
-    else if (strncasecmp(line,"Message-Id:",11)==0) {
-      msgIdStr = QByteArray(line+11);
+    } else if ( strncasecmp( line, "Message-Id:", 11 ) == 0 ) {
+      msgIdStr = QByteArray( line + 11 );
       lastStr = &msgIdStr;
-    }
-    else if (strncasecmp(line,"Date:",5)==0)
-    {
-      dateStr = QByteArray(line+5);
+    } else if ( strncasecmp( line, "Date:", 5 ) == 0 ) {
+      dateStr = QByteArray( line + 5 );
       lastStr = &dateStr;
-    }
-    else if (strncasecmp(line,"From:", 5)==0)
-    {
-      fromStr = QByteArray(line+5);
+    } else if ( strncasecmp( line, "From:", 5 ) == 0 ) {
+      fromStr = QByteArray( line + 5 );
       lastStr = &fromStr;
-    }
-    else if (strncasecmp(line,"To:", 3)==0)
-    {
-      toStr = QByteArray(line+3);
+    } else if ( strncasecmp( line, "To:", 3 ) == 0 ) {
+      toStr = QByteArray( line + 3 );
       lastStr = &toStr;
-    }
-    else if (strncasecmp(line,"Subject:",8)==0)
-    {
-      subjStr = QByteArray(line+8);
+    } else if ( strncasecmp( line, "Subject:", 8 ) == 0 ) {
+      subjStr = QByteArray( line + 8 );
       lastStr = &subjStr;
-    }
-    else if (strncasecmp(line,"X-Length:",9)==0)
-    {
-      sizeServerStr = QByteArray(line+9);
+    } else if ( strncasecmp( line, "X-Length:", 9 ) == 0 ) {
+      sizeServerStr = QByteArray( line + 9 );
       sizeServer = sizeServerStr.toULong();
       lastStr = &sizeServerStr;
-    }
-    else if (strncasecmp(line,"X-UID:",6)==0)
-    {
-      uidStr = QByteArray(line+6);
+    } else if ( strncasecmp( line, "X-UID:", 6 ) == 0 ) {
+      uidStr = QByteArray( line + 6 );
       uid = uidStr.toULong();
       lastStr = &uidStr;
+    } else if ( strncasecmp( line, "Content-Type:", 13 ) == 0 ) {
+      contentTypeStr = QByteArray( line + 13 );
+      lastStr = &contentTypeStr;
     }
   }
 
-  if (mAutoCreateIndex)
-  {
-    emit statusMsg(i18n("Writing index file"));
+  if ( mAutoCreateIndex ) {
+    emit statusMsg( i18n("Writing index file") );
     writeIndex();
+  } else {
+    mHeaderOffset = 0;
   }
-  else mHeaderOffset = 0;
 
   correctUnreadMsgsCount();
 
-  if (kmkernel->outboxFolder() == folder() && count() > 0)
-    KMessageBox::queuedMessageBox(0, KMessageBox::Information,
-                                  i18n("Your outbox contains messages which were "
-    "most-likely not created by KMail;\nplease remove them from there if you "
-    "do not want KMail to send them."));
+  if ( kmkernel->outboxFolder() == folder() && count() > 0 ) {
+    KMessageBox::queuedMessageBox(
+      0, KMessageBox::Information,
+      i18n("Your outbox contains messages which were "
+           "most-likely not created by KMail;\n"
+           "please remove them from there if you "
+           "do not want KMail to send them.") );
+  }
 
   invalidateFolder();
   return 0;

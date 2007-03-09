@@ -380,19 +380,32 @@ namespace {
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2047String(const QByteArray& aStr)
+QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
+                                        QByteArray prefCharset )
 {
-  if ( aStr.isEmpty() )
+  if ( aStr.isEmpty() ) {
     return QString();
+  }
 
   const QByteArray str = unfold( aStr );
 
-  if ( str.isEmpty() )
+  if ( str.isEmpty() ) {
     return QString();
+  }
 
-  if ( !str.contains( "=?" ) )
+  if ( str.find( "=?" ) < 0 ) {
+    if ( !prefCharset.isEmpty() ) {
+      if ( prefCharset == "us-ascii" ) {
+        // isn`t this foolproof?
+        return KMMsgBase::codecForName( "utf-8" )->toUnicode( str );
+      } else {
+        return KMMsgBase::codecForName( prefCharset )->toUnicode( str );
+      }
+    } else {
     return KMMsgBase::codecForName( GlobalSettings::self()->
-                                    fallbackCharacterEncoding().toLatin1() )->toUnicode( str );
+                                    fallbackCharacterEncoding().latin1() )->toUnicode( str );
+    }
+  }
 
   QString result;
   QByteArray LWSP_buffer;

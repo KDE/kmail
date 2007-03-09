@@ -385,38 +385,41 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::contentDescription(void) const
+QString KMMessagePart::contentDescription( void ) const
 {
-  return KMMsgBase::decodeRFC2047String(mContentDescription);
+  return KMMsgBase::decodeRFC2047String( mContentDescription, charset() );;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDescription(const QString &aStr)
+void KMMessagePart::setContentDescription( const QString &aStr )
 {
-  QByteArray encoding = KMMsgBase::autoDetectCharset(charset(),
-    KMMessage::preferredCharsets(), aStr);
-  if (encoding.isEmpty()) encoding = "utf-8";
-  mContentDescription = KMMsgBase::encodeRFC2047String(aStr, encoding);
+  QByteArray encoding =
+    KMMsgBase::autoDetectCharset( charset(),
+                                  KMMessage::preferredCharsets(), aStr );
+  if ( encoding.isEmpty() ) {
+    encoding = "utf-8";
+  }
+  mContentDescription = KMMsgBase::encodeRFC2047String( aStr, encoding );
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::fileName(void) const
+QString KMMessagePart::fileName( void ) const
 {
   bool bRFC2231encoded = false;
 
   // search the start of the filename
   QString cd( mContentDisposition );
-  int startOfFilename = cd.indexOf("filename*=");
-  if (startOfFilename >= 0) {
+  int startOfFilename = cd.indexOf( "filename*=" );
+  if ( startOfFilename >= 0 ) {
     bRFC2231encoded = true;
     startOfFilename += 10;
-  }
-  else {
-    startOfFilename = cd.indexOf("filename=");
-    if (startOfFilename < 0)
+  } else {
+    startOfFilename = cd.indexOf( "filename=" );
+    if ( startOfFilename < 0 ) {
       return QString();
+    }
     startOfFilename += 9;
   }
 
@@ -424,22 +427,23 @@ QString KMMessagePart::fileName(void) const
   int endOfFilename;
   if ( '"' == mContentDisposition[startOfFilename] ) {
     startOfFilename++; // the double quote isn't part of the filename
-    endOfFilename = mContentDisposition.indexOf('"', startOfFilename) - 1;
+    endOfFilename = mContentDisposition.indexOf( '"', startOfFilename ) - 1;
+  } else {
+    endOfFilename = mContentDisposition.indexOf( ';', startOfFilename ) - 1;
   }
-  else {
-    endOfFilename = mContentDisposition.indexOf(';', startOfFilename) - 1;
-  }
-  if (endOfFilename < 0)
+  if ( endOfFilename < 0 ) {
     endOfFilename = 32767;
+  }
 
-  const QByteArray str = mContentDisposition.mid(startOfFilename,
-                                endOfFilename-startOfFilename+1)
-                           .trimmed();
+  const QByteArray str =
+    mContentDisposition.mid( startOfFilename,
+                             endOfFilename-startOfFilename + 1 ).trimmed();
 
-  if (bRFC2231encoded)
-    return KMMsgBase::decodeRFC2231String(str);
-  else
-    return KMMsgBase::decodeRFC2047String(str);
+  if ( bRFC2231encoded ) {
+    return KMMsgBase::decodeRFC2231String( str );
+  } else {
+    return KMMsgBase::decodeRFC2047String( str, charset() );
+  }
 }
 
 

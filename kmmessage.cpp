@@ -2210,13 +2210,16 @@ QList<QByteArray> KMMessage::rawHeaderFields( const QByteArray& field ) const
 
 QString KMMessage::headerField(const QByteArray& aName) const
 {
-  if ( aName.isEmpty() )
+  if ( aName.isEmpty() ) {
     return QString();
+  }
 
-  if ( !mMsg->Headers().FindField( aName ) )
+  if ( !mMsg->Headers().FindField( aName ) ) {
     return QString();
+  }
 
-  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
+  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str(),
+                              charset() );
 }
 
 QStringList KMMessage::headerFields( const QByteArray& field ) const
@@ -2227,7 +2230,7 @@ QStringList KMMessage::headerFields( const QByteArray& field ) const
   std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
   QStringList headerFields;
   for ( uint i = 0; i < v.size(); ++i ) {
-    headerFields.append( decodeRFC2047String( v[i]->AsString().c_str() ) );
+    headerFields.append( decodeRFC2047String( v[i]->AsString().c_str(), charset() ) );
   }
 
   return headerFields;

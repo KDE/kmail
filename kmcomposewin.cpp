@@ -489,8 +489,8 @@ void KMComposeWin::addAttachment(const QString &name,
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(name);
     QList<int> dummy;
-    msgPart->setBodyAndGuessCte(data, dummy,
-                                kmkernel->msgSender()->sendQuotedPrintable());
+    msgPart->setBodyAndGuessCte( data, dummy,
+                                 kmkernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
     msgPart->setSubtypeStr(subType);
     msgPart->setParameter(paramAttr,paramValue);
@@ -2644,8 +2644,8 @@ void KMComposeWin::slotAttachFileResult(KJob *job)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   QList<int> allowedCTEs;
-  msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
-                              !kmkernel->msgSender()->sendQuotedPrintable());
+  msgPart->setBodyAndGuessCte( (*it).data, allowedCTEs,
+                               !kmkernel->msgSender()->sendQuotedPrintable() );
   kDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
   int slash = mimeType.indexOf( '/' );
   if( slash == -1 )

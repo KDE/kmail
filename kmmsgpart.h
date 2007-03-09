@@ -86,7 +86,7 @@ public:
 
   /** Sets body, encoded according to the content-transfer-encoding.
       This one is for text strings, the trailing 0 is not used. */
-  void setBodyEncoded(const QByteArray& aStr);
+  void setBodyEncoded( const QByteArray &aStr );
 
   /** Returns decoded length of body. */
   int decodedSize() const;
@@ -94,11 +94,12 @@ public:
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  QByteArray originalContentTypeStr(void) const { return mOriginalContentTypeStr; }
-  void setOriginalContentTypeStr( const QByteArray& txt )
-  {
-    mOriginalContentTypeStr = txt;
-  }
+  QByteArray originalContentTypeStr(void) const
+    { return mOriginalContentTypeStr; }
+
+  void setOriginalContentTypeStr( const QByteArray &txt )
+    { mOriginalContentTypeStr = txt; }
+
   QByteArray typeStr() const { return mType; }
   void setTypeStr( const QByteArray & aStr ) { mType = aStr; }
   int type() const;
