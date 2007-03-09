@@ -741,13 +741,14 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-static KUrl subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveUrl( subject.trimmed()
-                                           .replace( QDir::separator(), '_' ),
-                                    QString() );
+static KUrl subjectToUrl( const QString &subject ) {
+
+  return KFileDialog::getSaveUrl( subject.trimmed()
+                                  .replace( QDir::separator(), '_' ),
+                                  "*.mbox" );
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
+KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
     mStandAloneMessage( 0 ),
