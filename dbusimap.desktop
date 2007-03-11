@@ -3,4 +3,5 @@ Encoding=UTF-8
 Type=ServiceType
 X-KDE-ServiceType=DBUS/ResourceBackend/IMAP
 Comment=Mail program with a DBUS interface
+Comment[es]=Programa de correo con una interfaz DBUS
 Comment[x-test]=xxMail program with a DBUS interfacexx
