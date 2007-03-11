@@ -300,7 +300,7 @@ void KMReaderMainWin::setupAccel()
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAllAction );
 
-  mReplyListAction  = new KAction(KIcon("mail_replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction  = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));

@@ -1202,7 +1202,7 @@ void KMComposeWin::setupActions(void)
   action  = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
-  action  = new KAction(KIcon("mail_new"), i18n("&New Composer"), this);
+  action  = new KAction(KIcon("mail-new"), i18n("&New Composer"), this);
   actionCollection()->addAction("new_composer", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
   action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));

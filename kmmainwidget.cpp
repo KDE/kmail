@@ -2638,12 +2638,12 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("empty_trash", action );
   connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
 
-  action  = new KAction(KIcon("mail_get"), i18n("Check &Mail"), this);
+  action  = new KAction(KIcon("mail-get"), i18n("Check &Mail"), this);
   actionCollection()->addAction("check_mail", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
   action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
 
-  KActionMenu *actActionMenu  = new KActionMenu(KIcon("mail_get"), i18n("Check Mail &In"), this);
+  KActionMenu *actActionMenu  = new KActionMenu(KIcon("mail-get"), i18n("Check Mail &In"), this);
   actionCollection()->addAction("check_mail_in", actActionMenu );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
@@ -2752,7 +2752,7 @@ void KMMainWidget::setupActions()
   mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
 
-  action  = new KAction(KIcon("mail_find"), i18n("&Find Messages..."), this);
+  action  = new KAction(KIcon("mail-find"), i18n("&Find Messages..."), this);
   actionCollection()->addAction("search_messages", action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
   action->setShortcut(QKeySequence(Qt::Key_S));
@@ -2861,7 +2861,7 @@ void KMMainWidget::setupActions()
   connect(action, SIGNAL(triggered(bool)), headers(), SLOT(pasteMessages()));
 
   //----- Message Menu
-  action  = new KAction(KIcon("mail_new"), i18n("&New Message..."), this);
+  action  = new KAction(KIcon("mail-new"), i18n("&New Message..."), this);
   actionCollection()->addAction("new_message", action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
   action->setShortcuts(KStandardShortcut::shortcut(KStandardShortcut::New));
@@ -2924,7 +2924,7 @@ void KMMainWidget::setupActions()
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAllAction );
 
-  mReplyListAction  = new KAction(KIcon("mail_replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction  = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));
@@ -3013,7 +3013,7 @@ void KMMainWidget::setupActions()
   mStatusMenu->addSeparator();
 
   // -------- Toggle Actions
-  mToggleFlagAction  = new KToggleAction(KIcon("mail_flag"), i18n("Mark Message as &Important"), this);
+  mToggleFlagAction  = new KToggleAction(KIcon("mail-flag-kmail"), i18n("Mark Message as &Important"), this);
   actionCollection()->addAction("status_flag", mToggleFlagAction );
   connect(mToggleFlagAction, SIGNAL(triggered(bool) ), SLOT(slotSetMsgStatusFlag()));
   mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );

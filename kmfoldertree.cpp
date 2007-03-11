@@ -136,10 +136,10 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     }
     // non-root search folders
     if ( protocol() == KMFolderTreeItem::Search ) {
-      icon = "mail_find";
+      icon = "mail-find";
     }
     if ( mFolder && mFolder->noContent() ) {
-      icon = "folder_grey";
+      icon = "folder-grey";
     }
   }
 
@@ -1031,7 +1031,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addAction( mMainWidget->action("compact_all_folders") );
       folderMenu->addAction( mMainWidget->action("expire_all_folders") );
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
-      folderMenu->addAction(KIcon("mail_get"), i18n("Check &Mail"),
+      folderMenu->addAction(KIcon("mail-get"), i18n("Check &Mail"),
         this, SLOT(slotCheckMail()));
     }
   } else { // regular folders
