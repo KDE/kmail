@@ -265,7 +265,6 @@ void KMMainWidget::destruct()
 void KMMainWidget::readPreConfig(void)
 {
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  const KConfigGroup general( KMKernel::config(), "General" );
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
@@ -463,7 +462,6 @@ void KMMainWidget::writeConfig(void)
   QString s;
   KConfig *config = KMKernel::config();
   KConfigGroup geometry( config, "Geometry" );
-  KConfigGroup general( config, "General" );
 
   if (mMsgView)
     mMsgView->writeConfig();
