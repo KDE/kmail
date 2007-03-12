@@ -283,10 +283,15 @@ void KMMainWidget::readPreConfig(void)
 {
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
   const KConfigGroup general( KMKernel::config(), "General" );
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
   mReaderWindowActive = geometry.readEntry( "readerWindowMode", "below" ) != "hide";
   mReaderWindowBelow = geometry.readEntry( "readerWindowMode", "below" ) == "below";
+  mThreadPref = geometry.readEntry( "nestedMessages", false );
+
+  mHtmlPref = reader.readEntry( "htmlMail", false );
+  mHtmlLoadExtPref = reader.readEntry( "htmlLoadExternal", false );
 }
 
 
@@ -357,15 +362,8 @@ void KMMainWidget::readConfig(void)
 
   }
 
-  // read "Reader" config options
-  KConfigGroup readerConfig( config, "Reader" );
-  mHtmlPref = readerConfig.readEntry( "htmlMail", false );
-  mHtmlLoadExtPref =
-      readerConfig.readEntry( "htmlLoadExternal", false );
-
   { // area for config group "Geometry"
     KConfigGroup group(config, "Geometry");
-    mThreadPref = group.readEntry( "nestedMessages", false );
     // size of the mainwin
     QSize defaultSize(750,560);
     siz = group.readEntry("MainWin", defaultSize );
