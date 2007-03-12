@@ -1276,7 +1276,6 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setContentDescription(msg->from()+": "+msg->subject());
     msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
-    QValueList<int> dummy;
     msgPart->setMessageBody( msg->asString() );
     msgPart->setCharset("");
 
