@@ -264,9 +264,9 @@ void KMMainWidget::destruct()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig(void)
 {
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup reader( KMKernel::config(), "Reader" );
+  const KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  const KConfigGroup general( KMKernel::config(), "General" );
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
   mReaderWindowActive = geometry.readEntry( "readerWindowMode", "below" ) != "hide";
