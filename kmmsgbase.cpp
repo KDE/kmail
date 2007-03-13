@@ -19,7 +19,7 @@ using KMail::MessageProperty;
 #include <kcharsets.h>
 #include <kascii.h>
 #include <kcodecs.h>
-#include <krfcdate.h>
+#include <kdatetime.h>
 #include <kconfiggroup.h>
 
 #include <mimelib/mimepp.h>
@@ -256,7 +256,7 @@ const MessageStatus& KMMsgBase::messageStatus() const
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(const QByteArray& aDateStr)
 {
-  setDate( KRFCDate::parseDate( aDateStr ) );
+  setDate( KDateTime::fromString( aDateStr, KDateTime::RFCDate ).toTime_t() );
 }
 
 
