@@ -1455,7 +1455,7 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
    No directory listing done*/
 void KMFolderCachedImap::listMessages() {
   bool groupwareOnly = GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
-               && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
+               && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
                && folder()->isSystemFolder() 
                && mImapPath == "/INBOX/";
   // Don't list messages on the root folder, and skip the inbox, if this is
@@ -1955,7 +1955,7 @@ void KMFolderCachedImap::listDirectory2()
    *  kmkernel->iCalIface().isEnabled(), since that is false during the 
    *  very first sync, where we already want to filter. */
   if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() 
-     && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
+     && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
      && mAccount->hasAnnotationSupport()
      && GlobalSettings::self()->theIMAPResourceEnabled()
      && !foldersNewOnServer.isEmpty() ) {
@@ -2413,8 +2413,17 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
       const QString folderPath = it.key();
       const QString annotation = it.data();
       kdDebug(5006) << k_funcinfo << "Folder: " << folderPath << " has type: " << annotation << endl;
-      if ( annotation.simplifyWhiteSpace() != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) {
-        folders.append( mSubfolderPaths.findIndex( folderPath ) );
+      // we're only interested in the main type
+      QString type(annotation);
+      int dot = annotation.find( '.' );
+      if ( dot != -1 ) type.truncate( dot );
+      type = type.simplifyWhiteSpace();
+
+      const int idx = mSubfolderPaths.findIndex( folderPath );
+      const bool isNoContent =  mSubfolderMimeTypes[idx] == "inode/directory";
+      if ( ( isNoContent && type.isEmpty() )
+        || ( !type.isEmpty() && type != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) ) {
+        folders.append( idx );
         kdDebug(5006) << k_funcinfo << " subscribing to: " << folderPath << endl;
       } else {
         kdDebug(5006) << k_funcinfo << " automatically unsubscribing from: " << folderPath << endl;

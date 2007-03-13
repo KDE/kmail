@@ -1301,8 +1301,11 @@ void KMFolderTree::cleanupConfigFile()
     if (folderMap.find(name) == folderMap.end())
     {
       KMFolder* folder = kmkernel->findFolderById( name );
-      if ( folder && kmkernel->iCalIface().hideResourceFolder( folder ) )
+      if ( folder ) {
+          if ( kmkernel->iCalIface().hideResourceFolder( folder )
+           ||  kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
         continue; // hidden IMAP resource folder, don't delete info
+      }
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
       config->deleteGroup(*grpIt, TRUE);
