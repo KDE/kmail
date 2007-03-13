@@ -690,7 +690,10 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     KMFolderTreeItem * fti = 0;
     if (!parent)
     {
-      // create new root-item
+      // create new root-item, but only if this is not the root of a 
+      // "groupware folders only" account
+      if ( kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
+        continue;
       // it needs a folder e.g. to save it's state (open/close)
       fti = new KMFolderTreeItem( this, folder->label(), folder );
       fti->setExpandable( true );

@@ -1079,6 +1079,16 @@ bool KMailICalIfaceImpl::hideResourceFolder( KMFolder* folder ) const
   return mHideFolders && isResourceFolder( folder );
 }
 
+bool KMailICalIfaceImpl::hideResourceAccountRoot( KMFolder* folder ) const
+{
+  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
+  bool hide = dimapFolder && mHideFolders 
+       && (int)dimapFolder->account()->id() == GlobalSettings::self()->theIMAPResourceAccount()
+       && GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount();
+  return hide;
+
+}
+
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
   if( mUseResourceIMAP && folder ) {

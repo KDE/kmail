@@ -1454,8 +1454,13 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
 /* This will only list the messages in a folder.
    No directory listing done*/
 void KMFolderCachedImap::listMessages() {
-  if( imapPath() == "/" ) {
-    // Don't list messages on the root folder
+  bool groupwareOnly = GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
+               && GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id()
+               && folder()->isSystemFolder() 
+               && mImapPath == "/INBOX/";
+  // Don't list messages on the root folder, and skip the inbox, if this is
+  // the inbox of a groupware-only dimap account
+  if( imapPath() == "/" || groupwareOnly ) {
     serverSyncInternal();
     return;
   }
