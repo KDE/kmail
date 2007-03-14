@@ -241,6 +241,7 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
     kWarning(5006) << "Calling " << k_funcinfo
                    << " with something containing neither 7 nor 8 bit text!"
                    << " Fix this caller: " << kdBacktrace() << endl;
+    cte = 0;
   }
   setCte( cte );
   setBodyEncodedBinary( aBuf );
