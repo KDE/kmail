@@ -94,7 +94,7 @@ protected:
 
 private:
   int mRemainingFolders;
-  bool mRecursive, mRunning, mIdle, mRunByIndex;
+  bool mRecursive, mRunning, mIdle;
   QPointer<KMFolder> mRoot;
   KMSearchPattern* mSearchPattern;
   QList<QPointer<KMFolder> > mFolders, mOpenedFolders;

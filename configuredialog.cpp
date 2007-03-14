@@ -59,7 +59,6 @@ using KMail::ImapAccountBase;
 using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
-#include "index.h"
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
@@ -4692,14 +4691,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-#ifdef HAVE_INDEXLIB
-  // indexing enabled option:
-  mIndexingEnabled = new QCheckBox( i18n("Enable full text &indexing"), this );
-  vlay->addWidget( mIndexingEnabled );
-  connect( mIndexingEnabled, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-#endif
-
   // "Quota Units"
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mQuotaCmbBox = new QComboBox( false, this );
@@ -4747,22 +4738,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
             "the search will start from the bottom of the message list and continue to "
             "the previous folder depending on which option is selected.</p></qt>" );
   mLoopOnGotoUnread->setWhatsThis( msg );
-
-#ifdef HAVE_INDEXLIB
- // this is probably overly pessimistic
-  msg = i18nc( "what's this help",
-		  "<qt><p>Full text indexing allows very fast searches on the content "
-		  "of your messages. When enabled, the search dialog will work very fast. "
-		  "Also, the search tool bar will also select messages based on content.</p>"
-		  "<p>It takes up a certain amount of disk space "
-		  "(about half the disk space for the messages).</p>"
-		  "<p>After enabling, the index will need to be built, but you can continue to use KMail "
-		  "while this operation is running.</p>"
-		  "</qt>"
-	    );
-
-  mIndexingEnabled->setWhatsThis( msg );
-#endif
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings() {
@@ -4789,10 +4764,6 @@ void MiscPage::FolderTab::doLoadOther() {
   int num = general.readEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
   mMailboxPrefCombo->setCurrentIndex( num );
-
-#ifdef HAVE_INDEXLIB
-  mIndexingEnabled->setChecked( kmkernel->msgIndex() && kmkernel->msgIndex()->isEnabled() );
-#endif
 }
 
 void MiscPage::FolderTab::save() {
@@ -4812,9 +4783,6 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
   GlobalSettings::self()->setQuotaUnit( mQuotaCmbBox->currentItem() );
-#ifdef HAVE_INDEXLIB
-  if ( kmkernel->msgIndex() ) kmkernel->msgIndex()->setEnabled( mIndexingEnabled->isChecked() );
-#endif
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {

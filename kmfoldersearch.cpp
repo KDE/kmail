@@ -25,7 +25,6 @@
 #include "kmfoldermgr.h"
 #include "kmsearchpattern.h"
 #include "kmmsgdict.h"
-#include "index.h"
 #include "jobscheduler.h"
 
 #include <kdebug.h>
@@ -78,7 +77,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     setObjectName( name );
     mRemainingFolders = -1;
     mRecursive = true;
-    mRunByIndex = mRunning = false;
+    mRunning = false;
     mRoot = 0;
     mSearchPattern = 0;
     mFoundCount = 0;
@@ -160,12 +159,6 @@ void KMSearch::start()
 
     mFoundCount = 0;
     mRunning = true;
-    mRunByIndex = false;
-    // check if this query can be done with the index
-    if ( kmkernel->msgIndex() && kmkernel->msgIndex()->startQuery( this ) ) {
-        mRunByIndex = true;
-        return;
-    }
 
     mFolders.append( mRoot );
     if ( recursive() )
@@ -204,37 +197,32 @@ void KMSearch::stop()
 {
     if ( !running() )
         return;
-    if ( mRunByIndex ) {
-        if ( kmkernel->msgIndex() )
-            kmkernel->msgIndex()->stopQuery( this );
-    } else {
-        mIncompleteFolders.clear();
-        QList<QPointer<KMFolder> >::ConstIterator jt;
-        for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
-            KMFolder *folder = *jt;
-            if ( !folder ) continue;
-            // explicitly stop jobs for this folder as it will not be closed below
-            // when the folder is currently selected
-            if ( folder->folderType() == KMFolderTypeImap ) {
-                KMAcctImap *account =
-                    static_cast<KMFolderImap*>( folder->storage() )->account();
-                account->ignoreJobsForFolder( folder );
-            }
-            folder->storage()->search( 0 );
-            folder->close();
-        }
+
+    mIncompleteFolders.clear();
+    QList<QPointer<KMFolder> >::ConstIterator jt;
+    for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
+      KMFolder *folder = *jt;
+      if ( !folder ) continue;
+      // explicitly stop jobs for this folder as it will not be closed below
+      // when the folder is currently selected
+      if ( folder->folderType() == KMFolderTypeImap ) {
+        KMAcctImap *account =
+          static_cast<KMFolderImap*>( folder->storage() )->account();
+        account->ignoreJobsForFolder( folder );
+      }
+      folder->storage()->search( 0 );
+      folder->close();
     }
     mRemainingFolders = -1;
     mOpenedFolders.clear();
     mFolders.clear();
     mLastFolder.clear();
-    mRunByIndex = mRunning = false;
+    mRunning = false;
     emit finished(false);
 }
 
 void KMSearch::indexFinished() {
 	mRunning = false;
-	mRunByIndex = false;
 }
 
 void KMSearch::slotProcessNextBatch()

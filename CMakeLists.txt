@@ -18,7 +18,6 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkpgp
   ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/libkleo
-  ${CMAKE_SOURCE_DIR}/indexlib
   ${GPGME_INCLUDES}
    )
 
@@ -30,9 +29,7 @@ set(kmailprivate_LIB_SRCS
    kmmainwin.cpp
    configuredialog.cpp
    configuredialog_p.cpp
-   klistviewindexedsearchline.cpp
    simplestringlisteditor.cpp
-   index.cpp
    identitylistview.cpp
    identitydialog.cpp
    kmfolderdia.cpp

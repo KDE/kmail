@@ -52,7 +52,6 @@ using KMail::AccountManager;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
-class KMMsgIndex;
 class QLabel;
 class KMFolder;
 class KMFolderMgr;
@@ -247,7 +246,6 @@ public:
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMail::MessageSender *msgSender();
-  KMMsgIndex *msgIndex();
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
@@ -393,7 +391,6 @@ private:
   KMFilterActionDict *the_filterActionDict;
   mutable KPIM::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
-  KMMsgIndex *the_msgIndex;
   struct putData
   {
     KUrl url;

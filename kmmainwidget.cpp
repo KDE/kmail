@@ -100,7 +100,6 @@ using KMail::AntiSpamWizard;
 #include "filterlogdlg.h"
 using KMail::FilterLogDialog;
 #include <headerlistquicksearch.h>
-#include "klistviewindexedsearchline.h"
 using KMail::HeaderListQuickSearch;
 #include "kmheaders.h"
 #include "mailinglistpropertiesdialog.h"
@@ -571,15 +570,10 @@ void KMMainWidget::createWidgets(void)
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );
-#ifdef HAVE_INDEXLIB
-  mQuickSearchLine = new KListViewIndexedSearchLine( mSearchToolBar, mHeaders,
-                                                    actionCollection() );
-#else
   mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders,
                                                 actionCollection() );
-#endif
   mQuickSearchLine->setObjectName( "headers quick search line" );
-  
+
   mSearchToolBar->addWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );

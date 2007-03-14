@@ -11,7 +11,6 @@
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
-#include "index.h"
 #include "kmmainwin.h"
 #include "composer.h"
 #include "kmmsgpart.h"
@@ -106,7 +105,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_startingUp = true;
   closed_by_user = true;
   the_firstInstance = true;
-  the_msgIndex = 0;
 
   the_inboxFolder = 0;
   the_outboxFolder = 0;
@@ -1350,11 +1348,6 @@ void KMKernel::init()
   readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
-#ifdef HAVE_INDEXLIB
-  the_msgIndex = new KMMsgIndex(this); //create the indexer
-#else
-  the_msgIndex = 0;
-#endif
 
   the_weaver =  new ThreadWeaver::Weaver( this );
 
@@ -1559,8 +1552,6 @@ void KMKernel::cleanup(void)
     folder->close(true);
   }
 
-  delete the_msgIndex;
-  the_msgIndex = 0;
   delete the_folderMgr;
   the_folderMgr = 0;
   delete the_imapFolderMgr;
@@ -1905,11 +1896,6 @@ KPIM::IdentityManager * KMKernel::identityManager() {
     mIdentityManager = new KPIM::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
-}
-
-KMMsgIndex *KMKernel::msgIndex()
-{
-    return the_msgIndex;
 }
 
 KMainWindow* KMKernel::mainWin()
