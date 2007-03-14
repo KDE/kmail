@@ -152,6 +152,13 @@ public:
   bool hideResourceFolder( KMFolder* folder ) const;
 
   /**
+   * Returns true if the given folder is the root of the groupware account,
+   * groupware folders are hidden, and only groupware folders shown in this
+   * account.
+   */
+  bool hideResourceAccountRoot( KMFolder* folder ) const;
+
+  /**
    * Returns the resource folder type. Other is returned if resource
    * isn't enabled or it isn't a resource folder.
    */

@@ -78,6 +78,7 @@ namespace KMail {
   class FolderJob;
   class HeaderListQuickSearch;
   class SearchWindow;
+  class ImapAccountBase;
 }
 
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
@@ -216,8 +217,11 @@ public slots:
   /** Update message actions */
   void updateMessageActions();
 
-  /** Launch subscription-dialog */
+  /** Launch subscription-dialog (server side) */
   void slotSubscriptionDialog();
+
+  /** Launch dialog for local (client side) subscription configuration */
+  void slotLocalSubscriptionDialog();
 
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
@@ -424,6 +428,16 @@ private:
   QString overrideEncoding() const;
 
   void initializeIMAPActions( bool setState );
+
+  /** Helper which finds the associated account if there is a current
+   * folder and it is an imap or disconnected imap one.
+   */
+  KMail::ImapAccountBase* findCurrentImapAccountBase();
+
+  /** Helper which finds the associated IMAP path if there is a current
+   * folder and it is an imap or disconnected imap one.
+   */
+  QString findCurrentImapPath();
 
 private:
   // Message actions

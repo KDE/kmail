@@ -4890,7 +4890,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ), mBox );
   mHideGroupwareFolders->setObjectName( "HideGroupwareFoldersBox" );
-  grid->addWidget( mHideGroupwareFolders, 3, 0, 1, 2 );
+  grid->addWidget( mHideGroupwareFolders, 3, 0, 1, 1 );
   mHideGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
@@ -4899,6 +4899,18 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
   vlay->addWidget( b1 );
+
+  mOnlyShowGroupwareFolders = new QCheckBox( i18n( "&Only show groupware folders for this account" ), mBox );
+  mOnlyShowGroupwareFolders->setObjectName( "OnlyGroupwareFoldersBox" );
+  grid->addWidget( mOnlyShowGroupwareFolders, 3, 1, 1, 1 );
+  mOnlyShowGroupwareFolders->setToolTip(
+                 i18n( "When this is checked, you will not see normal  "
+                       "mail folders in the folder tree for the account "
+                       "configured for groupware." ) );
+  QWhatsThis::add( mOnlyShowGroupwareFolders, i18n( GlobalSettings::self()
+           ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().utf8() ) );
+  connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
   b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("Groupware Compatibility && Legacy Options"), this );
@@ -4983,6 +4995,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   i = GlobalSettings::self()->theIMAPResourceStorageFormat();
   mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
+  mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -5035,6 +5048,7 @@ void MiscPage::GroupwareTab::save() {
 
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled

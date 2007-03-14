@@ -71,6 +71,20 @@ public:
 
   virtual ~ListJob();
 
+  /**
+   * Set whether the listing should include only folders that the
+   * account is subscribed to locally. This is different from the server
+   * side subscription managed by the ctor parameter.
+   */
+  void setHonorLocalSubscription( bool value );
+  
+  /**
+   * Return whether the listing includes only folders that the
+   * account is subscribed to locally. This is different from the server
+   * side subscription managed by the ctor parameter.
+   */
+  bool honorLocalSubscription() const;
+
   virtual void execute();
 
   /** Path */
@@ -124,6 +138,7 @@ protected:
   ImapAccountBase* mAccount;
   ImapAccountBase::ListType mType;
   bool mComplete;
+  bool mHonorLocalSubscription;
   QString mPath;
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;

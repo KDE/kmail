@@ -24,6 +24,8 @@
 #ifndef __KMAIL_IMAPACCOUNTBASE_H__
 #define __KMAIL_IMAPACCOUNTBASE_H__
 
+#include <set>
+
 #include "networkaccount.h"
 
 #include <kio/global.h>
@@ -83,6 +85,11 @@ namespace KMail {
     /** @return whether to show only subscribed folders */
     bool onlySubscribedFolders() const { return mOnlySubscribedFolders; }
     virtual void setOnlySubscribedFolders( bool show );
+
+    /** @return whether to show only locally subscribed folders */
+    bool onlyLocallySubscribedFolders() const { return mOnlyLocallySubscribedFolders; }
+    virtual void setOnlyLocallySubscribedFolders( bool show );
+
 
     /** @return whether to load attachments on demand */
     bool loadOnDemand() const { return mLoadOnDemand; }
@@ -189,6 +196,19 @@ namespace KMail {
      * Emits subscriptionChanged signal on success.
      */
     void changeSubscription(bool subscribe, const QString& imapPath);
+
+    /** 
+     * Returns whether the account is locally subscribed to the
+     * folder @param imapPath. No relation to server side subscription above.
+     */
+    bool locallySubscribedTo( const QString& imapPath );
+
+    /**
+     * Locally subscribe (@p subscribe = TRUE) / Unsubscribe the folder
+     * identified by @p imapPath.
+     */
+    void changeLocalSubscription( const QString& imapPath, bool subscribe );
+
 
     /**
      * Retrieve the users' right on the folder
@@ -493,6 +513,9 @@ namespace KMail {
     /** Migrate the prefix */
     void migratePrefix();
 
+    // used for writing the blacklist out to the config file
+    QStringList locallyBlacklistedFolders() const;
+    void localBlacklistFromStringList( const QStringList & );
 
   protected:
     QList<QPointer<KMFolder>* > mOpenFolders;
@@ -508,6 +531,7 @@ namespace KMail {
     bool mAutoExpunge : 1;
     bool mHiddenFolders : 1;
     bool mOnlySubscribedFolders : 1;
+    bool mOnlyLocallySubscribedFolders : 1;
     bool mLoadOnDemand : 1;
     bool mListOnlyOpenFolders : 1;
     bool mProgressEnabled : 1;
@@ -543,6 +567,8 @@ namespace KMail {
 
     // capabilities
     QStringList mCapabilities;
+
+    std::set<QString> mLocalSubscriptionBlackList;
 
   signals:
     /**

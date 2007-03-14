@@ -86,6 +86,8 @@ using KMail::Vacation;
 
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
+#include "localsubscriptiondialog.h"
+using KMail::LocalSubscriptionDialog;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
 #include "headerstrategy.h"
@@ -3888,34 +3890,66 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSubscriptionDialog()
+QString KMMainWidget::findCurrentImapPath()
 {
-  if (!mFolder) return;
-
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-
-  ImapAccountBase* account;
   QString startPath;
+  if (!mFolder) return startPath;
   if (mFolder->folderType() == KMFolderTypeImap)
   {
     startPath = static_cast<KMFolderImap*>(mFolder->storage())->imapPath();
-    account = static_cast<KMFolderImap*>(mFolder->storage())->account();
   } else if (mFolder->folderType() == KMFolderTypeCachedImap)
   {
     startPath = static_cast<KMFolderCachedImap*>(mFolder->storage())->imapPath();
-    account = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
-  } else
-    return;
+  }
+  return startPath;
+}
 
+//-----------------------------------------------------------------------------
+ImapAccountBase* KMMainWidget::findCurrentImapAccountBase()
+{
+  ImapAccountBase* account = 0;
+  if (!mFolder) return account;
+  if (mFolder->folderType() == KMFolderTypeImap)
+  {
+    account = static_cast<KMFolderImap*>(mFolder->storage())->account();
+  } else if (mFolder->folderType() == KMFolderTypeCachedImap)
+  {
+    account = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
+  }
+  return account;
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSubscriptionDialog()
+{
+  if ( !kmkernel->askToGoOnline() )
+    return;
+  ImapAccountBase* account = findCurrentImapAccountBase();
+  if ( !account ) return;
+  const QString startPath = findCurrentImapPath();
+
+  // KSubscription sets "DestruciveClose"
+  SubscriptionDialog * dialog =
+      new SubscriptionDialog(this, i18n("Subscription"), account, startPath);
+  if ( dialog->exec() ) {
+    // start a new listing
+    if (mFolder->folderType() == KMFolderTypeImap)
+      static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotLocalSubscriptionDialog()
+{
+  ImapAccountBase* account = findCurrentImapAccountBase();
   if ( !account ) return;
 
-  SubscriptionDialog *dialog = new SubscriptionDialog(this,
-      i18n("Subscription"),
-      account, startPath);
-  // start a new listing
+  const QString startPath = findCurrentImapPath();
+  // KSubscription sets "DestruciveClose"
+  LocalSubscriptionDialog *dialog =
+      new LocalSubscriptionDialog(this, i18n("Local Subscription"), account, startPath);
   if ( dialog->exec() ) {
+    // start a new listing
     if (mFolder->folderType() == KMFolderTypeImap)
       static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
   }

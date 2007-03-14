@@ -187,4 +187,70 @@ AnnotationJobs::MultiSetAnnotationJob* AnnotationJobs::multiSetAnnotation(
   return new MultiSetAnnotationJob( slave, url, annotations, false /*showProgressInfo*/ );
 }
 
+
+AnnotationJobs::MultiUrlGetAnnotationJob::MultiUrlGetAnnotationJob( KIO::Slave* slave,
+                                                                    const KUrl& baseUrl,
+                                                                    const QStringList& paths,
+                                                                    const QString& annotation )
+  : KIO::Job( false ),
+    mSlave( slave ),
+    mUrl( baseUrl ),
+    mPathList( paths ),
+    mPathListIterator( mPathList.begin() ),
+    mAnnotation( annotation )
+{
+  QTimer::singleShot(0, this, SLOT(slotStart()));
+}
+
+
+void AnnotationJobs::MultiUrlGetAnnotationJob::slotStart()
+{
+  if ( mPathListIterator != mPathList.end() ) {
+    QStringList attributes;
+    attributes << "value";
+    KUrl url(mUrl);
+    url.setPath( *mPathListIterator );
+    KIO::Job* job = getAnnotation( mSlave, url, mAnnotation, attributes );
+    addSubjob( job );
+  } else { // done!
+    emitResult();
+  }
+}
+
+void AnnotationJobs::MultiUrlGetAnnotationJob::slotResult( KJob *job )
+{
+  if ( job->error() ) {
+    KIO::Job::slotResult( job ); // will set the error and emit result(this)
+    return;
+  }
+  removeSubjob( job );
+  const QString& path = *mPathListIterator;
+  GetAnnotationJob* getJob = static_cast<GetAnnotationJob *>( job );
+  const AnnotationList& lst = getJob->annotations();
+  for ( int i = 0 ; i < lst.size() ; ++ i ) {
+    kDebug(5006) << "MultiURL: found annotation " << lst[i].name << " = " << lst[i].value << " for path: " << path << endl;
+    if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
+      mAnnotations.insert( path, lst[i].value );
+      break;
+    }
+  }
+  // Move on to next one
+  ++mPathListIterator;
+  slotStart();
+}
+
+QMap<QString, QString> AnnotationJobs::MultiUrlGetAnnotationJob::annotations() const
+{
+  return mAnnotations;
+}
+
+AnnotationJobs::MultiUrlGetAnnotationJob* AnnotationJobs::multiUrlGetAnnotation( KIO::Slave* slave,
+                                                                                 const KUrl& baseUrl,
+                                                                                 const QStringList& paths,
+                                                                                 const QString& annotation )
+{
+  return new MultiUrlGetAnnotationJob( slave, baseUrl, paths, annotation );
+}
+
+
 #include "annotationjobs.moc"

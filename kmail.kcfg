@@ -168,6 +168,14 @@
         <default>true</default>
       </entry>
 
+      <entry name="ShowOnlyGroupwareFoldersForGroupwareAccount" type="Bool">
+        <default>false</default>
+        <whatsthis>&lt;p&gt;If the account used for storing groupware information "
+          "is not used to manage normal mail, set this option to make KMail only "
+          "show groupware folders in it. This is useful if you are handling regular "
+          "mail via an additional online IMAP account.&lt;/p&gt;</whatsthis>
+      </entry>
+
       <entry name="TheIMAPResourceStorageFormat" type="Enum">
         <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for addressbook folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
         <choices>
