@@ -56,7 +56,7 @@ namespace KMail {
 
     // "enable signatue" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Enable signature"), this );
-    QWhatsThis::add(mEnableCheck, 
+    QWhatsThis::add(mEnableCheck,
         i18n("Check this box if you want KMail to append a signature to mails "
              "written with this identity."));
     vlay->addWidget( mEnableCheck );
@@ -102,7 +102,7 @@ namespace KMail {
     int pageno = 0;
     // page 0: input field for direct entering:
     mTextEdit = new QTextEdit( widgetStack );
-    QWhatsThis::add(mTextEdit, 
+    QWhatsThis::add(mTextEdit,
         i18n("Use this field to enter an arbitrary static signature."));
     widgetStack->addWidget( mTextEdit, pageno );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
@@ -118,7 +118,7 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KURLRequester( page );
-    QWhatsThis::add(mFileRequester, 
+    QWhatsThis::add(mFileRequester,
         i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
@@ -145,7 +145,7 @@ namespace KMail {
     mCommandEdit = new KLineEdit( page );
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );
-    QWhatsThis::add(mCommandEdit, 
+    QWhatsThis::add(mCommandEdit,
         i18n("You can add an arbitrary command here, either with or without path "
              "depending on whether or not the command is in your Path. For every "
              "new mail, KMail will execute the command and use what it outputs (to "
@@ -228,25 +228,19 @@ namespace KMail {
 
 
   Signature SignatureConfigurator::signature() const {
-    switch ( signatureType() ) {
-    case Signature::Inlined:
-      return Signature( inlineText() );
-    case Signature::FromCommand:
-      return Signature( commandURL(), true );
-    case Signature::FromFile:
-      return Signature( fileURL(), false );
-    case Signature::Disabled:
-    default:
-      return Signature();
-    };
+    Signature sig;
+    sig.setType( signatureType() );
+    sig.setText( inlineText() );
+    if ( signatureType() == Signature::FromCommand )
+      sig.setUrl( commandURL(), true );
+    if ( signatureType() == Signature::FromFile )
+      sig.setUrl( fileURL(), false );
+    return sig;
   }
 
   void SignatureConfigurator::setSignature( const Signature & sig ) {
     setSignatureType( sig.type() );
-    if ( sig.type() == Signature::Inlined )
-      setInlineText( sig.text() );
-    else
-      setInlineText( QString::null );
+    setInlineText( sig.text() );
     if ( sig.type() == Signature::FromFile )
       setFileURL( sig.url() );
     else
