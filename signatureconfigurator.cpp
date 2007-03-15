@@ -121,7 +121,7 @@ namespace KMail {
 
     // page 1: "signature file" requester, label, "edit file" button:
     ++pageno;
-        page = new QWidget( widgetStack );
+    page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
@@ -244,25 +244,19 @@ namespace KMail {
 
 
   Signature SignatureConfigurator::signature() const {
-    switch ( signatureType() ) {
-    case Signature::Inlined:
-      return Signature( inlineText() );
-    case Signature::FromCommand:
-      return Signature( commandURL(), true );
-    case Signature::FromFile:
-      return Signature( fileURL(), false );
-    case Signature::Disabled:
-    default:
-      return Signature();
-    };
+    Signature sig;
+    sig.setType( signatureType() );
+    sig.setText( inlineText() );
+    if ( signatureType() == Signature::FromCommand )
+      sig.setUrl( commandURL(), true );
+    if ( signatureType() == Signature::FromFile )
+      sig.setUrl( fileURL(), false );
+    return sig;
   }
 
   void SignatureConfigurator::setSignature( const Signature & sig ) {
     setSignatureType( sig.type() );
-    if ( sig.type() == Signature::Inlined )
-      setInlineText( sig.text() );
-    else
-      setInlineText( QString() );
+    setInlineText( sig.text() );
     if ( sig.type() == Signature::FromFile )
       setFileURL( sig.url() );
     else
