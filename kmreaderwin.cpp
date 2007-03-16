@@ -417,6 +417,7 @@ kDebug(5006) << "                      Root node will NOT be replaced." << endl;
 
 void KMReaderWin::createWidgets() {
   QVBoxLayout * vlay = new QVBoxLayout( this );
+  vlay->setMargin( 0 );
   mSplitter = new QSplitter( Qt::Vertical, this );
   mSplitter->setObjectName( "mSplitter" );
   vlay->addWidget( mSplitter );
