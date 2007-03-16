@@ -394,8 +394,7 @@ void SubscriptionDialog::doSave()
   KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>(mAcct);
   if( !a->onlySubscribedFolders() ) {
       int result = KMessageBox::questionYesNoCancel( this,
-              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?")
-              .arg( a->name() ),
+              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?", a->name() ),
               i18n("Enable Subscriptions?"), KGuiItem( i18n("Enable") ), KGuiItem( i18n("Do Not Enable") ) );
       switch(result) {
           case KMessageBox::Yes:
