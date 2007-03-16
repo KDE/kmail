@@ -1847,18 +1847,32 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   mEditor->setText( otp.textualContent() );
   mCharset = otp.textualContentCharset();
-  if ( mCharset.isEmpty() )
-    mCharset = mMsg->charset();
-  if ( mCharset.isEmpty() )
-    mCharset = mDefCharset;
-  setCharset( mCharset );
 
   if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) )
     if ( partNode * p = n->parentNode() )
       if ( p->hasType( DwMime::kTypeMultipart ) &&
            p->hasSubType( DwMime::kSubtypeAlternative ) )
-        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" )
+        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" ) {
           toggleMarkup( true );
+
+          // get cte decoded body part
+          mCharset = n->msgPart().charset();
+          QByteArray bodyDecoded = n->msgPart().bodyDecoded();
+
+          // respect html part charset
+          const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+          if ( codec ) {
+            mEditor->setText( codec->toUnicode( bodyDecoded ) );
+          } else {
+            mEditor->setText( QString::fromLocal8Bit( bodyDecoded ) );
+          }
+        }
+
+  if ( mCharset.isEmpty() )
+    mCharset = mMsg->charset();
+  if ( mCharset.isEmpty() )
+    mCharset = mDefCharset;
+  setCharset( mCharset );
 
   /* Handle the special case of non-mime mails */
   if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
