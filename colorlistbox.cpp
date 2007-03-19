@@ -1,6 +1,7 @@
 /*
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
+ *                            2007 Mathias Soeken, msoeken@tzi.de
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
