@@ -21,26 +21,23 @@
 #ifndef _COLOR_LISTBOX_H_
 #define _COLOR_LISTBOX_H_
 
-#include <k3listbox.h>
-//Added by qt3to4:
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
+#include <QTreeWidget>
 
-class ColorListBox : public K3ListBox
+class ColorListBox : public QTreeWidget
 {
   Q_OBJECT
 
   public:
-    ColorListBox( QWidget *parent=0, const char * name=0, Qt::WFlags f=0 );
-    void setColor( uint index, const QColor &color );
-    QColor color( uint index ) const;
-signals:
+    ColorListBox( QWidget *parent=0 );
+    void addColor( const QString& text, const QColor& color=Qt::black );
+    void setColor( int index, const QColor &color );
+    QColor color( int index ) const;
+  signals:
     void changed();
-
-  public slots:
-    virtual void setEnabled( bool state );
 
   protected:
     void dragEnterEvent( QDragEnterEvent *e );
@@ -49,29 +46,11 @@ signals:
     void dropEvent( QDropEvent *e );
 
   private slots:
-    void newColor( int index );
+    void newColor( const QModelIndex& index );
 
   private:
-    int mCurrentOnDragEnter;
+    QTreeWidgetItem* mCurrentOnDragEnter;
 
-};
-
-
-class ColorListItem : public Q3ListBoxItem
-{
-  public:
-    ColorListItem( const QString &text, const QColor &color=Qt::black );
-    const QColor &color( void );
-    void  setColor( const QColor &color );
-
-  protected:
-    virtual void paint( QPainter * );
-    virtual int height( const Q3ListBox * ) const;
-    virtual int width( const Q3ListBox * ) const;
-
-  private:
-    QColor mColor;
-    int mBoxWidth;
 };
 
 #endif

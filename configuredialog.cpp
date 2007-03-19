@@ -1778,7 +1778,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   mColorList->setEnabled( false ); // since !mCustomColorCheck->isChecked()
   QStringList modeList;
   for ( int i = 0 ; i < numColorNames ; i++ )
-    mColorList->insertItem( new ColorListItem( i18n( colorNames[i].displayName ) ) );
+    mColorList->addColor( i18n(colorNames[i].displayName) );
   vlay->addWidget( mColorList, 1 );
 
   // "recycle colors" check box:
