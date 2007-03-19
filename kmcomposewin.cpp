@@ -3344,13 +3344,26 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
                                "not have to enter it for each message.") );
       return;
     }
-    if (to().isEmpty() && cc().isEmpty() && bcc().isEmpty())
+    if ( to().isEmpty() )
     {
-      mEdtTo->setFocus();
-      KMessageBox::information( this,
+        if (  cc().isEmpty() && bcc().isEmpty()) {
+          mEdtTo->setFocus();
+          KMessageBox::information( this,
                                 i18n("You must specify at least one receiver,"
                                      "either in the To: field or as CC or as BCC.") );
-      return;
+          return;
+        }
+        else {
+                mEdtTo->setFocus();
+                int rc =
+                            KMessageBox::questionYesNo( this,
+                                                        i18n("To field is missing."
+                                                              "Send message anyway?"),
+                                                        i18n("No To: specified") );
+                if ( rc == KMessageBox::No ){
+                   return;
+                }
+        }
     }
 
     if (subject().isEmpty())
