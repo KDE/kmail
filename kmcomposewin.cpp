@@ -3801,13 +3801,28 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
                                "not have to enter it for each message.") );
       return;
     }
-    if (to().isEmpty() && cc().isEmpty() && bcc().isEmpty())
-    {
-      if ( mEdtTo ) mEdtTo->setFocus();
-      KMessageBox::information( this,
-                                i18n("You must specify at least one receiver,"
-                                     "either in the To: field or as CC or as BCC.") );
-      return;
+    if ( to().isEmpty() ) {
+      if ( cc().isEmpty() && bcc().isEmpty() ) {
+        if ( mEdtTo ) {
+          mEdtTo->setFocus();
+        }
+        KMessageBox::information( this,
+                                  i18n("You must specify at least one receiver,"
+                                       "either in the To: field or as CC or as BCC.") );
+
+        return;
+      } else {
+        if ( mEdtTo ) {
+          mEdtTo->setFocus();
+        }
+        int rc = KMessageBox::questionYesNo( this,
+                                             i18n("To: field is empty. "
+                                                  "Send message anyway?"),
+                                             i18n("No To: specified") );
+        if ( rc == KMessageBox::No ) {
+          return;
+        }
+      }
     }
 
     // Validate the To:, CC: and BCC fields
