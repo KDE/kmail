@@ -29,7 +29,7 @@
 #ifndef KMWIZARD_H
 #define KMWIZARD_H
 
-#include <k3wizard.h>
+#include <KAssistantDialog>
 
 #include <QLabel>
 #include <QList>
@@ -48,7 +48,7 @@ namespace KPIM {
 class ServerTest;
 }
 
-class AccountWizard : public K3Wizard
+class AccountWizard : public KAssistantDialog
 {
   Q_OBJECT
 
@@ -65,7 +65,7 @@ class AccountWizard : public K3Wizard
     /**
       Reimplemented
      */
-    void showPage( QWidget *page );
+    //void setCurrentPage( KPageWidgetItem *page );
 
   protected:
     AccountWizard( KMKernel *kernel, QWidget *parent );
@@ -87,6 +87,8 @@ class AccountWizard : public K3Wizard
     void finished();
 
   private slots:
+    void slotCurrentPageChanged( KPageWidgetItem *current, KPageWidgetItem *before );
+    
     void popCapabilities( const QStringList&, const QStringList& );
     void imapCapabilities( const QStringList&, const QStringList& );
     void smtpCapabilities( const QStringList&, const QStringList&,
@@ -104,21 +106,21 @@ class AccountWizard : public K3Wizard
     uint authMethodsFromString( const QString& );
     uint authMethodsFromStringList( const QStringList& );
 
-    QWidget *mWelcomePage;
+    KPageWidgetItem *mWelcomePage;
 
-    QWidget *mAccountTypePage;
+    KPageWidgetItem *mAccountTypePage;
     AccountTypeBox *mTypeBox;
 
-    QWidget *mAccountInformationPage;
+    KPageWidgetItem *mAccountInformationPage;
     KLineEdit *mRealName;
     KLineEdit *mEMailAddress;
     KLineEdit *mOrganization;
 
-    QWidget *mLoginInformationPage;
+    KPageWidgetItem *mLoginInformationPage;
     KLineEdit *mLoginName;
     KLineEdit *mPassword;
 
-    QWidget *mServerInformationPage;
+    KPageWidgetItem *mServerInformationPage;
     QLabel *mIncomingLabel;
     KLineEdit *mIncomingServer;
     QCheckBox *mIncomingUseSSL;

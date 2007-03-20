@@ -31,7 +31,6 @@
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <klineedit.h>
-#include <k3listbox.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
@@ -41,6 +40,7 @@
 
 #include <QLabel>
 #include <QLayout>
+#include <QListWidget>
 #include <QPushButton>
 
 //Added by qt3to4:
@@ -83,13 +83,13 @@ enum Capabilities
   AllCapa    = 0xffffffff
 };
 
-class AccountTypeBox : public K3ListBox
+class AccountTypeBox : public QListWidget
 {
   public:
     enum Type { Local, POP3, IMAP, dIMAP, Maildir };
 
     AccountTypeBox( QWidget *parent )
-      : K3ListBox( parent, "AccountTypeBox" )
+      : QListWidget( parent )
     {
       mTypeList << i18n( "Local mailbox" );
       mTypeList << i18n( "POP3" );
@@ -97,17 +97,18 @@ class AccountTypeBox : public K3ListBox
       mTypeList << i18n( "Disconnected IMAP" );
       mTypeList << i18n( "Maildir mailbox" );
 
-      insertStringList( mTypeList );
+      setSelectionBehavior( QAbstractItemView::SelectRows );
+      addItems( mTypeList );
     }
 
     void setType( Type type )
     {
-      setCurrentItem( (int)type );
+      setCurrentRow( (int)type );
     }
 
     Type type() const
     {
-      return (Type)currentItem();
+      return (Type)currentRow();
     }
 
   private:
@@ -115,14 +116,18 @@ class AccountTypeBox : public K3ListBox
 };
 
 AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
-  : K3Wizard( parent, "KWizard" ), mKernel( kernel ),
+  : KAssistantDialog( parent ), mKernel( kernel ),
     mAccount( 0 ), mTransportInfo( 0 ), mServerTest( 0 )
 {
+  showButton( Help, false );
+  
   setupWelcomePage();
   setupAccountTypePage();
   setupAccountInformationPage();
   setupLoginInformationPage();
   setupServerInformationPage();
+  
+  connect( this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT(slotCurrentPageChanged(KPageWidgetItem*, KPageWidgetItem*)) );
 }
 
 AccountWizard::~AccountWizard()
@@ -144,14 +149,14 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
   }
 }
 
-void AccountWizard::showPage( QWidget *page )
+void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current, KPageWidgetItem *before )
 {
-  if ( page == mWelcomePage ) {
+  if ( current == mWelcomePage ) {
     // do nothing
-  } else if ( page == mAccountTypePage ) {
-    if ( mTypeBox->currentItem() == -1 )
+  } else if ( current == mAccountTypePage ) {
+    if ( !mTypeBox->currentItem() )
       mTypeBox->setType( AccountTypeBox::POP3 );
-  } else if ( page == mAccountInformationPage ) {
+  } else if ( current == mAccountInformationPage ) {
     if ( mRealName->text().isEmpty() && mEMailAddress->text().isEmpty() &&
          mOrganization->text().isEmpty() ) {
       KPIM::IdentityManager *manager = mKernel->identityManager();
@@ -161,7 +166,7 @@ void AccountWizard::showPage( QWidget *page )
       mEMailAddress->setText( identity.emailAddr() );
       mOrganization->setText( identity.organization() );
     }
-  } else if ( page == mLoginInformationPage ) {
+  } else if ( current == mLoginInformationPage ) {
     if ( mLoginName->text().isEmpty() ) {
       // try to extract login from email address
       QString email = mEMailAddress->text();
@@ -171,7 +176,7 @@ void AccountWizard::showPage( QWidget *page )
 
       // take the whole email as login otherwise?!?
     }
-  } else if ( page == mServerInformationPage ) {
+  } else if ( current == mServerInformationPage ) {
     if ( mTypeBox->type() == AccountTypeBox::Local ||
          mTypeBox->type() == AccountTypeBox::Maildir ) {
       mIncomingServerWdg->hide();
@@ -187,19 +192,15 @@ void AccountWizard::showPage( QWidget *page )
       mIncomingServerWdg->show();
       mIncomingLabel->setText( i18n( "Incoming server:" ) );
     }
-
-    setFinishEnabled( mServerInformationPage, true );
   }
-
-  Q3Wizard::showPage( page );
 }
 
 void AccountWizard::setupWelcomePage()
 {
-  mWelcomePage = new KVBox( this );
-  ((KVBox*)mWelcomePage)->setSpacing( KDialog::spacingHint() );
+  KVBox *box = new KVBox( this );
+  box->setSpacing( KDialog::spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "Welcome to KMail" ), mWelcomePage );
+  QLabel *label = new QLabel( i18n( "Welcome to KMail" ), box );
   QFont font = label->font();
   font.setBold( true );
   label->setFont( font );
@@ -207,93 +208,98 @@ void AccountWizard::setupWelcomePage()
   QLabel *message = new QLabel( i18n( "<qt>It seems you have started KMail for the first time. "
                     "You can use this wizard to setup your mail accounts. Just "
                     "enter the connection data that you received from your email provider "
-                    "into the following pages.</qt>" ), mWelcomePage );
+                    "into the following pages.</qt>" ), box );
   message->setWordWrap(true);
-  addPage( mWelcomePage, i18n( "Welcome" ) );
+  
+  mWelcomePage = new KPageWidgetItem( box, i18n("Welcome") );
+  addPage( mWelcomePage );
 }
 
 void AccountWizard::setupAccountTypePage()
 {
-  mAccountTypePage = new KVBox( this );
-  ((KVBox*)mAccountTypePage)->setSpacing( KDialog::spacingHint() );
+  KVBox *box = new KVBox( this );
+  box->setSpacing( KDialog::spacingHint() );
 
-  new QLabel( i18n( "Select what kind of account you would like to create" ), mAccountTypePage );
+  new QLabel( i18n( "Select what kind of account you would like to create" ), box );
 
-  mTypeBox = new AccountTypeBox( mAccountTypePage );
+  mTypeBox = new AccountTypeBox( box );
 
-  addPage( mAccountTypePage, i18n( "Account Type" ) );
+  mAccountTypePage = new KPageWidgetItem( box, i18n("Account Type") );
+  addPage( mAccountTypePage );
 }
 
 void AccountWizard::setupAccountInformationPage()
 {
-  mAccountInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mAccountInformationPage );
+  QWidget *page = new QWidget( this );
+  QGridLayout *layout = new QGridLayout( page );
   layout->setSpacing( KDialog::spacingHint() );
   layout->setMargin( KDialog::marginHint() );
 
-  QLabel *label = new QLabel( i18n( "Real name:" ), mAccountInformationPage );
-  mRealName = new KLineEdit( mAccountInformationPage );
+  QLabel *label = new QLabel( i18n( "Real name:" ), page );
+  mRealName = new KLineEdit( page );
   label->setBuddy( mRealName );
 
   layout->addWidget( label, 0, 0 );
   layout->addWidget( mRealName, 0, 1 );
 
-  label = new QLabel( i18n( "E-mail address:" ), mAccountInformationPage );
-  mEMailAddress = new KLineEdit( mAccountInformationPage );
+  label = new QLabel( i18n( "E-mail address:" ), page );
+  mEMailAddress = new KLineEdit( page );
   label->setBuddy( mEMailAddress );
 
   layout->addWidget( label, 1, 0 );
   layout->addWidget( mEMailAddress, 1, 1 );
 
-  label = new QLabel( i18n( "Organization:" ), mAccountInformationPage );
-  mOrganization = new KLineEdit( mAccountInformationPage );
+  label = new QLabel( i18n( "Organization:" ), page );
+  mOrganization = new KLineEdit( page );
   label->setBuddy( mOrganization );
 
   layout->addWidget( label, 2, 0 );
   layout->addWidget( mOrganization, 2, 1 );
 
-  addPage( mAccountInformationPage, i18n( "Account Information" ) );
+  mAccountInformationPage= new KPageWidgetItem( page, i18n("Account Information") );
+  addPage( mAccountInformationPage );
 }
 
 void AccountWizard::setupLoginInformationPage()
 {
-  mLoginInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mLoginInformationPage );
+  QWidget *page = new QWidget( this );
+  QGridLayout *layout = new QGridLayout( page );
   layout->setSpacing( KDialog::spacingHint() );
   layout->setMargin( KDialog::marginHint() );
 
-  QLabel *label = new QLabel( i18n( "Login name:" ), mLoginInformationPage );
-  mLoginName = new KLineEdit( mLoginInformationPage );
+  QLabel *label = new QLabel( i18n( "Login name:" ), page );
+  mLoginName = new KLineEdit( page );
   label->setBuddy( mLoginName );
 
   layout->addWidget( label, 0, 0 );
   layout->addWidget( mLoginName, 0, 1 );
 
-  label = new QLabel( i18n( "Password:" ), mLoginInformationPage );
-  mPassword = new KLineEdit( mLoginInformationPage );
+  label = new QLabel( i18n( "Password:" ), page );
+  mPassword = new KLineEdit( page );
   mPassword->setEchoMode( QLineEdit::Password );
   label->setBuddy( mPassword );
 
   layout->addWidget( label, 1, 0 );
   layout->addWidget( mPassword, 1, 1 );
 
-  addPage( mLoginInformationPage, i18n( "Login Information" ) );
+  mLoginInformationPage = new KPageWidgetItem( page, i18n("Login Information") );
+  addPage( mLoginInformationPage );
 }
 
 void AccountWizard::setupServerInformationPage()
 {
-  mServerInformationPage = new QWidget( this );
-  QGridLayout *layout = new QGridLayout( mServerInformationPage );
+  QWidget *page = new QWidget( this );
+  QGridLayout *layout = new QGridLayout( page );
   layout->setSpacing( KDialog::spacingHint() );
   layout->setMargin( KDialog::marginHint() );
 
-  mIncomingLabel = new QLabel( mServerInformationPage );
+  mIncomingLabel = new QLabel( page );
 
-  mIncomingServerWdg = new KVBox( mServerInformationPage );
+  mIncomingServerWdg = new KVBox( page );
   mIncomingServer = new KLineEdit( mIncomingServerWdg );
   mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), mIncomingServerWdg );
 
-  mIncomingLocationWdg = new KHBox( mServerInformationPage );
+  mIncomingLocationWdg = new KHBox( page );
   mIncomingLocation = new KLineEdit( mIncomingLocationWdg );
   mChooseLocation = new QPushButton( i18n( "Choose..." ), mIncomingLocationWdg );
 
@@ -301,27 +307,28 @@ void AccountWizard::setupServerInformationPage()
            this, SLOT( chooseLocation() ) );
 
   layout->addWidget( mIncomingLabel, 0, 0, Qt::AlignTop );
-  layout->addWidget( mIncomingLocationWdg, 0, 1 );
+  layout->addWidget( mIncomingLocationWdg, 0, 1, Qt::AlignTop );
   layout->addWidget( mIncomingServerWdg, 0, 1 );
 
-  QLabel *label = new QLabel( i18n( "Outgoing server:" ), mServerInformationPage );
-  mOutgoingServer = new KLineEdit( mServerInformationPage );
+  QLabel *label = new QLabel( i18n( "Outgoing server:" ), page );
+  mOutgoingServer = new KLineEdit( page );
   label->setBuddy( mOutgoingServer );
 
   layout->addWidget( label, 1, 0 );
   layout->addWidget( mOutgoingServer, 1, 1 );
 
-  mOutgoingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), mServerInformationPage );
+  mOutgoingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), page );
   layout->addWidget( mOutgoingUseSSL, 2, 1 );
 
   mLocalDelivery = new QCheckBox( i18n( "Use local delivery" ),
-                                  mServerInformationPage );
+                                  page );
   layout->addWidget( mLocalDelivery, 3, 0 );
 
   connect( mLocalDelivery, SIGNAL( toggled( bool ) ),
            mOutgoingServer, SLOT( setDisabled( bool ) ) );
 
-  addPage( mServerInformationPage, i18n( "Server Information" ) );
+  mServerInformationPage = new KPageWidgetItem( page, i18n("Server Information") );
+  addPage( mServerInformationPage );
 }
 
 void AccountWizard::chooseLocation()
@@ -513,7 +520,7 @@ void AccountWizard::finished()
 {
   GlobalSettings::self()->writeConfig();
 
-  Q3Wizard::accept();
+  KAssistantDialog::accept();
 }
 
 // ----- Security Checks --------------
