@@ -30,8 +30,8 @@
 #define KMAIL_ANTISPAMWIZARD_H
 
 #include <kconfig.h>
-#include <k3listbox.h>
-#include <k3wizard.h>
+
+#include <KAssistantDialog>
 
 #include <QCheckBox>
 #include <q3dict.h>
@@ -40,6 +40,7 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QList>
+#include <QListWidget>
 #include <QBoxLayout>
 
 class KActionCollection;
@@ -106,7 +107,7 @@ namespace KMail {
     and it's expected in the config dir of KDE.
 
   */
-  class AntiSpamWizard : public K3Wizard
+  class AntiSpamWizard : public KAssistantDialog
   {
     Q_OBJECT
 
@@ -326,7 +327,7 @@ namespace KMail {
       QLabel *mIntroText;
       QLabel *mScanProgressText;
       QLabel *mSelectionHint;
-      K3ListBox *mToolsList;
+      QListWidget *mToolsList;
   };
 
   //---------------------------------------------------------------------------

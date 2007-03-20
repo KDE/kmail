@@ -69,7 +69,7 @@ using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
                                 QWidget* parent, KMFolderTree * mainFolderTree )
-  : K3Wizard( parent ),
+  : KAssistantDialog( parent ),
     mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
     mVirusRulesPage( 0 ),
@@ -134,13 +134,9 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
   connect( this, SIGNAL( helpClicked( void) ),
             this, SLOT( slotHelpClicked( void ) ) );
 
-  setNextEnabled( mInfoPage, false );
-
   if ( mMode == AntiSpam ) {
     mSummaryPage = new ASWizSummaryPage( 0, "" );
     addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
-    setNextEnabled( mSpamRulesPage, true );
-    setFinishEnabled( mSummaryPage, true );
   }
 
   QTimer::singleShot( 0, this, SLOT( checkToolAvailability( void ) ) );
@@ -492,13 +488,13 @@ void AntiSpamWizard::checkProgramsSelections()
   if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
     checkVirusRulesSelections();
 
-  setNextEnabled( mInfoPage, status );
+  //setNextEnabled( mInfoPage, status );
 }
 
 
 void AntiSpamWizard::checkVirusRulesSelections()
 {
-  setFinishEnabled( mVirusRulesPage, anyVirusOptionChecked() );
+  //setFinishEnabled( mVirusRulesPage, anyVirusOptionChecked() );
 }
 
 
@@ -908,13 +904,13 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   mScanProgressText->setText( "" ) ;
   layout->addWidget( mScanProgressText );
 
-  mToolsList = new K3ListBox( this );
+  mToolsList = new QListWidget( this );
   mToolsList->hide();
-  mToolsList->setSelectionMode( Q3ListBox::Multi );
-  mToolsList->setRowMode( Q3ListBox::FixedNumber );
-  mToolsList->setRowMode( 10 );
+  mToolsList->setSelectionMode( QAbstractItemView::MultiSelection );
+  mToolsList->setLayoutMode( QListView::Batched );
+  mToolsList->setBatchSize( 10 );
   layout->addWidget( mToolsList );
-  connect( mToolsList, SIGNAL(selectionChanged()),
+  connect( mToolsList->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
            this, SLOT(processSelectionChange(void)) );
 
   mSelectionHint = new QLabel( this );
@@ -934,11 +930,12 @@ void ASWizInfoPage::setScanProgressText( const QString &toolName )
 void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 {
   QString listName = visibleName;
-  mToolsList->insertItem( listName );
+  mToolsList->addItem( listName );
   if ( !mToolsList->isVisible() )
   {
     mToolsList->show();
-    mToolsList->setSelected( 0, true );
+    mToolsList->selectionModel()->clearSelection();
+    mToolsList->setCurrentRow( 0 );
     mSelectionHint->setText( i18n("<p>Please select the tools to be used "
                                   "for the spam detection and go "
                                   "to the next page.</p>") );
@@ -948,7 +945,9 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
 {
   QString listName = visibleName;
-  return mToolsList->isSelected( mToolsList->findItem( listName ) );
+  
+  QList<QListWidgetItem*> foundItems = mToolsList->findItems( listName, Qt::MatchFixedString );
+  return (foundItems.size() > 0 && foundItems[0]->isSelected());
 }
 
 
