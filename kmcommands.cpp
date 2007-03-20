@@ -2345,7 +2345,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     KMimeType::Ptr mime = KMimeType::findByUrl( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||
-        mime->name() == "application/x-msdos-program" ||
+        mime->name() == "application/x-ms-dos-executable" ||
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" ,

@@ -104,7 +104,7 @@ void KMSoundTestWidget::openSoundDialog( KUrlRequester * )
     KFileDialog *fileDialog = m_urlRequester->fileDialog();
     fileDialog->setCaption( i18n("Select Sound File") );
     QStringList filters;
-    filters << "audio/x-wav" << "audio/x-mp3" << "application/x-ogg"
+    filters << "audio/x-wav" << "audio/mpeg" << "application/ogg"
             << "audio/x-adpcm";
     fileDialog->setMimeFilter( filters );
 
