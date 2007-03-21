@@ -919,7 +919,7 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
   QPtrList<KMFolder> toRemove;
   if (!folder()->child())
     return;
-    
+
   KMFolderNode *node = folder()->child()->first();
   while ( node )
   {
@@ -1078,9 +1078,13 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   kdDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
-  if ( it == mAccount->jobsEnd() ) return;
-  if (job->error()) {
-    if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
+  if ( it == mAccount->jobsEnd() )
+  {
+    // the job has been killed internally, so we're not interested in its results
+    job = 0;
+  }
+  if (!job || job->error()) {
+    if ( job && job->error() != KIO::ERR_ACCESS_DENIED ) {
       // we suppress access denied messages because they are normally a result of
       // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that
       // we notice when this changes
