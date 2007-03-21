@@ -51,6 +51,9 @@ using KMail::FolderJob;
 using KMail::QuotaInfo;
 class KMAcctCachedImap;
 
+class QComboBox;
+class QRadioButton;
+
 namespace KMail {
   class AttachmentStrategy;
   class ImapAccountBase;
@@ -62,15 +65,24 @@ class DImapTroubleShootDialog : public KDialog
 {
   Q_OBJECT
 public:
+  enum SelectedOperation {
+    None = -1,
+    ReindexCurrent = 0,
+    ReindexRecursive = 1,
+    ReindexAll = 2,
+    RefreshCache
+  };
+
   DImapTroubleShootDialog( QWidget* parent=0 );
 
   static int run();
 
 private slots:
-  void slotRebuildIndex();
-  void slotRebuildCache();
+  void slotDone();
 
 private:
+  QRadioButton *mIndexButton, *mCacheButton;
+  QComboBox *mIndexScope;
   int rc;
 };
 
@@ -192,6 +204,8 @@ public:
 
   virtual int createIndexFromContents()
     { return KMFolderMaildir::createIndexFromContents(); }
+
+  int createIndexFromContentsRecursive();
 
   //virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
 

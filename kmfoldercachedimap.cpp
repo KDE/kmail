@@ -74,9 +74,13 @@ using KMail::ListJob;
 #include <kio/global.h>
 #include <kio/scheduler.h>
 #include <QBuffer>
+#include <QButtonGroup>
+#include <QComboBox>
 #include <QFile>
 #include <QLabel>
 #include <QLayout>
+#include <QRadioButton>
+#include <khbox.h>
 
 #include "annotationjobs.h"
 #include "quotajobs.h"
@@ -103,10 +107,10 @@ static KMFolderCachedImap::IncidencesFor incidencesForFromString( const QString&
 
 DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent )
   : KDialog( parent ),
-    rc( Cancel )
+    rc( None )
 {
   setCaption( i18n( "Troubleshooting IMAP Cache" ) );
-  setButtons( Cancel | User1 | User2 );
+  setButtons( Ok | Cancel );
   setDefaultButton( Cancel );
   setModal( true );
 
@@ -125,11 +129,32 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent )
   topLayout->addWidget( new QLabel( txt, page ) );
   showButtonSeparator( true );
 
-  setButtonText( User1, i18n( "Refresh &Cache" ) );
-  setButtonText( User2, i18n( "Rebuild &Index" ) );
+  QButtonGroup *group = new QButtonGroup( 0 );
 
-  connect( this, SIGNAL( user1Clicked () ), this, SLOT( slotRebuildCache() ) );
-  connect( this, SIGNAL( user2Clicked () ), this, SLOT( slotRebuildIndex() ) );
+  mIndexButton = new QRadioButton( page );
+  mIndexButton->setText( i18n( "Rebuild &Index" ) );
+  group->insert( mIndexButton );
+  topLayout->addWidget( mIndexButton );
+
+  KHBox *hbox = new KHBox( page );
+  QLabel *scopeLabel = new QLabel( i18n( "Scope:" ), hbox );
+  scopeLabel->setEnabled( false );
+  mIndexScope = new QComboBox( hbox );
+  mIndexScope->addItem( i18n( "Only current folder" ) );
+  mIndexScope->addItem( i18n( "Current folder and all subfolders" ) );
+  mIndexScope->addItem( i18n( "All folder of this account" ) );
+  mIndexScope->setEnabled( false );
+  topLayout->addWidget( hbox );
+
+  mCacheButton = new QRadioButton( page );
+  mCacheButton->setText( i18n( "Refresh &Cache" ) );
+  group->insert( mCacheButton );
+  topLayout->addWidget( mCacheButton );
+
+  connect ( mIndexButton, SIGNAL(toggled(bool)), mIndexScope, SLOT(setEnabled(bool)) );
+  connect ( mIndexButton, SIGNAL(toggled(bool)), scopeLabel, SLOT(setEnabled(bool)) );
+
+  connect( this, SIGNAL( okClicked () ), this, SLOT( slotDone() ) );
 }
 
 int DImapTroubleShootDialog::run()
@@ -139,16 +164,14 @@ int DImapTroubleShootDialog::run()
   return d.rc;
 }
 
-void DImapTroubleShootDialog::slotRebuildCache()
+void DImapTroubleShootDialog::slotDone()
 {
-  rc = User1;
-  done( User1 );
-}
-
-void DImapTroubleShootDialog::slotRebuildIndex()
-{
-  rc = User2;
-  done( User2 );
+  rc = None;
+  if ( mIndexButton->isChecked() )
+    rc = mIndexScope->currentIndex();
+  else if ( mCacheButton->isChecked() )
+    rc = RefreshCache;
+  done( Ok );
 }
 
 
@@ -548,7 +571,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 {
   const int rc = DImapTroubleShootDialog::run();
 
-  if( rc == KDialog::User1 ) {
+  if( rc == DImapTroubleShootDialog::RefreshCache ) {
     // Refresh cache
     if( !account() ) {
       KMessageBox::sorry( 0, i18n("No account setup for this folder.\n"
@@ -564,9 +587,25 @@ void KMFolderCachedImap::slotTroubleshoot()
     if( KMessageBox::warningContinueCancel( 0, str, s1, KGuiItem(s2) ) ==
         KMessageBox::Continue )
       account()->invalidateIMAPFolders( this );
-  } else if( rc == KDialog::User2 ) {
+  } else {
     // Rebuild index file
-    createIndexFromContents();
+    switch ( rc ) {
+      case DImapTroubleShootDialog::ReindexAll:
+      {
+        KMFolderCachedImap *rootStorage = dynamic_cast<KMFolderCachedImap*>( account()->rootFolder() );
+        if ( rootStorage )
+          rootStorage->createIndexFromContentsRecursive();
+        break;
+      }
+      case DImapTroubleShootDialog::ReindexCurrent:
+        createIndexFromContents();
+        break;
+      case DImapTroubleShootDialog::ReindexRecursive:
+        createIndexFromContentsRecursive();
+        break;
+      default:
+        return;
+    }
     KMessageBox::information( 0, i18n( "The index of this folder has been "
                                        "recreated." ) );
   }
@@ -1417,7 +1456,7 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
 void KMFolderCachedImap::listMessages() {
   bool groupwareOnly = GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
                && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
-               && folder()->isSystemFolder() 
+               && folder()->isSystemFolder()
                && mImapPath == "/INBOX/";
   // Don't list messages on the root folder, and skip the inbox, if this is
   // the inbox of a groupware-only dimap account
@@ -1909,11 +1948,11 @@ void KMFolderCachedImap::listDirectory2()
    * If a folder is already known to be locally unsubscribed, it won't be
    * listed at all, on this level, so these are only folders that we are
    * seeing for the first time. */
-     
+
   /*  Note: We ask the globalsettings, and not the current state of the
-   *  kmkernel->iCalIface().isEnabled(), since that is false during the 
+   *  kmkernel->iCalIface().isEnabled(), since that is false during the
    *  very first sync, where we already want to filter. */
-  if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() 
+  if ( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount()
      && GlobalSettings::self()->theIMAPResourceAccount() == (int)mAccount->id()
      && mAccount->hasAnnotationSupport()
      && GlobalSettings::self()->theIMAPResourceEnabled()
@@ -2503,6 +2542,24 @@ void KMFolderCachedImap::slotFolderDeletionOnServerFinished()
     kmkernel->iCalIface().folderDeletedOnServer( url );
   }
   serverSyncInternal();
+}
+
+int KMFolderCachedImap::createIndexFromContentsRecursive()
+{
+  if ( !folder() || !folder()->child() )
+    return 0;
+
+  for( QList<KMFolderNode*>::Iterator it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    if( !(*it)->isDir() ) {
+      KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(*it)->storage());
+      kDebug() << k_funcinfo << "Re-indexing: " << storage->folder()->label() << endl;
+      int rv = storage->createIndexFromContentsRecursive();
+      if ( rv > 0 )
+        return rv;
+    }
+  }
+
+  return createIndexFromContents();
 }
 
 #include "kmfoldercachedimap.moc"
