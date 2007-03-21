@@ -854,7 +854,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
     KMFolder *folder = kmkernel->findFolderById( *it );
 
-    if ( !folder->ignoreNewMail() ) {
+    if ( folder && !folder->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18n( "1 new message in %1",
