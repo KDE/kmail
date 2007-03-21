@@ -845,6 +845,12 @@ public:
   /** Set cursor position as offset from message start */
   void setCursorPos(int pos) { mCursorPos = pos; };
 
+  /* This is set in kmreaderwin if a message is being parsed to avoid
+     other parts of kmail (e.g. kmheaders) destroying the message.
+     Parsing can take longer and can be async (in case of gpg mails) */
+  bool isBeingParsed() const { return mIsParsed; }
+  void setIsBeingParsed( bool t ) { mIsParsed = t; }
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -859,6 +865,7 @@ private:
   bool mDecodeHTML :1;
   bool mReadyToShow :1;
   bool mComplete :1;
+  bool mIsParsed :1;
   static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
   const QTextCodec * mOverrideCodec;

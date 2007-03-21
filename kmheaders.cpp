@@ -1770,6 +1770,10 @@ void KMHeaders::nextMessage()
 
 void KMHeaders::selectNextMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() ) {
+    return;
+  }
   Q3ListViewItem *lvi = currentItem();
   if( lvi ) {
     Q3ListViewItem *below = lvi->itemBelow();
@@ -1804,6 +1808,10 @@ void KMHeaders::prevMessage()
 
 void KMHeaders::selectPrevMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() ) {
+    return;
+  }
   Q3ListViewItem *lvi = currentItem();
   if( lvi ) {
     Q3ListViewItem *above = lvi->itemAbove();
@@ -1827,6 +1835,10 @@ void KMHeaders::selectPrevMessage()
 
 void KMHeaders::incCurrentMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() ) {
+    return;
+  }
   Q3ListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemBelow() ) {
 
@@ -1842,6 +1854,10 @@ void KMHeaders::incCurrentMessage()
 
 void KMHeaders::decCurrentMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() ) {
+    return;
+  }
   Q3ListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemAbove() ) {
     disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),

@@ -1475,7 +1475,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   assert(aMsg!=0);
 
-  delete mRootNode;
+  aMsg->setIsBeingParsed( true );
+
+  if ( mRootNode && !mRootNode->processed() ) {
+    kWarning() << "The root node is not yet processed! Danger!\n";
+    return;
+  } else {
+    delete mRootNode;
+  }
   mRootNode = partNode::fromMessage( aMsg );
   const QByteArray mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
@@ -1610,6 +1617,8 @@ kDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
     showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
 		      rootNodeCntSubtype == DwMime::kSubtypePlain );
   }
+
+  aMsg->setIsBeingParsed( false );
 }
 
 

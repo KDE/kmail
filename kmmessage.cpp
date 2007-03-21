@@ -157,6 +157,7 @@ void KMMessage::init( DwMessage* aMsg )
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
   mCursorPos = 0;
+  mIsParsed = false;
 }
 
 void KMMessage::assign( const KMMessage& other )
@@ -179,6 +180,7 @@ void KMMessage::assign( const KMMessage& other )
   mEncryptionState = other.mEncryptionState;
   mSignatureState = other.mSignatureState;
   mMDNSentState = other.mMDNSentState;
+  mIsParsed = other.mIsParsed;
   mDate    = other.mDate;
   if( other.hasUnencryptedMsg() )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
