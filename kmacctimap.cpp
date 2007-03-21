@@ -342,7 +342,7 @@ void KMAcctImap::processNewMail(bool interactive)
         else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
-          bool ok = imapFolder->processNewMail(interactive);
+          bool ok = imapFolder->processNewMail(interactive); // this removes the local kmfolderimap if its imapPath is somehow empty, and removing it calls createFolderList, invalidating mMailCheckFolders, and causing a crash
           if (!ok)
           {
             // there was an error so cancel
@@ -352,6 +352,8 @@ void KMAcctImap::processNewMail(bool interactive)
               mMailCheckProgressItem->incCompletedItems();
               mMailCheckProgressItem->updateProgress();
             }
+            // since the list of folders might have been updated at this point, mMailCheckFolders may be invalid, so break
+            break;
           }
         }
       }
