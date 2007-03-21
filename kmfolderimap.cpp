@@ -1108,9 +1108,12 @@ void KMFolderImap::slotCheckValidityResult(KJob * job)
   kDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = account()->findJob(static_cast<KIO::Job*>(job));
-  if ( it == account()->jobsEnd() ) return;
-  if (job->error()) {
-    if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
+  if ( it == account()->jobsEnd() ) {
+    // the job has been killed internally, so we're not interested in its results
+    job = 0;
+  }
+  if ( !job || job->error() ) {
+    if ( job && job->error() != KIO::ERR_ACCESS_DENIED ) {
       // we suppress access denied messages because they are normally a result of
       // explicitly set ACLs. Do not save this information (e.g. setNoContent) so that
       // we notice when this changes
