@@ -531,6 +531,7 @@ private:
   KXMLGUIClient *mGUIClient;
 
   static QValueList<KMMainWidget*>* s_mainWidgetList;
+  bool mOpenedImapFolder;
 };
 
 #endif

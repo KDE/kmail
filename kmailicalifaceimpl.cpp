@@ -555,6 +555,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 #endif
     }
   }
+  f->close();
   return aMap;
 }
 
