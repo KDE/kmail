@@ -15,6 +15,7 @@ using KMail::HeaderItem;
 #include "kmmsgdict.h"
 #include "kmdebug.h"
 #include "kmfoldertree.h"
+#include "kmfolderimap.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "actionscheduler.h"
@@ -244,10 +245,13 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
 //-----------------------------------------------------------------------------
 KMHeaders::~KMHeaders ()
 {
-  if (mFolder)
-  {
+  if ( mFolder ) {
     writeFolderConfig();
     writeSortOrder();
+    if ( mFolder->folderType() == KMFolderTypeImap ) {
+      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
+      imap->setSelected( false );
+    }
     mFolder->close();
   }
   writeConfig();

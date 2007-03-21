@@ -561,6 +561,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
 #endif
     }
   }
+  f->close();
   return aMap;
 }
 
@@ -1101,7 +1102,7 @@ bool KMailICalIfaceImpl::hideResourceFolder( KMFolder* folder ) const
 bool KMailICalIfaceImpl::hideResourceAccountRoot( KMFolder* folder ) const
 {
   KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
-  bool hide = dimapFolder && mHideFolders 
+  bool hide = dimapFolder && mHideFolders
        && (int)dimapFolder->account()->id() == GlobalSettings::self()->theIMAPResourceAccount()
        && GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount();
   return hide;

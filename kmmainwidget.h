@@ -554,6 +554,7 @@ private:
   KXMLGUIClient *mGUIClient;
 
   static QList<KMMainWidget*>* s_mainWidgetList;
+  bool mOpenedImapFolder;
 
   Q3Accel *mAccel;
 };

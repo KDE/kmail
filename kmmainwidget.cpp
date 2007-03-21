@@ -179,6 +179,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
+  mOpenedImapFolder = false;
 
   mCustomReplyActionMenu = 0;
   mCustomReplyAllActionMenu = 0;
@@ -1923,8 +1924,10 @@ void KMMainWidget::folderSelected()
   folderSelected( mFolder );
   updateFolderMenu();
   // opened() before the getAndCheckFolder() in folderSelected
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && mOpenedImapFolder ) {
     mFolder->close();
+    mOpenedImapFolder = false;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1978,20 +1981,25 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
            this, SLOT( updateMarkAsReadAction() ) );
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
+    if ( mOpenedImapFolder && newFolder && mFolder->folderType() == KMFolderTypeImap ) {
+      mFolder->close();
+      KMFolderImap *imap = static_cast<KMFolderImap*>( mFolder->storage() );
+      imap->setSelected( false );
+      mOpenedImapFolder = false;
+    }
   }
 
   mFolder = aFolder;
 
-  if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
-  {
+  if ( aFolder && aFolder->folderType() == KMFolderTypeImap ) {
     if ( kmkernel->isOffline() ) {
       showOfflinePage();
       return;
     }
-    KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
-    if ( newFolder && !mFolder->noContent() )
-    {
+    KMFolderImap *imap = static_cast<KMFolderImap*>( aFolder->storage() );
+    if ( newFolder && !mFolder->noContent() ) {
       imap->open(); // will be closed in the folderSelected slot
+      mOpenedImapFolder = true;
       // first get new headers before we select the folder
       imap->setSelected( true );
       connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
