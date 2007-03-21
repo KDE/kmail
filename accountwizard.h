@@ -87,8 +87,8 @@ class AccountWizard : public KAssistantDialog
     void finished();
 
   private slots:
-    void slotCurrentPageChanged( KPageWidgetItem *current, KPageWidgetItem *before );
-    
+    void slotCurrentPageChanged( KPageWidgetItem *current );
+
     void popCapabilities( const QStringList&, const QStringList& );
     void imapCapabilities( const QStringList&, const QStringList& );
     void smtpCapabilities( const QStringList&, const QStringList&,

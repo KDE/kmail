@@ -120,14 +120,14 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
     mAccount( 0 ), mTransportInfo( 0 ), mServerTest( 0 )
 {
   showButton( Help, false );
-  
+
   setupWelcomePage();
   setupAccountTypePage();
   setupAccountInformationPage();
   setupLoginInformationPage();
   setupServerInformationPage();
-  
-  connect( this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT(slotCurrentPageChanged(KPageWidgetItem*, KPageWidgetItem*)) );
+
+  connect( this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT(slotCurrentPageChanged(KPageWidgetItem*)) );
 }
 
 AccountWizard::~AccountWizard()
@@ -149,7 +149,7 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
   }
 }
 
-void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current, KPageWidgetItem *before )
+void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
 {
   if ( current == mWelcomePage ) {
     // do nothing
@@ -210,7 +210,7 @@ void AccountWizard::setupWelcomePage()
                     "enter the connection data that you received from your email provider "
                     "into the following pages.</qt>" ), box );
   message->setWordWrap(true);
-  
+
   mWelcomePage = new KPageWidgetItem( box, i18n("Welcome") );
   addPage( mWelcomePage );
 }
