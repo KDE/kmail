@@ -335,7 +335,7 @@ void KMAcctImap::processNewMail(bool interactive)
         // connect the result-signals for new-mail-notification
         mCountRemainChecks++;
 
-        if (imapFolder->isSelected()) {
+        if ( imapFolder->isSelected() ) {
           connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
               this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
           imapFolder->getFolder();
@@ -348,13 +348,11 @@ void KMAcctImap::processNewMail(bool interactive)
           connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
                    this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
           imapFolder->getFolder();
-        }
-        else {
+        } else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-              this, SLOT(postProcessNewMail(KMFolder*)));
-          bool ok = imapFolder->processNewMail(interactive);
-          if (!ok)
-          {
+                  this, SLOT(postProcessNewMail(KMFolder*)));
+          bool ok = imapFolder->processNewMail(interactive); // this removes the local kmfolderimap if its imapPath is somehow empty, and removing it calls createFolderList, invalidating mMailCheckFolders, and causing a crash
+          if ( !ok ) {
             // there was an error so cancel
             mCountRemainChecks--;
             gotError = true;
@@ -362,6 +360,8 @@ void KMAcctImap::processNewMail(bool interactive)
               mMailCheckProgressItem->incCompletedItems();
               mMailCheckProgressItem->updateProgress();
             }
+            // since the list of folders might have been updated at this point, mMailCheckFolders may be invalid, so break
+            break;
           }
         }
       }
