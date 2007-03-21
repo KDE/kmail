@@ -917,6 +917,9 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
     const QString& myNamespace )
 {
   QPtrList<KMFolder> toRemove;
+  if (!folder()->child())
+    return;
+    
   KMFolderNode *node = folder()->child()->first();
   while ( node )
   {
