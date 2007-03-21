@@ -1504,7 +1504,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   assert(aMsg!=0);
 
-  delete mRootNode;
+  aMsg->setIsBeingParsed( true );
+
+  if ( mRootNode && !mRootNode->processed() )
+  {
+    kdWarning() << "The root node is not yet processed! Danger!\n";
+    return;
+  } else
+    delete mRootNode;
   mRootNode = partNode::fromMessage( aMsg );
   const QCString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
@@ -1642,6 +1649,8 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
     showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
 		      rootNodeCntSubtype == DwMime::kSubtypePlain );
   }
+
+  aMsg->setIsBeingParsed( false );
 }
 
 
