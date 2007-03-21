@@ -1358,8 +1358,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setContentDescription(msg->from()+": "+msg->subject());
     msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
-    QList<int> dummy;
-    msgPart->setMessageBody( msg->asString() );
+    msgPart->setMessageBody( KMail::Util::ByteArray( msg->asDwString() ) );
     msgPart->setCharset( "" );
 
     fwdMsg->link( msg, MessageStatus::statusForwarded() );
