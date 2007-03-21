@@ -105,7 +105,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                                                   const char* name )
   : KDialogBase( Plain, i18n( "Troubleshooting IMAP Cache" ),
                  Ok | Cancel, Cancel, parent, name, true ),
-    rc( Cancel )
+    rc( None )
 {
   QFrame* page = plainPage();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
