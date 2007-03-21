@@ -272,12 +272,12 @@ void KMAcctImap::cancelMailCheck()
 void KMAcctImap::processNewMail(bool interactive)
 {
   kDebug() << "processNewMail " << mCheckingSingleFolder << ",status="<<makeConnection()<<endl;
-  if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
-      makeConnection() == ImapAccountBase::Error)
-  {
+  if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
+       makeConnection() == ImapAccountBase::Error ) {
+    // checks for mCountRemainChecks
+    checkDone( false, CheckError );
     mCountRemainChecks = 0;
     mCheckingSingleFolder = false;
-    checkDone( false, CheckError );
     return;
   }
   // if necessary then initialize the list of folders which should be checked
