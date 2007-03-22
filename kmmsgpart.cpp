@@ -311,9 +311,15 @@ QString KMMessagePart::iconName() const
 {
   QByteArray mimeType( mType + '/' + mSubtype );
   kAsciiToLower( mimeType.data() );
-  QString fileName =
-    KMimeType::mimeType( mimeType )->iconName();
-
+  
+  QString fileName;
+  KMimeType::Ptr mime = KMimeType::mimeType( mimeType );
+  if (mime) {
+    fileName = mime->iconName();
+  } else {
+    kWarning() << "unknown mimetype " << mimeType << endl;
+  }
+  
   if ( fileName.isEmpty() )
   {
     fileName = this->fileName();
