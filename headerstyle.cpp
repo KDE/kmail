@@ -692,6 +692,26 @@ namespace KMail {
                     .arg( directionOf( message->dateStr() ) )
                             .arg(strToHtml(dateString)));
 
+    if ( GlobalSettings::self()->showUserAgent() ) {
+      if ( strategy->showHeader( "user-agent" ) ) {
+        if ( !message->headerField("User-Agent").isEmpty() ) {
+          headerStr.append(QString("<tr><th>%1</th>\n"
+                                   "<td>%2</td></tr>\n")
+                           .arg(i18n("User-Agent: "))
+                           .arg( strToHtml( message->headerField("User-Agent") ) ) );
+        }
+      }
+
+      if ( strategy->showHeader( "x-mailer" ) ) {
+        if ( !message->headerField("X-Mailer").isEmpty() ) {
+          headerStr.append(QString("<tr><th>%1</th>\n"
+                                   "<td>%2</td></tr>\n")
+                           .arg(i18n("X-Mailer: "))
+                           .arg( strToHtml( message->headerField("X-Mailer") ) ) );
+        }
+      }
+    }
+
     // FIXME: Show status in synthetic header style field.  Decide whether this or current in brackets style is best and remove one.
     /*    if( strategy->showHeader( "status" ) )
       headerStr.append( QString( "<tr><th>%1</th>\n"
