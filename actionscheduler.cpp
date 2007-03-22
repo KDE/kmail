@@ -781,22 +781,16 @@ QString ActionScheduler::debug()
     int i = 1;
     for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
 	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );
-#ifdef __GNUC__
-#warning Port DCOPObject usage!
-#endif
-/*	if ((*it)->mAccount && kmkernel->find( (*it)->mAccountId )) {
+	if ((*it)->mAccount && kmkernel->acctMgr()->find( (*it)->mAccountId )) {
 	    res.append( QString( "Account %1, Name %2.\n" )
 			.arg( (*it)->mAccountId )
 			.arg( kmkernel->acctMgr()->find( (*it)->mAccountId )->name() ) );
-	}*/
+	}
 	res.append( QString( "mExecuting %1, " ).arg( (*it)->mExecuting ? "true" : "false" ) );
 	res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
 	res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );
 	res.append( QString( "mOriginalSerNum %1.\n" ).arg( (*it)->mOriginalSerNum ) );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//	res.append( QString( "mMessageIt %1.\n" ).arg( ((*it)->mMessageIt != 0) ? *(*it)->mMessageIt : 0 ) );
+	res.append( QString( "mMessageIt %1.\n" ).arg( *((*it)->mMessageIt) ) );
 	res.append( QString( "mSerNums count %1, " ).arg( (*it)->mSerNums.count() ) );
 	res.append( QString( "mFetchSerNums count %1.\n" ).arg( (*it)->mFetchSerNums.count() ) );
 	res.append( QString( "mResult " ) );

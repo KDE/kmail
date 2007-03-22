@@ -34,11 +34,6 @@ using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 
-// other KDE headers:
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//#include <kregexp3.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -1169,10 +1164,7 @@ public:
     return (new KMFilterActionRewriteHeader);
   }
 private:
-#ifdef __GNUC__
-#warning Port me!
-#endif
-  /*KRegExp3*/QRegExp mRegExp;
+  QRegExp mRegExp;
   QString mReplacementString;
 };
 
@@ -1193,16 +1185,9 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
 {
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
-
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
-
-//  QString newValue = rx.replace( msg->headerField( mParameter.toLatin1() ),
-//                                     mReplacementString );
-
-//  msg->setHeaderField( mParameter.toLatin1(), newValue );
+  // QString::replace is not const.
+  QString value = msg->headerField( mParameter.toLatin1() );
+  msg->setHeaderField( mParameter.toLatin1(), value.replace( mRegExp, mReplacementString ) );
   return GoOn;
 }
 
