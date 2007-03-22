@@ -2313,6 +2313,12 @@ QString KMComposeWin::prettyMimeType( const QString& type )
 {
   const QString t = type.toLower();
   const KMimeType::Ptr st = KMimeType::mimeType( t );
+  
+  if (!st) {
+    kWarning() << "unknown mimetype " << t << endl;
+    return QString();
+  }
+  
   return !st->isDefault() ? st->comment() : t;
 }
 
