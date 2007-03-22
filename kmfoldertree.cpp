@@ -949,7 +949,7 @@ QValueList<QGuardedPtr<KMFolder> > KMFolderTree::selectedFolders()
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi, bool keepSelection )
 {
   if (!qlvi) return;
-  if ( mLastItem && mLastItem == qlvi )
+  if ( mLastItem && mLastItem == qlvi && (keepSelection || selectedFolders().count() == 1) )
     return;
 
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
@@ -1012,6 +1012,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     return;
 
   KPopupMenu *folderMenu = new KPopupMenu;
+  bool multiFolder = selectedFolders().count() > 1;
   if (fti->folder()) folderMenu->insertTitle(fti->folder()->label());
 
   // outbox specific, but there it's the most used action
@@ -1028,7 +1029,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     QString createChild = i18n("&New Subfolder...");
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
-    if (fti->folder() || (fti->text(0) != i18n("Searches")))
+    if (fti->folder() || (fti->text(0) != i18n("Searches")) && !multiFolder)
         folderMenu->insertItem(SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
@@ -1044,7 +1045,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   } else { // regular folders
 
     folderMenu->insertSeparator();
-    if ( !fti->folder()->noChildren() ) {
+    if ( !fti->folder()->noChildren() && !multiFolder ) {
       folderMenu->insertItem(SmallIconSet("folder_new"),
                              i18n("&New Subfolder..."), this,
                              SLOT(addChildFolder()));
@@ -1095,12 +1096,12 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     if (!fti->folder()->noContent())
     {
       mMainWidget->action("refresh_folder")->plug(folderMenu);
-      if ( fti->folder()->folderType() == KMFolderTypeImap ) {
+      if ( fti->folder()->folderType() == KMFolderTypeImap && !multiFolder ) {
         folderMenu->insertItem(SmallIconSet("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
       }
     }
-    if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
+    if ( fti->folder()->folderType() == KMFolderTypeCachedImap && !multiFolder ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
       folderMenu->insertItem( SmallIconSet("wizard"),
                               i18n("&Troubleshoot IMAP Cache..."),
@@ -1109,11 +1110,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     folderMenu->insertSeparator();
   }
 
-  if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
+  if ( fti->folder() && fti->folder()->isMailingListEnabled() && !multiFolder ) {
     mMainWidget->action("post_message")->plug(folderMenu);
   }
 
-  if (fti->folder() && fti->parent())
+  if (fti->folder() && fti->parent() && !multiFolder)
   {
     folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
         i18n("&Assign Shortcut..."),

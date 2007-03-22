@@ -3395,9 +3395,11 @@ void KMMainWidget::updateMarkAsReadAction()
 void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
-  mModifyFolderAction->setEnabled( folderWithContent );
-  mFolderMailingListPropertiesAction->setEnabled( folderWithContent );
-  mCompactFolderAction->setEnabled( folderWithContent );
+  bool multiFolder = folderTree()->selectedFolders().count() > 1;
+  kdDebug() << k_funcinfo << "Multiple folders selected: " << multiFolder << endl;
+  mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
+  mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder );
+  mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
   // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
   bool imap = mFolder && mFolder->folderType() == KMFolderTypeImap;
@@ -3405,18 +3407,18 @@ void KMMainWidget::updateFolderMenu()
   // For dimap, check that the imap path is known before allowing "check mail in this folder".
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
-                                                           || ( cachedImap && knownImapPath ) ) );
+                                                           || ( cachedImap && knownImapPath ) ) && !multiFolder );
   if ( mTroubleshootFolderAction )
-    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
+    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() );
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() && !multiFolder);
   if(mFolder) {
     mRemoveFolderAction->setText( mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
   }
-  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
+  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mHeaders->folder() ? true : false );
