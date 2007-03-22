@@ -2054,10 +2054,19 @@ void KMComposeWin::setModified( bool modified )
 //-----------------------------------------------------------------------------
 bool KMComposeWin::queryClose ()
 {
-  if ( !mEditor->checkExternalEditorFinished() )
+  if ( !mEditor->checkExternalEditorFinished() ) {
     return false;
-  if (kmkernel->shuttingDown() || kapp->sessionSaving())
+  }
+  if ( kmkernel->shuttingDown() || kapp->sessionSaving() ) {
     return true;
+  }
+
+  if ( mComposer && mComposer->isPerformingSignOperation() ) {
+    // since the non-gpg-agent gpg plugin gets a passphrase using
+    // QDialog::exec() the user can try to close the window,
+    // which destroys mComposer mid-call.
+    return false;
+  }
 
   if ( isModified() ) {
     bool istemplate = ( mFolder!=0 && mFolder->isTemplates() );
