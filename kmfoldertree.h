@@ -151,6 +151,8 @@ public:
 
   KMFolder *currentFolder() const;
 
+  QValueList<QGuardedPtr<KMFolder> > selectedFolders();
+
   enum ColumnMode {unread=15, total=16};
 
   /** toggles the unread and total columns on/off */
@@ -233,7 +235,7 @@ public slots:
   void slotAccountRemoved(KMAccount*);
 
   /** Select the item and switch to the folder */
-  void doFolderSelected(QListViewItem*);
+  void doFolderSelected(QListViewItem *qlvi, bool keepSelection = false);
 
   /**
    * Reset current folder and all childs
@@ -308,6 +310,7 @@ protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
 
+  virtual void contentsMousePressEvent( QMouseEvent *e );
   virtual void contentsMouseReleaseEvent(QMouseEvent* me);
 
   /** Updates the number of unread messages for all folders */
@@ -344,7 +347,7 @@ protected:
   void connectSignals();
 
   /** Move or copy the folder @p source to @p destination. */
-  void moveOrCopyFolder( KMFolder* source, KMFolder* destination, bool move=false );
+  void moveOrCopyFolder( QValueList<QGuardedPtr<KMFolder> > sources, KMFolder* destination, bool move=false );
 
 private:
   /** total column */
@@ -358,7 +361,7 @@ private:
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
-  QGuardedPtr<KMFolder> mCopySourceFolder;
+  QValueList<QGuardedPtr<KMFolder> > mCopySourceFolders;
   bool mCutFolder;
 
   QTimer *mUpdateCountTimer;
