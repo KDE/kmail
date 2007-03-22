@@ -26,6 +26,7 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 #include <QMouseEvent>
+#include <QScrollArea>
 #include <QSignalMapper>
 using KMail::MailSourceViewer;
 #include "partNode.h"
@@ -711,8 +712,8 @@ void KMReaderWin::slotLevelQuote( int l )
 {
   kDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
 	mLevelQuote = l;
-  Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
+  QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
+  mSavedRelativePosition = (float)scrollview->widget()->pos().y() / scrollview->widget()->size().height();
 
   update(true);
 }
@@ -1403,8 +1404,8 @@ void KMReaderWin::updateReaderWin()
 
   if (mSavedRelativePosition)
   {
-    Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
-    scrollview->setContentsPos ( 0, qRound(  scrollview->contentsHeight() * mSavedRelativePosition ) );
+    QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
+    scrollview->widget()->move( 0, qRound(scrollview->widget()->size().height() * mSavedRelativePosition) );
     mSavedRelativePosition = 0;
   }
 }
@@ -1958,8 +1959,8 @@ void KMReaderWin::slotFind()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
-  Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
+  QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
+  mSavedRelativePosition = (float)scrollview->widget()->pos().y() / scrollview->widget()->size().height();
 
   mUseFixedFont = !mUseFixedFont;
   update(true);
