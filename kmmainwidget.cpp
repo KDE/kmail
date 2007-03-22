@@ -505,7 +505,9 @@ void KMMainWidget::writeConfig(void)
   // Only save when the widget is shown (to avoid saving a wrong value)
   if ( mSearchAndHeaders && !mSearchAndHeaders->isHidden() ) {
     geometry.writeEntry( "HeaderPaneHeight", heights[0] );
-    geometry.writeEntry( "ReaderPaneHeight", heights[1] );
+    if (mReaderWindowActive) {
+      geometry.writeEntry( "ReaderPaneHeight", heights[1] );
+    }
   }
 
   // save the state of the unread/total-columns
