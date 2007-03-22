@@ -287,7 +287,7 @@ public:
 
 MessageComposer::MessageComposer( KMComposeWin* win, const char* name )
   : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 ),
-    mKeyResolver( 0 ), mIdentityUid( 0 )
+    mKeyResolver( 0 ), mIdentityUid( 0 ), mPerformingSignOperation( false )
 {
 }
 
@@ -1590,9 +1590,10 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   if ( doSignBody ) {
-
+    mPerformingSignOperation = true;  // this lets the KMComposeWin know if it is safe to close the window.
     pgpSignedMsg( mEncodedBody, format );
-
+    mPerformingSignOperation = false;
+    
     if ( mSignature.isEmpty() ) {
       kdDebug() << "signature was empty" << endl;
       mRc = false;

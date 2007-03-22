@@ -92,6 +92,7 @@ public:
     return mMessageList;
   }
 
+  bool isPerformingSignOperation() const { return mPerformingSignOperation; }
 signals:
   void done( bool );
 
@@ -273,6 +274,7 @@ private:
 
   QValueList<MessageComposerJob*> mJobs;
   bool mEncryptWithChiasmus;
+  bool mPerformingSignOperation;
 };
 
 #endif /* MESSAGECOMPOSER_H */
