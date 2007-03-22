@@ -223,9 +223,16 @@ void SearchJob::slotSearchFolder()
     // pure imap search - now get the serial number for the UIDs
     QList<quint32> serNums;
     for ( QStringList::Iterator it = mImapSearchHits.begin();
-        it != mImapSearchHits.end(); ++it )
-    {
-      serNums.append( mFolder->serNumForUID( (*it).toULong() ) );
+        it != mImapSearchHits.end(); ++it ) {
+      ulong serNum = mFolder->serNumForUID( (*it).toULong() );
+      // Check that the local folder does contain a message for this UID.
+      // Scenario: server responds with a list of UIDs.
+      //   While the search was running, filtering or bad juju moved a message
+      //   locally serNumForUID will happily return 0 for the missing message,
+      //   and KMFolderSearch::addSerNum() will fail its assertion.
+      if ( serNum != 0 ) {
+        serNums.append( serNum );
+      }
     }
     emit searchDone( serNums, mSearchPattern, true );
   } else {
