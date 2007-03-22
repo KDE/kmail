@@ -222,7 +222,12 @@ void SearchJob::slotSearchFolder()
     for ( QStringList::Iterator it = mImapSearchHits.begin(); 
         it != mImapSearchHits.end(); ++it ) 
     {
-      serNums.append( mFolder->serNumForUID( (*it).toULong() ) );
+      ulong serNum = mFolder->serNumForUID( (*it).toULong() );
+      // we need to check that the local folder does contain a message for this UID. 
+      // scenario: server responds with a list of UIDs.  While the search was running, filtering or bad juju moved a message locally
+      // serNumForUID will happily return 0 for the missing message, and KMFolderSearch::addSerNum() will fail its assertion.
+      if ( serNum != 0 ) 
+        serNums.append( serNum );
     }
     emit searchDone( serNums, mSearchPattern, true );
   } else {
