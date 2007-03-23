@@ -4053,31 +4053,43 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::updateAttachmentState( DwBodyPart* part )
+void KMMessage::updateAttachmentState( DwBodyPart *part )
 {
-  if ( !part )
+  if ( !part ) {
     part = getFirstDwBodyPart();
+  }
 
-  if ( !part )
-  {
+  if ( !part ) {
     // kDebug(5006) << "updateAttachmentState - no part!" << endl;
-    if ( mStatus.hasAttachment() )
+    if ( mStatus.hasAttachment() ) {
       toggleStatus( MessageStatus::statusHasAttachment() );
+    }
     return;
+  }
+
+  bool filenameEmpty = true;
+  if ( part->hasHeaders() ) {
+    if ( part->Headers().HasContentDisposition() ) {
+      DwDispositionType cd = part->Headers().ContentDisposition();
+      filenameEmpty = cd.Filename().empty();
+      if ( filenameEmpty ) {
+        // let's try if it is rfc 2231 encoded which mimelib can't handle
+        filenameEmpty =
+          KMMsgBase::decodeRFC2231String( KMMsgBase::extractRFC2231HeaderField( cd.AsString().c_str(), "filename" ) ).isEmpty();
+      }
+    }
   }
 
   if ( part->hasHeaders() &&
        ( ( part->Headers().HasContentDisposition() &&
            !part->Headers().ContentDisposition().Filename().empty() ) ||
          ( part->Headers().HasContentType() &&
-           !part->Headers().ContentType().Name().empty() ) ) )
-  {
+           !filenameEmpty ) ) ) {
     // now blacklist certain ContentTypes
     if ( !part->Headers().HasContentType() ||
          ( part->Headers().HasContentType() &&
            part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
-           part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) )
-    {
+           part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) ) {
       setStatus( MessageStatus::statusHasAttachment() );
     }
     return;
@@ -4087,30 +4099,33 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( part->hasHeaders() &&
        part->Headers().HasContentType() &&
        part->Body().FirstBodyPart() &&
-       (DwMime::kTypeMultipart == part->Headers().ContentType().Type() ) )
-  {
+       (DwMime::kTypeMultipart == part->Headers().ContentType().Type() ) ) {
     updateAttachmentState( part->Body().FirstBodyPart() );
   }
 
   // encapsulated message
   if ( part->Body().Message() &&
-       part->Body().Message()->Body().FirstBodyPart() )
-  {
+       part->Body().Message()->Body().FirstBodyPart() ) {
     updateAttachmentState( part->Body().Message()->Body().FirstBodyPart() );
   }
 
   // next part
-  if ( part->Next() )
+  if ( part->Next() ) {
     updateAttachmentState( part->Next() );
-  else if ( attachmentState() == KMMsgAttachmentUnknown
-            && mStatus.hasAttachment() )
+  } else if ( attachmentState() == KMMsgAttachmentUnknown &&
+              mStatus.hasAttachment() ) {
     toggleStatus( MessageStatus::statusHasAttachment() );
+  }
 }
 
-void KMMessage::setBodyFromUnicode( const QString & str ) {
-  QByteArray encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
-  if ( encoding.isEmpty() )
+void KMMessage::setBodyFromUnicode( const QString &str )
+{
+  QByteArray encoding =
+    KMMsgBase::autoDetectCharset( charset(),
+                                  KMMessage::preferredCharsets(), str );
+  if ( encoding.isEmpty() ) {
     encoding = "utf-8";
+  }
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
   QList<int> dummy;
@@ -4118,28 +4133,33 @@ void KMMessage::setBodyFromUnicode( const QString & str ) {
   setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
 
-const QTextCodec * KMMessage::codec() const {
-  const QTextCodec * c = mOverrideCodec;
-  if ( !c )
+const QTextCodec * KMMessage::codec() const
+{
+  const QTextCodec *c = mOverrideCodec;
+  if ( !c ) {
     // no override-codec set for this message, try the CT charset parameter:
     c = KMMsgBase::codecForName( charset() );
+  }
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
     c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().toLatin1() );
   }
-  if ( !c )
+  if ( !c ) {
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay
     c = kmkernel->networkCodec();
+  }
   assert( c );
   return c;
 }
 
-QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
-  if ( !codec )
+QString KMMessage::bodyToUnicode(const QTextCodec *codec) const
+{
+  if ( !codec ) {
     // No codec was given, so try the charset in the mail
     codec = this->codec();
+  }
   assert( codec );
 
   return codec->toUnicode( bodyDecoded() );
