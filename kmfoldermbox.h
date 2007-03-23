@@ -79,11 +79,11 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open();
+  virtual int open( const char *owner );
 
   /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=false);
+  virtual void close( const char *owner, bool force=false );
 
   virtual int canAccess();
 
@@ -153,6 +153,7 @@ private:
   bool mReadOnly; // true if locking failed
   LockType mLockType;
   QString mProcmailLockFileName;
+  QStringList mOwners;
 };
 
 #endif // kmfoldermbox_h

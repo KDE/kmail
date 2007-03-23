@@ -71,12 +71,12 @@ ImapJob::ImapJob( QList<KMMessage*>& msgList, QString sets, JobType jt,
 {
 }
 
-void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
-                    QList<KMMessage*>& msgList )
+void ImapJob::init( JobType jt, QString sets, KMFolderImap *folder,
+                    QList<KMMessage*> &msgList )
 {
   mJob = 0;
 
-  assert(jt == tGetMessage || folder);
+  assert( jt == tGetMessage || folder );
   KMMessage* msg = msgList.first();
    // guard against empty list
   if ( !msg ) {
@@ -86,13 +86,13 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   mType = jt;
   mDestFolder = folder? folder->folder() : 0;
   // refcount++
-  if (folder) {
-    folder->open();
+  if ( folder ) {
+    folder->open( "imapjobdest" );
   }
   KMFolder *msg_parent = msg->parent();
-  if (msg_parent) {
-    if (!folder || folder!= msg_parent->storage()) {
-      msg_parent->open();
+  if ( msg_parent ) {
+    if ( !folder || folder!= msg_parent->storage() ) {
+      msg_parent->open( "imapjobsrc" );
     }
   }
   mSrcFolder = msg_parent;
@@ -245,7 +245,7 @@ ImapJob::~ImapJob()
       }
       account->mJobList.removeAll( this );
     }
-    mDestFolder->close();
+    mDestFolder->close( "imapjobdest" );
   }
 
   if ( mSrcFolder ) {
@@ -271,10 +271,9 @@ ImapJob::~ImapJob()
         account->mJobList.removeAll( this ); // remove the folderjob
       }
     }
-    mSrcFolder->close();
+    mSrcFolder->close( "imapjobsrc" );
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void ImapJob::slotGetNextMessage()

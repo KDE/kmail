@@ -182,10 +182,10 @@ void RenameJob::folderCopyComplete(bool success)
   mCopyFolderJob = 0;
 
   if ( mStorageTempOpened ) {
-    mStorageTempOpened->close();
+    mStorageTempOpened->close( "renamejob" );
     mStorageTempOpened = 0;
   }
-  
+
   kDebug(5006) << "deleting old folder" << endl;
   // move complete or not necessary
   // save our settings

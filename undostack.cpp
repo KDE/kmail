@@ -98,7 +98,7 @@ void UndoStack::undo()
     UndoInfo *info = mStack.takeFirst();
     emit undoStackChanged();
     QList<ulong>::iterator itr;
-    info->destFolder->open();
+    info->destFolder->open( "undodest" );
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;
       KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);
@@ -112,7 +112,7 @@ void UndoStack::undo()
       if ( info->srcFolder->count() > 1 )
         info->srcFolder->unGetMsg( info->srcFolder->count() - 1 );
     }
-    info->destFolder->close();
+    info->destFolder->close( "undodest" );
     delete info;
   }
   else

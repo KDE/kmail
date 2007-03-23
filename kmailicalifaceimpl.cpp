@@ -488,9 +488,9 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
     return 0;
   }
 
-  f->open();
+  f->open( "kolabcount" );
   int n = f->count();
-  f->close();
+  f->close( "kolabcount" );
   kDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( " << mimetype << ", "
                 << resource << " ) returned " << n << endl;
   return n;
@@ -515,7 +515,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
     return aMap;
   }
 
-  f->open();
+  f->open( "incidences" );
 
   int stopIndex = nbMessages == -1 ? f->count() :
                   qMin( f->count(), startIndex + nbMessages );
@@ -561,7 +561,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
 #endif
     }
   }
-  f->close();
+  f->close( "incidences" );
   return aMap;
 }
 
@@ -732,7 +732,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     return rc;
   }
 
-  f->open();
+  f->open( "ifaceupdate" );
 
   KMMessage* msg = 0;
   if ( sernum != 0 ) {
@@ -815,7 +815,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
                             attachmentMimetypes );
   }
 
-  f->close();
+  f->close( "ifaceupdate" );
   return rc;
 }
 
@@ -862,7 +862,7 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
 
       KTemporaryFile file;
       file.setAutoRemove(false);
-      file.open();
+      file.open( );
       file.write( rawData.data(), rawData.size() );
 
       url.setPath( file.fileName() );
@@ -1736,7 +1736,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
-  folder->open();
+  folder->open( "ifacefolder" );
   connectFolder( folder );
   return folder;
 }
@@ -1778,7 +1778,7 @@ static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
   if( folder ) {
     folder->setSystemFolder( false );
     folder->disconnect( _this );
-    folder->close();
+    folder->close( "ifacefolder" );
   }
 }
 

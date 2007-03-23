@@ -323,11 +323,9 @@ void KMAcctImap::processNewMail(bool interactive)
   }
   bool gotError = false;
   // then check for new mails
-  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
-  {
+  for ( it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it ) {
     KMFolder *folder = *it;
-    if (folder && !folder->noContent())
-    {
+    if ( folder && !folder->noContent() ) {
       KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
       if ( imapFolder->getContentState() != KMFolderImap::imapListingInProgress
         && imapFolder->getContentState() != KMFolderImap::imapDownloadInProgress )
@@ -342,7 +340,8 @@ void KMAcctImap::processNewMail(bool interactive)
         } else if ( kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( id() ) &&
                     imapFolder->folder()->isSystemFolder() &&
                     imapFolder->imapPath() == "/INBOX/" ) {
-          imapFolder->open(); // will be closed in the folderSelected slot
+          // will be closed in the folderSelected slot
+          imapFolder->open( "acctimap" );
           // first get new headers before we select the folder
           imapFolder->setSelected( true );
           connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
@@ -570,7 +569,7 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
   disconnect( folder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
 	      this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
   postProcessNewMail( static_cast<KMFolder*>(folder->folder()) );
-  folder->close();
+  folder->close( "acctimap" );
 }
 
 void KMAcctImap::execFilters(quint32 serNum)

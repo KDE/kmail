@@ -110,34 +110,37 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::settingsOk() const
 {
-  if (KMTransportInfo::availableTransports().isEmpty())
-  {
-    KMessageBox::information(0,i18n("Please create an account for sending and try again."));
+  if ( KMTransportInfo::availableTransports().isEmpty() ) {
+    KMessageBox::information( 0,
+                              i18n("Please create an account for sending and try again.") );
     return false;
   }
   return true;
 }
 
-static void handleRedirections( KMMessage * m ) {
-  const QString from  = m->headerField("X-KMail-Redirect-From");
+static void handleRedirections( KMMessage *m ) {
+  const QString from  = m->headerField( "X-KMail-Redirect-From" );
   const QString msgId = m->msgId();
-  if( from.isEmpty() || msgId.isEmpty() )
+  if ( from.isEmpty() || msgId.isEmpty() ) {
     m->setMsgId( KMMessage::generateMessageId( m->sender() ) );
+  }
 }
 
 //-----------------------------------------------------------------------------
-bool KMSender::doSend(KMMessage* aMsg, short sendNow)
+bool KMSender::doSend(KMMessage *aMsg, short sendNow )
 {
-  if(!aMsg)
-      return false;
+  if ( !aMsg ) {
+    return false;
+  }
 
-  if (!settingsOk()) return false;
+  if ( !settingsOk() ) {
+    return false;
+  }
 
-  if (aMsg->to().isEmpty())
-  {
+  if ( aMsg->to().isEmpty() ) {
     // RFC822 says:
-    // Note that the "Bcc" field may be empty, while the "To" field is required to
-    // have at least one address.
+    // Note that the "Bcc" field may be empty, while the "To" field is
+    // required to have at least one address.
     //
     // however:
     //
@@ -155,75 +158,79 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
     //
     // In further explanations RFC 2822 states that it *is*
     // allowed to have a ZERO number of mailboxes in the "mailbox-list".
-    aMsg->setTo("Undisclosed.Recipients: ;");
+    aMsg->setTo( "Undisclosed.Recipients: ;" );
   }
 
   handleRedirections( aMsg );
 
-  if (sendNow==-1) sendNow = mSendImmediate;
+  if ( sendNow == -1 ) {
+    sendNow = mSendImmediate;
+  }
 
-  kmkernel->outboxFolder()->open();
-  const KMFolderCloser openOutbox( kmkernel->outboxFolder() );
+  kmkernel->outboxFolder()->open( "outbox" );
+  const KMFolderCloser openOutbox( "outbox", kmkernel->outboxFolder() );
 
   aMsg->setStatus( MessageStatus::statusQueued() );
 
-  if ( const int err = openOutbox.folder()->addMsg(aMsg) ) {
+  if ( const int err = openOutbox.folder()->addMsg( aMsg ) ) {
     Q_UNUSED( err );
-    KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
+    KMessageBox::information( 0, i18n("Cannot add message to outbox folder") );
     return false;
   }
 
   //Ensure the message is correctly and fully parsed
   openOutbox.folder()->unGetMsg( openOutbox.folder()->count() - 1 );
 
-  if ( !sendNow || mSendInProgress )
+  if ( !sendNow || mSendInProgress ) {
     return true;
+  }
 
   return sendQueued();
 }
 
-
 //-----------------------------------------------------------------------------
-void KMSender::outboxMsgAdded(int idx)
+void KMSender::outboxMsgAdded( int idx )
 {
-    ++mTotalMessages;
-    KMMsgBase* msg = kmkernel->outboxFolder()->getMsgBase(idx);
-    Q_ASSERT(msg);
-    if ( msg )
-        mTotalBytes += msg->msgSize();
+  ++mTotalMessages;
+  KMMsgBase* msg = kmkernel->outboxFolder()->getMsgBase( idx );
+  Q_ASSERT( msg );
+  if ( msg ) {
+    mTotalBytes += msg->msgSize();
+  }
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMSender::doSendQueued( const QString &customTransport )
 {
-  if (!settingsOk()) return false;
+  if ( !settingsOk() ) {
+    return false;
+  }
 
-  if (mSendInProgress)
-  {
+  if ( mSendInProgress ) {
     return false;
   }
 
   // open necessary folders
   mOutboxFolder = kmkernel->outboxFolder();
-  mOutboxFolder->open();
+  mOutboxFolder->open( "dosendoutbox" );
   mTotalMessages = mOutboxFolder->count();
-  if (mTotalMessages == 0) {
+  if ( mTotalMessages == 0 ) {
     // Nothing in the outbox. We are done.
-    mOutboxFolder->close();
+    mOutboxFolder->close( "dosendoutbox" );
     mOutboxFolder = 0;
     return true;
   }
   mTotalBytes = 0;
-  for( int i = 0 ; i<mTotalMessages ; ++i )
-      mTotalBytes += mOutboxFolder->getMsgBase(i)->msgSize();
+  for( int i = 0 ; i<mTotalMessages ; ++i ) {
+    mTotalBytes += mOutboxFolder->getMsgBase(i)->msgSize();
+  }
 
-  connect( mOutboxFolder, SIGNAL(msgAdded(int)),
-           this, SLOT(outboxMsgAdded(int)) );
+  connect( mOutboxFolder, SIGNAL( msgAdded( int ) ),
+           this, SLOT( outboxMsgAdded( int ) ) );
   mCurrentMsg = 0;
 
   mSentFolder = kmkernel->sentFolder();
-  mSentFolder->open();
+  mSentFolder->open( "dosendsent" );
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
@@ -265,21 +272,21 @@ static bool messageIsDispositionNotificationReport( KMMessage *msg )
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
-  if (!kmkernel)  //To handle message sending in progress when kaplan is exited
+  if ( !kmkernel ) { //To handle message sending in progress when exiting
     return;	//TODO: handle this case better
+  }
 
   const bool someSent = mCurrentMsg;
-  if (someSent) {
+  if ( someSent ) {
       mSentMessages++;
       mSentBytes += mCurrentMsg->msgSize();
   }
 
   // Post-process sent message (filtering)
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
-  if (mCurrentMsg  && kmkernel->filterMgr())
-  {
+  if ( mCurrentMsg  && kmkernel->filterMgr() ) {
     mCurrentMsg->setTransferInProgress( false );
-    if( mCurrentMsg->hasUnencryptedMsg() ) {
+    if ( mCurrentMsg->hasUnencryptedMsg() ) {
       kDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
       // delete all current body parts
       mCurrentMsg->deleteBodyParts();
@@ -287,16 +294,18 @@ void KMSender::doSendMsg()
       KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
       mCurrentMsg->dwContentType() = newMsg.dwContentType();
       mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
-      QByteArray newDispo = newMsg.headerField("Content-Disposition").toLatin1();
-      if( newDispo.isEmpty() )
+      QByteArray newDispo =
+        newMsg.headerField( "Content-Disposition" ).toLatin1();
+      if (  newDispo.isEmpty() ) {
         mCurrentMsg->removeHeaderField( "Content-Disposition" );
-      else
+      } else {
         mCurrentMsg->setHeaderField( "Content-Disposition", newDispo );
+      }
       // copy the body
       mCurrentMsg->setBody( newMsg.body() );
       // copy all the body parts
       KMMessagePart msgPart;
-      for( int i = 0; i < newMsg.numBodyParts(); ++i ) {
+      for ( int i = 0; i < newMsg.numBodyParts(); ++i ) {
         newMsg.bodyPart( i, &msgPart );
         mCurrentMsg->addBodyPart( &msgPart );
       }
@@ -306,92 +315,104 @@ void KMSender::doSendMsg()
     mCurrentMsg->setStatus( status );
     mCurrentMsg->updateAttachmentState();
 
-    const KPIM::Identity & id = kmkernel->identityManager()
-      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
-    if ( !mCurrentMsg->fcc().isEmpty() )
-    {
+    const KPIM::Identity & id =
+      kmkernel->identityManager()->identityForUoidOrDefault(
+        mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
+    if ( !mCurrentMsg->fcc().isEmpty() ) {
       sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0 ) {
       // This is *NOT* supposed to be imapSentFolder!
         sentFolder =
           kmkernel->dimapFolderMgr()->findIdString( mCurrentMsg->fcc() );
-      if ( sentFolder == 0 )
+      }
+      if ( sentFolder == 0 ) {
         imapSentFolder =
           kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
+      }
     }
     // No, or no usable sentFolder, and no, or no usable imapSentFolder,
     // let's try the on in the identity
     if ( ( sentFolder == 0 || sentFolder->isReadOnly() )
       && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() )
-      && !id.fcc().isEmpty() )
-    {
+      && !id.fcc().isEmpty() ) {
       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0 ) {
         // This is *NOT* supposed to be imapSentFolder!
         sentFolder = kmkernel->dimapFolderMgr()->findIdString( id.fcc() );
-      if ( sentFolder == 0 )
+      }
+      if ( sentFolder == 0 ) {
         imapSentFolder = kmkernel->imapFolderMgr()->findIdString( id.fcc() );
+      }
     }
-    if (imapSentFolder
-        && ( imapSentFolder->noContent() || imapSentFolder->isReadOnly() ) )
+    if (imapSentFolder &&
+        ( imapSentFolder->noContent() || imapSentFolder->isReadOnly() ) ) {
         imapSentFolder = 0;
+    }
 
-    if ( sentFolder == 0 || sentFolder->isReadOnly() )
+    if ( sentFolder == 0 || sentFolder->isReadOnly() ) {
       sentFolder = kmkernel->sentFolder();
+    }
 
-    if ( const int err = sentFolder->open() ) {
+    if ( const int err = sentFolder->open( "sentFolder" ) ) {
       Q_UNUSED( err );
       cleanup();
       return;
     }
 
-    // Disable the emitting of msgAdded signal, because the message is taken out of the
-    // current folder (outbox) and re-added, to make filter actions changing the message
-    // work. We don't want that to screw up message counts.
-    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( true );
-    const int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
-    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( false );
+    // Disable the emitting of msgAdded signal, because the message is
+    // taken out of the current folder (outbox) and re-added, to make
+    // filter actions changing the message work. We don't want that to
+    // screw up message counts.
+    if ( mCurrentMsg->parent() ) {
+      mCurrentMsg->parent()->quiet( true );
+    }
+    const int processResult =
+      kmkernel->filterMgr()->process( mCurrentMsg, KMFilterMgr::Outbound );
+    if ( mCurrentMsg->parent() ) {
+      mCurrentMsg->parent()->quiet( false );
+    }
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
-    switch (processResult) {
+    switch ( processResult ) {
     case 2:
-      perror("Critical error: Unable to process sent mail (out of space?)");
-      KMessageBox::information(0, i18n("Critical error: "
-                   "Unable to process sent mail (out of space?)"
-                   "Moving failing message to \"sent-mail\" folder."));
+      perror( "Critical error: Unable to process sent mail (out of space?)" );
+      KMessageBox::information( 0,
+                                i18n("Critical error: "
+                                     "Unable to process sent mail (out of space?)"
+                                     "Moving failing message to \"sent-mail\" folder.") );
       if ( sentFolder ) {
-        sentFolder->moveMsg(mCurrentMsg);
-        sentFolder->close();
+        sentFolder->moveMsg( mCurrentMsg );
+        sentFolder->close( "sentFolder" );
       }
       cleanup();
       return;
     case 1:
-      if (sentFolder->moveMsg(mCurrentMsg) != 0)
-      {
-        KMessageBox::error(0, i18n("Moving the sent message \"%1\" from the "
-          "\"outbox\" to the \"sent-mail\" folder failed.\n"
-          "Possible reasons are lack of disk space or write permission. "
-          "Please try to fix the problem and move the message manually.",
-           mCurrentMsg->subject()));
+      if ( sentFolder->moveMsg( mCurrentMsg ) != 0 ) {
+        KMessageBox::error( 0,
+                            i18n("Moving the sent message \"%1\" from the "
+                                 "\"outbox\" to the \"sent-mail\" folder failed.\n"
+                                 "Possible reasons are lack of disk space or write permission. "
+                                 "Please try to fix the problem and move the message manually.",
+                                 mCurrentMsg->subject() ) );
         cleanup();
         return;
       }
-      if (imapSentFolder) {
+      if ( imapSentFolder ) {
         // Does proper folder refcounting and message locking
         KMCommand *command = new KMMoveCommand( imapSentFolder, mCurrentMsg );
-        command->keepFolderOpen( sentFolder ); // will open it, and close it once done
+        command->keepFolderOpen( sentFolder ); // will open it, and close when done
         command->start();
       }
     default:
       break;
     }
     setStatusByLink( mCurrentMsg );
-    if (mCurrentMsg->parent() && !imapSentFolder) {
+    if ( mCurrentMsg->parent() && !imapSentFolder ) {
       // for speed optimization, this code assumes that mCurrentMsg is the
       // last one in it's parent folder; make sure that's really the case:
       assert( mCurrentMsg->parent()->find( mCurrentMsg )
               == mCurrentMsg->parent()->count() - 1 );
-       // unGet this message:
+      // unGet this message:
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
     }
 
@@ -399,48 +420,48 @@ void KMSender::doSendMsg()
   }
 
   // See if there is another queued message
-  mCurrentMsg = mOutboxFolder->getMsg(mFailedMessages);
+  mCurrentMsg = mOutboxFolder->getMsg( mFailedMessages );
   if ( mCurrentMsg && !mCurrentMsg->transferInProgress() &&
        mCurrentMsg->sender().isEmpty() ) {
     // if we do not have a sender address then use the email address of the
-    // message's identity or of the default identity unless those two are also
-    // empty
-    const KPIM::Identity & id = kmkernel->identityManager()
-      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
+    // message's identity or of the default identity unless those two are
+    // also empty
+    const KPIM::Identity &id =
+      kmkernel->identityManager()->identityForUoidOrDefault(
+        mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
     if ( !id.emailAddr().isEmpty() ) {
       mCurrentMsg->setFrom( id.fullEmailAddr() );
-    }
-    else if ( !kmkernel->identityManager()->defaultIdentity().emailAddr().isEmpty() ) {
+    } else if ( !kmkernel->identityManager()->defaultIdentity().emailAddr().isEmpty() ) {
       mCurrentMsg->setFrom( kmkernel->identityManager()->defaultIdentity().fullEmailAddr() );
-    }
-    else {
+    } else {
       KMessageBox::sorry( 0, i18n( "It is not possible to send messages "
                                    "without specifying a sender address.\n"
                                    "Please set the email address of "
                                    "identity '%1' in the Identities "
                                    "section of the configuration dialog "
                                    "and then try again." ,
-                               id.identityName() ) );
+                                   id.identityName() ) );
       mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
     }
   }
-  if (!mCurrentMsg || mCurrentMsg->transferInProgress())
-  {
+  if ( !mCurrentMsg || mCurrentMsg->transferInProgress() ) {
     // a message is locked finish the send
-    if (mCurrentMsg && mCurrentMsg->transferInProgress())
-    	mCurrentMsg = 0;
+    if ( mCurrentMsg && mCurrentMsg->transferInProgress() ) {
+      mCurrentMsg = 0;
+    }
     // no more message: cleanup and done
-    if ( sentFolder != 0 )
-        sentFolder->close();
+    if ( sentFolder != 0 ) {
+      sentFolder->close( "sentFolder" );
+    }
     if ( someSent ) {
       if ( mSentMessages == mTotalMessages ) {
         setStatusMsg(i18np("%1 queued message successfully sent.",
-                          "%1 queued messages successfully sent.",
-                          mSentMessages));
+                           "%1 queued messages successfully sent.",
+                           mSentMessages));
       } else {
         setStatusMsg(i18n("%1 of %2 queued messages successfully sent.",
-             mSentMessages, mTotalMessages ));
+                          mSentMessages, mTotalMessages ));
       }
     }
     cleanup();
@@ -448,15 +469,15 @@ void KMSender::doSendMsg()
   }
   mCurrentMsg->setTransferInProgress( true );
 
-  // start the sender process or initialize communication
-  if (!mSendInProgress)
-  {
+  /// start the sender process or initialize communication
+  if ( !mSendInProgress ) {
     Q_ASSERT( !mProgressItem );
-    mProgressItem = KPIM::ProgressManager::createProgressItem(
-      "Sender",
-      i18n( "Sending messages" ),
-      i18n("Initiating sender process..."),
-      true );
+    mProgressItem =
+      KPIM::ProgressManager::createProgressItem(
+        "Sender",
+        i18n( "Sending messages" ),
+        i18n("Initiating sender process..."),
+        true );
     connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
              this, SLOT( slotAbortSend() ) );
     KGlobal::ref();
@@ -465,32 +486,36 @@ void KMSender::doSendMsg()
 
   QString msgTransport = mCustomTransport;
   if ( msgTransport.isEmpty() ) {
-    msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
+    msgTransport = mCurrentMsg->headerField( "X-KMail-Transport" );
   }
   if ( msgTransport.isEmpty() ) {
     const QStringList sl = KMTransportInfo::availableTransports();
-    if (!sl.empty()) msgTransport = sl.front();
+    if ( !sl.empty() ) {
+      msgTransport = sl.front();
+    }
   }
 
-  if (!mSendProc || msgTransport != mMethodStr) {
-    if (mSendProcStarted && mSendProc) {
+  if ( !mSendProc || msgTransport != mMethodStr ) {
+    if ( mSendProcStarted && mSendProc ) {
       mSendProc->finish();
       mSendProcStarted = false;
     }
 
-    mSendProc = createSendProcFromString(msgTransport);
+    mSendProc = createSendProcFromString( msgTransport );
     mMethodStr = msgTransport;
 
-    if( mTransportInfo->encryption == "TLS" || mTransportInfo->encryption == "SSL" ) {
+    if ( mTransportInfo->encryption == "TLS" ||
+         mTransportInfo->encryption == "SSL" ) {
       mProgressItem->setUsesCrypto( true );
     } else if ( !mCustomTransport.isEmpty() ) {
-        int result = KMessageBox::warningContinueCancel( 0,
+      int result = KMessageBox::warningContinueCancel(
+        0,
         i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),
         i18n( "Security Warning" ),
-        KGuiItem(i18n( "Send Unencrypted" )),
-        "useCustomTransportWithoutAsking", false);
+        KGuiItem( i18n( "Send Unencrypted" ) ),
+        "useCustomTransportWithoutAsking", false );
 
-      if( result == KMessageBox::Cancel ) {
+      if ( result == KMessageBox::Cancel ) {
         mProgressItem->cancel();
         mProgressItem->setComplete();
         slotAbortSend();
@@ -499,9 +524,9 @@ void KMSender::doSendMsg()
       }
     }
 
-    if (!mSendProc)
-      sendProcStarted(false);
-    else {
+    if ( !mSendProc ) {
+      sendProcStarted( false );
+    } else {
       connect(mSendProc, SIGNAL(idle()), SLOT(slotIdle()));
       connect(mSendProc, SIGNAL(started(bool)), SLOT(sendProcStarted(bool)));
 
@@ -513,11 +538,11 @@ void KMSender::doSendMsg()
 
       mSendProc->start();
     }
-  }
-  else if (!mSendProcStarted)
+  } else if ( !mSendProcStarted ) {
     mSendProc->start();
-  else
+  } else {
     doSendMsgAux();
+  }
 }
 
 bool KMSender::runPrecommand( const QString & cmd ) {
@@ -608,31 +633,33 @@ void KMSender::doSendMsgAux()
 
 
 //-----------------------------------------------------------------------------
-void KMSender::cleanup(void)
+void KMSender::cleanup( void )
 {
   kDebug(5006) << k_funcinfo << endl;
-  if (mSendProc && mSendProcStarted) mSendProc->finish();
+  if ( mSendProc && mSendProcStarted ) {
+    mSendProc->finish();
+  }
   mSendProc = 0;
   mSendProcStarted = false;
-  if (mSendInProgress) KGlobal::deref();
+  if ( mSendInProgress ) {
+    KGlobal::deref();
+  }
   mSendInProgress = false;
-  if (mCurrentMsg)
-  {
+  if ( mCurrentMsg ) {
     mCurrentMsg->setTransferInProgress( false );
     mCurrentMsg = 0;
   }
   if ( mSentFolder ) {
-    mSentFolder->close();
+    mSentFolder->close( "dosendsent" );
     mSentFolder = 0;
   }
   if ( mOutboxFolder ) {
     disconnect( mOutboxFolder, SIGNAL(msgAdded(int)),
                 this, SLOT(outboxMsgAdded(int)) );
-    mOutboxFolder->close();
+    mOutboxFolder->close( "dosendoutbox" );
     if ( mOutboxFolder->count( true ) == 0 ) {
       mOutboxFolder->expunge();
-    }
-    else if ( mOutboxFolder->needsCompacting() ) {
+    } else if ( mOutboxFolder->needsCompacting() ) {
       mOutboxFolder->compact( KMFolder::CompactSilentlyNow );
     }
     mOutboxFolder = 0;
@@ -642,12 +669,12 @@ void KMSender::cleanup(void)
   mSentMessages = 0;
   mFailedMessages = 0;
   mSentBytes = 0;
-  if ( mProgressItem )
+  if ( mProgressItem ) {
     mProgressItem->setComplete();
+  }
   mProgressItem = 0;
   kmkernel->filterMgr()->deref();
 }
-
 
 //-----------------------------------------------------------------------------
 void KMSender::slotAbortSend()
@@ -655,25 +682,29 @@ void KMSender::slotAbortSend()
   mSendAborted = true;
   delete mPrecommand;
   mPrecommand = 0;
-  if (mSendProc) mSendProc->abort();
+  if ( mSendProc ) {
+    mSendProc->abort();
+  }
 }
 
 //-----------------------------------------------------------------------------
 void KMSender::slotIdle()
 {
-  assert(mSendProc != 0);
+  assert( mSendProc != 0 );
 
   QString msg;
   QString errString;
-  if (mSendProc)
-      errString = mSendProc->lastErrorMessage();
+  if ( mSendProc ) {
+    errString = mSendProc->lastErrorMessage();
+  }
 
-  if (mSendAborted) {
+  if ( mSendAborted ) {
     // sending of message aborted
     if ( mCurrentMsg ) {
       mCurrentMsg->setTransferInProgress( false );
-      if ( mOutboxFolder )
+      if ( mOutboxFolder ) {
         mOutboxFolder->unGetMsg( mFailedMessages );
+      }
       mCurrentMsg = 0;
     }
     msg = i18n("Sending aborted:\n%1\n"
@@ -825,31 +856,32 @@ KMSendProc* KMSender::createSendProcFromString( const QString & transport )
 }
 
 //-----------------------------------------------------------------------------
-void KMSender::setStatusByLink(const KMMessage *aMsg)
+void KMSender::setStatusByLink( const KMMessage *aMsg )
 {
   int n = 0;
-  while (1) {
+  while ( 1 ) {
     ulong msn;
     MessageStatus status;
-    aMsg->getLink(n, &msn, status);
-    if ( !msn || status.isOfUnknownStatus() )
+    aMsg->getLink( n, &msn, status );
+    if ( !msn || status.isOfUnknownStatus() ) {
       break;
+    }
     n++;
 
     KMFolder *folder = 0;
     int index = -1;
-    KMMsgDict::instance()->getLocation(msn, &folder, &index);
-    if (folder && index != -1) {
-      folder->open();
+    KMMsgDict::instance()->getLocation( msn, &folder, &index );
+    if ( folder && index != -1 ) {
+      folder->open( "setstatus" );
       if ( status.isDeleted() ) {
         // Move the message to the trash folder
         KMDeleteMsgCommand *cmd =
           new KMDeleteMsgCommand( folder, folder->getMsg( index ) );
         cmd->start();
       } else {
-        folder->setStatus(index, status);
+        folder->setStatus( index, status );
       }
-      folder->close();
+      folder->close( "setstatus" );
     } else {
       kWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
     }

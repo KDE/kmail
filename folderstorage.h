@@ -254,7 +254,7 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open() = 0;
+  virtual int open( const char *owner ) = 0;
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
@@ -262,7 +262,7 @@ public:
 
   /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=false) = 0;
+  virtual void close( const char *owner, bool force=false ) = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry. */

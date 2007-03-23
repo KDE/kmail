@@ -507,28 +507,27 @@ void KMFolderTree::writeConfig()
 void KMFolderTree::updateUnreadAll()
 {
   bool upd = updatesEnabled();
-  setUpdatesEnabled(false);
+  setUpdatesEnabled( false );
 
-  KMFolderDir* fdir;
-  KMFolderNode* folderNode;
-  KMFolder* folder;
+  KMFolderDir *fdir;
+  KMFolderNode *folderNode;
+  KMFolder *folder;
 
   fdir = &kmkernel->folderMgr()->dir();
   QList<KMFolderNode*>::const_iterator it;
   for ( it = fdir->constBegin();
       ( folderNode = *it ) && ( it != fdir->constEnd() );
-      ++it )
-  {
-    if (!folderNode->isDir()) {
-      folder = static_cast<KMFolder*>(folderNode);
+      ++it ) {
+    if ( !folderNode->isDir() ) {
+      folder = static_cast<KMFolder*>( folderNode );
 
-      folder->open();
+      folder->open( "updateunread" );
       folder->countUnread();
-      folder->close();
+      folder->close( "updateunread" );
     }
   }
 
-  setUpdatesEnabled(upd);
+  setUpdatesEnabled( upd );
 }
 
 //-----------------------------------------------------------------------------
@@ -670,21 +669,28 @@ void KMFolderTree::reload(bool openFolders)
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateOneCount()
 {
-  if ( !mUpdateIterator.current() ) return;
-  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(mUpdateIterator.current());
+  if ( !mUpdateIterator.current() ) {
+    return;
+  }
+  KMFolderTreeItem *fti =
+    static_cast<KMFolderTreeItem*>( mUpdateIterator.current() );
   ++mUpdateIterator;
   if ( !fti->folder() ) {
     // next one please
-    QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
+    QTimer::singleShot( 0, this, SLOT( slotUpdateOneCount() ) );
     return;
   }
 
   // open the folder and update the count
   bool open = fti->folder()->isOpened();
-  if (!open) fti->folder()->open();
-  slotUpdateCounts(fti->folder());
+  if ( !open ) {
+    fti->folder()->open( "updatecount" );
+  }
+  slotUpdateCounts( fti->folder() );
   // restore previous state
-  if (!open) fti->folder()->close();
+  if ( !open ) {
+    fti->folder()->close( "updatecount" );
+  }
 
   QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
 }
@@ -705,7 +711,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     KMFolderTreeItem * fti = 0;
     if (!parent)
     {
-      // create new root-item, but only if this is not the root of a 
+      // create new root-item, but only if this is not the root of a
       // "groupware folders only" account
       if ( kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
         continue;

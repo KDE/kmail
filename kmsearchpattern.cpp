@@ -753,21 +753,23 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
 
 bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
 {
-  if ( isEmpty() )
+  if ( isEmpty() ) {
     return true;
+  }
 
   bool res;
   int idx = -1;
   KMFolder *folder = 0;
-  KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
-  if (!folder || (idx == -1) || (idx >= folder->count())) {
+  KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+  if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
     return false;
   }
 
   bool opened = folder->isOpened();
-  if ( !opened )
-    folder->open();
-  KMMsgBase *msgBase = folder->getMsgBase(idx);
+  if ( !opened ) {
+    folder->open( "searchptr" );
+  }
+  KMMsgBase *msgBase = folder->getMsgBase( idx );
   if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg(idx);
@@ -777,8 +779,9 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
   } else {
     res = matches( folder->getDwString(idx), ignoreBody );
   }
-  if ( !opened )
-    folder->close();
+  if ( !opened ) {
+    folder->close( "searchptr" );
+  }
   return res;
 }
 

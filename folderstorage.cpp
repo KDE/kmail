@@ -586,51 +586,56 @@ FolderJob* FolderStorage::createJob( QList<KMMessage*>& msgList, const QString& 
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg(KMMessage* aMsg, int* aIndex_ret)
+int FolderStorage::moveMsg( KMMessage *aMsg, int *aIndex_ret )
 {
-  assert(aMsg != 0);
+  assert( aMsg != 0 );
   KMFolder* msgParent = aMsg->parent();
 
-  if (msgParent)
-    msgParent->open();
+  if ( msgParent ) {
+    msgParent->open( "moveMsgSrc" );
+  }
 
-  open();
-  int rc = addMsg(aMsg, aIndex_ret);
-  close();
+  open( "moveMsgDest" );
+  int rc = addMsg( aMsg, aIndex_ret );
+  close( "moveMsgDest" );
 
-  if (msgParent)
-    msgParent->close();
+  if ( msgParent ) {
+    msgParent->close( "moveMsgSrc" );
+  }
 
   return rc;
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg(QList<KMMessage*> msglist, int* aIndex_ret)
+int FolderStorage::moveMsg( QList<KMMessage*> msglist, int *aIndex_ret )
 {
   KMMessage* aMsg = msglist.first();
-  assert(aMsg != 0);
+  assert( aMsg != 0 );
   KMFolder* msgParent = aMsg->parent();
 
-  if (msgParent)
-    msgParent->open();
+  if ( msgParent ) {
+    msgParent->open( "foldermovemsg" );
+  }
 
   QList<int> index;
-  open();
-  int rc = addMsg(msglist, index);
-  close();
+  open( "moveMsg" );
+  int rc = addMsg( msglist, index );
+  close( "moveMsg" );
   // FIXME: we want to have a QValueList to pass it back, so change this method
-  if ( !index.isEmpty() )
+  if ( !index.isEmpty() ) {
     aIndex_ret = &index.first();
+  }
 
-  if (msgParent)
-    msgParent->close();
+  if ( msgParent ) {
+    msgParent->close( "foldermovemsg" );
+  }
 
   return rc;
 }
 
 
 //-----------------------------------------------------------------------------
-int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
+int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
 {
   QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
@@ -638,7 +643,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   int rc=0, openCount=mOpenCount;
   KMFolderDir *oldParent;
 
-  assert(!newName.isEmpty());
+  assert( !newName.isEmpty() );
 
   oldLoc = location();
   oldIndexLoc = indexLocation();
@@ -646,42 +651,46 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
   QString oldConfigString = "Folder-" + folder()->idString();
 
-  close(true);
+  close( "rename", true );
 
   oldName = folder()->fileName();
   oldParent = folder()->parent();
-  if (newParent)
+  if ( newParent ) {
     folder()->setParent( newParent );
+  }
 
-  folder()->setName(newName);
+  folder()->setName( newName );
   newLoc = location();
   newIndexLoc = indexLocation();
   newSubDirLoc = folder()->subdirLocation();
   newIdsLoc = KMMsgDict::instance()->getFolderIdsLocation( *this );
 
-  if (::rename(QFile::encodeName(oldLoc), QFile::encodeName(newLoc))) {
-    folder()->setName(oldName);
-    folder()->setParent(oldParent);
+  if ( ::rename( QFile::encodeName( oldLoc ),
+                 QFile::encodeName( newLoc ) ) ) {
+    folder()->setName( oldName );
+    folder()->setParent( oldParent );
     rc = errno;
-  }
-  else {
+  } else {
     // rename/move index file and index.sorted file
-    if (!oldIndexLoc.isEmpty()) {
-      ::rename(QFile::encodeName(oldIndexLoc), QFile::encodeName(newIndexLoc));
-      ::rename(QFile::encodeName(oldIndexLoc) + ".sorted",
-               QFile::encodeName(newIndexLoc) + ".sorted");
+    if ( !oldIndexLoc.isEmpty() ) {
+      ::rename( QFile::encodeName( oldIndexLoc ),
+                QFile::encodeName( newIndexLoc ) );
+      ::rename( QFile::encodeName( oldIndexLoc ) + ".sorted",
+                QFile::encodeName( newIndexLoc ) + ".sorted" );
     }
 
     // rename/move serial number file
-    if (!oldIdsLoc.isEmpty())
-      ::rename(QFile::encodeName(oldIdsLoc), QFile::encodeName(newIdsLoc));
+    if ( !oldIdsLoc.isEmpty() )
+      ::rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) );
 
     // rename/move the subfolder directory
-    KMFolderDir* child = 0;
-    if( folder() )
+    KMFolderDir *child = 0;
+    if( folder() ) {
       child = folder()->child();
+    }
 
-    if (!::rename(QFile::encodeName(oldSubDirLoc), QFile::encodeName(newSubDirLoc) )) {
+    if ( !::rename( QFile::encodeName( oldSubDirLoc ),
+                    QFile::encodeName( newSubDirLoc ) ) ) {
       // now that the subfolder directory has been renamed and/or moved also
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)
@@ -692,16 +701,18 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
 
     // if the folder is being moved then move its node and, if necessary, also
     // the associated subfolder directory node to the new parent
-    if (newParent) {
+    if ( newParent ) {
       int idx = oldParent->indexOf( folder() );
-      if ( idx != -1)
+      if ( idx != -1 ) {
         oldParent->takeAt( idx );
+      }
       newParent->prepend( folder() );
       qSort( newParent->begin(), newParent->end() );
       if ( child ) {
         int idx = child->parent()->indexOf( child );
-        if ( idx != -1 )
+        if ( idx != -1 ) {
           child->parent()->takeAt( idx );
+        }
         newParent->prepend( child );
         qSort( newParent->begin(), newParent->end() );
         child->setParent( newParent );
@@ -709,9 +720,8 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
     }
   }
 
-  if (openCount > 0)
-  {
-    open();
+  if ( openCount > 0 ) {
+    open( "rename" );
     mOpenCount = openCount;
   }
   writeConfig();
@@ -729,17 +739,18 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
 //-----------------------------------------------------------------------------
 void FolderStorage::remove()
 {
-  assert(!folder()->name().isEmpty());
+  assert( !folder()->name().isEmpty() );
 
-  clearIndex( true, mExportsSernums ); // delete and remove from dict if necessary
-  close(true);
+  // delete and remove from dict if necessary
+  clearIndex( true, mExportsSernums );
+  close( "remove", true );
 
   if ( mExportsSernums ) {
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
     mExportsSernums = false;	// do not writeFolderIds after removal
   }
-  unlink(QFile::encodeName(indexLocation()) + ".sorted");
-  unlink(QFile::encodeName(indexLocation()));
+  unlink( QFile::encodeName( indexLocation() ) + ".sorted" );
+  unlink( QFile::encodeName( indexLocation() ) );
 
   int rc = removeContents();
 
@@ -749,43 +760,48 @@ void FolderStorage::remove()
   KConfig* config = KMKernel::config();
   config->deleteGroup( "Folder-" + folder()->idString() );
 
-  emit removed(folder(), (rc ? false : true));
+  emit removed( folder(), (rc ? false : true) );
 }
-
 
 //-----------------------------------------------------------------------------
 int FolderStorage::expunge()
 {
   int openCount = mOpenCount;
 
-  assert(!folder()->name().isEmpty());
+  assert( !folder()->name().isEmpty() );
 
-  clearIndex( true, mExportsSernums );   // delete and remove from dict, if needed
-  close( true );
+  // delete and remove from dict, if needed
+  clearIndex( true, mExportsSernums );
+  close( "expunge", true );
 
-  if ( mExportsSernums )
+  if ( mExportsSernums ) {
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
-  if ( mAutoCreateIndex )
+  }
+  if ( mAutoCreateIndex ) {
     truncateIndex();
-  else unlink(QFile::encodeName(indexLocation()));
+  } else {
+    unlink( QFile::encodeName( indexLocation() ) );
+  }
 
   int rc = expungeContents();
-  if (rc) return rc;
+  if ( rc ) {
+    return rc;
+  }
 
   mDirty = false;
   needsCompact = false; //we're cleared and truncated no need to compact
 
-  if (openCount > 0)
-  {
-    open();
+  if ( openCount > 0 ) {
+    open( "expunge" );
     mOpenCount = openCount;
   }
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
   emit numUnreadMsgsChanged( folder() );
-  if ( mAutoCreateIndex ) // FIXME Heh? - Till
+  if ( mAutoCreateIndex ) {  // FIXME Heh? - Till
     writeConfig();
+  }
   emit changed();
   emit expunged( folder() );
 
@@ -809,19 +825,22 @@ int FolderStorage::count(bool cache) const
 //-----------------------------------------------------------------------------
 int FolderStorage::countUnread()
 {
-  if (mGuessedUnreadMsgs > -1)
+  if ( mGuessedUnreadMsgs > -1 ) {
     return mGuessedUnreadMsgs;
-  if (mUnreadMsgs > -1)
+  }
+  if ( mUnreadMsgs > -1 ) {
     return mUnreadMsgs;
+  }
 
   readConfig();
 
-  if (mUnreadMsgs > -1)
+  if ( mUnreadMsgs > -1 ) {
     return mUnreadMsgs;
+  }
 
-  open(); // will update unreadMsgs
+  open( "countunread" ); // will update unreadMsgs
   int unread = mUnreadMsgs;
-  close();
+  close( "countunread" );
   return (unread > 0) ? unread : 0;
 }
 
@@ -900,12 +919,12 @@ void FolderStorage::readConfig()
 void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + folder()->idString());
-  group.writeEntry("UnreadMsgs",
-      mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
-  group.writeEntry("TotalMsgs", mTotalMsgs);
-  group.writeEntry("Compactable", mCompactable);
-  group.writeEntry("ContentsType", (int)mContentsType);
+  KConfigGroup group( config, "Folder-" + folder()->idString() );
+  group.writeEntry( "UnreadMsgs",
+                    mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
+  group.writeEntry( "TotalMsgs", mTotalMsgs );
+  group.writeEntry( "Compactable", mCompactable );
+  group.writeEntry( "ContentsType", (int)mContentsType );
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
@@ -916,8 +935,8 @@ void FolderStorage::writeConfig()
 //-----------------------------------------------------------------------------
 void FolderStorage::correctUnreadMsgsCount()
 {
-  open();
-  close();
+  open( "countunreadmsg" );
+  close( "countunreadmsg" );
   emit numUnreadMsgsChanged( folder() );
 }
 

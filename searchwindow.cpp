@@ -370,23 +370,24 @@ SearchWindow::~SearchWindow()
 {
   QList<QPointer<KMFolder> >::Iterator fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
-    if (!(*fit))
+    if ( !(*fit) ) {
       continue;
-    (*fit)->close();
+    }
+    (*fit)->close( "searchwindow" );
   }
 
-  KConfig* config = KMKernel::config();
+  KConfig *config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
-  group.writeEntry("SubjectWidth", mLbxMatches->columnWidth(0));
-  group.writeEntry("SenderWidth", mLbxMatches->columnWidth(1));
-  group.writeEntry("DateWidth", mLbxMatches->columnWidth(2));
-  group.writeEntry("FolderWidth", mLbxMatches->columnWidth(3));
-  group.writeEntry("SearchWidgetWidth", width());
-  group.writeEntry("SearchWidgetHeight", height());
+  group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
+  group.writeEntry( "SenderWidth", mLbxMatches->columnWidth( 1 ) );
+  group.writeEntry( "DateWidth", mLbxMatches->columnWidth( 2 ) );
+  group.writeEntry( "FolderWidth", mLbxMatches->columnWidth( 3 ) );
+  group.writeEntry( "SearchWidgetWidth", width());
+  group.writeEntry( "SearchWidgetHeight", height());
   config->sync();
 }
 
-void SearchWindow::setEnabledSearchButton(bool)
+void SearchWindow::setEnabledSearchButton( bool )
 {
   //Make sure that button is enable
   //Before when we selected a folder == "Local Folder" as that it was not a folder
@@ -462,77 +463,78 @@ void SearchWindow::activateFolder(KMFolder *curFolder)
 //-----------------------------------------------------------------------------
 void SearchWindow::slotSearch()
 {
-    mLastFocus = focusWidget();
-    setButtonFocus( User1 );     // set focus so we don't miss key event
+  mLastFocus = focusWidget();
+  setButtonFocus( User1 );     // set focus so we don't miss key event
 
-    mStopped = false;
-    mFetchingInProgress = 0;
+  mStopped = false;
+  mFetchingInProgress = 0;
 
-    mSearchFolderOpenBtn->setEnabled(true);
-    enableButton(User1, false);
-    enableButton(User2, true);
+  mSearchFolderOpenBtn->setEnabled( true );
+  enableButton( User1, false );
+  enableButton( User2, true );
 
-    mLbxMatches->clear();
+  mLbxMatches->clear();
 
-    mSortColumn = mLbxMatches->sortColumn();
-    mSortOrder = mLbxMatches->sortOrder();
-    mLbxMatches->setSorting(-1);
-    mLbxMatches->setShowSortIndicator(false);
+  mSortColumn = mLbxMatches->sortColumn();
+  mSortOrder = mLbxMatches->sortOrder();
+  mLbxMatches->setSorting( -1 );
+  mLbxMatches->setShowSortIndicator( false );
 
-    // If we haven't openend an existing search folder, find or
-    // create one.
-    if (!mFolder) {
-      KMFolderMgr *mgr = kmkernel->searchFolderMgr();
-      if (mSearchFolderEdt->text().isEmpty())
-          mSearchFolderEdt->setText(i18n("Last Search"));
-      QString baseName = mSearchFolderEdt->text();
-      QString fullName = baseName;
-      int count = 0;
-      KMFolder *folder;
-      while ((folder = mgr->find(fullName))) {
-        if (folder->storage()->inherits("KMFolderSearch"))
-          break;
-        fullName = QString("%1 %2").arg(baseName).arg(++count);
+  // If we haven't openend an existing search folder, find or create one.
+  if ( !mFolder ) {
+    KMFolderMgr *mgr = kmkernel->searchFolderMgr();
+    if ( mSearchFolderEdt->text().isEmpty() ) {
+      mSearchFolderEdt->setText( i18n("Last Search") );
+    }
+    QString baseName = mSearchFolderEdt->text();
+    QString fullName = baseName;
+    int count = 0;
+    KMFolder *folder;
+    while ( ( folder = mgr->find( fullName ) ) ) {
+      if ( folder->storage()->inherits( "KMFolderSearch" ) ) {
+        break;
       }
-
-      if (!folder)
-        folder = mgr->createFolder(fullName, false, KMFolderTypeSearch,
-            &mgr->dir());
-
-      mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
-    }
-    mFolder->stopSearch();
-    disconnect(mFolder, SIGNAL(msgAdded(int)),
-            this, SLOT(slotAddMsg(int)));
-    disconnect(mFolder, SIGNAL(msgRemoved(KMFolder*, quint32)),
-            this, SLOT(slotRemoveMsg(KMFolder*, quint32)));
-    connect(mFolder, SIGNAL(msgAdded(int)),
-            this, SLOT(slotAddMsg(int)));
-    connect(mFolder, SIGNAL(msgRemoved(KMFolder*, quint32)),
-            this, SLOT(slotRemoveMsg(KMFolder*, quint32)));
-    KMSearch *search = new KMSearch();
-    connect(search, SIGNAL(finished(bool)),
-            this, SLOT(searchDone()));
-    if (mChkbxAllFolders->isChecked()) {
-        search->setRecursive(true);
-    } else {
-        search->setRoot(mCbxFolders->folder());
-        search->setRecursive(mChkSubFolders->isChecked());
+      fullName = QString( "%1 %2" ).arg( baseName ).arg( ++count );
     }
 
-    mPatternEdit->updateSearchPattern();
-    KMSearchPattern *searchPattern = new KMSearchPattern();
-    *searchPattern = *mSearchPattern; //deep copy
-    searchPattern->purify();
-    search->setSearchPattern(searchPattern);
-    mFolder->setSearch(search);
-    enableGUI();
-
-    if (mFolder && !mFolders.contains(mFolder.operator->()->folder())) {
-        mFolder->open();
-        mFolders.append(mFolder.operator->()->folder());
+    if ( !folder ) {
+      folder =
+        mgr->createFolder( fullName, false, KMFolderTypeSearch, &mgr->dir() );
     }
-    mTimer->start(200);
+    mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
+  }
+  mFolder->stopSearch();
+  disconnect( mFolder, SIGNAL( msgAdded( int ) ),
+              this, SLOT( slotAddMsg( int ) ) );
+  disconnect( mFolder, SIGNAL( msgRemoved( KMFolder*, quint32  )),
+              this, SLOT( slotRemoveMsg( KMFolder*, quint32 ) ) );
+  connect( mFolder, SIGNAL( msgAdded( int ) ),
+           this, SLOT( slotAddMsg( int ) ) );
+  connect( mFolder, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
+           this, SLOT( slotRemoveMsg( KMFolder*, quint32 ) ) );
+  KMSearch *search = new KMSearch();
+  connect( search, SIGNAL( finished( bool ) ),
+           this, SLOT( searchDone() ) );
+  if ( mChkbxAllFolders->isChecked() ) {
+    search->setRecursive( true );
+  } else {
+    search->setRoot( mCbxFolders->folder() );
+    search->setRecursive( mChkSubFolders->isChecked() );
+  }
+
+  mPatternEdit->updateSearchPattern();
+  KMSearchPattern *searchPattern = new KMSearchPattern();
+  *searchPattern = *mSearchPattern; //deep copy
+  searchPattern->purify();
+  search->setSearchPattern( searchPattern );
+  mFolder->setSearch( search );
+  enableGUI();
+
+  if ( mFolder && !mFolders.contains( mFolder.operator->()->folder() ) ) {
+    mFolder->open( "searchwindow" );
+    mFolders.append(mFolder.operator->()->folder());
+  }
+  mTimer->start( 200 );
 }
 
 //-----------------------------------------------------------------------------
@@ -551,33 +553,36 @@ void SearchWindow::searchDone()
     mLbxMatches->setShowSortIndicator(true);
 }
 
-void SearchWindow::slotAddMsg(int idx)
+void SearchWindow::slotAddMsg( int idx )
 {
-    if (!mFolder)
-        return;
-    bool unget = !mFolder->isMessage(idx);
-    KMMessage *msg = mFolder->getMsg(idx);
-    QString from, fName;
-    KMFolder *pFolder = msg->parent();
-    if (!mFolders.contains(pFolder)) {
-        mFolders.append(pFolder);
-        pFolder->open();
-    }
-    if(pFolder->whoField() == "To")
-        from = msg->to();
-    else
-        from = msg->from();
-    if (pFolder->isSystemFolder())
-        fName = i18n(pFolder->name().toUtf8());
-    else
-        fName = pFolder->name();
+  if ( !mFolder ) {
+    return;
+  }
+  bool unget = !mFolder->isMessage( idx );
+  KMMessage *msg = mFolder->getMsg( idx );
+  QString from, fName;
+  KMFolder *pFolder = msg->parent();
+  if ( !mFolders.contains( pFolder ) ) {
+    mFolders.append( pFolder );
+    pFolder->open( "searchwindow" );
+  }
+  if( pFolder->whoField() == "To" ) {
+    from = msg->to();
+  } else {
+    from = msg->from();
+  }
+  if ( pFolder->isSystemFolder() ) {
+    fName = i18n( pFolder->name().toUtf8() );
+  } else {
+    fName = pFolder->name();
+  }
 
-    (void)new K3ListViewItem(mLbxMatches, mLbxMatches->lastItem(),
+  (void)new K3ListViewItem( mLbxMatches, mLbxMatches->lastItem(),
                             msg->subject(), from, msg->dateIsoStr(),
-                            fName,
-                            QString::number(mFolder->serNum(idx)));
-    if (unget)
-        mFolder->unGetMsg(idx);
+                            fName, QString::number( mFolder->serNum( idx ) ) );
+  if ( unget ) {
+    mFolder->unGetMsg( idx );
+  }
 }
 
 void SearchWindow::slotRemoveMsg(KMFolder *, quint32 serNum)
@@ -598,56 +603,58 @@ void SearchWindow::slotRemoveMsg(KMFolder *, quint32 serNum)
 //-----------------------------------------------------------------------------
 void SearchWindow::slotStop()
 {
-    if (mFolder)
-      mFolder->stopSearch();
-    mStopped = true;
-    enableButton(User2, false);
+  if ( mFolder ) {
+    mFolder->stopSearch();
+  }
+  mStopped = true;
+  enableButton( User2, false );
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotClose()
 {
-    accept();
+  accept();
 }
 
 
 //-----------------------------------------------------------------------------
 void SearchWindow::closeEvent(QCloseEvent *e)
 {
-    if (mFolder && mFolder->search() && mFolder->search()->running()) {
-      mCloseRequested = true;
-      //Cancel search in progress by setting the search folder search to
-      //the null search
-      mFolder->setSearch(new KMSearch());
-      QTimer::singleShot(0, this, SLOT(slotClose()));
-    } else {
-      KDialog::closeEvent(e);
-    }
+  if ( mFolder && mFolder->search() && mFolder->search()->running() ) {
+    mCloseRequested = true;
+    //Cancel search in progress by setting the search folder search to
+    //the null search
+    mFolder->setSearch( new KMSearch() );
+    QTimer::singleShot( 0, this, SLOT( slotClose() ) );
+  } else {
+    KDialog::closeEvent( e );
+  }
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::updateCreateButton( const QString &s)
+void SearchWindow::updateCreateButton( const QString &s )
 {
-    mSearchFolderBtn->setEnabled(s != i18n("Last Search") && mSearchFolderOpenBtn->isEnabled());
+    mSearchFolderBtn->setEnabled( s != i18n("Last Search") &&
+                                  mSearchFolderOpenBtn->isEnabled() );
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::renameSearchFolder()
 {
-    if (mFolder && (mFolder->folder()->name() != mSearchFolderEdt->text())) {
-        int i = 1;
-        QString name =  mSearchFolderEdt->text();
-        while (i < 100) {
-            if (!kmkernel->searchFolderMgr()->find( name )) {
-                mFolder->rename( name );
-                kmkernel->searchFolderMgr()->contentsChanged();
-                break;
-            }
-            name.setNum( i );
-            name = mSearchFolderEdt->text() + ' ' + name;
-            ++i;
-        }
+  if ( mFolder && ( mFolder->folder()->name() != mSearchFolderEdt->text() ) ) {
+    int i = 1;
+    QString name =  mSearchFolderEdt->text();
+    while ( i < 100 ) {
+      if ( !kmkernel->searchFolderMgr()->find( name ) ) {
+        mFolder->rename( name );
+        kmkernel->searchFolderMgr()->contentsChanged();
+        break;
+      }
+      name.setNum( i );
+      name = mSearchFolderEdt->text() + ' ' + name;
+      ++i;
     }
+  }
 }
 
 void SearchWindow::openSearchFolder()

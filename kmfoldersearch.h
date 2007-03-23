@@ -72,6 +72,7 @@ public:
   bool running() const { return mRunning; }
   void stop();
   int foundCount() const { return mFoundCount; }
+  int searchCount() const { return mSearchCount; }
   QString currentFolder() const { return mLastFolder; }
 
 public slots:
@@ -102,6 +103,7 @@ private:
   SerNumList mSerNums;
   QString mLastFolder;
   int mFoundCount;
+  int mSearchCount;
   QTimer *mProcessNextBatchTimer;
 };
 
@@ -168,12 +170,12 @@ public slots:
 
 public:
   //See base class for documentation
-  virtual QByteArray& getMsgString(int idx, QByteArray& mDest);
-  virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int open();
+  virtual QByteArray& getMsgString( int idx, QByteArray &mDest );
+  virtual int addMsg( KMMessage *msg, int *index_return = 0 );
+  virtual int open( const char *owner );
   virtual int canAccess();
   virtual void sync();
-  virtual void close(bool force=false);
+  virtual void close( const char *owner, bool force=false );
   virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;

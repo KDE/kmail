@@ -691,7 +691,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
 
         int i;
 
-        mAddMsgCurrentFolder->open();
+        mAddMsgCurrentFolder->open( "dbusadd" );
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
           KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
 	  QString id = mb->msgIdMD5();
@@ -710,7 +710,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
             mAddMessageMsgIds.append(id);
           }
         }
-        mAddMsgCurrentFolder->close();
+        mAddMsgCurrentFolder->close( "dbusadd" );
       }
 
       QString msgId = msg->msgIdMD5();
@@ -952,7 +952,7 @@ bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (!folder || (idx == -1))
       return false;
-    folder->open();
+    folder->open( "showmail" );
     KMMsgBase *msgBase = folder->getMsgBase(idx);
     if (!msgBase)
       return false;
@@ -969,7 +969,7 @@ bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
 
     if (unGet)
       folder->unGetMsg(idx);
-    folder->close();
+    folder->close( "showmail" );
     return true;
   }
 
@@ -983,7 +983,7 @@ QString KMKernel::getFrom( quint32 serialNumber )
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
     return QString();
-  folder->open();
+  folder->open( "getFrom" );
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (!msgBase)
     return QString();
@@ -992,7 +992,7 @@ QString KMKernel::getFrom( quint32 serialNumber )
   QString result = msg->from();
   if (unGet)
     folder->unGetMsg(idx);
-  folder->close();
+  folder->close( "getFrom" );
   return result;
 }
 
@@ -1014,7 +1014,7 @@ QString KMKernel::debugSernum( quint32 serialNumber )
     // different folder
     if (folder && (idx != -1)) {
       // everything is ok
-      folder->open();
+      folder->open( "debugser" );
       msg = folder->getMsgBase( idx );
       if (msg) {
 	res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
@@ -1024,7 +1024,7 @@ QString KMKernel::debugSernum( quint32 serialNumber )
       } else {
 	res.append( QString( "Invalid serial number." ) );
       }
-      folder->close();
+      folder->close( "debugser" );
     } else {
       res.append( QString( "Invalid serial number." ) );
     }
@@ -1187,7 +1187,7 @@ void KMKernel::recoverDeadLetters()
     return;
 
   KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  const int rc = folder.open();
+  const int rc = folder.open( "recover" );
   if ( rc ) {
     perror( "cannot open autosave folder" );
     return;
@@ -1203,7 +1203,7 @@ void KMKernel::recoverDeadLetters()
       win->show();
     }
   }
-  folder.close();
+  folder.close( "recover" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1247,7 +1247,7 @@ void KMKernel::initFolders(KConfig* cfg)
    * the index on each start to be on the save side. */
   //if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
   //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
-  the_outboxFolder->open();
+  the_outboxFolder->open( "kmkernel" );
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
   if (the_sentFolder->canAccess() != 0) {
@@ -1274,7 +1274,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_draftsFolder->setSystemFolder(true);
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString() );
-  the_draftsFolder->open();
+  the_draftsFolder->open( "kmkernel" );
 
   the_templatesFolder = the_folderMgr->findOrCreate(cfg->readEntry("templatesFolder", I18N_NOOP("templates")));
   if (the_templatesFolder->canAccess() != 0) {
@@ -1283,7 +1283,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_templatesFolder->setSystemFolder(true);
   if ( the_templatesFolder->userWhoField().isEmpty() )
     the_templatesFolder->setUserWhoField( QString() );
-  the_templatesFolder->open();
+  the_templatesFolder->open( "kmkernel" );
 }
 
 
@@ -1424,7 +1424,7 @@ void KMKernel::cleanupImapFolders()
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
-    fld->close();
+    fld->close( "kernel", true );
   }
   the_imapFolderMgr->quiet(false);
 
@@ -1455,7 +1455,7 @@ void KMKernel::cleanupImapFolders()
     cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
     cfld->setAccount(cachedImapAcct);
     cachedImapAcct->setImapFolder(cfld);
-    cfld->close();
+    cfld->close( "kmkernel" );
   }
   the_dimapFolderMgr->quiet( false );
 }
@@ -1517,14 +1517,14 @@ void KMKernel::cleanup(void)
   KConfig* config =  KMKernel::config();
   KConfigGroup group(config, "General");
 
-  if (the_trashFolder) {
+  if ( the_trashFolder ) {
 
-    the_trashFolder->close(true);
+    the_trashFolder->close( "kmkernel", true );
 
-    if (group.readEntry("empty-trash-on-exit", true ) )
-    {
-      if ( the_trashFolder->count( true ) > 0 )
+    if ( group.readEntry( "empty-trash-on-exit", true ) ) {
+      if ( the_trashFolder->count( true ) > 0 ) {
         the_trashFolder->expunge();
+      }
     }
   }
 
@@ -1536,20 +1536,22 @@ void KMKernel::cleanup(void)
   the_folderMgr->createFolderList(&strList, &folders);
 
   QList<QPointer<KMFolder> >::const_iterator it;
-  for ( it = folders.begin(); it != folders.end(); it++ )
-  {
+  for ( it = folders.begin(); it != folders.end(); it++ ) {
     folder = *it;
-    if (!folder || folder->isDir()) continue;
-    folder->close(true);
+    if ( !folder || folder->isDir() ) {
+      continue;
+    }
+    folder->close( "kmkernel", true );
   }
   strList.clear();
   folders.clear();
   the_searchFolderMgr->createFolderList(&strList, &folders);
-  for ( it = folders.begin(); it != folders.end(); it++ )
-  {
+  for ( it = folders.begin(); it != folders.end(); it++ ) {
     folder = *it;
-    if (!folder || folder->isDir()) continue;
-    folder->close(true);
+    if ( !folder || folder->isDir() ) {
+      continue;
+    }
+    folder->close( "kmkernel", true );
   }
 
   delete the_folderMgr;

@@ -2313,12 +2313,12 @@ QString KMComposeWin::prettyMimeType( const QString& type )
 {
   const QString t = type.toLower();
   const KMimeType::Ptr st = KMimeType::mimeType( t );
-  
+
   if (!st) {
     kWarning() << "unknown mimetype " << t << endl;
     return QString();
   }
-  
+
   return !st->isDefault() ? st->comment() : t;
 }
 
@@ -3961,7 +3961,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     theFolder = ( mSaveIn==KMComposeWin::Drafts ?
                   kmkernel->draftsFolder() : kmkernel->templatesFolder() );
 
-  theFolder->open();
+  theFolder->open( "composer" );
   kDebug(5006) << k_funcinfo << "theFolder=" << theFolder->name() << endl;
   if ( imapTheFolder )
     kDebug(5006) << k_funcinfo << "imapTheFolder=" << imapTheFolder->name() << endl;
@@ -3979,7 +3979,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     (static_cast<KMFolderImap*>( imapTheFolder->storage() ))->getFolder();
   }
 
-  theFolder->close();
+  theFolder->close( "composer" );
   return sentOk;
 }
 

@@ -135,6 +135,12 @@ public:
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void remove();
 
+  /** Close folder. If force is TRUE the files are closed even if
+      others still use it (e.g. other mail reader windows). This also
+      cancels all pending jobs.
+  */
+  virtual void close( const char *owner, bool force=FALSE );
+
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
 
@@ -280,11 +286,6 @@ virtual int create();
 
 /** imap folders cannot expire */
 virtual bool isAutoExpire() const { return false; }
-
-/** Close folder. If force is true the files are closed even if
-others still use it (e.g. other mail reader windows). This also
-cancels all pending jobs. */
-virtual void close(bool force=false);
 
 void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
@@ -434,7 +435,7 @@ protected:
   /** See if all folders are still present on server, otherwise delete them */
   void checkFolders( const QStringList& folderNames, const QString& ns );
 
-  void finishMailCheck( imapState state );
+  void finishMailCheck( const char *func, imapState state );
 
 protected slots:
 
@@ -530,6 +531,7 @@ private:
   ProgressItem *mAddMessageProgressItem;
   // to-be-added folders
   QStringList mFoldersPendingCreation;
+  QStringList owners;
 };
 
 #endif // kmfolderimap_h

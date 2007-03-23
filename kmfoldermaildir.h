@@ -62,7 +62,7 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open();
+  virtual int open( const char *owner );
 
   virtual int canAccess();
 
@@ -71,7 +71,7 @@ public:
 
   /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=false);
+  virtual void close( const char *owner, bool force=false );
 
   /** Create the necessary folders for a maildir folder. Usually you will
       want to use create() instead.

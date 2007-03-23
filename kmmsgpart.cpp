@@ -240,7 +240,7 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
   default:
     kWarning(5006) << "Calling " << k_funcinfo
                    << " with something containing neither 7 nor 8 bit text!"
-                   << " Fix this caller: " << kdBacktrace() << endl;
+                   << " Fix this caller: " << kBacktrace() << endl;
     cte = 0;
   }
   setCte( cte );
@@ -311,7 +311,7 @@ QString KMMessagePart::iconName() const
 {
   QByteArray mimeType( mType + '/' + mSubtype );
   kAsciiToLower( mimeType.data() );
-  
+
   QString fileName;
   KMimeType::Ptr mime = KMimeType::mimeType( mimeType );
   if (mime) {
@@ -319,7 +319,7 @@ QString KMMessagePart::iconName() const
   } else {
     kWarning() << "unknown mimetype " << mimeType << endl;
   }
-  
+
   if ( fileName.isEmpty() )
   {
     fileName = this->fileName();

@@ -1386,30 +1386,30 @@ KMFilterActionCopy::KMFilterActionCopy()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
+KMFilterAction::ReturnCode KMFilterActionCopy::process( KMMessage *msg ) const
 {
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
-  if ( !mFolder && mFolder->open() != 0 )
+  if ( !mFolder && mFolder->open( "filtercopy" ) != 0 ) {
     return ErrorButGoOn;
+  }
 
   // copy the message 1:1
   KMMessage* msgCopy = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
 
   int index;
-  int rc = mFolder->addMsg(msgCopy, &index);
-  if (rc == 0 && index != -1)
+  int rc = mFolder->addMsg( msgCopy, &index );
+  if ( rc == 0 && index != -1 ) {
     mFolder->unGetMsg( index );
-  mFolder->close();
+  }
+  mFolder->close( "filtercopy" );
 
   return GoOn;
 }
 
-void KMFilterActionCopy::processAsync(KMMessage* msg) const
+void KMFilterActionCopy::processAsync( KMMessage *msg ) const
 {
-  // FIXME remove the debug output
-  kDebug(5006) << "##### KMFilterActionCopy::processAsync(KMMessage* msg)" << endl;
   ActionScheduler *handler = MessageProperty::filterHandler( msg );
 
   KMCommand *cmd = new KMCopyCommand( mFolder, msg );

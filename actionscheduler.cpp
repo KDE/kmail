@@ -131,13 +131,14 @@ ActionScheduler::~ActionScheduler()
 {
   schedulerList->removeAll( this );
   tempCloseFolders();
-  mSrcFolder->close();
+  mSrcFolder->close( "actionschedsrc" );
 
-  if (mDeleteSrcFolder)
-    tempFolderMgr->remove(mSrcFolder);
+  if ( mDeleteSrcFolder ) {
+    tempFolderMgr->remove( mSrcFolder );
+  }
 
   --refCount;
-  if (refCount == 0) {
+  if ( refCount == 0 ) {
     delete tempFolderMgr;
     tempFolderMgr = 0;
   }
@@ -160,19 +161,21 @@ void ActionScheduler::setDefaultDestinationFolder( KMFolder *destFolder )
 
 void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 {
-  srcFolder->open();
-  if (mSrcFolder) {
+  srcFolder->open( "actionschedsrc" );
+  if ( mSrcFolder ) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
 		this, SLOT(msgAdded(KMFolder*, quint32)) );
-    mSrcFolder->close();
+    mSrcFolder->close( "actionschedsrc" );
   }
   mSrcFolder = srcFolder;
   int i = 0;
-  for (i = 0; i < mSrcFolder->count(); ++i)
+  for ( i = 0; i < mSrcFolder->count(); ++i ) {
     enqueue( mSrcFolder->getMsgBase( i )->getMsgSerNum() );
-  if (mSrcFolder)
+  }
+  if ( mSrcFolder ) {
     connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
 	     this, SLOT(msgAdded(KMFolder*, quint32)) );
+  }
 }
 
 void ActionScheduler::setFilterList( QList<KMFilter*> filters )
@@ -190,16 +193,18 @@ void ActionScheduler::setFilterList( QList<KMFilter*> filters )
   }
 }
 
-int ActionScheduler::tempOpenFolder( KMFolder* aFolder )
+int ActionScheduler::tempOpenFolder( KMFolder *aFolder )
 {
   assert( aFolder );
   tempCloseFoldersTimer->stop();
-  if ( aFolder == mSrcFolder.operator->() )
+  if ( aFolder == mSrcFolder.operator->() ) {
     return 0;
+  }
 
-  int rc = aFolder->open();
-  if (rc)
+  int rc = aFolder->open( "actionsched" );
+  if ( rc ) {
     return rc;
+  }
 
   mOpenFolders.append( aFolder );
   return 0;
@@ -209,29 +214,32 @@ void ActionScheduler::tempCloseFolders()
 {
   // close temp opened folders
   QList<QPointer<KMFolder> >::ConstIterator it;
-  for (it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it) {
+  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it ) {
     KMFolder *folder = *it;
-    if (folder)
-      folder->close();
+    if ( folder ) {
+      folder->close( "actionsched" );
+    }
   }
   mOpenFolders.clear();
 }
 
-void ActionScheduler::execFilters(const QList<quint32> serNums)
+void ActionScheduler::execFilters( const QList<quint32> serNums )
 {
   QList<quint32>::ConstIterator it;
-  for (it = serNums.begin(); it != serNums.end(); ++it)
+  for ( it = serNums.begin(); it != serNums.end(); ++it ) {
     execFilters( *it );
+  }
 }
 
-void ActionScheduler::execFilters(const QList<KMMsgBase*> msgList)
+void ActionScheduler::execFilters( const QList<KMMsgBase*> msgList )
 {
   KMMsgBase *msgBase;
-  foreach ( msgBase, msgList )
+  foreach ( msgBase, msgList ) {
     execFilters( msgBase->getMsgSerNum() );
+  }
 }
 
-void ActionScheduler::execFilters(KMMsgBase* msgBase)
+void ActionScheduler::execFilters( KMMsgBase *msgBase )
 {
   execFilters( msgBase->getMsgSerNum() );
 }

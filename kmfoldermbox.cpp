@@ -89,28 +89,40 @@ KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMbox::~KMFolderMbox()
 {
-  if (mOpenCount>0) close(true);
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+  if ( mOpenCount > 0 ) {
+    close( "~kmfoldermbox", true );
+  }
+  if ( kmkernel->undoStack() ) {
+    kmkernel->undoStack()->folderDestroyed( folder() );
+  }
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::open()
+int KMFolderMbox::open( const char *owner )
 {
+  mOwners.append( owner );
+  assert( mOwners.contains( "mainwidget" ) );
+
+  kDebug() << "\nopen " << mOpenCount << " " << folder()->name()
+           << " " << mOwners << ", adding: " << owner << " \n" << endl;
+//           << " " << mOwners << ", adding: " << owner << " \n" << kBacktrace() << endl;
   int rc = 0;
 
   mOpenCount++;
   kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
 
-  if (mOpenCount > 1) return 0;  // already open
+  if ( mOpenCount > 1 ) {
+    return 0;  // already open
+  }
 
-  assert(!folder()->name().isEmpty());
+  assert( !folder()->name().isEmpty() );
 
   mFilesLocked = false;
-  mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
-  if (!mStream)
-  {
+  mStream = fopen( QFile::encodeName( location() ), "r+" ); // messages file
+  if ( !mStream ) {
     KNotification::event( "warning",
-    i18n("Cannot open file \"%1\":\n%2", location(), strerror(errno)));
+                          i18n("Cannot open file \"%1\":\n%2",
+                               location(), strerror( errno ) ) );
     kDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
@@ -118,79 +130,78 @@ int KMFolderMbox::open()
 
   lock();
 
-  if (!folder()->path().isEmpty())
-  {
+  if ( !folder()->path().isEmpty() ) {
      KMFolderIndex::IndexStatus index_status = indexStatus();
      // test if index file exists and is up-to-date
-     if (KMFolderIndex::IndexOk != index_status)
-     {
+     if ( KMFolderIndex::IndexOk != index_status ) {
        // only show a warning if the index file exists, otherwise it can be
        // silently regenerated
-       if (KMFolderIndex::IndexTooOld == index_status) {
-        QString msg = i18n("<qt><p>The index of folder '%2' seems "
-                           "to be out of date. To prevent message "
-                           "corruption the index will be "
-                           "regenerated. As a result deleted "
-                           "messages might reappear and status "
-                           "flags might be lost.</p>"
-                           "<p>Please read the corresponding entry "
-                           "in the <a href=\"%1\">FAQ section of the manual "
-                           "of KMail</a> for "
-                           "information about how to prevent this "
-                           "problem from happening again.</p></qt>",
-                       QString("help:/kmail/faq.html#faq-index-regeneration"),
-                       objectName());
+       if ( KMFolderIndex::IndexTooOld == index_status ) {
+         QString msg = i18n("<qt><p>The index of folder '%2' seems "
+                            "to be out of date. To prevent message "
+                            "corruption the index will be "
+                            "regenerated. As a result deleted "
+                            "messages might reappear and status "
+                            "flags might be lost.</p>"
+                            "<p>Please read the corresponding entry "
+                            "in the <a href=\"%1\">FAQ section of the manual "
+                            "of KMail</a> for "
+                            "information about how to prevent this "
+                            "problem from happening again.</p></qt>",
+                            QString("help:/kmail/faq.html#faq-index-regeneration"),
+                            objectName());
         // When KMail is starting up we have to show a non-blocking message
         // box so that the initialization can continue. We don't show a
         // queued message box when KMail isn't starting up because queued
         // message boxes don't have a "Don't ask again" checkbox.
-        if (kmkernel->startingUp())
-        {
-          KConfigGroup configGroup( KMKernel::config(), "Notification Messages" );
-          bool showMessage = configGroup.readEntry( "showIndexRegenerationMessage", true );
-          if (showMessage)
+        if ( kmkernel->startingUp() ) {
+          KConfigGroup configGroup( KMKernel::config(),
+                                    "Notification Messages" );
+          bool showMessage =
+            configGroup.readEntry( "showIndexRegenerationMessage", true );
+          if ( showMessage ) {
             KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                            msg, i18n("Index Out of Date"),
                                            KMessageBox::AllowLink );
-        }
-        else
-        {
-            KCursorSaver idle(KBusyPtr::idle());
-            KMessageBox::information( 0, msg, i18n("Index Out of Date"),
-                                      "showIndexRegenerationMessage",
-                                      KMessageBox::AllowLink );
+          }
+        } else {
+          KCursorSaver idle( KBusyPtr::idle() );
+          KMessageBox::information( 0, msg, i18n("Index Out of Date"),
+                                    "showIndexRegenerationMessage",
+                                    KMessageBox::AllowLink );
         }
        }
        QString str;
        mIndexStream = 0;
        str = i18n("Folder `%1' changed. Recreating index.",
-              objectName());
-       emit statusMsg(str);
+                  objectName());
+       emit statusMsg( str );
      } else {
-       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+       mIndexStream = fopen( QFile::encodeName( indexLocation() ), "r+" ); // index file
        if ( mIndexStream ) {
-         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+         fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
          updateIndexStreamPtr();
        }
      }
 
-     if (!mIndexStream)
+     if ( !mIndexStream ) {
        rc = createIndexFromContents();
-     else
-       if (!readIndex())
+     } else {
+       if ( !readIndex() ) {
          rc = createIndexFromContents();
-  }
-  else
-  {
+       }
+     }
+  } else {
     mAutoCreateIndex = false;
     rc = createIndexFromContents();
   }
 
   mChanged = false;
 
-  fcntl(fileno(mStream), F_SETFD, FD_CLOEXEC);
-  if (mIndexStream)
-     fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+  fcntl( fileno( mStream ), F_SETFD, FD_CLOEXEC );
+  if ( mIndexStream ) {
+     fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
+  }
 
   return rc;
 }
@@ -257,11 +268,28 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::close(bool aForced)
+void KMFolderMbox::close( const char *owner, bool aForced )
 {
-  if (mOpenCount <= 0 || !mStream) return;
-  if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0 && !aForced) return;
+  kDebug() << "\nclose " << folder()->name() << " " << mOwners
+           << " " << owner << " " << mOpenCount << " \n" << endl;
+//           << " " << owner << " " << mOpenCount << " \n" << kBacktrace() << endl;
+  QStringList::iterator it = mOwners.find( owner );
+  if ( !aForced && !mOwners.isEmpty() ) {
+    assert( it != mOwners.end() );
+    mOwners.remove( it );
+  } else {
+    mOwners.clear();
+  }
+
+  if ( mOpenCount <= 0 || !mStream ) {
+    return;
+  }
+  if ( mOpenCount > 0 ) {
+    mOpenCount--;
+  }
+  if ( mOpenCount > 0 && !aForced ) {
+    return;
+  }
 #if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
   if ( (folder() != kmkernel->inboxFolder())
         && folder()->isSystemFolder() && !aForced )
@@ -271,26 +299,29 @@ void KMFolderMbox::close(bool aForced)
   }
 #endif
 
-  if (mAutoCreateIndex)
-  {
-      if (KMFolderIndex::IndexOk != indexStatus()) {
-          kDebug(5006) << "Critical error: " << location() <<
-              " has been modified by an external application while KMail was running." << endl;
-          //      exit(1); backed out due to broken nfs
+  if ( mAutoCreateIndex ) {
+      if ( KMFolderIndex::IndexOk != indexStatus() ) {
+        kDebug(5006) << "Critical error: " << location()
+                     << " has been modified by an external application while KMail was running." << endl;
+        //      exit(1); backed out due to broken nfs
       }
 
       updateIndex();
       writeConfig();
   }
 
-  if (!noContent()) {
-    if (mStream) unlock();
-    mMsgList.clear(true);
+  if ( !noContent() ) {
+    if ( mStream ) {
+      unlock();
+    }
+    mMsgList.clear( true );
 
-    if (mStream) fclose(mStream);
-    if (mIndexStream) {
-      fclose(mIndexStream);
-      updateIndexStreamPtr(true);
+    if ( mStream ) {
+      fclose( mStream );
+    }
+    if ( mIndexStream ) {
+      fclose( mIndexStream );
+      updateIndexStreamPtr( true );
     }
   }
   mOpenCount   = 0;
@@ -299,7 +330,7 @@ void KMFolderMbox::close(bool aForced)
   mFilesLocked = false;
   mUnreadMsgs  = -1;
 
-  mMsgList.reset(INIT_MSGS);
+  mMsgList.reset( INIT_MSGS );
 }
 
 //-----------------------------------------------------------------------------
@@ -946,9 +977,11 @@ DwString KMFolderMbox::getDwString(int idx)
 
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
+int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
 {
-  if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
+  if ( !canAddMsgNow( aMsg, aIndex_ret ) ) {
+    return 0;
+  }
   bool opened = false;
   QByteArray msgText;
   char endStr[3];
@@ -957,36 +990,34 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   bool editing = false;
   int growth = 0;
 
-  if (!mStream)
-  {
+  if ( !mStream ) {
     opened = true;
-    rc = open();
-    kDebug(5006) << "KMFolderMBox::addMsg-open: " << rc << " of folder: " << label() << endl;
-    if (rc) return rc;
+    rc = open( "mboxaddMsg" );
+    kDebug(5006) << "KMFolderMBox::addMsg-open: " << rc
+                 << " of folder: " << label() << endl;
+    if ( rc ) {
+      return rc;
+    }
   }
 
   // take message out of the folder it is currently in, if any
   msgParent = aMsg->parent();
-  if (msgParent)
-  {
-    if ( msgParent== folder() )
-    {
-        if (kmkernel->folderIsDraftOrOutbox( folder() ))
-          //special case for Edit message.
-          {
-            kDebug(5006) << "Editing message in outbox or drafts" << endl;
-            editing = true;
-          }
-        else
-          return 0;
+  if ( msgParent ) {
+    if ( msgParent== folder() ) {
+      if ( kmkernel->folderIsDraftOrOutbox( folder() ) ) {
+        //special case for Edit message.
+        kDebug(5006) << "Editing message in outbox or drafts" << endl;
+        editing = true;
+      } else {
+        return 0;
       }
+    }
 
-    idx = msgParent->find(aMsg);
+    idx = msgParent->find( aMsg );
     msgParent->getMsg( idx );
   }
 
-  if (folderType() != KMFolderTypeImap)
-  {
+  if ( folderType() != KMFolderTypeImap ) {
 /*
 QFile fileD0( "testdat_xx-kmfoldermbox-0" );
 if( fileD0.open( QIODevice::WriteOnly ) ) {
@@ -1010,57 +1041,65 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   msgText = escapeFrom( aMsg->asDwString() );
   size_t len = msgText.size();
 
-  assert(mStream != 0);
-  clearerr(mStream);
-  if (len <= 0)
-  {
-    kDebug(5006) << "Message added to folder `" << objectName() << "' contains no data. Ignoring it." << endl;
-    if (opened) close();
+  assert( mStream != 0 );
+  clearerr( mStream );
+  if ( len <= 0 ) {
+    kDebug(5006) << "Message added to folder `" << objectName()
+                 << "' contains no data. Ignoring it." << endl;
+    if ( opened ) {
+      close( "mboxaddMsg" );
+    }
     return 0;
   }
 
   // Make sure the file is large enough to check for an end
   // character
-  fseek(mStream, 0, SEEK_END);
-  off_t revert = ftell(mStream);
-  if (ftell(mStream) >= 2) {
-      // write message to folder file
-      fseek(mStream, -2, SEEK_END);
-      fread(endStr, 1, 2, mStream); // ensure separating empty line
-      if (ftell(mStream) > 0 && endStr[0]!='\n') {
-          ++growth;
-          if (endStr[1]!='\n') {
-              //printf ("****endStr[1]=%c\n", endStr[1]);
-              fwrite("\n\n", 1, 2, mStream);
-              ++growth;
-          }
-          else fwrite("\n", 1, 1, mStream);
+  fseek( mStream, 0, SEEK_END );
+  off_t revert = ftell( mStream );
+  if ( ftell( mStream ) >= 2 ) {
+    // write message to folder file
+    fseek( mStream, -2, SEEK_END );
+    fread( endStr, 1, 2, mStream ); // ensure separating empty line
+    if ( ftell( mStream ) > 0 && endStr[0]!='\n' ) {
+      ++growth;
+      if ( endStr[1]!='\n' ) {
+        //printf ("****endStr[1]=%c\n", endStr[1]);
+        fwrite( "\n\n", 1, 2, mStream );
+        ++growth;
+      } else {
+        fwrite( "\n", 1, 1, mStream );
       }
+    }
   }
-  fseek(mStream,0,SEEK_END); // this is needed on solaris and others
-  int error = ferror(mStream);
-  if (error)
-  {
-    if (opened) close();
+  fseek( mStream,0,SEEK_END ); // this is needed on solaris and others
+  int error = ferror( mStream );
+  if ( error ) {
+    if ( opened ) {
+      close( "mboxaddMsg" );
+    }
     return error;
   }
 
   QByteArray messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
-  off_t offs = ftell(mStream);
-  fwrite(msgText.data(), len, 1, mStream);
-  if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
-  fflush(mStream);
-  size_t size = ftell(mStream) - offs;
+  off_t offs = ftell( mStream );
+  fwrite( msgText.data(), len, 1, mStream );
+  if ( msgText[(int)len-1] != '\n' ) {
+    fwrite( "\n\n", 1, 2, mStream );
+  }
+  fflush( mStream );
+  size_t size = ftell( mStream ) - offs;
 
-  error = ferror(mStream);
-  if (error) {
-    kDebug(5006) << "Error: Could not add message to folder: " << strerror(errno) << endl;
-    if (ftell(mStream) > revert) {
+  error = ferror( mStream );
+  if ( error ) {
+    kDebug(5006) << "Error: Could not add message to folder: "
+                 << strerror(errno) << endl;
+    if ( ftell( mStream ) > revert ) {
       kDebug(5006) << "Undoing changes" << endl;
       truncate( QFile::encodeName(location()), revert );
     }
-    kmkernel->emergencyExit( i18n("Could not add message to folder: ") + QString::fromLocal8Bit(strerror(errno)));
+    kmkernel->emergencyExit( i18n("Could not add message to folder: ") +
+                             QString::fromLocal8Bit( strerror( errno ) ) );
 
     /* This code is not 100% reliable
     bool busy = kmkernel->kbp()->isBusy();
@@ -1076,17 +1115,24 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     return error;
   }
 
-  if (msgParent) {
-    if (idx >= 0) msgParent->take(idx);
+  if ( msgParent ) {
+    if ( idx >= 0 ) {
+      msgParent->take( idx );
+    }
   }
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
-  if (aMsg->status().isUnread() || aMsg->status().isNew() ||
-      (folder() == kmkernel->outboxFolder())) {
-    if (mUnreadMsgs == -1) mUnreadMsgs = 1;
-    else ++mUnreadMsgs;
-    if ( !mQuiet )
+  if ( aMsg->status().isUnread() ||
+       aMsg->status().isNew() ||
+       (folder() == kmkernel->outboxFolder() ) ) {
+    if ( mUnreadMsgs == -1 ) {
+      mUnreadMsgs = 1;
+    } else {
+      ++mUnreadMsgs;
+    }
+    if ( !mQuiet ) {
       emit numUnreadMsgsChanged( folder() );
+    }
   }
   ++mTotalMsgs;
 
@@ -1095,55 +1141,60 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     aMsg->updateAttachmentState();
 
   // store information about the position in the folder file in the message
-  aMsg->setParent(folder());
-  aMsg->setFolderOffset(offs);
-  aMsg->setMsgSize(size);
-  idx = mMsgList.append(&aMsg->toMsgBase(), mExportsSernums );
-  if ( aMsg->getMsgSerNum() <= 0 )
+  aMsg->setParent( folder() );
+  aMsg->setFolderOffset( offs );
+  aMsg->setMsgSize( size );
+  idx = mMsgList.append( &aMsg->toMsgBase(), mExportsSernums );
+  if ( aMsg->getMsgSerNum() <= 0 ) {
     aMsg->setMsgSerNum();
-  else
+  } else {
     replaceMsgSerNum( aMsg->getMsgSerNum(), &aMsg->toMsgBase(), idx );
+  }
 
   // change the length of the previous message to encompass white space added
-  if ((idx > 0) && (growth > 0)) {
+  if (( idx > 0) && (growth > 0) ) {
     // don't grow if a deleted message claims space at the end of the file
-    if ((ulong)revert == mMsgList[idx - 1]->folderOffset() + mMsgList[idx - 1]->msgSize() )
+    if ( (ulong)revert == mMsgList[idx - 1]->folderOffset() + mMsgList[idx - 1]->msgSize() ) {
       mMsgList[idx - 1]->setMsgSize( mMsgList[idx - 1]->msgSize() + growth );
+    }
   }
 
   // write index entry if desired
-  if (mAutoCreateIndex)
-  {
-    assert(mIndexStream != 0);
-    clearerr(mIndexStream);
-    fseek(mIndexStream, 0, SEEK_END);
-    revert = ftell(mIndexStream);
+  if ( mAutoCreateIndex ) {
+    assert( mIndexStream != 0 );
+    clearerr( mIndexStream );
+    fseek( mIndexStream, 0, SEEK_END );
+    revert = ftell( mIndexStream );
 
     KMMsgBase * mb = &aMsg->toMsgBase();
-        int len;
-        const uchar *buffer = mb->asIndexString(len);
-        fwrite(&len,sizeof(len), 1, mIndexStream);
-        mb->setIndexOffset( ftell(mIndexStream) );
-        mb->setIndexLength( len );
-        if(fwrite(buffer, len, 1, mIndexStream) != 1)
-            kDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    int len;
+    const uchar *buffer = mb->asIndexString( len );
+    fwrite( &len,sizeof( len ), 1, mIndexStream );
+    mb->setIndexOffset( ftell( mIndexStream ) );
+    mb->setIndexLength( len );
+    if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {
+      kDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    }
 
-    fflush(mIndexStream);
-    error = ferror(mIndexStream);
+    fflush( mIndexStream );
+    error = ferror( mIndexStream );
 
-    if ( mExportsSernums )
+    if ( mExportsSernums ) {
       error |= appendToFolderIdsFile( idx );
+    }
 
     if (error) {
       kWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
-      if (ftell(mIndexStream) > revert) {
+      if ( ftell( mIndexStream ) > revert ) {
         kWarning(5006) << "Undoing changes" << endl;
-        truncate( QFile::encodeName(indexLocation()), revert );
+        truncate( QFile::encodeName( indexLocation() ), revert );
       }
-      if ( errno )
-        kmkernel->emergencyExit( i18n("Could not add message to folder:") + QString::fromLocal8Bit(strerror(errno)));
-      else
+      if ( errno ) {
+        kmkernel->emergencyExit( i18n("Could not add message to folder:") +
+                                 QString::fromLocal8Bit( strerror( errno ) ) );
+      } else {
         kmkernel->emergencyExit( i18n("Could not add message to folder (No space left on device?)") );
+      }
 
       /* This code may not be 100% reliable
       bool busy = kmkernel->kbp()->isBusy();
@@ -1160,9 +1211,13 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   }
 
   // some "paper work"
-  if (aIndex_ret) *aIndex_ret = idx;
+  if ( aIndex_ret ) {
+    *aIndex_ret = idx;
+  }
   emitMsgAddedSignals(idx);
-  if (opened) close();
+  if ( opened ) {
+    close( "mboxaddMsg" );
+  }
 
   // All streams have been flushed without errors if we arrive here
   // Return success!
@@ -1170,39 +1225,44 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   return 0;
 }
 
-int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
+int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
+                           off_t&offs, bool &done )
 {
   int rc = 0;
   QByteArray mtext;
-  int stopIndex = nbMessages == -1 ? mMsgList.count() :
-                           qMin( (int)mMsgList.count(), startIndex + nbMessages );
+  int stopIndex = nbMessages == -1
+                  ? mMsgList.count()
+                  : qMin( (int)mMsgList.count(), startIndex + nbMessages );
   //kDebug(5006) << "KMFolderMbox: compacting from " << startIndex << " to " << stopIndex << endl;
-  for(int idx = startIndex; idx < stopIndex; ++idx) {
-    KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
+  for ( int idx = startIndex; idx < stopIndex; ++idx ) {
+    KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at( idx );
     size_t msize = mi->msgSize();
-    if (mtext.size() < msize + 2)
-      mtext.resize(msize+2);
+    if ( mtext.size() < msize + 2 ) {
+      mtext.resize( msize+2 );
+    }
     off_t folder_offset = mi->folderOffset();
 
     //now we need to find the separator! grr...
-    for(off_t i = folder_offset-25; true; i -= 20) {
+    for( off_t i = folder_offset-25; true; i -= 20 ) {
       off_t chunk_offset = i <= 0 ? 0 : i;
-      if(fseek(mStream, chunk_offset, SEEK_SET) == -1) {
+      if ( fseek( mStream, chunk_offset, SEEK_SET ) == -1 ) {
         rc = errno;
         break;
       }
-      if (mtext.size() < 20)
-        mtext.resize(20);
-      fread(mtext.data(), 20, 1, mStream);
-      if(i <= 0) { //woops we've reached the top of the file, last try..
+      if ( mtext.size() < 20 ) {
+        mtext.resize( 20 );
+      }
+      fread( mtext.data(), 20, 1, mStream );
+      if( i <= 0 ) { //woops we've reached the top of the file, last try..
         if ( mtext.indexOf( "from " ) ) {
-          if (mtext.size() < (size_t)folder_offset)
-              mtext.resize(folder_offset);
-          if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
-             !fread(mtext.data(), folder_offset, 1, mStream) ||
-             !fwrite(mtext.data(), folder_offset, 1, tmpfile)) {
-              rc = errno;
-              break;
+          if ( mtext.size() < (size_t)folder_offset ) {
+              mtext.resize( folder_offset );
+          }
+          if( fseek( mStream, chunk_offset, SEEK_SET) == -1 ||
+              !fread( mtext.data(), folder_offset, 1, mStream ) ||
+              !fwrite( mtext.data(), folder_offset, 1, tmpfile ) ) {
+            rc = errno;
+            break;
           }
           offs += folder_offset;
         } else {
@@ -1211,35 +1271,39 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t&
         break;
       } else {
         int last_crlf = -1;
-        for(int i2 = 0; i2 < 20; i2++) {
-          if(*(mtext.data()+i2) == '\n')
+        for ( int i2 = 0; i2 < 20; i2++ ) {
+          if ( *(mtext.data()+i2) == '\n' ) {
             last_crlf = i2;
+          }
         }
-        if(last_crlf != -1) {
-          int size = folder_offset - (i + last_crlf+1);
-          if ((int)mtext.size() < size)
-              mtext.resize(size);
-          if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
-             !fread(mtext.data(), size, 1, mStream) ||
-             !fwrite(mtext.data(), size, 1, tmpfile)) {
-              rc = errno;
-              break;
+        if ( last_crlf != -1 ) {
+          int size = folder_offset - ( i + last_crlf + 1 );
+          if ( (int)mtext.size() < size ) {
+              mtext.resize( size );
+          }
+          if ( fseek( mStream, i + last_crlf+1, SEEK_SET ) == -1 ||
+               !fread( mtext.data(), size, 1, mStream ) ||
+               !fwrite( mtext.data(), size, 1, tmpfile ) ) {
+            rc = errno;
+            break;
           }
           offs += size;
           break;
         }
       }
     }
-    if (rc)
+    if ( rc ) {
       break;
+    }
 
     //now actually write the message
-    if(fseek(mStream, folder_offset, SEEK_SET) == -1 ||
-       !fread(mtext.data(), msize, 1, mStream) || !fwrite(mtext.data(), msize, 1, tmpfile)) {
-        rc = errno;
-        break;
+    if( fseek( mStream, folder_offset, SEEK_SET ) == -1 ||
+        !fread( mtext.data(), msize, 1, mStream ) ||
+        !fwrite( mtext.data(), msize, 1, tmpfile ) ) {
+      rc = errno;
+      break;
     }
-    mi->setFolderOffset(offs);
+    mi->setFolderOffset( offs );
     offs += msize;
   }
   done = ( !rc && stopIndex == mMsgList.count() ); // finished without errors
@@ -1253,23 +1317,24 @@ int KMFolderMbox::compact( bool silent )
   // so we don't check needsCompact.
   int openCount = mOpenCount;
 
-  KMail::MboxCompactionJob* job = new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
+  KMail::MboxCompactionJob *job =
+    new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
   int rc = job->executeNow( silent );
   // Note that job autodeletes itself.
 
-  if (openCount > 0)
-  {
-    open();
+  if (openCount > 0) {
+    open( "mboxcompact" );
     mOpenCount = openCount;
   }
+
   // If this is the current folder, the changed signal will ultimately call
-  // KMHeaders::setFolderInfoStatus which will override the message, so save/restore it
+  // KMHeaders::setFolderInfoStatus which will override the message,
+  // so save/restore it
   QString statusMsg = BroadcastStatus::instance()->statusMsg();
   emit changed();
   BroadcastStatus::instance()->setStatusMsg( statusMsg );
   return rc;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolderMbox::setLockType( LockType ltype )

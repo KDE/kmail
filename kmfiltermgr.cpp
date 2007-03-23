@@ -222,44 +222,51 @@ int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
     int idx = -1;
     // get the message with the serNum
     KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
-    if (!folder || (idx == -1) || (idx >= folder->count())) {
+    if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
       return 1;
     }
     bool opened = folder->isOpened();
-    if ( !opened )
-      folder->open();
-    KMMsgBase *msgBase = folder->getMsgBase(idx);
+    if ( !opened ) {
+      folder->open( "filtermgr" );
+    }
+    KMMsgBase *msgBase = folder->getMsgBase( idx );
     bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg(idx);
+    KMMessage *msg = folder->getMsg( idx );
     // do the actual filtering stuff
     if ( !msg || !beginFiltering( msg ) ) {
-      if (unGet)
-        folder->unGetMsg(idx);
-      if ( !opened )
-        folder->close();
+      if ( unGet) {
+        folder->unGetMsg( idx );
+      }
+      if ( !opened ) {
+        folder->close( "filtermgr" );
+      }
       return 1;
     }
-    if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError) {
-      if (unGet)
-        folder->unGetMsg(idx);
-      if ( !opened )
-        folder->close();
+    if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
+      if ( unGet ) {
+        folder->unGetMsg( idx );
+      }
+      if ( !opened ) {
+        folder->close( "filtermgr" );
+      }
       return 2;
     }
 
     KMFolder *targetFolder = MessageProperty::filterFolder( msg );
 
     endFiltering( msg );
-    if (targetFolder) {
+    if ( targetFolder ) {
       tempOpenFolder( targetFolder );
-      msg->setTransferInProgress(false);
+      msg->setTransferInProgress( false );
       result = targetFolder->moveMsg( msg );
-      msg->setTransferInProgress(true);
+      msg->setTransferInProgress( true );
     }
-    if (unGet)
-      folder->unGetMsg(idx);
-    if ( !opened )
-      folder->close();
+    if ( unGet) {
+      folder->unGetMsg( idx );
+    }
+    if ( !opened ) {
+      folder->close( "filtermgr" );
+    }
   } else {
     result = 1;
   }
@@ -405,34 +412,40 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
 }
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::ref(void)
+void KMFilterMgr::ref( void )
 {
   mRefCount++;
 }
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::deref(bool force)
+void KMFilterMgr::deref( bool force )
 {
-  if (!force)
+  if ( !force ) {
     mRefCount--;
-  if (mRefCount < 0)
+  }
+  if ( mRefCount < 0 ) {
     mRefCount = 0;
-  if (mRefCount && !force)
+  }
+  if ( mRefCount && !force ) {
     return;
+  }
   QVector< KMFolder *>::const_iterator it;
-  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it )
-    (*it)->close();
+  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it ) {
+    (*it)->close( "filtermgr" );
+  }
   mOpenFolders.clear();
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
+int KMFilterMgr::tempOpenFolder( KMFolder *aFolder )
 {
   assert( aFolder );
 
-  int rc = aFolder->open();
-  if (rc) return rc;
+  int rc = aFolder->open( "filtermgr" );
+  if ( rc ) {
+    return rc;
+  }
 
   mOpenFolders.append( aFolder );
   return 0;
