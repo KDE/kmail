@@ -1196,7 +1196,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWin();
     }
     else if (updateReaderWinTimer.isActive()) {
-      updateReaderWinTimer.setSingleShot( false );
+      updateReaderWinTimer.setSingleShot( true );
       updateReaderWinTimer.start( delay );
     } else {
       updateReaderWinTimer.setSingleShot( true );
