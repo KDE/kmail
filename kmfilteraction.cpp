@@ -1378,7 +1378,9 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
-  if ( !mFolder && mFolder->open() != 0 )
+  if ( !mFolder )
+    return ErrorButGoOn;
+  if ( mFolder && mFolder->open() != 0 )
     return ErrorButGoOn;
 
   // copy the message 1:1
