@@ -1761,10 +1761,20 @@ void KMKernel::slotShowConfigurationDialog()
              this, SLOT( slotConfigChanged() ) );
   }
 
-  if( mConfigureDialog->isHidden() )
+  if( KMKernel::getKMMainWidget() == 0 ) {
+    // ensure that there is a main widget available
+    // as parts of the configure dialog (identity) rely on this
+    // and this slot can be called when there is only a KMComposeWin showing
+    KMMainWin *win = new KMMainWin;
+    win->show();
+
+  }
+
+  if( mConfigureDialog->isHidden() ) {
     mConfigureDialog->show();
-  else
+  } else {
     mConfigureDialog->raise();
+  }
 }
 
 void KMKernel::slotConfigChanged()
