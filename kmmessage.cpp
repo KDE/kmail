@@ -4140,11 +4140,23 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
     return;
   }
 
+  bool filenameEmpty = true;
+  if ( part->hasHeaders() ) {
+    if ( part->Headers().HasContentDisposition() ) {
+      DwDispositionType cd = part->Headers().ContentDisposition();
+      filenameEmpty = cd.Filename().empty();
+      if ( filenameEmpty ) {
+        // let's try if it is rfc 2231 encoded which mimelib can't handle
+        filenameEmpty = KMMsgBase::decodeRFC2231String( KMMsgBase::extractRFC2231HeaderField( cd.AsString().c_str(), "filename" ) ).isEmpty();
+      }
+    }
+  }
+
   if ( part->hasHeaders() &&
        ( ( part->Headers().HasContentDisposition() &&
            !part->Headers().ContentDisposition().Filename().empty() ) ||
          ( part->Headers().HasContentType() &&
-           !part->Headers().ContentType().Name().empty() ) ) )
+           !filenameEmpty ) ) )
   {
     // now blacklist certain ContentTypes
     if ( !part->Headers().HasContentType() ||
