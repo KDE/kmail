@@ -36,10 +36,12 @@
 
 #include <errno.h>
 #include <sys/types.h>
+#include <sys/param.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <qfile.h>
 
 #undef Status // stupid X headers
 
@@ -154,12 +156,34 @@ void lockOrDie() {
   bool first_instance = false;
   if ( oldPid == -1 )
       first_instance = true;
-  // check if the lock file is stale by trying to see if
-  // the other pid is currently running.
-  // Not 100% correct but better safe than sorry
   else if (hostName == oldHostName && oldPid != getpid()) {
-      if ( kill(oldPid, 0) == -1 )
-          first_instance = ( errno == ESRCH );
+      // check if the lock file is stale
+#ifdef Q_OS_LINUX
+      if ( ::access("/proc", X_OK ) == 0 ) {
+          // On linux with /proc we can even check that it's really kmail and not something else
+          char path_buffer[MAXPATHLEN + 1];
+          path_buffer[MAXPATHLEN] = 0;
+          const QString procPath = QString("/proc/%1/exe").arg(oldPid);
+          const int length = readlink (procPath.latin1(), path_buffer, MAXPATHLEN);
+          if ( length == -1 ) // not such pid
+              first_instance = true;
+          else {
+              path_buffer[length] = '\0';
+              const QString path = QFile::decodeName(path_buffer);
+              kdDebug() << k_funcinfo << path << endl;
+              const int pos = path.findRev('/');
+              const QString fileName = path.mid(pos+1);
+              kdDebug() << "Found process " << oldPid << " running. It's: " << fileName << endl;
+              first_instance = fileName != "kmail" && fileName != "kontact";
+          }
+      } else
+#endif
+      {
+          // Otherwise we just check if the other pid is currently running.
+          // Not 100% correct but better safe than sorry.
+          if ( kill(oldPid, 0) == -1 )
+              first_instance = ( errno == ESRCH );
+      }
   }
 
   if ( !first_instance ) {
