@@ -235,27 +235,38 @@ public:
   KMMsgBase& operator=(const KMMsgBase& other);
 
   /** Copy constructor that simply calls assign(). */
-  KMMsgBase( const KMMsgBase& other );
+  KMMsgBase( const KMMsgBase &other );
 
   /** Helper function for encodeRFC2047String */
-  static QByteArray encodeRFC2047Quoted(const QByteArray& aStr, bool base64);
+  static QByteArray encodeRFC2047Quoted( const QByteArray &aStr, bool base64 );
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static QString decodeRFC2047String(const QByteArray &aStr, QByteArray prefCharset = "");
+  static QString decodeRFC2047String( const QByteArray &aStr,
+                                      QByteArray prefCharset = "" );
 
   /** Encode given string as described in RFC2047:
     using quoted-printable. */
-  static QByteArray encodeRFC2047String(const QString& aStr,
-    const QByteArray& charset);
+  static QByteArray encodeRFC2047String( const QString &aStr,
+                                         const QByteArray &charset );
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */
-  static QByteArray encodeRFC2231String(const QString& aStr,
-    const QByteArray& charset);
+  static QByteArray encodeRFC2231String( const QString &aStr,
+                                         const QByteArray &charset );
 
   /** Decode given string as described in RFC2231 */
-  static QString decodeRFC2231String(const QByteArray& aStr);
+  static QString decodeRFC2231String( const QByteArray &aStr );
+
+  /** Extract a given param from the RFC2231-encoded header field, in
+      particular concatenate possibly multiple entries, which are given as
+      paramname*0=..; paramname*1=..; ... or paramname*0*=..; paramname*1*=..;
+      ... and return their value as one string. That string will still be
+      encoded
+  */
+  static QByteArray extractRFC2231HeaderField( const QByteArray &aStr,
+                                               const QByteArray &field );
+
 
   /** Calculate the base64 encoded md5sum (sans the trailing equal
       signs). If @p utf8 is false, uses QString::latin1() to calculate
