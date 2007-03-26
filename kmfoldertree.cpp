@@ -1068,7 +1068,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      mMainWidget->action("search_messages")->plug(folderMenu);
+      if ( !multiFolder )
+        mMainWidget->action("search_messages")->plug(folderMenu);
 
       mMainWidget->action("compact")->plug(folderMenu);
 

@@ -212,6 +212,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
+  connect(mFolderTree, SIGNAL(selectionChanged()),
+          SLOT(updateFolderMenu()) );
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
@@ -631,7 +633,7 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotFolderTreeColumnsChanged()));
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  action = new KAction(
+  mRemoveDuplicatesAction = new KAction(
     i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
   action->plugAccel( actionCollection()->kaccel() );
@@ -2696,7 +2698,7 @@ void KMMainWidget::setupActions()
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   //----- Folder Menu
-  (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
+  mNewFolderAction = new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
 		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
 
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
@@ -3396,7 +3398,6 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   bool multiFolder = folderTree()->selectedFolders().count() > 1;
-  kdDebug() << k_funcinfo << "Multiple folders selected: " << multiFolder << endl;
   mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
@@ -3432,6 +3433,10 @@ void KMMainWidget::updateFolderMenu()
   mThreadBySubjectAction->setEnabled(
       mHeaders->folder() ? ( mThreadMessagesAction->isChecked()) : false );
   mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
+
+  mNewFolderAction->setEnabled( !multiFolder );
+  mRemoveDuplicatesAction->setEnabled( !multiFolder );
+  mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
 
 
