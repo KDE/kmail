@@ -27,7 +27,7 @@ class KMMessage;
 class QString;
 class KMFolder;
 class QObject;
-class KProcess;
+class K3Process;
 
 namespace KMail {
 
@@ -81,10 +81,10 @@ class TemplateParser : public QObject
                      QString &quote ) const;
 
   protected slots:
-    void onProcessExited( KProcess *proc );
-    void onReceivedStdout( KProcess *proc, char *buffer, int buflen );
-    void onReceivedStderr( KProcess *proc, char *buffer, int buflen );
-    void onWroteStdin( KProcess *proc );
+    void onProcessExited( K3Process *proc );
+    void onReceivedStdout( K3Process *proc, char *buffer, int buflen );
+    void onReceivedStderr( K3Process *proc, char *buffer, int buflen );
+    void onWroteStdin( K3Process *proc );
 };
 
 } // namespace KMail

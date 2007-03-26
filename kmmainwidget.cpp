@@ -1756,17 +1756,17 @@ void KMMainWidget::slotDebugSieve()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotStartCertManager()
 {
-  KProcess certManagerProc; // save to create on the heap, since
+  K3Process certManagerProc; // save to create on the heap, since
   // there is no parent
   certManagerProc << "kleopatra";
 
-  if( !certManagerProc.start( KProcess::DontCare ) )
+  if( !certManagerProc.start( K3Process::DontCare ) )
     KMessageBox::error( this, i18n( "Could not start certificate manager; "
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
     kDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
-  // process continues to run even after the KProcess object goes
+  // process continues to run even after the K3Process object goes
   // out of scope here, since it is started in DontCare run mode.
 
 }
@@ -1774,10 +1774,10 @@ void KMMainWidget::slotStartCertManager()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotStartWatchGnuPG()
 {
-  KProcess certManagerProc;
+  K3Process certManagerProc;
   certManagerProc << "kwatchgnupg";
 
-  if( !certManagerProc.start( KProcess::DontCare ) )
+  if( !certManagerProc.start( K3Process::DontCare ) )
     KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );

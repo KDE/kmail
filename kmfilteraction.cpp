@@ -37,7 +37,7 @@ using KMail::RegExpLineEdit;
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kurlrequester.h>
 #include <phonon/audioplayer.h>
 
@@ -471,7 +471,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
   int idx = 0;
   while ( ( idx = header_rx.indexIn( result, idx ) ) != -1 ) {
-    QString replacement = KProcess::quote( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
+    QString replacement = K3Process::quote( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
     result.replace( idx, header_rx.matchedLength(), replacement );
     idx += replacement.length();
   }
@@ -487,7 +487,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  // KProcess doesn't support a QProcess::launch() equivalent, so
+  // K3Process doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
   KTemporaryFile * inFile = new KTemporaryFile;
   inFile->open();
@@ -519,9 +519,9 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   shProc << commandLine;
 
   // run process:
-  if ( !shProc.start( KProcess::Block,
-                      withOutput ? KProcess::Stdout
-                                 : KProcess::NoCommunication ) ) {
+  if ( !shProc.start( K3Process::Block,
+                      withOutput ? K3Process::Stdout
+                                 : K3Process::NoCommunication ) ) {
     qDeleteAll( atmList );
     atmList.clear();
     return ErrorButGoOn;

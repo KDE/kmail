@@ -48,7 +48,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>
 
@@ -627,10 +627,10 @@ void AntiSpamWizard::slotBuildSummary()
 int AntiSpamWizard::checkForProgram( const QString &executable )
 {
   kDebug(5006) << "Testing for executable:" << executable << endl;
-  KProcess process;
+  K3Process process;
   process << executable;
   process.setUseShell( true );
-  process.start( KProcess::Block );
+  process.start( K3Process::Block );
   return process.exitStatus();
 }
 

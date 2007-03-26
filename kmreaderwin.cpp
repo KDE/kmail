@@ -108,7 +108,7 @@ using KMail::TeeHtmlWriter;
 #include <kglobalsettings.h>
 #include <krun.h>
 #include <ktemporaryfile.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kdialog.h>
 #include <kaction.h>
 #include <kiconloader.h>

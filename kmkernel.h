@@ -63,7 +63,7 @@ namespace KPIM {
   class IdentityManager;
 }
 class KMKernel;
-class KProcess;
+class K3Process;
 class KProgressDialog;
 class KComponentData;
 class QTimer;

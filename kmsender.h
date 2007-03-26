@@ -38,7 +38,7 @@ class KMMessage;
 class KMFolder;
 class KMFolderMgr;
 class KConfig;
-class KProcess;
+class K3Process;
 class KMSendProc;
 class KMSendSendmail;
 class KMSendSMTP;

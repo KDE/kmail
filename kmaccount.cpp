@@ -49,8 +49,8 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   mPrecommandProcess.setUseShell(true);
   mPrecommandProcess << precommand;
 
-  connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),
-          SLOT(precommandExited(KProcess *)));
+  connect(&mPrecommandProcess, SIGNAL(processExited(K3Process *)),
+          SLOT(precommandExited(K3Process *)));
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ KMPrecommand::~KMPrecommand()
 //-----------------------------------------------------------------------------
 bool KMPrecommand::start()
 {
-  bool ok = mPrecommandProcess.start( KProcess::NotifyOnExit );
+  bool ok = mPrecommandProcess.start( K3Process::NotifyOnExit );
   if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.",
      mPrecommand));
   return ok;
@@ -70,7 +70,7 @@ bool KMPrecommand::start()
 
 
 //-----------------------------------------------------------------------------
-void KMPrecommand::precommandExited(KProcess *p)
+void KMPrecommand::precommandExited(K3Process *p)
 {
   int exitCode = p->normalExit() ? p->exitStatus() : -1;
   if (exitCode)

@@ -24,7 +24,7 @@ class SpellingFilter;
 class KTemporaryFile;
 class K3DictSpellingHighlighter;
 class KDirWatch;
-class KProcess;
+class K3Process;
 
 
 class KMEdit : public KEdit {
@@ -86,7 +86,7 @@ public slots:
   void slotSpellcheck2(K3Spell*);
   void slotSpellResult(const QString&);
   void slotSpellDone();
-  void slotExternalEditorDone(KProcess*);
+  void slotExternalEditorDone(K3Process*);
   void slotMisspelling(const QString &, const QStringList &, unsigned int);
   void slotCorrected (const QString &, const QString &, unsigned int);
   void addSuggestion(const QString& text, const QStringList& lst, unsigned int );
@@ -116,7 +116,7 @@ private:
   SpellingFilter* mSpellingFilter;
   KTemporaryFile *mExtEditorTempFile;
   KDirWatch *mExtEditorTempFileWatcher;
-  KProcess  *mExtEditorProcess;
+  K3Process  *mExtEditorProcess;
   bool      mUseExtEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;

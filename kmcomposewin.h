@@ -55,7 +55,7 @@ class KMFolderComboBox;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
-class KProcess;
+class K3Process;
 class KDirWatch;
 class KSelectAction;
 class KFontAction;

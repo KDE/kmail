@@ -39,7 +39,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knotification.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
@@ -391,9 +391,9 @@ int KMFolderMbox::lock()
     case procmail_lockfile:
       cmd_str = "lockfile -l20 -r5 ";
       if (!mProcmailLockFileName.isEmpty())
-        cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
+        cmd_str += QFile::encodeName(K3Process::quote(mProcmailLockFileName));
       else
-        cmd_str += QFile::encodeName(KProcess::quote(location() + ".lock"));
+        cmd_str += QFile::encodeName(K3Process::quote(location() + ".lock"));
 
       rc = system( cmd_str.data() );
       if( rc != 0 )
@@ -405,7 +405,7 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "lockfile -l20 -r5 " + QFile::encodeName(KProcess::quote(indexLocation() + ".lock"));
+        cmd_str = "lockfile -l20 -r5 " + QFile::encodeName(K3Process::quote(indexLocation() + ".lock"));
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
@@ -418,7 +418,7 @@ int KMFolderMbox::lock()
       break;
 
     case mutt_dotlock:
-      cmd_str = "mutt_dotlock " + QFile::encodeName(KProcess::quote(location()));
+      cmd_str = "mutt_dotlock " + QFile::encodeName(K3Process::quote(location()));
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
@@ -429,7 +429,7 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock " + QFile::encodeName(KProcess::quote(indexLocation()));
+        cmd_str = "mutt_dotlock " + QFile::encodeName(K3Process::quote(indexLocation()));
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
@@ -442,7 +442,7 @@ int KMFolderMbox::lock()
       break;
 
     case mutt_dotlock_privileged:
-      cmd_str = "mutt_dotlock -p " + QFile::encodeName(KProcess::quote(location()));
+      cmd_str = "mutt_dotlock -p " + QFile::encodeName(K3Process::quote(location()));
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
@@ -453,7 +453,7 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -p " + QFile::encodeName(KProcess::quote(indexLocation()));
+        cmd_str = "mutt_dotlock -p " + QFile::encodeName(K3Process::quote(indexLocation()));
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
@@ -520,34 +520,34 @@ int KMFolderMbox::unlock()
     case procmail_lockfile:
       cmd_str = "rm -f ";
       if (!mProcmailLockFileName.isEmpty())
-        cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
+        cmd_str += QFile::encodeName(K3Process::quote(mProcmailLockFileName));
       else
-        cmd_str += QFile::encodeName(KProcess::quote(location() + ".lock"));
+        cmd_str += QFile::encodeName(K3Process::quote(location() + ".lock"));
 
       rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "rm -f " + QFile::encodeName(KProcess::quote(indexLocation() + ".lock"));
+        cmd_str = "rm -f " + QFile::encodeName(K3Process::quote(indexLocation() + ".lock"));
         rc = system( cmd_str.data() );
       }
       break;
 
     case mutt_dotlock:
-      cmd_str = "mutt_dotlock -u " + QFile::encodeName(KProcess::quote(location()));
+      cmd_str = "mutt_dotlock -u " + QFile::encodeName(K3Process::quote(location()));
       rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -u " + QFile::encodeName(KProcess::quote(indexLocation()));
+        cmd_str = "mutt_dotlock -u " + QFile::encodeName(K3Process::quote(indexLocation()));
         rc = system( cmd_str.data() );
       }
       break;
 
     case mutt_dotlock_privileged:
-      cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KProcess::quote(location()));
+      cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(K3Process::quote(location()));
       rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KProcess::quote(indexLocation()));
+        cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(K3Process::quote(indexLocation()));
         rc = system( cmd_str.data() );
       }
       break;

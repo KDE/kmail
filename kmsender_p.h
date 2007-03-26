@@ -13,7 +13,7 @@
 #include <kio/global.h>
 #include <kdeversion.h>
 
-class KProcess;
+class K3Process;
 
 namespace KIO {
   class Job;
@@ -95,9 +95,9 @@ public:
   void abort();
 
 protected slots:
-  void receivedStderr(KProcess*,char*,int);
-  void wroteStdin(KProcess*);
-  void sendmailExited(KProcess*);
+  void receivedStderr(K3Process*,char*,int);
+  void wroteStdin(K3Process*);
+  void sendmailExited(K3Process*);
 
 private:
   /** implemented from KMSendProc */
@@ -111,7 +111,7 @@ private:
   QByteArray mMsgStr;
   char* mMsgPos;
   int mMsgRest;
-  KProcess* mMailerProc;
+  K3Process* mMailerProc;
 };
 
 //-----------------------------------------------------------------------------

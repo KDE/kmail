@@ -25,7 +25,7 @@
 #include <klocale.h>
 #include <kcalendarsystem.h>
 #include <kglobal.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <qregexp.h>
 #include <qfile.h>
 #include <kmessagebox.h>
@@ -980,21 +980,21 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   mPipeErr = "";
   mPipeRc = 0;
 
-  KProcess proc;
+  K3Process proc;
   QByteArray data = buf.local8Bit();
 
   // kDebug() << "Command data: " << data << endl;
 
   proc << KShell::splitArgs( cmd, KShell::TildeExpand );
   proc.setUseShell( true );
-  connect( &proc, SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-           this, SLOT( onReceivedStdout( KProcess *, char *, int ) ) );
-  connect( &proc, SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-           this, SLOT( onReceivedStderr( KProcess *, char *, int ) ) );
-  connect( &proc, SIGNAL( wroteStdin( KProcess * ) ),
-           this, SLOT( onWroteStdin( KProcess * ) ) );
+  connect( &proc, SIGNAL( receivedStdout( K3Process *, char *, int ) ),
+           this, SLOT( onReceivedStdout( K3Process *, char *, int ) ) );
+  connect( &proc, SIGNAL( receivedStderr( K3Process *, char *, int ) ),
+           this, SLOT( onReceivedStderr( K3Process *, char *, int ) ) );
+  connect( &proc, SIGNAL( wroteStdin( K3Process * ) ),
+           this, SLOT( onWroteStdin( K3Process * ) ) );
 
-  if ( proc.start( KProcess::NotifyOnExit, KProcess::All ) ) {
+  if ( proc.start( K3Process::NotifyOnExit, K3Process::All ) ) {
 
     bool pipe_filled = proc.writeStdin( data, data.length() );
     if ( pipe_filled ) {
@@ -1070,25 +1070,25 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   return mPipeOut;
 }
 
-void TemplateParser::onProcessExited( KProcess *proc )
+void TemplateParser::onProcessExited( K3Process *proc )
 {
   Q_UNUSED( proc );
   // do nothing for now
 }
 
-void TemplateParser::onReceivedStdout( KProcess *proc, char *buffer, int buflen )
+void TemplateParser::onReceivedStdout( K3Process *proc, char *buffer, int buflen )
 {
   Q_UNUSED( proc );
   mPipeOut += QString::fromLocal8Bit( buffer, buflen );
 }
 
-void TemplateParser::onReceivedStderr( KProcess *proc, char *buffer, int buflen )
+void TemplateParser::onReceivedStderr( K3Process *proc, char *buffer, int buflen )
 {
   Q_UNUSED( proc );
   mPipeErr += QString::fromLocal8Bit( buffer, buflen );
 }
 
-void TemplateParser::onWroteStdin( KProcess *proc )
+void TemplateParser::onWroteStdin( K3Process *proc )
 {
   proc->closeStdin();
 }

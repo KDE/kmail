@@ -955,14 +955,14 @@ bool KMSendSendmail::doStart() {
 
   if (!mMailerProc)
   {
-    mMailerProc = new KProcess;
+    mMailerProc = new K3Process;
     assert(mMailerProc != 0);
-    connect(mMailerProc,SIGNAL(processExited(KProcess*)),
-	    this, SLOT(sendmailExited(KProcess*)));
-    connect(mMailerProc,SIGNAL(wroteStdin(KProcess*)),
-	    this, SLOT(wroteStdin(KProcess*)));
-    connect(mMailerProc,SIGNAL(receivedStderr(KProcess*,char*,int)),
-	    this, SLOT(receivedStderr(KProcess*, char*, int)));
+    connect(mMailerProc,SIGNAL(processExited(K3Process*)),
+	    this, SLOT(sendmailExited(K3Process*)));
+    connect(mMailerProc,SIGNAL(wroteStdin(K3Process*)),
+	    this, SLOT(wroteStdin(K3Process*)));
+    connect(mMailerProc,SIGNAL(receivedStderr(K3Process*,char*,int)),
+	    this, SLOT(receivedStderr(K3Process*, char*, int)));
   }
   return true;
 }
@@ -989,7 +989,7 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
 
   mMsgStr = message;
 
-  if ( !mMailerProc->start( KProcess::NotifyOnExit, KProcess::All ) ) {
+  if ( !mMailerProc->start( K3Process::NotifyOnExit, K3Process::All ) ) {
     KMessageBox::information( 0, i18n("Failed to execute mailer program %1",
                                 mSender->transportInfo()->host ) );
     return false;
@@ -1002,7 +1002,7 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
 }
 
 
-void KMSendSendmail::wroteStdin(KProcess *proc)
+void KMSendSendmail::wroteStdin(K3Process *proc)
 {
   char* str;
   int len;
@@ -1022,13 +1022,13 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
     mMsgRest -= len;
     mMsgPos  += len;
     mMailerProc->writeStdin(str,len);
-    // if code is added after writeStdin() KProcess probably initiates
+    // if code is added after writeStdin() K3Process probably initiates
     // a race condition.
   }
 }
 
 
-void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
+void KMSendSendmail::receivedStderr(K3Process *proc, char *buffer, int buflen)
 {
   assert(proc!=0);
   Q_UNUSED( proc );
@@ -1036,7 +1036,7 @@ void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 }
 
 
-void KMSendSendmail::sendmailExited(KProcess *proc)
+void KMSendSendmail::sendmailExited(K3Process *proc)
 {
   assert(proc!=0);
   mSendOk = (proc->normalExit() && proc->exitStatus()==0);

@@ -29,7 +29,7 @@
 #include <emailfunctions/email.h>
 
 #include <kcursor.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kconfiggroup.h>
 
 #include <kmenu.h>
@@ -374,7 +374,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       mExtEditorTempFile->close();
       // replace %f in the system line
       sysLine.replace( "%f", mExtEditorTempFile->fileName() );
-      mExtEditorProcess = new KProcess();
+      mExtEditorProcess = new K3Process();
       mExtEditorProcess->setUseShell( true );
       sysLine += ' ';
       while (!sysLine.isEmpty())
@@ -382,8 +382,8 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         *mExtEditorProcess << sysLine.left(sysLine.indexOf(" ")).toLocal8Bit();
         sysLine.remove(0, sysLine.indexOf(" ") + 1);
       }
-      connect(mExtEditorProcess, SIGNAL(processExited(KProcess*)),
-              SLOT(slotExternalEditorDone(KProcess*)));
+      connect(mExtEditorProcess, SIGNAL(processExited(K3Process*)),
+              SLOT(slotExternalEditorDone(K3Process*)));
       if (!mExtEditorProcess->start())
       {
         KMessageBox::error( topLevelWidget(),
@@ -514,7 +514,7 @@ void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   repaint();
 }
 
-void KMEdit::slotExternalEditorDone( KProcess * proc ) {
+void KMEdit::slotExternalEditorDone( K3Process * proc ) {
   assert(proc == mExtEditorProcess);
   // make sure, we update even when KDirWatcher is too slow:
   slotExternalEditorTempFileChanged( mExtEditorTempFile->fileName() );

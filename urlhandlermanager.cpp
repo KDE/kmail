@@ -331,7 +331,7 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 #include "kmmsgpart.h"
 
 #include <klocale.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kmessagebox.h>
 #include <khtml_part.h>
 
@@ -430,9 +430,9 @@ namespace {
     QString displayName, libName, keyId;
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return false;
-    KProcess cmp;
+    K3Process cmp;
     cmp << "kleopatra" << "-query" << keyId;
-    if ( !cmp.start( KProcess::DontCare ) )
+    if ( !cmp.start( K3Process::DontCare ) )
       KMessageBox::error( w, i18n("Could not start certificate manager. "
 				  "Please check your installation."),
 			  i18n("KMail Error") );
