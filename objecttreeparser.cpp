@@ -68,7 +68,8 @@
 
 #include <kpgpblock.h>
 #include <kpgp.h>
-#include <linklocator.h>
+#include <kpimutils/linklocator.h>
+using KPIMUtils::LinkLocator;
 
 #include <ktnef/ktnefparser.h>
 #include <ktnef/ktnefmessage.h>

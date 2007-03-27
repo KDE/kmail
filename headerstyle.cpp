@@ -37,7 +37,8 @@
 
 #include "headerstrategy.h"
 #include "kmkernel.h"
-#include "linklocator.h"
+#include <kpimutils/linklocator.h>
+using KPIMUtils::LinkLocator;
 #include "kmmessage.h"
 #include "spamheaderanalyzer.h"
 #include "globalsettings.h"
