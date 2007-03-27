@@ -12,7 +12,7 @@
 #include "globalsettings.h"
 
 #include <libkdepim/kvcarddrag.h>
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 
 #include <kabc/vcardconverter.h>
 #include <kio/netaccess.h>

@@ -28,7 +28,7 @@ using KMail::TemplateParser;
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>

@@ -23,7 +23,7 @@
 
 #include "distributionlistdialog.h"
 
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include <kabc/resource.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>

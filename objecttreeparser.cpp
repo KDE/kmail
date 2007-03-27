@@ -38,7 +38,7 @@
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include <libkdepim/kfileio.h>
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include "partmetadata.h"
 #include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"

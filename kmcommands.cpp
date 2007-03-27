@@ -63,7 +63,7 @@
 #include <QTextCodec>
 #include <QProgressBar>
 
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>

@@ -34,7 +34,7 @@
 #include "kmkernel.h"
 #include "kmlineeditspell.h"
 
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include <addressesdialog.h>
 using KPIM::AddressesDialog;
 #include "recentaddresses.h"

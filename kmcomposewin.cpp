@@ -55,7 +55,7 @@ using KRecentAddress::RecentAddresses;
 #include <libkpimidentities/identitycombo.h>
 #include <libkpimidentities/identity.h>
 #include <libkdepim/kfileio.h>
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
 #include <kleo/specialjob.h>

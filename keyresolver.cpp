@@ -43,7 +43,7 @@
 #include "kcursorsaver.h"
 #include "kleo_util.h"
 
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 #include <ui/keyselectiondialog.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/keylistjob.h>

@@ -31,7 +31,7 @@
 #include "distributionlistdialog.h"
 #include "globalsettings.h"
 
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 
 #include <kdebug.h>
 #include <kinputdialog.h>

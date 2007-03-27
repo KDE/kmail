@@ -26,7 +26,7 @@
 #include <QTextStream>
 
 #include <libkdepim/kfileio.h>
-#include <emailfunctions/email.h>
+#include <kpimutils/email.h>
 
 #include <kcursor.h>
 #include <k3process.h>
