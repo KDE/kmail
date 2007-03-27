@@ -2157,7 +2157,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     // extra hint for green case
                     // that email addresses in DN do not match fromAddress
                     QString greenCaseWarning;
-                    QString msgFrom( EmailAddressTools::extractEmailAddress(fromAddress) );
+                    QString msgFrom( KPIMUtils::extractEmailAddress(fromAddress) );
                     QString certificate;
                     if( block.keyId.isEmpty() )
                         certificate = "certificate";
@@ -2188,7 +2188,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                 if( !bStart )
                                     greenCaseWarning.append(", <br />&nbsp; &nbsp;");
                                 bStart = false;
-                                greenCaseWarning.append( EmailAddressTools::extractEmailAddress(*it) );
+                                greenCaseWarning.append( KPIMUtils::extractEmailAddress(*it) );
                             }
                         }
                     } else {

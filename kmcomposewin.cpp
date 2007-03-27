@@ -2420,19 +2420,19 @@ void KMComposeWin::addrBookSelIntoOld()
 
   txt = to();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       dlg.setSelectedTo( lst );
   }
 
   txt = mEdtCc->text();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       dlg.setSelectedCC( lst );
   }
 
   txt = mEdtBcc->text();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       dlg.setSelectedBCC( lst );
   }
 
@@ -2467,19 +2467,19 @@ void KMComposeWin::addrBookSelIntoNew()
 
   txt = to();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       selection.setSelectedTo( lst );
   }
 
   txt = mEdtCc->text();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       selection.setSelectedCC( lst );
   }
 
   txt = mEdtBcc->text();
   if ( !txt.isEmpty() ) {
-      lst = EmailAddressTools::splitAddressList( txt );
+      lst = KPIMUtils::splitAddressList( txt );
       selection.setSelectedBCC( lst );
   }
 
@@ -3775,10 +3775,10 @@ void KMComposeWin::slotContinuePrint( bool rc )
 bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresses )
 {
   QString brokenAddress;
-  EmailAddressTools::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
-  if ( !( errorCode == EmailAddressTools::AddressOk || errorCode == EmailAddressTools::AddressEmpty ) ) {
+  KPIMUtils::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
+  if ( !( errorCode == KPIMUtils::AddressOk || errorCode == KPIMUtils::AddressEmpty ) ) {
     QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" + EmailAddressTools::emailParseResultToString( errorCode ) +
+                      "</b></p><p>" + KPIMUtils::emailParseResultToString( errorCode ) +
                       "</p></qt>" );
     KMessageBox::sorry( parent, errorMsg, i18n("Invalid Email Address") );
     return false;
@@ -3803,7 +3803,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
 
   if ( saveIn == KMComposeWin::None )
   {
-    if ( EmailAddressTools::firstEmailAddress( from() ).isEmpty() ) {
+    if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
         rethinkFields( false );
@@ -4361,7 +4361,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if( !ident.fullEmailAddr().isNull() )
     mEdtFrom->setText(ident.fullEmailAddr());
   // make sure the From field is shown if it does not contain a valid email address
-  if ( EmailAddressTools::firstEmailAddress( from() ).isEmpty() )
+  if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() )
     mShowHeaders |= HDR_FROM;
   if ( mEdtReplyTo ) mEdtReplyTo->setText(ident.replyToAddr());
 

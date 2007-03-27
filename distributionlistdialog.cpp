@@ -129,7 +129,7 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
 {
   Recipient::List::ConstIterator it;
   for( it = recipients.begin(); it != recipients.end(); ++it ) {
-    QStringList emails = EmailAddressTools::splitAddressList( (*it).email() );
+    QStringList emails = KPIMUtils::splitAddressList( (*it).email() );
     QStringList::ConstIterator it2;
     for( it2 = emails.begin(); it2 != emails.end(); ++it2 ) {
       QString name;

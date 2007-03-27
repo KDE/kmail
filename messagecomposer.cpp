@@ -499,9 +499,9 @@ void MessageComposer::readFromComposeWin()
   // mReferenceMessage->bcc() later and also not now. So get the Bcc from
   // the composer window.)
   mBcc = mComposeWin->bcc();
-  mTo = EmailAddressTools::splitAddressList( mComposeWin->to().trimmed() );
-  mCc = EmailAddressTools::splitAddressList( mComposeWin->cc().trimmed() );
-  mBccList = EmailAddressTools::splitAddressList( mBcc.trimmed() );
+  mTo = KPIMUtils::splitAddressList( mComposeWin->to().trimmed() );
+  mCc = KPIMUtils::splitAddressList( mComposeWin->cc().trimmed() );
+  mBccList = KPIMUtils::splitAddressList( mBcc.trimmed() );
 
   for ( int i = 0 ; i < mComposeWin->mAtmList.count() ; ++i )
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),

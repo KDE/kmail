@@ -391,7 +391,7 @@ public:
            requires moving expandAliases and all that
            it brings
   */
-  static EmailAddressTools::EmailParseResult isValidEmailAddressList( const QString& aStr,
+  static KPIMUtils::EmailParseResult isValidEmailAddressList( const QString& aStr,
                                                          QString& brokenAddress );
 
   /**

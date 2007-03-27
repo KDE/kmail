@@ -114,7 +114,7 @@ QString Callback::receiver() const
 
   mReceiverSet = true;
 
-  QStringList addrs = EmailAddressTools::splitAddressList( mMsg->to() );
+  QStringList addrs = KPIMUtils::splitAddressList( mMsg->to() );
   int found = 0;
   for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
     if( kmkernel->identityManager()->identityForAddress( *it ) !=
@@ -124,7 +124,7 @@ QString Callback::receiver() const
       mReceiver = *it;
     }
   }
-  QStringList ccaddrs = EmailAddressTools::splitAddressList( mMsg->cc() );
+  QStringList ccaddrs = KPIMUtils::splitAddressList( mMsg->cc() );
   for( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
     if( kmkernel->identityManager()->identityForAddress( *it ) !=
         KPIM::Identity::null() ) {

@@ -386,7 +386,7 @@ namespace {
 } // anon namespace
 
 static QString canonicalAddress( const QString & _address ) {
-  const QString address = EmailAddressTools::extractEmailAddress( _address );
+  const QString address = KPIMUtils::extractEmailAddress( _address );
   if ( !address.contains('@') ) {
     // local address
     //return address + '@' + KNetwork::KResolver::localHostName();

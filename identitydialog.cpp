@@ -514,10 +514,10 @@ namespace KMail {
 bool IdentityDialog::validateAddresses( const QString & addresses )
 {
   QString brokenAddress;
-  EmailAddressTools::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
-  if ( !( errorCode == EmailAddressTools::AddressOk || errorCode == EmailAddressTools::AddressEmpty ) ) {
+  KPIMUtils::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
+  if ( !( errorCode == KPIMUtils::AddressOk || errorCode == KPIMUtils::AddressEmpty ) ) {
     QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" + EmailAddressTools::emailParseResultToString( errorCode ) +
+                      "</b></p><p>" + KPIMUtils::emailParseResultToString( errorCode ) +
                       "</p></qt>" );
     KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
     return false;
@@ -529,8 +529,8 @@ void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().trimmed();
 
     // Validate email addresses
-    if ( !EmailAddressTools::isValidSimpleAddress( email )) {
-      QString errorMsg( EmailAddressTools::simpleEmailAddressErrorMsg());
+    if ( !KPIMUtils::isValidSimpleAddress( email )) {
+      QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg());
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
       return;
     }
