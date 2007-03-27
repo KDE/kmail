@@ -69,7 +69,6 @@ class KToggleAction;
 class KSelectColorAction;
 class KUrl;
 class KRecentFilesAction;
-class SpellingFilter;
 class MessageComposer;
 class RecipientsEditor;
 class KMLineEdit;

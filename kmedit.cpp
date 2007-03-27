@@ -27,6 +27,7 @@
 
 #include <libkdepim/kfileio.h>
 #include <kpimutils/email.h>
+#include <kpimutils/spellingfilter.h>
 
 #include <kcursor.h>
 #include <k3process.h>
@@ -48,7 +49,6 @@
 #include <k3spell.h>
 #include <k3spelldlg.h>
 #include <k3sconfig.h>
-#include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 
 #include <QRegExp>

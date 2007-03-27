@@ -20,7 +20,8 @@
 class KMComposeWin;
 class K3SpellConfig;
 class K3Spell;
-class SpellingFilter;
+namespace KPIMUtils { class SpellingFilter; }
+using KPIMUtils::SpellingFilter;
 class KTemporaryFile;
 class K3DictSpellingHighlighter;
 class KDirWatch;
