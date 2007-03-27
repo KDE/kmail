@@ -115,7 +115,6 @@ using KRecentAddress::RecentAddresses;
 #include <k3spell.h>
 #include <k3sconfig.h>
 #include <k3spelldlg.h>
-#include <spellingfilter.h>
 #include <k3syntaxhighlighter.h>
 #include <kcolordialog.h>
 #include <kzip.h>
@@ -124,7 +123,6 @@ using KRecentAddress::RecentAddresses;
 #include <kconfiggroup.h>
 
 
-//Added by qt3to4:
 #include <QByteArray>
 #include <q3header.h>
 #include <q3tabdialog.h>
