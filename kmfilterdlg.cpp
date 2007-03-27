@@ -415,7 +415,8 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
-    mKeyButton->setShortcut( shortcut );
+#warning Port me!
+//    mKeyButton->setShortcut( shortcut );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
@@ -517,7 +518,8 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
 {
   KShortcut mySc(sc);
-  if ( mySc == mKeyButton->shortcut() ) return;
+#warning Port me!
+//  if ( mySc == mKeyButton->shortcut() ) return;
   // FIXME work around a problem when reseting the shortcut via the shortcut dialog
   // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
   // so we additionally have to check for an empty string
@@ -528,9 +530,10 @@ void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );
   } else {
-    mKeyButton->setShortcut( mySc );
-    if ( mFilter )
-      mFilter->setShortcut( mKeyButton->shortcut() );
+#warning Port me!
+//    mKeyButton->setShortcut( mySc );
+//    if ( mFilter )
+//      mFilter->setShortcut( mKeyButton->shortcut() );
   }
 }
 

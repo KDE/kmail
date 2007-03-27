@@ -187,7 +187,8 @@ void CustomTemplates::save()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
-      vitem->mShortcut = mKeyButton->shortcut();
+#warning Port me!
+//      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
   QStringList list;
@@ -270,7 +271,8 @@ void CustomTemplates::slotListSelectionChanged()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
-      vitem->mShortcut = mKeyButton->shortcut();
+#warning Port me!
+//      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
   Q3ListViewItem *item = mList->selectedItem();
@@ -284,7 +286,8 @@ void CustomTemplates::slotListSelectionChanged()
                   this, SLOT( slotTextChanged( void ) ) );
 
       mEdit->setText( vitem->mContent );
-      mKeyButton->setShortcut( vitem->mShortcut );
+#warning Port me!
+//      mKeyButton->setShortcut( vitem->mShortcut );
       mType->setCurrentItem( vitem->mType );
 
       connect( mEdit, SIGNAL( textChanged() ),
@@ -306,7 +309,8 @@ void CustomTemplates::slotListSelectionChanged()
 #warning There must be a better way of doing this...
 #endif
     KShortcut nullShortcut;
-    mKeyButton->setShortcut( nullShortcut );
+#warning Port me!
+//    mKeyButton->setShortcut( nullShortcut );
     mType->setCurrentItem( 0 );
   }
 }
@@ -347,7 +351,8 @@ void CustomTemplates::slotTypeActivated( int index )
 void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
 {
   KShortcut sc( shortcut );
-  if ( sc == mKeyButton->shortcut() )
+#warning Port me!
+//  if ( sc == mKeyButton->shortcut() )
     return;
   // see above
 #ifdef __GNUC__
@@ -389,7 +394,8 @@ void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
                 == KMessageBox::Yes );
   }
   if ( assign ) {
-    mKeyButton->setShortcut( sc );
+#warning Port me!
+//    mKeyButton->setShortcut( sc );
     emit changed();
   }
 }
