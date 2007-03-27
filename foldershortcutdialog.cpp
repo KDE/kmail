@@ -79,7 +79,9 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
            this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  mKeyButton->setShortcut( folder->shortcut() );
 }
 
@@ -89,11 +91,15 @@ FolderShortcutDialog::~FolderShortcutDialog()
 
 void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
 {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  if ( sc == mKeyButton->shortcut() ) return;
   if ( sc.toString().isNull() ) {
     // null is fine, that's reset, but sc.іsNull() will be false :/
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //    mKeyButton->setShortcut( KShortcut() );
   } else {
     if( !mMainWidget->shortcutIsValid( sc ) ) {
@@ -101,7 +107,9 @@ void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
             "please select a different one." ) );
       KMessageBox::sorry( mMainWidget, msg );
     } else {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //      mKeyButton->setShortcut( sc );
     }
   }
@@ -109,7 +117,9 @@ void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
 
 void FolderShortcutDialog::slotOk()
 {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  mFolder->setShortcut( mKeyButton->shortcut() );
 }
 

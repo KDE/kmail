@@ -415,7 +415,9 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //    mKeyButton->setShortcut( shortcut );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
@@ -518,7 +520,9 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
 {
   KShortcut mySc(sc);
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  if ( mySc == mKeyButton->shortcut() ) return;
   // FIXME work around a problem when reseting the shortcut via the shortcut dialog
   // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
@@ -530,7 +534,9 @@ void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );
   } else {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //    mKeyButton->setShortcut( mySc );
 //    if ( mFilter )
 //      mFilter->setShortcut( mKeyButton->shortcut() );

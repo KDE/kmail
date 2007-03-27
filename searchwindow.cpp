@@ -109,7 +109,9 @@ class MatchListView : public K3ListView
         pixmap = QPixmap( DesktopIcon("kmultiple", K3Icon::SizeSmall) );
 
       drag->setPixmap( pixmap );
+#ifdef __GNUC__
 #warning Fix me: QDrag incompatible with K3ListView::dragObject!
+#endif
 //      return drag;
       drag->start();
       return 0;

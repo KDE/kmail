@@ -187,7 +187,9 @@ void CustomTemplates::save()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
@@ -271,7 +273,9 @@ void CustomTemplates::slotListSelectionChanged()
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
     if ( vitem ) {
       vitem->mContent = mEdit->text();
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //      vitem->mShortcut = mKeyButton->shortcut();
     }
   }
@@ -286,7 +290,9 @@ void CustomTemplates::slotListSelectionChanged()
                   this, SLOT( slotTextChanged( void ) ) );
 
       mEdit->setText( vitem->mContent );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //      mKeyButton->setShortcut( vitem->mShortcut );
       mType->setCurrentItem( vitem->mType );
 
@@ -309,7 +315,9 @@ void CustomTemplates::slotListSelectionChanged()
 #warning There must be a better way of doing this...
 #endif
     KShortcut nullShortcut;
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //    mKeyButton->setShortcut( nullShortcut );
     mType->setCurrentItem( 0 );
   }
@@ -351,7 +359,9 @@ void CustomTemplates::slotTypeActivated( int index )
 void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
 {
   KShortcut sc( shortcut );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  if ( sc == mKeyButton->shortcut() )
     return;
   // see above
@@ -394,7 +404,9 @@ void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
                 == KMessageBox::Yes );
   }
   if ( assign ) {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //    mKeyButton->setShortcut( sc );
     emit changed();
   }
