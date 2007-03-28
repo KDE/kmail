@@ -1928,7 +1928,12 @@ void KMMainWidget::folderSelected()
   folderSelected( mFolder );
   updateFolderMenu();
   // opened() before the getAndCheckFolder() in folderSelected
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && mOpenedImapFolder ) {
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap &&
+       mOpenedImapFolder ) {
+    // the selected state is mainly a duplicate for having an open
+    // "mainwidget" so keep that in sync
+    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
+    imap->setSelected( false );
     mFolder->close( "mainwidget" );
     mOpenedImapFolder = false;
   }
@@ -1974,8 +1979,9 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   delete mShowBusySplashTimer;
   mShowBusySplashTimer = 0;
 
-  if ( newFolder )
+  if ( newFolder ) {
     writeFolderConfig();
+  }
   if ( mFolder ) {
     disconnect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
@@ -1985,10 +1991,11 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
            this, SLOT( updateMarkAsReadAction() ) );
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-    if ( mOpenedImapFolder && newFolder && mFolder->folderType() == KMFolderTypeImap ) {
-      mFolder->close( "mainwidget" );
+    if ( mOpenedImapFolder && newFolder &&
+         mFolder->folderType() == KMFolderTypeImap ) {
       KMFolderImap *imap = static_cast<KMFolderImap*>( mFolder->storage() );
       imap->setSelected( false );
+      mFolder->close( "mainwidget" );
       mOpenedImapFolder = false;
     }
   }
