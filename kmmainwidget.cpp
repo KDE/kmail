@@ -1878,6 +1878,10 @@ void KMMainWidget::folderSelected()
   // opened() before the getAndCheckFolder() in folderSelected
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap && mOpenedImapFolder )
   {
+    // the selected state is mainly a duplicate for having an open "mainwidget" 
+    // so keep that in sync
+    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());   
+    imap->setSelected( false );
     mFolder->close("mainwidget");
     mOpenedImapFolder = false;
   }
