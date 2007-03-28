@@ -106,7 +106,7 @@ KMFolderImap::~KMFolderImap()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::close(bool aForced)
+void KMFolderImap::close(const char *owner, bool aForced)
 {
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount == 0 && isSelected() && !aForced) {
@@ -1243,7 +1243,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mAccount->handleJobError( job,
          i18n("Error while listing the contents of the folder %1.").arg( label() ) );
     mAccount->removeJob(it);
-    finishMailCheck( imapNoInformation );
+    finishMailCheck( "listfolder", imapNoInformation );
     return;
   }
   mCheckFlags = FALSE;
@@ -1296,7 +1296,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
-    finishMailCheck( imapFinished );
+    finishMailCheck( "listfolder", imapFinished );
     mAccount->removeJob(it);
     return;
   }
@@ -1499,7 +1499,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     }
     (*it).cdata.remove(0, pos);
   }
-  open();
+  open("digestsplit");
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   int flags;
   while (pos >= 0)
@@ -1581,7 +1581,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   } // while
-  close();
+  close("digestsplit");
 }
 
 //-------------------------------------------------------------
