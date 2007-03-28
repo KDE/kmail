@@ -96,7 +96,10 @@ int KMFolderMbox::open()
   mOpenCount++;
   kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
 
-  if (mOpenCount > 1) return 0;  // already open
+  if (mOpenCount > 1) {
+     assert(mStream);
+     return 0;  // already open
+  }
 
   assert(!folder()->name().isEmpty());
 
@@ -255,9 +258,13 @@ int KMFolderMbox::create()
 //-----------------------------------------------------------------------------
 void KMFolderMbox::close(bool aForced)
 {
-  if (mOpenCount <= 0 || !mStream) return;
+  if (!aForced)
+     assert(mOpenCount >= 0);
+
+  if (mOpenCount <= 0 || !mStream) { mOpenCount = 0; return; }
   if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0 && !aForced) return;
+  if (mOpenCount > 0 && !aForced) { assert(mStream); return; }
+  
 #if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
   if ( (folder() != kmkernel->inboxFolder())
         && folder()->isSystemFolder() && !aForced )

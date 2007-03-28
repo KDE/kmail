@@ -1497,6 +1497,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     }
     (*it).cdata.remove(0, pos);
   }
+  open();
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   int flags;
   while (pos >= 0)
@@ -1578,6 +1579,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   } // while
+  close();
 }
 
 //-------------------------------------------------------------
