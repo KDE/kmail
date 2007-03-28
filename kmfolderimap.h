@@ -131,6 +131,11 @@ public:
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void remove();
 
+  /** Close folder. If force is TRUE the files are closed even if
+    others still use it (e.g. other mail reader windows). This also
+    cancels all pending jobs. */
+  virtual void close(const char *owner, bool force=FALSE);
+
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
 
@@ -277,11 +282,6 @@ public:
   /** imap folders cannot expire */
   virtual bool isAutoExpire() const { return false; }
 
-  /** Close folder. If force is TRUE the files are closed even if
-    others still use it (e.g. other mail reader windows). This also
-    cancels all pending jobs. */
-  virtual void close(bool force=FALSE);
-
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
   /** Return the trash folder. */
@@ -423,7 +423,7 @@ protected:
   /** See if all folders are still present on server, otherwise delete them */
   void checkFolders( const QStringList& folderNames, const QString& ns );
 
-  void finishMailCheck( imapState state );
+  void finishMailCheck( const char *func, imapState state );
 
 protected slots:
 

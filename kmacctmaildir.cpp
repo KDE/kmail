@@ -127,7 +127,7 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  rc = mailFolder.open();
+  rc = mailFolder.open("acctmaildirMail");
   if (rc)
   {
     QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>").arg( mailFolder.location() );
@@ -138,7 +138,7 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  mFolder->open();
+  mFolder->open("acctmaildirFold");
 
 
   num = mailFolder.count();
@@ -203,8 +203,8 @@ void KMAcctMaildir::processNewMail(bool)
   }
   // else warning is written already
 
-  mailFolder.close();
-  mFolder->close();
+  mailFolder.close("acctmaildirMail");
+  mFolder->close("acctmaildirFold");
 
   checkDone( hasNewMail, CheckOK );
 

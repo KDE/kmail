@@ -221,7 +221,7 @@ KMHeaders::~KMHeaders ()
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->setSelected( false );
     }
-    mFolder->close();
+    mFolder->close("kmheaders");
   }
   writeConfig();
   delete mRoot;
@@ -672,7 +672,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       disconnect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
       writeSortOrder();
-      mFolder->close();
+      mFolder->close("kmheaders");
       // System folders remain open but we also should write the index from
       // time to time
       if (mFolder->dirty()) mFolder->writeIndex();
@@ -721,7 +721,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 
       CREATE_TIMER(kmfolder_open);
       START_TIMER(kmfolder_open);
-      mFolder->open();
+      mFolder->open("kmheaders");
       END_TIMER(kmfolder_open);
       SHOW_TIMER(kmfolder_open);
 

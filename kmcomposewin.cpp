@@ -3934,7 +3934,8 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     theFolder = ( mSaveIn==KMComposeWin::Drafts ?
                   kmkernel->draftsFolder() : kmkernel->templatesFolder() );
 
-  theFolder->open();
+  theFolder->open("composer");
+
   kdDebug(5006) << k_funcinfo << "theFolder=" << theFolder->name() << endl;
   if ( imapTheFolder )
     kdDebug(5006) << k_funcinfo << "imapTheFolder=" << imapTheFolder->name() << endl;
@@ -3952,7 +3953,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
     (static_cast<KMFolderImap*>( imapTheFolder->storage() ))->getFolder();
   }
 
-  theFolder->close();
+  theFolder->close( "composer" );
   return sentOk;
 }
 

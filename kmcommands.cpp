@@ -182,7 +182,7 @@ KMCommand::~KMCommand()
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;
-    (*fit)->close();
+    (*fit)->close("kmcommand");
   }
 }
 
@@ -440,7 +440,7 @@ void KMCommand::slotTransferCancelled()
 
 void KMCommand::keepFolderOpen( KMFolder *folder )
 {
-  folder->open();
+  folder->open("kmcommand");
   mFolders.append( folder );
 }
 
@@ -786,7 +786,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
     if ((*it)->parent() != 0)
-      (*it)->parent()->open();
+      (*it)->parent()->open("kmcommand");
     ++it;
   }
   mMsgListIndex = 0;
@@ -901,7 +901,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
     KMMsgDict::instance()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
-    p->close();
+    p->close("kmcommand");
   }
 }
 
@@ -1882,7 +1882,7 @@ KMCommand::Result KMCopyCommand::execute()
   QPtrList<KMMessage> list;
   QPtrList<KMMessage> localList;
 
-  if (mDestFolder && mDestFolder->open() != 0)
+  if (mDestFolder && mDestFolder->open("kmcommand") != 0)
   {
     deleteLater();
     return Failed;
@@ -1983,7 +1983,7 @@ KMCommand::Result KMCopyCommand::execute()
   // otherwise this is done in slotMsgAdded or slotFolderComplete
   if ( deleteNow )
   {
-    mDestFolder->close();
+    mDestFolder->close("kmcommand");
     deleteLater();
   }
 
@@ -1995,14 +1995,14 @@ void KMCopyCommand::slotMsgAdded( KMFolder*, Q_UINT32 serNum )
   mWaitingForMsgs.remove( serNum );
   if ( mWaitingForMsgs.isEmpty() )
   {
-    mDestFolder->close();
+    mDestFolder->close("kmcommand");
     deleteLater();
   }
 }
 
 void KMCopyCommand::slotFolderComplete()
 {
-  mDestFolder->close();
+  mDestFolder->close("kmcommand");
   deleteLater();
 }
 
@@ -2039,7 +2039,7 @@ KMCommand::Result KMMoveCommand::execute()
   typedef QMap< KMFolder*, QPtrList<KMMessage>* > FolderToMessageListMap;
   FolderToMessageListMap folderDeleteList;
 
-  if (mDestFolder && mDestFolder->open() != 0) {
+  if (mDestFolder && mDestFolder->open("kmcommand") != 0) {
     completeMove( Failed );
     return Failed;
   }
@@ -2209,11 +2209,11 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
 void KMMoveCommand::completeMove( Result result )
 {
   if ( mDestFolder )
-    mDestFolder->close();
+    mDestFolder->close("kmcommand");
   while ( !mOpenedFolders.empty() ) {
     KMFolder *folder = mOpenedFolders.back();
     mOpenedFolders.pop_back();
-    folder->close();
+    folder->close("kmcommand");
   }
   if ( mProgressItem ) {
     mProgressItem->setComplete();
@@ -2234,14 +2234,14 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
-  srcFolder->open();
+  srcFolder->open("kmcommand");
   mOpenedFolders.push_back( srcFolder );
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
-  srcFolder->open();
+  srcFolder->open("kmcommand");
   mOpenedFolders.push_back( srcFolder );
 }
 
@@ -2253,7 +2253,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
   if ( srcFolder ) {
     KMMsgBase *msg = srcFolder->getMsgBase( idx );
-    srcFolder->open();
+    srcFolder->open("kmcommand");
     mOpenedFolders.push_back( srcFolder );
     addMsg( msg );
   }

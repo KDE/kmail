@@ -482,9 +482,9 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
     return 0;
   }
 
-  f->open();
+  f->open("kolabcount");
   int n = f->count();
-  f->close();
+  f->close("kolabcount");
   kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( " << mimetype << ", "
                 << resource << " ) returned " << n << endl;
   return n;
@@ -509,7 +509,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
     return aMap;
   }
 
-  f->open();
+  f->open("incidences");
 
   int stopIndex = nbMessages == -1 ? f->count() :
                   QMIN( f->count(), startIndex + nbMessages );
@@ -555,7 +555,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 #endif
     }
   }
-  f->close();
+  f->close( "incidences" );
   return aMap;
 }
 
@@ -726,7 +726,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     return rc;
   }
 
-  f->open();
+  f->open("ifaceupdate");
 
   KMMessage* msg = 0;
   if ( sernum != 0 ) {
@@ -809,7 +809,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                             attachmentMimetypes );
   }
 
-  f->close();
+  f->close("ifaceupdate");
   return rc;
 }
 
@@ -1694,7 +1694,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
-  folder->open();
+  folder->open("ifacefolder");
   connectFolder( folder );
   return folder;
 }
@@ -1736,7 +1736,7 @@ static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
   if( folder ) {
     folder->setSystemFolder( false );
     folder->disconnect( _this );
-    folder->close();
+    folder->close("ifacefolder");
   }
 }
 

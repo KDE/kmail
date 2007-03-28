@@ -239,7 +239,7 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     }
     bool opened = folder->isOpened();
     if ( !opened )
-      folder->open();
+      folder->open("filtermgr");
     KMMsgBase *msgBase = folder->getMsgBase( idx );
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg( idx );
@@ -248,14 +248,14 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
       if ( unGet )
         folder->unGetMsg( idx );
       if ( !opened )
-        folder->close();
+        folder->close("filtermgr");
       return 1;
     }
     if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
       if ( unGet )
         folder->unGetMsg( idx );
       if ( !opened )
-        folder->close();
+        folder->close("filtermgr");
       return 2;
     }
 
@@ -271,7 +271,7 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     if ( unGet )
       folder->unGetMsg( idx );
     if ( !opened )
-      folder->close();
+      folder->close("filtermgr");
   } else {
     result = 1;
   }
@@ -423,7 +423,7 @@ void KMFilterMgr::deref(bool force)
     return;
   QValueVector< KMFolder *>::const_iterator it;
   for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it )
-    (*it)->close();
+    (*it)->close("filtermgr");
   mOpenFolders.clear();
 }
 
@@ -433,7 +433,7 @@ int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 {
   assert( aFolder );
 
-  int rc = aFolder->open();
+  int rc = aFolder->open("filermgr");
   if (rc) return rc;
 
   mOpenFolders.append( aFolder );

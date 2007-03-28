@@ -171,10 +171,10 @@ public:
   //See base class for documentation
   virtual QCString& getMsgString(int idx, QCString& mDest);
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int open();
+  virtual int open(const char *owner);
   virtual int canAccess();
   virtual void sync();
-  virtual void close(bool force=FALSE);
+  virtual void close(const char *owner, bool force=FALSE);
   virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;

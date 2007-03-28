@@ -229,7 +229,7 @@ void KMSearch::stop()
             }
             folder->storage()->search( 0 );
             mSearchCount += folder->count();
-            folder->close();
+            folder->close("kmsearch");
         }
     }
     mRemainingFolders = -1;
@@ -257,7 +257,7 @@ void KMSearch::slotProcessNextBatch()
         if ( folder )
         {
             mLastFolder = folder->label();
-            folder->open();
+            folder->open("kmsearch");
             mOpenedFolders.append( folder );
             connect( folder->storage(),
                 SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ),
@@ -295,7 +295,7 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
                                         const KMSearchPattern*, bool ) ) );
       --mRemainingFolders;
       mSearchCount += folder->count();
-      folder->close();
+      folder->close("kmsearch");
       mOpenedFolders.remove( folder );
       if ( mRemainingFolders <= 0 )
       {
@@ -378,7 +378,7 @@ KMFolderSearch::~KMFolderSearch()
     delete mSearch;
     mSearch = 0;
     if (mOpenCount > 0)
-        close(TRUE);
+        close("~foldersearch", TRUE);
 }
 
 void KMFolderSearch::setSearch(KMSearch *search)
@@ -412,7 +412,7 @@ void KMFolderSearch::setSearch(KMSearch *search)
     /* TODO There is KMFolder::cleared signal now. Adjust. */
     if (mSearch)
         mSearch->start();
-    open(); // will be closed in searchFinished
+    open("foldersearch"); // will be closed in searchFinished
 }
 
 void KMFolderSearch::executeSearch()
@@ -432,7 +432,7 @@ void KMFolderSearch::searchFinished(bool success)
 {
     if (!success)
         mSerNums.clear();
-    close();
+    close("foldersearch");
 }
 
 void KMFolderSearch::addSerNum(Q_UINT32 serNum)
@@ -444,7 +444,7 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     KMMsgDict::instance()->getLocation(serNum, &aFolder, &idx);
     assert(aFolder && (idx != -1));
     if(mFolders.findIndex(aFolder) == -1) {
-        aFolder->open();
+        aFolder->open("foldersearch");
         // Exceptional case, for when folder has invalid ids
         if (mInvalid)
             return;
@@ -508,7 +508,7 @@ bool KMFolderSearch::readSearch()
     return mSearch->read(location());
 }
 
-int KMFolderSearch::open()
+int KMFolderSearch::open(const char *)
 {
     mOpenCount++;
     kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
@@ -546,7 +546,7 @@ void KMFolderSearch::sync()
     }
 }
 
-void KMFolderSearch::close(bool force)
+void KMFolderSearch::close(const char *, bool force)
 {
     if (mOpenCount <= 0) return;
     if (mOpenCount > 0) mOpenCount--;
@@ -566,7 +566,7 @@ void KMFolderSearch::close(bool force)
     for (fit = mFolders.begin(); fit != mFolders.end(); ++fit) {
         if (!(*fit))
             continue;
-        (*fit)->close();
+        (*fit)->close("foldersearch");
     }
     mFolders.clear();
 
@@ -861,7 +861,7 @@ bool KMFolderSearch::readIndex()
         }
         mSerNums.push_back(serNum);
         if(mFolders.findIndex(folder) == -1) {
-            folder->open();
+            folder->open("foldersearch");
             if (mInvalid) //exceptional case for when folder has invalid ids
                 return false;
             mFolders.append(folder);
@@ -943,7 +943,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     if (!search()->inScope(aFolder))
         return;
     if (!mTempOpened) {
-        open();
+        open("foldersearch");
         mTempOpened = true;
     }
 
@@ -955,7 +955,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
     assert(folder && (idx != -1));
     assert(folder == aFolder);
-    folder->open();
+    folder->open("foldersearch");
 
     // if we are already checking this folder, refcount
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
@@ -999,7 +999,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     } else {
       Q_ASSERT( 0 ); // Can't happen (TM)
     }
-    folder->close();
+    folder->close("foldersearch");
 
     if ( !matches ) {
         QValueVector<Q_UINT32>::const_iterator it;
@@ -1029,7 +1029,7 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
     if (!search()->inScope(folder))
         return;
     if (!mTempOpened) {
-        open();
+        open("foldersearch");
         mTempOpened = true;
     }
 
@@ -1047,7 +1047,7 @@ void KMFolderSearch::examineChangedMessage(KMFolder *aFolder, Q_UINT32 serNum, i
     if (!search()->inScope(aFolder))
         return;
     if (!mTempOpened) {
-        open();
+        open("foldersearch");
         mTempOpened = true;
     }
     QValueVector<Q_UINT32>::const_iterator it;
@@ -1066,7 +1066,7 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     if (!search()->inScope(folder))
         return;
     if (mTempOpened) {
-        close();
+        close("foldersearch");
         mTempOpened = false;
     }
 
@@ -1083,7 +1083,7 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
         return;
 
     if (!mTempOpened) {
-        open();
+        open("foldersearch");
         mTempOpened = true;
     }
     mExecuteSearchTimer->start(0, true);
@@ -1106,7 +1106,7 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
     if (!search()->inScope(aFolder))
         return;
     if (!mTempOpened) {
-        open();
+        open("foldersearch");
         mTempOpened = true;
     }
 
@@ -1120,7 +1120,7 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
         ++pos;
     }
     // let's try if the message matches our search
-    aFolder->open();
+    aFolder->open("foldersearch");
 
     // if we are already checking this folder, refcount
     if ( mFoldersCurrentlyBeingSearched.contains( aFolder ) ) {

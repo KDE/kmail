@@ -1878,7 +1878,7 @@ void KMMainWidget::folderSelected()
   // opened() before the getAndCheckFolder() in folderSelected
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap && mOpenedImapFolder )
   {
-    mFolder->close();
+    mFolder->close("mainwidget");
     mOpenedImapFolder = false;
   }
 }
@@ -1935,7 +1935,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
     if ( mOpenedImapFolder && newFolder && mFolder->folderType() == KMFolderTypeImap ) {
-      mFolder->close();
+      mFolder->close( "mainwidget" );
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->setSelected( false );
       mOpenedImapFolder = false;
@@ -1953,7 +1953,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
     if ( newFolder && !mFolder->noContent() )
     {
-      imap->open(); // will be closed in the folderSelected slot
+      imap->open("mainwidget"); // will be closed in the folderSelected slot
       mOpenedImapFolder = true;
       // first get new headers before we select the folder
       imap->setSelected( true );
@@ -3540,7 +3540,7 @@ void KMMainWidget::removeDuplicates()
   QMap< QString, QValueList<int> > idMD5s;
   QValueList<int> redundantIds;
   QValueList<int>::Iterator kt;
-  mFolder->open();
+  mFolder->open("removedups");
   for (int i = mFolder->count() - 1; i >= 0; --i) {
     QString id = (*mFolder)[i]->msgIdMD5();
     if ( !id.isEmpty() ) {
@@ -3579,7 +3579,7 @@ void KMMainWidget::removeDuplicates()
   }
   while (kt != redundantIds.begin());
 
-  mFolder->close();
+  mFolder->close("removedups");
   mHeaders->setFolder(oFolder);
   QString msg;
   if ( numDuplicates )

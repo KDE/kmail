@@ -84,12 +84,12 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   mDestFolder = folder? folder->folder() : 0;
   // refcount++
   if (folder) {
-    folder->open();
+    folder->open("imapjobdest");
   }
   KMFolder *msg_parent = msg->parent();
   if (msg_parent) {
     if (!folder || folder!= msg_parent->storage()) {
-      msg_parent->open();
+      msg_parent->open("imapjobsrc");
     }
   }
   mSrcFolder = msg_parent;
@@ -241,7 +241,7 @@ ImapJob::~ImapJob()
       }
       account->mJobList.remove( this );
     }
-    mDestFolder->close();
+    mDestFolder->close("imapjobdest");
   }
 
   if ( mSrcFolder ) {
@@ -266,7 +266,7 @@ ImapJob::~ImapJob()
         account->mJobList.remove( this ); // remove the folderjob
       }
     }
-    mSrcFolder->close();
+    mSrcFolder->close("imapjobsrc");
   }
 }
 

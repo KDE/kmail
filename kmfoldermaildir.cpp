@@ -58,7 +58,7 @@ KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMaildir::~KMFolderMaildir()
 {
-  if (mOpenCount>0) close(true);
+  if (mOpenCount>0) close("~foldermaildir", true);
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
@@ -96,7 +96,7 @@ int KMFolderMaildir::canAccess()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::open()
+int KMFolderMaildir::open(const char *)
 {
   int rc = 0;
 
@@ -219,7 +219,7 @@ int KMFolderMaildir::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMaildir::close(bool aForced)
+void KMFolderMaildir::close(const char *, bool aForced)
 {
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
@@ -434,7 +434,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (!isOpened())
   {
     opened = true;
-    rc = open();
+    rc = open("maildir");
     kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
   }
@@ -445,7 +445,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (moveInternal(tmp_file, new_loc, filename, aMsg->status()).isNull())
   {
     file.remove();
-    if (opened) close();
+    if (opened) close("maildir");
     return -1;
   }
 
@@ -543,7 +543,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   emitMsgAddedSignals(idx);
   needsCompact = true;
 
-  if (opened) close();
+  if (opened) close("maildir" );
 /*
 QFile fileD1( "testdat_xx-kmfoldermaildir-1" );
 if( fileD1.open( IO_WriteOnly ) ) {

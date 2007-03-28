@@ -325,7 +325,7 @@ void KMMsgIndex::act() {
 		mPendingFolders.pop_back();
 		if ( !mOpenedFolders.count( f ) ) {
 			mOpenedFolders.insert( f );
-			f->open();
+			f->open("msgindex");
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
 		KConfig* config = KMKernel::config();
@@ -345,7 +345,7 @@ void KMMsgIndex::act() {
 	for ( std::set<KMFolder*>::const_iterator first = mOpenedFolders.begin(), past = mOpenedFolders.end();
 			first != past;
 			++first ) {
-		( *first )->close();
+		( *first )->close("msgindex");
 	}
 	mOpenedFolders.clear();
 	mState = s_idle;

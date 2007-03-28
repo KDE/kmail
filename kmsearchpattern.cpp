@@ -762,7 +762,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
 
   bool opened = folder->isOpened();
   if ( !opened )
-    folder->open();
+    folder->open("searchptr");
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
@@ -774,7 +774,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
     res = matches( folder->getDwString(idx), ignoreBody );
   }
   if ( !opened )
-    folder->close();
+    folder->close("searchptr");
   return res;
 }
 

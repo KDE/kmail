@@ -84,12 +84,12 @@ KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMbox::~KMFolderMbox()
 {
-  if (mOpenCount>0) close(true);
+  if (mOpenCount>0) close("~kmfoldermbox", true);
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::open()
+int KMFolderMbox::open(const char *owner)
 {
   int rc = 0;
 
@@ -256,7 +256,7 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::close(bool aForced)
+void KMFolderMbox::close(const char *owner, bool aForced)
 {
   if (!aForced)
      assert(mOpenCount >= 0);
@@ -978,7 +978,7 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   if (!mStream)
   {
     opened = true;
-    rc = open();
+    rc = open("mboxaddMsg");
     kdDebug(5006) << "KMFolderMBox::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
   }
@@ -1033,7 +1033,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   if (len <= 0)
   {
     kdDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
-    if (opened) close();
+    if (opened) close("mboxaddMsg");
     return 0;
   }
 
@@ -1059,7 +1059,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   int error = ferror(mStream);
   if (error)
   {
-    if (opened) close();
+    if (opened) close("mboxaddMsg");
     return error;
   }
 
@@ -1180,7 +1180,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
   emitMsgAddedSignals(idx);
-  if (opened) close();
+  if (opened) close("mboxaddMsg");
 
   // All streams have been flushed without errors if we arrive here
   // Return success!
@@ -1277,7 +1277,7 @@ int KMFolderMbox::compact( bool silent )
 
   if (openCount > 0)
   {
-    open();
+    open("mboxcompact");
     mOpenCount = openCount;
   }
   // If this is the current folder, the changed signal will ultimately call

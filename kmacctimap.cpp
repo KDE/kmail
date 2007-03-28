@@ -333,7 +333,7 @@ void KMAcctImap::processNewMail(bool interactive)
         } else if ( kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( id() ) &&
                     imapFolder->folder()->isSystemFolder() &&
                     imapFolder->imapPath() == "/INBOX/" ) {
-          imapFolder->open(); // will be closed in the folderSelected slot
+          imapFolder->open("acctimap"); // will be closed in the folderSelected slot
           // first get new headers before we select the folder
           imapFolder->setSelected( true );
           connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
@@ -567,7 +567,7 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
   disconnect( folder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
 	      this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
   postProcessNewMail( static_cast<KMFolder*>(folder->folder()) );
-  folder->close();
+  folder->close( "acctimap" );
 }
 
 void KMAcctImap::execFilters(Q_UINT32 serNum)

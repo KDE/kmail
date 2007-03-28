@@ -286,7 +286,7 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  int open();
+  int open(const char *owner);
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
@@ -294,7 +294,7 @@ public:
 
   /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  void close(bool force=false);
+  void close(const char *owner, bool force=false);
 
   /** fsync buffers to disk */
   void sync();
@@ -647,10 +647,11 @@ private:
 */
 class KMFolderCloser {
   KMFolder * f;
+  QString mOwner;
 public:
-  KMFolderCloser( KMFolder * folder ) : f( folder ) {}
+  KMFolderCloser( const char *owner, KMFolder * folder ) : f( folder ), mOwner( owner ) {}
   ~KMFolderCloser() {
-    if ( f ) f->close();
+    if ( f ) f->close(mOwner.latin1());
   }
   KMFolder * folder() const { return f; }
 };

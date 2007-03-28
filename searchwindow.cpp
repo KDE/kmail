@@ -313,7 +313,7 @@ SearchWindow::~SearchWindow()
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;
-    (*fit)->close();
+    (*fit)->close("searchwindow");
   }
 
   KConfig* config = KMKernel::config();
@@ -470,7 +470,7 @@ void SearchWindow::slotSearch()
     enableGUI();
 
     if (mFolder && !mFolders.contains(mFolder.operator->()->folder())) {
-        mFolder->open();
+        mFolder->open("searchwindow");
         mFolders.append(mFolder.operator->()->folder());
     }
     mTimer->start(200);
@@ -502,7 +502,7 @@ void SearchWindow::slotAddMsg(int idx)
     KMFolder *pFolder = msg->parent();
     if (!mFolders.contains(pFolder)) {
         mFolders.append(pFolder);
-        pFolder->open();
+        pFolder->open("searchwindow");
     }
     if(pFolder->whoField() == "To")
         from = msg->to();

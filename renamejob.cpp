@@ -228,7 +228,7 @@ void RenameJob::slotMoveMessages()
   // move all messages to the new folder
   QPtrList<KMMsgBase> msgList;
   if ( !mStorage->isOpened() )
-    mStorageTempOpened = mStorage->open() ? mStorage : 0;
+    mStorageTempOpened = mStorage->open("renamejob") ? mStorage : 0;
   for ( int i = 0; i < mStorage->count(); i++ )
   {
     KMMsgBase* msgBase = mStorage->getMsgBase( i );
@@ -251,7 +251,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
 {
   kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
   if ( mStorageTempOpened ) {
-    mStorageTempOpened->close();
+    mStorageTempOpened->close("renamejob");
     mStorageTempOpened = 0;
   }
   if ( command ) {

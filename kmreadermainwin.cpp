@@ -132,13 +132,13 @@ void KMReaderMainWin::slotTrashMsg()
   KMMsgDict::instance()->getLocation( mMsg->getMsgSerNum(), &parent, &index );
   if ( parent && !parent->isTrash() ) {
     // open the folder (ref counted)
-    parent->open();
+    parent->open("trashmsg");
     KMMessage *msg = parent->getMsg( index );
     if (msg) {
       KMDeleteMsgCommand *command = new KMDeleteMsgCommand( parent, msg );
       command->start();
     }
-    parent->close();
+    parent->close("trashmsg");
   }
   close();
 }

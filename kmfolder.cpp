@@ -468,9 +468,9 @@ void KMFolder::msgStatusChanged( const KMMsgStatus oldStatus,
   mStorage->msgStatusChanged( oldStatus, newStatus, idx );
 }
 
-int KMFolder::open()
+int KMFolder::open(const char *owner)
 {
-  return mStorage->open();
+  return mStorage->open(owner);
 }
 
 int KMFolder::canAccess()
@@ -478,9 +478,9 @@ int KMFolder::canAccess()
   return mStorage->canAccess();
 }
 
-void KMFolder::close( bool force )
+void KMFolder::close( const char *owner, bool force )
 {
-  mStorage->close( force );
+  mStorage->close( owner, force );
 }
 
 void KMFolder::sync()

@@ -489,9 +489,9 @@ void KMFolderTree::updateUnreadAll()
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
 
-      folder->open();
+      folder->open("updateunread");
       folder->countUnread();
-      folder->close();
+      folder->close("updateunread");
     }
   }
 
@@ -648,10 +648,10 @@ void KMFolderTree::slotUpdateOneCount()
 
   // open the folder and update the count
   bool open = fti->folder()->isOpened();
-  if (!open) fti->folder()->open();
+  if (!open) fti->folder()->open("updatecount");
   slotUpdateCounts(fti->folder());
   // restore previous state
-  if (!open) fti->folder()->close();
+  if (!open) fti->folder()->close("updatecount");
 
   QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
 }

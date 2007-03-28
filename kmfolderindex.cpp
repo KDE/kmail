@@ -463,11 +463,11 @@ void KMFolderIndex::truncateIndex()
 
 void KMFolderIndex::fillMessageDict()
 {
-  open();
+  open("fillDict");
   for (unsigned int idx = 0; idx < mMsgList.high(); idx++)
     if ( mMsgList.at( idx ) )
       KMMsgDict::mutableInstance()->insert(0, mMsgList.at( idx ), idx);
-  close();
+  close("fillDict");
 }
 
 

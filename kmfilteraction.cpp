@@ -1390,7 +1390,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   int rc = mFolder->addMsg(msgCopy, &index);
   if (rc == 0 && index != -1)
     mFolder->unGetMsg( index );
-  mFolder->close();
+  mFolder->close("filtercopy");
 
   return GoOn;
 }

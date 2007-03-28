@@ -65,7 +65,7 @@ void MboxCompactionJob::kill()
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
-    mSrcFolder->storage()->close();
+    mSrcFolder->storage()->close("mboxcompactjob");
 
   if ( mTmpFile )
     fclose( mTmpFile );
@@ -124,7 +124,7 @@ int MboxCompactionJob::executeNow( bool silent )
     return errno;
   }
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
-  storage->open();
+  storage->open("mboxcompactjob");
   mOpeningFolder = false;
   mFolderOpen = true;
   mOffset = 0;
@@ -170,13 +170,13 @@ void MboxCompactionJob::done( int rc )
     mbox->writeIndex();
     mbox->writeConfig();
     mbox->setAutoCreateIndex( false );
-    mbox->close(true);
+    mbox->close("mboxcompact", true);
     mbox->setAutoCreateIndex( autoCreate );
     mbox->setNeedsCompacting( false );            // We are clean now
     str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
     kdDebug(5006) << str << endl;
   } else {
-    mbox->close();
+    mbox->close("mboxcompact");
     str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
     kdDebug(5006) << "Error occurred while compacting " << mbox->location() << endl;
     kdDebug(5006) << "Compaction aborted." << endl;
@@ -208,7 +208,7 @@ void MaildirCompactionJob::kill()
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
-    mSrcFolder->storage()->close();
+    mSrcFolder->storage()->close("maildircompact");
 
   FolderJob::kill();
 }
@@ -220,7 +220,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   kdDebug(5006) << "Compacting " << mSrcFolder->idString() << endl;
 
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
-  storage->open();
+  storage->open("maildircompact");
   mOpeningFolder = false;
   mFolderOpen = true;
   QString subdirNew(storage->location() + "/new/");
@@ -262,7 +262,7 @@ void MaildirCompactionJob::done( int rc )
   }
   mErrorCode = rc;
   storage->setNeedsCompacting( false );
-  storage->close();
+  storage->close("maildircompact");
   if ( storage->isOpened() )
     storage->updateIndex();
   if ( !mSilent )
