@@ -1380,7 +1380,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   // but I gonna look at improvements ASAP.
   if ( !mFolder )
     return ErrorButGoOn;
-  if ( mFolder && mFolder->open("filtercopy") != 0 )
+  if ( mFolder->open("filtercopy") != 0 )
     return ErrorButGoOn;
 
   // copy the message 1:1
