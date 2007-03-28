@@ -115,7 +115,12 @@ void KMFolderImap::close(const char *owner, bool aForced)
       mOpenCount++;
       return;
   }
-  if (mOpenCount > 0 && !aForced) return;
+  if (mOpenCount > 0 && !aForced) {
+    // The inherited close will decrement again, so we have to adjust.
+    mOpenCount++;
+    KMFolderMbox::close(owner, aForced);
+    return;
+  }
 
   // FIXME is this still needed?
   if (mAccount)
