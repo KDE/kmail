@@ -1939,7 +1939,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->setSelected( false );
       mOpenedImapFolder = false;
-  }
+    }
   }
 
   mFolder = aFolder;
