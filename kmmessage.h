@@ -382,19 +382,6 @@ public:
   QString strippedSubjectMD5() const;
 
   /**
-    Validate a list of email addresses, and also allow
-    aliases and distribution lists to be expanded
-    before validation.
-    @return Enum to describe the error.
-    @return brokenAddress the address that was faulty.
-    FIXME: this should be in libemailfucntions but that
-           requires moving expandAliases and all that
-           it brings
-  */
-  static KPIMUtils::EmailParseResult isValidEmailAddressList( const QString& aStr,
-                                                         QString& brokenAddress );
-
-  /**
     Get a hash of the subject.
     Used for threading.
   */

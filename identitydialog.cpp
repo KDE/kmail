@@ -51,7 +51,7 @@ using KMail::FolderRequester;
 #include "kmfolder.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
- 
+
 // other kdepim headers:
 // libkdepim
 #include <libkpimidentities/identity.h>
@@ -414,7 +414,7 @@ namespace KMail {
 
     //
     // Tab Widget: Templates
-    // 
+    //
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&Templates") );
     vlay = new QVBoxLayout( tab, marginHint(), spacingHint() );
@@ -433,7 +433,7 @@ namespace KMail {
 	     mCopyGlobal, SLOT( setEnabled( bool ) ) );
     connect( mCopyGlobal, SIGNAL(clicked()),
 	     this, SLOT(slotCopyGlobal()) );
-		
+
     //
     // Tab Widget: Signature
     //
@@ -511,26 +511,32 @@ namespace KMail {
     }
   }
 
-bool IdentityDialog::validateAddresses( const QString & addresses )
-{
-  QString brokenAddress;
-  KPIMUtils::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
-  if ( !( errorCode == KPIMUtils::AddressOk || errorCode == KPIMUtils::AddressEmpty ) ) {
-    QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" + KPIMUtils::emailParseResultToString( errorCode ) +
-                      "</p></qt>" );
-    KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
-    return false;
-  }
-  return true;
-}
+  bool IdentityDialog::validateAddresses( const QString &addresses )
+  {
+    QString brokenAddress;
 
-void IdentityDialog::slotOk() {
+    KPIMUtils::EmailParseResult errorCode =
+      KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses ),
+                                     brokenAddress );
+    if ( !( errorCode == KPIMUtils::AddressOk ||
+            errorCode == KPIMUtils::AddressEmpty ) ) {
+      QString errorMsg( "<qt><p><b>" + brokenAddress +
+                        "</b></p><p>" +
+                        KPIMUtils::emailParseResultToString( errorCode ) +
+                        "</p></qt>" );
+      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
+      return false;
+    }
+    return true;
+  }
+
+  void IdentityDialog::slotOk()
+  {
     const QString email = mEmailEdit->text().trimmed();
 
     // Validate email addresses
-    if ( !KPIMUtils::isValidSimpleAddress( email )) {
-      QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg());
+    if ( !KPIMUtils::isValidSimpleAddress( email ) ) {
+      QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
       return;
     }
@@ -543,50 +549,53 @@ void IdentityDialog::slotOk() {
       return;
     }
 
-    const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
-    const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
-    const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
-    const std::vector<GpgME::Key> & smimeEncryptionKeys = mSMIMEEncryptionKeyRequester->keys();
+    const std::vector<GpgME::Key> &pgpSigningKeys =
+      mPGPSigningKeyRequester->keys();
+    const std::vector<GpgME::Key> &pgpEncryptionKeys =
+      mPGPEncryptionKeyRequester->keys();
+    const std::vector<GpgME::Key> &smimeSigningKeys =
+      mSMIMESigningKeyRequester->keys();
+    const std::vector<GpgME::Key> &smimeEncryptionKeys =
+      mSMIMEEncryptionKeyRequester->keys();
+
     QString msg;
     bool err = false;
     if ( std::find_if( pgpSigningKeys.begin(), pgpSigningKeys.end(),
-		       DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() ) {
+                       DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() ) {
       msg = i18n("One of the configured OpenPGP signing keys does not contain "
-		 "any user ID with the configured email address for this "
-		 "identity (%1).\n"
-		 "This might result in warning messages on the receiving side "
-		 "when trying to verify signatures made with this configuration.", email);
+                 "any user ID with the configured email address for this "
+                 "identity (%1).\n"
+                 "This might result in warning messages on the receiving side "
+                 "when trying to verify signatures made with this configuration.", email);
       err = true;
-    }
-    else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() ) {
+    } else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
+                              DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() ) {
       msg = i18n("One of the configured OpenPGP encryption keys does not contain "
-		 "any user ID with the configured email address for this "
-		 "identity (%1).", email);
+                 "any user ID with the configured email address for this "
+                 "identity (%1).", email);
       err = true;
-    }
-    else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() ) {
+    } else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
+                              DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() ) {
       msg = i18n("One of the configured S/MIME signing certificates does not contain "
-		 "the configured email address for this "
-		 "identity (%1).\n"
-		 "This might result in warning messages on the receiving side "
-		 "when trying to verify signatures made with this configuration.", email);
+                 "the configured email address for this "
+                 "identity (%1).\n"
+                 "This might result in warning messages on the receiving side "
+                 "when trying to verify signatures made with this configuration.", email);
       err = true;
-    }
-    else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() ) {
+    } else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
+                              DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() ) {
       msg = i18n("One of the configured S/MIME encryption certificates does not contain "
-		 "the configured email address for this "
-		 "identity (%1).", email);
+                 "the configured email address for this "
+                 "identity (%1).", email);
       err = true;
     }
 
     if ( err )
       if ( KMessageBox::warningContinueCancel( this, msg,
-                                          i18n("Email Address Not Found in Key/Certificates"),
-                                          KStandardGuiItem::cont(), "warn_email_not_in_certificate" )
-	 != KMessageBox::Continue)
+                                               i18n("Email Address Not Found in Key/Certificates"),
+                                               KStandardGuiItem::cont(),
+                                               "warn_email_not_in_certificate" )
+           != KMessageBox::Continue)
         return;
 
 
@@ -668,7 +677,7 @@ void IdentityDialog::slotOk() {
       mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
     else
       mTemplatesCombo->setFolder( ident.templates() );
-    
+
     // "Templates" tab:
     uint identity = ident.uoid();
     QString iid = QString("IDENTITY_%1").arg( identity );

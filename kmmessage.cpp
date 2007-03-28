@@ -265,26 +265,6 @@ void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
 }
 
 //-----------------------------------------------------------------------------
-//FIXME: move to libemailfunctions
-KPIMUtils::EmailParseResult KMMessage::isValidEmailAddressList( const QString& aStr,
-                                                           QString& brokenAddress )
-{
-  if ( aStr.isEmpty() ) {
-     return KPIMUtils::AddressEmpty;
-  }
-
-  QStringList list = KPIMUtils::splitAddressList( aStr );
-  for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it ) {
-    KPIMUtils::EmailParseResult errorCode = KPIMUtils::isValidAddress( *it );
-      if ( errorCode != KPIMUtils::AddressOk ) {
-      brokenAddress = ( *it );
-      return errorCode;
-    }
-  }
-  return KPIMUtils::AddressOk;
-}
-
-//-----------------------------------------------------------------------------
 const DwString& KMMessage::asDwString() const
 {
   if (mNeedsAssembly)

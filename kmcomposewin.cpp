@@ -3770,13 +3770,17 @@ void KMComposeWin::slotContinuePrint( bool rc )
 }
 
 //----------------------------------------------------------------------------
-bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresses )
+bool KMComposeWin::validateAddresses( QWidget *parent, const QString &addresses )
 {
   QString brokenAddress;
-  KPIMUtils::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
-  if ( !( errorCode == KPIMUtils::AddressOk || errorCode == KPIMUtils::AddressEmpty ) ) {
+  KPIMUtils::EmailParseResult errorCode =
+    KPIMUtils::isValidAddressList( KMMessage::expandAliases( addresses ),
+                                   brokenAddress );
+  if ( !( errorCode == KPIMUtils::AddressOk ||
+          errorCode == KPIMUtils::AddressEmpty ) ) {
     QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" + KPIMUtils::emailParseResultToString( errorCode ) +
+                      "</b></p><p>" +
+                      KPIMUtils::emailParseResultToString( errorCode ) +
                       "</p></qt>" );
     KMessageBox::sorry( parent, errorMsg, i18n("Invalid Email Address") );
     return false;
