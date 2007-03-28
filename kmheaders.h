@@ -188,6 +188,12 @@ public:
   */
   void setCopiedMessages( const QList<quint32> &msgs, bool move );
 
+  /**
+    Returns true if the message with the given serial number has been cut.
+    @param serNum A message serial number.
+  */
+  bool isMessageCut( quint32 serNum ) const;
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */

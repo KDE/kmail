@@ -3418,6 +3418,7 @@ void KMHeaders::copyMessages()
     mCopiedMessages << list->at( i )->getMsgSerNum();
   mMoveMessages = false;
   updateActions();
+  triggerUpdate();
 }
 
 void KMHeaders::cutMessages()
@@ -3428,6 +3429,7 @@ void KMHeaders::cutMessages()
     mCopiedMessages << list->at( i )->getMsgSerNum();
   mMoveMessages = true;
   updateActions();
+  triggerUpdate();
 }
 
 void KMHeaders::pasteMessages()
@@ -3467,6 +3469,11 @@ void KMHeaders::setCopiedMessages(const QList<quint32> & msgs, bool move)
   mCopiedMessages = msgs;
   mMoveMessages = move;
   updateActions();
+}
+
+bool KMHeaders::isMessageCut(quint32 serNum) const
+{
+  return mMoveMessages && mCopiedMessages.contains( serNum );
 }
 
 #include "kmheaders.moc"

@@ -401,6 +401,11 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
     font = headers->dateFont();
   }
 
+  QColor cdisabled = KGlobalSettings::inactiveTextColor();
+  if ( headers->isMessageCut( msgSerNum() ) ) {
+    color = &cdisabled;
+  }
+
   // set color and font
   _cg.setColor( QPalette::Text, *color );
   font.setWeight( weight );
