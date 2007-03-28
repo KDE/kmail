@@ -1935,9 +1935,9 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
     if ( mOpenedImapFolder && newFolder && mFolder->folderType() == KMFolderTypeImap ) {
-      mFolder->close( "mainwidget" );
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->setSelected( false );
+      mFolder->close( "mainwidget" );
       mOpenedImapFolder = false;
     }
   }
