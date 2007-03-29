@@ -78,8 +78,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mType, SIGNAL( activated( int ) ),
            this, SLOT( slotTypeActivated( int ) ) );
 
-  connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
-           this, SLOT( slotShortcutCaptured( const KShortcut& ) ) );
+  connect( mKeyButton, SIGNAL( capturedKeySequence(const QKeySequence &) ),
+           this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
 
   mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", K3Icon::Small );
   mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", K3Icon::Small );
@@ -356,7 +356,7 @@ void CustomTemplates::slotTypeActivated( int index )
   }
 }
 
-void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
+void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
 {
   KShortcut sc( shortcut );
 #ifdef __GNUC__
@@ -396,7 +396,7 @@ void CustomTemplates::slotShortcutCaptured( const KShortcut &shortcut )
   }
   // check if shortcut is used somewhere else
   if ( !customused && sc != nullShortcut &&
-       !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
+       !( kmkernel->getKMMainWidget()->shortcutIsValid( shortcut ) ) ) {
     QString title( I18N_NOOP("Key Conflict") );
     QString msg( I18N_NOOP("The selected shortcut is already used, "
           "would you still like to continue with the assignment?" ) );

@@ -169,7 +169,7 @@ public:
 
   /** Checks a shortcut against the actioncollection and returns whether it
    * is already used and therefor not valid or not. */
-  bool shortcutIsValid( const KShortcut& ) const;
+  bool shortcutIsValid( const QKeySequence& ) const;
 
 
   void modifyFolder( KMFolderTreeItem* folderItem );

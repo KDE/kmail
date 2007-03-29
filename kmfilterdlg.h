@@ -349,7 +349,7 @@ protected slots:
   void slotApplicableAccountsChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotConfigureShortcutButtonToggled( bool aChecked );
-  void slotCapturedShortcutChanged( const KShortcut& );
+  void slotCapturedShortcutChanged( const QKeySequence& );
   void slotConfigureToolbarButtonToggled( bool aChecked );
   void slotFilterActionIconChanged( QString icon );
   void slotReset();

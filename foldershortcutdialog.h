@@ -59,7 +59,7 @@ public:
 
 protected slots:
   void slotOk();
-  void slotCapturedShortcut( const KShortcut& );
+  void slotCapturedShortcut( const QKeySequence& );
 
 private:
   KMFolder *mFolder;

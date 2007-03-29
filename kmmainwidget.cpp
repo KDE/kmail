@@ -3888,11 +3888,11 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->addClient( mGUIClient );
 }
 
-bool KMMainWidget::shortcutIsValid( const KShortcut &sc ) const
+bool KMMainWidget::shortcutIsValid( const QKeySequence &sc ) const
 {
   QList<QAction*> actions = actionCollection()->actions();
   foreach ( QAction *a, actions ) {
-    if ( a->shortcuts() == sc ) return false;
+    if ( a->shortcut() == sc ) return false;
   }
   return true;
 }

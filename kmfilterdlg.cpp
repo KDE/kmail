@@ -299,8 +299,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
-             this, SLOT( slotCapturedShortcutChanged( const KShortcut& ) ) );
+    connect( mKeyButton, SIGNAL( capturedKeySequence(const QKeySequence &)  ),
+             this, SLOT( slotCapturedShortcutChanged( const QKeySequence& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
@@ -517,7 +517,7 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
   }
 }
 
-void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
+void KMFilterDlg::slotCapturedShortcutChanged( const QKeySequence& sc )
 {
   KShortcut mySc(sc);
 #ifdef __GNUC__
@@ -529,7 +529,7 @@ void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
   // so we additionally have to check for an empty string
   if ( mySc.isEmpty() || mySc.toString().isEmpty() )
     mySc.clear();
-  if ( !mySc.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( mySc ) ) ) {
+  if ( !mySc.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
     QString msg( i18n( "The selected shortcut is already used, "
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );

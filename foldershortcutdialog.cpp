@@ -76,8 +76,8 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   mKeyButton->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
-  connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
-           this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
+  connect( mKeyButton, SIGNAL( capturedKeySequence(const QKeySequence &) ),
+           this, SLOT( slotCapturedShortcut( const QKeySequence& ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 #ifdef __GNUC__
 #warning Port me!
@@ -89,7 +89,7 @@ FolderShortcutDialog::~FolderShortcutDialog()
 {
 }
 
-void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
+void FolderShortcutDialog::slotCapturedShortcut( const QKeySequence& sc )
 {
 #ifdef __GNUC__
 #warning Port me!
