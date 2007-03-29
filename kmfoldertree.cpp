@@ -1465,7 +1465,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       } else if ( keybstate & Qt::ShiftModifier ) {
         action = DRAG_MOVE;
       } else {
-        if ( GlobalSettings::self()->showPopupAfterDnD() ) {
+        if ( GlobalSettings::self()->showPopupAfterDnD() || e->provides("application/x-qlistviewitem") ) {
           KMenu *menu = new KMenu( this );
           const QAction *dragMove = menu->addAction( i18n("&Move Here") );
           const QAction *dragCopy = menu->addAction( SmallIcon("edit-copy"), i18n("&Copy Here") );
@@ -2040,7 +2040,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
   for ( QList<QPointer<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
     KMFolder* source = *it;
     if ( move ) {
-      kdDebug(5006) << "move folder " << (source ? source->label(): "Unknown") << " to "
+      kDebug(5006) << "move folder " << (source ? source->label(): "Unknown") << " to "
         << ( destination ? destination->label() : "Local Folders" ) << endl;
       kmkernel->folderMgr()->moveFolder( source, parent );
     } else {
