@@ -241,6 +241,10 @@ protected:
   void updateFileMenu();
   void newFromTemplate( KMMessage *msg );
 
+  // helper functions for keeping reference to mFolder
+  void openFolder();
+  void closeFolder();
+
   KActionCollection * actionCollection() const { return mActionCollection; }
 
   /** @return the correct config dialog depending on whether the parent of the mainWidget

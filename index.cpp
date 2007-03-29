@@ -251,7 +251,7 @@ void KMMsgIndex::clear() {
 	mExisting.clear();
 	mState = s_disabled;
 	for ( std::set<KMFolder*>::const_iterator first = mOpenedFolders.begin(), past = mOpenedFolders.end(); first != past; ++first ) {
-		( *first )->close();
+		( *first )->close("msgindex");
 	}
 	mOpenedFolders.clear();
 	for ( std::vector<Search*>::const_iterator first = mSearches.begin(), past = mSearches.end(); first != past; ++first ) {
@@ -285,7 +285,7 @@ int KMMsgIndex::addMessage( Q_UINT32 serNum ) {
 	if ( !folder || idx == -1 ) return -1;
 	if ( !mOpenedFolders.count( folder ) ) {
 		mOpenedFolders.insert( folder );
-		folder->open();
+		folder->open("msgindex");
 	}
 	KMMessage* msg = folder->getMsg( idx );
 	/* I still don't know whether we should allow decryption or not.

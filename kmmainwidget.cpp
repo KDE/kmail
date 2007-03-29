@@ -1870,21 +1870,34 @@ void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
   slotChangeCaption( mFolderTree->currentItem() );
 }
 
+void KMMainWidget::openFolder()
+{
+  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap )
+    return;
+  KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
+  assert( !mOpenedImapFolder );
+  imap->open("mainwidget"); // will be closed in the folderSelected slot
+  mOpenedImapFolder = true;
+  // first get new headers before we select the folder
+  imap->setSelected( true );
+}
+
+void KMMainWidget::closeFolder()
+{
+  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap )
+    return;
+  assert( mOpenedImapFolder );
+  KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
+  imap->setSelected( false );
+  mFolder->close( "mainwidget" );
+  mOpenedImapFolder = false;
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelected()
 {
   folderSelected( mFolder );
   updateFolderMenu();
-  // opened() before the getAndCheckFolder() in folderSelected
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && mOpenedImapFolder )
-  {
-    // the selected state is mainly a duplicate for having an open "mainwidget" 
-    // so keep that in sync
-    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());   
-    imap->setSelected( false );
-    mFolder->close("mainwidget");
-    mOpenedImapFolder = false;
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1938,15 +1951,15 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
            this, SLOT( updateMarkAsReadAction() ) );
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-    if ( mOpenedImapFolder && newFolder && mFolder->folderType() == KMFolderTypeImap ) {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-      imap->setSelected( false );
-      mFolder->close( "mainwidget" );
-      mOpenedImapFolder = false;
-    }
   }
 
+  if ( newFolder )
+      closeFolder();
+
   mFolder = aFolder;
+
+  if ( newFolder )
+    openFolder();
 
   if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
   {
@@ -1957,10 +1970,6 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
     if ( newFolder && !mFolder->noContent() )
     {
-      imap->open("mainwidget"); // will be closed in the folderSelected slot
-      mOpenedImapFolder = true;
-      // first get new headers before we select the folder
-      imap->setSelected( true );
       connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
           this, SLOT( folderSelected() ) );
       imap->getAndCheckFolder();
@@ -3476,6 +3485,7 @@ void KMMainWidget::slotIntro()
 
   mMsgView->displayAboutPage();
 
+  closeFolder();
   mFolder = 0;
 }
 
