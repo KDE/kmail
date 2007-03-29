@@ -1706,6 +1706,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       return;
     }
   mMsg = newMsg;
+  KPIM::IdentityManager * im = kmkernel->identityManager();
 
   mEdtFrom->setText(mMsg->from());
   mEdtReplyTo->setText(mMsg->replyTo());
@@ -1717,6 +1718,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     mRecipientsEditor->setRecipientString( mMsg->to(), Recipient::To );
     mRecipientsEditor->setRecipientString( mMsg->cc(), Recipient::Cc );
     mRecipientsEditor->setRecipientString( mMsg->bcc(), Recipient::Bcc );
+    mRecipientsEditor->setFocusBottom();
   }
   mEdtSubject->setText(mMsg->subject());
 
@@ -1738,10 +1740,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // make sure the header values are overwritten with the values of the
     // sticky identity (the slot isn't called by the signal for new messages
     // since the identity has already been set before the signal was connected)
-    slotIdentityChanged( mId );
+    uint savedId = mId;
+    if ( !newMsg->headerField("X-KMail-Identity").isEmpty() )
+      mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+    else
+      mId = im->defaultIdentity().uoid();
+    slotIdentityChanged( savedId );
   }
 
-  KPIM::IdentityManager * im = kmkernel->identityManager();
 
   const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
@@ -4330,6 +4336,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     if ( oldIdentity.bcc() != ident.bcc() ) {
       mRecipientsEditor->removeRecipient( oldIdentity.bcc(), Recipient::Bcc );
       mRecipientsEditor->addRecipient( ident.bcc(), Recipient::Bcc );
+      mRecipientsEditor->setFocusBottom();
     }
   }
 
