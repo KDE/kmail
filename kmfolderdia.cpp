@@ -275,6 +275,16 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     if (!aName.isEmpty())
             mNameEdit->setText(aName);
     mNameEdit->setMinimumSize(mNameEdit->sizeHint());
+    // prevent renaming of IMAP inbox
+    if ( mDlg->folder() && mDlg->folder()->isSystemFolder() ) {
+      QString imapPath;
+      if ( mDlg->folder()->folderType() == KMFolderTypeImap )
+        imapPath = static_cast<KMFolderImap*>( mDlg->folder()->storage() )->imapPath();
+      if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap )
+        imapPath = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() )->imapPath();
+      if ( imapPath == "/INBOX/" )
+        mNameEdit->setEnabled( false );
+    }
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
@@ -676,24 +686,24 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
        mDlg->folder()->folderType() != KMFolderTypeCachedImap;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
-  
+
   mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
   topLayout->addWidget( mCustom );
-  
+
   mWidget = new TemplatesConfiguration( this , "folder-templates" );
   mWidget->setEnabled( false );
   topLayout->addWidget( mWidget );
-  
+
   QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
   mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this );
   mCopyGlobal->setEnabled( false );
   btns->addWidget( mCopyGlobal );
-  
+
   connect( mCustom, SIGNAL(toggled(bool)),
         mWidget, SLOT(setEnabled(bool)) );
   connect( mCustom, SIGNAL(toggled(bool)),
         mCopyGlobal, SLOT(setEnabled(bool)) );
-  
+
   connect( mCopyGlobal, SIGNAL(clicked()),
         this, SLOT(slotCopyGlobal()) );
 
@@ -705,23 +715,23 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
 
 void FolderDiaTemplatesTab::load()
 {
-  
+
 }
 
 void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
-  
+
   mFolder = folder;
 
   QString fid = folder->idString();
-  
+
   Templates t( fid );
 
   mCustom->setChecked(t.useCustomTemplates());
-  
+
   mIdentity = folder->identity();
-  
+
   mWidget->loadFromFolder( fid, mIdentity );
 }
 
@@ -729,16 +739,16 @@ void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 bool FolderDiaTemplatesTab::save()
 {
   KMFolder* folder = mDlg->folder();
-  
+
   QString fid = folder->idString();
   Templates t(fid);
-  
+
   kdDebug() << "use custom templates for folder " << fid << ": " << mCustom->isChecked() << endl;
   t.setUseCustomTemplates(mCustom->isChecked());
   t.writeConfig();
-  
+
   mWidget->saveToFolder(fid);
-  
+
   return true;
 }
 
