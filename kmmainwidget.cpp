@@ -572,7 +572,7 @@ void KMMainWidget::createWidgets(void)
   mSearchAndHeaders = new KVBox( headerParent );
   mSearchToolBar = new QToolBar( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
-  mSearchToolBar->setMaximumHeight (mSearchToolBar->minimumHeight ());
+  mSearchToolBar->setMovable( false );
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
