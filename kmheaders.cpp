@@ -20,6 +20,8 @@ using KMail::HeaderItem;
 using KMail::FolderJob;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
+#include "messagecopyhelper.h"
+using KMail::MessageCopyHelper;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
@@ -206,6 +208,9 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   resetCurrentTime();
 
   mSubjectLists.setAutoDelete( true );
+
+  mMoveMessages = false;
+  connect( this, SIGNAL(selectionChanged()), SLOT(updateActions()) );
 }
 
 
@@ -756,6 +761,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
   }
+
+  updateActions();
 
   END_TIMER(set_folder);
   SHOW_TIMER(set_folder);
@@ -3348,6 +3355,72 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
   }
   // Not found. Maybe we should select the last item instead?
   kdDebug(5006) << "KMHeaders::setCurrentItem item with serial number " << serialNum << " NOT FOUND" << endl;
+}
+
+void KMHeaders::copyMessages()
+{
+  mCopiedMessages.clear();
+  KMMessageList* list = selectedMsgs();
+  for ( uint i = 0; i < list->count(); ++ i )
+    mCopiedMessages << list->at( i )->getMsgSerNum();
+  mMoveMessages = false;
+  updateActions();
+  triggerUpdate();
+}
+
+void KMHeaders::cutMessages()
+{
+  mCopiedMessages.clear();
+  KMMessageList* list = selectedMsgs();
+  for ( uint i = 0; i < list->count(); ++ i )
+    mCopiedMessages << list->at( i )->getMsgSerNum();
+  mMoveMessages = true;
+  updateActions();
+  triggerUpdate();
+}
+
+void KMHeaders::pasteMessages()
+{
+  new MessageCopyHelper( mCopiedMessages, folder(), mMoveMessages, this );
+  if ( mMoveMessages ) {
+    mCopiedMessages.clear();
+    updateActions();
+  }
+}
+
+void KMHeaders::updateActions()
+{
+  KAction *copy = owner()->action( "copy_messages" );
+  KAction *cut = owner()->action( "cut_messages" );
+  KAction *paste = owner()->action( "paste_messages" );
+
+  if ( selectedItems().isEmpty() ) {
+    copy->setEnabled( false );
+    cut->setEnabled( false );
+  } else {
+    copy->setEnabled( true );
+    if ( folder() && folder()->isReadOnly() )
+      cut->setEnabled( false );
+    else
+      cut->setEnabled( true );
+  }
+
+  if ( mCopiedMessages.isEmpty() || !folder() || folder()->isReadOnly() )
+    paste->setEnabled( false );
+  else
+    paste->setEnabled( true );
+}
+
+void KMHeaders::setCopiedMessages(const QValueList< Q_UINT32 > & msgs, bool move)
+{
+  mCopiedMessages = msgs;
+  mMoveMessages = move;
+  updateActions();
+}
+
+bool KMHeaders::isMessageCut(Q_UINT32 serNum) const
+{
+  return mMoveMessages && mCopiedMessages.contains( serNum );
 }
 
 #include "kmheaders.moc"

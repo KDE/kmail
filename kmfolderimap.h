@@ -109,7 +109,7 @@ public:
   virtual KMMessage* getMsg(int idx);
   /** The path to the imap folder on the server */
   void setImapPath( const QString &path );
-  QString imapPath() { return mImapPath; }
+  QString imapPath() const { return mImapPath; }
 
   /** The highest UID in the folder */
   ulong lastUid();
@@ -120,7 +120,7 @@ public:
 
   /** The imap account associated with this folder */
   void setAccount(KMAcctImap *acct);
-  KMAcctImap* account() const { return mAccount; }
+  KMAcctImap* account() const;
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
@@ -174,7 +174,7 @@ public:
    * that contain messages _or_ folders the new folder is set to "contains messages"
    * by default
    */
-  void createFolder(const QString &name, 
+  void createFolder(const QString &name,
       const QString& imapPath = QString::null, bool askUser = true);
 
   /**
@@ -249,7 +249,7 @@ public:
   /**
    * Return the filename of the folder (reimplemented from KFolder)
    */
-  virtual QString fileName() const { 
+  virtual QString fileName() const {
     return encodeFileName( KMFolderMbox::fileName() ); }
 
   /**
@@ -261,7 +261,7 @@ public:
    * Save the metadata for the UID
    * If the UID is not supplied the one from the message is taken
    */
-  void saveMsgMetaData( KMMessage* msg, ulong uid = 0 ); 
+  void saveMsgMetaData( KMMessage* msg, ulong uid = 0 );
 
   /**
    * Splits a uid-set into single uids
@@ -306,7 +306,7 @@ public:
   /** Set the user's rights on this folder - called by getUserRights */
   void setUserRights( unsigned int userRights );
 
-  /** 
+  /**
     * Search for messages
     * The actual search is done in slotSearch and the end
     * is signaled with searchDone()
@@ -332,6 +332,13 @@ signals:
    * Emitted at the end of the directory listing
    */
   void directoryListingFinished(KMFolderImap*);
+
+  /**
+   * Emitted when a folder creation has finished.
+   * @param name The name of the folder that should have been created.
+   * @param success True if the folder was created, false otherwise.
+   */
+  void folderCreationResult( const QString &name, bool success );
 
 public slots:
   /** Add a message to a folder after is has been added on an IMAP server */
@@ -369,7 +376,7 @@ public slots:
 
   /**
    * Connected to the result signal of the copy/move job
-   */ 
+   */
   void slotCopyMsgResult( KMail::FolderJob* job );
 
   /**
@@ -382,7 +389,7 @@ public slots:
   /**
    * Called from the SearchJob when the message was searched
    */
-  void slotSearchDone( Q_UINT32 serNum, const KMSearchPattern* pattern, bool matches ); 
+  void slotSearchDone( Q_UINT32 serNum, const KMSearchPattern* pattern, bool matches );
 
   /**
    * Connected to ListJob::receivedFolders
@@ -486,7 +493,7 @@ protected slots:
 
   /**
    * Starts a namespace listing
-   */ 
+   */
   void slotListNamespaces();
 
 protected:
@@ -497,7 +504,7 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   bool        mCheckMail;
-  QGuardedPtr<KMAcctImap> mAccount;
+  mutable QGuardedPtr<KMAcctImap> mAccount;
   // the current uidvalidity
   QString mUidValidity;
   unsigned int mUserRights;

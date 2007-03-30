@@ -1888,9 +1888,9 @@ KMCommand::Result KMCopyCommand::execute()
     return Failed;
   }
 
+  setEmitsCompletedItself( true );
   KCursorSaver busy(KBusyPtr::busy());
 
-  mWaitingForMsgs.clear();
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
   {
     KMFolder *srcFolder = msgBase->parent();
@@ -1922,16 +1922,14 @@ KMCommand::Result KMCopyCommand::execute()
       if (srcFolder && !newMsg->isComplete())
       {
         // imap => others
-        mWaitingForMsgs.append( msg->getMsgSerNum() );
-        disconnect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(slotMsgAdded(KMFolder*, Q_UINT32)));
-        connect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(slotMsgAdded(KMFolder*, Q_UINT32)));
         newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         job->setCancellable( false );
+        mPendingJobs << job;
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
                 mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+        connect( job, SIGNAL(result(KMail::FolderJob*)),
+                 this, SLOT(slotJobFinished(KMail::FolderJob*)) );
         job->start();
       } else {
         // local => others
@@ -1956,14 +1954,14 @@ KMCommand::Result KMCopyCommand::execute()
       mDestFolder->unGetMsg( *it );
     }
     if ( mDestFolder->folderType() == KMFolderTypeImap ) {
-      if ( mWaitingForMsgs.isEmpty() ) {
+      if ( mPendingJobs.isEmpty() ) {
         // wait for the end of the copy before closing the folder
         KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
         connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-            this, SLOT( slotFolderComplete() ) );
+            this, SLOT( slotFolderComplete( KMFolderImap*, bool ) ) );
       }
     } else {
-      deleteNow = true; // we're done
+      deleteNow = list.isEmpty() && mPendingJobs.isEmpty(); // we're done if there are no other mails we need to fetch
     }
   }
 
@@ -1974,7 +1972,7 @@ KMCommand::Result KMCopyCommand::execute()
     // copy the message(s); note: the list is empty afterwards!
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
     connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-        this, SLOT( slotFolderComplete() ) );
+        this, SLOT( slotFolderComplete( KMFolderImap*, bool ) ) );
     imapDestFolder->copyMsg(list);
     imapDestFolder->getFolder();
   }
@@ -1984,25 +1982,44 @@ KMCommand::Result KMCopyCommand::execute()
   if ( deleteNow )
   {
     mDestFolder->close("kmcommand");
+    setResult( OK );
+    emit completed( this );
     deleteLater();
   }
 
   return OK;
 }
 
-void KMCopyCommand::slotMsgAdded( KMFolder*, Q_UINT32 serNum )
+void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 {
-  mWaitingForMsgs.remove( serNum );
-  if ( mWaitingForMsgs.isEmpty() )
+  mPendingJobs.remove( job );
+  if ( job->error() ) {
+    kdDebug(5006) << k_funcinfo << "folder job failed: " << job->error() << endl;
+    // kill all pending jobs
+    for ( QValueList<KMail::FolderJob*>::Iterator it = mPendingJobs.begin(); it != mPendingJobs.end(); ++it ) {
+      disconnect( (*it), SIGNAL(result(KMail::FolderJob*)),
+                  this, SLOT(slotJobFinished(KMail::FolderJob*)) );
+      (*it)->kill();
+    }
+    mPendingJobs.clear();
+    setResult( Failed );
+  }
+
+  if ( mPendingJobs.isEmpty() )
   {
     mDestFolder->close("kmcommand");
+    emit completed( this );
     deleteLater();
   }
 }
 
-void KMCopyCommand::slotFolderComplete()
+void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 {
+  kdDebug(5006) << k_funcinfo << success << endl;
+  if ( !success )
+    setResult( Failed );
   mDestFolder->close("kmcommand");
+  emit completed( this );
   deleteLater();
 }
 

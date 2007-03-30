@@ -502,10 +502,11 @@ private:
 //  QPopupMenu *mMessageMenu;
   KMail::SearchWindow *mSearchWin;
 
-  KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
+  KAction *mNewFolderAction, *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
       *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction, *mTroubleshootFolderAction;
+      *mFolderShortCutCommandAction, *mTroubleshootFolderAction,
+      *mRemoveDuplicatesAction;
   KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;

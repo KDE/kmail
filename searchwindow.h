@@ -127,6 +127,8 @@ protected slots:
   void slotSaveMsg();
   void slotSaveAttachments();
   void slotPrintMsg();
+  void slotCopyMsgs();
+  void slotCutMsgs();
 
   /** GUI cleanup after search */
   virtual void searchDone();
@@ -170,7 +172,8 @@ protected:
   QMap<int,KMFolder*> mMenuToFolder;
   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
-    *mRedirectAction, *mPrintAction, *mClearAction, *mSaveAtchAction;
+    *mRedirectAction, *mPrintAction, *mClearAction, *mSaveAtchAction,
+    *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 

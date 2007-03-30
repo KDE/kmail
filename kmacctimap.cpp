@@ -175,7 +175,16 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   }
   // remove the jobs
   mapJobData.clear();
+  // KMAccount::deleteFolderJobs(); doesn't work here always, it deletes jobs from
+  // its own mJobList instead of our mJobList...
   KMAccount::deleteFolderJobs();
+  QPtrListIterator<ImapJob> it2( mJobList );
+  while ( it2.current() ) {
+    ImapJob *job = it2.current();
+    ++it2;
+    job->kill();
+  }
+  mJobList.clear();
   // make sure that no new-mail-check is blocked
   if (mCountRemainChecks > 0)
   {

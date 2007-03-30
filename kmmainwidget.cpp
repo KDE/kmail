@@ -211,6 +211,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
+  connect(mFolderTree, SIGNAL(selectionChanged()),
+          SLOT(updateFolderMenu()) );
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
@@ -627,7 +629,7 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotFolderTreeColumnsChanged()));
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  action = new KAction(
+  mRemoveDuplicatesAction = new KAction(
     i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
   action->plugAccel( actionCollection()->kaccel() );
@@ -2715,7 +2717,7 @@ void KMMainWidget::setupActions()
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   //----- Folder Menu
-  (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
+  mNewFolderAction = new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
 		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
 
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
@@ -2763,6 +2765,19 @@ void KMMainWidget::setupActions()
   mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
 		      SLOT(slotToggleSubjectThreading()), actionCollection(), "thread_messages_by_subject" );
 
+  new KAction( i18n("Copy Folder"), "editcopy", SHIFT+CTRL+Key_C, folderTree(),
+               SLOT(copyFolder()), actionCollection(), "copy_folder" );
+  new KAction( i18n("Cut Folder"), "editcut", SHIFT+CTRL+Key_X, folderTree(),
+               SLOT(cutFolder()), actionCollection(), "cut_folder" );
+  new KAction( i18n("Paste Folder"), "editpaste", SHIFT+CTRL+Key_V, folderTree(),
+               SLOT(pasteFolder()), actionCollection(), "paste_folder" );
+
+  new KAction( i18n("Copy Messages"), "editcopy", ALT+CTRL+Key_C, headers(),
+               SLOT(copyMessages()), actionCollection(), "copy_messages" );
+  new KAction( i18n("Cut Messages"), "editcut", ALT+CTRL+Key_X, headers(),
+               SLOT(cutMessages()), actionCollection(), "cut_messages" );
+  new KAction( i18n("Paste Messages"), "editpaste", ALT+CTRL+Key_V, headers(),
+               SLOT(pasteMessages()), actionCollection(), "paste_messages" );
 
   //----- Message Menu
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
@@ -3402,9 +3417,10 @@ void KMMainWidget::updateMarkAsReadAction()
 void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
-  mModifyFolderAction->setEnabled( folderWithContent );
-  mFolderMailingListPropertiesAction->setEnabled( folderWithContent );
-  mCompactFolderAction->setEnabled( folderWithContent );
+  bool multiFolder = folderTree()->selectedFolders().count() > 1;
+  mModifyFolderAction->setEnabled( folderWithContent && !multiFolder );
+  mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder );
+  mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
 
   // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
   bool imap = mFolder && mFolder->folderType() == KMFolderTypeImap;
@@ -3412,16 +3428,16 @@ void KMMainWidget::updateFolderMenu()
   // For dimap, check that the imap path is known before allowing "check mail in this folder".
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
-                                                           || ( cachedImap && knownImapPath ) ) );
+                                                           || ( cachedImap && knownImapPath ) ) && !multiFolder );
   if ( mTroubleshootFolderAction )
-    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
+    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() );
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() && !multiFolder);
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
+  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mHeaders->folder() ? true : false );
@@ -3435,6 +3451,10 @@ void KMMainWidget::updateFolderMenu()
   mThreadBySubjectAction->setEnabled(
       mHeaders->folder() ? ( mThreadMessagesAction->isChecked()) : false );
   mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
+
+  mNewFolderAction->setEnabled( !multiFolder );
+  mRemoveDuplicatesAction->setEnabled( !multiFolder );
+  mFolderShortCutCommandAction->setEnabled( !multiFolder );
 }
 
 

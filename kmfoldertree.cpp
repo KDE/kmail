@@ -10,6 +10,7 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolderdia.h"
+#include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "accountmanager.h"
@@ -20,6 +21,8 @@ using KMail::AccountManager;
 #include "expirypropertiesdialog.h"
 #include "newfolderdialog.h"
 #include "acljobs.h"
+#include "messagecopyhelper.h"
+using KMail::MessageCopyHelper;
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -258,16 +261,29 @@ void KMFolderTreeItem::slotNameChanged()
 
 
 //-----------------------------------------------------------------------------
-bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
+bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
 {
-  if ( !mFolder || mFolder->isReadOnly() ||
-      (mFolder->noContent() && childCount() == 0) ||
-       (mFolder->noContent() && isOpen()) ) {
-    return false;
-  }
-  else {
+  if ( protocol() == KFolderTreeItem::Search )
+    return false; // nothing can be dragged into search folders
+
+  if ( e->provides( KPIM::MailListDrag::format() ) ) {
+    if ( !mFolder || mFolder->isReadOnly() ||
+        (mFolder->noContent() && childCount() == 0) ||
+        (mFolder->noContent() && isOpen()) ) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  } else if ( e->provides("application/x-qlistviewitem") ) {
+    // wtf: protocol() is NONE instead of Local for the local root folder
+    if ( !mFolder && protocol() == KFolderTreeItem::NONE && type() == KFolderTreeItem::Root )
+      return true; // local top-level folder
+    if ( !mFolder || mFolder->isReadOnly() || mFolder->noContent() )
+      return false;
     return true;
   }
+  return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -321,10 +337,15 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mLastItem = 0;
   mMainWidget = mainWidget;
   mReloading = false;
+  mCutFolder = false;
 
   mUpdateCountTimer= new QTimer( this );
 
+  setDragEnabled( true );
   addAcceptableDropMimetype(MailListDrag::format(), false);
+  addAcceptableDropMimetype( "application/x-qlistviewitem", false );
+
+  setSelectionModeExt( Extended );
 
   int namecol = addColumn( i18n("Folder"), 250 );
   header()->setStretchEnabled( true, namecol );
@@ -393,6 +414,8 @@ void KMFolderTree::connectSignals()
 
   connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString &)),
            this, SLOT( slotRenameFolder( QListViewItem*, int, const QString &)));
+
+  connect( this, SIGNAL(folderSelected(KMFolder*)), SLOT(updateCopyActions()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -762,6 +785,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
   }
   removeFromFolderToItemMap( aFolder );
   delete fti;
+  updateCopyActions();
 }
 
 //-----------------------------------------------------------------------------
@@ -903,14 +927,26 @@ KMFolder *KMFolderTree::currentFolder() const
         return 0;
 }
 
+QValueList<QGuardedPtr<KMFolder> > KMFolderTree::selectedFolders()
+{
+  QValueList<QGuardedPtr<KMFolder> > rv;
+  for ( QListViewItemIterator it( this ); it.current(); ++it ) {
+    if ( it.current()->isSelected() ) {
+      KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
+      rv.append( fti->folder() );
+    }
+  }
+  return rv;
+}
+
 //-----------------------------------------------------------------------------
 // When not dragging and dropping a change in the selected item
 // indicates the user has changed the active folder emit a signal
 // so that the header list and reader window can be udpated.
-void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
+void KMFolderTree::doFolderSelected( QListViewItem* qlvi, bool keepSelection )
 {
   if (!qlvi) return;
-  if ( mLastItem && mLastItem == qlvi )
+  if ( mLastItem && mLastItem == qlvi && (keepSelection || selectedFolders().count() == 1) )
     return;
 
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
@@ -926,9 +962,11 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   }
   mLastItem = fti;
 
-  clearSelection();
+  if ( !keepSelection )
+    clearSelection();
   setCurrentItem( qlvi );
-  setSelected( qlvi, TRUE );
+  if ( !keepSelection )
+    setSelected( qlvi, TRUE );
   ensureItemVisible( qlvi );
   if (!folder) {
     emit folderSelected(0); // Root has been selected
@@ -958,18 +996,20 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   if (!lvi)
     return;
   setCurrentItem( lvi );
-  setSelected( lvi, TRUE );
 
   if (!mMainWidget) return; // safe bet
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
-  if ( fti != mLastItem )
+  if ( !isSelected( fti ) )
     doFolderSelected( fti );
+  else if ( fti != mLastItem )
+    doFolderSelected( fti, true );
 
   if (!fti )
     return;
 
   KPopupMenu *folderMenu = new KPopupMenu;
+  bool multiFolder = selectedFolders().count() > 1;
   if (fti->folder()) folderMenu->insertTitle(fti->folder()->label());
 
   // outbox specific, but there it's the most used action
@@ -986,7 +1026,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     QString createChild = i18n("&New Subfolder...");
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
-    if (fti->folder() || (fti->text(0) != i18n("Searches")))
+    if (fti->folder() || (fti->text(0) != i18n("Searches")) && !multiFolder)
         folderMenu->insertItem(SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
@@ -1002,11 +1042,16 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   } else { // regular folders
 
     folderMenu->insertSeparator();
-    if ( !fti->folder()->noChildren() ) {
+    if ( !fti->folder()->noChildren() && !multiFolder ) {
       folderMenu->insertItem(SmallIconSet("folder_new"),
                              i18n("&New Subfolder..."), this,
                              SLOT(addChildFolder()));
     }
+
+    // copy folder
+    QPopupMenu *copyMenu = new QPopupMenu( folderMenu );
+    folderToPopupMenu( CopyFolder, this, &mMenuToFolder, copyMenu );
+    folderMenu->insertItem( i18n("&Copy Folder To"), copyMenu );
 
     if ( fti->folder()->isMoveable() )
     {
@@ -1020,7 +1065,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      mMainWidget->action("search_messages")->plug(folderMenu);
+      if ( !multiFolder )
+        mMainWidget->action("search_messages")->plug(folderMenu);
 
       mMainWidget->action("compact")->plug(folderMenu);
 
@@ -1045,12 +1091,12 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     if (!fti->folder()->noContent())
     {
       mMainWidget->action("refresh_folder")->plug(folderMenu);
-      if ( fti->folder()->folderType() == KMFolderTypeImap ) {
+      if ( fti->folder()->folderType() == KMFolderTypeImap && !multiFolder ) {
         folderMenu->insertItem(SmallIconSet("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
       }
     }
-    if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
+    if ( fti->folder()->folderType() == KMFolderTypeCachedImap && !multiFolder ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
       folderMenu->insertItem( SmallIconSet("wizard"),
                               i18n("&Troubleshoot IMAP Cache..."),
@@ -1059,11 +1105,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     folderMenu->insertSeparator();
   }
 
-  if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
+  if ( fti->folder() && fti->folder()->isMailingListEnabled() && !multiFolder ) {
     mMainWidget->action("post_message")->plug(folderMenu);
   }
 
-  if (fti->folder() && fti->parent())
+  if (fti->folder() && fti->parent() && !multiFolder)
   {
     folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
         i18n("&Assign Shortcut..."),
@@ -1087,12 +1133,18 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderTree::contentsMousePressEvent(QMouseEvent * e)
+{
+  // KFolderTree messes around with the selection mode
+  KListView::contentsMousePressEvent( e );
+}
+
 // If middle button and folder holds mailing-list, create a message to that list
 void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
 {
   QListViewItem *lvi = currentItem(); // Needed for when branches are clicked on
   ButtonState btn = me->button();
-  doFolderSelected(lvi);
+  doFolderSelected(lvi, true);
 
   // get underlying folder
   KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(lvi);
@@ -1382,38 +1434,51 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-    if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
+    if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
     {
+      int action = -1;
       int keybstate = kapp->keyboardModifiers();
       if ( keybstate & KApplication::ControlModifier ) {
-        emit folderDropCopy(fti->folder());
+        action = DRAG_COPY;
       } else if ( keybstate & KApplication::ShiftModifier ) {
-        emit folderDrop(fti->folder());
+        action = DRAG_MOVE;
       } else {
-        if ( GlobalSettings::self()->showPopupAfterDnD() ) {
+        if ( GlobalSettings::self()->showPopupAfterDnD() || e->provides("application/x-qlistviewitem") ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
           menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
           menu->insertSeparator();
           menu->insertItem( SmallIcon("cancel"), i18n("C&ancel"), DRAG_CANCEL, 3 );
-          int id = menu->exec( QCursor::pos(), 0 );
-          switch(id) {
-            case DRAG_COPY:
-              emit folderDropCopy(fti->folder());
-              break;
-            case DRAG_MOVE:
-              emit folderDrop(fti->folder());
-              break;
-            case DRAG_CANCEL: // cancelled by menuitem
-            case -1: // cancelled by Esc
-              //just chill, doing nothing
-              break;
-            default:
-              kdDebug(5006) << "Unknown dnd-type! " << id << endl;
-          }
+          action = menu->exec( QCursor::pos(), 0 );
         }
         else
-          emit folderDrop(fti->folder());
+          action = DRAG_MOVE;
+      }
+      if ( e->provides("application/x-qlistviewitem") ) {
+        if ( (action == DRAG_COPY || action == DRAG_MOVE) && !mCopySourceFolders.isEmpty() ) {
+          for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = mCopySourceFolders.constBegin();
+                it != mCopySourceFolders.constEnd(); ++it ) {
+            if ( ! (*it)->isMoveable() )
+              action = DRAG_COPY;
+          }
+          moveOrCopyFolder( mCopySourceFolders, fti->folder(), (action == DRAG_MOVE) );
+        }
+      } else {
+        if ( e->source() == mMainWidget->headers()->viewport() ) {
+          // KMHeaders does copy/move itself
+          if ( action == DRAG_MOVE && fti->folder() )
+            emit folderDrop( fti->folder() );
+          else if ( action == DRAG_COPY && fti->folder() )
+            emit folderDropCopy( fti->folder() );
+        } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
+          MailList list;
+          if ( !MailListDrag::decode( e, list ) ) {
+            kdWarning() << k_funcinfo << "Could not decode drag data!" << endl;
+          } else {
+            QValueList<Q_UINT32> serNums = MessageCopyHelper::serNumListFromMailList( list );
+            new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
+          }
+        }
       }
       e->accept( true );
     } else
@@ -1428,6 +1493,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       clearSelection();
       setSelected( oldSelected, TRUE );
     }
+
+    mCopySourceFolders.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -1790,18 +1857,6 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       item = item->nextSibling();
       continue;
     }
-    if ( action == MoveFolder ) {
-      // FIXME remove in KDE 4
-      // skip all but local folders if a folder is to be moved
-      // because moving of nested folders to IMAP and DIMAP
-      // looses all messages in the subfolders
-      if ( fti->protocol() != KFolderTreeItem::Local
-        && fti->protocol() != KFolderTreeItem::NONE )
-      {
-        item = item->nextSibling();
-        continue;
-      }
-    }
     QString label = fti->text( 0 );
     label.replace( "&","&&" );
     if ( fti->firstChild() )
@@ -1813,9 +1868,21 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       if ( ( action == MoveMessage || action == CopyMessage ) &&
            fti->folder() && !fti->folder()->noContent() )
         subMenu = true;
-      if ( action == MoveFolder && ( !fti->folder() ||
-            ( fti->folder() && !fti->folder()->noChildren() ) ) )
+      if ( ( action == MoveFolder || action == CopyFolder )
+          && ( !fti->folder() || ( fti->folder() && !fti->folder()->noChildren() ) ) )
         subMenu = true;
+
+      QString sourceFolderName;
+      KMFolderTreeItem* srcItem = dynamic_cast<KMFolderTreeItem*>( currentItem() );
+      if ( srcItem )
+        sourceFolderName = srcItem->text( 0 );
+
+      if ( (action == MoveFolder || action == CopyFolder)
+              && fti->folder() && fti->folder()->child()
+              && fti->folder()->child()->hasNamedFolder( sourceFolderName ) ) {
+        subMenu = false;
+      }
+
       if ( subMenu )
       {
         int menuId;
@@ -1847,55 +1914,183 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
 //-----------------------------------------------------------------------------
 void KMFolderTree::moveSelectedToFolder( int menuId )
 {
-  moveFolder( mMenuToFolder[menuId] );
+  moveOrCopyFolder( selectedFolders(), mMenuToFolder[ menuId ], true /*move*/ );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::moveFolder( KMFolder* destination )
+void KMFolderTree::copySelectedToFolder( int menuId )
 {
-  KMFolder* folder = currentFolder();
-  if (!folder)
-	return;
+  moveOrCopyFolder( selectedFolders(), mMenuToFolder[ menuId ], false /*copy, don't move*/ );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::moveOrCopyFolder( QValueList<QGuardedPtr<KMFolder> > sources, KMFolder* destination, bool move )
+{
+  kdDebug(5006) << k_funcinfo << "source: " << sources << " destination: " << destination << " move: " << move << endl;
 
   KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
   if ( destination )
     parent = destination->createChildFolder();
-  QString message =
-    i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).
-        arg( folder->label() );
 
-  KMFolderDir* folderDir = parent;
-  // check that the folder can be moved
-  if ( folder->child() )
-  {
-    while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
-        ( folderDir != folder->parent() ) )
-    {
-      if ( folderDir->findRef( folder ) != -1 )
-      {
-        KMessageBox::error( this, message );
+  QStringList sourceFolderNames;
+
+  // check if move/copy is possible at all
+  for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
+    KMFolder* source = *it;
+
+    // check if folder with same name already exits
+    QString sourceFolderName;
+    if ( source )
+      sourceFolderName = source->label();
+
+    if ( parent->hasNamedFolder( sourceFolderName ) || sourceFolderNames.contains( sourceFolderName ) ) {
+      KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>")
+          .arg( sourceFolderName ) );
+      return;
+    }
+    sourceFolderNames.append( sourceFolderName );
+
+    // don't move/copy a folder that's still not completely moved/copied
+    KMFolder *f = source;
+    while ( f ) {
+      if ( f->moveInProgress() ) {
+        KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>")
+            .arg( sourceFolderName ) );
         return;
       }
-      folderDir = folderDir->parent();
+      if ( f->parent() )
+        f = f->parent()->owner();
+    }
+
+    QString message =
+      i18n( "<qt>Cannot move or copy folder <b>%1</b> into a subfolder below itself.</qt>" ).
+          arg( sourceFolderName );
+    KMFolderDir* folderDir = parent;
+    // check that the folder can be moved
+    if ( source && source->child() )
+    {
+      while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
+          ( folderDir != source->parent() ) )
+      {
+        if ( folderDir->findRef( source ) != -1 )
+        {
+          KMessageBox::error( this, message );
+          return;
+        }
+        folderDir = folderDir->parent();
+      }
+    }
+
+    if( source && source->child() && parent &&
+        ( parent->path().find( source->child()->path() + "/" ) == 0 ) ) {
+      KMessageBox::error( this, message );
+      return;
+    }
+
+    if( source && source->child()
+        && ( parent == source->child() ) ) {
+      KMessageBox::error( this, message );
+      return;
     }
   }
 
-  if( folder->child() && parent &&
-      ( parent->path().find( folder->child()->path() + "/" ) == 0 ) ) {
-    KMessageBox::error( this, message );
-    return;
+  // check if the source folders are independent of each other
+  for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = sources.constBegin(); move && it != sources.constEnd(); ++it ) {
+    KMFolderDir *parentDir = (*it)->child();
+    if ( !parentDir )
+      continue;
+    for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it2 = sources.constBegin(); it2 != sources.constEnd(); ++it2 ) {
+      if ( *it == *it2 )
+        continue;
+      KMFolderDir *childDir = (*it2)->parent();
+      do {
+        if ( parentDir == childDir || parentDir->findRef( childDir->owner() ) != -1 ) {
+          KMessageBox::error( this, i18n("Moving the selected folders is not possible") );
+          return;
+        }
+        childDir = childDir->parent();
+      }
+      while ( childDir && childDir != &kmkernel->folderMgr()->dir() );
+    }
   }
 
-  if( folder->child()
-      && ( parent == folder->child() ) ) {
-    KMessageBox::error( this, message );
-    return;
+  // do the actual move/copy
+  for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
+    KMFolder* source = *it;
+    if ( move ) {
+      kdDebug(5006) << "move folder " << (source ? source->label(): "Unknown") << " to "
+        << ( destination ? destination->label() : "Local Folders" ) << endl;
+      kmkernel->folderMgr()->moveFolder( source, parent );
+    } else {
+      kmkernel->folderMgr()->copyFolder( source, parent );
+    }
+  }
+}
+
+QDragObject * KMFolderTree::dragObject()
+{
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>
+      (itemAt(viewport()->mapFromGlobal(QCursor::pos())));
+  if ( !item || !item->parent() || !item->folder() ) // top-level items or something invalid
+    return 0;
+  mCopySourceFolders = selectedFolders();
+
+  QDragObject *drag = KFolderTree::dragObject();
+  if ( drag )
+    drag->setPixmap( SmallIcon("folder") );
+  return drag;
+}
+
+void KMFolderTree::copyFolder()
+{
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( currentItem() );
+  if ( item ) {
+    mCopySourceFolders = selectedFolders();
+    mCutFolder = false;
+  }
+  updateCopyActions();
+}
+
+void KMFolderTree::cutFolder()
+{
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( currentItem() );
+  if ( item ) {
+    mCopySourceFolders = selectedFolders();
+    mCutFolder = true;
+  }
+  updateCopyActions();
+}
+
+void KMFolderTree::pasteFolder()
+{
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( currentItem() );
+  if ( !mCopySourceFolders.isEmpty() && item && !mCopySourceFolders.contains( item->folder() ) ) {
+    moveOrCopyFolder( mCopySourceFolders, item->folder(), mCutFolder );
+    if ( mCutFolder )
+      mCopySourceFolders.clear();
+  }
+  updateCopyActions();
+}
+
+void KMFolderTree::updateCopyActions()
+{
+  KAction *copy = mMainWidget->action("copy_folder");
+  KAction *cut = mMainWidget->action("cut_folder");
+  KAction *paste = mMainWidget->action("paste_folder");
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( currentItem() );
+
+  if ( !item ||  !item->folder() ) {
+    copy->setEnabled( false );
+    cut->setEnabled( false );
+  } else {
+    copy->setEnabled( true );
+    cut->setEnabled( item->folder()->isMoveable() );
   }
 
-  kdDebug(5006) << "move folder " << currentFolder()->label() << " to "
-    << ( destination ? destination->label() : "Local Folders" ) << endl;
-  kmkernel->folderMgr()->moveFolder( folder, parent );
+  if ( mCopySourceFolders.isEmpty() )
+    paste->setEnabled( false );
+  else
+    paste->setEnabled( true );
 }
 
 #include "kmfoldertree.moc"
-

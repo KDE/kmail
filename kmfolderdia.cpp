@@ -275,6 +275,16 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     if (!aName.isEmpty())
             mNameEdit->setText(aName);
     mNameEdit->setMinimumSize(mNameEdit->sizeHint());
+    // prevent renaming of IMAP inbox
+    if ( mDlg->folder() && mDlg->folder()->isSystemFolder() ) {
+      QString imapPath;
+      if ( mDlg->folder()->folderType() == KMFolderTypeImap )
+        imapPath = static_cast<KMFolderImap*>( mDlg->folder()->storage() )->imapPath();
+      if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap )
+        imapPath = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() )->imapPath();
+      if ( imapPath == "/INBOX/" )
+        mNameEdit->setEnabled( false );
+    }
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),

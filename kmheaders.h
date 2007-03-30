@@ -176,6 +176,19 @@ public:
   QFont todoFont() const { return mTodoFont; }
   QFont dateFont() const { return mDateFont; }
 
+  /**
+    Sets the list of copied/cutted messages.
+    @param msgs A list of serial numbers.
+    @param move if true, the messages were cutted
+  */
+  void setCopiedMessages( const QValueList<Q_UINT32> &msgs, bool move );
+
+  /**
+    Returns true if the message with the given serial number has been cut.
+    @param serNum A message serial number.
+  */
+  bool isMessageCut( Q_UINT32 serNum ) const;
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */
@@ -188,10 +201,10 @@ signals:
   /** emitted when the list of messages has been completely rebuilt */
   void messageListUpdated();
 
-  /** emitted after a new item has been fully built and added to the 
+  /** emitted after a new item has been fully built and added to the
    * list view. We can't use KListView::itemAdded, as that is emitted
    * from the ctor of the item, at which point the building of the item
-   * is not yet far enough along to update the quick search, which is 
+   * is not yet far enough along to update the quick search, which is
    * what is connected to this signal. */
   void msgAddedToListView( QListViewItem* );
 
@@ -336,6 +349,12 @@ protected slots:
 private slots:
   void slotMoveCompleted( KMCommand * );
 
+  void copyMessages();
+  void cutMessages();
+  void pasteMessages();
+
+  void updateActions();
+
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */
@@ -429,5 +448,8 @@ private:
   /** popup to switch columns */
   KPopupMenu* mPopup;
 
+  // copied messages
+  QValueList<Q_UINT32> mCopiedMessages;
+  bool mMoveMessages;
 }; // class
 #endif

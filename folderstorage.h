@@ -386,7 +386,10 @@ public:
   bool compactable() const { return mCompactable; }
 
   /// Set the type of contents held in this folder (mail, calendar, etc.)
-  virtual void setContentsType( KMail::FolderContentsType type );
+  // If quiet is true, the KMailIcalIface is not informed of the changed. That's usefull
+  // for folder that are being copied around, should retain their type, but not cause
+  // conflicts on copy because events are identical in two folders.
+  virtual void setContentsType( KMail::FolderContentsType type, bool quiet = false );
   /// @return the type of contents held in this folder (mail, calendar, etc.)
   KMail::FolderContentsType contentsType() const { return mContentsType; }
 
