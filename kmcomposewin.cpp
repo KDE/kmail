@@ -86,7 +86,7 @@ using KRecentAddress::RecentAddresses;
 #include <kmenu.h>
 #include <kmimetypetrader.h>
 #include <kedittoolbar.h>
-#include <kkeydialog.h>
+#include <kshortcutsdialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <ktoolbar.h>
@@ -4572,8 +4572,8 @@ void KMComposeWin::slotUpdateToolbars()
 
 void KMComposeWin::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection(),
-    KKeyChooser::LetterShortcutsDisallowed );
+  KShortcutsDialog::configure( actionCollection(),
+    KShortcutsEditor::LetterShortcutsDisallowed );
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )

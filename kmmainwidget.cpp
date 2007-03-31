@@ -35,7 +35,7 @@
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
 #include <kstandardshortcut.h>
-#include <kkeydialog.h>
+#include <kshortcutsdialog.h>
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -3305,8 +3305,8 @@ void KMMainWidget::slotEditNotifications()
 
 void KMMainWidget::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection(),
-    KKeyChooser::LetterShortcutsAllowed );
+  KShortcutsDialog::configure( actionCollection(),
+    KShortcutsEditor::LetterShortcutsAllowed );
 }
 
 //-----------------------------------------------------------------------------
