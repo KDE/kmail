@@ -285,7 +285,6 @@ void PopAccount::setFilterOnServerCheckSize(unsigned int aSize)
 //-----------------------------------------------------------------------------
 void PopAccount::connectJob() {
   KIO::Scheduler::assignJobToSlave(mSlave, job);
-  if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
          SLOT( slotData( KIO::Job*, const QByteArray &)));
   connect(job, SIGNAL( result( KIO::Job * ) ),
