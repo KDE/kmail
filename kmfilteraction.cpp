@@ -1376,9 +1376,9 @@ public:
   static KMFilterAction* newAction(void);
 };
 
-KMFilterAction* KMFilterActionCopy::newAction(void)
+KMFilterAction* KMFilterActionCopy::newAction( void )
 {
-  return (new KMFilterActionCopy);
+  return ( new KMFilterActionCopy );
 }
 
 KMFilterActionCopy::KMFilterActionCopy()
@@ -1391,7 +1391,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( KMMessage *msg ) const
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
-  if ( !mFolder && mFolder->open( "filtercopy" ) != 0 ) {
+  if ( !mFolder || mFolder->open( "filtercopy" ) != 0 ) {
     return ErrorButGoOn;
   }
 
@@ -1418,11 +1418,11 @@ void KMFilterActionCopy::processAsync( KMMessage *msg ) const
   cmd->start();
 }
 
-bool KMFilterActionCopy::requiresBody(KMMsgBase*) const
+bool KMFilterActionCopy::requiresBody( KMMsgBase *msg ) const
 {
-    return true;
+  Q_UNUSED( msg );
+  return true;
 }
-
 
 //=============================================================================
 // KMFilterActionForward - forward to
@@ -1430,15 +1430,15 @@ bool KMFilterActionCopy::requiresBody(KMMsgBase*) const
 //=============================================================================
 class KMFilterActionForward: public KMFilterActionWithAddress
 {
-public:
-  KMFilterActionForward();
-  virtual ReturnCode process(KMMessage* msg) const;
-  static KMFilterAction* newAction(void);
+  public:
+    KMFilterActionForward();
+    virtual ReturnCode process( KMMessage *msg ) const;
+    static KMFilterAction* newAction( void );
 };
 
-KMFilterAction* KMFilterActionForward::newAction(void)
+KMFilterAction *KMFilterActionForward::newAction( void )
 {
-  return (new KMFilterActionForward);
+  return ( new KMFilterActionForward );
 }
 
 KMFilterActionForward::KMFilterActionForward()
@@ -1446,7 +1446,7 @@ KMFilterActionForward::KMFilterActionForward()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
+KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *aMsg ) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
