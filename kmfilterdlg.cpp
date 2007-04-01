@@ -23,7 +23,7 @@ using KMail::AccountManager;
 #include <kwin.h>
 #include <kconfig.h>
 #include <kicondialog.h>
-#include <kkeybutton.h>
+#include <kkeysequencewidget.h>
 #include <k3listview.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
@@ -230,10 +230,10 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
       keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
       gl->addWidget( keyButtonLabel, 7, 2, 1, 1);
-      mKeyButton = new KKeyButton( mAdvOptsGroup );
-      mKeyButton->setObjectName( "FilterShortcutSelector" );
-      gl->addWidget( mKeyButton, 7, 3, 1, 1);
-      mKeyButton->setEnabled( false );
+      mKeySeqWidget = new KKeySequenceWidget( mAdvOptsGroup );
+      mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
+      gl->addWidget( mKeySeqWidget, 7, 3, 1, 1);
+      mKeySeqWidget->setEnabled( false );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
@@ -299,7 +299,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mKeyButton, SIGNAL( capturedKeySequence(const QKeySequence &)  ),
+    connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
              this, SLOT( slotCapturedShortcutChanged( const QKeySequence& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
@@ -415,10 +415,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//    mKeyButton->setShortcut( shortcut );
+    mKeySeqWidget->setKeySequence( shortcut.primary() );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
@@ -510,36 +507,23 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 {
   if ( mFilter ) {
     mFilter->setConfigureShortcut( aChecked );
-    mKeyButton->setEnabled( aChecked );
+    mKeySeqWidget->setEnabled( aChecked );
     mConfigureToolbar->setEnabled( aChecked );
     mFilterActionIconButton->setEnabled( aChecked );
     mFilterActionLabel->setEnabled( aChecked );
   }
 }
 
-void KMFilterDlg::slotCapturedShortcutChanged( const QKeySequence& sc )
+void KMFilterDlg::slotCapturedShortcutChanged( const QKeySequence& ks )
 {
-  KShortcut mySc(sc);
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  if ( mySc == mKeyButton->shortcut() ) return;
-  // FIXME work around a problem when reseting the shortcut via the shortcut dialog
-  // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
-  // so we additionally have to check for an empty string
-  if ( mySc.isEmpty() || mySc.toString().isEmpty() )
-    mySc.clear();
-  if ( !mySc.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
+  if ( !ks.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( ks ) ) ) {
     QString msg( i18n( "The selected shortcut is already used, "
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );
   } else {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//    mKeyButton->setShortcut( mySc );
-//    if ( mFilter )
-//      mFilter->setShortcut( mKeyButton->shortcut() );
+    mKeySeqWidget->setKeySequence( ks );
+    if ( mFilter )
+      mFilter->setShortcut( KShortcut(ks, QKeySequence()) );
   }
 }
 

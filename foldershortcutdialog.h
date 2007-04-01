@@ -42,7 +42,7 @@
 #include <kdialog.h> // include for the base class
 class KShortcut;
 class KMFolder;
-class KKeyButton;
+class KKeySequenceWidget;
 class KMMainWidget;
 
 namespace KMail
@@ -64,7 +64,7 @@ protected slots:
 private:
   KMFolder *mFolder;
   KMMainWidget *mMainWidget;
-  KKeyButton *mKeyButton;
+  KKeySequenceWidget *mKeySeqWidget;
 
 }; // End of class FolderShortcutDialog
 

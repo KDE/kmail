@@ -30,6 +30,7 @@ struct CustomTemplateItem;
 typedef Q3Dict<CustomTemplateItem> CustomTemplateItemList;
 class KShortcut;
 class Q3ListViewItem;
+class KKeySequenceWidget;
 
 class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 {
@@ -73,7 +74,7 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
     QPixmap mReplyPix;
     QPixmap mReplyAllPix;
     QPixmap mForwardPix;
-
+    KKeySequenceWidget *mKeySequenceWidget;
 };
 
 struct CustomTemplateItem
@@ -86,6 +87,7 @@ struct CustomTemplateItem
     mName( name ), mContent( content ), mShortcut(shortcut), mType( type ) {}
 
   QString mName, mContent;
+  //QKeySequence might do the trick too, check the rest of your code. --ahartmetz
   KShortcut mShortcut;
   CustomTemplates::Type mType;
 };

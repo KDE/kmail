@@ -42,7 +42,7 @@
 #include <Q3GroupBox>
 
 
-#include <kkeybutton.h>
+#include <kkeysequencewidget.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kvbox.h>
@@ -72,17 +72,14 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                              "you wish to associate with this folder.</qt>" ) );
   KHBox *hb = new KHBox( gb );
   new QWidget(hb);
-  mKeyButton = new KKeyButton( hb );
-  mKeyButton->setObjectName( "FolderShortcutSelector" );
+  mKeySeqWidget = new KKeySequenceWidget( hb );
+  mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
-  connect( mKeyButton, SIGNAL( capturedKeySequence(const QKeySequence &) ),
+  connect( mKeySeqWidget, SIGNAL( keySequenceChanged(const QKeySequence &) ),
            this, SLOT( slotCapturedShortcut( const QKeySequence& ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mKeyButton->setShortcut( folder->shortcut() );
+  mKeySeqWidget->setKeySequence( folder->shortcut().primary() );
 }
 
 FolderShortcutDialog::~FolderShortcutDialog()
@@ -91,36 +88,22 @@ FolderShortcutDialog::~FolderShortcutDialog()
 
 void FolderShortcutDialog::slotCapturedShortcut( const QKeySequence& sc )
 {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  if ( sc == mKeyButton->shortcut() ) return;
-  if ( sc.toString().isNull() ) {
-    // null is fine, that's reset, but sc.іsNull() will be false :/
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//    mKeyButton->setShortcut( KShortcut() );
+  if ( sc.isEmpty() ) {
+    mKeySeqWidget->setKeySequence( sc );
   } else {
     if( !mMainWidget->shortcutIsValid( sc ) ) {
       QString msg( i18n( "The selected shortcut is already used, "
             "please select a different one." ) );
       KMessageBox::sorry( mMainWidget, msg );
     } else {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//      mKeyButton->setShortcut( sc );
+      mKeySeqWidget->setKeySequence( sc );
     }
   }
 }
 
 void FolderShortcutDialog::slotOk()
 {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mFolder->setShortcut( mKeyButton->shortcut() );
+  mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) );
 }
 
 #include "foldershortcutdialog.moc"

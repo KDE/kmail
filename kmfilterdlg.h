@@ -28,7 +28,7 @@ class QPushButton;
 class QStackedWidget;
 class QCheckBox;
 class KIconButton;
-class KKeyButton;
+class KKeySequenceWidget;
 class K3ListView;
 
 
@@ -385,7 +385,7 @@ protected:
   QCheckBox *mConfigureToolbar;
   QLabel *mFilterActionLabel;
   KIconButton *mFilterActionIconButton;
-  KKeyButton *mKeyButton;
+  KKeySequenceWidget *mKeySeqWidget;
   QGroupBox *mAdvOptsGroup;
   QGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;

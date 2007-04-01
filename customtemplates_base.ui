@@ -1,7 +1,4 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>CustomTemplatesBase</class>
  <widget class="QWidget" name="CustomTemplatesBase" >
   <property name="geometry" >
@@ -41,7 +38,7 @@
           <number>6</number>
          </property>
          <item>
-          <widget class="KLineEdit" name="mName" >
+          <widget class="KLineEdit" native="1" name="mName" >
            <property name="sizePolicy" >
             <sizepolicy>
              <hsizetype>3</hsizetype>
@@ -59,10 +56,10 @@
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="mAdd" />
+          <widget class="KPushButton" native="1" name="mAdd" />
          </item>
          <item>
-          <widget class="KPushButton" name="mRemove" />
+          <widget class="KPushButton" native="1" name="mRemove" />
          </item>
         </layout>
        </item>
@@ -174,7 +171,7 @@
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
            <property name="buddy" >
-            <cstring>mKeyButton</cstring>
+            <cstring>mKeySequenceWidget</cstring>
            </property>
           </widget>
          </item>
@@ -200,13 +197,13 @@
           </widget>
          </item>
          <item row="1" column="0" >
-          <widget class="TemplatesInsertCommand" name="mInsertCommand" />
-         </item>
-         <item row="0" column="2" >
-          <widget class="KKeyButton" name="mKeyButton" />
+          <widget class="TemplatesInsertCommand" native="1" name="mInsertCommand" />
          </item>
          <item row="0" column="0" >
           <widget class="QLabel" name="mHelp" />
+         </item>
+         <item row="0" column="2" >
+          <widget class="KKeySequenceWidget" native="1" name="mKeySequenceWidget" />
          </item>
         </layout>
        </item>
@@ -217,56 +214,44 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QWidget</extends>
-   <header>klineedit.h</header>
-   <container>1</container>
-   <pixmap></pixmap>
-  </customwidget>
   <customwidget>
    <class>TemplatesInsertCommand</class>
    <extends>QWidget</extends>
    <header>templatesinsertcommand.h</header>
-   <container>0</container>
-   <pixmap></pixmap>
+  </customwidget>
+  <customwidget>
+   <class>KKeySequenceWidget</class>
+   <extends>QWidget</extends>
+   <header>kkeysequencewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Q3ListView</class>
+   <extends>Q3Frame</extends>
+   <header>q3listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Q3TextEdit</class>
+   <extends>Q3Frame</extends>
+   <header>q3textedit.h</header>
   </customwidget>
   <customwidget>
    <class>KPushButton</class>
    <extends>QWidget</extends>
    <header>kpushbutton.h</header>
    <container>1</container>
-   <pixmap></pixmap>
   </customwidget>
   <customwidget>
-   <class>KKeyButton</class>
+   <class>KLineEdit</class>
    <extends>QWidget</extends>
-   <header>kkeybutton.h</header>
+   <header>klineedit.h</header>
    <container>1</container>
-   <pixmap></pixmap>
   </customwidget>
   <customwidget>
    <class>Q3Frame</class>
    <extends>QFrame</extends>
    <header>Qt3Support/Q3Frame</header>
    <container>1</container>
-   <pixmap></pixmap>
-  </customwidget>
-  <customwidget>
-   <class>Q3TextEdit</class>
-   <extends>Q3Frame</extends>
-   <header>q3textedit.h</header>
-   <container>0</container>
-   <pixmap></pixmap>
-  </customwidget>
-  <customwidget>
-   <class>Q3ListView</class>
-   <extends>Q3Frame</extends>
-   <header>q3listview.h</header>
-   <container>0</container>
-   <pixmap></pixmap>
   </customwidget>
  </customwidgets>
  <resources/>
