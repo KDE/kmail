@@ -161,7 +161,7 @@ private:
   QDataStream *curMsgStrm;
 
   int curMsgLen;
-  int stage;
+  Stage stage;
   QTimer processMsgsTimer;
   int processingDelay;
   int numMsgs, numBytes, numBytesToRead, numBytesRead, numMsgBytesRead;
