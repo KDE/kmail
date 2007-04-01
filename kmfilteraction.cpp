@@ -1378,10 +1378,9 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
-  if ( !mFolder )
+  if ( !mFolder || mFolder->open( "filtercopy" ) != 0 ) {
     return ErrorButGoOn;
-  if ( mFolder->open("filtercopy") != 0 )
-    return ErrorButGoOn;
+  }
 
   // copy the message 1:1
   KMMessage* msgCopy = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
@@ -1456,11 +1455,11 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->initFromMessage( aMsg );
 
   // QString st = QString::fromUtf8( aMsg->createForwardBody() );
-  
-  TemplateParser parser( msg, TemplateParser::Forward, 
+
+  TemplateParser parser( msg, TemplateParser::Forward,
     aMsg->body(), false, false, false, false);
   parser.process( aMsg );
-  
+
   QCString
     encoding = KMMsgBase::autoDetectCharset( aMsg->charset(),
                                              KMMessage::preferredCharsets(),
