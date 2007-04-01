@@ -1340,6 +1340,7 @@ void KMMainWidget::slotOverrideHtml()
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
       KGuiItem(i18n( "Use HTML" )),
+      KStandardGuiItem::cancel(),
       "OverrideHtmlWarning", false);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlAction->setChecked( false );
@@ -1364,6 +1365,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
       KGuiItem(i18n( "Load External References" )),
+      KStandardGuiItem::cancel(),
       "OverrideHtmlLoadExtWarning", false);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlLoadExtAction->setChecked( false );

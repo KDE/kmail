@@ -1550,7 +1550,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %1 selected messages?<br>"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-	 msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), KStandardGuiItem::del(),
+	 msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), KStandardGuiItem::del(), KStandardGuiItem::cancel(),
 	 "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 

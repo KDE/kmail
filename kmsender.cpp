@@ -513,6 +513,7 @@ void KMSender::doSendMsg()
         i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),
         i18n( "Security Warning" ),
         KGuiItem( i18n( "Send Unencrypted" ) ),
+        KStandardGuiItem::cancel(),
         "useCustomTransportWithoutAsking", false );
 
       if ( result == KMessageBox::Cancel ) {

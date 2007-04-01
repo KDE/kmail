@@ -594,6 +594,7 @@ namespace KMail {
       if ( KMessageBox::warningContinueCancel( this, msg,
                                                i18n("Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
+                                               KStandardGuiItem::cancel(),
                                                "warn_email_not_in_certificate" )
            != KMessageBox::Continue)
         return;

@@ -562,7 +562,8 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 					     key.protocol() == GpgME::Context::OpenPGP
 					     ? i18n("OpenPGP Key Expires Soon" )
 					     : i18n("S/MIME Certificate Expires Soon" ),
-					     KStandardGuiItem::cont(), dontAskAgainName )
+					     KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
+					     dontAskAgainName )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
   }
@@ -603,7 +604,7 @@ Kpgp::Result Kleo::KeyResolver::setEncryptToSelfKeys( const QStringList & finger
 			     "later on, you will be prompted to specify the keys "
 			     "to use.");
     return KMessageBox::warningContinueCancel( 0, msg, i18n("Unusable Encryption Keys"),
-					       KStandardGuiItem::cont(),
+					       KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
 					       "unusable own encryption key warning" )
       == KMessageBox::Continue ? Kpgp::Ok : Kpgp::Canceled ;
   }
@@ -647,7 +648,7 @@ Kpgp::Result Kleo::KeyResolver::setSigningKeys( const QStringList & fingerprints
 			     "later on, you will be prompted to specify the keys "
 			     "to use.");
     return KMessageBox::warningContinueCancel( 0, msg, i18n("Unusable Signing Keys"),
-					       KStandardGuiItem::cont(),
+					       KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
 					       "unusable signing key warning" )
       == KMessageBox::Continue ? Kpgp::Ok : Kpgp::Canceled ;
   }
@@ -916,7 +917,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
 			       "own messages if you do so.");
       if ( KMessageBox::warningContinueCancel( 0, msg,
 					       i18n("Unusable Encryption Keys"),
-					       KStandardGuiItem::cont(),
+					       KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
 					       "encrypt-to-self will fail warning" )
 	   == KMessageBox::Cancel )
 	return Kpgp::Canceled;
@@ -943,7 +944,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
 			       "own messages if you do so.");
       if ( KMessageBox::warningContinueCancel( 0, msg,
 					       i18n("Unusable Encryption Keys"),
-					       KStandardGuiItem::cont(),
+					       KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
 					       "encrypt-to-self will fail warning" )
 	   == KMessageBox::Cancel )
 	return Kpgp::Canceled;
@@ -971,6 +972,7 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
 					     KGuiItem(i18n("Do Not OpenPGP-Sign")),
+					     KStandardGuiItem::cancel(),
 					     "signing will fail warning" )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
@@ -987,6 +989,7 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
 					     KGuiItem(i18n("Do Not S/MIME-Sign")),
+					     KStandardGuiItem::cancel(),
 					     "signing will fail warning" )
 	 == KMessageBox::Cancel )
       return Kpgp::Canceled;
