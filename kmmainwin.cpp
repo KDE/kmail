@@ -145,7 +145,7 @@ void KMMainWin::slotNewMailReader()
 void KMMainWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
-  KEditToolBar dlg(actionCollection(), "kmmainwin.rc");
+  KEditToolBar dlg(actionCollection(), this);
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
 	   SLOT(slotUpdateToolbars()) );
