@@ -146,6 +146,7 @@ void KMMainWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
   KEditToolBar dlg(actionCollection(), this);
+  dlg.setResourceFile( "kmmainwin.rc" );
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
 	   SLOT(slotUpdateToolbars()) );
