@@ -143,6 +143,9 @@ void KMFolderImap::close( const char *owner, bool aForced )
       }
     }
   }
+
+  mCheckingValidity = false;
+
   // The inherited close will decrement again, so we have to adjust.
   mOpenCount++;
   KMFolderMbox::close( owner, aForced );
@@ -1115,19 +1118,29 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult( KJob *job )
 {
-  kDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
+  // if we closed the folder in between, we don't want this results
+  if ( !mCheckingValidity ) {
+    return;
+  }
+
+  kDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName()
+               << endl;
+
   mCheckingValidity = false;
-  ImapAccountBase::JobIterator it = account()->findJob(static_cast<KIO::Job*>(job));
+  ImapAccountBase::JobIterator it
+    = account()->findJob( static_cast<KIO::Job*>(job) );
   if ( it == account()->jobsEnd() ) {
-    // the job has been killed internally, so we're not interested in its results
+    // job has been killed internally, so we're not interested in its results.
     job = 0;
   }
   if ( !job || job->error() ) {
     if ( job && job->error() != KIO::ERR_ACCESS_DENIED ) {
-      // we suppress access denied messages because they are normally a result of
-      // explicitly set ACLs. Do not save this information (e.g. setNoContent) so that
-      // we notice when this changes
-      account()->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while querying the server status.") );
+      // we suppress access denied messages because they are normally a
+      // result of explicitly set ACLs. Do not save this information
+      // (e.g. setNoContent) so that we notice when this changes
+      account()->handleJobError(
+        static_cast<KIO::Job*>(job),
+        i18n("Error while querying the server status.") );
     }
     kDebug() << "error in slotCheckValidityResult\n";
     mContentState = imapNoInformation;
