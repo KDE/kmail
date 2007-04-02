@@ -615,7 +615,7 @@ void RecipientsView::removeRecipient( const QString & recipient,
     }
   }
   if ( line )
-    line->clear();
+    line->slotPropagateDeletion();
 }
 
 bool RecipientsView::isModified()
