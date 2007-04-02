@@ -84,7 +84,7 @@ using KMime::DateFormatter;
 #include <kascii.h>
 #include <kdebug.h>
 #include <knuminput.h>
-#include <kfontdialog.h>
+#include <kfontchooser.h>
 #include <kmessagebox.h>
 #include <kurlrequester.h>
 #include <kseparator.h>
@@ -1614,8 +1614,8 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   hlay->addWidget( mFontLocationCombo );
   hlay->addStretch( 10 );
   vlay->addSpacing( KDialog::spacingHint() );
-  mFontChooser = new KFontChooser( this, false, QStringList(),
-                                   false, 4 );
+  mFontChooser = new KFontChooser( this, KFontChooser::DisplayFrame,
+                                   QStringList(), 4 );
   mFontChooser->setObjectName( "font" );
   mFontChooser->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   vlay->addWidget( mFontChooser );
