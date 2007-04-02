@@ -99,7 +99,6 @@ using KMail::TeeHtmlWriter;
 #include <kcharsets.h>
 #include <kmenu.h>
 #include <kstandarddirs.h>  // Sven's : for access and getpid
-#include <kcursor.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -120,7 +119,7 @@ using KMail::TeeHtmlWriter;
 #include <kconfiggroup.h>
 
 #include <QClipboard>
-
+#include <QCursor>
 #include <QTextCodec>
 #include <q3paintdevicemetrics.h>
 #include <QLayout>
@@ -992,7 +991,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setJScriptEnabled(false); // just make this explicit
   mViewer->setJavaEnabled(false);    // just make this explicit
   mViewer->setMetaRefreshEnabled(false);
-  mViewer->setURLCursor(KCursor::handCursor());
+  mViewer->setURLCursor( QCursor( Qt::PointingHandCursor ) );
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
   // register our own event filter for shift-click

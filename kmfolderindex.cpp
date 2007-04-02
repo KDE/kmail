@@ -52,7 +52,7 @@
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
 #endif
-#include <kcursor.h>
+#include <QCursor>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include "kmmsgdict.h"
@@ -330,7 +330,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       createIndexFromContents();
       return false;
   } else if(indexVersion > INDEX_VERSION) {
-      QApplication::setOverrideCursor(KCursor::arrowCursor());
+      QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
       int r = KMessageBox::questionYesNo(0,
 					 i18n(
 					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
