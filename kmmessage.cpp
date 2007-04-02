@@ -41,7 +41,6 @@ using KMail::TemplateParser;
 #include <kconfig.h>
 #include <khtml_part.h>
 #include <kuser.h>
-#include <kidna.h>
 #include <kresolver.h>
 #include <kconfiggroup.h>
 
