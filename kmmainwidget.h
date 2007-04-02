@@ -244,25 +244,30 @@ public slots:
 
 signals:
   void messagesTransfered( bool );
-  void captionChangeRequest( const QString & caption );
+  void captionChangeRequest( const QString &caption );
 
 protected:
   void setupActions();
   void createWidgets();
   void activatePanners();
-  void showMsg(KMReaderWin *win, KMMessage *msg);
+  void showMsg( KMReaderWin *win, KMMessage *msg );
   void updateFileMenu();
   void newFromTemplate( KMMessage *msg );
 
-  KActionCollection * actionCollection() const { return mActionCollection; }
+  // helper functions for keeping reference to mFolder
+  void openFolder();
+  void closeFolder();
 
-  /** @return the correct config dialog depending on whether the parent of the mainWidget
-   *          is a KPart or a KMMainWindow. When dealing with geometries, use this pointer
+  KActionCollection *actionCollection() const { return mActionCollection; }
+
+  /** @return the correct config dialog depending on whether the parent of
+   *          the mainWidget is a KPart or a KMMainWindow.
+   *          When dealing with geometries, use this pointer
    */
-  KConfig * config();
+  KConfig *config();
 
 protected slots:
-  void slotCheckOneAccount(QAction*);
+  void slotCheckOneAccount( QAction* );
   void slotMailChecked( bool newMail, bool sendOnCheck,
                         const QMap<QString, int> & newInFolder );
   void getAccountMenu();

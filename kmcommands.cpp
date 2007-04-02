@@ -68,7 +68,7 @@
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
-#include <kdirselectdialog.h>
+#include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
@@ -2442,9 +2442,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   KUrl url, dirUrl;
   if ( mAttachmentMap.count() > 1 ) {
     // get the dir
-    dirUrl = KDirSelectDialog::selectDirectory( QString(), false,
-                                                parentWidget(),
-                                                i18n("Save Attachments To") );
+    dirUrl = KFileDialog::getExistingDirectoryUrl( QString(),
+                                                   parentWidget(),
+                                                   i18n("Save Attachments To") );
     if ( !dirUrl.isValid() ) {
       setResult( Canceled );
       emit completed( this );
@@ -2452,7 +2452,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       return;
     }
 
-    // we may not get a slash-terminated url out of KDirSelectDialog
+    // we may not get a slash-terminated url out of KFileDialog
     dirUrl.adjustPath( KUrl::AddTrailingSlash );
   }
   else {
