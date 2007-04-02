@@ -55,7 +55,8 @@ ListJob::ListJob( ImapAccountBase* account, ImapAccountBase::ListType type,
     KPIM::ProgressItem* item )
  : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
    mStorage( storage ), mAccount( account ), mType( type ),
-   mComplete( complete ), mPath( path ),
+   mComplete( complete ),
+   mHonorLocalSubscription( false ), mPath( path ),
    mParentProgressItem( item )
 {
 }
@@ -101,7 +102,7 @@ void ListJob::execute()
   jd.total = 1; jd.done = 0;
   jd.cancellable = true;
   jd.parent = mDestFolder;
-  jd.onlySubscribed = ( mType == ImapAccountBase::ListSubscribed || 
+  jd.onlySubscribed = ( mType == ImapAccountBase::ListSubscribed ||
                         mType == ImapAccountBase::ListSubscribedNoCheck ||
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
@@ -131,12 +132,12 @@ void ListJob::execute()
   QString section;
   if ( mComplete )
     section = ";SECTION=COMPLETE";
-  else if ( mType == ImapAccountBase::ListFolderOnly || 
+  else if ( mType == ImapAccountBase::ListFolderOnly ||
             mType == ImapAccountBase::ListFolderOnlySubscribed )
     section = ";SECTION=FOLDERONLY";
-  
+
   KURL url = mAccount->getUrl();
-  url.setPath( mPath 
+  url.setPath( mPath
       + ";TYPE=" + ltype
       + section );
   // go
@@ -221,6 +222,11 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
           || mimeType == "message/directory")
          && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.') )
     {
+      if ( mHonorLocalSubscription && mAccount->onlyLocallySubscribedFolders()
+        && !mAccount->locallySubscribedTo( url.path() ) ) {
+          continue;
+      }
+
       // Some servers send _lots_ of duplicates
       // This check is too slow for huge lists
       if ( mSubfolderPaths.count() > 100 ||
@@ -233,6 +239,17 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       }
     }
   }
+}
+
+
+void KMail::ListJob::setHonorLocalSubscription( bool value )
+{
+  mHonorLocalSubscription = value;
+}
+
+bool KMail::ListJob::honorLocalSubscription() const
+{
+  return mHonorLocalSubscription;
 }
 
 #include "listjob.moc"

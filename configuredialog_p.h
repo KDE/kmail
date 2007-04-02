@@ -1006,6 +1006,7 @@ private:
   KMail::AccountComboBox* mAccountCombo; // in the widgetstack
 
   QCheckBox* mHideGroupwareFolders;
+  QCheckBox* mOnlyShowGroupwareFolders;
   QCheckBox* mAutoResCB;
   QCheckBox* mAutoDeclConflCB;
   QCheckBox* mAutoDeclRecurCB;

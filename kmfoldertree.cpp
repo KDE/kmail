@@ -691,7 +691,10 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     KMFolderTreeItem * fti = 0;
     if (!parent)
     {
-      // create new root-item
+      // create new root-item, but only if this is not the root of a 
+      // "groupware folders only" account
+      if ( kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
+        continue;
       // it needs a folder e.g. to save it's state (open/close)
       fti = new KMFolderTreeItem( this, folder->label(), folder );
       fti->setExpandable( true );
@@ -1087,6 +1090,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     folderMenu->insertItem(SmallIconSet("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
+    folderMenu->insertItem(SmallIcon("bookmark_folder"),
+        i18n("Local Subscription..."), mMainWidget,
+        SLOT(slotLocalSubscriptionDialog()));
 
     if (!fti->folder()->noContent())
     {
@@ -1319,8 +1325,11 @@ void KMFolderTree::cleanupConfigFile()
     if (folderMap.find(name) == folderMap.end())
     {
       KMFolder* folder = kmkernel->findFolderById( name );
-      if ( folder && kmkernel->iCalIface().hideResourceFolder( folder ) )
+      if ( folder ) {
+          if ( kmkernel->iCalIface().hideResourceFolder( folder )
+           ||  kmkernel->iCalIface().hideResourceAccountRoot( folder ) )
         continue; // hidden IMAP resource folder, don't delete info
+      }
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
       config->deleteGroup(*grpIt, TRUE);

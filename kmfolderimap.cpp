@@ -767,6 +767,7 @@ bool KMFolderImap::listDirectory()
     type = ImapAccountBase::ListSubscribed;
   KMail::ListJob* job = new  KMail::ListJob( account(), type, this );
   job->setParentProgressItem( account()->listDirProgressItem() );
+  job->setHonorLocalSubscription( true );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,

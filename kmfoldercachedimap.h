@@ -290,6 +290,7 @@ protected slots:
   void slotCheckUidValidityResult( KMail::FolderJob* job );
   void slotTestAnnotationResult(KIO::Job *job);
   void slotGetAnnotationResult( KIO::Job* );
+  void slotMultiUrlGetAnnotationResult( KIO::Job* );
   void slotSetAnnotationResult(KIO::Job *job);
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
@@ -313,6 +314,7 @@ protected:
   void createNewFolders();
 
   void listDirectory2();
+  void createFoldersNewOnServerAndFinishListing( const QValueVector<int> foldersNewOnServer );
 
 
   /** Utility methods for syncing. Finds new messages

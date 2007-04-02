@@ -92,6 +92,18 @@ class MultiGetAnnotationJob;
  */
 MultiGetAnnotationJob* multiGetAnnotation( KIO::Slave* slave, const KURL& url, const QStringList& entries );
 
+class MultiUrlGetAnnotationJob;
+/**
+ * Get annotation entries for multiple folders.
+ * @param paths The paths to get the annotation for 
+ * @param annotation The annotation to get
+ */
+MultiUrlGetAnnotationJob* multiUrlGetAnnotation( KIO::Slave* slave,
+                                              const KURL& baseUrl,
+                                              const QStringList& paths,
+                                              const QString& annotation );
+
+
 /// for getAnnotation()
 class GetAnnotationJob : public KIO::SimpleJob
 {
@@ -130,6 +142,30 @@ private:
   const KURL mUrl;
   const QStringList mEntryList;
   QStringList::const_iterator mEntryListIterator;
+};
+
+/// for multiUrlGetAnnotation
+class MultiUrlGetAnnotationJob : public KIO::Job
+{
+  Q_OBJECT
+
+public:
+  MultiUrlGetAnnotationJob( KIO::Slave* slave, const KURL& baseUrl,
+                            const QStringList& paths, const QString& annotation );
+
+  QMap<QString, QString> annotations() const;
+
+protected slots:
+  virtual void slotStart();
+  virtual void slotResult( KIO::Job *job );
+
+private:
+  KIO::Slave* mSlave;
+  const KURL mUrl;
+  const QStringList mPathList;
+  QStringList::const_iterator mPathListIterator;
+  QString mAnnotation;
+  QMap<QString, QString> mAnnotations;
 };
 
 /// for multiSetAnnotation
