@@ -133,6 +133,9 @@ void KMFolderImap::close(const char *owner, bool aForced)
           msg->setTransferInProgress( false );
     }
   }
+
+  mCheckingValidity = false;
+
   // The inherited close will decrement again, so we have to adjust.
   mOpenCount++;
   KMFolderMbox::close(owner, aForced);
@@ -1109,6 +1112,10 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
+  // if we closed the folder in between, we don't want this results
+  if (!mCheckingValidity)
+    return;
+
   kdDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = account()->findJob(job);
