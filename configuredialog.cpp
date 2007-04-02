@@ -90,7 +90,7 @@ using KMime::DateFormatter;
 #include <kseparator.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
@@ -226,7 +226,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
 #ifdef Q_OS_UNIX
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
+  KWM::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
 #endif
   addModule ( "kmail_config_identity" );

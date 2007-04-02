@@ -8,7 +8,7 @@
 
 #include <config-kmail.h>
 #include <kicon.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <krun.h>
 #ifdef MALLOC_DEBUG
 #include <malloc.h>
@@ -796,7 +796,7 @@ void KMMainWidget::slotSearch()
 
   mSearchWin->show();
 #ifdef Q_OS_UNIX
-  KWin::activateWindow( mSearchWin->winId() );
+  KWM::activateWindow( mSearchWin->winId() );
 #endif
 }
 

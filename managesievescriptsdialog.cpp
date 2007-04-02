@@ -11,7 +11,7 @@
 
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
@@ -45,7 +45,7 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
   setAttribute( Qt::WA_GroupLeader );
   setAttribute( Qt::WA_DeleteOnClose );
 #ifdef Q_OS_UNIX  
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
+  KWM::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 #endif
   QFrame *frame =new QFrame( this );
   setMainWidget( frame );

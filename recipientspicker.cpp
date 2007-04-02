@@ -32,7 +32,7 @@
 #include <kabc/resource.h>
 #include <kiconloader.h>
 #include <kdialog.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kabc/distributionlist.h>
 #include <kmessagebox.h>
 #include <kconfiggroup.h>
@@ -262,7 +262,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mDistributionListManager( 0 )
 {
   setObjectName("RecipientsPicker");
-//  KWin::setType( winId(), NET::Dock );
+//  KWM::setType( winId(), NET::Dock );
 
   setWindowTitle( i18n("Select Recipient") );
 

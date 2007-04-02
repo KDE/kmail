@@ -20,7 +20,7 @@ using KMail::AccountManager;
 #include <klocale.h>
 #include <kinputdialog.h>
 #include <kiconloader.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kconfig.h>
 #include <kicondialog.h>
 #include <kkeysequencewidget.h>
@@ -118,7 +118,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   setButtons( Help|Ok|Apply|Cancel );
   setModal( false );
 #ifdef Q_OS_UNIX  
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
+  KWM::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 #endif  
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 

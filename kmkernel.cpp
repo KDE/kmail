@@ -41,7 +41,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmsystemtray.h"
 #include "transportmanager.h"
 
-#include <kwin.h>
+#include <kwm.h>
 #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
@@ -368,7 +368,7 @@ void KMKernel::openReader( bool onlyCheck )
   }
 
   if ( activate ) {
-    // Activate window - doing this instead of KWin::activateWindow(mWin->winId());
+    // Activate window - doing this instead of KWM::activateWindow(mWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId( mWin, kapp->startupId() );
@@ -438,7 +438,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     cWin->addAttach((*it));
   if (hidden == 0) {
     cWin->show();
-    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // Activate window - doing this instead of KWM::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
@@ -480,7 +480,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   cWin->setCharset("", true);
   if (!hidden) {
     cWin->show();
-    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // Activate window - doing this instead of KWM::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );

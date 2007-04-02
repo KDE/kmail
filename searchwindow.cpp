@@ -39,7 +39,7 @@
 #include <kactionmenu.h>
 #include <kdebug.h>
 #include <kstatusbar.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kstandardaction.h>
@@ -139,7 +139,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
 #ifdef Q_OS_UNIX
-  KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
+  KWM::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 #endif
 
   KConfig* config = KMKernel::config();
