@@ -14,7 +14,7 @@ kde4_automoc(${utiltests_SRCS})
 
 kde4_add_executable(utiltests NOGUI RUN_UNINSTALLED ${utiltests_SRCS})
 
-target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY})
+target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY} ${QT_QT3SUPPORT_LIBRARY})
 
 add_test(kmail-utiltests ${EXECUTABLE_OUTPUT_PATH}/utiltests)
 
