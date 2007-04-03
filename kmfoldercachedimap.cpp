@@ -1247,32 +1247,65 @@ void KMFolderCachedImap::uploadNewMessages()
       job->start();
       return;
     } else {
-      const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
-            "have not been uploaded to the server yet, but you do not seem to "
-            "have sufficient access rights on the folder now to upload them. "
-            "Please contact your administrator to allow upload of new messages "
-            "to you, or move them out of this folder.</p> "
-            "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
-      if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
-        KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
-            i18n("Move Messages to Folder"), true );
-        if ( dlg.exec() ) {
-          KMFolder* dest = dlg.folder();
-          if ( dest ) {
-            QPtrList<KMMsgBase> msgs;
-            for( int i = 0; i < count(); ++i ) {
-              KMMsgBase *msg = getMsgBase( i );
-              if( !msg ) continue; /* what goes on if getMsg() returns 0? */
-              if ( msg->UID() == 0 )
-                msgs.append( msg );
-            }
-            KMCommand *command = new KMMoveCommand( dest, msgs );
-            connect( command, SIGNAL( completed( KMCommand * ) ),
-                     this, SLOT( serverSyncInternal() ) );
-            command->start();
-            return;
+      KMFolder *dest = 0;
+      bool manualMove = true;
+      while ( GlobalSettings::autoLostFoundMove() ) {
+        // find the inbox of this account
+        KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
+        if ( !inboxFolder ) {
+          kdWarning(5006) << k_funcinfo << "inbox not found!" << endl;
+          break;
+        }
+        KMFolderDir *inboxDir = inboxFolder->child();
+        assert( inboxDir );
+        if ( !inboxDir )
+          break;
+
+        // create lost+found folder if needed
+        KMFolderNode *node;
+        if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
+          kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
+          KMFolder *folder = inboxDir->createFolder( i18n("lost+found"), false, folderType() );
+          folder->storage()->setContentsType( contentsType() );
+          folder->storage()->writeConfig();
+          dest = folder;
+        } else {
+          dest = dynamic_cast<KMFolder*>( node );
+        }
+        if ( !dest )
+          break;
+        manualMove = false;
+        break;
+      }
+
+      if ( manualMove ) {
+        const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
+              "have not been uploaded to the server yet, but you do not seem to "
+              "have sufficient access rights on the folder now to upload them. "
+              "Please contact your administrator to allow upload of new messages "
+              "to you, or move them out of this folder.</p> "
+              "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
+        if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
+          KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
+              i18n("Move Messages to Folder"), true );
+          if ( dlg.exec() ) {
+            dest = dlg.folder();
           }
         }
+      }
+      if ( dest ) {
+        QPtrList<KMMsgBase> msgs;
+        for( int i = 0; i < count(); ++i ) {
+          KMMsgBase *msg = getMsgBase( i );
+          if( !msg ) continue; /* what goes on if getMsg() returns 0? */
+          if ( msg->UID() == 0 )
+            msgs.append( msg );
+        }
+        KMCommand *command = new KMMoveCommand( dest, msgs );
+        connect( command, SIGNAL( completed( KMCommand * ) ),
+                  this, SLOT( serverSyncInternal() ) );
+        command->start();
+        return;
       }
     }
   }
