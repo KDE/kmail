@@ -661,12 +661,12 @@ private:
 */
 class KMFolderCloser {
   KMFolder * f;
-  QString mOwner;
+  QByteArray mOwner;
 public:
   KMFolderCloser( const char *owner, KMFolder *folder ) : f( folder ),  mOwner( owner ) {}
   ~KMFolderCloser() {
     if ( f ) {
-      f->close( mOwner.latin1() );
+      f->close( mOwner );
     }
   }
   KMFolder * folder() const { return f; }
