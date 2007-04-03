@@ -114,6 +114,7 @@ namespace {
   CREATE_BODY_PART_FORMATTER(ApplicationPkcs7Mime)
   CREATE_BODY_PART_FORMATTER(ApplicationChiasmusText)
   //CREATE_BODY_PART_FORMATTER(ApplicationPgp)
+  CREATE_BODY_PART_FORMATTER(ApplicationMsTnef)
 
   CREATE_BODY_PART_FORMATTER(MessageRfc822)
 
@@ -147,6 +148,7 @@ static const SubtypeBuiltin applicationSubtypeBuiltins[] = {
   { "x-pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
   { "vnd.de.bund.bsi.chiasmus-text", &ApplicationChiasmusTextBodyPartFormatter::create },
   { "pgp", &ApplicationPgpBodyPartFormatter::create },
+  { "ms-tnef", &ApplicationMsTnefBodyPartFormatter::create }
 };
 
 static const SubtypeBuiltin textSubtypeBuiltins[] = {
@@ -286,8 +288,8 @@ static const KMail::BodyPartFormatter * createForApplication( const char * subty
       break;
     case 'm':
     case 'M':
-      //if ( kasciistricmp( subtype, "ms-tnef" ) == 0 )
-      //  return ApplicationMsTnefBodyPartFormatter::create();
+      if ( kasciistricmp( subtype, "ms-tnef" ) == 0 )
+        return ApplicationMsTnefBodyPartFormatter::create();
       break;
     case 'v':
     case 'V':

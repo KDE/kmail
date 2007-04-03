@@ -65,7 +65,7 @@ namespace KParts {
   struct URLArgs;
 }
 
-/** 
+/**
    This class implements a "reader window", that is a window
    used for reading or viewing messages.
 */
@@ -405,6 +405,13 @@ protected:
       name of this file or QString::null if writing failed.
   */
   QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
+
+  /**
+    Creates a temporary dir for saving attachments, etc.
+    Will be automatically deleted when another message is viewed.
+    @param param Optional part of the directory name.
+  */
+  QString createTempDir( const QString &param = QString() );
 
   /** show window containing infos about a vCard. */
   void showVCard(KMMessagePart *msgPart);

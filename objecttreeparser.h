@@ -2,7 +2,7 @@
     objecttreeparser.h
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2002-2003 Klar√§lvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -222,6 +222,7 @@ namespace KMail {
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
     bool processApplicationChiasmusTextSubtype( partNode * node, ProcessResult & result );
+    bool processApplicationMsTnefSubtype( partNode *node, ProcessResult &result );
 
   private:
     bool decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText );
