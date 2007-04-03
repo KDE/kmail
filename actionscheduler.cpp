@@ -399,7 +399,7 @@ void ActionScheduler::fetchMessage()
   //If we got this far then there's a valid message to work with
   KMMsgBase *msgBase = messageBase( *mFetchMessageIt );
 
-  if ((mResult != ResultOk) || (!msgBase)) {
+  if ( !msgBase || mResult != ResultOk ) {
     mFetchExecuting = false;
     return;
   }
