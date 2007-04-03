@@ -709,12 +709,13 @@ void KMReaderWin::slotAllHeaders() {
 
 void KMReaderWin::slotLevelQuote( int l )
 {
-  kDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
-	mLevelQuote = l;
-  QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->widget()->pos().y() / scrollview->widget()->size().height();
+  kDebug(5006) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
+  mLevelQuote = l;
+  QScrollArea *scrollview = mViewer->view();
+  mSavedRelativePosition = (float)scrollview->widget()->pos().y() /
+                           scrollview->widget()->size().height();
 
-  update(true);
+  update( true );
 }
 
 void KMReaderWin::slotCycleHeaderStyles() {
@@ -1376,23 +1377,23 @@ void KMReaderWin::enableMsgDisplay() {
 
 void KMReaderWin::updateReaderWin()
 {
-  if (!mMsgDisplay) return;
+  if ( !mMsgDisplay ) {
+    return;
+  }
 
-  mViewer->setOnlyLocalReferences(!htmlLoadExternal());
+  mViewer->setOnlyLocalReferences( !htmlLoadExternal() );
 
   htmlWriter()->reset();
 
-  KMFolder* folder;
-  if (message(&folder))
-  {
-    if ( mShowColorbar )
+  KMFolder *folder;
+  if ( message( &folder ) ) {
+    if ( mShowColorbar ) {
       mColorBar->show();
-    else
+    } else {
       mColorBar->hide();
+    }
     displayMessage();
-  }
-  else
-  {
+  } else {
     mColorBar->hide();
     mMimePartTree->hide();
     mMimePartTree->clear();
@@ -1401,10 +1402,11 @@ void KMReaderWin::updateReaderWin()
     htmlWriter()->end();
   }
 
-  if (mSavedRelativePosition)
-  {
-    QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
-    scrollview->widget()->move( 0, qRound(scrollview->widget()->size().height() * mSavedRelativePosition) );
+  if ( mSavedRelativePosition ) {
+    QScrollArea *scrollview = mViewer->view();
+    scrollview->widget()->move( 0,
+                                qRound( scrollview->widget()->size().height() *
+                                        mSavedRelativePosition ) );
     mSavedRelativePosition = 0;
   }
 }
@@ -1958,13 +1960,13 @@ void KMReaderWin::slotFind()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
-  QScrollArea * scrollview = static_cast<QScrollArea *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->widget()->pos().y() / scrollview->widget()->size().height();
+  QScrollArea * scrollview = mViewer->view();
+  mSavedRelativePosition = (float)scrollview->widget()->pos().y() /
+                           scrollview->widget()->size().height();
 
   mUseFixedFont = !mUseFixedFont;
-  update(true);
+  update( true );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotCopySelectedText()
@@ -2221,41 +2223,38 @@ void KMReaderWin::openAttachment( int id, const QString & name )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
-  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, -10);
+  mViewer->view()->scrollBy( 0, -10 );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollDown()
 {
-  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, 10);
+  mViewer->view()->scrollBy( 0, 10 );
 }
 
 bool KMReaderWin::atBottom() const
 {
-    const Q3ScrollView *view = static_cast<const Q3ScrollView *>(mViewer->widget());
-    return view->contentsY() + view->visibleHeight() >= view->contentsHeight();
+  KHTMLView *view = mViewer->view();
+  return view->contentsY() + view->visibleHeight() >= view->contentsHeight();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotJumpDown()
 {
-    Q3ScrollView *view = static_cast<Q3ScrollView *>(mViewer->widget());
-    int offs = (view->clipper()->height() < 30) ? view->clipper()->height() : 30;
-    view->scrollBy( 0, view->clipper()->height() - offs );
+  mViewer->view()->scrollBy( 0, mViewer->view()->visibleHeight() );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, -(int)(height()*0.8));
+  mViewer->view()->scrollBy( 0, -(int)(height() * 0.8 ) );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));
+  mViewer->view()->scrollBy( 0, (int)(height() * 0.8 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -2263,7 +2262,6 @@ void KMReaderWin::slotDocumentChanged()
 {
 
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
@@ -2285,38 +2283,31 @@ QString KMReaderWin::copyText()
   return temp;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentDone()
 {
-  // mSbVert->setValue(0);
 }
 
-
 //-----------------------------------------------------------------------------
-void KMReaderWin::setHtmlOverride(bool override)
+void KMReaderWin::setHtmlOverride( bool override )
 {
   mHtmlOverride = override;
-  if (message())
-      message()->setDecodeHTML(htmlMail());
+  if ( message() ) {
+    message()->setDecodeHTML( htmlMail() );
+  }
 }
-
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setHtmlLoadExtOverride(bool override)
+void KMReaderWin::setHtmlLoadExtOverride( bool override )
 {
   mHtmlLoadExtOverride = override;
-  //if (message())
-  //    message()->setDecodeHTML(htmlMail());
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlMail()
 {
   return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMReaderWin::htmlLoadExternal()
@@ -2325,18 +2316,17 @@ bool KMReaderWin::htmlLoadExternal()
           (!mHtmlLoadExternal && mHtmlLoadExtOverride));
 }
 
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )
 {
-  KMMessage* msg = message();
-  if ( msg )
+  KMMessage *msg = message();
+  if ( msg ) {
     setMsg( msg, force );
+  }
 }
 
-
 //-----------------------------------------------------------------------------
-KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
+KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
 {
   KMFolder*  tmpFolder;
   KMFolder*& folder = aFolder ? *aFolder : tmpFolder;
@@ -2355,8 +2345,6 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
   }
   return 0;
 }
-
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlClicked()
