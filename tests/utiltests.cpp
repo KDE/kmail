@@ -8,7 +8,7 @@
 #include "utiltests.h"
 #include "utiltests.moc"
 
-QTEST_KDEMAIN( UtilTester, NoGUI )
+QTEST_KDEMAIN_CORE( UtilTester )
 
 #include "util.h"
 #include <mimelib/string.h>
