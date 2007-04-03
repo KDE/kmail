@@ -59,6 +59,17 @@ void UtilTester::test_lf2crlf()
   COMPARE( makePrintable( arrConv ), QString("") );
 }
 
+void UtilTester::test_crlf2lf()
+{
+  QCString src = "\r\n\r\nfoo\r\n\r\nbar\rblah\r\n\r\r\n\r\n\r";
+  int len = src.length();
+  COMPARE( src[len], '\0' );
+  int newLen = KMail::Util::crlf2lf( src.data(), len );
+  VERIFY( newLen <= len );
+  QCString cstr( src.data(), newLen + 1 );
+  COMPARE( makePrintable( cstr ), makePrintable("\n\nfoo\n\nbar\rblah\n\r\n\n\r") );
+}
+
 void UtilTester::test_escapeFrom()
 {
   // TODO should take a DwString, then fix kmfoldermbox.cpp:1021      msgText = escapeFrom( aMsg->asString() );

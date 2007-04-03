@@ -169,7 +169,6 @@ public slots:
 
 public:
   //See base class for documentation
-  virtual QCString& getMsgString(int idx, QCString& mDest);
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
   virtual int open();
   virtual int canAccess();

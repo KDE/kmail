@@ -9,8 +9,6 @@
 
 #include <kunittest/tester.h>
 
-class KMDict;
-
 class UtilTester : public KUnitTest::SlotTester
 {
   Q_OBJECT
@@ -19,6 +17,7 @@ public slots:
   void setUp();
   void tearDown();
   void test_lf2crlf();
+  void test_crlf2lf();
   void test_escapeFrom();
   void test_append();
   void test_insert();

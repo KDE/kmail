@@ -60,8 +60,7 @@ public:
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeMbox; }
 
-  /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  /** Read a message and return it as a string */
   DwString getDwString(int idx);
 
   /** Add the given message to the folder. Usually the message

@@ -183,9 +183,6 @@ public:
   /** Checks if the message is already "gotten" with getMsg */
   bool isMessage(int idx);
 
-  /** Read a message and return a referece to a string */
-  QCString& getMsgString(int idx, QCString& mDest);
-
   /** Read a message and returns a DwString */
   DwString getDwString(int idx);
 

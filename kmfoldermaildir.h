@@ -28,8 +28,7 @@ public:
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeMaildir; }
 
-  /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  /** Read a message and return it as a string */
   virtual DwString getDwString(int idx);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
