@@ -32,7 +32,7 @@
 #include <kactionmenu.h>
 #include <klocale.h>
 #include <kstandardshortcut.h>
-#include <kwin.h>
+#include <kwm.h>
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kstandardaction.h>
