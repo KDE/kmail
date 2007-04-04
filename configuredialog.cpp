@@ -94,7 +94,7 @@ using KMime::DateFormatter;
 #include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
-#include <kresolver.h>
+#include <k3resolver.h>
 #include <kconfiggroup.h>
 
 // Qt headers:

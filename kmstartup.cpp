@@ -32,7 +32,7 @@
 #include <kglobal.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
-#include <kresolver.h>
+#include <k3resolver.h>
 #include <kconfiggroup.h>
 
 #include <errno.h>
