@@ -1257,23 +1257,51 @@ void KMFolderCachedImap::uploadNewMessages()
           break;
         }
         KMFolderDir *inboxDir = inboxFolder->child();
-        assert( inboxDir );
-        if ( !inboxDir )
+        if ( !inboxDir && !inboxFolder->storage() )
           break;
+        assert( inboxFolder->storage()->folderType() == KMFolderTypeCachedImap );
 
         // create lost+found folder if needed
         KMFolderNode *node;
+        KMFolder *lfFolder = 0;
         if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
           kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
-          KMFolder *folder = inboxDir->createFolder( i18n("lost+found"), false, folderType() );
-          folder->storage()->setContentsType( contentsType() );
+          KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
+              i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
+          if ( !folder || !folder->storage() )
+            break;
+          static_cast<KMFolderCachedImap*>( folder->storage() )->initializeFrom(
+            static_cast<KMFolderCachedImap*>( inboxFolder->storage() ) );
+          folder->storage()->setContentsType( KMail::ContentsTypeMail );
           folder->storage()->writeConfig();
-          dest = folder;
+          lfFolder = folder;
         } else {
-          dest = dynamic_cast<KMFolder*>( node );
+          kdDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
+          lfFolder = dynamic_cast<KMFolder*>( node );
         }
-        if ( !dest )
+        if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
           break;
+
+        // create subfolder for this incident
+        QDate today = QDate::currentDate();
+        QString baseName = folder()->label() + "-" + QString::number( today.year() )
+            + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
+            + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
+        QString name = baseName;
+        int suffix = 0;
+        while ( (node = lfFolder->child()->hasNamedFolder( name )) ) {
+          ++suffix;
+          name = baseName + '-' + QString::number( suffix );
+        }
+        kdDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
+        dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
+        if ( !dest || !dest->storage() )
+            break;
+        static_cast<KMFolderCachedImap*>( dest->storage() )->initializeFrom(
+          static_cast<KMFolderCachedImap*>( lfFolder->storage() ) );
+        dest->storage()->setContentsType( contentsType() );
+        dest->storage()->writeConfig();
+
         manualMove = false;
         break;
       }
