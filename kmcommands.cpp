@@ -955,7 +955,7 @@ KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
   if ( mUrl.isEmpty() ) {
-    mUrl = KFileDialog::getOpenURL( ":OpenMessage", "message/rfc822",
+    mUrl = KFileDialog::getOpenURL( ":OpenMessage", "message/rfc822 application/mbox",
                                     parentWidget(), i18n("Open Message") );
   }
   if ( mUrl.isEmpty() ) {
