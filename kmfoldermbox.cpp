@@ -264,7 +264,7 @@ void KMFolderMbox::close(const char *owner, bool aForced)
   if (mOpenCount <= 0 || !mStream) { mOpenCount = 0; return; }
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) { assert(mStream); return; }
-  
+
 #if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
   if ( (folder() != kmkernel->inboxFolder())
         && folder()->isSystemFolder() && !aForced )
@@ -1269,17 +1269,11 @@ int KMFolderMbox::compact( bool silent )
 {
   // This is called only when the user explicitely requests compaction,
   // so we don't check needsCompact.
-  int openCount = mOpenCount;
 
   KMail::MboxCompactionJob* job = new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
   int rc = job->executeNow( silent );
   // Note that job autodeletes itself.
 
-  if (openCount > 0)
-  {
-    open("mboxcompact");
-    mOpenCount = openCount;
-  }
   // If this is the current folder, the changed signal will ultimately call
   // KMHeaders::setFolderInfoStatus which will override the message, so save/restore it
   QString statusMsg = BroadcastStatus::instance()->statusMsg();

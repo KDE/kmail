@@ -221,6 +221,8 @@ public slots:
   void msgChanged();
   /** For when the folder has been cleared */
   void folderCleared();
+  /** For when the folder has been cleared */
+  void folderClosed();
   /** For when the message with the given message id has been added to a folder */
   void msgAdded(int);
   /** For when the message with the given id has been removed for a folder */

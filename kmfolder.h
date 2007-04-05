@@ -540,6 +540,10 @@ signals:
     folder changed. */
   void changed();
 
+  /** Emitted when the folder is closed for real - ticket holders should
+   * discard any messages */
+  void closed();
+
   /** Emitted when the contents of a folder have been cleared
      (new search in a search folder, for example) */
   void cleared();

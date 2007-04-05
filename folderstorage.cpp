@@ -84,6 +84,8 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
 
   mHasChildren = HasNoChildren;
   mContentsType = KMail::ContentsTypeMail;
+ 
+  connect(this, SIGNAL(closed(KMFolder*)), mFolder, SIGNAL(closed()));  
 }
 
 //-----------------------------------------------------------------------------
@@ -627,7 +629,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
   QString oldName;
-  int rc=0, openCount=mOpenCount;
+  int rc=0;
   KMFolderDir *oldParent;
 
   assert(!newName.isEmpty());
@@ -697,11 +699,6 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
     }
   }
 
-  if (openCount > 0)
-  {
-    open("rename");
-    mOpenCount = openCount;
-  }
   writeConfig();
 
   // delete the old entry as we get two entries with the same ID otherwise
@@ -711,6 +708,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   emit locationChanged( oldLoc, newLoc );
   emit nameChanged();
   kmkernel->folderMgr()->contentsChanged();
+  emit closed(folder()); // let the ticket owners regain
   return rc;
 }
 
@@ -738,6 +736,7 @@ void FolderStorage::remove()
   KConfig* config = KMKernel::config();
   config->deleteGroup( "Folder-" + folder()->idString() );
 
+  emit closed(folder());
   emit removed(folder(), (rc ? false : true));
 }
 
@@ -745,8 +744,6 @@ void FolderStorage::remove()
 //-----------------------------------------------------------------------------
 int FolderStorage::expunge()
 {
-  int openCount = mOpenCount;
-
   assert(!folder()->name().isEmpty());
 
   clearIndex( true, mExportsSernums );   // delete and remove from dict, if needed
@@ -763,12 +760,6 @@ int FolderStorage::expunge()
 
   mDirty = false;
   needsCompact = false; //we're cleared and truncated no need to compact
-
-  if (openCount > 0)
-  {
-    open("expunge");
-    mOpenCount = openCount;
-  }
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
