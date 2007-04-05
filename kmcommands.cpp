@@ -488,11 +488,14 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
-  win->setCharset(msg->codec()->name(), true);
+  win->setCharset( msg->codec()->name(), true );
   win->setReplyFocus();
   win->show();
 
@@ -510,11 +513,14 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *fmsg = msg->createForward();
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( fmsg );
-  win->setCharset(msg->codec()->name(), true);
+  win->setCharset( msg->codec()->name(), true );
   win->show();
 
   return OK;
@@ -662,25 +668,26 @@ KMCommand::Result KMEditMsgCommand::execute()
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
       ( !kmkernel->folderIsDraftOrOutbox( msg->parent() ) &&
-	!kmkernel->folderIsTemplates( msg->parent() ) ) )
+	!kmkernel->folderIsTemplates( msg->parent() ) ) ) {
     return Failed;
+  }
 
   // Remember the old parent, we need it a bit further down to be able
   // to put the unchanged messsage back in the original folder if the nth
   // edit is discarded, for n > 1.
   KMFolder *parent = msg->parent();
-  if ( parent )
+  if ( parent ) {
     parent->take( parent->find( msg ) );
+  }
 
-  KMail::Composer * win = KMail::makeComposer();
-  msg->setTransferInProgress(false); // From here on on, the composer owns the message.
-  win->setMsg(msg, false, true);
+  KMail::Composer *win = KMail::makeComposer();
+  msg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+  win->setMsg( msg, false, true );
   win->setFolder( parent );
   win->show();
 
   return OK;
 }
-
 
 KMUseTemplateCommand::KMUseTemplateCommand( QWidget *parent, KMMessage *msg )
   :KMCommand( parent, msg )
@@ -691,8 +698,9 @@ KMCommand::Result KMUseTemplateCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->parent() ||
-       !kmkernel->folderIsTemplates( msg->parent() ) )
+       !kmkernel->folderIsTemplates( msg->parent() ) ) {
     return Failed;
+  }
 
   // Take a copy of the original message, which remains unchanged.
   KMMessage *newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
@@ -706,9 +714,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
   return OK;
 }
 
-
 KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-  KMMessage *msg, bool fixedFont )
+                                          KMMessage *msg, bool fixedFont )
   :KMCommand( parent, msg ), mFixedFont( fixedFont )
 {
   // remember complete state
@@ -718,26 +725,31 @@ KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
 KMCommand::Result KMShowMsgSrcCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-  if ( msg->isComplete() && !mMsgWasComplete )
+  if ( !msg ) {
+    return Failed;
+  }
+  if ( msg->isComplete() && !mMsgWasComplete ) {
     msg->notify(); // notify observers as msg was transfered
+  }
   QString str = msg->codec()->toUnicode( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setWindowTitle( i18n("Message as Plain Text") );
-  viewer->setText(str);
-  if( mFixedFont )
-    viewer->setFont(KGlobalSettings::fixedFont());
+  viewer->setText( str );
+  if( mFixedFont ) {
+    viewer->setFont( KGlobalSettings::fixedFont() );
+  }
 
   // Well, there is no widget to be seen here, so we have to use QCursor::pos()
   // Update: (GS) I'm not going to make this code behave according to Xinerama
   //         configuration because this is quite the hack.
-  if (QApplication::desktop()->isVirtualDesktop()) {
-    int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
-    viewer->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
-                  2*QApplication::desktop()->screenGeometry(scnum).height()/3);
+  if ( QApplication::desktop()->isVirtualDesktop() ) {
+    int scnum = QApplication::desktop()->screenNumber( QCursor::pos() );
+    viewer->resize( QApplication::desktop()->screenGeometry( scnum ).width()/2,
+                    2 * QApplication::desktop()->screenGeometry( scnum ).height()/3);
   } else {
-    viewer->resize(QApplication::desktop()->geometry().width()/2,
-                  2*QApplication::desktop()->geometry().height()/3);
+    viewer->resize( QApplication::desktop()->geometry().width()/2,
+                    2 * QApplication::desktop()->geometry().height()/3);
   }
   viewer->show();
 
@@ -758,7 +770,9 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage *msg )
     mOffset( 0 ),
     mTotalSize( msg ? msg->msgSize() : 0 )
 {
-  if ( !msg ) return;
+  if ( !msg ) {
+    return;
+  }
   setDeletesItself( true );
   // If the mail has a serial number, operate on sernums, if it does not
   // we need to work with the pointer, but can be reasonably sure it won't
@@ -1073,6 +1087,9 @@ KMCommand::Result KMReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->name(), true );
@@ -1093,10 +1110,13 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
-  KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->name(), true);
-  win->setReplyFocus(false);
+  KMail::Composer *win = KMail::makeComposer( reply );
+  win->setCharset( msg->codec()->name(), true );
+  win->setReplyFocus( false );
   win->show();
 
   return OK;
@@ -1111,12 +1131,15 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 KMCommand::Result KMReplyListCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
-  KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
+  if ( !msg ) {
+    return Failed;
+  }
+  KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->name(), true);
-  win->setReplyFocus(false);
+  win->setCharset( msg->codec()->name(), true );
+  win->setReplyFocus( false );
   win->show();
 
   return OK;
@@ -1131,8 +1154,11 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 KMCommand::Result KMReplyToAllCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
+  if ( !msg ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->name(), true );
@@ -1153,6 +1179,9 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->name(), true );
@@ -1386,9 +1415,9 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 KMCommand::Result KMRedirectCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-  if ( !msg || !msg->codec() )
+  if ( !msg || !msg->codec() ) {
     return Failed;
-
+  }
   RedirectDialog dlg( parentWidget(), kmkernel->msgSender()->sendImmediate() );
   dlg.setObjectName( "redirect" );
   if (dlg.exec()==QDialog::Rejected) return Failed;
@@ -1416,8 +1445,11 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  KCursorSaver busy( KBusyPtr::busy() );
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
@@ -1440,6 +1472,9 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
@@ -1510,8 +1545,9 @@ KMCommand::Result KMCustomForwardCommand::execute()
   } else { // forward a single message at most
 
     KMMessage *msg = msgList.first();
-    if ( !msg || !msg->codec() )
+    if ( !msg || !msg->codec() ) {
       return Failed;
+    }
 
     KCursorSaver busy( KBusyPtr::busy() );
     KMMessage *fwdMsg = msg->createForward( mTemplate );
@@ -1749,15 +1785,15 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   QByteArray name;
   QString value;
   KMMessage *msg = retrievedMessage();
-  if (!msg)
+  if ( !msg ) {
     return Failed;
-
+  }
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
     kmkernel->filterMgr()->createFilter( name, value );
     return OK;
-  }
-  else
+  } else {
     return Failed;
+  }
 }
 
 
@@ -2759,9 +2795,11 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 KMCommand::Result KMResendMessageCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-
-  KMMessage *newMsg = new KMMessage(*msg);
-  newMsg->setCharset(msg->codec()->name());
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
+  KMMessage *newMsg = new KMMessage( *msg );
+  newMsg->setCharset( msg->codec()->name() );
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
@@ -2770,7 +2808,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->removeHeaderField( "Date" );
 
   KMail::Composer * win = KMail::makeComposer();
-  win->setMsg(newMsg, false, true);
+  win->setMsg( newMsg, false, true );
   win->show();
 
   return OK;
