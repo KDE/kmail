@@ -477,7 +477,7 @@ private:
       mLastUid. See above for details. */
   ulong mTentativeHighestUid;
 
-  int mUserRights;
+  int mUserRights, mOldUserRights;
   ACLList mACLList;
 
   bool mSilentUpload;
