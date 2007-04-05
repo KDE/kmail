@@ -696,6 +696,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(folderCleared()));
       disconnect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
+      disconnect(mFolder, SIGNAL(closed()),
+                 this, SLOT(folderClosed()));
       disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       disconnect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
@@ -730,6 +732,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
+      connect(mFolder, SIGNAL(closed()),
+                 this, SLOT(folderClosed()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
               BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
@@ -2575,36 +2579,44 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
   unsigned long msgSerNum;
   unsigned long parentSerNum;
   msgSerNum = KMMsgDict::instance()->getMsgSerNum( folder, msgid );
-  if (parent_id >= 0)
+  if (parent_id >= 0) {
     parentSerNum = KMMsgDict::instance()->getMsgSerNum( folder, parent_id ) + KMAIL_RESERVED;
-  else
+  } else {
     parentSerNum = (unsigned long)(parent_id + KMAIL_RESERVED);
+  }
 
-  fwrite(&msgSerNum, sizeof(msgSerNum), 1, sortStream);
-  fwrite(&parentSerNum, sizeof(parentSerNum), 1, sortStream);
+  fwrite( &msgSerNum, sizeof( msgSerNum ), 1, sortStream );
+  fwrite( &parentSerNum, sizeof( parentSerNum ), 1, sortStream );
   qint32 len = key.length() * sizeof(QChar);
-  fwrite(&len, sizeof(len), 1, sortStream);
-  if (len)
-    fwrite(key.unicode(), qMin(len, KMAIL_MAX_KEY_LEN), 1, sortStream);
+  fwrite( &len, sizeof(len), 1, sortStream );
+  if ( len ) {
+    fwrite( key.unicode(), qMin( len, KMAIL_MAX_KEY_LEN ), 1, sortStream );
+  }
 
-  if (update_discover) {
+  if ( update_discover ) {
     //update the discovered change count
-      qint32 discovered_count = 0;
-      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET);
-      fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
-      discovered_count++;
-      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET);
-      fwrite(&discovered_count, sizeof(discovered_count), 1, sortStream);
+    qint32 discovered_count = 0;
+    fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
+    fread( &discovered_count, sizeof(discovered_count), 1, sortStream );
+    discovered_count++;
+    fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
+    fwrite( &discovered_count, sizeof(discovered_count), 1, sortStream );
   }
 }
 
 void KMHeaders::folderCleared()
 {
-    mSortCacheItems.clear(); //autoDelete is true
-    mSubjectLists.clear();
-    mImperfectlyThreadedList.clear();
-    mPrevCurrent = 0;
-    emit selected(0);
+  mSortCacheItems.clear(); //autoDelete is true
+  mSubjectLists.clear();
+  mImperfectlyThreadedList.clear();
+  mPrevCurrent = 0;
+  emit selected(0);
+}
+
+void KMHeaders::folderClosed()
+{
+  mFolder->open( "kmheaders" );
+  folderCleared();
 }
 
 bool KMHeaders::writeSortOrder()

@@ -63,7 +63,7 @@ using KMail::ListJob;
 
 //-----------------------------------------------------------------------------
 
-FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
+FolderStorage::FolderStorage( KMFolder *folder, const char *aName )
   : QObject( folder ), mFolder( folder ), mEmitChangedTimer( 0L )
 {
   setObjectName( aName );
@@ -76,18 +76,19 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
   mTotalMsgs = -1;
-  needsCompact    = false;
-  mConvertToUtf8  = false;
-  mCompactable     = true;
-  mNoContent      = false;
-  mNoChildren     = false;
+  needsCompact = false;
+  mConvertToUtf8 = false;
+  mCompactable = true;
+  mNoContent = false;
+  mNoChildren = false;
   mRDict = 0;
-  mDirtyTimer = new QTimer(this);
-  connect(mDirtyTimer, SIGNAL(timeout()),
-	  this, SLOT(updateIndex()));
+  mDirtyTimer = new QTimer( this );
+  connect( mDirtyTimer, SIGNAL( timeout() ), this, SLOT( updateIndex() ) );
 
   mHasChildren = HasNoChildren;
   mContentsType = KMail::ContentsTypeMail;
+
+  connect( this, SIGNAL( closed(KMFolder*) ), mFolder, SIGNAL( closed() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -640,7 +641,7 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
   QString oldName;
-  int rc=0, openCount=mOpenCount;
+  int rc = 0;
   KMFolderDir *oldParent;
 
   assert( !newName.isEmpty() );
@@ -720,10 +721,6 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
     }
   }
 
-  if ( openCount > 0 ) {
-    open( "rename" );
-    mOpenCount = openCount;
-  }
   writeConfig();
 
   // delete the old entry as we get two entries with the same ID otherwise
@@ -732,6 +729,7 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   emit locationChanged( oldLoc, newLoc );
   emit nameChanged();
   kmkernel->folderMgr()->contentsChanged();
+  emit closed( folder() ); // let the ticket owners regain
   return rc;
 }
 
@@ -757,17 +755,16 @@ void FolderStorage::remove()
   needsCompact = false; //we are dead - no need to compact us
 
   // Erase settings, otherwise they might interfere when recreating the folder
-  KConfig* config = KMKernel::config();
+  KConfig *config = KMKernel::config();
   config->deleteGroup( "Folder-" + folder()->idString() );
 
+  emit closed( folder() );
   emit removed( folder(), (rc ? false : true) );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::expunge()
 {
-  int openCount = mOpenCount;
-
   assert( !folder()->name().isEmpty() );
 
   // delete and remove from dict, if needed
@@ -790,11 +787,6 @@ int FolderStorage::expunge()
 
   mDirty = false;
   needsCompact = false; //we're cleared and truncated no need to compact
-
-  if ( openCount > 0 ) {
-    open( "expunge" );
-    mOpenCount = openCount;
-  }
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;

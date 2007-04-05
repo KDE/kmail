@@ -695,7 +695,7 @@ int KMFolderMbox::createIndexFromContents()
             int cidx = contentTypeStr.find( "charset=" );
             if ( cidx != -1 ) {
               charset = contentTypeStr.mid( cidx + 8 );
-              if ( charset[0] == '"' ) {
+              if ( !charset.isNull() && charset[0] == '"' ) {
                 charset = charset.mid( 1 );
               }
               cidx = 0;
@@ -1315,17 +1315,11 @@ int KMFolderMbox::compact( bool silent )
 {
   // This is called only when the user explicitly requests compaction,
   // so we don't check needsCompact.
-  int openCount = mOpenCount;
 
   KMail::MboxCompactionJob *job =
     new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
   int rc = job->executeNow( silent );
   // Note that job autodeletes itself.
-
-  if (openCount > 0) {
-    open( "mboxcompact" );
-    mOpenCount = openCount;
-  }
 
   // If this is the current folder, the changed signal will ultimately call
   // KMHeaders::setFolderInfoStatus which will override the message,
