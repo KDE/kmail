@@ -1122,6 +1122,9 @@ KMCommand::Result KMReplyToAllCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if (!msg)
+     return Failed;
+
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
@@ -1142,6 +1145,9 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if (!msg)
+    return Failed;
+
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
@@ -1193,7 +1199,7 @@ KMCommand::Result KMForwardInlineCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, 0, true );
+        parser.process( msg, false, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
@@ -1491,7 +1497,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, 0, true );
+        parser.process( msg, false, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
