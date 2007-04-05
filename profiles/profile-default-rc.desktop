@@ -2,7 +2,6 @@
 Name=Default
 Name[af]=Standaard
 Name[ar]=الإفتراضي
-Name[be]=Па ўмаўчанні
 Name[bg]=Стандартен
 Name[br]=Dre ziouer
 Name[ca]=Omissió
@@ -59,7 +58,6 @@ Name[xh]=Engagqibekanga
 Name[zh_TW]=預設
 Comment=Standard profile
 Comment[af]=Standaard profiel
-Comment[be]=Стандартны профіль
 Comment[bg]=Стандартен профил
 Comment[ca]=Perfil estàndard
 Comment[cs]=Standardní profil

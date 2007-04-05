@@ -14,7 +14,6 @@ X-KDE-CfgDlgHierarchy=KMail
 
 Name=Misc
 Name[af]=Allerlei
-Name[be]=Рознае
 Name[bg]=Разни
 Name[br]=A bep seurt
 Name[ca]=Varis
@@ -110,7 +109,6 @@ Comment[uk]=Інші параметри
 Comment[x-test]=xxSettings that don't fit elsewherexx
 Comment[zh_TW]=不屬於任何其他地方的設定
 Keywords=kmail,misc
-Keywords[be]=K Пошта,рознае,kmail,misc
 Keywords[bg]=пощенски, клиент, е-поща, разни, настройки, kmail, misc
 Keywords[br]=kmail,a bep seurt
 Keywords[ca]=kmail,varis
