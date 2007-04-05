@@ -176,7 +176,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mFoundAnIMAPDigest( false ),
-    mUserRights( 0 ), mSilentUpload( false ),
+    mUserRights( 0 ), mOldUserRights( 0 ), mSilentUpload( false ),
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
@@ -246,6 +246,7 @@ void KMFolderCachedImap::readConfig()
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
+  mOldUserRights = mUserRights;
 
   int storageQuotaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
   int storageQuotaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
@@ -790,6 +791,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
+      mOldUserRights = mUserRights;
       newState( mProgress, i18n("Checking permissions"));
       connect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
                this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
@@ -1302,6 +1304,12 @@ void KMFolderCachedImap::uploadNewMessages()
         dest->storage()->setContentsType( contentsType() );
         dest->storage()->writeConfig();
 
+        KMessageBox::sorry( 0, i18n("<p>There are new messages in folder <b>%1</b>, which "
+              "have not been uploaded to the server yet, but you do not seem to "
+              "have sufficient access rights on the folder now to upload them.</p>"
+              "<p>All affected messages will therefore be moved to <b>%2</b>"
+              "to avoid data loss.</p>").arg( folder()->prettyURL() ).arg( dest->prettyURL() ),
+              i18n("Insufficient access rights") );
         manualMove = false;
         break;
       }
@@ -1335,6 +1343,14 @@ void KMFolderCachedImap::uploadNewMessages()
         command->start();
         return;
       }
+    }
+  } else { // nothing to upload
+    if ( mUserRights != mOldUserRights && (mOldUserRights & KMail::ACLJobs::Insert)
+         && !(mUserRights & KMail::ACLJobs::Insert) ) {
+      // write access revoked
+      KMessageBox::information( 0, i18n("<p>Your access rights to folder <b>%1</b> have been restricted, "
+          "it will no longer be possible to add messages to this folder.</p>").arg( folder()->prettyURL() ),
+          i18n("Acces rights revoked") );
     }
   }
   newState( mProgress, i18n("No messages to upload to server"));
