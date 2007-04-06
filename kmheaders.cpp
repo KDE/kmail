@@ -2086,20 +2086,18 @@ void KMHeaders::highlightMessage(Q3ListViewItem* lvi, bool markitread)
   }
 
   int idx = item->msgId();
-  if (mReaderWindowActive) {
-    KMMessage *msg = mFolder->getMsg(idx);
-    if (!msg ) {
-      emit selected( 0 );
-      mPrevCurrent = 0;
-      return;
-    }
+  KMMessage *msg = mFolder->getMsg(idx);
+  if (mReaderWindowActive && !msg) {
+    emit selected( 0 );
+    mPrevCurrent = 0;
+    return;
   }
 
   BroadcastStatus::instance()->setStatusMsg("");
   if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
-  emit selected( mFolder->getMsg(idx) );
+  emit selected( msg );
   setFolderInfoStatus();
 }
 

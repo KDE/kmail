@@ -138,6 +138,7 @@ void lockOrDie() {
   QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
   KConfig config(lockLocation, KConfig::OnlyLocal);
   int oldPid = config.readEntry("pid", -1 );
+  kDebug() << "oldPid=" << oldPid << endl;
   const QString oldHostName = config.readEntry("hostname");
   const QString oldAppName = config.readEntry( "appName", appName );
   const QString oldProgramName = config.readEntry( "programName", programName );

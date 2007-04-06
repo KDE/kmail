@@ -451,7 +451,7 @@ KMMessage* FolderStorage::take(int idx)
   return msg;
 }
 
-void FolderStorage::take(QList<KMMessage*> msgList)
+void FolderStorage::take(const QList<KMMessage*>& msgList)
 {
   for( QList<KMMessage*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )

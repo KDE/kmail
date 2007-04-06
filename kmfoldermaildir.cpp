@@ -597,29 +597,6 @@ DwString KMFolderMaildir::getDwString(int idx)
 }
 
 
-QByteArray& KMFolderMaildir::getMsgString(int idx, QByteArray& mDest)
-{
-  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-
-  assert(mi!=0);
-
-  QString abs_file(location() + "/cur/");
-  abs_file += mi->fileName();
-
-  if (QFile::exists(abs_file) == false)
-  {
-    kDebug(5006) << "The " << abs_file << " file doesn't exist!" << endl;
-    return mDest;
-  }
-
-  QFileInfo fi( abs_file );
-  mDest.resize(fi.size()+2);
-  mDest = KPIM::kFileToByteArray( abs_file, false, false );
-  const size_t newMsgSize = KMail::Util::crlf2lf( mDest.data(), fi.size() );
-  mDest.truncate( newMsgSize );
-  return mDest;
-}
-
 void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
                                             const QString& file,
                                             MessageStatus& status )

@@ -3,13 +3,13 @@
  * This file is subject to the GPL version 2.
  */
 
-#include <kdebug.h>
 #include "qtest_kde.h"
 #include "utiltests.h"
 #include "utiltests.moc"
 
 QTEST_KDEMAIN_CORE( UtilTester )
 
+#include <kdebug.h>
 #include "util.h"
 #include <mimelib/string.h>
 
@@ -29,6 +29,16 @@ void UtilTester::test_lf2crlf()
   QByteArray conv = KMail::Util::lf2crlf( src );
   QCOMPARE( makePrintable( conv ), makePrintable("\r\nfoo\r\n\r\nbar\rblah\r\n\r\r\n\r\n\r") );
   QCOMPARE( KMail::Util::lf2crlf( QByteArray("") ), QByteArray("") );
+}
+
+void UtilTester::test_crlf2lf()
+{
+  QByteArray src = "\r\n\r\nfoo\r\n\r\nbar\rblah\r\n\r\r\n\r\n\r";
+  int len = src.length();
+  QCOMPARE( (char)src[len], '\0' );
+  int newLen = KMail::Util::crlf2lf( src.data(), len );
+  QVERIFY( newLen <= len );
+  QCOMPARE( makePrintable( src ), makePrintable("\n\nfoo\n\nbar\rblah\n\r\n\n\r") );
 }
 
 void UtilTester::test_escapeFrom()

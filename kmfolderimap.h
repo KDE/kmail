@@ -366,7 +366,7 @@ void copyMsg(QList<KMMessage*>& msgList/*, KMFolder* parent*/);
 /** Detach message from this folder. Usable to call addMsg() afterwards.
 Loads the message if it is not loaded up to now. */
 virtual KMMessage* take(int idx);
-virtual void take(QList<KMMessage*>);
+virtual void take(const QList<KMMessage*>&);
 
 /**
 * Add the data a KIO::Job retrieves to the buffer

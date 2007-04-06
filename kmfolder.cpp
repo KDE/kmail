@@ -323,11 +323,6 @@ bool KMFolder::isMessage( int idx )
   return mStorage->isMessage( idx );
 }
 
-QByteArray& KMFolder::getMsgString( int idx, QByteArray& mDest )
-{
-  return mStorage->getMsgString( idx,  mDest );
-}
-
 DwString KMFolder::getDwString( int idx )
 {
   return mStorage->getDwString( idx );
@@ -377,7 +372,7 @@ KMMessage* KMFolder::take( int idx )
   return mStorage->take( idx );
 }
 
-void KMFolder::take( QList<KMMessage*> msgList )
+void KMFolder::take( const QList<KMMessage*>& msgList )
 {
   mStorage->take( msgList );
 }
@@ -407,7 +402,7 @@ void KMFolder::removeMsg( int i, bool imapQuiet )
   mStorage->removeMsg( i, imapQuiet );
 }
 
-void KMFolder::removeMsg( QList<KMMessage*> msgList, bool imapQuiet )
+void KMFolder::removeMsg( QList<KMMessage*> msgList, bool imapQuiet ) // TODO const ref
 {
   mStorage->removeMsg( msgList, imapQuiet );
 }

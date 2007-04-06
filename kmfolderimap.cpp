@@ -618,7 +618,7 @@ KMMessage* KMFolderImap::take(int idx)
   return KMFolderMbox::take(idx);
 }
 
-void KMFolderImap::take(QList<KMMessage*> msgList)
+void KMFolderImap::take(const QList<KMMessage*>& msgList)
 {
   deleteMessage(msgList);
 

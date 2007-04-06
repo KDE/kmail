@@ -15,6 +15,7 @@ class UtilTester : public QObject
 
 private slots:
   void test_lf2crlf();
+  void test_crlf2lf();
   void test_escapeFrom();
   void test_DwStringConversions();
 private:

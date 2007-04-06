@@ -499,13 +499,6 @@ void KMFolderSearch::removeSerNum(quint32 serNum)
     }
 }
 
-QByteArray& KMFolderSearch::getMsgString(int idx, QByteArray& mDest)
-{
-    KMFolder *folder = getMsgBase(idx)->parent();
-    assert(folder);
-    return folder->getMsgString(folder->find(getMsgBase(idx)), mDest);
-}
-
 int KMFolderSearch::addMsg(KMMessage*, int* index_return)
 {
     //Not supported search folder can't own messages

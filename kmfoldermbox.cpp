@@ -929,29 +929,6 @@ QByteArray KMFolderMbox::escapeFrom( const DwString & str ) {
 #undef STRDIM
 
 //-----------------------------------------------------------------------------
-QByteArray& KMFolderMbox::getMsgString(int idx, QByteArray &mDest)
-{
-  size_t msgSize;
-  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-
-  assert(mi!=0);
-  assert(mStream != 0);
-
-  msgSize = mi->msgSize();
-  mDest.resize(msgSize+2);
-
-  fseek(mStream, mi->folderOffset(), SEEK_SET);
-  fread(mDest.data(), msgSize, 1, mStream);
-  mDest[(uint)msgSize] = '\0';
-
-  size_t newMsgSize = unescapeFrom( mDest.data(), msgSize );
-  newMsgSize = KMail::Util::crlf2lf( mDest.data(), newMsgSize );
-
-  return mDest;
-}
-
-
-//-----------------------------------------------------------------------------
 DwString KMFolderMbox::getDwString(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];

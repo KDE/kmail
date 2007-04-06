@@ -188,9 +188,6 @@ public:
   /** Checks if the message is already "gotten" with getMsg */
   bool isMessage(int idx);
 
-  /** Read a message and return a referece to a string */
-  QByteArray& getMsgString(int idx, QByteArray& mDest);
-
   /** Read a message and returns a DwString */
   DwString getDwString(int idx);
 
@@ -226,7 +223,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   KMMessage* take(int idx);
-  void take(QList<KMMessage*> msgList);
+  void take(const QList<KMMessage*>& msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and

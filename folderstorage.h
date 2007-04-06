@@ -148,9 +148,6 @@ public:
   */
   virtual KMMessage* readTemporaryMsg(int idx);
 
-  /** Read a message and return a referece to a string */
-  virtual QByteArray& getMsgString(int idx, QByteArray& mDest) = 0;
-
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;
 
@@ -186,7 +183,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-  virtual void take(QList<KMMessage*> msgList);
+  virtual void take(const QList<KMMessage*>& msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
