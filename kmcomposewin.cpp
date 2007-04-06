@@ -394,6 +394,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     this, SLOT (slotSpellcheckDone (int)));
   connect (mEditor, SIGNAL( pasteImage() ),
     this, SLOT (slotPaste() ) );
+  connect (mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
+    this, SLOT ( slotAttachPNGImageData(const QByteArray &) ) );
   connect (mEditor, SIGNAL( focusChanged(bool) ),
     this, SLOT (editorFocusChanged(bool)) );
 
@@ -500,48 +502,36 @@ void KMComposeWin::addAttachment(const QString &name,
     addAttach(msgPart);
   }
 }
+
 //-----------------------------------------------------------------------------
-void KMComposeWin::addImageFromClipboard()
+void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
 {
   bool ok;
-  QFile *tmpFile;
 
-  QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
-  if ( !ok )
-    return;
-
-  mTempDir = new KTempDir();
-
-  if ( attName.toLower().endsWith(".png") )
-    tmpFile = new QFile(mTempDir->name() + attName );
-  else
-    tmpFile = new QFile(mTempDir->name() + attName + ".png" );
-
-  if ( !QApplication::clipboard()->image().save( tmpFile->fileName(), "PNG" ) ) {
-    KMessageBox::error( this, i18n("Unknown error trying to save image."), i18n("Attaching Image Failed") );
-    delete mTempDir;
-    mTempDir = 0;
+  QString attName =
+    KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
+  if ( !ok ) {
     return;
   }
 
-  addAttach( tmpFile->fileName() );
-}
-//-----------------------------------------------------------------------------
-void KMComposeWin::setBody(QString body)
-{
-  mEditor->setText(body);
+  addAttachment( attName, "base64", image, "image", "png", QByteArray(),
+                 QString(), QByteArray() );
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::event(QEvent *e)
+void KMComposeWin::setBody( QString body )
 {
-  if (e->type() == QEvent::ApplicationPaletteChange)
-  {
-     readColorConfig();
+  mEditor->setText( body );
+}
+
+//-----------------------------------------------------------------------------
+bool KMComposeWin::event( QEvent *e )
+{
+  if ( e->type() == QEvent::ApplicationPaletteChange ) {
+    readColorConfig();
   }
-  return KMail::Composer::event(e);
+  return KMail::Composer::event( e );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::readColorConfig(void)
@@ -3418,25 +3408,28 @@ void KMComposeWin::slotPasteAsAttachment()
 {
   KUrl url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
   if ( url.isValid() ) {
-    addAttach(QApplication::clipboard()->text( QClipboard::Clipboard ) );
+    addAttach( QApplication::clipboard()->text( QClipboard::Clipboard ) );
     return;
   }
 
-  if ( QApplication::clipboard()->image().isNull() )  {
+  const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+  if ( mimeData->hasImage() ) {
+    slotAttachPNGImageData( mimeData->data( "image/png" ) );
+  } else {
     bool ok;
-    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
-    if ( !ok )
+    QString attName =
+      KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
+    if ( !ok ) {
       return;
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName(attName);
-    QList<int> dummy;
-    msgPart->setBodyAndGuessCte(QByteArray(QApplication::clipboard()->text().toLatin1()), dummy,
-                                kmkernel->msgSender()->sendQuotedPrintable());
-    addAttach(msgPart);
-  }
-  else
-    addImageFromClipboard();
+    }
 
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName( attName );
+    QList<int> dummy;
+    msgPart->setBodyAndGuessCte( QByteArray( QApplication::clipboard()->text().toLatin1() ),
+                                 dummy, kmkernel->msgSender()->sendQuotedPrintable());
+    addAttach( msgPart );
+  }
 }
 
 void KMComposeWin::slotAddQuotes()
@@ -3548,43 +3541,33 @@ void KMComposeWin::slotCut()
       static_cast<QLineEdit*>(fw)->cut();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCopy()
 {
-  QWidget* fw = focusWidget();
-  if (!fw) return;
-
-#ifdef KeyPress
-#undef KeyPress
-#endif
-
-  QKeyEvent k(QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier);
-  qApp->notify(fw, &k);
+  QWidget *fw = focusWidget();
+  if ( !fw ) {
+    return;
+  }
+  QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
+  qApp->notify( fw, &k );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPaste()
 {
-  QWidget* fw = focusWidget();
-  if (!fw) return;
-
-  if ( ! QApplication::clipboard()->image().isNull() )  {
-    addImageFromClipboard();
-  }
-  else {
-
-#ifdef KeyPress
-#undef KeyPress
-#endif
-
-    QKeyEvent k(QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier);
-    qApp->notify(fw, &k);
+  QWidget *fw = focusWidget();
+  if ( !fw ) {
+    return;
   }
 
+  QMimeSource *mimeSource = QApplication::clipboard()->data();
+  if ( mimeSource->provides( "image/png" ) )  {
+    slotAttachPNGImageData( mimeSource->encodedData( "image/png" ) );
+  } else {
+    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
+    qApp->notify( fw, &k );
+  }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotMarkAll()

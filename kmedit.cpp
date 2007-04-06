@@ -64,150 +64,155 @@
 #include <assert.h>
 
 
-void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
+void KMEdit::contentsDragEnterEvent( QDragEnterEvent *e )
 {
-    if( KPIM::MailList::canDecode( e->mimeData() ) )
-        e->setAccepted(true);
-    else
-        return KEdit::contentsDragEnterEvent(e);
+  if ( KPIM::MailList::canDecode( e->mimeData() ) ) {
+    e->setAccepted( true );
+  } else if ( e->mimeData()->hasFormat( "image/png" ) ) {
+    e->accept();
+  } else {
+    return KEdit::contentsDragEnterEvent( e );
+  }
 }
 
-void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
+void KMEdit::contentsDragMoveEvent( QDragMoveEvent *e )
 {
-    if( KPIM::MailList::canDecode( e->mimeData() ) )
-        e->accept();
-    else
-        return KEdit::contentsDragMoveEvent(e);
+  if ( KPIM::MailList::canDecode( e->mimeData() ) ) {
+    e->accept();
+  } else if  ( e->mimeData()->hasFormat( "image/png" ) ) {
+    e->accept();
+  } else {
+    return KEdit::contentsDragMoveEvent( e );
+  }
 }
 
-void KMEdit::keyPressEvent( QKeyEvent* e )
+void KMEdit::keyPressEvent( QKeyEvent *e )
 {
-    if( e->key() == Qt::Key_Return ) {
-        int line, col;
+  if( e->key() == Qt::Key_Return ) {
+    int line, col;
+    getCursorPosition( &line, &col );
+    QString lineText = text( line );
+    // returns line with additional trailing space (bug in Qt?), cut it off
+    lineText.truncate( lineText.length() - 1 );
+    // special treatment of quoted lines only if the cursor is neither at
+    // the begin nor at the end of the line
+    if( ( col > 0 ) && ( col < int( lineText.length() ) ) ) {
+      bool isQuotedLine = false;
+      int bot = 0; // bot = begin of text after quote indicators
+      while( bot < lineText.length() ) {
+        if( ( lineText[bot] == '>' ) || ( lineText[bot] == '|' ) ) {
+          isQuotedLine = true;
+          ++bot;
+        }
+        else if( lineText[bot].isSpace() ) {
+          ++bot;
+        }
+        else {
+          break;
+        }
+      }
+
+      KEdit::keyPressEvent( e );
+
+      // duplicate quote indicators of the previous line before the new
+      // line if the line actually contained text (apart from the quote
+      // indicators) and the cursor is behind the quote indicators
+      if( isQuotedLine
+          && ( bot != lineText.length() )
+          && ( col >= int( bot ) ) ) {
+
+        // The cursor position might have changed unpredictably if there was selected
+        // text which got replaced by a new line, so we query it again:
         getCursorPosition( &line, &col );
-        QString lineText = text( line );
-        // returns line with additional trailing space (bug in Qt?), cut it off
-        lineText.truncate( lineText.length() - 1 );
-        // special treatment of quoted lines only if the cursor is neither at
-        // the begin nor at the end of the line
-        if( ( col > 0 ) && ( col < int( lineText.length() ) ) ) {
-            bool isQuotedLine = false;
-            int bot = 0; // bot = begin of text after quote indicators
-            while( bot < lineText.length() ) {
-                if( ( lineText[bot] == '>' ) || ( lineText[bot] == '|' ) ) {
-                    isQuotedLine = true;
-                    ++bot;
-                }
-                else if( lineText[bot].isSpace() ) {
-                    ++bot;
-                }
-                else {
-                    break;
-                }
-            }
-
-            KEdit::keyPressEvent( e );
-
-            // duplicate quote indicators of the previous line before the new
-            // line if the line actually contained text (apart from the quote
-            // indicators) and the cursor is behind the quote indicators
-            if( isQuotedLine
-                && ( bot != lineText.length() )
-                && ( col >= int( bot ) ) ) {
-
-		// The cursor position might have changed unpredictably if there was selected
-		// text which got replaced by a new line, so we query it again:
-		getCursorPosition( &line, &col );
-                QString newLine = text( line );
-                // remove leading white space from the new line and instead
-                // add the quote indicators of the previous line
-                int leadingWhiteSpaceCount = 0;
-                while( ( leadingWhiteSpaceCount < newLine.length() )
-                       && newLine[leadingWhiteSpaceCount].isSpace() ) {
-                    ++leadingWhiteSpaceCount;
-                }
-                newLine = newLine.replace( 0, leadingWhiteSpaceCount,
-                                           lineText.left( bot ) );
-                removeParagraph( line );
-                insertParagraph( newLine, line );
-                // place the cursor at the begin of the new line since
-                // we assume that the user split the quoted line in order
-                // to add a comment to the first part of the quoted line
-                setCursorPosition( line, 0 );
-            }
+        QString newLine = text( line );
+        // remove leading white space from the new line and instead
+        // add the quote indicators of the previous line
+        int leadingWhiteSpaceCount = 0;
+        while( ( leadingWhiteSpaceCount < newLine.length() )
+               && newLine[leadingWhiteSpaceCount].isSpace() ) {
+          ++leadingWhiteSpaceCount;
         }
-        else
-            KEdit::keyPressEvent( e );
+        newLine = newLine.replace( 0, leadingWhiteSpaceCount,
+                                   lineText.left( bot ) );
+        removeParagraph( line );
+        insertParagraph( newLine, line );
+        // place the cursor at the begin of the new line since
+        // we assume that the user split the quoted line in order
+        // to add a comment to the first part of the quoted line
+        setCursorPosition( line, 0 );
+      }
     }
     else
-        KEdit::keyPressEvent( e );
+      KEdit::keyPressEvent( e );
+  }
+  else
+    KEdit::keyPressEvent( e );
 }
 
-void KMEdit::contentsDropEvent(QDropEvent *e)
+void KMEdit::contentsDropEvent( QDropEvent *e )
 {
-    const QMimeData *md = e->mimeData();
-    if( KPIM::MailList::canDecode( md ) ) {
-        e->accept();
-        // Decode the list of serial numbers stored as the drag data
-        QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
-        QBuffer serNumBuffer(&serNums);
-        serNumBuffer.open(QIODevice::ReadOnly);
-        QDataStream serNumStream(&serNumBuffer);
-        quint32 serNum;
-        KMFolder *folder = 0;
-        int idx;
-        QList<KMMsgBase*> messageList;
-        while (!serNumStream.atEnd()) {
-            KMMsgBase *msgBase = 0;
-            serNumStream >> serNum;
-            KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
-            if (folder)
-                msgBase = folder->getMsgBase(idx);
-            if (msgBase)
-                messageList.append( msgBase );
-        }
-        serNumBuffer.close();
-        uint identity = folder ? folder->identity() : 0;
-        KMCommand *command =
-            new KMForwardAttachedCommand(mComposer, messageList,
-                                         identity, mComposer);
-        command->start();
-    }
-    else {
-      KUrl::List urlList = KUrl::List::fromMimeData( md );
-      if ( !urlList.isEmpty() ) {
-        e->accept();
-        KMenu p;
-        const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
-        const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
-        const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
-        if ( selectedAction == addAsTextAction ) {
-          for ( KUrl::List::Iterator it = urlList.begin();
-                it != urlList.end(); ++it ) {
-            insert( (*it).url() );
-          }
-        }
-        else if ( selectedAction == addAsAtmAction ) {
-          for ( KUrl::List::Iterator it = urlList.begin();
-                it != urlList.end(); ++it ) {
-            mComposer->addAttach( *it );
-          }
-        }
+  const QMimeData *md = e->mimeData();
+  if ( KPIM::MailList::canDecode( md ) ) {
+    e->accept();
+    // Decode the list of serial numbers stored as the drag data
+    QByteArray serNums = KPIM::MailList::serialsFromMimeData( md );
+    QBuffer serNumBuffer( &serNums );
+    serNumBuffer.open( QIODevice::ReadOnly );
+    QDataStream serNumStream( &serNumBuffer );
+    quint32 serNum;
+    KMFolder *folder = 0;
+    int idx;
+    QList<KMMsgBase*> messageList;
+    while ( !serNumStream.atEnd() ) {
+      KMMsgBase *msgBase = 0;
+      serNumStream >> serNum;
+      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
+      if ( folder ) {
+        msgBase = folder->getMsgBase( idx );
       }
-      else if ( md->hasText() ) {
-        insert( md->text() );
-        e->accept();
-      }
-      else {
-        kDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
-        return KEdit::contentsDropEvent(e);
+      if ( msgBase ) {
+        messageList.append( msgBase );
       }
     }
+    serNumBuffer.close();
+    uint identity = folder ? folder->identity() : 0;
+    KMCommand *command = new KMForwardAttachedCommand( mComposer, messageList,
+                                                       identity, mComposer );
+    command->start();
+  } else if ( md->hasFormat( "image/png" ) ) {
+    emit attachPNGImageData( e->encodedData( "image/png" ) );
+  } else {
+    KUrl::List urlList = KUrl::List::fromMimeData( md );
+    if ( !urlList.isEmpty() ) {
+      e->accept();
+      KMenu p;
+      const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
+      const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
+      const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
+      if ( selectedAction == addAsTextAction ) {
+        for ( KUrl::List::Iterator it = urlList.begin();
+              it != urlList.end(); ++it ) {
+          insert( (*it).url() );
+        }
+      } else if ( selectedAction == addAsAtmAction ) {
+        for ( KUrl::List::Iterator it = urlList.begin();
+              it != urlList.end(); ++it ) {
+          mComposer->addAttach( *it );
+        }
+      }
+    } else if ( md->hasText() ) {
+      insert( md->text() );
+      e->accept();
+    } else {
+      kDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
+      return KEdit::contentsDropEvent( e );
+    }
+  }
 }
 
-KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
-               K3SpellConfig* autoSpellConfig,
-               const char *name)
+KMEdit::KMEdit( QWidget *parent, KMComposeWin *composer,
+                K3SpellConfig *autoSpellConfig,
+                const char *name )
   : KEdit( parent ),
     mComposer( composer ),
     mKSpell( 0 ),
