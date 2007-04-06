@@ -593,29 +593,6 @@ DwString KMFolderMaildir::getDwString(int idx)
 }
 
 
-QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
-{
-  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-
-  assert(mi!=0);
-
-  QString abs_file(location() + "/cur/");
-  abs_file += mi->fileName();
-
-  if (QFile::exists(abs_file) == false)
-  {
-    kdDebug(5006) << "The " << abs_file << " file doesn't exist!" << endl;
-    return mDest;
-  }
-
-  QFileInfo fi( abs_file );
-  mDest.resize(fi.size()+2);
-  mDest = KPIM::kFileToString(abs_file, false, false);
-  size_t newMsgSize = KMail::Util::crlf2lf( mDest.data(), fi.size() );
-  mDest[newMsgSize] = '\0';
-  return mDest;
-}
-
 void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status)
 {
   // we keep our current directory to restore it later

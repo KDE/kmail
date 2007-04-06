@@ -145,9 +145,6 @@ public:
   */
   virtual KMMessage* readTemporaryMsg(int idx);
 
-  /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
-
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;
 
@@ -200,9 +197,9 @@ public:
     return addMsg(msg, index_return);
   }
 
-  /** 
-   * Adds the given messages to the folder. Behaviour is identical 
-   * to addMsg(msg) 
+  /**
+   * Adds the given messages to the folder. Behaviour is identical
+   * to addMsg(msg)
    */
   virtual int addMsg( QPtrList<KMMessage>&, QValueList<int>& index_return );
 
@@ -360,7 +357,7 @@ public:
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
   void removeJobs();
-  
+
   /** Escape a leading dot */
   static QString dotEscape(const QString&);
 
@@ -406,7 +403,7 @@ public:
   virtual void search( const KMSearchPattern*, Q_UINT32 serNum );
 
   /** Returns true if this folder can be moved */
-  virtual bool isMoveable() const;  
+  virtual bool isMoveable() const;
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -426,7 +423,7 @@ signals:
   
   /** Emitted when the serial numbers of this folder were invalidated. */
   void invalidated( KMFolder * );
-  
+
   /** Emitted when the name of the folder changes. */
   void nameChanged();
 
@@ -473,7 +470,7 @@ signals:
    * The matching serial numbers are included
    * If @p complete is true the search is done
    */
-  void searchResult( KMFolder*, QValueList<Q_UINT32>, 
+  void searchResult( KMFolder*, QValueList<Q_UINT32>,
                      const KMSearchPattern*, bool complete );
 
   /**
@@ -494,7 +491,7 @@ public slots:
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
-  
+
   /** Emit changed signal if mQuite <=0 */
   void slotEmitChangedTimer();
 
@@ -558,7 +555,7 @@ friend class KMMsgDict;
   /** Replaces the serial number for the message @p msg at index @p idx with
    * @p sernum */
   void replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx );
-  
+
    /** Called when serial numbers for a folder are invalidated,
   invalidates/recreates data structures dependent on the
   serial numbers for this folder */
@@ -573,7 +570,7 @@ friend class KMMsgDict;
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-  
+
   /** Read index file and fill the message-info list mMsgList. */
   virtual bool readIndex() = 0;
   virtual KMMsgBase* takeIndexEntry( int idx ) = 0;
@@ -593,7 +590,7 @@ friend class KMMsgDict;
   bool mDirty :1;
   /** TRUE if the files of the folder are locked (writable) */
   bool mFilesLocked :1;
-  
+
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
