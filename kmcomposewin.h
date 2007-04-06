@@ -284,6 +284,7 @@ private slots:
   void slotPasteAsAttachment();
   void slotAddQuotes();
   void slotRemoveQuotes();
+  void slotAttachPNGImageData(const QByteArray &image);
 
   void slotMarkAll();
 
@@ -460,12 +461,6 @@ public: // kmcommand
    * Add an attachment to the list.
    */
   void addAttach(const KMMessagePart* msgPart);
-
-private:
-  /**
-   * Add an image from the clipboard as attachment
-   */
-  void addImageFromClipboard();
 
 private:
   const KPIM::Identity & identity() const;

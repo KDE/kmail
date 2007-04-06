@@ -60,6 +60,8 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
     if (e->provides(MailListDrag::format()))
         e->accept(true);
+    else if (e->provides("image/png"))
+        e->accept();
     else
         return KEdit::contentsDragEnterEvent(e);
 }
@@ -67,6 +69,8 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 {
     if (e->provides(MailListDrag::format()))
+        e->accept();
+    else if (e->provides("image/png"))
         e->accept();
     else
         return KEdit::contentsDragMoveEvent(e);
@@ -163,6 +167,9 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
             new KMForwardAttachedCommand(mComposer, messageList,
                                          identity, mComposer);
         command->start();
+    }
+    else if( e->provides("image/png") ) {
+        emit attachPNGImageData(e->encodedData("image/png"));
     }
     else if( KURLDrag::canDecode( e ) ) {
         KURL::List urlList;

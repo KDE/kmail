@@ -380,6 +380,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     this, SLOT (slotSpellcheckDone (int)));
   connect (mEditor, SIGNAL( pasteImage() ),
     this, SLOT (slotPaste() ) );
+  connect (mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
+    this, SLOT ( slotAttachPNGImageData(const QByteArray &) ) );
   connect (mEditor, SIGNAL( focusChanged(bool) ),
     this, SLOT (editorFocusChanged(bool)) );
 
@@ -491,33 +493,21 @@ void KMComposeWin::addAttachment(const QString &name,
     addAttach(msgPart);
   }
 }
+
 //-----------------------------------------------------------------------------
-void KMComposeWin::addImageFromClipboard()
+void KMComposeWin::slotAttachPNGImageData(const QByteArray &image)
 {
   bool ok;
-  QFile *tmpFile;
 
   QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
   if ( !ok )
     return;
 
-  mTempDir = new KTempDir();
-  mTempDir->setAutoDelete( true );
+  if ( !attName.lower().endsWith(".png") ) attName += ".png";
 
-  if ( attName.lower().endsWith(".png") )
-    tmpFile = new QFile(mTempDir->name() + attName );
-  else
-    tmpFile = new QFile(mTempDir->name() + attName + ".png" );
-
-  if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
-    KMessageBox::error( this, i18n("Unknown error trying to save image."), i18n("Attaching Image Failed") );
-    delete mTempDir;
-    mTempDir = 0;
-    return;
-  }
-
-  addAttach( tmpFile->name() );
+  addAttachment( attName, "base64", image, "image", "png", QCString(), QString(), QCString() );
 }
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody(QString body)
 {
@@ -3410,7 +3400,11 @@ void KMComposeWin::slotPasteAsAttachment()
     return;
   }
 
-  if ( QApplication::clipboard()->image().isNull() )  {
+  QMimeSource *mimeSource = QApplication::clipboard()->data();
+  if ( QImageDrag::canDecode(mimeSource) ) {
+    slotAttachPNGImageData(mimeSource->encodedData("image/png"));
+  }
+  else {
     bool ok;
     QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
     if ( !ok )
@@ -3422,9 +3416,6 @@ void KMComposeWin::slotPasteAsAttachment()
                                 kmkernel->msgSender()->sendQuotedPrintable());
     addAttach(msgPart);
   }
-  else
-    addImageFromClipboard();
-
 }
 
 void KMComposeWin::slotAddQuotes()
@@ -3557,8 +3548,9 @@ void KMComposeWin::slotPaste()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if ( ! QApplication::clipboard()->image().isNull() )  {
-    addImageFromClipboard();
+  QMimeSource *mimeSource = QApplication::clipboard()->data();
+  if ( mimeSource->provides("image/png") )  {
+    slotAttachPNGImageData(mimeSource->encodedData("image/png"));
   }
   else {
 
