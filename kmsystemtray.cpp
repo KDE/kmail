@@ -82,7 +82,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   mLightIconImage = loadIcon( "kmaillight" ).pixmap().toImage();
 
   setIcon(mDefaultIcon);
-
+#ifdef Q_OS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
     QWidget * mainWin = mainWidget->topLevelWidget();
@@ -92,7 +92,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
       mPosOfMainWin = mainWin->pos();
     }
   }
-
+#endif
   // register the applet with the kernel
   kmkernel->registerSystemTrayApplet( this );
 
@@ -375,6 +375,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 {
+#ifdef Q_OS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return false;
@@ -385,6 +386,9 @@ bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 
   return KWM::windowInfo( mainWin->winId(),
                            NET::WMDesktop ).isOnCurrentDesktop();
+#else
+  return true;
+#endif
 }
 
 /**
@@ -397,6 +401,7 @@ void KMSystemTray::showKMail()
     return;
   QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
   assert(mainWin);
+#ifdef Q_OS_X11
   if(mainWin)
   {
     KWM::WindowInfo cur =  KWM::windowInfo( mainWin->winId(), NET::WMDesktop );
@@ -413,6 +418,7 @@ void KMSystemTray::showKMail()
     KWM::activateWindow( mainWin->winId() );
     mParentVisible = true;
   }
+#endif
   kmkernel->raise();
 
   //Fake that the folders have changed so that the icon status is correct
@@ -427,11 +433,13 @@ void KMSystemTray::hideKMail()
   assert(mainWin);
   if(mainWin)
   {
+#ifdef Q_OS_X11
     mDesktopOfMainWin = KWM::windowInfo( mainWin->winId(),
                                           NET::WMDesktop ).desktop();
     mPosOfMainWin = mainWin->pos();
     // iconifying is unnecessary, but it looks cooler
     KWM::minimizeWindow( mainWin->winId() );
+#endif
     mainWin->hide();
     mParentVisible = false;
   }
