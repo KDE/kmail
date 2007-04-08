@@ -74,7 +74,6 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
     QPixmap mReplyPix;
     QPixmap mReplyAllPix;
     QPixmap mForwardPix;
-    KKeySequenceWidget *mKeySequenceWidget;
 };
 
 struct CustomTemplateItem
