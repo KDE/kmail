@@ -808,7 +808,6 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     if ( (*it)->parent() != 0 ) {
       (*it)->parent()->open( "kmcommand" );
     }
-    ++it;
   }
   mMsgListIndex = 0;
   KMMsgBase *msgBase = *(msgList.begin());
