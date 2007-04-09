@@ -661,21 +661,21 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "DATEEN" );
         QDateTime date = QDateTime::currentDateTime();
         KLocale locale( "C" );
-        QString str = locale.formatDate( date.date(), false );
+        QString str = locale.formatDate( date.date(), KLocale::LongDate );
         body.append( str );
 
       } else if ( cmd.startsWith( "DATESHORT" ) ) {
         kDebug() << "Command: DATESHORT" << endl;
         i += strlen( "DATESHORT" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = KGlobal::locale()->formatDate( date.date(), true );
+        QString str = KGlobal::locale()->formatDate( date.date(), KLocale::ShortDate );
         body.append( str );
 
       } else if ( cmd.startsWith( "DATE" ) ) {
         kDebug() << "Command: DATE" << endl;
         i += strlen( "DATE" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = KGlobal::locale()->formatDate( date.date(), false );
+        QString str = KGlobal::locale()->formatDate( date.date(), KLocale::LongDate );
         body.append( str );
 
       } else if ( cmd.startsWith( "DOW" ) ) {
@@ -714,7 +714,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
           KLocale locale( "C");
-          QString str = locale.formatDate( date.date(), false );
+          QString str = locale.formatDate( date.date(), KLocale::LongDate );
           body.append( str );
         }
 
@@ -724,7 +724,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = KGlobal::locale()->formatDate( date.date(), true );
+          QString str = KGlobal::locale()->formatDate( date.date(), KLocale::ShortDate );
           body.append( str );
         }
 
@@ -734,7 +734,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = KGlobal::locale()->formatDate( date.date(), false );
+          QString str = KGlobal::locale()->formatDate( date.date(), KLocale::LongDate );
           body.append( str );
         }
 
