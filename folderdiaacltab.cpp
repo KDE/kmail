@@ -58,7 +58,6 @@
 #include <QLayout>
 #include <QLabel>
 
-#include <q3widgetstack.h>
 #include <QRadioButton>
 
 //Added by qt3to4:

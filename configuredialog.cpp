@@ -117,7 +117,6 @@ using KMime::DateFormatter;
 #include <QTextCodec>
 #include <q3header.h>
 #include <QMenu>
-#include <q3widgetstack.h>
 
 // other headers:
 #include <assert.h>
