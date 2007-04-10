@@ -31,6 +31,7 @@
 #include "quotajobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
+#include <kuiserverjobtracker.h>
 
 using namespace KMail;
 
@@ -49,8 +50,10 @@ QuotaJobs::GetQuotarootJob* QuotaJobs::getQuotaroot(
 QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
                                              const QByteArray &packedArgs,
                                              bool showProgressInfo )
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
+  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
 {
+    if(showProgressInfo)
+       KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
            SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
 }
@@ -98,7 +101,7 @@ QuotaJobs::GetStorageQuotaJob* QuotaJobs::getStorageQuota(
 
 
 QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KUrl& url )
-  : KIO::Job( false )
+  : KIO::Job()
 {
     QByteArray packedArgs;
     QDataStream stream( &packedArgs, IO_WriteOnly );

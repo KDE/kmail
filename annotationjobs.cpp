@@ -34,6 +34,7 @@
 #include "annotationjobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
+#include <kuiserverjobtracker.h>
 
 using namespace KMail;
 
@@ -66,9 +67,11 @@ AnnotationJobs::GetAnnotationJob* AnnotationJobs::getAnnotation(
 AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KUrl& url, const QString& entry,
                                                     const QByteArray &packedArgs,
                                                     bool showProgressInfo )
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo ),
+  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs),
     mEntry( entry )
 {
+  if(showProgressInfo)
+     KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
@@ -87,10 +90,12 @@ void AnnotationJobs::GetAnnotationJob::slotInfoMessage( KJob*, const QString& st
 
 AnnotationJobs::MultiGetAnnotationJob::MultiGetAnnotationJob(
   KIO::Slave* slave, const KUrl& url, const QStringList& entries, bool showProgressInfo )
-  : KIO::Job( showProgressInfo ),
+  : KIO::Job(),
     mSlave( slave ),
     mUrl( url ), mEntryList( entries ), mEntryListIterator( mEntryList.begin() )
 {
+  if(showProgressInfo)
+    KIO::getJobTracker()->registerJob(this);
   QTimer::singleShot(0, this, SLOT(slotStart()));
 }
 
@@ -142,10 +147,12 @@ AnnotationJobs::MultiGetAnnotationJob* AnnotationJobs::multiGetAnnotation( KIO::
 
 AnnotationJobs::MultiSetAnnotationJob::MultiSetAnnotationJob(
   KIO::Slave* slave, const KUrl& url, const AnnotationList& annotations, bool showProgressInfo )
-  : KIO::Job( showProgressInfo ),
+  : KIO::Job(),
     mSlave( slave ),
     mUrl( url ), mAnnotationList( annotations ), mAnnotationListIterator( mAnnotationList.begin() )
 {
+  if(showProgressInfo)
+    KIO::getJobTracker()->registerJob(this);
   QTimer::singleShot(0, this, SLOT(slotStart()));
 }
 
@@ -192,7 +199,7 @@ AnnotationJobs::MultiUrlGetAnnotationJob::MultiUrlGetAnnotationJob( KIO::Slave* 
                                                                     const KUrl& baseUrl,
                                                                     const QStringList& paths,
                                                                     const QString& annotation )
-  : KIO::Job( false ),
+  : KIO::Job(),
     mSlave( slave ),
     mUrl( baseUrl ),
     mPathList( paths ),

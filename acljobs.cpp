@@ -34,6 +34,7 @@
 #include "acljobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
+#include <kuiserverjobtracker.h>
 
 using namespace KMail;
 
@@ -168,8 +169,10 @@ ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KUrl
 
 ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs,
                                  bool showProgressInfo )
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
+  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs )
 {
+  if(showProgressInfo)
+    KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
@@ -189,8 +192,10 @@ void ACLJobs::GetACLJob::slotInfoMessage( KJob*, const QString& str,const QStrin
 
 ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs,
                                                bool showProgressInfo )
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo )
+  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
 {
+  if(showProgressInfo)
+	  KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
@@ -204,18 +209,22 @@ void ACLJobs::GetUserRightsJob::slotInfoMessage( KJob*, const QString& str,const
 ACLJobs::DeleteACLJob::DeleteACLJob( const KUrl& url, const QString& userId,
                                      const QByteArray &packedArgs,
                                      bool showProgressInfo )
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs, showProgressInfo ),
+  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs ),
     mUserId( userId )
 {
+  if(showProgressInfo)
+     KIO::getJobTracker()->registerJob(this);
 }
 
 ////
 
 ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl, bool showProgressInfo )
-  : KIO::Job( showProgressInfo ),
+  : KIO::Job(),
     mSlave( slave ),
     mUrl( url ), mACLList( acl ), mACLListIterator( mACLList.begin() )
 {
+  if(showProgressInfo)
+    KIO::getJobTracker()->registerJob(this);
   QTimer::singleShot(0, this, SLOT(slotStart()));
 }
 
