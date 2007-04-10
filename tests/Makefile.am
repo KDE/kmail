@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kmail $(all_includes)
+INCLUDES = -I$(top_srcdir)/kmail -I$(top_srcdir)/mimelib $(all_includes)
 AM_CPPFLAGS = -DKDESRCDIR=\"$(srcdir)\"
 METASOURCES = AUTO
 
