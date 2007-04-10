@@ -209,15 +209,12 @@ QString KMMsgPartDialog::mimeType() const {
 }
 
 void KMMsgPartDialog::setMimeType( const QString & mimeType ) {
-  int dummy = 0;
-  QString tmp = mimeType; // get rid of const'ness
-  if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy ) )
-    for ( int i = 0 ; i < mMimeType->count() ; ++i )
-      if ( mMimeType->itemText( i ) == mimeType ) {
-        mMimeType->setCurrentIndex( i );
-        return;
-      }
-  mMimeType->addItem( mimeType, 0 );
+  for ( int i = 0 ; i < mMimeType->count() ; ++i )
+    if ( mMimeType->itemText( i ) == mimeType ) {
+      mMimeType->setCurrentIndex( i );
+      return;
+    }
+  mMimeType->insertItem( 0, mimeType );
   mMimeType->setCurrentIndex( 0 );
   slotMimeTypeChanged( mimeType );
 }
@@ -274,7 +271,7 @@ void KMMsgPartDialog::setEncoding( Encoding encoding ) {
           mEncoding->setCurrentIndex( j );
           return;
         }
-      mEncoding->addItem( text, 0 );
+      mEncoding->insertItem( 0, text );
       mEncoding->setCurrentIndex( 0 );
     }
   kFatal(5006) << "KMMsgPartDialog::setEncoding(): "
