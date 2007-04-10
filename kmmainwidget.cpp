@@ -25,7 +25,6 @@
 #include <QByteArray>
 #include <QToolBar>
 //Added by qt3to4:
-#include <q3popupmenu.h>
 #include <q3ptrlist.h>
 
 #include <kmessagebox.h>

@@ -116,7 +116,7 @@ using KMime::DateFormatter;
 #include <q3buttongroup.h>
 #include <QTextCodec>
 #include <q3header.h>
-#include <q3popupmenu.h>
+#include <QMenu>
 #include <q3widgetstack.h>
 
 // other headers:

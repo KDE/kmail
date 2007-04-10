@@ -56,11 +56,11 @@
 #include <klineedit.h>
 #include <QPushButton>
 #include <QRadioButton>
+#include <Q3PopupMenu>
 #include <q3buttongroup.h>
 #include <QComboBox>
 #include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <QCursor>
-#include <q3popupmenu.h>
 
 #include <maillistdrag.h>
 using namespace KPIM;
