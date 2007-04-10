@@ -34,7 +34,6 @@
 #include "acljobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
-#include <kuiserverjobtracker.h>
 
 using namespace KMail;
 
@@ -140,7 +139,7 @@ ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KUrl& url, c
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'D' << url << user;
 
-  ACLJobs::DeleteACLJob* job = new ACLJobs::DeleteACLJob( url, user, packedArgs, false );
+  ACLJobs::DeleteACLJob* job = new ACLJobs::DeleteACLJob( url, user, packedArgs);
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }
@@ -151,7 +150,7 @@ ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KUrl& url )
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'G' << url;
 
-  ACLJobs::GetACLJob* job = new ACLJobs::GetACLJob( url, packedArgs, false );
+  ACLJobs::GetACLJob* job = new ACLJobs::GetACLJob( url, packedArgs);
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }
@@ -162,17 +161,14 @@ ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KUrl
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'M' << url;
 
-  ACLJobs::GetUserRightsJob* job = new ACLJobs::GetUserRightsJob( url, packedArgs, false );
+  ACLJobs::GetUserRightsJob* job = new ACLJobs::GetUserRightsJob( url, packedArgs );
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }
 
-ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs,
-                                 bool showProgressInfo )
+ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs)
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs )
 {
-  if(showProgressInfo)
-    KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
@@ -190,12 +186,9 @@ void ACLJobs::GetACLJob::slotInfoMessage( KJob*, const QString& str,const QStrin
   }
 }
 
-ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs,
-                                               bool showProgressInfo )
+ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs)
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
 {
-  if(showProgressInfo)
-	  KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
@@ -207,24 +200,19 @@ void ACLJobs::GetUserRightsJob::slotInfoMessage( KJob*, const QString& str,const
 }
 
 ACLJobs::DeleteACLJob::DeleteACLJob( const KUrl& url, const QString& userId,
-                                     const QByteArray &packedArgs,
-                                     bool showProgressInfo )
+                                     const QByteArray &packedArgs)
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs ),
     mUserId( userId )
 {
-  if(showProgressInfo)
-     KIO::getJobTracker()->registerJob(this);
 }
 
 ////
 
-ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl, bool showProgressInfo )
+ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl )
   : KIO::Job(),
     mSlave( slave ),
     mUrl( url ), mACLList( acl ), mACLListIterator( mACLList.begin() )
 {
-  if(showProgressInfo)
-    KIO::getJobTracker()->registerJob(this);
   QTimer::singleShot(0, this, SLOT(slotStart()));
 }
 
@@ -266,7 +254,7 @@ void ACLJobs::MultiSetACLJob::slotResult( KJob *job )
 
 ACLJobs::MultiSetACLJob* ACLJobs::multiSetACL( KIO::Slave* slave, const KUrl& url, const ACLList& acl )
 {
-  return new MultiSetACLJob( slave, url, acl, false /*showProgressInfo*/ );
+  return new MultiSetACLJob( slave, url, acl);
 }
 
 #include "acljobs.moc"

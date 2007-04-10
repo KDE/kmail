@@ -31,7 +31,6 @@
 #include "quotajobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
-#include <kuiserverjobtracker.h>
 
 using namespace KMail;
 
@@ -42,18 +41,15 @@ QuotaJobs::GetQuotarootJob* QuotaJobs::getQuotaroot(
   QDataStream stream( &packedArgs, IO_WriteOnly );
   stream << (int)'Q' << (int)'R' << url;
 
-  GetQuotarootJob* job = new GetQuotarootJob( url, packedArgs, false );
+  GetQuotarootJob* job = new GetQuotarootJob( url, packedArgs);
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }
 
 QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
-                                             const QByteArray &packedArgs,
-                                             bool showProgressInfo )
+                                             const QByteArray &packedArgs)
   : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
 {
-    if(showProgressInfo)
-       KIO::getJobTracker()->registerJob(this);
   connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
            SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
 }
@@ -108,7 +104,7 @@ QuotaJobs::GetStorageQuotaJob::GetStorageQuotaJob( KIO::Slave* slave, const KUrl
     stream << (int)'Q' << (int)'R' << url;
 
     QuotaJobs::GetQuotarootJob *job =
-        new QuotaJobs::GetQuotarootJob( url, packedArgs, false );
+        new QuotaJobs::GetQuotarootJob( url, packedArgs);
     connect(job, SIGNAL(quotaInfoReceived(const QuotaInfoList&)),
             SLOT(slotQuotaInfoReceived(const QuotaInfoList&)));
     connect(job, SIGNAL(quotaRootResult(const QStringList&)),

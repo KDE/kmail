@@ -109,8 +109,7 @@ class GetAnnotationJob : public KIO::SimpleJob
 {
   Q_OBJECT
 public:
-  GetAnnotationJob( const KUrl& url, const QString& entry, const QByteArray &packedArgs,
-                    bool showProgressInfo );
+  GetAnnotationJob( const KUrl& url, const QString& entry, const QByteArray &packedArgs);
 
   const AnnotationList& annotations() const { return mAnnotations; }
 
@@ -127,7 +126,7 @@ class MultiGetAnnotationJob : public KIO::Job
   Q_OBJECT
 
 public:
-  MultiGetAnnotationJob( KIO::Slave* slave, const KUrl& url, const QStringList& entries, bool showProgressInfo );
+  MultiGetAnnotationJob( KIO::Slave* slave, const KUrl& url, const QStringList& entries);
 
 signals:
   // Emitted when a given annotation was found - or not found
@@ -174,7 +173,7 @@ class MultiSetAnnotationJob : public KIO::Job
   Q_OBJECT
 
 public:
-  MultiSetAnnotationJob( KIO::Slave* slave, const KUrl& url, const AnnotationList& annotations, bool showProgressInfo );
+  MultiSetAnnotationJob( KIO::Slave* slave, const KUrl& url, const AnnotationList& annotations);
 
 signals:
   // Emitted when a given annotation was successfully changed

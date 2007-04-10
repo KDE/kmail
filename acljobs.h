@@ -100,8 +100,7 @@ namespace ACLJobs {
   {
     Q_OBJECT
   public:
-    GetACLJob( const KUrl& url, const QByteArray &packedArgs,
-               bool showProgressInfo );
+    GetACLJob( const KUrl& url, const QByteArray &packedArgs);
 
     const ACLList& entries() const { return m_entries; }
 
@@ -116,8 +115,7 @@ namespace ACLJobs {
   {
     Q_OBJECT
   public:
-    GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs,
-                      bool showProgressInfo );
+    GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs);
     unsigned int permissions() const { return m_permissions; }
 
   protected slots:
@@ -133,8 +131,7 @@ namespace ACLJobs {
     Q_OBJECT
   public:
     DeleteACLJob( const KUrl& url, const QString& userId,
-                  const QByteArray &packedArgs,
-                  bool showProgressInfo );
+                  const QByteArray &packedArgs);
 
     QString userId() const { return mUserId; }
 
@@ -147,7 +144,7 @@ namespace ACLJobs {
     Q_OBJECT
 
   public:
-    MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl, bool showProgressInfo );
+    MultiSetACLJob( KIO::Slave* slave, const KUrl& url, const ACLList& acl);
 
   signals:
     // Emitted when a given user's permissions were successfully changed.

@@ -132,7 +132,7 @@ class GetQuotarootJob : public KIO::SimpleJob
 {
   Q_OBJECT
 public:
-  GetQuotarootJob( const KUrl& url, const QByteArray &packedArgs, bool showProgressInfo );
+  GetQuotarootJob( const KUrl& url, const QByteArray &packedArgs);
 
 signals:
   /** Emitted when the server returns a (potentially empty) list of
