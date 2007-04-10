@@ -232,6 +232,10 @@
     </group>
 
     <group name="Composer">
+      <entry name="ForwardingInlineByDefault" type="Bool">
+        <default>true</default>
+        <label>Forward Inline As Default.</label>
+      </entry>
       <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
           <default>true</default>
           <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>

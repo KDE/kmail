@@ -2782,19 +2782,25 @@ void KMMainWidget::setupActions()
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardInlineMsg()) );
 
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()),
-                                        actionCollection(),
-					"message_forward_as_attachment" );
-  mForwardActionMenu->insert( forwardAttachedAction() );
-  mForwardInlineAction = new KAction( i18n("&Inline..."), "mail_forward",
-                                      SHIFT+Key_F, this,
+      mForwardInlineAction = new KAction( i18n("&Inline..."),
+                                      "mail_forward", SHIFT+Key_F, this,
                                       SLOT(slotForwardInlineMsg()),
                                       actionCollection(),
                                       "message_forward_inline" );
 
-  mForwardActionMenu->insert( forwardInlineAction() );
+      mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+                                        "mail_forward", Key_F, this,
+                                        SLOT(slotForwardAttachedMsg()),
+                                        actionCollection(),
+                                        "message_forward_as_attachment" );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      mForwardActionMenu->insert( mForwardInlineAction );
+      mForwardActionMenu->insert( mForwardAttachedAction );
+  } else {
+        mForwardActionMenu->insert( mForwardAttachedAction );
+        mForwardActionMenu->insert( mForwardInlineAction );
+  }
   mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
                                       "mail_forward", 0, this,
                                       SLOT(slotForwardDigestMsg()),
