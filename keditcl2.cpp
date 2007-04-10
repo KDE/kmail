@@ -35,7 +35,7 @@
 #include <q3popupmenu.h>
 #include <Q3VButtonGroup>
 
-#include <kcombobox.h>
+#include <khistorycombobox.h>
 #include <knuminput.h>
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -379,7 +379,7 @@ again:
 			srchdialog,
                         i18n("End of document reached.\n"\
                              "Continue from the beginning?"),
-                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::cont());
+                        i18n("Find"),KStandardGuiItem::cont(),KStandardGuiItem::stop());
     if (query == KMessageBox::Yes){
       replace_all_line = 0;
       replace_all_col = 0;
@@ -551,8 +551,8 @@ int KEdit::doReplace(const QString &s_pattern, Qt::CaseSensitivity case_sensitiv
 	if(replace_all){ // automatic
 
           stringnew = string;
-          do
-          {
+          do 
+          {  
 	    stringnew.replace(pos,length,replacement);
 
 	    replace_all_col = pos + replacement.length();
@@ -560,7 +560,7 @@ int KEdit::doReplace(const QString &s_pattern, Qt::CaseSensitivity case_sensitiv
 
             pos = stringnew.indexOf(s_pattern, replace_all_col, case_sensitive);
           }
-          while( pos != -1);
+          while( pos != -1); 
 
 	  removeLine(line_counter);
 	  insertLine(stringnew,line_counter);
@@ -689,14 +689,14 @@ class KEdFind::KEdFindPrivate
 {
 public:
     KEdFindPrivate( QWidget *parent ) {
-	combo = new KHistoryCombo( parent );
+	combo = new KHistoryComboBox( parent );
 	combo->setMaxCount( 20 ); // just some default
     }
     ~KEdFindPrivate() {
 	delete combo;
     }
 
-    KHistoryCombo *combo;
+    KHistoryComboBox *combo;
 };
 
 
@@ -806,7 +806,7 @@ bool KEdFind::get_direction() const
   return direction->isChecked();
 }
 
-KHistoryCombo * KEdFind::searchCombo() const
+KHistoryComboBox * KEdFind::searchCombo() const
 {
     return d->combo;
 }
@@ -822,8 +822,8 @@ class KEdReplace::KEdReplacePrivate
 {
 public:
     KEdReplacePrivate( QWidget *parent ) {
-	searchCombo = new KHistoryCombo( parent );
-	replaceCombo = new KHistoryCombo( parent );
+	searchCombo = new KHistoryComboBox( parent );
+	replaceCombo = new KHistoryComboBox( parent );
 
 	searchCombo->setMaxCount( 20 ); // just some defaults
 	replaceCombo->setMaxCount( 20 );
@@ -833,7 +833,7 @@ public:
 	delete replaceCombo;
     }
 
-    KHistoryCombo *searchCombo, *replaceCombo;
+    KHistoryComboBox *searchCombo, *replaceCombo;
 };
 
 KEdReplace::KEdReplace( QWidget *parent, bool modal )
@@ -894,7 +894,7 @@ KEdReplace::KEdReplace( QWidget *parent, bool modal )
   gbox->addWidget( sensitive, 1, 0 );
   gbox->addWidget( direction, 1, 1 );
   gbox->setRowStretch( 2, 10 );
-
+  
   connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotUser1() ) );
   connect( this, SIGNAL( user2Clicked() ), this, SLOT( slotUser2() ) );
   connect( this, SIGNAL( user3Clicked() ), this, SLOT( slotUser3() ) );
@@ -917,7 +917,7 @@ void KEdReplace::textSearchChanged ( const QString &text )
 }
 
 void KEdReplace::slotCancel( void )
-{
+{ 
 	emit done();
 	d->searchCombo->clearEditText();
 	d->replaceCombo->clearEditText();
@@ -984,12 +984,12 @@ bool KEdReplace::get_direction()
   return direction->isChecked();
 }
 
-KHistoryCombo * KEdReplace::searchCombo() const
+KHistoryComboBox * KEdReplace::searchCombo() const
 {
     return d->searchCombo;
 }
 
-KHistoryCombo * KEdReplace::replaceCombo() const
+KHistoryComboBox * KEdReplace::replaceCombo() const
 {
     return d->replaceCombo;
 }

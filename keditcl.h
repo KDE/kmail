@@ -31,7 +31,7 @@ class QPushButton;
 class QCheckBox;
 class QRadioButton;
 class QTextStream;
-class KHistoryCombo;
+class KHistoryComboBox;
 class KIntNumInput;
 class Q3VButtonGroup;
 class QMenu;
@@ -78,7 +78,7 @@ public:
      * @returns the combobox containing the history of searches. Can be used
      * to save and restore the history.
      */
-    KHistoryCombo *searchCombo() const;
+    KHistoryComboBox *searchCombo() const;
 
 protected Q_SLOTS:
     void slotUser1( void );
@@ -118,13 +118,13 @@ public:
      * @returns the combobox containing the history of searches. Can be used
      * to save and restore the history.
      */
-    KHistoryCombo *searchCombo() const;
+    KHistoryComboBox *searchCombo() const;
 
     /**
      * @returns the combobox containing the history of replaces. Can be used
      * to save and restore the history.
      */
-    KHistoryCombo *replaceCombo() const;
+    KHistoryComboBox *replaceCombo() const;
 
     Qt::CaseSensitivity case_sensitive();
     bool 	get_direction();
