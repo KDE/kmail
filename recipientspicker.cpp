@@ -505,7 +505,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
   kDebug() << "RecipientsPicker::insertCollection() " << coll->title()
     << "  index: " << index << endl;
 
-  mCollectionCombo->addItem( coll->title(), index );
+  mCollectionCombo->insertItem( index, coll->title() );
   mCollectionMap.insert( index, coll );
 }
 

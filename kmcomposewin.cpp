@@ -4449,7 +4449,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     }
     if (found == false) {
       if (i == mTransport->maxCount()) mTransport->setMaxCount(i + 1);
-      mTransport->addItem(transp,i);
+      mTransport->insertItem(i,transp);
       mTransport->setCurrentIndex(i);
     }
   }

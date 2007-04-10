@@ -122,7 +122,7 @@ void KMFolderComboBox::setFolder( const QString &idString )
      if (mSpecialIdx >= 0)
         removeItem(mSpecialIdx);
      mSpecialIdx = count();
-     addItem(idString, -1);
+     insertItem(-1, idString);
      setCurrentIndex(mSpecialIdx);
 
      mFolder = 0;

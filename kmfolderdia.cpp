@@ -447,9 +447,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mShowSenderReceiverComboBox->setToolTip( tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
   gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
-  mShowSenderReceiverComboBox->addItem(i18n("Default"), 0);
-  mShowSenderReceiverComboBox->addItem(i18n("Sender"), 1);
-  mShowSenderReceiverComboBox->addItem(i18n("Receiver"), 2);
+  mShowSenderReceiverComboBox->insertItem(0, i18n("Default"));
+  mShowSenderReceiverComboBox->insertItem(1, i18n("Sender"));
+  mShowSenderReceiverComboBox->insertItem(2, i18n("Receiver"));
 
   QString whoField;
   if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();
