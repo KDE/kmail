@@ -3130,7 +3130,7 @@ void KMComposeWin::compressAttach( int idx )
   static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedMimeType(
       msgPart->typeStr(), msgPart->subtypeStr() );
   msgPart->setTypeStr( "application" );
-  msgPart->setSubtypeStr( "x-zip" );
+  msgPart->setSubtypeStr( "zip" );
 
   KMAtmListViewItem* listItem = static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) );
   msgPartToItem( msgPart, listItem, false );

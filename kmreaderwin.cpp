@@ -2166,19 +2166,21 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
   mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ) );
-  if ( mimetype->name() == "application/octet-stream" ) {
-    // consider the filename if Content-Type is application/octet-stream
+  if ( mimetype.isNull() ) {
+    // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
   }
-  if ( ( mimetype->name() == "application/octet-stream" )
+  if ( ( mimetype.isNull() )
        && msgPart.isComplete() ) {
     // consider the attachment's contents if neither the Content-Type header
     // nor the filename give us a clue
     mimetype = KMimeType::findByFileContent( name );
   }
 
-  KService::Ptr offer =
-    KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
+  KService::Ptr offer;
+  if ( !mimetype.isNull() )
+     offer =
+      KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
   QString open_text;
   QString filenameText = msgPart.fileName();
@@ -2193,9 +2195,11 @@ void KMReaderWin::openAttachment( int id, const QString & name )
                             "Note that opening an attachment may compromise "
                             "your system's security.",
                          filenameText );
+  const QString dontAskAgainName = QString::fromLatin1("askSave") + 
+      ( mimetype.isNull() ? contentTypeStr : mimetype->name() );
   const int choice = KMessageBox::questionYesNoCancel( this, text,
-      i18n("Open Attachment?"), KStandardGuiItem::saveAs(), KGuiItem(open_text), KStandardGuiItem::cancel(),
-      QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName
+      i18n("Open Attachment?"), KStandardGuiItem::saveAs(), 
+      KGuiItem(open_text), KStandardGuiItem::cancel(), dontAskAgainName ); 
 
   if( choice == KMessageBox::Yes ) {		// Save
     mAtmUpdate = true;
