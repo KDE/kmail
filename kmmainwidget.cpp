@@ -2811,14 +2811,13 @@ void KMMainWidget::setupActions()
       if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
           mForwardActionMenu->insert( mForwardInlineAction );
           mForwardActionMenu->insert( mForwardAttachedAction );
-          mForwardActionMenu->insert( mForwardDigestAction );
-          mForwardActionMenu->insert( mRedirectAction );
       } else {
             mForwardActionMenu->insert( mForwardAttachedAction );
             mForwardActionMenu->insert( mForwardInlineAction );
-            mForwardActionMenu->insert( mForwardDigestAction );
-            mForwardActionMenu->insert( mRedirectAction );
       }
+
+      mForwardActionMenu->insert( mForwardDigestAction );
+      mForwardActionMenu->insert( mRedirectAction );
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );

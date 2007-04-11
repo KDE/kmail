@@ -372,6 +372,9 @@ void KMReaderMainWin::setupAccel()
         mForwardActionMenu->insert( mForwardInlineAction );
   }
 
+  mForwardActionMenu->insert( mForwardDigestAction );
+  mForwardActionMenu->insert( mRedirectAction );
+
   mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
                                       "mail_reply", actionCollection(),
                                       "message_reply_menu" );
