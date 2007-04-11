@@ -18,6 +18,7 @@
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qpopupmenu.h>
+#include <qptrlist.h>
 
 #include <kopenwith.h>
 
@@ -2794,25 +2795,30 @@ void KMMainWidget::setupActions()
                                         actionCollection(),
                                         "message_forward_as_attachment" );
 
-  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-      mForwardActionMenu->insert( mForwardInlineAction );
-      mForwardActionMenu->insert( mForwardAttachedAction );
-  } else {
-        mForwardActionMenu->insert( mForwardAttachedAction );
-        mForwardActionMenu->insert( mForwardInlineAction );
-  }
-  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
+      mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
                                       "mail_forward", 0, this,
                                       SLOT(slotForwardDigestMsg()),
                                       actionCollection(),
                                       "message_forward_as_digest" );
-  mForwardActionMenu->insert( forwardDigestAction() );
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+
+      mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
                                  "mail_forward", Key_E, this,
                                  SLOT(slotRedirectMsg()),
-				 actionCollection(),
+                                 actionCollection(),
                                  "message_forward_redirect" );
-  mForwardActionMenu->insert( redirectAction() );
+
+
+      if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+          mForwardActionMenu->insert( mForwardInlineAction );
+          mForwardActionMenu->insert( mForwardAttachedAction );
+          mForwardActionMenu->insert( mForwardDigestAction );
+          mForwardActionMenu->insert( mRedirectAction );
+      } else {
+            mForwardActionMenu->insert( mForwardAttachedAction );
+            mForwardActionMenu->insert( mForwardInlineAction );
+            mForwardActionMenu->insert( mForwardDigestAction );
+            mForwardActionMenu->insert( mRedirectAction );
+      }
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
@@ -3150,6 +3156,26 @@ void KMMainWidget::setupActions()
   initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
   updateCustomTemplateMenus();
+}
+
+void KMMainWidget::setupForwardingActionsList()
+{
+  QPtrList<KAction> mForwardActionList;
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      mGUIClient->unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardDigestAction );
+      mForwardActionList.append( mRedirectAction );
+      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
+  } else {
+      mGUIClient->unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardDigestAction );
+      mForwardActionList.append( mRedirectAction );
+      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
+  }
 }
 
 //-----------------------------------------------------------------------------

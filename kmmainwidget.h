@@ -172,6 +172,11 @@ public:
    */
   void setAccelsEnabled( bool enabled = true );
 
+  /**
+   * Sets up action list for forward menu.
+  */
+  void setupForwardingActionsList();
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash

@@ -219,6 +219,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
   mainWidget->initializeFolderShortcutActions();
+  mainWidget->setupForwardingActionsList();
 }
 
 void KMailPart::exit()

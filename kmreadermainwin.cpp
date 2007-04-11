@@ -91,6 +91,7 @@ void KMReaderMainWin::initKMReaderMainWin() {
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
+  setupForwardingActionsList();
   applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
   if ( ! mReaderWin->message() ) {
     menuBar()->hide();
@@ -99,6 +100,26 @@ void KMReaderMainWin::initKMReaderMainWin() {
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
+}
+
+void KMReaderMainWin::setupForwardingActionsList()
+{
+  QPtrList<KAction> mForwardActionList;
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardDigestAction );
+      mForwardActionList.append( mRedirectAction );
+      plugActionList( "forward_action_list", mForwardActionList );
+  } else {
+      unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardDigestAction );
+      mForwardActionList.append( mRedirectAction );
+      plugActionList( "forward_action_list", mForwardActionList );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -331,6 +352,18 @@ void KMReaderMainWin::setupAccel()
                                         actionCollection(),
                                         "message_forward_as_attachment" );
 
+      mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
+                                      "mail_forward", 0, this,
+                                      SLOT(slotForwardDigestMsg()),
+                                      actionCollection(),
+                                      "message_forward_as_digest" );
+
+      mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                 "mail_forward", Key_E, this,
+                                 SLOT(slotRedirectMsg()),
+                                 actionCollection(),
+                                 "message_forward_redirect" );
+
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
       mForwardActionMenu->insert( mForwardInlineAction );
       mForwardActionMenu->insert( mForwardAttachedAction );
@@ -338,19 +371,6 @@ void KMReaderMainWin::setupAccel()
         mForwardActionMenu->insert( mForwardAttachedAction );
         mForwardActionMenu->insert( mForwardInlineAction );
   }
-  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
-                                      "mail_forward", 0, this,
-                                      SLOT(slotForwardDigestMsg()),
-                                      actionCollection(),
-                                      "message_forward_as_digest" );
-  mForwardActionMenu->insert( mForwardDigestAction );
-
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 "mail_forward", Key_E, this,
-                                 SLOT(slotRedirectMsg()),
-				 actionCollection(),
-                                 "message_forward_redirect" );
-  mForwardActionMenu->insert( mRedirectAction );
 
   mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
                                       "mail_reply", actionCollection(),
