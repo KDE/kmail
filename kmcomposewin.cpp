@@ -3291,10 +3291,12 @@ void KMComposeWin::openAttach( int index )
     return;
   }
 
-  KService::Ptr offer =
-    KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
+  KService::Ptr offer;
+  if ( !mimetype.isNull() )
+    offer = 
+        KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
-  if ( !offer || mimetype->name() == "application/octet-stream" ) {
+  if ( !offer || mimetype.isNull() ) {
     if ( ( !KRun::displayOpenWithDialog( url, this, autoDelete ) ) && autoDelete ) {
       QFile::remove(url.path());
     }

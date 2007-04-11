@@ -3049,17 +3049,20 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
   mimetype = KMimeType::mimeType( contentTypeStr );
-  if ( mimetype->name() == "application/octet-stream" ) {
-    // consider the filename if Content-Type is application/octet-stream
+  if ( mimetype.isNull() ) {
+    // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( mAtmName, 0, true /* no disk access */ );
   }
-  if ( ( mimetype->name() == "application/octet-stream" )
+  if ( ( mimetype.isNull() )
        && msgPart.isComplete() ) {
     // consider the attachment's contents if neither the Content-Type header
     // nor the filename give us a clue
     mimetype = KMimeType::findByFileContent( mAtmName );
   }
-  return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
+  if ( !mimetype.isNull() )
+    return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
+  else
+    return KMimeTypeTrader::self()->preferredService( contentTypeStr, "Application" );
 }
 
 void KMHandleAttachmentCommand::atmOpen()
