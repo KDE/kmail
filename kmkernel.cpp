@@ -71,7 +71,6 @@ using KWallet::Wallet;
 #include <QObject>
 #include <QWidget>
 //Added by qt3to4:
-#include <q3vbox.h>
 #include <qutf7codec.h>
 
 #include <sys/types.h>

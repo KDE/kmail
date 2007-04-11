@@ -121,7 +121,6 @@ using KMail::TeeHtmlWriter;
 #include <QClipboard>
 #include <QCursor>
 #include <QTextCodec>
-#include <q3paintdevicemetrics.h>
 #include <QLayout>
 #include <QLabel>
 #include <QSplitter>
