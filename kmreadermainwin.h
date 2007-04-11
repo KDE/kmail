@@ -61,7 +61,7 @@ private:
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-          *mReplyListAction, *mForwardAction,
+          *mReplyListAction, *mForwardInlineAction,
           *mForwardAttachedAction, *mRedirectAction, *mBounceAction;
   KAction *mCopyMsgTextAction, *mSelectAllTextAction;
   KActionMenu *mReplyActionMenu;

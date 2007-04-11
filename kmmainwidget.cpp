@@ -2302,16 +2302,25 @@ void KMMainWidget::setupActions()
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardAttachedMsg()) );
 
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
-					"message_forward_as_attachment" );
-  mForwardActionMenu->insert( forwardAttachedAction() );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
+  mForwardInlineAction = new KAction( i18n("&Inline..."),
+                                      "mail_forward", SHIFT+Key_F, this,
+                                      SLOT(slotForwardInlineMsg()),
+                                      actionCollection(),
+                                      "message_forward_inline" );
 
-  mForwardActionMenu->insert( forwardAction() );
+  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+                                        "mail_forward", Key_F, this,
+                                        SLOT(slotForwardAttachedMsg()),
+                                        actionCollection(),
+                                        "message_forward_as_attachment" );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      mForwardActionMenu->insert( mForwardInlineAction );
+      mForwardActionMenu->insert( mForwardAttachedAction );
+  } else {
+        mForwardActionMenu->insert( mForwardAttachedAction );
+        mForwardActionMenu->insert( mForwardInlineAction );
+  }
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
@@ -2926,7 +2935,7 @@ void KMMainWidget::updateMessageActions()
     mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mFindInMessageAction->setEnabled( mass_actions );
-    mForwardAction->setEnabled( mass_actions );
+    mForwardInlineAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );
 
     forwardMenu()->setEnabled( mass_actions );

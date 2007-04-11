@@ -102,7 +102,7 @@ public:
   KAction *replyListAction() const { return mReplyListAction; }
   KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
-  KAction *forwardAction() const { return mForwardAction; }
+  KAction *forwardInlineAction() const { return mForwardInlineAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *redirectAction() const { return mRedirectAction; }
   KAction *bounceAction() const { return mBounceAction; }
@@ -402,7 +402,7 @@ private:
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
+      *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction,
       *mBounceAction, *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;

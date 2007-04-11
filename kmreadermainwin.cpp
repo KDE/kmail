@@ -30,6 +30,7 @@
 #include <kedittoolbar.h> //for saveMainWindowSettings() applyMainWindowSettings()
 #include <kmainwindow.h>
 #include <kcharsets.h>
+#include "globalsettings.h"
 
 #include "kmreadermainwin.h"
 #include "kmreadermainwin.moc"
@@ -212,16 +213,25 @@ void KMReaderMainWin::setupAccel()
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
            SLOT( slotForwardAttachedMsg() ) );
 
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
-  mForwardActionMenu->insert( mForwardAction );
+  mForwardInlineAction = new KAction( i18n("&Inline..."),
+                                      "mail_forward", SHIFT+Key_F, this,
+                                      SLOT(slotForwardInlineMsg()),
+                                      actionCollection(),
+                                      "message_forward_inline" );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
-					"message_forward_as_attachment" );
-  mForwardActionMenu->insert( mForwardAttachedAction );
+                                        "mail_forward", Key_F, this,
+                                        SLOT(slotForwardAttachedMsg()),
+                                        actionCollection(),
+                                        "message_forward_as_attachment" );
+
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      mForwardActionMenu->insert( mForwardInlineAction );
+      mForwardActionMenu->insert( mForwardAttachedAction );
+  } else {
+        mForwardActionMenu->insert( mForwardAttachedAction );
+        mForwardActionMenu->insert( mForwardInlineAction );
+  }
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
 				 Key_E, this, SLOT(slotRedirectMsg()),
