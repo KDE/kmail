@@ -36,7 +36,6 @@
 #include "kmmsgbase.h"
 
 #include <cryptplugwrapper.h>
-#include <q3cstring.h>
 
 class KMReaderWin;
 class KMMessagePart;

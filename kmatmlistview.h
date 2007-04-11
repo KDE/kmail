@@ -6,7 +6,6 @@
 #define __KMAIL_KMATMLISTVIEW_H__
 
 #include <q3listview.h>
-#include <q3cstring.h>
 
 class KMComposeWin;
 class MessageComposer;

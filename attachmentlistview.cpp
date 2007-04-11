@@ -37,7 +37,6 @@
 #include <kurl.h>
 
 // other Qt headers
-#include <q3cstring.h>
 #include <QBuffer>
 #include <QDataStream>
 #include <QEvent>

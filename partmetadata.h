@@ -21,7 +21,6 @@
 
 #include <kpgp.h>
 #include <QString>
-#include <q3cstring.h>
 #include <time.h>
 
 namespace KMail {

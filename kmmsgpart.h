@@ -21,7 +21,6 @@
 #define kmmsgpart_h
 
 #include <QString>
-#include <q3cstring.h>
 #include <q3dict.h>
 //Added by qt3to4:
 #include <QList>

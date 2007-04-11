@@ -50,7 +50,6 @@
 
 #include <QList>
 
-#include <q3cstring.h>
 
 class KMFolderCachedImap;
 class KMAcctCachedImap;

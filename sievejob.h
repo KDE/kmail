@@ -19,7 +19,6 @@
 #include <QStack>
 #include <QString>
 #include <QStringList>
-#include <q3cstring.h>
 
 #include <kurl.h>
 #include <kio/global.h>

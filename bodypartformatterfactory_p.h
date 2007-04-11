@@ -34,10 +34,9 @@
 #ifndef __KMAIL_BODYPARTFORMATTERFACTORY_P_H__
 #define __KMAIL_BODYPARTFORMATTERFACTORY_P_H__
 
-#include <q3cstring.h>
 
 #include <map>
-
+#include <qstring.h>
 namespace KMail {
 
   namespace Interface {

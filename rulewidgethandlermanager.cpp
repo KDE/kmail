@@ -45,7 +45,6 @@
 
 #include <QStackedWidget>
 #include <QString>
-#include <q3cstring.h>
 #include <QObject>
 #include <QObject>
 

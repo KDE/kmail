@@ -39,8 +39,6 @@
 
 #include <QList>
 
-//Added by qt3to4:
-#include <q3cstring.h>
 
 class KMAcctImap;
 class KMMessage;

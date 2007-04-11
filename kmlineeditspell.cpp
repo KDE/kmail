@@ -25,7 +25,6 @@
 
 #include <QEvent>
 #include <QFile>
-#include <q3cstring.h>
 #include <QCursor>
 //Added by qt3to4:
 #include <QKeyEvent>
