@@ -43,7 +43,6 @@
 #include <QLabel>
 #include <q3scrollview.h>
 #include <QComboBox>
-#include <q3hbox.h>
 #include <QTimer>
 #include <QPushButton>
 #include <q3stylesheet.h>
