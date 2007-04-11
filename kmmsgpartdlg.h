@@ -44,7 +44,7 @@ class KMMsgPartDialog: public KDialog
 
 public:
   KMMsgPartDialog( const QString & caption=QString(),
-		   QWidget * parent=0, const char * name=0 );
+		   QWidget * parent=0 );
   virtual ~KMMsgPartDialog();
 
   /** Get the currently selected mimetype */

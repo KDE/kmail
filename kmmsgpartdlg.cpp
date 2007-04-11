@@ -48,7 +48,7 @@ static const int numEncodingTypes =
   sizeof encodingTypes / sizeof *encodingTypes;
 
 KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
-                                  QWidget * parent, const char * name )
+                                  QWidget * parent )
   : KDialog( parent )
 {
   setCaption( caption.isEmpty() ? i18n("Message Part Properties") : caption );
@@ -212,6 +212,7 @@ void KMMsgPartDialog::setMimeType( const QString & mimeType ) {
   for ( int i = 0 ; i < mMimeType->count() ; ++i )
     if ( mMimeType->itemText( i ) == mimeType ) {
       mMimeType->setCurrentIndex( i );
+      slotMimeTypeChanged( mimeType );
       return;
     }
   mMimeType->insertItem( 0, mimeType );
@@ -330,12 +331,11 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   }
 #endif
   // find a mimetype icon:
-  int dummy = 0;
-  QString tmp = mimeType; // get rid of const'ness
-  if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy )
-       == QValidator::Acceptable )
-    mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( KMimeType::mimeType( mimeType )->iconName(), K3Icon::Desktop ) );
-  else
+  KMimeType::Ptr mt = KMimeType::mimeType( mimeType );
+  if ( !mt.isNull() )
+    mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mt->iconName(),
+                      K3Icon::Desktop ) );
+  else 
     mIcon->setPixmap( DesktopIcon("unknown") );
 }
 
@@ -444,7 +444,7 @@ void KMMsgPartDialogCompat::applyChanges()
   case QuotedPrintable: cte = "quoted-printable"; break;
   case Base64: default: cte = "base64";           break;
   }
-  if ( cte != mMsgPart->cteStr().lower() ) {
+  if ( cte != mMsgPart->cteStr().toLower() ) {
     QByteArray body = mMsgPart->bodyDecodedBinary();
     mMsgPart->setCteStr( cte );
     mMsgPart->setBodyEncodedBinary( body );
