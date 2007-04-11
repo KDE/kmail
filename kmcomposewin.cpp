@@ -3272,9 +3272,6 @@ void KMComposeWin::openAttach( int index )
   const QString contentTypeStr =
     ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).toLower();
 
-  KMimeType::Ptr mimetype;
-  mimetype = KMimeType::mimeType( contentTypeStr );
-
   KTemporaryFile* atmTempFile = new KTemporaryFile();
   atmTempFile->open();
   mAtmTempList.append( atmTempFile );
@@ -3291,6 +3288,7 @@ void KMComposeWin::openAttach( int index )
     return;
   }
 
+  KMimeType::Ptr mimetype = KMimeType::mimeType( contentTypeStr );
   KService::Ptr offer;
   if ( !mimetype.isNull() )
     offer = 

@@ -2170,16 +2170,14 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
   }
-  if ( ( mimetype.isNull() )
+  if ( ( mimetype->name() == "application/octet-stream" )
        && msgPart.isComplete() ) {
     // consider the attachment's contents if neither the Content-Type header
     // nor the filename give us a clue
     mimetype = KMimeType::findByFileContent( name );
   }
 
-  KService::Ptr offer;
-  if ( !mimetype.isNull() )
-     offer =
+  KService::Ptr offer =
       KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
   QString open_text;
@@ -2195,11 +2193,10 @@ void KMReaderWin::openAttachment( int id, const QString & name )
                             "Note that opening an attachment may compromise "
                             "your system's security.",
                          filenameText );
-  const QString dontAskAgainName = QString::fromLatin1("askSave") + 
-      ( mimetype.isNull() ? contentTypeStr : mimetype->name() );
   const int choice = KMessageBox::questionYesNoCancel( this, text,
       i18n("Open Attachment?"), KStandardGuiItem::saveAs(), 
-      KGuiItem(open_text), KStandardGuiItem::cancel(), dontAskAgainName ); 
+      KGuiItem(open_text), KStandardGuiItem::cancel(),
+      QString::fromLatin1("askSave") + mimetype->name() ); 
 
   if( choice == KMessageBox::Yes ) {		// Save
     mAtmUpdate = true;

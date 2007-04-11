@@ -3053,16 +3053,13 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
     // consider the filename if mimetype can not be found by content-type
     mimetype = KMimeType::findByPath( mAtmName, 0, true /* no disk access */ );
   }
-  if ( ( mimetype.isNull() )
+  if ( ( mimetype->name() == "application/octet-stream" )
        && msgPart.isComplete() ) {
     // consider the attachment's contents if neither the Content-Type header
     // nor the filename give us a clue
     mimetype = KMimeType::findByFileContent( mAtmName );
   }
-  if ( !mimetype.isNull() )
-    return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
-  else
-    return KMimeTypeTrader::self()->preferredService( contentTypeStr, "Application" );
+  return KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 }
 
 void KMHandleAttachmentCommand::atmOpen()
