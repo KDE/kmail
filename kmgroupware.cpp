@@ -71,7 +71,7 @@ bool vPartFoundAndDecoded( KMMessage* msg, QString& s )
       // kDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
-      s = KTnef::Formatter::msTNEFToVPart( msgPart.bodyDecodedBinary() );
+      s = KTnef::msTNEFToVPart( msgPart.bodyDecodedBinary() );
       return !s.isEmpty();
     } else {
       dwPart = msg->findDwBodyPart( DwMime::kTypeText, DwMime::kSubtypeVCal );
