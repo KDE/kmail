@@ -90,7 +90,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="Q3Frame" name="mEditFrame" >
+     <widget class="QFrame" name="mEditFrame" >
       <property name="sizePolicy" >
        <sizepolicy>
         <hsizetype>7</hsizetype>
@@ -245,12 +245,6 @@
    <class>KLineEdit</class>
    <extends>QWidget</extends>
    <header>klineedit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3Frame</class>
-   <extends>QFrame</extends>
-   <header>Qt3Support/Q3Frame</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

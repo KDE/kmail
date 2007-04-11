@@ -165,7 +165,7 @@
               </widget>
             </item>
             <item>
-              <widget class="Q3Frame" name="frameHTTP" >
+              <widget class="QFrame" name="frameHTTP" >
                 <property name="frameShape" >
                   <enum>NoFrame</enum>
                 </property>
@@ -253,7 +253,7 @@
               </widget>
             </item>
             <item>
-              <widget class="Q3Frame" name="frameLDAP" >
+              <widget class="QFrame" name="frameLDAP" >
                 <property name="frameShape" >
                   <enum>NoFrame</enum>
                 </property>
