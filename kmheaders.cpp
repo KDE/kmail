@@ -776,6 +776,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 void KMHeaders::msgChanged()
 {
   if (mFolder->count() == 0) { // Folder cleared
+    mItems.resize(0);
     clear();
     return;
   }
@@ -2104,10 +2105,10 @@ void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
   mPrevCurrent = 0;
   noRepaint = true;
   clear();
+  mItems.resize(0); // will contain deleted pointers
   noRepaint = false;
   KListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
-    mItems.resize(0);
     repaint();
     return;
   }
