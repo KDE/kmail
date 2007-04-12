@@ -71,6 +71,7 @@
 #include "folderrequester.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
+#include "globalsettings.h"
 
 #include <cassert>
 #include <stdlib.h>
@@ -1068,7 +1069,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( 1, 10000, 1, false );
+  const int kioskMinimumImapCheckInterval = GlobalSettings::minimumImapCheckInterval();
+  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, FALSE );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
