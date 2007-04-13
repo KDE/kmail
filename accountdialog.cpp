@@ -362,12 +362,9 @@ void AccountDialog::makeLocalAccountPage()
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
 
-  Q3ButtonGroup *group = new Q3ButtonGroup(i18n("Locking Method"), page );
-  group->setColumnLayout(0, Qt::Horizontal);
-  group->layout()->setSpacing( 0 );
-  group->layout()->setMargin( 0 );
+  QGroupBox *group = new QGroupBox( i18n("Locking Method"), page );
   QGridLayout *groupLayout = new QGridLayout();
-  group->layout()->addItem( groupLayout );
+  group->setLayout( groupLayout );
   groupLayout->setAlignment( Qt::AlignTop );
   groupLayout->setSpacing( 6 );
   groupLayout->setMargin( 11 );
@@ -785,8 +782,8 @@ void AccountDialog::makePopAccountPage()
 
   vlay->addSpacing( KDialog::spacingHint() );
 
-  mPop.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
-    i18n("Encryption"), page2 );
+  mPop.encryptionGroup = new QGroupBox( i18n("Encryption"), page2 );
+  mPop.encryptionGroup->setLayout( new QVBoxLayout() );
   mPop.encryptionNone =
     new QRadioButton( i18n("&None"), mPop.encryptionGroup );
   mPop.encryptionSSL =
@@ -795,12 +792,21 @@ void AccountDialog::makePopAccountPage()
   mPop.encryptionTLS =
     new QRadioButton( i18n("Use &TLS for secure mail download"),
     mPop.encryptionGroup );
+  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionNone );
+  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionSSL );
+  mPop.encryptionGroup->layout()->addWidget( mPop.encryptionTLS );
+  
+  mPop.encryptionButtonGroup = new QButtonGroup();
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS );
+  
   connect(mPop.encryptionGroup, SIGNAL(clicked(int)),
     SLOT(slotPopEncryptionChanged(int)));
   vlay->addWidget( mPop.encryptionGroup );
 
-  mPop.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentication Method"), page2 );
+  mPop.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
+  mPop.authGroup->setLayout( new QVBoxLayout() );
   mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
   mPop.authUser->setObjectName( "auth clear text" );
   mPop.authLogin = new QRadioButton( i18nc("Please translate this "
@@ -826,6 +832,25 @@ void AccountDialog::makePopAccountPage()
   }
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
   mPop.authAPOP->setObjectName( "auth apop" );
+  
+  mPop.authGroup->layout()->addWidget( mPop.authUser ); 
+  mPop.authGroup->layout()->addWidget( mPop.authLogin );
+  mPop.authGroup->layout()->addWidget( mPop.authPlain );
+  mPop.authGroup->layout()->addWidget( mPop.authCRAM_MD5 );
+  mPop.authGroup->layout()->addWidget( mPop.authDigestMd5 ); 
+  mPop.authGroup->layout()->addWidget( mPop.authNTLM );
+  mPop.authGroup->layout()->addWidget( mPop.authGSSAPI );
+  mPop.authGroup->layout()->addWidget( mPop.authAPOP );
+  
+  mPop.authButtonGroup = new QButtonGroup();
+  mPop.authButtonGroup->addButton( mPop.authUser );
+  mPop.authButtonGroup->addButton( mPop.authLogin );
+  mPop.authButtonGroup->addButton( mPop.authPlain );
+  mPop.authButtonGroup->addButton( mPop.authCRAM_MD5 );
+  mPop.authButtonGroup->addButton( mPop.authDigestMd5 ); 
+  mPop.authButtonGroup->addButton( mPop.authNTLM );
+  mPop.authButtonGroup->addButton( mPop.authGSSAPI );
+  mPop.authButtonGroup->addButton( mPop.authAPOP );
 
   vlay->addWidget( mPop.authGroup );
 
@@ -1005,7 +1030,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   mImap.locallySubscribedFoldersCheck = new QCheckBox(
     i18n("Show only &locally subscribed folders"), page1);
-  grid->addMultiCellWidget( mImap.locallySubscribedFoldersCheck, row, row, 0, 1 );
+  grid->addWidget( mImap.locallySubscribedFoldersCheck, row, 0, 1, 2 );
 
   if ( !connected ) {
     // not implemented for disconnected yet
@@ -1105,10 +1130,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   vlay->addSpacing( KDialog::spacingHint() );
 
-  mImap.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
-    i18n("Encryption"), page2 );
+  mImap.encryptionGroup = new QGroupBox( i18n("Encryption"), page2 );
+  mImap.encryptionGroup->setLayout( new QVBoxLayout() );
   mImap.encryptionNone =
-    new QRadioButton( i18n("&None"), mImap.encryptionGroup );
+    new QRadioButton( i18n("&None"), mImap.encryptionGroup );  
   mImap.encryptionSSL =
     new QRadioButton( i18n("Use &SSL for secure mail download"),
     mImap.encryptionGroup );
@@ -1117,10 +1142,19 @@ void AccountDialog::makeImapAccountPage( bool connected )
     mImap.encryptionGroup );
   connect(mImap.encryptionGroup, SIGNAL(clicked(int)),
     SLOT(slotImapEncryptionChanged(int)));
+  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionNone );
+  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionSSL );
+  mImap.encryptionGroup->layout()->addWidget( mImap.encryptionTLS );
+  
+  mImap.encryptionButtonGroup = new QButtonGroup();
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS );
+  
   vlay->addWidget( mImap.encryptionGroup );
 
-  mImap.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentication Method"), page2 );
+  mImap.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
+  mImap.authGroup->setLayout( new QVBoxLayout() );
   mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
   mImap.authLogin = new QRadioButton( i18nc("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
@@ -1133,6 +1167,26 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authNTLM = new QRadioButton( i18n("&NTLM"), mImap.authGroup );
   mImap.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mImap.authGroup );
   mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), mImap.authGroup );
+  
+  mImap.authGroup->layout()->addWidget( mImap.authUser );
+  mImap.authGroup->layout()->addWidget( mImap.authLogin );
+  mImap.authGroup->layout()->addWidget( mImap.authPlain );
+  mImap.authGroup->layout()->addWidget( mImap.authCramMd5 );
+  mImap.authGroup->layout()->addWidget( mImap.authDigestMd5 );
+  mImap.authGroup->layout()->addWidget( mImap.authNTLM );
+  mImap.authGroup->layout()->addWidget( mImap.authGSSAPI );
+  mImap.authGroup->layout()->addWidget( mImap.authAnonymous );
+  
+  mImap.authButtonGroup = new QButtonGroup();
+  mImap.authButtonGroup->addButton( mImap.authUser );
+  mImap.authButtonGroup->addButton( mImap.authLogin );
+  mImap.authButtonGroup->addButton( mImap.authPlain );
+  mImap.authButtonGroup->addButton( mImap.authCramMd5 );
+  mImap.authButtonGroup->addButton( mImap.authDigestMd5 );
+  mImap.authButtonGroup->addButton( mImap.authNTLM );
+  mImap.authButtonGroup->addButton( mImap.authGSSAPI );
+  mImap.authButtonGroup->addButton( mImap.authAnonymous );
+  
   vlay->addWidget( mImap.authGroup );
 
   vlay->addStretch();
@@ -1512,9 +1566,9 @@ void AccountDialog::slotPopEncryptionChanged(int id)
                            : ( id == SSL ) ? mCapaSSL
                                            : mCapaNormal;
   enablePopFeatures( mCurCapa );
-  const QAbstractButton *old = mPop.authGroup->selected();
-  if ( !old->isEnabled() )
-    checkHighest( mPop.authGroup );
+  const QAbstractButton *old = mPop.authButtonGroup->checkedButton();
+  if ( old && !old->isEnabled() )
+    checkHighest( mPop.authButtonGroup );
 }
 
 
@@ -1530,9 +1584,9 @@ void AccountDialog::slotImapEncryptionChanged(int id)
                                   : ( id == SSL ) ? mCapaSSL
                                                   : mCapaNormal;
   enableImapAuthMethods( authMethods );
-  QAbstractButton *old = mImap.authGroup->selected();
+  QAbstractButton *old = mImap.authButtonGroup->checkedButton();
   if ( !old->isEnabled() )
-    checkHighest( mImap.authGroup );
+    checkHighest( mImap.authButtonGroup );
 }
 
 
@@ -1623,7 +1677,7 @@ void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
   mPop.encryptionNone->setEnabled( !capaNormal.isEmpty() );
   mPop.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
   mPop.encryptionTLS->setEnabled( mCapaTLS != 0 );
-  checkHighest( mPop.encryptionGroup );
+  checkHighest( mPop.encryptionButtonGroup );
   delete mServerTest;
   mServerTest = 0;
 }
@@ -1729,7 +1783,7 @@ void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
   mImap.encryptionNone->setEnabled( !capaNormal.isEmpty() );
   mImap.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
   mImap.encryptionTLS->setEnabled( mCapaTLS != 0 );
-  checkHighest( mImap.encryptionGroup );
+  checkHighest( mImap.encryptionButtonGroup );
   delete mServerTest;
   mServerTest = 0;
 }
@@ -1765,12 +1819,12 @@ void AccountDialog::enableImapAuthMethods( unsigned int capa )
 }
 
 
-void AccountDialog::checkHighest( Q3ButtonGroup *btnGroup )
+void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
   kDebug(5006) << "checkHighest( " << btnGroup << " )" << endl;
-  for ( int i = btnGroup->count() - 1; i >= 0 ; --i ) {
-    QAbstractButton * btn = btnGroup->find( i );
-    if ( btn && btn->isEnabled() ) {
+  QAbstractButton *btn;
+  foreach (btn, btnGroup->buttons()) {
+    if (btn && btn->isEnabled()) {
       btn->animateClick();
       return;
     }

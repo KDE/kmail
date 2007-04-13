@@ -44,6 +44,7 @@ class KIntNumInput;
 class KMAccount;
 class KMFolder;
 class Q3ButtonGroup;
+class QGroupBox;
 
 namespace KPIM {
 class ServerTest;
@@ -116,11 +117,13 @@ class AccountDialog : public KDialog
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *precommand;
-      Q3ButtonGroup *encryptionGroup;
+      QGroupBox    *encryptionGroup;
+      QButtonGroup *encryptionButtonGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
-      Q3ButtonGroup *authGroup;
+      QGroupBox    *authGroup;
+      QButtonGroup *authButtonGroup;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -180,11 +183,13 @@ class AccountDialog : public KDialog
       QCheckBox    *listOnlyOpenCheck;
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
-      Q3ButtonGroup *encryptionGroup;
+      QGroupBox    *encryptionGroup;
+      QButtonGroup *encryptionButtonGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
-      Q3ButtonGroup *authGroup;
+      QGroupBox    *authGroup;
+      QButtonGroup *authButtonGroup;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -247,7 +252,7 @@ class AccountDialog : public KDialog
     void makeImapAccountPage( bool disconnected = false );
     void setupSettings();
     void saveSettings();
-    void checkHighest( Q3ButtonGroup * );
+    void checkHighest( QButtonGroup * );
     static unsigned int popCapabilitiesFromStringList( const QStringList & );
     static unsigned int imapCapabilitiesFromStringList( const QStringList & );
     void enablePopFeatures( unsigned int );
