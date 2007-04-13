@@ -64,6 +64,7 @@
 #include "folderrequester.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
+#include "globalsettings.h"
 
 #include <cassert>
 #include <stdlib.h>
@@ -884,10 +885,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
-  button->setIconSet( 
+  button->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
-  QWhatsThis::add( button, 
+  QWhatsThis::add( button,
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
   grid->addWidget( box, row, 0 );
 
@@ -898,7 +899,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
-  mImap.editPNS->setIconSet( 
+  mImap.editPNS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editPNS->setAutoRaise( true );
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -910,7 +911,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
-  mImap.editONS->setIconSet( 
+  mImap.editONS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editONS->setAutoRaise( true );
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -922,7 +923,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
-  mImap.editSNS->setIconSet( 
+  mImap.editSNS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editSNS->setAutoRaise( true );
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -1031,7 +1032,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  const int kioskMinimumImapCheckInterval = GlobalSettings::minimumImapCheckInterval();
+  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, FALSE );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
@@ -1918,7 +1920,7 @@ void AccountDialog::saveSettings()
     }
     ai.setNamespaces( map );
     ai.setNamespaceToDelimiter( delimMap );
-  }  
+  }
 
   kmkernel->acctMgr()->writeConfig(TRUE);
 
@@ -2078,7 +2080,7 @@ void AccountDialog::slotReloadNamespaces()
     connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     connect( ai, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( slotConnectionResult(int, const QString&) ) );    
+          this, SLOT( slotConnectionResult(int, const QString&) ) );
     ai->getNamespaces();
   }
 }
@@ -2090,7 +2092,7 @@ void AccountDialog::slotConnectionResult( int errorCode, const QString& )
     disconnect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     disconnect( ai, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( slotConnectionResult(int, const QString&) ) );    
+          this, SLOT( slotConnectionResult(int, const QString&) ) );
     mImap.personalNS->setText( QString::null );
   }
 }
@@ -2170,8 +2172,8 @@ void AccountDialog::initAccountForConnect()
       na.setAuth("GSSAPI");
     else if (mPop.authAPOP->isChecked())
       na.setAuth("APOP");
-    else na.setAuth("AUTO");    
-  } 
+    else na.setAuth("AUTO");
+  }
   else if ( type == "imap" || type == "cachedimap" ) {
     na.setHost( mImap.hostEdit->text().stripWhiteSpace() );
     na.setPort( mImap.portEdit->text().toInt() );
@@ -2194,7 +2196,7 @@ void AccountDialog::initAccountForConnect()
       na.setAuth("LOGIN");
     else if (mImap.authPlain->isChecked())
       na.setAuth("PLAIN");
-    else na.setAuth("*");    
+    else na.setAuth("*");
   }
 }
 
@@ -2233,7 +2235,7 @@ void NamespaceLineEdit::setText( const QString& text )
   KLineEdit::setText( text );
 }
 
-NamespaceEditDialog::NamespaceEditDialog( QWidget *parent, 
+NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
   : KDialogBase( parent, "edit_namespace", false, QString::null,
       Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
@@ -2259,7 +2261,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
     edit->setText( it.key() );
     QToolButton* button = new QToolButton( grid );
-    button->setIconSet( 
+    button->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "editdelete", KIcon::Small, 0 ) );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
