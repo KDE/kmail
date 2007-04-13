@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 //  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
   // Go!
-  int ret = kapp->exec();
+  int ret = qApp->exec();
   // clean up
   kmailKernel.cleanup();
 
