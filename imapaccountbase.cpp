@@ -562,19 +562,19 @@ namespace KMail {
     if (aSlave != mSlave) return;
     handleError( errorCode, errorMsg, 0, QString::null, true );
     if ( mAskAgain )
-      makeConnection();
-    else {
-      if ( !mSlaveConnected ) {
-        mSlaveConnectionError = true;
-        resetConnectionList( this );
-        if ( mSlave )
-        {
-          KIO::Scheduler::disconnectSlave( slave() );
-          mSlave = 0;
-        }
+      if ( makeConnection() != ImapAccountBase::Error )
+        return;
+
+    if ( !mSlaveConnected ) {
+      mSlaveConnectionError = true;
+      resetConnectionList( this );
+      if ( mSlave )
+      {
+        KIO::Scheduler::disconnectSlave( slave() );
+        mSlave = 0;
       }
-      emit connectionResult( errorCode, errorMsg );
     }
+    emit connectionResult( errorCode, errorMsg );
   }
 
   //-----------------------------------------------------------------------------
@@ -892,7 +892,7 @@ namespace KMail {
     bool jobsKilled = true;
     switch( errorCode ) {
     case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
-    case KIO::ERR_COULD_NOT_LOGIN: // bad password
+    case KIO::ERR_COULD_NOT_AUTHENTICATE: // bad password
       mAskAgain = true;
       // fallthrough intended
     case KIO::ERR_CONNECTION_BROKEN:
@@ -901,6 +901,7 @@ namespace KMail {
       // These mean that we'll have to reconnect on the next attempt, so disconnect and set mSlave to 0.
       killAllJobs( true );
       break;
+    case KIO::ERR_COULD_NOT_LOGIN:
     case KIO::ERR_USER_CANCELED:
       killAllJobs( false );
       break;
@@ -1042,7 +1043,7 @@ namespace KMail {
     msg->deleteBodyParts();
     // make the parts and fill the mBodyPartList
     constructParts( stream, 1, 0, 0, msg->asDwMessage() );
-    if ( mBodyPartList.count() == 1 ) // we directly set the body later
+    if ( mBodyPartList.count() == 1 ) // we directly set the body later, at partsToLoad below
       msg->deleteBodyParts();
 
     if ( !as )
@@ -1068,6 +1069,12 @@ namespace KMail {
         ++partsToLoad;
       }
     }
+    // if the only body part is not text, part->loadPart() would return false
+    // and that part is never loaded, so make sure it loads. 
+    // it seems that TEXT does load the single body part even if it is not text/*
+    if ( mBodyPartList.count() == 1 && partsToLoad == 0 )
+        partsToLoad = 1;
+
     if ( (mBodyPartList.count() * 0.5) < partsToLoad )
     {
       // more than 50% of the parts have to be loaded anyway so it is faster
