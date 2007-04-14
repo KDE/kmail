@@ -718,17 +718,24 @@ void KMSender::slotIdle()
     if (!errString.isEmpty()) KMessageBox::error(0,msg);
     setStatusMsg( i18n( "Sending aborted." ) );
   } else {
-    if (!mSendProc->sendOk()) {
-      if ( mCurrentMsg )
+    if ( !mSendProc->sendOk() ) {
+      if ( mCurrentMsg ) {
         mCurrentMsg->setTransferInProgress( false );
-      if ( mOutboxFolder )
+      }
+      if ( mOutboxFolder ) {
         mOutboxFolder->unGetMsg( mFailedMessages );
+      }
       mCurrentMsg = 0;
       mFailedMessages++;
+      // reset cached password
+      QMap<QString, QString>::iterator pc;
+      if ( ( pc = mPasswdCache.find( mMethodStr ) ) != mPasswdCache.end() ) {
+        mPasswdCache.erase( pc );
+      }
       // Sending of message failed.
-      if (!errString.isEmpty()) {
+      if ( !errString.isEmpty() ) {
         int res = KMessageBox::Yes;
-        if (mSentMessages+mFailedMessages != mTotalMessages) {
+        if ( mSentMessages+mFailedMessages != mTotalMessages ) {
           msg = i18n("<p>Sending failed:</p>"
             "<p>%1</p>"
             "<p>The message will stay in the 'outbox' folder until you either "
@@ -1092,44 +1099,51 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
   destination.setHost(ti->host);
   destination.setPort(ti->port.toUShort());
 
-  if (ti->auth)
-  {
-    if( (ti->user.isEmpty() || ti->passwd().isEmpty()) &&
-      ti->authType != "GSSAPI" )
-    {
+  if ( ti->auth ) {
+    QMap<QString, QString>::iterator tpc =
+      mSender->mPasswdCache.find( ti->name );
+    QString tpwd = ( tpc != mSender->mPasswdCache.end() ) ? (*tpc) : QString();
+    if ( ti->passwd().isEmpty() ) {
+      ti->setPasswd( tpwd );
+    }
+
+    if ( ( ti->user.isEmpty() || ti->passwd().isEmpty() ) &&
+         ti->authType != "GSSAPI" ) {
       bool b = false;
       int result;
 
-      KCursorSaver idle(KBusyPtr::idle());
+      KCursorSaver idle( KBusyPtr::idle() );
       QString passwd = ti->passwd();
-      result = KIO::PasswordDialog::getNameAndPassword(ti->user, passwd,
+      result = KIO::PasswordDialog::getNameAndPassword( ti->user, passwd,
 	&b, i18n("You need to supply a username and a password to use this "
 	     "SMTP server."), false, QString(), ti->name, QString());
 
-      if ( result != QDialog::Accepted )
-      {
+      if ( result != QDialog::Accepted ) {
         abort();
         return false;
       }
-      if (int id = KMTransportInfo::findTransport(ti->name)) {
+      if ( int id = KMTransportInfo::findTransport( ti->name ) ) {
         ti->setPasswd( passwd );
-        ti->writeConfig(id);
+        ti->writeConfig( id );
+
+        // save the password into the cache
+        mSender->mPasswdCache[ti->name] = passwd;
       }
     }
-    destination.setUser(ti->user);
-    destination.setPass(ti->passwd());
+    destination.setUser( ti->user );
+    destination.setPass( ti->passwd() );
   }
 
-  if (!mSlave || !mInProcess)
-  {
+  if ( !mSlave || !mInProcess ) {
     KIO::MetaData slaveConfig;
-    slaveConfig.insert("tls", (ti->encryption == "TLS") ? "on" : "off");
-    if (ti->auth) slaveConfig.insert("sasl", ti->authType);
-    mSlave = KIO::Scheduler::getConnectedSlave(destination, slaveConfig);
+    slaveConfig.insert( "tls", ( ti->encryption == "TLS" ) ? "on" : "off" );
+    if ( ti->auth ) {
+      slaveConfig.insert( "sasl", ti->authType );
+    }
+    mSlave = KIO::Scheduler::getConnectedSlave( destination, slaveConfig );
   }
 
-  if (!mSlave)
-  {
+  if (!mSlave) {
     abort();
     return false;
   }
