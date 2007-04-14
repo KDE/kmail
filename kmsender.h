@@ -30,6 +30,7 @@
 #include <qcstring.h>
 #include <qstring.h>
 #include <qstringlist.h>
+#include <qmap.h>
 #include <qobject.h>
 #include <kdeversion.h>
 
@@ -167,6 +168,7 @@ private:
   int mSentMessages, mTotalMessages;
   int mSentBytes, mTotalBytes;
   int mFailedMessages;
+  QMap<QString,QString> mPasswdCache;
 };
 
 #endif /*kmsender_h*/

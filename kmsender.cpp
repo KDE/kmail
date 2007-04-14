@@ -707,6 +707,11 @@ void KMSender::slotIdle()
         mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
       mFailedMessages++;
+      // reset cached password
+      QMapIterator <QString,QString> pc;
+      if ( (pc = mPasswdCache.find( mMethodStr )) != mPasswdCache.end() ) {
+        mPasswdCache.erase(pc);
+      }
       // Sending of message failed.
       if (!errString.isEmpty()) {
         int res = KMessageBox::Yes;
@@ -1077,6 +1082,12 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
 
   if (ti->auth)
   {
+    QMapIterator<QString,QString> tpc = mSender->mPasswdCache.find( ti->name );
+    QString tpwd = ( tpc != mSender->mPasswdCache.end() )?(*tpc):QString::null;
+
+    if ( ti->passwd().isEmpty() )
+      ti->setPasswd( tpwd );
+
     if( (ti->user.isEmpty() || ti->passwd().isEmpty()) &&
       ti->authType != "GSSAPI" )
     {
@@ -1097,6 +1108,9 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
       if (int id = KMTransportInfo::findTransport(ti->name)) {
         ti->setPasswd( passwd );
         ti->writeConfig(id);
+
+        // save the password into the cache
+        mSender->mPasswdCache[ti->name] = passwd;
       }
     }
     destination.setUser(ti->user);
