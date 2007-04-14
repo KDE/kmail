@@ -74,39 +74,39 @@ using KIO::PasswordDialog;
 
 namespace KMail {
 
-  static const unsigned short int imapDefaultPort = 143;
+static const unsigned short int imapDefaultPort = 143;
 
-  //
-  //
-  // Ctor and Dtor
-  //
-  //
+//
+//
+// Ctor and Dtor
+//
+//
 
-  ImapAccountBase::ImapAccountBase( AccountManager * parent, const QString & name, uint id )
-    : NetworkAccount( parent, name, id ),
-      mTotal( 0 ),
-      mCountUnread( 0 ),
-      mCountLastUnread( 0 ),
-      mAutoExpunge( true ),
-      mHiddenFolders( false ),
-      mOnlySubscribedFolders( false ),
-      mOnlyLocallySubscribedFolders( false ),
-      mLoadOnDemand( true ),
-      mListOnlyOpenFolders( false ),
-      mProgressEnabled( false ),
-      mErrorDialogIsActive( false ),
-      mPasswordDialogIsActive( false ),
-      mACLSupport( true ),
-      mAnnotationSupport( true ),
-      mQuotaSupport( true ),
-      mSlaveConnected( false ),
-      mSlaveConnectionError( false ),
-      mCheckingSingleFolder( false ),
-      mListDirProgressItem( 0 )
-  {
-    mPort = imapDefaultPort;
-    KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
-                            this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
+ImapAccountBase::ImapAccountBase( AccountManager * parent, const QString & name, uint id )
+  : NetworkAccount( parent, name, id ),
+    mTotal( 0 ),
+    mCountUnread( 0 ),
+    mCountLastUnread( 0 ),
+    mAutoExpunge( true ),
+    mHiddenFolders( false ),
+    mOnlySubscribedFolders( false ),
+    mOnlyLocallySubscribedFolders( false ),
+    mLoadOnDemand( true ),
+    mListOnlyOpenFolders( false ),
+    mProgressEnabled( false ),
+    mErrorDialogIsActive( false ),
+    mPasswordDialogIsActive( false ),
+    mACLSupport( true ),
+    mAnnotationSupport( true ),
+    mQuotaSupport( true ),
+    mSlaveConnected( false ),
+    mSlaveConnectionError( false ),
+    mCheckingSingleFolder( false ),
+    mListDirProgressItem( 0 )
+{
+  mPort = imapDefaultPort;
+  KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+                          this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
                             this, SLOT(slotSchedulerSlaveConnected(KIO::Slave *)));
     connect(&mNoopTimer, SIGNAL(timeout()), SLOT(slotNoopTimeout()));
@@ -562,32 +562,35 @@ namespace KMail {
     killAllJobs();
   }
 
-
-  //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,
-      const QString &errorMsg)
-  {
-    if (aSlave != mSlave) return;
-    handleError( errorCode, errorMsg, 0, QString(), true );
-    if ( mAskAgain )
-      makeConnection();
-    else {
-      if ( !mSlaveConnected ) {
-        mSlaveConnectionError = true;
-        resetConnectionList( this );
-        if ( mSlave )
-        {
-          KIO::Scheduler::disconnectSlave( slave() );
-          mSlave = 0;
-        }
-      }
-      emit connectionResult( errorCode, errorMsg );
+//-----------------------------------------------------------------------------
+void ImapAccountBase::slotSchedulerSlaveError( KIO::Slave *aSlave,
+                                               int errorCode,
+                                               const QString &errorMsg )
+{
+  if ( aSlave != mSlave ) {
+    return;
+  }
+  handleError( errorCode, errorMsg, 0, QString(), true );
+  if ( mAskAgain ) {
+    if ( makeConnection() != ImapAccountBase::Error ) {
+      return;
     }
   }
 
-  //-----------------------------------------------------------------------------
-  void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
-  {
+  if ( !mSlaveConnected ) {
+    mSlaveConnectionError = true;
+    resetConnectionList( this );
+    if ( mSlave ) {
+      KIO::Scheduler::disconnectSlave( slave() );
+      mSlave = 0;
+    }
+  }
+  emit connectionResult( errorCode, errorMsg );
+}
+
+//-----------------------------------------------------------------------------
+void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
+{
     if (aSlave != mSlave) return;
     mSlaveConnected = true;
     mNoopTimer.start( 60000 ); // make sure we start sending noops
@@ -900,7 +903,7 @@ namespace KMail {
     bool jobsKilled = true;
     switch( errorCode ) {
     case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
-    case KIO::ERR_COULD_NOT_LOGIN: // bad password
+    case KIO::ERR_COULD_NOT_AUTHENTICATE: // bad password
       mAskAgain = true;
       // fallthrough intended
     case KIO::ERR_CONNECTION_BROKEN:
@@ -909,6 +912,7 @@ namespace KMail {
       // These mean that we'll have to reconnect on the next attempt, so disconnect and set mSlave to 0.
       killAllJobs( true );
       break;
+    case KIO::ERR_COULD_NOT_LOGIN:
     case KIO::ERR_USER_CANCELED:
       killAllJobs( false );
       break;
@@ -1051,7 +1055,7 @@ namespace KMail {
     msg->deleteBodyParts();
     // make the parts and fill the mBodyPartList
     constructParts( stream, 1, 0, 0, msg->asDwMessage() );
-    if ( mBodyPartList.count() == 1 ) // we directly set the body later
+    if ( mBodyPartList.count() == 1 ) // we directly set the body later, at partsToLoad below
       msg->deleteBodyParts();
 
     if ( !as )
@@ -1074,6 +1078,12 @@ namespace KMail {
         ++partsToLoad;
       }
     }
+    // if the only body part is not text, part->loadPart() would return false
+    // and that part is never loaded, so make sure it loads.
+    // it seems that TEXT does load the single body part even if it is not text/*
+    if ( mBodyPartList.count() == 1 && partsToLoad == 0 )
+        partsToLoad = 1;
+
     if ( (mBodyPartList.count() * 0.5) < partsToLoad )
     {
       // more than 50% of the parts have to be loaded anyway so it is faster
