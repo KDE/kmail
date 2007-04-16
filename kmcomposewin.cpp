@@ -3291,7 +3291,7 @@ void KMComposeWin::openAttach( int index )
   KMimeType::Ptr mimetype = KMimeType::mimeType( contentTypeStr );
   KService::Ptr offer;
   if ( !mimetype.isNull() )
-    offer = 
+    offer =
         KMimeTypeTrader::self()->preferredService( mimetype->name(), "Application" );
 
   if ( !offer || mimetype.isNull() ) {
@@ -3603,31 +3603,31 @@ void KMComposeWin::slotNewComposer()
   win->show();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotNewMailReader()
 {
-  KMMainWin *kmmwin = new KMMainWin(0);
+  KMMainWin *kmmwin = new KMMainWin( 0 );
   kmmwin->show();
-  //d->resize(d->size());
 }
 
-
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotUpdWinTitle(const QString& text)
+void KMComposeWin::slotUpdWinTitle( const QString &text )
 {
-  if (text.isEmpty())
-       setCaption('(' + i18n("unnamed") + ')');
-  else setCaption(text);
+  QString s( text );
+  // Remove characters that show badly in most window decorations:
+  // newlines tend to become boxes.
+  if ( text.isEmpty() ) {
+    setCaption( '(' + i18n("unnamed") + ')' );
+  } else {
+    setCaption( s.replace( QChar('\n'), ' ' ) );
+  }
 }
 
-
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotEncryptToggled(bool on)
+void KMComposeWin::slotEncryptToggled( bool on )
 {
   setEncryption( on, true /* set by the user */ );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
