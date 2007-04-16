@@ -483,4 +483,16 @@ KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
   return msgInfo;
 }
 
+void KMFolderIndex::recreateIndex()
+{
+  QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
+  KMessageBox::error(0,
+       i18n("The mail index for '%1' is corrupted and will be regenerated now, "
+            "but some information, including status flags, will be lost.").arg(name()));
+  QApplication::restoreOverrideCursor();
+  createIndexFromContents();
+  readIndex();
+}
+
+
 #include "kmfolderindex.moc"

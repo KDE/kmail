@@ -851,6 +851,7 @@ namespace {
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
+retry:
   QString ret;
 
   g_chunk_offset = 0;
@@ -887,7 +888,12 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
     type = (MsgPartType) tmp;
     if(g_chunk_offset + l > mIndexLength) {
 	kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
-	break;
+        if(using_mmap) {
+            g_chunk_length = 0;
+            g_chunk = 0;
+        }
+        storage()->recreateIndex();
+        goto retry;
     }
     if(type == t) {
         // This works because the QString constructor does a memcpy.
@@ -920,6 +926,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
 //-----------------------------------------------------------------------------
 off_t KMMsgBase::getLongPart(MsgPartType t) const
 {
+retry:
   off_t ret = 0;
 
   g_chunk_offset = 0;
@@ -959,7 +966,12 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 
     if (g_chunk_offset + l > mIndexLength) {
       kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
-      break;
+      if(using_mmap) {
+        g_chunk_length = 0;
+        g_chunk = 0;
+      }
+      storage()->recreateIndex();
+      goto retry;
     }
     if(type == t) {
       assert(sizeOfLong == l);
