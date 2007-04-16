@@ -61,7 +61,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
     // keeping it for now, maybe we need it when k3listviewsearchline changes
     // TA20060825
 
-//   KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear_left" : "locationbar_erase" ),
+//   KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "clear-left" : "locationbar-erase" ),
 //                                            i18n( "Reset Quick Search" ),
 //                                            actionCollection, "reset_quicksearch" );
 //   connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
