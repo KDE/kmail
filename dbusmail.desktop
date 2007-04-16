@@ -5,4 +5,5 @@ X-KDE-ServiceType=DBUS/Mailer
 Comment=Mail program with a DBUS interface
 Comment[es]=Programa de correo con una interfaz DBUS
 Comment[kk]=DBUS интерфейсті пошта бағдарламасы
+Comment[sv]=E-postprogram med DBus-gränssnitt
 Comment[x-test]=xxMail program with a DBUS interfacexx
