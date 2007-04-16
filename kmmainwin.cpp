@@ -28,7 +28,7 @@
 #include "kmmainwin.moc"
 
 KMMainWin::KMMainWin(QWidget *)
-    : KMainWindow( 0 ),
+    : KXmlGuiWindow( 0 ),
       mReallyClose( false )
 {
   setObjectName("kmail-mainwindow#");

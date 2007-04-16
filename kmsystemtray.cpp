@@ -32,7 +32,7 @@
 using KMail::AccountManager;
 #include "globalsettings.h"
 
-#include <kmainwindow.h>
+#include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
@@ -136,7 +136,7 @@ void KMSystemTray::buildPopupMenu()
     mPopupMenu->addAction( action );
   mPopupMenu->addSeparator();
 
-  KMainWindow *mainWin = ::qobject_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
+  KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
       mPopupMenu->addAction( action );

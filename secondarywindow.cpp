@@ -43,7 +43,7 @@ namespace KMail {
 
   //---------------------------------------------------------------------------
   SecondaryWindow::SecondaryWindow( const char * name )
-    : KMainWindow( 0 )
+    : KXmlGuiWindow( 0 )
   {
     setObjectName( name );
     // Set this to be the group leader for all subdialogs - this means

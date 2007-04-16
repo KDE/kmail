@@ -20,7 +20,7 @@
 #ifndef __KMMAINWIN
 #define __KMMAINWIN
 
-#include <kmainwindow.h>
+#include <kxmlguiwindow.h>
 #include "kdeversion.h"
 #include "qstring.h"
 
@@ -32,7 +32,7 @@ namespace KPIM {
 using KPIM::StatusbarProgressWidget;
 using KPIM::ProgressDialog;
 
-class KMMainWin : public KMainWindow
+class KMMainWin : public KXmlGuiWindow
 {
   Q_OBJECT
 

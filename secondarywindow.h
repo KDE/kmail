@@ -31,7 +31,7 @@
 #ifndef __KMAIL_SECONDARYWINDOW_H__
 #define __KMAIL_SECONDARYWINDOW_H__
 
-#include <kmainwindow.h>
+#include <kxmlguiwindow.h>
 //Added by qt3to4:
 #include <QCloseEvent>
 
@@ -43,7 +43,7 @@ namespace KMail {
    *  Window class for secondary KMail window like the composer window and
    *  the separate message window.
    */
-  class SecondaryWindow : public KMainWindow
+  class SecondaryWindow : public KXmlGuiWindow
   {
     Q_OBJECT
 
