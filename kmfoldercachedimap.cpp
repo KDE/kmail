@@ -176,7 +176,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mFoundAnIMAPDigest( false ),
-    mUserRights( 0 ), mSilentUpload( false ),
+    mUserRights( 0 ), mOldUserRights( 0 ), mSilentUpload( false ),
     /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
     mRecurse( true ),
@@ -247,6 +247,7 @@ void KMFolderCachedImap::readConfig()
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
+  mOldUserRights = mUserRights;
 
   int storageQuotaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
   int storageQuotaLimit = config->readNumEntry( "StorageQuotaLimit", -1 );
@@ -791,6 +792,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
+      mOldUserRights = mUserRights;
       newState( mProgress, i18n("Checking permissions"));
       connect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
                this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
@@ -1248,33 +1250,108 @@ void KMFolderCachedImap::uploadNewMessages()
       job->start();
       return;
     } else {
-      const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
-            "have not been uploaded to the server yet, but you do not seem to "
-            "have sufficient access rights on the folder now to upload them. "
-            "Please contact your administrator to allow upload of new messages "
-            "to you, or move them out of this folder.</p> "
-            "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
-      if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
-        KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
-            i18n("Move Messages to Folder"), true );
-        if ( dlg.exec() ) {
-          KMFolder* dest = dlg.folder();
-          if ( dest ) {
-            QPtrList<KMMsgBase> msgs;
-            for( int i = 0; i < count(); ++i ) {
-              KMMsgBase *msg = getMsgBase( i );
-              if( !msg ) continue; /* what goes on if getMsg() returns 0? */
-              if ( msg->UID() == 0 )
-                msgs.append( msg );
-            }
-            KMCommand *command = new KMMoveCommand( dest, msgs );
-            connect( command, SIGNAL( completed( KMCommand * ) ),
-                     this, SLOT( serverSyncInternal() ) );
-            command->start();
-            return;
+      KMFolder *dest = 0;
+      bool manualMove = true;
+      while ( GlobalSettings::autoLostFoundMove() ) {
+        // find the inbox of this account
+        KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
+        if ( !inboxFolder ) {
+          kdWarning(5006) << k_funcinfo << "inbox not found!" << endl;
+          break;
+        }
+        KMFolderDir *inboxDir = inboxFolder->child();
+        if ( !inboxDir && !inboxFolder->storage() )
+          break;
+        assert( inboxFolder->storage()->folderType() == KMFolderTypeCachedImap );
+
+        // create lost+found folder if needed
+        KMFolderNode *node;
+        KMFolder *lfFolder = 0;
+        if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
+          kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
+          KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
+              i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
+          if ( !folder || !folder->storage() )
+            break;
+          static_cast<KMFolderCachedImap*>( folder->storage() )->initializeFrom(
+            static_cast<KMFolderCachedImap*>( inboxFolder->storage() ) );
+          folder->storage()->setContentsType( KMail::ContentsTypeMail );
+          folder->storage()->writeConfig();
+          lfFolder = folder;
+        } else {
+          kdDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
+          lfFolder = dynamic_cast<KMFolder*>( node );
+        }
+        if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
+          break;
+
+        // create subfolder for this incident
+        QDate today = QDate::currentDate();
+        QString baseName = folder()->label() + "-" + QString::number( today.year() )
+            + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
+            + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
+        QString name = baseName;
+        int suffix = 0;
+        while ( (node = lfFolder->child()->hasNamedFolder( name )) ) {
+          ++suffix;
+          name = baseName + '-' + QString::number( suffix );
+        }
+        kdDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
+        dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
+        if ( !dest || !dest->storage() )
+            break;
+        static_cast<KMFolderCachedImap*>( dest->storage() )->initializeFrom(
+          static_cast<KMFolderCachedImap*>( lfFolder->storage() ) );
+        dest->storage()->setContentsType( contentsType() );
+        dest->storage()->writeConfig();
+
+        KMessageBox::sorry( 0, i18n("<p>There are new messages in folder <b>%1</b>, which "
+              "have not been uploaded to the server yet, but you do not seem to "
+              "have sufficient access rights on the folder now to upload them.</p>"
+              "<p>All affected messages will therefore be moved to <b>%2</b>"
+              "to avoid data loss.</p>").arg( folder()->prettyURL() ).arg( dest->prettyURL() ),
+              i18n("Insufficient access rights") );
+        manualMove = false;
+        break;
+      }
+
+      if ( manualMove ) {
+        const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
+              "have not been uploaded to the server yet, but you do not seem to "
+              "have sufficient access rights on the folder now to upload them. "
+              "Please contact your administrator to allow upload of new messages "
+              "to you, or move them out of this folder.</p> "
+              "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
+        if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
+          KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
+              i18n("Move Messages to Folder"), true );
+          if ( dlg.exec() ) {
+            dest = dlg.folder();
           }
         }
       }
+      if ( dest ) {
+        QPtrList<KMMsgBase> msgs;
+        for( int i = 0; i < count(); ++i ) {
+          KMMsgBase *msg = getMsgBase( i );
+          if( !msg ) continue; /* what goes on if getMsg() returns 0? */
+          if ( msg->UID() == 0 )
+            msgs.append( msg );
+        }
+        KMCommand *command = new KMMoveCommand( dest, msgs );
+        connect( command, SIGNAL( completed( KMCommand * ) ),
+                  this, SLOT( serverSyncInternal() ) );
+        command->start();
+        return;
+      }
+    }
+  } else { // nothing to upload
+    if ( mUserRights != mOldUserRights && (mOldUserRights & KMail::ACLJobs::Insert)
+         && !(mUserRights & KMail::ACLJobs::Insert) ) {
+      // write access revoked
+      KMessageBox::information( 0, i18n("<p>Your access rights to folder <b>%1</b> have been restricted, "
+          "it will no longer be possible to add messages to this folder.</p>").arg( folder()->prettyURL() ),
+          i18n("Acces rights revoked"), "KMailACLRevocationNotification" );
     }
   }
   newState( mProgress, i18n("No messages to upload to server"));

@@ -482,7 +482,7 @@ private:
    * listing) attempted, during the sync.  */
   bool mFoundAnIMAPDigest;
 
-  int mUserRights;
+  int mUserRights, mOldUserRights;
   ACLList mACLList;
 
   bool mSilentUpload;
