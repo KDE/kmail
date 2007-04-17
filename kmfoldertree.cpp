@@ -1966,8 +1966,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
       sourceFolderName = source->label();
 
     if ( parent->hasNamedFolder( sourceFolderName ) || sourceFolderNames.contains( sourceFolderName ) ) {
-      KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>")
-          .arg( sourceFolderName ) );
+      KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> here because a folder with the same name already exists.</qt>", sourceFolderName ) );
       return;
     }
     sourceFolderNames.append( sourceFolderName );
@@ -1976,8 +1975,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     KMFolder *f = source;
     while ( f ) {
       if ( f->moveInProgress() ) {
-        KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>")
-            .arg( sourceFolderName ) );
+        KMessageBox::error( this, i18n("<qt>Cannot move or copy folder <b>%1</b> because it is not completely copied itself.</qt>", sourceFolderName ) );
         return;
       }
       if ( f->parent() )
@@ -1985,8 +1983,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     }
 
     QString message =
-      i18n( "<qt>Cannot move or copy folder <b>%1</b> into a subfolder below itself.</qt>" ).
-          arg( sourceFolderName );
+      i18n( "<qt>Cannot move or copy folder <b>%1</b> into a subfolder below itself.</qt>", sourceFolderName );
     KMFolderDir* folderDir = parent;
     // check that the folder can be moved
     if ( source && source->child() )

@@ -1281,7 +1281,7 @@ void KMFolderCachedImap::uploadNewMessages()
               "have not been uploaded to the server yet, but you do not seem to "
               "have sufficient access rights on the folder now to upload them.</p>"
               "<p>All affected messages will therefore be moved to <b>%2</b>"
-              "to avoid data loss.</p>").arg( folder()->prettyUrl() ).arg( dest->prettyUrl() ),
+              "to avoid data loss.</p>", folder()->prettyUrl(), dest->prettyUrl() ),
               i18n("Insufficient access rights") );
         manualMove = false;
         break;
@@ -1293,7 +1293,7 @@ void KMFolderCachedImap::uploadNewMessages()
               "have sufficient access rights on the folder now to upload them. "
               "Please contact your administrator to allow upload of new messages "
               "to you, or move them out of this folder.</p> "
-              "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyUrl() ) );
+              "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
         if ( KMessageBox::warningYesNo( 0, msg, QString::null, KGuiItem(i18n("Move")), KGuiItem(i18n("Do Not Move")) ) == KMessageBox::Yes ) {
           KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
               i18n("Move Messages to Folder"), true );
@@ -1322,7 +1322,7 @@ void KMFolderCachedImap::uploadNewMessages()
          && !(mUserRights & KMail::ACLJobs::Insert) ) {
       // write access revoked
       KMessageBox::information( 0, i18n("<p>Your access rights to folder <b>%1</b> have been restricted, "
-          "it will no longer be possible to add messages to this folder.</p>").arg( folder()->prettyUrl() ),
+          "it will no longer be possible to add messages to this folder.</p>", folder()->prettyUrl() ),
           i18n("Acces rights revoked"), "KMailACLRevocationNotification" );
     }
   }
