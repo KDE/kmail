@@ -165,12 +165,20 @@ namespace {
 	  w->setToolTip("");
     }
   }
-
-  void populateButtonGroup( Q3ButtonGroup * g, const EnumConfigEntry & e ) {
-    g->setTitle( i18n( e.desc ) );
-    g->layout()->setSpacing( KDialog::spacingHint() );
-    for ( int i = 0 ; i < e.numItems ; ++i )
-      g->insert( new QRadioButton( i18n( e.items[i].desc ), g ), i );
+  
+  void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation, const EnumConfigEntry & e ) {
+    box->setTitle( i18n(e.desc) );
+    if (orientation == Qt::Horizontal) {
+      box->setLayout( new QHBoxLayout() );
+    } else {
+      box->setLayout( new QVBoxLayout() );
+    }
+    box->layout()->setSpacing( KDialog::spacingHint() );
+    for (int i = 0; i < e.numItems; ++i) {
+      QRadioButton *button = new QRadioButton( i18n(e.items[i].desc), box );
+      group->addButton( button, i );
+      box->layout()->addWidget( button );
+    }
   }
 
   void populateCheckBox( QCheckBox * b, const BoolConfigEntry & e ) {
@@ -183,17 +191,18 @@ namespace {
     b->setChecked( c.readEntry( e.key, e.defaultValue ) );
   }
 
-  void loadWidget( Q3ButtonGroup * g, const KConfigGroup & c, const EnumConfigEntry & e ) {
+  void loadWidget( QGroupBox * box, QButtonGroup * group, const KConfigGroup & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
-    Q_ASSERT( g->count() == e.numItems );
-    checkLockDown( g, c, e.key );
+    Q_ASSERT( group->buttons().size() == e.numItems );
+    checkLockDown( box, c, e.key );
     const QString s = c.readEntry( e.key, e.items[e.defaultItem].key );
-    for ( int i = 0 ; i < e.numItems ; ++i )
-      if ( s == e.items[i].key ) {
-        g->setButton( i );
+    for (int i = 0; i < e.numItems; i++) {
+      if (s == e.items[i].key) {
+        group->buttons()[i]->animateClick();
         return;
       }
-    g->setButton( e.defaultItem );
+    }
+    group->buttons()[e.defaultItem]->animateClick();
   }
 
   void saveCheckBox( QCheckBox * b, KConfigGroup & c, const BoolConfigEntry & e ) {
@@ -201,16 +210,24 @@ namespace {
     c.writeEntry( e.key, b->isChecked() );
   }
 
-  void saveButtonGroup( Q3ButtonGroup * g, KConfigGroup & c, const EnumConfigEntry & e ) {
+  void saveButtonGroup( QButtonGroup * group, KConfigGroup & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
-    Q_ASSERT( g->count() == e.numItems );
-    c.writeEntry( e.key, e.items[ g->id( g->selected() ) ].key );
+    Q_ASSERT( group->buttons().size() == e.numItems );
+    if (group->checkedId() != -1) {
+      c.writeEntry( e.key, e.items[group->checkedId()].key );
+    }
   }
 
   template <typename T_Widget, typename T_Entry>
   inline void loadProfile( T_Widget * g, const KConfigGroup & c, const T_Entry & e ) {
     if ( c.hasKey( e.key ) )
       loadWidget( g, c, e );
+  }
+  
+  inline void loadProfile( QGroupBox * box, QButtonGroup * group, const KConfigGroup & c, const EnumConfigEntry & e ) {
+    if (c.hasKey( e.key )) {
+      loadWidget( box, group, c, e );
+    }
   }
 }
 
@@ -1919,27 +1936,27 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // "folder list" radio buttons:
-  populateButtonGroup( mFolderListGroup = new Q3HButtonGroup( this ), folderListMode );
-  vlay->addWidget( mFolderListGroup );
-  connect( mFolderListGroup, SIGNAL ( clicked( int ) ),
+  populateButtonGroup( mFolderListGroupBox = new QGroupBox(this), mFolderListGroup = new QButtonGroup(this), Qt::Horizontal, folderListMode );
+  vlay->addWidget( mFolderListGroupBox );
+  connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "show reader window" radio buttons:
-  populateButtonGroup( mReaderWindowModeGroup = new Q3VButtonGroup( this ), readerWindowMode );
-  vlay->addWidget( mReaderWindowModeGroup );
-  connect( mReaderWindowModeGroup, SIGNAL ( clicked( int ) ),
+  populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
+  vlay->addWidget( mReaderWindowModeGroupBox );
+  connect( mReaderWindowModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
-  populateButtonGroup( mMIMETreeModeGroup = new Q3VButtonGroup( this ), mimeTreeMode );
-  vlay->addWidget( mMIMETreeModeGroup );
-  connect( mMIMETreeModeGroup, SIGNAL ( clicked( int ) ),
+  populateButtonGroup( mMIMETreeModeGroupBox = new QGroupBox(this), mMIMETreeModeGroup = new QButtonGroup(this), Qt::Vertical, mimeTreeMode );
+  vlay->addWidget( mMIMETreeModeGroupBox );
+  connect( mMIMETreeModeGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroup = new Q3HButtonGroup( this ), mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroup );
-  connect( mMIMETreeLocationGroup, SIGNAL ( clicked( int ) ),
+  populateButtonGroup( mMIMETreeLocationGroupBox = new QGroupBox(this), mMIMETreeLocationGroup = new QButtonGroup(this), Qt::Horizontal, mimeTreeLocation );
+  vlay->addWidget( mMIMETreeLocationGroupBox );
+  connect( mMIMETreeLocationGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   vlay->addStretch( 10 ); // spacer
@@ -1949,20 +1966,20 @@ void AppearancePage::LayoutTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  loadWidget( mFolderListGroup, geometry, folderListMode );
-  loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
-  loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
-  loadWidget( mReaderWindowModeGroup, geometry, readerWindowMode );
+  loadWidget( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
+  loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  loadWidget( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
+  loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup reader( profile, "Reader" );
   const KConfigGroup geometry( profile, "Geometry" );
 
-  loadProfile( mFolderListGroup, geometry, folderListMode );
-  loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
-  loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
-  loadProfile( mReaderWindowModeGroup, geometry, readerWindowMode );
+  loadProfile( mFolderListGroupBox, mFolderListGroup, geometry, folderListMode );
+  loadProfile( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  loadProfile( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
+  loadProfile( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 void AppearancePage::LayoutTab::save() {

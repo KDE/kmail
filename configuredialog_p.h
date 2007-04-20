@@ -501,10 +501,14 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private: // data
-  Q3ButtonGroup *mFolderListGroup;
-  Q3ButtonGroup *mMIMETreeLocationGroup;
-  Q3ButtonGroup *mMIMETreeModeGroup;
-  Q3ButtonGroup *mReaderWindowModeGroup;
+  QButtonGroup  *mFolderListGroup;
+  QGroupBox     *mFolderListGroupBox;
+  QButtonGroup  *mMIMETreeLocationGroup;
+  QGroupBox     *mMIMETreeLocationGroupBox;
+  QButtonGroup  *mMIMETreeModeGroup;
+  QGroupBox     *mMIMETreeModeGroupBox;
+  QButtonGroup  *mReaderWindowModeGroup;
+  QGroupBox     *mReaderWindowModeGroupBox;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
