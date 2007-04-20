@@ -42,7 +42,6 @@ namespace KMail {
 
     protected slots:
       void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
-      virtual void recolorRows();
 
     protected:
       /** Read color options and set palette. */

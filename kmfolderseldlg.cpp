@@ -28,51 +28,8 @@ class FolderItem : public KFolderTreeItem
     void setFolder( KMFolder * folder ) { mFolder = folder; };
     const KMFolder * folder() { return mFolder; };
 
-  // Redefine isAlternate() for proper row coloring behavior.
-  // KListViewItem::isAlternate() is not virtual!  Therefore,
-  // it is necessary to overload paintCell() below.  If it were
-  // made virtual, paintCell() would no longer be necessary.
-  bool isAlternate () {
-    return mAlternate;
-  }
-
-  // Set the flag which determines if this is an alternate row
-  void setAlternate ( bool alternate ) {
-    mAlternate = alternate;
-  }
-
-  // Must overload paintCell because neither KListViewItem::isAlternate()
-  // or KListViewItem::backgroundColor() are virtual!
-  virtual void paintCell( QPainter *p, const QColorGroup &cg,
-                          int column, int width, int alignment )
-  {
-    K3ListView* view = static_cast< K3ListView* >( listView() );
-
-    // Set alternate background to invalid
-    QColor nocolor;
-    QColor alt = view->alternateBackground();
-    view->setAlternateBackground( nocolor );
-
-    // Set the base and text to the appropriate colors
-    QPalette cgroup = view->viewport()->palette();
-    QColor base = cgroup.color( QPalette::Base );
-    QColor text = cgroup.color( QPalette::Text );
-    cgroup.setColor( QPalette::Base, isAlternate() ? alt : base );
-    cgroup.setColor( QPalette::Text, isEnabled() ? text : Qt::lightGray );
-
-    // Call the parent paint routine
-    K3ListViewItem::paintCell( p, cg, column, width, alignment );
-
-    // Restore the base and alternate background
-    cgroup.setColor( QPalette::Base, base );
-    cgroup.setColor( QPalette::Text, text );
-    view->viewport()->setPalette( cgroup );
-    view->setAlternateBackground( alt );
-  }
-
   private:
     KMFolder * mFolder;
-    bool mAlternate;
 };
 
 //-----------------------------------------------------------------------------
@@ -95,21 +52,15 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
   : KFolderTree( parent ), mFolderTree( folderTree )
 {
   setSelectionModeExt( Single );
-  mFolderColumn = addColumn( i18n( "Folder" ), 0 );
-  mPathColumn = addColumn( i18n( "Path" ), 0 );
-  setAllColumnsShowFocus( true );
-  setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
+  //TODO: Enable this again once KFolderTree is ported to QTreeWidget
+  //setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
+  mFolderColumn = addColumn( i18n( "Folder" ), 0 ); 
   mPathColumn = addColumn( i18n( "Path" ) );
-  setAllColumnsShowFocus( true );
-  setAlternateBackground( QColor( 0xf0, 0xf0, 0xf0 ) );
 
   reload( mustBeReadWrite, true, true, preSelection );
   readColorConfig();
 
   applyFilter( "" );
-
-  connect(this, SIGNAL(collapsed(Q3ListViewItem*)), SLOT(recolorRows()));
-  connect(this, SIGNAL(expanded(Q3ListViewItem*)),  SLOT(recolorRows()));
 
   connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ),
            this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint & ) ) );
@@ -329,42 +280,13 @@ static int recurseFilter( Q3ListViewItem * item, const QString& filter, int colu
     ++enabled;
   }
   else {
-    item->setVisible( !!enabled );
+    item->setVisible( enabled );
     item->setEnabled( false );
   }
 
   return enabled;
 }
 
-void SimpleFolderTree::recolorRows()
-{
-  // Iterate through the list to set the alternate row flags.
-  int alt = 0;
-  Q3ListViewItemIterator it ( this );
-  while ( it.current() ) {
-    FolderItem * item = static_cast< FolderItem* >( it.current() );
-
-    if ( item->isVisible() ) {
-      bool visible = true;
-      Q3ListViewItem * parent = item->parent();
-      while ( parent ) {
-        if (!parent->isOpen()) {
-          visible = false;
-          break;
-        }
-        parent = parent->parent();
-      }
-
-      if ( visible ) {
-        item->setAlternate( alt );
-        alt = !alt;
-      }
-    }
-
-    ++it;
-  }
-}
-    
 void SimpleFolderTree::applyFilter( const QString& filter )
 {
   // Reset all items to visible, enabled, and open
@@ -394,9 +316,6 @@ void SimpleFolderTree::applyFilter( const QString& filter )
       recurseFilter( item, filter, mPathColumn );
     ++it;
   }
-
-  // Recolor the rows appropriately
-  recolorRows();
 
   // Iterate through the list to find the first selectable item
   Q3ListViewItemIterator first ( this );
