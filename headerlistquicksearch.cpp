@@ -70,7 +70,6 @@ HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
 //                                         "Resets the quick search so that "
 //                                         "all messages are shown again." ) );
   setClickMessage( i18n("Search") );
-  parent->addWidget (this);
 
   QLabel *label = new QLabel( i18n("Stat&us:"), parent );
   label->setObjectName( "kde toolbar widget" );
