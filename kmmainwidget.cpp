@@ -868,19 +868,23 @@ void KMMainWidget::slotCheckMail()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCheckOneAccount(QAction* item)
+void KMMainWidget::slotCheckOneAccount( QAction* item )
 {
+  if ( ! item ) {
+    return;
+  }
+
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
 
-  KMAccount* t = kmkernel->acctMgr()->findByName(item->text());
+  KMAccount* t = kmkernel->acctMgr()->findByName( item->data().toString() );
 
   if ( t ) {
     kmkernel->acctMgr()->singleCheckMail( t );
   }
   else {
-    kDebug(5006) << k_funcinfo << " - account with name '" << item->text() << "' not found" << endl;
+    kDebug(5006) << k_funcinfo << " - account with name '" << item->data().toString() << "' not found" << endl;
   }
 }
 
@@ -2483,8 +2487,11 @@ void KMMainWidget::getAccountMenu()
   mActMenu->clear();
   actList = kmkernel->acctMgr()->getAccounts();
   QStringList::Iterator it;
-  for(it = actList.begin(); it != actList.end() ; ++it)
-    mActMenu->addAction((*it).replace("&", "&&"));
+  foreach ( QString accountName, actList )
+  {
+    QAction* action = mActMenu->addAction( accountName.replace("&", "&&") );
+    action->setData( accountName );
+  }
 }
 
 //-----------------------------------------------------------------------------
