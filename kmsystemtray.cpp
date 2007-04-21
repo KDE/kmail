@@ -42,7 +42,7 @@ using KMail::AccountManager;
 
 #include <QPainter>
 #include <QBitmap>
-#include <QToolTip>
+
 #include <QWidget>
 #include <QObject>
 

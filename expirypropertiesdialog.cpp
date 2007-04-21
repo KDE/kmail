@@ -15,7 +15,7 @@
 #include <q3buttongroup.h>
 #include <QComboBox>
 #include <QLayout>
-#include <QToolTip>
+
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>

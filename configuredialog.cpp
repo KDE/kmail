@@ -107,7 +107,7 @@ using KMime::DateFormatter;
 #include <QLayout>
 #include <QList>
 #include <QRadioButton>
-#include <QToolTip>
+
 #include <QValidator>
 #include <QVBoxLayout>
 #include <QWhatsThis>

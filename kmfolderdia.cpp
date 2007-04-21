@@ -64,7 +64,7 @@
 #include <q3groupbox.h>
 #include <QRegExp>
 #include <QLabel>
-#include <QToolTip>
+
 
 #include <QGridLayout>
 #include <QFrame>

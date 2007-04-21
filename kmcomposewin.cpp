@@ -136,7 +136,7 @@ using KRecentAddress::RecentAddresses;
 #include <QList>
 #include <QRegExp>
 #include <QTextCodec>
-#include <QToolTip>
+
 
 #include <mimelib/mimepp.h>
 

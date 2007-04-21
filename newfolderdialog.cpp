@@ -34,7 +34,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QLayout>
-#include <QToolTip>
+
 
 #include <QRegExp>
 #include <QVBoxLayout>

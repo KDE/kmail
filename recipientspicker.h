@@ -30,7 +30,7 @@
 
 #include <QWidget>
 #include <QDialog>
-#include <QToolTip>
+
 //Added by qt3to4:
 #include <QPixmap>
 #include <QList>

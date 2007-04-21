@@ -46,7 +46,7 @@ using KRecentAddress::RecentAddresses;
 #include <kvbox.h>
 
 
-#include <QToolTip>
+
 
 #include <QLabel>
 #include <QPushButton>
