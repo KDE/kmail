@@ -3244,7 +3244,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                if we are sorting descendingly and the sorted item is supposed
                to be sorted before the unsorted one do so. In the ascending
                case we invert the logic for non top level items. */
-            if( (*it) &&
+            if( ( it != sorted->constEnd() ) && (*it) &&
                 ( !unsorted || unsorted_off >= unsorted_count
                 ||
                 ( ( !ascending || (ascending && !compare_toplevel) )
