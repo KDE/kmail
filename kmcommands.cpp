@@ -758,8 +758,8 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 
 static KUrl subjectToUrl( const QString &subject ) {
 
-  return KFileDialog::getSaveUrl( subject.trimmed()
-                                  .replace( QDir::separator(), '_' ),
+  return KFileDialog::getSaveUrl( KUrl::fromPath( subject.trimmed()
+                                  .replace( QDir::separator(), '_' ) ),
                                   "*.mbox" );
 }
 
@@ -2501,8 +2501,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18nc("filename for an unnamed attachment", "attachment.1");
-    url = KFileDialog::getSaveUrl( s, QString(), parentWidget(),
-                                   QString() );
+    url = KFileDialog::getSaveUrl( KUrl::fromPath( s ), QString(),
+                                   parentWidget(), QString() );
     if ( url.isEmpty() ) {
       setResult( Canceled );
       emit completed( this );
