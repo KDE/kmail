@@ -664,7 +664,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   QHBoxLayout *hlay;
   QGridLayout *glay;
   QPushButton *button;
-  Q3GroupBox   *group;
+  QGroupBox   *group;
 
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
@@ -726,13 +726,12 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   btn_vlay->addStretch( 1 ); // spacer
 
   // "Common options" groupbox:
-  group = new Q3GroupBox( 0, Qt::Vertical,
-                         i18n("Common Options"), this );
+  group = new QGroupBox( i18n("Common Options"), this );
   vlay->addWidget(group);
 
   // a grid layout for the contents of the "common options" group box
   glay = new QGridLayout();
-  group->layout()->addItem( glay );
+  group->setLayout( glay );
   glay->setSpacing( KDialog::spacingHint() );
   glay->setColumnStretch( 2, 10 );
 
