@@ -4784,7 +4784,7 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings() {
   mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
   mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
   mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-  mQuotaCmbBox->setCurrentItem( GlobalSettings::self()->quotaUnit() );
+  mQuotaCmbBox->setCurrentIndex( GlobalSettings::self()->quotaUnit() );
 }
 
 void MiscPage::FolderTab::doLoadOther() {

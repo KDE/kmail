@@ -388,29 +388,29 @@ MailingList::id() const
 }
 
 void
-MailingList::writeConfig( KConfig* config ) const
+MailingList::writeConfig( KConfigGroup & config ) const
 {
-  config->writeEntry( "MailingListFeatures", mFeatures );
-  config->writeEntry( "MailingListHandler", (int)mHandler );
-  config->writeEntry( "MailingListId",  mId );
-  config->writeEntry( "MailingListPostingAddress", mPostURLS.toStringList() );
-  config->writeEntry( "MailingListSubscribeAddress", mSubscribeURLS.toStringList() );
-  config->writeEntry( "MailingListUnsubscribeAddress", mUnsubscribeURLS.toStringList() );
-  config->writeEntry( "MailingListArchiveAddress", mArchiveURLS.toStringList() );
-  config->writeEntry( "MailingListHelpAddress", mHelpURLS.toStringList() );
+  config.writeEntry( "MailingListFeatures", mFeatures );
+  config.writeEntry( "MailingListHandler", (int)mHandler );
+  config.writeEntry( "MailingListId",  mId );
+  config.writeEntry( "MailingListPostingAddress", mPostURLS.toStringList() );
+  config.writeEntry( "MailingListSubscribeAddress", mSubscribeURLS.toStringList() );
+  config.writeEntry( "MailingListUnsubscribeAddress", mUnsubscribeURLS.toStringList() );
+  config.writeEntry( "MailingListArchiveAddress", mArchiveURLS.toStringList() );
+  config.writeEntry( "MailingListHelpAddress", mHelpURLS.toStringList() );
 }
 
 void
-MailingList::readConfig( KConfig* config )
+MailingList::readConfig( KConfigGroup & config )
 {
-  mFeatures =  config->readEntry( "MailingListFeatures", 0 );
+  mFeatures =  config.readEntry( "MailingListFeatures", 0 );
   mHandler = static_cast<MailingList::Handler>(
-    config->readEntry( "MailingListHandler", (int)MailingList::KMail ) );
+    config.readEntry( "MailingListHandler", (int)MailingList::KMail ) );
 
-  mId = config->readEntry("MailingListId");
-  mPostURLS        = config->readEntry( "MailingListPostingAddress" , QStringList() );
-  mSubscribeURLS   = config->readEntry( "MailingListSubscribeAddress" , QStringList() );
-  mUnsubscribeURLS = config->readEntry( "MailingListUnsubscribeAddress" , QStringList() );
-  mArchiveURLS     = config->readEntry( "MailingListArchiveAddress" , QStringList() );
-  mHelpURLS        = config->readEntry( "MailingListHelpAddress" , QStringList() );
+  mId = config.readEntry("MailingListId");
+  mPostURLS        = config.readEntry( "MailingListPostingAddress" , QStringList() );
+  mSubscribeURLS   = config.readEntry( "MailingListSubscribeAddress" , QStringList() );
+  mUnsubscribeURLS = config.readEntry( "MailingListUnsubscribeAddress" , QStringList() );
+  mArchiveURLS     = config.readEntry( "MailingListArchiveAddress" , QStringList() );
+  mHelpURLS        = config.readEntry( "MailingListHelpAddress" , QStringList() );
 }

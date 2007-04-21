@@ -8,7 +8,7 @@
 #include <QByteArray>
 
 class KMMessage;
-class KConfig;
+class KConfigGroup;
 
 namespace KMail
 {
@@ -69,8 +69,8 @@ public:
   void setId( const QString& );
   QString id() const;
 
-  void writeConfig( KConfig* config ) const;
-  void readConfig( KConfig* config );
+  void writeConfig( KConfigGroup & config ) const;
+  void readConfig( KConfigGroup & config );
 private:
   int        mFeatures;
   Handler    mHandler;

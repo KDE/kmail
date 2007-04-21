@@ -904,7 +904,7 @@ void FolderStorage::readConfig()
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
 
-  if( folder() ) folder()->readConfig( config );
+  if( folder() ) folder()->readConfig( group );
 }
 
 //-----------------------------------------------------------------------------
@@ -919,7 +919,7 @@ void FolderStorage::writeConfig()
   group.writeEntry( "ContentsType", (int)mContentsType );
 
   // Write the KMFolder parts
-  if( folder() ) folder()->writeConfig( config );
+  if( folder() ) folder()->writeConfig( group );
 
   GlobalSettings::self()->requestSync();
 }

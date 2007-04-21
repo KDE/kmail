@@ -150,74 +150,76 @@ KMFolder::~KMFolder()
   delete mStorage;
 }
 
-void KMFolder::readConfig( KConfig* config )
+void KMFolder::readConfig( KConfigGroup & configGroup )
 {
-  if ( !config->readEntry( "SystemLabel" ).isEmpty() )
-    mSystemLabel = config->readEntry( "SystemLabel" );
-  mExpireMessages = config->readEntry( "ExpireMessages", false );
-  mReadExpireAge = config->readEntry( "ReadExpireAge", 3 );
-  mReadExpireUnits = (ExpireUnits)config->readEntry( "ReadExpireUnits", (int)expireMonths );
-  mUnreadExpireAge = config->readEntry( "UnreadExpireAge", 12 );
+  // KConfigGroup configGroup(config, "");
+  if ( !configGroup.readEntry( "SystemLabel" ).isEmpty() )
+    mSystemLabel = configGroup.readEntry( "SystemLabel" );
+  mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
+  mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
+  mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)expireMonths );
+  mUnreadExpireAge = configGroup.readEntry( "UnreadExpireAge", 12 );
   mUnreadExpireUnits = (ExpireUnits)
-      config->readEntry( "UnreadExpireUnits", (int)expireNever );
-  mExpireAction = config->readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
-  mExpireToFolderId = config->readEntry( "ExpireToFolder" );
+      configGroup.readEntry( "UnreadExpireUnits", (int)expireNever );
+  mExpireAction = configGroup.readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
+  mExpireToFolderId = configGroup.readEntry( "ExpireToFolder" );
 
-  mUseCustomIcons = config->readEntry( "UseCustomIcons", false );
-  mNormalIconPath = config->readEntry( "NormalIconPath" );
-  mUnreadIconPath = config->readEntry( "UnreadIconPath" );
+  mUseCustomIcons = configGroup.readEntry( "UseCustomIcons", false );
+  mNormalIconPath = configGroup.readEntry( "NormalIconPath" );
+  mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" );
 
-  mMailingListEnabled = config->readEntry( "MailingListEnabled", false );
-  mMailingList.readConfig( config );
+  mMailingListEnabled = configGroup.readEntry( "MailingListEnabled", false );
+  mMailingList.readConfig( configGroup );
 
-  mIdentity = config->readEntry("Identity", 0 );
+  mIdentity = configGroup.readEntry("Identity", 0 );
 
-  setUserWhoField( config->readEntry( "WhoField" ), false );
-  uint savedId = config->readEntry( "Id" , 0 );
+  setUserWhoField( configGroup.readEntry( "WhoField" ), false );
+  uint savedId = configGroup.readEntry( "Id" , 0 );
   // make sure that we don't overwrite a valid id
   if ( savedId != 0 && mId == 0 )
     mId = savedId;
-  mPutRepliesInSameFolder = config->readEntry( "PutRepliesInSameFolder", false );
-  mIgnoreNewMail = config->readEntry( "IgnoreNewMail", false );
+  mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
+  mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
 
   if ( mUseCustomIcons )
     emit iconsChanged();
 
-  QString shortcut( config->readEntry( "Shortcut" ) );
+  QString shortcut( configGroup.readEntry( "Shortcut" ) );
   if ( !shortcut.isEmpty() ) {
     KShortcut sc( shortcut );
     setShortcut( sc );
   }
 }
 
-void KMFolder::writeConfig( KConfig* config ) const
+void KMFolder::writeConfig( KConfigGroup & configGroup ) const
 {
-  config->writeEntry("SystemLabel", mSystemLabel);
-  config->writeEntry("ExpireMessages", mExpireMessages);
-  config->writeEntry("ReadExpireAge", mReadExpireAge);
-  config->writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
-  config->writeEntry("UnreadExpireAge", mUnreadExpireAge);
-  config->writeEntry("UnreadExpireUnits", (int)mUnreadExpireUnits);
-  config->writeEntry("ExpireAction", mExpireAction == ExpireDelete ? "Delete" : "Move");
-  config->writeEntry("ExpireToFolder", mExpireToFolderId);
+  // KConfigGroup configGroup(config, "");
+  configGroup.writeEntry("SystemLabel", mSystemLabel);
+  configGroup.writeEntry("ExpireMessages", mExpireMessages);
+  configGroup.writeEntry("ReadExpireAge", mReadExpireAge);
+  configGroup.writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
+  configGroup.writeEntry("UnreadExpireAge", mUnreadExpireAge);
+  configGroup.writeEntry("UnreadExpireUnits", (int)mUnreadExpireUnits);
+  configGroup.writeEntry("ExpireAction", mExpireAction == ExpireDelete ? "Delete" : "Move");
+  configGroup.writeEntry("ExpireToFolder", mExpireToFolderId);
 
-  config->writeEntry("UseCustomIcons", mUseCustomIcons);
-  config->writeEntry("NormalIconPath", mNormalIconPath);
-  config->writeEntry("UnreadIconPath", mUnreadIconPath);
+  configGroup.writeEntry("UseCustomIcons", mUseCustomIcons);
+  configGroup.writeEntry("NormalIconPath", mNormalIconPath);
+  configGroup.writeEntry("UnreadIconPath", mUnreadIconPath);
 
-  config->writeEntry("MailingListEnabled", mMailingListEnabled);
-  mMailingList.writeConfig( config );
+  configGroup.writeEntry("MailingListEnabled", mMailingListEnabled);
+  mMailingList.writeConfig( configGroup );
 
-  config->writeEntry("Identity", mIdentity);
+  configGroup.writeEntry("Identity", mIdentity);
 
-  config->writeEntry("WhoField", mUserWhoField);
-  config->writeEntry("Id", mId);
-  config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
-  config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
+  configGroup.writeEntry("WhoField", mUserWhoField);
+  configGroup.writeEntry("Id", mId);
+  configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
+  configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
   if ( !mShortcut.isEmpty() )
-    config->writeEntry( "Shortcut", mShortcut.toString() );
+    configGroup.writeEntry( "Shortcut", mShortcut.toString() );
   else
-    config->deleteEntry( "Shortcut" );
+    configGroup.deleteEntry( "Shortcut" );
 }
 
 KMFolderType KMFolder::folderType() const

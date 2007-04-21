@@ -1209,8 +1209,9 @@ void KMKernel::recoverDeadLetters()
 void KMKernel::initFolders(KConfig* cfg)
 {
   QString name;
+  KConfigGroup group(cfg,"General");
 
-  name = cfg->readEntry("inboxFolder");
+  name = group.readEntry("inboxFolder");
 
   // Currently the folder manager cannot manage folders which are not
   // in the base folder directory.
@@ -1229,7 +1230,7 @@ void KMKernel::initFolders(KConfig* cfg)
     the_inboxFolder->setUserWhoField( QString() );
   // inboxFolder->open();
 
-  the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
+  the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
   if (the_outboxFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
@@ -1248,7 +1249,7 @@ void KMKernel::initFolders(KConfig* cfg)
   //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
   the_outboxFolder->open( "kmkernel" );
 
-  the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
+  the_sentFolder = the_folderMgr->findOrCreate(group.readEntry("sentFolder", I18N_NOOP("sent-mail")));
   if (the_sentFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
@@ -1257,7 +1258,7 @@ void KMKernel::initFolders(KConfig* cfg)
     the_sentFolder->setUserWhoField( QString() );
   // the_sentFolder->open();
 
-  the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
+  the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
@@ -1266,7 +1267,7 @@ void KMKernel::initFolders(KConfig* cfg)
     the_trashFolder->setUserWhoField( QString() );
   // the_trashFolder->open();
 
-  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
+  the_draftsFolder = the_folderMgr->findOrCreate(group.readEntry("draftsFolder", I18N_NOOP("drafts")));
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
@@ -1275,7 +1276,7 @@ void KMKernel::initFolders(KConfig* cfg)
     the_draftsFolder->setUserWhoField( QString() );
   the_draftsFolder->open( "kmkernel" );
 
-  the_templatesFolder = the_folderMgr->findOrCreate(cfg->readEntry("templatesFolder", I18N_NOOP("templates")));
+  the_templatesFolder = the_folderMgr->findOrCreate(group.readEntry("templatesFolder", I18N_NOOP("templates")));
   if (the_templatesFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
   }

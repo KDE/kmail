@@ -137,11 +137,12 @@ void lockOrDie() {
 
   QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
   KConfig config(lockLocation, KConfig::OnlyLocal);
-  int oldPid = config.readEntry("pid", -1 );
+  KConfigGroup group(&config, "");
+  int oldPid = group.readEntry("pid", -1 );
   kDebug() << "oldPid=" << oldPid << endl;
-  const QString oldHostName = config.readEntry("hostname");
-  const QString oldAppName = config.readEntry( "appName", appName );
-  const QString oldProgramName = config.readEntry( "programName", programName );
+  const QString oldHostName = group.readEntry("hostname");
+  const QString oldAppName = group.readEntry( "appName", appName );
+  const QString oldProgramName = group.readEntry( "programName", programName );
   const QString hostName = KNetwork::KResolver::localHostName();
   bool first_instance = false;
   if ( oldPid == -1 ) {
@@ -226,11 +227,11 @@ void lockOrDie() {
     }
   }
 
-  config.writeEntry("pid", getpid());
-  config.writeEntry("hostname", hostName);
-  config.writeEntry( "appName", appName );
-  config.writeEntry( "programName", programName );
-  config.sync();
+  group.writeEntry("pid", getpid());
+  group.writeEntry("hostname", hostName);
+  group.writeEntry( "appName", appName );
+  group.writeEntry( "programName", programName );
+  group.sync();
 }
 
 void insertLibraryCataloguesAndIcons() {
@@ -254,7 +255,8 @@ void cleanup()
 {
   const QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
   KConfig config(lockLocation, KConfig::OnlyLocal);
-  config.writeEntry("pid", -1);
-  config.sync();
+  KConfigGroup group(&config, "");
+  group.writeEntry("pid", -1);
+  group.sync();
 }
 }

@@ -201,7 +201,7 @@ void RenameJob::folderCopyComplete(bool success)
       continue;
     saver.writeEntry( it.key(), it.data() );
   }
-  mNewFolder->readConfig( config );
+  mNewFolder->readConfig( saver );
   // make sure the children state is correct
   if ( mNewFolder->child() &&
         ( mNewFolder->storage()->hasChildren() == FolderStorage::HasNoChildren ) )

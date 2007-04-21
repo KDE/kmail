@@ -132,10 +132,10 @@ public:
   bool hasAccounts() const { return (mAcctList != 0); }
 
   /** This is used by the storage to read the folder specific configuration */
-  void readConfig( KConfig* config );
+  void readConfig( KConfigGroup & config );
 
   /** This is used by the storage to save the folder specific configuration */
-  void writeConfig( KConfig* config ) const;
+  void writeConfig( KConfigGroup & config ) const;
 
   FolderStorage* storage() { return mStorage; }
   /** if the folder is const, the storage should be as well */
