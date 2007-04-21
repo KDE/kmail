@@ -3,6 +3,7 @@
 
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2002 Marc Mutz <mutz@kde.org>
+                  2007 Mathias Soeken <msoeken@tzi.de>
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License, version 2, as
@@ -34,45 +35,43 @@
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
-#include <Q3DragObject>
-#include <QDropEvent>
 
 namespace KPIM { class Identity; }
+class Q3DragObject;
 class QDropEvent;
-class QDragEvent;
 
 namespace KMail {
 
   class IdentityListView;
 
   /** @short A QWidgetTreeItem for use in IdentityListView
-      @author Marc Mutz <mutz@kde.org>
-  **/
+   *  @author Marc Mutz <mutz@kde.org>
+   **/
   class IdentityListViewItem : public QTreeWidgetItem {
   public:
-    IdentityListViewItem( IdentityListView * parent,
-			  const KPIM::Identity & ident );
-    IdentityListViewItem( IdentityListView * parent, QTreeWidgetItem * after,
-			  const KPIM::Identity & ident );
+    IdentityListViewItem( IdentityListView *parent,
+                          const KPIM::Identity &ident );
+    IdentityListViewItem( IdentityListView *parent, QTreeWidgetItem *after,
+                          const KPIM::Identity &ident );
 
     uint uoid() const { return mUOID; }
-    KPIM::Identity & identity() const;
-    virtual void setIdentity( const KPIM::Identity & ident );
+    KPIM::Identity &identity() const;
+    virtual void setIdentity( const KPIM::Identity &ident );
     void redisplay();
   private:
-    void init( const KPIM::Identity & ident );
+    void init( const KPIM::Identity &ident );
 
   protected:
     uint mUOID;
   };
 
-  /** @short A listview for KPIM::Identity
-      @author Marc Mutz <mutz@kde.org>
-  **/
+  /** @short A QTreeWidget for KPIM::Identity
+    * @author Marc Mutz <mutz@kde.org>
+    **/
   class IdentityListView : public QTreeWidget {
     Q_OBJECT
   public:
-    IdentityListView( QWidget * parent=0 );
+    IdentityListView( QWidget *parent = 0 );
     virtual ~IdentityListView() {}
 
   public:
@@ -85,12 +84,12 @@ namespace KMail {
     void slotCustomContextMenuRequested( const QPoint& );
 
   signals:
-    void contextMenu( KMail::IdentityListViewItem*, const QPoint& );
-    void rename( KMail::IdentityListViewItem*, const QString& );
+    void contextMenu( KMail::IdentityListViewItem *, const QPoint& );
+    void rename( KMail::IdentityListViewItem *, const QString& );
 
   protected:
     bool acceptDrag( QDropEvent * ) const;
-    Q3DragObject * dragObject();
+    Q3DragObject *dragObject();
   };
 
 

@@ -3,6 +3,7 @@
 
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2002 Marc Mutz <mutz@kde.org>
+                  2007 Mathias Soeken <msoeken@tzi.de>
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License, version 2, as
@@ -39,12 +40,11 @@
 #include <libkpimidentities/identity.h>
 #include "kmkernel.h"
 
-#include <klocale.h> // i18n
-#include <kiconloader.h> // SmallIcon
-#include <QHeaderView>
+#include <KLocale> // i18n
+#include <KIconLoader> // SmallIcon
 
-#include <cassert>
 #include <QDropEvent>
+#include <QHeaderView>
 
 namespace KMail {
 
@@ -54,40 +54,50 @@ namespace KMail {
   //
   //
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, const KPIM::Identity & ident )
-    : QTreeWidgetItem( parent ), mUOID( ident.uoid() ) {
+  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
+                                              const KPIM::Identity &ident )
+    : QTreeWidgetItem( parent ), mUOID( ident.uoid() ) 
+  {
     init( ident );
   }
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, QTreeWidgetItem * after, const KPIM::Identity & ident )
-    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() ) {
+  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
+                                              QTreeWidgetItem *after,
+                                              const KPIM::Identity &ident )
+    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() ) 
+  {
     init( ident );
   }
 
-  KPIM::Identity & IdentityListViewItem::identity() const {
-    KPIM::IdentityManager * im = kmkernel->identityManager();
-    assert( im );
+  KPIM::Identity & IdentityListViewItem::identity() const 
+  {
+    KPIM::IdentityManager *im = kmkernel->identityManager();
+    Q_ASSERT( im );
     return im->modifyIdentityForUoid( mUOID );
   }
 
-  void IdentityListViewItem::setIdentity( const KPIM::Identity & ident ) {
+  void IdentityListViewItem::setIdentity( const KPIM::Identity &ident ) 
+  {
     mUOID = ident.uoid();
     init( ident );
   }
 
-  void IdentityListViewItem::redisplay() {
+  void IdentityListViewItem::redisplay() 
+  {
     init( identity() );
   }
 
-  void IdentityListViewItem::init( const KPIM::Identity & ident ) {
-    if ( ident.isDefault() )
+  void IdentityListViewItem::init( const KPIM::Identity &ident ) 
+  {
+    if ( ident.isDefault() ) {
       // Add "(Default)" to the end of the default identity's name:
       setText( 0, i18nc("%1: identity name. Used in the config "
-		       "dialog, section Identity, to indicate the "
-		       "default identity", "%1 (Default)",
-	         ident.identityName() ) );
-    else
+                        "dialog, section Identity, to indicate the "
+                        "default identity", "%1 (Default)",
+                        ident.identityName() ) );
+    } else {
       setText( 0, ident.identityName() );
+    }
     setText( 1, ident.fullEmailAddr() );
   }
 
@@ -97,7 +107,7 @@ namespace KMail {
   //
   //
 
-  IdentityListView::IdentityListView( QWidget * parent )
+  IdentityListView::IdentityListView( QWidget *parent )
     : QTreeWidget( parent )
   {
     setDragEnabled( true );
@@ -110,7 +120,8 @@ namespace KMail {
     setSelectionMode( SingleSelection ); // ### Extended would be nicer...
 
     setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(slotCustomContextMenuRequested(const QPoint&)) );
+    connect( this, SIGNAL(customContextMenuRequested(const QPoint&)),
+             this, SLOT(slotCustomContextMenuRequested(const QPoint&)) );
   }
 
   void IdentityListView::editItem( QTreeWidgetItem *item, int column )
@@ -146,13 +157,13 @@ namespace KMail {
     }
   }
 
-  void IdentityListView::slotCustomContextMenuRequested( const QPoint& pos )
+  void IdentityListView::slotCustomContextMenuRequested( const QPoint &pos )
   {
     kDebug() << "position: " << pos << endl;
-    QTreeWidgetItem * item = itemAt( pos );
+    QTreeWidgetItem *item = itemAt( pos );
     kDebug() << "item: " << item << endl;
     if (item) {
-      IdentityListViewItem * lvItem = dynamic_cast<IdentityListViewItem*>( item );
+      IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
       if (lvItem) {
         emit contextMenu( lvItem, viewport()->mapToGlobal(pos) );
       }
@@ -161,12 +172,12 @@ namespace KMail {
     }
   }
 
-  bool IdentityListView::acceptDrag( QDropEvent * e ) const {
+  bool IdentityListView::acceptDrag( QDropEvent *e ) const {
     // disallow moving:
     return e->source() != viewport() && KPIM::Identity::canDecode( e->mimeData() );
   }
 
-  Q3DragObject * IdentityListView::dragObject() {
+  Q3DragObject *IdentityListView::dragObject() {
     IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
     if ( !item ) return 0;
 
@@ -174,7 +185,7 @@ namespace KMail {
 #ifdef __GNUC__
 #warning enable the QDrag-based code once the list view does no longer derive from Q3ListView...
 #endif
-    QDrag * drag = new QDrag( viewport() );
+    QDrag *drag = new QDrag( viewport() );
     QMimeData *md = new QMimeData;
     drag->setMimeData( md );
     item->identity().populateMimeData( md );
