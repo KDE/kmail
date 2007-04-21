@@ -91,10 +91,10 @@ namespace KMail {
   {
     if ( ident.isDefault() ) {
       // Add "(Default)" to the end of the default identity's name:
-      setText( 0, i18nc("%1: identity name. Used in the config "
-                        "dialog, section Identity, to indicate the "
-                        "default identity", "%1 (Default)",
-                        ident.identityName() ) );
+      setText( 0, i18nc( "%1: identity name. Used in the config "
+                         "dialog, section Identity, to indicate the "
+                         "default identity", "%1 (Default)",
+                         ident.identityName() ) );
     } else {
       setText( 0, ident.identityName() );
     }
@@ -112,7 +112,7 @@ namespace KMail {
   {
     setDragEnabled( true );
     setAcceptDrops( true );
-    setHeaderLabels( QStringList() << i18n("Identity Name") << i18n("Email Address") );
+    setHeaderLabels( QStringList() << i18n( "Identity Name" ) << i18n( "Email Address" ) );
     setRootIsDecorated( false );
     header()->setMovable( false );
     setAllColumnsShowFocus( true );
@@ -120,17 +120,17 @@ namespace KMail {
     setSelectionMode( SingleSelection ); // ### Extended would be nicer...
 
     setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( this, SIGNAL(customContextMenuRequested(const QPoint&)),
-             this, SLOT(slotCustomContextMenuRequested(const QPoint&)) );
+    connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ),
+             this, SLOT( slotCustomContextMenuRequested( const QPoint& ) ) );
   }
 
   void IdentityListView::editItem( QTreeWidgetItem *item, int column )
   {
-    if (column == 0 && item) {
+    if ( column == 0 && item ) {
       IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
-      if (lvItem) {
+      if ( lvItem ) {
         KPIM::Identity& ident = lvItem->identity();
-        if (ident.isDefault()) {
+        if ( ident.isDefault() ) {
           lvItem->setText( 0, ident.identityName() );
         }
       }
@@ -146,11 +146,11 @@ namespace KMail {
   {
     kDebug() << "after editing" << endl;
 
-    if (selectedItems().size() > 0) {
+    if ( selectedItems().size() > 0 ) {
       IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
 
       QLineEdit *edit = dynamic_cast<QLineEdit*>( editor );
-      if (edit) {
+      if ( edit ) {
         QString text = edit->text();
         emit rename( item, text );
       }
@@ -162,13 +162,13 @@ namespace KMail {
     kDebug() << "position: " << pos << endl;
     QTreeWidgetItem *item = itemAt( pos );
     kDebug() << "item: " << item << endl;
-    if (item) {
+    if ( item ) {
       IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
-      if (lvItem) {
-        emit contextMenu( lvItem, viewport()->mapToGlobal(pos) );
+      if ( lvItem ) {
+        emit contextMenu( lvItem, viewport()->mapToGlobal( pos ) );
       }
     } else {
-      emit contextMenu( 0L, viewport()->mapToGlobal(pos) );
+      emit contextMenu( 0, viewport()->mapToGlobal( pos ) );
     }
   }
 
