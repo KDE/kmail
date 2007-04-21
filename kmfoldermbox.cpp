@@ -101,7 +101,6 @@ KMFolderMbox::~KMFolderMbox()
 int KMFolderMbox::open( const char *owner )
 {
   mOwners.append( owner );
-  assert( mOwners.contains( "kmheaders" ) );
 
   kDebug() << "\nopen " << mOpenCount << " " << folder()->name()
            << " " << mOwners << ", adding: " << owner << " \n" << endl;
