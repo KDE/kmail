@@ -317,14 +317,14 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, con
   hlay->setMargin( 0 );
 
   mIdentityList = new IdentityListView( this );
-  connect( mIdentityList, SIGNAL(selectionChanged()),
+  connect( mIdentityList, SIGNAL(itemSelectionChanged()),
            SLOT(slotIdentitySelectionChanged()) );
-  connect( mIdentityList, SIGNAL(itemRenamed(Q3ListViewItem*,const QString&,int)),
-           SLOT(slotRenameIdentity(Q3ListViewItem*,const QString&,int)) );
-  connect( mIdentityList, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
+  connect( mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*, const QString&)),
+           SLOT(slotRenameIdentity(KMail::IdentityListViewItem*, const QString&)) );
+  connect( mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
            SLOT(slotModifyIdentity()) );
-  connect( mIdentityList, SIGNAL(contextMenu(K3ListView*,Q3ListViewItem*,const QPoint&)),
-           SLOT(slotContextMenu(K3ListView*,Q3ListViewItem*,const QPoint&)) );
+  connect( mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*, const QPoint&)),
+           SLOT(slotContextMenu(KMail::IdentityListViewItem*, const QPoint&)) );
   // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
@@ -371,10 +371,12 @@ void IdentityPage::load()
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
-  Q3ListViewItem * item = 0;
+  QTreeWidgetItem * item = 0;
   for ( KPIM::IdentityManager::Iterator it = im->modifyBegin() ; it != im->modifyEnd() ; ++it )
     item = new IdentityListViewItem( mIdentityList, item, *it  );
-  mIdentityList->setSelected( mIdentityList->currentItem(), true );
+  if (mIdentityList->currentItem()) {
+    mIdentityList->currentItem()->setSelected( true );
+  }
 }
 
 void IdentityPage::save() {
@@ -383,7 +385,7 @@ void IdentityPage::save() {
   kmkernel->identityManager()->sort();
   kmkernel->identityManager()->commit();
 
-  if( mOldNumberOfIdentities < 2 && mIdentityList->childCount() > 1 ) {
+  if( mOldNumberOfIdentities < 2 && mIdentityList->topLevelItemCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
     KConfigGroup composer( KMKernel::config(), "Composer" );
@@ -392,7 +394,7 @@ void IdentityPage::save() {
     composer.writeEntry( "headers", showHeaders );
   }
   // and now the reverse
-  if( mOldNumberOfIdentities > 1 && mIdentityList->childCount() < 2 ) {
+  if( mOldNumberOfIdentities > 1 && mIdentityList->topLevelItemCount() < 2 ) {
     // have only one identity, so remove the combo in the composer:
     KConfigGroup composer( KMKernel::config(), "Composer" );
     int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
@@ -435,12 +437,23 @@ void IdentityPage::slotNewIdentity()
     // Insert into listview:
     //
     KPIM::Identity & newIdent = im->modifyIdentityForName( identityName );
-    Q3ListViewItem * item = mIdentityList->selectedItem();
-    if ( item )
-      item = item->itemAbove();
-    mIdentityList->setSelected( new IdentityListViewItem( mIdentityList,
-                                                          /*after*/ item,
-                                                          newIdent ), true );
+    QTreeWidgetItem * item = 0L;
+    if (mIdentityList->selectedItems().size() > 0) {
+      item = mIdentityList->selectedItems()[0];
+    }
+
+    QTreeWidgetItem * newItem = 0L;
+    if ( item ) {
+      newItem = new IdentityListViewItem( mIdentityList, mIdentityList->itemAbove(item), newIdent );
+    } else {
+      newItem = new IdentityListViewItem( mIdentityList, newIdent );
+    }
+
+    mIdentityList->selectionModel()->clearSelection();
+    if (newItem) {
+      newItem->setSelected( true );
+    }
+
     slotModifyIdentity();
   }
 }
@@ -448,8 +461,10 @@ void IdentityPage::slotNewIdentity()
 void IdentityPage::slotModifyIdentity() {
   assert( !mIdentityDialog );
 
-  IdentityListViewItem * item =
-    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  IdentityListViewItem * item = 0L;
+  if (mIdentityList->selectedItems().size() > 0) {
+    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  }
   if ( !item ) return;
 
   mIdentityDialog = new IdentityDialog( this );
@@ -474,8 +489,10 @@ void IdentityPage::slotRemoveIdentity()
   kFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
-  IdentityListViewItem * item =
-    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  IdentityListViewItem * item = 0L;
+  if (mIdentityList->selectedItems().size() > 0) {
+    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  }
   if ( !item ) return;
 
   QString msg = i18n("<qt>Do you really want to remove the identity named "
@@ -484,7 +501,9 @@ void IdentityPage::slotRemoveIdentity()
    KGuiItem(i18n("&Remove"),"edit-delete") ) == KMessageBox::Continue )
     if ( im->removeIdentity( item->identity().identityName() ) ) {
       delete item;
-      mIdentityList->setSelected( mIdentityList->currentItem(), true );
+      if (mIdentityList->currentItem()) {
+        mIdentityList->currentItem()->setSelected( true );
+      }
       refreshList();
     }
 }
@@ -492,21 +511,20 @@ void IdentityPage::slotRemoveIdentity()
 void IdentityPage::slotRenameIdentity() {
   assert( !mIdentityDialog );
 
-  Q3ListViewItem * item = mIdentityList->selectedItem();
+  QTreeWidgetItem * item = 0L;
+
+  if (mIdentityList->selectedItems().size() > 0) {
+    item = mIdentityList->selectedItems()[0];
+  }
   if ( !item ) return;
 
-  mIdentityList->rename( item, 0 );
+  mIdentityList->editItem( item );
 }
 
-void IdentityPage::slotRenameIdentity( Q3ListViewItem * i,
-                                       const QString & s, int col ) {
-  assert( col == 0 );
-  Q_UNUSED( col );
-
-  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
+void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const QString& text ) {
   if ( !item ) return;
 
-  QString newName = s.trimmed();
+  QString newName = text.trimmed();
   if ( !newName.isEmpty() &&
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
     KPIM::Identity & ident = item->identity();
@@ -516,15 +534,12 @@ void IdentityPage::slotRenameIdentity( Q3ListViewItem * i,
   item->redisplay();
 }
 
-void IdentityPage::slotContextMenu( K3ListView *, Q3ListViewItem * i,
-                                    const QPoint & pos ) {
-  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
-
+void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint& pos ) {
   QMenu * menu = new QMenu( this );
   menu->addAction( i18n("Add..."), this, SLOT(slotNewIdentity()) );
   if ( item ) {
     menu->addAction( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
-    if ( mIdentityList->childCount() > 1 )
+    if ( mIdentityList->topLevelItemCount() > 1 )
       menu->addAction( i18n("Remove"), this, SLOT(slotRemoveIdentity()) );
     if ( !item->identity().isDefault() )
       menu->addAction( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
@@ -537,8 +552,10 @@ void IdentityPage::slotContextMenu( K3ListView *, Q3ListViewItem * i,
 void IdentityPage::slotSetAsDefault() {
   assert( !mIdentityDialog );
 
-  IdentityListViewItem * item =
-    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  IdentityListViewItem * item = 0L;
+  if (mIdentityList->selectedItems().size() > 0) {
+    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  }
   if ( !item ) return;
 
   KPIM::IdentityManager * im = kmkernel->identityManager();
@@ -547,21 +564,23 @@ void IdentityPage::slotSetAsDefault() {
 }
 
 void IdentityPage::refreshList() {
-  for ( Q3ListViewItemIterator it( mIdentityList ) ; it.current() ; ++it ) {
-    IdentityListViewItem * item =
-      dynamic_cast<IdentityListViewItem*>(it.current());
-    if ( item )
+  for (int i = 0; i < mIdentityList->topLevelItemCount(); ++i) {
+    IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( mIdentityList->topLevelItem(i) );
+    if (item) {
       item->redisplay();
+    }
   }
   emit changed(true);
 }
 
 void IdentityPage::slotIdentitySelectionChanged()
 {
-  IdentityListViewItem *item =
-    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  IdentityListViewItem *item = 0L;
+  if (mIdentityList->selectedItems().size() >  0) {
+    item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
+  }
 
-  mRemoveButton->setEnabled( item && mIdentityList->childCount() > 1 );
+  mRemoveButton->setEnabled( item && mIdentityList->topLevelItemCount() > 1 );
   mModifyButton->setEnabled( item );
   mRenameButton->setEnabled( item );
   mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );

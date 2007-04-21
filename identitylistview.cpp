@@ -41,6 +41,7 @@
 
 #include <klocale.h> // i18n
 #include <kiconloader.h> // SmallIcon
+#include <QHeaderView>
 
 #include <cassert>
 #include <QDropEvent>
@@ -54,19 +55,19 @@ namespace KMail {
   //
 
   IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, const KPIM::Identity & ident )
-    : K3ListViewItem( parent ), mUOID( ident.uoid() ) {
+    : QTreeWidgetItem( parent ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, Q3ListViewItem * after, const KPIM::Identity & ident )
-    : K3ListViewItem( parent, after ), mUOID( ident.uoid() ) {
+  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, QTreeWidgetItem * after, const KPIM::Identity & ident )
+    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
   KPIM::Identity & IdentityListViewItem::identity() const {
     KPIM::IdentityManager * im = kmkernel->identityManager();
     assert( im );
-    return im->modifyIdentityForUoid( uoid() );
+    return im->modifyIdentityForUoid( mUOID );
   }
 
   void IdentityListViewItem::setIdentity( const KPIM::Identity & ident ) {
@@ -97,34 +98,67 @@ namespace KMail {
   //
 
   IdentityListView::IdentityListView( QWidget * parent )
-    : K3ListView( parent )
+    : QTreeWidget( parent )
   {
-    setFullWidth( true );
     setDragEnabled( true );
     setAcceptDrops( true );
-    setDropVisualizer( true );
-    addColumn( i18n("Identity Name") );
-    addColumn( i18n("Email Address") );
+    setHeaderLabels( QStringList() << i18n("Identity Name") << i18n("Email Address") );
     setRootIsDecorated( false );
-    setRenameable( 0 );
-    setItemsRenameable( true );
-    // setShowToolTips( true );
-    setItemsMovable( false );
+    header()->setMovable( false );
     setAllColumnsShowFocus( true );
-    setSorting( -1 ); // disabled
-    setSelectionModeExt( Single ); // ### Extended would be nicer...
+    setSortingEnabled( false ); // disabled
+    setSelectionMode( SingleSelection ); // ### Extended would be nicer...
+
+    setContextMenuPolicy( Qt::CustomContextMenu );
+    connect( this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(slotCustomContextMenuRequested(const QPoint&)) );
   }
 
-  void IdentityListView::rename( Q3ListViewItem * i, int col ) {
-    if ( col == 0 && isRenameable( col ) ) {
-      IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
-      if ( item ) {
-	KPIM::Identity & ident = item->identity();
-	if ( ident.isDefault() )
-	  item->setText( 0, ident.identityName() );
+  void IdentityListView::editItem( QTreeWidgetItem *item, int column )
+  {
+    if (column == 0 && item) {
+      IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
+      if (lvItem) {
+        KPIM::Identity& ident = lvItem->identity();
+        if (ident.isDefault()) {
+          lvItem->setText( 0, ident.identityName() );
+        }
+      }
+
+      Qt::ItemFlags oldFlags = item->flags();
+      item->setFlags( oldFlags | Qt::ItemIsEditable );
+      QTreeWidget::editItem( item, 0 );
+      item->setFlags( oldFlags );
+    }
+  }
+
+  void IdentityListView::commitData( QWidget *editor )
+  {
+    kDebug() << "after editing" << endl;
+
+    if (selectedItems().size() > 0) {
+      IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
+
+      QLineEdit *edit = dynamic_cast<QLineEdit*>( editor );
+      if (edit) {
+        QString text = edit->text();
+        emit rename( item, text );
       }
     }
-    K3ListView::rename( i, col );
+  }
+
+  void IdentityListView::slotCustomContextMenuRequested( const QPoint& pos )
+  {
+    kDebug() << "position: " << pos << endl;
+    QTreeWidgetItem * item = itemAt( pos );
+    kDebug() << "item: " << item << endl;
+    if (item) {
+      IdentityListViewItem * lvItem = dynamic_cast<IdentityListViewItem*>( item );
+      if (lvItem) {
+        emit contextMenu( lvItem, viewport()->mapToGlobal(pos) );
+      }
+    } else {
+      emit contextMenu( 0L, viewport()->mapToGlobal(pos) );
+    }
   }
 
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {

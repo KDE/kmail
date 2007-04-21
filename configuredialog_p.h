@@ -60,6 +60,7 @@ namespace Kpgp {
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
+  class IdentityListViewItem;
   class AccountComboBox;
   class FolderRequester;
 }
@@ -303,8 +304,8 @@ private slots:
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KPIM::IdentityManager */
-  void slotRenameIdentity( Q3ListViewItem *, const QString &, int );
-  void slotContextMenu( K3ListView*, Q3ListViewItem *, const QPoint & );
+  void slotRenameIdentity( KMail::IdentityListViewItem*, const QString& );
+  void slotContextMenu( KMail::IdentityListViewItem*, const QPoint& );
   void slotSetAsDefault();
   void slotIdentitySelectionChanged();
 

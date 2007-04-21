@@ -32,8 +32,9 @@
 #ifndef __KMAIL_IDENTITYLIST_H__
 #define __KMAIL_IDENTITYLIST_H__
 
-#include <k3listview.h>
-//Added by qt3to4:
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <Q3DragObject>
 #include <QDropEvent>
 
 namespace KPIM { class Identity; }
@@ -44,14 +45,14 @@ namespace KMail {
 
   class IdentityListView;
 
-  /** @short A QListViewItem for use in IdentityListView
+  /** @short A QWidgetTreeItem for use in IdentityListView
       @author Marc Mutz <mutz@kde.org>
   **/
-  class IdentityListViewItem : public K3ListViewItem {
+  class IdentityListViewItem : public QTreeWidgetItem {
   public:
     IdentityListViewItem( IdentityListView * parent,
 			  const KPIM::Identity & ident );
-    IdentityListViewItem( IdentityListView * parent, Q3ListViewItem * after,
+    IdentityListViewItem( IdentityListView * parent, QTreeWidgetItem * after,
 			  const KPIM::Identity & ident );
 
     uint uoid() const { return mUOID; }
@@ -68,14 +69,24 @@ namespace KMail {
   /** @short A listview for KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
-  class IdentityListView : public K3ListView {
+  class IdentityListView : public QTreeWidget {
     Q_OBJECT
   public:
     IdentityListView( QWidget * parent=0 );
     virtual ~IdentityListView() {}
 
+  public:
+    void editItem( QTreeWidgetItem *item, int column = 0 );
+
+  protected slots:
+    void commitData( QWidget *editor );
+
   public slots:
-    void rename( Q3ListViewItem *, int );
+    void slotCustomContextMenuRequested( const QPoint& );
+
+  signals:
+    void contextMenu( KMail::IdentityListViewItem*, const QPoint& );
+    void rename( KMail::IdentityListViewItem*, const QString& );
 
   protected:
     bool acceptDrag( QDropEvent * ) const;
