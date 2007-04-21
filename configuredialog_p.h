@@ -17,6 +17,7 @@
 #include <QShowEvent>
 #include <QResizeEvent>
 #include <QStackedWidget>
+#include <QTreeWidget>
 
 #include <kdialog.h>
 #include <k3listview.h>
@@ -355,7 +356,7 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  ListView    *mTransportList;
+  QTreeWidget *mTransportList;
   QPushButton *mModifyTransportButton;
   QPushButton *mRemoveTransportButton;
   QPushButton *mSetDefaultTransportButton;

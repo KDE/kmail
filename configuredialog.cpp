@@ -678,16 +678,22 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   // transport list: left widget in hlay; stretch 1
   // ### FIXME: allow inline renaming of the account:
-  mTransportList = new ListView( this, 5 );
+  mTransportList = new QTreeWidget( this );
   mTransportList->setObjectName( "transportList" );
-  mTransportList->addColumn( i18n("Name") );
-  mTransportList->addColumn( i18n("Type") );
+  mTransportList->setHeaderLabels( QStringList() << i18n( "Name" ) << i18n( "Type" ) );
   mTransportList->setAllColumnsShowFocus( true );
-  mTransportList->setSorting( -1 );
-  connect( mTransportList, SIGNAL(selectionChanged()),
-           this, SLOT(slotTransportSelected()) );
-  connect( mTransportList, SIGNAL(doubleClicked( Q3ListViewItem *)),
-           this, SLOT(slotModifySelectedTransport()) );
+  mTransportList->setSortingEnabled( false );
+  mTransportList->setSelectionMode( QAbstractItemView::SingleSelection );
+  mTransportList->setRootIsDecorated( false );
+  connect( mTransportList->selectionModel(),
+           SIGNAL( selectionChanged(
+                     const QItemSelection &,
+                     const QItemSelection & )
+                 ),
+           this, SLOT( slotTransportSelected() ) );
+  connect( mTransportList, 
+           SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           this, SLOT( slotModifySelectedTransport() ) );
   hlay->addWidget( mTransportList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
@@ -810,7 +816,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
 void AccountsPage::SendingTab::slotTransportSelected()
 {
-  Q3ListViewItem *cur = mTransportList->selectedItem();
+  QTreeWidgetItem *cur = mTransportList->currentItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
   mSetDefaultTransportButton->setEnabled( cur );
@@ -833,29 +839,29 @@ static inline QString uniqueName( const QStringList & list,
 
 void AccountsPage::SendingTab::slotSetDefaultTransport()
 {
-  Q3ListViewItem *item = mTransportList->selectedItem();
+  QTreeWidgetItem *item = mTransportList->currentItem();
   if ( !item ) return;
 
   KMTransportInfo ti;
 
-  Q3ListViewItemIterator it( mTransportList );
-  for ( ; it.current(); ++it ) {
-  ti.readConfig( KMTransportInfo::findTransport( it.current()->text(0) ));
-  if ( ti.type != "sendmail" ) {
-    it.current()->setText( 1, "smtp" );
-  } else {
-    it.current()->setText( 1, "sendmail" );
+  for ( int i = 0; i < mTransportList->topLevelItemCount(); ++i ) {
+    QTreeWidgetItem *it = mTransportList->topLevelItem( i );
+    ti.readConfig( KMTransportInfo::findTransport( it->text( 0 ) ) );
+
+    if (ti.type != "sendmail") {
+      it->setText( 1, "smtp" );
+    } else {
+      it->setText( 1, "sendmail" );
     }
   }
 
-  if ( item->text(1) != "sendmail" ) {
-    item->setText( 1, i18n( "smtp (Default)" ));
+  if ( item->text( 1 ) != "sendmail" ) {
+    item->setText( 1, i18n( "smtp (Default)" ) );
   } else {
-    item->setText( 1, i18n( "sendmail (Default)" ));
+    item->setText( 1, i18n( "sendmail (Default)" ) );
   }
 
-  GlobalSettings::self()->setDefaultTransport( item->text(0) );
-
+  GlobalSettings::self()->setDefaultTransport( item->text( 0 ) );
 }
 
 void AccountsPage::SendingTab::slotAddTransport()
@@ -905,7 +911,10 @@ void AccountsPage::SendingTab::slotAddTransport()
 
   // append to listview:
   // ### FIXME: insert before the selected item, append on empty selection
-  Q3ListViewItem *lastItem = mTransportList->firstChild();
+  QTreeWidgetItem *lastItem = 0;
+  if ( mTransportList->topLevelItemCount() > 0 ) {
+    lastItem = mTransportList->topLevelItem( 0 );
+  }
   QString typeDisplayName;
   if ( lastItem ) {
     typeDisplayName = transportInfo->type;
@@ -917,8 +926,9 @@ void AccountsPage::SendingTab::slotAddTransport()
         transportInfo->type );
     GlobalSettings::self()->setDefaultTransport( transportInfo->name );
   }
-  (void) new Q3ListViewItem( mTransportList, lastItem, transportInfo->name,
-                            typeDisplayName );
+  QTreeWidgetItem *item = new QTreeWidgetItem( mTransportList, lastItem );
+  item->setText( 0, transportInfo->name );
+  item->setText( 1, typeDisplayName );
 
   // notify anyone who cares:
   emit transportListChanged( transportNames );
@@ -927,7 +937,7 @@ void AccountsPage::SendingTab::slotAddTransport()
 
 void AccountsPage::SendingTab::slotModifySelectedTransport()
 {
-  Q3ListViewItem *item = mTransportList->selectedItem();
+  QTreeWidgetItem *item = mTransportList->currentItem();
   if ( !item ) return;
 
   const QString& originalTransport = item->text(0);
@@ -985,7 +995,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
 
 void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 {
-  Q3ListViewItem *item = mTransportList->selectedItem();
+  QTreeWidgetItem *item = mTransportList->currentItem();
   if ( !item ) return;
 
   QStringList changedIdents;
@@ -1017,12 +1027,11 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 
   KMTransportInfo ti;
 
-  Q3ListViewItem *newCurrent = item->itemBelow();
-  if ( !newCurrent ) newCurrent = item->itemAbove();
+  QTreeWidgetItem *newCurrent = mTransportList->itemBelow( item );
+  if ( !newCurrent ) newCurrent = mTransportList->itemAbove( item );
   //mTransportList->removeItem( item );
   if ( newCurrent ) {
     mTransportList->setCurrentItem( newCurrent );
-    mTransportList->setSelected( newCurrent, true );
     GlobalSettings::self()->setDefaultTransport( newCurrent->text(0) );
     ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
     if ( item->text( 0 ) == GlobalSettings::self()->defaultTransport() ) {
@@ -1056,7 +1065,7 @@ void AccountsPage::SendingTab::doLoadOther() {
 
   int numTransports = general.readEntry("transports", 0 );
 
-  Q3ListViewItem *top = 0;
+  QTreeWidgetItem *top = 0;
   mTransportInfoList.clear();
   mTransportList->clear();
   QStringList transportNames;
@@ -1065,25 +1074,25 @@ void AccountsPage::SendingTab::doLoadOther() {
     ti->readConfig(i);
     mTransportInfoList.append( ti );
     transportNames << ti->name;
-    top = new Q3ListViewItem( mTransportList, top, ti->name, ti->type );
+    top = new QTreeWidgetItem( mTransportList, QStringList() << ti->name << ti->type );
   }
   emit transportListChanged( transportNames );
 
   const QString &defaultTransport = GlobalSettings::self()->defaultTransport();
 
-  Q3ListViewItemIterator it( mTransportList );
-  for ( ; it.current(); ++it ) {
-    if ( it.current()->text(0) == defaultTransport ) {
-      if ( it.current()->text(1) != "sendmail" ) {
-        it.current()->setText( 1, i18n( "smtp (Default)" ));
+  for ( int i = 0; i < mTransportList->topLevelItemCount(); ++i ) {
+    QTreeWidgetItem *it = mTransportList->topLevelItem( i );
+    if ( it->text(0) == defaultTransport ) {
+      if ( it->text(1) != "sendmail" ) {
+        it->setText( 1, i18n( "smtp (Default)" ));
       } else {
-        it.current()->setText( 1, i18n( "sendmail (Default)" ));
+        it->setText( 1, i18n( "sendmail (Default)" ));
       }
     } else {
-      if ( it.current()->text(1) != "sendmail" ) {
-        it.current()->setText( 1, "smtp" );
+      if ( it->text(1) != "sendmail" ) {
+        it->setText( 1, "smtp" );
       } else {
-        it.current()->setText( 1, "sendmail" );
+        it->setText( 1, "sendmail" );
       }
     }
   }
