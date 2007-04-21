@@ -1,13 +1,13 @@
-/*******************************************************************************
+/******************************************************************************
 **
 ** Filename   : accountwizard.cpp
 ** Created on : 07 February, 2005
 ** Copyright  : (c) 2005 Tobias Koenig
 ** Email      : tokoe@kde.org
 **
-*******************************************************************************/
+******************************************************************************/
 
-/*******************************************************************************
+/******************************************************************************
 **
 **   This program is free software; you can redistribute it and/or modify
 **   it under the terms of the GNU General Public License as published by
@@ -24,28 +24,10 @@
 **   your version of the file, but you are not obligated to do so.  If
 **   you do not wish to do so, delete this exception statement from
 **   your version.
-*******************************************************************************/
+******************************************************************************/
 
-#include "config.h"
-
-#include <kdialog.h>
-#include <kfiledialog.h>
-#include <klineedit.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <kconfiggroup.h>
-
-#include <QCheckBox>
-#include <QDir>
-
-#include <QLabel>
-#include <QLayout>
-#include <QListWidget>
-#include <QPushButton>
-
-//Added by qt3to4:
-#include <QGridLayout>
-#include <kvbox.h>
+#include "accountwizard.h"
+#include <config.h>
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"
@@ -61,12 +43,26 @@ using KMail::AccountManager;
 #include "libkpimidentities/identity.h"
 #include "libkpimidentities/identitymanager.h"
 #include "protocols.h"
+
 #include <libkdepim/servertest.h>
 
-#include "accountwizard.h"
+#include <kdialog.h>
+#include <kfiledialog.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <kstandarddirs.h>
+#include <kconfiggroup.h>
+#include <kvbox.h>
 
-enum Capabilities
-{
+#include <QCheckBox>
+#include <QDir>
+#include <QLabel>
+#include <QLayout>
+#include <QListWidget>
+#include <QPushButton>
+#include <QGridLayout>
+
+enum Capabilities {
   Plain      =   1,
   Login      =   2,
   CRAM_MD5   =   4,
@@ -86,7 +82,13 @@ enum Capabilities
 class AccountTypeBox : public QListWidget
 {
   public:
-    enum Type { Local, POP3, IMAP, dIMAP, Maildir };
+    enum Type {
+      Local,
+      POP3,
+      IMAP,
+      dIMAP,
+      Maildir
+    };
 
     AccountTypeBox( QWidget *parent )
       : QListWidget( parent )
@@ -103,12 +105,12 @@ class AccountTypeBox : public QListWidget
 
     void setType( Type type )
     {
-      setCurrentRow( (int)type );
+      setCurrentRow( static_cast<int>( type ) );
     }
 
     Type type() const
     {
-      return (Type)currentRow();
+      return static_cast<Type>( currentRow() );
     }
 
   private:
@@ -127,7 +129,9 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
   setupLoginInformationPage();
   setupServerInformationPage();
 
-  connect( this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT(slotCurrentPageChanged(KPageWidgetItem*)) );
+  connect( this, SIGNAL( currentPageChanged( KPageWidgetItem *,
+                                             KPageWidgetItem * ) ),
+           this, SLOT( slotCurrentPageChanged( KPageWidgetItem * ) ) );
 }
 
 AccountWizard::~AccountWizard()
@@ -154,8 +158,9 @@ void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
   if ( current == mWelcomePage ) {
     // do nothing
   } else if ( current == mAccountTypePage ) {
-    if ( !mTypeBox->currentItem() )
+    if ( !mTypeBox->currentItem() ) {
       mTypeBox->setType( AccountTypeBox::POP3 );
+    }
   } else if ( current == mAccountInformationPage ) {
     if ( mRealName->text().isEmpty() && mEMailAddress->text().isEmpty() &&
          mOrganization->text().isEmpty() ) {
@@ -171,25 +176,27 @@ void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
       // try to extract login from email address
       QString email = mEMailAddress->text();
       int pos = email.indexOf( '@' );
-      if ( pos != -1 )
+      if ( pos != -1 ) {
         mLoginName->setText( email.left( pos ) );
+      }
 
       // take the whole email as login otherwise?!?
     }
   } else if ( current == mServerInformationPage ) {
     if ( mTypeBox->type() == AccountTypeBox::Local ||
          mTypeBox->type() == AccountTypeBox::Maildir ) {
-      mIncomingServerWdg->hide();
+      mIncomingServer->hide();
       mIncomingLocationWdg->show();
       mIncomingLabel->setText( i18n( "Location:" ) );
 
-      if ( mTypeBox->type() == AccountTypeBox::Local )
+      if ( mTypeBox->type() == AccountTypeBox::Local ) {
         mIncomingLocation->setText( QDir::homePath() + "/inbox" );
-      else
+      } else {
         mIncomingLocation->setText( QDir::homePath() + "/Mail/" );
+      }
     } else {
+      mIncomingServer->show();
       mIncomingLocationWdg->hide();
-      mIncomingServerWdg->show();
       mIncomingLabel->setText( i18n( "Incoming server:" ) );
     }
   }
@@ -209,7 +216,7 @@ void AccountWizard::setupWelcomePage()
                     "You can use this wizard to setup your mail accounts. Just "
                     "enter the connection data that you received from your email provider "
                     "into the following pages.</qt>" ), box );
-  message->setWordWrap(true);
+  message->setWordWrap( true );
 
   mWelcomePage = new KPageWidgetItem( box, i18n("Welcome") );
   addPage( mWelcomePage );
@@ -293,36 +300,40 @@ void AccountWizard::setupServerInformationPage()
   layout->setSpacing( KDialog::spacingHint() );
   layout->setMargin( KDialog::marginHint() );
 
+  // Incoming server
   mIncomingLabel = new QLabel( page );
+  /* mIncomingLabel text is set in slotCurrentPageChanged() */
+  mIncomingServer = new KLineEdit( page );
+  mIncomingLabel->setBuddy( mIncomingServer );
 
-  mIncomingServerWdg = new KVBox( page );
-  mIncomingServer = new KLineEdit( mIncomingServerWdg );
-  mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), mIncomingServerWdg );
+  layout->addWidget( mIncomingLabel, 0, 0 );
+  layout->addWidget( mIncomingServer, 0, 1 );
+
+  mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), page );
+  layout->addWidget( mIncomingUseSSL, 1, 1 );
 
   mIncomingLocationWdg = new KHBox( page );
   mIncomingLocation = new KLineEdit( mIncomingLocationWdg );
-  mChooseLocation = new QPushButton( i18n( "Choose..." ), mIncomingLocationWdg );
+  layout->addWidget( mIncomingLocationWdg, 0, 1 );
 
+  mChooseLocation = new QPushButton( i18n( "Choose..." ), mIncomingLocationWdg );
   connect( mChooseLocation, SIGNAL( clicked() ),
            this, SLOT( chooseLocation() ) );
 
-  layout->addWidget( mIncomingLabel, 0, 0, Qt::AlignTop );
-  layout->addWidget( mIncomingLocationWdg, 0, 1, Qt::AlignTop );
-  layout->addWidget( mIncomingServerWdg, 0, 1 );
-
+  // Outgoing server
   QLabel *label = new QLabel( i18n( "Outgoing server:" ), page );
   mOutgoingServer = new KLineEdit( page );
   label->setBuddy( mOutgoingServer );
 
-  layout->addWidget( label, 1, 0 );
-  layout->addWidget( mOutgoingServer, 1, 1 );
+  layout->addWidget( label, 2, 0 );
+  layout->addWidget( mOutgoingServer, 2, 1 );
 
   mOutgoingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), page );
-  layout->addWidget( mOutgoingUseSSL, 2, 1 );
+  layout->addWidget( mOutgoingUseSSL, 3, 1 );
 
-  mLocalDelivery = new QCheckBox( i18n( "Use local delivery" ),
-                                  page );
-  layout->addWidget( mLocalDelivery, 3, 0 );
+  // Local delivery
+  mLocalDelivery = new QCheckBox( i18n( "Use local delivery" ), page );
+  layout->addWidget( mLocalDelivery, 4, 0 );
 
   connect( mLocalDelivery, SIGNAL( toggled( bool ) ),
            mOutgoingServer, SLOT( setDisabled( bool ) ) );
@@ -341,8 +352,9 @@ void AccountWizard::chooseLocation()
     location = KFileDialog::getExistingDirectory( QString(), this );
   }
 
-  if ( !location.isEmpty() )
+  if ( !location.isEmpty() ) {
     mIncomingLocation->setText( location );
+  }
 }
 
 QString AccountWizard::accountName() const
@@ -364,6 +376,7 @@ QLabel *AccountWizard::createInfoLabel( const QString &msg )
 {
   QLabel *label = new QLabel( msg, this );
   label->setFrameStyle( QFrame::Panel | QFrame::Raised );
+  label->setLineWidth( 3 );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
   label->move( width() / 2 - label->width() / 2, height() / 2 - label->height() / 2 );
   label->show();
@@ -375,7 +388,8 @@ void AccountWizard::accept()
 {
   // store identity information
   KPIM::IdentityManager *manager = mKernel->identityManager();
-  KPIM::Identity &identity = manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
+  KPIM::Identity &identity =
+    manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
 
   identity.setFullName( mRealName->text() );
   identity.setEmailAddr( mEMailAddress->text() );
@@ -427,7 +441,7 @@ void AccountWizard::createTransport()
     mTransportInfo->user = mLoginName->text();
     mTransportInfo->setPasswd( mPassword->text() );
 
-    int port = (mOutgoingUseSSL->isChecked() ? 465 : 25);
+    int port = ( mOutgoingUseSSL->isChecked() ? 465 : 25 );
     checkSmtpCapabilities( mTransportInfo->host, port );
   }
 }
@@ -439,8 +453,9 @@ void AccountWizard::transportCreated()
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "transports", mTransportInfoList.count() );
 
-  for ( int i = 0 ; i < mTransportInfoList.count() ; i++ )
+  for ( int i = 0 ; i < mTransportInfoList.count() ; i++ ) {
     mTransportInfo->writeConfig( i + 1 );
+  }
 
   qDeleteAll( mTransportInfoList );
   mTransportInfoList.clear();
@@ -500,18 +515,19 @@ void AccountWizard::createAccount()
     }
   }
 
-  if ( mTypeBox->type() == AccountTypeBox::POP3 )
+  if ( mTypeBox->type() == AccountTypeBox::POP3 ) {
     checkPopCapabilities( mIncomingServer->text(), port );
-  else if ( mTypeBox->type() == AccountTypeBox::IMAP || mTypeBox->type() == AccountTypeBox::dIMAP )
+  } else if ( mTypeBox->type() == AccountTypeBox::IMAP ||
+              mTypeBox->type() == AccountTypeBox::dIMAP ) {
     checkImapCapabilities( mIncomingServer->text(), port );
-  else
+  } else {
     QTimer::singleShot( 0, this, SLOT( accountCreated() ) );
+  }
 }
 
 void AccountWizard::accountCreated()
 {
-  if ( mAccount )
-  {
+  if ( mAccount ) {
     mKernel->acctMgr()->add( mAccount );
     mKernel->cleanupImapFolders();
   }
@@ -533,10 +549,13 @@ void AccountWizard::checkPopCapabilities( const QString &server, int port )
   delete mServerTest;
   mServerTest = new KPIM::ServerTest( POP_PROTOCOL, server, port );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
-           this, SLOT( popCapabilities( const QStringList&, const QStringList& ) ) );
+  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
+                                              const QStringList & ) ),
+           this, SLOT( popCapabilities( const QStringList &,
+                                        const QStringList & ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
+  mAuthInfoLabel =
+    createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::checkImapCapabilities( const QString &server, int port )
@@ -544,10 +563,13 @@ void AccountWizard::checkImapCapabilities( const QString &server, int port )
   delete mServerTest;
   mServerTest = new KPIM::ServerTest( IMAP_PROTOCOL, server, port );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList& ) ),
-           this, SLOT( imapCapabilities( const QStringList&, const QStringList& ) ) );
+  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
+                                              const QStringList & ) ),
+           this, SLOT( imapCapabilities( const QStringList &,
+                                         const QStringList & ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
+  mAuthInfoLabel =
+    createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
@@ -555,12 +577,17 @@ void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
   delete mServerTest;
   mServerTest = new KPIM::ServerTest( SMTP_PROTOCOL, server, port );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList&, const QStringList&,
-                                              const QString&, const QString&, const QString& ) ),
-           this, SLOT( smtpCapabilities( const QStringList&, const QStringList&,
-                                         const QString&, const QString&, const QString& ) ) );
+  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
+                                              const QStringList &,
+                                              const QString &, const QString &,
+                                              const QString & ) ),
+           this, SLOT( smtpCapabilities( const QStringList &,
+                                         const QStringList &,
+                                         const QString &,
+                                         const QString &, const QString & ) ) );
 
-  mAuthInfoLabel = createInfoLabel( i18n( "Check for supported security capabilities of %1...", server ) );
+  mAuthInfoLabel =
+    createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
 void AccountWizard::popCapabilities( const QStringList &capaNormalList,
@@ -569,12 +596,14 @@ void AccountWizard::popCapabilities( const QStringList &capaNormalList,
   uint capaNormal = popCapabilitiesFromStringList( capaNormalList );
   uint capaTLS = 0;
 
-  if ( capaNormal & STLS )
+  if ( capaNormal & STLS ) {
     capaTLS = capaNormal;
+  }
 
   uint capaSSL = popCapabilitiesFromStringList( capaSSLList );
 
-  KMail::NetworkAccount *account = static_cast<KMail::NetworkAccount*>( mAccount );
+  KMail::NetworkAccount *account =
+    static_cast<KMail::NetworkAccount*>( mAccount );
 
   bool useSSL = !capaSSLList.isEmpty();
   bool useTLS = capaTLS != 0;
@@ -582,24 +611,25 @@ void AccountWizard::popCapabilities( const QStringList &capaNormalList,
   account->setUseSSL( useSSL );
   account->setUseTLS( useTLS );
 
-  uint capa = (useSSL ? capaSSL : (useTLS ? capaTLS : capaNormal));
+  uint capa = ( useSSL ? capaSSL : ( useTLS ? capaTLS : capaNormal ) );
 
-  if ( capa & Plain )
+  if ( capa & Plain ) {
     account->setAuth( "PLAIN" );
-  else if ( capa & Login )
+  } else if ( capa & Login ) {
     account->setAuth( "LOGIN" );
-  else if ( capa & CRAM_MD5 )
+  } else if ( capa & CRAM_MD5 ) {
     account->setAuth( "CRAM-MD5" );
-  else if ( capa & Digest_MD5 )
+  } else if ( capa & Digest_MD5 ) {
     account->setAuth( "DIGEST-MD5" );
-  else if ( capa & NTLM )
+  } else if ( capa & NTLM ) {
     account->setAuth( "NTLM" );
-  else if ( capa & GSSAPI )
+  } else if ( capa & GSSAPI ) {
     account->setAuth( "GSSAPI" );
-  else if ( capa & APOP )
+  } else if ( capa & APOP ) {
     account->setAuth( "APOP" );
-  else
+  } else {
     account->setAuth( "USER" );
+  }
 
   account->setPort( useSSL ? 995 : 110 );
 
@@ -612,43 +642,45 @@ void AccountWizard::popCapabilities( const QStringList &capaNormalList,
   accountCreated();
 }
 
-
 void AccountWizard::imapCapabilities( const QStringList &capaNormalList,
                                       const QStringList &capaSSLList )
 {
   uint capaNormal = imapCapabilitiesFromStringList( capaNormalList );
   uint capaTLS = 0;
-  if ( capaNormal & STARTTLS )
+  if ( capaNormal & STARTTLS ) {
     capaTLS = capaNormal;
+  }
 
   uint capaSSL = imapCapabilitiesFromStringList( capaSSLList );
 
-  KMail::NetworkAccount *account = static_cast<KMail::NetworkAccount*>( mAccount );
+  KMail::NetworkAccount *account =
+    static_cast<KMail::NetworkAccount*>( mAccount );
 
   bool useSSL = !capaSSLList.isEmpty();
-  bool useTLS = (capaTLS != 0);
+  bool useTLS = ( capaTLS != 0 );
 
   account->setUseSSL( useSSL );
   account->setUseTLS( useTLS );
 
-  uint capa = (useSSL ? capaSSL : (useTLS ? capaTLS : capaNormal));
+  uint capa = ( useSSL ? capaSSL : ( useTLS ? capaTLS : capaNormal ) );
 
-  if ( capa & CRAM_MD5 )
+  if ( capa & CRAM_MD5 ) {
     account->setAuth( "CRAM-MD5" );
-  else if ( capa & Digest_MD5 )
+  } else if ( capa & Digest_MD5 ) {
     account->setAuth( "DIGEST-MD5" );
-  else if ( capa & NTLM )
+  } else if ( capa & NTLM ) {
     account->setAuth( "NTLM" );
-  else if ( capa & GSSAPI )
+  } else if ( capa & GSSAPI ) {
     account->setAuth( "GSSAPI" );
-  else if ( capa & Anonymous )
+  } else if ( capa & Anonymous ) {
     account->setAuth( "ANONYMOUS" );
-  else if ( capa & Login )
+  } else if ( capa & Login ) {
     account->setAuth( "LOGIN" );
-  else if ( capa & Plain )
+  } else if ( capa & Plain ) {
     account->setAuth( "PLAIN" );
-  else
+  } else {
     account->setAuth( "*" );
+  }
 
   account->setPort( useSSL ? 993 : 143 );
 
@@ -672,10 +704,11 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
   if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() ) {
     // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
     authBitsNone = authMethodsFromStringList( capaNormal );
-    if ( capaNormal.indexOf( "STARTTLS" ) != -1 )
+    if ( capaNormal.indexOf( "STARTTLS" ) != -1 ) {
       authBitsTLS = authBitsNone;
-    else
+    } else {
       authBitsTLS = 0;
+    }
     authBitsSSL = authMethodsFromStringList( capaSSL );
   } else {
     authBitsNone = authMethodsFromString( authNone );
@@ -695,18 +728,19 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
     authBits = authBitsNone;
   }
 
-  if ( authBits & Login )
+  if ( authBits & Login ) {
     mTransportInfo->authType = "LOGIN";
-  else if ( authBits & CRAM_MD5 )
+  } else if ( authBits & CRAM_MD5 ) {
     mTransportInfo->authType = "CRAM-MD5";
-  else if ( authBits & Digest_MD5 )
+  } else if ( authBits & Digest_MD5 ) {
     mTransportInfo->authType = "DIGEST-MD5";
-  else if ( authBits & NTLM )
+  } else if ( authBits & NTLM ) {
     mTransportInfo->authType = "NTLM";
-  else if ( authBits & GSSAPI )
+  } else if ( authBits & GSSAPI ) {
     mTransportInfo->authType = "GSSAPI";
-  else
+  } else {
     mTransportInfo->authType = "PLAIN";
+  }
 
   mTransportInfo->port = ( !capaSSL.isEmpty() ? "465" : "25" );
 
@@ -719,99 +753,105 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
   transportCreated();
 }
 
-uint AccountWizard::popCapabilitiesFromStringList( const QStringList & l )
+uint AccountWizard::popCapabilitiesFromStringList( const QStringList &l )
 {
   unsigned int capa = 0;
 
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).toUpper();
-    if ( cur == "PLAIN" )
+    if ( cur == "PLAIN" ) {
       capa |= Plain;
-    else if ( cur == "LOGIN" )
+    } else if ( cur == "LOGIN" ) {
       capa |= Login;
-    else if ( cur == "CRAM-MD5" )
+    } else if ( cur == "CRAM-MD5" ) {
       capa |= CRAM_MD5;
-    else if ( cur == "DIGEST-MD5" )
+    } else if ( cur == "DIGEST-MD5" ) {
       capa |= Digest_MD5;
-    else if ( cur == "NTLM" )
+    } else if ( cur == "NTLM" ) {
       capa |= NTLM;
-    else if ( cur == "GSSAPI" )
+    } else if ( cur == "GSSAPI" ) {
       capa |= GSSAPI;
-    else if ( cur == "APOP" )
+    } else if ( cur == "APOP" ) {
       capa |= APOP;
-    else if ( cur == "STLS" )
+    } else if ( cur == "STLS" ) {
       capa |= STLS;
+    }
   }
 
   return capa;
 }
 
-uint AccountWizard::imapCapabilitiesFromStringList( const QStringList & l )
+uint AccountWizard::imapCapabilitiesFromStringList( const QStringList &l )
 {
   unsigned int capa = 0;
 
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).toUpper();
-    if ( cur == "AUTH=PLAIN" )
+    if ( cur == "AUTH=PLAIN" ) {
       capa |= Plain;
-    else if ( cur == "AUTH=LOGIN" )
+    } else if ( cur == "AUTH=LOGIN" ) {
       capa |= Login;
-    else if ( cur == "AUTH=CRAM-MD5" )
+    } else if ( cur == "AUTH=CRAM-MD5" ) {
       capa |= CRAM_MD5;
-    else if ( cur == "AUTH=DIGEST-MD5" )
+    } else if ( cur == "AUTH=DIGEST-MD5" ) {
       capa |= Digest_MD5;
-    else if ( cur == "AUTH=NTLM" )
+    } else if ( cur == "AUTH=NTLM" ) {
       capa |= NTLM;
-    else if ( cur == "AUTH=GSSAPI" )
+    } else if ( cur == "AUTH=GSSAPI" ) {
       capa |= GSSAPI;
-    else if ( cur == "AUTH=ANONYMOUS" )
+    } else if ( cur == "AUTH=ANONYMOUS" ) {
       capa |= Anonymous;
-    else if ( cur == "STARTTLS" )
+    } else if ( cur == "STARTTLS" ) {
       capa |= STARTTLS;
+    }
   }
 
   return capa;
 }
 
-uint AccountWizard::authMethodsFromString( const QString & s )
+uint AccountWizard::authMethodsFromString( const QString &s )
 {
   unsigned int result = 0;
 
   QStringList sl = s.toUpper().split( '\n', QString::SkipEmptyParts );
-  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
-    if (  *it == "SASL/LOGIN" )
+  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it ) {
+    if ( *it == "SASL/LOGIN" ) {
       result |= Login;
-    else if ( *it == "SASL/PLAIN" )
+    } else if ( *it == "SASL/PLAIN" ) {
       result |= Plain;
-    else if ( *it == "SASL/CRAM-MD5" )
+    } else if ( *it == "SASL/CRAM-MD5" ) {
       result |= CRAM_MD5;
-    else if ( *it == "SASL/DIGEST-MD5" )
+    } else if ( *it == "SASL/DIGEST-MD5" ) {
       result |= Digest_MD5;
-    else if ( *it == "SASL/NTLM" )
+    } else if ( *it == "SASL/NTLM" ) {
       result |= NTLM;
-    else if ( *it == "SASL/GSSAPI" )
+    } else if ( *it == "SASL/GSSAPI" ) {
       result |= GSSAPI;
+    }
+  }
 
   return result;
 }
 
-uint AccountWizard::authMethodsFromStringList( const QStringList & sl )
+uint AccountWizard::authMethodsFromStringList( const QStringList &l )
 {
   unsigned int result = 0;
 
-  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
-    if ( *it == "LOGIN" )
+  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
+    if ( *it == "LOGIN" ) {
       result |= Login;
-    else if ( *it == "PLAIN" )
+    } else if ( *it == "PLAIN" ) {
       result |= Plain;
-    else if ( *it == "CRAM-MD5" )
+    } else if ( *it == "CRAM-MD5" ) {
       result |= CRAM_MD5;
-    else if ( *it == "DIGEST-MD5" )
+    } else if ( *it == "DIGEST-MD5" ) {
       result |= Digest_MD5;
-    else if ( *it == "NTLM" )
+    } else if ( *it == "NTLM" ) {
       result |= NTLM;
-    else if ( *it == "GSSAPI" )
+    } else if ( *it == "GSSAPI" ) {
       result |= GSSAPI;
+    }
+  }
 
   return result;
 }

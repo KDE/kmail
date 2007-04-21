@@ -1,13 +1,13 @@
-/*******************************************************************************
+/******************************************************************************
 **
 ** Filename   : accountwizard.h
 ** Created on : 07 February, 2005
 ** Copyright  : (c) 2005 Tobias Koenig
 ** Email      : tokoe@kde.org
 **
-*******************************************************************************/
+******************************************************************************/
 
-/*******************************************************************************
+/******************************************************************************
 **
 **   This program is free software; you can redistribute it and/or modify
 **   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 **   your version of the file, but you are not obligated to do so.  If
 **   you do not wish to do so, delete this exception statement from
 **   your version.
-*******************************************************************************/
+******************************************************************************/
 
 #ifndef KMWIZARD_H
 #define KMWIZARD_H
@@ -62,11 +62,6 @@ class AccountWizard : public KAssistantDialog
      */
     static void start( KMKernel *kernel, QWidget *parent = 0 );
 
-    /**
-      Reimplemented
-     */
-    //void setCurrentPage( KPageWidgetItem *page );
-
   protected:
     AccountWizard( KMKernel *kernel, QWidget *parent );
     ~AccountWizard();
@@ -89,22 +84,27 @@ class AccountWizard : public KAssistantDialog
   private slots:
     void slotCurrentPageChanged( KPageWidgetItem *current );
 
-    void popCapabilities( const QStringList&, const QStringList& );
-    void imapCapabilities( const QStringList&, const QStringList& );
-    void smtpCapabilities( const QStringList&, const QStringList&,
-                           const QString&, const QString&, const QString& );
+    void popCapabilities( const QStringList &capaNormalList,
+                          const QStringList &capaSSLList );
+    void imapCapabilities( const QStringList &capaNormalList,
+                           const QStringList &capaSSLList );
+    void smtpCapabilities( const QStringList &capaNormal,
+                           const QStringList &capaSSL,
+                           const QString &authNone,
+                           const QString &authSSL,
+                           const QString &authTLS );
 
   private:
     QString accountName() const;
     QLabel *createInfoLabel( const QString &msg );
 
-    void checkPopCapabilities( const QString&, int );
-    void checkImapCapabilities( const QString&, int );
-    void checkSmtpCapabilities( const QString&, int );
-    uint popCapabilitiesFromStringList( const QStringList& );
-    uint imapCapabilitiesFromStringList( const QStringList& );
-    uint authMethodsFromString( const QString& );
-    uint authMethodsFromStringList( const QStringList& );
+    void checkPopCapabilities( const QString &server, int port );
+    void checkImapCapabilities( const QString &server, int port );
+    void checkSmtpCapabilities( const QString &server, int port );
+    uint popCapabilitiesFromStringList( const QStringList &l );
+    uint imapCapabilitiesFromStringList( const QStringList &l );
+    uint authMethodsFromString( const QString &s );
+    uint authMethodsFromStringList( const QStringList &l );
 
     KPageWidgetItem *mWelcomePage;
 
@@ -131,7 +131,6 @@ class AccountWizard : public KAssistantDialog
     QCheckBox *mOutgoingUseSSL;
     QCheckBox *mLocalDelivery;
 
-    QWidget *mIncomingServerWdg;
     QWidget *mIncomingLocationWdg;
 
     QLabel *mAuthInfoLabel;
