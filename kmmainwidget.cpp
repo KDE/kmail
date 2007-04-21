@@ -876,8 +876,12 @@ void KMMainWidget::slotCheckOneAccount(QAction* item)
 
   KMAccount* t = kmkernel->acctMgr()->findByName(item->text());
 
-  if (!t)
-    kmkernel->acctMgr()->singleCheckMail(t);
+  if ( t ) {
+    kmkernel->acctMgr()->singleCheckMail( t );
+  }
+  else {
+    kDebug(5006) << k_funcinfo << " - account with name '" << item->text() << "' not found" << endl;
+  }
 }
 
 //-----------------------------------------------------------------------------
