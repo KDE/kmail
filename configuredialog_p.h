@@ -284,7 +284,7 @@ private:
 class KDE_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
-  IdentityPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  IdentityPage( const KComponentData &instance, QWidget *parent = 0, const QStringList &args = QStringList() );
   ~IdentityPage() {}
 
   QString helpAnchor() const;
@@ -300,12 +300,12 @@ private slots:
   void slotModifyIdentity();
   void slotRemoveIdentity();
   /** Connected to @p mRenameButton's clicked() signal. Just does a
-      K3ListView::rename on the selected item */
+      QTreeWidget::editItem on the selected item */
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KPIM::IdentityManager */
-  void slotRenameIdentity( KMail::IdentityListViewItem*, const QString& );
-  void slotContextMenu( KMail::IdentityListViewItem*, const QPoint& );
+  void slotRenameIdentity( KMail::IdentityListViewItem *, const QString & );
+  void slotContextMenu( KMail::IdentityListViewItem *, const QPoint & );
   void slotSetAsDefault();
   void slotIdentitySelectionChanged();
 
@@ -313,14 +313,14 @@ private: // methods
   void refreshList();
 
 private: // data members
-  KMail::IdentityDialog   * mIdentityDialog;
-  int            mOldNumberOfIdentities;
+  KMail::IdentityDialog   *mIdentityDialog;
+  int                      mOldNumberOfIdentities;
 
-  KMail::IdentityListView * mIdentityList;
-  QPushButton             * mModifyButton;
-  QPushButton             * mRenameButton;
-  QPushButton             * mRemoveButton;
-  QPushButton             * mSetAsDefaultButton;
+  KMail::IdentityListView *mIdentityList;
+  QPushButton             *mModifyButton;
+  QPushButton             *mRenameButton;
+  QPushButton             *mRemoveButton;
+  QPushButton             *mSetAsDefaultButton;
 };
 
 

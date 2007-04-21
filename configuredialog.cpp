@@ -304,39 +304,40 @@ void ConfigureDialog::slotUser2() {
 // *                      IdentityPage                         *
 // *                                                           *
 // *************************************************************
-QString IdentityPage::helpAnchor() const {
-  return QString::fromLatin1("configure-identity");
+QString IdentityPage::helpAnchor() const 
+{
+  return QString::fromLatin1( "configure-identity" );
 }
 
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
   : ConfigModule( instance, parent, args ),
     mIdentityDialog( 0 )
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this );
+  QHBoxLayout *hlay = new QHBoxLayout( this );
   hlay->setSpacing( KDialog::spacingHint() );
   hlay->setMargin( 0 );
 
   mIdentityList = new IdentityListView( this );
-  connect( mIdentityList, SIGNAL(itemSelectionChanged()),
-           SLOT(slotIdentitySelectionChanged()) );
-  connect( mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*, const QString&)),
-           SLOT(slotRenameIdentity(KMail::IdentityListViewItem*, const QString&)) );
-  connect( mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-           SLOT(slotModifyIdentity()) );
-  connect( mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*, const QPoint&)),
-           SLOT(slotContextMenu(KMail::IdentityListViewItem*, const QPoint&)) );
+  connect( mIdentityList, SIGNAL( itemSelectionChanged() ),
+           SLOT( slotIdentitySelectionChanged() ) );
+  connect( mIdentityList, SIGNAL( rename( KMail::IdentityListViewItem *, const QString & ) ),
+           SLOT( slotRenameIdentity(KMail::IdentityListViewItem *, const QString & ) ) );
+  connect( mIdentityList, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
+           SLOT( slotModifyIdentity() ) );
+  connect( mIdentityList, SIGNAL( contextMenu( KMail::IdentityListViewItem *, const QPoint & ) ),
+           SLOT( slotContextMenu( KMail::IdentityListViewItem *, const QPoint & ) ) );
   // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
 
-  QVBoxLayout * vlay = new QVBoxLayout(); // inherits spacing
+  QVBoxLayout *vlay = new QVBoxLayout(); // inherits spacing
   hlay->addLayout( vlay );
 
-  QPushButton * button = new QPushButton( i18n("&Add..."), this );
-  mModifyButton = new QPushButton( i18n("&Modify..."), this );
-  mRenameButton = new QPushButton( i18n("&Rename"), this );
-  mRemoveButton = new QPushButton( i18n("Remo&ve"), this );
-  mSetAsDefaultButton = new QPushButton( i18n("Set as &Default"), this );
+  QPushButton *button = new QPushButton( i18n( "&Add..." ), this );
+  mModifyButton = new QPushButton( i18n( "&Modify..." ), this );
+  mRenameButton = new QPushButton( i18n( "&Rename" ), this );
+  mRemoveButton = new QPushButton( i18n( "Remo&ve" ), this );
+  mSetAsDefaultButton = new QPushButton( i18n( "Set as &Default" ), this );
   button->setAutoDefault( false );
   mModifyButton->setAutoDefault( false );
   mModifyButton->setEnabled( false );
@@ -346,16 +347,16 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, con
   mRemoveButton->setEnabled( false );
   mSetAsDefaultButton->setAutoDefault( false );
   mSetAsDefaultButton->setEnabled( false );
-  connect( button, SIGNAL(clicked()),
-           this, SLOT(slotNewIdentity()) );
-  connect( mModifyButton, SIGNAL(clicked()),
-           this, SLOT(slotModifyIdentity()) );
-  connect( mRenameButton, SIGNAL(clicked()),
-           this, SLOT(slotRenameIdentity()) );
-  connect( mRemoveButton, SIGNAL(clicked()),
-           this, SLOT(slotRemoveIdentity()) );
-  connect( mSetAsDefaultButton, SIGNAL(clicked()),
-           this, SLOT(slotSetAsDefault()) );
+  connect( button, SIGNAL( clicked() ),
+           this, SLOT( slotNewIdentity() ) );
+  connect( mModifyButton, SIGNAL( clicked() ),
+           this, SLOT( slotModifyIdentity() ) );
+  connect( mRenameButton, SIGNAL( clicked() ),
+           this, SLOT( slotRenameIdentity() ) );
+  connect( mRemoveButton, SIGNAL( clicked() ),
+           this, SLOT( slotRemoveIdentity() ) );
+  connect( mSetAsDefaultButton, SIGNAL( clicked() ),
+           this, SLOT( slotSetAsDefault() ) );
   vlay->addWidget( button );
   vlay->addWidget( mModifyButton );
   vlay->addWidget( mRenameButton );
@@ -367,20 +368,22 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, con
 
 void IdentityPage::load()
 {
-  KPIM::IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager *im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
-  QTreeWidgetItem * item = 0;
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin() ; it != im->modifyEnd() ; ++it )
-    item = new IdentityListViewItem( mIdentityList, item, *it  );
-  if (mIdentityList->currentItem()) {
+  QTreeWidgetItem *item = 0;
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    item = new IdentityListViewItem( mIdentityList, item, *it );
+  }
+  if ( mIdentityList->currentItem() ) {
     mIdentityList->currentItem()->setSelected( true );
   }
 }
 
-void IdentityPage::save() {
-  assert( !mIdentityDialog );
+void IdentityPage::save()
+{
+  Q_ASSERT( !mIdentityDialog );
 
   kmkernel->identityManager()->sort();
   kmkernel->identityManager()->commit();
@@ -405,15 +408,15 @@ void IdentityPage::save() {
 
 void IdentityPage::slotNewIdentity()
 {
-  assert( !mIdentityDialog );
+  Q_ASSERT( !mIdentityDialog );
 
-  KPIM::IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager *im = kmkernel->identityManager();
   NewIdentityDialog dialog( im->shadowIdentities(), this );
   dialog.setObjectName( "new" );
 
   if( dialog.exec() == QDialog::Accepted ) {
     QString identityName = dialog.identityName().trimmed();
-    assert( !identityName.isEmpty() );
+    Q_ASSERT( !identityName.isEmpty() );
 
     //
     // Construct a new Identity:
@@ -421,7 +424,7 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-        KPIM::Identity & dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
+        KPIM::Identity &dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
         im->newFromExisting( dupThis, identityName );
         break;
       }
@@ -436,21 +439,21 @@ void IdentityPage::slotNewIdentity()
     //
     // Insert into listview:
     //
-    KPIM::Identity & newIdent = im->modifyIdentityForName( identityName );
-    QTreeWidgetItem * item = 0L;
-    if (mIdentityList->selectedItems().size() > 0) {
+    KPIM::Identity &newIdent = im->modifyIdentityForName( identityName );
+    QTreeWidgetItem *item = 0;
+    if ( mIdentityList->selectedItems().size() > 0 ) {
       item = mIdentityList->selectedItems()[0];
     }
 
-    QTreeWidgetItem * newItem = 0L;
+    QTreeWidgetItem * newItem = 0;
     if ( item ) {
-      newItem = new IdentityListViewItem( mIdentityList, mIdentityList->itemAbove(item), newIdent );
+      newItem = new IdentityListViewItem( mIdentityList, mIdentityList->itemAbove( item ), newIdent );
     } else {
       newItem = new IdentityListViewItem( mIdentityList, newIdent );
     }
 
     mIdentityList->selectionModel()->clearSelection();
-    if (newItem) {
+    if ( newItem ) {
       newItem->setSelected( true );
     }
 
@@ -458,14 +461,17 @@ void IdentityPage::slotNewIdentity()
   }
 }
 
-void IdentityPage::slotModifyIdentity() {
-  assert( !mIdentityDialog );
+void IdentityPage::slotModifyIdentity()
+{
+  Q_ASSERT( !mIdentityDialog );
 
-  IdentityListViewItem * item = 0L;
-  if (mIdentityList->selectedItems().size() > 0) {
+  IdentityListViewItem *item = 0;
+  if ( mIdentityList->selectedItems().size() > 0 ) {
     item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
   }
-  if ( !item ) return;
+  if ( !item ) {
+    return;
+  }
 
   mIdentityDialog = new IdentityDialog( this );
   mIdentityDialog->setIdentity( item->identity() );
@@ -474,7 +480,7 @@ void IdentityPage::slotModifyIdentity() {
   if ( mIdentityDialog->exec() == QDialog::Accepted ) {
     mIdentityDialog->updateIdentity( item->identity() );
     item->redisplay();
-    emit changed(true);
+    emit changed( true );
   }
 
   delete mIdentityDialog;
@@ -483,37 +489,43 @@ void IdentityPage::slotModifyIdentity() {
 
 void IdentityPage::slotRemoveIdentity()
 {
-  assert( !mIdentityDialog );
+  Q_ASSERT( !mIdentityDialog );
 
-  KPIM::IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager *im = kmkernel->identityManager();
   kFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
-  IdentityListViewItem * item = 0L;
-  if (mIdentityList->selectedItems().size() > 0) {
+  IdentityListViewItem *item = 0;
+  if ( mIdentityList->selectedItems().size() > 0 ) {
     item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
   }
-  if ( !item ) return;
+  if ( !item ) {
+    return;
+  }
 
-  QString msg = i18n("<qt>Do you really want to remove the identity named "
-                     "<b>%1</b>?</qt>", item->identity().identityName() );
+  QString msg = i18n( "<qt>Do you really want to remove the identity named "
+                      "<b>%1</b>?</qt>", item->identity().identityName() );
   if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
-   KGuiItem(i18n("&Remove"),"edit-delete") ) == KMessageBox::Continue )
+                                          KGuiItem(i18n("&Remove"),
+                                          "edit-delete") )
+      == KMessageBox::Continue ) {
     if ( im->removeIdentity( item->identity().identityName() ) ) {
       delete item;
-      if (mIdentityList->currentItem()) {
+      if ( mIdentityList->currentItem() ) {
         mIdentityList->currentItem()->setSelected( true );
       }
       refreshList();
     }
+  }
 }
 
-void IdentityPage::slotRenameIdentity() {
-  assert( !mIdentityDialog );
+void IdentityPage::slotRenameIdentity()
+{
+  Q_ASSERT( !mIdentityDialog );
 
-  QTreeWidgetItem * item = 0L;
+  QTreeWidgetItem *item = 0;
 
-  if (mIdentityList->selectedItems().size() > 0) {
+  if ( mIdentityList->selectedItems().size() > 0 ) {
     item = mIdentityList->selectedItems()[0];
   }
   if ( !item ) return;
@@ -521,62 +533,70 @@ void IdentityPage::slotRenameIdentity() {
   mIdentityList->editItem( item );
 }
 
-void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const QString& text ) {
+void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const QString &text )
+{
   if ( !item ) return;
 
   QString newName = text.trimmed();
   if ( !newName.isEmpty() &&
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
-    KPIM::Identity & ident = item->identity();
+    KPIM::Identity &ident = item->identity();
     ident.setIdentityName( newName );
-    emit changed(true);
+    emit changed( true );
   }
   item->redisplay();
 }
 
-void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint& pos ) {
-  QMenu * menu = new QMenu( this );
-  menu->addAction( i18n("Add..."), this, SLOT(slotNewIdentity()) );
+void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &pos )
+{
+  QMenu *menu = new QMenu( this );
+  menu->addAction( i18n( "Add..." ), this, SLOT( slotNewIdentity() ) );
   if ( item ) {
-    menu->addAction( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
-    if ( mIdentityList->topLevelItemCount() > 1 )
-      menu->addAction( i18n("Remove"), this, SLOT(slotRemoveIdentity()) );
-    if ( !item->identity().isDefault() )
-      menu->addAction( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
+    menu->addAction( i18n( "Modify..." ), this, SLOT( slotModifyIdentity() ) );
+    if ( mIdentityList->topLevelItemCount() > 1 ) {
+      menu->addAction( i18n( "Remove" ), this, SLOT( slotRemoveIdentity() ) );
+    }
+    if ( !item->identity().isDefault() ) {
+      menu->addAction( i18n( "Set as Default" ), this, SLOT( slotSetAsDefault() ) );
+    }
   }
   menu->exec( pos );
   delete menu;
 }
 
 
-void IdentityPage::slotSetAsDefault() {
-  assert( !mIdentityDialog );
+void IdentityPage::slotSetAsDefault()
+{
+  Q_ASSERT( !mIdentityDialog );
 
-  IdentityListViewItem * item = 0L;
-  if (mIdentityList->selectedItems().size() > 0) {
+  IdentityListViewItem *item = 0;
+  if ( mIdentityList->selectedItems().size() > 0 ) {
     item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
   }
-  if ( !item ) return;
+  if ( !item ) {
+    return;
+  }
 
-  KPIM::IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager *im = kmkernel->identityManager();
   im->setAsDefault( item->identity().identityName() );
   refreshList();
 }
 
-void IdentityPage::refreshList() {
-  for (int i = 0; i < mIdentityList->topLevelItemCount(); ++i) {
-    IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( mIdentityList->topLevelItem(i) );
-    if (item) {
+void IdentityPage::refreshList() 
+{
+  for ( int i = 0; i < mIdentityList->topLevelItemCount(); ++i ) {
+    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIdentityList->topLevelItem( i ) );
+    if ( item ) {
       item->redisplay();
     }
   }
-  emit changed(true);
+  emit changed( true );
 }
 
 void IdentityPage::slotIdentitySelectionChanged()
 {
-  IdentityListViewItem *item = 0L;
-  if (mIdentityList->selectedItems().size() >  0) {
+  IdentityListViewItem *item = 0;
+  if ( mIdentityList->selectedItems().size() >  0 ) {
     item = dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItems()[0] );
   }
 
@@ -586,9 +606,11 @@ void IdentityPage::slotIdentitySelectionChanged()
   mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
-void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
+void IdentityPage::slotUpdateTransportCombo( const QStringList &sl )
 {
-  if ( mIdentityDialog ) mIdentityDialog->slotUpdateTransportCombo( sl );
+  if ( mIdentityDialog ) {
+    mIdentityDialog->slotUpdateTransportCombo( sl );
+  }
 }
 
 
