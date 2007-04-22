@@ -299,7 +299,8 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 //-----------------------------------------------------------------------------
 const QTextCodec* KMMsgBase::codecForName(const QByteArray& _str)
 {
-  if (_str.isEmpty()) return 0;
+  if (_str.isEmpty()) 
+    return 0;
   QByteArray codec = _str;
   kAsciiToLower(codec.data());
   return KGlobal::charsets()->codecForName(codec);
@@ -395,6 +396,7 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
 
   if ( str.find( "=?" ) < 0 ) {
     if ( !prefCharset.isEmpty() ) {
+      kAsciiToLower(prefCharset.data());
       if ( prefCharset == "us-ascii" ) {
         // isn`t this foolproof?
         return KMMsgBase::codecForName( "utf-8" )->toUnicode( str );
