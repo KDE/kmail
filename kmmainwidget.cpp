@@ -3100,23 +3100,23 @@ void KMMainWidget::setupActions()
   mStatusMenu->addSeparator();
 
   mToggleSpamAction =
-    new KToggleAction( KIcon( "mail-mark-junk" ),
-                       i18n("Mark Message as &Spam"), this );
+    new KToggleAction( KIcon( "mail_spam" ),
+                       i18n("Classify Message as &Spam"), this );
   actionCollection()->addAction( "status_spam", mToggleSpamAction );
   connect( mToggleSpamAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusSpam()) );
   mToggleSpamAction->
-    setCheckedState( KGuiItem( i18n("Remove &Spam Message Mark") ) );
+    setCheckedState( KGuiItem( i18n("Remove &Spam Classification") ) );
   mToggleSpamAction->setIconText( i18n( "Spam" ) );
   mStatusMenu->addAction( mToggleSpamAction );
 
-  mToggleHamAction = new KToggleAction( KIcon( "mail-mark-notjunk" ),
-                                        i18n("Mark Message as &Ham"), this );
+  mToggleHamAction = new KToggleAction( KIcon( "mail_ham" ),
+                                        i18n("Classify Message as &Ham"), this );
   actionCollection()->addAction( "status_ham", mToggleHamAction );
   connect( mToggleHamAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusHam()) );
   mToggleHamAction->
-    setCheckedState( KGuiItem( i18n("Remove &Ham Message Mark") ) );
+    setCheckedState( KGuiItem( i18n("Remove &Ham Classification") ) );
   mToggleHamAction->setIconText( i18n( "Ham" ) );
   mStatusMenu->addAction( mToggleHamAction );
 
