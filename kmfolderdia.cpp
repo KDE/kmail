@@ -734,7 +734,7 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog *dlg,
   topLayout->addWidget( mWidget );
 
   QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
-  mCopyGlobal = new KPushButton( i18n("&Copy global templates"), this );
+  mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), this );
   mCopyGlobal->setEnabled( false );
   btns->addWidget( mCopyGlobal );
 

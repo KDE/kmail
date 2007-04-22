@@ -287,9 +287,9 @@ void AntiSpamWizard::accept()
     }
     KMSearchPattern* spamFilterPattern = spamFilter->pattern();
     if ( replaceExistingFilters )
-      spamFilterPattern->setName( i18n( "Spam handling" ) );
+      spamFilterPattern->setName( i18n( "Spam Handling" ) );
     else
-      spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
+      spamFilterPattern->setName( uniqueNameFor( i18n( "Spam Handling" ) ) );
     spamFilterPattern->setOp( KMSearchPattern::OpOr );
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
           it != mToolList.end(); ++it ) {
@@ -390,9 +390,9 @@ void AntiSpamWizard::accept()
 
     KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
     if ( replaceExistingFilters )
-      classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
+      classSpamFilterPattern->setName( i18n( "Classify as Spam" ) );
     else
-      classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
+      classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as Spam" ) ) );
     classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
     classSpamFilter->setApplyOnOutbound( false);
@@ -432,9 +432,9 @@ void AntiSpamWizard::accept()
     }
     KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
     if ( replaceExistingFilters )
-      classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
+      classHamFilterPattern->setName( i18n( "Classify as NOT Spam" ) );
     else
-      classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
+      classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT Spam" ) ) );
     classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
     classHamFilter->setApplyOnOutbound( false);
@@ -585,7 +585,7 @@ void AntiSpamWizard::slotBuildSummary()
         sortFilterOnExistance( (*it).getFilterName(), newFilters, replaceFilters );
       }
     }
-    sortFilterOnExistance( i18n( "Spam handling" ), newFilters, replaceFilters );
+    sortFilterOnExistance( i18n( "Spam Handling" ), newFilters, replaceFilters );
 
     // The need for a andling of status "probably spam" depends on the tools chosen
     if ( mSpamRulesPage->moveUnsureSelected() ) {
@@ -606,9 +606,9 @@ void AntiSpamWizard::slotBuildSummary()
     }
 
     // Manual classification via toolbar icon / manually applied filter action
-    sortFilterOnExistance( i18n( "Classify as spam" ),
+    sortFilterOnExistance( i18n( "Classify as Spam" ),
                             newFilters, replaceFilters );
-    sortFilterOnExistance( i18n( "Classify as NOT spam" ),
+    sortFilterOnExistance( i18n( "Classify as NOT Spam" ),
                             newFilters, replaceFilters );
 
     // Show the filters in the summary

@@ -2737,7 +2737,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
-  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order" ), this );
+  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
   connect( completionOrderBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureCompletionOrder() ) );
   hlay->addWidget( completionOrderBtn );

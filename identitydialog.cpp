@@ -424,7 +424,7 @@ namespace KMail {
     mWidget->setEnabled( false );
     vlay->addWidget( mWidget );
     QHBoxLayout *btns = new QHBoxLayout( vlay, spacingHint() );
-    mCopyGlobal = new KPushButton( i18n("&Copy global templates"), tab );
+    mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), tab );
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
     connect( mCustom, SIGNAL( toggled( bool ) ),
