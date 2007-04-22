@@ -333,6 +333,7 @@ void AccountWizard::setupServerInformationPage()
 
   // Local delivery
   mLocalDelivery = new QCheckBox( i18n( "Use local delivery" ), page );
+  mLocalDelivery->setWhatsThis( i18n( "If your local host acts as a sending mail server (SMTP), you may activate this." ) );
   layout->addWidget( mLocalDelivery, 4, 0 );
 
   connect( mLocalDelivery, SIGNAL( toggled( bool ) ),
