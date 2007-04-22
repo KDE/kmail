@@ -395,18 +395,22 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
   }
 
   if ( str.find( "=?" ) < 0 ) {
-    if ( !prefCharset.isEmpty() ) {
-      kAsciiToLower(prefCharset.data());
-      if ( prefCharset == "us-ascii" ) {
+    QByteArray charsetName;
+    if ( ! prefCharset.isEmpty() ) {
+      if ( kasciistricmp( prefCharset.data(), "us-ascii" ) ) {
         // isn`t this foolproof?
-        return KMMsgBase::codecForName( "utf-8" )->toUnicode( str );
+        charsetName = "utf-8";
       } else {
-        return KMMsgBase::codecForName( prefCharset )->toUnicode( str );
+        charsetName = prefCharset;
       }
     } else {
-    return KMMsgBase::codecForName( GlobalSettings::self()->
-                                    fallbackCharacterEncoding().latin1() )->toUnicode( str );
+      charsetName = GlobalSettings::self()->fallbackCharacterEncoding().latin1();
     }
+    const QTextCodec *codec = KMMsgBase::codecForName( charsetName );
+    if ( ! codec ) {
+      codec = kmkernel->networkCodec();
+    }
+    return codec->toUnicode( str );
   }
 
   QString result;
