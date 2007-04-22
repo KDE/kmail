@@ -42,7 +42,7 @@ KMMainWin::KMMainWin(QWidget *)
   actionCollection()->addAction("new_mail_client", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
 
-  mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
+  mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
   setupStatusBar();

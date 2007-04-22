@@ -195,8 +195,8 @@
   <Separator/>
   <Action name="move_to_trash" />
   <Separator/>
-  <Action name="antiSpamWizard"/>
-  <Action name="antiVirusWizard"/>
+  <Action name="status_spam"/>
+  <Action name="status_ham"/>
   <Separator/>
   <ActionList name="toolbar_filter_actions" />
  </ToolBar>

@@ -37,7 +37,6 @@
 #include "aboutdata.h"
 #include "kmfolder.h"
 #include "accountmanager.h"
-//Added by qt3to4:
 #include <QPixmap>
 #include <QVBoxLayout>
 using KMail::AccountManager;
@@ -124,7 +123,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   setXMLFile( "kmail_part.rc" );
   kmkernel->inboxFolder()->close();
 #else
-  mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
+  mainWidget = new KMMainWidget( canvas, this, actionCollection(),
                                  KGlobal::config().data());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
