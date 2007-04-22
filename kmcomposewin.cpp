@@ -1116,12 +1116,14 @@ void KMComposeWin::setupActions(void)
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu  = new KActionMenu(KIcon( "mail-send"), i18n("&Send Mail Via"), this);
+    actActionNowMenu->setIconText( i18n( "Send" ) );
     actionCollection()->addAction("send_default_via", actActionNowMenu );
 
     action  = new KAction(KIcon("queue"), i18n("Send &Later"), this);
     actionCollection()->addAction("send_alternative", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendLater()));
     actActionLaterMenu  = new KActionMenu(KIcon("queue"), i18n("Send &Later Via"), this);
+    actActionLaterMenu->setIconText( i18n( "Queue" ) );
     actionCollection()->addAction("send_alternative_via", actActionLaterMenu );
 
   }
@@ -1332,6 +1334,7 @@ void KMComposeWin::setupActions(void)
   actionCollection()->addAction("attach_my_public_key", mAttachMPK );
   connect(mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
   action  = new KAction(KIcon("attach"), i18n("&Attach File..."), this);
+  action->setIconText( i18n( "Attach" ) );
   actionCollection()->addAction("attach", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAttachFile()));
   mAttachRemoveAction  = new KAction(i18n("&Remove Attachment"), this);
@@ -1366,8 +1369,10 @@ void KMComposeWin::setupActions(void)
   }
 
   mEncryptAction  = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"), this);
+  mEncryptAction->setIconText( i18n( "Encrypt" ) );
   actionCollection()->addAction("encrypt_message", mEncryptAction );
   mSignAction  = new KToggleAction(KIcon("signature"), i18n("&Sign Message"), this);
+  mSignAction->setIconText( i18n( "Sign" ) );
   actionCollection()->addAction("sign_message", mSignAction );
   // get PGP user id for the chosen identity
   const KPIM::Identity & ident =
