@@ -32,8 +32,9 @@
 #include <kglobal.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
-#include <k3resolver.h>
 #include <kconfiggroup.h>
+
+#include <QHostInfo>
 
 #include <errno.h>
 #include <sys/types.h>
@@ -143,7 +144,7 @@ void lockOrDie() {
   const QString oldHostName = group.readEntry("hostname");
   const QString oldAppName = group.readEntry( "appName", appName );
   const QString oldProgramName = group.readEntry( "programName", programName );
-  const QString hostName = KNetwork::KResolver::localHostName();
+  const QString hostName = QHostInfo::localHostName();
   bool first_instance = false;
   if ( oldPid == -1 ) {
     first_instance = true;
