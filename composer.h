@@ -28,45 +28,46 @@ namespace GpgME {
 
 namespace KMail {
 
-  class Composer;
+class Composer;
 
-  Composer * makeComposer( KMMessage * msg=0, uint identity=0 );
+Composer *makeComposer( KMMessage *msg=0, uint identity=0 );
 
-  class Composer : public KMail::SecondaryWindow {
-    Q_OBJECT
+class Composer : public KMail::SecondaryWindow
+{
+  Q_OBJECT
   protected:
-    Composer( const char * name=0 ) : KMail::SecondaryWindow( name ) {}
+    Composer( const char *name=0 ) : KMail::SecondaryWindow( name ) {}
+
   public: // mailserviceimpl
     /**
      * From MailComposerIface
      */
     virtual void send( int how ) = 0;
-    virtual void addAttachment( KUrl url, QString comment ) = 0;
-    virtual void addAttachment( const QString & name,
-                                const QByteArray & cte,
-                                const QByteArray & data,
-                                const QByteArray & type,
-                                const QByteArray & subType,
-                                const QByteArray & paramAttr,
-                                const QString & paramValue,
-                                const QByteArray & contDisp) = 0;
+    virtual void addAttachment( const KUrl &url, const QString &comment ) = 0;
+    virtual void addAttachment( const QString &name,
+                                const QByteArray &cte,
+                                const QByteArray &data,
+                                const QByteArray &type,
+                                const QByteArray &subType,
+                                const QByteArray &paramAttr,
+                                const QString &paramValue,
+                                const QByteArray &contDisp ) = 0;
   public: // kmcommand
-    virtual void setBody( QString body ) = 0;
-
+    virtual void setBody( const QString &body ) = 0;
 
   public: // kmkernel, kmcommands, callback
     /**
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMsg( KMMessage * newMsg, bool mayAutoSign=true,
-                         bool allowDecryption=false, bool isModified=false) = 0;
+    virtual void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
+                         bool allowDecryption=false, bool isModified=false ) = 0;
 
   public: // kmkernel
     /**
      * Set the filename which is used for autosaving.
      */
-    virtual void setAutoSaveFilename( const QString & filename ) = 0;
+    virtual void setAutoSaveFilename( const QString &filename ) = 0;
 
   public: // kmkernel, callback
     /**
@@ -80,13 +81,13 @@ namespace KMail {
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-    virtual void setFolder( KMFolder * aFolder ) = 0;
+    virtual void setFolder( KMFolder *aFolder ) = 0;
 
   public: // kmkernel, kmcommand, mailserviceimpl
     /**
      * Recode to the specified charset
      */
-    virtual void setCharset( const QByteArray & aCharset, bool forceDefault=false ) = 0;
+    virtual void setCharset( const QByteArray &aCharset, bool forceDefault=false ) = 0;
 
   public: // kmcommand
     /**
@@ -117,11 +118,12 @@ namespace KMail {
        simply be able to confirm the message and send it.
     */
     virtual void slotSetAlwaysSend( bool bAlwaysSend ) = 0;
+
   public slots: // kmkernel, callback
     /**
      * Switch wordWrap on/off
      */
-    virtual void slotWordWrapToggled(bool) = 0;
+    virtual void slotWordWrapToggled( bool ) = 0;
 
   public slots: // kmkernel
     virtual void autoSaveMessage() = 0;
@@ -133,8 +135,8 @@ namespace KMail {
     /**
      * Add an attachment to the list.
      */
-    virtual void addAttach( const KMMessagePart * msgPart ) = 0;
-  };
+    virtual void addAttach( const KMMessagePart *msgPart ) = 0;
+};
 
 }
 
