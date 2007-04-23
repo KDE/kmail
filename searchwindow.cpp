@@ -797,7 +797,7 @@ void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &
     // FIXME is this ever unGetMsg()'d?
     if (!message())
         return;
-    Q3PopupMenu *menu = new Q3PopupMenu(this);
+    QMenu *menu = new QMenu(this);
     updateContextMenuActions();
 
     mMenuToFolder.clear();

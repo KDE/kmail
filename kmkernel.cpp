@@ -468,7 +468,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
   if ( !body.isEmpty() ) {
-    msg->setBody(body.utf8());
+    msg->setBody(body.toUtf8());
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
 			   "", false, false, false, false );
