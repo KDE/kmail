@@ -843,12 +843,12 @@ void FolderStorage::msgStatusChanged( const MessageStatus& oldStatus,
   int oldUnread = 0;
   int newUnread = 0;
 
-  if ((oldStatus.isUnread() || oldStatus.isNew()) &&
-      (folder() == kmkernel->outboxFolder()))
+  if ( ( oldStatus.isUnread() || oldStatus.isNew() ) ) {
     oldUnread = 1;
-  if ((newStatus.isUnread() || newStatus.isNew()) &&
-      (folder() == kmkernel->outboxFolder()))
+  }
+  if ( ( newStatus.isUnread() || newStatus.isNew() ) ) {
     newUnread = 1;
+  }
   int deltaUnread = newUnread - oldUnread;
 
   mDirtyTimer->start(mDirtyTimerInterval);
