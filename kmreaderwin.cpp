@@ -1,6 +1,21 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
-// kmreaderwin.cpp
-// Author: Markus Wuebben <markus.wuebben@kde.org>
+/* -*- mode: C++; c-file-style: "gnu" -*-
+  This file is part of KMail, the KDE mail client.
+  Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+*/
 
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
@@ -2193,9 +2208,9 @@ void KMReaderWin::openAttachment( int id, const QString & name )
                             "your system's security.",
                          filenameText );
   const int choice = KMessageBox::questionYesNoCancel( this, text,
-      i18n("Open Attachment?"), KStandardGuiItem::saveAs(), 
+      i18n("Open Attachment?"), KStandardGuiItem::saveAs(),
       KGuiItem(open_text), KStandardGuiItem::cancel(),
-      QString::fromLatin1("askSave") + mimetype->name() ); 
+      QString::fromLatin1("askSave") + mimetype->name() );
 
   if( choice == KMessageBox::Yes ) {		// Save
     mAtmUpdate = true;
