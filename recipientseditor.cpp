@@ -835,8 +835,10 @@ void SideWidget::pickRecipient()
 RecipientsEditor::RecipientsEditor( QWidget *parent )
   : QWidget( parent ), mModified( false )
 {
-  QBoxLayout *topLayout = new QHBoxLayout( this );
+  QBoxLayout *topLayout = new QHBoxLayout();
   topLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->setMargin( 0 );
+  setLayout( topLayout );
 
   mRecipientsView = new RecipientsView( this );
   topLayout->addWidget( mRecipientsView );
