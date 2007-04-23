@@ -113,11 +113,29 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
                               const QList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
+
+  /* createMDN requires Return-Path and Disposition-Notification-To
+   * if it is not set in the message we assume that the notification should go to the
+   * sender
+   */
+  const QString returnPath = msg->headerField( "Return-Path" );
+  const QString dispNoteTo = msg->headerField( "Disposition-Notification-To" );
+  if ( returnPath.isEmpty() )
+    msg->setHeaderField( "Return-Path", msg->from() );
+  if ( dispNoteTo.isEmpty() )
+    msg->setHeaderField( "Disposition-Notification-To", msg->from() );
+
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
     kDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
     //delete mdn;
   }
+
+  //restore orignial header
+  if ( returnPath.isEmpty() )
+    msg->removeHeaderField( "Return-Path" );
+  if ( dispNoteTo.isEmpty() )
+    msg->removeHeaderField( "Disposition-Notification-To" );
 }
 
 

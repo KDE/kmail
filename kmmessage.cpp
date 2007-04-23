@@ -1414,27 +1414,30 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     s = MDN::SentManually;
   }
 
-  if ( mode == 1 ) { // ask
-    if ( !allowGUI ) return 0; // don't setMDNSentState here!
-    mode = requestAdviceOnMDN( "mdnNormalAsk" );
-    s = MDN::SentManually; // asked user
-  }
+  if ( a != KMime::MDN::AutomaticAction ) { 
+    //TODO: only ingore user settings for AutomaticAction if requested 
+    if ( mode == 1 ) { // ask
+      if ( !allowGUI ) return 0; // don't setMDNSentState here!
+      mode = requestAdviceOnMDN( "mdnNormalAsk" );
+      s = MDN::SentManually; // asked user
+    }
 
-  switch ( mode ) {
-  case 0: // ignore:
-    setMDNSentState( KMMsgMDNIgnore );
-    return 0;
-  default:
-  case 1:
-    kFatal(5006) << "KMMessage::createMDN(): The \"ask\" mode should "
-		  << "never appear here!" << endl;
-    break;
-  case 2: // deny
-    d = MDN::Denied;
-    m.clear();
-    break;
-  case 3:
-    break;
+    switch ( mode ) {
+      case 0: // ignore:
+        setMDNSentState( KMMsgMDNIgnore );
+        return 0;
+      default:
+      case 1:
+        kFatal(5006) << "KMMessage::createMDN(): The \"ask\" mode should "
+                                                  << "never appear here!" << endl;
+        break;
+      case 2: // deny
+        d = MDN::Denied;
+        m.clear();
+        break;
+      case 3:
+        break;
+    }
   }
 
 
