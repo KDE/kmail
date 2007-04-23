@@ -1,8 +1,22 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
-// kmfilterdlg.cpp
-// Author: Marc Mutz <Marc@Mutz.com>
-// based on work by Stefan Taferner <taferner@kde.org>
-// This code is under the GPL
+/*
+  Filter Dialog
+  Author: Marc Mutz <Marc@Mutz.com>
+  based upon work by Stefan Taferner <taferner@kde.org>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+*/
 
 #include <config.h>
 #include "kmfilterdlg.h"
@@ -117,9 +131,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     setCaption( i18n("Filter Rules") );
   setButtons( Help|Ok|Apply|Cancel );
   setModal( false );
-#ifdef Q_OS_UNIX  
+#ifdef Q_OS_UNIX
   KWM::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
-#endif  
+#endif
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget( this );
