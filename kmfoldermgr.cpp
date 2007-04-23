@@ -323,7 +323,6 @@ void KMFolderMgr::remove(KMFolder* aFolder)
     for ( it = (*aFolder->child()).begin();
         ( (node = *it) && it != (*aFolder->child()).end() ); ++it )
     {
-      ++it;
       if (node->isDir()) continue;
       KMFolder *folder = static_cast<KMFolder*>(node);
       remove(folder);
