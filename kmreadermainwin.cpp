@@ -338,8 +338,6 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
-  connect( mForwardActionMenu, SIGNAL( activated() ), this,
-           SLOT( slotForwardInlineMsg() ) );
       mForwardInlineAction = new KAction( i18n("&Inline..."),
                                       "mail_forward", SHIFT+Key_F, this,
                                       SLOT(slotForwardInlineMsg()),
@@ -367,9 +365,17 @@ void KMReaderMainWin::setupAccel()
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
       mForwardActionMenu->insert( mForwardInlineAction );
       mForwardActionMenu->insert( mForwardAttachedAction );
+      mForwardInlineAction->setShortcut( Key_F );
+      mForwardAttachedAction->setShortcut( SHIFT+Key_F );
+      connect( mForwardActionMenu, SIGNAL(activated()), this,
+               SLOT(slotForwardInlineMsg()) );
   } else {
-        mForwardActionMenu->insert( mForwardAttachedAction );
-        mForwardActionMenu->insert( mForwardInlineAction );
+      mForwardActionMenu->insert( mForwardAttachedAction );
+      mForwardActionMenu->insert( mForwardInlineAction );
+      mForwardInlineAction->setShortcut( SHIFT+Key_F );
+      mForwardAttachedAction->setShortcut( Key_F );
+      connect( mForwardActionMenu, SIGNAL(activated()), this,
+               SLOT(slotForwardAttachedMsg()) );
   }
 
   mForwardActionMenu->insert( mForwardDigestAction );

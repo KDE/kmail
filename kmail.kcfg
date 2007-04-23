@@ -241,7 +241,7 @@
 
     <group name="Composer">
       <entry name="ForwardingInlineByDefault" type="Bool">
-        <default>true</default>
+        <default>false</default>
         <label>Forward Inline As Default.</label>
       </entry>
       <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
