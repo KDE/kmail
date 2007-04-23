@@ -395,6 +395,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
 
   QColor cdisabled = KGlobalSettings::inactiveTextColor();
   if ( headers->isMessageCut( msgSerNum() ) ) {
+    font.setItalic( true );
     color = &cdisabled;
   }
 
