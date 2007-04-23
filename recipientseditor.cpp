@@ -745,6 +745,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
   topLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->setMargin( 0 );
   topLayout->addStretch( 1 );
 
   mTotalLabel = new QLabel( this );
