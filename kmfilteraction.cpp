@@ -198,34 +198,24 @@ KMFilterActionWithString::KMFilterActionWithString( const char* aName, const QSt
 
 QWidget* KMFilterActionWithString::createParamWidget( QWidget* parent ) const
 {
-  QWidget *w = new QWidget( parent );
-  QHBoxLayout *hbl = new QHBoxLayout( w );
-  QLineEdit *le = new KLineEdit(w);
-  le->setObjectName( "ledit" );
+  QLineEdit *le = new KLineEdit(parent);
   le->setText( mParameter );
-  hbl->addWidget( le );
-  return w;
+  return le;
 }
 
 void KMFilterActionWithString::applyParamWidgetValue( QWidget* paramWidget )
 {
-  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
-  Q_ASSERT( le );
-  mParameter = le->text();
+  mParameter = ((QLineEdit*)paramWidget)->text();
 }
 
 void KMFilterActionWithString::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
-  Q_ASSERT( le );
-  le->setText( mParameter );
+  ((QLineEdit*)paramWidget)->setText( mParameter );
 }
 
 void KMFilterActionWithString::clearParamWidget( QWidget* paramWidget ) const
 {
-  QLineEdit *le = paramWidget->findChild<QLineEdit*>("ledit");
-  Q_ASSERT( le );
-  le->clear();
+  ((QLineEdit*)paramWidget)->clear();
 }
 
 void KMFilterActionWithString::argsFromString( const QString argsStr )
@@ -258,37 +248,27 @@ KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, c
 
 QWidget* KMFilterActionWithStringList::createParamWidget( QWidget* parent ) const
 {
-  QWidget *w = new QWidget( parent );
-  QHBoxLayout *hbl = new QHBoxLayout( w );
-  QComboBox *cb = new QComboBox( w );
-  cb->setObjectName( "combo" );
+  QComboBox *cb = new QComboBox( parent );
   cb->setEditable( false );
   cb->addItems( mParameterList );
-  hbl->addWidget( cb );
-  setParamWidgetValue( w );
-  return w;
+  setParamWidgetValue( cb );
+  return cb;
 }
 
 void KMFilterActionWithStringList::applyParamWidgetValue( QWidget* paramWidget )
 {
-  QComboBox * cb = paramWidget->findChild<QComboBox*>( "combo" );
-  Q_ASSERT( cb );
-  mParameter = cb->currentText();
+  mParameter = ((QComboBox*)paramWidget)->currentText();
 }
 
 void KMFilterActionWithStringList::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  QComboBox * cb = paramWidget->findChild<QComboBox*>( "combo" );
-  Q_ASSERT( cb );
   int idx = mParameterList.indexOf( mParameter );
-  cb->setCurrentIndex( idx >= 0 ? idx : 0 );
+  ((QComboBox*)paramWidget)->setCurrentIndex( idx >= 0 ? idx : 0 );
 }
 
 void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) const
 {
-  QComboBox * cb = paramWidget->findChild<QComboBox*>( "combo" );
-  Q_ASSERT( cb );
-  cb->setCurrentIndex(0);
+  ((QComboBox*)paramWidget)->setCurrentIndex(0);
 }
 
 void KMFilterActionWithStringList::argsFromString( const QString argsStr )
@@ -737,34 +717,30 @@ KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 
 QWidget * KMFilterActionIdentity::createParamWidget( QWidget * parent ) const
 {
-  QWidget *w = new QWidget( parent );
-  QHBoxLayout *hbl = new QHBoxLayout( w );
-  KPIM::IdentityCombo * ic = new KPIM::IdentityCombo( kmkernel->identityManager(), w );
-  ic->setObjectName( "idCombo" );
+  KPIM::IdentityCombo * ic = new KPIM::IdentityCombo( kmkernel->identityManager(), parent );
   ic->setCurrentIdentity( mParameter );
-  hbl->addWidget( ic );
-  return w;
+  return ic;
 }
 
 void KMFilterActionIdentity::applyParamWidgetValue( QWidget * paramWidget )
 {
-  KPIM::IdentityCombo * ic = paramWidget->findChild<KPIM::IdentityCombo*>( "idCombo" );
-  Q_ASSERT( ic );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  assert( ic );
   mParameter = ic->currentIdentity();
 }
 
 void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 {
-  KPIM::IdentityCombo * ic = paramWidget->findChild<KPIM::IdentityCombo*>( "idCombo" );
-  Q_ASSERT( ic );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  assert( ic );
   ic->setCurrentIndex( 0 );
   //ic->setCurrentIdentity( kmkernel->identityManager()->defaultIdentity() );
 }
 
 void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
 {
-  KPIM::IdentityCombo * ic = paramWidget->findChild<KPIM::IdentityCombo*>( "idCombo" );
-  Q_ASSERT( ic );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  assert( ic );
   ic->setCurrentIdentity( mParameter );
 }
 
@@ -1006,15 +982,11 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
 
 QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
 {
-  QWidget *w = new QWidget( parent );
-  QHBoxLayout *hbl = new QHBoxLayout( w );
-  QComboBox *cb = new QComboBox( w );
-  cb->setObjectName( "combo" );
+  QComboBox *cb = new QComboBox( parent );
   cb->setEditable( true );
   cb->setInsertPolicy( QComboBox::AtBottom );
-  hbl->addWidget( cb );
-  setParamWidgetValue( w );
-  return w;
+  setParamWidgetValue( cb );
+  return cb;
 }
 
 KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) const
@@ -1028,7 +1000,7 @@ KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) c
 
 void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  QComboBox * cb = paramWidget->findChild<QComboBox*>( "combo" );
+  QComboBox * cb = dynamic_cast<QComboBox*>(paramWidget);
   Q_ASSERT( cb );
 
   int idx = mParameterList.indexOf( mParameter );
@@ -1095,6 +1067,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QWidget *w = new QWidget( parent );
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
+  hbl->setMargin( 0 );
   QComboBox *cb = new QComboBox( w );
   cb->setObjectName( "combo" );
   cb->setEditable( true );
@@ -1242,6 +1215,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   QWidget *w = new QWidget( parent );
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
+  hbl->setMargin( 0 );
 
   QComboBox *cb = new QComboBox( w );
   cb->setEditable( true );

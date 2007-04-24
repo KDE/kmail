@@ -45,6 +45,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   setObjectName( name );
   QHBoxLayout *hbl = new QHBoxLayout(this);
   hbl->setSpacing(4);
+  hbl->setMargin( 0 );
   mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString() ,this );
@@ -85,6 +86,7 @@ KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
 {
     setObjectName( name );
     QHBoxLayout *lay1 = new QHBoxLayout( this );
+    lay1->setMargin( 0 );
     m_playButton = new QPushButton( this );
     m_playButton->setObjectName( "m_playButton" );
     m_playButton->setIcon( SmallIconSet( "arrow-right" ) );
