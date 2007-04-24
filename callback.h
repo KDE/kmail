@@ -57,7 +57,7 @@ public:
 
   /** Mail a message */
   bool mailICal( const QString& to, const QString iCal,
-                 const QString& subject ) const;
+                 const QString& subject, bool delMessage = true ) const;
 
   /** Get the receiver of the mail */
   QString receiver() const;

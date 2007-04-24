@@ -50,13 +50,13 @@
 using namespace KMail;
 
 
-Callback::Callback( KMMessage* msg, KMReaderWin* readerWin ) 
+Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
 }
 
 bool Callback::mailICal( const QString& to, const QString iCal,
-                         const QString& subject ) const
+                         const QString& subject, bool delMessage ) const
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
 
@@ -68,9 +68,11 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   msg->setTo( to );
   msg->setBody( iCal.utf8() );
   msg->setFrom( receiver() );
-  /* We want the triggering mail to be moved to the trash once this one
-   * has been sent successfully. Set a link header which accomplishes that. */
-  msg->link( mMsg, KMMsgStatusDeleted );
+
+  if ( delMessage )
+    /* We want the triggering mail to be moved to the trash once this one
+    * has been sent successfully. Set a link header which accomplishes that. */
+    msg->link( mMsg, KMMsgStatusDeleted );
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
