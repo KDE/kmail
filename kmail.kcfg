@@ -96,7 +96,7 @@
           <choice name="MB"/>
           <choice name="GB"/>
         </choices>
-        <default>KB</default>
+        <default>MB</default>
       </entry>
     </group>
 
