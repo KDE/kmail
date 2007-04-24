@@ -299,8 +299,8 @@ void KMCommand::transferSelectedMsgs()
     mProgressDialog = new KProgressDialog(mParent,
       i18n("Please wait"),
       i18np("Please wait while the message is transferred",
-        "Please wait while the %1 messages are transferred", mMsgList.count()),
-      true);
+        "Please wait while the %1 messages are transferred", mMsgList.count()));
+    mProgressDialog->setModal(true);
     mProgressDialog->setMinimumDuration(1000);
   }
   QList<KMMsgBase*>::const_iterator it;
