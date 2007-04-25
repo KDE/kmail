@@ -24,19 +24,12 @@
 #ifndef RECIPIENTSEDITOR_H
 #define RECIPIENTSEDITOR_H
 
-#include <QWidget>
-#include <q3scrollview.h>
-#include <QPointer>
-#include <QLineEdit>
-#include <QToolTip>
-//Added by qt3to4:
-#include <QLabel>
+#include <QComboBox>
 #include <QList>
-#include <QKeyEvent>
-#include <QResizeEvent>
+#include <QScrollArea>
+#include <QToolTip>
 
 #include "kmlineeditspell.h"
-#include <QComboBox>
 
 class RecipientsPicker;
 
@@ -171,7 +164,7 @@ class RecipientLine : public QWidget
     bool mModified;
 };
 
-class RecipientsView : public Q3ScrollView
+class RecipientsView : public QScrollArea
 {
     Q_OBJECT
   public:
@@ -227,7 +220,7 @@ class RecipientsView : public Q3ScrollView
     void completionModeChanged( KGlobalSettings::Completion );
 
   protected:
-    void viewportResizeEvent( QResizeEvent * );
+    void resizeEvent( QResizeEvent * );
     void resizeView();
 
   protected slots:
@@ -246,6 +239,8 @@ class RecipientsView : public Q3ScrollView
     int mFirstColumnWidth;
     bool mModified;
     KGlobalSettings::Completion mCompletionMode;
+    QWidget *mPage;
+    QLayout *mTopLayout;
 };
 
 class RecipientsToolTip : public QToolTip

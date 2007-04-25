@@ -33,25 +33,16 @@
 
 #include <kpimutils/email.h>
 
-#include <kdebug.h>
-#include <kinputdialog.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
+#include <KDebug>
+#include <KLocale>
+#include <KMessageBox>
 
+#include <QKeyEvent>
 #include <QLayout>
 #include <QLabel>
-#include <q3scrollview.h>
-#include <QComboBox>
-#include <QTimer>
 #include <QPushButton>
-#include <q3stylesheet.h>
-#include <QKeyEvent>
-#include <QHBoxLayout>
-#include <QApplication>
 #include <QResizeEvent>
-#include <QVBoxLayout>
-#include <QTextDocument>
+#include <QTimer>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )
   : mEmail( email ), mType( type )
@@ -153,8 +144,11 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 RecipientLine::RecipientLine( QWidget *parent )
   : QWidget( parent ), mRecipientsCount( 0 ), mModified( false )
 {
+  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+
   QBoxLayout *topLayout = new QHBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
+  topLayout->setMargin( 0 );
 
   QStringList recipientTypes = Recipient::allTypeLabels();
 
@@ -324,17 +318,25 @@ void RecipientLine::setRemoveLineButtonEnabled( bool b )
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
-  : Q3ScrollView( parent ), mCurDelLine( 0 ),
+  : QScrollArea( parent ), mCurDelLine( 0 ),
     mLineHeight( 0 ), mFirstColumnWidth( 0 ),
     mModified( false )
 {
   mCompletionMode = KGlobalSettings::completionMode();
-  setHScrollBarMode( AlwaysOff );
-  setLineWidth( 0 );
+
+  setWidgetResizable( true );
+  setFrameStyle( QFrame::NoFrame );
+
+  mPage = new QWidget;
+  mPage->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+  setWidget( mPage );
+
+  mTopLayout = new QVBoxLayout;
+  mTopLayout->setMargin( 0 );
+  mTopLayout->setSpacing( 0 );
+  mPage->setLayout( mTopLayout );
 
   addLine();
-  setResizePolicy( Q3ScrollView::Manual );
-  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 }
 
 RecipientLine *RecipientsView::activeLine()
@@ -345,7 +347,7 @@ RecipientLine *RecipientsView::activeLine()
 RecipientLine *RecipientsView::emptyLine()
 {
   RecipientLine *line;
-  Q_FOREACH( line , mLines ) {
+  foreach( line , mLines ) {
     if ( line->isEmpty() ) return line;
   }
 
@@ -354,8 +356,9 @@ RecipientLine *RecipientsView::emptyLine()
 
 RecipientLine *RecipientsView::addLine()
 {
-  RecipientLine *line = new RecipientLine( viewport() );
-  addChild( line, 0, mLines.count() * mLineHeight );
+  RecipientLine *line = new RecipientLine( widget() );
+  //addChild( line, 0, mLines.count() * mLineHeight );
+  mTopLayout->addWidget( line );
   line->mEdit->setCompletionMode( mCompletionMode );
   line->show();
   connect( line, SIGNAL( returnPressed( RecipientLine * ) ),
@@ -411,6 +414,9 @@ RecipientLine *RecipientsView::addLine()
 
   ensureVisible( 0, mLines.count() * mLineHeight );
 
+  // scroll to bottom
+  verticalScrollBar()->triggerAction( QAbstractSlider::SliderToMaximum );
+
   return line;
 }
 
@@ -436,7 +442,7 @@ void RecipientsView::calculateTotal()
   int empty = 0;
 
   RecipientLine *line;
-  Q_FOREACH( line , mLines ) {
+  foreach( line , mLines ) {
     if ( line->isEmpty() ) ++empty;
     else count += line->recipientsCount();
   }
@@ -504,14 +510,15 @@ void RecipientsView::slotDeleteLine()
     mLines.at( newPos )->activate();
 
   mLines.removeAll( line );
-  removeChild( line );
+  line->setParent( 0 );
   delete line;
 
   bool atLeastOneToLine = false;
   unsigned int firstCC = 0;
-  for( uint i = pos; i < mLines.count(); ++i ) {
+  for( int i = pos; i < mLines.count(); ++i ) {
     RecipientLine *line = mLines.at( i );
-    moveChild( line, childX( line ), childY( line ) - mLineHeight );
+#warning port from Q3ScrollView
+    //moveChild( line, childX( line ), childY( line ) - mLineHeight );
     if ( line->recipientType() == Recipient::To )
       atLeastOneToLine = true;
     else if ( ( line->recipientType() == Recipient::Cc ) && ( i == 0 ) )
@@ -531,8 +538,6 @@ void RecipientsView::slotDeleteLine()
 
 void RecipientsView::resizeView()
 {
-  resizeContents( width(), mLines.count() * mLineHeight );
-
   if ( mLines.count() < 6 ) {
     setFixedHeight( mLineHeight * mLines.count() );
   }
@@ -541,10 +546,11 @@ void RecipientsView::resizeView()
 void RecipientsView::activateLine( RecipientLine *line )
 {
   line->activate();
-  ensureVisible( 0, childY( line ) );
+#warning port from Q3ScrollView
+  //ensureVisible( 0, childY( line ) );
 }
 
-void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )
+void RecipientsView::resizeEvent ( QResizeEvent *ev )
 {
   for( int i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
@@ -575,7 +581,7 @@ Recipient::List RecipientsView::recipients() const
   QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
   while( it.hasNext()) {
-		  line = it.next();
+    line = it.next();
     if ( !line->recipient().isEmpty() ) {
       recipients.append( line->recipient() );
     }
@@ -625,7 +631,7 @@ bool RecipientsView::isModified()
   QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
   while( it.hasNext()) {
-	line = it.next();
+  line = it.next();
     if ( line->isModified() ) {
       return true;
     }
@@ -641,7 +647,7 @@ void RecipientsView::clearModified()
   QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
   while( it.hasNext() ) {
-	line = it.next();
+  line = it.next();
     line->clearModified();
   }
 }
@@ -664,6 +670,7 @@ void RecipientsView::setFocusTop()
 
 void RecipientsView::setFocusBottom()
 {
+#warning port from Q3ScrollView
   RecipientLine *line = mLines.last();
   if ( line ) line->activate();
   else  kWarning() << "No last" << endl;

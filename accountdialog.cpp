@@ -1111,7 +1111,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
   const int kioskMinimumImapCheckInterval = GlobalSettings::minimumImapCheckInterval();
-  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, FALSE );
+  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, false );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
