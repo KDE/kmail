@@ -6,6 +6,7 @@ check_include_files(paths.h HAVE_PATHS_H)
 
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
+add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 add_subdirectory( interfaces )
 add_subdirectory( about )
