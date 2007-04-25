@@ -104,7 +104,7 @@ QString TemplateParser::getFName( const QString &str )
   // last resort -- return 'name' from 'name@domain'
   int sep_pos;
   QString res;
-  if ( ( sep_pos = str.find( '@' ) ) > 0 ) {
+  if ( ( sep_pos = str.indexOf( '@' ) ) > 0 ) {
     int i;
     for ( i = (sep_pos - 1); i >= 0; --i ) {
       QChar c = str[i];
@@ -114,7 +114,7 @@ QString TemplateParser::getFName( const QString &str )
         break;
       }
     }
-  } else if ( ( sep_pos = str.find(',') ) > 0 ) {
+  } else if ( ( sep_pos = str.indexOf(',') ) > 0 ) {
     unsigned int i;
     bool begin = false;
     for ( i = sep_pos; i < str.length(); ++i ) {
@@ -147,7 +147,7 @@ QString TemplateParser::getLName( const QString &str )
   // else format is 'First Last'
   int sep_pos;
   QString res;
-  if ( ( sep_pos = str.find(',') ) > 0 ) {
+  if ( ( sep_pos = str.indexOf(',') ) > 0 ) {
     int i;
     for ( i = sep_pos; i >= 0; --i ) {
       QChar c = str[i];
@@ -158,7 +158,7 @@ QString TemplateParser::getLName( const QString &str )
       }
     }
   } else {
-    if ( ( sep_pos = str.find( ' ' ) ) > 0 ) {
+    if ( ( sep_pos = str.indexOf( ' ' ) ) > 0 ) {
       unsigned int i;
       bool begin = false;
       for ( i = sep_pos; i < str.length(); ++i ) {

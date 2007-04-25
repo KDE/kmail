@@ -710,10 +710,10 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
           status.setImportant();
       }
 
-      contentTypeStr = contentTypeStr.stripWhiteSpace();
+      contentTypeStr = contentTypeStr.trimmed();
       charset = "";
       if ( !contentTypeStr.isEmpty() ) {
-        int cidx = contentTypeStr.find( "charset=" );
+        int cidx = contentTypeStr.indexOf( "charset=" );
         if ( cidx != -1 ) {
           charset = contentTypeStr.mid( cidx + 8 );
           if ( charset[0] == '"' ) {

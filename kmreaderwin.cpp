@@ -1697,7 +1697,7 @@ QString KMReaderWin::createTempDir( const QString &param )
   KTemporaryFile *tempFile = new KTemporaryFile();
   tempFile->setSuffix( '.' + param );
   tempFile->open();
-  QString fname = tempFile->name();
+  QString fname = tempFile->fileName();
   delete tempFile;
 
   if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )

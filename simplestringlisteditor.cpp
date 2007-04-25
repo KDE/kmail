@@ -127,7 +127,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
       kDebug(5006) << "Are you sure you want to use an Up button "
         "without a Down button??" << endl;
     mUpButton = new KPushButton( QString(), this );
-    mUpButton->setIcon( BarIconSet( "go-up", K3Icon::SizeSmall ) );
+    mUpButton->setIcon( KIcon( "go-up" ) );
+    mUpButton->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
     mUpButton->setAutoDefault( false );
     mUpButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mUpButton );
@@ -140,7 +141,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
       kDebug(5006) << "Are you sure you want to use a Down button "
         "without an Up button??" << endl;
     mDownButton = new KPushButton( QString(), this );
-    mDownButton->setIcon( BarIconSet( "go-down", K3Icon::SizeSmall ) );
+    mDownButton->setIcon( KIcon( "go-down" ) );
+    mDownButton->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
     mDownButton->setAutoDefault( false );
     mDownButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mDownButton );

@@ -394,7 +394,7 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
     return QString();
   }
 
-  if ( str.find( "=?" ) < 0 ) {
+  if ( str.indexOf( "=?" ) < 0 ) {
     QByteArray charsetName;
     if ( ! prefCharset.isEmpty() ) {
       if ( kasciistricmp( prefCharset.data(), "us-ascii" ) ) {
@@ -710,7 +710,7 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
     pattern += "=";
 
     QRegExp fnamePart( pattern, false );
-    int startPart = fnamePart.search( aStr );
+    int startPart = fnamePart.indexIn( aStr );
     int endPart;
     found = ( startPart >= 0 );
     if ( found ) {
@@ -718,14 +718,14 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
       // Quoted values end at the ending quote
       if ( aStr[startPart] == '"' ) {
         startPart++; // the double quote isn't part of the filename
-        endPart = aStr.find( '"', startPart ) - 1;
+        endPart = aStr.indexOf( '"', startPart ) - 1;
       } else {
-        endPart = aStr.find( ';', startPart ) - 1;
+        endPart = aStr.indexOf( ';', startPart ) - 1;
       }
       if ( endPart < 0 ) {
         endPart = 32767;
       }
-      str += aStr.mid( startPart, endPart - startPart + 1 ).stripWhiteSpace();
+      str += aStr.mid( startPart, endPart - startPart + 1 ).trimmed();
     }
     n++;
   }

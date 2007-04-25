@@ -199,7 +199,7 @@ void RenameJob::folderCopyComplete(bool success)
     if ( it.key() == "Id" || it.key() == "ImapPath" ||
           it.key() == "UidValidity" )
       continue;
-    saver.writeEntry( it.key(), it.data() );
+    saver.writeEntry( it.key(), it.value() );
   }
   mNewFolder->readConfig( saver );
   // make sure the children state is correct

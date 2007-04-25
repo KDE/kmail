@@ -1781,7 +1781,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     // since the identity has already been set before the signal was connected)
     uint savedId = mId;
     if ( !newMsg->headerField("X-KMail-Identity").isEmpty() ) {
-      mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+      mId = newMsg->headerField("X-KMail-Identity").simplified().toUInt();
     } else {
       mId = im->defaultIdentity().uoid();
     }

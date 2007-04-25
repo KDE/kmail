@@ -4973,7 +4973,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
                  i18n( "When this is checked, you will not see normal  "
                        "mail folders in the folder tree for the account "
                        "configured for groupware." ) );
-  QWhatsThis::add( mOnlyShowGroupwareFolders, i18n( GlobalSettings::self()
+  mOnlyShowGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
            ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().toUtf8() ) );
   connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );

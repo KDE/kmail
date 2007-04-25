@@ -1734,8 +1734,8 @@ void KMFolderImap::slotCreateFolderResult(KJob * job)
   if ( it == account()->jobsEnd() ) return;
 
   QString name;
-  if ( it.data().items.count() > 0 )
-    name = it.data().items.first();
+  if ( it.value().items.count() > 0 )
+    name = it.value().items.first();
 
   if (job->error())
   {

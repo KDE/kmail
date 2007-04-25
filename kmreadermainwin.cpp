@@ -360,7 +360,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     if ( urlMenuAdded )
       menu->addSeparator();
     menu->addAction( mReplyActionMenu );
-    menu->insertSeparator();
+    menu->addSeparator();
 
     menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );

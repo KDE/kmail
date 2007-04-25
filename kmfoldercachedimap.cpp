@@ -1228,7 +1228,7 @@ void KMFolderCachedImap::uploadNewMessages()
         // find the inbox of this account
         KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
         if ( !inboxFolder ) {
-          kdWarning(5006) << k_funcinfo << "inbox not found!" << endl;
+          kWarning(5006) << k_funcinfo << "inbox not found!" << endl;
           break;
         }
         KMFolderDir *inboxDir = inboxFolder->child();
@@ -1240,7 +1240,7 @@ void KMFolderCachedImap::uploadNewMessages()
         KMFolderNode *node;
         KMFolder *lfFolder = 0;
         if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
-          kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
+          kDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
           KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
               i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
           if ( !folder || !folder->storage() )
@@ -1251,7 +1251,7 @@ void KMFolderCachedImap::uploadNewMessages()
           folder->storage()->writeConfig();
           lfFolder = folder;
         } else {
-          kdDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
+          kDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
           lfFolder = dynamic_cast<KMFolder*>( node );
         }
         if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
@@ -1268,7 +1268,7 @@ void KMFolderCachedImap::uploadNewMessages()
           ++suffix;
           name = baseName + '-' + QString::number( suffix );
         }
-        kdDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
+        kDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
         dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
         if ( !dest || !dest->storage() )
             break;
@@ -2492,15 +2492,15 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob* job )
     QMap<QString, QString>::Iterator it = annotations.begin();
     for ( ; it != annotations.end(); ++it ) {
       const QString folderPath = it.key();
-      const QString annotation = it.data();
+      const QString annotation = it.value();
       kDebug(5006) << k_funcinfo << "Folder: " << folderPath << " has type: " << annotation << endl;
       // we're only interested in the main type
       QString type(annotation);
-      int dot = annotation.find( '.' );
+      int dot = annotation.indexOf( '.' );
       if ( dot != -1 ) type.truncate( dot );
-      type = type.simplifyWhiteSpace();
+      type = type.simplified();
 
-      const int idx = mSubfolderPaths.findIndex( folderPath );
+      const int idx = mSubfolderPaths.indexOf( folderPath );
       const bool isNoContent =  mSubfolderMimeTypes[idx] == "inode/directory";
       if ( ( isNoContent && type.isEmpty() )
         || ( !type.isEmpty() && type != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) ) {

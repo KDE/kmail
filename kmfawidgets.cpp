@@ -49,7 +49,8 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString() ,this );
-  mBtn->setIcon( BarIconSet( "help-contents", K3Icon::SizeSmall ) );
+  mBtn->setIcon( KIcon( "help-contents" ) );
+  mBtn->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
   hbl->addWidget( mBtn );
 
@@ -89,7 +90,8 @@ KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
     lay1->setMargin( 0 );
     m_playButton = new QPushButton( this );
     m_playButton->setObjectName( "m_playButton" );
-    m_playButton->setIcon( SmallIconSet( "arrow-right" ) );
+    m_playButton->setIcon( KIcon( "arrow-right" ) );
+    m_playButton->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
     connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
     lay1->addWidget( m_playButton );
 

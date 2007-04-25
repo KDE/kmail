@@ -547,7 +547,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
           // the data
           const QByteArray type( msg->typeStr() );
           const QByteArray subtype( msg->subtypeStr() );
-          if (type.lower() == sType && subtype.lower() == sSubtype ) {
+          if (type.toLower() == sType && subtype.toLower() == sSubtype ) {
             aMap.insert( msg->getMsgSerNum(), msg->bodyToUnicode() );
           }
           // This is *not* an error: it may be that not all of the messages

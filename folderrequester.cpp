@@ -59,7 +59,8 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   hlay->addWidget( edit );
 
   QToolButton* button = new QToolButton( this );
-  button->setIcon( KIconLoader::global()->loadIconSet( "folder", K3Icon::Small, 0 ) );
+  button->setIcon( KIcon( "folder" ) );
+  button->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
   hlay->addWidget( button );
   connect( button, SIGNAL(clicked()), this, SLOT(slotOpenDialog()) );
 
