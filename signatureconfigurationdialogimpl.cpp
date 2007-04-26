@@ -16,22 +16,13 @@
 
 
 /*
- *  Constructs a SignatureConfigurationDialogImpl which is a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'
+ *  Constructs a SignatureConfigurationDialogImpl which is a child of 'parent'
  */
-SignatureConfigurationDialogImpl::SignatureConfigurationDialogImpl( QWidget* parent,  const char* name, Qt::WFlags fl )
-    : SignatureConfigurationDialog( parent, name, fl )
+SignatureConfigurationDialogImpl::SignatureConfigurationDialogImpl( QWidget* parent )
+  : QWidget( parent )
 {
+  setupUi(this);
 }
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-SignatureConfigurationDialogImpl::~SignatureConfigurationDialogImpl()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
 
 /**
    Enables or disables the widgets in this dialog according to the
@@ -56,26 +47,26 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     warnAddressNotInCertificateCB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) );
     pinEntryBG->setEnabled( cryptPlug->hasFeature( Feature_PinEntrySettings ) );
     saveSentSigsCB->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesWithSigs ) );
-    
+
     if( ! FULLTEST ){
         askEachPartRB                ->hide(); // We won't implement that.
-        
+
         sendCertificatesBG           ->hide(); // Will implement that later
-        
+
         pinEntryBG                   ->hide(); // Will implement that later
-        
+
         saveSentSigsCB->hide(); // We won't implement that.
-        
+
         dontSendCertificatesRB       ->hide(); // Will implement that later.
         sendChainWithoutRootRB       ->hide(); // Will implement that later.
         sendChainWithRootRB          ->hide(); // Will implement that later.
-        
+
         pinOncePerSessionRB          ->hide(); // Will implement that later.
         pinAddCertificatesRB         ->hide(); // Will implement that later.
         pinAlwaysWhenSigningRB       ->hide(); // Will implement that later.
         pinIntervalRB                ->hide(); // Will implement that later.
         pinIntervalSB                ->hide(); // Will implement that later.
-        
+
         saveSentSigsCB               ->hide(); // We won't implement that.
     }
 }

@@ -1,17 +1,15 @@
 #ifndef SIGNATURECONFIGURATIONDIALOGIMPL_H
 #define SIGNATURECONFIGURATIONDIALOGIMPL_H
-#include "signatureconfigurationdialog.h"
+#include "ui_signatureconfigurationdialog.h"
 
 class CryptPlugWrapper;
 
-class SignatureConfigurationDialogImpl : public SignatureConfigurationDialog
+class SignatureConfigurationDialogImpl : public QWidget, Ui::SignatureConfigurationDialog
 {
     Q_OBJECT
 
 public:
-    SignatureConfigurationDialogImpl( QWidget* parent = 0, 
-                                      const char* name = 0, Qt::WFlags fl = 0 );
-    ~SignatureConfigurationDialogImpl();
+    SignatureConfigurationDialogImpl( QWidget* parent = 0 );
 
     void enableDisable( CryptPlugWrapper* );
 };
