@@ -2001,7 +2001,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
     }
 
     if( source && source->child() && parent &&
-        ( parent->path().indexOf( source->child()->path() + "/" ) == 0 ) ) {
+        ( parent->path().indexOf( source->child()->path() + '/' ) == 0 ) ) {
       KMessageBox::error( this, message );
       return;
     }

@@ -192,8 +192,8 @@ bool CopyFolderJob::createTargetDir()
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( mNewFolder->storage() );
         connect( selectedStorage, SIGNAL(folderCreationResult(const QString&, bool)),
                  this, SLOT(folderCreationDone(const QString&, bool)) );
-        selectedStorage->createFolder(mStorage->folder()->name(), QString::null); // create it on the server
-        newStorage->initializeFrom( selectedStorage, imapPath, QString::null );
+        selectedStorage->createFolder( mStorage->folder()->name(), QString() ); // create it on the server
+        newStorage->initializeFrom( selectedStorage, imapPath, QString() );
         static_cast<KMFolderImap*>(mNewParent->owner()->storage())->setAccount( selectedStorage->account() );
         waitForFolderCreation = true;
         success = true;

@@ -7,18 +7,18 @@
  * This file is based on kmacctimap.h by Michael Haeckel which is
  * based on popaccount.h by Don Sanders
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; version 2 of the License
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
 #ifndef kmfolderimap_h
@@ -34,7 +34,6 @@
 #include <kstandarddirs.h>
 
 #include <QList>
-//Added by qt3to4:
 #include <q3intdict.h>
 #include <q3dict.h>
 
@@ -139,7 +138,7 @@ public:
       others still use it (e.g. other mail reader windows). This also
       cancels all pending jobs.
   */
-  virtual void close( const char *owner, bool force=FALSE );
+  virtual void close( const char *owner, bool force=false );
 
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();

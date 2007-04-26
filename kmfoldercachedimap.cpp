@@ -1259,7 +1259,7 @@ void KMFolderCachedImap::uploadNewMessages()
 
         // create subfolder for this incident
         QDate today = QDate::currentDate();
-        QString baseName = folder()->label() + "-" + QString::number( today.year() )
+        QString baseName = folder()->label() + '-' + QString::number( today.year() )
             + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
             + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
         QString name = baseName;
@@ -1294,7 +1294,7 @@ void KMFolderCachedImap::uploadNewMessages()
               "Please contact your administrator to allow upload of new messages "
               "to you, or move them out of this folder.</p> "
               "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
-        if ( KMessageBox::warningYesNo( 0, msg, QString::null, KGuiItem(i18n("Move")), KGuiItem(i18n("Do Not Move")) ) == KMessageBox::Yes ) {
+        if ( KMessageBox::warningYesNo( 0, msg, QString(), KGuiItem(i18n("Move")), KGuiItem(i18n("Do Not Move")) ) == KMessageBox::Yes ) {
           KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
               i18n("Move Messages to Folder"), true );
           if ( dlg.exec() ) {
@@ -2043,7 +2043,7 @@ void KMFolderCachedImap::listDirectory2()
 
     AnnotationJobs::MultiUrlGetAnnotationJob* job =
       AnnotationJobs::multiUrlGetAnnotation( mAccount->slave(), mAccount->getUrl(), paths, KOLAB_FOLDERTYPE );
-    ImapAccountBase::jobData jd( QString::null, folder() );
+    ImapAccountBase::jobData jd( QString(), folder() );
     jd.cancellable = true;
     mAccount->insertJob(job, jd);
     connect( job, SIGNAL(result(KJob *)),
@@ -2481,7 +2481,7 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob* job )
       // that's when the imap server doesn't support annotations
       if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
            && (uint)GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id() )
-        KMessageBox::error( 0, i18n( "The IMAP server %1 doesn't have support for imap annotations. The XML storage cannot be used on this server, please re-configure KMail differently", mAccount->host() ) );
+        KMessageBox::error( 0, i18n( "The IMAP server %1 does not support annotations. The XML storage cannot be used on this server, please re-configure KMail differently", mAccount->host() ) );
       mAccount->setHasNoAnnotationSupport();
     }
     else

@@ -91,7 +91,7 @@ void checkConfigUpdates() {
     "3.1-use-identity-uoids",
     "3.1-new-mail-notification",
     "3.2-update-loop-on-goto-unread-settings",
-    "3.1.4-dont-use-UOID-0-for-any-identity",
+    "3.1.4-dont-use-UOID-0-for-any-identity",  //krazy:exclude=spelling
     "3.2-misc",
     "3.2-moves",
     "3.3-use-ID-for-accounts",

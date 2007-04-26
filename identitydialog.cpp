@@ -715,7 +715,7 @@ namespace KMail {
     ident.setDrafts( mDraftsCombo->folder() ?
                      mDraftsCombo->folder()->idString() : QString() );
     ident.setTemplates( mTemplatesCombo->folder() ?
-                     mTemplatesCombo->folder()->idString() : QString::null );
+                     mTemplatesCombo->folder()->idString() : QString() );
 
     // "Templates" tab:
     uint identity = ident.uoid();

@@ -75,7 +75,7 @@ protected slots:
   /** Copy all messages from the original folder to mNewFolder */
   void copyMessagesToTargetDir();
 
-  /** Called when the CopyCommand has either succesfully completed copying
+  /** Called when the CopyCommand has either successfully completed copying
    * the contents of our folder to the new location or failed. */
   void slotCopyCompleted( KMCommand *command );
 

@@ -4,28 +4,30 @@
  * Copyright (c) 2001 Kurt Granroth <granroth@kde.org>
  * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
  *
- * This file is based on kmacctimap.coo by Michael Haeckel which was
+ * This file is based on kmacctimap.cpp by Michael Haeckel which was
  * based on popaccount.cpp by Don Sanders
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; version 2 of the License
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
+#include "kmfolderimap.h"
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "kmfolder.h"
-#include "kmfolderimap.h"
 #include "kmfoldermbox.h"
 #include "kmfoldertree.h"
 #include "kmmsgdict.h"
@@ -60,7 +62,6 @@ using KMail::RenameJob;
 #include <QList>
 #include <QTextCodec>
 #include <QByteArray>
-//Added by qt3to4:
 #include <Q3StyleSheet>
 
 #include <assert.h>

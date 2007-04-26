@@ -132,7 +132,7 @@ namespace KMail {
       SubscriptionDialog( QWidget *parent,
                           const QString &caption,
                           KAccount* acct,
-                          QString startPath = QString::null );
+                          QString startPath = QString() );
       virtual ~SubscriptionDialog();
      protected:
       /** reimpl */

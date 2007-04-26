@@ -299,7 +299,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 //-----------------------------------------------------------------------------
 const QTextCodec* KMMsgBase::codecForName(const QByteArray& _str)
 {
-  if (_str.isEmpty()) 
+  if (_str.isEmpty())
     return 0;
   QByteArray codec = _str;
   kAsciiToLower(codec.data());
@@ -707,7 +707,7 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
       // If n<0, check for fieldname*=..., otherwise for fieldname*n=
       pattern += QString::number( n ) + "[*]?";
     }
-    pattern += "=";
+    pattern += '=';
 
     QRegExp fnamePart( pattern, false );
     int startPart = fnamePart.indexIn( aStr );

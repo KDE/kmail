@@ -1351,7 +1351,7 @@ void KMReaderWin::displayAboutPage()
     info = info.subs( featuresText );
   }
   else
-    info = info.subs( QString::null ); // remove the place holder
+    info = info.subs( QString() ); // remove the place holder
 
   if( kmkernel->firstStart() ) {
     info = info.subs( i18n("<p>Please take a moment to fill in the KMail "
@@ -1361,7 +1361,7 @@ void KMReaderWin::displayAboutPage()
 			  "an incoming as well as outgoing mail account."
 			  "</p>\n") );
   } else {
-    info = info.subs( QString::null ); // remove the place holder
+    info = info.subs( QString() ); // remove the place holder
   }
 
   if ( ( numKMailChanges > 1 ) || ( numKMailChanges == 1 && strlen(kmailChanges[0]) > 0 ) ) {
@@ -1376,7 +1376,7 @@ void KMReaderWin::displayAboutPage()
     info = info.subs( changesText );
   }
   else
-    info = info.subs( QString::null ); // remove the place holder
+    info = info.subs( QString() ); // remove the place holder
 
   displaySplashPage( info.toString() );
 }
@@ -1704,7 +1704,7 @@ QString KMReaderWin::createTempDir( const QString &param )
     // Not there or not writable
     if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
         || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
-      return QString::null; //failed create
+      return QString(); //failed create
 
   assert( !fname.isNull() );
 

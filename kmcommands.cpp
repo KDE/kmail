@@ -1880,7 +1880,7 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
     label.replace("&","&&");
     if (child->child() && child->child()->first()) {
       // descend
-      QMenu *subMenu = menu->addMenu( QString::null );
+      QMenu *subMenu = menu->addMenu( QString() );
       makeFolderMenu( child, move, receiver,
                       aMenuToFolder, subMenu );
     } else {

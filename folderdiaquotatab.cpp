@@ -121,12 +121,12 @@ void KMail::FolderDiaQuotaTab::load()
   mLabel->setText( i18n( "Connecting to server %1, please wait...", mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
-    slotConnectionResult( -1, QString::null );
+    slotConnectionResult( -1, QString() );
   } else if ( state == ImapAccountBase::Connecting ) {
     connect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
              this, SLOT( slotConnectionResult(int, const QString&) ) );
   } else { // Connected
-    slotConnectionResult( 0, QString::null );
+    slotConnectionResult( 0, QString() );
   }
 
 }
