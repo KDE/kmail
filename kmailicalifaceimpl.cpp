@@ -634,7 +634,7 @@ bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
   kdDebug(5006) << k_funcinfo << endl;
   QValueList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
   for ( QValueList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
-                                                                    end( folderList.end() ); 
+                                                                    end( folderList.end() );
         it != end ; ++it ) {
     KMFolder * const f = findResourceFolder( (*it).location );
     if ( !f ) continue;
@@ -751,7 +751,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     const KMail::FolderContentsType t = f->storage()->contentsType();
     const QCString type = msg->typeStr();
     const QCString subtype = msg->subtypeStr();
-    const bool messageWasIcalVcardFormat = ( type.lower() == "text" && 
+    const bool messageWasIcalVcardFormat = ( type.lower() == "text" &&
         ( subtype.lower() == "calendar" || subtype.lower() == "x-vcard" ) );
 
     if ( storageFormat( f ) == StorageIcalVcard ) {
@@ -776,8 +776,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
           && itmime != attachmentMimetypes.end()
           && itname != attachmentNames.end();
           ++iturl, ++itname, ++itmime ){
-        bool bymimetype = (*itname).startsWith( "application/x-vnd.kolab." );
-        if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, bymimetype ) ){
+        bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+        if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, byname ) ){
           kdDebug(5006) << "Attachment error, can not update attachment " << *iturl << endl;
           break;
         }
@@ -1082,7 +1082,7 @@ bool KMailICalIfaceImpl::hideResourceFolder( KMFolder* folder ) const
 bool KMailICalIfaceImpl::hideResourceAccountRoot( KMFolder* folder ) const
 {
   KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
-  bool hide = dimapFolder && mHideFolders 
+  bool hide = dimapFolder && mHideFolders
        && (int)dimapFolder->account()->id() == GlobalSettings::self()->theIMAPResourceAccount()
        && GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount();
   return hide;
@@ -1913,13 +1913,13 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
 
   KMFolder *folder = findResourceFolder( location );
 
-  // We don't allow the default folders to be deleted, so check for 
+  // We don't allow the default folders to be deleted, so check for
   // those first. It would be nicer to produce a more meaningful error,
   // or prevent deletion of the builtin folders from the gui already.
   if ( !folder || isStandardResourceFolder( folder ) )
       return false;
 
-  // the folder will be removed, which implies closed, so make sure 
+  // the folder will be removed, which implies closed, so make sure
   // nothing is using it anymore first
   subresourceDeleted( folderContentsType( folder->storage()->contentsType() ), location );
   mExtraFolders.remove( location );
