@@ -410,8 +410,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && itmime != attachmentMimetypes.end()
        && iturl != attachmentURLs.end();
        ++itname, ++iturl, ++itmime ){
-    bool bymimetype = (*itmime).startsWith( "application/x-vnd.kolab." );
-    if( !updateAttachment( *msg, *iturl, *itname, *itmime, !bymimetype ) ){
+    bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+    if( !updateAttachment( *msg, *iturl, *itname, *itmime, byname ) ){
       kdWarning(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
