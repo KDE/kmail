@@ -158,6 +158,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   mCombo->setToolTip( i18n("Select type of recipient") );
 
   mEdit = new RecipientLineEdit( this );
+  mEdit->setClearButtonShown( true );
   topLayout->addWidget( mEdit );
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
   connect( mEdit, SIGNAL( deleteMe() ), SLOT( slotPropagateDeletion() ) );
@@ -168,16 +169,11 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( rightPressed() ), SIGNAL( rightPressed() ) );
 
   connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
+  connect( mEdit, SIGNAL( clearButtonClicked() ), SLOT( slotPropagateDeletion() ) );
   connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
   connect( mCombo, SIGNAL( activated ( int ) ),
            this, SLOT( slotTypeModified() ) );
-
-  mRemoveButton = new QPushButton( this );
-  mRemoveButton->setIcon( QApplication::isRightToLeft() ? KIcon("locationbar-erase") : KIcon( "clear-left" ) );
-  topLayout->addWidget( mRemoveButton );
-  connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
-  mRemoveButton->setToolTip( i18n("Remove recipient line") );
 }
 
 void RecipientLine::slotFocusUp()
@@ -296,24 +292,17 @@ void RecipientLine::fixTabOrder( QWidget *previous )
 {
   setTabOrder( previous, mCombo );
   setTabOrder( mCombo, mEdit );
-  setTabOrder( mEdit, mRemoveButton );
 }
 
 QWidget *RecipientLine::tabOut() const
 {
-  return mRemoveButton;
+  return mEdit;
 }
 
 void RecipientLine::clear()
 {
   mEdit->clear();
 }
-
-void RecipientLine::setRemoveLineButtonEnabled( bool b )
-{
-  mRemoveButton->setEnabled( b );
-}
-
 
 // ------------ RecipientsView ---------------------
 
@@ -395,12 +384,6 @@ RecipientLine *RecipientsView::addLine()
   }
 
   mLines.append( line );
-  // If there is only one line, removing it makes no sense
-  if ( mLines.count() == 1 ) {
-    mLines.first()->setRemoveLineButtonEnabled( false );
-  } else {
-    mLines.first()->setRemoveLineButtonEnabled( true );
-  }
 
   mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
 
@@ -524,9 +507,6 @@ void RecipientsView::slotDeleteLine()
     else if ( ( line->recipientType() == Recipient::Cc ) && ( i == 0 ) )
       firstCC = i;
   }
-  // only one left, can't remove that one
-  if ( mLines.count() == 1 )
-    mLines.first()->setRemoveLineButtonEnabled( false );
 
   if ( !atLeastOneToLine )
     mLines.at( firstCC )->setRecipientType( Recipient::To );

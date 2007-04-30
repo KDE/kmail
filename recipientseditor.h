@@ -133,8 +133,6 @@ class RecipientLine : public QWidget
 
     int recipientsCount();
 
-    void setRemoveLineButtonEnabled( bool b );
-
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
@@ -159,7 +157,6 @@ class RecipientLine : public QWidget
     friend class RecipientsView;
     QComboBox *mCombo;
     RecipientLineEdit *mEdit;
-    QPushButton *mRemoveButton;
     int mRecipientsCount;
     bool mModified;
 };
