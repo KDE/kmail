@@ -1070,10 +1070,10 @@ namespace KMail {
       }
     }
     // if the only body part is not text, part->loadPart() would return false
-    // and that part is never loaded, so make sure it loads. 
+    // and that part is never loaded, so make sure it loads.
     // it seems that TEXT does load the single body part even if it is not text/*
     if ( mBodyPartList.count() == 1 && partsToLoad == 0 )
-        partsToLoad = 1;
+        partsToLoad = 1; // this causes the next test to succeed, and loads the whole message
 
     if ( (mBodyPartList.count() * 0.5) < partsToLoad )
     {
