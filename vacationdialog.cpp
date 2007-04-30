@@ -30,7 +30,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <knuminput.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kwm.h>
+#include <kwindowsystem.h>
 
 #include <QLayout>
 #include <QLabel>
@@ -52,7 +52,7 @@ namespace KMail {
     QFrame *frame = new QFrame( this );
     setMainWidget( frame );
 #ifdef Q_OS_UNIX    
-    KWM::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
+    KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 #endif
     static const int rows = 4;
     int row = -1;

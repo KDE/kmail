@@ -42,7 +42,7 @@
 #include <q3stylesheet.h>
 
 #include <kicon.h>
-#include <kwm.h>
+#include <kwindowsystem.h>
 #include <krun.h>
 #include <kmessagebox.h>
 #include <kactionmenu.h>
@@ -796,7 +796,7 @@ void KMMainWidget::slotSearch()
 
   mSearchWin->show();
 #ifdef Q_OS_UNIX
-  KWM::activateWindow( mSearchWin->winId() );
+  KWindowSystem::activateWindow( mSearchWin->winId() );
 #endif
 }
 

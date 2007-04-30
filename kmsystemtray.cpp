@@ -36,7 +36,7 @@ using KMail::AccountManager;
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
-#include <kwm.h>
+#include <kwindowsystem.h>
 #include <kdebug.h>
 #include <kmenu.h>
 
@@ -87,7 +87,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   if ( mainWidget ) {
     QWidget * mainWin = mainWidget->topLevelWidget();
     if ( mainWin ) {
-      mDesktopOfMainWin = KWM::windowInfo( mainWin->winId(),
+      mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                             NET::WMDesktop ).desktop();
       mPosOfMainWin = mainWin->pos();
     }
@@ -384,7 +384,7 @@ bool KMSystemTray::mainWindowIsOnCurrentDesktop()
   if ( !mainWin )
     return false;
 
-  return KWM::windowInfo( mainWin->winId(),
+  return KWindowSystem::windowInfo( mainWin->winId(),
                            NET::WMDesktop ).isOnCurrentDesktop();
 #else
   return true;
@@ -404,18 +404,18 @@ void KMSystemTray::showKMail()
 #ifdef Q_OS_X11
   if(mainWin)
   {
-    KWM::WindowInfo cur =  KWM::windowInfo( mainWin->winId(), NET::WMDesktop );
+    KWindowSystem::WindowInfo cur =  KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
     if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
     // switch to appropriate desktop
     if ( mDesktopOfMainWin != NET::OnAllDesktops )
-      KWM::setCurrentDesktop( mDesktopOfMainWin );
+      KWindowSystem::setCurrentDesktop( mDesktopOfMainWin );
     if ( !mParentVisible ) {
       if ( mDesktopOfMainWin == NET::OnAllDesktops )
-        KWM::setOnAllDesktops( mainWin->winId(), true );
+        KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
       mainWin->move( mPosOfMainWin );
       mainWin->show();
     }
-    KWM::activateWindow( mainWin->winId() );
+    KWindowSystem::activateWindow( mainWin->winId() );
     mParentVisible = true;
   }
 #endif
@@ -434,11 +434,11 @@ void KMSystemTray::hideKMail()
   if(mainWin)
   {
 #ifdef Q_OS_X11
-    mDesktopOfMainWin = KWM::windowInfo( mainWin->winId(),
+    mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                           NET::WMDesktop ).desktop();
     mPosOfMainWin = mainWin->pos();
     // iconifying is unnecessary, but it looks cooler
-    KWM::minimizeWindow( mainWin->winId() );
+    KWindowSystem::minimizeWindow( mainWin->winId() );
 #endif
     mainWin->hide();
     mParentVisible = false;

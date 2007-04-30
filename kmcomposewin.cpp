@@ -101,7 +101,7 @@ using KRecentAddress::RecentAddresses;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <ktoolbar.h>
-#include <kwm.h>
+#include <kwindowsystem.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
@@ -4642,7 +4642,7 @@ void KMComposeWin::slotSpellcheckConfig()
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
   qtd.setCancelButton ();
 #ifdef Q_OS_UNIX
-  KWM::setIcons( qtd.winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ), qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
+  KWindowSystem::setIcons( qtd.winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ), qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
 #endif
   qtd.setCancelButton( KStandardGuiItem::cancel().text() );
   qtd.setOkButton( KStandardGuiItem::ok().text() );

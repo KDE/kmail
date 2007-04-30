@@ -36,7 +36,7 @@
 #include "mailsourceviewer.h"
 #include <QApplication>
 #include <QIcon>
-#include <kwm.h>
+#include <kwindowsystem.h>
 
 #include <QRegExp>
 #include <QShortcut>
@@ -69,7 +69,7 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   shortcut->setKey( Qt::Key_W+Qt::CTRL );
   connect( shortcut, SIGNAL( activated() ), SLOT( close() ) );
 #ifdef Q_OS_UNIX
-  KWM::setIcons( winId(),
+  KWindowSystem::setIcons( winId(),
                   qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ),
                   IconSize( K3Icon::Desktop ) ),
                   qApp->windowIcon().pixmap( IconSize( K3Icon::Small ),
