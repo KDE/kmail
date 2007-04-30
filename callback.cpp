@@ -50,7 +50,7 @@
 using namespace KMail;
 
 
-Callback::Callback( KMMessage* msg, KMReaderWin* readerWin ) 
+Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
 }
@@ -148,7 +148,7 @@ QString Callback::receiver() const
     mReceiver =
       KInputDialog::getItem( i18n( "Select Address" ),
           selectMessage,
-          addrs, 0, FALSE, &ok, kmkernel->mainWin() );
+          addrs+ccaddrs, 0, FALSE, &ok, kmkernel->mainWin() );
     if( !ok )
       mReceiver = QString::null;
   }
