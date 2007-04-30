@@ -401,7 +401,7 @@ void KMCommand::slotJobFinished()
   }
   // update the progressbar
   if ( mProgressDialog ) {
-    mProgressDialog->setLabel(i18np("Please wait while the message is transferred",
+    mProgressDialog->setLabelText(i18np("Please wait while the message is transferred",
           "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
   }
   if (KMCommand::mCountJobs == 0)
