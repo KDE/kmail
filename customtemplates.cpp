@@ -334,8 +334,10 @@ void CustomTemplates::slotTypeActivated( int index )
 void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
 {
   KShortcut sc( shortcut );
-  if ( shortcut.isEmpty() )
-    sc.clear();
+  if ( shortcut.isEmpty() ) {
+    sc.setPrimary(QKeySequence());
+    sc.setAlternate(QKeySequence());
+  }
   bool assign = true;
   bool customused = false;
 
@@ -361,7 +363,8 @@ void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
                     == KMessageBox::Yes );
         if ( assign )
         {
-          (*it)->mShortcut.clear();
+          (*it)->mShortcut.setPrimary(QKeySequence());
+          (*it)->mShortcut.setAlternate(QKeySequence());
         }
         customused = true;
       }
