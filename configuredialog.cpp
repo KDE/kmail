@@ -1145,7 +1145,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   QVBoxLayout *btn_vlay;
   QHBoxLayout *hlay;
   QPushButton *button;
-  Q3GroupBox   *group;
+  QGroupBox   *group;
 
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
@@ -1159,17 +1159,23 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   vlay->addLayout( hlay, 10 ); // high stretch to suppress groupbox's growing
 
   // account list: left widget in hlay; stretch 1
-  mAccountList = new ListView( this, 5 );
+  mAccountList = new QTreeWidget( this );
   mAccountList->setObjectName( "accountList" );
-  mAccountList->addColumn( i18n("Name") );
-  mAccountList->addColumn( i18n("Type") );
-  mAccountList->addColumn( i18n("Folder") );
+  mAccountList->setHeaderLabels( QStringList() << "Name" << "Type" << "Folder" );
   mAccountList->setAllColumnsShowFocus( true );
-  mAccountList->setSorting( -1 );
-  connect( mAccountList, SIGNAL(selectionChanged()),
-           this, SLOT(slotAccountSelected()) );
-  connect( mAccountList, SIGNAL(doubleClicked( Q3ListViewItem *)),
-           this, SLOT(slotModifySelectedAccount()) );
+  mAccountList->setSortingEnabled( false );
+  mAccountList->setSelectionMode( QAbstractItemView::SingleSelection );
+  mAccountList->setRootIsDecorated( false );
+
+  connect( mAccountList->selectionModel(),
+           SIGNAL(
+             selectionChanged( const QItemSelection &, const QItemSelection &)
+           ),
+           this,
+           SLOT( slotAccountSelected() )
+         );
+  connect( mAccountList, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           this, SLOT( slotModifySelectedAccount() ) );
   hlay->addWidget( mAccountList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
@@ -1206,8 +1212,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "New Mail Notification" group box: stretch 0
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n("New Mail Notification"), this );
+  group = new QGroupBox( i18n( "New Mail Notification" ), this );
   vlay->addWidget( group );
+
+  group->setLayout( new QVBoxLayout );
+  group->layout()->setMargin( KDialog::marginHint() );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // "beep on new mail" check box:
@@ -1236,6 +1245,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
                                                           QSizePolicy::Fixed ) );
   connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
+
+  group->layout()->addWidget( mBeepNewMailCheck );
+  group->layout()->addWidget( mVerboseNotificationCheck );
+  group->layout()->addWidget( mOtherNewMailActionsButton );
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -1263,7 +1276,7 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPage::ReceivingTab::slotAccountSelected()
 {
-  Q3ListViewItem * item = mAccountList->selectedItem();
+  QTreeWidgetItem *item = mAccountList->currentItem();
   mModifyAccountButton->setEnabled( item );
   mRemoveAccountButton->setEnabled( item );
 }
@@ -1336,12 +1349,13 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
   account->deinstallTimer();
   account->setName( uniqueName( accountNames, account->name() ) );
 
-  Q3ListViewItem *after = mAccountList->firstChild();
-  while ( after && after->nextSibling() )
-    after = after->nextSibling();
-
-  Q3ListViewItem *listItem =
-    new Q3ListViewItem( mAccountList, after, account->name(), account->type() );
+  QTreeWidgetItem *after = mAccountList->topLevelItemCount() > 0 ? 
+      mAccountList->topLevelItem( mAccountList->topLevelItemCount() - 1 ) :
+      0;
+  
+  QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, after );
+  listItem->setText( 0, account->name() );
+  listItem->setText( 1, account->type() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1353,13 +1367,13 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
-  Q3ListViewItem *listItem = mAccountList->selectedItem();
+  QTreeWidgetItem *listItem = mAccountList->currentItem();
   if( !listItem ) return;
 
   KMAccount *account = 0;
   QList<ModifiedAccountsType*>::Iterator j;
   for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
-    if ( (*j)->newAccount->name() == listItem->text(0) ) {
+    if ( (*j)->newAccount->name() == listItem->text( 0 ) ) {
       account = (*j)->newAccount;
       break;
     }
@@ -1367,13 +1381,13 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   if ( !account ) {
     QList< QPointer<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
-      if ( (*it)->name() == listItem->text(0) ) {
+      if ( (*it)->name() == listItem->text( 0 ) ) {
         account = *it;
         break;
       }
 
     if ( !account ) {
-      account = kmkernel->acctMgr()->findByName( listItem->text(0) );
+      account = kmkernel->acctMgr()->findByName( listItem->text( 0 ) );
       if( !account ) {
         // ### FIXME: How should this happen? See above.
         KMessageBox::sorry( this, i18n("Unable to locate account") );
@@ -1420,7 +1434,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
-  Q3ListViewItem *listItem = mAccountList->selectedItem();
+  QTreeWidgetItem *listItem = mAccountList->currentItem();
   if( !listItem ) return;
 
   KMAccount *acct = 0;
@@ -1453,12 +1467,13 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
     return;
   }
 
-  Q3ListViewItem * item = listItem->itemBelow();
-  if ( !item ) item = listItem->itemAbove();
+  QTreeWidgetItem *item = mAccountList->itemBelow( listItem );
+  if ( !item ) item = mAccountList->itemAbove( listItem );
   delete listItem;
 
-  if ( item )
-    mAccountList->setSelected( item, true );
+  if ( item ) {
+    mAccountList->setCurrentItem( item );
+  }
 
   emit changed( true );
 }
@@ -1482,33 +1497,26 @@ void AccountsPage::ReceivingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
-  Q3ListViewItem *top = 0;
+  QTreeWidgetItem *top = 0;
 
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next() ) {
-    Q3ListViewItem *listItem =
-      new Q3ListViewItem( mAccountList, top, a->name(), a->type() );
+    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
+    listItem->setText( 0, a->name() );
+    listItem->setText( 1, a->type() );
     if( a->folder() )
       listItem->setText( 2, a->folder()->label() );
     top = listItem;
   }
-  Q3ListViewItem *listItem = mAccountList->firstChild();
+  QTreeWidgetItem *listItem = mAccountList->topLevelItemCount() == 0 ?
+      0 : mAccountList->topLevelItem( 0 );
   if ( listItem ) {
     mAccountList->setCurrentItem( listItem );
-    mAccountList->setSelected( listItem, true );
   }
 
   mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
   mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
-  QTimer::singleShot( 0, this, SLOT( slotTweakAccountList() ) );
-}
-
-void AccountsPage::ReceivingTab::slotTweakAccountList()
-{
-  // Force the contentsWidth of mAccountList to be recalculated so that items can be
-  // selected in the normal way. It would be best if this were not necessary.
-  mAccountList->resizeContents( mAccountList->visibleWidth(), mAccountList->contentsHeight() );
 }
 
 void AccountsPage::ReceivingTab::save() {

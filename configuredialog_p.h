@@ -387,7 +387,6 @@ private slots:
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
   void slotEditNotifications();
-  void slotTweakAccountList();
 
 private:
   virtual void doLoadFromGlobalSettings();
@@ -396,7 +395,7 @@ private:
   QStringList occupiedNames();
 
 private:
-  ListView      *mAccountList;
+  QTreeWidget   *mAccountList;
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
