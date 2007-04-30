@@ -108,24 +108,26 @@ bool Callback::mailICal( const QString& to, const QString iCal,
 
 QString Callback::receiver() const
 {
-  if ( mReceiverSet )
+  if ( mReceiverSet ) {
     // Already figured this out
     return mReceiver;
+  }
 
   mReceiverSet = true;
 
   QStringList addrs = KPIMUtils::splitAddressList( mMsg->to() );
   int found = 0;
-  for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
-    if( kmkernel->identityManager()->identityForAddress( *it ) !=
-        KPIM::Identity::null() ) {
+  for ( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
+    if ( kmkernel->identityManager()->identityForAddress( *it ) !=
+         KPIM::Identity::null() ) {
       // Ok, this could be us
       ++found;
       mReceiver = *it;
     }
   }
+
   QStringList ccaddrs = KPIMUtils::splitAddressList( mMsg->cc() );
-  for( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
+  for ( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
     if( kmkernel->identityManager()->identityForAddress( *it ) !=
         KPIM::Identity::null() ) {
       // Ok, this could be us
@@ -133,27 +135,28 @@ QString Callback::receiver() const
       mReceiver = *it;
     }
   }
-  if( found != 1 ) {
+  if ( found != 1 ) {
     bool ok;
     QString selectMessage;
-    if (found == 0) {
+    if ( found == 0 ) {
       selectMessage = i18n("<qt>None of your identities match the "
-          "receiver of this message,<br>please "
-          "choose which of the following addresses "
-          "is yours, if any:");
+                           "receiver of this message,<br>please "
+                           "choose which of the following addresses "
+                           "is yours, if any:");
     } else {
       selectMessage = i18n("<qt>Several of your identities match the "
-          "receiver of this message,<br>please "
-          "choose which of the following addresses "
-          "is yours:");
+                           "receiver of this message,<br>please "
+                           "choose which of the following addresses "
+                           "is yours:");
     }
 
-    mReceiver =
-      KInputDialog::getItem( i18n( "Select Address" ),
-          selectMessage,
-          addrs, 0, false, &ok, kmkernel->mainWin() );
-    if( !ok )
+    mReceiver = KInputDialog::getItem(
+      i18n( "Select Address" ),
+      selectMessage,
+      addrs+ccaddrs, 0, false, &ok, kmkernel->mainWin() );
+    if ( !ok ) {
       mReceiver.clear();
+    }
   }
 
   return mReceiver;
@@ -162,6 +165,7 @@ QString Callback::receiver() const
 void Callback::closeIfSecondaryWindow() const
 {
   KMail::SecondaryWindow *window = dynamic_cast<KMail::SecondaryWindow*>( mReaderWin->mainWindow() );
-  if ( window )
+  if ( window ) {
     window->close();
+  }
 }
