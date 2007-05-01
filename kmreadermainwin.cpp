@@ -225,18 +225,28 @@ void KMReaderMainWin::setupAccel()
                                         actionCollection(),
                                         "message_forward_as_attachment" );
 
+  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                 Key_E, this, SLOT(slotRedirectMsg()),
+                                 actionCollection(), "message_forward_redirect" );
+
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
       mForwardActionMenu->insert( mForwardInlineAction );
       mForwardActionMenu->insert( mForwardAttachedAction );
+      mForwardInlineAction->setShortcut( Key_F );
+      mForwardAttachedAction->setShortcut( SHIFT+Key_F );
+      connect( mForwardActionMenu, SIGNAL(activated()), this,
+              SLOT(slotForwardInlineMsg()) );
   } else {
         mForwardActionMenu->insert( mForwardAttachedAction );
         mForwardActionMenu->insert( mForwardInlineAction );
+        mForwardInlineAction->setShortcut( SHIFT+Key_F );
+        mForwardAttachedAction->setShortcut( Key_F );
+        connect( mForwardActionMenu, SIGNAL(activated()), this,
+             SLOT(slotForwardAttachedMsg()) );
   }
 
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
+
 
   mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
 			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
@@ -283,10 +293,28 @@ void KMReaderMainWin::setupAccel()
                                   "kmail_copy" );
 
   createGUI( "kmreadermainwin.rc" );
+  setupForwardingActionsList();
   //menuBar()->hide();
   //toolBar( "mainToolBar" )->hide();
 }
 
+void KMReaderMainWin::setupForwardingActionsList()
+{
+  QPtrList<KAction> mForwardActionList;
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mRedirectAction );
+      plugActionList( "forward_action_list", mForwardActionList );
+  } else {
+      unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mRedirectAction );
+      plugActionList( "forward_action_list", mForwardActionList );
+  }
+}
 
 void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
 {

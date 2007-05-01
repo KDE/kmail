@@ -29,6 +29,11 @@ public:
   // take ownership of and show @param msg
   void showMsg( const QString & encoding, KMMessage *msg );
 
+  /**
+   * Sets up action list for forward menu.
+  */
+  void setupForwardingActionsList();
+
 private slots:
   void slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint);
 

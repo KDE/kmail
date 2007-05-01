@@ -220,6 +220,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   kdDebug(5006) << "KMailPart::guiActivateEvent" << endl;
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
+  mainWidget->setupForwardingActionsList();
 }
 
 void KMailPart::exit()

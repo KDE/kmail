@@ -55,6 +55,8 @@ KMMainWin::KMMainWin(QWidget *)
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
+  mKMMainWidget->setupForwardingActionsList();
+
   applyMainWindowSettings(KMKernel::config(), "Main Window");
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),

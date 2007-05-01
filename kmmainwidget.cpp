@@ -2299,28 +2299,43 @@ void KMMainWidget::setupActions()
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
+
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardAttachedMsg()) );
+           SLOT(slotForwardAttachedMsg()) );
 
   mForwardInlineAction = new KAction( i18n("&Inline..."),
-                                      "mail_forward", SHIFT+Key_F, this,
+                                      "mail_forward", 0, this,
                                       SLOT(slotForwardInlineMsg()),
                                       actionCollection(),
                                       "message_forward_inline" );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-                                        "mail_forward", Key_F, this,
+                                        "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()),
                                         actionCollection(),
                                         "message_forward_as_attachment" );
 
+  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                 Key_E, this, SLOT(slotRedirectMsg()),
+                                 actionCollection(), "message_forward_redirect" );
+
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
       mForwardActionMenu->insert( mForwardInlineAction );
       mForwardActionMenu->insert( mForwardAttachedAction );
+      mForwardInlineAction->setShortcut( Key_F );
+      mForwardAttachedAction->setShortcut( SHIFT+Key_F );
+      connect( mForwardActionMenu, SIGNAL(activated()), this,
+                 SLOT(slotForwardInlineMsg()) );
+
   } else {
         mForwardActionMenu->insert( mForwardAttachedAction );
         mForwardActionMenu->insert( mForwardInlineAction );
+        mForwardInlineAction->setShortcut( SHIFT+Key_F );
+        mForwardAttachedAction->setShortcut( Key_F );
+        connect( mForwardActionMenu, SIGNAL(activated()), this,
+                SLOT(slotForwardAttachedMsg()) );
   }
+  mForwardActionMenu->insert( mRedirectAction );
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
@@ -2351,11 +2366,6 @@ void KMMainWidget::setupActions()
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
-
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 Key_E, this, SLOT(slotRedirectMsg()),
-				 actionCollection(), "message_forward_redirect" );
-  mForwardActionMenu->insert( redirectAction() );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
@@ -2765,6 +2775,24 @@ void KMMainWidget::setupActions()
   initializeFilterActions();
   initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
+}
+
+void KMMainWidget::setupForwardingActionsList()
+{
+  QPtrList<KAction> mForwardActionList;
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+      mGUIClient->unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mRedirectAction );
+      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
+  } else {
+      mGUIClient->unplugActionList( "forward_action_list" );
+      mForwardActionList.append( mForwardAttachedAction );
+      mForwardActionList.append( mForwardInlineAction );
+      mForwardActionList.append( mRedirectAction );
+      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
+  }
 }
 
 //-----------------------------------------------------------------------------
