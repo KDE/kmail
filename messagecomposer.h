@@ -12,9 +12,9 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  *  In addition, as a special exception, the copyright holders give
  *  permission to link the code of this program with any edition of
@@ -71,212 +71,207 @@ class MessageComposer : public QObject {
   friend class ::EncryptMessageJob;
   friend class ::SetLastMessageAsUnencryptedVersionOfLastButOne;
 
-public:
-  class KeyResolver;
+  public:
+    class KeyResolver;
 
-  MessageComposer( KMComposeWin* win, const char* name=0 );
-  ~MessageComposer();
+    MessageComposer( KMComposeWin *win );
+    ~MessageComposer();
 
-  /**
-   * Applies the user changes to the message object of the composer
-   * and signs/encrypts the message if activated. Returns false in
-   * case of an error (e.g. if PGP encryption fails).
-   * If backgroundMode is true then no functions which might require
-   * user interaction (like signing/encrypting) are performed
-   */
-  void applyChanges( bool disableCrypto );
+    /*
+      Applies the user changes to the message object of the composer
+      and signs/encrypts the message if activated. Returns false in
+      case of an error (e.g. if PGP encryption fails).
+      If backgroundMode is true then no functions which might require
+      user interaction (like signing/encrypting) are performed
+    */
+    void applyChanges( bool disableCrypto );
 
-  QString originalBCC() const { return mBcc; }
+    QString originalBCC() const { return mBcc; }
 
-  void setDisableBreaking( bool b ) { mDisableBreaking = b; }
+    void setDisableBreaking( bool b ) { mDisableBreaking = b; }
 
-  const QVector<KMMessage*> & composedMessageList() const {
-    return mMessageList;
-  }
+    const QVector<KMMessage*> &composedMessageList() const { return mMessageList; }
 
-  bool isPerformingSignOperation() const { return mPerformingSignOperation; }
+    bool isPerformingSignOperation() const { return mPerformingSignOperation; }
 
-signals:
-  void done( bool );
+  signals:
+    void done( bool );
 
-private:
-  void readFromComposeWin();
+  private:
+    void readFromComposeWin();
 
-  void adjustCryptFlags();
+    void adjustCryptFlags();
 
-  bool encryptWithChiasmus( const Kleo::CryptoBackend::Protocol * chiasmus,
-                            const QByteArray& body,
-                            QByteArray& resultData );
-  void chiasmusEncryptAllAttachments();
-  void composeChiasmusMessage( KMMessage& theMessage, Kleo::CryptoMessageFormat format );
+    bool encryptWithChiasmus( const Kleo::CryptoBackend::Protocol *chiasmus,
+                              const QByteArray &body,
+                              QByteArray &resultData ) const;
+    void chiasmusEncryptAllAttachments();
+    void composeChiasmusMessage( KMMessage &theMessage,
+                                 Kleo::CryptoMessageFormat format );
 
-  // This is the composeMessage method
-  void composeMessage();
-  // And these two are the parts that should be run after job completions
-  void createUnencryptedMessageVersion();
+    // This is the composeMessage method
+    void composeMessage();
+    // And these two are the parts that should be run after job completions
+    void createUnencryptedMessageVersion();
 
-  /**
-   * Internal helper function called from applyChanges(void) to allow
-   * processing several messages (encrypted or unencrypted) based on
-   * the same composer content.
-   * That's useful for storing decrypted versions of messages which
-   * were sent in encrypted form.                  (khz, 2002/06/24)
-   */
-  void composeMessage( KMMessage& theMessage,
-                       bool doSign, bool doEncrypt,
-		       Kleo::CryptoMessageFormat format );
-  void continueComposeMessage( KMMessage& theMessage, bool doSign,
-                               bool doEncrypt,
-			       Kleo::CryptoMessageFormat format );
+    /*
+      Internal helper function called from applyChanges(void) to allow
+      processing several messages (encrypted or unencrypted) based on
+      the same composer content.
+      That's useful for storing decrypted versions of messages which
+      were sent in encrypted form.                  (khz, 2002/06/24)
+    */
+    void composeMessage( KMMessage &theMessage,
+                         bool doSign, bool doEncrypt,
+                         Kleo::CryptoMessageFormat format );
+    void continueComposeMessage( KMMessage &theMessage, bool doSign,
+                                 bool doEncrypt,
+                                 Kleo::CryptoMessageFormat format );
 
-  /**
-   * Called by composeMessage for inline-openpgp messages
-   */
-  void composeInlineOpenPGPMessage( KMMessage& theMessage,
-                                    bool doSign, bool doEncrypt );
+    /*
+      Called by composeMessage for inline-openpgp messages
+    */
+    void composeInlineOpenPGPMessage( KMMessage &theMessage,
+                                      bool doSign, bool doEncrypt );
 
-  /**
-   * Get message ready for sending or saving.
-   * This must be done _before_ signing and/or encrypting it.
-   */
-  QByteArray breakLinesAndApplyCodec();
+    /*
+      Gets the message ready for sending or saving.
+      This must be done _before_ signing and/or encrypting it.
+    */
+    QByteArray breakLinesAndApplyCodec() const;
 
-  /**
-   * Create a plain text version of a marked up mail for use as the plain
-   * part in a multipart/alternative mail.
-   */
-  QByteArray plainTextFromMarkup( const QString& markupText );
+    /*
+      Creates a plain text version of a marked up mail for use as the plain
+      part in a multipart/alternative mail.
+    */
+    QByteArray plainTextFromMarkup( const QString &markupText ) const;
 
-  /**
-   * Get signature for a message (into mMessage).
-   * To build nice S/MIME objects signing and encoding must be separated.
-   */
-  void pgpSignedMsg( const QByteArray & cText, Kleo::CryptoMessageFormat f );
-  /**
-   * Get encrypted message.
-   * To build nice S/MIME objects signing and encrypting must be separate.
-   */
-  Kpgp::Result pgpEncryptedMsg( QByteArray& rEncryptedBody,
-                                const QByteArray & cText,
-                                const std::vector<GpgME::Key> & encryptionKeys,
-				Kleo::CryptoMessageFormat f );
+    /*
+      Gets the signature for a message (into mMessage).
+      To build nice S/MIME objects signing and encoding must be separated.
+    */
+    void pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessageFormat f );
 
-  /**
-   * Get signed & encrypted message.
-   * To build nice S/MIME objects signing and encrypting must be separate.
-   */
-  Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray& rEncryptedBody,
-					 const QByteArray & cText,
-					 const std::vector<GpgME::Key> & signingKeys,
-					 const std::vector<GpgME::Key> & encryptionKeys,
-					 Kleo::CryptoMessageFormat f );
+    /*
+      Gets the encrypted message.
+      To build nice S/MIME objects signing and encrypting must be separate.
+    */
+    Kpgp::Result pgpEncryptedMsg( QByteArray &rEncryptedBody,
+                                  const QByteArray &cText,
+                                  const std::vector<GpgME::Key> &encryptionKeys,
+                                  Kleo::CryptoMessageFormat f ) const;
 
-  /**
-   * Check for expiry of various certificates.
-   */
-  bool checkForEncryptCertificateExpiry( const QString& recipient,
-                                         const QByteArray& certFingerprint );
+    /*
+      Gets the signed & encrypted message.
+      To build nice S/MIME objects signing and encrypting must be separate.
+    */
+    Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray &rEncryptedBody,
+                                           const QByteArray &cText,
+                                           const std::vector<GpgME::Key> &signingKeys,
+                                           const std::vector<GpgME::Key> &encryptionKeys,
+                                           Kleo::CryptoMessageFormat f ) const;
 
-  /**
-   * Build a MIME object (or a flat text resp.) based upon
-   * structuring information returned by a crypto plugin that was
-   * called via pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
-   *
-   * NOTE: The c string representation of the MIME object (or the
-   *       flat text, resp.) is returned in resultingPart, so just
-   *       use this string as body text of the surrounding MIME object.
-   *       This string *is* encoded according to contentTEncClear
-   *       and thus should be ready for being sent via SMTP.
-   */
-  bool processStructuringInfo( const QString bugURL,
-                               const QString contentDescriptionClear,
-                               const QByteArray contentTypeClear,
-                               const QByteArray contentSubtypeClear,
-                               const QByteArray contentDispClear,
-                               const QByteArray contentTEncClear,
-                               const QByteArray& bodytext,
-                               const QString contentDescriptionCiph,
-                               const QByteArray& ciphertext,
-                               KMMessagePart& resultingPart,
-			       bool signing, Kleo::CryptoMessageFormat format );
+    /*
+      Builds a MIME object (or a flat text resp.) based upon structuring
+      information returned by a crypto plugin that was called via
+      pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
 
-  void encryptMessage( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
-                       bool doSign, bool doEncrypt,
-                       KMMessagePart newBodyPart,
-		       Kleo::CryptoMessageFormat format );
+      NOTE: The c string representation of the MIME object (or the
+            flat text, resp.) is returned in resultingPart, so just
+            use this string as body text of the surrounding MIME object.
+            This string *is* encoded according to contentTEncClear
+            and thus should be ready for being sent via SMTP.
+    */
+    bool processStructuringInfo( const QString bugURL,
+                                 const QString contentDescriptionClear,
+                                 const QByteArray contentTypeClear,
+                                 const QByteArray contentSubtypeClear,
+                                 const QByteArray contentDispClear,
+                                 const QByteArray contentTEncClear,
+                                 const QByteArray &bodytext,
+                                 const QString contentDescriptionCiph,
+                                 const QByteArray &ciphertext,
+                                 KMMessagePart &resultingPart,
+                                 bool signing, Kleo::CryptoMessageFormat format ) const;
 
-  void addBodyAndAttachments( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
-                              bool doSign, bool doEncrypt,
-                              const KMMessagePart& ourFineBodyPart,
-                              Kleo::CryptoMessageFormat format );
+    void encryptMessage( KMMessage *msg,
+                         const Kleo::KeyResolver::SplitInfo &si,
+                         bool doSign, bool doEncrypt,
+                         KMMessagePart newBodyPart,
+                         Kleo::CryptoMessageFormat format );
 
-private slots:
-  void slotDoNextJob();
+    void addBodyAndAttachments( KMMessage *msg,
+                                const Kleo::KeyResolver::SplitInfo &si,
+                                bool doSign, bool doEncrypt,
+                                const KMMessagePart &ourFineBodyPart,
+                                Kleo::CryptoMessageFormat format );
 
-private:
-  void doNextJob();
-  void emitDone( bool );
+  private slots:
+    void slotDoNextJob();
 
-  int encryptionPossible( const QStringList & recipients, bool openPGP );
-  bool determineWhetherToSign( bool doSignCompletely );
-  bool determineWhetherToEncrypt( bool doEncryptCompletely );
-  void markAllAttachmentsForSigning( bool sign );
-  void markAllAttachmentsForEncryption( bool enc );
+  private:
+    void doNextJob();
+    void emitDone( bool );
 
-  KMComposeWin* mComposeWin;
-  MessageComposerJob * mCurrentJob;
-  KMMessage* mReferenceMessage;
-  QVector<KMMessage*> mMessageList;
+    bool determineWhetherToSign( bool doSignCompletely );
+    bool determineWhetherToEncrypt( bool doEncryptCompletely );
+    void markAllAttachmentsForSigning( bool sign );
+    void markAllAttachmentsForEncryption( bool enc );
 
-  Kleo::KeyResolver * mKeyResolver;
+    KMComposeWin *mComposeWin;
+    MessageComposerJob *mCurrentJob;
+    KMMessage *mReferenceMessage;
+    QVector<KMMessage*> mMessageList;
 
-  QByteArray mSignCertFingerprint;
+    Kleo::KeyResolver *mKeyResolver;
 
-  struct Attachment {
-    Attachment( KMMessagePart * p=0, bool s=false, bool e=false )
-      : part( p ), sign( s ), encrypt( e ) {}
-    KMMessagePart * part;
-    bool sign;
-    bool encrypt;
-  };
-  QVector<Attachment> mAttachments;
+    QByteArray mSignCertFingerprint;
 
-  QString mPGPSigningKey, mSMIMESigningKey;
-  bool mUseOpportunisticEncryption;
-  bool mSignBody, mEncryptBody;
-  bool mSigningRequested, mEncryptionRequested;
-  bool mDoSign, mDoEncrypt;
-  unsigned int mAllowedCryptoMessageFormats;
-  bool mDisableCrypto;
-  bool mDisableBreaking;
-  QString mBcc;
-  QStringList mTo, mCc, mBccList;
-  bool mDebugComposerCrypto;
-  bool mAutoCharset;
-  QByteArray mCharset;
-  bool mIsRichText;
-  uint mIdentityUid;
-  bool mRc; // Set this to false, if something fails during the processes
-  bool mHoldJobs; // Don't run the next job yet
+    struct Attachment {
+      Attachment( KMMessagePart *p=0, bool s=false, bool e=false )
+        : part( p ), sign( s ), encrypt( e ) {}
+      KMMessagePart *part;
+      bool sign;
+      bool encrypt;
+    };
+    QVector<Attachment> mAttachments;
 
-  QByteArray mText; // textual representation of the message text, encoded
-  unsigned int mLineBreakColumn; // used for line breaking
+    QString mPGPSigningKey, mSMIMESigningKey;
+    bool mUseOpportunisticEncryption;
+    bool mSignBody, mEncryptBody;
+    bool mSigningRequested, mEncryptionRequested;
+    bool mDoSign, mDoEncrypt;
+    unsigned int mAllowedCryptoMessageFormats;
+    bool mDisableCrypto;
+    bool mDisableBreaking;
+    QString mBcc;
+    QStringList mTo, mCc, mBccList;
+    bool mDebugComposerCrypto;
+    bool mAutoCharset;
+    QByteArray mCharset;
+    bool mIsRichText;
+    uint mIdentityUid;
+    bool mRc; // Set this to false, if something fails during the processes
+    bool mHoldJobs; // Don't run the next job yet
 
-  // These are the variables of the big composeMessage(X,Y,Z) message
-  KMMessagePart* mNewBodyPart;
-  QByteArray mSignature;
+    QByteArray mText; // textual representation of the message text, encoded
+    unsigned int mLineBreakColumn; // used for line breaking
 
-  QByteArray mEncodedBody; // Only needed if signing and/or encrypting
-  bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
-  KMMessagePart mOldBodyPart;
-  int mPreviousBoundaryLevel;
+    // These are the variables of the big composeMessage(X,Y,Z) message
+    KMMessagePart *mNewBodyPart;
+    QByteArray mSignature;
 
-  // The boundary is saved for later addition into mp/a body
-  DwString  mSaveBoundary;
+    QByteArray mEncodedBody; // Only needed if signing and/or encrypting
+    bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
+    KMMessagePart mOldBodyPart;
+    int mPreviousBoundaryLevel;
 
-  QList<MessageComposerJob*> mJobs;
-  bool mEncryptWithChiasmus;
-  bool mPerformingSignOperation;
+    // The boundary is saved for later addition into mp/a body
+    DwString  mSaveBoundary;
+
+    QList<MessageComposerJob*> mJobs;
+    bool mEncryptWithChiasmus;
+    bool mPerformingSignOperation;
 };
 
 #endif /* MESSAGECOMPOSER_H */
