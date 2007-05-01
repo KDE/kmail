@@ -2031,7 +2031,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 }
 
 //-----------------------------------------------------------------------------
-QByteArray MessageComposer::plainTextFromMarkup( const QString& markupText )
+QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText )
 {
   QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
   hackConspiratorTextEdit->setAcceptRichText( false );
@@ -2050,6 +2050,7 @@ QByteArray MessageComposer::plainTextFromMarkup( const QString& markupText )
     kDebug(5006) << "Something is wrong and I can not get a codec." << endl;
     textbody = text.toLocal8Bit();
   } else {
+    text = codec->toUnicode( text.latin1(), text.length() );
     textbody = codec->fromUnicode( text );
   }
   if (textbody.isNull()) textbody = "";
