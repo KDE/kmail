@@ -210,12 +210,10 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
-  connect( mForwardActionMenu, SIGNAL( activated() ), this,
-           SLOT( slotForwardAttachedMsg() ) );
 
   mForwardInlineAction = new KAction( i18n("&Inline..."),
                                       "mail_forward", SHIFT+Key_F, this,
-                                      SLOT(slotForwardInlineMsg()),
+                                      SLOT(slotForwardMsg()),
                                       actionCollection(),
                                       "message_forward_inline" );
 
@@ -235,7 +233,7 @@ void KMReaderMainWin::setupAccel()
       mForwardInlineAction->setShortcut( Key_F );
       mForwardAttachedAction->setShortcut( SHIFT+Key_F );
       connect( mForwardActionMenu, SIGNAL(activated()), this,
-              SLOT(slotForwardInlineMsg()) );
+              SLOT(slotForwardMsg()) );
   } else {
         mForwardActionMenu->insert( mForwardAttachedAction );
         mForwardActionMenu->insert( mForwardInlineAction );
@@ -293,27 +291,8 @@ void KMReaderMainWin::setupAccel()
                                   "kmail_copy" );
 
   createGUI( "kmreadermainwin.rc" );
-  setupForwardingActionsList();
   //menuBar()->hide();
   //toolBar( "mainToolBar" )->hide();
-}
-
-void KMReaderMainWin::setupForwardingActionsList()
-{
-  QPtrList<KAction> mForwardActionList;
-  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-      unplugActionList( "forward_action_list" );
-      mForwardActionList.append( mForwardInlineAction );
-      mForwardActionList.append( mForwardAttachedAction );
-      mForwardActionList.append( mRedirectAction );
-      plugActionList( "forward_action_list", mForwardActionList );
-  } else {
-      unplugActionList( "forward_action_list" );
-      mForwardActionList.append( mForwardAttachedAction );
-      mForwardActionList.append( mForwardInlineAction );
-      mForwardActionList.append( mRedirectAction );
-      plugActionList( "forward_action_list", mForwardActionList );
-  }
 }
 
 void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)

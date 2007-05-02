@@ -144,11 +144,6 @@ public:
 
   void modifyFolder( KMFolderTreeItem* folderItem );
 
-  /**
-   * Sets up action list for forward menu.
-  */
-  void setupForwardingActionsList();
-
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash

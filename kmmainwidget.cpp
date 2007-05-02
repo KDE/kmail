@@ -2300,12 +2300,9 @@ void KMMainWidget::setupActions()
 					"mail_forward", actionCollection(),
 					"message_forward" );
 
-  connect( mForwardActionMenu, SIGNAL(activated()), this,
-           SLOT(slotForwardAttachedMsg()) );
-
   mForwardInlineAction = new KAction( i18n("&Inline..."),
                                       "mail_forward", 0, this,
-                                      SLOT(slotForwardInlineMsg()),
+                                      SLOT(slotForwardMsg()),
                                       actionCollection(),
                                       "message_forward_inline" );
 
@@ -2325,7 +2322,7 @@ void KMMainWidget::setupActions()
       mForwardInlineAction->setShortcut( Key_F );
       mForwardAttachedAction->setShortcut( SHIFT+Key_F );
       connect( mForwardActionMenu, SIGNAL(activated()), this,
-                 SLOT(slotForwardInlineMsg()) );
+                 SLOT(slotForwardMsg()) );
 
   } else {
         mForwardActionMenu->insert( mForwardAttachedAction );
@@ -2775,24 +2772,6 @@ void KMMainWidget::setupActions()
   initializeFilterActions();
   initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
-}
-
-void KMMainWidget::setupForwardingActionsList()
-{
-  QPtrList<KAction> mForwardActionList;
-  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
-      mGUIClient->unplugActionList( "forward_action_list" );
-      mForwardActionList.append( mForwardInlineAction );
-      mForwardActionList.append( mForwardAttachedAction );
-      mForwardActionList.append( mRedirectAction );
-      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
-  } else {
-      mGUIClient->unplugActionList( "forward_action_list" );
-      mForwardActionList.append( mForwardAttachedAction );
-      mForwardActionList.append( mForwardInlineAction );
-      mForwardActionList.append( mRedirectAction );
-      mGUIClient->plugActionList( "forward_action_list", mForwardActionList );
-  }
 }
 
 //-----------------------------------------------------------------------------
