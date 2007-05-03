@@ -269,7 +269,7 @@ public:
 
 
   /** Calculate the base64 encoded md5sum (sans the trailing equal
-      signs). If @p utf8 is false, uses QString::latin1() to calculate
+      signs). If @p utf8 is false, uses QString::toLatin1() to calculate
       the md5sum of, else uses QString::utf8() */
   static QString base64EncodedMD5( const QString & aStr, bool utf8=false );
   static QString base64EncodedMD5( const QByteArray & aStr );

@@ -404,7 +404,7 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
         charsetName = prefCharset;
       }
     } else {
-      charsetName = GlobalSettings::self()->fallbackCharacterEncoding().latin1();
+      charsetName = GlobalSettings::self()->fallbackCharacterEncoding().toLatin1();
     }
     const QTextCodec *codec = KMMsgBase::codecForName( charsetName );
     if ( ! codec ) {

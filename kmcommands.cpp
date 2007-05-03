@@ -2353,7 +2353,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
       if (queryPart.left(9) == "?subject=")
         msg->setSubject( KUrl::fromPercentEncoding(queryPart.mid(9).toLatin1()) );
       else if (queryPart.left(6) == "?body=")
-        // It is correct to convert to latin1() as URL should not contain
+        // It is correct to convert to toLatin1() as URL should not contain
         // anything except ascii.
         msg->setBody( KUrl::fromPercentEncoding(queryPart.mid(6).toLatin1()).toLatin1() );
       else if (queryPart.left(4) == "?cc=")

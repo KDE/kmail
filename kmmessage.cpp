@@ -1566,7 +1566,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   str += "\n\n---------- Message header follows ----------\n";
   str += headerAsString();
   str += "--------------------------------------------\n";
-  // Conversion to latin1 is correct here as Mail headers should contain
+  // Conversion to toLatin1 is correct here as Mail headers should contain
   // ascii only
   receipt->setBody(str.toLatin1());
   receipt->setAutomaticFields();
