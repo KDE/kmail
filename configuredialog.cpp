@@ -14,9 +14,9 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   You should have received a copy of the GNU General Public License along
+ *   with this program; if not, write to the Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
 
@@ -165,7 +165,7 @@ namespace {
 	  w->setToolTip("");
     }
   }
-  
+
   void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation, const EnumConfigEntry & e ) {
     box->setTitle( i18n(e.desc) );
     if (orientation == Qt::Horizontal) {
@@ -223,7 +223,7 @@ namespace {
     if ( c.hasKey( e.key ) )
       loadWidget( g, c, e );
   }
-  
+
   inline void loadProfile( QGroupBox * box, QButtonGroup * group, const KConfigGroup & c, const EnumConfigEntry & e ) {
     if (c.hasKey( e.key )) {
       loadWidget( box, group, c, e );
@@ -304,7 +304,7 @@ void ConfigureDialog::slotUser2() {
 // *                      IdentityPage                         *
 // *                                                           *
 // *************************************************************
-QString IdentityPage::helpAnchor() const 
+QString IdentityPage::helpAnchor() const
 {
   return QString::fromLatin1( "configure-identity" );
 }
@@ -582,7 +582,7 @@ void IdentityPage::slotSetAsDefault()
   refreshList();
 }
 
-void IdentityPage::refreshList() 
+void IdentityPage::refreshList()
 {
   for ( int i = 0; i < mIdentityList->topLevelItemCount(); ++i ) {
     IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIdentityList->topLevelItem( i ) );
@@ -691,7 +691,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
                      const QItemSelection & )
                  ),
            this, SLOT( slotTransportSelected() ) );
-  connect( mTransportList, 
+  connect( mTransportList,
            SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
            this, SLOT( slotModifySelectedTransport() ) );
   hlay->addWidget( mTransportList, 1 );
@@ -1349,10 +1349,10 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
   account->deinstallTimer();
   account->setName( uniqueName( accountNames, account->name() ) );
 
-  QTreeWidgetItem *after = mAccountList->topLevelItemCount() > 0 ? 
+  QTreeWidgetItem *after = mAccountList->topLevelItemCount() > 0 ?
       mAccountList->topLevelItem( mAccountList->topLevelItemCount() - 1 ) :
       0;
-  
+
   QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, after );
   listItem->setText( 0, account->name() );
   listItem->setText( 1, account->type() );
@@ -5014,6 +5014,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+
+  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
+  mExchangeCompatibleInvitations->setToolTip( i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
+  mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
+           exchangeCompatibleInvitationsItem()->whatsThis().utf8() ) );
+  connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
@@ -5047,15 +5055,17 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
 }
 
 void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
-  // Read the groupware config
   if ( mEnableGwCB ) {
     mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
+
   mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
+
   mLegacyBodyInvites->blockSignals( true );
   mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
+
   mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 
@@ -5109,12 +5119,25 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
     kDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
 }
 
-void MiscPage::GroupwareTab::save() {
+void MiscPage::GroupwareTab::save()
+{
+  KConfigGroup groupware( KMKernel::config(), "Groupware" );
+
   // Write the groupware config
-  if ( mEnableGwCB )
+  if ( mEnableGwCB ) {
+    groupware.writeEntry( "GroupwareEnabled", mEnableGwCB->isChecked() );
+  }
+  groupware.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
+  groupware.writeEntry( "LegacyBodyInvites", mLegacyBodyInvites->isChecked() );
+  groupware.writeEntry( "ExchangeCompatibleInvitations", mExchangeCompatibleInvitations->isChecked() );
+  groupware.writeEntry( "AutomaticSending", mAutomaticSending->isChecked() );
+
+  if ( mEnableGwCB ) {
     GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
+  }
   GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
   GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
+  GlobalSettings::self()->setExchangeCompatibleInvitations( mExchangeCompatibleInvitations->isChecked() );
   GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
   int format = mStorageFormatCombo->currentIndex();

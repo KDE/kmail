@@ -105,9 +105,22 @@ public:
                     const KUrl &messageFile, const KUrl::List &attachURLs,
                     const QByteArrayList &customHeaders);
 
+  int openComposer (const QString &to, const QString &cc,
+                    const QString &bcc, const QString &subject,
+                    const QString &body, int hidden,
+                    const QString &attachName,
+                    const QByteArray &attachCte,
+                    const QByteArray &attachData,
+                    const QByteArray &attachType,
+                    const QByteArray &attachSubType,
+                    const QByteArray &attachParamAttr,
+                    const QString &attachParamValue,
+                    const QByteArray &attachContDisp,
+                    const QByteArray &attachCharset);
+
   QDBusObjectPath openComposer(const QString &to, const QString &cc,
-                       const QString &bcc, const QString &subject,
-                       const QString &body,bool hidden);
+                               const QString &bcc, const QString &subject,
+                               const QString &body,bool hidden);
 
   /** D-Bus call used to set the default transport. */
 

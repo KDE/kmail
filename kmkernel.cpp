@@ -446,6 +446,109 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   return 1;
 }
 
+int KMKernel::openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const QString &attachName,
+                            const QByteArray &attachCte,
+                            const QByteArray &attachData,
+                            const QByteArray &attachType,
+                            const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr,
+                            const QString &attachParamValue,
+                            const QByteArray &attachContDisp,
+                            const QByteArray &attachCharset )
+{
+  kDebug(5006) << "KMKernel::openComposer()" << endl;
+
+  KMMessage *msg = new KMMessage;
+  KMMessagePart *msgPart = 0;
+  msg->initHeader();
+  msg->setCharset( "utf-8" );
+  if ( !cc.isEmpty() ) msg->setCc(cc);
+  if ( !bcc.isEmpty() ) msg->setBcc(bcc);
+  if ( !subject.isEmpty() ) msg->setSubject(subject);
+  if ( !to.isEmpty() ) msg->setTo(to);
+  if ( !body.isEmpty() ) {
+    msg->setBody(body.toUtf8());
+  } else {
+    TemplateParser parser( msg, TemplateParser::NewMessage,
+      "", false, false, false, false );
+    parser.process( NULL, NULL );
+  }
+
+  bool iCalAutoSend = false;
+  bool noWordWrap = false;
+  bool isICalInvitation = false;
+  KConfigGroup options( config(), "Groupware" );
+  if ( !attachData.isEmpty() ) {
+    isICalInvitation = attachName == "cal.ics" &&
+      attachType == "text" &&
+      attachSubType == "calendar" &&
+      attachParamAttr == "method";
+    // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
+    if ( isICalInvitation && bcc.isEmpty() )
+      msg->setBcc( "" );
+    if ( isICalInvitation &&
+        GlobalSettings::self()->legacyBodyInvites() ) {
+      // KOrganizer invitation caught and to be sent as body instead
+      msg->setBody( attachData );
+      msg->setHeaderField( "Content-Type",
+                           QString( "text/calendar; method=%1; "
+                                    "charset=\"utf-8\"" ).
+                           arg( attachParamValue ) );
+
+      iCalAutoSend = true; // no point in editing raw ICAL
+      noWordWrap = true; // we shant word wrap inline invitations
+    } else {
+      // Just do what we're told to do
+      msgPart = new KMMessagePart;
+      msgPart->setName( attachName );
+      msgPart->setCteStr( attachCte );
+      msgPart->setBodyEncoded( attachData );
+      msgPart->setTypeStr( attachType );
+      msgPart->setSubtypeStr( attachSubType );
+      msgPart->setParameter( attachParamAttr, attachParamValue );
+       if( ! GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+        msgPart->setContentDisposition( attachContDisp );
+      }
+      if( !attachCharset.isEmpty() ) {
+        // kDebug(5006) << "KMKernel::openComposer set attachCharset to "
+        // << attachCharset << endl;
+        msgPart->setCharset( attachCharset );
+      }
+      // Don't show the composer window, if the automatic sending is checked
+      KConfigGroup options( config(), "Groupware" );
+      iCalAutoSend = options.readEntry( "AutomaticSending", true );
+    }
+  }
+
+  KMail::Composer * cWin = KMail::makeComposer();
+  cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
+  cWin->setSigningAndEncryptionDisabled( isICalInvitation
+      && GlobalSettings::self()->legacyBodyInvites() );
+  cWin->setAutoDelete( true );
+  if( noWordWrap )
+    cWin->slotWordWrapToggled( false );
+  else
+    cWin->setCharset( "", true );
+  if ( msgPart )
+    cWin->addAttach(msgPart);
+
+  if ( hidden == 0 && !iCalAutoSend ) {
+    cWin->show();
+    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // so that it also works when called from KMailApplication::newInstance()
+#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+    KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
+#endif
+  } else {
+    cWin->slotSendNow();
+  }
+
+  return 1;
+}
+
 void KMKernel::setDefaultTransport( const QString & transport )
 {
   QStringList availTransports = KMail::TransportManager::transportNames();
