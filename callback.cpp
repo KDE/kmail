@@ -57,13 +57,16 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 }
 
 bool Callback::mailICal( const QString& to, const QString iCal,
-                         const QString& subject ) const
+                         const QString& subject, int reply ) const
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
-
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setSubject( subject );
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) 
+  {
+    if (reply == 5) msg->setSubject("The sender has accepted the invitation");
+  }
   msg->setTo( to );
   msg->setFrom( receiver() );
   /* We want the triggering mail to be moved to the trash once this one
@@ -73,7 +76,8 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) {
+  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) 
+  {
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
@@ -92,7 +96,9 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
 
-  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) 
+  {
+    if (reply == 5) msg->setSubject("The sender has accepted the invitation");
     // For Exchange, send ical as attachment, with proper
     // parameters
     msg->setCharset( "utf-8" );
