@@ -333,12 +333,12 @@ Currently defined tag values are:
    Msg*Part      num. val  type obtained by:
 
    No		 0	   u	-
-   From		 1	   u	fromStrip().stripWhitespace()
-   Subject	 2	   u	subject().stripWhitespace()
-   To		 3	   u	toStrip().stripWhiteSpace()
-   ReplyToIdMD5	 4	   u	replyToIdMD5().stripWhiteSpace()
-   IdMD5	 5	   u	msgIdMD5().stripWhiteSpace()
-   XMark	 6	   u	xmark().stripWhiteSpace()
+   From		 1	   u	fromStrip().trimmed()
+   Subject	 2	   u	subject().trimmed()
+   To		 3	   u	toStrip().trimmed()
+   ReplyToIdMD5	 4	   u	replyToIdMD5().trimmed()
+   IdMD5	 5	   u	msgIdMD5().trimmed()
+   XMark	 6	   u	xmark().trimmed()
    Offset	 7	   l	folderOffset() (not only mbox!)
    LegacyStatus	 8	   l	mLegacyStatus
    Size		 9	   l	msgSize()
@@ -347,7 +347,7 @@ Currently defined tag values are:
    CryptoState	 12	   l	(signatureState() << 16) | encryptionState())
    MDNSent	 13	   l	mdnSentState()
    ReplyToAuxIdMD5 14	   u	replyToAuxIdMD5()
-   StrippedSubject 15	   u	strippedSubjectMD5().stripWhiteSpace()
+   StrippedSubject 15	   u	strippedSubjectMD5().trimmed()
    Status	   16	   l	status()
 </pre>
 
