@@ -1013,6 +1013,7 @@ private:
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;
+  QCheckBox* mExchangeCompatibleInvitations;
   QCheckBox* mAutomaticSending;
 };
 

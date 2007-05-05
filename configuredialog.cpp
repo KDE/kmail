@@ -4770,6 +4770,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+
+  mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
+  QToolTip::add( mExchangeCompatibleInvitations, i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
+  QWhatsThis::add( mExchangeCompatibleInvitations, i18n( GlobalSettings::self()->
+           exchangeCompatibleInvitationsItem()->whatsThis().utf8() ) );
+  connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   QToolTip::add( mAutomaticSending, i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   QWhatsThis::add( mAutomaticSending, i18n( GlobalSettings::self()->
@@ -4804,15 +4812,19 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
 }
 
 void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
-  // Read the groupware config
   if ( mEnableGwCB ) {
     mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
+
   mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
   mLegacyBodyInvites->blockSignals( true );
+
   mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
+
+  mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
+
   mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 
@@ -4864,11 +4876,23 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
 }
 
 void MiscPage::GroupwareTab::save() {
+  KConfigGroup groupware( KMKernel::config(), "Groupware" );
+
   // Write the groupware config
-  if ( mEnableGwCB )
+  if ( mEnableGwCB ) {
+    groupware.writeEntry( "GroupwareEnabled", mEnableGwCB->isChecked() );
+  }
+  groupware.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
+  groupware.writeEntry( "LegacyBodyInvites", mLegacyBodyInvites->isChecked() );
+  groupware.writeEntry( "ExchangeCompatibleInvitations", mExchangeCompatibleInvitations->isChecked() );
+  groupware.writeEntry( "AutomaticSending", mAutomaticSending->isChecked() );
+
+  if ( mEnableGwCB ) {
     GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
+  }
   GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
   GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
+  GlobalSettings::self()->setExchangeCompatibleInvitations( mExchangeCompatibleInvitations->isChecked() );
   GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
   int format = mStorageFormatCombo->currentItem();

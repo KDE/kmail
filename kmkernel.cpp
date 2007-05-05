@@ -523,14 +523,16 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->setTypeStr( attachType );
       msgPart->setSubtypeStr( attachSubType );
       msgPart->setParameter( attachParamAttr, attachParamValue );
-      msgPart->setContentDisposition( attachContDisp );
+       if( ! GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+        msgPart->setContentDisposition( attachContDisp );
+      }
       if( !attachCharset.isEmpty() ) {
         // kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
         // << attachCharset << endl;
         msgPart->setCharset( attachCharset );
       }
       // Don't show the composer window, if the automatic sending is checked
-      KConfigGroup options(  config(), "Groupware" );
+      KConfigGroup options( config(), "Groupware" );
       iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
     }
   }

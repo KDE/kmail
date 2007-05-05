@@ -33,6 +33,7 @@
 #include "callback.h"
 #include "kmkernel.h"
 #include "kmmessage.h"
+#include "kmmsgpart.h"
 #include <libemailfunctions/email.h>
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
@@ -62,11 +63,8 @@ bool Callback::mailICal( const QString& to, const QString iCal,
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
-  msg->setHeaderField( "Content-Type",
-                       "text/calendar; method=reply; charset=\"utf-8\"" );
   msg->setSubject( subject );
   msg->setTo( to );
-  msg->setBody( iCal.utf8() );
   msg->setFrom( receiver() );
   /* We want the triggering mail to be moved to the trash once this one
    * has been sent successfully. Set a link header which accomplishes that. */
@@ -79,12 +77,13 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
-    if( identity != KPIM::Identity::null() )
+    if( identity != KPIM::Identity::null() ) {
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
       msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
-      // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
-      msg->setBcc( "" );
+    }
+    // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
+    msg->setBcc( "" );
   }
 
   KMail::Composer * cWin = KMail::makeComposer();
@@ -92,6 +91,24 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   // cWin->setCharset( "", true );
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
+
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    // For Exchange, send ical as attachment, with proper
+    // parameters
+    msg->setCharset( "utf-8" );
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName( "cal.ics" );
+    // msgPart->setCteStr( attachCte ); // "base64" ?
+    msgPart->setBodyEncoded( iCal.utf8() );
+    msgPart->setTypeStr( "text" );
+    msgPart->setSubtypeStr( "calendar" );
+    msgPart->setParameter( "method", "reply" );
+    cWin->addAttach( msgPart );
+  } else {
+    msg->setHeaderField( "Content-Type",
+                         "text/calendar; method=reply; charset=\"utf-8\"" );
+    msg->setBody( iCal.utf8() );
+  }
 
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
     cWin->setAutoDeleteWindow(  true );
