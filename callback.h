@@ -55,9 +55,11 @@ public:
   /** Get the full message */
   KMMessage* getMsg() const { return mMsg; }
 
-  /** Mail a message */
+  /** Mail a message 
+   * @ param status can be accepted/declined/tentative
+   */
   bool mailICal( const QString& to, const QString iCal,
-                 const QString& subject, int reply ) const;
+                 const QString& subject, QString status ) const;
 
   /** Get the receiver of the mail */
   QString receiver() const;
