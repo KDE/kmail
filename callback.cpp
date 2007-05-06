@@ -57,15 +57,15 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 }
 
 bool Callback::mailICal( const QString& to, const QString iCal,
-                         const QString& subject, QString status ) const
+                         const QString& subject, const QString &status ) const
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
   KMMessage *msg = new KMMessage;
   msg->initHeader();
-  msg->setSubject( subject );
-  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) 
-  {
-    msg->setSubject(status);
+  if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    msg->setSubject( status );
+  } else {
+    msg->setSubject( subject );
   }
   msg->setTo( to );
   msg->setFrom( receiver() );
@@ -76,7 +76,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) 
+  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) )
   {
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
@@ -96,11 +96,10 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
 
-  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) 
-  {
-    msg->setSubject(status);
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
     // For Exchange, send ical as attachment, with proper
     // parameters
+    msg->setSubject( status );
     msg->setCharset( "utf-8" );
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName( "cal.ics" );
