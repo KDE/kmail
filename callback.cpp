@@ -62,13 +62,17 @@ Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
 }
 
 bool Callback::mailICal( const QString &to, const QString iCal,
-                         const QString &subject ) const
+                         const QString &subject, const QString &status ) const
 {
   kDebug(5006) << "Mailing message:\n" << iCal << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
-  msg->setSubject( subject );
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    msg->setSubject( status );
+  } else {
+    msg->setSubject( subject );
+  }
   msg->setTo( to );
   msg->setFrom( receiver() );
   /* We want the triggering mail to be moved to the trash once this one
@@ -96,10 +100,10 @@ bool Callback::mailICal( const QString &to, const QString iCal,
   // cWin->setCharset( "", true );
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
-
   if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
     // For Exchange, send ical as attachment, with proper
     // parameters
+    msg->setSubject( status );
     msg->setCharset( "utf-8" );
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName( "cal.ics" );

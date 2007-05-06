@@ -62,7 +62,7 @@ class KDE_EXPORT Callback {
       Mails a message.
     */
     bool mailICal( const QString &to, const QString iCal,
-                   const QString &subject ) const;
+                   const QString &subject, const QString &string ) const;
 
     /*
       Returns the receiver of the mail.
