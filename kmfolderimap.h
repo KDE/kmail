@@ -277,10 +277,8 @@ public:
   /** imap folders cannot expire */
   virtual bool isAutoExpire() const { return false; }
 
-  /** Close folder. If force is TRUE the files are closed even if
-    others still use it (e.g. other mail reader windows). This also
-    cancels all pending jobs. */
-  virtual void close(bool force=FALSE);
+  /** Closes and cancels all pending jobs. */
+  virtual void reallyDoClose();
 
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 

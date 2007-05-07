@@ -530,12 +530,8 @@ void KMFolderSearch::sync()
     }
 }
 
-void KMFolderSearch::close(bool force)
+void KMFolderSearch::reallyDoClose()
 {
-    if (mOpenCount <= 0) return;
-    if (mOpenCount > 0) mOpenCount--;
-    if (mOpenCount > 0 && !force) return;
-
     if (mAutoCreateIndex) {
         if (mSearch)
             mSearch->write(location());

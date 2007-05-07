@@ -106,16 +106,14 @@ KMFolderImap::~KMFolderImap()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::close(bool aForced)
+void KMFolderImap::reallyDoClose()
 {
-  if (mOpenCount <= 0 ) return;
-  if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0 && !aForced) return;
-  if (isSelected() && !aForced) {
+  if (isSelected()) {
       kdWarning(5006) << "Trying to close the selected folder " << label() <<
           " - ignoring!" << endl;
       return;
   }
+
   // FIXME is this still needed?
   if (account())
     account()->ignoreJobsForFolder( folder() );
@@ -127,9 +125,7 @@ void KMFolderImap::close(bool aForced)
           msg->setTransferInProgress( false );
     }
   }
-  // The inherited close will decrement again, so we have to adjust.
-  mOpenCount++;
-  KMFolderMbox::close(aForced);
+  KMFolderMbox::reallyDoClose();
 }
 
 KMFolder* KMFolderImap::trashFolder() const

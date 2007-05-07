@@ -256,7 +256,8 @@ public:
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=FALSE) = 0;
+  void close(bool force=FALSE);
+  virtual void reallyDoClose() = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry. */
