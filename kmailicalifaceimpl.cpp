@@ -141,7 +141,7 @@ const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContents
 #warning Port me to DBus!
 #endif
 KMailICalIfaceImpl::KMailICalIfaceImpl()
-  : /*DCOPObject( "KMailICalIface" ),*/ QObject( 0 ),
+  : KMailICalIface(),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
     mFolderLanguage( 0 ), mFolderParentDir( 0 ), mFolderType( KMFolderTypeUnknown ),
     mUseResourceIMAP( false ), mResourceQuiet( false ), mHideFolders( true )
@@ -1913,3 +1913,4 @@ bool KMailICalIfaceImpl::isResourceQuiet() const
 }
 
 #include "kmailicalifaceimpl.moc"
+#include "kmailicalIface.moc"

@@ -204,6 +204,10 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.kmail.xml kmkernel.h  KMKernel)
 
+# Generate org.kde.kmail.groupware.xml from kmailicalIface.h
+qt4_generate_dbus_interface( kmailicalIface.h org.kde.kmail.groupware.xml )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml kmailicalIface.h KMailICalIface )
+
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases.kcfgc custommimeheader.kcfgc templatesconfiguration_kfg.kcfgc customtemplates_kfg.kcfgc )

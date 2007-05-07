@@ -82,7 +82,7 @@ public:
 }
 
 /** The implementation of the interface. */
-class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
+class KMailICalIfaceImpl : public KMailICalIface {
   Q_OBJECT
 public:
   KMailICalIfaceImpl();

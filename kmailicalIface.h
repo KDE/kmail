@@ -32,28 +32,13 @@
 #ifndef KMAILICALIFACE_H
 #define KMAILICALIFACE_H
 
-#include <kurl.h>
+#include <KUrl>
 
-#include <QList>
-#include <QStringList>
-
-// yes, this is this very header - but it tells dcopidl to include it
-// in _stub.cpp and _skel.cpp files, to get the definition of the structs.
-// ### dcopidlng bug: "" is copied verbatim...
-// The kmail/ is so that it can be found by the resources easily
-#include <kmail/kmailicalIface.h>
-
-#ifdef __GNUC__
-#warning This was a DCOPObject and needs porting to DBus!
-#endif
-class KMailICalIface //: virtual public DCOPObject
+class KMailICalIface : public QObject
 {
-
+  Q_OBJECT
 public:
-//k_dcop:
   struct SubResource {
-    //dcopidl barfs on those constructors, but dcopidlng works
-    SubResource() {} // for QValueList
     SubResource( const QString& loc, const QString& lab, bool rw )
       : location( loc ), label( lab ), writable( rw ) {}
     QString location; // unique
@@ -71,11 +56,12 @@ public:
   /// This bitfield indicates which changes have been made in a folder, at syncing time.
   enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
 
+public Q_SLOTS:
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
 
   virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
-  
+
   virtual KUrl getAttachment( const QString& resource,
                               quint32 sernum,
                               const QString& filename ) = 0;
@@ -115,8 +101,7 @@ public:
    */
   virtual bool triggerSync( const QString & ) = 0;
 
-//k_dcop_signals:
-signals:
+Q_SIGNALS:
   void incidenceAdded( const QString& type, const QString& folder,
                        quint32 sernum, int format, const QString& entry );
   void asyncLoadResult( const QMap<quint32, QString>, const QString& type,
@@ -143,14 +128,14 @@ inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& s
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::StorageFormat& format  )
 {
   quint32 foo = format;
-  str << foo; 
+  str << foo;
   return str;
 }
 
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::StorageFormat& format  )
 {
   quint32 foo;
-  str >> foo; 
+  str >> foo;
   format = ( KMailICalIface::StorageFormat )foo;
   return str;
 }
