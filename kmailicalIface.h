@@ -37,6 +37,7 @@
 class KMailICalIface : public QObject
 {
   Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.groupware")
 public:
   struct SubResource {
     SubResource( const QString& loc, const QString& lab, bool rw )
