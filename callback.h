@@ -56,7 +56,7 @@ public:
   KMMessage* getMsg() const { return mMsg; }
 
   /** Mail a message
-   * @ param status can be accepted/declined/tentative
+   * @ param status can be accepted/cancel/tentative
    */
   bool mailICal( const QString& to, const QString iCal,
                  const QString& subject, const QString &status ) const;

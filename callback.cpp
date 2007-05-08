@@ -63,7 +63,10 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-    msg->setSubject( status );
+    if ( status == QString("cancel") ) msg->setSubject( QString("Declined: %1").arg(subject).replace("Answer: ","") );
+    else if ( status == QString("tentative") ) msg->setSubject(QString("Tentative: %1").arg(subject).replace("Answer: ","") );
+    else if ( status == QString("accepted") ) msg->setSubject( QString("Accepted: %1").arg(subject).replace("Answer: ","") );
+    else msg->setSubject( subject );
   } else {
     msg->setSubject( subject );
   }
