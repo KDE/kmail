@@ -38,6 +38,7 @@
 #include <Q3PopupMenu>
 #include <QDragEnterEvent>
 #include <QTextStream>
+#include <QTextEdit>
 
 #include <libkdepim/kfileio.h>
 #include <kpimutils/email.h>
@@ -682,9 +683,9 @@ void KMEdit::slotSpellcheck2(K3Spell*)
         }
 
         kDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
-        Q3TextEdit plaintext;
+        QTextEdit plaintext;
         plaintext.setText(text());
-        plaintext.setTextFormat(Qt::PlainText);
+        plaintext.setAcceptRichText(false);
         mSpellingFilter = new SpellingFilter(plaintext.text(), quotePrefix, SpellingFilter::FilterUrls,
                                              SpellingFilter::FilterEmailAddresses);
 
