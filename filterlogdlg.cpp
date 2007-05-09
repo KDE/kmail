@@ -43,7 +43,7 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QStringList>
-#include <q3textedit.h>
+#include <qtextedit.h>
 
 #include <q3groupbox.h>
 
@@ -68,17 +68,19 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   QFrame *page = new KVBox( this );
   setMainWidget( page );
 
-  mTextEdit = new Q3TextEdit( page );
+  mTextEdit = new QTextEdit( page );
   mTextEdit->setReadOnly( true );
-  mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
-  mTextEdit->setTextFormat( Qt::LogText );
+  mTextEdit->setLineWrapMode ( QTextEdit::NoWrap );
+  mTextEdit->setAcceptRichText( false );
 
+  QString text;
   QStringList logEntries = FilterLog::instance()->getLogEntries();
   for ( QStringList::Iterator it = logEntries.begin();
         it != logEntries.end(); ++it )
   {
-    mTextEdit->append( *it );
+    text+=*it;
   }
+  mTextEdit->setText(text);
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
@@ -179,8 +181,8 @@ void FilterLogDialog::slotLogShrinked()
 {
   // limit the size of the shown log lines as soon as
   // the log has reached it's memory limit
-  if ( mTextEdit->maxLogLines() == -1 )
-    mTextEdit->setMaxLogLines( mTextEdit->lines() );
+  if ( mTextEdit->document()->maximumBlockCount () <= 0 )
+    mTextEdit->document()->setMaximumBlockCount( mTextEdit->document()->blockCount() );
 }
 
 
