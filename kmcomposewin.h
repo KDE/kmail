@@ -111,6 +111,7 @@ public: // mailserviceimpl
    * From MailComposerIface
    */
   void send(int how);
+  void addAttachmentsAndSend(const KURL::List &urls, const QString &comment, int how);
   void addAttachment(KURL url,QString comment);
   void addAttachment(const QString &name,
                     const QCString &cte,
@@ -253,6 +254,7 @@ private slots:
   void slotPrint();
   void slotAttachFile();
   void slotInsertRecentFile(const KURL&);
+  void slotAttachedFile(const KURL&);
 public slots: // kmkernel, callback
   void slotSendNow();
 private slots:
@@ -454,7 +456,7 @@ private slots:
   void alignmentChanged( int );
 
 public: // kmkernel, attachmentlistview
-  void addAttach(const KURL url);
+  bool addAttach(const KURL url);
 
 public: // kmcommand
   /**
@@ -470,6 +472,7 @@ private:
 
 signals:
   void applyChangesDone( bool );
+  void attachmentAdded( const KURL&, bool success );
 
 private:
   /**
@@ -751,6 +754,9 @@ private:
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
+  QMap<KIO::Job*, KURL> mAttachJobs;
+  KURL::List mAttachFilesPending;
+  int mAttachFilesSend;
 
 private:
   // helper method for slotInsert(My)PublicKey()

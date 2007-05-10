@@ -461,6 +461,41 @@ void KMComposeWin::send(int how)
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::addAttachmentsAndSend(const KURL::List &urls, const QString &/*comment*/, int how)
+{
+  if (urls.isEmpty())
+  {
+    send(how);
+    return;
+  }
+  mAttachFilesSend = how;
+  mAttachFilesPending = urls;
+  connect(this, SIGNAL(attachmentAdded(const KURL&, bool)), SLOT(slotAttachedFile(const KURL&)));
+  for( KURL::List::ConstIterator itr = urls.begin(); itr != urls.end(); ++itr ) {
+    if (!addAttach( *itr ))
+      mAttachFilesPending.remove(mAttachFilesPending.find(*itr)); // only remove one copy of the url
+  }
+
+  if (mAttachFilesPending.isEmpty() && mAttachFilesSend == how)
+  {
+    send(mAttachFilesSend);
+    mAttachFilesSend = -1;
+  }
+}
+
+void KMComposeWin::slotAttachedFile(const KURL &url)
+{
+  if (mAttachFilesPending.isEmpty())
+    return;
+  mAttachFilesPending.remove(mAttachFilesPending.find(url)); // only remove one copy of url
+  if (mAttachFilesPending.isEmpty())
+  {
+    send(mAttachFilesSend);
+    mAttachFilesSend = -1;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment(KURL url,QString /*comment*/)
 {
   addAttach(url);
@@ -2220,13 +2255,13 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttach(const KURL aUrl)
+bool KMComposeWin::addAttach(const KURL aUrl)
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
                                  "<p>you have to specify the full path if you wish to attach a file.</p></qt>" )
                         .arg( aUrl.prettyURL() ) );
-    return;
+    return false;
   }
   KIO::TransferJob *job = KIO::get(aUrl);
   KIO::Scheduler::scheduleJob( job );
@@ -2238,10 +2273,12 @@ void KMComposeWin::addAttach(const KURL aUrl)
     ld.encoding = aUrl.fileEncoding().latin1();
 
   mMapAtmLoadData.insert(job, ld);
+  mAttachJobs[job] = aUrl;
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
+  return true;
 }
 
 
@@ -2588,10 +2625,20 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 {
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
   assert(it != mMapAtmLoadData.end());
+  KURL attachURL;
+  QMap<KIO::Job*, KURL>::iterator jit = mAttachJobs.find(job);
+  bool attachURLfound = (jit != mAttachJobs.end());
+  if (attachURLfound)
+  {
+    attachURL = jit.data();
+    mAttachJobs.remove(jit);
+  }
   if (job->error())
   {
     mMapAtmLoadData.remove(it);
     job->showErrorDialog();
+    if (attachURLfound)
+      emit attachmentAdded(attachURL, false);
     return;
   }
   if ((*it).insert)
@@ -2603,6 +2650,8 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     else
       mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
     mMapAtmLoadData.remove(it);
+    if (attachURLfound)
+      emit attachmentAdded(attachURL, true);
     return;
   }
   const QCString partCharset = (*it).url.fileEncoding().isEmpty()
@@ -2697,6 +2746,8 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     if (!dlg.exec()) {
       delete msgPart;
       msgPart = 0;
+      if (attachURLfound)
+        emit attachmentAdded(attachURL, false);
       return;
     }
   }
@@ -2705,6 +2756,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   // add the new attachment to the list
   addAttach(msgPart);
+
+  if (attachURLfound)
+    emit attachmentAdded(attachURL, true);
 }
 
 
