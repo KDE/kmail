@@ -1527,7 +1527,7 @@ void KMComposeWin::setupActions( void )
   listAction = new KSelectAction(i18n("Select Style"), this);
   actionCollection()->addAction("text_list", listAction );
   listAction->setItems( styleItems );
-  connect( listAction, SIGNAL( activated( const QString& ) ),
+  connect( listAction, SIGNAL( triggered( const QString& ) ),
            SLOT( slotListAction( const QString& ) ) );
   fontAction = new KFontAction(i18n("Select Font"), this);
   actionCollection()->addAction("text_font", fontAction );
