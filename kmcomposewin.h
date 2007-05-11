@@ -122,6 +122,7 @@ class KMComposeWin : public KMail::Composer
      * From MailComposerIface
      */
     void send( int how );
+    void addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how );
     void addAttachment( const KUrl &url, const QString &comment );
     void addAttachment( const QString &name,
                         const QByteArray &cte,
@@ -261,6 +262,7 @@ class KMComposeWin : public KMail::Composer
     void slotPrint();
     void slotAttachFile();
     void slotInsertRecentFile( const KUrl & );
+    void slotAttachedFile( const KUrl & );
 
   public slots: // kmkernel, callback
     void slotSendNow();
@@ -460,7 +462,7 @@ class KMComposeWin : public KMail::Composer
     void alignmentChanged( int );
 
   public: // kmkernel, attachmentlistview
-    void addAttach( const KUrl url );
+    bool addAttach( const KUrl url );
 
   public: // kmcommand
     /**
@@ -476,6 +478,7 @@ class KMComposeWin : public KMail::Composer
 
   signals:
     void applyChangesDone( bool );
+    void attachmentAdded( const KUrl &, bool success );
 
   private:
     /**
@@ -752,6 +755,9 @@ class KMComposeWin : public KMail::Composer
 
     QStringList mFolderNames;
     QList<QPointer<KMFolder> > mFolderList;
+    QMap<KJob*, KUrl> mAttachJobs;
+    KUrl::List mAttachFilesPending;
+    int mAttachFilesSend;
 
   private:
     // helper method for slotInsert(My)PublicKey()

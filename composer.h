@@ -58,6 +58,8 @@ class Composer : public KMail::SecondaryWindow
      * From MailComposerIface
      */
     virtual void send( int how ) = 0;
+    virtual void addAttachmentsAndSend( const KUrl::List &urls,
+                                        const QString &comment, int how) = 0;
     virtual void addAttachment( const KUrl &url, const QString &comment ) = 0;
     virtual void addAttachment( const QString &name,
                                 const QByteArray &cte,
@@ -144,7 +146,7 @@ class Composer : public KMail::SecondaryWindow
     virtual void autoSaveMessage() = 0;
 
   public: // kmkernel, attachmentlistview
-    virtual void addAttach( const KUrl url ) = 0;
+    virtual bool addAttach( const KUrl url ) = 0;
 
   public: // kmcommand
     /**

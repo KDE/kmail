@@ -477,6 +477,41 @@ void KMComposeWin::send( int how )
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how )
+{
+  Q_UNUSED( comment );
+  if ( urls.isEmpty() ) {
+    send( how );
+    return;
+  }
+  mAttachFilesSend = how;
+  mAttachFilesPending = urls;
+  connect( this, SIGNAL(attachmentAdded(const KUrl &, bool)), SLOT(slotAttachedFile(const KUrl &)) );
+  for ( int i = 0, count = urls.count(); i < count; ++i ) {
+    if ( !addAttach( urls[i] ) ) {
+      mAttachFilesPending.removeAt( mAttachFilesPending.indexOf( urls[i] ) ); // only remove one copy of the url
+    }
+  }
+
+  if ( mAttachFilesPending.isEmpty() && mAttachFilesSend == how ) {
+    send( mAttachFilesSend );
+    mAttachFilesSend = -1;
+  }
+}
+
+void KMComposeWin::slotAttachedFile( const KUrl &url )
+{
+  if ( mAttachFilesPending.isEmpty() ) {
+    return;
+  }
+  mAttachFilesPending.removeAt( mAttachFilesPending.indexOf( url ) ); // only remove one copy of url
+  if ( mAttachFilesPending.isEmpty() ) {
+    send( mAttachFilesSend );
+    mAttachFilesSend = -1;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 {
   Q_UNUSED( comment );
@@ -2288,13 +2323,13 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttach( const KUrl aUrl )
+bool KMComposeWin::addAttach( const KUrl aUrl )
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
                                     "<p>you have to specify the full path if you wish to attach a file.</p></qt>" ,
                                     aUrl.prettyUrl() ) );
-    return;
+    return false;
   }
   KIO::TransferJob *job = KIO::get(aUrl);
   KIO::Scheduler::scheduleJob( job );
@@ -2306,10 +2341,12 @@ void KMComposeWin::addAttach( const KUrl aUrl )
     ld.encoding = aUrl.fileEncoding().toLatin1();
 
   mMapAtmLoadData.insert(job, ld);
+  mAttachJobs[job] = aUrl;
   connect(job, SIGNAL(result(KJob *)),
           this, SLOT(slotAttachFileResult(KJob *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2655,10 +2692,20 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(static_cast<KIO::Job*>(job));
 
   assert( it != mMapAtmLoadData.end() );
+  KUrl attachUrl;
+  QMap<KJob*, KUrl>::Iterator jit = mAttachJobs.find( job );
+  bool attachURLfound = (jit != mAttachJobs.end());
+  if ( attachURLfound ) {
+    attachUrl = jit.value();
+    mAttachJobs.erase( jit );
+  }
   if ( job->error() ) {
     mMapAtmLoadData.erase( it );
     static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( attachURLfound ) {
+      emit attachmentAdded( attachUrl, false );
+    }
     return;
   }
 
@@ -2671,6 +2718,9 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
         mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
     }
     mMapAtmLoadData.erase(it);
+    if ( attachURLfound ) {
+      emit attachmentAdded( attachUrl, true );
+    }
     return;
   }
   const QByteArray partCharset = (*it).url.fileEncoding().isEmpty()
@@ -2767,6 +2817,9 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     if (!dlg.exec()) {
       delete msgPart;
       msgPart = 0;
+      if ( attachURLfound ) {
+        emit attachmentAdded( attachUrl, false );
+      }
       return;
     }
   }
@@ -2775,6 +2828,10 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
 
   // add the new attachment to the list
   addAttach(msgPart);
+
+  if ( attachURLfound ) {
+    emit attachmentAdded( attachUrl, true );
+  }
 }
 
 //-----------------------------------------------------------------------------
