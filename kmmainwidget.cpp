@@ -3952,7 +3952,8 @@ bool KMMainWidget::shortcutIsValid( const QKeySequence &sc ) const
 {
   QList<QAction*> actions = actionCollection()->actions();
   foreach ( QAction *a, actions ) {
-    if ( a->shortcut() == sc ) return false;
+    foreach ( QShortcut otherSc, a->shortcuts() )
+      if ( sc == otherSc ) return false;
   }
   return true;
 }
