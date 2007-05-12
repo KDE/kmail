@@ -37,6 +37,7 @@
 #include <QVBoxLayout>
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <QShortcut>
 #include <q3accel.h>
 #include <q3ptrlist.h>
 #include <q3stylesheet.h>
@@ -3952,7 +3953,7 @@ bool KMMainWidget::shortcutIsValid( const QKeySequence &sc ) const
 {
   QList<QAction*> actions = actionCollection()->actions();
   foreach ( QAction *a, actions ) {
-    foreach ( QShortcut otherSc, a->shortcuts() )
+    foreach ( QKeySequence otherSc, a->shortcuts() )
       if ( sc == otherSc ) return false;
   }
   return true;
