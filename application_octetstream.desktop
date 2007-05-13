@@ -35,7 +35,6 @@ Name[tr]=Uygulama Sekizli Akışı
 Name[x-test]=xxApplication Octetstreamxx
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
-Comment[bg]=Приставка за форматиране на двоични данни
 Comment[ca]=Un endollable formatador del cos per application/octet-stream
 Comment[cs]=Modul formátovače těla pro application/octet-stream
 Comment[da]=Et bodypart formateringsplugin for application/octet-stream
