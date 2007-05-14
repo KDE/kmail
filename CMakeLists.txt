@@ -216,7 +216,7 @@ kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
 target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KMIME_LIBS} kpgp kdepim
   kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} ${KDE4_PHONON_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS} ${KDE4_KTNEF_LIBS}
-  threadweaver)
+  threadweaver ${KDE4_KUTILS_LIBS})
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
