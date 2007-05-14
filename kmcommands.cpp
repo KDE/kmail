@@ -720,12 +720,24 @@ static KURL subjectToUrl( const QString & subject ) {
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
+    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( msg ? msg->msgSize() : 0 )
 {
   if ( !msg ) return;
   setDeletesItself( true );
-  mMsgList.append( msg->getMsgSerNum() );
+  // If the mail has a serial number, operate on sernums, if it does not
+  // we need to work with the pointer, but can be reasonably sure it won't
+  // go away, since it'll be an encapsulated message or one that was opened
+  // from an .eml file.
+  if ( msg->getMsgSerNum() != 0 ) {
+    mMsgList.append( msg->getMsgSerNum() );
+    if ( msg->parent() ) {
+      msg->parent()->open();
+    }
+  } else {
+    mStandAloneMessage = msg;
+  }
   mUrl = subjectToUrl( msg->cleanSubject() );
 }
 
@@ -733,6 +745,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
                                     const QPtrList<KMMsgBase> &msgList )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
+    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( 0 )
 {
@@ -799,27 +812,39 @@ void KMSaveMsgCommand::slotSaveDataReq()
     assert( idx >= 0 );
     msg = p->getMsg(idx);
 
-    if (msg->transferInProgress()) {
+    if ( msg ) {
+      if (msg->transferInProgress()) {
+        QByteArray data = QByteArray();
+        mJob->sendAsyncData( data );
+      }
+      msg->setTransferInProgress( true );
+      if (msg->isComplete() ) {
+        slotMessageRetrievedForSaving(msg);
+      } else {
+        // retrieve Message first
+        if (msg->parent()  && !msg->isComplete() ) {
+          FolderJob *job = msg->parent()->createJob(msg);
+          job->setCancellable( false );
+          connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+              this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
+          job->start();
+        }
+      }
+    } else {
+      mJob->slotError( KIO::ERR_ABORTED,
+                       i18n("The message was removed while saving it. "
+                            "It has not been saved.") );
+    }
+  } else {
+    if ( mStandAloneMessage ) {
+      // do the special case of a standalone message
+      slotMessageRetrievedForSaving( mStandAloneMessage );
+      mStandAloneMessage = 0;
+    } else {
+      // No more messages. Tell the putjob we are done.
       QByteArray data = QByteArray();
       mJob->sendAsyncData( data );
     }
-    msg->setTransferInProgress( true );
-    if (msg->isComplete() ) {
-      slotMessageRetrievedForSaving(msg);
-    } else {
-      // retrieve Message first
-      if (msg->parent()  && !msg->isComplete() ) {
-        FolderJob *job = msg->parent()->createJob(msg);
-        job->setCancellable( false );
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
-        job->start();
-      }
-    }
-  } else {
-    // No more messages. Tell the putjob we are done.
-    QByteArray data = QByteArray();
-    mJob->sendAsyncData( data );
   }
 }
 
