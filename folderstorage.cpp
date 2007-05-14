@@ -470,8 +470,11 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 KMMessage* FolderStorage::getMsg(int idx)
 {
-  if ( idx < 0 || idx >= count() )
-  { 
+  if ( mOpenCount <= 0 ) {
+    kdWarning(5006) << "FolderStorage::getMsg was called on a closed folder: " << folder()->prettyURL() << endl; 
+    return 0;
+  }
+  if ( idx < 0 || idx >= count() ) { 
     kdWarning(5006) << "FolderStorage::getMsg was asked for an invalid index. idx =" << idx << " count()=" << count() << endl; 
     return 0;
   }
