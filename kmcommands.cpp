@@ -759,6 +759,9 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   // from an .eml file.
   if ( msg->getMsgSerNum() != 0 ) {
     mMsgList.append( msg->getMsgSerNum() );
+    if ( msg->parent() ) {
+      msg->parent()->open();
+    }
   } else {
     mStandAloneMessage = msg;
   }
@@ -834,6 +837,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     KMMsgDict::instance()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
     assert( p );
     assert( idx >= 0 );
+    //kdDebug() << "SERNUM: " << mMsgList[mMsgListIndex] << " idx: " << idx << " folder: " << p->prettyURL() << endl;
     msg = p->getMsg(idx);
 
     if ( msg ) {
