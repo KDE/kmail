@@ -101,7 +101,9 @@ void FolderStorage::close( bool aForced )
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-    reallyDoClose();
+
+  // kdWarning() << "Really closing: " << folder()->prettyURL()  << kdBacktrace() << endl;
+  reallyDoClose();
 }
 
 //-----------------------------------------------------------------------------
@@ -469,10 +471,16 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 KMMessage* FolderStorage::getMsg(int idx)
 {
   if ( idx < 0 || idx >= count() )
+  { 
+    kdWarning(5006) << "FolderStorage::getMsg was asked for an invalid index. idx =" << idx << " count()=" << count() << endl; 
     return 0;
+  }
 
   KMMsgBase* mb = getMsgBase(idx);
-  if (!mb) return 0;
+  if (!mb) {
+    kdWarning(5006) << "FolderStorage::getMsg, getMsgBase failed for index: " << idx << endl;
+    return 0;
+  }
 
   KMMessage *msg = 0;
   bool undo = mb->enableUndo();
@@ -493,8 +501,10 @@ KMMessage* FolderStorage::getMsg(int idx)
   // Either isMessage and we had a sernum, or readMsg gives us one
   // (via insertion into mMsgList). sernum == 0 may still occur due to
   // an outdated or corrupt IMAP cache.
-  if ( msg->getMsgSerNum() == 0 )
+  if ( msg->getMsgSerNum() == 0 ) {
+    kdWarning(5006) << "FolderStorage::getMsg, message has no sernum, index: " << idx << endl;
     return 0;
+  }
   msg->setEnableUndo(undo);
   msg->setComplete( true );
   return msg;
