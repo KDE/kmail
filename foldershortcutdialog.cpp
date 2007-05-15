@@ -39,7 +39,7 @@
 #include "config.h"
 
 #include <QLabel>
-#include <Q3GroupBox>
+#include <QGroupBox>
 
 
 #include <kkeysequencewidget.h>
@@ -65,12 +65,15 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   setButtons( Ok | Cancel );
   QFrame *box = new KVBox( this );
   setMainWidget( box );
-  Q3GroupBox *gb = new Q3GroupBox(1, Qt::Horizontal, i18n("Select Shortcut for Folder"), box );
+  QGroupBox *gb = new QGroupBox(i18n("Select Shortcut for Folder"),box );
+  QHBoxLayout *layout = new QHBoxLayout;
   gb->setWhatsThis( i18n( "<qt>To choose a key or a combination "
                              "of keys which select the current folder, "
                              "click the button below and then press the key(s) "
                              "you wish to associate with this folder.</qt>" ) );
-  KHBox *hb = new KHBox( gb );
+  gb->setLayout( layout );
+  KHBox *hb = new KHBox;
+  layout->addWidget( hb );
   new QWidget(hb);
   mKeySeqWidget = new KKeySequenceWidget( hb );
   mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
