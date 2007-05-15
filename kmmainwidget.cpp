@@ -2244,18 +2244,6 @@ void KMMainWidget::slotSetMsgStatusImportant()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusSpam()
-{
-  mHeaders->setMsgStatus( MessageStatus::statusSpam(), true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusHam()
-{
-  mHeaders->setMsgStatus( MessageStatus::statusHam(), true);
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusTodo()
 {
   mHeaders->setMsgStatus( MessageStatus::statusTodo(), true);
@@ -3098,29 +3086,6 @@ void KMMainWidget::setupActions()
     setCheckedState( KGuiItem( i18n("Remove &To-do Message Mark") ) );
   mStatusMenu->addAction( mToggleTodoAction );
 
-  mStatusMenu->addSeparator();
-
-  mToggleSpamAction =
-    new KToggleAction( KIcon( "mail_spam" ),
-                       i18n("Classify Message as &Spam"), this );
-  actionCollection()->addAction( "status_spam", mToggleSpamAction );
-  connect( mToggleSpamAction, SIGNAL(triggered(bool) ),
-           SLOT(slotSetMsgStatusSpam()) );
-  mToggleSpamAction->
-    setCheckedState( KGuiItem( i18n("Remove &Spam Classification") ) );
-  mToggleSpamAction->setIconText( i18n( "Spam" ) );
-  mStatusMenu->addAction( mToggleSpamAction );
-
-  mToggleHamAction = new KToggleAction( KIcon( "mail_ham" ),
-                                        i18n("Classify Message as &Ham"), this );
-  actionCollection()->addAction( "status_ham", mToggleHamAction );
-  connect( mToggleHamAction, SIGNAL(triggered(bool) ),
-           SLOT(slotSetMsgStatusHam()) );
-  mToggleHamAction->
-    setCheckedState( KGuiItem( i18n("Remove &Ham Classification") ) );
-  mToggleHamAction->setIconText( i18n( "Ham" ) );
-  mStatusMenu->addAction( mToggleHamAction );
-
   //----- "Mark Thread" submenu
   mThreadStatusMenu  = new KActionMenu(i18n("Mark &Thread"), this);
   actionCollection()->addAction("thread_status", mThreadStatusMenu );
@@ -3550,8 +3515,6 @@ void KMMainWidget::updateMessageActions()
     mMoveActionMenu->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mCopyActionMenu->setEnabled( mass_actions );
     mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
-    mToggleSpamAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
-    mToggleHamAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mFindInMessageAction->setEnabled( mass_actions );
     mForwardAction->setEnabled( mass_actions );
@@ -3884,6 +3847,7 @@ void KMMainWidget::initializeFilterActions()
         icon = "gear";
       }
       filterAction = new KAction( KIcon( icon ), as, actionCollection() );
+      filterAction->setIconText( (*it)->name() );
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool) ),

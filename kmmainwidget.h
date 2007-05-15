@@ -342,8 +342,6 @@ class KDE_EXPORT KMMainWidget : public QWidget
     void slotSetMsgStatusTodo();
     void slotSetMsgStatusSent();
     void slotSetMsgStatusImportant();
-    void slotSetMsgStatusSpam();
-    void slotSetMsgStatusHam();
     void slotSetThreadStatusNew();
     void slotSetThreadStatusUnread();
     void slotSetThreadStatusRead();
@@ -492,7 +490,7 @@ class KDE_EXPORT KMMainWidget : public QWidget
       *mCopyActionMenu, *mApplyFilterActionsMenu;
     KAction *mMarkThreadAsNewAction, *mMarkThreadAsReadAction, *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadTodoAction, *mToggleThreadImportantAction,
-      *mToggleTodoAction, *mToggleImportantAction, *mToggleSpamAction, *mToggleHamAction;
+      *mToggleTodoAction, *mToggleImportantAction;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 

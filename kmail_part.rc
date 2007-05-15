@@ -189,9 +189,6 @@
   <Separator/>
   <Action name="move_to_trash" />
   <Separator/>
-  <Action name="mark_as_spam"/>
-  <Action name="mark_as_ham"/>
-  <Separator/>
   <ActionList name="toolbar_filter_actions" />
  </ToolBar>
 </kpartgui>
