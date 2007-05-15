@@ -71,7 +71,7 @@ FilterLog * FilterLog::instance()
 }
 
 
-void FilterLog::add( QString logEntry, ContentType contentType )
+void FilterLog::add( const QString& logEntry, ContentType contentType )
 {
   if ( isLogging() && ( mAllowedTypes & contentType ) )
   {

@@ -34,7 +34,7 @@
 class QTextEdit;
 class QCheckBox;
 class QSpinBox;
-class Q3GroupBox;
+class QGroupBox;
 
 namespace KMail {
 
@@ -54,7 +54,7 @@ namespace KMail {
       FilterLogDialog( QWidget * parent );
     
     protected slots:
-      void slotLogEntryAdded( QString logEntry );
+      void slotLogEntryAdded( const QString& logEntry );
       void slotLogShrinked();
       void slotLogStateChanged();
       void slotChangeLogDetail();
@@ -67,7 +67,7 @@ namespace KMail {
   protected:
       QTextEdit * mTextEdit;
       QCheckBox * mLogActiveBox;
-      Q3GroupBox * mLogDetailsBox;
+      QGroupBox * mLogDetailsBox;
       QCheckBox * mLogPatternDescBox;
       QCheckBox * mLogRuleEvaluationBox;
       QCheckBox * mLogPatternResultBox;

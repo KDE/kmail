@@ -103,7 +103,7 @@ namespace KMail {
 
       
       /** add a log entry */
-      void add( QString logEntry, ContentType contentType );
+      void add( const QString &logEntry, ContentType contentType );
       /** add a separating line in the log */
       void addSeparator() { add( "------------------------------", meta ); };
       /** discard collected log data */
@@ -128,7 +128,7 @@ namespace KMail {
       static QString recode( const QString & plain ) { return Qt::escape(plain); };
       
     signals:
-      void logEntryAdded( QString );
+      void logEntryAdded(const QString& );
       void logShrinked();
       void logStateChanged();
 

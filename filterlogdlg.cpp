@@ -45,8 +45,8 @@
 #include <QStringList>
 #include <qtextedit.h>
 
-#include <q3groupbox.h>
-
+#include <qgroupbox.h>
+#include <QVBoxLayout>
 
 
 #include <errno.h>
@@ -91,13 +91,15 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
             "Of course, log data is collected and shown only when logging "
             "is turned on. " ) );
 
-  mLogDetailsBox = new Q3GroupBox(1, Qt::Horizontal, i18n( "Logging Details" ), page );
+  mLogDetailsBox = new QGroupBox(i18n( "Logging Details" ), page );
+  QVBoxLayout *layout = new QVBoxLayout;
+  mLogDetailsBox->setLayout( layout );
   mLogDetailsBox->setEnabled( mLogActiveBox->isChecked() );
   connect( mLogActiveBox, SIGNAL( toggled( bool ) ),
            mLogDetailsBox, SLOT( setEnabled( bool ) ) );
 
-  mLogPatternDescBox = new QCheckBox( i18n("Log pattern description"),
-                                      mLogDetailsBox );
+  mLogPatternDescBox = new QCheckBox( i18n("Log pattern description") );
+  layout->addWidget( mLogPatternDescBox );
   mLogPatternDescBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) );
   connect( mLogPatternDescBox, SIGNAL(clicked()),
@@ -106,8 +108,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   //QWhatsThis::add( mLogPatternDescBox,
   //    i18n( "" ) );
 
-  mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation"),
-                                         mLogDetailsBox );
+  mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation") );
+  layout->addWidget( mLogRuleEvaluationBox );
   mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
@@ -120,8 +122,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
             "feedback about the result of the evaluation of all rules "
             "of a single filter will be given." ) );
 
-  mLogPatternResultBox = new QCheckBox( i18n("Log filter pattern evaluation"),
-                                        mLogDetailsBox );
+  mLogPatternResultBox = new QCheckBox( i18n("Log filter pattern evaluation") );
+  layout->addWidget( mLogPatternResultBox );
   mLogPatternResultBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) );
   connect( mLogPatternResultBox, SIGNAL(clicked()),
@@ -130,8 +132,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   //QWhatsThis::add( mLogPatternResultBox,
   //    i18n( "" ) );
 
-  mLogFilterActionBox = new QCheckBox( i18n("Log filter actions"),
-                                       mLogDetailsBox );
+  mLogFilterActionBox = new QCheckBox( i18n("Log filter actions") );
+  layout->addWidget( mLogFilterActionBox );
   mLogFilterActionBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) );
   connect( mLogFilterActionBox, SIGNAL(clicked()),
@@ -158,8 +160,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 	    "this limit then the oldest data will be discarded until "
 	    "the limit is no longer exceeded. " ) );
 
-  connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)),
-          this, SLOT(slotLogEntryAdded(QString)));
+  connect(FilterLog::instance(), SIGNAL(logEntryAdded(const QString&)),
+          this, SLOT(slotLogEntryAdded(const QString&)));
   connect(FilterLog::instance(), SIGNAL(logShrinked(void)),
           this, SLOT(slotLogShrinked(void)));
   connect(FilterLog::instance(), SIGNAL(logStateChanged(void)),
@@ -171,7 +173,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 }
 
 
-void FilterLogDialog::slotLogEntryAdded( QString logEntry )
+void FilterLogDialog::slotLogEntryAdded(const QString& logEntry )
 {
   mTextEdit->append( logEntry );
 }
