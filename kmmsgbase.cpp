@@ -465,8 +465,7 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
       kFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
 
-      QByteArray in;
-      in.fromRawData( enc_start, pos - enc_start );
+      QByteArray in = QByteArray::fromRawData( enc_start, pos - enc_start );
       const QByteArray enc = c->decode( in );
       in.clear();
 
@@ -500,8 +499,7 @@ QByteArray KMMsgBase::encodeRFC2047Quoted( const QByteArray & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
   kFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
-  QByteArray in;
-  in.fromRawData( s.data(), s.length() );
+  QByteArray in = QByteArray::fromRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
   in.clear();
   return QByteArray( result.data(), result.size());
