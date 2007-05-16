@@ -1,5 +1,6 @@
 project(kmail)
 
+INCLUDE(CheckIncludeFiles)
 check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
