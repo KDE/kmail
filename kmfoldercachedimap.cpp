@@ -491,7 +491,7 @@ void KMFolderCachedImap::rememberDeletion( int idx )
   long uid = msg->UID();
   assert(uid>=0);
   mDeletedUIDsSinceLastSync.insert(uid, 0);
-  kdDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyURL();
+  kdDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyURL() << endl;
 }
 
 /* Reimplemented from KMFolderMaildir */
