@@ -51,8 +51,8 @@ k_dcop:
   struct SubResource {
     //dcopidl barfs on those constructors, but dcopidlng works
     SubResource() {} // for QValueList
-    SubResource( const QString& loc, const QString& lab, bool rw )
-      : location( loc ), label( lab ), writable( rw ) {}
+    SubResource( const QString& loc, const QString& lab, bool rw, bool ar )
+      : location( loc ), label( lab ), writable( rw ), alarmRelevant( ar ) {}
     QString location; // unique
     QString label;    // shown to the user
     bool writable;
@@ -73,7 +73,7 @@ k_dcop:
                                  const QString& resource ) = 0;
 
   virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
-  
+
   virtual KURL getAttachment( const QString& resource,
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
@@ -95,7 +95,7 @@ k_dcop:
 
   /// Return the number of mails that need to be looked at by incidencesKolab.
   /// This allows to call incidencesKolab in chunks.
-  virtual int incidencesKolabCount( const QString& mimetype,
+  virtual int incidencesKolabCount( const QString& mimetype /*ignored*/,
                                     const QString& resource ) = 0;
 
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
@@ -108,7 +108,7 @@ k_dcop:
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
-   /** 
+   /**
    * Trigger the creation of a new resource folder with name @param resource
    * under parent @param.
    * @return success or failure
@@ -116,7 +116,7 @@ k_dcop:
   virtual bool addSubresource( const QString& resource,
                                const QString& parent,
                                const QString& contentsType ) = 0;
-  /** 
+  /**
    * Trigger the deletion of a new resource folder with id @param resource.
    * @return success or failure
    */
@@ -136,7 +136,7 @@ k_dcop_signals:
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource,
-                         const QString& label );
+                         const QString& label, bool writable, bool alarmRelevant );
   void subresourceDeleted( const QString& type, const QString& resource );
 };
 
@@ -154,14 +154,14 @@ inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& s
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::StorageFormat& format  )
 {
   Q_UINT32 foo = format;
-  str << foo; 
+  str << foo;
   return str;
 }
 
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::StorageFormat& format  )
 {
   Q_UINT32 foo;
-  str >> foo; 
+  str >> foo;
   format = ( KMailICalIface::StorageFormat )foo;
   return str;
 }
