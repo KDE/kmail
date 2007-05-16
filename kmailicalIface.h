@@ -142,12 +142,12 @@ k_dcop_signals:
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
 {
-  str << subResource.location << subResource.label << subResource.writable;
+  str << subResource.location << subResource.label << subResource.writable << subResource.alarmRelevant;
   return str;
 }
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& subResource )
 {
-  str >> subResource.location >> subResource.label >> subResource.writable;
+  str >> subResource.location >> subResource.label >> subResource.writable >> subResource.alarmRelevant;
   return str;
 }
 
