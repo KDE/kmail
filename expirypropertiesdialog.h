@@ -22,7 +22,6 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
 class QSpacerItem;
-class Q3GroupBox;
 class QCheckBox;
 class QSpinBox;
 class QLabel;

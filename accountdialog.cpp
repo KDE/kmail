@@ -21,7 +21,7 @@
 #include <config-kmail.h>
 #include "accountdialog.h"
 
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
 #include <QCheckBox>
 #include <QLayout>
 #include <QTabWidget>
@@ -35,6 +35,7 @@
 #include <q3header.h>
 #include <QToolButton>
 #include <q3grid.h>
+#include <QGroupBox>
 //Added by qt3to4:
 #include <QGridLayout>
 #include <QTextStream>
@@ -2366,8 +2367,8 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
   setCaption( i18n("Edit Namespace '%1'", ns) );
   Q3Grid* grid = new Q3Grid( 2, page );
 
-  mBg = new Q3ButtonGroup( 0 );
-  connect( mBg, SIGNAL( clicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
+  mBg = new QButtonGroup( 0 );
+  connect( mBg, SIGNAL( buttonClicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mDelimMap = mNamespaceMap->find( mType ).value();
   ImapAccountBase::namespaceDelim::Iterator it;
@@ -2379,7 +2380,8 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     button->setFixedSize( 22, 22 );
-    mLineEditMap[ mBg->insert( button ) ] = edit;
+    mBg->addButton( button );
+    mLineEditMap[ mBg->id( button ) ] = edit;
   }
 }
 
@@ -2395,9 +2397,9 @@ void NamespaceEditDialog::slotRemoveEntry( int id )
     mLineEditMap.remove( id );
     delete edit;
   }
-  if ( mBg->find( id ) ) {
+  if ( mBg->button( id ) ) {
     // delete the button
-    delete mBg->find( id );
+    delete mBg->button( id );
   }
   adjustSize();
 }

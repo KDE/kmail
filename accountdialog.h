@@ -43,7 +43,7 @@ class QToolButton;
 class KIntNumInput;
 class KMAccount;
 class KMFolder;
-class Q3ButtonGroup;
+class QButtonGroup;
 class QGroupBox;
 
 namespace KPIM {
@@ -331,7 +331,7 @@ class NamespaceEditDialog: public KDialog
     ImapAccountBase::nsDelimMap* mNamespaceMap;
     ImapAccountBase::namespaceDelim mDelimMap;
     QMap<int, NamespaceLineEdit*> mLineEditMap;
-    Q3ButtonGroup* mBg;
+    QButtonGroup* mBg;
 };
 
 } // namespace KMail
