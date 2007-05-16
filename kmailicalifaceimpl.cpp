@@ -52,6 +52,7 @@ using KMail::AccountManager;
 #include "accountmanager.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
+#include "acljobs.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -412,8 +413,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && itmime != attachmentMimetypes.end()
        && iturl != attachmentURLs.end();
        ++itname, ++iturl, ++itmime ){
-    bool bymimetype = (*itmime).startsWith( "application/x-vnd.kolab." );
-    if( !updateAttachment( *msg, *iturl, *itname, *itmime, !bymimetype ) ){
+    bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+    if( !updateAttachment( *msg, *iturl, *itname, *itmime, byname ) ){
       kdWarning(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
@@ -473,6 +474,8 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
 int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
                                               const QString& resource )
 {
+  Q_UNUSED( mimetype ); // honouring that would be too slow...
+
   if( !mUseResourceIMAP )
     return 0;
 
@@ -485,7 +488,7 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
   f->open("kolabcount");
   int n = f->count();
   f->close("kolabcount");
-  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( " << mimetype << ", "
+  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( "
                 << resource << " ) returned " << n << endl;
   return n;
 }
@@ -610,7 +613,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f ) {
-    subResources.append( SubResource( f->location(),  f->prettyURL(), !f->isReadOnly() ) );
+    subResources.append( SubResource( f->location(),  f->prettyURL(),
+                                      !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
@@ -621,7 +625,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t ) {
-      subResources.append( SubResource( f->location(), f->prettyURL(), !f->isReadOnly() ) );
+      subResources.append( SubResource( f->location(), f->prettyURL(),
+                                        !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
@@ -779,8 +784,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
           && itmime != attachmentMimetypes.end()
           && itname != attachmentNames.end();
           ++iturl, ++itname, ++itmime ){
-        bool bymimetype = (*itname).startsWith( "application/x-vnd.kolab." );
-        if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, bymimetype ) ){
+        bool byname = !(*itmime).startsWith( "application/x-vnd.kolab." );
+        if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, byname ) ){
           kdDebug(5006) << "Attachment error, can not update attachment " << *iturl << endl;
           break;
         }
@@ -1258,7 +1263,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
-  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL() );
+  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
+                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1402,8 +1408,8 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
     subresourceDeleted( contentsTypeStr, location );
 
-    subresourceAdded( contentsTypeStr, location, folder->prettyURL()  /*,
-                      !folder->isReadOnly() , folderIsAlarmRelevant( folder ) TODO */ );
+    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
+                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
 
   }
 }
@@ -1642,11 +1648,11 @@ void KMailICalIfaceImpl::readConfig()
 
   // END TILL TODO
 
-  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
 
   reloadFolderTree();
 }
@@ -1868,6 +1874,36 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
       return StandardFolderSearchResult( 0, StandardFolderSearchResult::NotFound );
     return StandardFolderSearchResult( static_cast<KMFolder*>( node ), StandardFolderSearchResult::FoundAndStandard );
   }
+}
+
+/* We treat all folders as relevant wrt alarms for which we have Administer
+ * rights or for which the "Incidences relevant for everyone" annotation has
+ * been set. It can be reasonably assumed that those are "ours". All local folders
+ * must be ours anyhow. */
+bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
+{
+  bool administerRights = true;
+  bool relevantForOwner = true;
+  bool relevantForEveryone = false;
+  if ( folder->folderType() == KMFolderTypeImap ) {
+    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
+    administerRights =
+      imapFolder->userRights() <= 0 || imapFolder->userRights() & KMail::ACLJobs::Administer;
+  }
+  if ( folder->folderType() == KMFolderTypeCachedImap ) {
+    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
+    administerRights =
+      dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
+    relevantForOwner = dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins;
+    relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
+  }
+#if 0
+  kdDebug(5006) << k_funcinfo << endl;
+  kdDebug(5006) << "Folder: " << folder->label() << " has administer rights: " << administerRights << endl;
+  kdDebug(5006) << "and is relevant for owner: " << relevantForOwner <<  endl;
+  kdDebug(5006) << "and relevant for everyone: "  << relevantForEveryone << endl;
+#endif
+  return ( administerRights && relevantForOwner ) || relevantForEveryone;
 }
 
 void KMailICalIfaceImpl::setResourceQuiet(bool q)

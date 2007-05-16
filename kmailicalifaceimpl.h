@@ -274,6 +274,8 @@ private:
 
   StorageFormat globalStorageFormat() const;
 
+  static bool folderIsAlarmRelevant( const KMFolder * );
+
 private:
   QGuardedPtr<KMFolder> mContacts;
   QGuardedPtr<KMFolder> mCalendar;

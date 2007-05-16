@@ -51,11 +51,12 @@ k_dcop:
   struct SubResource {
     //dcopidl barfs on those constructors, but dcopidlng works
     SubResource() {} // for QValueList
-    SubResource( const QString& loc, const QString& lab, bool rw )
-      : location( loc ), label( lab ), writable( rw ) {}
+    SubResource( const QString& loc, const QString& lab, bool rw, bool ar )
+      : location( loc ), label( lab ), writable( rw ), alarmRelevant( ar ) {}
     QString location; // unique
     QString label;    // shown to the user
     bool writable;
+    bool alarmRelevant;
   };
 
   /// The format of the mails containing other contents than actual mail
@@ -94,7 +95,7 @@ k_dcop:
 
   /// Return the number of mails that need to be looked at by incidencesKolab.
   /// This allows to call incidencesKolab in chunks.
-  virtual int incidencesKolabCount( const QString& mimetype,
+  virtual int incidencesKolabCount( const QString& mimetype /*ignored*/,
                                     const QString& resource ) = 0;
 
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
@@ -121,18 +122,18 @@ k_dcop_signals:
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource,
-                         const QString& label );
+                         const QString& label, bool writable, bool alarmRelevant );
   void subresourceDeleted( const QString& type, const QString& resource );
 };
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
 {
-  str << subResource.location << subResource.label << subResource.writable;
+  str << subResource.location << subResource.label << subResource.writable << subResource.alarmRelevant;
   return str;
 }
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& subResource )
 {
-  str >> subResource.location >> subResource.label >> subResource.writable;
+  str >> subResource.location >> subResource.label >> subResource.writable >> subResource.alarmRelevant;
   return str;
 }
 
