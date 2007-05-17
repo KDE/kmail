@@ -45,6 +45,7 @@ namespace KMail {
     mBasicList += "APPLICATION/PKCS7-SIGNATURE";
     // groupware
     mBasicList += "APPLICATION/MS-TNEF";
+    mBasicList += "TEXT/CALENDAR";
   }
 
   //-----------------------------------------------------------------------------
@@ -75,7 +76,7 @@ namespace KMail {
     {
       ++it;
       // skip this part if the parent part is already loading
-      if ( part->parent() && 
+      if ( part->parent() &&
            selected.contains( part->parent() ) &&
            part->loadPart() )
         continue;
@@ -91,7 +92,7 @@ namespace KMail {
         selected.append( fake );
         break;
       }
-        
+
       if ( headerCheck && !part->partSpecifier().endsWith(".HEADER") )
       {
         // this is an embedded simple message (not multipart) so we get no header part
@@ -102,15 +103,15 @@ namespace KMail {
         fake->setPartSpecifier( partId );
         fake->setOriginalContentTypeStr("");
         fake->setLoadPart( true );
-        if ( addPartToList( fake ) ) 
+        if ( addPartToList( fake ) )
           selected.append( fake );
       }
-      
+
       if ( part->originalContentTypeStr() == "MESSAGE/RFC822" )
         headerCheck = true;
       else
         headerCheck = false;
-      
+
       // check whether to load this part or not:
       // look at the basic list, ask the subclass and check the parent
       if ( mBasicList.contains( part->originalContentTypeStr() ) ||
@@ -127,7 +128,7 @@ namespace KMail {
       if ( !part->partSpecifier().endsWith(".HEADER") &&
            part->typeStr() != "MULTIPART" )
         part->setLoadHeaders( true ); // load MIME header
-      
+
       if ( part->loadHeaders() || part->loadPart() )
         selected.append( part );
     }
@@ -205,5 +206,5 @@ namespace KMail {
 
     return false;
   }
-  
+
 }
