@@ -3250,4 +3250,95 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job
   d.setResult( OK );
 }
 
+
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    KMCommand( parent, msg ),
+    mPartIndex( node->nodeId() ),
+    mSernum( 0 )
+{
+  kdDebug() << k_funcinfo << endl;
+}
+
+KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
+{
+  kdDebug() << k_funcinfo << endl;
+}
+
+KMCommand::Result KMDeleteAttachmentCommand::execute()
+{
+  kdDebug() << k_funcinfo << endl;
+  KMMessage *msg = retrievedMessage();
+  if ( !msg )
+    return Failed;
+  mSernum = msg->getMsgSerNum();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+  msg->removeBodyPart( dwpart );
+
+  // add dummy part to show that a attachment has been deleted
+  KMMessagePart dummyPart;
+  dummyPart.duplicate( part );
+  QString content = i18n("This attachment has been deleted.");
+  if ( !part.fileName().isEmpty() )
+    content = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setBodyFromUnicode( content );
+  dummyPart.setTypeStr( "text" );
+  dummyPart.setSubtypeStr( "plain" );
+  QCString cd = dummyPart.contentDisposition();
+  if ( cd.find( "attachment", 0, false ) == 0 ) {
+    cd.replace( 0, 10, "inline" );
+    dummyPart.setContentDisposition( cd );
+  } else if ( cd.isEmpty() ) {
+    dummyPart.setContentDisposition( "inline" );
+  }
+  msg->addBodyPart( &dummyPart );
+
+  KMFolder *folder = msg->parent();
+  if ( !folder )
+    return Failed;
+  FolderStorage *storage = folder->storage();
+  if ( !storage )
+    return Failed;
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  FolderJob *job = storage->createJob( newMsg, FolderJob::tPutMessage, folder );
+  connect( job, SIGNAL(result(KMail::FolderJob*)), SLOT(messageStoreResult(KMail::FolderJob*)) );
+  job->start();
+
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void KMDeleteAttachmentCommand::messageStoreResult(KMail::FolderJob * job)
+{
+  kdDebug() << k_funcinfo << job << job->error() << endl;
+  if ( !job->error() && mSernum ) {
+    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
+    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
+    delCmd->start();
+    return;
+  }
+  setResult( Failed );
+  emit completed( this );
+  deleteLater();
+}
+
+void KMDeleteAttachmentCommand::messageDeleteResult(KMCommand * cmd)
+{
+  kdDebug() << k_funcinfo << cmd << cmd->result() << endl;
+  setResult( cmd->result() );
+  emit completed( this );
+  deleteLater();
+}
+
 #include "kmcommands.moc"

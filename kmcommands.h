@@ -1018,4 +1018,23 @@ private:
 
 };
 
+
+class KDE_EXPORT KMDeleteAttachmentCommand : public KMCommand
+{
+  Q_OBJECT
+  public:
+    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~KMDeleteAttachmentCommand();
+
+  private slots:
+    void messageStoreResult( KMail::FolderJob *job );
+    void messageDeleteResult( KMCommand *cmd );
+
+  private:
+    Result execute();
+
+    int mPartIndex;
+    Q_UINT32 mSernum;
+};
+
 #endif /*KMCommands_h*/

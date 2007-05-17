@@ -621,6 +621,9 @@ public:
   /** Delete all body parts. */
   void deleteBodyParts();
 
+  /** Removes the given body part. */
+  void removeBodyPart( DwBodyPart * dwPart );
+
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
   void setStatusFields();
