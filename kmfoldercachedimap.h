@@ -383,6 +383,13 @@ public slots:
   void slotCheckNamespace( const QStringList&, const QStringList&,
       const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
+  /** 
+   * Reset the flag that is used to tell whether there are local changes to the
+   * incidencesFor annoation. This is needed to-redownload the annotation value
+   * when a local override needs to be cleared.
+   */
+  void resetIncidencesForChanged();
+
 private slots:
   void serverSyncInternal();
   void slotIncreaseProgress();

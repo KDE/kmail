@@ -2773,4 +2773,9 @@ int KMFolderCachedImap::createIndexFromContentsRecursive()
   return createIndexFromContents();
 }
 
+void KMFolderCachedImap::resetIncidencesForChanged()
+{
+  mIncidencesForChanged = false;
+}
+
 #include "kmfoldercachedimap.moc"

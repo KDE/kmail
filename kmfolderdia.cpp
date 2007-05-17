@@ -458,6 +458,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   } else {
     mContentsComboBox = 0;
   }
+  
+  mIncidencesForComboBox = 0;
+  mIncidencesForCheckBox = 0;
 
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
@@ -466,13 +469,15 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
          GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
       mContentsComboBox ) {
     ++row;
-    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
-    gl->addWidget( label, row, 0 );
-    mIncidencesForComboBox = new QComboBox( this );
-    label->setBuddy( mIncidencesForComboBox );
-    gl->addWidget( mIncidencesForComboBox, row, 1 );
+    const bool readOnly = !mDlg->folder()->isReadOnly();
+    if ( readOnly ) {
+      QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
+      gl->addWidget( label, row, 0 );
+      mIncidencesForComboBox = new QComboBox( this );
+      label->setBuddy( mIncidencesForComboBox );
+      gl->addWidget( mIncidencesForComboBox, row, 1 );
 
-    QWhatsThis::add( mIncidencesForComboBox,
+      const QString whatsThisForMyOwnFolders = 
                      i18n( "This setting defines which users sharing "
                            "this folder should get \"busy\" periods in their freebusy lists "
                            "and should see the alarms for the events or tasks in this folder. "
@@ -485,20 +490,34 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                            "group meetings, all readers of the folders should be marked "
                            "as busy for meetings.\n"
                            "A company-wide folder with optional events in it would use \"Nobody\" "
-                           "since it is not known who will go to those events." ) );
+                           "since it is not known who will go to those events." );
 
-    mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
-    mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
-    mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
+      QWhatsThis::add( mIncidencesForComboBox, whatsThisForMyOwnFolders );
+      mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
+      mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
+      mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
+    } else {
+      const QString whatsThisForReadOnlyFolders =
+        i18n( "This setting allows you to disable alarms for folders shared by "
+            "others. ");
+      mIncidencesForCheckBox = new QCheckBox( this );
+      gl->addWidget( mIncidencesForCheckBox, row, 0 );
+      QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms" ), this );
+      gl->addWidget( label, row, 1 );
+      label->setBuddy( mIncidencesForCheckBox );
+
+      QWhatsThis::add( mIncidencesForCheckBox, whatsThisForReadOnlyFolders );
+    }
 
     if ( mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeCalendar
       && mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeTask ) {
-      mIncidencesForComboBox->setEnabled( false );
+      if ( readOnly ) {
+        mIncidencesForComboBox->setEnabled( false );
+      } else {
+        mIncidencesForCheckBox->setEnabled( false );
+      }
     }
-  } else {
-    mIncidencesForComboBox = 0;
   }
-
   topLayout->addStretch( 100 ); // eat all superfluous space
 
   initializeWithValuesFromFolder( mDlg->folder() );
@@ -548,6 +567,10 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
     mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
   }
+  if ( mIncidencesForCheckBox ) {
+    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
+    mIncidencesForCheckBox->setChecked( dimap->incidencesFor() != KMFolderCachedImap::IncForNobody );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -569,10 +592,12 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
         "to temporarily disable hiding of groupware folders to be able to see it.");
     KMessageBox::information( this, message );
   }
-
+  const bool enable = type == KMail::ContentsTypeCalendar ||
+                                          type == KMail::ContentsTypeTask;
   if ( mIncidencesForComboBox )
-      mIncidencesForComboBox->setEnabled( type == KMail::ContentsTypeCalendar ||
-                                          type == KMail::ContentsTypeTask );
+      mIncidencesForComboBox->setEnabled( enable );
+  if ( mIncidencesForComboBox )
+      mIncidencesForCheckBox->setEnabled( enable );
 }
 
 //-----------------------------------------------------------------------------
@@ -634,12 +659,19 @@ bool FolderDiaGeneralTab::save()
       folder->storage()->setContentsType( type );
     }
 
-    if ( mIncidencesForComboBox && folder->folderType() == KMFolderTypeCachedImap ) {
-      KMFolderCachedImap::IncidencesFor incfor =
-        static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+    if ( folder->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+      KMFolderCachedImap::IncidencesFor incfor = KMFolderCachedImap::IncForAdmins;
+      if ( mIncidencesForComboBox ) {
+        incfor = static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+      }
+      if ( mIncidencesForCheckBox ) {
+        incfor = mIncidencesForCheckBox->isChecked() ? KMFolderCachedImap::IncForAdmins: KMFolderCachedImap::IncForNobody;
+      }
       if ( dimap->incidencesFor() != incfor ) {
         dimap->setIncidencesFor( incfor );
+        if ( mIncidencesForCheckBox && incfor != KMFolderCachedImap::IncForNobody )
+          dimap->resetIncidencesForChanged();
         dimap->writeConfig();
       }
     }

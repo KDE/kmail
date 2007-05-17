@@ -136,6 +136,7 @@ private:
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;
   QComboBox *mIncidencesForComboBox;
+  QCheckBox *mIncidencesForCheckBox;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;
   QLabel      *mUnreadIconLabel;
