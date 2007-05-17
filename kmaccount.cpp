@@ -399,7 +399,9 @@ QString KMAccount::encryptStr(const QString &aStr)
 {
   QString result;
   for (uint i = 0; i < aStr.length(); i++)
-    result += (aStr[i].unicode() < 0x20) ? aStr[i] :
+    /* yes, no typo. can't encode ' ' or '!' because
+       they're the unicode BOM. stupid scrambling. stupid. */
+    result += (aStr[i].unicode() <= 0x21 ) ? aStr[i] :
       QChar(0x1001F - aStr[i].unicode());
   return result;
 }
