@@ -231,6 +231,22 @@ public:
   */
   bool configureToolbar() const { return bConfigureToolbar; }
 
+  /** @return The toolbar name of this filter.
+   *  @see setToolbarName
+   */
+  QString toolbarName() const;
+
+  /** This sets the toolbar name for this filter.
+   *  The toolbar name is the text to be displayed underneath the toolbar icon
+   *  for this filter. This is usually the same as name(),  expect when 
+   *  explicitly set by this function.
+   *  This is useful if the normal filter mame is too long for the toolbar.
+   *  @see toolbarName, name
+   */
+  void setToolbarName( QString toolbarName ) {
+    mToolbarName = toolbarName;
+  }
+
   /** Set the shortcut to be used if plugged into the filter menu
       or toolbar. Default is no shortcut.
       @see setConfigureShortcut setConfigureToolbar
@@ -292,6 +308,7 @@ private:
   QList<int> mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
+  QString mToolbarName;
   KShortcut mShortcut;
   bool bPopFilter : 1;
   bool bApplyOnInbound : 1;

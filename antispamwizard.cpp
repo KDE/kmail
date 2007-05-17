@@ -366,7 +366,7 @@ void AntiSpamWizard::accept()
 
     // Classify messages manually as Spam
     KMFilter* classSpamFilter = new KMFilter();
-    classSpamFilter->setIcon( "mail-spam" );
+    classSpamFilter->setIcon( "mail_spam" );
     QList<KMFilterAction*> *classSpamFilterActions = classSpamFilter->actions();
     KMFilterAction* classSpamFilterActionFirst = dict.value( "set status" )->create();
     classSpamFilterActionFirst->argsFromString( "P" );
@@ -401,11 +401,12 @@ void AntiSpamWizard::accept()
     classSpamFilter->setStopProcessingHere( true );
     classSpamFilter->setConfigureShortcut( true );
     classSpamFilter->setConfigureToolbar( true );
+    classSpamFilter->setToolbarName( i18n( "Spam" ) );
     filterList.append( classSpamFilter );
 
     // Classify messages manually as not Spam / as Ham
     KMFilter* classHamFilter = new KMFilter();
-    classHamFilter->setIcon( "mail-ham" );
+    classHamFilter->setIcon( "mail_ham" );
     QList<KMFilterAction*> *classHamFilterActions = classHamFilter->actions();
     KMFilterAction* classHamFilterActionFirst = dict.value( "set status" )->create();
     classHamFilterActionFirst->argsFromString( "H" );
@@ -443,6 +444,7 @@ void AntiSpamWizard::accept()
     classHamFilter->setStopProcessingHere( true );
     classHamFilter->setConfigureShortcut( true );
     classHamFilter->setConfigureToolbar( true );
+    classHamFilter->setToolbarName( i18n( "Ham" ) );
     filterList.append( classHamFilter );
   }
 

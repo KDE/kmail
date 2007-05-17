@@ -85,6 +85,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bStopProcessingHere = aFilter.stopProcessingHere();
     bConfigureShortcut = aFilter.configureShortcut();
     bConfigureToolbar = aFilter.configureToolbar();
+    mToolbarName = aFilter.toolbarName();
     mApplicability = aFilter.applicability();
     mIcon = aFilter.icon();
     mShortcut = aFilter.shortcut();
@@ -265,6 +266,7 @@ void KMFilter::readConfig(KConfigGroup & config)
     }
     bConfigureToolbar = config.readEntry( "ConfigureToolbar", false );
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
+    mToolbarName = config.readEntry( "ToolbarName", name() );
     mIcon = config.readEntry( "Icon", "gear" );
     bAutoNaming = config.readEntry( "AutomaticName", false );
 
@@ -344,6 +346,7 @@ void KMFilter::writeConfig(KConfigGroup & config) const
     if ( !mShortcut.isEmpty() )
       config.writeEntry( "Shortcut", mShortcut.toString() );
     config.writeEntry( "ConfigureToolbar", bConfigureToolbar );
+    config.writeEntry( "ToolbarName", mToolbarName );
     config.writeEntry( "Icon", mIcon );
     config.writeEntry( "AutomaticName", bAutoNaming );
     config.writeEntry( "Applicability", (int)mApplicability );
@@ -393,6 +396,14 @@ bool KMFilter::isEmpty() const
     return mPattern.isEmpty();
   else
     return mPattern.isEmpty() && mActions.isEmpty() && mAccounts.isEmpty();
+}
+
+QString KMFilter::toolbarName() const
+{
+  if ( mToolbarName.isEmpty() )
+    return name();
+  else
+    return mToolbarName;
 }
 
 #ifndef NDEBUG
