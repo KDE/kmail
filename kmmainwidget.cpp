@@ -1004,13 +1004,13 @@ void KMMainWidget::slotShowNewFromTemplate()
   if ( !mTemplateFolder )
     return;
 
-  mTemplateMenu->popupMenu()->clear();
+  mTemplateMenu->menu()->clear();
   for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
     KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
 
     QString subj = mb->subject();
     if ( subj.isEmpty() ) subj = i18n("No Subject");
-    mTemplateMenu->popupMenu()->insertItem(
+    mTemplateMenu->menu()->insertItem(
       KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ), idx );
   }
 }
@@ -2643,18 +2643,18 @@ void KMMainWidget::updateCustomTemplateMenus()
     ++idx;
   }
   if ( !replyc ) {
-      mCustomReplyActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomReplyActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomReplyActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
+      mCustomReplyActionMenu->menu()->setItemEnabled( 0, false );
       mCustomReplyActionMenu->setEnabled( false );
   }
   if ( !replyallc ) {
-      mCustomReplyAllActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomReplyAllActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomReplyAllActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
+      mCustomReplyAllActionMenu->menu()->setItemEnabled( 0, false );
       mCustomReplyAllActionMenu->setEnabled( false );
   }
   if ( !forwardc ) {
-      mCustomForwardActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomForwardActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomForwardActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
+      mCustomForwardActionMenu->menu()->setItemEnabled( 0, false );
       mCustomForwardActionMenu->setEnabled( false );
   }
 
@@ -2923,9 +2923,9 @@ void KMMainWidget::setupActions()
 				   actionCollection() );
   mTemplateMenu->setDelayed( true );
   actionCollection()->addAction("new_from_template", mTemplateMenu );
-  connect( mTemplateMenu->popupMenu(), SIGNAL( aboutToShow() ), this,
+  connect( mTemplateMenu->menu(), SIGNAL( aboutToShow() ), this,
            SLOT( slotShowNewFromTemplate() ) );
-  connect( mTemplateMenu->popupMenu(), SIGNAL( activated(int) ), this,
+  connect( mTemplateMenu->menu(), SIGNAL( activated(int) ), this,
            SLOT( slotNewFromTemplate(int) ) );
 
   action  = new KAction(KIcon("mail_post_to"), i18n("New Message t&o Mailing-List..."), this);
@@ -3779,22 +3779,22 @@ void KMMainWidget::slotUpdateUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::clearFilterActions()
 {
-  if ( !mFilterTBarActions.isEmpty() ) {
-    if ( mGUIClient->factory() ) {
+  if ( !mFilterTBarActions.isEmpty() )
+    if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
-    }
-    qDeleteAll( mFilterTBarActions );
-    mFilterTBarActions.clear();
-  }
+
+  if ( !mFilterMenuActions.isEmpty() )
+    if ( mGUIClient->factory() )
+      mGUIClient->unplugActionList( "menu_filter_actions" );
+
+  foreach ( QAction *a, mFilterMenuActions )
+    actionCollection()->removeAction( a );
 
   mApplyFilterActionsMenu->menu()->clear();
-  if ( !mFilterMenuActions.isEmpty() ) {
-    if ( mGUIClient->factory() ) {
-      mGUIClient->unplugActionList( "menu_filter_actions" );
-    }
-    qDeleteAll( mFilterMenuActions );
-    mFilterMenuActions.clear();
-  }
+  mFilterTBarActions.clear(); 
+  mFilterMenuActions.clear();
+
+  qDeleteAll( mFilterCommands );
   mFilterCommands.clear();
 }
 
@@ -3847,7 +3847,7 @@ void KMMainWidget::initializeFilterActions()
         icon = "gear";
       }
       filterAction = new KAction( KIcon( icon ), as, actionCollection() );
-      filterAction->setIconText( (*it)->name() );
+      filterAction->setIconText( (*it)->toolbarName() );
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool) ),

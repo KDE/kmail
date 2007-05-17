@@ -180,7 +180,7 @@
    <Action name="help_kmail_welcomepage"/>
   </Menu>
  </MenuBar>
- <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
+ <ToolBar name="mainToolBar" fullWidth="true" >
   <text>Main Toolbar</text>
   <Action name="new_message" />
   <Action name="file_print" />
