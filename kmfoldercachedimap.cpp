@@ -200,7 +200,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder *folder, const char *aName )
     mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo()
+    mQuotaInfo(), mAlarmsBlocked( false )
 {
   setUidValidity( "" );
   readUidCache();
@@ -257,6 +257,9 @@ void KMFolderCachedImap::readConfig()
     }
   }
   mIncidencesFor = incidencesForFromString( group.readEntry( "IncidencesFor" ) );
+  mAlarmsBlocked = group.readEntry( "AlarmsBlocked", false );
+//  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
+//                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   mUserRights = config->readEntry( "UserRights", 0 ); // default is we don't know
   mOldUserRights = mUserRights;
@@ -312,6 +315,7 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
     configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+    configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
     configGroup.writeEntry( "UserRights", mUserRights );
 
     if ( mQuotaInfo.isValid() ) {
@@ -2857,6 +2861,16 @@ int KMFolderCachedImap::createIndexFromContentsRecursive()
   }
 
   return createIndexFromContents();
+}
+
+void KMFolderCachedImap::setAlarmsBlocked( bool blocked )
+{
+  mAlarmsBlocked = blocked;
+}
+
+bool KMFolderCachedImap::alarmsBlocked() const
+{
+  return mAlarmsBlocked;
 }
 
 #include "kmfoldercachedimap.moc"

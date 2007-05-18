@@ -132,9 +132,17 @@ class KMFolderCachedImap : public KMFolderMaildir
     virtual void serverSync( bool recurse );
 
     /*
-      Forces the sync state to be performed.
+      Forces the sync state to be reset.
     */
     void resetSyncState();
+
+    /** Block this folder from generating alarms, even if the annotations
+     * on it say otherwise. Used to override alarms for read-only folders.
+     * (Only useful for resource folders) */
+    void setAlarmsBlocked( bool blocked );
+
+    /** Should alarms for this folder be blocked?  (Only useful for resource folders) */
+    bool alarmsBlocked() const;
 
     void checkUidValidity();
 
@@ -614,6 +622,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     QString mImapPathCreation;
 
     QuotaInfo mQuotaInfo;
+  bool mAlarmsBlocked;
 };
 
 #endif /*kmfoldercachedimap_h*/
