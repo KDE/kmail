@@ -181,7 +181,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo()
+    mQuotaInfo(), mAlarmsBlocked( false )
 {
   setUidValidity("");
   // if we fail to read a uid file but there is one, nuke it
