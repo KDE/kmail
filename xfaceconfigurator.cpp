@@ -136,6 +136,8 @@ namespace KMail {
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
              widgetStack, SLOT(setCurrentIndex(int)) );
+    connect( mSourceCombo, SIGNAL(activated(int)),
+             widgetStack, SLOT(setCurrentIndex (int)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
              mSourceCombo, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
