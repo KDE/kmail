@@ -455,12 +455,14 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
               this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
+    if ( mDlg->folder()->isReadOnly() )
+      mContentsComboBox->setEnabled( false );
   } else {
     mContentsComboBox = 0;
   }
   
   mIncidencesForComboBox = 0;
-  mIncidencesForCheckBox = 0;
+  mAlarmsBlockedCheckBox = 0;
 
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
@@ -469,53 +471,47 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
          GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
       mContentsComboBox ) {
     ++row;
-    const bool readOnly = !mDlg->folder()->isReadOnly();
-    if ( readOnly ) {
-      QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
-      gl->addWidget( label, row, 0 );
-      mIncidencesForComboBox = new QComboBox( this );
-      label->setBuddy( mIncidencesForComboBox );
-      gl->addWidget( mIncidencesForComboBox, row, 1 );
 
-      const QString whatsThisForMyOwnFolders = 
-                     i18n( "This setting defines which users sharing "
-                           "this folder should get \"busy\" periods in their freebusy lists "
-                           "and should see the alarms for the events or tasks in this folder. "
-                           "The setting applies to Calendar and Task folders only "
-                           "(for tasks, this setting is only used for alarms).\n\n"
-                           "Example use cases: if the boss shares a folder with his secretary, "
-                           "only the boss should be marked as busy for his meetings, so he should "
-                           "select \"Admins\", since the secretary has no admin rights on the folder.\n"
-                           "On the other hand if a working group shares a Calendar for "
-                           "group meetings, all readers of the folders should be marked "
-                           "as busy for meetings.\n"
-                           "A company-wide folder with optional events in it would use \"Nobody\" "
-                           "since it is not known who will go to those events." );
+    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
+    gl->addWidget( label, row, 0 );
+    mIncidencesForComboBox = new QComboBox( this );
+    label->setBuddy( mIncidencesForComboBox );
+    gl->addWidget( mIncidencesForComboBox, row, 1 );
 
-      QWhatsThis::add( mIncidencesForComboBox, whatsThisForMyOwnFolders );
-      mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
-      mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
-      mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
-    } else {
-      const QString whatsThisForReadOnlyFolders =
-        i18n( "This setting allows you to disable alarms for folders shared by "
-            "others. ");
-      mIncidencesForCheckBox = new QCheckBox( this );
-      gl->addWidget( mIncidencesForCheckBox, row, 0 );
-      QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms" ), this );
-      gl->addWidget( label, row, 1 );
-      label->setBuddy( mIncidencesForCheckBox );
+    const QString whatsThisForMyOwnFolders = 
+      i18n( "This setting defines which users sharing "
+          "this folder should get \"busy\" periods in their freebusy lists "
+          "and should see the alarms for the events or tasks in this folder. "
+          "The setting applies to Calendar and Task folders only "
+          "(for tasks, this setting is only used for alarms).\n\n"
+          "Example use cases: if the boss shares a folder with his secretary, "
+          "only the boss should be marked as busy for his meetings, so he should "
+          "select \"Admins\", since the secretary has no admin rights on the folder.\n"
+          "On the other hand if a working group shares a Calendar for "
+          "group meetings, all readers of the folders should be marked "
+          "as busy for meetings.\n"
+          "A company-wide folder with optional events in it would use \"Nobody\" "
+          "since it is not known who will go to those events." );
 
-      QWhatsThis::add( mIncidencesForCheckBox, whatsThisForReadOnlyFolders );
-    }
+    QWhatsThis::add( mIncidencesForComboBox, whatsThisForMyOwnFolders );
+    mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
+    mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
+    ++row;
+    const QString whatsThisForReadOnlyFolders =
+      i18n( "This setting allows you to disable alarms for folders shared by "
+          "others. ");
+    mAlarmsBlockedCheckBox = new QCheckBox( this );
+    gl->addWidget( mAlarmsBlockedCheckBox, row, 0 );
+    label = new QLabel( i18n( "Block free/&busy and alarms locally" ), this );
+    gl->addWidget( label, row, 1 );
+    label->setBuddy( mAlarmsBlockedCheckBox );
+    QWhatsThis::add( mAlarmsBlockedCheckBox, whatsThisForReadOnlyFolders );
 
     if ( mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeCalendar
       && mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeTask ) {
-      if ( readOnly ) {
         mIncidencesForComboBox->setEnabled( false );
-      } else {
-        mIncidencesForCheckBox->setEnabled( false );
-      }
+        mAlarmsBlockedCheckBox->setEnabled( false );
     }
   }
   topLayout->addStretch( 100 ); // eat all superfluous space
@@ -566,10 +562,11 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( mIncidencesForComboBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
     mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
+    mIncidencesForComboBox->setDisabled( mDlg->folder()->isReadOnly() );
   }
-  if ( mIncidencesForCheckBox ) {
+  if ( mAlarmsBlockedCheckBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-    mIncidencesForCheckBox->setChecked( !dimap->alarmsBlocked() );
+    mAlarmsBlockedCheckBox->setChecked( dimap->alarmsBlocked() );
   }
 }
 
@@ -596,8 +593,8 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
                                           type == KMail::ContentsTypeTask;
   if ( mIncidencesForComboBox )
       mIncidencesForComboBox->setEnabled( enable );
-  if ( mIncidencesForCheckBox )
-      mIncidencesForCheckBox->setEnabled( enable );
+  if ( mAlarmsBlockedCheckBox )
+      mAlarmsBlockedCheckBox->setEnabled( enable );
 }
 
 //-----------------------------------------------------------------------------
@@ -669,8 +666,8 @@ bool FolderDiaGeneralTab::save()
           dimap->writeConfig();
         }
       }
-      if ( mIncidencesForCheckBox && mIncidencesForCheckBox->isChecked() == dimap->alarmsBlocked() ) {
-        dimap->setAlarmsBlocked( !mIncidencesForCheckBox->isChecked() );
+      if ( mAlarmsBlockedCheckBox && mAlarmsBlockedCheckBox->isChecked() != dimap->alarmsBlocked() ) {
+        dimap->setAlarmsBlocked( mAlarmsBlockedCheckBox->isChecked() );
         dimap->writeConfig();
       }
     }

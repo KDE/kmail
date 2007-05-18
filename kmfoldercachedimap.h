@@ -277,7 +277,7 @@ public:
   /// IncForReaders: apply to all readers of this calendar
   enum IncidencesFor { IncForNobody, IncForAdmins, IncForReaders };
 
-  IncidencesFor incidencesFor() const { return mAlarmsBlocked? IncForNobody : mIncidencesFor; }
+  IncidencesFor incidencesFor() const { return mIncidencesFor; }
   /// For the folder properties dialog
   void setIncidencesFor( IncidencesFor incfor );
 

@@ -1891,8 +1891,8 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     administerRights =
       dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
-    relevantForOwner = dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins;
-    relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
+    relevantForOwner = !dimapFolder->alarmsBlocked() && ( dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins );
+    relevantForEveryone = !dimapFolder->alarmsBlocked() && ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
   }
 #if 0
   kdDebug(5006) << k_funcinfo << endl;
