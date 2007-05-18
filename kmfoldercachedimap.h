@@ -95,7 +95,7 @@ class KMFolderCachedImap : public KMFolderMaildir
       return KStandardDirs::locateLocal("data", "kmail/dimap" );
     }
 
-    /*
+    /**
       Usually a parent is given. But in some cases there is no
       fitting parent object available. Then the name of the folder
       is used as the absolute path to the folder file.
@@ -103,7 +103,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     explicit KMFolderCachedImap( KMFolder *folder, const char *name=0 );
     virtual ~KMFolderCachedImap();
 
-    /*
+    /**
       Initializes this storage from another. Used when creating a child folder.
     */
     void initializeFrom( KMFolderCachedImap *parent );
@@ -113,7 +113,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     void writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 
-    /*
+    /**
       Returns the type of this folder.
     */
     virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
@@ -121,17 +121,17 @@ class KMFolderCachedImap : public KMFolderMaildir
     /** @reimpl */
     virtual int create();
 
-    /*
+    /**
       Removes this folder.
     */
     virtual void remove();
 
-    /*
+    /**
       Synchronizes this folder and it's subfolders with the server.
     */
     virtual void serverSync( bool recurse );
 
-    /*
+    /**
       Forces the sync state to be reset.
     */
     void resetSyncState();
@@ -158,77 +158,77 @@ class KMFolderCachedImap : public KMFolderMaildir
     virtual imapState getSubfolderState() { return mSubfolderState; }
     virtual void setSubfolderState( imapState state );
 
-    /*
+    /**
       Sets the path to the imap folder on the server.
     */
     void setImapPath( const QString &path );
     QString imapPath() const { return mImapPath; }
 
-    /*
+    /**
       Sets the highest UID in the folder.
     */
     void setLastUid( ulong uid );
     ulong lastUid();
 
-    /*
+    /**
       Finds the message by UID.
       @return NULL if the message does not exist.
     */
     KMMsgBase *findByUID( ulong uid );
 
-    /*
+    /**
       Sets the uidvalidity of the last update.
     */
     void setUidValidity( const QString &validity ) { mUidValidity = validity; }
     QString uidValidity() const { return mUidValidity; }
 
-    /*
+    /**
       Clears the map of which messages are considered present locally.
       Needed when uidvalidity changes.
     */
     void clearUidMap() { uidMap.clear(); }
 
-    /*
+    /**
       Sets the imap account associated with this folder.
     */
     void setAccount( KMAcctCachedImap *acct );
 
-    /*
+    /**
       Returns the account associated with this folder.
       If no account exists yet, one is created.
     */
     KMAcctCachedImap *account() const;
 
-    /*
+    /**
       Returns the filename of the uidcache file.
     */
     QString uidCacheLocation() const;
 
-    /*
+    /**
       Reads the uidValitidy and lastUid values from disk.
     */
     int readUidCache();
 
-    /*
+    /**
       Writes the uidValitidy and lastUid values to disk.
     */
     int writeUidCache();
 
-    /*
+    /**
       Returns the cCurrent progress status (between 0 and 100).
     */
     int progress() const { return mProgress; }
 
-    /* Reimplemented from KMFolder. Moving is not supported, so aParent must be 0. */
+    /** Reimplemented from KMFolder. Moving is not supported, so aParent must be 0. */
     virtual int rename( const QString &aName, KMFolderDir *aParent = 0 );
 
-    /* Reimplemented from KMFolderMaildir */
+    /** Reimplemented from KMFolderMaildir */
     virtual KMMessage *take( int idx );
 
-    /* Reimplemented from KMFolderMaildir */
+    /** Reimplemented from KMFolderMaildir */
     virtual int addMsg( KMMessage *msg, int *index_return = 0 );
 
-    /*
+    /**
       Adds a message without clearing it's X-UID field.
     */
     virtual int addMsgInternal( KMMessage *msg, bool, int *index_return = 0 );
@@ -236,27 +236,27 @@ class KMFolderCachedImap : public KMFolderMaildir
       return addMsgInternal( msg, false, index_return );
     }
 
-    /* Reimplemented from KMFolderMaildir */
+    /** Reimplemented from KMFolderMaildir */
     virtual void removeMsg( int i, bool imapQuiet = false );
     virtual void removeMsg( QList<KMMessage*> msgList, bool imapQuiet = false ){
       FolderStorage::removeMsg( msgList, imapQuiet );
     }
 
-    /*
+    /**
       Returns true if the folder is read-only; false otherwise.
     */
     bool isReadOnly() const {
       return KMFolderMaildir::isReadOnly() || mReadOnly;
     }
 
-    /*
+    /**
       Emits the folderComplete signal.
     */
     void sendFolderComplete( bool success ) {
       emit folderComplete( this, success );
     }
 
-    /*
+    /**
       Sets the silentUpload flag, which removes the folder upload error dialog.
     */
     void setSilentUpload( bool silent ) {
@@ -270,7 +270,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     int createIndexFromContentsRecursive();
 
-    /*
+    /**
       Lists a directory and add the contents to kmfoldermgr.
       It uses a ListJob to get the folders
       @return false if the connection failed.
@@ -279,23 +279,23 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     virtual void listNamespaces();
 
-    /*
+    /**
       Returns the trash folder.
     */
     KMFolder *trashFolder() const;
 
-    /*
+    /**
       The user's rights on this folder - see bitfield in ACLJobs namespace.
       @return 0 when not known yet, -1 if there was an error fetching them
     */
     int userRights() const { return mUserRights; }
 
-    /*
+    /**
       Sets the user's rights on this folder.
     */
     void setUserRights( unsigned int userRights );
 
-    /*
+    /**
       Returns the  quota information for this folder.
       @return an invalid info if we haven't synced yet, or the server
       doesn't support quota. The difference can be figured out by
@@ -306,13 +306,13 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     const QuotaInfo quotaInfo() const { return mQuotaInfo; }
 
-    /*
+    /**
       Returns the list of ACL for this folder.
     */
     typedef QVector<KMail::ACLListEntry> ACLList;
     const ACLList &aclList() const { return mACLList; }
 
-    /*
+    /**
       Sets the list of ACL for this folder (for FolderDiaACLTab)
     */
     void setACLList( const ACLList &arr );
@@ -326,7 +326,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     /** For kmailicalifaceimpl only */
     void updateAnnotationFolderType();
 
-    /*
+    /**
       Free-busy and alarms relevance of this folder, i.e. for whom should
       events in this calendar lead to "busy" periods in their freebusy lists,
       and who should get alarms for the incidences in this folder.
@@ -341,19 +341,19 @@ class KMFolderCachedImap : public KMFolderMaildir
     IncidencesFor incidencesFor() const { return mIncidencesFor; }
     void setIncidencesFor( IncidencesFor incfor );
 
-    /*
+    /**
       Returns true if this folder can be moved.
     */
     virtual bool isMoveable() const;
 
-    /*
+    /**
       Returns a list of namespaces that need to be queried
       Is set by the account for the root folder when the listing starts
     */
     QStringList namespacesToList() { return mNamespacesToList; }
     void setNamespacesToList( QStringList list ) { mNamespacesToList = list; }
 
-    /*
+    /**
       Specify an imap path that is used to create the folder on the server
       Otherwise the parent folder is used to construct the path.
     */
@@ -369,7 +369,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     void slotSubFolderComplete( KMFolderCachedImap*, bool );
 
-    /*
+    /**
       Connected to the imap account's connectionResult signal.
       Emitted when the slave connected or failed to connect.
     */
@@ -395,12 +395,12 @@ class KMFolderCachedImap : public KMFolderMaildir
     void slotQuotaResult( KIO::Job *job );
 
   protected:
-    /*
+    /**
       Returns true if there were messages to delete on the server.
     */
     bool deleteMessages();
 
-    /*
+    /**
       List the messages in a folder. No directory listing done.
     */
     void listMessages();
@@ -409,7 +409,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void uploadFlags();
     void createNewFolders();
 
-    /*
+    /**
       Synchronizes the local folders as needed (creation/deletion).
       No network communication here.
     */
@@ -417,19 +417,19 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     void createFoldersNewOnServerAndFinishListing( const QVector<int> foldersNewOnServer );
 
-    /*
+    /**
       Utility methods for syncing. Finds new messages
       in the local cache that must be uploaded.
     */
     virtual QList<unsigned long> findNewMessages();
 
-    /*
+    /**
       Utility methods for syncing. Finds new subfolders
       in the local cache that must be created in the server.
     */
     virtual QList<KMFolderCachedImap*> findNewFolders();
 
-    /*
+    /**
       Returns false if we have subfolders; else returns ::canRemoveFolder()
     */
     virtual bool canRemoveFolder() const;
@@ -445,28 +445,28 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     virtual void timerEvent( QTimerEvent *e );
 
-    /*
+    /**
       Updates the progress status.
     */
     void newState( int progress, const QString &syncStatus );
 
-    /*
+    /**
       Determines if there is a better parent then this folder.
     */
     KMFolderCachedImap *findParent( const QString &path, const QString &name );
 
   public slots:
-    /*
+    /**
       Adds the data a KIO::Job retrieves to the buffer.
     */
     void slotSimpleData( KIO::Job *job, const QByteArray &data );
 
-    /*
+    /**
       Troubleshoots the IMAP cache.
     */
     void slotTroubleshoot();
 
-    /*
+    /**
       Connected to ListJob::receivedFolders. creates/removes folders.
     */
     void slotListResult( const QStringList &folderNames,
@@ -475,7 +475,7 @@ class KMFolderCachedImap : public KMFolderMaildir
                          const QStringList &folderAttributes,
                          const ImapAccountBase::jobData &jobData );
 
-    /*
+    /**
       Connected to ListJob::receivedFolders. creates namespace folders.
     */
     void slotCheckNamespace( const QStringList &folderNames,
@@ -494,7 +494,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void folderComplete( KMFolderCachedImap *folder, bool success );
     void listComplete( KMFolderCachedImap *folder );
 
-    /*
+    /**
       Emitted when we enter the state "state" and have to process @p "number
       items (for example messages)
     */
@@ -504,7 +504,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void setReadOnly( bool readOnly );
     QString state2String( int state ) const;
 
-    /* State variable for the synchronization mechanism */
+    /** State variable for the synchronization mechanism */
     enum {
       SYNC_STATE_INITIAL,
       SYNC_STATE_TEST_ANNOTATIONS,
@@ -558,7 +558,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     QList<KMFolderCachedImap*> mSubfoldersForSync;
     KMFolderCachedImap *mCurrentSubfolder;
 
-    /*
+    /**
       Mapping uid -> index
       Keep updated in addMsg, take and removeMsg. This is used to lookup
       whether a mail is present locally or not.
@@ -568,7 +568,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void reloadUidMap();
     int uidWriteTimer;
 
-    /*
+    /**
       This is the last uid that we have seen from the server on the last
       sync. It is crucially important that this is correct at all times
       and not bumped up permaturely, as it is the watermark which is used
@@ -581,7 +581,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     ulong mLastUid;
 
-    /*
+    /**
       The highest id encountered while syncing. Once the sync process has
       successfully downloaded all pending mail and deleted on the server
       all messages that were removed locally, this will become the new
@@ -596,7 +596,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     bool mFolderRemoved;
     bool mRecurse;
 
-    /*
+    /**
       Set to true by setStatus. Indicates that the client has changed
       the status of at least one mail. The mail flags will therefore be
       uploaded to the server, overwriting the server's notion of the status
@@ -604,13 +604,13 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     bool mStatusChangedLocally;
 
-    /*
+    /**
       Set to true when the foldertype annotation needs to be set
       on the next sync.
     */
     bool mAnnotationFolderTypeChanged;
 
-    /*
+    /**
       Set to true when the "incidences-for" annotation needs to be set
       on the next sync
     */
