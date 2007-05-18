@@ -93,6 +93,8 @@ namespace KMail {
     QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
+    connect( mSourceCombo, SIGNAL(activated(int)),
+	     widgetStack, SLOT(setCurrentIndex (int)) );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
              widgetStack, SLOT(setCurrentIndex (int)) );
     // connects for the enabling of the widgets depending on
