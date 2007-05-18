@@ -107,12 +107,11 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   assert(fld != 0);
   fld->setSystemFolder(aSysFldr);
 
-  KMFolderNode* fNode;
+  KMFolderNode* fNode = 0;
   QList<KMFolderNode*>::const_iterator it;
   int index = 0;
-  for ( it = begin();
-      ( ( fNode = *it ) && it != end() );
-      ++it ) {
+  for ( it = begin(); it != end(); ++it ) {
+    fNode = *it;
     if (fNode->name().toLower() > fld->name().toLower()) {
       insert( index, fld );
       break;
