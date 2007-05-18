@@ -596,7 +596,7 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
                                           type == KMail::ContentsTypeTask;
   if ( mIncidencesForComboBox )
       mIncidencesForComboBox->setEnabled( enable );
-  if ( mIncidencesForComboBox )
+  if ( mIncidencesForCheckBox )
       mIncidencesForCheckBox->setEnabled( enable );
 }
 
