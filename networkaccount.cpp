@@ -36,6 +36,7 @@
 #include <kio/global.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kstringhandler.h>
 #include <kdebug.h>
 #include <kwallet.h>
 using KIO::MetaData;
@@ -96,12 +97,12 @@ namespace KMail {
   QString NetworkAccount::passwd() const {
     if ( storePasswd() && mPasswd.isEmpty() )
       mOwner->readPasswords();
-    return decryptStr( mPasswd );
+    return KStringHandler::obscure( mPasswd );
   }
 
   void NetworkAccount::setPasswd( const QString & passwd, bool storeInConfig ) {
-    if ( mPasswd != encryptStr( passwd ) ) {
-      mPasswd = encryptStr( passwd );
+    if ( mPasswd != KStringHandler::obscure( passwd ) ) {
+      mPasswd = KStringHandler::obscure( passwd );
       mPasswdDirty = true;
     }
     setStorePasswd( storeInConfig );
@@ -161,7 +162,7 @@ namespace KMail {
       }
 
       if ( !encpasswd.isEmpty() ) {
-        setPasswd( decryptStr( encpasswd ), true );
+        setPasswd( KStringHandler::obscure( encpasswd ), true );
         // migrate to KWallet if available
         if ( Wallet::isEnabled() ) {
           config.deleteEntry( "pass" );
@@ -229,7 +230,7 @@ namespace KMail {
            KGuiItem( i18n("Store Password") ),
            KGuiItem( i18n("Do Not Store Password") ) )
            == KMessageBox::Yes ) ) {
-        config.writeEntry( "pass", encryptStr( passwd() ) );
+        config.writeEntry( "pass", KStringHandler::obscure( passwd() ) );
         mStorePasswdInConfig = true;
       }
     }

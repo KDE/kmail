@@ -42,6 +42,7 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kstringhandler.h>
 #include <kseparator.h>
 #include <kdebug.h>
 #include <kconfiggroup.h>
@@ -79,7 +80,7 @@ void KMTransportInfo::readConfig(int id)
   host = config.readEntry("host", "localhost");
   port = config.readEntry("port", "25");
   user = config.readEntry("user");
-  mPasswd = KMAccount::decryptStr(config.readEntry("pass"));
+  mPasswd = KStringHandler::obscure(config.readEntry("pass"));
   precommand = config.readPathEntry("precommand");
   encryption = config.readEntry("encryption");
   authType = config.readEntry("authtype");
@@ -154,7 +155,7 @@ void KMTransportInfo::writeConfig(int id)
          KGuiItem( i18n("Store Password") ),
          KGuiItem( i18n("Do Not Store Password") ) )
          == KMessageBox::Yes ) ) {
-      config.writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
+      config.writeEntry( "pass", KStringHandler::obscure( passwd() ) );
       mStorePasswdInConfig = true;
     }
   }

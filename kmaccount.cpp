@@ -25,6 +25,7 @@ using KMail::FolderJob;
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <kstringhandler.h>
 
 #include <QList>
 #include <QEventLoop>
@@ -398,16 +399,6 @@ void KMAccount::sendReceipts()
 }
 
 //-----------------------------------------------------------------------------
-QString KMAccount::encryptStr(const QString &aStr)
-{
-  QString result;
-  for (int i = 0; i < aStr.length(); i++)
-    result += (aStr[i].unicode() < 0x20) ? aStr[i] :
-      QChar(0x1001F - aStr[i].unicode());
-  return result;
-}
-
-//-----------------------------------------------------------------------------
 QString KMAccount::importPassword(const QString &aStr)
 {
   unsigned int i, val;
@@ -423,7 +414,7 @@ QString KMAccount::importPassword(const QString &aStr)
   }
   result[i] = '\0';
 
-  return encryptStr(result);
+  return KStringHandler::obscure(result);
 }
 
 void KMAccount::invalidateIMAPFolders()
