@@ -124,8 +124,15 @@ public:
   /** Synchronize this folder and it's subfolders with the server */
   virtual void serverSync( bool recurse );
 
-  /** Force the sync state to be done. */
-  void resetSyncState();
+  /**  Force the sync state to be done. */
+  void resetSyncState( );
+
+  /** Block this folder from generating alarms, even if the annotations
+   * on it say otherwise. Used to override alarms for read-only folders.
+   * (Only useful for resource folders) */
+  void setAlarmsBlocked( bool blocked );
+  /** Should alarms for this folder be blocked?  (Only useful for resource folders) */
+  bool alarmsBlocked() const;
 
   void checkUidValidity();
 
@@ -270,7 +277,7 @@ public:
   /// IncForReaders: apply to all readers of this calendar
   enum IncidencesFor { IncForNobody, IncForAdmins, IncForReaders };
 
-  IncidencesFor incidencesFor() const { return mIncidencesFor; }
+  IncidencesFor incidencesFor() const { return mAlarmsBlocked? IncForNobody : mIncidencesFor; }
   /// For the folder properties dialog
   void setIncidencesFor( IncidencesFor incfor );
 
@@ -382,13 +389,6 @@ public slots:
    */
   void slotCheckNamespace( const QStringList&, const QStringList&,
       const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
-
-  /** 
-   * Reset the flag that is used to tell whether there are local changes to the
-   * incidencesFor annoation. This is needed to-redownload the annotation value
-   * when a local override needs to be cleared.
-   */
-  void resetIncidencesForChanged();
 
 private slots:
   void serverSyncInternal();
@@ -517,6 +517,7 @@ private:
 
   QuotaInfo mQuotaInfo;
   QMap<ulong,void*> mDeletedUIDsSinceLastSync;
+  bool mAlarmsBlocked;
 };
 
 #endif /*kmfoldercachedimap_h*/

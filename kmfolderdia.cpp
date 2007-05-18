@@ -569,7 +569,7 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   }
   if ( mIncidencesForCheckBox ) {
     KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-    mIncidencesForCheckBox->setChecked( dimap->incidencesFor() != KMFolderCachedImap::IncForNobody );
+    mIncidencesForCheckBox->setChecked( !dimap->alarmsBlocked() );
   }
 }
 
@@ -661,17 +661,16 @@ bool FolderDiaGeneralTab::save()
 
     if ( folder->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
-      KMFolderCachedImap::IncidencesFor incfor = KMFolderCachedImap::IncForAdmins;
       if ( mIncidencesForComboBox ) {
+        KMFolderCachedImap::IncidencesFor incfor = KMFolderCachedImap::IncForAdmins;
         incfor = static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+        if ( dimap->incidencesFor() != incfor ) {
+          dimap->setIncidencesFor( incfor );
+          dimap->writeConfig();
+        }
       }
-      if ( mIncidencesForCheckBox ) {
-        incfor = mIncidencesForCheckBox->isChecked() ? KMFolderCachedImap::IncForAdmins: KMFolderCachedImap::IncForNobody;
-      }
-      if ( dimap->incidencesFor() != incfor ) {
-        dimap->setIncidencesFor( incfor );
-        if ( mIncidencesForCheckBox && incfor != KMFolderCachedImap::IncForNobody )
-          dimap->resetIncidencesForChanged();
+      if ( mIncidencesForCheckBox && mIncidencesForCheckBox->isChecked() == dimap->alarmsBlocked() ) {
+        dimap->setAlarmsBlocked( !mIncidencesForCheckBox->isChecked() );
         dimap->writeConfig();
       }
     }
