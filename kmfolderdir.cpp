@@ -107,19 +107,20 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   assert(fld != 0);
   fld->setSystemFolder(aSysFldr);
 
-  KMFolderNode* fNode = 0;
+  bool inserted = false;
   QList<KMFolderNode*>::const_iterator it;
   int index = 0;
   for ( it = begin(); it != end(); ++it ) {
-    fNode = *it;
+    KMFolderNode* fNode = *it;
     if (fNode->name().toLower() > fld->name().toLower()) {
       insert( index, fld );
+      inserted = true;
       break;
     }
     ++index;
   }
 
-  if (!fNode)
+  if ( !inserted )
     append(fld);
 
   fld->correctUnreadMsgsCount();
