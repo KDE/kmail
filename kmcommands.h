@@ -697,26 +697,7 @@ private:
 };
 
 
-  /** Returns a popupmenu containing a hierarchy of folder names.
-      Each item in the popupmenu is connected to a slot, if
-      move is true this slot will cause all selected messages to
-      be moved into the given folder, otherwise messages will be
-      copied.
-      Am empty KMMenuToFolder must be passed in. */
-
-class KDE_EXPORT KMMenuCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  static void folderToPopupMenu(bool move, QObject *receiver,
-    KMMenuToFolder *aMenuToFolder, QMenu *menu );
-
-  static void makeFolderMenu(KMFolderNode* item, bool move,
-    QObject *receiver, KMMenuToFolder *aMenuToFolder, QMenu *menu );
-};
-
-class KDE_EXPORT KMCopyCommand : public KMMenuCommand
+class KDE_EXPORT KMCopyCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -741,7 +722,7 @@ private:
 namespace KPIM {
   class ProgressItem;
 }
-class KDE_EXPORT KMMoveCommand : public KMMenuCommand
+class KDE_EXPORT KMMoveCommand : public KMCommand
 {
   Q_OBJECT
 
