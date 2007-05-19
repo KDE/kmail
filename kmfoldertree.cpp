@@ -1838,20 +1838,22 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
 {
   menu->clear();
 
-  // connect the signals
-  if ( action == MoveMessage || action == MoveFolder )
-  {
-    disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
-        SLOT(moveSelectedToFolder(QAction*)) );
-    connect( menu, SIGNAL(triggered(QAction*)), receiver,
-        SLOT(moveSelectedToFolder(QAction*)) );
-  } else {
-    disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
-        SLOT(copySelectedToFolder(QAction*)) );
-    connect( menu, SIGNAL(triggered(QAction*)), receiver,
-        SLOT(copySelectedToFolder(QAction*)) );
-  }
   if ( !item ) {
+
+    // connect the signals
+    if ( action == MoveMessage || action == MoveFolder )
+    {
+      disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
+                  SLOT(moveSelectedToFolder(QAction*)) );
+      connect( menu, SIGNAL(triggered(QAction*)), receiver,
+               SLOT(moveSelectedToFolder(QAction*)) );
+    } else {
+      disconnect( menu, SIGNAL(triggered(QAction*)), receiver,
+                  SLOT(copySelectedToFolder(QAction*)) );
+      connect( menu, SIGNAL(triggered(QAction*)), receiver,
+               SLOT(copySelectedToFolder(QAction*)) );
+    }
+
     item = firstChild();
 
     // avoid a popup menu with the single entry 'Local Folders' if there
