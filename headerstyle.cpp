@@ -408,9 +408,19 @@ namespace KMail {
         meterBar.setPixel( i, 0, i+1 );
       }
     }
-    QString confidenceString = ( confidence < 0.0 ) ? "" : QString::number( confidence ) + "% &nbsp;";
-    QString titleText = i18n("%1% probability of being spam with confidence %3%.\n\nFull report:\nProbability=%2\n Confidence=%4",
-                             percent, filterHeader, confidence, confidenceHeader );
+
+    QString titleText;
+    QString confidenceString;
+    if ( confidence >= 0.0 ) {
+      confidenceString = QString::number( confidence ) + "% &nbsp;";
+      titleText = i18n("%1% probability of being spam with confidence %3%.\n\n"
+                       "Full report:\nProbability=%2\nConfidence=%4",
+                       percent, filterHeader, confidence, confidenceHeader );
+    }
+    else
+      titleText = i18n("%1% probability of being spam.\n\n"
+                       "Full report:\n%2",
+                       percent, filterHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
             QString::number( 5 ), titleText ) + confidenceString;
