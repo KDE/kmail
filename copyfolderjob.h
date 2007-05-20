@@ -103,6 +103,7 @@ protected:
   QPointer<KMFolder> mNewFolder;
   QList<KMFolderNode*>::Iterator mChildFolderNodeIterator;
   KMFolder* mNextChildFolder;
+  bool mHasChildFolders;
 };
 
 } // namespace KMail

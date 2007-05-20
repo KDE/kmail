@@ -48,9 +48,16 @@ using namespace KMail;
 CopyFolderJob::CopyFolderJob( FolderStorage* const storage, KMFolderDir* const newParent )
  : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
    mStorage( storage ), mNewParent( newParent ),
-   mNewFolder( 0 ), mChildFolderNodeIterator( mStorage->folder()->createChildFolder()->begin() ),
-   mNextChildFolder( 0 )
+   mNewFolder( 0 ), mNextChildFolder( 0 )
 {
+  if ( mStorage->folder()->child() && 
+       mStorage->folder()->child()->size() > 0 ) {
+    mHasChildFolders = true;
+    mChildFolderNodeIterator = mStorage->folder()->child()->begin();
+  }
+  else
+    mHasChildFolders = false;
+
   mStorage->open( "copyfolder" );
 }
 
@@ -110,9 +117,9 @@ void CopyFolderJob::slotCopyCompleted( KMCommand* command )
     return;
   }
   // if we have children, recurse
-  if ( mStorage->folder()->child() ) {
+  if ( mHasChildFolders )
     slotCopyNextChild();
-  } else {
+  else {
     emit folderCopyComplete( true );
     deleteLater();
   }
@@ -120,7 +127,6 @@ void CopyFolderJob::slotCopyCompleted( KMCommand* command )
 
 void CopyFolderJob::slotCopyNextChild( bool success )
 {
-  //kDebug(5006) << k_funcinfo << endl;
   if ( mNextChildFolder )
     mNextChildFolder->close( "copyfolder" ); // refcount
   // previous sibling failed
@@ -131,12 +137,20 @@ void CopyFolderJob::slotCopyNextChild( bool success )
     deleteLater();
   }
 
-  KMFolderNode* node = *mChildFolderNodeIterator;
-  while ( node && node->isDir() ) {
-    ++mChildFolderNodeIterator;
-    node = *mChildFolderNodeIterator;
-  }
-  if ( node ) {
+  //Attempt to find the next child folder which is not a directory
+  KMFolderNode* node = 0;
+  bool folderFound = false;
+  if ( mHasChildFolders )
+    for ( ; mChildFolderNodeIterator != mStorage->folder()->child()->end();
+          ++mChildFolderNodeIterator ) {
+      node = *mChildFolderNodeIterator;
+      if ( !node->isDir() ) {
+        folderFound = true;
+        break;
+      }
+    }
+
+  if ( folderFound ) {
     mNextChildFolder = static_cast<KMFolder*>(node);
     ++mChildFolderNodeIterator;
   } else {
