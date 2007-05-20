@@ -14,7 +14,7 @@
     </property>
     <layout class="QVBoxLayout" >
       <item>
-        <widget class="Q3GroupBox" name="optionsGroup_2" >
+        <widget class="QGroupBox" name="optionsGroup_2" >
           <property name="title" >
             <string>Signing</string>
           </property>
@@ -36,7 +36,7 @@
         </widget>
       </item>
       <item>
-        <widget class="Q3GroupBox" name="optionsGroup" >
+        <widget class="QGroupBox" name="optionsGroup" >
           <property name="title" >
             <string>Encrypting</string>
           </property>

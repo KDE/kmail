@@ -392,7 +392,7 @@ It is recommended to leave this option turned on to enable you to read the messa
         </widget>
       </item>
       <item>
-        <widget class="Q3GroupBox" name="encryptionSettingsBG" >
+        <widget class="QGroupBox" name="encryptionSettingsBG" >
           <property name="title" >
             <string>Warnings</string>
           </property>

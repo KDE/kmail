@@ -37,7 +37,7 @@
         </widget>
       </item>
       <item>
-        <widget class="Q3GroupBox" name="OCSPGroupBox" >
+        <widget class="QGroupBox" name="OCSPGroupBox" >
           <property name="title" >
             <string>Online Certificate Validation</string>
           </property>
@@ -234,7 +234,7 @@
         </widget>
       </item>
       <item>
-        <widget class="Q3GroupBox" name="LDAPGroupBox" >
+        <widget class="QGroupBox" name="LDAPGroupBox" >
           <property name="title" >
             <string>LDAP Requests</string>
           </property>

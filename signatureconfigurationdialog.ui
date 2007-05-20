@@ -261,7 +261,7 @@ When this box is checked, sent messages are stored together with the signatures 
             <item rowspan="1" row="6" column="0" colspan="3" >
               <widget class="Q3ButtonGroup" name="sigCompoundModeBG" >
                 <property name="frameShape" >
-                  <enum>Q3GroupBox::NoFrame</enum>
+                  <enum>NoFrame</enum>
                 </property>
                 <property name="title" >
                   <string/>
@@ -331,7 +331,7 @@ When this option is selected, both the signature and the signed data will be enc
             <item rowspan="1" row="7" column="0" colspan="3" >
               <widget class="Q3ButtonGroup" name="ButtonGroup15" >
                 <property name="frameShape" >
-                  <enum>Q3GroupBox::NoFrame</enum>
+                  <enum>NoFrame</enum>
                 </property>
                 <property name="title" >
                   <string/>
@@ -473,7 +473,7 @@ When this option is selected, both the signature and the signed data will be enc
         </widget>
       </item>
       <item row="1" column="1" >
-        <widget class="Q3GroupBox" name="signatureSettingsBG" >
+        <widget class="QGroupBox" name="signatureSettingsBG" >
           <property name="title" >
             <string>Warnings</string>
           </property>
