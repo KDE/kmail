@@ -31,7 +31,7 @@
 #include "folderrequester.h"
 #include "kmfolder.h"
 #include "kmfoldertree.h"
-#include "kmfolderseldlg.h"
+#include "folderselectiondialog.h"
 
 #include <kdebug.h>
 #include <klineedit.h>
@@ -72,7 +72,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  KMFolderSelDlg dlg( this, mFolderTree, i18n("Select Folder"),
+  FolderSelectionDialog dlg( this, mFolderTree, i18n("Select Folder"),
       mMustBeReadWrite, false );
   dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
   dlg.setFolder( mFolder );

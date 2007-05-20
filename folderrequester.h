@@ -41,7 +41,7 @@ namespace KMail {
 
   /**
    * A widget that contains a KLineEdit which shows the current folder
-   * and a button that fires a KMFolderSelDlg
+   * and a button that fires a FolderSelectionDialog
    * The dialog is set to disable readonly folders by default
    * Search folders are excluded
    */ 

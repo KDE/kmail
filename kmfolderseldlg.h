@@ -19,8 +19,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef kmfolderseldlg_h
-#define kmfolderseldlg_h
+#ifndef FolderSelectionDialog_h
+#define FolderSelectionDialog_h
 
 #include <kdialog.h>
 #include <kfoldertree.h>
@@ -65,7 +65,7 @@ namespace KMail {
       virtual void keyPressEvent( QKeyEvent *e );
 
       /** Folder and path column IDs. */
-      friend class KMFolderSelDlg;
+      friend class FolderSelectionDialog;
       int mFolderColumn;
       int mPathColumn;
 
@@ -78,7 +78,7 @@ namespace KMail {
 };
 
   //-----------------------------------------------------------------------------
-  class KMFolderSelDlg: public KDialog
+  class FolderSelectionDialog: public KDialog
   {
     Q_OBJECT
 
@@ -91,7 +91,7 @@ namespace KMail {
        * @param useGlobalSettings if true, the current folder is read and
        *        written to GlobalSettings
        */
-      KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
+      FolderSelectionDialog( KMMainWidget * parent, const QString& caption,
           bool mustBeReadWrite, bool useGlobalSettings = true );
       /**
        * Constructor with separate KMFolderTree
@@ -99,11 +99,11 @@ namespace KMail {
        * @param useGlobalSettings if true, the current folder is read and
        *        written to GlobalSettings
        */
-      KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
+      FolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
           const QString& caption, bool mustBeReadWrite,
           bool useGlobalSettings = true );
 
-      virtual ~KMFolderSelDlg();
+      virtual ~FolderSelectionDialog();
 
       /** Returns selected folder */
       virtual KMFolder* folder( void );
@@ -131,4 +131,4 @@ namespace KMail {
 
 } // namespace KMail
 
-#endif /*kmfolderseldlg_h*/
+#endif /*FolderSelectionDialog_h*/

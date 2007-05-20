@@ -20,7 +20,7 @@
 */
 
 #include <config.h>
-#include "kmfolderseldlg.h"
+#include "folderselectiondialog.h"
 #include "kmfoldertree.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
@@ -379,7 +379,7 @@ void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
 
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
+FolderSelectionDialog::KMFolderSelectionDialog( KMMainWidget * parent, const QString& caption,
     bool mustBeReadWrite, bool useGlobalSettings )
   : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -402,7 +402,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
 }
 
 //----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
+FolderSelectionDialog::KMFolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
   : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -422,7 +422,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::init()
+void FolderSelectionDialog::init()
 {
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ),
@@ -434,7 +434,7 @@ void KMFolderSelDlg::init()
 }
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::~KMFolderSelDlg()
+FolderSelectionDialog::~FolderSelectionDialog()
 {
   const KMFolder * cur = folder();
   if ( cur && mUseGlobalSettings ) {
@@ -446,44 +446,44 @@ KMFolderSelDlg::~KMFolderSelDlg()
 
 
 //-----------------------------------------------------------------------------
-KMFolder * KMFolderSelDlg::folder( void )
+KMFolder * FolderSelectionDialog::folder( void )
 {
   return ( KMFolder * ) mTreeView->folder();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::setFolder( KMFolder* folder )
+void FolderSelectionDialog::setFolder( KMFolder* folder )
 {
   mTreeView->setFolder( folder );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotSelect()
+void FolderSelectionDialog::slotSelect()
 {
   accept();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotUser1()
+void FolderSelectionDialog::slotUser1()
 {
   mTreeView->addChildFolder();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotUpdateBtnStatus()
+void FolderSelectionDialog::slotUpdateBtnStatus()
 {
   enableButton( User1, folder() &&
                 ( !folder()->noContent() && !folder()->noChildren() ) );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox,
+void FolderSelectionDialog::setFlags( bool mustBeReadWrite, bool showOutbox,
                                bool showImapFolders )
 {
   mTreeView->reload( mustBeReadWrite, showOutbox, showImapFolders );
 }
 
-void KMFolderSelDlg::readConfig()
+void FolderSelectionDialog::readConfig()
 {
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, "FolderSelectionDialog" );
@@ -505,7 +505,7 @@ void KMFolderSelDlg::readConfig()
   }
 }
 
-void KMFolderSelDlg::writeConfig()
+void FolderSelectionDialog::writeConfig()
 {
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, "FolderSelectionDialog" );
@@ -519,4 +519,4 @@ void KMFolderSelDlg::writeConfig()
 
 } // namespace KMail
 
-#include "kmfolderseldlg.moc"
+#include "FolderSelectionDialog.moc"

@@ -54,7 +54,7 @@ using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
 #include "listjob.h"
 using KMail::ListJob;
-#include "kmfolderseldlg.h"
+#include "folderselectiondialog.h"
 #include "kmcommands.h"
 #include "annotationjobs.h"
 #include "quotajobs.h"
@@ -1354,8 +1354,8 @@ void KMFolderCachedImap::uploadNewMessages()
         if ( KMessageBox::warningYesNo( 0, msg, QString(),
                                         KGuiItem( i18n("Move") ),
                                         KGuiItem( i18n("Do Not Move") ) ) == KMessageBox::Yes ) {
-          KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
-                                     i18n("Move Messages to Folder"), true );
+          KMail::FolderSelectionDialog dlg( kmkernel->getKMMainWidget(),
+                                        i18n("Move Messages to Folder"), true );
           if ( dlg.exec() ) {
             dest = dlg.folder();
           }

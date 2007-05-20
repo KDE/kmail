@@ -96,7 +96,7 @@ using KMail::AccountManager;
 #include "kmfolderimap.h"
 #include "kmacctcachedimap.h"
 #include "composer.h"
-#include "kmfolderseldlg.h"
+#include "folderselectiondialog.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
 #include "kmaddrbook.h"
@@ -1689,7 +1689,7 @@ void KMMainWidget::slotToggleTotalColumn()
 
 void KMMainWidget::slotJumpToFolder()
 {
-  KMail::KMFolderSelDlg dlg( this, i18n("Jump to Folder"), true );
+  KMail::FolderSelectionDialog dlg( this, i18n("Jump to Folder"), true );
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -1701,7 +1701,7 @@ void KMMainWidget::slotJumpToFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMoveMsg()
 {
-  KMail::KMFolderSelDlg dlg( this, i18n("Move Message to Folder"), true );
+  KMail::FolderSelectionDialog dlg( this, i18n("Move Message to Folder"), true );
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -1799,7 +1799,7 @@ void KMMainWidget::slotStartWatchGnuPG()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCopyMsg()
 {
-  KMail::KMFolderSelDlg dlg( this, i18n("Copy Message to Folder"), true );
+  KMail::FolderSelectionDialog dlg( this, i18n("Copy Message to Folder"), true );
   KMFolder* dest;
 
   if (!dlg.exec()) return;
