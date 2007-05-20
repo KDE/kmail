@@ -50,9 +50,14 @@ class HeaderListQuickSearch : public K3ListViewSearchLine
 {
 Q_OBJECT
 public:
+
+    /**
+     * Constructs this widget and automatically adds it to the
+     * parent.
+     */
     HeaderListQuickSearch( QToolBar *parent,
-                                             K3ListView *listView,
-                                             KActionCollection *actionCollection );
+                           K3ListView *listView,
+                           KActionCollection *actionCollection );
     virtual ~HeaderListQuickSearch();
 
     /**

@@ -71,14 +71,16 @@ HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
 //                                         "all messages are shown again." ) );
   setClickMessage( i18n("Search") );
 
+  parent->addWidget( this );
+
   QLabel *label = new QLabel( i18n("Stat&us:"), parent );
-  label->setObjectName( "kde toolbar widget" );
-  parent->addWidget (label);
+  label->setObjectName( "quick search status label" );
+  parent->addWidget( label );
 
   mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
   mStatusCombo->addItem( SmallIcon( "system-run" ), i18n("Any Status") );
-  parent->addWidget (mStatusCombo);
+  parent->addWidget( mStatusCombo );
 
   insertStatus( StatusUnread );
   insertStatus( StatusNew );

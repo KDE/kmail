@@ -582,7 +582,6 @@ void KMMainWidget::createWidgets(void)
                                                 actionCollection() );
   mQuickSearchLine->setObjectName( "headers quick search line" );
 
-  mSearchToolBar->addWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
   if ( !GlobalSettings::self()->quickSearchActive() ) mSearchToolBar->hide();
