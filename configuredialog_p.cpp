@@ -13,7 +13,6 @@
 #include "configuredialog_p.h"
 
 // other KMail headers:
-#include "kmtransport.h"
 #include "globalsettings.h"
 #include "kmacctcachedimap.h"
 

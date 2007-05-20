@@ -94,6 +94,10 @@ namespace KPIM {
   class Identity;
 }
 
+namespace MailTransport {
+  class TransportComboBox;
+}
+
 namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
@@ -673,7 +677,7 @@ class KMComposeWin : public KMail::Composer
 
   private:
     QWidget   *mMainWidget;
-    QComboBox *mTransport;
+    MailTransport::TransportComboBox *mTransport;
     KMail::DictionaryComboBox *mDictionaryCombo;
     KPIM::IdentityCombo    *mIdentity;
     KMFolderComboBox *mFcc;

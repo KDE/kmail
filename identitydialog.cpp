@@ -44,7 +44,6 @@
 #include <QGridLayout>
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
-#include "transportmanager.h"
 #include "dictionarycombobox.h"
 #include "kleo_util.h"
 #include "kmmainwidget.h"
@@ -61,6 +60,8 @@ using KMail::FolderRequester;
 #include <kleo/cryptobackendfactory.h>
 
 #include <kpimutils/email.h>
+#include <mailtransport/transportmanager.h>
+using MailTransport::TransportManager;
 
 // other KDE headers:
 #include <klocale.h>
@@ -405,7 +406,7 @@ namespace KMail {
     mTransportCombo = new QComboBox( tab );
     mTransportCombo->setEditable( true );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-    mTransportCombo->addItems( KMail::TransportManager::transportNames() );
+    mTransportCombo->addItems( TransportManager::self()->transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );
     connect( mTransportCheck, SIGNAL(toggled(bool)),
              mTransportCombo, SLOT(setEnabled(bool)) );

@@ -36,11 +36,9 @@
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
-#include "kmtransport.h"
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
-#include "transportmanager.h"
 #include "attachmentlistview.h"
 using KMail::AttachmentListView;
 #include "dictionarycombobox.h"
@@ -72,6 +70,10 @@ using KRecentAddress::RecentAddresses;
 #include <kleo/specialjob.h>
 #include <ui/progressdialog.h>
 #include <ui/keyselectiondialog.h>
+
+#include <mailtransport/transportcombobox.h>
+#include <mailtransport/transportmanager.h>
+using MailTransport::TransportManager;
 
 #include <gpgmepp/context.h>
 #include <gpgmepp/key.h>
@@ -214,7 +216,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox( mMainWidget );
   mFcc->showOutboxFolder( false );
-  mTransport = new QComboBox( mMainWidget );
+  mTransport = new MailTransport::TransportComboBox( mMainWidget );
   mTransport->setEditable( true );
   mEdtFrom = new KMLineEdit( false, mMainWidget, "fromLine" );
 
@@ -672,8 +674,8 @@ void KMComposeWin::readConfig( void )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  mTransport->clear();
-  mTransport->addItems( KMTransportInfo::availableTransports() );
+  for ( int i = 0; i < mTransport->count(); ++i )
+    transportHistory.removeAll( mTransport->itemText( i ) );
   while ( transportHistory.count() >
           GlobalSettings::self()->maxTransportEntries() ) {
     transportHistory.removeLast();
@@ -686,11 +688,6 @@ void KMComposeWin::readConfig( void )
       }
     }
     mTransport->setEditText( currentTransport );
-  }
-
-  if ( !mBtnTransport->isChecked() ) {
-    mTransport->setItemText( mTransport->currentIndex(),
-                             GlobalSettings::self()->defaultTransport() );
   }
 
   QString fccName = "";
@@ -717,7 +714,7 @@ void KMComposeWin::writeConfig( void )
                                                mAutoSpellCheckingAction->isChecked() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
   transportHistory.removeAll(mTransport->currentText());
-  if (!KMTransportInfo::availableTransports().contains(mTransport->currentText())) {
+  if (!TransportManager::self()->transportNames().contains(mTransport->currentText())) {
     transportHistory.prepend(mTransport->currentText());
   }
   GlobalSettings::self()->setTransportHistory( transportHistory );
@@ -1188,7 +1185,7 @@ void KMComposeWin::getTransportMenu()
 
   mActNowMenu->clear();
   mActLaterMenu->clear();
-  availTransports = KMail::TransportManager::transportNames();
+  availTransports = TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for ( it = availTransports.begin(); it != availTransports.end() ; ++it ) {
     mActNowMenu->addAction( (*it).replace( "&", "&&" ) );
@@ -4220,7 +4217,7 @@ void KMComposeWin::slotSendNowVia( QAction *item )
 #warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
 #endif
   QString temp = item->text().remove( "&" );
-  QStringList availTransports= KMail::TransportManager::transportNames();
+  QStringList availTransports= TransportManager::self()->transportNames();
   if ( availTransports.contains( temp ) ) {
     mTransport->setItemText( mTransport->currentIndex(), temp );
     slotSendNow();
@@ -4234,7 +4231,7 @@ void KMComposeWin::slotSendLaterVia( QAction *item )
 #warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
 #endif
   QString temp = item->text().remove( "&" );
-  QStringList availTransports= KMail::TransportManager::transportNames();
+  QStringList availTransports= TransportManager::self()->transportNames();
   if ( availTransports.contains( temp ) ) {
     mTransport->setItemText( mTransport->currentIndex(), temp );
     slotSendLater();

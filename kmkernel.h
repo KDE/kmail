@@ -382,6 +382,12 @@ signals:
   void folderRemoved( KMFolder* aFolder );
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
 
+private slots:
+  /** Updates identities when a transport has been deleted. */
+  void transportRemoved( int id, const QString &name );
+  /** Updates identities when a transport has been renamed. */
+  void transportRenamed( int id, const QString &oldName, const QString &newName );
+
 private:
   void openReader( bool onlyCheck );
   KMFolder *currentFolder();

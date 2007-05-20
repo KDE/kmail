@@ -39,7 +39,9 @@ using KRecentAddress::RecentAddresses;
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
-#include "transportmanager.h"
+
+#include <mailtransport/transport.h>
+#include <mailtransport/transportmanager.h>
 
 #include <kwindowsystem.h>
 #include "kmailicalifaceimpl.h"
@@ -169,6 +171,12 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );*/
 
+  connect( MailTransport::TransportManager::self(),
+           SIGNAL(transportRemoved(int,QString)),
+           SLOT(transportRemoved(int,QString)) );
+  connect( MailTransport::TransportManager::self(),
+           SIGNAL(transportRenamed(int,QString,QString)),
+           SLOT(transportRenamed(int,QString,QString)) );
 }
 
 KMKernel::~KMKernel ()
@@ -551,12 +559,12 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
 void KMKernel::setDefaultTransport( const QString & transport )
 {
-  QStringList availTransports = KMail::TransportManager::transportNames();
-  if ( !availTransports.contains( transport ) ) {
+  MailTransport::Transport *t = MailTransport::TransportManager::self()->transportByName( transport, false );
+  if ( !t ) {
     kWarning() << "The transport you entered is not available" << endl;
     return;
   }
-  GlobalSettings::self()->setDefaultTransport( transport );
+  MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
 }
 
 QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
@@ -2279,5 +2287,57 @@ KMFolder *KMKernel::currentFolder() {
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
 KMail::MessageSender * KMKernel::msgSender() { return the_msgSender; }
+
+void KMKernel::transportRemoved(int id, const QString & name)
+{
+  Q_UNUSED( id );
+
+  // reset all identities using the deleted transport
+  QStringList changedIdents;
+  KPIM::IdentityManager * im = identityManager();
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( name == (*it).transport() ) {
+      (*it).setTransport( QString() );
+      changedIdents += (*it).identityName();
+    }
+  }
+
+  // if the deleted transport is the currently used transport reset it to default
+  const QString& currentTransport = GlobalSettings::self()->currentTransport();
+  if ( name == currentTransport ) {
+    GlobalSettings::self()->setCurrentTransport( QString() );
+  }
+
+  if ( !changedIdents.isEmpty() ) {
+    QString information = i18np( "This identity has been changed to use the default transport:",
+                          "These %1 identities have been changed to use the default transport:",
+                          changedIdents.count() );
+    KMessageBox::informationList( mWin, information, changedIdents );
+    im->commit();
+  }
+}
+
+void KMKernel::transportRenamed(int id, const QString & oldName, const QString & newName)
+{
+  Q_UNUSED( id );
+
+  QStringList changedIdents;
+  KPIM::IdentityManager * im = identityManager();
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( oldName == (*it).transport() ) {
+      (*it).setTransport( newName );
+      changedIdents << (*it).identityName();
+    }
+  }
+
+  if ( !changedIdents.isEmpty() ) {
+    QString information =
+      i18np( "This identity has been changed to use the modified transport:",
+             "These %1 identities have been changed to use the modified transport:",
+             changedIdents.count() );
+    KMessageBox::informationList( mWin, information, changedIdents );
+    im->commit();
+  }
+}
 
 #include "kmkernel.moc"

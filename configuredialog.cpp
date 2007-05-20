@@ -39,7 +39,6 @@
 #include "kmacctseldlg.h"
 using KMail::AccountDialog;
 #include "messagesender.h"
-#include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include <libkpimidentities/identitymanager.h>
 #include "identitylistview.h"
@@ -77,6 +76,9 @@ using KMime::DateFormatter;
 #include <ui/backendconfigwidget.h>
 #include <ui/keyrequester.h>
 #include <ui/keyselectiondialog.h>
+
+#include <mailtransport/transportmanagementwidget.h>
+using MailTransport::TransportManagementWidget;
 
 // other KDE headers:
 #include <klocale.h>
@@ -640,15 +642,12 @@ AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent, con
   //
   mSendingTab = new SendingTab();
   addTab( mSendingTab, i18n( "&Sending" ) );
-  connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
-           this, SIGNAL(transportListChanged(const QStringList&)) );
 
   load();
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
 {
-  qDeleteAll( mTransportInfoList );
 }
 
 QString AccountsPage::SendingTab::helpAnchor() const {
@@ -660,10 +659,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 {
   // temp. vars:
   QVBoxLayout *vlay;
-  QVBoxLayout *btn_vlay;
-  QHBoxLayout *hlay;
   QGridLayout *glay;
-  QPushButton *button;
   QGroupBox   *group;
 
   vlay = new QVBoxLayout( this );
@@ -672,64 +668,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   // label: zero stretch ### FIXME more
   vlay->addWidget( new QLabel( i18n("Outgoing accounts (add at least one):"), this ) );
 
-  // hbox layout: stretch 10, spacing inherited from vlay
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay, 10 ); // high stretch b/c of the groupbox's sizeHint
-
-  // transport list: left widget in hlay; stretch 1
-  // ### FIXME: allow inline renaming of the account:
-  mTransportList = new QTreeWidget( this );
-  mTransportList->setObjectName( "transportList" );
-  mTransportList->setHeaderLabels( QStringList() << i18n( "Name" ) << i18n( "Type" ) );
-  mTransportList->setAllColumnsShowFocus( true );
-  mTransportList->setSortingEnabled( false );
-  mTransportList->setSelectionMode( QAbstractItemView::SingleSelection );
-  mTransportList->setRootIsDecorated( false );
-  connect( mTransportList->selectionModel(),
-           SIGNAL( selectionChanged(
-                     const QItemSelection &,
-                     const QItemSelection & )
-                 ),
-           this, SLOT( slotTransportSelected() ) );
-  connect( mTransportList,
-           SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( slotModifySelectedTransport() ) );
-  hlay->addWidget( mTransportList, 1 );
-
-  // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
-  btn_vlay = new QVBoxLayout();
-  hlay->addLayout( btn_vlay );
-
-  // "add..." button: stretch 0
-  button = new QPushButton( i18n("A&dd..."), this );
-  button->setAutoDefault( false );
-  connect( button, SIGNAL(clicked()),
-           this, SLOT(slotAddTransport()) );
-  btn_vlay->addWidget( button );
-
-  // "modify..." button: stretch 0
-  mModifyTransportButton = new QPushButton( i18n("&Modify..."), this );
-  mModifyTransportButton->setAutoDefault( false );
-  mModifyTransportButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mModifyTransportButton, SIGNAL(clicked()),
-           this, SLOT(slotModifySelectedTransport()) );
-  btn_vlay->addWidget( mModifyTransportButton );
-
-  // "remove" button: stretch 0
-  mRemoveTransportButton = new QPushButton( i18n("R&emove"), this );
-  mRemoveTransportButton->setAutoDefault( false );
-  mRemoveTransportButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mRemoveTransportButton, SIGNAL(clicked()),
-           this, SLOT(slotRemoveSelectedTransport()) );
-  btn_vlay->addWidget( mRemoveTransportButton );
-
-  mSetDefaultTransportButton = new QPushButton( i18n("Set Default"), this );
-  mSetDefaultTransportButton->setAutoDefault( false );
-  mSetDefaultTransportButton->setEnabled( false );
-  connect ( mSetDefaultTransportButton, SIGNAL(clicked()),
-            this, SLOT(slotSetDefaultTransport()) );
-  btn_vlay->addWidget( mSetDefaultTransportButton );
-  btn_vlay->addStretch( 1 ); // spacer
+  TransportManagementWidget *tmw = new TransportManagementWidget( this );
+  vlay->addWidget( tmw );
 
   // "Common options" groupbox:
   group = new QGroupBox( i18n("Common Options"), this );
@@ -814,14 +754,6 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 }
 
 
-void AccountsPage::SendingTab::slotTransportSelected()
-{
-  QTreeWidgetItem *cur = mTransportList->currentItem();
-  mModifyTransportButton->setEnabled( cur );
-  mRemoveTransportButton->setEnabled( cur );
-  mSetDefaultTransportButton->setEnabled( cur );
-}
-
 // adds a number to @p name to make the name unique
 static inline QString uniqueName( const QStringList & list,
                                   const QString & name )
@@ -837,224 +769,6 @@ static inline QString uniqueName( const QStringList & list,
   return result;
 }
 
-void AccountsPage::SendingTab::slotSetDefaultTransport()
-{
-  QTreeWidgetItem *item = mTransportList->currentItem();
-  if ( !item ) return;
-
-  KMTransportInfo ti;
-
-  for ( int i = 0; i < mTransportList->topLevelItemCount(); ++i ) {
-    QTreeWidgetItem *it = mTransportList->topLevelItem( i );
-    ti.readConfig( KMTransportInfo::findTransport( it->text( 0 ) ) );
-
-    if (ti.type != "sendmail") {
-      it->setText( 1, "smtp" );
-    } else {
-      it->setText( 1, "sendmail" );
-    }
-  }
-
-  if ( item->text( 1 ) != "sendmail" ) {
-    item->setText( 1, i18n( "smtp (Default)" ) );
-  } else {
-    item->setText( 1, i18n( "sendmail (Default)" ) );
-  }
-
-  GlobalSettings::self()->setDefaultTransport( item->text( 0 ) );
-}
-
-void AccountsPage::SendingTab::slotAddTransport()
-{
-  int transportType;
-
-  { // limit scope of selDialog
-    KMTransportSelDlg selDialog( this );
-    if ( selDialog.exec() != QDialog::Accepted ) return;
-    transportType = selDialog.selected();
-  }
-
-  KMTransportInfo *transportInfo = new KMTransportInfo();
-  switch ( transportType ) {
-  case 0: // smtp
-    transportInfo->type = QString::fromLatin1("smtp");
-    break;
-  case 1: // sendmail
-    transportInfo->type = QString::fromLatin1("sendmail");
-    transportInfo->name = i18n("Sendmail");
-    transportInfo->host = _PATH_SENDMAIL; // ### FIXME: use const, not #define
-    break;
-  default:
-    assert( 0 );
-  }
-
-  KMTransportDialog dialog( i18n("Add Transport"), transportInfo, this );
-
-  // create list of names:
-  // ### move behind dialog.exec()?
-  QStringList transportNames;
-  QList<KMTransportInfo*>::const_iterator it;
-  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
-    transportNames << (*it)->name;
-
-  if( dialog.exec() != QDialog::Accepted ) {
-    delete transportInfo;
-    return;
-  }
-
-  // disambiguate the name by appending a number:
-  // ### FIXME: don't allow this error to happen in the first place!
-  transportInfo->name = uniqueName( transportNames, transportInfo->name );
-  // append to names and transportinfo lists:
-  transportNames << transportInfo->name;
-  mTransportInfoList.append( transportInfo );
-
-  // append to listview:
-  // ### FIXME: insert before the selected item, append on empty selection
-  QTreeWidgetItem *lastItem = 0;
-  if ( mTransportList->topLevelItemCount() > 0 ) {
-    lastItem = mTransportList->topLevelItem( 0 );
-  }
-  QString typeDisplayName;
-  if ( lastItem ) {
-    typeDisplayName = transportInfo->type;
-  } else {
-    typeDisplayName = i18nc("%1: type of transport. Result used in "
-                           "Configure->Accounts->Sending listview, \"type\" "
-                           "column, first row, to indicate that this is the "
-                           "default transport", "%1 (Default)",
-        transportInfo->type );
-    GlobalSettings::self()->setDefaultTransport( transportInfo->name );
-  }
-  QTreeWidgetItem *item = new QTreeWidgetItem( mTransportList, lastItem );
-  item->setText( 0, transportInfo->name );
-  item->setText( 1, typeDisplayName );
-
-  // notify anyone who cares:
-  emit transportListChanged( transportNames );
-  emit changed( true );
-}
-
-void AccountsPage::SendingTab::slotModifySelectedTransport()
-{
-  QTreeWidgetItem *item = mTransportList->currentItem();
-  if ( !item ) return;
-
-  const QString& originalTransport = item->text(0);
-
-  QList<KMTransportInfo*>::const_iterator it;
-  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
-    if ( (*it)->name == item->text(0) ) break;
-  if ( !(*it) ) return;
-
-  KMTransportDialog dialog( i18n("Modify Transport"), (*it), this );
-
-  if ( dialog.exec() != QDialog::Accepted ) return;
-
-  // create the list of names of transports, but leave out the current
-  // item:
-  QStringList transportNames;
-  QList<KMTransportInfo*>::const_iterator jt;
-  int entryLocation = -1;
-  for ( jt= mTransportInfoList.begin(); jt != mTransportInfoList.end(); ++jt )
-    if ( jt != it )
-      transportNames << (*jt)->name;
-    else
-      entryLocation = transportNames.count();
-  assert( entryLocation >= 0 );
-
-  // make the new name unique by appending a high enough number:
-  (*it)->name = uniqueName( transportNames, (*it)->name );
-  // change the list item to the new name
-  item->setText( 0, (*it)->name );
-  // and insert the new name at the position of the old in the list of
-  // strings; then broadcast the new list:
-  transportNames.insert( entryLocation, (*it)->name );
-  const QString& newTransportName = (*it)->name;
-
-  QStringList changedIdents;
-  KPIM::IdentityManager * im = kmkernel->identityManager();
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
-    if ( originalTransport == (*it).transport() ) {
-      (*it).setTransport( newTransportName );
-      changedIdents += (*it).identityName();
-    }
-  }
-
-  if ( !changedIdents.isEmpty() ) {
-    QString information =
-      i18np( "This identity has been changed to use the modified transport:",
-             "These %1 identities have been changed to use the modified transport:",
-             changedIdents.count() );
-    KMessageBox::informationList( this, information, changedIdents );
-  }
-
-  emit transportListChanged( transportNames );
-  emit changed( true );
-}
-
-void AccountsPage::SendingTab::slotRemoveSelectedTransport()
-{
-  QTreeWidgetItem *item = mTransportList->currentItem();
-  if ( !item ) return;
-
-  QStringList changedIdents;
-  KPIM::IdentityManager * im = kmkernel->identityManager();
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
-    if ( item->text( 0 ) == (*it).transport() ) {
-      (*it).setTransport( QString() );
-      changedIdents += (*it).identityName();
-    }
-  }
-
-  // if the deleted transport is the currently used transport reset it to default
-  const QString& currentTransport = GlobalSettings::self()->currentTransport();
-  if ( item->text( 0 ) == currentTransport ) {
-    GlobalSettings::self()->setCurrentTransport( QString() );
-  }
-
-  if ( !changedIdents.isEmpty() ) {
-    QString information = i18np( "This identity has been changed to use the default transport:",
-                          "These %1 identities have been changed to use the default transport:",
-                          changedIdents.count() );
-    KMessageBox::informationList( this, information, changedIdents );
-  }
-
-  QList<KMTransportInfo*>::iterator it;
-  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
-    if ( (*it)->name == item->text(0) ) break;
-  if ( !(*it) ) return;
-
-  KMTransportInfo ti;
-
-  QTreeWidgetItem *newCurrent = mTransportList->itemBelow( item );
-  if ( !newCurrent ) newCurrent = mTransportList->itemAbove( item );
-  //mTransportList->removeItem( item );
-  if ( newCurrent ) {
-    mTransportList->setCurrentItem( newCurrent );
-    GlobalSettings::self()->setDefaultTransport( newCurrent->text(0) );
-    ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
-    if ( item->text( 0 ) == GlobalSettings::self()->defaultTransport() ) {
-      if ( ti.type != "sendmail" ) {
-        newCurrent->setText( 1, i18n("smtp (Default)") );
-      } else {
-        newCurrent->setText( 1, i18n("sendmail (Default)" ));
-      }
-    }
-  } else {
-    GlobalSettings::self()->setDefaultTransport( QString() );
-  }
-
-  delete item;
-  mTransportInfoList.erase( it );
-
-  QStringList transportNames;
-  for ( it = mTransportInfoList.begin(); it != mTransportInfoList.end(); ++it )
-    transportNames << (*it)->name;
-  emit transportListChanged( transportNames );
-  emit changed( true );
-}
-
 void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
   mSendOnCheckCombo->setCurrentIndex( GlobalSettings::self()->sendOnCheck() );
 }
@@ -1064,38 +778,6 @@ void AccountsPage::SendingTab::doLoadOther() {
   KConfigGroup composer( KMKernel::config(), "Composer");
 
   int numTransports = general.readEntry("transports", 0 );
-
-  QTreeWidgetItem *top = 0;
-  mTransportInfoList.clear();
-  mTransportList->clear();
-  QStringList transportNames;
-  for ( int i = 1 ; i <= numTransports ; i++ ) {
-    KMTransportInfo *ti = new KMTransportInfo();
-    ti->readConfig(i);
-    mTransportInfoList.append( ti );
-    transportNames << ti->name;
-    top = new QTreeWidgetItem( mTransportList, QStringList() << ti->name << ti->type );
-  }
-  emit transportListChanged( transportNames );
-
-  const QString &defaultTransport = GlobalSettings::self()->defaultTransport();
-
-  for ( int i = 0; i < mTransportList->topLevelItemCount(); ++i ) {
-    QTreeWidgetItem *it = mTransportList->topLevelItem( i );
-    if ( it->text(0) == defaultTransport ) {
-      if ( it->text(1) != "sendmail" ) {
-        it->setText( 1, i18n( "smtp (Default)" ));
-      } else {
-        it->setText( 1, i18n( "sendmail (Default)" ));
-      }
-    } else {
-      if ( it->text(1) != "sendmail" ) {
-        it->setText( 1, "smtp" );
-      } else {
-        it->setText( 1, "sendmail" );
-      }
-    }
-  }
 
   mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
@@ -1114,13 +796,6 @@ void AccountsPage::SendingTab::doLoadOther() {
 void AccountsPage::SendingTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
-
-  // Save transports:
-  general.writeEntry( "transports", mTransportInfoList.count() );
-  QList<KMTransportInfo*>::const_iterator it;
-  it = mTransportInfoList.begin();
-  for ( int i = 1 ; it != mTransportInfoList.end() ; ++it, ++i )
-    (*it)->writeConfig(i);
 
   // Save common options:
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );

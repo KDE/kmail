@@ -38,22 +38,18 @@ class KMFolder;
 class KMFolderMgr;
 class KConfig;
 class K3Process;
-class KMSendProc;
-class KMSendSendmail;
-class KMSendSMTP;
-class KMTransportInfo;
-class KMPrecommand;
+class KJob;
 
 namespace KPIM {
   class ProgressItem;
+}
+namespace MailTransport {
+  class TransportJob;
 }
 
 class KMSender: public QObject, public KMail::MessageSender
 {
   Q_OBJECT
-  friend class ::KMSendProc;
-  friend class ::KMSendSendmail;
-  friend class ::KMSendSMTP;
 
 public:
   KMSender();
@@ -89,10 +85,6 @@ public:
   bool sendQuotedPrintable() const { return mSendQuotedPrintable; }
   void setSendQuotedPrintable(bool);
 
-private:
-  /** Get the transport information */
-  KMTransportInfo * transportInfo() { return mTransportInfo; }
-
 public:
   /** Read configuration from global config. */
   void readConfig();
@@ -111,16 +103,10 @@ private:
   void emitProgressInfo( int currentFileProgress );
 
 private slots:
-  /** Start sending */
-  void slotPrecommandFinished(bool);
-
-  void slotIdle();
+  void slotResult( KJob* job );
 
   /** abort sending of the current message */
   void slotAbortSend();
-
-  /** initialization sequence has finised */
-  void sendProcStarted(bool success);
 
   /** note when a msg gets added to outbox during sending */
   void outboxMsgAdded(int idx);
@@ -128,9 +114,6 @@ private slots:
 private:
   /** handle sending of messages */
   void doSendMsg();
-
-  /** second part of handling sending of messages */
-  void doSendMsgAux();
 
   /** cleanup after sending */
   void cleanup();
@@ -140,22 +123,15 @@ private:
       Returns true if everything is Ok. */
   bool settingsOk() const;
 
-  /** Parse protocol '://' (host port? | mailer) string and
-      set transport settings */
-  KMSendProc* createSendProcFromString( const QString & transport );
-
-  bool runPrecommand( const QString & cmd );
-
 private:
   bool mSendImmediate;
   bool mSendQuotedPrintable;
-  KMTransportInfo *mTransportInfo;
-  KMPrecommand *mPrecommand;
+
+  MailTransport::TransportJob* mTransportJob;
 
   QString mCustomTransport;
   bool mSentOk, mSendAborted;
   QString mErrorMsg;
-  KMSendProc *mSendProc;
   QString mMethodStr;
   bool mSendProcStarted;
   bool mSendInProgress;

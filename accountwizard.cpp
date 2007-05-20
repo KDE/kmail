@@ -39,12 +39,15 @@
 using KMail::AccountManager;
 
 #include "globalsettings.h"
-#include "kmtransport.h"
 #include "libkpimidentities/identity.h"
 #include "libkpimidentities/identitymanager.h"
 #include "protocols.h"
 
 #include <libkdepim/servertest.h>
+
+#include <mailtransport/transport.h>
+#include <mailtransport/transportmanager.h>
+using namespace MailTransport;
 
 #include <kdialog.h>
 #include <kfiledialog.h>
@@ -119,7 +122,7 @@ class AccountTypeBox : public QListWidget
 
 AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
   : KAssistantDialog( parent ), mKernel( kernel ),
-    mAccount( 0 ), mTransportInfo( 0 ), mServerTest( 0 )
+    mAccount( 0 ), mTransport( 0 ), mServerTest( 0 )
 {
   showButton( Help, false );
 
@@ -136,7 +139,6 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
 
 AccountWizard::~AccountWizard()
 {
-    qDeleteAll( mTransportInfoList );
 }
 
 void AccountWizard::start( KMKernel *kernel, QWidget *parent )
@@ -380,6 +382,7 @@ QLabel *AccountWizard::createInfoLabel( const QString &msg )
   label->setLineWidth( 3 );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
   label->move( width() / 2 - label->width() / 2, height() / 2 - label->height() / 2 );
+  label->setAutoFillBackground( true );
   label->show();
 
   return label;
@@ -403,18 +406,7 @@ void AccountWizard::accept()
 
 void AccountWizard::createTransport()
 {
-  // create outgoing account
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  uint numTransports = general.readEntry( "transports", 0 );
-
-  for ( uint i = 1 ; i <= numTransports ; i++ ) {
-    KMTransportInfo *info = new KMTransportInfo();
-    info->readConfig( i );
-    mTransportInfoList.append( info );
-  }
-
-  mTransportInfo = new KMTransportInfo();
+  mTransport = TransportManager::self()->createTransport();
 
   if ( mLocalDelivery->isChecked() ) { // local delivery
 
@@ -428,39 +420,28 @@ void AccountWizard::createTransport()
       }
     }
 
-    mTransportInfo->type = "sendmail";
-    mTransportInfo->name = i18n( "Sendmail" );
-    mTransportInfo->host = pathToSendmail;
-    mTransportInfo->auth = false;
-    mTransportInfo->setStorePasswd( false );
+    mTransport->setType( Transport::EnumType::Sendmail );
+    mTransport->setName( i18n( "Sendmail" ) );
+    mTransport->setHost( pathToSendmail );
+    mTransport->setRequiresAuthentication( false );
+    mTransport->setStorePassword( false );
 
     QTimer::singleShot( 0, this, SLOT( transportCreated() ) );
   } else { // delivery via SMTP
-    mTransportInfo->type = "smtp";
-    mTransportInfo->name = accountName();
-    mTransportInfo->host = mOutgoingServer->text();
-    mTransportInfo->user = mLoginName->text();
-    mTransportInfo->setPasswd( mPassword->text() );
+    mTransport->setType( Transport::EnumType::SMTP );
+    mTransport->setName(accountName() );
+    mTransport->setHost( mOutgoingServer->text() );
+    mTransport->setUserName( mLoginName->text() );
+    mTransport->setPassword( mPassword->text() );
 
     int port = ( mOutgoingUseSSL->isChecked() ? 465 : 25 );
-    checkSmtpCapabilities( mTransportInfo->host, port );
+    checkSmtpCapabilities( mTransport->host(), port );
   }
 }
 
 void AccountWizard::transportCreated()
 {
-  mTransportInfoList.append( mTransportInfo );
-
-  KConfigGroup general( KMKernel::config(), "General" );
-  general.writeEntry( "transports", mTransportInfoList.count() );
-
-  for ( int i = 0 ; i < mTransportInfoList.count() ; i++ ) {
-    mTransportInfo->writeConfig( i + 1 );
-  }
-
-  qDeleteAll( mTransportInfoList );
-  mTransportInfoList.clear();
-
+  TransportManager::self()->addTransport( mTransport );
   QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }
 
@@ -719,31 +700,31 @@ void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
 
   uint authBits = 0;
   if ( capaNormal.indexOf( "STARTTLS" ) != -1 ) {
-    mTransportInfo->encryption = "TLS";
+    mTransport->setEncryption( Transport::EnumEncryption::TLS );
     authBits = authBitsTLS;
   } else if ( !capaSSL.isEmpty() ) {
-    mTransportInfo->encryption = "SSL";
+    mTransport->setEncryption( Transport::EnumEncryption::SSL );
     authBits = authBitsSSL;
   } else {
-    mTransportInfo->encryption = "NONE";
+    mTransport->setEncryption( Transport::EnumEncryption::None );
     authBits = authBitsNone;
   }
 
   if ( authBits & Login ) {
-    mTransportInfo->authType = "LOGIN";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::LOGIN );
   } else if ( authBits & CRAM_MD5 ) {
-    mTransportInfo->authType = "CRAM-MD5";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::CRAM_MD5 );
   } else if ( authBits & Digest_MD5 ) {
-    mTransportInfo->authType = "DIGEST-MD5";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::DIGEST_MD5 );
   } else if ( authBits & NTLM ) {
-    mTransportInfo->authType = "NTLM";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::NTLM );
   } else if ( authBits & GSSAPI ) {
-    mTransportInfo->authType = "GSSAPI";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::GSSAPI );
   } else {
-    mTransportInfo->authType = "PLAIN";
+    mTransport->setAuthenticationType( Transport::EnumAuthenticationType::PLAIN );
   }
 
-  mTransportInfo->port = ( !capaSSL.isEmpty() ? "465" : "25" );
+  mTransport->setPort( !capaSSL.isEmpty() ? 465 : 25 );
 
   mServerTest->deleteLater();
   mServerTest = 0;

@@ -36,7 +36,6 @@ set(kmailprivate_LIB_SRCS
    identitydialog.cpp
    kmfolderdia.cpp
    kmfoldertree.cpp
-   kmtransport.cpp
    kmfoldercombobox.cpp
    kmaccount.cpp
    kmheaders.cpp
@@ -124,7 +123,6 @@ set(kmailprivate_LIB_SRCS
    kmmainwidget.cpp
    kmfolderindex.cpp
    kmfoldersearch.cpp
-   transportmanager.cpp
    folderjob.cpp
    cachedimapjob.cpp
    maildirjob.cpp
@@ -186,13 +184,13 @@ set(kmailprivate_LIB_SRCS
    quotajobs.cpp
    folderdiaquotatab.cpp
    folderdiaquotatab_p.cpp
-   keditcl1.cpp keditcl2.cpp folderadaptor.cpp 
+   keditcl1.cpp keditcl2.cpp folderadaptor.cpp
    copyfolderjob.cpp messagecopyhelper.cpp
    localsubscriptiondialog.cpp
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)  
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
 
 kde4_automoc(${kmailprivate_LIB_SRCS})
 
@@ -217,7 +215,7 @@ kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
 target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KMIME_LIBS} kpgp kdepim
   kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} ${KDE4_PHONON_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS} ${KDE4_KTNEF_LIBS}
-  threadweaver ${KDE4_KUTILS_LIBS})
+  threadweaver ${KDE4_KUTILS_LIBS} ${KDE4_MAILTRANSPORT_LIBS})
 
 set_target_properties(kmailprivate PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})

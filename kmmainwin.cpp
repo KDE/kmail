@@ -12,7 +12,6 @@
 #include "accountwizard.h"
 #include "broadcaststatus.h"
 #include "accountmanager.h"
-#include "kmtransport.h"
 
 #include <kapplication.h>
 #include <klocale.h>

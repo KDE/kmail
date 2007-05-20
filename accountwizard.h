@@ -42,10 +42,12 @@ class QPushButton;
 class KMAccount;
 class KMKernel;
 class AccountTypeBox;
-class KMTransportInfo;
 
 namespace KPIM {
 class ServerTest;
+}
+namespace MailTransport {
+  class Transport;
 }
 
 class AccountWizard : public KAssistantDialog
@@ -137,8 +139,7 @@ class AccountWizard : public KAssistantDialog
 
     KMKernel *mKernel;
     KMAccount *mAccount;
-    KMTransportInfo *mTransportInfo;
-    QList<KMTransportInfo*> mTransportInfoList;
+    MailTransport::Transport *mTransport;
     KPIM::ServerTest *mServerTest;
 };
 

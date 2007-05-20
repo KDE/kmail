@@ -21,12 +21,16 @@
 
 #define REALLY_WANT_KMSENDER
 #include "kmsender.h"
-#include "kmsender_p.h"
 #undef REALLY_WANT_KMSENDER
 
 #include <kmime/kmime_header_parsing.h>
 #include <QByteArray>
 using namespace KMime::Types;
+
+#include <mailtransport/transport.h>
+#include <mailtransport/transportjob.h>
+#include <mailtransport/transportmanager.h>
+using namespace MailTransport;
 
 #include <kio/passworddialog.h>
 #include <kio/scheduler.h>
@@ -51,7 +55,6 @@ using namespace KMime::Types;
 #include <libkpimidentities/identitymanager.h>
 #include "progressmanager.h"
 #include "kmaccount.h"
-#include "kmtransport.h"
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
@@ -66,14 +69,11 @@ using namespace KMime::Types;
 
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
-  : mOutboxFolder( 0 ), mSentFolder( 0 )
+  :  mTransportJob( 0 ), mOutboxFolder( 0 ), mSentFolder( 0 )
 {
-  mPrecommand = 0;
-  mSendProc = 0;
   mSendProcStarted = false;
   mSendInProgress = false;
   mCurrentMsg = 0;
-  mTransportInfo = new KMTransportInfo();
   readConfig();
   mSendAborted = false;
   mSentMessages = 0;
@@ -89,9 +89,6 @@ KMSender::KMSender()
 KMSender::~KMSender()
 {
   writeConfig(false);
-  delete mSendProc;
-  delete mPrecommand;
-  delete mTransportInfo;
 }
 
 //-----------------------------------------------------------------------------
@@ -127,7 +124,7 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::settingsOk() const
 {
-  if ( KMTransportInfo::availableTransports().isEmpty() ) {
+  if ( TransportManager::self()->transportNames().isEmpty() ) {
     KMessageBox::information( 0,
                               i18n("Please create an account for sending and try again.") );
     return false;
@@ -285,6 +282,32 @@ static bool messageIsDispositionNotificationReport( KMMessage *msg )
     }
     return false;
 }
+
+
+static QStringList addrSpecListToStringList( const AddrSpecList & l, bool allowEmpty=false ) {
+  QStringList result;
+  for ( AddrSpecList::const_iterator it = l.begin(), end = l.end() ; it != end ; ++it ) {
+    const QString s = (*it).asString();
+    if ( allowEmpty || !s.isEmpty() )
+      result.push_back( s );
+  }
+  return result;
+}
+
+static void extractSenderToCCAndBcc( KMMessage * aMsg, QString * sender, QStringList * to, QStringList * cc, QStringList * bcc ) {
+  if ( sender ) *sender = aMsg->sender();
+  if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
+    // extended BCC handling to prevent TOs and CCs from seeing
+    // BBC information by looking at source of an OpenPGP encrypted mail
+    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "X-KMail-Recipients" ) );
+    aMsg->removeHeaderField( "X-KMail-Recipients" );
+  } else {
+    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "To" ) );
+    if ( cc ) *cc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Cc" ) );
+    if ( bcc ) *bcc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Bcc" ) );
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
@@ -506,23 +529,23 @@ void KMSender::doSendMsg()
     msgTransport = mCurrentMsg->headerField( "X-KMail-Transport" );
   }
   if ( msgTransport.isEmpty() ) {
-    const QStringList sl = KMTransportInfo::availableTransports();
-    if ( !sl.empty() ) {
-      msgTransport = sl.front();
-    }
+    msgTransport = TransportManager::self()->defaultTransportName();
   }
 
-  if ( !mSendProc || msgTransport != mMethodStr ) {
-    if ( mSendProcStarted && mSendProc ) {
-      mSendProc->finish();
-      mSendProcStarted = false;
+  if ( !mTransportJob ) {
+    mTransportJob = TransportManager::self()->createTransportJob( msgTransport );
+    mMethodStr = msgTransport;
+    if ( !mTransportJob ) {
+      KMessageBox::error( 0, i18n( "Transport '%1' is invalid." ).arg( msgTransport ),
+                          i18n( "Sending failed" ) );
+      mProgressItem->cancel();
+      mProgressItem->setComplete();
+      cleanup();
+      return;
     }
 
-    mSendProc = createSendProcFromString( msgTransport );
-    mMethodStr = msgTransport;
-
-    if ( mTransportInfo->encryption == "TLS" ||
-         mTransportInfo->encryption == "SSL" ) {
+    if ( mTransportJob->transport()->encryption() == Transport::EnumEncryption::TLS ||
+         mTransportJob->transport()->encryption() == Transport::EnumEncryption::SSL ) {
       mProgressItem->setUsesCrypto( true );
     } else if ( !mCustomTransport.isEmpty() ) {
       int result = KMessageBox::warningContinueCancel(
@@ -542,111 +565,39 @@ void KMSender::doSendMsg()
       }
     }
 
-    if ( !mSendProc ) {
-      sendProcStarted( false );
-    } else {
-      connect(mSendProc, SIGNAL(idle()), SLOT(slotIdle()));
-      connect(mSendProc, SIGNAL(started(bool)), SLOT(sendProcStarted(bool)));
+    setStatusMsg( i18nc("%3: subject of message","Sending message %1 of %2: %3",
+                  mSentMessages+mFailedMessages+1, mTotalMessages,
+                  mCurrentMsg->subject()) );
+    QStringList to, cc, bcc;
+    QString sender;
+    extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
 
-      // Run the precommand if there is one
-      if ( !mTransportInfo->precommand.isEmpty() ) {
-        runPrecommand( mTransportInfo->precommand );
-        return;
-      }
+    // MDNs are required to have an empty envelope from as per RFC2298.
+    if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
+      sender = "<>";
 
-      mSendProc->start();
+    const QByteArray message = mCurrentMsg->asSendableString();
+    if ( sender.isEmpty() ) {
+      if ( mCurrentMsg )
+        mCurrentMsg->setTransferInProgress( false );
+      if ( mOutboxFolder )
+        mOutboxFolder->unGetMsg( mFailedMessages );
+      mCurrentMsg = 0;
+      cleanup();
+      setStatusMsg(i18n("Failed to send (some) queued messages."));
+      return;
     }
-  } else if ( !mSendProcStarted ) {
-    mSendProc->start();
-  } else {
-    doSendMsgAux();
+
+    mTransportJob->setSender( sender );
+    mTransportJob->setTo( to );
+    mTransportJob->setCc( cc );
+    mTransportJob->setBcc( bcc );
+    mTransportJob->setData( message );
+
+    connect( mTransportJob, SIGNAL(result(KJob*)), SLOT(slotResult(KJob*)) );
+    mSendProcStarted = true;
+    mTransportJob->start();
   }
-}
-
-bool KMSender::runPrecommand( const QString & cmd ) {
-  setStatusMsg( i18n("Executing precommand %1", cmd ) );
-  mPrecommand = new KMPrecommand( cmd );
-  connect( mPrecommand, SIGNAL(finished(bool)),
-           SLOT(slotPrecommandFinished(bool)) );
-  if ( !mPrecommand->start() ) {
-    delete mPrecommand; mPrecommand = 0;
-    return false;
-  }
-  return true;
-}
-
-//-----------------------------------------------------------------------------
-void KMSender::sendProcStarted(bool success)
-{
-  if (!success) {
-    if (mSendProc)
-       mSendProc->finish();
-    else
-      setStatusMsg(i18n("Unrecognized transport protocol. Unable to send message."));
-    mSendProc = 0;
-    mSendProcStarted = false;
-    cleanup();
-    return;
-  }
-  doSendMsgAux();
-}
-
-
-static QStringList addrSpecListToStringList( const AddrSpecList & l, bool allowEmpty=false ) {
-  QStringList result;
-  for ( AddrSpecList::const_iterator it = l.begin(), end = l.end() ; it != end ; ++it ) {
-    const QString s = (*it).asString();
-    if ( allowEmpty || !s.isEmpty() )
-      result.push_back( s );
-  }
-  return result;
-}
-
-static void extractSenderToCCAndBcc( KMMessage * aMsg, QString * sender, QStringList * to, QStringList * cc, QStringList * bcc ) {
-  if ( sender ) *sender = aMsg->sender();
-  if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
-    // extended BCC handling to prevent TOs and CCs from seeing
-    // BBC information by looking at source of an OpenPGP encrypted mail
-    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "X-KMail-Recipients" ) );
-    aMsg->removeHeaderField( "X-KMail-Recipients" );
-  } else {
-    if ( to ) *to = addrSpecListToStringList( aMsg->extractAddrSpecs( "To" ) );
-    if ( cc ) *cc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Cc" ) );
-    if ( bcc ) *bcc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Bcc" ) );
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMSender::doSendMsgAux()
-{
-  mSendProcStarted = true;
-
-  // start sending the current message
-
-  setStatusMsg(i18nc("%3: subject of message","Sending message %1 of %2: %3",
-	        mSentMessages+mFailedMessages+1, mTotalMessages,
-	        mCurrentMsg->subject()));
-  QStringList to, cc, bcc;
-  QString sender;
-  extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
-
-  // MDNs are required to have an empty envelope from as per RFC2298.
-  if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
-    sender = "<>";
-
-  const QByteArray message = mCurrentMsg->asSendableString();
-  if ( sender.isEmpty() || !mSendProc->send( sender, to, cc, bcc, message ) ) {
-    if ( mCurrentMsg )
-      mCurrentMsg->setTransferInProgress( false );
-    if ( mOutboxFolder )
-      mOutboxFolder->unGetMsg( mFailedMessages );
-    mCurrentMsg = 0;
-    cleanup();
-    setStatusMsg(i18n("Failed to send (some) queued messages."));
-    return;
-  }
-  // Do *not* add code here, after send(). It can happen that this method
-  // is called recursively if send() emits the idle signal directly.
 }
 
 
@@ -654,10 +605,10 @@ void KMSender::doSendMsgAux()
 void KMSender::cleanup( void )
 {
   kDebug(5006) << k_funcinfo << endl;
-  if ( mSendProc && mSendProcStarted ) {
-    mSendProc->finish();
+  if ( mTransportJob && mSendProcStarted ) {
+    mTransportJob->kill();
   }
-  mSendProc = 0;
+  mTransportJob = 0;
   mSendProcStarted = false;
   if ( mSendInProgress ) {
     KGlobal::deref();
@@ -698,23 +649,20 @@ void KMSender::cleanup( void )
 void KMSender::slotAbortSend()
 {
   mSendAborted = true;
-  delete mPrecommand;
-  mPrecommand = 0;
-  if ( mSendProc ) {
-    mSendProc->abort();
+  if ( mTransportJob ) {
+    mTransportJob->kill( KJob::EmitResult );
   }
 }
 
 //-----------------------------------------------------------------------------
-void KMSender::slotIdle()
+void KMSender::slotResult( KJob *job )
 {
-  assert( mSendProc != 0 );
+  assert( mTransportJob == job );
+  mTransportJob = 0;
+  mSendProcStarted = false;
 
   QString msg;
-  QString errString;
-  if ( mSendProc ) {
-    errString = mSendProc->lastErrorMessage();
-  }
+  QString errString = job->errorString();
 
   if ( mSendAborted ) {
     // sending of message aborted
@@ -735,7 +683,7 @@ void KMSender::slotIdle()
     if (!errString.isEmpty()) KMessageBox::error(0,msg);
     setStatusMsg( i18n( "Sending aborted." ) );
   } else {
-    if ( !mSendProc->sendOk() ) {
+    if ( job->error() ) {
       if ( mCurrentMsg ) {
         mCurrentMsg->setTransferInProgress( false );
       }
@@ -789,23 +737,8 @@ void KMSender::slotIdle()
       return;
     }
   }
-  mSendProc->finish();
-  mSendProc = 0;
-  mSendProcStarted = false;
-
   cleanup();
 }
-
-
-//-----------------------------------------------------------------------------
-void KMSender::slotPrecommandFinished(bool normalExit)
-{
-  delete mPrecommand;
-  mPrecommand = 0;
-  if (normalExit) mSendProc->start();
-  else slotIdle();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMSender::setSendImmediate(bool aSendImmediate)
@@ -820,65 +753,6 @@ void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
   mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
-
-//-----------------------------------------------------------------------------
-KMSendProc* KMSender::createSendProcFromString( const QString & transport )
-{
-  mTransportInfo->type.clear();
-  int nr = KMTransportInfo::findTransport(transport);
-  if (nr)
-  {
-    mTransportInfo->readConfig(nr);
-  } else {
-    if (transport.startsWith("smtp://")) // should probably use KUrl and SMTP_PROTOCOL
-    {
-      mTransportInfo->type = "smtp";
-      mTransportInfo->auth = false;
-      mTransportInfo->encryption = "NONE";
-      QString serverport = transport.mid(7);
-      int colon = serverport.indexOf(':');
-      if (colon != -1) {
-        mTransportInfo->host = serverport.left(colon);
-        mTransportInfo->port = serverport.mid(colon + 1);
-      } else {
-        mTransportInfo->host = serverport;
-        mTransportInfo->port = "25";
-      }
-    } else
-    if (transport.startsWith("smtps://"))  // should probably use KUrl and SMTPS_PROTOCOL
-    {
-      mTransportInfo->type = "smtps";
-      mTransportInfo->auth = false;
-      mTransportInfo->encryption = "ssl";
-      QString serverport = transport.mid(7);
-      int colon = serverport.indexOf(':');
-      if (colon != -1) {
-        mTransportInfo->host = serverport.left(colon);
-        mTransportInfo->port = serverport.mid(colon + 1);
-      } else {
-        mTransportInfo->host = serverport;
-        mTransportInfo->port = "465";
-      }
-    }
-    else if (transport.startsWith("file://"))
-    {
-      mTransportInfo->type = "sendmail";
-      mTransportInfo->host = transport.mid(7);
-    }
-  }
-  // strip off a trailing "/"
-  while (mTransportInfo->host.endsWith("/")) {
-    mTransportInfo->host.truncate(mTransportInfo->host.length()-1);
-  }
-
-
-  if (mTransportInfo->type == "sendmail")
-    return new KMSendSendmail(this);
-  if (mTransportInfo->type == "smtp" || mTransportInfo->type == "smtps")
-    return new KMSendSMTP(this);
-
-  return 0L;
-}
 
 //-----------------------------------------------------------------------------
 void KMSender::setStatusByLink( const KMMessage *aMsg )
@@ -913,354 +787,4 @@ void KMSender::setStatusByLink( const KMMessage *aMsg )
   }
 }
 
-//=============================================================================
-//=============================================================================
-KMSendProc::KMSendProc( KMSender * sender )
-  : QObject( 0 ),
-    mSender( sender ),
-    mLastErrorMessage(),
-    mSendOk( false ),
-    mSending( false )
-{
-}
-
-//-----------------------------------------------------------------------------
-void KMSendProc::reset()
-{
-  mSending = false;
-  mSendOk = false;
-  mLastErrorMessage.clear();
-}
-
-//-----------------------------------------------------------------------------
-void KMSendProc::failed(const QString &aMsg)
-{
-  mSending = false;
-  mSendOk = false;
-  mLastErrorMessage = aMsg;
-}
-
-//-----------------------------------------------------------------------------
-void KMSendProc::statusMsg(const QString& aMsg)
-{
-  if (mSender) mSender->setStatusMsg(aMsg);
-}
-
-//=============================================================================
-//=============================================================================
-KMSendSendmail::KMSendSendmail( KMSender * sender )
-  : KMSendProc( sender ),
-    mMsgStr(),
-    mMsgPos( 0 ),
-    mMsgRest( 0 ),
-    mMailerProc( 0 )
-{
-
-}
-
-KMSendSendmail::~KMSendSendmail() {
-  delete mMailerProc; mMailerProc = 0;
-}
-
-bool KMSendSendmail::doStart() {
-
-  if (mSender->transportInfo()->host.isEmpty())
-  {
-    const QString str = i18n("Please specify a mailer program in the settings.");
-    const QString msg = i18n("Sending failed:\n%1\n"
-                             "The message will stay in the 'outbox' folder and will be resent.\n"
-                             "Please remove it from there if you do not want the message to "
-                             "be resent.\n"
-                             "The following transport protocol was used:\n  %2",
-                         str + '\n',
-                         "sendmail://");
-    KMessageBox::information(0,msg);
-    return false;
-  }
-
-  if (!mMailerProc)
-  {
-    mMailerProc = new K3Process;
-    assert(mMailerProc != 0);
-    connect(mMailerProc,SIGNAL(processExited(K3Process*)),
-	    this, SLOT(sendmailExited(K3Process*)));
-    connect(mMailerProc,SIGNAL(wroteStdin(K3Process*)),
-	    this, SLOT(wroteStdin(K3Process*)));
-    connect(mMailerProc,SIGNAL(receivedStderr(K3Process*,char*,int)),
-	    this, SLOT(receivedStderr(K3Process*, char*, int)));
-  }
-  return true;
-}
-
-void KMSendSendmail::doFinish() {
-  delete mMailerProc;
-  mMailerProc = 0;
-}
-
-void KMSendSendmail::abort()
-{
-  delete mMailerProc;
-  mMailerProc = 0;
-  mSendOk = false;
-  mMsgStr = 0;
-  idle();
-}
-
-bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
-  mMailerProc->clearArguments();
-  *mMailerProc << mSender->transportInfo()->host
-               << "-i" << "-f" << sender
-               << to << cc << bcc ;
-
-  mMsgStr = message;
-
-  if ( !mMailerProc->start( K3Process::NotifyOnExit, K3Process::All ) ) {
-    KMessageBox::information( 0, i18n("Failed to execute mailer program %1",
-                                mSender->transportInfo()->host ) );
-    return false;
-  }
-  mMsgPos  = mMsgStr.data();
-  mMsgRest = mMsgStr.size();
-  wroteStdin( mMailerProc );
-
-  return true;
-}
-
-
-void KMSendSendmail::wroteStdin(K3Process *proc)
-{
-  char* str;
-  int len;
-
-  assert(proc!=0);
-  Q_UNUSED( proc );
-
-  str = mMsgPos;
-  len = (mMsgRest>1024 ? 1024 : mMsgRest);
-
-  if (len <= 0)
-  {
-    mMailerProc->closeStdin();
-  }
-  else
-  {
-    mMsgRest -= len;
-    mMsgPos  += len;
-    mMailerProc->writeStdin(str,len);
-    // if code is added after writeStdin() K3Process probably initiates
-    // a race condition.
-  }
-}
-
-
-void KMSendSendmail::receivedStderr(K3Process *proc, char *buffer, int buflen)
-{
-  assert(proc!=0);
-  Q_UNUSED( proc );
-  mLastErrorMessage.replace(mLastErrorMessage.length(), buflen, buffer);
-}
-
-
-void KMSendSendmail::sendmailExited(K3Process *proc)
-{
-  assert(proc!=0);
-  mSendOk = (proc->normalExit() && proc->exitStatus()==0);
-  if (!mSendOk) failed(i18n("Sendmail exited abnormally."));
-  mMsgStr = 0;
-  emit idle();
-}
-
-
-
-//-----------------------------------------------------------------------------
-//=============================================================================
-//=============================================================================
-KMSendSMTP::KMSendSMTP(KMSender *sender)
-  : KMSendProc(sender),
-    mInProcess(false),
-    mJob(0),
-    mSlave(0)
-{
-  KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int,
-    const QString &)), this, SLOT(slaveError(KIO::Slave *, int,
-    const QString &)));
-}
-
-KMSendSMTP::~KMSendSMTP()
-{
-  if (mJob) mJob->kill();
-}
-
-bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QByteArray & message ) {
-  QString query = "headers=0&from=";
-  query += KUrl::toPercentEncoding( sender );
-
-  foreach ( QString str, to )
-    query += "&to=" + KUrl::toPercentEncoding( str );
-  foreach ( QString str, cc )
-    query += "&cc=" + KUrl::toPercentEncoding( str );
-  foreach ( QString str, bcc )
-    query += "&bcc=" + KUrl::toPercentEncoding( str );
-
-  KMTransportInfo * ti = mSender->transportInfo();
-
-  if ( ti->specifyHostname )
-    query += "&hostname=" + KUrl::toPercentEncoding( ti->localHostname );
-
-  if ( !kmkernel->msgSender()->sendQuotedPrintable() )
-    query += "&body=8bit";
-
-  KUrl destination;
-
-  destination.setProtocol((ti->encryption == "SSL") ? SMTPS_PROTOCOL : SMTP_PROTOCOL);
-  destination.setHost(ti->host);
-  destination.setPort(ti->port.toUShort());
-
-  if ( ti->auth ) {
-    QMap<QString, QString>::iterator tpc =
-      mSender->mPasswdCache.find( ti->name );
-    QString tpwd = ( tpc != mSender->mPasswdCache.end() ) ? (*tpc) : QString();
-    if ( ti->passwd().isEmpty() ) {
-      ti->setPasswd( tpwd );
-    }
-
-    if ( ( ti->user.isEmpty() || ti->passwd().isEmpty() ) &&
-         ti->authType != "GSSAPI" ) {
-      bool b = false;
-      int result;
-
-      KCursorSaver idle( KBusyPtr::idle() );
-      QString passwd = ti->passwd();
-      result = KIO::PasswordDialog::getNameAndPassword( ti->user, passwd,
-	&b, i18n("You need to supply a username and a password to use this "
-	     "SMTP server."), false, QString(), ti->name, QString());
-
-      if ( result != QDialog::Accepted ) {
-        abort();
-        return false;
-      }
-      if ( int id = KMTransportInfo::findTransport( ti->name ) ) {
-        ti->setPasswd( passwd );
-        ti->writeConfig( id );
-
-        // save the password into the cache
-        mSender->mPasswdCache[ti->name] = passwd;
-      }
-    }
-    destination.setUser( ti->user );
-    destination.setPass( ti->passwd() );
-  }
-
-  if ( !mSlave || !mInProcess ) {
-    KIO::MetaData slaveConfig;
-    slaveConfig.insert( "tls", ( ti->encryption == "TLS" ) ? "on" : "off" );
-    if ( ti->auth ) {
-      slaveConfig.insert( "sasl", ti->authType );
-    }
-    mSlave = KIO::Scheduler::getConnectedSlave( destination, slaveConfig );
-  }
-
-  if (!mSlave) {
-    abort();
-    return false;
-  }
-
-  // dotstuffing is now done by the slave (see setting of metadata)
-  mMessage = message;
-  mMessageLength = mMessage.size();
-  mMessageOffset = 0;
-
-  if ( mMessageLength )
-    // allow +5% for subsequent LF->CRLF and dotstuffing (an average
-    // over 2G-lines gives an average line length of 42-43):
-    query += "&size=" + QString::number( qRound( mMessageLength * 1.05 ) );
-
-  destination.setPath("/send");
-  destination.setQuery( query );
-
-  mJob = KIO::put( destination, -1, false, false, false );
-  if ( !mJob ) {
-    abort();
-    return false;
-  }
-  mJob->addMetaData( "lf2crlf+dotstuff", "slave" );
-  KIO::Scheduler::assignJobToSlave(mSlave, mJob);
-  connect(mJob, SIGNAL(result(KJob *)), this, SLOT(result(KJob *)));
-  connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
-          this, SLOT(dataReq(KIO::Job *, QByteArray &)));
-  mSendOk = true;
-  mInProcess = true;
-  return true;
-}
-
-void KMSendSMTP::cleanup() {
-  if(mJob)
-  {
-    mJob->kill( KJob::EmitResult );
-    mJob = 0;
-    mSlave = 0;
-  }
-
-  if (mSlave)
-  {
-    KIO::Scheduler::disconnectSlave(mSlave);
-    mSlave = 0;
-  }
-
-  mInProcess = false;
-}
-
-void KMSendSMTP::abort() {
-  cleanup();
-  emit idle();
-}
-
-void KMSendSMTP::doFinish() {
-  cleanup();
-}
-
-void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
-{
-  // Send it by 32K chuncks
-  const int chunkSize = qMin( mMessageLength - mMessageOffset, (unsigned int)32*1024 );
-  if ( chunkSize > 0 ) {
-    array = QByteArray(mMessage.data() + mMessageOffset, chunkSize);
-    mMessageOffset += chunkSize;
-  } else
-  {
-    array.resize(0);
-    mMessage.resize(0);
-  }
-  mSender->emitProgressInfo( mMessageOffset );
-}
-
-void KMSendSMTP::result(KJob *_job)
-{
-  if (!mJob) return;
-  mJob = 0;
-
-  if(_job->error())
-  {
-    mSendOk = false;
-    if (_job->error() == KIO::ERR_SLAVE_DIED) mSlave = 0;
-    failed(_job->errorString());
-    abort();
-  } else {
-    emit idle();
-  }
-}
-
-void KMSendSMTP::slaveError(KIO::Slave *aSlave, int error, const QString &errorMsg)
-{
-  if (aSlave == mSlave)
-  {
-    if (error == KIO::ERR_SLAVE_DIED) mSlave = 0;
-    mSendOk = false;
-    mJob = 0;
-    failed(KIO::buildErrorString(error, errorMsg));
-    abort();
-  }
-}
-
 #include "kmsender.moc"
-#include "kmsender_p.moc"

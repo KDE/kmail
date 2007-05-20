@@ -44,7 +44,6 @@ class Q3ButtonGroup;
 class QRegExpValidator;
 class KVBox;
 class KMAccount;
-class KMTransportInfo;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
@@ -340,33 +339,17 @@ public:
   QString helpAnchor() const;
   void save();
 
-signals:
-  void transportListChanged( const QStringList & );
-
-private slots:
-  void slotTransportSelected();
-  void slotAddTransport();
-  void slotModifySelectedTransport();
-  void slotRemoveSelectedTransport();
-  void slotSetDefaultTransport();
-
 private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  QTreeWidget *mTransportList;
-  QPushButton *mModifyTransportButton;
-  QPushButton *mRemoveTransportButton;
-  QPushButton *mSetDefaultTransportButton;
   QCheckBox   *mConfirmSendCheck;
   QComboBox   *mSendOnCheckCombo;
   QComboBox   *mSendMethodCombo;
   QComboBox   *mMessagePropertyCombo;
   QLineEdit   *mDefaultDomainEdit;
-
-  QList< KMTransportInfo* > mTransportInfoList;
 };
 
 
@@ -424,8 +407,6 @@ public:
   typedef AccountsPageSendingTab SendingTab;
   typedef AccountsPageReceivingTab ReceivingTab;
 
-signals:
-  void transportListChanged( const QStringList & );
   void accountListChanged( const QStringList & );
 
 private:

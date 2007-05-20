@@ -74,6 +74,8 @@
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 
+#include <mailtransport/transportmanager.h>
+
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 using namespace KMime;
@@ -109,7 +111,6 @@ using KMail::SearchWindow;
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "imapaccountbase.h"
-#include "transportmanager.h"
 using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
@@ -1900,7 +1901,7 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
     return;
   }
 
-  QStringList availTransports= KMail::TransportManager::transportNames();
+  QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
   if (availTransports.contains(item->text()))
     kmkernel->msgSender()->sendQueued( item->text() );
 }
@@ -2510,7 +2511,7 @@ void KMMainWidget::getTransportMenu()
   QStringList availTransports;
 
   mSendMenu->clear();
-  availTransports = KMail::TransportManager::transportNames();
+  availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for(it = availTransports.begin(); it != availTransports.end() ; ++it)
     mSendMenu->addAction((*it).replace("&", "&&"));
@@ -3790,7 +3791,7 @@ void KMMainWidget::clearFilterActions()
     actionCollection()->removeAction( a );
 
   mApplyFilterActionsMenu->menu()->clear();
-  mFilterTBarActions.clear(); 
+  mFilterTBarActions.clear();
   mFilterMenuActions.clear();
 
   qDeleteAll( mFilterCommands );
