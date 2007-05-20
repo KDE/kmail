@@ -1217,7 +1217,7 @@ KMCommand::Result KMForwardInlineCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, false, true );
+        parser.process( msg, 0, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
@@ -1521,7 +1521,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, false, true );
+        parser.process( msg, 0, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
