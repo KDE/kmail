@@ -379,7 +379,7 @@ void SimpleFolderTree::keyPressEvent( QKeyEvent *e ) {
 
 
 //-----------------------------------------------------------------------------
-FolderSelectionDialog::KMFolderSelectionDialog( KMMainWidget * parent, const QString& caption,
+FolderSelectionDialog::FolderSelectionDialog( KMMainWidget * parent, const QString& caption,
     bool mustBeReadWrite, bool useGlobalSettings )
   : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -402,7 +402,7 @@ FolderSelectionDialog::KMFolderSelectionDialog( KMMainWidget * parent, const QSt
 }
 
 //----------------------------------------------------------------------------
-FolderSelectionDialog::KMFolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
+FolderSelectionDialog::FolderSelectionDialog( QWidget * parent, KMFolderTree * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
   : KDialog( parent ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -519,4 +519,4 @@ void FolderSelectionDialog::writeConfig()
 
 } // namespace KMail
 
-#include "FolderSelectionDialog.moc"
+#include "folderselectiondialog.moc"
