@@ -621,7 +621,7 @@ QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( co
   if ( f ) {
     subResources.append( SubResource( f->location(),  f->prettyUrl(),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-    kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
+    kDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
 
@@ -633,7 +633,7 @@ QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( co
     if ( f && f->storage()->contentsType() == t ) {
       subResources.append( SubResource( f->location(), f->prettyUrl(),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-      kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
+      kDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
   }
@@ -1930,10 +1930,10 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
     relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
   }
 #if 0
-  kdDebug(5006) << k_funcinfo << endl;
-  kdDebug(5006) << "Folder: " << folder->label() << " has administer rights: " << administerRights << endl;
-  kdDebug(5006) << "and is relevant for owner: " << relevantForOwner <<  endl;
-  kdDebug(5006) << "and relevant for everyone: "  << relevantForEveryone << endl;
+  kDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << "Folder: " << folder->label() << " has administer rights: " << administerRights << endl;
+  kDebug(5006) << "and is relevant for owner: " << relevantForOwner <<  endl;
+  kDebug(5006) << "and relevant for everyone: "  << relevantForEveryone << endl;
 #endif
   return ( administerRights && relevantForOwner ) || relevantForEveryone;
 }

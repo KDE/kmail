@@ -258,8 +258,8 @@ void KMFolderCachedImap::readConfig()
   }
   mIncidencesFor = incidencesForFromString( group.readEntry( "IncidencesFor" ) );
   mAlarmsBlocked = group.readEntry( "AlarmsBlocked", false );
-//  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
-//                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
+//  kDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
+//               << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   mUserRights = config->readEntry( "UserRights", 0 ); // default is we don't know
   mOldUserRights = mUserRights;
