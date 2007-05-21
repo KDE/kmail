@@ -1156,10 +1156,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
   if(kmkernel->xmlGuiInstance().isValid())
-#ifdef __GNUC__
-#warning "kde4: port it"
-#endif
-    KNotifyConfigWidget::configure(this/*,  kmkernel->xmlGuiInstance()->aboutData()*/);
+    KNotifyConfigWidget::configure(this,  kmkernel->xmlGuiInstance().componentName());
   else
     KNotifyConfigWidget::configure(this);
 }

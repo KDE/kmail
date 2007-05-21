@@ -44,8 +44,10 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
   topLayout->setSpacing( spacingHint() );
   topLayout->setMargin( 0 );
 
-  Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Account Type"), page );
-  connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
+  QGroupBox *group = new QGroupBox(i18n("Account Type"));
+
+  QButtonGroup *button = new QButtonGroup;
+  connect(button, SIGNAL(buttonClicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );
   QVBoxLayout *vlay = new QVBoxLayout( group );
@@ -53,15 +55,20 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
   vlay->setMargin( spacingHint()*2 );
   vlay->addSpacing( fontMetrics().lineSpacing() );
 
-  QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox"), group );
+  QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox") );
+  button->addButton(radioButton1,0);
   vlay->addWidget( radioButton1 );
-  QRadioButton *radioButton2 = new QRadioButton( i18n("&POP3"), group );
+  QRadioButton *radioButton2 = new QRadioButton( i18n("&POP3"));
+  button->addButton(radioButton2,1);
   vlay->addWidget( radioButton2 );
-  QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"), group );
+  QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"));
+  button->addButton(radioButton3,2);
   vlay->addWidget( radioButton3 );
-  QRadioButton *radioButton4 = new QRadioButton( i18n("&Disconnected IMAP"), group );
+  QRadioButton *radioButton4 = new QRadioButton( i18n("&Disconnected IMAP") );
+  button->addButton(radioButton4,3);
   vlay->addWidget( radioButton4 );
-  QRadioButton *radioButton5 = new QRadioButton( i18n("&Maildir mailbox"), group );
+  QRadioButton *radioButton5 = new QRadioButton( i18n("&Maildir mailbox") );
+  button->addButton(radioButton5,4);
   vlay->addWidget( radioButton5 );
 
   vlay->addStretch( 10 );

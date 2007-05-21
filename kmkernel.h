@@ -273,11 +273,11 @@ public:
 
   KMailICalIfaceImpl& iCalIface();
 
-  bool firstStart() { return the_firstStart; }
-  QString previousVersion() { return the_previousVersion; }
-  bool startingUp() { return the_startingUp; }
+  bool firstStart() const { return the_firstStart; }
+  QString previousVersion() const { return the_previousVersion; }
+  bool startingUp() const { return the_startingUp; }
   void setStartingUp (bool flag) { the_startingUp = flag; }
-  bool shuttingDown() { return the_shuttingDown; }
+  bool shuttingDown() const { return the_shuttingDown; }
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
 
