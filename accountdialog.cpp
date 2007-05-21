@@ -798,11 +798,11 @@ void AccountDialog::makePopAccountPage()
   mPop.encryptionGroup->layout()->addWidget( mPop.encryptionTLS );
   
   mPop.encryptionButtonGroup = new QButtonGroup();
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone,NoEncryption );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL,SSL );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS,TLS );
   
-  connect(mPop.encryptionGroup, SIGNAL(clicked(int)),
+  connect(mPop.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
     SLOT(slotPopEncryptionChanged(int)));
   vlay->addWidget( mPop.encryptionGroup );
 
@@ -1157,17 +1157,18 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.encryptionTLS =
     new QRadioButton( i18n("Use &TLS for secure mail download"),
     mImap.encryptionGroup );
-  connect(mImap.encryptionGroup, SIGNAL(clicked(int)),
-    SLOT(slotImapEncryptionChanged(int)));
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionNone );
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionSSL );
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionTLS );
   
   mImap.encryptionButtonGroup = new QButtonGroup();
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS );
-  
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone,NoEncryption );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL,SSL );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS,TLS );
+ 
+  connect(mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
+		      SLOT(slotImapEncryptionChanged(int)));
+
   vlay->addWidget( mImap.encryptionGroup );
 
   mImap.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
