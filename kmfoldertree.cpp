@@ -350,7 +350,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 
   mUpdateCountTimer= new QTimer( this );
 
-  addAcceptableDropMimetype( qPrintable(MailList::mimeDataType()), false);
+  addAcceptableDropMimetype( MailList::mimeDataType(), false);
   setDragEnabled( true );
   addAcceptableDropMimetype( "application/x-qlistviewitem", false );
 
