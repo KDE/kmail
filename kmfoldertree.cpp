@@ -1457,8 +1457,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     int action = -1;
 
-    if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
+    if ( fti && acceptDrag(e) && ( fti != oldSelected || e->source() == mMainWidget->headers()->viewport() ) )
     {
+      //First, determine if we want to copy or to move the dropped contents
       int keybstate = qApp->keyboardModifiers();
       if ( keybstate & Qt::ControlModifier ) {
         action = DRAG_COPY;
@@ -1473,13 +1474,15 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
           menu->addAction( SmallIcon("cancel"), i18n("C&ancel") );
           const QAction *selectedAction = menu->exec( QCursor::pos() );
           if ( selectedAction == dragMove )
-            emit folderDrop( fti->folder() );
+            action = DRAG_MOVE;
           else if ( selectedAction == dragCopy )
-            emit folderDropCopy( fti->folder() );
+            action = DRAG_COPY;
         }
         else
           action = DRAG_MOVE;
       }
+
+      //If the dropped content is a folder, move/copy the folder
       if ( e->provides("application/x-qlistviewitem") ) {
         if ( (action == DRAG_COPY || action == DRAG_MOVE) && !mCopySourceFolders.isEmpty() ) {
           for ( QList<QPointer<KMFolder> >::ConstIterator it = mCopySourceFolders.constBegin();
@@ -1489,7 +1492,10 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
           }
           moveOrCopyFolder( mCopySourceFolders, fti->folder(), (action == DRAG_MOVE) );
         }
-      } else {
+      }
+
+      //If the dropped content are messages, move/copy the messages
+      else {
         if ( e->source() == mMainWidget->headers()->viewport() ) {
           // KMHeaders does copy/move itself
           if ( action == DRAG_MOVE && fti->folder() )
