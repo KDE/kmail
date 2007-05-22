@@ -62,7 +62,7 @@ using KMail::RenameJob;
 #include <QList>
 #include <QTextCodec>
 #include <QByteArray>
-#include <Q3StyleSheet>
+#include <qtextdocument.h>
 
 #include <assert.h>
 
@@ -270,7 +270,7 @@ void KMFolderImap::remove()
   jd.progressItem = ProgressManager::createProgressItem(
                       "ImapFolderRemove" + ProgressManager::getUniqueID(),
                       i18n("Removing folder"),
-                      i18n( "URL: %1", Q3StyleSheet::escape( folder()->prettyUrl() ) ),
+                      i18n( "URL: %1", Qt::escape( folder()->prettyUrl() ) ),
                       false,
                       account()->useSSL() || account()->useTLS() );
   account()->insertJob(job, jd);
@@ -514,7 +514,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
       mAddMessageProgressItem = ProgressManager::createProgressItem(
           "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: %1", Q3StyleSheet::escape( folder()->prettyUrl() ) ),
+          i18n("Destination folder: %1", Qt::escape( folder()->prettyUrl() ) ),
           true,
           account()->useSSL() || account()->useTLS() );
       mAddMessageProgressItem->setTotalItems( msgList.count() );

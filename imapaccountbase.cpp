@@ -942,9 +942,9 @@ bool ImapAccountBase::handlePutError( KIO::Job *job, jobData &jd, KMFolder *fold
   QString myError = "<p><b>" +
                     i18n("Error while uploading message") +
                     "</b></p><p>" +
-                    i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.", msg->dateStr(), Qt::escape( from ), Q3StyleSheet::escape( subject ) ) +
+                    i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.", msg->dateStr(), Qt::escape( from ), Qt::escape( subject ) ) +
                     "</p><p>" +
-                    i18n("The destination folder was %1, which has the URL %2.", Qt::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) ) +
+                    i18n("The destination folder was %1, which has the URL %2.", Qt::escape( folder->label() ), Qt::escape( jd.htmlURL() ) ) +
                     "</p><p>" +
                     i18n("The error message from the server communication is here:") +
                     "</p>";
