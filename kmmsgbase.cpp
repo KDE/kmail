@@ -569,7 +569,7 @@ QByteArray KMMsgBase::encodeRFC2047String(const QString& _str,
         }
         stop = start + dif;
       }
-      p = stop;
+      p = (stop >= strLength ? strLength - 1 : stop);
       while (p > start && _str.at(p) != ' ') p--;
       if (p > start) stop = p;
       if (result.right(3) == "?= ") start--;
