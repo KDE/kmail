@@ -66,7 +66,6 @@ QValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
 	return res;
 }
 
-
 static
 std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
 	std::vector<Q_UINT32> res;
