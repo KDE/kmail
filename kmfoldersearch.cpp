@@ -146,6 +146,15 @@ bool KMSearch::inScope(KMFolder* folder) const
 
 void KMSearch::start()
 {
+    //close all referenced folders
+    QValueListIterator<QGuardedPtr<KMFolder> > fit;
+    for (fit = mFolders.begin(); fit != mFolders.end(); ++fit) {
+        if (!(*fit))
+            continue;
+        (*fit)->close("kmsearch");
+    }
+    mFolders.clear();
+
     if ( running() )
         return;
 
@@ -899,7 +908,16 @@ KMMsgInfo* KMFolderSearch::setIndexEntry(int idx, KMMessage *msg)
 
 void KMFolderSearch::clearIndex(bool, bool)
 {
-    mSerNums.clear();
+  //close all referenced folders
+  QValueListIterator<QGuardedPtr<KMFolder> > fit;
+  for (fit = mFolders.begin(); fit != mFolders.end(); ++fit) {
+    if (!(*fit))
+      continue;
+    (*fit)->close("foldersearch");
+  }
+  mFolders.clear();
+
+  mSerNums.clear();
 }
 
 void KMFolderSearch::truncateIndex()
@@ -941,6 +959,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
     folder->storage()->search( search()->searchPattern(), serNum );
+    folder->close( "foldersearch" );
 }
 
 void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
@@ -951,6 +970,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     if ( search()->searchPattern() != pattern ) return;
     kdDebug(5006) << folder->label() << ": serNum " << serNum
      << " matches?" << matches << endl;
+    folder->open();
 
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
