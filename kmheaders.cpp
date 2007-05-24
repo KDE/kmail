@@ -1732,6 +1732,9 @@ void KMHeaders::nextMessage()
 
 void KMHeaders::selectNextMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() )
+    return;
   QListViewItem *lvi = currentItem();
   if( lvi ) {
     QListViewItem *below = lvi->itemBelow();
@@ -1766,6 +1769,9 @@ void KMHeaders::prevMessage()
 
 void KMHeaders::selectPrevMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() )
+    return;
   QListViewItem *lvi = currentItem();
   if( lvi ) {
     QListViewItem *above = lvi->itemAbove();
@@ -1789,6 +1795,9 @@ void KMHeaders::selectPrevMessage()
 
 void KMHeaders::incCurrentMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() )
+    return;
   QListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemBelow() ) {
 
@@ -1804,6 +1813,9 @@ void KMHeaders::incCurrentMessage()
 
 void KMHeaders::decCurrentMessage()
 {
+  KMMessage *cm = currentMsg();
+  if ( cm && cm->isBeingParsed() )
+    return;
   QListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemAbove() ) {
     disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
