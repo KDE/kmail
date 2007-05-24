@@ -541,7 +541,7 @@ namespace KMail {
         if ( facestring.length() < 993 ) {
           QByteArray facearray;
           KCodecs::base64Decode(facestring, facearray);
-    
+
           QImage faceimage;
           if ( faceimage.loadFromData( facearray, "png" ) ) {
             // Spec says image must be 48x48 pixels
@@ -659,30 +659,50 @@ namespace KMail {
     // to line
     if ( strategy->showHeader( "to" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                            .arg(i18n("To: "))
-                            .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
+                               "<td>%2</td></tr>\n")
+                       .arg(i18n("To: "))
+                       .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                              .arg(i18n("CC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
+                               "<td>%2</td></tr>\n")
+                       .arg(i18n("CC: "))
+                       .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td>%2</td></tr>\n")
-                              .arg(i18n("BCC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
+                               "<td>%2</td></tr>\n")
+                       .arg(i18n("BCC: "))
+                       .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
-                   "<td dir=\"%2\">%3</td></tr>\n")
-                            .arg(i18n("Date: "))
-                    .arg( directionOf( message->dateStr() ) )
-                            .arg(strToHtml(dateString)));
+                               "<td dir=\"%2\">%3</td></tr>\n")
+                       .arg(i18n("Date: "))
+                       .arg( directionOf( message->dateStr() ) )
+                       .arg(strToHtml(dateString)));
+
+    if ( GlobalSettings::self()->showUserAgent() ) {
+      if ( strategy->showHeader( "user-agent" ) ) {
+        if ( !message->headerField("User-Agent").isEmpty() ) {
+          headerStr.append(QString("<tr><th>%1</th>\n"
+                                   "<td>%2</td></tr>\n")
+                           .arg(i18n("User-Agent: "))
+                           .arg( strToHtml( message->headerField("User-Agent") ) ) );
+        }
+      }
+
+      if ( strategy->showHeader( "x-mailer" ) ) {
+        if ( !message->headerField("X-Mailer").isEmpty() ) {
+          headerStr.append(QString("<tr><th>%1</th>\n"
+                                   "<td>%2</td></tr>\n")
+                           .arg(i18n("X-Mailer: "))
+                           .arg( strToHtml( message->headerField("X-Mailer") ) ) );
+        }
+      }
+    }
 
     // FIXME: Show status in synthetic header style field.  Decide whether this or current in brackets style is best and remove one.
     /*    if( strategy->showHeader( "status" ) )
