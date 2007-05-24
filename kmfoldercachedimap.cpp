@@ -177,8 +177,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mFoundAnIMAPDigest( false ),
     mUserRights( 0 ), mOldUserRights( 0 ), mSilentUpload( false ),
+    /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
-    /*mHoldSyncs( false ),*/ mRecurse( true ),
+    mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
     mQuotaInfo(), mAlarmsBlocked( false )

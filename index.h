@@ -8,16 +8,16 @@
  * KMail is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as
  * published by the Free Software Foundation.
- * 
+ *
  * KMail is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * In addition, as a special exception, the copyright holders give
  * permission to link the code of this program with any edition of
  * the Qt library by Trolltech AS, Norway (or with modified versions
@@ -56,11 +56,11 @@ class KMMsgIndex : public QObject {
 		~KMMsgIndex();
 
 	public:
-		
+
 		/**
 		 * Starts a query.
 		 * Results will be returned assyncronously by signals.
-		 * 
+		 *
 		 * @return false if the query cannot be handled
 		 */
 		bool startQuery( KMSearch* );
@@ -133,8 +133,8 @@ class KMMsgIndex : public QObject {
 
 		void continueCreation();
 
-		void slotAddMessage( KMFolder*, Q_UINT32 message );
-		void slotRemoveMessage( KMFolder*, Q_UINT32 message );
+		void slotAddMessage( Q_UINT32 message );
+		void slotRemoveMessage( Q_UINT32 message );
 	private:
 		static QString defaultPath();
 

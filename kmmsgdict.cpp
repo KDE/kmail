@@ -420,7 +420,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   fseek(fp, pos, SEEK_SET);   // back to previous position
 
   // the file must at least contain what we try to read below
-  if ( (fileSize - pos) < (count * sizeof(Q_UINT32)) ) {
+  if ( (fileSize - pos) < (long)(count * sizeof(Q_UINT32)) ) {
     fclose(fp);
     return -1;
   }

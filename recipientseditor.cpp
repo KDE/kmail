@@ -318,8 +318,9 @@ void RecipientLine::setRemoveLineButtonEnabled( bool b )
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
-  : QScrollView( parent ), mCurDelLine( 0 ), mModified( false ),
-    mFirstColumnWidth( 0 ), mLineHeight( 0 )
+  : QScrollView( parent ), mCurDelLine( 0 ),
+    mLineHeight( 0 ), mFirstColumnWidth( 0 ),
+    mModified( false )
 {
   mCompletionMode = KGlobalSettings::completionMode();
   setHScrollBarMode( AlwaysOff );
