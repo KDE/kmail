@@ -2652,7 +2652,11 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
           i18n( "KMail Error" ) );
       return Failed;
     }
-    fchmod( file.handle(), S_IRUSR | S_IWUSR );
+
+    // #79685 by default use the umask the user defined, but let it be configurable
+    if ( GlobalSettings::self()->disregardUmask() )
+      fchmod( file.handle(), S_IRUSR | S_IWUSR );
+
     ds.setDevice( &file );
   } else
   {
