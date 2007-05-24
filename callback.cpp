@@ -61,15 +61,26 @@ Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
 {
 }
 
-bool Callback::mailICal( const QString &to, const QString iCal,
+bool Callback::mailICal( const QString &to, const QString &iCal,
                          const QString &subject, const QString &status ) const
 {
   kDebug(5006) << "Mailing message:\n" << iCal << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
-  if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+  if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
     msg->setSubject( status );
+    QString tsubject = subject;
+    tsubject.replace( i18n( "Answer: " ), "" );
+    if ( status == QLatin1String( "cancel" ) ) {
+      msg->setSubject( i18n( "Declined: %1", tsubject ) );
+    } else if ( status == QLatin1String("tentative") ) {
+      msg->setSubject( i18n( "Tentative: %1", tsubject ) );
+    } else if ( status == QLatin1String("accepted") ) {
+      msg->setSubject( i18n( "Accepted: %1", tsubject ) );
+    } else {
+      msg->setSubject( subject );
+    }
   } else {
     msg->setSubject( subject );
   }

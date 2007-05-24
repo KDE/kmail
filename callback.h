@@ -53,23 +53,24 @@ class KDE_EXPORT Callback {
   public:
     Callback( KMMessage *msg, KMReaderWin *readerWin );
 
-    /*
+    /**
       Returns the full message.
     */
     KMMessage *getMsg() const { return mMsg; }
 
-    /*
+    /**
       Mails a message.
+      @param status can be accepted/cancel/tentative
     */
-    bool mailICal( const QString &to, const QString iCal,
-                   const QString &subject, const QString &string ) const;
+    bool mailICal( const QString &to, const QString &iCal,
+                   const QString &subject, const QString &status ) const;
 
-    /*
+    /**
       Returns the receiver of the mail.
     */
     QString receiver() const;
 
-    /*
+    /**
       Closes the main window showing this message, if it's a secondary window.
     */
     void closeIfSecondaryWindow() const;
