@@ -1909,7 +1909,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   bool newFolder = ( mFolder != aFolder );
   bool isNewImapFolder = aFolder && aFolder->folderType() == KMFolderTypeImap && newFolder;
   if( !mFolder
-      || ( !isNewImapFolder && mShowBusySplashTimer && !mShowBusySplashTimer->isActive() )
+      || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
     if ( mMsgView ) {
       mMsgView->enableMsgDisplay();
