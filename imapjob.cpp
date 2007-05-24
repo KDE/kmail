@@ -502,6 +502,12 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
 void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )
 {
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
+  if ( !account )
+  {
+    emit finished();
+    deleteLater();
+    return;
+  }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -522,6 +528,12 @@ void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )
 void ImapJob::slotPutMessageResult( KIO::Job *job )
 {
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
+  if ( !account )
+  {
+    emit finished();
+    deleteLater();
+    return;
+  }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
   bool deleteMe = false;
@@ -562,6 +574,12 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
 {
   KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
   KMAcctImap *account = imapFolder->account();
+  if ( !account )
+  {
+    emit finished();
+    deleteLater();
+    return;
+  }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -595,6 +613,12 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 {
   KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
   KMAcctImap *account = imapFolder->account();
+  if ( !account )
+  {
+    emit finished();
+    deleteLater();
+    return;
+  }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -613,6 +637,12 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 void ImapJob::slotCopyMessageResult( KIO::Job *job )
 {
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
+  if ( !account )
+  {
+    emit finished();
+    deleteLater();
+    return;
+  }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
