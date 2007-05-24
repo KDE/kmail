@@ -2062,6 +2062,8 @@ bool KMComposeWin::queryClose ()
     return false;
   if ( kmkernel->shuttingDown() || kapp->sessionSaving() )
     return true;
+  if ( mComposer && mComposer->isPerformingSignOperation() ) // since the non-gpg-agent gpg plugin gets a passphrase using QDialog::exec()
+    return false;                                            // the user can try to close the window, which destroys mComposer mid-call.
 
   if ( isModified() ) {
     bool istemplate = ( mFolder!=0 && mFolder->isTemplates() );
