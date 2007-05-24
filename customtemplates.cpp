@@ -300,9 +300,10 @@ void CustomTemplates::slotTypeActivated( int index )
   if ( mCurrentItem ) {
     // mCurrentItem->setText( 0, indexToType( index ) );
     CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
-    if ( vitem ) {
-      vitem->mType = static_cast<Type>(index);
+    if ( !vitem ) {
+      return;
     }
+    vitem->mType = static_cast<Type>(index);
     switch ( vitem->mType ) {
     case TReply:
       mCurrentItem->setPixmap( 0, mReplyPix );
