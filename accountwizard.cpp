@@ -491,7 +491,10 @@ void AccountWizard::createAccount()
 void AccountWizard::accountCreated()
 {
   if ( mAccount )
+  {
     mKernel->acctMgr()->add( mAccount );
+    mKernel->cleanupImapFolders();
+  }
 
   finished();
 }
