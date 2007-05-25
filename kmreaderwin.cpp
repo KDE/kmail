@@ -1912,6 +1912,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+  menu->insertItem(SmallIcon("edit"), i18n("Edit Attachment"), 8 );
   menu->insertItem(SmallIcon("editdelete"), i18n("Delete Attachment"), 7 );
   if ( name.endsWith( ".xia", false ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
@@ -1951,22 +1952,30 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if ( choice != 7 ) {
+  if ( choice < 7 ) {
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
         node, message(), mAtmCurrent, mAtmCurrentName,
         KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
-  } else {
+  } else if ( choice == 7 ) {
     if ( KMessageBox::warningContinueCancel( this,
          i18n("Deleting an attachment might invalidate any digital signature on this message."),
          i18n("Delete Attachment"), KStdGuiItem::del(), "DeleteAttachmentSignatureWarning" )
          != KMessageBox::Continue ) {
       return;
     }
-    kdDebug() << k_funcinfo << mAtmCurrent << mAtmCurrentName << endl;
     KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
+    command->start();
+  } else if ( choice == 8 ) {
+    if ( KMessageBox::warningContinueCancel( this,
+         i18n("Modifying an attachment might invalidate any digital signature on this message."),
+         i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), "EditAttachmentSignatureWarning" )
+         != KMessageBox::Continue ) {
+      return;
+    }
+    KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
     command->start();
   }
 }

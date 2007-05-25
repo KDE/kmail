@@ -3,20 +3,24 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 
+#include <qdatetime.h>
 #include <qguardedptr.h>
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qvaluevector.h>
+#include <qtimer.h>
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
 #include <kdepimmacros.h>
 #include <kservice.h>
+#include <ktempfile.h>
 
 class QPopupMenu;
 class KMainWindow;
 class KAction;
 class KProgressDialog;
+class KProcess;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;
@@ -1019,22 +1023,75 @@ private:
 };
 
 
-class KDE_EXPORT KMDeleteAttachmentCommand : public KMCommand
+/** Base class for commands modifying attachements of existing messages. */
+class KDE_EXPORT AttachmentModifyCommand : public KMCommand
 {
   Q_OBJECT
   public:
-    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    ~KMDeleteAttachmentCommand();
+    AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~AttachmentModifyCommand();
+
+  protected:
+    void storeChangedMessage( KMMessage* msg );
+    virtual Result doAttachmentModify() = 0;
+
+  protected:
+    int mPartIndex;
+    Q_UINT32 mSernum;
+
+  private:
+    Result execute();
 
   private slots:
     void messageStoreResult( KMail::FolderJob *job );
     void messageDeleteResult( KMCommand *cmd );
 
   private:
-    Result execute();
+    QGuardedPtr<KMFolder> mFolder;
+};
 
-    int mPartIndex;
-    Q_UINT32 mSernum;
+class KDE_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
+{
+  Q_OBJECT
+  public:
+    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~KMDeleteAttachmentCommand();
+
+  protected:
+    Result doAttachmentModify();
+};
+
+
+class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
+{
+  Q_OBJECT
+  public:
+    KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~KMEditAttachmentCommand();
+
+  protected:
+    Result doAttachmentModify();
+
+  private slots:
+    void editorExited();
+    void inotifyEvent();
+    void checkEditDone();
+
+  private:
+    KTempFile mTempFile;
+    KProcess *mEditor;
+
+    int mInotifyFd;
+    int mInotifyWatch;
+    bool mHaveInotify;
+
+    bool mFileOpen;
+    bool mEditorRunning;
+
+    bool mFileModified;
+
+    QTimer mTimer;
+    QTime mEditTime;
 };
 
 #endif /*KMCommands_h*/

@@ -74,9 +74,11 @@
 #include <ktempfile.h>
 #include <kimproxy.h>
 #include <kuserprofile.h>
+#include <krun.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/netaccess.h>
+#include <kopenwith.h>
 
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
@@ -129,6 +131,13 @@ using namespace KMime;
 #include <qclipboard.h>
 
 #include <memory>
+
+#ifdef HAVE_INOTIFY
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/inotify.h>
+#include <sys/ioctl.h>
+#endif
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
@@ -3255,26 +3264,86 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job
 }
 
 
-KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+AttachmentModifyCommand::AttachmentModifyCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     KMCommand( parent, msg ),
     mPartIndex( node->nodeId() ),
     mSernum( 0 )
 {
-  kdDebug() << k_funcinfo << endl;
 }
 
-KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
+AttachmentModifyCommand::~ AttachmentModifyCommand()
 {
-  kdDebug() << k_funcinfo << endl;
 }
 
-KMCommand::Result KMDeleteAttachmentCommand::execute()
+KMCommand::Result AttachmentModifyCommand::execute()
 {
-  kdDebug() << k_funcinfo << endl;
   KMMessage *msg = retrievedMessage();
   if ( !msg )
     return Failed;
   mSernum = msg->getMsgSerNum();
+
+  mFolder = msg->parent();
+  if ( !mFolder || !mFolder->storage() )
+    return Failed;
+
+  Result res = doAttachmentModify();
+  if ( res != OK )
+    return res;
+
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
+{
+  if ( !mFolder || !mFolder->storage() ) {
+    kdWarning(5006) << k_funcinfo << "We lost the folder!" << endl;
+    setResult( Failed );
+    emit completed( this );
+    deleteLater();
+  }
+  FolderStorage *storage = mFolder->storage();
+  FolderJob *job = storage->createJob( msg, FolderJob::tPutMessage, mFolder );
+  connect( job, SIGNAL(result(KMail::FolderJob*)), SLOT(messageStoreResult(KMail::FolderJob*)) );
+  job->start();
+}
+
+void AttachmentModifyCommand::messageStoreResult(KMail::FolderJob * job)
+{
+  if ( !job->error() && mSernum ) {
+    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
+    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
+    delCmd->start();
+    return;
+  }
+  setResult( Failed );
+  emit completed( this );
+  deleteLater();
+}
+
+void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
+{
+  setResult( cmd->result() );
+  emit completed( this );
+  deleteLater();
+}
+
+
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+}
+
+KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+}
+
+KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
   KMMessagePart part;
   // -2 because partNode counts root and body of the message as well
   DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
@@ -3303,46 +3372,178 @@ KMCommand::Result KMDeleteAttachmentCommand::execute()
   }
   msg->addBodyPart( &dummyPart );
 
-  KMFolder *folder = msg->parent();
-  if ( !folder )
-    return Failed;
-  FolderStorage *storage = folder->storage();
-  if ( !storage )
-    return Failed;
-
   KMMessage *newMsg = new KMMessage();
   newMsg->fromDwString( msg->asDwString() );
   newMsg->setStatus( msg->status() );
 
-  FolderJob *job = storage->createJob( newMsg, FolderJob::tPutMessage, folder );
-  connect( job, SIGNAL(result(KMail::FolderJob*)), SLOT(messageStoreResult(KMail::FolderJob*)) );
-  job->start();
+  storeChangedMessage( newMsg );
+  return OK;
+}
+
+
+KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent ),
+    mEditor( 0 ),
+    mHaveInotify( false ),
+    mFileOpen( false ),
+    mEditorRunning( false ),
+    mFileModified( true ) // assume the worst unless we know better
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  mTempFile.setAutoDelete( true );
+  connect( &mTimer, SIGNAL(timeout()), SLOT(checkEditDone()) );
+}
+
+KMEditAttachmentCommand::~ KMEditAttachmentCommand()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+#ifdef HAVE_INOTIFY
+  if ( mHaveInotify ) {
+    inotify_rm_watch( mInotifyFd, mInotifyWatch );
+    ::close( mInotifyFd );
+  }
+#endif
+}
+
+KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+
+  mTempFile.file()->writeBlock( part.bodyDecodedBinary() );
+  mTempFile.file()->flush();
+  KURL::List list;
+  list.append( KURL( mTempFile.file()->name() ) );
+
+  // find an editor
+  KService::Ptr offer = KServiceTypeProfile::preferredService( part.typeStr() + "/" + part.subtypeStr(), "Application" );
+  if ( !offer ) {
+    KOpenWithDlg dlg( list, i18n("Edit with:"), QString::null, 0 );
+    if ( !dlg.exec() )
+      return Failed;
+    offer = dlg.service();
+    if ( !offer )
+      return Failed;
+  }
+
+#ifdef HAVE_INOTIFY
+  // monitor file
+  mInotifyFd = inotify_init();
+  if ( mInotifyFd > 0 ) {
+    mInotifyWatch = inotify_add_watch( mInotifyFd, mTempFile.file()->name().latin1(), IN_CLOSE | IN_OPEN | IN_MODIFY );
+    if ( mInotifyWatch >= 0 ) {
+      QSocketNotifier *sn = new QSocketNotifier( mInotifyFd, QSocketNotifier::Read, this );
+      connect( sn, SIGNAL(activated(int)), SLOT(inotifyEvent()) );
+      mHaveInotify = true;
+      mFileModified = false;
+    }
+  } else {
+    kdWarning(5006) << k_funcinfo << "Failed to activate INOTIFY!" << endl;
+  }
+#endif
+
+  // start the editor
+  QStringList params = KRun::processDesktopExec( *offer, list, false );
+  mEditor = new KProcess( this );
+  *mEditor << params;
+  connect( mEditor, SIGNAL(processExited(KProcess*)), SLOT(editorExited()) );
+  if ( !mEditor->start() )
+    return Failed;
+  mEditorRunning = true;
+
+  mEditTime.start();
 
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   return OK;
 }
 
-void KMDeleteAttachmentCommand::messageStoreResult(KMail::FolderJob * job)
+void KMEditAttachmentCommand::editorExited()
 {
-  kdDebug() << k_funcinfo << job << job->error() << endl;
-  if ( !job->error() && mSernum ) {
-    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
-    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
-    delCmd->start();
-    return;
-  }
-  setResult( Failed );
-  emit completed( this );
-  deleteLater();
+  mEditorRunning = false;
+  mTimer.start( 500, true );
 }
 
-void KMDeleteAttachmentCommand::messageDeleteResult(KMCommand * cmd)
+void KMEditAttachmentCommand::inotifyEvent()
 {
-  kdDebug() << k_funcinfo << cmd << cmd->result() << endl;
-  setResult( cmd->result() );
-  emit completed( this );
-  deleteLater();
+  assert( mHaveInotify );
+#ifdef HAVE_INOTIFY
+  int pending = -1;
+  char buffer[4096];
+  ioctl( mInotifyFd, FIONREAD, &pending );
+  while ( pending > 0 ) {
+    int size = read( mInotifyFd, buffer, QMIN( pending, (int)sizeof(buffer) ) );
+    pending -= size;
+    if ( size < 0 )
+      break; // error
+    int offset = 0;
+    while ( size > 0 ) {
+      struct inotify_event *event = (struct inotify_event *) &buffer[offset];
+      size -= sizeof( struct inotify_event ) + event->len;
+      offset += sizeof( struct inotify_event ) + event->len;
+      if ( event->mask & IN_OPEN )
+        mFileOpen = true;
+      if ( event->mask & IN_CLOSE )
+        mFileOpen = false;
+      if ( event->mask & IN_MODIFY )
+        mFileModified = true;
+    }
+  }
+#endif
+  mTimer.start( 500, true );
+}
+
+void KMEditAttachmentCommand::checkEditDone()
+{
+  if ( mEditorRunning || (mFileOpen && mHaveInotify) )
+    return;
+  // nobody can edit that fast, we seem to be unable to detect
+  // when the editor will be closed
+  if ( mEditTime.elapsed() <= 3000 ) {
+    KMessageBox::error( 0, i18n("KMail is unable to detect when the choosen editor is closed. "
+         "To avoid data loss, editing the attachment will be aborted."), i18n("Unable to edit attachment") );
+    setResult( Failed );
+    emit completed( this );
+    deleteLater();
+    return;
+  }
+
+  // anything changed?
+  if ( !mFileModified ) {
+    kdDebug(5006) << k_funcinfo << "File has not been changed" << endl;
+    setResult( Canceled );
+    emit completed( this );
+    deleteLater();
+  }
+
+  mTempFile.file()->reset();
+  QByteArray data = mTempFile.file()->readAll();
+
+  // build the new message
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  KMMessage::bodyPart( dwpart, &part, true );
+  msg->removeBodyPart( dwpart );
+
+  KMMessagePart att;
+  att.duplicate( part );
+  att.setBodyEncodedBinary( data );
+  msg->addBodyPart( &att );
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  storeChangedMessage( newMsg );
 }
 
 #include "kmcommands.moc"
