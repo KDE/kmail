@@ -610,7 +610,7 @@ void RecipientsView::removeRecipient( const QString & recipient,
     ++it;
   }
   if ( line )
-    line->clear();
+    line->slotPropagateDeletion();
 }
 
 bool RecipientsView::isModified()
