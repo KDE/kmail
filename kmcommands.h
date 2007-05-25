@@ -1043,7 +1043,7 @@ class KDE_EXPORT AttachmentModifyCommand : public KMCommand
     Result execute();
 
   private slots:
-    void messageStoreResult( KMail::FolderJob *job );
+    void messageStoreResult( KMFolderImap* folder, bool success );
     void messageDeleteResult( KMCommand *cmd );
 
   private:

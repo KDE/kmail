@@ -3303,20 +3303,26 @@ void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
     emit completed( this );
     deleteLater();
   }
-  FolderStorage *storage = mFolder->storage();
-  FolderJob *job = storage->createJob( msg, FolderJob::tPutMessage, mFolder );
-  connect( job, SIGNAL(result(KMail::FolderJob*)), SLOT(messageStoreResult(KMail::FolderJob*)) );
-  job->start();
+  int res = mFolder->addMsg( msg ) != 0;
+  if ( mFolder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap *f = static_cast<KMFolderImap*>( mFolder->storage() );
+    connect( f, SIGNAL(folderComplete(KMFolderImap*,bool)),
+             SLOT(messageStoreResult(KMFolderImap*,bool)) );
+  } else {
+    messageStoreResult( 0, res == 0 );
+  }
 }
 
-void AttachmentModifyCommand::messageStoreResult(KMail::FolderJob * job)
+void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool success )
 {
-  if ( !job->error() && mSernum ) {
+  Q_UNUSED( folder );
+  if ( success ) {
     KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
     connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
     delCmd->start();
     return;
   }
+  kdWarning(5006) << k_funcinfo << "Adding modified message failed." << endl;
   setResult( Failed );
   emit completed( this );
   deleteLater();
