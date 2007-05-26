@@ -34,7 +34,7 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                                                 const char *name )
   : QPushButton( parent, name )
 {
-  setText( i18n( "&Insert command..." ) );
+  setText( i18n( "&Insert Command..." ) );
   connect( this, SIGNAL( clicked() ),
            this, SLOT( slotClicked() ) );
 
@@ -45,21 +45,21 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
   connect( mapper, SIGNAL( mapped(int) ),
            this, SLOT( slotMapped(int) ) );
 
-  mMenu = new KActionMenu( i18n( "Insert command" ), this );
+  mMenu = new KActionMenu( i18n( "Insert Command..." ), this );
 
   // ******************************************************
-  menu = new KActionMenu( i18n( "Original message" ), mMenu );
+  menu = new KActionMenu( i18n( "Original Message" ), mMenu );
   mMenu->insert( menu );
 
-  action = new KAction( i18n("Quoted message"),
+  action = new KAction( i18n("Quoted Message"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CQuote );
   menu->insert( action );
-  action = new KAction( i18n("Message text as is"),
+  action = new KAction( i18n("Message Text as Is"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CText );
   menu->insert( action );
-  action = new KAction( i18n("Message id"),
+  action = new KAction( i18n("Message Id"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COMsgId );
   menu->insert( action );
@@ -67,15 +67,15 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CODate );
   menu->insert( action );
-  action = new KAction( i18n("Date in short format"),
+  action = new KAction( i18n("Date in Short Format"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CODateShort );
   menu->insert( action );
-  action = new KAction( i18n("Date in C locale"),
+  action = new KAction( i18n("Date in C Locale"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CODateEn );
   menu->insert( action );
-  action = new KAction( i18n("Day of week"),
+  action = new KAction( i18n("Day of Week"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CODow );
   menu->insert( action );
@@ -83,59 +83,59 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COTime );
   menu->insert( action );
-  action = new KAction( i18n("Time in long format"),
+  action = new KAction( i18n("Time in Long Format"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COTimeLong );
   menu->insert( action );
-  action = new KAction( i18n("Time in C locale"),
+  action = new KAction( i18n("Time in C Locale"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COTimeLongEn );
   menu->insert( action );
-  action = new KAction( i18n("To field address"),
+  action = new KAction( i18n("To Field Address"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COToAddr );
   menu->insert( action );
-  action = new KAction( i18n("To field name"),
+  action = new KAction( i18n("To Field Name"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COToName );
   menu->insert( action );
-  action = new KAction( i18n("To field first name"),
+  action = new KAction( i18n("To Field First Name"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COToFName );
   menu->insert( action );
-  action = new KAction( i18n("To field last name"),
+  action = new KAction( i18n("To Field Last Name"),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COToLName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field address" ),
+  action = new KAction( i18n( "CC Field Address" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COCCAddr );
   menu->insert( action );
-  action = new KAction( i18n( "CC field name" ),
+  action = new KAction( i18n( "CC Field Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COCCName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field first name" ),
+  action = new KAction( i18n( "CC Field First Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COCCFName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field last name" ),
+  action = new KAction( i18n( "CC Field Last Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COCCLName );
   menu->insert( action );
-  action = new KAction( i18n( "From field address" ),
+  action = new KAction( i18n( "From Field Address" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFromAddr );
   menu->insert( action );
-  action = new KAction( i18n( "From field name" ),
+  action = new KAction( i18n( "From Field Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFromName );
   menu->insert( action );
-  action = new KAction( i18n( "From field first name" ),
+  action = new KAction( i18n( "From Field First Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFromFName );
   menu->insert( action );
-  action = new KAction( i18n( "From field last name" ),
+  action = new KAction( i18n( "From Field Last Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFromLName );
   menu->insert( action );
@@ -143,24 +143,24 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COFullSubject );
   menu->insert( action );
-  action = new KAction( i18n( "Quoted headers" ),
+  action = new KAction( i18n( "Quoted Headers" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CQHeaders );
   menu->insert( action );
-  action = new KAction( i18n( "Headers as is" ),
+  action = new KAction( i18n( "Headers as Is" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CHeaders );
   menu->insert( action );
-  action = new KAction( i18n( "Header content" ),
+  action = new KAction( i18n( "Header Content" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, COHeader );
   menu->insert( action );
 
   // ******************************************************
-  menu = new KActionMenu( i18n( "Current message" ), mMenu );
+  menu = new KActionMenu( i18n( "Current Message" ), mMenu );
   mMenu->insert( menu );
 
-  action = new KAction( i18n( "Message id" ),
+  action = new KAction( i18n( "Message Id" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CMsgId );
   menu->insert( action );
@@ -168,15 +168,15 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDate );
   menu->insert( action );
-  action = new KAction( i18n( "Date in short format" ),
+  action = new KAction( i18n( "Date in Short Format" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDateShort );
   menu->insert( action );
-  action = new KAction( i18n( "Date in C locale" ),
+  action = new KAction( i18n( "Date in C Locale" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDateEn );
   menu->insert( action );
-  action = new KAction( i18n( "Day of week" ),
+  action = new KAction( i18n( "Day of Week" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDow );
   menu->insert( action );
@@ -184,59 +184,59 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CTime );
   menu->insert( action );
-  action = new KAction( i18n( "Time in long format" ),
+  action = new KAction( i18n( "Time in Long Format" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CTimeLong );
   menu->insert( action );
-  action = new KAction( i18n( "Time in C locale" ),
+  action = new KAction( i18n( "Time in C Locale" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CTimeLongEn );
   menu->insert( action );
-  action = new KAction( i18n( "To field address" ),
+  action = new KAction( i18n( "To Field Address" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CToAddr );
   menu->insert( action );
-  action = new KAction( i18n( "To field name" ),
+  action = new KAction( i18n( "To Field Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CToName );
   menu->insert( action );
-  action = new KAction( i18n( "To field first name" ),
+  action = new KAction( i18n( "To Field First Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CToFName );
   menu->insert( action );
-  action = new KAction( i18n( "To field last name" ),
+  action = new KAction( i18n( "To Field Last Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CToLName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field address" ),
+  action = new KAction( i18n( "CC Field Address" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CCCAddr );
   menu->insert( action );
-  action = new KAction( i18n( "CC field name" ),
+  action = new KAction( i18n( "CC Field Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CCCName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field first name" ),
+  action = new KAction( i18n( "CC Field First Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CCCFName );
   menu->insert( action );
-  action = new KAction( i18n( "CC field last name" ),
+  action = new KAction( i18n( "CC Field Last Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CCCLName );
   menu->insert( action );
-  action = new KAction( i18n( "From field address" ),
+  action = new KAction( i18n( "From Field Address" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CFromAddr );
   menu->insert( action );
-  action = new KAction( i18n( "From field name" ),
+  action = new KAction( i18n( "From Field Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CFromName );
   menu->insert( action );
-  action = new KAction( i18n( "From field first name" ),
+  action = new KAction( i18n( "From Field First Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CFromFName );
   menu->insert( action );
-  action = new KAction( i18n( "From field last name" ),
+  action = new KAction( i18n( "From Field Last Name" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CFromLName );
   menu->insert( action );
@@ -244,36 +244,36 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CFullSubject );
   menu->insert( action );
-  action = new KAction( i18n( "Header content" ),
+  action = new KAction( i18n( "Header Content" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CHeader );
   menu->insert( action );
 
   // ******************************************************
-  menu = new KActionMenu( i18n( "Process with external programs" ), mMenu );
+  menu = new KActionMenu( i18n( "Process With External Programs" ), mMenu );
   mMenu->insert( menu );
 
-  action = new KAction( i18n( "Insert result of command" ),
+  action = new KAction( i18n( "Insert Result of Command" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CSystem );
   menu->insert( action );
-  action = new KAction( i18n( "Pipe original message body and insert result as quoted text" ),
+  action = new KAction( i18n( "Pipe Original Message Body and Insert Result as Quoted Text" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CQuotePipe );
   menu->insert( action );
-  action = new KAction( i18n( "Pipe original message body and insert result as is" ),
+  action = new KAction( i18n( "Pipe Original Message Body and Insert Result as Is" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CTextPipe );
   menu->insert( action );
-  action = new KAction( i18n( "Pipe original message with headers and insert result as is" ),
+  action = new KAction( i18n( "Pipe Original Message with Headers and Insert Result as Is" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CMsgPipe );
   menu->insert( action );
-  action = new KAction( i18n( "Pipe current message body and insert result as is" ),
+  action = new KAction( i18n( "Pipe Current Message Body and Insert Result as Is" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CBodyPipe );
   menu->insert( action );
-  action = new KAction( i18n( "Pipe current message body and replace with result" ),
+  action = new KAction( i18n( "Pipe Current Message Body and Replace with Result" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CClearPipe );
   menu->insert( action );
@@ -282,11 +282,11 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
   menu = new KActionMenu( i18n( "Miscellaneous" ), mMenu );
   mMenu->insert( menu );
 
-  action = new KAction( i18n( "Set cursor position" ),
+  action = new KAction( i18n( "Set Cursor Position" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CCursor );
   menu->insert( action );
-  action = new KAction( i18n( "Insert file content" ),
+  action = new KAction( i18n( "Insert File Content" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CInsert );
   menu->insert( action );
@@ -294,23 +294,23 @@ TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDnl );
   menu->insert( action );
-  action = new KAction( i18n( "Template comment" ),
+  action = new KAction( i18n( "Template Comment" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CRem );
   menu->insert( action );
-  action = new KAction( i18n( "No operation" ),
+  action = new KAction( i18n( "No Operation" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CNop );
   menu->insert( action );
-  action = new KAction( i18n( "Clear generated message" ),
+  action = new KAction( i18n( "Clear Generated Message" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CClear );
   menu->insert( action );
-  action = new KAction( i18n( "Turn debug on" ),
+  action = new KAction( i18n( "Turn Debug On" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDebug );
   menu->insert( action );
-  action = new KAction( i18n( "Turn debug off" ),
+  action = new KAction( i18n( "Turn Debug Off" ),
                         0, mapper, SLOT( map() ), menu );
   mapper->setMapping( action, CDebugOff );
   menu->insert( action );

@@ -2627,7 +2627,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   // recent addresses
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses" ), this );
+  QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses..." ), this );
   connect( recentAddressesBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureRecentAddresses() ) );
   hlay->addWidget( recentAddressesBtn );
@@ -4519,7 +4519,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mQuotaCmbBox = new QComboBox( false, this );
   label = new QLabel( mQuotaCmbBox,
-                      i18n("Quota Units: "), this );
+                      i18n("Quota units: "), this );
   mQuotaCmbBox->insertStringList( QStringList()
                    << i18n("KB")
                    << i18n("MB")
