@@ -75,6 +75,7 @@ public:
 
 signals:
   void spellcheck_done(int result);
+  void attachPNGImageData(const QByteArray &image);
   void pasteImage();
   void focusUp();
   void focusChanged( bool );
