@@ -649,7 +649,7 @@ int KMFolderMbox::createIndexFromContents()
             int cidx = contentTypeStr.find( "charset=" );
             if ( cidx != -1 ) {
               charset = contentTypeStr.mid( cidx + 8 );
-              if ( charset[0] == '"' ) {
+              if ( !charset.isEmpty() && ( charset[0] == '"' ) ) {
                 charset = charset.mid( 1 );
               }
               cidx = 0;
