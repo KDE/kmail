@@ -490,6 +490,9 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
@@ -512,6 +515,9 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *fmsg = msg->createForward();
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
@@ -721,6 +727,9 @@ KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
 KMCommand::Result KMShowMsgSrcCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   if ( msg->isComplete() && !mMsgWasComplete )
     msg->notify(); // notify observers as msg was transfered
   QString str = msg->codec()->toUnicode( msg->asString() );
@@ -1075,6 +1084,9 @@ KMCommand::Result KMReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
@@ -1095,6 +1107,9 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, "", TRUE);
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
@@ -1115,6 +1130,9 @@ KMCommand::Result KMReplyListCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
@@ -1135,6 +1153,9 @@ KMCommand::Result KMReplyToAllCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
@@ -1155,6 +1176,9 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
@@ -1206,7 +1230,7 @@ KMCommand::Result KMForwardInlineCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, 0, true );
+        parser.process( msg, false, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
@@ -1430,6 +1454,9 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
@@ -1452,6 +1479,9 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
@@ -1504,7 +1534,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
         msg->body(), false, false, false, false);
-        parser.process( msg, 0, true );
+        parser.process( msg, false, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
@@ -2773,7 +2803,9 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 KMCommand::Result KMResendMessageCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
   KMMessage *newMsg = new KMMessage(*msg);
   newMsg->setCharset(msg->codec()->mimeName());
   // the message needs a new Message-Id
