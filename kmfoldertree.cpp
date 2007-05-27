@@ -126,9 +126,9 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
   } else {
     // special folders
     switch ( type() ) {
-      case Inbox: icon = "folder_inbox"; break;
-      case Outbox: icon = "folder_outbox"; break;
-      case SentMail: icon = "folder_sent_mail"; break;
+      case Inbox: icon = "folder-inbox"; break;
+      case Outbox: icon = "folder-outbox"; break;
+      case SentMail: icon = "folder-sent_mail"; break;
       case Trash: icon = "user-trash"; break;
       case Drafts: icon = "edit"; break;
       case Templates: icon = "document-new"; break;

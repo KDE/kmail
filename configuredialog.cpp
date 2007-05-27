@@ -4767,16 +4767,19 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
     selectedAccount = kmkernel->acctMgr()->find( accountId );
   else {
     // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-      for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+    for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
          a = kmkernel->acctMgr()->next() ) {
       if( a->folder() && a->folder()->child() ) {
         // Look inside that folder for an INBOX
-        KMFolderNode *node;
+        KMFolderNode *node = 0;
         QList<KMFolderNode*>::const_iterator it;
         for ( it = a->folder()->child()->constBegin();
-              ( node = *it ) && ( it != a->folder()->child()->constEnd() );
-              ++it )
-          if (!node->isDir() && node->name() == "INBOX") break;
+              it != a->folder()->child()->constEnd();
+              ++it ) {
+          node = *it;
+          if (!node->isDir() && node->name() == "INBOX") 
+            break;
+        }
 
         if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
           selectedAccount = a;
