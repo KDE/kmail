@@ -1443,6 +1443,12 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
+    if (fti && mCopySourceFolders.count() == 1)
+    {
+      KMFolder *source = mCopySourceFolders.first();
+      // if we are dragging to ourselves or to our parent, set fti to 0 so nothing is done
+      if (source == fti->folder() || source->parent()->owner() == fti->folder()) fti = 0;
+    }
     if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
     {
       int action = -1;
