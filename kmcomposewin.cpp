@@ -3476,17 +3476,14 @@ void KMComposeWin::slotAttachSave()
 void KMComposeWin::slotAttachRemove()
 {
   bool attachmentRemoved = false;
-  int i = 0;
-  QList<Q3ListViewItem*>::iterator it = mAtmItemList.begin();
-  while ( it != mAtmItemList.end() ) {
-    if ( (*it)->isSelected() ) {
+  for ( int i = 0; i < mAtmItemList.size(); ) {
+    Q3ListViewItem *cur = mAtmItemList[i];
+    if ( cur->isSelected() ) {
       removeAttach( i );
-      it = mAtmItemList.begin();
       attachmentRemoved = true;
-    } else {
-      ++it;
-      ++i;
     }
+    else
+      i++;
   }
 
   if ( attachmentRemoved ) {
