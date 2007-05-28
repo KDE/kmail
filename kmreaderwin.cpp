@@ -1960,23 +1960,9 @@ void KMReaderWin::slotHandleAttachment( int choice )
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
   } else if ( choice == 7 ) {
-    if ( KMessageBox::warningContinueCancel( this,
-         i18n("Deleting an attachment might invalidate any digital signature on this message."),
-         i18n("Delete Attachment"), KStdGuiItem::del(), "DeleteAttachmentSignatureWarning" )
-         != KMessageBox::Continue ) {
-      return;
-    }
-    KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
-    command->start();
+    slotDeleteAttachment( node );
   } else if ( choice == 8 ) {
-    if ( KMessageBox::warningContinueCancel( this,
-         i18n("Modifying an attachment might invalidate any digital signature on this message."),
-         i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), "EditAttachmentSignatureWarning" )
-         != KMessageBox::Continue ) {
-      return;
-    }
-    KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
-    command->start();
+    slotEditAttachment( node );
   }
 }
 
@@ -2549,6 +2535,30 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   }
   // standard event processing
   return false;
+}
+
+void KMReaderWin::slotDeleteAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+       i18n("Deleting an attachment might invalidate any digital signature on this message."),
+       i18n("Delete Attachment"), KStdGuiItem::del(), "DeleteAttachmentSignatureWarning" )
+     != KMessageBox::Continue ) {
+    return;
+  }
+  KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
+  command->start();
+}
+
+void KMReaderWin::slotEditAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+        i18n("Modifying an attachment might invalidate any digital signature on this message."),
+        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), "EditAttachmentSignatureWarning" )
+        != KMessageBox::Continue ) {
+    return;
+  }
+  KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
+  command->start();
 }
 
 #include "kmreaderwin.moc"

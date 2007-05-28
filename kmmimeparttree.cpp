@@ -132,6 +132,13 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
                            SLOT( slotSaveAsEncoded() ) );
         popup->insertItem( i18n( "Save All Attachments..." ), this,
                            SLOT( slotSaveAll() ) );
+        // edit + delete only for attachments
+        if ( mCurrentContextMenuItem->node()->nodeId() > 2 ) {
+          popup->insertItem( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
+                            this, SLOT( slotDelete() ) );
+          popup->insertItem( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
+                            this, SLOT( slotEdit() ) );
+        }
         popup->exec( point );
         delete popup;
         mCurrentContextMenuItem = 0;
@@ -224,6 +231,23 @@ void KMMimePartTree::correctSize( QListViewItem * item )
     correctSize( item->parent() );
 }
 
+void KMMimePartTree::slotDelete()
+{
+  QPtrList<QListViewItem> selected = selectedItems();
+  if ( selected.count() != 1 )
+    return;
+  mReaderWin->slotDeleteAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
+}
+
+void KMMimePartTree::slotEdit()
+{
+  QPtrList<QListViewItem> selected = selectedItems();
+  if ( selected.count() != 1 )
+    return;
+  mReaderWin->slotEditAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
+}
+
+
 //=============================================================================
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         partNode* node,
@@ -285,6 +309,5 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
     setPixmap( 0, mtp ? mtp->pixmap( KIcon::Small) : SmallIcon("unknown") );
   }
 }
-
 
 #include "kmmimeparttree.moc"

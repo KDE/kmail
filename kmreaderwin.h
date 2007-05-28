@@ -356,6 +356,9 @@ public slots:
   void slotLevelQuote( int l );
   void slotTouchMessage();
 
+  void slotDeleteAttachment( partNode* node );
+  void slotEditAttachment( partNode* node );
+
 protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
