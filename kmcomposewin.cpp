@@ -3616,9 +3616,12 @@ void KMComposeWin::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
+  QString s( text );
+  // Remove characters that show badly in most window decorations:
+  // newlines tend to become boxes.
   if (text.isEmpty())
-       setCaption("("+i18n("unnamed")+")");
-  else setCaption(text);
+    setCaption("("+i18n("unnamed")+")");
+  else setCaption( s.replace( QChar('\n'), ' ' ) );
 }
 
 
