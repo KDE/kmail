@@ -2552,14 +2552,17 @@ void KMMainWidget::updateCustomTemplateMenus()
   if ( !replyc ) {
       mCustomReplyActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomReplyActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomReplyActionMenu->setEnabled(false);
   }
   if ( !replyallc ) {
       mCustomReplyAllActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomReplyAllActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomReplyAllActionMenu->setEnabled(false);
   }
   if ( !forwardc ) {
       mCustomForwardActionMenu->popupMenu()->insertItem( i18n( "(no custom templates)" ), 0 );
       mCustomForwardActionMenu->popupMenu()->setItemEnabled( 0, false );
+      mCustomForwardActionMenu->setEnabled(false);
   }
 
 }
