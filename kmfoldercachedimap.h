@@ -200,6 +200,7 @@ public:
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMaildir::isReadOnly() || mReadOnly; }
+ 
 
   /**
    * Emit the folderComplete signal
@@ -251,6 +252,7 @@ public:
    * @see QuotaInfo::isEmpty(), QuotaInfo::isValid()
    */
   const QuotaInfo quotaInfo() const { return mQuotaInfo; }
+  void setQuotaInfo( const QuotaInfo & );
 
   /// Return the list of ACL for this folder
   typedef QValueVector<KMail::ACLListEntry> ACLList;
@@ -298,6 +300,9 @@ public:
    */
   const QString& imapPathForCreation() { return mImapPathCreation; }
   void setImapPathForCreation( const QString& path ) { mImapPathCreation = path; }
+
+  /**  \reimp */
+  bool isCloseToQuota() const;
 
 protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
@@ -365,6 +370,8 @@ protected:
 
   /** See if there is a better parent then this folder */
   KMFolderCachedImap* findParent( const QString& path, const QString& name );
+
+
 
 public slots:
   /**

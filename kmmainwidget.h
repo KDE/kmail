@@ -332,6 +332,7 @@ protected slots:
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
+  void slotToggleSizeColumn();
   void slotSendQueued();
   void slotSendQueuedVia( int item );
   void slotOnlineStatus();
@@ -480,6 +481,7 @@ private:
   KRadioAction* mUnreadColumnToggle;
   KRadioAction* mUnreadTextToggle;
   KToggleAction* mTotalColumnToggle;
+  KToggleAction* mSizeColumnToggle;
 
   KToggleAction *mToggleShowQuickSearchAction;
 

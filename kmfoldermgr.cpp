@@ -342,6 +342,22 @@ void KMFolderMgr::removeFolder(KMFolder* aFolder)
   aFolder->remove();
 }
 
+KMFolder* KMFolderMgr::parentFolder( KMFolder* folder )
+{
+  // find the parent folder by stripping "." and ".directory" from the name
+  KMFolderDir* fdir = folder->parent();
+  QString parentName = fdir->name();
+  parentName = parentName.mid( 1, parentName.length()-11 );
+  KMFolderNode* parent = fdir->hasNamedFolder( parentName );
+  if ( !parent && fdir->parent() ) // dimap obviously has a different structure
+    parent = fdir->parent()->hasNamedFolder( parentName );
+
+  KMFolder* parentF = 0;
+  if ( parent )
+    parentF = dynamic_cast<KMFolder*>( parent );
+  return parentF;
+}
+
 void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
 {
   if (!success) {
@@ -358,15 +374,12 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
     }
   }
   aFolder->parent()->remove(aFolder);
-  // find the parent folder by stripping "." and ".directory" from the name
-  QString parentName = fdir->name();
-  parentName = parentName.mid( 1, parentName.length()-11 );
-  KMFolderNode* parent = fdir->hasNamedFolder( parentName );
-  if ( !parent && fdir->parent() ) // dimap obviously has a different structure
-    parent = fdir->parent()->hasNamedFolder( parentName );
+
+  KMFolder* parentF = parentFolder( aFolder );
+ 
   // update the children state
-  if ( parent )
-    static_cast<KMFolder*>(parent)->storage()->updateChildrenState();
+  if ( parentF )
+    parentF->storage()->updateChildrenState();
   else
     kdWarning(5006) << "Can not find parent folder" << endl;
 

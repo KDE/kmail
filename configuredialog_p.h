@@ -57,6 +57,7 @@ class KColorCombo;
 class KFontRequester;
 class KIconButton;
 class KKeyButton;
+class QSpinBox;
 
 namespace Kpgp {
   class Config;
@@ -461,6 +462,7 @@ private:
   QCheckBox    *mCustomColorCheck;
   ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
+  QSpinBox     *mCloseToQuotaThreshold;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab {

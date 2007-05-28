@@ -27,6 +27,7 @@ using KMail::MaildirJob;
 #include <klocale.h>
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
+#include <kdirsize.h>
 
 #include <dirent.h>
 #include <errno.h>
@@ -49,7 +50,7 @@ using KMail::MaildirJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
-  : KMFolderIndex(folder, name)
+  : KMFolderIndex(folder, name), mCurrentlyCheckingFolderSize(false)
 {
 
 }
@@ -462,6 +463,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     }
   }
   ++mTotalMsgs;
+  mSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
@@ -1096,6 +1098,35 @@ void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
   needsCompact = true;
 
   KMFolderIndex::msgStatusChanged(oldStatus, newStatus, idx);
+}
+
+/*virtual*/
+size_t KMFolderMaildir::doFolderSize() const
+{
+  if (mCurrentlyCheckingFolderSize) return -1;
+  KFileItemList list;
+  KFileItem *item = 0;
+  item = new KFileItem( S_IFDIR, -1, location() + "/cur" );
+  list.append( item );
+  item = new KFileItem( S_IFDIR, -1, location() + "/new" );
+  list.append( item );
+  item = new KFileItem( S_IFDIR, -1, location() + "/tmp" );
+  list.append( item );
+
+  KDirSize* job = KDirSize::dirSizeJob( list );
+  connect( job, SIGNAL( result( KIO::Job* ) ),
+           this, SLOT( slotDirSizeJobResult( KIO::Job*) ) );
+  mCurrentlyCheckingFolderSize = true;
+  return -1;
+}
+
+void KMFolderMaildir::slotDirSizeJobResult( KIO::Job* job )
+{
+    mCurrentlyCheckingFolderSize = false;
+    KDirSize * dirsize = dynamic_cast<KDirSize*>( job );
+    if ( !dirsize || dirsize->error() ) return;
+    mSize = dirsize->totalSize();
+    emit folderSizeChanged();
 }
 
 #include "kmfoldermaildir.moc"

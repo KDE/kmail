@@ -381,20 +381,37 @@ void KMMainWidget::readConfig(void)
 
       const int unreadColumn = config->readNumEntry("UnreadColumn", 1);
       const int totalColumn = config->readNumEntry("TotalColumn", 2);
+      const int sizeColumn = config->readNumEntry("SizeColumn", 3);
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
       * but otherwise the restoreLayout from KMFolderTree
       * doesn't know that to do */
-      if (unreadColumn != -1 && unreadColumn < totalColumn)
+      if (unreadColumn == 1)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
-      if (totalColumn != -1)
+      else if (totalColumn == 1)
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
-      if (unreadColumn != -1 && unreadColumn > totalColumn)
+      else if (sizeColumn == 1)
+        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+
+      if (unreadColumn == 2)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+      else if (totalColumn == 2)
+        mFolderTree->addTotalColumn( i18n("Total"), 70 );
+      else if (sizeColumn == 2)
+        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+ 
+      if (unreadColumn == 3)
+        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+      else if (totalColumn == 3)
+        mFolderTree->addTotalColumn( i18n("Total"), 70 );
+      else if (sizeColumn == 3)
+        mFolderTree->addSizeColumn( i18n("Size"), 70 );
+
       mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
       mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
       mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
+      mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
 
       mFolderTree->updatePopup();
     }
@@ -490,6 +507,7 @@ void KMMainWidget::writeConfig(void)
   // save the state of the unread/total-columns
   geometry.writeEntry( "UnreadColumn", mFolderTree->unreadIndex() );
   geometry.writeEntry( "TotalColumn", mFolderTree->totalIndex() );
+  geometry.writeEntry( "SizeColumn", mFolderTree->sizeIndex() );
 }
 
 
@@ -1627,6 +1645,13 @@ void KMMainWidget::slotToggleTotalColumn()
 {
   mFolderTree->toggleColumn(KMFolderTree::total, true);
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotToggleSizeColumn()
+{
+  mFolderTree->toggleColumn(KMFolderTree::foldersize);
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
@@ -3023,6 +3048,11 @@ void KMMainWidget::setupActions()
 			       actionCollection(), "view_columns_total" );
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
+  mSizeColumnToggle = new KToggleAction( i18n("View->", "&Size Column"), 0, this,
+			       SLOT(slotToggleSizeColumn()),
+			       actionCollection(), "view_columns_size" );
+  mSizeColumnToggle->setToolTip( i18n("Toggle display of column showing the "
+                                      "total size of messages in folders.") );
 
   (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
 			       i18n("Expand the current thread") ),
@@ -3874,6 +3904,7 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
 {
   mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
   mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
 }
 
 void KMMainWidget::toggleSystemTray()

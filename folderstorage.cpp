@@ -72,6 +72,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
   mTotalMsgs = -1;
+  mSize = -1;
   needsCompact    = false;
   mConvertToUtf8  = false;
   mCompactable     = true;
@@ -409,6 +410,7 @@ void FolderStorage::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
+  mSize = -1;
   QString msgIdMD5 = mb->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
@@ -446,6 +448,7 @@ KMMessage* FolderStorage::take(int idx)
   --mTotalMsgs;
   msg->setParent(0);
   setDirty( true );
+  mSize = -1;
   needsCompact=true; // message is taken from here - needs to be compacted
   QString msgIdMD5 = msg->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
@@ -793,6 +796,7 @@ int FolderStorage::expunge()
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
+  mSize = 0;
   emit numUnreadMsgsChanged( folder() );
   if ( mAutoCreateIndex ) // FIXME Heh? - Till
     writeConfig();
@@ -833,6 +837,22 @@ int FolderStorage::countUnread()
   int unread = mUnreadMsgs;
   close();
   return (unread > 0) ? unread : 0;
+}
+
+size_t FolderStorage::folderSize() const
+{
+    if ( mSize != -1 ) {
+        return mSize;
+    } else {
+        return doFolderSize();
+    }
+}
+
+
+/*virtual*/
+bool FolderStorage::isCloseToQuota() const
+{
+  return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -900,7 +920,9 @@ void FolderStorage::readConfig()
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
   mCompactable = config->readBoolEntry("Compactable", true);
-
+  if ( mSize == -1 )
+      mSize = config->readNumEntry("FolderSize", -1);
+  
   int type = config->readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
@@ -918,6 +940,7 @@ void FolderStorage::writeConfig()
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
   config->writeEntry("ContentsType", mContentsType);
+  config->writeEntry("FolderSize", mSize);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );

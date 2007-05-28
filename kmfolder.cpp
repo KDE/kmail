@@ -126,6 +126,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
+  
+  connect( mStorage, SIGNAL( folderSizeChanged() ),
+           this, SLOT( slotFolderSizeChanged() ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   // Meanwhile, readConfig must be done before registerWithMessageDict, since
@@ -842,5 +845,15 @@ void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
   kmkernel->iCalIface().folderContentsTypeChanged( this, type );
   emit iconsChanged();
 }
+
+void KMFolder::slotFolderSizeChanged()
+{
+  emit folderSizeChanged( this );
+  KMFolder* papa = parent()->manager()->parentFolder( this );
+  if ( papa && papa != this ) {
+    papa->slotFolderSizeChanged();
+  }
+}
+
 
 #include "kmfolder.moc"

@@ -153,7 +153,7 @@ public:
 
   QValueList<QGuardedPtr<KMFolder> > selectedFolders();
 
-  enum ColumnMode {unread=15, total=16};
+  enum ColumnMode {unread=15, total=16, foldersize=17};
 
   /** toggles the unread and total columns on/off */
   void toggleColumn(int column, bool openFolders = false);
@@ -203,7 +203,7 @@ signals:
   /** Messages have been dropped onto a folder with Ctrl */
   void folderDropCopy(KMFolder*);
 
-  /** unread/total column has changed */
+  /** unread/total/size column has changed */
   void columnsChanged();
 
   /** an icon of one of our folders changed */
@@ -287,9 +287,10 @@ protected slots:
   void slotUpdateCountTimeout();
   void slotUpdateOneCount();
 
-  /** slots for the unread/total-popup */
+  /** slots for the unread/total/size-popup */
   void slotToggleUnreadColumn();
   void slotToggleTotalColumn();
+  void slotToggleSizeColumn();
 
   void slotContextMenuRequested( QListViewItem *, const QPoint & );
 
@@ -357,6 +358,7 @@ private:
   KPopupMenu* mPopup;
   int mUnreadPop;
   int mTotalPop;
+  int mSizePop;
 
   KMMainWidget *mMainWidget;
   bool mReloading;

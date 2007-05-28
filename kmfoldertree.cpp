@@ -361,6 +361,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
+  mSizePop = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
 }
 
 //-----------------------------------------------------------------------------
@@ -438,16 +439,19 @@ void KMFolderTree::readColorConfig (void)
   QColor c1=QColor(kapp->palette().active().text());
   QColor c2=QColor("blue");
   QColor c4=QColor(kapp->palette().active().base());
+  QColor c5=QColor("red");
 
   if (!conf->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
     mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
     mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
+    mPaintInfo.colCloseToQuota = conf->readColorEntry("CloseToQuotaColor",&c5);
   }
   else {
     mPaintInfo.colFore = c1;
     mPaintInfo.colUnread = c2;
     mPaintInfo.colBack = c4;
+    mPaintInfo.colCloseToQuota = c5;
   }
   QPalette newPal = kapp->palette();
   newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
@@ -624,13 +628,26 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
+  disconnect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
+  connect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
+
+
+
     disconnect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
                mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
     connect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
             mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
 
+
     if (!openFolders)
       slotUpdateCounts(fti->folder());
+
+    // populate the size column
+    fti->setFolderSize( 0 );
+    fti->setFolderIsCloseToQuota( fti->folder()->storage()->isCloseToQuota() );
+
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
   // if current and selected folder did not change set it again
@@ -1510,9 +1527,11 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
+  if ( !fti || !fti->folder() || !fti->folder()->storage() ) return;
 
-  if ( fti && fti->folder() &&
-       fti->folder()->folderType() == KMFolderTypeImap )
+  fti->setFolderSize( fti->folder()->storage()->folderSize() );
+
+  if( fti->folder()->folderType() == KMFolderTypeImap )
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
     // if we should list all folders we limit this to the root folder
@@ -1543,6 +1562,10 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
   slotResetFolderList( item, false );
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
+  if ( !fti || !fti->folder() || !fti->folder()->storage() ) return;
+
+  fti->setFolderSize( fti->folder()->storage()->folderSize() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1654,6 +1677,17 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
       repaint = true;
     }
   }
+  if ( isSizeActive() ) {
+    if ( !fti->folder()->noContent()) {
+      int size = folder->storage()->folderSize();
+      if ( size != fti->folderSize() ) {
+        fti->setFolderSize( size );
+        fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
+        repaint = true;
+      }
+    }
+  }
+
   if (fti->parent() && !fti->parent()->isOpen())
     repaint = false; // we're not visible
   if (repaint) {
@@ -1668,6 +1702,7 @@ void KMFolderTree::updatePopup() const
 {
    mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
    mPopup->setItemChecked( mTotalPop, isTotalActive() );
+   mPopup->setItemChecked( mSizePop, isSizeActive() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1697,8 +1732,19 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       addTotalColumn( i18n("Total"), 70 );
       reload(openFolders);
     }
-    // toggle KPopupMenu
     mPopup->setItemChecked( mTotalPop, isTotalActive() );
+  } else if (column == foldersize) {
+    // switch total
+    if ( isSizeActive() )
+    {
+      removeSizeColumn();
+      reload();
+    } else {
+      addSizeColumn( i18n("Size"), 70 );
+      reload( openFolders );
+    }
+    // toggle KPopupMenu
+    mPopup->setItemChecked( mSizePop, isSizeActive() );
 
   } else kdDebug(5006) << "unknown column:" << column << endl;
 
@@ -1718,6 +1764,14 @@ void KMFolderTree::slotToggleTotalColumn()
   // activate the total-column and force the folders to be opened
   toggleColumn(total, true);
 }
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotToggleSizeColumn()
+{
+  // activate the size-column and force the folders to be opened
+  toggleColumn(foldersize, true);
+}
+
 
 //-----------------------------------------------------------------------------
 bool KMFolderTree::eventFilter( QObject *o, QEvent *e )

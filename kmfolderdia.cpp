@@ -704,7 +704,7 @@ void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-re
 
 //----------------------------------------------------------------------------
 KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog* dlg,
-                                                 QWidget* parent )
+                                                     QWidget* parent )
   : FolderDiaTab( parent, 0 ), mDlg( dlg )
 {
 
