@@ -1,6 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdiaacltab.h
+ * folderdialogacltab.h
  *
  * Copyright (c) 2004 David Faure <faure@kde.org>
  *
@@ -29,10 +29,10 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef FOLDERDIAACL_H
-#define FOLDERDIAACL_H
+#ifndef FOLDERDIALOGACLTAB_H
+#define FOLDERDIALOGACLTAB_H
 
-#include "kmfolderdia.h"
+#include "kmfolderdialog.h"
 #include "kmfoldertype.h"
 class KJob;
 class KMFolderImap;
@@ -55,7 +55,7 @@ class ImapAccountBase;
 
 /**
  * "New Access Control Entry" dialog.
- * Internal class, only used by FolderDiaACLTab
+ * Internal class, only used by FolderDialogACLTab
  */
 class ACLEntryDialog :public KDialog {
   Q_OBJECT
@@ -83,12 +83,12 @@ private:
  * "Access Control" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDiaACLTab : public FolderDiaTab
+class FolderDialogACLTab : public FolderDialogTab
 {
   Q_OBJECT
 
 public:
-  FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent );
+  FolderDialogACLTab( KMFolderDialog* dlg, QWidget* parent );
 
   virtual void load();
   virtual bool save();
@@ -154,5 +154,5 @@ private:
 
 } // end of namespace KMail
 
-#endif /* FOLDERDIAACL_H */
+#endif /* FOLDERDIALOGACLTAB_H */
 

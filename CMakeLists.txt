@@ -34,7 +34,7 @@ set(kmailprivate_LIB_SRCS
    simplestringlisteditor.cpp
    identitylistview.cpp
    identitydialog.cpp
-   kmfolderdia.cpp
+   kmfolderdialog.cpp
    kmfoldertree.cpp
    kmfoldercombobox.cpp
    kmaccount.cpp
@@ -152,7 +152,7 @@ set(kmailprivate_LIB_SRCS
    rulewidgethandlermanager.cpp
    headerlistquicksearch.cpp
    acljobs.cpp
-   folderdiaacltab.cpp
+   folderdialogacltab.cpp
    partnodebodypart.cpp
    expirejob.cpp
    compactionjob.cpp
@@ -182,8 +182,8 @@ set(kmailprivate_LIB_SRCS
    templateparser.cpp templatesconfiguration.cpp templatesinsertcommand.cpp
    customtemplates.cpp
    quotajobs.cpp
-   folderdiaquotatab.cpp
-   folderdiaquotatab_p.cpp
+   folderdialogquotatab.cpp
+   folderdialogquotatab_p.cpp
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp
    copyfolderjob.cpp messagecopyhelper.cpp
    localsubscriptiondialog.cpp

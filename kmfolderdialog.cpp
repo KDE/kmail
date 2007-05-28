@@ -1,6 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * kmfolderdia.cpp
+ * kmfolderdialog.cpp
  *
  * Copyright (c) 1997-2004 KMail Developers
  *
@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#include "kmfolderdia.h"
+#include "kmfolderdialog.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include <libkpimidentities/identitycombo.h>
@@ -42,8 +42,8 @@
 #include "kmheaders.h"
 #include "kmcommands.h"
 #include "kmfoldertree.h"
-#include "folderdiaacltab.h"
-#include "folderdiaquotatab.h"
+#include "folderdialogacltab.h"
+#include "folderdialogquotatab.h"
 #include "kmailicalifaceimpl.h"
 #include "globalsettings.h"
 #include "folderrequester.h"
@@ -78,8 +78,6 @@
 
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
-
-#include "kmfolderdia.moc"
 
 using namespace KMail;
 
@@ -123,19 +121,19 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     }
   }
 
-  FolderDiaTab* tab;
+  FolderDialogTab* tab;
   QFrame *box;
 
   box = new KVBox;
   addPage( box, i18n("General") );
-  tab = new FolderDiaGeneralTab( this, aName, box );
+  tab = new FolderDialogGeneralTab( this, aName, box );
   addTab( tab );
 
   if (!mFolder->isSystemFolder() || mFolder->isMainInbox())
   {							// not for special folders
     box = new KVBox( this );
     addPage( box, i18n("Templates") );
-    tab = new FolderDiaTemplatesTab( this, box );
+    tab = new FolderDialogTemplatesTab( this, box );
     addTab( tab );
   }
 
@@ -143,19 +141,19 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   KMFolderType folderType = refFolder ? refFolder->folderType() : KMFolderTypeUnknown;
   bool noContent = mFolder ? mFolder->storage()->noContent() : false;
   if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
-    if ( FolderDiaACLTab::supports( refFolder ) ) {
+    if ( FolderDialogACLTab::supports( refFolder ) ) {
       box = new KVBox;
       addPage( box, i18n("Access Control") );
-      tab = new FolderDiaACLTab( this, box );
+      tab = new FolderDialogACLTab( this, box );
       addTab( tab );
     }
   }
 
   if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
-    if ( FolderDiaQuotaTab::supports( refFolder ) ) {
+    if ( FolderDialogQuotaTab::supports( refFolder ) ) {
       box = new KVBox;
       addPage( box, i18n("Quota") );
-      tab = new FolderDiaQuotaTab( this, box );
+      tab = new FolderDialogQuotaTab( this, box );
       addTab( tab );
     }
   }
@@ -165,7 +163,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 }
 
-void KMFolderDialog::addTab( FolderDiaTab* tab )
+void KMFolderDialog::addTab( FolderDialogTab* tab )
 {
   connect( tab, SIGNAL( readyForAccept() ),
            this, SLOT( slotReadyForAccept() ) );
@@ -208,12 +206,12 @@ void KMFolderDialog::slotOk()
 
   mDelayedSavingTabs = 0; // number of tabs which need delayed saving
   for ( int i = 0 ; i < mTabs.count() ; ++i ) {
-    FolderDiaTab::AcceptStatus s = mTabs[i]->accept();
-    if ( s == FolderDiaTab::Canceled ) {
+    FolderDialogTab::AcceptStatus s = mTabs[i]->accept();
+    if ( s == FolderDialogTab::Canceled ) {
       slotCancelAccept();
       return;
     }
-    else if ( s == FolderDiaTab::Delayed )
+    else if ( s == FolderDialogTab::Delayed )
       ++mDelayedSavingTabs;
   }
 
@@ -274,10 +272,10 @@ static void addLine( QWidget *parent, QVBoxLayout* layout )
 }
 
 //----------------------------------------------------------------------------
-KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
+KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ), mDlg( dlg )
+  : FolderDialogTab( parent, name ), mDlg( dlg )
 {
 
 
@@ -562,12 +560,12 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   initializeWithValuesFromFolder( mDlg->folder() );
 }
 
-void FolderDiaGeneralTab::load()
+void FolderDialogGeneralTab::load()
 {
   // Nothing here, all is done in the ctor
 }
 
-void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
+void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
 
@@ -614,13 +612,13 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 }
 
 //-----------------------------------------------------------------------------
-void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
+void FolderDialogGeneralTab::slotFolderNameChanged( const QString& str )
 {
   mDlg->enableButtonOk( !str.isEmpty() );
 }
 
 //-----------------------------------------------------------------------------
-void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
+void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
 {
   KMail::FolderContentsType type =
     static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
@@ -641,7 +639,7 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 }
 
 //-----------------------------------------------------------------------------
-bool FolderDiaGeneralTab::save()
+bool FolderDialogGeneralTab::save()
 {
   KMFolder* folder = mDlg->folder();
   folder->setIdentity( mIdentityComboBox->currentIdentity() );
@@ -740,15 +738,15 @@ bool FolderDiaGeneralTab::save()
   return true;
 }
 
-void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
+void FolderDialogGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
 {
     mUnreadIconButton->setIcon( icon );
 }
 
 //----------------------------------------------------------------------------
-KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog *dlg,
+KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
                                                      QWidget *parent )
-  : FolderDiaTab( parent, 0 ), mDlg( dlg )
+  : FolderDialogTab( parent, 0 ), mDlg( dlg )
 {
 
   mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
@@ -783,12 +781,12 @@ KMail::FolderDiaTemplatesTab::FolderDiaTemplatesTab( KMFolderDialog *dlg,
            this, SLOT( slotEmitChanged( void ) ) );
 }
 
-void FolderDiaTemplatesTab::load()
+void FolderDialogTemplatesTab::load()
 {
 
 }
 
-void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
+void FolderDialogTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
 
@@ -806,7 +804,7 @@ void FolderDiaTemplatesTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 }
 
 //-----------------------------------------------------------------------------
-bool FolderDiaTemplatesTab::save()
+bool FolderDialogTemplatesTab::save()
 {
   KMFolder* folder = mDlg->folder();
 
@@ -823,9 +821,9 @@ bool FolderDiaTemplatesTab::save()
 }
 
 
-void FolderDiaTemplatesTab::slotEmitChanged() {}
+void FolderDialogTemplatesTab::slotEmitChanged() {}
 
-void FolderDiaTemplatesTab::slotCopyGlobal() {
+void FolderDialogTemplatesTab::slotCopyGlobal() {
   if ( mIdentity ) {
     mWidget->loadFromIdentity( mIdentity );
   }
@@ -834,3 +832,4 @@ void FolderDiaTemplatesTab::slotCopyGlobal() {
   }
 }
 
+#include "kmfolderdialog.moc"

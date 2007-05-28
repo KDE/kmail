@@ -1,6 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
-/*
- * folderdiaacltab.cpp
+/**
+ * folderdialogacltab.cpp
  *
  * Copyright (c) 2004 David Faure <faure@kde.org>
  *
@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#include "folderdiaacltab.h"
+#include "folderdialogacltab.h"
 #include "acljobs.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
@@ -71,11 +71,6 @@
 #include <kvbox.h>
 
 using namespace KMail;
-
-// In case your kdelibs is < 3.3
-#ifndef I18N_NOOP2
-#define I18N_NOOP2( comment,x ) x
-#endif
 
 // The set of standard permission sets
 static const struct {
@@ -201,7 +196,7 @@ unsigned int KMail::ACLEntryDialog::permissions() const
   return mButtonGroup->selectedId();
 }
 
-class KMail::FolderDiaACLTab::ListViewItem : public K3ListViewItem
+class KMail::FolderDialogACLTab::ListViewItem : public K3ListViewItem
 {
 public:
   ListViewItem( Q3ListView* listview )
@@ -253,13 +248,13 @@ static QString permissionsToUserString( unsigned int permissions, const QString&
     return i18n( "Custom Permissions (%1)", internalRightsList );
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::setPermissions( unsigned int permissions )
+void KMail::FolderDialogACLTab::ListViewItem::setPermissions( unsigned int permissions )
 {
   mPermissions = permissions;
   setText( 1, permissionsToUserString( permissions, QString() ) );
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
+void KMail::FolderDialogACLTab::ListViewItem::load( const ACLListEntry& entry )
 {
   // Don't allow spaces in userids. If you need this, fix the slave->app communication,
   // since it uses space as a separator (imap4.cc, look for GETACL)
@@ -275,7 +270,7 @@ void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
   mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList,
+void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
 #ifdef KDEPIM_NEW_DISTRLISTS
                                                  KABC::AddressBook* addressBook,
 #else
@@ -319,8 +314,8 @@ void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList,
 
 ////
 
-KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent )
-  : FolderDiaTab( parent ),
+KMail::FolderDialogACLTab::FolderDialogACLTab( KMFolderDialog* dlg, QWidget* parent )
+  : FolderDialogTab( parent ),
     mImapAccount( 0 ),
     mUserRights( 0 ),
     mDlg( dlg ),
@@ -370,14 +365,14 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent )
 }
 
 // Warning before save() this will return the url of the _parent_ folder, when creating a new one
-KUrl KMail::FolderDiaACLTab::imapURL() const
+KUrl KMail::FolderDialogACLTab::imapURL() const
 {
   KUrl url = mImapAccount->getUrl();
   url.setPath( mImapPath );
   return url;
 }
 
-void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
+void KMail::FolderDialogACLTab::initializeWithValuesFromFolder( KMFolder* folder )
 {
   // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
   mFolderType = folder->folderType();
@@ -397,7 +392,7 @@ void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
     assert( 0 ); // see KMFolderDialog constructor
 }
 
-void KMail::FolderDiaACLTab::load()
+void KMail::FolderDialogACLTab::load()
 {
   if ( mDlg->folder() ) {
     // existing folder
@@ -466,7 +461,7 @@ void KMail::FolderDiaACLTab::load()
   }
 }
 
-void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString& errorMsg )
+void KMail::FolderDialogACLTab::slotConnectionResult( int errorCode, const QString& errorMsg )
 {
   disconnect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
               this, SLOT( slotConnectionResult(int, const QString&) ) );
@@ -489,7 +484,7 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
     startListing();
 }
 
-void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
+void KMail::FolderDialogACLTab::slotReceivedUserRights( KMFolder* folder )
 {
   if ( !mImapAccount->hasACLSupport() ) {
     mLabel->setText( i18n( "This IMAP server does not have support for access control lists (ACL)" ) );
@@ -503,7 +498,7 @@ void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
   }
 }
 
-void KMail::FolderDiaACLTab::startListing()
+void KMail::FolderDialogACLTab::startListing()
 {
   // List ACLs of folder - or its parent, if creating a new folder
   mImapAccount->getACL( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
@@ -511,7 +506,7 @@ void KMail::FolderDiaACLTab::startListing()
            this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 }
 
-void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
+void KMail::FolderDialogACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
 {
   if ( folder == ( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) ) {
     disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
@@ -529,7 +524,7 @@ void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, c
   }
 }
 
-void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
+void KMail::FolderDialogACLTab::loadListView( const ACLList& aclList )
 {
   mListView->clear();
   for( ACLList::const_iterator it = aclList.begin(); it != aclList.end(); ++it ) {
@@ -543,7 +538,7 @@ void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
   }
 }
 
-void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
+void KMail::FolderDialogACLTab::loadFinished( const ACLList& aclList )
 {
   loadListView( aclList );
   if ( mDlg->folder() ) // not when creating a new folder
@@ -552,7 +547,7 @@ void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
   slotSelectionChanged( mListView->selectedItem() );
 }
 
-void KMail::FolderDiaACLTab::slotEditACL(Q3ListViewItem* item)
+void KMail::FolderDialogACLTab::slotEditACL(Q3ListViewItem* item)
 {
   if ( !item ) return;
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
@@ -582,12 +577,12 @@ void KMail::FolderDiaACLTab::slotEditACL(Q3ListViewItem* item)
   }
 }
 
-void KMail::FolderDiaACLTab::slotEditACL()
+void KMail::FolderDialogACLTab::slotEditACL()
 {
   slotEditACL( mListView->currentItem() );
 }
 
-void KMail::FolderDiaACLTab::addACLs( const QStringList& userIds, unsigned int permissions )
+void KMail::FolderDialogACLTab::addACLs( const QStringList& userIds, unsigned int permissions )
 {
   for( QStringList::const_iterator it = userIds.begin(); it != userIds.end(); ++it ) {
     ListViewItem* ACLitem = new ListViewItem( mListView );
@@ -598,7 +593,7 @@ void KMail::FolderDiaACLTab::addACLs( const QStringList& userIds, unsigned int p
   }
 }
 
-void KMail::FolderDiaACLTab::slotAddACL()
+void KMail::FolderDialogACLTab::slotAddACL()
 {
   ACLEntryDialog dlg( mUserIdFormat, i18n( "Add Permissions" ), this );
   if ( dlg.exec() == QDialog::Accepted ) {
@@ -608,7 +603,7 @@ void KMail::FolderDiaACLTab::slotAddACL()
   }
 }
 
-void KMail::FolderDiaACLTab::slotSelectionChanged(Q3ListViewItem* item)
+void KMail::FolderDialogACLTab::slotSelectionChanged(Q3ListViewItem* item)
 {
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
   bool canAdminThisItem = canAdmin;
@@ -625,7 +620,7 @@ void KMail::FolderDiaACLTab::slotSelectionChanged(Q3ListViewItem* item)
   mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
 }
 
-void KMail::FolderDiaACLTab::slotRemoveACL()
+void KMail::FolderDialogACLTab::slotRemoveACL()
 {
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
   if ( !ACLitem )
@@ -642,7 +637,7 @@ void KMail::FolderDiaACLTab::slotRemoveACL()
   emit changed(true);
 }
 
-KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaACLTab::accept()
+KMail::FolderDialogTab::AcceptStatus KMail::FolderDialogACLTab::accept()
 {
   if ( !mChanged || !mImapAccount )
     return Accepted; // (no change made), ok for accepting the dialog immediately
@@ -655,7 +650,7 @@ KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaACLTab::accept()
   return Delayed;
 }
 
-bool KMail::FolderDiaACLTab::save()
+bool KMail::FolderDialogACLTab::save()
 {
   if ( !mChanged || !mImapAccount ) // no changes
     return true;
@@ -736,7 +731,7 @@ bool KMail::FolderDiaACLTab::save()
   return true;
 }
 
-void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
+void KMail::FolderDialogACLTab::slotDirectoryListingFinished(KMFolderImap* f)
 {
   if ( !f ||
        f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) ||
@@ -763,7 +758,7 @@ void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
           SLOT(slotACLChanged( const QString&, int )) );
 }
 
-void KMail::FolderDiaACLTab::slotMultiSetACLResult(KJob* job)
+void KMail::FolderDialogACLTab::slotMultiSetACLResult(KJob* job)
 {
   ImapAccountBase::JobIterator it = mImapAccount->findJob( static_cast<KIO::Job*>(job) );
   if ( it == mImapAccount->jobsEnd() ) return;
@@ -782,7 +777,7 @@ void KMail::FolderDiaACLTab::slotMultiSetACLResult(KJob* job)
   }
 }
 
-void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissions )
+void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permissions )
 {
   // The job indicates success in changing the permissions for this user
   // -> we note that it's been done.
@@ -805,12 +800,12 @@ void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissi
     kWarning(5006) << k_funcinfo << " no item found for userId " << userId << endl;
 }
 
-void KMail::FolderDiaACLTab::slotChanged( bool b )
+void KMail::FolderDialogACLTab::slotChanged( bool b )
 {
   mChanged = b;
 }
 
-bool KMail::FolderDiaACLTab::supports( KMFolder* refFolder )
+bool KMail::FolderDialogACLTab::supports( KMFolder* refFolder )
 {
   ImapAccountBase* imapAccount = 0;
   if ( refFolder->folderType() == KMFolderTypeImap )
@@ -820,4 +815,4 @@ bool KMail::FolderDiaACLTab::supports( KMFolder* refFolder )
   return imapAccount && imapAccount->hasACLSupport(); // support for ACLs (or not tried connecting yet)
 }
 
-#include "folderdiaacltab.moc"
+#include "folderdialogacltab.moc"

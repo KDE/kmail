@@ -1,6 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * kmfolderdia.h
+ * kmfolderdialog.h
  *
  * Copyright (c) 1997-2004 KMail Developers
  *
@@ -29,8 +29,8 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef __KMFOLDERDIA
-#define __KMFOLDERDIA
+#ifndef __KMFOLDERDIALOG_H
+#define __KMFOLDERDIALOG_H
 
 #include <kpagedialog.h>
 #include "configuredialog_p.h"
@@ -71,11 +71,11 @@ namespace KMail {
  * Feel free to rename and move this base class somewhere else if it
  * can be useful for other dialogs.
  */
-class FolderDiaTab : public QWidget
+class FolderDialogTab : public QWidget
 {
   Q_OBJECT
 public:
-   FolderDiaTab( QWidget *parent=0, const char* name=0 )
+   FolderDialogTab( QWidget *parent=0, const char* name=0 )
      : QWidget( parent ) { setObjectName( name ); }
 
   virtual void load() = 0;
@@ -112,14 +112,14 @@ signals:
  * "General" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDiaGeneralTab : public FolderDiaTab
+class FolderDialogGeneralTab : public FolderDialogTab
 {
   Q_OBJECT
 
 public:
-  FolderDiaGeneralTab( KMFolderDialog* dlg,
-                       const QString& aName,
-                       QWidget* parent, const char* name = 0 );
+  FolderDialogGeneralTab( KMFolderDialog* dlg,
+                          const QString& aName,
+                          QWidget* parent, const char* name = 0 );
 
   virtual void load();
   virtual bool save();
@@ -161,12 +161,12 @@ private:
  * "Templates" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDiaTemplatesTab : public FolderDiaTab
+class FolderDialogTemplatesTab : public FolderDialogTab
 {
   Q_OBJECT
 
 public:
-  FolderDiaTemplatesTab( KMFolderDialog *dlg, QWidget *parent );
+  FolderDialogTemplatesTab( KMFolderDialog *dlg, QWidget *parent );
 
   virtual void load();
   virtual bool save();
@@ -226,7 +226,7 @@ protected slots:
   void slotCancelAccept();
 
 private:
-  void addTab( KMail::FolderDiaTab* tab );
+  void addTab( KMail::FolderDialogTab* tab );
 
 private:
   // Can be 0 initially when creating a folder, but will be set by save() in the first tab.
@@ -236,10 +236,10 @@ private:
 
   bool mIsNewFolder; // if true, save() did set mFolder.
 
-  QVector<KMail::FolderDiaTab*> mTabs;
+  QVector<KMail::FolderDialogTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day
   KMFolderTree* mFolderTree;
 };
 
-#endif /*__KMFOLDERDIA*/
+#endif /*__KMFOLDERDIALOG_H*/
 

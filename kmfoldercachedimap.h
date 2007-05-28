@@ -313,7 +313,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     const ACLList &aclList() const { return mACLList; }
 
     /**
-      Sets the list of ACL for this folder (for FolderDiaACLTab)
+      Sets the list of ACL for this folder (for FolderDialogACLTab)
     */
     void setACLList( const ACLList &arr );
 

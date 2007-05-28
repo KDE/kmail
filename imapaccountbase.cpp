@@ -539,7 +539,7 @@ void ImapAccountBase::slotGetACLResult( KJob *_job )
 }
 
 //-----------------------------------------------------------------------------
-// Do not remove imapPath, FolderDiaQuotaTab needs to call this with parent==0.
+// Do not remove imapPath, FolderDialogQuotaTab needs to call this with parent==0.
 void ImapAccountBase::getStorageQuotaInfo( KMFolder *parent, const QString &imapPath )
 {
   if ( !mSlave ) {

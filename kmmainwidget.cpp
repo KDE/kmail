@@ -88,7 +88,7 @@ using KPIM::ProgressManager;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
-#include "kmfolderdia.h"
+#include "kmfolderdialog.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmfilter.h"

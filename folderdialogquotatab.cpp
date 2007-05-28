@@ -1,6 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdiaquotatab.cpp
+ * folderdialogquotatab.cpp
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
@@ -30,7 +30,7 @@
  *  your version.
  */
 
-#include "folderdiaquotatab.h"
+#include "folderdialogquotatab.h"
 #include "kmfolder.h"
 #include "kmfoldertype.h"
 #include "kmfolderimap.h"
@@ -44,14 +44,14 @@
 #include <qprogressbar.h>
 #include <qwhatsthis.h>
 
-#include "folderdiaquotatab_p.h"
+#include "folderdialogquotatab_p.h"
 
 #include <assert.h>
 
 using namespace KMail;
 
-KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ),
+KMail::FolderDialogQuotaTab::FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
+  : FolderDialogTab( parent, name ),
     mImapAccount( 0 ),
     mDlg( dlg )
 {
@@ -70,7 +70,7 @@ KMail::FolderDiaQuotaTab::FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* paren
 }
 
 
-void KMail::FolderDiaQuotaTab::initializeWithValuesFromFolder( KMFolder* folder )
+void KMail::FolderDialogQuotaTab::initializeWithValuesFromFolder( KMFolder* folder )
 {
   // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
   mFolderType = folder->folderType();
@@ -88,7 +88,7 @@ void KMail::FolderDiaQuotaTab::initializeWithValuesFromFolder( KMFolder* folder 
     assert( 0 ); // see KMFolderDialog constructor
 }
 
-void KMail::FolderDiaQuotaTab::load()
+void KMail::FolderDialogQuotaTab::load()
 {
   if ( mDlg->folder() ) {
     // existing folder
@@ -131,7 +131,7 @@ void KMail::FolderDiaQuotaTab::load()
 
 }
 
-void KMail::FolderDiaQuotaTab::slotConnectionResult( int errorCode, const QString& errorMsg )
+void KMail::FolderDialogQuotaTab::slotConnectionResult( int errorCode, const QString& errorMsg )
 {
   disconnect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
               this, SLOT( slotConnectionResult(int, const QString&) ) );
@@ -149,7 +149,7 @@ void KMail::FolderDiaQuotaTab::slotConnectionResult( int errorCode, const QStrin
   mImapAccount->getStorageQuotaInfo( folder, mImapPath );
 }
 
-void KMail::FolderDiaQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
+void KMail::FolderDialogQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
                                                       KIO::Job* job,
                                                       const KMail::QuotaInfo& info )
 {
@@ -171,7 +171,7 @@ void KMail::FolderDiaQuotaTab::slotReceivedQuotaInfo( KMFolder* folder,
   }
 }
 
-void KMail::FolderDiaQuotaTab::showQuotaWidget()
+void KMail::FolderDialogQuotaTab::showQuotaWidget()
 {
   if ( !mQuotaInfo.isValid() ) {
     if ( !mImapAccount->hasQuotaSupport() ) {
@@ -188,7 +188,7 @@ void KMail::FolderDiaQuotaTab::showQuotaWidget()
 }
 
 
-KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaQuotaTab::accept()
+KMail::FolderDialogTab::AcceptStatus KMail::FolderDialogQuotaTab::accept()
 {
   if ( mFolderType == KMFolderTypeCachedImap || mFolderType == KMFolderTypeImap )
     return Accepted;
@@ -196,13 +196,13 @@ KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaQuotaTab::accept()
     assert(0);
 }
 
-bool KMail::FolderDiaQuotaTab::save()
+bool KMail::FolderDialogQuotaTab::save()
 {
   // nothing to do, we are read-only
   return true;
 }
 
-bool KMail::FolderDiaQuotaTab::supports( KMFolder* refFolder )
+bool KMail::FolderDialogQuotaTab::supports( KMFolder* refFolder )
 {
   ImapAccountBase* imapAccount = 0;
   if ( refFolder->folderType() == KMFolderTypeImap )
@@ -212,4 +212,4 @@ bool KMail::FolderDiaQuotaTab::supports( KMFolder* refFolder )
   return imapAccount && imapAccount->hasQuotaSupport(); // support for Quotas (or not tried connecting yet)
 }
 
-#include "folderdiaquotatab.moc"
+#include "folderdialogquotatab.moc"

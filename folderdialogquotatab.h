@@ -1,5 +1,6 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdiaquotatab.h
+ * folderdialogquotatab.h
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
@@ -28,39 +29,63 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
+#ifndef FOLDERDIALOGQUOTATAB_H
+#define FOLDERDIALOGQUOTATAB_H
 
-
-#ifndef FOLDERDIAQUOTA_P_H
-#define FOLDERDIAQUOTA_P_H
-
-
-#include <qlabel.h>
-#include <qprogressbar.h>
-#include <qwhatsthis.h>
-
+#include "kmfolderdialog.h"
+#include "kmfoldertype.h"
 #include "quotajobs.h"
 
 namespace KMail {
+  class QuotaWidget;
+}
+class QVBox;
+class QStackedWidget;
 
-class QuotaWidget : public QWidget {
+namespace KMail {
 
- Q_OBJECT
+class ImapAccountBase;
+
+/**
+ * "Quota" tab in the folder dialog
+ * Internal class, only used by KMFolderDialog
+ */
+class FolderDialogQuotaTab : public FolderDialogTab
+{
+  Q_OBJECT
+
 public:
-    QuotaWidget( QWidget* parent, const char* name = 0 );
-    virtual ~QuotaWidget() { }
-    void setQuotaInfo( const KMail::QuotaInfo& info );
+  FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
+
+  virtual void load();
+  virtual bool save();
+  virtual AcceptStatus accept();
+
+  static bool supports( KMFolder* refFolder );
 
 private:
-    void readConfig();
+  void initializeWithValuesFromFolder( KMFolder* folder );
+  void showQuotaWidget();
+private slots:
+  // Network (KIO) slots
+  void slotConnectionResult( int, const QString& );
+  void slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& );
+
 
 private:
-    QLabel* mInfoLabel;
-    QLabel* mRootLabel;
-    QProgressBar* mProgressBar;
-    QString mUnits;
-    int mFactor;
+
+  QLabel* mLabel;
+  KMail::QuotaWidget* mQuotaWidget;
+  QStackedWidget* mStack;
+  ImapAccountBase* mImapAccount;
+  QString mImapPath;
+  KMFolderDialog* mDlg;
+
+  QuotaInfo mQuotaInfo;
+  KMFolderType mFolderType;
 };
 
-}//end of namespace KMail
+} // end of namespace KMail
 
-#endif /* FOLDERDIAQUOTA_H */
+#endif /* FOLDERDIALOGQUOTATAB_H */
+

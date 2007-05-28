@@ -1,5 +1,5 @@
 /**
- * folderdiaquotatab.cpp
+ * folderdialogquotatab_p.cpp
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
@@ -29,7 +29,7 @@
  *  your version.
  */
 
-#include "folderdiaquotatab_p.h"
+#include "folderdialogquotatab_p.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -109,4 +109,4 @@ void QuotaWidget::readConfig()
 }
 
 
-#include "folderdiaquotatab_p.moc"
+#include "folderdialogquotatab_p.moc"

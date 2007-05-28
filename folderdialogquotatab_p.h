@@ -1,6 +1,5 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
 /**
- * folderdiaquotatab.h
+ * folderdialogquotatab_p.h
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
@@ -29,63 +28,39 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef FOLDERDIAQUOTA_H
-#define FOLDERDIAQUOTA_H
 
-#include "kmfolderdia.h"
-#include "kmfoldertype.h"
+
+#ifndef FOLDERDIALOGQUOTATAB_P_H
+#define FOLDERDIALOGQUOTATAB_P_H
+
+
+#include <qlabel.h>
+#include <qprogressbar.h>
+#include <qwhatsthis.h>
+
 #include "quotajobs.h"
 
 namespace KMail {
-  class QuotaWidget;
-}
-class QVBox;
-class QStackedWidget;
 
-namespace KMail {
+class QuotaWidget : public QWidget {
 
-class ImapAccountBase;
-
-/**
- * "Quota" tab in the folder dialog
- * Internal class, only used by KMFolderDialog
- */
-class FolderDiaQuotaTab : public FolderDiaTab
-{
-  Q_OBJECT
-
+ Q_OBJECT
 public:
-  FolderDiaQuotaTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
-
-  virtual void load();
-  virtual bool save();
-  virtual AcceptStatus accept();
-
-  static bool supports( KMFolder* refFolder );
+    QuotaWidget( QWidget* parent, const char* name = 0 );
+    virtual ~QuotaWidget() { }
+    void setQuotaInfo( const KMail::QuotaInfo& info );
 
 private:
-  void initializeWithValuesFromFolder( KMFolder* folder );
-  void showQuotaWidget();
-private slots:
-  // Network (KIO) slots
-  void slotConnectionResult( int, const QString& );
-  void slotReceivedQuotaInfo( KMFolder*, KIO::Job*, const KMail::QuotaInfo& );
-
+    void readConfig();
 
 private:
-
-  QLabel* mLabel;
-  KMail::QuotaWidget* mQuotaWidget;
-  QStackedWidget* mStack;
-  ImapAccountBase* mImapAccount;
-  QString mImapPath;
-  KMFolderDialog* mDlg;
-
-  QuotaInfo mQuotaInfo;
-  KMFolderType mFolderType;
+    QLabel* mInfoLabel;
+    QLabel* mRootLabel;
+    QProgressBar* mProgressBar;
+    QString mUnits;
+    int mFactor;
 };
 
-} // end of namespace KMail
+}//end of namespace KMail
 
-#endif /* FOLDERDIAQUOTA_H */
-
+#endif /* FOLDERDIALOGQUOTATAB_P_H */
