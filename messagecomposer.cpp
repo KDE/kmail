@@ -1593,7 +1593,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     mPerformingSignOperation = true;  // this lets the KMComposeWin know if it is safe to close the window.
     pgpSignedMsg( mEncodedBody, format );
     mPerformingSignOperation = false;
-    
+
     if ( mSignature.isEmpty() ) {
       kdDebug() << "signature was empty" << endl;
       mRc = false;
@@ -2049,6 +2049,7 @@ QCString MessageComposer::plainTextFromMarkup( const QString& markupText )
     kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
     textbody = text.local8Bit();
   } else {
+    text = codec->toUnicode( text.latin1(), text.length() );
     textbody = codec->fromUnicode( text );
   }
   if (textbody.isNull()) textbody = "";
