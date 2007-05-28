@@ -80,6 +80,8 @@ public:
   virtual QString indexLocation() const;
   virtual int writeIndex( bool createEmptyIndex = false );
 
+  void recreateIndex();
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex();
