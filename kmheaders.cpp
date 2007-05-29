@@ -2077,7 +2077,9 @@ void KMHeaders::highlightCurrentThread()
 void KMHeaders::resetCurrentTime()
 {
     mDate.reset();
-    QTimer::singleShot( 1000, this, SLOT( resetCurrentTime() ) );
+    // only reset exactly during minute switch
+    QTimer::singleShot( ( 60-QTime::currentTime().second() ) * 1000, 
+        this, SLOT( resetCurrentTime() ) );
 }
 
 //-----------------------------------------------------------------------------
