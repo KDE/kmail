@@ -1924,7 +1924,7 @@ KMCommand::Result KMCopyCommand::execute()
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
   {
     KMFolder *srcFolder = msgBase->parent();
-    if (isMessage = msgBase->isMessage())
+    if (( isMessage = msgBase->isMessage() ))
     {
       msg = static_cast<KMMessage*>(msgBase);
     } else {

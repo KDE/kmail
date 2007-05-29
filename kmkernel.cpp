@@ -1521,7 +1521,7 @@ void KMKernel::init()
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SIGNAL( folderRemoved(KMFolder*) ) );
 
-  mBackgroundTasksTimer = new QTimer( this );
+  mBackgroundTasksTimer = new QTimer( this, "mBackgroundTasksTimer" );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
   mBackgroundTasksTimer->start( 10000, true ); // 10s minute, singleshot

@@ -81,19 +81,19 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   mAccount = false;
   lastCommand = 0;
   lastJob = 0;
-  finishTimer = new QTimer( this );
+  finishTimer = new QTimer( this, "finishTimer" );
   connect( finishTimer, SIGNAL(timeout()), this, SLOT(finish()));
-  fetchMessageTimer = new QTimer( this );
+  fetchMessageTimer = new QTimer( this, "fetchMessageTimer" );
   connect( fetchMessageTimer, SIGNAL(timeout()), this, SLOT(fetchMessage()));
-  tempCloseFoldersTimer = new QTimer( this );
+  tempCloseFoldersTimer = new QTimer( this, "tempCloseFoldersTimer" );
   connect( tempCloseFoldersTimer, SIGNAL(timeout()), this, SLOT(tempCloseFolders()));
-  processMessageTimer = new QTimer( this );
+  processMessageTimer = new QTimer( this, "processMessageTimer" );
   connect( processMessageTimer, SIGNAL(timeout()), this, SLOT(processMessage()));
-  filterMessageTimer = new QTimer( this );
+  filterMessageTimer = new QTimer( this, "filterMessageTimer" );
   connect( filterMessageTimer, SIGNAL(timeout()), this, SLOT(filterMessage()));
-  timeOutTimer = new QTimer( this );
+  timeOutTimer = new QTimer( this, "timeOutTimer" );
   connect( timeOutTimer, SIGNAL(timeout()), this, SLOT(timeOut()));
-  fetchTimeOutTimer = new QTimer( this );
+  fetchTimeOutTimer = new QTimer( this, "fetchTimeOutTimer" );
   connect( fetchTimeOutTimer, SIGNAL(timeout()), this, SLOT(fetchTimeOut()));
 
   QValueList<KMFilter*>::Iterator it = filters.begin();

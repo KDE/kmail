@@ -81,6 +81,8 @@ namespace KMail {
 
   ImapAccountBase::ImapAccountBase( AccountManager * parent, const QString & name, uint id )
     : NetworkAccount( parent, name, id ),
+      mIdleTimer( 0, "mIdleTimer" ),
+      mNoopTimer( 0, "mNoopTimer" ),
       mTotal( 0 ),
       mCountUnread( 0 ),
       mCountLastUnread( 0 ),

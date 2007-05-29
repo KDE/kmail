@@ -49,7 +49,7 @@ namespace KMail {
   KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
 					    QObject * parent, const char * name )
     : QObject( parent, name ), HtmlWriter(),
-      mHtmlPart( part ), mState( Ended )
+      mHtmlPart( part ), mState( Ended ), mHtmlTimer( 0, "mHtmlTimer" )
   {
     assert( part );
     connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );

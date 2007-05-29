@@ -57,7 +57,8 @@ using KPIM::ProgressManager;
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMail::ImapAccountBase(aOwner, aAccountName, id),
-  mCountRemainChecks( 0 )
+  mCountRemainChecks( 0 ),
+  mErrorTimer( 0, "mErrorTimer" )
 {
   mFolder = 0;
   mScheduler = 0;

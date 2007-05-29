@@ -40,7 +40,7 @@ GlobalSettings *GlobalSettings::self()
 
 GlobalSettings::GlobalSettings()
 {
-  mConfigSyncTimer = new QTimer( this );
+  mConfigSyncTimer = new QTimer( this, "mConfigSyncTimer" );
   connect( mConfigSyncTimer, SIGNAL( timeout() ), this, SLOT( slotSyncNow() ) );
 }
 

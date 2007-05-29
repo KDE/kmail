@@ -509,7 +509,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    mSavedRelativePosition( 0 )
+    mSavedRelativePosition( 0 ),
+    updateReaderWinTimer( 0, "updateReaderWinTimer" ),
+    mResizeTimer( 0, "mResizeTimer" ),
+    mDelayedMarkTimer( 0, "mDelayedMarkTimer" )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;

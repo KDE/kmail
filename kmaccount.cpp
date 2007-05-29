@@ -324,7 +324,7 @@ void KMAccount::installTimer()
   if (mInterval <= 0) return;
   if(!mTimer)
   {
-    mTimer = new QTimer();
+    mTimer = new QTimer(0, "mTimer");
     connect(mTimer,SIGNAL(timeout()),SLOT(mailCheck()));
   }
   else

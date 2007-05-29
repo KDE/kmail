@@ -51,7 +51,7 @@ using namespace KMail;
 #define COMPACTIONJOB_TIMERINTERVAL 100
 
 MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
- : ScheduledJob( folder, immediate ), mTimer( this ), mTmpFile( 0 ),
+ : ScheduledJob( folder, immediate ), mTimer( this, "mTimer" ), mTmpFile( 0 ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
 }
@@ -194,7 +194,7 @@ void MboxCompactionJob::done( int rc )
 ////
 
 MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
- : ScheduledJob( folder, immediate ), mTimer( this ),
+ : ScheduledJob( folder, immediate ), mTimer( this, "mTimer" ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
 }
