@@ -75,12 +75,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
 
-  for( KURL::List::ConstIterator itr = attachments.begin();
-       itr != attachments.end(); ++itr ) {
-    cWin->addAttachment( *itr, "" );
-  }
-
-  cWin->send( 1 );//send now
+  cWin->addAttachmentsAndSend(attachments, "", 1);//send now
   return true;
 }
 
