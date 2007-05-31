@@ -85,7 +85,7 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	mIndex( 0 ),
 #endif
 	mIndexPath( QFile::encodeName( defaultPath() ) ),
-	mTimer( new QTimer( this ) ),
+	mTimer( new QTimer( this, "mTimer" ) ),
 	//mSyncState( ss_none ),
 	//mSyncTimer( new QTimer( this ) ),
 	mSlowDown( false ) {
@@ -532,7 +532,7 @@ bool KMMsgIndex::creating() const {
 
 KMMsgIndex::Search::Search( KMSearch* s ):
 	mSearch( s ),
-	mTimer( new QTimer( this ) ),
+	mTimer( new QTimer( this, "mTimer" ) ),
 	mResidual( new KMSearchPattern ),
 	mState( s_starting ) {
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );

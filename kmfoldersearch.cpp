@@ -80,7 +80,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     mFoundCount = 0;
     mSearchCount = 0;
 
-    mProcessNextBatchTimer = new QTimer();
+    mProcessNextBatchTimer = new QTimer(0, "mProcessNextBatchTimer");
     connect(mProcessNextBatchTimer, SIGNAL(timeout()), this, SLOT(slotProcessNextBatch()));
 }
 
@@ -367,7 +367,7 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
     connect(kmkernel->dimapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
             this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
-  mExecuteSearchTimer = new QTimer();
+  mExecuteSearchTimer = new QTimer(0, "mExecuteSearchTimer");
   connect(mExecuteSearchTimer, SIGNAL(timeout()),
           this, SLOT(executeSearch()));
 }

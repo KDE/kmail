@@ -862,7 +862,7 @@ class KDE_EXPORT KMMailingListCommand : public KMCommand
 {
   Q_OBJECT
 public:
-  KMMailingListCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListCommand( QWidget *parent, KMFolder *folder );
 private:
   virtual Result execute();
 private slots:
@@ -877,7 +877,7 @@ class KDE_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListPostCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListPostCommand( QWidget *parent, KMFolder *folder );
 protected:
   virtual KURL::List urls() const;
 };
@@ -886,7 +886,7 @@ class KDE_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListSubscribeCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListSubscribeCommand( QWidget *parent, KMFolder *folder );
 protected:
   virtual KURL::List urls() const;
 };
@@ -895,7 +895,7 @@ class KDE_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *folder );
 protected:
   virtual KURL::List urls() const;
 };
@@ -904,7 +904,7 @@ class KDE_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListArchivesCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListArchivesCommand( QWidget *parent, KMFolder *folder );
 protected:
   virtual KURL::List urls() const;
 };
@@ -913,7 +913,7 @@ class KDE_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListHelpCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListHelpCommand( QWidget *parent, KMFolder *folder );
 protected:
   virtual KURL::List urls() const;
 };

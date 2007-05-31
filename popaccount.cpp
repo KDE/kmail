@@ -55,7 +55,8 @@ namespace KMail {
 //-----------------------------------------------------------------------------
 PopAccount::PopAccount(AccountManager* aOwner, const QString& aAccountName, uint id)
   : NetworkAccount(aOwner, aAccountName, id),
-    headerIt(headersOnServer)
+    headerIt(headersOnServer),
+    processMsgsTimer( 0, "processMsgsTimer" )
 {
   init();
   job = 0;

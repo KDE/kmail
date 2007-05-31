@@ -35,7 +35,7 @@
 using namespace KMail;
 
 JobScheduler::JobScheduler( QObject* parent, const char* name )
-  : QObject( parent, name ), mTimer( this ),
+  : QObject( parent, name ), mTimer( this, "mTimer" ),
     mPendingImmediateTasks( 0 ),
     mCurrentTask( 0 ), mCurrentJob( 0 )
 {

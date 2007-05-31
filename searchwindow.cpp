@@ -117,7 +117,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mSortColumn(0),
   mSortOrder(Ascending),
   mFolder(0),
-  mTimer(new QTimer(this)),
+  mTimer(new QTimer(this, "mTimer")),
   mLastFocus(0),
   mKMMainWidget(w)
 {

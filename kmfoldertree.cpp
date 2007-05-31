@@ -331,6 +331,8 @@ void KMFolderTreeItem::assignShortcut()
 KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
                             const char *name )
   : KFolderTree( parent, name )
+  , mUpdateTimer( 0, "mUpdateTimer" )
+  , autoopen_timer( 0, "autoopen_timer" )
 {
   oldSelected = 0;
   oldCurrent = 0;
@@ -339,7 +341,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mReloading = false;
   mCutFolder = false;
 
-  mUpdateCountTimer= new QTimer( this );
+  mUpdateCountTimer= new QTimer( this, "mUpdateCountTimer" );
 
   setDragEnabled( true );
   addAcceptableDropMimetype(MailListDrag::format(), false);

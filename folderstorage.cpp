@@ -79,7 +79,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mNoContent      = false;
   mNoChildren     = false;
   mRDict = 0;
-  mDirtyTimer = new QTimer(this);
+  mDirtyTimer = new QTimer(this, "mDirtyTimer");
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
 
@@ -209,7 +209,7 @@ void FolderStorage::quiet(bool beQuiet)
      * a timer is created when a folder is checked
      */
     if ( !mEmitChangedTimer) {
-      mEmitChangedTimer= new QTimer( this );
+      mEmitChangedTimer= new QTimer( this, "mEmitChangedTimer" );
       connect( mEmitChangedTimer, SIGNAL( timeout() ),
       this, SLOT( slotEmitChangedTimer() ) );
     }

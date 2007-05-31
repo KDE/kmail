@@ -4677,7 +4677,7 @@ void KMComposeWin::updateAutoSave()
   }
   else {
     if ( !mAutoSaveTimer ) {
-      mAutoSaveTimer = new QTimer( this );
+      mAutoSaveTimer = new QTimer( this, "mAutoSaveTimer" );
       connect( mAutoSaveTimer, SIGNAL( timeout() ),
                this, SLOT( autoSaveMessage() ) );
     }
