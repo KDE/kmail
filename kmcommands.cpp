@@ -132,11 +132,31 @@ using namespace KMime;
 
 #include <memory>
 
+// inotify stuff taken from kdelibs/kio/kio/kdirwatch.cpp
 #ifdef HAVE_INOTIFY
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/inotify.h>
-#include <sys/ioctl.h>
+#include <sys/syscall.h>
+#include <linux/types.h>
+// Linux kernel headers are documented to not compile
+#define _S390_BITOPS_H
+#include <linux/inotify.h>
+
+static inline int inotify_init (void)
+{
+  return syscall (__NR_inotify_init);
+}
+
+static inline int inotify_add_watch (int fd, const char *name, __u32 mask)
+{
+  return syscall (__NR_inotify_add_watch, fd, name, mask);
+}
+
+static inline int inotify_rm_watch (int fd, __u32 wd)
+{
+  return syscall (__NR_inotify_rm_watch, fd, wd);
+}
 #endif
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
