@@ -333,6 +333,14 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
     kmkernel->acctMgr()->singleCheckMail(acct, false);
 }
 
+void KMKernel::loadProfile( const QString& )
+{
+}
+
+void KMKernel::saveToProfile( const QString& ) const
+{
+}
+
 void KMKernel::openReader( bool onlyCheck )
 {
   mWin = 0;

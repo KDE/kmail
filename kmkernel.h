@@ -386,6 +386,9 @@ public:
 
   void raise();
 
+  void loadProfile( const QString& path );
+
+  void saveToProfile( const QString& path ) const;
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter

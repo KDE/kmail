@@ -211,6 +211,9 @@ k_dcop_hidden:
   /** Clears the list of added message ids which is used to filter out
       duplicates. */
   virtual void dcopResetAddMessage() = 0;
+  
+  virtual void loadProfile( const QString& path ) = 0;
+  virtual void saveToProfile( const QString& path ) const = 0;
 };
 
 #endif
