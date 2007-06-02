@@ -23,8 +23,8 @@ SupportsUnsure=0
 ScoreName=Spamassassin
 ScoreHeader=X-Spam-Status
 ScoreType=Adjusted
-ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
-ScoreThresholdRegexp=required=([\d\.-]+)\s
+ScoreValueRegexp=(?:hits|score)=([\d\.-]+)[^\d\.]
+ScoreThresholdRegexp=required=([\d\.-]+)[^\d\.]
 
 [Spamtool #2]
 Ident=bogofilter
@@ -148,8 +148,8 @@ SupportsUnsure=0
 ScoreName=Spamassassin
 ScoreHeader=X-Spam-Status
 ScoreType=Adjusted
-ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
-ScoreThresholdRegexp=required=([\d\.-]+)\s
+ScoreValueRegexp=(?:hits|score)=([\d\.-]+)[^\d\.]
+ScoreThresholdRegexp=required=([\d\.-]+)[^\d\.]
 
 [Spamtool #8]
 Ident=spamassassin
@@ -173,8 +173,8 @@ SupportsUnsure=0
 ScoreName=Spamassassin
 ScoreHeader=X-Spam-Status
 ScoreType=Adjusted
-ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
-ScoreThresholdRegexp=required=([\d\.-]+)\s
+ScoreValueRegexp=(?:hits|score)=([\d\.-]+)[^\d\.]
+ScoreThresholdRegexp=required=([\d\.-]+)[^\d\.]
 
 [Spamtool #9]
 Ident=bsfilter
