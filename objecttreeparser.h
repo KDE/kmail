@@ -40,7 +40,6 @@
 class KMReaderWin;
 class KMMessagePart;
 class QString;
-class QWidget;
 class partNode;
 
 namespace KMail {

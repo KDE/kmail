@@ -38,21 +38,15 @@ using KPIM::MessageStatus;
 class QSplitter;
 class KHBox;
 class Q3ListViewItem;
-class QScrollBar;
 class QString;
-class Q3TabDialog;
 class QTextCodec;
 
-class DwHeaders;
-class DwMediaType;
 
 class KActionCollection;
 class KAction;
-class KActionMenu;
 class KSelectAction;
 class KToggleAction;
 class KToggleAction;
-class KConfigBase;
 class KHTMLPart;
 class KUrl;
 
@@ -63,16 +57,13 @@ namespace KMail {
   namespace Interface {
     class Observable;
   }
-  class PartMetaData;
   class ObjectTreeParser;
   class AttachmentStrategy;
   class HeaderStrategy;
   class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
-  class ISubject;
   class HtmlStatusBar;
-  class FolderJob;
   class CSSHelper;
 }
 

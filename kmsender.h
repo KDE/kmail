@@ -35,9 +35,6 @@
 
 class KMMessage;
 class KMFolder;
-class KMFolderMgr;
-class KConfig;
-class K3Process;
 class KJob;
 
 namespace KPIM {

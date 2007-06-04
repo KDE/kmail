@@ -40,7 +40,6 @@
 
 class QDropEvent;
 class QPixmap;
-class QPainter;
 class QMenu;
 class KMenu;
 class KMFolder;

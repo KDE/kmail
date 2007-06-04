@@ -34,12 +34,9 @@ class QLabel;
 class QCheckBox;
 class KUrlRequester;
 class KFontChooser;
-class QRadioButton;
 class ColorListBox;
 class QFont;
-class Q3ListViewItem;
 class QTabWidget;
-class Q3ListBox;
 class Q3ButtonGroup;
 class QRegExpValidator;
 class KVBox;
@@ -67,8 +64,7 @@ namespace KMail {
 namespace Kleo {
   class BackendConfigWidget;
   class CryptoConfig;
-  class CryptoConfigEntry;
-}
+  }
 
 class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
 {

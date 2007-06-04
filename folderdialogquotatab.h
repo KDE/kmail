@@ -39,7 +39,6 @@
 namespace KMail {
   class QuotaWidget;
 }
-class QVBox;
 class QStackedWidget;
 
 namespace KMail {

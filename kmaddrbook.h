@@ -25,7 +25,6 @@
 #include <kdeversion.h>
 #include <kabc/addressee.h>
 
-class QWidget;
 
 class KabcBridge {
 public:

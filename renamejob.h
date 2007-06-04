@@ -33,7 +33,6 @@
 class FolderStorage;
 class KMFolderDir;
 class KMFolder;
-class KMCommand;
 
 namespace KIO {
   class Job;

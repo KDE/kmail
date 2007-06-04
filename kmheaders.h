@@ -31,10 +31,8 @@ class KMMsgBase;
 class KMCommand;
 class KMMainWidget;
 class KMenu;
-class QPalette;
 class QPixmap;
 class QIcon;
-class QDateTime;
 
 typedef QList<KMMsgBase*> KMMessageList;
 typedef QList<quint32> SerNumList;

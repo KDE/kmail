@@ -15,13 +15,10 @@ using KPIM::MessageStatus;
 
 #include <QMenu>
 
-class KMainWindow;
-class KAction;
 class KProgressDialog;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;
-class KMFolderNode;
 class KMHeaders;
 class KMMainWidget;
 class KMMessage;

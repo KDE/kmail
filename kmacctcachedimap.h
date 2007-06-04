@@ -41,8 +41,7 @@ class KMFolderCachedImap;
 class KMFolderTreeItem;
 class KMFolder;
 namespace KMail {
-  class FolderJob;
-  class ImapJob;
+    class ImapJob;
   class CachedImapJob;
 }
 using KMail::ImapJob;

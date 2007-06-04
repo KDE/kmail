@@ -39,7 +39,6 @@
 
 template< typename T> class QList;
 
-class KMFolderTreeItem;
 class KMFolderImap;
 class KMSearchPattern;
 class KMMessage;

@@ -30,16 +30,7 @@
 class KMMessage;
 class KMFolder;
 class KMMessagePart;
-class Q3ListViewItem;
 class MailComposerIface;
-
-namespace KIO {
-  class Job;
-}
-
-namespace GpgME {
-  class Error;
-}
 
 namespace KMail {
 

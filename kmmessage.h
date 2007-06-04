@@ -30,11 +30,9 @@ class QString;
 class QTextCodec;
 
 class KMFolder;
-class KMFolderIndex;
 class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
-class KMHeaders;
 class KMForwardCommand;
 
 namespace KMime {

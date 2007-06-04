@@ -12,7 +12,6 @@ class KMMessage;
 class KMMessagePart;
 class KAction;
 class KActionMenu;
-class KMFolderIndex;
 class KMFolder;
 template <typename T, typename S> class QMap;
 

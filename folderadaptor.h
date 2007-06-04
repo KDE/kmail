@@ -34,7 +34,6 @@
 #include <QObject>
 
 class KMFolder;
-class KMMainWidget;
 
 namespace KMail {
 

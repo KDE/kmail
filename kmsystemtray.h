@@ -32,7 +32,6 @@
 #include <time.h>
 
 class KMFolder;
-class KMMainWidget;
 class QMouseEvent;
 class KMenu;
 class QPoint;

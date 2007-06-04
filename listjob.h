@@ -31,10 +31,6 @@
 #include "folderjob.h"
 #include "imapaccountbase.h"
 
-class KMFolderImap;
-class KMFolderCachedImap;
-class KMAcctImap;
-class KMAcctCachedImap;
 class FolderStorage;
 class KUrl;
 class KJob; 

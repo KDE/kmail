@@ -47,9 +47,7 @@ typedef QList<KMAccount*> AccountList;
 
 class KMMessage;
 class KMFolderDir;
-class QTimer;
 class FolderStorage;
-class KMFolderTreeItem;
 class KMFolderJob;
 
 namespace KMail {

@@ -42,7 +42,6 @@
 
 class KMAcctImap;
 class KMMessage;
-class KMFolderTreeItem;
 class KMFolderImap;
 namespace KPIM {
   class ProgressItem;

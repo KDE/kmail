@@ -40,7 +40,6 @@
 #define FOLDERSHORTCUTDIALOG_H
 
 #include <kdialog.h> // include for the base class
-class KShortcut;
 class KMFolder;
 class KKeySequenceWidget;
 class KMMainWidget;

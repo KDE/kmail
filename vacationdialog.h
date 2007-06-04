@@ -23,7 +23,6 @@ class QString;
 class QCheckBox;
 class QLineEdit;
 class QTextEdit;
-class KDateWidget;
 class KIntSpinBox;
 template <typename T> class QList;
 

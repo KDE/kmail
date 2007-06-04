@@ -25,7 +25,6 @@
 //Added by qt3to4:
 #include <QEvent>
 
-class QWindow;
 
 class KWindowPositioner : public QObject
 {

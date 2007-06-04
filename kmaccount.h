@@ -35,7 +35,6 @@ class QTimer;
 
 class KMFolder;
 class KMAcctFolder;
-class KMFolderJob;
 class KMFolderCachedImap;
 class AccountsPageReceivingTab;
 

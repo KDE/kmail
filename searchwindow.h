@@ -35,7 +35,6 @@
 #include <QList>
 
 class QCheckBox;
-class QComboBox;
 class QGridLayout;
 class QLabel;
 class QLineEdit;
@@ -47,14 +46,11 @@ class KAction;
 class KActionMenu;
 class KMFolder;
 class KMFolderSearch;
-class KMFolderImap;
-class KMFolderMgr;
 class KMMainWidget;
 class KMMessage;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
-class DwBoyerMoore;
 namespace KMail {
   class FolderRequester;
 }

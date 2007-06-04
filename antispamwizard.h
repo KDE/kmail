@@ -43,7 +43,6 @@
 #include <QListWidget>
 #include <QBoxLayout>
 
-class KActionCollection;
 class KMFolder;
 class KMFolderTree;
 class QLabel;

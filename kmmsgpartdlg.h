@@ -26,7 +26,6 @@
 #include <QLabel>
 
 class KMMessagePart;
-class QPushButton;
 class KComboBox;
 class QComboBox;
 class QCheckBox;

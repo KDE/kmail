@@ -36,8 +36,6 @@
 #include <ksubscription.h>
 #include "imapaccountbase.h"
 
-class KMMessage;
-class FolderStorage;
 
 namespace KMail {
 

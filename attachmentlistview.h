@@ -22,7 +22,6 @@
 class QDragEnterEvent;
 class QDragMoveEvent;
 class QDropEvent;
-class KMComposeWin;
 
 namespace KMail {
 

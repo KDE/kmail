@@ -51,7 +51,6 @@
 class KMFolder;
 class KMMessage;
 class KMFolderDir;
-class KMFolderTreeItem;
 
 namespace KMail {
 

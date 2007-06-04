@@ -27,7 +27,6 @@
 #include <QList>
 
 class KMFolderImap;
-class KMFolderTreeItem;
 namespace KMail {
   class ImapJob;
   class ActionScheduler;

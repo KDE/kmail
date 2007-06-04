@@ -22,8 +22,6 @@
 
 #include <q3listview.h>
 
-class KMComposeWin;
-class MessageComposer;
 class QCheckBox;
 
 class KMAtmListViewItem : public QObject, public Q3ListViewItem

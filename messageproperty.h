@@ -37,7 +37,6 @@
 #include <QObject>
 
 class KMFilter;
-class KMFilterDlg;
 
 namespace KMail {
 

@@ -30,7 +30,6 @@ struct CustomTemplateItem;
 typedef Q3Dict<CustomTemplateItem> CustomTemplateItemList;
 class KShortcut;
 class Q3ListViewItem;
-class KKeySequenceWidget;
 
 class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 {

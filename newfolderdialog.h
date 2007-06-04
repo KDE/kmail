@@ -40,7 +40,6 @@
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
-class QSpacerItem;
 class QLabel;
 class QLineEdit;
 class QComboBox;

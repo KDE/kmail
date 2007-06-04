@@ -63,16 +63,11 @@ namespace KPIM {
   class IdentityManager;
 }
 class KMKernel;
-class K3Process;
-class KProgressDialog;
 class KComponentData;
 class QTimer;
-class KProgress;
-class KPassivePopup;
 class KMMainWin;
 class KMainWindow;
 class KMailICalIfaceImpl;
-class KMReaderWin;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;

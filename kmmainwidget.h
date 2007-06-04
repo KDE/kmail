@@ -44,22 +44,17 @@ class QSignalMapper;
 class QToolBar;
 
 class KActionMenu;
-class KSeparatorAction;
 class KConfig;
 class KToggleAction;
 class KToggleAction;
-class KMenuBar;
 
 class KMFolder;
-class KMFolderDir;
 class KMFolderTree;
 class KMFolderTreeItem;
-class KMCommand;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
-class KMAccount;
 class KMSystemTray;
 class KMHeaders;
 

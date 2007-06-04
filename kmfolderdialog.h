@@ -40,16 +40,10 @@
 #include <QList>
 
 class QCheckBox;
-class QPushButton;
-class QLineEdit;
-class Q3ListBox;
 class QComboBox;
 class KMFolder;
-class KMFolderTreeItem;
 class KMFolderDir;
-class KIntNumInput;
 class KIconButton;
-class KEditListBox;
 namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
@@ -59,7 +53,6 @@ class TemplatesConfiguration;
 class KPushButton;
 
 namespace KMail {
-  class FolderRequester;
 /**
  * This is the base class for tabs in the folder dialog.
  * It uses the API from ConfigModuleTab (basically: it's a widget that can load and save)

@@ -26,10 +26,7 @@
 
 #include <kdialog.h>
 
-class QDropEvent;
-class QPushButton;
 class QCheckBox;
-class QRadioButton;
 class QTextStream;
 class KHistoryComboBox;
 class KIntNumInput;
