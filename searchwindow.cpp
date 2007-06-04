@@ -57,7 +57,6 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <Q3PopupMenu>
-#include <q3buttongroup.h>
 #include <QComboBox>
 #include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <QCursor>
@@ -151,21 +150,19 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   vbl->setSpacing( spacingHint() );
   vbl->setMargin( 0 );
 
-  Q3ButtonGroup * radioGroup = new Q3ButtonGroup( searchWidget );
-  radioGroup->hide();
+  QGroupBox * radioGroup = new QGroupBox( searchWidget );
 
-  mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget);
+  mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), radioGroup );
   vbl->addWidget( mChkbxAllFolders );
-  radioGroup->insert( mChkbxAllFolders );
 
   QHBoxLayout *hbl = new QHBoxLayout();
   vbl->addLayout( hbl );
   hbl->setObjectName( "kmfs_hbl" );
   hbl->setSpacing( spacingHint() );
-  mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget);
+
+  mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), radioGroup );
   hbl->addWidget(mChkbxSpecificFolders);
   mChkbxSpecificFolders->setChecked(true);
-  radioGroup->insert( mChkbxSpecificFolders );
 
   mCbxFolders = new FolderRequester( searchWidget,
       kmkernel->getKMMainWidget()->folderTree() );

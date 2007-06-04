@@ -32,13 +32,15 @@
 class QPushButton;
 class QLabel;
 class QCheckBox;
-class KUrlRequester;
-class KFontChooser;
 class ColorListBox;
 class QFont;
 class QTabWidget;
-class Q3ButtonGroup;
 class QRegExpValidator;
+class QPoint;
+
+class KButtonGroup;
+class KUrlRequester;
+class KFontChooser;
 class KVBox;
 class KMAccount;
 class ListView;
@@ -46,7 +48,6 @@ class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
 class KConfig;
-class QPoint;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
@@ -112,7 +113,7 @@ protected slots:
 private:
   QLineEdit  *mLineEdit;
   QComboBox  *mComboBox;
-  Q3ButtonGroup *mButtonGroup;
+  KButtonGroup *mButtonGroup;
 };
 
 
@@ -510,8 +511,8 @@ private: // data
   QCheckBox    *mAttachmentCheck;
   QCheckBox    *mNestedMessagesCheck;
   QCheckBox    *mCryptoIconsCheck;
-  Q3ButtonGroup *mNestingPolicy;
-  Q3ButtonGroup *mDateDisplay;
+  KButtonGroup *mNestingPolicy;
+  KButtonGroup *mDateDisplay;
   QLineEdit    *mCustomDateFormatEdit;
 };
 
@@ -559,7 +560,7 @@ private:
 
 private: // data
   QCheckBox    *mSystemTrayCheck;
-  Q3ButtonGroup *mSystemTrayGroup;
+  KButtonGroup *mSystemTrayGroup;
 };
 
 class KDE_EXPORT AppearancePage : public ConfigModuleWithTabs {
@@ -828,8 +829,8 @@ private:
   QCheckBox    *mExternalReferences;
   QCheckBox    *mHtmlMailCheck;
   QCheckBox    *mNoMDNsWhenEncryptedCheck;
-  Q3ButtonGroup *mMDNGroup;
-  Q3ButtonGroup *mOrigQuoteGroup;
+  QButtonGroup *mMDNGroup;
+  QButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
   QString       mHtmlWhatsThis;
   QString       mExternalWhatsThis;

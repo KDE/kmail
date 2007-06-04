@@ -23,7 +23,7 @@
         <number>6</number>
       </property>
       <item>
-        <widget class="Q3ButtonGroup" name="encryptMessagesBG" >
+        <widget class="KButtonGroup" name="encryptMessagesBG" >
           <property name="title" >
             <string>Encryption</string>
           </property>
@@ -165,7 +165,7 @@ This setting is a default, you can override it for each individual message.
         </widget>
       </item>
       <item>
-        <widget class="Q3ButtonGroup" name="certBG" >
+        <widget class="KButtonGroup" name="certBG" >
           <property name="title" >
             <string>Certificates</string>
           </property>
@@ -174,7 +174,7 @@ This setting is a default, you can override it for each individual message.
               <number>0</number>
             </property>
             <item>
-              <widget class="Q3ButtonGroup" name="certificatePathCheckBG" >
+              <widget class="KButtonGroup" name="certificatePathCheckBG" >
                 <property name="title" >
                   <string/>
                 </property>
@@ -260,7 +260,7 @@ Note that it is not possible to turn off checking the receiver's certificate its
               </widget>
             </item>
             <item>
-              <widget class="Q3ButtonGroup" name="crlBG" >
+              <widget class="KButtonGroup" name="crlBG" >
                 <property name="title" >
                   <string/>
                 </property>

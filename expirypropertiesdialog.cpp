@@ -43,108 +43,83 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
 
   QWidget* privateLayoutWidget = new QWidget;
-  privateLayoutWidget->setObjectName( "globalVBox" );
+  privateLayoutWidget->setObjectName( "privateLayoutWidget" );
   setMainWidget( privateLayoutWidget );
-  globalVBox = new QVBoxLayout;
-  globalVBox->setMargin( 11 );
-  globalVBox->setObjectName( "globalVBox" );
-  globalVBox->setSpacing( 20 );
-  privateLayoutWidget->setLayout(globalVBox);
 
-  readHBox = new QHBoxLayout();
-  readHBox->setMargin( 0 );
-  readHBox->setSpacing( 6 );
-  readHBox->setObjectName( "readHBox" );
+  QVBoxLayout *globalVBox = new QVBoxLayout;
+  globalVBox->setMargin( marginHint() );
+  globalVBox->setObjectName( "globalVBox" );
+  globalVBox->setSpacing( spacingHint() );
+  privateLayoutWidget->setLayout( globalVBox );
+
+  QGridLayout *daysBox = new QGridLayout;
 
   expireReadMailCB = new QCheckBox;
   expireReadMailCB->setObjectName( "expireReadMailCB" );
-  expireReadMailCB->setText( i18n( "Expire read mails after" ) );
+  expireReadMailCB->setText( i18n( "Expire read messages after" ) );
   connect( expireReadMailCB, SIGNAL( toggled( bool )),
            this, SLOT( slotUpdateControls() ) );
-  readHBox->addWidget( expireReadMailCB );
+  daysBox->addWidget( expireReadMailCB, 0, 0, Qt::AlignLeft );
 
   expireReadMailSB = new QSpinBox;
   expireReadMailSB->setObjectName( "expireReadMailSB" );
   expireReadMailSB->setMaximum( 999999 );
   expireReadMailSB->setValue( 30 );
-  readHBox->addWidget( expireReadMailSB );
+  daysBox->addWidget( expireReadMailSB, 0, 1 );
 
-  labelDays = new QLabel;
+  QLabel *labelDays = new QLabel;
   labelDays->setObjectName( "labelDays" );
-  labelDays->setText( i18n( "days" ) );
-  readHBox->addWidget( labelDays );
-  globalVBox->addLayout( readHBox );
-
-  unreadHBox = new QHBoxLayout();
-  unreadHBox->setMargin( 0 );
-  unreadHBox->setSpacing( 6 );
-  unreadHBox->setObjectName( "unreadHBox" );
+  labelDays->setText( i18n("days") );
+  daysBox->addWidget( labelDays, 0, 2, Qt::AlignLeft );
 
   expireUnreadMailCB = new QCheckBox;
   expireUnreadMailCB->setObjectName( "expireUnreadMailCB" );
-  expireUnreadMailCB->setText( i18n( "Expire unread mails after" ) );
+  expireUnreadMailCB->setText( i18n( "Expire unread messages after" ) );
   connect( expireUnreadMailCB, SIGNAL( toggled( bool )),
            this, SLOT( slotUpdateControls() ) );
-  unreadHBox->addWidget( expireUnreadMailCB );
+  daysBox->addWidget( expireUnreadMailCB, 1, 0, Qt::AlignLeft );
 
   expireUnreadMailSB = new QSpinBox;
   expireUnreadMailSB->setObjectName( "expireUnreadMailSB" );
   expireUnreadMailSB->setMaximum( 99999 );
   expireUnreadMailSB->setValue( 30 );
-  unreadHBox->addWidget( expireUnreadMailSB );
+  daysBox->addWidget( expireUnreadMailSB, 1, 1 );
 
-  labelDays2 = new QLabel;
+  QLabel *labelDays2 = new QLabel;
   labelDays2->setObjectName( "labelDays2" );
-  labelDays2->setText( i18n( "days" ) );
-  labelDays2->setAlignment( Qt::AlignTop );
-  unreadHBox->addWidget( labelDays2 );
-  globalVBox->addLayout( unreadHBox );
+  labelDays2->setText( i18n("days") );
+  daysBox->addWidget( labelDays2, 1, 2, Qt::AlignLeft );
+  daysBox->setColumnStretch( 3, 1 );
+  globalVBox->addLayout( daysBox );
 
-  expiryActionHBox = new QHBoxLayout();
-  expiryActionHBox->setMargin( 0 );
-  expiryActionHBox->setSpacing( 6 );
-  expiryActionHBox->setObjectName( "expiryActionHBox" );
+  globalVBox->addSpacing( 30 );
 
-  expiryActionLabel = new QLabel;
-  expiryActionLabel->setObjectName( "expiryActionLabel" );
-  expiryActionLabel->setText( i18n( "Expiry action:" ) );
-  expiryActionLabel->setAlignment( Qt::AlignVCenter );
-  expiryActionHBox->addWidget( expiryActionLabel );
-
-  actionsHBox = new QVBoxLayout();
-  actionsHBox->setMargin( 0 );
-  actionsHBox->setSpacing( 6 );
-  actionsHBox->setObjectName( "actionsHBox" );
-  actionsGroup = new Q3ButtonGroup( this );
+  QGroupBox *actionsGroup = new QGroupBox;
   actionsGroup->hide(); // for mutual exclusion of the radio buttons
 
-  moveToHBox = new QHBoxLayout();
+  QHBoxLayout *moveToHBox = new QHBoxLayout();
   moveToHBox->setMargin( 0 );
   moveToHBox->setSpacing( 6 );
-  moveToHBox->setObjectName( "moveToHBox" );
 
-  moveToRB = new QRadioButton;
+  moveToRB = new QRadioButton( actionsGroup );
   moveToRB->setObjectName( "moveToRB" );
-  actionsGroup->insert( moveToRB );
-  connect( moveToRB, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotUpdateControls() ) );
-  moveToRB->setText( i18n( "Move to:" ) );
+  moveToRB->setText( i18n( "Move expired messages to:" ) );
+  connect( moveToRB, SIGNAL( toggled( bool ) ), this, SLOT( slotUpdateControls() ) );
   moveToHBox->addWidget( moveToRB );
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget, tree );
   folderSelector->setMustBeReadWrite( true );
   moveToHBox->addWidget( folderSelector );
-  actionsHBox->addLayout( moveToHBox );
+  globalVBox->addLayout( moveToHBox );
 
-  deletePermanentlyRB = new QRadioButton;
+  deletePermanentlyRB = new QRadioButton( actionsGroup );
   deletePermanentlyRB->setObjectName( "deletePermanentlyRB" );
-  actionsGroup->insert( deletePermanentlyRB );
-  deletePermanentlyRB->setText( i18n( "Delete permanently" ) );
-  actionsHBox->addWidget( deletePermanentlyRB );
-  expiryActionHBox->addLayout( actionsHBox );
-  globalVBox->addLayout( expiryActionHBox );
+  deletePermanentlyRB->setText( i18n( "Delete expired messages permanently" ) );
+  globalVBox->addWidget( deletePermanentlyRB );
 
-  note = new QLabel;
+  globalVBox->addSpacing( 30 );
+
+  QLabel *note = new QLabel;
   note->setObjectName( "note" );
   note->setText( i18n( "Note: Expiry action will be applied immediately after confirming settings." ) );
   note->setAlignment( Qt::AlignVCenter );
@@ -198,12 +173,6 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
 
 void ExpiryPropertiesDialog::slotOk()
 {
-  bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
-    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
-        i18n( "No Folder Selected" ) );
-    return;
-  }
   mFolder->setAutoExpire( enableGlobally );
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
@@ -224,12 +193,28 @@ void ExpiryPropertiesDialog::slotOk()
     mFolder->expireOldMessages( true /*immediate*/);
 }
 
+
+void ExpiryPropertiesDialog::accept()
+{
+  enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
+  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
+    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
+        i18n( "No Folder Selected" ) );
+    return;
+  }
+  KDialog::accept();
+}
+
+
 void ExpiryPropertiesDialog::slotUpdateControls()
 {
   bool showExpiryActions = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
   moveToRB->setEnabled( showExpiryActions );
   folderSelector->setEnabled( showExpiryActions && moveToRB->isChecked() );
   deletePermanentlyRB->setEnabled( showExpiryActions );
+
+  expireReadMailSB->setEnabled( expireReadMailCB->isChecked() );
+  expireUnreadMailSB->setEnabled( expireUnreadMailCB->isChecked() );
 }
 
 

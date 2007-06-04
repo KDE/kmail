@@ -24,12 +24,11 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfiggroup.h>
+#include <kbuttongroup.h>
 
 // Qt headers:
-#include <q3header.h>
 #include <QTabWidget>
 #include <QRadioButton>
-#include <q3buttongroup.h>
 #include <QLabel>
 #include <QLayout>
 //Added by qt3to4:
@@ -68,23 +67,20 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotEnableOK(const QString&)) );
 
-  mButtonGroup = new Q3ButtonGroup( page );
+  mButtonGroup = new KButtonGroup( page );
   mButtonGroup->hide();
 
   // row 1: radio button
-  QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), page );
+  QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), mButtonGroup );
   radio->setChecked( true );
-  mButtonGroup->insert( radio, Empty );
   vlay->addWidget( radio );
 
   // row 2: radio button
-  radio = new QRadioButton( i18n("&Use Control Center settings"), page );
-  mButtonGroup->insert( radio, ControlCenter );
+  radio = new QRadioButton( i18n("&Use Control Center settings"), mButtonGroup );
   vlay->addWidget( radio );
 
   // row 3: radio button
-  radio = new QRadioButton( i18n("&Duplicate existing identity"), page );
-  mButtonGroup->insert( radio, ExistingEntry );
+  radio = new QRadioButton( i18n("&Duplicate existing identity"), mButtonGroup );
   vlay->addWidget( radio );
 
   // row 4: combobox with existing identities and label
@@ -113,7 +109,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
-  int id = mButtonGroup->id( mButtonGroup->selected() );
+  int id = mButtonGroup->selected();
   assert( id == (int)Empty
 	  || id == (int)ControlCenter
 	  || id == (int)ExistingEntry );

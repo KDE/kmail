@@ -24,7 +24,8 @@
 #include <config.h>
 #endif
 
-#include <Q3ButtonGroup>
+#include <QGroupBox>
+#include <QButtonGroup>
 #include <QLayout>
 #include <QRadioButton>
 #include <QVBoxLayout>

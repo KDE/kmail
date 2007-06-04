@@ -84,7 +84,6 @@ using MailTransport::TransportManagementWidget;
 #include <klocale.h>
 #include <kcharsets.h>
 #include <kascii.h>
-#include <kdebug.h>
 #include <knuminput.h>
 #include <kfontchooser.h>
 #include <kmessagebox.h>
@@ -98,6 +97,7 @@ using MailTransport::TransportManagementWidget;
 #include <knotifyconfigwidget.h>
 #include <k3resolver.h>
 #include <kconfiggroup.h>
+#include <kbuttongroup.h>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -777,7 +777,7 @@ void AccountsPage::SendingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
-  int numTransports = general.readEntry("transports", 0 );
+  //int numTransports = general.readEntry("transports", 0 );
 
   mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
@@ -1747,7 +1747,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
     mCustomDateFormatEdit( 0 )
 {
   // tmp. vars:
-  Q3ButtonGroup * group;
+  QGroupBox * group;
   QRadioButton * radio;
 
   QVBoxLayout * vlay = new QVBoxLayout( this );
@@ -1755,17 +1755,22 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // "General Options" group:
-  group = new Q3VButtonGroup( i18n( "General Options" ), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
+  group = new QGroupBox( i18n( "General Options" ), this );
+  //  group->layout()->setSpacing( KDialog::spacingHint() );
+  QVBoxLayout *gvlay = new QVBoxLayout( group );
+  gvlay->setSpacing( KDialog::spacingHint() );
 
   mMessageSizeCheck = new QCheckBox( i18n("Display messa&ge sizes"), group );
+  gvlay->addWidget( mMessageSizeCheck );
 
   mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto &icons" ), group );
+  gvlay->addWidget( mCryptoIconsCheck );
 
   mAttachmentCheck = new QCheckBox( i18n("Show attachment icon"), group );
+  gvlay->addWidget( mAttachmentCheck );
 
-  mNestedMessagesCheck =
-    new QCheckBox( i18n("&Threaded message list"), group );
+  mNestedMessagesCheck = new QCheckBox( i18n("&Threaded message list"), group );
+  gvlay->addWidget( mNestedMessagesCheck );
 
   connect( mMessageSizeCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1776,46 +1781,47 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   connect( mNestedMessagesCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-
   vlay->addWidget( group );
 
   // "Message Header Threading Options" group:
-  mNestingPolicy =
-    new Q3VButtonGroup( i18n("Threaded Message List Options"), this );
-  mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
+  mNestingPolicy = new KButtonGroup( this );
+  mNestingPolicy->setTitle( i18n("Threaded Message List Options") );
+  //mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
+  gvlay = new QVBoxLayout( mNestingPolicy );
+  gvlay->setSpacing( KDialog::spacingHint() );
 
-  mNestingPolicy->insert(
-    new QRadioButton( i18n("Always &keep threads open"),
-                      mNestingPolicy ), 0 );
-  mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to o&pen"),
-                      mNestingPolicy ), 1 );
-  mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to closed"),
-                      mNestingPolicy ), 2 );
-  mNestingPolicy->insert(
-    new QRadioButton( i18n("Open threads that contain ne&w, unread "
-                           "or important messages and open watched threads."),
-                      mNestingPolicy ), 3 );
+  gvlay->addWidget( new QRadioButton( i18n("Always &keep threads open"), mNestingPolicy ) );
+  gvlay->addWidget( new QRadioButton( i18n("Threads default to o&pen"), mNestingPolicy ) );
+  gvlay->addWidget( new QRadioButton( i18n("Threads default to closed"), mNestingPolicy ) );
+  gvlay->addWidget( new QRadioButton( i18n("Open threads that contain ne&w, unread "
+                           "or important messages and open watched threads."), mNestingPolicy ) );
 
   vlay->addWidget( mNestingPolicy );
 
-  connect( mNestingPolicy, SIGNAL( clicked( int ) ),
+  connect( mNestingPolicy, SIGNAL( changed() ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Date Display" group:
-  mDateDisplay = new Q3VButtonGroup( i18n("Date Display"), this );
-  mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
+  mDateDisplay = new KButtonGroup( this );
+  mDateDisplay->setTitle( i18n("Date Display") );
+  //mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
+  gvlay = new QVBoxLayout( mDateDisplay );
+  gvlay->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
-    QString buttonLabel = i18n(dateDisplayConfig[i].displayName);
-    if ( buttonLabel.contains("%1") )
-      buttonLabel = buttonLabel.arg( DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
+    const char *label = dateDisplayConfig[i].displayName;
+    QString buttonLabel;
+    if ( QString(label).contains("%1") )
+      buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
+    else
+      buttonLabel = i18n( label );
     radio = new QRadioButton( buttonLabel, mDateDisplay );
-    mDateDisplay->insert( radio, i );
+    gvlay->addWidget( radio );
+
     if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
       mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
       mCustomDateFormatEdit->setEnabled( false );
+      gvlay->addWidget( mCustomDateFormatEdit );
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
       connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
@@ -1878,7 +1884,7 @@ void AppearancePage::HeadersTab::doLoadOther() {
   // "Message Header Threading Options":
   int num = geometry.readEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
-  mNestingPolicy->setButton( num );
+  mNestingPolicy->setSelected( num );
 
   // "Date Display":
   setDateDisplay( general.readEntry( "dateFormat",
@@ -1896,11 +1902,11 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
     if ( dateDisplay == dateDisplayConfig[i].dateDisplay ) {
-      mDateDisplay->setButton( i );
+      mDateDisplay->setSelected( i );
       return;
     }
   // fell through since none found:
-  mDateDisplay->setButton( numDateDisplayConfig - 2 ); // default
+  mDateDisplay->setSelected( numDateDisplayConfig - 2 ); // default
 }
 
 void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
@@ -1920,7 +1926,7 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readEntry( "nestingPolicy", 0 );
     if ( num < 0 || num > 3 ) num = 3;
-    mNestingPolicy->setButton( num );
+    mNestingPolicy->setSelected( num );
   }
 
   if ( general.hasKey( "dateFormat" ) )
@@ -1951,13 +1957,12 @@ void AppearancePage::HeadersTab::save() {
     }
   }
 
-  geometry.writeEntry( "nestingPolicy",
-                       mNestingPolicy->id( mNestingPolicy->selected() ) );
+  geometry.writeEntry( "nestingPolicy", mNestingPolicy->selected() );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
   general.writeEntry( "showAttachmentIcon", mAttachmentCheck->isChecked() );
 
-  int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
+  int dateDisplayID = mDateDisplay->selected();
   // check bounds:
   assert( dateDisplayID >= 0 ); assert( dateDisplayID < numDateDisplayConfig );
   general.writeEntry( "dateFormat",
@@ -2221,26 +2226,26 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // System tray modes
-  mSystemTrayGroup = new Q3VButtonGroup( i18n("System Tray Mode"), this );
-  mSystemTrayGroup->layout()->setSpacing( KDialog::spacingHint() );
-  vlay->addWidget( mSystemTrayGroup );
+  mSystemTrayGroup = new KButtonGroup( this );
+  mSystemTrayGroup->setTitle( i18n("System Tray Mode" ) );
+  QVBoxLayout *gvlay = new QVBoxLayout( mSystemTrayGroup );
+  gvlay->setSpacing( KDialog::spacingHint() );
+
   connect( mSystemTrayGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mSystemTrayCheck, SIGNAL( toggled( bool ) ),
            mSystemTrayGroup, SLOT( setEnabled( bool ) ) );
 
-  mSystemTrayGroup->insert( new QRadioButton( i18n("Always show KMail in system tray"), mSystemTrayGroup ),
-                            GlobalSettings::EnumSystemTrayPolicy::ShowAlways );
+  gvlay->addWidget( new QRadioButton( i18n("Always show KMail in system tray"), mSystemTrayGroup ) );
+  gvlay->addWidget( new QRadioButton( i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroup ) );
 
-  mSystemTrayGroup->insert( new QRadioButton( i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroup ),
-                            GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread );
-
+  vlay->addWidget( mSystemTrayGroup );
   vlay->addStretch( 10 ); // spacer
 }
 
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings() {
   mSystemTrayCheck->setChecked( GlobalSettings::self()->systemTrayEnabled() );
-  mSystemTrayGroup->setButton( GlobalSettings::self()->systemTrayPolicy() );
+  mSystemTrayGroup->setSelected( GlobalSettings::self()->systemTrayPolicy() );
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
 
@@ -2252,14 +2257,14 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
         general.readEntry( "SystemTrayEnabled", false ) );
   }
   if ( general.hasKey( "SystemTrayPolicy" ) ) {
-    mSystemTrayGroup->setButton( general.readEntry( "SystemTrayPolicy", 0 ) );
+    mSystemTrayGroup->setSelected( general.readEntry( "SystemTrayPolicy", 0 ) );
   }
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
 
 void AppearancePage::SystemTrayTab::save() {
   GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
-  GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
+  GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
 }
 
 
@@ -3408,12 +3413,10 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
-  KHBox        *hbox;
   QGroupBox    *group;
   QVBoxLayout  *vboxlayout;
   QRadioButton *radio;
   QLabel       *label;
-  QWidget      *w;
   QString       msg;
 
   vlay = new QVBoxLayout( this );
@@ -3480,16 +3483,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
               "</ul></qt>" );
 
   // "HTML Messages" group box:
-  group = new QGroupBox(i18n( "HTML Messages" ), this );
+  group = new QGroupBox( i18n("HTML Messages"), this );
   vboxlayout = new QVBoxLayout( group );
 
-  mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
+  mHtmlMailCheck = new QCheckBox( i18n("Prefer HTML to plain text"), group );
   mHtmlMailCheck->setWhatsThis( mHtmlWhatsThis );
   connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   vboxlayout->addWidget( mHtmlMailCheck );
 
-  mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
+  mExternalReferences = new QCheckBox( i18n("Allow messages to load external "
                                             "references from the Internet" ), group );
   mExternalReferences->setWhatsThis( mExternalWhatsThis );
 
@@ -3515,79 +3518,75 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   // "Message Disposition Notification" groupbox:
   group = new QGroupBox( i18n("Message Disposition Notifications"), this );
-  vboxlayout = new QVBoxLayout( group );
+
+  QGridLayout *grlayout = new QGridLayout( group );
+  grlayout->setSpacing( KDialog::spacingHint() );
 
   // "ignore", "ask", "deny", "always send" radiobutton line:
-  mMDNGroup = new Q3ButtonGroup( group );
-  mMDNGroup->hide();
-  connect( mMDNGroup, SIGNAL( clicked( int ) ),
+  mMDNGroup = new QButtonGroup( group );
+  connect( mMDNGroup, SIGNAL( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  vboxlayout->addWidget( mMDNGroup );
 
-  hbox = new KHBox( group );
-  hbox->setSpacing( KDialog::spacingHint() );
+  grlayout->addWidget( new QLabel( i18n("Send policy:"), group ), 0, 0 );
 
-  (void)new QLabel( i18n("Send policy:"), hbox );
+  radio = new QRadioButton( i18n("Ignore"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 0, 1, Qt::AlignLeft );
+  mMDNGroup->addButton( radio, 0 );
 
-  radio = new QRadioButton( i18n("&Ignore"), hbox );
-  mMDNGroup->insert( radio );
+  radio = new QRadioButton( i18n("Ask"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 0, 2, Qt::AlignLeft );
+  mMDNGroup->addButton( radio, 1 );
 
-  radio = new QRadioButton( i18n("As&k"), hbox );
-  mMDNGroup->insert( radio );
+  radio = new QRadioButton( i18n("Deny"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 0, 3, Qt::AlignLeft );
+  mMDNGroup->addButton( radio, 2 );
 
-  radio = new QRadioButton( i18n("&Deny"), hbox );
-  mMDNGroup->insert( radio );
-
-  radio = new QRadioButton( i18n("Al&ways send"), hbox );
-  mMDNGroup->insert( radio );
-
-  for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
-      mMDNGroup->find( i )->setWhatsThis( mReceiptWhatsThis );
-
-  w = new QWidget( hbox ); // spacer
-  hbox->setStretchFactor( w, 1 );
-  vboxlayout->addWidget( hbox );
+  radio = new QRadioButton( i18n("Always send"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 0, 4, Qt::AlignLeft );
+  mMDNGroup->addButton( radio, 3 );
 
   // "Original Message quote" radiobutton line:
-  mOrigQuoteGroup = new Q3ButtonGroup( group );
-  mOrigQuoteGroup->hide();
-  connect( mOrigQuoteGroup, SIGNAL( clicked( int ) ),
+  mOrigQuoteGroup = new QButtonGroup( group );
+  connect( mOrigQuoteGroup, SIGNAL( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hbox = new KHBox( group );
-  hbox->setSpacing( KDialog::spacingHint() );
+  grlayout->addWidget( new QLabel( i18n("Quote original message:"), group ), 1, 0 );
 
-  (void)new QLabel( i18n("Quote original message:"), hbox );
+  radio = new QRadioButton( i18n("Nothing"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 1, 1, Qt::AlignLeft );
+  mOrigQuoteGroup->addButton( radio, 0 );
 
-  radio = new QRadioButton( i18n("Nothin&g"), hbox );
-  mOrigQuoteGroup->insert( radio );
+  radio = new QRadioButton( i18n("Full message"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 1, 2, Qt::AlignLeft );
+  mOrigQuoteGroup->addButton( radio, 1 );
 
-  radio = new QRadioButton( i18n("&Full message"), hbox );
-  mOrigQuoteGroup->insert( radio );
-
-  radio = new QRadioButton( i18n("Onl&y headers"), hbox );
-  mOrigQuoteGroup->insert( radio );
-
-  w = new QWidget( hbox );
-  hbox->setStretchFactor( w, 1 );
-  vboxlayout->addWidget( hbox );
+  radio = new QRadioButton( i18n("Only headers"), group );
+  radio->setWhatsThis( mReceiptWhatsThis );
+  grlayout->addWidget( radio, 1, 3, Qt::AlignLeft );
+  mOrigQuoteGroup->addButton( radio, 2 );
 
   mNoMDNsWhenEncryptedCheck = new QCheckBox(
-          i18n("Do not send MDNs in response to encrypted messages"), group );
+          i18n("Do not send MDNs in response to encrypted messages"), this );
   connect( mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  vboxlayout->addWidget( mNoMDNsWhenEncryptedCheck );
+  grlayout->addWidget( mNoMDNsWhenEncryptedCheck, 2, 0, 1, -1 );
 
   // Warning label:
   label = new QLabel( i18n("<b>WARNING:</b> Unconditionally returning "
                            "confirmations undermines your privacy. "
-                           "<a href=\"whatsthis3\">More...</a>"),
-                           group );
+                           "<a href=\"whatsthis3\">More about MDNs...</a>"),
+                           this );
   connect(label, SIGNAL(linkActivated ( const QString& )),
           SLOT(slotLinkClicked( const QString& )));
   label->setWordWrap(true);
   label->setTextInteractionFlags( Qt::LinksAccessibleByMouse |
           Qt::LinksAccessibleByKeyboard);
-  vboxlayout->addWidget( label );
+  grlayout->addWidget( label, 3, 0, 1, -1 );
 
   vlay->addWidget( group );
 
@@ -3625,11 +3624,11 @@ void SecurityPage::GeneralTab::doLoadOther() {
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
   int num = mdn.readEntry( "default-policy", 0 );
-  if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
-  mMDNGroup->setButton( num );
+  if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
+  mMDNGroup->button(num)->setChecked(true);
   num = mdn.readEntry( "quote-message", 0 );
-  if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
-  mOrigQuoteGroup->setButton( num );
+  if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
+  mOrigQuoteGroup->button(num)->setChecked(true);
   mNoMDNsWhenEncryptedCheck->setChecked(
       mdn.readEntry( "not-send-when-encrypted", true ) );
 }
@@ -3650,13 +3649,13 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
 
   if ( mdn.hasKey( "default-policy" ) ) {
       int num = mdn.readEntry( "default-policy", 0 );
-      if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
-      mMDNGroup->setButton( num );
+      if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
+      mMDNGroup->button(num)->setChecked(true);
   }
   if ( mdn.hasKey( "quote-message" ) ) {
       int num = mdn.readEntry( "quote-message", 0 );
-      if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
-      mOrigQuoteGroup->setButton( num );
+      if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
+      mOrigQuoteGroup->button(num)->setChecked(true);
   }
   if ( mdn.hasKey( "not-send-when-encrypted" ) )
       mNoMDNsWhenEncryptedCheck->setChecked(
@@ -3694,8 +3693,8 @@ void SecurityPage::GeneralTab::save() {
   }
   reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
   reader.writeEntry( "AutoImportKeys", mAutomaticallyImportAttachedKeysCheck->isChecked() );
-  mdn.writeEntry( "default-policy", mMDNGroup->id( mMDNGroup->selected() ) );
-  mdn.writeEntry( "quote-message", mOrigQuoteGroup->id( mOrigQuoteGroup->selected() ) );
+  mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
+  mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
   mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
 }
 
@@ -3937,10 +3936,9 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   vlay->addWidget( mWidget );
 
   // Button-group for exclusive radiobuttons
-  Q3ButtonGroup* bg = new Q3ButtonGroup( mWidget );
-  bg->hide();
-  bg->insert( mWidget->CRLRB );
-  bg->insert( mWidget->OCSPRB );
+  QButtonGroup* bg = new QButtonGroup( mWidget );
+  bg->addButton( mWidget->CRLRB );
+  bg->addButton( mWidget->OCSPRB );
 
   // Settings for the keyrequester custom widget
   mWidget->OCSPResponderSignature->setAllowedKeys(
@@ -3950,6 +3948,10 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
      | Kleo::KeySelectionDialog::SigningKeys
      | Kleo::KeySelectionDialog::PublicKeys );
   mWidget->OCSPResponderSignature->setMultipleKeysEnabled( false );
+
+  mWidget->OCSPGroupBox->layout()->setMargin( KDialog::marginHint() );
+  mWidget->HTTPGroupBox->layout()->setMargin( KDialog::marginHint() );
+  mWidget->LDAPGroupBox->layout()->setMargin( KDialog::marginHint() );
 
   mConfig = Kleo::CryptoBackendFactory::instance()->config();
 
@@ -3977,10 +3979,9 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
            this, SLOT( slotUpdateHTTPActions() ) );
 
   // Button-group for exclusive radiobuttons
-  Q3ButtonGroup* bgHTTPProxy = new Q3ButtonGroup( mWidget );
-  bgHTTPProxy->hide();
-  bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
-  bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
+  QButtonGroup* bgHTTPProxy = new QButtonGroup( mWidget );
+  bgHTTPProxy->addButton( mWidget->honorHTTPProxyRB );
+  bgHTTPProxy->addButton( mWidget->useCustomHTTPProxyRB );
 
 #ifdef __GNUC__
 #warning Port me!
@@ -4137,6 +4138,10 @@ void SecurityPage::SMimeTab::slotUpdateHTTPActions() {
   mWidget->useCustomHTTPProxyRB->setEnabled( enableProxySettings );
   mWidget->honorHTTPProxyRB->setEnabled( enableProxySettings );
   mWidget->customHTTPProxy->setEnabled( enableProxySettings );
+
+  if ( !mWidget->useCustomHTTPProxyRB->isChecked() &&
+       !mWidget->honorHTTPProxyRB->isChecked() )
+    mWidget->honorHTTPProxyRB->setChecked( true );
 }
 
 void SecurityPage::SMimeTab::installProfile( KConfig * ) {

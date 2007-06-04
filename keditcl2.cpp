@@ -31,9 +31,9 @@
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
+#include <qgroupbox.h>
 
 #include <q3popupmenu.h>
-#include <Q3VButtonGroup>
 
 #include <khistorycombobox.h>
 #include <knuminput.h>
@@ -732,26 +732,28 @@ KEdFind::KEdFind( QWidget *parent, bool modal )
 
   topLayout->addWidget(d->combo);
 
-  group = new Q3VButtonGroup( i18n("Options"), page );
+  QGroupBox *group = new QGroupBox( i18n("Options"), page );
   topLayout->addWidget( group );
 
-  KHBox* row1 = new KHBox( group );
+  QGridLayout *gbox = new QGridLayout( group );
+  gbox->setMargin(spacingHint());
+  gbox->addItem(new QSpacerItem(0,fontMetrics().lineSpacing()), 0, 0);
 
   text = i18n("Case &sensitive");
-  sensitive = new QCheckBox( text, row1 );
-  sensitive->setObjectName( QLatin1String( "case" ) );
+  sensitive = new QCheckBox( text, group );
+  sensitive->setObjectName( QLatin1String( "case") );
   text = i18n("Find &backwards");
-  direction = new QCheckBox( text, row1 );
+  direction = new QCheckBox( text, group );
   direction->setObjectName( QLatin1String( "direction" ) );
-
+  gbox->addWidget( sensitive, 1, 0 );
+  gbox->addWidget( direction, 1, 1 );
+  gbox->setRowStretch( 2, 10 );
 
   enableButton( KDialog::User1, !d->combo->currentText().isEmpty() );
 
   connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotUser1() ) );
   connect( this, SIGNAL( cancelClicked() ), this, SIGNAL( done() ) );
   connect( this, SIGNAL( closeClicked() ), this, SIGNAL( done() ) );
-
-
 }
 
 KEdFind::~KEdFind()
@@ -878,7 +880,7 @@ KEdReplace::KEdReplace( QWidget *parent, bool modal )
   connect(d->searchCombo, SIGNAL(textChanged ( const QString & )),
           this,SLOT(textSearchChanged ( const QString & )));
 
-  Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Options"), page );
+  QGroupBox *group = new QGroupBox( i18n("Options"), page );
   topLayout->addWidget( group );
 
   QGridLayout *gbox = new QGridLayout( group );

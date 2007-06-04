@@ -30,7 +30,6 @@ class QCheckBox;
 class QTextStream;
 class KHistoryComboBox;
 class KIntNumInput;
-class Q3VButtonGroup;
 class QMenu;
 
 class KDEUI_EXPORT KEdGotoLine : public KDialog
@@ -80,9 +79,6 @@ public:
 protected Q_SLOTS:
     void slotUser1( void );
     void textSearchChanged ( const QString & );
-
-protected:
-  Q3VButtonGroup* group;
 
 private:
     QCheckBox *sensitive;
