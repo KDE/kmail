@@ -2721,6 +2721,7 @@ bool KMFolderCachedImap::isCloseToQuota() const
 KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
 {
   QValueList<unsigned long> newMsgs = findNewMessages();
+  kdDebug() << k_funcinfo << newMsgs << " of " << count() << endl;
   if ( newMsgs.isEmpty() )
     return 0;
   KMFolder *dest = 0;
@@ -2822,6 +2823,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
 
 void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder, bool root )
 {
+  kdDebug() << k_funcinfo << folder << " " << root << endl;
   if ( root )
     mToBeDeletedAfterRescue.append( folder );
   folder->open();
@@ -2845,6 +2847,8 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
     }
   }
   folder->close();
+  if ( root )
+    slotRescueDone( 0 ); // just in case there is nothing to rescue
 }
 
 void KMFolderCachedImap::slotRescueDone(KMCommand * command)
