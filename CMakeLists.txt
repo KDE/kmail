@@ -213,9 +213,9 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KMIME_LIBS} kpgp kdepim
-  kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} ${KDE4_PHONON_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS} ${KDE4_KTNEF_LIBS}
-  threadweaver ${KDE4_KUTILS_LIBS} ${KDE4_MAILTRANSPORT_LIBS})
+target_link_libraries(kmailprivate  ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KHTML_LIBRARY} ${KDE4_KMIME_LIBS} kpgp kdepim
+  kpimidentities mimelib ksieve kleopatra ${KDE4_KCAL_LIBS} ${KDE4_PHONON_LIBS} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KTNEF_LIBS}
+  threadweaver ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBS})
 
 set_target_properties(kmailprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
