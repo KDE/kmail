@@ -42,6 +42,7 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmmsgdict.h"
+#include "csshelper.h"
 
 #include "globalsettings.h"
 
@@ -192,9 +193,10 @@ void KMReaderMainWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotPrintMsg()
 {
-  KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
+  KMPrintCommand *command = new KMPrintCommand( this, mReaderWin->message(),
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
+  command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
   command->start();
 }
 
@@ -408,6 +410,16 @@ void KMReaderMainWin::setupAccel()
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
 
+  fontAction = new KFontAction( "Select Font", 0, actionCollection(),
+                               "text_font" );
+  fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
+  connect( fontAction, SIGNAL( activated( const QString& ) ),
+           SLOT( slotFontAction( const QString& ) ) );
+  fontSizeAction = new KFontSizeAction( "Select Size", 0, actionCollection(),
+                                       "text_size" );
+  fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
+  connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
+           SLOT( slotSizeAction( int ) ) );
 
 
   QAccel *accel = new QAccel(mReaderWin, "showMsg()");
@@ -514,6 +526,24 @@ void KMReaderMainWin::copySelectedToFolder( int menuId )
 
   KMCommand *command = new KMCopyCommand( mMenuToFolder[menuId], mMsg );
   command->start();
+}
+
+void KMReaderMainWin::slotFontAction( const QString& font)
+{
+  QFont f( mReaderWin->cssHelper()->bodyFont() );
+  f.setFamily( font );
+  mReaderWin->cssHelper()->setBodyFont( f );
+  mReaderWin->cssHelper()->setPrintFont( f );
+  mReaderWin->update();
+}
+
+void KMReaderMainWin::slotSizeAction( int size )
+{
+  QFont f( mReaderWin->cssHelper()->bodyFont() );
+  f.setPointSize( size );
+  mReaderWin->cssHelper()->setBodyFont( f );
+  mReaderWin->cssHelper()->setPrintFont( f );
+  mReaderWin->update();
 }
 
 #include "kmreadermainwin.moc"

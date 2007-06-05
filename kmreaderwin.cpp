@@ -509,10 +509,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    mSavedRelativePosition( 0 ),
     updateReaderWinTimer( 0, "updateReaderWinTimer" ),
     mResizeTimer( 0, "mResizeTimer" ),
-    mDelayedMarkTimer( 0, "mDelayedMarkTimer" )
+    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
+    mSavedRelativePosition( 0 )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -1116,6 +1116,13 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
     }
   }
   update( true );
+}
+
+
+void KMReaderWin::setPrintFont( const QFont& font )
+{
+
+  mCSSHelper->setPrintFont( font );
 }
 
 //-----------------------------------------------------------------------------
@@ -2562,6 +2569,11 @@ void KMReaderWin::slotEditAttachment(partNode * node)
   }
   KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
   command->start();
+}
+
+KMail::CSSHelper* KMReaderWin::cssHelper()
+{
+  return mCSSHelper;
 }
 
 #include "kmreaderwin.moc"
