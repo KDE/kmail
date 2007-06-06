@@ -1922,7 +1922,10 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+// FIXME: make this a KIOSK option
+#if 0
   menu->insertItem(SmallIcon("edit"), i18n("Edit Attachment"), 8 );
+#endif
   menu->insertItem(SmallIcon("editdelete"), i18n("Delete Attachment"), 7 );
   if ( name.endsWith( ".xia", false ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
