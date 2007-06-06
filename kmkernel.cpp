@@ -1423,6 +1423,9 @@ void KMKernel::init()
     kDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
   }
 
+  // moved up here because KMMessage::stripOffPrefixes is used below
+  KMMessage::readConfig();
+
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
@@ -1438,8 +1441,6 @@ void KMKernel::init()
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
-  // moved up here because KMMessage::stripOffPrefixes is used below -ta
-  KMMessage::readConfig();
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
