@@ -25,12 +25,11 @@
 #include <kxmlguiclient.h>
 
 #include <QList>
+#include <QVector>
 #include <QVBoxLayout>
 #include <q3listview.h>
 #include <QMenu>
-#include <Q3Dict>
-#include <Q3PtrList>
-#include <Q3ValueVector>
+#include <QHash>
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
@@ -551,11 +550,11 @@ class KDE_EXPORT KMMainWidget : public QWidget
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
-    Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
+    QHash<QString,FolderShortcutCommand*> mFolderShortcutCommands;
     QPointer <KMail::FolderJob> mJob;
 
-    Q3ValueVector<QString> mCustomTemplates;
-    Q3PtrList<KAction> mCustomTemplateActions;
+    QVector<QString> mCustomTemplates;
+    QList<KAction*> mCustomTemplateActions;
 
     KMSystemTray  *mSystemTray;
     KConfig *mConfig;

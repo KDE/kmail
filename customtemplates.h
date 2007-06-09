@@ -20,6 +20,8 @@
 
 #include <config.h>
 
+#include <Q3Dict>
+
 #ifndef CUSTOMTEMPLATES_H
 #define CUSTOMTEMPLATES_H
 

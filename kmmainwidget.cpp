@@ -39,7 +39,6 @@
 #include <QDBusMessage>
 #include <QShortcut>
 #include <q3accel.h>
-#include <q3ptrlist.h>
 #include <q3stylesheet.h>
 
 #include <kicon.h>
@@ -178,7 +177,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
-  mFolderShortcutCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
@@ -2522,8 +2520,8 @@ void KMMainWidget::getTransportMenu()
 void KMMainWidget::updateCustomTemplateMenus()
 {
   if ( !mCustomTemplateActions.isEmpty() ) {
-    Q3PtrList<KAction>::iterator ait = mCustomTemplateActions.begin();
-    for ( ; ait != mCustomTemplateActions.end() ; ++ait ) {
+    for ( QList<KAction*>::iterator ait = mCustomTemplateActions.begin();
+	  ait != mCustomTemplateActions.end() ; ++ait ) {
       //(*ait)->unplugAll();
       delete (*ait);
     }
@@ -2538,32 +2536,31 @@ void KMMainWidget::updateCustomTemplateMenus()
   delete mCustomReplyAllMapper;
   delete mCustomForwardMapper;
 
-  mCustomForwardActionMenu =
-    new KActionMenu( KIcon( "mail_custom_forward" ),
-		     i18n("Forward With Custom Template"),
-                     actionCollection() ); //, "custom_forward" );
+  mCustomForwardActionMenu = new KActionMenu( KIcon( "mail_custom_forward" ),
+					      i18n("With Custom Template"), this );
+  actionCollection()->addAction( "custom_forward", mCustomForwardActionMenu );
   QSignalMapper *mCustomForwardMapper = new QSignalMapper( this );
   connect( mCustomForwardMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotCustomForwardMsg( int ) ) );
-  mCustomForwardActionMenu->addAction( mForwardActionMenu );
+  mForwardActionMenu->addSeparator();
+  mForwardActionMenu->addAction( mCustomForwardActionMenu );
 
-  mCustomReplyActionMenu =
-    new KActionMenu( KIcon( "mail_custom_reply" ),
-		     i18n("Reply With Custom Template"),
-                     actionCollection() ); //, "custom_reply" );
+  mCustomReplyActionMenu = new KActionMenu( KIcon( "mail_custom_reply" ),
+					    i18n("Reply With Custom Template"), this );
+  actionCollection()->addAction( "custom_reply", mCustomReplyActionMenu );
   QSignalMapper *mCustomReplyMapper = new QSignalMapper( this );
   connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotCustomReplyToMsg( int ) ) );
-  mCustomReplyActionMenu->addAction( mReplyActionMenu );
+  mReplyActionMenu->addSeparator();
+  mReplyActionMenu->addAction( mCustomReplyActionMenu );
 
-  mCustomReplyAllActionMenu =
-    new KActionMenu( KIcon( "mail_custom_reply_all" ),
-		     i18n("Reply to All With Custom Template"),
-                     actionCollection() ); //, "custom_reply_all" );
+  mCustomReplyAllActionMenu = new KActionMenu( KIcon( "mail_custom_reply_all" ),
+					       i18n("Reply to All With Custom Template"), this );
+  actionCollection()->addAction( "custom_reply_all", mCustomReplyAllActionMenu );
   QSignalMapper *mCustomReplyAllMapper = new QSignalMapper( this );
   connect( mCustomReplyAllMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotCustomReplyAllToMsg( int ) ) );
-  mCustomReplyAllActionMenu->addAction( mReplyActionMenu );
+  mReplyActionMenu->addAction( mCustomReplyAllActionMenu );
 
   mCustomTemplates.clear();
 
@@ -3877,6 +3874,7 @@ void KMMainWidget::initializeFilterActions()
 
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )
 {
+  delete mFolderShortcutCommands[ folder->idString() ];
   mFolderShortcutCommands.remove( folder->idString() );
 }
 
@@ -3925,8 +3923,9 @@ bool KMMainWidget::shortcutIsValid( const QKeySequence &sc ) const
 
 void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 {
-  // remove the old one, autodelete
-  mFolderShortcutCommands.remove( folder->idString() );
+  // remove the old one, no autodelete in Qt4
+  slotFolderRemoved( folder );
+
   if ( folder->shortcut().isEmpty() )
     return;
 

@@ -2298,7 +2298,7 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent, con
   // "Templates" tab:
   //
   mTemplatesTab = new TemplatesTab();
-  addTab( mTemplatesTab, i18n("&Templates") );
+  addTab( mTemplatesTab, i18n("Standard &Templates") );
 
   //
   // "Custom Templates" tab:
