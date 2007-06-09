@@ -225,14 +225,6 @@ void KMReaderMainWin::setupAccel()
     setComponentData( kmkernel->xmlGuiInstance() );
 
   //----- File Menu
-  //mOpenAction = KStandardAction::open( this, SLOT( slotOpenMsg() ),
-  //                                actionCollection() );
-
-  //mSaveAsAction = new KAction( i18n("Save &As..."), "document-save",
-  //                             KStandardShortcut::shortcut( KStandardShortcut::Save ),
-  //                             this, SLOT( slotSaveMsg() ),
-  //                             actionCollection(), "file_save_as" );
-
   mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
 				      actionCollection() );
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
@@ -253,7 +245,7 @@ void KMReaderMainWin::setupAccel()
   connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
-
+  //----- Message Menu
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
