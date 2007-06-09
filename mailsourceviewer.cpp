@@ -53,8 +53,8 @@ void MailSourceHighlighter::highlightBlock ( const QString & text ) {
   }
 }
 
-MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
-  : KTextBrowser( parent, name ), mSourceHighLighter( 0 )
+MailSourceViewer::MailSourceViewer( QWidget *parent )
+  : KTextBrowser( parent ), mSourceHighLighter( 0 )
 {
   setAttribute( Qt::WA_DeleteOnClose );
   setLineWrapMode( QTextEdit::NoWrap );

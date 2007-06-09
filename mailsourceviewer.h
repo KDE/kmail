@@ -60,7 +60,7 @@ protected:
 class MailSourceViewer : public KTextBrowser
 {
 public:
-  MailSourceViewer( QWidget *parent = 0, const char *name = 0 );
+  MailSourceViewer( QWidget *parent = 0 );
   ~MailSourceViewer();
 
 private:
