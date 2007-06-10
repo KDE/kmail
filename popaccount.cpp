@@ -165,7 +165,8 @@ void PopAccount::processNewMail(bool _interactive)
     QString seenUidList = KStandardDirs::locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
                                        mHost + ':' + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
-    QStringList uidsOfSeenMsgs = config.readEntry( "seenUidList" , QStringList() );
+    KConfigGroup group( &config, "General" );
+    QStringList uidsOfSeenMsgs = group.readEntry( "seenUidList" , QStringList() );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.reserve( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     for ( int i = 0; i < uidsOfSeenMsgs.count(); ++i ) {
@@ -174,7 +175,7 @@ void PopAccount::processNewMail(bool _interactive)
       // mTimeOfSeenMsgsVector for use in PopAccount::slotData()
       mUidsOfSeenMsgsDict.insert( uidsOfSeenMsgs[i].toLatin1(), i );
     }
-    QList<int> timeOfSeenMsgs = config.readEntry( "seenUidTimeList",QList<int>() );
+    QList<int> timeOfSeenMsgs = group.readEntry( "seenUidTimeList",QList<int>() );
     // If the counts differ then the config file has presumably been tampered
     // with and so to avoid possible unwanted message deletion we'll treat
     // them all as newly seen by clearing the seen times vector
@@ -182,7 +183,7 @@ void PopAccount::processNewMail(bool _interactive)
       mTimeOfSeenMsgsVector = timeOfSeenMsgs.toVector();
     else
       mTimeOfSeenMsgsVector.clear();
-    QStringList downloadLater = config.readEntry( "downloadLater" , QStringList() );
+    QStringList downloadLater = group.readEntry( "downloadLater" , QStringList() );
     for ( int i = 0; i < downloadLater.count(); ++i ) {
       mHeaderLaterUids.insert( downloadLater[i].toLatin1() );
     }
@@ -822,8 +823,9 @@ void PopAccount::saveUidList()
   QString seenUidList = KStandardDirs::locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
                                       mHost + ':' + QString::number( mPort ) );
   KConfig config( seenUidList );
-  config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
-  config.writeEntry( "seenUidTimeList", seenUidTimeList );
+  KConfigGroup group( &config, "General" );
+  group.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
+  group.writeEntry( "seenUidTimeList", seenUidTimeList );
   QByteArray laterList;
   laterList.reserve( mHeaderLaterUids.count() * 5 ); // what's the average size of a uid?
   foreach( const QByteArray& uid, mHeaderLaterUids.values() ) {
@@ -831,7 +833,7 @@ void PopAccount::saveUidList()
           laterList += ',';
       laterList.append( uid );
   }
-  config.writeEntry( "downloadLater", laterList.constData() );
+  group.writeEntry( "downloadLater", laterList.constData() );
   config.sync();
 }
 
@@ -921,7 +923,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   //values would otherwise fail.
   if ( qdata.at( qdata.size() - 1 ) == 0 )
     qdata.chop( 1 );
-  
+
   if (spc > 0) {
     if (stage == List) {
       QByteArray length = qdata.mid(spc+1);
