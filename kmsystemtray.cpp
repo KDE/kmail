@@ -38,7 +38,7 @@ using KMail::AccountManager;
 #include <kiconeffect.h>
 #include <kwindowsystem.h>
 #include <kdebug.h>
-#include <kmenu.h>
+#include <KMenu>
 
 #include <QPainter>
 #include <QBitmap>
@@ -67,8 +67,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
-    mNewMessagePopupId(-1),
-    mPopupMenu(0)
+    mNewMessagePopupId(-1)
 {
   kDebug(5006) << "Initting systray" << endl;
 
@@ -99,6 +98,11 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   /** Initiate connections between folders and this object */
   foldersChanged();
 
+  connect( this, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
+           this, SLOT( slotActivated( QSystemTrayIcon::ActivationReason ) ) );
+  connect( contextMenu(), SIGNAL( aboutToShow() ),
+           this, SLOT( slotContextMenuAboutToShow() ) );
+
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
@@ -110,45 +114,43 @@ KMSystemTray::KMSystemTray(QWidget *parent)
 
 void KMSystemTray::buildPopupMenu()
 {
-  // Delete any previously created popup menu
-  delete mPopupMenu;
-  mPopupMenu = 0;
+  if ( !contextMenu() ) {
+    setContextMenu( new KMenu() );
+  }
 
-  mPopupMenu = new KMenu();
+  contextMenu()->clear();
+
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return;
 
-  mPopupMenu->addTitle(this->icon(), "KMail");
+  static_cast<KMenu*>( contextMenu() )->addTitle(this->icon(), "KMail");
   QAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
-    mPopupMenu->addAction( action );
+    contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("check_mail_in") ) )
-    mPopupMenu->addAction( action );
+    contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("send_queued") ) )
-    mPopupMenu->addAction( action );
+    contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("send_queued_via") ) )
-    mPopupMenu->addAction( action );
-  mPopupMenu->addSeparator();
+    contextMenu()->addAction( action );
+  contextMenu()->addSeparator();
   if ( ( action = mainWidget->action("new_message") ) )
-    mPopupMenu->addAction( action );
+    contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
-    mPopupMenu->addAction( action );
-  mPopupMenu->addSeparator();
+    contextMenu()->addAction( action );
+  contextMenu()->addSeparator();
 
   KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
-      mPopupMenu->addAction( action );
+      contextMenu()->addAction( action );
 }
 
 KMSystemTray::~KMSystemTray()
 {
   // unregister the applet
   kmkernel->unregisterSystemTrayApplet( this );
-
-  delete mPopupMenu;
-  mPopupMenu = 0;
 }
 
 void KMSystemTray::setMode(int newMode)
@@ -296,55 +298,50 @@ void KMSystemTray::foldersChanged()
  * On left mouse click, switch focus to the first KMMainWidget.  On right
  * click, bring up a list of all folders with a count of unread messages.
  */
-void KMSystemTray::mousePressEvent(QMouseEvent *e)
+void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
 {
+  kDebug() << "trigger: " << reason << endl;
+
   // switch to kmail on left mouse button
-  if( e->button() == Qt::LeftButton )
+  if( reason == QSystemTrayIcon::Trigger )
   {
     if( mParentVisible && mainWindowIsOnCurrentDesktop() )
       hideKMail();
     else
       showKMail();
   }
+}
 
-  // open popup menu on right mouse button
-  if( e->button() == Qt::RightButton )
+void KMSystemTray::slotContextMenuAboutToShow() 
+{
+  // Rebuild popup menu before show to minimize race condition if
+  // the base KMainWidget is closed.
+  buildPopupMenu();
+
+  if(mNewMessagePopupId != -1)
   {
-    mPopupFolders.clear();
-    mPopupFolders.reserve( mFoldersWithUnread.count() );
-
-    // Rebuild popup menu at click time to minimize race condition if
-    // the base KMainWidget is closed.
-    buildPopupMenu();
-
-    if(mNewMessagePopupId != -1)
-    {
-      mPopupMenu->removeItem(mNewMessagePopupId);
-    }
-
-    if(mFoldersWithUnread.count() > 0)
-    {
-      KMenu *newMessagesPopup = new KMenu();
-
-      QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
-      for(uint i=0; it != mFoldersWithUnread.end(); ++i)
-      {
-        kDebug(5006) << "Adding folder" << endl;
-        mPopupFolders.append( it.key() );
-        QString item = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
-        newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
-        ++it;
-      }
-
-      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New Messages In"),
-                                                  newMessagesPopup, mNewMessagePopupId, 3);
-
-      kDebug(5006) << "Folders added" << endl;
-    }
-
-    mPopupMenu->popup(e->globalPos());
+    contextMenu()->removeItem(mNewMessagePopupId);
   }
 
+  if(mFoldersWithUnread.count() > 0)
+  {
+    KMenu *newMessagesPopup = new KMenu();
+
+    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
+    for(uint i=0; it != mFoldersWithUnread.end(); ++i)
+    {
+      kDebug(5006) << "Adding folder" << endl;
+      mPopupFolders.append( it.key() );
+      QString item = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
+      newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
+      ++it;
+    }
+
+    mNewMessagePopupId = contextMenu()->insertItem(i18n("New Messages In"),
+                                                newMessagesPopup, mNewMessagePopupId, 3);
+
+    kDebug(5006) << "Folders added" << endl;
+  }
 }
 
 /**

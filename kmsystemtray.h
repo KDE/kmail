@@ -26,14 +26,11 @@
 
 #include <QPixmap>
 #include <QImage>
-//Added by qt3to4:
-#include <QMouseEvent>
 
 #include <time.h>
 
 class KMFolder;
 class QMouseEvent;
-class KMenu;
 class QPoint;
 
 /**
@@ -59,9 +56,10 @@ private slots:
   void foldersChanged();
   void selectedAccount(int);
   void updateNewMessages();
+  void slotActivated( QSystemTrayIcon::ActivationReason reason );
+  void slotContextMenuAboutToShow();
 
 protected:
-  void mousePressEvent(QMouseEvent *);
   bool mainWindowIsOnCurrentDesktop();
   void showKMail();
   void buildPopupMenu();
@@ -79,7 +77,6 @@ private:
   int mCount;
   int mNewMessagePopupId;
 
-  KMenu * mPopupMenu;
   QPixmap mDefaultIcon;
   QImage mLightIconImage;
 
