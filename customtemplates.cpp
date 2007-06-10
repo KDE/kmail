@@ -28,7 +28,6 @@
 #include <qtoolbox.h>
 #include <kdebug.h>
 #include <qfont.h>
-#include <q3dict.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
 #include <k3listview.h>
@@ -114,13 +113,7 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
 CustomTemplates::~CustomTemplates()
 {
-  Q3DictIterator<CustomTemplateItem> it(mItemList);
-  for ( ; it.current() ; ++it ) {
-    CustomTemplateItem *vitem = mItemList.take( it.currentKey() );
-    if ( vitem ) {
-      delete vitem;
-    }
-  }
+  qDeleteAll( mItemList );				// no auto-delete with QHash
 }
 
 QString CustomTemplates::indexToType( int index )
@@ -152,7 +145,7 @@ void CustomTemplates::slotTextChanged()
 void CustomTemplates::load()
 {
   QStringList list = GlobalSettings::self()->customTemplates();
-  for ( QStringList::iterator it = list.begin(); it != list.end(); ++it ) {
+  for ( QStringList::const_iterator it = list.begin(); it != list.end(); ++it ) {
     CTemplates t(*it);
     // QString typeStr = indexToType( t.type() );
     QString typeStr;
@@ -196,17 +189,19 @@ void CustomTemplates::save()
     list.append( (*lit)->text( 1 ) );
     ++lit;
   }
-  Q3DictIterator<CustomTemplateItem> it( mItemList );
-  for ( ; it.current() ; ++it ) {
-    // list.append( (*it)->mName );
-    CTemplates t( (*it)->mName );
-    QString &content = (*it)->mContent;
+
+  for ( CustomTemplateItemList::const_iterator it = mItemList.begin();
+	it != mItemList.end(); ++it)
+  {
+    const CustomTemplateItem *ti = it.value();
+    CTemplates t( ti->mName );
+    QString content = ti->mContent;
     if ( content.trimmed().isEmpty() ) {
       content = "%BLANK";
     }
     t.setContent( content );
-    t.setShortcut( (*it)->mShortcut.toString() );
-    t.setType( (*it)->mType );
+    t.setShortcut( ti->mShortcut.toString() );
+    t.setType( ti->mType );
     t.writeConfig();
   }
   GlobalSettings::self()->setCustomTemplates( list );
@@ -236,7 +231,7 @@ void CustomTemplates::slotAddClicked()
     if ( !vitem ) {
       // KShortcut::null() doesn't seem to be present, although documented
       // at http://developer.kde.org/documentation/library/cvs-api/kdelibs-apidocs/kdecore/html/classKShortcut.html
-//see slotShorcutChanged(). oh, and you should look up documentation on the english breakfast network!
+      // see slotShortcutChanged(). oh, and you should look up documentation on the english breakfast network!
 #ifdef __GNUC__
 #warning There must be a better way of doing this...
 #endif
@@ -291,7 +286,12 @@ void CustomTemplates::slotListSelectionChanged()
       connect( mEdit, SIGNAL( textChanged() ),
               this, SLOT( slotTextChanged( void ) ) );
 
-      mKeySequenceWidget->setEnabled( vitem->mType == TUniversal );
+      // I think the logic (originally 'vitem->mType==TUniversal') was inverted here:
+      // a key shortcut is only allowed for a specific type of template and not for
+      // a universal, as otherwise we won't know what sort of action to do when the
+      // key sequence is activated!
+      // This agrees with KMMainWidget::updateCustomTemplateMenus() -- marten
+      mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
     }
   } else {
     mEditFrame->setEnabled( false );
@@ -326,60 +326,69 @@ void CustomTemplates::slotTypeActivated( int index )
       mCurrentItem->setPixmap( 0, QPixmap() );
       break;
     };
-    mKeySequenceWidget->setEnabled( vitem->mType == TUniversal );
+
+    // see slotListSelectionChanged() above
+    mKeySequenceWidget->setEnabled( vitem->mType != TUniversal );
     emit changed();
   }
 }
 
-void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
-{
-  KShortcut sc( shortcut );
-  if ( shortcut.isEmpty() ) {
-    sc.setPrimary(QKeySequence());
-    sc.setAlternate(QKeySequence());
-  }
-  bool assign = true;
-  bool customused = false;
-
-//btw, all the problems with KShorcut that you have are because KShortcut is a subclass of
+//btw, all the problems with KShortcut that you have are because KShortcut is a subclass of
 //QList<QKeySequence>. I have contacted Simon Hausmann who did this. I reworked the API, but
 //the list thing wasn't me. Really :) -- ahartmetz
 
-#ifdef __GNUC__
-#warning logic bug, if shortcut is empty you will annoy the user with messageboxes. right?
-#endif
-  // check if shortcut is already used for custom templates
-  Q3DictIterator<CustomTemplateItem> it(mItemList);
-  for ( ; it.current() ; ++it ) {
-    if ( !mCurrentItem || (*it)->mName != mCurrentItem->text( 1 ) )
+void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
+{
+  bool assign = true;
+  bool customused = false;
+
+  KShortcut sc( shortcut );
+  if ( shortcut.isEmpty() )
+  {
+    sc.setPrimary(QKeySequence());
+    sc.setAlternate(QKeySequence());
+  }
+  else
+  {
+    // check if shortcut is already used for custom templates
+    for ( CustomTemplateItemList::iterator it = mItemList.begin();
+	  it != mItemList.end(); ++it )
     {
-      if ( (*it)->mShortcut == sc )
+      CustomTemplateItem *ti = it.value();
+      if ( !mCurrentItem || ti->mName != mCurrentItem->text( 1 ) )
       {
-        QString title( I18N_NOOP("Key Conflict") );
-        QString msg( I18N_NOOP("The selected shortcut is already used "
-              "for another custom template, "
-              "would you still like to continue with the assignment?" ) );
-        assign = ( KMessageBox::warningYesNo( this, msg, title )
-                    == KMessageBox::Yes );
-        if ( assign )
-        {
-          (*it)->mShortcut.setPrimary(QKeySequence());
-          (*it)->mShortcut.setAlternate(QKeySequence());
-        }
-        customused = true;
+	if ( ti->mShortcut == sc )
+	{
+#ifdef __GNUC__
+#warning Should use i18n() here and below, surely?
+#endif
+	  QString title( I18N_NOOP("Key Conflict") );
+	  QString msg( I18N_NOOP("The selected shortcut is already used "
+				 "for another custom template, "
+				 "would you still like to continue with the assignment?" ) );
+	  assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
+	  if ( assign )
+	  {
+	    ti->mShortcut.setPrimary(QKeySequence());
+	    ti->mShortcut.setAlternate(QKeySequence());
+	  }
+	  customused = true;
+	}
       }
     }
+
+    // check if shortcut is used somewhere else
+    if ( !customused && !kmkernel->getKMMainWidget()->shortcutIsValid( shortcut ) )
+    {
+      QString title( I18N_NOOP("Key Conflict") );
+      QString msg( I18N_NOOP("The selected shortcut is already in use, "
+			     "would you still like to continue with the assignment?" ) );
+      assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
+    }
   }
-  // check if shortcut is used somewhere else
-  if ( !customused && !shortcut.isEmpty() &&
-       !( kmkernel->getKMMainWidget()->shortcutIsValid( shortcut ) ) ) {
-    QString title( I18N_NOOP("Key Conflict") );
-    QString msg( I18N_NOOP("The selected shortcut is already used, "
-          "would you still like to continue with the assignment?" ) );
-    assign = ( KMessageBox::warningYesNo( this, msg, title )
-                == KMessageBox::Yes );
-  }
-  if ( assign ) {
+
+  if ( assign )
+  {
     //this is rather pointless, the signal is called keySequence*Changed* now. It is safe, though.
     mKeySequenceWidget->setKeySequence( shortcut );
     emit changed();

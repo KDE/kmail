@@ -20,18 +20,19 @@
 
 #include <config.h>
 
-#include <Q3Dict>
-
 #ifndef CUSTOMTEMPLATES_H
 #define CUSTOMTEMPLATES_H
+
+#include <QHash>
 
 #include "ui_customtemplates_base.h"
 #include "templatesinsertcommand.h"
 
-struct CustomTemplateItem;
-typedef Q3Dict<CustomTemplateItem> CustomTemplateItemList;
 class KShortcut;
 class Q3ListViewItem;
+
+struct CustomTemplateItem;
+typedef QHash<QString,CustomTemplateItem*> CustomTemplateItemList;
 
 class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 {

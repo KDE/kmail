@@ -3517,6 +3517,8 @@ void KMMainWidget::updateMessageActions()
     mForwardAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );
 
+    if (mCustomForwardActionMenu) mCustomForwardActionMenu->setEnabled( mass_actions );
+
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
@@ -3535,6 +3537,10 @@ void KMMainWidget::updateMessageActions()
     replyAllAction()->setEnabled( single_actions );
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
+
+    if (mCustomReplyActionMenu) mCustomReplyActionMenu->setEnabled( single_actions );
+    if (mCustomReplyAllActionMenu) mCustomReplyAllActionMenu->setEnabled( single_actions );
+
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );
 
@@ -3874,8 +3880,7 @@ void KMMainWidget::initializeFilterActions()
 
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )
 {
-  delete mFolderShortcutCommands[ folder->idString() ];
-  mFolderShortcutCommands.remove( folder->idString() );
+  delete mFolderShortcutCommands.take( folder->idString() );
 }
 
 //-----------------------------------------------------------------------------
