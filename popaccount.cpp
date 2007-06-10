@@ -915,6 +915,13 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   // otherwise stage is List Or Uidl
   QByteArray qdata = data.simplified(); // Workaround for Maillennium POP3/UNIBOX
   const int spc = qdata.indexOf( ' ' );
+
+  //Get rid of the null-terminating character if that exists.
+  //Because mUidsOfSeenMsgsDict doesn't have those either, comparing the
+  //values would otherwise fail.
+  if ( qdata.at( qdata.size() - 1 ) == 0 )
+    qdata.chop( 1 );
+  
   if (spc > 0) {
     if (stage == List) {
       QByteArray length = qdata.mid(spc+1);
