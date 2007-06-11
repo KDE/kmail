@@ -613,6 +613,8 @@ void AccountDialog::makePopAccountPage()
   mPop.passwordEdit->setEchoMode( QLineEdit::Password );
   label->setBuddy( mPop.passwordEdit );
   grid->addWidget( mPop.passwordEdit, 2, 1 );
+  connect( mPop.passwordEdit, SIGNAL( textEdited( const QString& ) ),
+           this, SLOT( slotPopPasswordChanged( const QString& ) ) );
 
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
@@ -1589,6 +1591,13 @@ void AccountDialog::slotPopEncryptionChanged(int id)
     checkHighest( mPop.authButtonGroup );
 }
 
+void AccountDialog::slotPopPasswordChanged(const QString& text)
+{
+  if ( text.isEmpty() )
+    mPop.storePasswordCheck->setCheckState( Qt::Unchecked );
+  else
+    mPop.storePasswordCheck->setCheckState( Qt::Checked );
+}
 
 void AccountDialog::slotImapEncryptionChanged(int id)
 {
