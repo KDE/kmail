@@ -120,6 +120,8 @@ namespace KMail {
     if( mStorePasswd != store && store )
       mPasswdDirty = true;
     mStorePasswd = store;
+    if ( !store )
+      mStorePasswdInConfig = false;
   }
 
   void NetworkAccount::setHost( const QString & host ) {
@@ -163,16 +165,8 @@ namespace KMail {
 
       if ( !encpasswd.isEmpty() ) {
         setPasswd( KStringHandler::obscure( encpasswd ), true );
-        // migrate to KWallet if available
-        if ( Wallet::isEnabled() ) {
-          config.deleteEntry( "pass" );
-          config.deleteEntry( "passwd" );
-          mPasswdDirty = true;
-          mStorePasswdInConfig = false;
-        } else {
-          mPasswdDirty = false; // set by setPasswd() on first read
-          mStorePasswdInConfig = true;
-        }
+        mPasswdDirty = false; // set by setPasswd() on first read
+        mStorePasswdInConfig = true;
       } else {
         // read password if wallet is already open, otherwise defer to on-demand loading
         if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
@@ -199,37 +193,56 @@ namespace KMail {
   void NetworkAccount::writeConfig( KConfigGroup & config ) {
     KMAccount::writeConfig( config );
 
-    config.writeEntry( "login", login() );
-    config.writeEntry( "store-passwd", storePasswd() );
-
     if ( storePasswd() ) {
       // write password to the wallet if possible and necessary
       bool passwdStored = false;
-      Wallet *wallet = kmkernel->wallet();
-      if ( mPasswdDirty ) {
-        if ( wallet && wallet->writePassword( "account-" + QString::number(mId), passwd() ) == 0 ) {
+
+      //If the password should be written to the wallet, do that
+      if ( !mStorePasswdInConfig ) {
+        Wallet *wallet = kmkernel->wallet();
+
+        //If the password is dirty, try to store it in the wallet
+        if ( mPasswdDirty ) {
+          if ( wallet && wallet->writePassword( "account-" + QString::number(mId), passwd() ) == 0 )
+            passwdStored = true;
+        }
+
+        //If the password isn't dirty, it is already stored in the wallet.
+        else if ( wallet )
           passwdStored = true;
+
+        //If the password is stored in the wallet, it isn't dirty or stored in the config
+        if ( passwdStored ) {
           mPasswdDirty = false;
           mStorePasswdInConfig = false;
         }
-      } else {
-        passwdStored = wallet ? !mStorePasswdInConfig /*already in the wallet*/ : config.hasKey("pass");
       }
+      else
+        passwdStored = config.hasKey("pass");
+
       // if wallet is not available, write to config file, since the account
       // manager deletes this group, we need to write it always
-      if ( !passwdStored && ( mStorePasswdInConfig || KMessageBox::warningYesNo( 0,
-           i18n("KWallet is not available. It is strongly recommended to use "
-                "KWallet for managing your passwords.\n"
-                "However, KMail can store the password in its configuration "
-                "file instead. The password is stored in an obfuscated format, "
-                "but should not be considered secure from decryption efforts "
-                "if access to the configuration file is obtained.\n"
-                "Do you want to store the password for account '%1' in the "
-                "configuration file?", name() ),
-           i18n("KWallet Not Available"),
-           KGuiItem( i18n("Store Password") ),
-           KGuiItem( i18n("Do Not Store Password") ) )
-           == KMessageBox::Yes ) ) {
+      bool writeInConfigNow = !passwdStored && mStorePasswdInConfig;
+      if ( !passwdStored && !mStorePasswdInConfig ) {
+        int answer = KMessageBox::warningYesNo( 0,
+            i18n("KWallet is not available. It is strongly recommended to use "
+                 "KWallet for managing your passwords.\n"
+                 "However, KMail can store the password in its configuration "
+                 "file instead. The password is stored in an obfuscated format, "
+                 "but should not be considered secure from decryption efforts "
+                 "if access to the configuration file is obtained.\n"
+                 "Do you want to store the password for account '%1' in the "
+                 "configuration file?", name() ),
+            i18n("KWallet Not Available"),
+            KGuiItem( i18n("Store Password") ),
+            KGuiItem( i18n("Do Not Store Password") ) );
+        if (answer == KMessageBox::Yes)
+          writeInConfigNow = true;
+        if (answer == KMessageBox::No)
+          mStorePasswd = false;
+      }
+
+      if ( writeInConfigNow ) {
         config.writeEntry( "pass", KStringHandler::obscure( passwd() ) );
         mStorePasswdInConfig = true;
       }
@@ -243,6 +256,13 @@ namespace KMail {
         wallet->removeEntry( "account-" + QString::number(mId) );
     }
 
+    // delete password from config file if it is stored in the wallet or
+    // not stored at all
+    if ( !mStorePasswdInConfig )
+      config.deleteEntry( "pass" );
+
+    config.writeEntry( "store-passwd", storePasswd() );
+    config.writeEntry( "login", login() );
     config.writeEntry( "host", host() );
     config.writeEntry( "port", static_cast<unsigned int>( port() ) );
     config.writeEntry( "auth", auth() );
