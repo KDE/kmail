@@ -94,7 +94,7 @@ KMSearch::~KMSearch()
     delete mSearchPattern;
 }
 
-bool KMSearch::write(QString location) const
+bool KMSearch::write(const QString &location) const
 {
     KConfig config(location);
     KConfigGroup group( &config, "Search Folder" );
@@ -108,7 +108,7 @@ bool KMSearch::write(QString location) const
     return true;
 }
 
-bool KMSearch::read(QString location)
+bool KMSearch::read(const QString &location)
 {
     KConfig config( location );
     KConfigGroup group( &config, "Search Folder" );
@@ -654,7 +654,7 @@ bool KMFolderSearch::isReadOnly() const
 }
 
 FolderJob* KMFolderSearch::doCreateJob(KMMessage*, FolderJob::JobType,
-                                     KMFolder*, QString, const AttachmentStrategy* ) const
+                                     KMFolder*, const QString&, const AttachmentStrategy* ) const
 {
     // Should never be called
     assert(0);

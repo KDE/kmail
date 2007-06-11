@@ -461,7 +461,7 @@ class KMComposeWin : public KMail::Composer
     void alignmentChanged( int );
 
   public: // kmkernel, attachmentlistview
-    bool addAttach( const KUrl url );
+    bool addAttach( const KUrl &url );
 
   public: // kmcommand
     /**

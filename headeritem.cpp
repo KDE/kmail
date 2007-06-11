@@ -555,7 +555,7 @@ QString HeaderItem::key( int column, bool /*ascending*/ ) const
   return mKey;
 }
 
-void HeaderItem::setTempKey( QString key ) {
+void HeaderItem::setTempKey( const QString &key ) {
   mKey = key;
 }
 

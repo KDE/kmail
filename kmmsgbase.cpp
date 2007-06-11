@@ -382,7 +382,7 @@ namespace {
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
-                                        QByteArray prefCharset )
+                                        const QByteArray& prefCharset )
 {
   if ( aStr.isEmpty() ) {
     return QString();

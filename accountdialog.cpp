@@ -90,7 +90,7 @@ namespace KMail {
 class ProcmailRCParser
 {
 public:
-  ProcmailRCParser(QString fileName = QString());
+  ProcmailRCParser(const QString &fileName = QString());
   ~ProcmailRCParser();
 
   QStringList getLockFilesList() const { return mLockFiles; }
@@ -109,16 +109,15 @@ protected:
   QHash<QByteArray, QString> mVars;
 };
 
-ProcmailRCParser::ProcmailRCParser(QString fname)
-  : mProcmailrc(fname),
+ProcmailRCParser::ProcmailRCParser(const QString &filename)
+  : mProcmailrc(filename),
     mStream(new QTextStream(&mProcmailrc))
 {
   // predefined
   mVars.insert( "HOME", QDir::homePath() );
 
-  if( fname.isEmpty() ) {
-    fname = QDir::homePath() + "/.procmailrc";
-    mProcmailrc.setFileName(fname);
+  if( filename.isEmpty() ) {
+    mProcmailrc.setFileName(QDir::homePath() + "/.procmailrc");
   }
 
   QRegExp lockFileGlobal("^LOCKFILE=", Qt::CaseSensitive);

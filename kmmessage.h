@@ -155,7 +155,7 @@ public:
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          QString selection=QString(), bool noQuote=false,
+                          const QString &selection=QString(), bool noQuote=false,
                           bool allowDecryption=true, bool selectionIsBody=false,
                           const QString &tmpl = QString() );
 

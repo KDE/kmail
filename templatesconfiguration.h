@@ -38,8 +38,8 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
     void saveToGlobal();
     void loadFromIdentity( uint id );
     void saveToIdentity( uint id );
-    void loadFromFolder( QString id, uint identity = 0 );
-    void saveToFolder( QString id );
+    void loadFromFolder( const QString &id, uint identity = 0 );
+    void saveToFolder( const QString &id );
 
     /** Do import settings from 'Phrases' configuration. */
     void loadFromPhrases();
@@ -68,7 +68,7 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
 
   protected:
 
-    QString strOrBlank( QString str );
+    QString strOrBlank( const QString &str );
 
 };
 

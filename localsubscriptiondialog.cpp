@@ -47,7 +47,7 @@
 namespace KMail {
 
 LocalSubscriptionDialog::LocalSubscriptionDialog( QWidget *parent, const QString &caption,
-    ImapAccountBase *acct, QString startPath )
+    ImapAccountBase *acct, const QString &startPath )
   : SubscriptionDialog( parent, caption, acct, startPath ),
     mAccount( acct )
 {

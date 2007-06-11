@@ -132,7 +132,7 @@ public slots:
   void removeFolderAux(KMFolder* obsoleteFolder, bool success);
 
   /** Called when the renaming of a folder is done */
-  void slotRenameDone( QString newName, bool success );
+  void slotRenameDone( const QString &newName, bool success );
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook

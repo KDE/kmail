@@ -2646,8 +2646,8 @@ void KMLoadPartsCommand::slotStart()
           curFolder->createJob( it.value(), FolderJob::tGetMessage,
                                 0, it.key()->msgPart().partSpecifier() );
         job->setCancellable( false );
-        connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
-                 this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
+        connect( job, SIGNAL(messageUpdated(KMMessage*, const QString&)),
+                 this, SLOT(slotPartRetrieved(KMMessage*, const QString&)) );
         job->start();
       } else
         kWarning(5006) << "KMLoadPartsCommand - msg has no parent" << endl;
@@ -2658,7 +2658,7 @@ void KMLoadPartsCommand::slotStart()
 }
 
 void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
-                                            QString partSpecifier )
+                                            const QString &partSpecifier )
 {
   DwBodyPart *part =
     msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );

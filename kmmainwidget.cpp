@@ -714,7 +714,7 @@ void KMMainWidget::createWidgets(void)
   mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
                         mHeaders, SLOT( selectCurrentMessage() ) );
 
-  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
+  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );

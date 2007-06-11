@@ -269,7 +269,7 @@ void saveMsgMetaData( KMMessage* msg, ulong uid = 0 );
 /**
 * Splits a uid-set into single uids
 */
-static QList<ulong> splitSets(const QString);
+static QList<ulong> splitSets(const QString&);
 
 virtual void ignoreJobsForMessage( KMMessage* );
 
@@ -321,7 +321,7 @@ virtual void search( const KMSearchPattern*, quint32 serNum );
 virtual bool isMoveable() const;
 
 /** Initialize this storage from another one. Used when creating a child folder */
-void initializeFrom( KMFolderImap* parent, QString path, QString mimeType );
+void initializeFrom( KMFolderImap* parent, const QString &path, const QString &mimeType );
 
 signals:
 void folderComplete(KMFolderImap *folder, bool success);
@@ -410,7 +410,7 @@ void slotSearchDone( quint32 serNum, const KMSearchPattern* pattern, bool matche
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                                  KMFolder *folder, QString partSpecifier,
+                                  KMFolder *folder, const QString &partSpecifier,
                                   const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
@@ -422,7 +422,7 @@ protected:
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
 
-  void setChildrenState( QString attributes );
+  void setChildrenState( const QString &attributes );
 
   /** Create or find the INBOX and initialize it */
   void initInbox();

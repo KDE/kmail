@@ -688,8 +688,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(msgHeaderChanged(KMFolder*,int)));
       disconnect(mFolder, SIGNAL(msgAdded(int)),
                  this, SLOT(msgAdded(int)));
-      disconnect(mFolder, SIGNAL( msgRemoved( int, QString ) ),
-                 this, SLOT( msgRemoved( int, QString ) ) );
+      disconnect(mFolder, SIGNAL( msgRemoved( int, const QString& ) ),
+                 this, SLOT( msgRemoved( int, const QString& ) ) );
       disconnect(mFolder, SIGNAL(changed()),
                  this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(cleared()),
@@ -724,8 +724,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               this, SLOT(msgHeaderChanged(KMFolder*,int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
               this, SLOT(msgAdded(int)));
-      connect(mFolder, SIGNAL(msgRemoved(int,QString)),
-              this, SLOT(msgRemoved(int,QString)));
+      connect(mFolder, SIGNAL(msgRemoved(int,const QString&)),
+              this, SLOT(msgRemoved(int,const QString&)));
       connect(mFolder, SIGNAL(changed()),
               this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(cleared()),
@@ -1051,7 +1051,7 @@ void KMHeaders::msgAdded(int id)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::msgRemoved(int id, QString msgId )
+void KMHeaders::msgRemoved(int id, const QString &msgId )
 {
   if (!updatesEnabled()) return;
 

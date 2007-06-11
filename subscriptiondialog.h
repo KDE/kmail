@@ -50,7 +50,7 @@ namespace KMail {
       SubscriptionDialogBase( QWidget *parent,
                               const QString &caption,
                               KAccount* acct,
-                              QString startPath = QString() );
+                              const QString &startPath = QString() );
       virtual ~SubscriptionDialogBase() {}
 
       void show();
@@ -130,7 +130,7 @@ namespace KMail {
       SubscriptionDialog( QWidget *parent,
                           const QString &caption,
                           KAccount* acct,
-                          QString startPath = QString() );
+                          const QString & startPath = QString() );
       virtual ~SubscriptionDialog();
      protected:
       /** reimpl */

@@ -823,7 +823,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
 
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
-                                   QString selection /*.clear() */,
+                                   const QString &selection /*.clear() */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
                                    bool selectionIsBody /* = false */,

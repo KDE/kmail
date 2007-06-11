@@ -74,7 +74,7 @@ protected slots:
 
 signals:
   /** Emitted when the job is done, check the success bool */
-  void renameDone( QString newName, bool success );
+  void renameDone( const QString& newName, bool success );
 
 protected:
   FolderStorage* mStorage;

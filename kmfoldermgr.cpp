@@ -533,8 +533,8 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
                                 KMFolderDir *newParent )
 {
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
-  connect( job, SIGNAL( renameDone( QString, bool ) ),
-      this, SLOT( slotRenameDone( QString, bool ) ) );
+  connect( job, SIGNAL( renameDone( const QString&, bool ) ),
+      this, SLOT( slotRenameDone( const QString&, bool ) ) );
   job->start();
 }
 
@@ -547,7 +547,7 @@ void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::slotRenameDone( QString, bool success )
+void KMFolderMgr::slotRenameDone( const QString&, bool success )
 {
   kDebug(5006) << k_funcinfo << success << endl;
 }

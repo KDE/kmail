@@ -58,8 +58,8 @@ public:
   KMSearch(QObject * parent = 0, const char * name = 0);
   ~KMSearch();
 
-  bool write(QString location) const;
-  bool read(QString location);
+  bool write(const QString &location) const;
+  bool read(const QString &location);
   bool recursive() const { return mRecursive; }
   void setRecursive(bool recursive) { if (running()) stop(); mRecursive = recursive; }
   KMFolder* root() const { return mRoot; }
@@ -188,7 +188,7 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
-                                 KMFolder *folder, QString partSpecifier,
+                                 KMFolder *folder, const QString &partSpecifier,
                                  const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob(QList<KMMessage*>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;

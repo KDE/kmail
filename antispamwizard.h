@@ -137,11 +137,13 @@ namespace KMail {
       {
         public:
           SpamToolConfig() {}
-          SpamToolConfig( QString toolId, int configVersion, int prio,
-                        QString name, QString exec, QString url, QString filter,
-                        QString detection, QString spam, QString ham,
-						QString noSpam, QString header, QString pattern,
-						QString pattern2, QString serverPattern,
+          SpamToolConfig( const QString &toolId, int configVersion, int prio,
+                        const QString &name, const QString &exec,
+                        const QString &url, const QString &filter,
+                        const QString &detection, const QString &spam,
+                        const QString &ham,const QString &noSpam,
+                        const QString &header, const QString &pattern,
+                        const QString &pattern2, const QString &serverPattern,
                         bool detectionOnly, bool regExp, bool bayesFilter,
                         bool tristateDetection, WizardMode type );
 

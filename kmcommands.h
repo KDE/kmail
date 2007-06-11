@@ -796,7 +796,7 @@ public:
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
 public slots:
-  void slotPartRetrieved( KMMessage* msg, QString partSpecifier );
+  void slotPartRetrieved( KMMessage* msg, const QString &partSpecifier );
 
 signals:
   void partsRetrieved();

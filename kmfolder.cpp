@@ -107,8 +107,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   connect( mStorage, SIGNAL( nameChanged() ), SIGNAL( nameChanged() ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
            SIGNAL( msgRemoved( KMFolder*, quint32 ) ) );
-  connect( mStorage, SIGNAL( msgRemoved( int, QString ) ),
-           SIGNAL( msgRemoved( int, QString ) ) );
+  connect( mStorage, SIGNAL( msgRemoved( int, const QString& ) ),
+           SIGNAL( msgRemoved( int, const QString& ) ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder* ) ),
            SIGNAL( msgRemoved( KMFolder* ) ) );
   connect( mStorage, SIGNAL( msgAdded( int ) ), SIGNAL( msgAdded( int ) ) );
@@ -336,7 +336,7 @@ void KMFolder::ignoreJobsForMessage( KMMessage* m )
 }
 
 FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder, QString partSpecifier,
+                                KMFolder *folder, const QString &partSpecifier,
                                 const AttachmentStrategy *as ) const
 {
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );

@@ -374,8 +374,8 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
     connect( mIconsCheckBox, SIGNAL(toggled(bool)),
                     mUnreadIconLabel, SLOT(setEnabled(bool)) );
 
-    connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
-                    this, SLOT(slotChangeIcon(QString)) );
+    connect( mNormalIconButton, SIGNAL(iconChanged(const QString&)),
+                    this, SLOT(slotChangeIcon(const QString&)) );
 
     //end icons group
     addLine( this, topLayout);
@@ -738,7 +738,7 @@ bool FolderDialogGeneralTab::save()
   return true;
 }
 
-void FolderDialogGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
+void FolderDialogGeneralTab::slotChangeIcon( const QString &icon )
 {
     mUnreadIconButton->setIcon( icon );
 }

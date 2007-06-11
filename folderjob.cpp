@@ -44,7 +44,7 @@ namespace KMail {
 
 //----------------------------------------------------------------------------
 FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
-                          QString partSpecifier )
+                          const QString &partSpecifier )
   : mType( jt ), mSrcFolder( 0 ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
     mErrorCode( 0 ),
     mPassiveDestructor( false ), mStarted( false )

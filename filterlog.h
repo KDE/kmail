@@ -120,7 +120,7 @@ namespace KMail {
       /** dump the log - for testing purposes */
       void dump();
       /** save the log to a file - returns true if okay */
-      bool saveToFile( QString fileName );
+      bool saveToFile( const QString &fileName );
       
       /** destructor */
       virtual ~FilterLog();

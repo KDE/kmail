@@ -2320,7 +2320,7 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::addAttach( const KUrl aUrl )
+bool KMComposeWin::addAttach( const KUrl &aUrl )
 {
   if ( !aUrl.isValid() ) {
     KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"

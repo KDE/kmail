@@ -441,9 +441,9 @@ partNode* partNode::findTypeNot( int type, int subType, bool deep, bool wide )
 
 void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
                                  KMMimePartTree*     mimePartTree,
-                                 QString labelDescr,
-                                 QString labelCntType,
-                                 QString labelEncoding,
+                                 const QString &labelDescr,
+                                 const QString &labelCntType,
+                                 const QString &labelEncoding,
                                  KIO::filesize_t size,
                                  bool revertOrder )
 {

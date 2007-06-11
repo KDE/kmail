@@ -346,7 +346,7 @@ int KMFolderMaildir::compact( bool silent )
 //-------------------------------------------------------------
 FolderJob*
 KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                              KMFolder *folder, QString, const AttachmentStrategy* ) const
+                              KMFolder *folder,  const QString&, const AttachmentStrategy* ) const
 {
   MaildirJob *job = new MaildirJob( msg, jt, folder );
   job->setParentFolder( this );

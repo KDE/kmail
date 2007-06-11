@@ -57,21 +57,21 @@ namespace KMail {
 
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
-    QString partSpecifier, const AttachmentStrategy *as )
+    const QString &partSpecifier, const AttachmentStrategy *as )
   : FolderJob( msg, jt, folder? folder->folder() : 0, partSpecifier ),
     mAttachmentStrategy( as ), mParentProgressItem(0)
 {
 }
 
 //-----------------------------------------------------------------------------
-ImapJob::ImapJob( QList<KMMessage*>& msgList, QString sets, JobType jt,
+ImapJob::ImapJob( QList<KMMessage*>& msgList, const QString &sets, JobType jt,
                   KMFolderImap* folder )
   : FolderJob( msgList, sets, jt, folder? folder->folder() : 0 ),
     mAttachmentStrategy ( 0 ), mParentProgressItem(0)
 {
 }
 
-void ImapJob::init( JobType jt, QString sets, KMFolderImap *folder,
+void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
                     QList<KMMessage*> &msgList )
 {
   mJob = 0;

@@ -65,8 +65,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mEdit, SIGNAL( textChanged() ),
            this, SLOT( slotTextChanged( void ) ) );
 
-  connect( mInsertCommand, SIGNAL( insertCommand(QString, int) ),
-           this, SLOT( slotInsertCommand(QString, int) ) );
+  connect( mInsertCommand, SIGNAL( insertCommand(const QString&, int) ),
+           this, SLOT( slotInsertCommand(const QString&, int) ) );
 
   connect( mAdd, SIGNAL( clicked() ),
            this, SLOT( slotAddClicked() ) );
@@ -212,7 +212,7 @@ void CustomTemplates::save()
     kmkernel->getKMMainWidget()->updateCustomTemplateMenus();
 }
 
-void CustomTemplates::slotInsertCommand( QString cmd, int adjustCursor )
+void CustomTemplates::slotInsertCommand( const QString &cmd, int adjustCursor )
 {
   int para, index;
   mEdit->getCursorPosition( &para, &index );

@@ -229,7 +229,7 @@ public slots:
   /** For when the message with the given message id has been added to a folder */
   void msgAdded(int);
   /** For when the message with the given id has been removed for a folder */
-  void msgRemoved( int, QString );
+  void msgRemoved( int, const QString& );
   /** Make the next header visible scrolling if necessary */
   void nextMessage();
   /** Same as nextMessage() but don't clear the current selection */

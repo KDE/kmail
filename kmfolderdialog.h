@@ -118,7 +118,7 @@ public:
   virtual bool save();
 
 private slots:
-  void slotChangeIcon( QString icon );
+  void slotChangeIcon( const QString &icon );
   /*
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities

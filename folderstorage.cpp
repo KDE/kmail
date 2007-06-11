@@ -567,7 +567,7 @@ bool FolderStorage::isMessage(int idx)
 
 //-----------------------------------------------------------------------------
 FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder, QString partSpecifier,
+                                KMFolder *folder, const QString &partSpecifier,
                                 const AttachmentStrategy *as ) const
 {
   FolderJob * job = doCreateJob( msg, jt, folder, partSpecifier, as );

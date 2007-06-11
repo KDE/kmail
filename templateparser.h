@@ -44,7 +44,7 @@ class TemplateParser : public QObject
     };
 
   public:
-    TemplateParser( KMMessage *amsg, const Mode amode, const QString aselection,
+    TemplateParser( KMMessage *amsg, const Mode amode, const QString &aselection,
                     bool aSmartQuote, bool anoQuote, bool aallowDecryption,
                     bool aselectionIsBody );
 

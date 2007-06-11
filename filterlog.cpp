@@ -143,7 +143,7 @@ void FilterLog::checkLogSize()
 }
 
 
-bool FilterLog::saveToFile( QString fileName )
+bool FilterLog::saveToFile( const QString &fileName )
 {
     QFile file( fileName );
     if( file.open( QIODevice::WriteOnly ) ) {

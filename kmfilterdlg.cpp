@@ -319,8 +319,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
 
-    connect( mFilterActionIconButton, SIGNAL( iconChanged( QString ) ),
-             this, SLOT( slotFilterActionIconChanged( QString ) ) );
+    connect( mFilterActionIconButton, SIGNAL( iconChanged( const QString& ) ),
+             this, SLOT( slotFilterActionIconChanged( const QString& ) ) );
   }
 
   // reset all widgets here
@@ -547,7 +547,7 @@ void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
     mFilter->setConfigureToolbar( aChecked );
 }
 
-void KMFilterDlg::slotFilterActionIconChanged( QString icon )
+void KMFilterDlg::slotFilterActionIconChanged( const QString &icon )
 {
   if ( mFilter )
     mFilter->setIcon( icon );

@@ -184,7 +184,7 @@ namespace KMail {
     kDebug(5006) << "~Vacation()" << endl;
   }
 
-  static inline QString dotstuff( QString s ) {
+  static inline QString dotstuff( QString s ) { // krazy:exclude=passbyvalue
     if ( s.startsWith( "." ) )
       return '.' + s.replace( "\n.", "\n.." );
     else

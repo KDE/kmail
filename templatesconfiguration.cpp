@@ -62,7 +62,7 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
   connect( lineEdit_quote, SIGNAL( textChanged( const QString & ) ),
            this, SLOT( slotTextChanged( void ) ) );
 
-  connect( mInsertCommand, SIGNAL( insertCommand(QString, int) ),
+  connect( mInsertCommand, SIGNAL( insertCommand(const QString&, int) ),
            this, SLOT( slotInsertCommand(const QString &, int) ) );
 
   QString help;
@@ -229,7 +229,7 @@ void TemplatesConfiguration::saveToIdentity( uint id )
   t.writeConfig();
 }
 
-void TemplatesConfiguration::loadFromFolder( QString id, uint identity )
+void TemplatesConfiguration::loadFromFolder( const QString &id, uint identity )
 {
   Templates t( id );
   Templates* tid = 0;
@@ -303,7 +303,7 @@ void TemplatesConfiguration::loadFromFolder( QString id, uint identity )
   delete(tid);
 }
 
-void TemplatesConfiguration::saveToFolder( QString id )
+void TemplatesConfiguration::saveToFolder( const QString &id )
 {
   Templates t( id );
 
@@ -555,7 +555,7 @@ QString TemplatesConfiguration::defaultQuoteString() {
   return "> ";
 }
 
-QString TemplatesConfiguration::strOrBlank( QString str ) {
+QString TemplatesConfiguration::strOrBlank( const QString &str ) {
   if ( str.trimmed().isEmpty() ) {
     return QString( "%BLANK" );
   }

@@ -54,7 +54,7 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
   public slots:
 
-    void slotInsertCommand( QString cmd, int adjustCursor = 0 );
+    void slotInsertCommand( const QString &cmd, int adjustCursor = 0 );
 
     void slotTextChanged();
 

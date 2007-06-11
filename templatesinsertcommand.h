@@ -48,7 +48,7 @@ class TemplatesInsertCommand : public QPushButton
 
   signals:
     void insertCommand( TemplatesInsertCommand::Command cmd );
-    void insertCommand( QString cmd, int adjustCursor = 0 );
+    void insertCommand( const QString& cmd, int adjustCursor = 0 );
 
   public slots:
     void slotClicked();

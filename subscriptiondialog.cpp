@@ -45,7 +45,7 @@
 namespace KMail {
 
 SubscriptionDialogBase::SubscriptionDialogBase( QWidget *parent, const QString &caption,
-    KAccount *acct, QString startPath )
+    KAccount *acct, const QString &startPath )
   : KSubscription( parent, caption, acct, User1, QString(), false ),
     mStartPath( startPath ), mSubscribed( false ), mForceSubscriptionEnable( false)
 {
@@ -303,7 +303,7 @@ void SubscriptionDialogBase::loadingComplete()
 //------------------------------------------------------------------------------
 
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
-    KAccount *acct, QString startPath )
+    KAccount *acct, const QString & startPath )
   : SubscriptionDialogBase( parent, caption, acct, startPath )
 {
 }

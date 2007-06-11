@@ -147,9 +147,9 @@ public:
 
   QStringList folderList() const;
   QDBusObjectPath getFolder( const QString& vpath );
-  void selectFolder( QString folder );
+  void selectFolder( const QString &folder );
   int timeOfLastMessageCountChange() const;
-  virtual bool showMail( quint32 serialNumber, QString messageId );
+  virtual bool showMail( quint32 serialNumber, const QString &messageId );
   virtual QString getFrom( quint32 serialNumber );
   virtual QString debugScheduler();
   virtual QString debugSernum( quint32 serialNumber );

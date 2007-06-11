@@ -453,7 +453,7 @@ void KMAccount::checkDone( bool newmail, CheckStatus status )
 }
 
 //-----------------------------------------------------------------------------
-void KMAccount::addToNewInFolder( QString folderId, int num )
+void KMAccount::addToNewInFolder( const QString &folderId, int num )
 {
   if ( mNewInFolder.find( folderId ) == mNewInFolder.end() )
     mNewInFolder[folderId] = num;

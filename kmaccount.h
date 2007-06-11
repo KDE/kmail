@@ -286,7 +286,7 @@ protected:
    * @param folderId the id of the folder
    * @param num the number of new message in this folder
    */
-  void addToNewInFolder( QString folderId, int num );
+  void addToNewInFolder( const QString &folderId, int num );
 
 protected:
   QString       mPrecommand;

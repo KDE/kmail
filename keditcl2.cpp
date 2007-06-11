@@ -967,8 +967,7 @@ QString KEdReplace::getReplaceText()
 }
 
 
-/* antlarr: KDE 4: make it const QString & */
-void KEdReplace::setText(QString string)
+void KEdReplace::setText(const QString &string)
 {
   d->searchCombo->setEditText(string);
   d->searchCombo->lineEdit()->selectAll();

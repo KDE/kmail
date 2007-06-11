@@ -105,7 +105,7 @@ public:
 
     QString 	getText();
     QString 	getReplaceText();
-    void 	setText(QString);
+    void 	setText(const QString&);
 
     /**
      * @returns the combobox containing the history of searches. Can be used

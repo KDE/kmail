@@ -102,7 +102,7 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  QString partSpecifier, const AttachmentStrategy *as ) const;
+                                  const QString &partSpecifier, const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0

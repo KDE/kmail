@@ -366,7 +366,7 @@ protected slots:
   void slotConfigureShortcutButtonToggled( bool aChecked );
   void slotCapturedShortcutChanged( const QKeySequence& );
   void slotConfigureToolbarButtonToggled( bool aChecked );
-  void slotFilterActionIconChanged( QString icon );
+  void slotFilterActionIconChanged( const QString &icon );
   void slotReset();
   void slotUpdateFilter();
   void slotSaveSize();

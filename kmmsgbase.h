@@ -243,7 +243,7 @@ public:
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
   static QString decodeRFC2047String( const QByteArray &aStr,
-                                      QByteArray prefCharset = "" );
+                                      const QByteArray &prefCharset = "" );
 
   /** Encode given string as described in RFC2047:
     using quoted-printable. */

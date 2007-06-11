@@ -72,7 +72,7 @@ public:
 		    CriticalError = 0x8 };
   /** Initialize filter action with (english) name @p aName and
       (internationalized) label @p aLabel. */
-  KMFilterAction(const char* aName, const QString aLabel);
+  KMFilterAction(const char* aName, const QString &aLabel);
   virtual ~KMFilterAction();
 
   /** Returns nationalized label, ie. the one which is presented in
@@ -125,7 +125,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr) = 0;
+  virtual void argsFromString(const QString &argsStr) = 0;
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const = 0;
@@ -181,11 +181,11 @@ class KMFilterActionWithNone : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithNone(const char* aName, const QString aLabel);
+  KMFilterActionWithNone(const char* aName, const QString &aLabel);
 
   /** Read extra arguments from given string. This type of filter
       action has no parameters, so this is a no-op. */
-  virtual void argsFromString(const QString) {};
+  virtual void argsFromString(const QString &argStr) {};
 
   /** Return extra arguments as string. Must not contain newlines. We
       return QString(), because we have no parameter. */
@@ -222,7 +222,7 @@ class KMFilterActionWithString : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithString(const char* aName, const QString aLabel);
+  KMFilterActionWithString(const char* aName, const QString &aLabel);
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -248,7 +248,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
@@ -286,7 +286,7 @@ class KMFilterActionWithUOID : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithUOID(const char* aName, const QString aLabel);
+  KMFilterActionWithUOID(const char* aName, const QString &aLabel);
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -295,7 +295,7 @@ public:
   virtual bool isEmpty() const { return mParameter == 0; }
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
@@ -339,7 +339,7 @@ class KMFilterActionWithStringList : public KMFilterActionWithString
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithStringList(const char* aName, const QString aLabel);
+  KMFilterActionWithStringList(const char* aName, const QString &aLabel);
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */
@@ -359,7 +359,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
 protected:
   QStringList mParameterList;
@@ -392,7 +392,7 @@ class KMFilterActionWithFolder : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithFolder(const char* aName, const QString aLabel);
+  KMFilterActionWithFolder(const char* aName, const QString &aLabel);
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -418,7 +418,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
@@ -463,7 +463,7 @@ class KMFilterActionWithAddress : public KMFilterActionWithString
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithAddress(const char* aName, const QString aLabel);
+  KMFilterActionWithAddress(const char* aName, const QString &aLabel);
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */
@@ -514,7 +514,7 @@ class KMFilterActionWithUrl : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-    KMFilterActionWithUrl(const char* aName, const QString aLabel);
+    KMFilterActionWithUrl(const char* aName, const QString &aLabel);
     ~KMFilterActionWithUrl();
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -540,7 +540,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
@@ -559,7 +559,7 @@ class KMFilterActionWithCommand : public KMFilterActionWithUrl
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithCommand(const char* aName, const QString aLabel);
+  KMFilterActionWithCommand(const char* aName, const QString &aLabel);
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */
@@ -595,7 +595,7 @@ class KMFilterActionWithTest : public KMFilterAction
 public:
   /** Initialize filter action with (english) name @p aName. This is
       the name under which this action is known in the config file. */
-  KMFilterActionWithTest(const char* aName, const QString aLabel);
+  KMFilterActionWithTest(const char* aName, const QString &aLabel);
     ~KMFilterActionWithTest();
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -621,7 +621,7 @@ public:
   virtual void clearParamWidget(QWidget* paramWidget) const;
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr);
+  virtual void argsFromString(const QString &argsStr);
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;

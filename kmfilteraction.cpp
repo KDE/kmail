@@ -55,7 +55,7 @@ using KMail::RegExpLineEdit;
 //
 //=============================================================================
 
-KMFilterAction::KMFilterAction( const char* aName, const QString aLabel )
+KMFilterAction::KMFilterAction( const char* aName, const QString &aLabel )
 {
   mName = aName;
   mLabel = aLabel;
@@ -145,7 +145,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 //
 //=============================================================================
 
-KMFilterActionWithNone::KMFilterActionWithNone( const char* aName, const QString aLabel )
+KMFilterActionWithNone::KMFilterActionWithNone( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
 }
@@ -162,12 +162,12 @@ const QString KMFilterActionWithNone::displayString() const
 //
 //=============================================================================
 
-KMFilterActionWithUOID::KMFilterActionWithUOID( const char* aName, const QString aLabel )
+KMFilterActionWithUOID::KMFilterActionWithUOID( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel ), mParameter( 0 )
 {
 }
 
-void KMFilterActionWithUOID::argsFromString( const QString argsStr )
+void KMFilterActionWithUOID::argsFromString( const QString &argsStr )
 {
   mParameter = argsStr.trimmed().toUInt();
 }
@@ -191,7 +191,7 @@ const QString KMFilterActionWithUOID::displayString() const
 //
 //=============================================================================
 
-KMFilterActionWithString::KMFilterActionWithString( const char* aName, const QString aLabel )
+KMFilterActionWithString::KMFilterActionWithString( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
 }
@@ -218,7 +218,7 @@ void KMFilterActionWithString::clearParamWidget( QWidget* paramWidget ) const
   ((QLineEdit*)paramWidget)->clear();
 }
 
-void KMFilterActionWithString::argsFromString( const QString argsStr )
+void KMFilterActionWithString::argsFromString( const QString &argsStr )
 {
   mParameter = argsStr;
 }
@@ -241,7 +241,7 @@ const QString KMFilterActionWithString::displayString() const
 //
 //=============================================================================
 
-KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, const QString aLabel )
+KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, const QString &aLabel )
   : KMFilterActionWithString( aName, aLabel )
 {
 }
@@ -271,7 +271,7 @@ void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) cons
   ((QComboBox*)paramWidget)->setCurrentIndex(0);
 }
 
-void KMFilterActionWithStringList::argsFromString( const QString argsStr )
+void KMFilterActionWithStringList::argsFromString( const QString &argsStr )
 {
   int idx = mParameterList.indexOf( argsStr );
   if ( idx < 0 ) {
@@ -288,7 +288,7 @@ void KMFilterActionWithStringList::argsFromString( const QString argsStr )
 //
 //=============================================================================
 
-KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QString aLabel )
+KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
   mFolder = 0;
@@ -321,7 +321,7 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
   ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsFolder() );
 }
 
-void KMFilterActionWithFolder::argsFromString( const QString argsStr )
+void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
   mFolder = kmkernel->folderMgr()->findIdString( argsStr );
   if (!mFolder)
@@ -371,7 +371,7 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
 //
 //=============================================================================
 
-KMFilterActionWithAddress::KMFilterActionWithAddress( const char* aName, const QString aLabel )
+KMFilterActionWithAddress::KMFilterActionWithAddress( const char* aName, const QString &aLabel )
   : KMFilterActionWithString( aName, aLabel )
 {
 }
@@ -404,7 +404,7 @@ void KMFilterActionWithAddress::clearParamWidget( QWidget* paramWidget ) const
 //
 //=============================================================================
 
-KMFilterActionWithCommand::KMFilterActionWithCommand( const char* aName, const QString aLabel )
+KMFilterActionWithCommand::KMFilterActionWithCommand( const char* aName, const QString &aLabel )
   : KMFilterActionWithUrl( aName, aLabel )
 {
 }
@@ -759,7 +759,7 @@ public:
 
   virtual bool isEmpty() const { return false; }
 
-  virtual void argsFromString( const QString argsStr );
+  virtual void argsFromString( const QString &argsStr );
   virtual const QString argsAsString() const;
   virtual const QString displayString() const;
 };
@@ -821,7 +821,7 @@ bool KMFilterActionSetStatus::requiresBody(KMMsgBase*) const
   return false;
 }
 
-void KMFilterActionSetStatus::argsFromString( const QString argsStr )
+void KMFilterActionSetStatus::argsFromString( const QString &argsStr )
 {
   if ( argsStr.length() == 1 ) {
     MessageStatus status;
@@ -868,7 +868,7 @@ public:
 
   virtual bool isEmpty() const { return false; }
 
-  virtual void argsFromString( const QString argsStr );
+  virtual void argsFromString( const QString &argsStr );
   virtual const QString argsAsString() const;
   virtual const QString displayString() const;
 };
@@ -917,7 +917,7 @@ KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMMessage* msg
   return GoOn;
 }
 
-void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
+void KMFilterActionFakeDisposition::argsFromString( const QString &argsStr )
 {
   if ( argsStr.length() == 1 ) {
     if ( argsStr[0] == 'I' ) { // ignore
@@ -1030,7 +1030,7 @@ public:
   virtual void clearParamWidget( QWidget* paramWidget ) const;
 
   virtual const QString argsAsString() const;
-  virtual void argsFromString( const QString argsStr );
+  virtual void argsFromString( const QString &argsStr );
 
   virtual const QString displayString() const;
 
@@ -1138,7 +1138,7 @@ const QString KMFilterActionAddHeader::displayString() const
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
-void KMFilterActionAddHeader::argsFromString( const QString argsStr )
+void KMFilterActionAddHeader::argsFromString( const QString &argsStr )
 {
   QStringList l = argsStr.split( '\t' );
   QString s;
@@ -1174,7 +1174,7 @@ public:
   virtual void clearParamWidget( QWidget* paramWidget ) const;
 
   virtual const QString argsAsString() const;
-  virtual void argsFromString( const QString argsStr );
+  virtual void argsFromString( const QString &argsStr );
 
   virtual const QString displayString() const;
 
@@ -1315,7 +1315,7 @@ const QString KMFilterActionRewriteHeader::displayString() const
   return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
-void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
+void KMFilterActionRewriteHeader::argsFromString( const QString &argsStr )
 {
   QStringList l = argsStr.split( '\t' );
   QString s;
@@ -1776,7 +1776,7 @@ private:
   Phonon::AudioPlayer* mPlayer;
 };
 
-KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString aLabel )
+KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
 }
@@ -1808,7 +1808,7 @@ void KMFilterActionWithTest::clearParamWidget( QWidget* paramWidget ) const
   ((KMSoundTestWidget*)paramWidget)->clear();
 }
 
-void KMFilterActionWithTest::argsFromString( const QString argsStr )
+void KMFilterActionWithTest::argsFromString( const QString &argsStr )
 {
   mParameter = argsStr;
 }
@@ -1855,7 +1855,7 @@ bool KMFilterActionExecSound::requiresBody(KMMsgBase*) const
   return false;
 }
 
-KMFilterActionWithUrl::KMFilterActionWithUrl( const char* aName, const QString aLabel )
+KMFilterActionWithUrl::KMFilterActionWithUrl( const char* aName, const QString &aLabel )
   : KMFilterAction( aName, aLabel )
 {
 }
@@ -1887,7 +1887,7 @@ void KMFilterActionWithUrl::clearParamWidget( QWidget* paramWidget ) const
   ((KUrlRequester*)paramWidget)->clear();
 }
 
-void KMFilterActionWithUrl::argsFromString( const QString argsStr )
+void KMFilterActionWithUrl::argsFromString( const QString &argsStr )
 {
   mParameter = argsStr;
 }

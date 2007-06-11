@@ -1007,8 +1007,8 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
-                                   QString mimeType )
+void KMFolderImap::initializeFrom( KMFolderImap* parent, const QString &folderPath,
+                                   const QString &mimeType )
 {
   setAccount( parent->account() );
   setImapPath( folderPath );
@@ -1017,7 +1017,7 @@ void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::setChildrenState( QString attributes )
+void KMFolderImap::setChildrenState( const QString &attributes )
 {
   // update children state
   if ( attributes.contains( "haschildren", Qt::CaseSensitive ) )
@@ -1624,7 +1624,7 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
 //-------------------------------------------------------------
 FolderJob*
 KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                           KMFolder *folder, QString partSpecifier,
+                           KMFolder *folder, const QString &partSpecifier,
                            const AttachmentStrategy *as ) const
 {
   KMFolderImap* kmfi = folder? dynamic_cast<KMFolderImap*>(folder->storage()) : 0;
@@ -1646,10 +1646,11 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
     return job;
   } else {
     // download complete message or part (attachment)
+    ImapJob *job;
     if ( partSpecifier == "STRUCTURE" ) // hide from outside
-      partSpecifier.clear();
-
-    ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
+      job = new ImapJob( msg, jt, kmfi, QString() );
+    else
+      job = new ImapJob( msg, jt, kmfi, partSpecifier );
     job->setParentFolder( this );
     return job;
   }
@@ -2130,7 +2131,7 @@ int KMFolderImap::create()
   return KMFolderMbox::create();
 }
 
-QList<ulong> KMFolderImap::splitSets(const QString uids)
+QList<ulong> KMFolderImap::splitSets(const QString &uids)
 {
   QList<ulong> uidlist;
 

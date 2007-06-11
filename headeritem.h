@@ -210,7 +210,7 @@ public:
 
   virtual QString key( int column, bool /*ascending*/ ) const;
 
-  void setTempKey( QString key );
+  void setTempKey( const QString &key );
 
   int compare( Q3ListViewItem *i, int col, bool ascending ) const;
 

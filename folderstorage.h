@@ -161,7 +161,7 @@ public:
    * for each derived KMFolder).
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0, QString partSpecifier = QString(),
+                                KMFolder *folder = 0, const QString &partSpecifier = QString(),
                                 const AttachmentStrategy *as = 0 ) const;
   virtual FolderJob* createJob( QList<KMMessage*>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
@@ -447,7 +447,7 @@ signals:
   void msgRemoved(KMFolder*, quint32 sernum);
 
   /** Emitted after a message is removed from the folder. */
-  void msgRemoved( int idx, QString msgIdMD5 );
+  void msgRemoved( int idx, const QString &msgIdMD5 );
   void msgRemoved( KMFolder* );
 
   /** Emitted when a message is added from the folder. */
@@ -513,7 +513,7 @@ protected:
    * @see createJob
    */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  QString partSpecifier, const AttachmentStrategy *as ) const = 0;
+                                  const QString &partSpecifier, const AttachmentStrategy *as ) const = 0;
   virtual FolderJob* doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 

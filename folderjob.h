@@ -54,7 +54,7 @@ public:
    * @p jt and with a parent folder @p folder.
    */
   FolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0,
-        QString partSpecifier = QString() );
+        const QString &partSpecifier = QString() );
 
   /**
    * Constructs a new job, operating on a message list @p msgList,
@@ -116,7 +116,7 @@ signals:
   /**
    * Emitted whenever a KMMessage was updated
    */
-  void messageUpdated( KMMessage *, QString );
+  void messageUpdated( KMMessage *, const QString& );
 
   /**
    * Emitted whenever a message has been stored in

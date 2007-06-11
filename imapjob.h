@@ -58,8 +58,8 @@ class ImapJob : public FolderJob
 
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
-           QString partSpecifier = QString(), const AttachmentStrategy *as = 0 );
-  ImapJob( QList<KMMessage*>& msgList, QString sets,
+           const QString &partSpecifier = QString(), const AttachmentStrategy *as = 0 );
+  ImapJob( QList<KMMessage*>& msgList, const QString &sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
 
@@ -82,7 +82,7 @@ private slots:
 
 private:
   void execute();
-  void init( JobType jt, QString sets, KMFolderImap *folder,
+  void init( JobType jt, const QString &sets, KMFolderImap *folder,
              QList<KMMessage*>& msgList );
   KIO::Job *mJob;
   QByteArray mData;

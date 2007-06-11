@@ -165,9 +165,9 @@ public:
 
     void fillMimePartTree( KMMimePartTreeItem* parentItem,
                            KMMimePartTree*     mimePartTree,
-                           QString labelDescr    = QString(),
-                           QString labelCntType  = QString(),
-                           QString labelEncoding = QString(),
+                           const QString &labelDescr    = QString(),
+                           const QString &labelCntType  = QString(),
+                           const QString &labelEncoding = QString(),
                            KIO::filesize_t size=0,
                            bool revertOrder = false );
 

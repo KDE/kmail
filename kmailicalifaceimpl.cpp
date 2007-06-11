@@ -355,7 +355,7 @@ static void setIcalVcardContentTypeHeader( KMMessage *msg, KMail::FolderContents
   }
 }
 
-static void setXMLContentTypeHeader( KMMessage *msg, const QString plainTextBody )
+static void setXMLContentTypeHeader( KMMessage *msg, const QString &plainTextBody )
 {
    // add a first body part to be displayed by all mailer
     // than can NOT display Kolab data: no matter if these

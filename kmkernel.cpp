@@ -1039,7 +1039,7 @@ void KMKernel::raise()
 
 }
 
-bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
+bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
   QObjectList l;
@@ -2091,7 +2091,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
   return *mICalIface;
 }
 
-void KMKernel::selectFolder( QString folderPath )
+void KMKernel::selectFolder( const QString &folderPath )
 {
   kDebug(5006)<<"Selecting a folder "<<folderPath<<endl;
   const QString localPrefix = "/Local";
