@@ -855,7 +855,7 @@ void KMMainWidget::slotAddrBook()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotImport()
 {
-  KRun::runCommand("kmailcvt");
+  KRun::runCommand("kmailcvt", topLevelWidget());
 }
 
 //-----------------------------------------------------------------------------
