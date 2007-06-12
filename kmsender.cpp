@@ -536,7 +536,7 @@ void KMSender::doSendMsg()
     mTransportJob = TransportManager::self()->createTransportJob( msgTransport );
     mMethodStr = msgTransport;
     if ( !mTransportJob ) {
-      KMessageBox::error( 0, i18n( "Transport '%1' is invalid." ).arg( msgTransport ),
+      KMessageBox::error( 0, i18n( "Transport '%1' is invalid.", msgTransport ),
                           i18n( "Sending failed" ) );
       mProgressItem->cancel();
       mProgressItem->setComplete();
