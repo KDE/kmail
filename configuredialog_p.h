@@ -113,7 +113,7 @@ protected slots:
 private:
   QLineEdit  *mLineEdit;
   QComboBox  *mComboBox;
-  KButtonGroup *mButtonGroup;
+  QButtonGroup *mButtonGroup;
 };
 
 

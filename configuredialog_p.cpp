@@ -67,21 +67,23 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotEnableOK(const QString&)) );
 
-  mButtonGroup = new KButtonGroup( page );
-  mButtonGroup->hide();
+  mButtonGroup = new QButtonGroup( page );
 
   // row 1: radio button
-  QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), mButtonGroup );
+  QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), page );
   radio->setChecked( true );
   vlay->addWidget( radio );
+  mButtonGroup->addButton( radio, (int)Empty );
 
   // row 2: radio button
-  radio = new QRadioButton( i18n("&Use Control Center settings"), mButtonGroup );
+  radio = new QRadioButton( i18n("&Use Control Center settings"), page );
   vlay->addWidget( radio );
+  mButtonGroup->addButton( radio, (int)ControlCenter );
 
   // row 3: radio button
-  radio = new QRadioButton( i18n("&Duplicate existing identity"), mButtonGroup );
+  radio = new QRadioButton( i18n("&Duplicate existing identity"), page );
   vlay->addWidget( radio );
+  mButtonGroup->addButton( radio, (int)ExistingEntry );
 
   // row 4: combobox with existing identities and label
   hlay = new QHBoxLayout(); // inherits spacing
@@ -109,7 +111,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
-  int id = mButtonGroup->selected();
+  int id = mButtonGroup->checkedId();
   assert( id == (int)Empty
 	  || id == (int)ControlCenter
 	  || id == (int)ExistingEntry );
