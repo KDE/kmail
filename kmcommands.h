@@ -36,6 +36,7 @@ namespace KIO { class Job; }
 namespace KMail {
   class Composer;
   class FolderJob;
+  class EditorWatcher;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
@@ -1077,25 +1078,10 @@ class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
     Result doAttachmentModify();
 
   private slots:
-    void editorExited();
-    void inotifyEvent();
-    void checkEditDone();
+    void editDone( KMail::EditorWatcher *watcher );
 
   private:
     KTempFile mTempFile;
-    KProcess *mEditor;
-
-    int mInotifyFd;
-    int mInotifyWatch;
-    bool mHaveInotify;
-
-    bool mFileOpen;
-    bool mEditorRunning;
-
-    bool mFileModified;
-
-    QTimer mTimer;
-    QTime mEditTime;
 };
 
 #endif /*KMCommands_h*/

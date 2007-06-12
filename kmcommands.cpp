@@ -74,11 +74,9 @@
 #include <ktempfile.h>
 #include <kimproxy.h>
 #include <kuserprofile.h>
-#include <krun.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/netaccess.h>
-#include <kopenwith.h>
 
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
@@ -112,6 +110,7 @@ using KMail::SecondaryWindow;
 using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
+#include "editorwatcher.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -131,33 +130,6 @@ using namespace KMime;
 #include <qclipboard.h>
 
 #include <memory>
-
-// inotify stuff taken from kdelibs/kio/kio/kdirwatch.cpp
-#ifdef HAVE_INOTIFY
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/syscall.h>
-#include <linux/types.h>
-// Linux kernel headers are documented to not compile
-#define _S390_BITOPS_H
-#include <linux/inotify.h>
-
-static inline int inotify_init (void)
-{
-  return syscall (__NR_inotify_init);
-}
-
-static inline int inotify_add_watch (int fd, const char *name, __u32 mask)
-{
-  return syscall (__NR_inotify_add_watch, fd, name, mask);
-}
-
-static inline int inotify_rm_watch (int fd, __u32 wd)
-{
-  return syscall (__NR_inotify_rm_watch, fd, wd);
-}
-#endif
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
@@ -3448,27 +3420,14 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 
 
 KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
-    AttachmentModifyCommand( node, msg, parent ),
-    mEditor( 0 ),
-    mHaveInotify( false ),
-    mFileOpen( false ),
-    mEditorRunning( false ),
-    mFileModified( true ) // assume the worst unless we know better
+    AttachmentModifyCommand( node, msg, parent )
 {
   kdDebug(5006) << k_funcinfo << endl;
   mTempFile.setAutoDelete( true );
-  connect( &mTimer, SIGNAL(timeout()), SLOT(checkEditDone()) );
 }
 
 KMEditAttachmentCommand::~ KMEditAttachmentCommand()
 {
-  kdDebug(5006) << k_funcinfo << endl;
-#ifdef HAVE_INOTIFY
-  if ( mHaveInotify ) {
-    inotify_rm_watch( mInotifyFd, mInotifyWatch );
-    ::close( mInotifyFd );
-  }
-#endif
 }
 
 KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
@@ -3485,104 +3444,21 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
 
   mTempFile.file()->writeBlock( part.bodyDecodedBinary() );
   mTempFile.file()->flush();
-  KURL::List list;
-  list.append( KURL( mTempFile.file()->name() ) );
 
-  // find an editor
-  KService::Ptr offer = KServiceTypeProfile::preferredService( part.typeStr() + "/" + part.subtypeStr(), "Application" );
-  if ( !offer ) {
-    KOpenWithDlg dlg( list, i18n("Edit with:"), QString::null, 0 );
-    if ( !dlg.exec() )
-      return Failed;
-    offer = dlg.service();
-    if ( !offer )
-      return Failed;
-  }
-
-#ifdef HAVE_INOTIFY
-  // monitor file
-  mInotifyFd = inotify_init();
-  if ( mInotifyFd > 0 ) {
-    mInotifyWatch = inotify_add_watch( mInotifyFd, mTempFile.file()->name().latin1(), IN_CLOSE | IN_OPEN | IN_MODIFY );
-    if ( mInotifyWatch >= 0 ) {
-      QSocketNotifier *sn = new QSocketNotifier( mInotifyFd, QSocketNotifier::Read, this );
-      connect( sn, SIGNAL(activated(int)), SLOT(inotifyEvent()) );
-      mHaveInotify = true;
-      mFileModified = false;
-    }
-  } else {
-    kdWarning(5006) << k_funcinfo << "Failed to activate INOTIFY!" << endl;
-  }
-#endif
-
-  // start the editor
-  QStringList params = KRun::processDesktopExec( *offer, list, false );
-  mEditor = new KProcess( this );
-  *mEditor << params;
-  connect( mEditor, SIGNAL(processExited(KProcess*)), SLOT(editorExited()) );
-  if ( !mEditor->start() )
+  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KURL(mTempFile.file()->name()), part.typeStr() + "/" + part.subtypeStr(), false, this );
+  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
+  if ( !watcher->start() )
     return Failed;
-  mEditorRunning = true;
-
-  mEditTime.start();
-
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   return OK;
 }
 
-void KMEditAttachmentCommand::editorExited()
+void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
 {
-  mEditorRunning = false;
-  mTimer.start( 500, true );
-}
-
-void KMEditAttachmentCommand::inotifyEvent()
-{
-  assert( mHaveInotify );
-#ifdef HAVE_INOTIFY
-  int pending = -1;
-  char buffer[4096];
-  ioctl( mInotifyFd, FIONREAD, &pending );
-  while ( pending > 0 ) {
-    int size = read( mInotifyFd, buffer, QMIN( pending, (int)sizeof(buffer) ) );
-    pending -= size;
-    if ( size < 0 )
-      break; // error
-    int offset = 0;
-    while ( size > 0 ) {
-      struct inotify_event *event = (struct inotify_event *) &buffer[offset];
-      size -= sizeof( struct inotify_event ) + event->len;
-      offset += sizeof( struct inotify_event ) + event->len;
-      if ( event->mask & IN_OPEN )
-        mFileOpen = true;
-      if ( event->mask & IN_CLOSE )
-        mFileOpen = false;
-      if ( event->mask & IN_MODIFY )
-        mFileModified = true;
-    }
-  }
-#endif
-  mTimer.start( 500, true );
-}
-
-void KMEditAttachmentCommand::checkEditDone()
-{
-  if ( mEditorRunning || (mFileOpen && mHaveInotify) )
-    return;
-  // nobody can edit that fast, we seem to be unable to detect
-  // when the editor will be closed
-  if ( mEditTime.elapsed() <= 3000 ) {
-    KMessageBox::error( 0, i18n("KMail is unable to detect when the choosen editor is closed. "
-         "To avoid data loss, editing the attachment will be aborted."), i18n("Unable to edit attachment") );
-    setResult( Failed );
-    emit completed( this );
-    deleteLater();
-    return;
-  }
-
+  kdDebug(5006) << k_funcinfo << endl;
   // anything changed?
-  if ( !mFileModified ) {
+  if ( !watcher->fileChanged() ) {
     kdDebug(5006) << k_funcinfo << "File has not been changed" << endl;
     setResult( Canceled );
     emit completed( this );

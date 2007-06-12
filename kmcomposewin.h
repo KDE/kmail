@@ -84,6 +84,7 @@ namespace KPIM {
 namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
+  class EditorWatcher;
 }
 
 namespace GpgME {
@@ -292,6 +293,8 @@ private slots:
 
   void slotFolderRemoved(KMFolder*);
 
+  void slotEditDone( KMail::EditorWatcher* watcher );
+
 public slots: // kmkernel
   /**
      Tell the composer to always send the message, even if the user
@@ -413,6 +416,8 @@ private slots:
   void slotAttachSave();
   void slotAttachProperties();
   void slotAttachOpenWith();
+  void slotAttachEdit();
+  void slotAttachEditWith();
 
   /**
    * Select an email from the addressbook and add it to the line
@@ -563,6 +568,11 @@ private:
    * View the attachment with the given index.
    */
   void viewAttach( int index );
+
+  /**
+    Edit the attachment with the given index.
+  */
+  void editAttach( int index, bool openWith );
 
   /**
    * Remove an attachment from the list.
@@ -860,6 +870,9 @@ private:
 
   QPopupMenu *mActNowMenu;
   QPopupMenu *mActLaterMenu;
+
+  QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
+  QMap<KMail::EditorWatcher*, KTempFile*> mEditorTempFiles;
 };
 
 #endif
