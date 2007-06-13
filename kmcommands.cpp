@@ -3395,18 +3395,17 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
   // add dummy part to show that a attachment has been deleted
   KMMessagePart dummyPart;
   dummyPart.duplicate( part );
-  QString content = i18n("This attachment has been deleted.");
+  QString comment = i18n("This attachment has been deleted.");
   if ( !part.fileName().isEmpty() )
-    content = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
-  dummyPart.setBodyFromUnicode( content );
-  dummyPart.setTypeStr( "text" );
-  dummyPart.setSubtypeStr( "plain" );
+    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setContentDescription( comment );
+  dummyPart.setBodyEncodedBinary( QByteArray() );
   QCString cd = dummyPart.contentDisposition();
-  if ( cd.find( "attachment", 0, false ) == 0 ) {
-    cd.replace( 0, 10, "inline" );
+  if ( cd.find( "inline", 0, false ) == 0 ) {
+    cd.replace( 0, 10, "attachment" );
     dummyPart.setContentDisposition( cd );
   } else if ( cd.isEmpty() ) {
-    dummyPart.setContentDisposition( "inline" );
+    dummyPart.setContentDisposition( "attachment" );
   }
   msg->addBodyPart( &dummyPart );
 
