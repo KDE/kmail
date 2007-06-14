@@ -28,27 +28,25 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
-#include <k3listview.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <kinputdialog.h>
-
-#include <QLayout>
+#include <KLocale>
+#include <KDebug>
+#include <KMessageBox>
+#include <KInputDialog>
 #include <QLabel>
 #include <QLineEdit>
-//Added by qt3to4:
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QBoxLayout>
 #include "distributionlistdialog.moc"
 
-class DistributionListItem : public Q3CheckListItem
+class DistributionListItem : public QTreeWidgetItem
 {
   public:
-    DistributionListItem( Q3ListView *list )
-      : Q3CheckListItem( list, QString(), CheckBox )
+    DistributionListItem( QTreeWidget *tree )
+      : QTreeWidgetItem( tree )
     {
+      setFlags( flags() | Qt::ItemIsUserCheckable );
     }
 
     void setAddressee( const KABC::Addressee &a, const QString &email )
@@ -67,8 +65,8 @@ class DistributionListItem : public Q3CheckListItem
     {
       mAddressee = a;
       mEmail = email;
-      setText( 1, mAddressee.realName() );
-      setText( 2, mEmail );
+      setText( 0, mAddressee.realName() );
+      setText( 1, mEmail );
     }
 
     KABC::Addressee addressee() const
@@ -108,21 +106,25 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   topLayout->setSpacing( spacingHint() );
 
   QBoxLayout *titleLayout = new QHBoxLayout();
+  titleLayout->setSpacing( spacingHint() );
   topLayout->addItem( titleLayout );
 
-  QLabel *label = new QLabel( i18n("Name:"), topFrame );
+  QLabel *label = new QLabel( i18n("&Name:"), topFrame );
   titleLayout->addWidget( label );
 
   mTitleEdit = new QLineEdit( topFrame );
   titleLayout->addWidget( mTitleEdit );
   mTitleEdit->setFocus();
+  label->setBuddy( mTitleEdit );
 
-  mRecipientsList = new K3ListView( topFrame );
-  mRecipientsList->addColumn( QString() );
-  mRecipientsList->addColumn( i18n("Name") );
-  mRecipientsList->addColumn( i18n("Email") );
+  mRecipientsList = new QTreeWidget( topFrame );
+  mRecipientsList->setHeaderLabels(
+                     QStringList() << i18n( "Name" ) << i18n( "Email" ) 
+                                  );
+  mRecipientsList->setRootIsDecorated( false );
   topLayout->addWidget( mRecipientsList );
-  connect(this,SIGNAL(user1Clicked()),this,SLOT(slotUser1()));
+  connect( this, SIGNAL( user1Clicked() ), 
+           this, SLOT( slotUser1() ) );
 }
 
 void DistributionListDialog::setRecipients( const Recipient::List &recipients )
@@ -144,12 +146,12 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
           a.setNameFromString( name );
           a.insertEmail( email );
           item->setTransientAddressee( a, email );
-          item->setOn( true );
+          item->setCheckState( 0, Qt::Checked );
         } else {
           KABC::Addressee::List::ConstIterator it3;
           for( it3 = addressees.begin(); it3 != addressees.end(); ++it3 ) {
             item->setAddressee( *it3, email );
-            if ( it3 == addressees.begin() ) item->setOn( true );
+            if ( it3 == addressees.begin() ) item->setCheckState( 0, Qt::Checked );
           }
         }
       }
@@ -163,14 +165,13 @@ void DistributionListDialog::slotUser1()
 
   KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
 
-  Q3ListViewItem *i = mRecipientsList->firstChild();
-  while( i ) {
-    DistributionListItem *item = static_cast<DistributionListItem *>( i );
-    if ( item->isOn() ) {
+  for (int i = 0; i < mRecipientsList->topLevelItemCount(); ++i) {
+    DistributionListItem *item = static_cast<DistributionListItem *>( 
+        mRecipientsList->topLevelItem( i ));
+    if ( item && item->checkState( 0 ) == Qt::Checked ) {
       isEmpty = false;
       break;
     }
-    i = i->nextSibling();
   }
 
   if ( isEmpty ) {
@@ -202,11 +203,13 @@ void DistributionListDialog::slotUser1()
   }
 
   KABC::DistributionList *dlist = new KABC::DistributionList( &manager, name );
-  i = mRecipientsList->firstChild();
-  while( i ) {
-    DistributionListItem *item = static_cast<DistributionListItem *>( i );
-    if ( item->isOn() ) {
-      kDebug() << "  " << item->addressee().fullEmail() << endl;
+
+  for (int i = 0; i < mRecipientsList->topLevelItemCount(); ++i) {
+    DistributionListItem *item = static_cast<DistributionListItem *>( 
+        mRecipientsList->topLevelItem( i ));
+    if ( item && item->checkState( 0 ) == Qt::Checked ) {
+      kDebug() << "  " << item->addressee().fullEmail() << " " 
+               << item->addressee().uid() << endl;
       if ( item->isTransient() ) {
         ab->insertAddressee( item->addressee() );
       }
@@ -216,7 +219,6 @@ void DistributionListDialog::slotUser1()
         dlist->insertEntry( item->addressee(), item->email() );
       }
     }
-    i = i->nextSibling();
   }
 
   // FIXME: Ask the user which resource to save to instead of the default
