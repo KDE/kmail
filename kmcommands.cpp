@@ -700,6 +700,10 @@ KMCommand::Result KMUseTemplateCommand::execute()
   KMMessage *newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
   newMsg->setComplete( msg->isComplete() );
 
+  // these fields need to be regenerated for the new message
+  newMsg->removeHeaderField("Date");
+  newMsg->removeHeaderField("Message-ID");
+
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
   win->setMsg( newMsg, FALSE, TRUE );
