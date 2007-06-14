@@ -19,9 +19,6 @@
             <string>Signing</string>
           </property>
           <layout class="QVBoxLayout" >
-            <property name="margin" >
-              <number>0</number>
-            </property>
             <item>
               <widget class="QCheckBox" name="mAutoSignature" >
                 <property name="text" >
@@ -41,9 +38,6 @@
             <string>Encrypting</string>
           </property>
           <layout class="QVBoxLayout" >
-            <property name="margin" >
-              <number>0</number>
-            </property>
             <item>
               <widget class="QCheckBox" name="mEncToSelf" >
                 <property name="text" >
