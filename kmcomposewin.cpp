@@ -338,7 +338,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   connect( mAtmListView,
            SIGNAL( doubleClicked( QListViewItem* ) ),
-           SLOT( slotAttachOpen() ) );
+           SLOT( slotAttachEdit() ) );
   connect( mAtmListView,
            SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
            SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
