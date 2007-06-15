@@ -50,6 +50,7 @@
 using KMail::FolderJob;
 using KMail::QuotaInfo;
 class KMAcctCachedImap;
+class KMCommand;
 
 class QComboBox;
 class QRadioButton;
@@ -489,6 +490,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void slotIncreaseProgress();
     void slotUpdateLastUid();
     void slotFolderDeletionOnServerFinished();
+  void slotRescueDone( KMCommand* command );
 
   signals:
     void folderComplete( KMFolderCachedImap *folder, bool success );
@@ -503,6 +505,13 @@ class KMFolderCachedImap : public KMFolderMaildir
   private:
     void setReadOnly( bool readOnly );
     QString state2String( int state ) const;
+  /** Rescue not yet synced messages to a lost+found folder in case
+    syncing is not possible because the folder has been deleted on the
+    server or write access to this folder has been revoked.
+  */
+  KMCommand* rescueUnsyncedMessages();
+  /** Recursive helper function calling the above method. */
+  void rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder, bool root = true );
 
     /** State variable for the synchronization mechanism */
     enum {
@@ -622,7 +631,10 @@ class KMFolderCachedImap : public KMFolderMaildir
     QString mImapPathCreation;
 
     QuotaInfo mQuotaInfo;
-  bool mAlarmsBlocked;
+    bool mAlarmsBlocked;
+
+    QList<KMFolder*> mToBeDeletedAfterRescue;
+    int mRescueCommandCount;
 };
 
 #endif /*kmfoldercachedimap_h*/
