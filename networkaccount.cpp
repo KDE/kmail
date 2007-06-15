@@ -165,6 +165,7 @@ namespace KMail {
 
       if ( !encpasswd.isEmpty() ) {
         setPasswd( KStringHandler::obscure( encpasswd ), true );
+        mOldPassKey = encpasswd;
         mPasswdDirty = false; // set by setPasswd() on first read
         mStorePasswdInConfig = true;
       } else {
@@ -196,6 +197,15 @@ namespace KMail {
     if ( storePasswd() ) {
       // write password to the wallet if possible and necessary
       bool passwdStored = false;
+
+      //If the password is different from the one stored in the config,
+      //try to store the new password in the wallet again.
+      //This ensures a malicious user can't just write a dummy pass key in the
+      //config, which would get overwritten by the real password and therefore
+      //leak out of the more secure wallet.
+      if ( mStorePasswdInConfig &&
+           KStringHandler::obscure( mOldPassKey ) != passwd() )
+        mStorePasswdInConfig = false;
 
       //If the password should be written to the wallet, do that
       if ( !mStorePasswdInConfig ) {
@@ -244,6 +254,7 @@ namespace KMail {
 
       if ( writeInConfigNow ) {
         config.writeEntry( "pass", KStringHandler::obscure( passwd() ) );
+        mOldPassKey = KStringHandler::obscure( passwd() );
         mStorePasswdInConfig = true;
       }
     }

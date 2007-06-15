@@ -129,7 +129,7 @@ namespace KMail {
   protected:
     KMail::SieveConfig mSieveConfig;
     KIO::Slave * mSlave;
-    QString mLogin, mPasswd, mAuth, mHost;
+    QString mLogin, mPasswd, mAuth, mHost, mOldPassKey;
     unsigned short int mPort;
     bool mStorePasswd : 1;
     bool mUseSSL : 1;
