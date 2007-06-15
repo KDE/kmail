@@ -287,7 +287,6 @@
       </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
-      <entry name="TransportHistory" type="StringList" key="transport-history" />
       <entry name="CurrentTransport" type="String" key="current-transport" />
       <entry name="DefaultTransport" type="String" key="default-transport" />
       <entry name="MaxTransportEntries" type="Int" key="max-transport-items">

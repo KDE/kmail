@@ -624,7 +624,6 @@ void KMComposeWin::readConfig( void )
   }
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
-  QStringList transportHistory = GlobalSettings::self()->transportHistory();
   QString currentTransport = GlobalSettings::self()->currentTransport();
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
@@ -674,19 +673,7 @@ void KMComposeWin::readConfig( void )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  for ( int i = 0; i < mTransport->count(); ++i )
-    transportHistory.removeAll( mTransport->itemText( i ) );
-  while ( transportHistory.count() >
-          GlobalSettings::self()->maxTransportEntries() ) {
-    transportHistory.removeLast();
-  }
-  mTransport->addItems( transportHistory );
   if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
-    for ( int i = 0; i < mTransport->count(); i++ ) {
-      if ( mTransport->itemText( i ) == currentTransport ) {
-        mTransport->setCurrentIndex( i );
-      }
-    }
     mTransport->setEditText( currentTransport );
   }
 
@@ -712,12 +699,6 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
-  QStringList transportHistory = GlobalSettings::self()->transportHistory();
-  transportHistory.removeAll(mTransport->currentText());
-  if (!TransportManager::self()->transportNames().contains(mTransport->currentText())) {
-    transportHistory.prepend(mTransport->currentText());
-  }
-  GlobalSettings::self()->setTransportHistory( transportHistory );
   GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
   GlobalSettings::self()->setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::self()->setComposerSize( size() );
