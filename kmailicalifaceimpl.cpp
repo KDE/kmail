@@ -169,8 +169,8 @@ static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sTy
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = msg.getFirstDwBodyPart();
   while( part ){
-  //    kDebug() << part->Headers().ContentType().TypeStr().c_str() << " "
-  //            << part->Headers().ContentType().SubtypeStr().c_str() << endl;
+  //    kDebug(5006) << part->Headers().ContentType().TypeStr().c_str() << " "
+  //                << part->Headers().ContentType().SubtypeStr().c_str() << endl;
     if ( part->hasHeaders() ) {
       DwMediaType& contentType = part->Headers().ContentType();
       if ( startsWith ) {
@@ -1418,7 +1418,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   httpURL.setQuery( QString() );
   // Ensure that we encode everything with UTF8
   httpURL = KUrl( httpURL.url( KUrl::LeaveTrailingSlash ) );
-  kDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
+  kDebug(5006) << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.
   /*KIO::Job* job =*/ KIO::get( httpURL, false, false /*no progress info*/ );

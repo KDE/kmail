@@ -1552,7 +1552,7 @@ void KMMainWidget::slotCustomReplyToMsg( int tid )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug() << "Reply with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) << "Reply with template: " << tmpl << " (" << tid << ")" << endl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1566,7 +1566,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( int tid )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug() << "Reply to All with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) << "Reply to All with template: " << tmpl << " (" << tid << ")" << endl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1579,7 +1579,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( int tid )
 void KMMainWidget::slotCustomForwardMsg( int tid )
 {
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug() << "Forward with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) << "Forward with template: " << tmpl << " (" << tid << ")" << endl;
   KMMessageList* selected = mHeaders->selectedMsgs();
   KMCommand *command = 0L;
   if(selected && !selected->isEmpty()) {

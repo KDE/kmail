@@ -102,8 +102,8 @@ int KMFolderMbox::open( const char *owner )
 {
   mOwners.append( owner );
 
-  kDebug() << "\nopen " << mOpenCount << " " << folder()->name()
-           << " " << mOwners << ", adding: " << owner << " \n" << endl;
+  kDebug(5006) << "\nopen " << mOpenCount << " " << folder()->name()
+               << " " << mOwners << ", adding: " << owner << " \n" << endl;
 //           << " " << mOwners << ", adding: " << owner << " \n" << kBacktrace() << endl;
   int rc = 0;
 
@@ -269,9 +269,9 @@ int KMFolderMbox::create()
 //-----------------------------------------------------------------------------
 void KMFolderMbox::close( const char *owner, bool aForced )
 {
-  kDebug() << "\nclose " << folder()->name() << " " << mOwners
-           << " " << owner << " " << mOpenCount << " \n" << endl;
-//           << " " << owner << " " << mOpenCount << " \n" << kBacktrace() << endl;
+  kDebug(5006) << "\nclose " << folder()->name() << " " << mOwners
+               << " " << owner << " " << mOpenCount << " \n" << endl;
+//               << " " << owner << " " << mOpenCount << " \n" << kBacktrace() << endl;
   QStringList::iterator it = mOwners.find( owner );
   if ( !aForced && !mOwners.isEmpty() ) {
     assert( it != mOwners.end() );

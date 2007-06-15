@@ -271,7 +271,7 @@ void KMAcctImap::cancelMailCheck()
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  kDebug() << "processNewMail " << mCheckingSingleFolder << ",status="<<makeConnection()<<endl;
+  kDebug(5006) << "processNewMail " << mCheckingSingleFolder << ",status="<<makeConnection()<<endl;
   if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
        makeConnection() == ImapAccountBase::Error ) {
     // checks for mCountRemainChecks

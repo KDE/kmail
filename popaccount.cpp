@@ -668,13 +668,13 @@ void PopAccount::slotJobFinished() {
       // Delete old messages
       else if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
         time_t timeLimit = time(0) - (86400 * mLeaveOnServerDays);
-        kDebug() << "timeLimit is " << timeLimit << endl;
+        kDebug(5006) << "timeLimit is " << timeLimit << endl;
         for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
               it != idsOfMsgsToDelete.end(); ++it ) {
           time_t msgTime = mTimeOfNextSeenMsgsMap[ mUidForIdMap[*it] ];
-          kDebug() << "id: " << *it << " msgTime: " << msgTime << endl;
+          kDebug(5006) << "id: " << *it << " msgTime: " << msgTime << endl;
           if ( msgTime >= timeLimit || msgTime == 0 ) {
-            kDebug() << "Saving msg id " << *it << endl;
+            kDebug(5006) << "Saving msg id " << *it << endl;
             QPair<time_t, QByteArray> pair( msgTime, *it );
             idsToSave.append( pair );
           }
@@ -685,12 +685,12 @@ void PopAccount::slotJobFinished() {
       // Delete more old messages if there are more than mLeaveOnServerCount
       if ( mLeaveOnServerCount > 0 ) {
         int numToDelete = idsToSave.count() - mLeaveOnServerCount;
-        kDebug() << "numToDelete is " << numToDelete << endl;
+        kDebug(5006) << "numToDelete is " << numToDelete << endl;
         if ( numToDelete > 0 && numToDelete < idsToSave.count() ) {
           // get rid of the first numToDelete messages
           #ifdef DEBUG
           for ( int i = 0; i < numToDelete; ++i )
-            kDebug() << "deleting msg id " << idsToSave[i].second << endl;
+            kDebug(5006) << "deleting msg id " << idsToSave[i].second << endl;
           #endif
           idsToSave = idsToSave.mid( numToDelete );
         }
@@ -710,15 +710,15 @@ void PopAccount::slotJobFinished() {
           firstMsgToKeep++;
         #ifdef DEBUG
         for ( int i = 0; i < firstMsgToKeep; ++i )
-          kDebug() << "deleting msg id " << idsToSave[i].second << endl;
+          kDebug(5006) << "deleting msg id " << idsToSave[i].second << endl;
         #endif
         if ( firstMsgToKeep > 0 )
           idsToSave = idsToSave.mid( firstMsgToKeep );
       }
       // Save msgs from deletion
-      kDebug() << "Going to save " << idsToSave.count() << endl;
+      kDebug(5006) << "Going to save " << idsToSave.count() << endl;
       for ( int i = 0; i < idsToSave.count(); ++i ) {
-        kDebug() << "keeping msg id " << idsToSave[i].second << endl;
+        kDebug(5006) << "keeping msg id " << idsToSave[i].second << endl;
         idsOfMsgsToDelete.remove( idsToSave[i].second );
       }
     }

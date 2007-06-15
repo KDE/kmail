@@ -787,7 +787,7 @@ void SideWidget::setFocus()
 void SideWidget::setTotal( int recipients, int lines )
 {
 #if 0
-  kDebug() << "SideWidget::setTotal() recipients: " << recipients <<
+  kDebug(5006) << "SideWidget::setTotal() recipients: " << recipients <<
     "  lines: " << lines << endl;
 #endif
 

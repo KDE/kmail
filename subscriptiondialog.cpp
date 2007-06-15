@@ -362,7 +362,7 @@ void SubscriptionDialogBase::show()
   {
     if( !account->onlySubscribedFolders() )
     {
-      kDebug() << "Not subscribed!!!" << endl;
+      kDebug(5006) << "Not subscribed!!!" << endl;
       int result = KMessageBox::questionYesNoCancel( this,
               i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?",
                 account->name() ),

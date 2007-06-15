@@ -1143,7 +1143,7 @@ void KMFolderImap::slotCheckValidityResult( KJob *job )
         static_cast<KIO::Job*>(job),
         i18n("Error while querying the server status.") );
     }
-    kDebug() << "error in slotCheckValidityResult\n";
+    kDebug(5006) << "error in slotCheckValidityResult\n";
     mContentState = imapNoInformation;
     emit folderComplete( this, false );
     close( "checkvalidity" );
@@ -1227,13 +1227,13 @@ void KMFolderImap::getFolder( bool force )
 {
   mGuessedUnreadMsgs = -1;
   if ( mNoContent ) {
-    kDebug() << "getFolder " << force << " " << mContentState << endl;
+    kDebug(5006) << "getFolder " << force << " " << mContentState << endl;
     mContentState = imapFinished;
     emit folderComplete(this, true);
     return;
   }
   open( "getfolder" );
-  kDebug() << "getFolder2 " << force << " " << mContentState << endl;
+  kDebug(5006) << "getFolder2 " << force << " " << mContentState << endl;
   mContentState = imapListingInProgress;
   if ( force ) {
     // force an update
@@ -1246,7 +1246,7 @@ void KMFolderImap::getFolder( bool force )
 //-----------------------------------------------------------------------------
 void KMFolderImap::reallyGetFolder( const QString &startUid )
 {
-  kDebug() << "reallyGetFolder " << startUid << endl;
+  kDebug(5006) << "reallyGetFolder " << startUid << endl;
   KUrl url = account()->getUrl();
   if ( account()->makeConnection() != ImapAccountBase::Connected ) {
     mContentState = imapNoInformation;
@@ -1265,7 +1265,7 @@ void KMFolderImap::reallyGetFolder( const QString &startUid )
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
     account()->insertJob( job, jd );
-    kDebug() << "listDir " << url << " " << job << endl;
+    kDebug(5006) << "listDir " << url << " " << job << endl;
     connect( job, SIGNAL( result( KJob * ) ),
              this, SLOT( slotListFolderResult( KJob * ) ) );
     connect( job, SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList & ) ),
@@ -1277,7 +1277,7 @@ void KMFolderImap::reallyGetFolder( const QString &startUid )
       mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
     }
     url.setPath( imapPath() + ";UID=" + startUid + ":*;SECTION=ENVELOPE" );
-    kDebug() << folder()->name() << " download " << url << endl;
+    kDebug(5006) << folder()->name() << " download " << url << endl;
     KIO::SimpleJob *newJob = KIO::get( url, false, false );
     KIO::Scheduler::assignJobToSlave( account()->slave(), newJob );
     ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1294,7 +1294,7 @@ void KMFolderImap::reallyGetFolder( const QString &startUid )
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotListFolderResult( KJob *job )
 {
-  kDebug() << "slotListFolderResult " << job << " " << job->error() << endl;
+  kDebug(5006) << "slotListFolderResult " << job << " " << job->error() << endl;
   ImapAccountBase::JobIterator it =
     account()->findJob( static_cast<KIO::Job*>( job ) );
   if ( it == account()->jobsEnd() ) {
@@ -1396,7 +1396,7 @@ void KMFolderImap::slotListFolderResult( KJob *job )
     KUrl url = account()->getUrl();
     url.setPath( imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE" );
     KIO::SimpleJob *newJob = KIO::get( url, false, false );
-    kDebug() << folder()->name() << " download " << url << endl;
+    kDebug(5006) << folder()->name() << " download " << url << endl;
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave( account()->slave(), newJob );
     account()->insertJob( newJob, jd );
@@ -1670,8 +1670,8 @@ KMFolderImap::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
 //-----------------------------------------------------------------------------
 void KMFolderImap::getMessagesResult( KIO::Job *job, bool lastSet )
 {
-  kDebug() << "getMessagesResult " << job << " " << job->error()
-           << " " << lastSet << endl;
+  kDebug(5006) << "getMessagesResult " << job << " " << job->error()
+               << " " << lastSet << endl;
   ImapAccountBase::JobIterator it = account()->findJob( job );
   if ( it == account()->jobsEnd() ) {
     return;
@@ -1920,13 +1920,13 @@ void KMFolderImap::setStatus( QList<int> &ids,
        account()->setImapStatus(folder(), imappath, flags);
      }
   }
-  kDebug() << folder()->name() << " setStatus " << mContentState << endl;
+  kDebug(5006) << folder()->name() << " setStatus " << mContentState << endl;
   if ( mContentState == imapListingInProgress ) {
     // we're currently get'ing this folder
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
     kDebug(5006) << "Set status during folder listing, restarting listing." << endl;
-    kDebug() << "disconnect slotListFolderResult\n";
+    kDebug(5006) << "disconnect slotListFolderResult\n";
     disconnect( this, SLOT( slotListFolderResult( KJob * ) ) );
     quiet( false );
     reallyGetFolder( QString() );
@@ -2379,8 +2379,8 @@ void KMFolderImap::setImapPath( const QString& path )
 
 void KMFolderImap::finishMailCheck( const char *dbg, imapState state )
 {
-  kDebug() << folder()->name() << " finishMailCheck " << dbg
-           << " " << state << endl;
+  kDebug(5006) << folder()->name() << " finishMailCheck " << dbg
+               << " " << state << endl;
   quiet( false );
   mContentState = state;
   emit folderComplete( this, mContentState == imapFinished );

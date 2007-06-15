@@ -811,7 +811,7 @@ bool FolderDialogTemplatesTab::save()
   QString fid = folder->idString();
   Templates t(fid);
 
-  kDebug() << "use custom templates for folder " << fid << ": " << mCustom->isChecked() << endl;
+  kDebug(5006) << "use custom templates for folder " << fid << ": " << mCustom->isChecked() << endl;
   t.setUseCustomTemplates(mCustom->isChecked());
   t.writeConfig();
 

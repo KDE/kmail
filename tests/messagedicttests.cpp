@@ -13,18 +13,18 @@
 
 static void p( const QString & str )
 {
-  kDebug() << str << endl;
+  kDebug(5006) << str << endl;
 }
 
 void MessageDictTester::setUp()
 {
-    kDebug() << "setUp" << endl;
+    kDebug(5006) << "setUp" << endl;
     m_dict = new KMDict( 4 ); // will be thrown away in init
 }
 
 void MessageDictTester::tearDown()
 {
-    kDebug() << "tearDown" << endl;  
+    kDebug(5006) << "tearDown" << endl;  
     delete m_dict;
 }
 

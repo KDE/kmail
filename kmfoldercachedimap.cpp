@@ -2744,7 +2744,7 @@ int KMFolderCachedImap::createIndexFromContentsRecursive()
     if ( !(*it)->isDir() ) {
       KMFolderCachedImap *storage =
         static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(*it)->storage());
-      kDebug() << k_funcinfo << "Re-indexing: " << storage->folder()->label() << endl;
+      kDebug(5006) << k_funcinfo << "Re-indexing: " << storage->folder()->label() << endl;
       int rv = storage->createIndexFromContentsRecursive();
       if ( rv > 0 ) {
         return rv;

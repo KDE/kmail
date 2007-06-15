@@ -449,7 +449,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 						    bool mine, bool sign, bool ca,
 						    int recur_limit, const GpgME::Key & orig ) const {
   if ( recur_limit <= 0 ) {
-    kDebug() << "Kleo::KeyResolver::checkKeyNearExpiry(): key chain too long (>100 certs)" << endl;
+    kDebug(5006) << "Kleo::KeyResolver::checkKeyNearExpiry(): key chain too long (>100 certs)" << endl;
     return Kpgp::Ok;
   }
   const GpgME::Subkey subkey = key.subkey(0);
@@ -462,8 +462,8 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   static const double secsPerDay = 24 * 60 * 60;
   const int daysTillExpiry =
     1 + int( ::difftime( subkey.expirationTime(), time(0) ) / secsPerDay );
-  kDebug() << "Key 0x" << key.shortKeyID() << " expires in less than "
-	    << daysTillExpiry << " days" << endl;
+  kDebug(5006) << "Key 0x" << key.shortKeyID() << " expires in less than "
+	           << daysTillExpiry << " days" << endl;
   const int threshold =
     ca
     ? ( key.isRoot()
@@ -1318,9 +1318,9 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   const QStringList fingerprints = keysForAddress( address );
 
   if ( !fingerprints.empty() ) {
-    kDebug() << "Using encryption keys 0x"
-	      << fingerprints.join( ", 0x" )
-	      << " for " << person << endl;
+    kDebug(5006) << "Using encryption keys 0x"
+	             << fingerprints.join( ", 0x" )
+	             << " for " << person << endl;
     std::vector<GpgME::Key> keys = lookup( fingerprints );
     if ( !keys.empty() ) {
       // Check if all of the keys are trusted and valid encryption keys
@@ -1388,8 +1388,8 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns, bool secret ) const {
   if ( patterns.empty() )
     return std::vector<GpgME::Key>();
-  kDebug() << "Kleo::KeyResolver::lookup( \"" << patterns.join( "\", \"" )
-	    << "\", " << secret << " )" << endl;
+  kDebug(5006) << "Kleo::KeyResolver::lookup( \"" << patterns.join( "\", \"" )
+	           << "\", " << secret << " )" << endl;
   std::vector<GpgME::Key> result;
   if ( mCryptoMessageFormats & (InlineOpenPGPFormat|OpenPGPMIMEFormat) )
     if ( const Kleo::CryptoBackend::Protocol * p = Kleo::CryptoBackendFactory::instance()->openpgp() ) {
@@ -1409,7 +1409,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns,
 	result.insert( result.end(), keys.begin(), keys.end() );
       }
     }
-  kDebug() << "  returned " << result.size() << " keys" << endl;
+  kDebug(5006) << "  returned " << result.size() << " keys" << endl;
   return result;
 }
 

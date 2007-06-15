@@ -452,7 +452,7 @@ void TemplatesInsertCommand::slotMapped( int cmd )
   case TemplatesInsertCommand::CDebug: emit insertCommand("%DEBUG"); break;
   case TemplatesInsertCommand::CDebugOff: emit insertCommand("%DEBUGOFF"); break;
   default:
-      kDebug() << "Unknown template command index: " << cmd << endl;
+    kDebug(5006) << "Unknown template command index: " << cmd << endl;
       break;
   }
 }

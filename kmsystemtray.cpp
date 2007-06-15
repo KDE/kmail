@@ -300,7 +300,7 @@ void KMSystemTray::foldersChanged()
  */
 void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
 {
-  kDebug() << "trigger: " << reason << endl;
+  kDebug(5006) << "trigger: " << reason << endl;
 
   // switch to kmail on left mouse button
   if( reason == QSystemTrayIcon::Trigger )

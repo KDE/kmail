@@ -157,7 +157,7 @@ void AnnotationJobs::MultiSetAnnotationJob::slotStart()
     // So in theory we could group entries coming from our list. Bah.
     QMap<QString, QString> attributes;
     attributes.insert( attr.name, attr.value );
-    kDebug() << k_funcinfo << " setting annotation " << attr.entry << " " << attr.name << " " << attr.value << endl;
+    kDebug(5006) << k_funcinfo << " setting annotation " << attr.entry << " " << attr.name << " " << attr.value << endl;
     KIO::Job* job = setAnnotation( mSlave, mUrl, attr.entry, attributes );
     addSubjob( job );
   } else { // done!

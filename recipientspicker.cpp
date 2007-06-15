@@ -502,7 +502,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
 {
   int index = mCollectionMap.count();
 
-  kDebug() << "RecipientsPicker::insertCollection() " << coll->title()
+  kDebug(5006) << "RecipientsPicker::insertCollection() " << coll->title()
     << "  index: " << index << endl;
 
   mCollectionCombo->insertItem( index, coll->title() );
@@ -625,7 +625,7 @@ void RecipientsPicker::slotPicked()
 
 void RecipientsPicker::pick( Recipient::Type type )
 {
-  kDebug() << "RecipientsPicker::pick " << int( type ) << endl;
+  kDebug(5006) << "RecipientsPicker::pick " << int( type ) << endl;
 
   int count = 0;
   Q3ListViewItemIterator it( mRecipientList ,

@@ -3493,7 +3493,7 @@ void KMComposeWin::slotReplace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  kDebug() << "KMComposeWin::slotUpdateFont " << endl;
+  kDebug(5006) << "KMComposeWin::slotUpdateFont " << endl;
   if ( ! mFixedFontAction ) {
     return;
   }

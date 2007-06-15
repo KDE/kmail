@@ -1663,7 +1663,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     mPerformingSignOperation = false;
 
     if ( mSignature.isEmpty() ) {
-      kDebug() << "signature was empty" << endl;
+      kDebug(5006) << "signature was empty" << endl;
       mRc = false;
       return;
     }
@@ -2255,11 +2255,11 @@ void MessageComposer::pgpSignedMsg( const QByteArray &cText, Kleo::CryptoMessage
   const GpgME::SigningResult res =
     job->exec( signingKeys, plainText, signingMode( format ), signature );
   if ( res.error().isCanceled() ) {
-    kDebug() << "signing was canceled by user" << endl;
+    kDebug(5006) << "signing was canceled by user" << endl;
     return;
   }
   if ( res.error() ) {
-    kDebug() << "signing failed: " << res.error().asString() << endl;
+    kDebug(5006) << "signing failed: " << res.error().asString() << endl;
     job->showErrorDialog( mComposeWin );
     return;
   }
@@ -2302,11 +2302,11 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
   const GpgME::EncryptionResult res =
     job->exec( encryptionKeys, plainText, false, encryptedBody );
   if ( res.error().isCanceled() ) {
-    kDebug() << "encryption was canceled by user" << endl;
+    kDebug(5006) << "encryption was canceled by user" << endl;
     return Kpgp::Canceled;
   }
   if ( res.error() ) {
-    kDebug() << "encryption failed: " << res.error().asString() << endl;
+    kDebug(5006) << "encryption failed: " << res.error().asString() << endl;
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
@@ -2340,14 +2340,14 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray &encryptedBod
   const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
     job->exec( signingKeys, encryptionKeys, cText, false, encryptedBody );
   if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
-    kDebug() << "encrypt/sign was canceled by user" << endl;
+    kDebug(5006) << "encrypt/sign was canceled by user" << endl;
     return Kpgp::Canceled;
   }
   if ( res.first.error() || res.second.error() ) {
     if ( res.first.error() ) {
-      kDebug() << "signing failed: " << res.first.error().asString() << endl;
+      kDebug(5006) << "signing failed: " << res.first.error().asString() << endl;
     } else {
-      kDebug() << "encryption failed: " << res.second.error().asString() << endl;
+      kDebug(5006) << "encryption failed: " << res.second.error().asString() << endl;
     }
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;

@@ -1725,13 +1725,13 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
   const QString fileName = mReader->writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
   KTnef::KTNEFParser parser;
   if ( !parser.openFile( fileName ) || !parser.message()) {
-    kDebug() << k_funcinfo << "Could not parse " << fileName << endl;
+    kDebug(5006) << k_funcinfo << "Could not parse " << fileName << endl;
     return false;
   }
 
   QList<KTnef::KTNEFAttach*> tnefatts = parser.message()->attachmentList();
   if ( tnefatts.isEmpty() ) {
-    kDebug() << k_funcinfo << "No attachments found in " << fileName << endl;
+    kDebug(5006) << k_funcinfo << "No attachments found in " << fileName << endl;
     return false;
   }
 
