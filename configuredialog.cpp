@@ -1798,7 +1798,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
   vlay->addWidget( mNestingPolicy );
 
-  connect( mNestingPolicy, SIGNAL( changed() ),
+  connect( mNestingPolicy, SIGNAL( changed( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Date Display" group:

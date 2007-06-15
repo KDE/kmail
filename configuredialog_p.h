@@ -404,6 +404,7 @@ public:
   typedef AccountsPageSendingTab SendingTab;
   typedef AccountsPageReceivingTab ReceivingTab;
 
+signals:
   void accountListChanged( const QStringList & );
 
 private:
