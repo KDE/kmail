@@ -20,7 +20,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/libkpgp
   ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/libkleo
-  ${GPGME_INCLUDES}
+  ${GPGME_INCLUDES}  ${CMAKE_SOURCE_DIR}/gpgmepp/
    )
 
 
