@@ -40,6 +40,7 @@ using KMail::RegExpLineEdit;
 #include <k3process.h>
 #include <kurlrequester.h>
 #include <phonon/audioplayer.h>
+#include <kshell.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -489,7 +490,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
   int idx = 0;
   while ( ( idx = header_rx.indexIn( result, idx ) ) != -1 ) {
-    QString replacement = K3Process::quote( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
+    QString replacement = KShell::quoteArg( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
     result.replace( idx, header_rx.matchedLength(), replacement );
     idx += replacement.length();
   }
