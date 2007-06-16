@@ -1546,8 +1546,9 @@ void KMComposeWin::setupActions( void )
   connect( actionFormatColor, SIGNAL(triggered(bool) ), SLOT( slotTextColor() ));
 
   createGUI( "kmcomposerui.rc" );
-  connect( toolBar("htmlToolBar"), SIGNAL( visibilityChanged(bool) ),
-           this, SLOT( htmlToolBarVisibilityChanged(bool) ) );
+  connect( toolBar( "htmlToolBar" )->toggleViewAction(), 
+           SIGNAL( toggled( bool ) ),
+           SLOT( htmlToolBarVisibilityChanged( bool ) ) );
 
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
