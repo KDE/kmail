@@ -18,14 +18,14 @@
 #ifndef __KMFOLDERTREE
 #define __KMFOLDERTREE
 
+#include "kmail_export.h"
+
 #include <klocale.h>
 #include <kfoldertree.h>
-#include <kdemacros.h>
 
 #include <QWidget>
 #include <QTimer>
 #include <q3header.h>
-//Added by qt3to4:
 #include <QPixmap>
 #include <QDragLeaveEvent>
 #include <QEvent>
@@ -52,7 +52,7 @@ class KMAccount;
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 template <typename T> class QPointer;
 
-class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
+class KMAIL_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
 {
   Q_OBJECT
 public:

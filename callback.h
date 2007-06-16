@@ -33,12 +33,11 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
+#include "kmail_export.h"
 #include <QString>
 
 class KMMessage;
 class KMReaderWin;
-
-#include <kdemacros.h>
 
 namespace KMail {
 
@@ -48,7 +47,7 @@ namespace KMail {
     Feel free to put whatever you want in here. It's not supposed to be
     a nicely formatted class, but simply include everything necessary
     for the plugins. */
-class KDE_EXPORT Callback {
+class KMAIL_EXPORT Callback {
 
   public:
     Callback( KMMessage *msg, KMReaderWin *readerWin );

@@ -15,9 +15,9 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kimproxy.h>
-#include <kdemacros.h>
 #include <kurl.h>
 
+#include "kmail_export.h"
 #include "kmmsgbase.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
@@ -81,7 +81,7 @@ class ConfigureDialog;
  * (singleton) objects such as the UndoStack, the folder managers and filter
  * manager, etc.
  */
-class KDE_EXPORT KMKernel : public QObject
+class KMAIL_EXPORT KMKernel : public QObject
 {
   Q_OBJECT
 

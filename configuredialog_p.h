@@ -5,13 +5,14 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
+#include "kmail_export.h"
+
 #include <klineedit.h>
 #include <QComboBox>
 #include <QPointer>
 #include <QString>
 
 #include <QStringList>
-//Added by qt3to4:
 #include <QLabel>
 #include <QList>
 #include <QShowEvent>
@@ -23,7 +24,6 @@
 #include <k3listview.h>
 #include <kcmodule.h>
 #include <klocale.h>
-#include <kdemacros.h>
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
@@ -278,7 +278,7 @@ private:
 //
 //
 
-class KDE_EXPORT IdentityPage : public ConfigModule {
+class KMAIL_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
   IdentityPage( const KComponentData &instance, QWidget *parent = 0, const QStringList &args = QStringList() );
@@ -393,7 +393,7 @@ private:
   QList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
-class KDE_EXPORT AccountsPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   AccountsPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
@@ -564,7 +564,7 @@ private: // data
   KButtonGroup *mSystemTrayGroup;
 };
 
-class KDE_EXPORT AppearancePage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   AppearancePage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
@@ -778,7 +778,7 @@ private:
   SimpleStringListEditor *mAttachWordsListEditor;
 };
 
-class KDE_EXPORT ComposerPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   ComposerPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
@@ -930,7 +930,7 @@ private:
   Kleo::BackendConfigWidget * mBackendConfig;
 };
 
-class KDE_EXPORT SecurityPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   SecurityPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
@@ -1032,7 +1032,7 @@ private:
   QCheckBox* mAutomaticSending;
 };
 
-class KDE_EXPORT MiscPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   MiscPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );

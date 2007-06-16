@@ -12,17 +12,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #ifndef accountmanager_h
 #define accountmanager_h
 
-#include <QObject>
+#include "kmail_export.h"
 #include "kmaccount.h"
-#include <kdemacros.h>
+#include <QObject>
 
 class QString;
 class QStringList;
@@ -32,109 +31,143 @@ namespace KMail {
  * The account manager is responsible for creating accounts of various types
  * via the factory method create() and for keeping track of them.
  */
-class KDE_EXPORT AccountManager: public QObject
+class KMAIL_EXPORT AccountManager: public QObject
 {
   Q_OBJECT
   friend class ::KMAccount;
 
-public:
-    /** Initializes the account manager. readConfig() needs to be called in
-     * order to fill it with persisted account information from the config file. */
-  AccountManager();
-  ~AccountManager();
+  public:
+    /**
+      Initializes the account manager. readConfig() needs to be called in
+      order to fill it with persisted account information from the config file.
+    */
+    AccountManager();
+    ~AccountManager();
 
-  /** Completely reload accounts from config. */
-  void readConfig(void);
+    /**
+      Completely reload accounts from config.
+    */
+    void readConfig( void );
 
-  /** Write accounts to config. */
-  void writeConfig( bool withSync=true );
+    /**
+      Write accounts to config.
+    */
+    void writeConfig( bool withSync = true );
 
-  /** Create a new account of given type with given name. Currently
-   the types "local" for local mail folders and "pop" are supported. */
-  KMAccount* create( const QString& type,
-                             const QString& name = QString(),
-                             uint id = 0);
+    /**
+      Create a new account of given type with given name. Currently
+      the types "local" for local mail folders and "pop" are supported.
+    */
+    KMAccount *create( const QString &type,
+                       const QString &name = QString(),
+                       uint id = 0 );
 
-  /** Adds an account to the list of accounts */
-  void add( KMAccount *account );
+    /**
+      Adds an account to the list of accounts.
+    */
+    void add( KMAccount *account );
 
-  /** Find account by name. Returns 0 if account does not exist.
-    Search is done case sensitive. */
-  KMAccount* findByName( const QString& name ) const;
+    /**
+      Find account by name. Returns 0 if account does not exist.
+      Search is done case sensitive.
+    */
+    KMAccount *findByName( const QString &name ) const;
 
-  /** Find account by id. Returns 0 if account does not exist.
-   */
-  KMAccount* find( const uint id ) const;
+    /**
+      Find account by id. Returns 0 if account does not exist.
+    */
+    KMAccount *find( const uint id ) const;
 
-  /** Physically remove account. Also deletes the given account object !
-      Returns false and does nothing if the account cannot be removed. */
-  bool remove( KMAccount* );
+    /**
+      Physically remove account. Also deletes the given account object !
+      Returns false and does nothing if the account cannot be removed.
+    */
+    bool remove( KMAccount *account );
 
-  /** First account of the list */
-  const KMAccount* first() const { return first(); }
-  KMAccount* first();
+    /**
+      First account of the list.
+    */
+    const KMAccount *first() const { return first(); }
+    KMAccount *first();
 
-  /** Next account of the list */
-  const KMAccount* next() const { return next(); }
-  KMAccount* next();
+    /**
+      Next account of the list/
+    */
+    const KMAccount *next() const { return next(); }
+    KMAccount *next();
 
-  /** Processes all accounts looking for new mail */
-  void checkMail( bool interactive = true );
+    /**
+      Processes all accounts looking for new mail.
+    */
+    void checkMail( bool interactive = true );
 
-  /** Delete all IMAP folders and resync them */
-  void invalidateIMAPFolders();
+    /**
+      Delete all IMAP folders and resync them.
+    */
+    void invalidateIMAPFolders();
 
-  QStringList getAccounts() const;
+    QStringList getAccounts() const;
 
-  /// Called on exit (KMMainWin::queryExit)
-  void cancelMailCheck();
+    /// Called on exit (KMMainWin::queryExit)
+    void cancelMailCheck();
 
-  /** Read passwords of all accounts from the wallet */
-  void readPasswords();
+    /**
+      Read passwords of all accounts from the wallet.
+    */
+    void readPasswords();
 
-public slots:
-  void singleCheckMail( KMAccount *, bool interactive = true );
-  void singleInvalidateIMAPFolders( KMAccount * );
+  public slots:
+    void singleCheckMail( KMAccount *account, bool interactive = true );
+    void singleInvalidateIMAPFolders( KMAccount *account );
 
-  void intCheckMail( int, bool interactive = true );
-  void processNextCheck( bool newMail );
+    void intCheckMail( int, bool interactive = true );
+    void processNextCheck( bool newMail );
 
-  /** this slot increases the count of new mails to show a total number
-  after checking in multiple accounts. */
-  void addToTotalNewMailCount( const QMap<QString, int> & newInFolder );
+    /**
+      Increases the count of new mails to show a total number after checking
+      in multiple accounts.
+    */
+    void addToTotalNewMailCount( const QMap<QString, int> &newInFolder );
 
+  signals:
+    /**
+      Emitted if new mail has been collected.
+      @param newMail true if there was new mail
+      @param interactive true if the mail check was initiated by the user
+      @param newInFolder number of new messages for each folder
+    */
+    void checkedMail( bool newMail, bool interactive,
+                      const QMap<QString, int> &newInFolder );
 
-signals:
-  /**
-   * Emitted if new mail has been collected.
-   * @param newMail true if there was new mail
-   * @param interactive true if the mail check was initiated by the user
-   * @param newInFolder number of new messages for each folder
-   **/
-  void checkedMail( bool newMail, bool interactive,
-                          const QMap<QString, int> & newInFolder );
-  /** emitted when an account is removed */
-  void accountRemoved( KMAccount* account );
-  /** emitted when an account is added */
-  void accountAdded( KMAccount* account );
+    /**
+      Emitted when an account is removed.
+    */
+    void accountRemoved( KMAccount *account );
 
-private:
-   /** Create a new unique ID */
-  uint createId();
+    /**
+      Emitted when an account is added.
+    */
+    void accountAdded( KMAccount *account );
 
-  AccountList   mAcctList;
-  AccountList::Iterator mPtrListInterfaceProxyIterator;
-  AccountList   mAcctChecking;
-  AccountList   mAcctTodo;
-  bool mNewMailArrived;
-  bool mInteractive;
-  int  mTotalNewMailsArrived;
+  private:
+     /**
+       Creates a new unique ID.
+     */
+    uint createId();
 
-  // for detailed (per folder) new mail notification
-  QMap<QString, int> mTotalNewInFolder;
+    AccountList   mAcctList;
+    AccountList::Iterator mPtrListInterfaceProxyIterator;
+    AccountList   mAcctChecking;
+    AccountList   mAcctTodo;
+    bool mNewMailArrived;
+    bool mInteractive;
+    int  mTotalNewMailsArrived;
 
-  // if a summary should be displayed
-  bool mDisplaySummary;
+    // for detailed (per folder) new mail notification
+    QMap<QString, int> mTotalNewInFolder;
+
+    // if a summary should be displayed
+    bool mDisplaySummary;
 };
 
 } // namespace KMail

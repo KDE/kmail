@@ -11,29 +11,26 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 #ifndef KMSTARTUP
 #define KMSTARTUP
 
-#include <kdemacros.h>
+#include "kmail_export.h"
 
 extern "C" {
-
-KDE_EXPORT void kmsetSignalHandler(void (*handler)(int));
-KDE_EXPORT void kmsignalHandler(int sigId);
-KDE_EXPORT void kmcrashHandler(int sigId);
-
+  KMAIL_EXPORT void kmsetSignalHandler( void (*handler)(int) );
+  KMAIL_EXPORT void kmsignalHandler( int sigId );
+  KMAIL_EXPORT void kmcrashHandler( int sigId );
 }
 
-namespace KMail
-{
-    KDE_EXPORT void checkConfigUpdates();
-    KDE_EXPORT void lockOrDie();
-    KDE_EXPORT void insertLibraryCataloguesAndIcons();
-    KDE_EXPORT void cleanup();
+namespace KMail {
+  KMAIL_EXPORT void checkConfigUpdates();
+  KMAIL_EXPORT void lockOrDie();
+  KMAIL_EXPORT void insertLibraryCataloguesAndIcons();
+  KMAIL_EXPORT void cleanup();
 }
 
 #endif

@@ -21,8 +21,15 @@
 #ifndef __KMMAINWIDGET
 #define __KMMAINWIDGET
 
+#include "kmail_export.h"
+#include "kmreaderwin.h" //for inline actions
+#include "kmkernel.h" // for access to config
+
 #include <kurl.h>
 #include <kxmlguiclient.h>
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <kvbox.h>
 
 #include <QList>
 #include <QVector>
@@ -30,11 +37,6 @@
 #include <q3listview.h>
 #include <QMenu>
 #include <QHash>
-#include "kmreaderwin.h" //for inline actions
-#include "kmkernel.h" // for access to config
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <kvbox.h>
 
 class Q3Accel;
 class QVBoxLayout;
@@ -76,7 +78,7 @@ namespace KMail {
 
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 
-class KDE_EXPORT KMMainWidget : public QWidget
+class KMAIL_EXPORT KMMainWidget : public QWidget
 {
   Q_OBJECT
 

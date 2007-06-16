@@ -13,9 +13,9 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
     As a special exception, permission is given to link this program
     with any edition of Qt, and distribute the resulting executable,
@@ -24,12 +24,13 @@
 #ifndef RECIPIENTSEDITOR_H
 #define RECIPIENTSEDITOR_H
 
+#include "kmail_export.h"
+#include "kmlineeditspell.h"
+
 #include <QComboBox>
 #include <QList>
 #include <QScrollArea>
 #include <QToolTip>
-
-#include "kmlineeditspell.h"
 
 class RecipientsPicker;
 
@@ -285,7 +286,7 @@ class SideWidget : public QWidget
     mutable KWindowPositioner *mPickerPositioner;
 };
 
-class KDE_EXPORT RecipientsEditor : public QWidget
+class KMAIL_EXPORT RecipientsEditor : public QWidget
 {
     Q_OBJECT
   public:

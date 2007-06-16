@@ -14,9 +14,9 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
     As a special exception, permission is given to link this program
     with any edition of Qt, and distribute the resulting executable,
@@ -25,6 +25,7 @@
 #ifndef KMail_PART_H
 #define KMail_PART_H
 
+#include "kmail_export.h"
 #include <kdeversion.h>
 #include <kparts/browserextension.h>
 #include <kparts/statusbarextension.h>
@@ -33,9 +34,7 @@
 #include <kparts/part.h>
 
 #include <QWidget>
-//Added by qt3to4:
 #include <QPixmap>
-#include <kdemacros.h>
 
 class KAboutData;
 class KMailStatusBarExtension;
@@ -48,7 +47,7 @@ class KMFolderTreeItem;
 
 class ActionManager;
 
-class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart
+class KMAIL_EXPORT KMailPart: public KParts::ReadOnlyPart
 {
     Q_OBJECT
   public:
