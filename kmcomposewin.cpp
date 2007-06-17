@@ -1240,7 +1240,7 @@ void KMComposeWin::setupActions( void )
            SLOT(getTransportMenu()) );
 
   QAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
-  actionCollection()->addAction(" save_in_drafts", action );
+  actionCollection()->addAction("save_in_drafts", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()) );
 
   action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );

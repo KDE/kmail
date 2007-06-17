@@ -553,11 +553,6 @@ void KMMainWidget::createWidgets(void)
     mimeParent = messageParent = mPanner1;
   }
 
-#ifndef NDEBUG
-  mPanner1->dumpObjectTree();
-  mPanner2->dumpObjectTree();
-#endif
-
   mTopLayout->setMargin (0);
   mTopLayout->addWidget( mPanner1 );
 
@@ -566,9 +561,6 @@ void KMMainWidget::createWidgets(void)
   // Probably need to disconnect them first.
 
   // create list of messages
-#ifndef NDEBUG
-  headerParent->dumpObjectTree();
-#endif
   mSearchAndHeaders = new KVBox( headerParent );
   mSearchToolBar = new QToolBar( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
@@ -2745,7 +2737,7 @@ void KMMainWidget::setupActions()
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
 #if !defined(NDEBUG)
-  action  = new KAction(KIcon("idea"), i18n("&Debug Sieve..."), this);
+  action  = new KAction(i18n("&Debug Sieve..."), this);
   actionCollection()->addAction("tools_debug_sieve", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotDebugSieve()));
 #endif
