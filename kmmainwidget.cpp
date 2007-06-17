@@ -38,6 +38,8 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QShortcut>
+#include <QProcess>
+
 #include <q3accel.h>
 #include <q3stylesheet.h>
 
@@ -1759,11 +1761,7 @@ void KMMainWidget::slotDebugSieve()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotStartCertManager()
 {
-  K3Process certManagerProc; // save to create on the heap, since
-  // there is no parent
-  certManagerProc << "kleopatra";
-
-  if( !certManagerProc.start( K3Process::DontCare ) )
+  if( !QProcess::startDetached("kleopatra" ) )
     KMessageBox::error( this, i18n( "Could not start certificate manager; "
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
@@ -1777,10 +1775,7 @@ void KMMainWidget::slotStartCertManager()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotStartWatchGnuPG()
 {
-  K3Process certManagerProc;
-  certManagerProc << "kwatchgnupg";
-
-  if( !certManagerProc.start( K3Process::DontCare ) )
+  if( !QProcess::startDetached("kwatchgnupg") )
     KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );

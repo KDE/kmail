@@ -47,7 +47,7 @@
 #include <kimproxy.h>
 #include "stl_util.h"
 #include <kurl.h>
-
+#include <QProcess>
 #include <algorithm>
 using std::for_each;
 using std::remove;
@@ -430,9 +430,9 @@ namespace {
     QString displayName, libName, keyId;
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return false;
-    K3Process cmp;
-    cmp << "kleopatra" << "-query" << keyId;
-    if ( !cmp.start( K3Process::DontCare ) )
+    QStringList lst;
+    lst << "-query" << keyId;
+    if ( !QProcess::startDetached( "kleopatra",lst) )
       KMessageBox::error( w, i18n("Could not start certificate manager. "
 				  "Please check your installation."),
 			  i18n("KMail Error") );
