@@ -282,7 +282,6 @@ install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 ########### next target ###############
-if(KDE4_BUILD_TESTS)
 set(dcoptest_SRCS dcoptest.cpp )
 
 kde4_automoc(${dcoptest_SRCS})
@@ -293,7 +292,7 @@ qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
 
 #kde4_add_dcop_stubs(dcoptest_SRCS kmailIface.h )
 
-#kde4_add_executable(dcoptest ${dcoptest_SRCS})
+#kde4_add_test_executable(dcoptest ${dcoptest_SRCS})
 
 #target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
 
@@ -304,12 +303,9 @@ set(recipienteditortest_SRCS recipientseditortest.cpp )
 
 kde4_automoc(${recipienteditortest_SRCS})
 
-
-kde4_add_executable(recipienteditortest ${recipienteditortest_SRCS})
+kde4_add_test_executable(recipienteditortest ${recipienteditortest_SRCS})
 
 target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBS} kmailprivate kdepim )
-
-endif(KDE4_BUILD_TESTS)
 
 ########### install files ###############
 
