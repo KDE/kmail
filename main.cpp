@@ -37,9 +37,16 @@
 class KMailApplication : public KUniqueApplication
 {
 public:
-  KMailApplication() : KUniqueApplication() { };
+  KMailApplication() : KUniqueApplication(),
+                       mDelayedInstanceCreation( false ),
+                       mEventLoopReached( false ) { };
   virtual int newInstance();
   void commitData(QSessionManager& sm);
+  void setEventLoopReached();
+  void delayedInstanceCreation();
+protected:
+  bool mDelayedInstanceCreation;
+  bool mEventLoopReached;
 
 };
 
@@ -49,6 +56,9 @@ void KMailApplication::commitData(QSessionManager& sm) {
   KApplication::commitData( sm );
 }
 
+void KMailApplication::setEventLoopReached() {
+  mEventLoopReached = true;
+}
 
 int KMailApplication::newInstance()
 {
@@ -56,10 +66,24 @@ int KMailApplication::newInstance()
   if (!kmkernel)
      return 0;
 
+  // If the event loop hasn't been reached yet, the kernel is probably not
+  // fully initalized. Creating an instance would therefore fail, this is why
+  // that is delayed until delayedInstanceCreation() is called.
+  if ( !mEventLoopReached ) {
+    kDebug(5006) << "Delaying instance creation." << endl;
+    mDelayedInstanceCreation = true;
+    return 0;
+  }
+
   if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
     kmkernel->handleCommandLine( true );
   kmkernel->setFirstInstance(false);
   return 0;
+}
+
+void KMailApplication::delayedInstanceCreation() {
+  if ( mDelayedInstanceCreation )
+    newInstance();
 }
 
 int main(int argc, char *argv[])
@@ -110,6 +134,11 @@ int main(int argc, char *argv[])
 #endif
 //  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
+
+  //If the instance hasn't been created yet, do that now
+  app.setEventLoopReached();
+  app.delayedInstanceCreation();
+
   // Go!
   int ret = qApp->exec();
   // clean up
