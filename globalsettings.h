@@ -32,8 +32,6 @@ class GlobalSettings : public GlobalSettingsBase
 {
   Q_OBJECT
 public:
-  virtual ~GlobalSettings();
-
   static GlobalSettings *self();
 
   /** Call this slot instead of directly @ref KConfig::sync() to
@@ -48,6 +46,7 @@ private slots:
 
 private:
   GlobalSettings();
+  virtual ~GlobalSettings();
   static GlobalSettings *mSelf;
 
   QTimer *mConfigSyncTimer;

@@ -28,12 +28,11 @@
 #include <QTimer>
 
 GlobalSettings *GlobalSettings::mSelf = 0;
-static KStaticDeleter<GlobalSettings> staticGlobalSettingsDeleter;
 
 GlobalSettings *GlobalSettings::self()
 {
   if ( !mSelf ) {
-    staticGlobalSettingsDeleter.setObject( mSelf, new GlobalSettings() );
+    mSelf = new GlobalSettings();
     mSelf->readConfig();
   }
 
