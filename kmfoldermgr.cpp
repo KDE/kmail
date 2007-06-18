@@ -373,10 +373,11 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
       break;
     }
   }
+  KMFolder* parentF = parentFolder( aFolder );
+
+  // aFolder will be deleted by the next call!
   aFolder->parent()->remove(aFolder);
 
-  KMFolder* parentF = parentFolder( aFolder );
- 
   // update the children state
   if ( parentF )
     parentF->storage()->updateChildrenState();

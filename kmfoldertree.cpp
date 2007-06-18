@@ -798,6 +798,10 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>
     (indexOfFolder(aFolder));
+  if ( oldCurrent == fti )
+    oldCurrent = 0;
+  if ( oldSelected == fti )
+    oldSelected = 0;
   if (!fti || !fti->folder()) return;
   if (fti == currentItem())
   {

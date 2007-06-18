@@ -400,7 +400,7 @@ void KMMainWidget::readConfig(void)
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
       else if (sizeColumn == 2)
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
- 
+
       if (unreadColumn == 3)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
       else if (totalColumn == 3)
@@ -1931,7 +1931,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   // when the new folder is also an IMAP folder, because that's an
   // async operation and we don't want flicker if it results in just
   // a new splash.
-  bool newFolder = ( mFolder != aFolder );
+  bool newFolder = ( (KMFolder*)mFolder != aFolder );
   bool isNewImapFolder = aFolder && aFolder->folderType() == KMFolderTypeImap && newFolder;
   if( !mFolder
       || ( !isNewImapFolder && mShowBusySplashTimer )
@@ -2684,7 +2684,7 @@ void KMMainWidget::setupActions()
               actionCollection(), "tools_edit_vacation" );
 
   }
- 
+
   (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
  		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
 
@@ -3450,7 +3450,7 @@ void KMMainWidget::updateMessageActions()
       if(!(msg = mFolder->getMsg(aIdx)))
         return;
 
-      if (mFolder == kmkernel->outboxFolder())
+      if ((KMFolder*)mFolder == kmkernel->outboxFolder())
         mEditAction->setEnabled( !msg->transferInProgress() );
     }
 
