@@ -125,10 +125,10 @@ QString RecipientItem::toolTip() const
     KABC::DistributionList::Entry::List::ConstIterator it;
     for( it = entries.begin(); it != entries.end(); ++it ) {
       txt += "<li>";
-      txt += (*it).addressee.realName() + ' ';
+      txt += (*it).addressee().realName() + ' ';
       txt += "<em>";
-      if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
-      else txt += (*it).email;
+      if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
+      else txt += (*it).email();
       txt += "</em>";
       txt += "<li/>";
     }

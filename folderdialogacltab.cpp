@@ -295,9 +295,9 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
     KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
 #endif
     for( it = entryList.begin(); it != entryList.end(); ++it ) {
-      QString email = (*it).email;
+      QString email = (*it).email();
       if ( email.isEmpty() )
-        email = addresseeToUserId( (*it).addressee, userIdFormat );
+        email = addresseeToUserId( (*it).addressee(), userIdFormat );
       ACLListEntry entry( email, QString(), mPermissions );
       entry.changed = true;
       aclList.append( entry );
