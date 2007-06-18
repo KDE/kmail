@@ -55,7 +55,7 @@ class KMPrecommand : public QObject
   Q_OBJECT
 
 public:
-  KMPrecommand(const QString &precommand, QObject *parent = 0);
+  explicit KMPrecommand(const QString &precommand, QObject *parent = 0);
   virtual ~KMPrecommand();
   bool start();
 

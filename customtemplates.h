@@ -44,7 +44,7 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
   public:
 
-    CustomTemplates( QWidget *parent = 0, const char *name = 0 );
+    explicit CustomTemplates( QWidget *parent = 0, const char *name = 0 );
     ~CustomTemplates();
 
     void load();

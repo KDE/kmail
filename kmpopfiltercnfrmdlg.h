@@ -41,7 +41,7 @@ class KMPopHeadersView : public K3ListView
   Q_OBJECT
 
 public:
-  KMPopHeadersView(QWidget *aParent=0, KMPopFilterCnfrmDlg *aDialog=0);
+  explicit KMPopHeadersView(QWidget *aParent=0, KMPopFilterCnfrmDlg *aDialog=0);
   ~KMPopHeadersView();
   static const KMPopFilterAction mapToAction(int aColumn) { return (KMPopFilterAction)aColumn;};
   static const int mapToColumn(KMPopFilterAction aAction) { return (int)aAction;};

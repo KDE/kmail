@@ -2560,7 +2560,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 
 //Flatten the list and write it to disk
 static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
-                              int parent_id, QString key,
+                              int parent_id, const QString &key,
                               bool update_discover=true)
 {
   unsigned long msgSerNum;

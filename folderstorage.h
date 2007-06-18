@@ -88,7 +88,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  FolderStorage( KMFolder* folder, const char* name=0 );
+  explicit FolderStorage( KMFolder* folder, const char* name=0 );
   virtual ~FolderStorage();
 
   KMFolder* folder() const { return mFolder; }

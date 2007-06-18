@@ -97,7 +97,7 @@ class JobScheduler : public QObject
 {
   Q_OBJECT
 public:
-  JobScheduler( QObject* parent, const char* name = 0 );
+  explicit JobScheduler( QObject* parent, const char* name = 0 );
   ~JobScheduler();
 
   /// Register a task to be done for a given folder

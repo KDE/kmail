@@ -55,7 +55,7 @@ class KMSearch: public QObject
   Q_OBJECT
 
 public:
-  KMSearch(QObject * parent = 0, const char * name = 0);
+  explicit KMSearch(QObject * parent = 0, const char * name = 0);
   ~KMSearch();
 
   bool write(const QString &location) const;
@@ -112,7 +112,7 @@ class KMFolderSearch: public FolderStorage
   Q_OBJECT
   friend class ::KMFolderSearchJob;
 public:
-  KMFolderSearch(KMFolder* folder, const char* name=0);
+  explicit KMFolderSearch(KMFolder* folder, const char* name=0);
   virtual ~KMFolderSearch();
 
   /** Returns the type of this folder */

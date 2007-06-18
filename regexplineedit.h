@@ -49,8 +49,8 @@ namespace KMail {
     Q_OBJECT
 
   public:
-    RegExpLineEdit( const QString &str, QWidget *parent = 0 );
-    RegExpLineEdit( QWidget *parent = 0 );
+    explicit RegExpLineEdit( const QString &str, QWidget *parent = 0 );
+    explicit RegExpLineEdit( QWidget *parent = 0 );
 
     QString text() const;
 

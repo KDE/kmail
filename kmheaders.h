@@ -55,7 +55,7 @@ class KMHeaders : public K3ListView
   friend class ::KMail::HeaderItem; // For easy access to the pixmaps
 
 public:
-  KMHeaders( KMMainWidget *owner, QWidget *parent=0 );
+  explicit KMHeaders( KMMainWidget *owner, QWidget *parent=0 );
   virtual ~KMHeaders();
 
   /** A new folder has been selected update the list of headers shown

@@ -11,7 +11,7 @@ class SieveEditor : public KDialog {
   Q_OBJECT
   Q_PROPERTY( QString script READ script WRITE setScript )
 public:
-  SieveEditor( QWidget * parent=0, const char * name=0 );
+  explicit SieveEditor( QWidget * parent=0, const char * name=0 );
   ~SieveEditor();
 
   QString script() const { return mTextEdit->text(); }

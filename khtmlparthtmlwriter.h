@@ -50,7 +50,7 @@ namespace KMail {
   public:
     // Key is Content-Id, value is URL
     typedef QMap<QString, QString> EmbeddedPartMap;
-    KHtmlPartHtmlWriter( KHTMLPart * part,
+    explicit KHtmlPartHtmlWriter( KHTMLPart * part,
 			 QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
 

@@ -61,7 +61,7 @@ namespace KMail {
   class HtmlStatusBar : public QLabel {
     Q_OBJECT
   public:
-    HtmlStatusBar( QWidget * parent=0, const char * name=0, Qt::WFlags f=0 );
+    explicit HtmlStatusBar( QWidget * parent=0, const char * name=0, Qt::WFlags f=0 );
     virtual ~HtmlStatusBar();
 
     enum Mode {

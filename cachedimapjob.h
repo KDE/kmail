@@ -71,7 +71,7 @@ public:
   };
 
   // Get messages
-  CachedImapJob( const QList<MsgForDownload>& msgs,
+  explicit CachedImapJob( const QList<MsgForDownload>& msgs,
                  JobType type = tGetMessage, KMFolderCachedImap* folder = 0 );
   // Put messages
   CachedImapJob( const QList<KMMessage*>& msgs,
@@ -79,7 +79,7 @@ public:
   CachedImapJob( const QList<unsigned long>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
   // Add sub folders
-  CachedImapJob( const QList<KMFolderCachedImap*>& folders,
+  explicit CachedImapJob( const QList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
   // Rename folder

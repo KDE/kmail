@@ -35,7 +35,7 @@ class KMFilterActionWithAddressWidget : public QWidget
 {
   Q_OBJECT
 public:
-  KMFilterActionWithAddressWidget( QWidget* parent=0, const char* name=0 );
+  explicit KMFilterActionWithAddressWidget( QWidget* parent=0, const char* name=0 );
 
   void clear() { mLineEdit->clear(); }
   QString text() const { return mLineEdit->text(); }
@@ -53,7 +53,7 @@ class KMSoundTestWidget : public QWidget
 {
   Q_OBJECT
 public:
-  KMSoundTestWidget( QWidget * parent, const char * name=0 );
+  explicit KMSoundTestWidget( QWidget * parent, const char * name=0 );
   ~KMSoundTestWidget();
   QString url() const;
   void setUrl( const QString & url );

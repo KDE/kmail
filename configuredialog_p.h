@@ -100,7 +100,7 @@ class NewIdentityDialog : public KDialog
 public:
   enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
-  NewIdentityDialog( const QStringList & identities,
+  explicit NewIdentityDialog( const QStringList & identities,
                      QWidget *parent=0 );
 
   QString identityName() const { return mLineEdit->text(); }
@@ -143,7 +143,7 @@ class NewLanguageDialog : public KDialog
   Q_OBJECT
 
   public:
-    NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0 );
+    explicit NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0 );
     QString language() const;
 
   private:
@@ -193,7 +193,8 @@ private:
 class ConfigModule : public KCModule {
   Q_OBJECT
 public:
-  ConfigModule( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() )
+  explicit ConfigModule( const KComponentData &instance, QWidget *parent=0,
+                         const QStringList &args=QStringList() )
      : KCModule ( instance, parent, args )
      {}
   ~ConfigModule() {}
@@ -254,7 +255,8 @@ private:
 class ConfigModuleWithTabs : public ConfigModule {
   Q_OBJECT
 public:
-  ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0,
+                                 const QStringList &args=QStringList() );
    ~ConfigModuleWithTabs() {}
 
   // don't reimplement any of those methods
@@ -281,7 +283,8 @@ private:
 class KMAIL_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
-  IdentityPage( const KComponentData &instance, QWidget *parent = 0, const QStringList &args = QStringList() );
+  explicit IdentityPage( const KComponentData &instance, QWidget *parent = 0,
+                         const QStringList &args = QStringList() );
   ~IdentityPage() {}
 
   QString helpAnchor() const;
@@ -396,7 +399,8 @@ private:
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  AccountsPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit AccountsPage( const KComponentData &instance, QWidget *parent=0,
+                         const QStringList &args=QStringList() );
   QString helpAnchor() const;
 
 
@@ -567,7 +571,8 @@ private: // data
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  AppearancePage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit AppearancePage( const KComponentData &instance, QWidget *parent=0,
+                           const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -781,7 +786,8 @@ private:
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  ComposerPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit ComposerPage( const KComponentData &instance, QWidget *parent=0,
+                         const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -933,7 +939,8 @@ private:
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  SecurityPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit SecurityPage( const KComponentData &instance, QWidget *parent=0,
+                         const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -1035,7 +1042,8 @@ private:
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  MiscPage( const KComponentData &instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  explicit MiscPage( const KComponentData &instance, QWidget *parent=0,
+                     const QStringList &args=QStringList() );
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;
@@ -1055,7 +1063,7 @@ private:
 class ListView : public K3ListView {
   Q_OBJECT
 public:
-  ListView( QWidget *parent=0, int visibleItem=10 );
+  explicit ListView( QWidget *parent=0, int visibleItem=10 );
   void resizeColums();
 
   void setVisibleItem( int visibleItem, bool updateSize=true );

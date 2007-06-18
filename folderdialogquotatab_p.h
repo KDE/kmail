@@ -46,7 +46,7 @@ class QuotaWidget : public QWidget {
 
  Q_OBJECT
 public:
-    QuotaWidget( QWidget* parent, const char* name = 0 );
+    explicit QuotaWidget( QWidget* parent, const char* name = 0 );
     virtual ~QuotaWidget() { }
     void setQuotaInfo( const KMail::QuotaInfo& info );
 

@@ -40,7 +40,7 @@ namespace KMail {
   class Vacation : public QObject {
     Q_OBJECT
   public:
-    Vacation( QObject * parent=0, const char * name=0 );
+    explicit Vacation( QObject * parent=0, const char * name=0 );
     virtual ~Vacation();
 
     bool isUsable() const { return !mUrl.isEmpty(); }

@@ -53,8 +53,8 @@ public:
    * Constructs a new job, operating on the message msg, of type
    * @p jt and with a parent folder @p folder.
    */
-  FolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0,
-        const QString &partSpecifier = QString() );
+  explicit FolderJob( KMMessage *msg, JobType jt = tGetMessage,
+        KMFolder *folder = 0, const QString &partSpecifier = QString() );
 
   /**
    * Constructs a new job, operating on a message list @p msgList,

@@ -76,7 +76,7 @@ public:
    * of search operations.
    * @param modal Whether the dialog is to be shown modal.
    */
-  SearchWindow( KMMainWidget* parent, KMFolder *curFolder=0 );
+  explicit SearchWindow( KMMainWidget* parent, KMFolder *curFolder=0 );
   virtual ~SearchWindow();
 
   /**

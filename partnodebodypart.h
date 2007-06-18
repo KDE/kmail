@@ -47,7 +47,7 @@ namespace KMail {
   */
   class PartNodeBodyPart : public Interface::BodyPart {
   public:
-    PartNodeBodyPart( partNode & n, const QTextCodec * codec=0 );
+    explicit PartNodeBodyPart( partNode & n, const QTextCodec * codec=0 );
 
     QString makeLink( const QString & path ) const;
     QString asText() const;

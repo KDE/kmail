@@ -45,7 +45,8 @@ namespace KMail {
   **/
   class TeeHtmlWriter : public KMail::HtmlWriter {
   public:
-    TeeHtmlWriter( KMail::HtmlWriter * writer1=0, KMail::HtmlWriter * writer2=0  );
+    explicit TeeHtmlWriter( KMail::HtmlWriter * writer1=0,
+                            KMail::HtmlWriter * writer2=0  );
     virtual ~TeeHtmlWriter();
 
     void addHtmlWriter( KMail::HtmlWriter * writer );

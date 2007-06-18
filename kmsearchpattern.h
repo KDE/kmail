@@ -62,7 +62,7 @@ public:
 		  FuncIsInAddressbook, FuncIsNotInAddressbook,
                   FuncIsInCategory, FuncIsNotInCategory,
 		  FuncHasAttachment, FuncHasNoAttachment};
-  KMSearchRule ( const QByteArray & field=0, Function=FuncContains,
+  explicit KMSearchRule ( const QByteArray & field=0, Function=FuncContains,
                  const QString &contents=QString() );
   KMSearchRule ( const KMSearchRule &other );
 
@@ -174,8 +174,8 @@ private:
 class KMSearchRuleString : public KMSearchRule
 {
 public:
-  KMSearchRuleString( const QByteArray & field=0, Function function=FuncContains,
-		const QString & contents=QString() );
+  explicit KMSearchRuleString( const QByteArray & field=0,
+                Function function=FuncContains, const QString & contents=QString() );
   KMSearchRuleString( const KMSearchRuleString & other );
   const KMSearchRuleString & operator=( const KMSearchRuleString & other );
 
@@ -209,8 +209,8 @@ private:
 class KMSearchRuleNumerical : public KMSearchRule
 {
 public:
-  KMSearchRuleNumerical( const QByteArray & field=0, Function function=FuncContains,
-		         const QString & contents=QString() );
+  explicit KMSearchRuleNumerical( const QByteArray & field=0,
+                         Function function=FuncContains, const QString & contents=QString() );
   virtual bool isEmpty() const ;
 
   virtual bool matches( const KMMessage * msg ) const;
@@ -283,7 +283,7 @@ namespace KMail {
 class KMSearchRuleStatus : public KMSearchRule
 {
 public:
-   KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
+   explicit KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
 		       const QString & contents=QString() );
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;
