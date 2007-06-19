@@ -21,7 +21,7 @@
 #include <config-kmail.h>
 #include "accountdialog.h"
 
-#include <qbuttongroup.h>
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QLayout>
 #include <QTabWidget>
@@ -32,28 +32,25 @@
 
 
 #include <QComboBox>
-#include <q3header.h>
 #include <QToolButton>
-#include <q3grid.h>
 #include <QGroupBox>
-//Added by qt3to4:
 #include <QGridLayout>
 #include <QTextStream>
 #include <QList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHash>
-#include <kglobalsettings.h>
-#include <kfiledialog.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <knuminput.h>
-#include <kseparator.h>
-#include <kprotocolinfo.h>
-#include <kiconloader.h>
-#include <kmenu.h>
-#include <kvbox.h>
+
+#include <KGlobalSettings>
+#include <KFileDialog>
+#include <KLocale>
+#include <KDebug>
+#include <KMessageBox>
+#include <KNumInput>
+#include <KSeparator>
+#include <KProtocolInfo>
+#include <KIconLoader>
+#include <KMenu>
 
 #include <libkdepim/servertest.h>
 
@@ -2362,7 +2359,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
   setButtons( Ok|Cancel );
   setObjectName( "edit_namespace" );
   setModal( false );
-  QFrame *page = new KVBox( this );
+  QWidget *page = new QWidget( this );
   setMainWidget( page );
 
   QString ns;
@@ -2374,24 +2371,31 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ns = i18n("Shared");
   }
   setCaption( i18n("Edit Namespace '%1'", ns) );
-  Q3Grid* grid = new Q3Grid( 2, page );
+  QGridLayout *layout = new QGridLayout;
 
   mBg = new QButtonGroup( 0 );
-  connect( mBg, SIGNAL( buttonClicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
+  connect( mBg, SIGNAL( buttonClicked( int ) ), this, SLOT( slotRemoveEntry( int ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mDelimMap = mNamespaceMap->find( mType ).value();
   ImapAccountBase::namespaceDelim::Iterator it;
+  int row = 0;
   for ( it = mDelimMap.begin(); it != mDelimMap.end(); ++it ) {
-    NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
+    NamespaceLineEdit* edit = new NamespaceLineEdit( page );
     edit->setText( it.key() );
-    QToolButton* button = new QToolButton( grid );
+    QToolButton* button = new QToolButton( page );
     button->setIcon( KIcon("edit-delete") );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     button->setFixedSize( 22, 22 );
-    mBg->addButton( button );
+    mBg->addButton( button, row );
     mLineEditMap[ mBg->id( button ) ] = edit;
+
+    layout->addWidget( edit, row, 0 );
+    layout->addWidget( button, row, 1 );
+    ++row;
   }
+
+  page->setLayout( layout );
 }
 
 void NamespaceEditDialog::slotRemoveEntry( int id )
@@ -2404,11 +2408,12 @@ void NamespaceEditDialog::slotRemoveEntry( int id )
       mDelimMap.remove( edit->lastText() );
     }
     mLineEditMap.remove( id );
-    delete edit;
+    mainWidget()->layout()->removeWidget( edit );
+    edit->close();
   }
   if ( mBg->button( id ) ) {
-    // delete the button
-    delete mBg->button( id );
+    mainWidget()->layout()->removeWidget( mBg->button( id ) );
+    mBg->button( id )->close();
   }
   adjustSize();
 }
