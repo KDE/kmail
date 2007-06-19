@@ -705,11 +705,17 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
 
   folder()->createChildFolder();
   KMFolderNode *node = 0;
+  bool found = false;
   QList<KMFolderNode*>::const_iterator it;
   for ( it = folder()->child()->begin();
       ( node = *it ) && it != folder()->child()->end(); ++it ) {
-    if ( !node->isDir() && node->name() == name )
+    if ( !node->isDir() && node->name() == name ) {
+      found = true;
       break;
+    }
+  }
+  if ( !found ) {
+    node = 0;
   }
   if ( subfolderNames.isEmpty() ) {
     if ( node ) {
@@ -837,13 +843,21 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
   for ( int i = 0; i < subfolderNames.count(); i++ )
   {
     bool settingsChanged = false;
+    bool found = false;
     // create folders if necessary
     QList<KMFolderNode*>::const_iterator it;
     for ( it = folder()->child()->begin();
         ( node = *it ) && it != folder()->child()->end(); ++it ) {
-      if ( !node->isDir() && node->name() == subfolderNames[i] )
+      if ( !node->isDir() && node->name() == subfolderNames[i] ) {
         break;
+        found = true;
+      }
     }
+
+    if ( !found ) {
+      node = 0;
+    }
+
     if ( node ) {
       f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
     }
@@ -903,14 +917,24 @@ void KMFolderImap::initInbox()
 {
   KMFolderImap *f = 0;
   KMFolderNode *node = 0;
+  bool found = false;
 
   QList<KMFolderNode*>::const_iterator it;
   for ( it = folder()->child()->begin();
       ( node = *it ) && it != folder()->child()->end(); ++it ) {
-    if (!node->isDir() && node->name() == "INBOX") break;
+    if (!node->isDir() && node->name() == "INBOX") {
+      found = true;
+      break;
+    }
   }
+
+  if (!found) {
+    node = 0;
+  }
+
   if (node) {
     f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+    //f = static_cast<KMFolderImap*>(node->parent()->owner()->storage());
   } else {
     f = static_cast<KMFolderImap*>
       (folder()->child()->createFolder("INBOX", true)->storage());
