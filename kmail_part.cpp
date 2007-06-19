@@ -141,8 +141,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   setXMLFile( "kmail_part.rc" );
 #endif
 
-  KSettings::Dispatcher::self()->registerComponent( KMailFactory::componentData(), mKMailKernel,
-                                                   SLOT( slotConfigChanged() ) );
+  KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel,
+                                            SLOT( slotConfigChanged() ) );
 }
 
 KMailPart::~KMailPart()
