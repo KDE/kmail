@@ -934,7 +934,6 @@ void KMFolderImap::initInbox()
 
   if (node) {
     f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
-    //f = static_cast<KMFolderImap*>(node->parent()->owner()->storage());
   } else {
     f = static_cast<KMFolderImap*>
       (folder()->child()->createFolder("INBOX", true)->storage());
@@ -2265,7 +2264,6 @@ void KMFolderImap::setSubfolderState( imapState state )
     for ( it = folder()->child()->begin();
         ( node = *it ) && it != folder()->child()->end(); ++it )
     {
-      ++it;
       if (node->isDir()) continue;
       KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderImap*>(folder->storage())->setSubfolderState( state );
