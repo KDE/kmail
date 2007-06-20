@@ -3,7 +3,7 @@
 
 #include <kdialog.h>
 #include <QLabel>
-class K3ListBox;
+class KListWidget;
 class KLineEdit;
 class QLabel;
 
@@ -17,11 +17,14 @@ public:
                        const QString& lastOptions );
 
   QString key() const;
-  QString options() const;
+  QString options() const; 
+
+private Q_SLOTS:
+  void slotItemSelectionChanged();
 
 private:
   QLabel* mLabel;
-  K3ListBox* mListBox;
+  KListWidget* mListBox;
   KLineEdit* mOptions;
 };
 

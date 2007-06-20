@@ -2,9 +2,10 @@
 
 #include "chiasmuskeyselector.h"
 
-#include <klineedit.h>
-#include <k3listbox.h>
-#include <klocale.h>
+#include <KLineEdit>
+#include <KListWidget>
+#include <KLocale>
+#include <KPushButton>
 
 #include <QLayout>
 #include <QLabel>
@@ -27,11 +28,11 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
   mLabel = new QLabel( i18n( "Please select the Chiasmus key file to use:" ), page );
   layout->addWidget( mLabel );
 
-  mListBox = new K3ListBox( page );
-  mListBox->insertStringList( keys );
+  mListBox = new KListWidget( page );
+  mListBox->addItems( keys );
   const int current = keys.indexOf( currentKey );
-  mListBox->setSelected( qMax( 0, current ), true );
-  mListBox->ensureCurrentVisible();
+  mListBox->setCurrentRow( qMax( 0, current ) );
+  mListBox->scrollToItem( mListBox->item( qMax( 0, current ) ) );
   layout->addWidget( mListBox, 1 );
 
   QLabel* optionLabel = new QLabel( i18n( "Additional arguments for chiasmus:" ), page );
@@ -43,15 +44,25 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
 
   layout->addStretch();
 
-  connect( mListBox, SIGNAL( doubleClicked( Q3ListBoxItem * ) ), this, SLOT( accept() ) );
-  connect( mListBox, SIGNAL( returnPressed( Q3ListBoxItem * ) ), this, SLOT( accept() ) );
+  connect( mListBox, SIGNAL( itemDoubleClicked( QListWidgetItem * ) ), this, SLOT( accept() ) );
+  connect( mListBox, SIGNAL( itemSelectionChanged() ), this, SLOT( slotItemSelectionChanged() ) );
 
+  slotItemSelectionChanged();
   mListBox->setFocus();
+}
+
+void ChiasmusKeySelector::slotItemSelectionChanged()
+{
+  button( Ok )->setEnabled( mListBox->selectedItems().size() > 0 );
 }
 
 QString ChiasmusKeySelector::key() const
 {
-  return mListBox->currentText();
+  if (mListBox->selectedItems().size() > 0) {
+    return mListBox->currentItem()->text();
+  } else {
+    return QString();
+  }
 }
 
 QString ChiasmusKeySelector::options() const
