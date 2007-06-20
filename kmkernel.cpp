@@ -163,13 +163,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     netCodec = QTextCodec::codecForLocale();
   }
   mMailService =  new MailServiceImpl();
-#ifdef __GNUC__
-#warning Port me to DBus!
-#endif
-  /*
-
-  connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
-                     "selectFolder(QString)", false );*/
+  QDBusConnection::sessionBus().connect(QString(), "/KMail", "org.kde.kmail", "kmailSelectFolder(QString)", this, SLOT(selectFolder(QString)) );
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
