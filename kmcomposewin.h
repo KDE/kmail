@@ -116,7 +116,8 @@ class KMComposeWin : public KMail::Composer
   public:
     static Composer *create( KMMessage *msg = 0, uint identity = 0 );
 
-  public: // mailserviceimpl
+  QString dbusObjectPath() const;
+public: // mailserviceimpl
     /**
      * From MailComposerIface
      */
@@ -848,6 +849,9 @@ class KMComposeWin : public KMail::Composer
    *   accidentally moving the cursor.
    */
   bool mPreserveUserCursorPosition;
+
+  QString mdbusObjectPath;
+  static int s_composerNumber;
 };
 
 #endif

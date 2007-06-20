@@ -597,11 +597,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
 #endif
   }
 
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  return DCOPRef( cWin->asMailComposerIFace() );
-   return QDBusObjectPath();
+  return QDBusObjectPath(cWin->dbusObjectPath());
 }
 
 QDBusObjectPath KMKernel::newMessage(const QString &to,
@@ -655,11 +651,7 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
   if(!hidden) {
     win->show();
   }
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  return DCOPRef( win->asMailComposerIFace() );
-  return QDBusObjectPath();
+  return QDBusObjectPath(win->dbusObjectPath());
 }
 
 int KMKernel::viewMessage( const KUrl & messageFile )

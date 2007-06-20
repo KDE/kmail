@@ -172,6 +172,8 @@ KMail::Composer *KMComposeWin::create( KMMessage *msg, uint identitiy ) {
   return new KMComposeWin( msg, identitiy );
 }
 
+int KMComposeWin::s_composerNumber = 0;
+
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   : KMail::Composer( "kmail-composer#" ),
@@ -203,7 +205,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mPreserveUserCursorPosition( false )
 {
   (void) new MailcomposerAdaptor( this );
-  QDBusConnection::sessionBus().registerObject( "/Composer", this );
+  mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
+  QDBusConnection::sessionBus().registerObject(mdbusObjectPath , this );
   mClassicalRecipients =
     ( GlobalSettings::self()->recipientsEditorType() == GlobalSettings::EnumRecipientsEditorType::Classic );
 
@@ -460,6 +463,12 @@ KMComposeWin::~KMComposeWin()
 
   qDeleteAll( mAtmList );
   qDeleteAll( mAtmTempList );
+}
+
+
+QString KMComposeWin::dbusObjectPath() const
+{
+  return mdbusObjectPath;
 }
 
 //-----------------------------------------------------------------------------
@@ -1548,7 +1557,7 @@ void KMComposeWin::setupActions( void )
   connect( actionFormatColor, SIGNAL(triggered(bool) ), SLOT( slotTextColor() ));
 
   createGUI( "kmcomposerui.rc" );
-  connect( toolBar( "htmlToolBar" )->toggleViewAction(), 
+  connect( toolBar( "htmlToolBar" )->toggleViewAction(),
            SIGNAL( toggled( bool ) ),
            SLOT( htmlToolBarVisibilityChanged( bool ) ) );
 
