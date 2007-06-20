@@ -595,7 +595,9 @@ void KMComposeWin::readColorConfig( void )
   mPalette = qApp->palette();
   mPalette.setColor( QPalette::Base, mBackColor );
   mPalette.setColor( QPalette::Text, mForeColor );
+#ifdef __GNUC__
 # warning "FIXME: Do we need to call setDisabled/setActive/setInactive or are the setColor calls enough??"
+#endif
   //   mPalette.setDisabled(cgrp);
   //   mPalette.setActive(cgrp);
   //   mPalette.setInactive(cgrp);

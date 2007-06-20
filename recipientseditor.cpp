@@ -500,7 +500,9 @@ void RecipientsView::slotDeleteLine()
   unsigned int firstCC = 0;
   for( int i = pos; i < mLines.count(); ++i ) {
     RecipientLine *line = mLines.at( i );
+#ifdef __GNUC__
 #warning port from Q3ScrollView
+#endif
     //moveChild( line, childX( line ), childY( line ) - mLineHeight );
     if ( line->recipientType() == Recipient::To )
       atLeastOneToLine = true;
@@ -526,7 +528,9 @@ void RecipientsView::resizeView()
 void RecipientsView::activateLine( RecipientLine *line )
 {
   line->activate();
+#ifdef __GNUC__
 #warning port from Q3ScrollView
+#endif
   //ensureVisible( 0, childY( line ) );
 }
 
@@ -650,7 +654,9 @@ void RecipientsView::setFocusTop()
 
 void RecipientsView::setFocusBottom()
 {
+#ifdef __GNUC__
 #warning port from Q3ScrollView
+#endif
   RecipientLine *line = mLines.last();
   if ( line ) line->activate();
   else  kWarning() << "No last" << endl;
