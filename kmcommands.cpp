@@ -133,7 +133,8 @@ using namespace KMime;
 #include <kleo/cryptobackendfactory.h>
 
 #include <QClipboard>
-
+#include <QDBusMessage>
+#include <QDBusConnection>
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
@@ -1647,8 +1648,9 @@ KMCommand::Result KMSetStatusCommand::execute()
      f->setStatus( (*it2), mStatus, mToggle );
      ++it2;
   }
-  //kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
-
+  QDBusMessage message =
+    QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
+  QDBusConnection::sessionBus().send(message);
   return OK;
 }
 
