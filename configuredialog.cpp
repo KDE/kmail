@@ -113,6 +113,7 @@ using MailTransport::TransportManagementWidget;
 #include <QValidator>
 #include <QVBoxLayout>
 #include <QWhatsThis>
+#include <QDBusConnection>
 
 //Added by qt3to4:
 #include <q3buttongroup.h>
@@ -3983,13 +3984,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   bgHTTPProxy->addButton( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->addButton( mWidget->useCustomHTTPProxyRB );
 
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//   if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
-//                            "load()", false ) )
-    kError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
-
+  QDBusConnection::sessionBus().connect(QString(), QString(), "org.kde.kleo.CryptoConfig", "changed",this, SLOT(load()) );
 }
 
 SecurityPageSMimeTab::~SecurityPageSMimeTab()
@@ -4782,7 +4777,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
               it != a->folder()->child()->constEnd();
               ++it ) {
           node = *it;
-          if (!node->isDir() && node->name() == "INBOX") 
+          if (!node->isDir() && node->name() == "INBOX")
             break;
         }
 
