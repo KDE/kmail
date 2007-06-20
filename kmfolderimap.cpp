@@ -2292,7 +2292,6 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
     for ( it = folder()->child()->begin();
         ( node = *it ) && it != folder()->child()->end(); ++it )
     {
-      ++it;
       if (node->isDir()) continue;
       KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderImap*>(folder->storage())->setAlreadyRemoved( removed );
