@@ -282,19 +282,15 @@ install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 ########### next target ###############
-set(dcoptest_SRCS dcoptest.cpp )
+set(dbustest_SRCS dbustest.cpp )
+qt4_add_dbus_interfaces( dbustest_SRCS org.kde.kmail.kmail.xml)
+qt4_add_dbus_interfaces( dbustest_SRCS org.kde.kmail.mailcomposer.xml )
 
-kde4_automoc(${dcoptest_SRCS})
-qt4_add_dbus_adaptor( dcoptest_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
-qt4_add_dbus_interfaces( dcoptest_SRCS org.kde.kmail.mailcomposer.xml )
+kde4_automoc(${dbustest_SRCS})
 
-#kde4_add_dcop_skels(dcoptest_SRCS kmailIface.h )
+kde4_add_test_executable(dbustest ${dbustest_SRCS})
 
-#kde4_add_dcop_stubs(dcoptest_SRCS kmailIface.h )
-
-#kde4_add_test_executable(dcoptest ${dcoptest_SRCS})
-
-#target_link_libraries(dcoptest  ${KDE4_KIO_LIBS} )
+target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 
 
 ########### next target ###############
