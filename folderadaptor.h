@@ -44,6 +44,7 @@ namespace KMail {
 
   public:
     FolderAdaptor( const QString& vpath );
+    void unregisterobject();
 
   public Q_SLOTS:
     Q_SCRIPTABLE QString path() const;

@@ -47,7 +47,7 @@ namespace KMail {
 FolderAdaptor::FolderAdaptor( const QString& vpath )
   : mPath( vpath )
 {
-  QDBusConnection::sessionBus().registerObject("/Folder", this);
+  QDBusConnection::sessionBus().registerObject("/Folder", this,QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals );
   //kDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
   if ( !mFolder )
@@ -110,6 +110,11 @@ int
 FolderAdaptor::unreadRecursiveMessages()
 {
     return mFolder->countUnreadRecursive();
+}
+
+void FolderAdaptor::unregisterobject()
+{
+  QDBusConnection::sessionBus().unregisterObject("/Folder");
 }
 
 //The reason why this function is disabled is that we loose

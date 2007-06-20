@@ -126,7 +126,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_msgSender = 0;
   mWin = 0;
   mMailCheckAborted = false;
-
+  folderAdaptor=0;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
   // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -983,7 +983,6 @@ QStringList KMKernel::folderList() const
 
 QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 {
-#if 0
   QString adaptorName;
   const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
@@ -996,25 +995,14 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
    adaptorName=vpath;
   if( !adaptorName.isEmpty())
   {
-	  KMail::FolderAdaptor *adaptor = new KMail::FolderAdaptor(adaptorName);
-    QDBusConnection::sessionBus().registerObject( vpath, this );
+    if ( folderAdaptor )
+      {
+        folderAdaptor->unregisterobject();
+        delete folderAdaptor;
+      }
+    folderAdaptor = new KMail::FolderAdaptor(adaptorName);
     return QDBusObjectPath(vpath);
   }
-#endif
-#ifdef __GNUC__
-#warning Port DCOPRef usage!
-#endif
-/*  const QString localPrefix = "/Local";
-  if ( the_folderMgr->getFolderByURL( vpath ) )
-    return DCOPRef( new FolderIface( vpath ) );
-  else if ( vpath.startsWith( localPrefix ) &&
-            the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
-    return DCOPRef( new FolderIface( vpath.mid( localPrefix.length() ) ) );
-  else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
-    return DCOPRef( new FolderIface( vpath ) );
-  else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
-    return DCOPRef( new FolderIface( vpath ) );
-  return DCOPRef();*/
   return QDBusObjectPath();
 }
 
