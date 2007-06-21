@@ -72,7 +72,6 @@ using KWallet::Wallet;
 #include <QList>
 #include <QObject>
 #include <QWidget>
-//Added by qt3to4:
 #include <qutf7codec.h>
 
 #include <sys/types.h>
@@ -144,7 +143,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   new Kpgp::Module();
 
-  // register our own (libkdenetwork) utf-7 codec as long as Qt
+  // register our own (libkdepim) utf-7 codec as long as Qt
   // doesn't have it's own:
   if ( !QTextCodec::codecForName("utf-7") ) {
     kDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
