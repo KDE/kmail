@@ -35,12 +35,12 @@
 #include <qdbusconnection.h>
 using namespace KMail;
 
-typedef QList<GroupwareAdaptor::SubResource> QListKmailSubResource;
-Q_DECLARE_METATYPE(GroupwareAdaptor::SubResource )
+typedef QList<SubResource> QListKmailSubResource;
+Q_DECLARE_METATYPE(SubResource )
 Q_DECLARE_METATYPE(QListKmailSubResource )
-Q_DECLARE_METATYPE(GroupwareAdaptor::StorageFormat )
+Q_DECLARE_METATYPE(StorageFormat )
 
-const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::SubResource &subResource)
+const QDBusArgument &operator<<(QDBusArgument &arg, const SubResource &subResource)
 {
     arg.beginStructure();
     arg << subResource.location << subResource.label << subResource.writable << subResource.alarmRelevant;
@@ -48,7 +48,7 @@ const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::SubR
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, GroupwareAdaptor::SubResource &subResource)
+const QDBusArgument &operator>>(const QDBusArgument &arg, SubResource &subResource)
 {
     arg.beginStructure();
     arg >> subResource.location >> subResource.label >> subResource.writable >> subResource.alarmRelevant;
@@ -56,7 +56,7 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, GroupwareAdaptor::SubR
     return arg;
 }
 
-const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::StorageFormat &format)
+const QDBusArgument &operator<<(QDBusArgument &arg, const StorageFormat &format)
 {
     arg.beginStructure();
     quint32 foo = format;
@@ -65,7 +65,7 @@ const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::Stor
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, GroupwareAdaptor::StorageFormat &format)
+const QDBusArgument &operator>>(const QDBusArgument &arg, StorageFormat &format)
 {
     arg.beginStructure();
     quint32 foo = format;
@@ -117,7 +117,7 @@ bool GroupwareAdaptor::deleteIncidenceKolab( const QString& resource, quint32 se
   return mIcalImpl->deleteIncidenceKolab( resource, sernum );
 }
 
-GroupwareAdaptor::StorageFormat GroupwareAdaptor::storageFormat( const QString& resource )
+StorageFormat GroupwareAdaptor::storageFormat( const QString& resource )
 {
   return mIcalImpl->storageFormat(resource );
 }
@@ -151,7 +151,7 @@ QMap<quint32, QString> GroupwareAdaptor::incidencesKolab( const QString& mimetyp
   return mIcalImpl->incidencesKolab( mimetype, resource, startIndex, nbMessages );
 }
 
-QList<GroupwareAdaptor::SubResource> GroupwareAdaptor::subresourcesKolab( const QString& contentsType )
+QList<SubResource> GroupwareAdaptor::subresourcesKolab( const QString& contentsType )
 {
   registerTypes();
   return mIcalImpl->subresourcesKolab(contentsType );

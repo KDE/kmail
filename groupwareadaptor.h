@@ -40,6 +40,8 @@
 #include <qdbusmetatype.h>
 #include <QtDBus/qdbusextratypes.h>
 #include <QtDBus/QtDBus>
+#include "kmail_util.h"
+
 class KMailICalIfaceImpl;
 
 typedef QMap<QByteArray, QString> ByteArrayStringMap;
@@ -54,29 +56,6 @@ public:
   GroupwareAdaptor(KMailICalIfaceImpl* impl);
   //qDBusRegisterMetaType< QMap<QByteArray, QString> >();
 
-  struct SubResource {
-    SubResource() {
-      writable=false;
-      alarmRelevant=false;
-    }
-    SubResource( const QString& loc, const QString& lab, bool rw, bool ar )
-      : location( loc ), label( lab ), writable( rw ), alarmRelevant( ar ) {}
-    QString location; // unique
-    QString label;    // shown to the user
-    bool writable;
-    bool alarmRelevant;
-  };
-
-  /// The format of the mails containing other contents than actual mail
-  /// (like contacts, calendar etc.)
-  /// This is currently either ical/vcard, or XML.
-  /// For actual mail folders this simply to know which resource handles it
-  /// This enum matches the one defined in kmail.kcfg
-  enum StorageFormat { StorageIcalVcard, StorageXML };
-
-  /// This bitfield indicates which changes have been made in a folder, at syncing time.
-  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
-
 public Q_SLOTS:
   Q_SCRIPTABLE bool isWritableFolder( const QString& type, const QString& resource );
   // Return the number of mails that need to be looked at by incidencesKolab.
@@ -89,7 +68,7 @@ public Q_SLOTS:
   Q_SCRIPTABLE bool triggerSync( const QString & );
 
   Q_SCRIPTABLE bool deleteIncidenceKolab( const QString& resource, quint32 sernum );
-  Q_SCRIPTABLE GroupwareAdaptor::StorageFormat storageFormat( const QString& resource );
+  Q_SCRIPTABLE KMail::StorageFormat storageFormat( const QString& resource );
 
   Q_SCRIPTABLE QString getAttachment( const QString& resource, quint32 sernum, const QString& filename );
   Q_SCRIPTABLE quint32 update( const QString& resource,
@@ -109,7 +88,7 @@ public Q_SLOTS:
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal
    */
-  Q_SCRIPTABLE QList<GroupwareAdaptor::SubResource> subresourcesKolab( const QString& contentsType );
+  Q_SCRIPTABLE QList<KMail::SubResource> subresourcesKolab( const QString& contentsType );
 
 
 Q_SIGNALS:

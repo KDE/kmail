@@ -31,5 +31,29 @@
 #define KMAILUTILS_H
 
 #define DBUS_KMAIL "org.kde.kmail"
+namespace KMail {
 
+  struct SubResource {
+    SubResource() {
+      writable=false;
+      alarmRelevant=false;
+    }
+    SubResource( const QString& loc, const QString& lab, bool rw, bool ar )
+      : location( loc ), label( lab ), writable( rw ), alarmRelevant( ar ) {}
+    QString location; // unique
+    QString label;    // shown to the user
+    bool writable;
+    bool alarmRelevant;
+  };
+
+  /// The format of the mails containing other contents than actual mail
+  /// (like contacts, calendar etc.)
+  /// This is currently either ical/vcard, or XML.
+  /// For actual mail folders this simply to know which resource handles it
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
+
+  /// This bitfield indicates which changes have been made in a folder, at syncing time.
+  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
+}
 #endif

@@ -255,7 +255,7 @@ void KMFolderCachedImap::readConfig()
     // if there is an annotation, it has to be XML
     if ( !mAnnotationFolderType.isEmpty() &&
          !mAnnotationFolderType.startsWith( "mail" ) ) {
-      kmkernel->iCalIface().setStorageFormat( folder(), GroupwareAdaptor::StorageXML );
+      kmkernel->iCalIface().setStorageFormat( folder(), StorageXML );
     }
   }
   mIncidencesFor = incidencesForFromString( group.readEntry( "IncidencesFor" ) );
@@ -2264,7 +2264,7 @@ void KMFolderCachedImap::slotMultiSetACLResult( KJob *job )
     static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   } else {
-    kmkernel->iCalIface().addFolderChange( folder(), GroupwareAdaptor::ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACL );
   }
 
   if ( mAccount->slave() ) {
@@ -2381,7 +2381,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
 
   QString newType, newSubType;
   // We want to store an annotation on the folder only if using the kolab storage.
-  if ( kmkernel->iCalIface().storageFormat( folder() ) == GroupwareAdaptor::StorageXML ) {
+  if ( kmkernel->iCalIface().storageFormat( folder() ) == StorageXML ) {
     newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
     if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) ) {
       newSubType = "default";
@@ -2438,7 +2438,7 @@ void KMFolderCachedImap::slotAnnotationResult( const QString &entry,
         if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) ) {
           // Case 3: known content-type on server, get it
           if ( contentsType != ContentsTypeMail ) {
-            kmkernel->iCalIface().setStorageFormat( folder(), GroupwareAdaptor::StorageXML );
+            kmkernel->iCalIface().setStorageFormat( folder(), StorageXML );
           }
           mAnnotationFolderType = value;
           if ( folder()->parent()->owner()->idString() != GlobalSettings::self()->theIMAPResourceFolderParent() &&
@@ -2640,7 +2640,7 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
      * The incidences-for changed, we must trigger the freebusy creation.
      * HACK: in theory we would need a new enum value for this.
      */
-    kmkernel->iCalIface().addFolderChange( folder(), GroupwareAdaptor::ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACL );
   }
 }
 

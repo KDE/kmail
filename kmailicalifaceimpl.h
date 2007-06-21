@@ -89,7 +89,7 @@ public:
 
   bool isWritableFolder( const QString& type, const QString& resource );
 
-  KMail::GroupwareAdaptor::StorageFormat storageFormat( const QString &resource );
+  KMail::StorageFormat storageFormat( const QString &resource );
 
   /// Update a kolab storage entry.
   /// If message is not there, it is added and
@@ -115,7 +115,7 @@ public:
                                            int startIndex,
                                            int nbMessages );
 
-  QList<KMail::GroupwareAdaptor::SubResource> subresourcesKolab( const QString& contentsType );
+  QList<KMail::SubResource> subresourcesKolab( const QString& contentsType );
 
   bool triggerSync( const QString& contentsType );
 
@@ -194,9 +194,9 @@ public:
   void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
   /// @return the storage format of a given folder
-    KMail::GroupwareAdaptor::StorageFormat storageFormat( KMFolder* folder ) const;
+    KMail::StorageFormat storageFormat( KMFolder* folder ) const;
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.
-  void setStorageFormat( KMFolder* folder, KMail::GroupwareAdaptor::StorageFormat format );
+  void setStorageFormat( KMFolder* folder, KMail::StorageFormat format );
 
 
   static const char* annotationForContentsType( KMail::FolderContentsType type );
@@ -206,7 +206,7 @@ public:
   // Called when deletion of a folder from the server suceeded,
   // triggers fb re-generation
   void folderDeletedOnServer( const KUrl& folderURL );
-  void addFolderChange( KMFolder* folder, KMail::GroupwareAdaptor::FolderChanges changes );
+  void addFolderChange( KMFolder* folder, KMail::FolderChanges changes );
 
   // See CachedImapJob::slotPutMessageResult
   bool isResourceQuiet() const;
@@ -274,7 +274,7 @@ private:
                            int _changes );
   void triggerKolabFreeBusy( const KUrl& folderURL );
 
-  KMail::GroupwareAdaptor::StorageFormat globalStorageFormat() const;
+  KMail::StorageFormat globalStorageFormat() const;
 
   static bool folderIsAlarmRelevant( const KMFolder * );
 
@@ -295,10 +295,10 @@ private:
   // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.
   struct FolderInfo {
     FolderInfo() {} // for QMap
-    FolderInfo(KMail::GroupwareAdaptor::StorageFormat f, KMail::GroupwareAdaptor::FolderChanges c ) :
+    FolderInfo(KMail::StorageFormat f, KMail::FolderChanges c ) :
       mStorageFormat( f ), mChanges( c ) {}
-    KMail::GroupwareAdaptor::StorageFormat mStorageFormat;
-    KMail::GroupwareAdaptor::FolderChanges mChanges;
+    KMail::StorageFormat mStorageFormat;
+    KMail::FolderChanges mChanges;
   };
   // The storage format used for each folder that we care about
   typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
