@@ -187,7 +187,7 @@ set(kmailprivate_LIB_SRCS
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp
    copyfolderjob.cpp messagecopyhelper.cpp
    localsubscriptiondialog.cpp
-   kmailical_adaptor.cpp
+   groupwareadaptor.cpp 
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)

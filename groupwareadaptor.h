@@ -28,8 +28,8 @@
  *  your version.
  */
 
-#ifndef KMAILICALADAPTOR_H
-#define KMAILICALADAPTOR_H
+#ifndef GROUPWAREADAPTOR_H
+#define GROUPWAREADAPTOR_H
 
 #include <QObject>
 #include <QtDBus/QDBusMetaType>
@@ -44,13 +44,14 @@ class KMailICalIfaceImpl;
 
 typedef QMap<QByteArray, QString> ByteArrayStringMap;
 Q_DECLARE_METATYPE(ByteArrayStringMap)
+namespace KMail {
 
-class KMailICalAdaptor : public QDBusAbstractAdaptor
+class GroupwareAdaptor : public QDBusAbstractAdaptor
 {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.groupware")
 public:
-  KMailICalAdaptor(KMailICalIfaceImpl* impl);
+  GroupwareAdaptor(KMailICalIfaceImpl* impl);
   //qDBusRegisterMetaType< QMap<QByteArray, QString> >();
 
   struct SubResource {
@@ -88,7 +89,7 @@ public Q_SLOTS:
   Q_SCRIPTABLE bool triggerSync( const QString & );
 
   Q_SCRIPTABLE bool deleteIncidenceKolab( const QString& resource, quint32 sernum );
-  Q_SCRIPTABLE KMailICalAdaptor::StorageFormat storageFormat( const QString& resource );
+  Q_SCRIPTABLE GroupwareAdaptor::StorageFormat storageFormat( const QString& resource );
 
   Q_SCRIPTABLE QString getAttachment( const QString& resource, quint32 sernum, const QString& filename );
   Q_SCRIPTABLE quint32 update( const QString& resource,
@@ -108,7 +109,7 @@ public Q_SLOTS:
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal
    */
-  Q_SCRIPTABLE QList<KMailICalAdaptor::SubResource> subresourcesKolab( const QString& contentsType );
+  Q_SCRIPTABLE QList<GroupwareAdaptor::SubResource> subresourcesKolab( const QString& contentsType );
 
 
 Q_SIGNALS:
@@ -127,5 +128,5 @@ protected:
   KMailICalIfaceImpl *mIcalImpl;
 
 };
-
-#endif
+}// namespace KMail
+#endif  /*groupwareadaptor*/

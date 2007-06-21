@@ -29,17 +29,18 @@
  */
 
 
-#include "kmailical_adaptor.h"
+#include "groupwareadaptor.h"
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include <qdbusconnection.h>
+using namespace KMail;
 
-typedef QList<KMailICalAdaptor::SubResource> QListKmailSubResource;
-Q_DECLARE_METATYPE(KMailICalAdaptor::SubResource )
+typedef QList<GroupwareAdaptor::SubResource> QListKmailSubResource;
+Q_DECLARE_METATYPE(GroupwareAdaptor::SubResource )
 Q_DECLARE_METATYPE(QListKmailSubResource )
-Q_DECLARE_METATYPE(KMailICalAdaptor::StorageFormat )
+Q_DECLARE_METATYPE(GroupwareAdaptor::StorageFormat )
 
-const QDBusArgument &operator<<(QDBusArgument &arg, const KMailICalAdaptor::SubResource &subResource)
+const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::SubResource &subResource)
 {
     arg.beginStructure();
     arg << subResource.location << subResource.label << subResource.writable << subResource.alarmRelevant;
@@ -47,7 +48,7 @@ const QDBusArgument &operator<<(QDBusArgument &arg, const KMailICalAdaptor::SubR
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, KMailICalAdaptor::SubResource &subResource)
+const QDBusArgument &operator>>(const QDBusArgument &arg, GroupwareAdaptor::SubResource &subResource)
 {
     arg.beginStructure();
     arg >> subResource.location >> subResource.label >> subResource.writable >> subResource.alarmRelevant;
@@ -55,7 +56,7 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, KMailICalAdaptor::SubR
     return arg;
 }
 
-const QDBusArgument &operator<<(QDBusArgument &arg, const KMailICalAdaptor::StorageFormat &format)
+const QDBusArgument &operator<<(QDBusArgument &arg, const GroupwareAdaptor::StorageFormat &format)
 {
     arg.beginStructure();
     quint32 foo = format;
@@ -64,7 +65,7 @@ const QDBusArgument &operator<<(QDBusArgument &arg, const KMailICalAdaptor::Stor
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, KMailICalAdaptor::StorageFormat &format)
+const QDBusArgument &operator>>(const QDBusArgument &arg, GroupwareAdaptor::StorageFormat &format)
 {
     arg.beginStructure();
     quint32 foo = format;
@@ -88,7 +89,7 @@ static void registerTypes()
     }
 }
 
-KMailICalAdaptor::KMailICalAdaptor(KMailICalIfaceImpl* impl)
+GroupwareAdaptor::GroupwareAdaptor(KMailICalIfaceImpl* impl)
   :QDBusAbstractAdaptor( impl ), mIcalImpl( impl )
 {
   setAutoRelaySignals(true);
@@ -96,38 +97,38 @@ KMailICalAdaptor::KMailICalAdaptor(KMailICalIfaceImpl* impl)
 }
 
 
-bool KMailICalAdaptor::isWritableFolder( const QString& type, const QString& resource )
+bool GroupwareAdaptor::isWritableFolder( const QString& type, const QString& resource )
 {
   return mIcalImpl->isWritableFolder( type, resource );
 }
 
-int KMailICalAdaptor::incidencesKolabCount( const QString& mimetype /*ignored*/, const QString& resource )
+int GroupwareAdaptor::incidencesKolabCount( const QString& mimetype /*ignored*/, const QString& resource )
 {
   return mIcalImpl->incidencesKolabCount( mimetype, resource );
 }
 
-bool KMailICalAdaptor::triggerSync( const QString & str)
+bool GroupwareAdaptor::triggerSync( const QString & str)
 {
   return mIcalImpl->triggerSync( str );
 }
 
-bool KMailICalAdaptor::deleteIncidenceKolab( const QString& resource, quint32 sernum )
+bool GroupwareAdaptor::deleteIncidenceKolab( const QString& resource, quint32 sernum )
 {
   return mIcalImpl->deleteIncidenceKolab( resource, sernum );
 }
 
-KMailICalAdaptor::StorageFormat KMailICalAdaptor::storageFormat( const QString& resource )
+GroupwareAdaptor::StorageFormat GroupwareAdaptor::storageFormat( const QString& resource )
 {
   return mIcalImpl->storageFormat(resource );
 }
 
-QString KMailICalAdaptor::getAttachment( const QString& resource, quint32 sernum, const QString& filename )
+QString GroupwareAdaptor::getAttachment( const QString& resource, quint32 sernum, const QString& filename )
 {
   KUrl url = mIcalImpl->getAttachment( resource, sernum, filename );
   return url.path();
 }
 
-quint32 KMailICalAdaptor::update( const QString& resource,
+quint32 GroupwareAdaptor::update( const QString& resource,
                                   quint32 sernum,
                                   const QString& subject,
                                   const QString& plainTextBody,
@@ -141,7 +142,7 @@ quint32 KMailICalAdaptor::update( const QString& resource,
   return mIcalImpl->update( resource, sernum, subject, plainTextBody, customHeaders, attachmentURLs, attachmentMimetypes, attachmentNames, deletedAttachments );
 }
 
-QMap<quint32, QString> KMailICalAdaptor::incidencesKolab( const QString& mimetype,
+QMap<quint32, QString> GroupwareAdaptor::incidencesKolab( const QString& mimetype,
                                                           const QString& resource,
                                                           int startIndex,
                                                           int nbMessages )
@@ -150,10 +151,10 @@ QMap<quint32, QString> KMailICalAdaptor::incidencesKolab( const QString& mimetyp
   return mIcalImpl->incidencesKolab( mimetype, resource, startIndex, nbMessages );
 }
 
-QList<KMailICalAdaptor::SubResource> KMailICalAdaptor::subresourcesKolab( const QString& contentsType )
+QList<GroupwareAdaptor::SubResource> GroupwareAdaptor::subresourcesKolab( const QString& contentsType )
 {
   registerTypes();
   return mIcalImpl->subresourcesKolab(contentsType );
 }
 
-#include "kmailical_adaptor.moc"
+#include "groupwareadaptor.moc"
