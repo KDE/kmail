@@ -1948,4 +1948,3 @@ bool KMailICalIfaceImpl::isResourceQuiet() const
 }
 
 #include "kmailicalifaceimpl.moc"
-#include "kmailicalIface.moc"
