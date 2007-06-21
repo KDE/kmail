@@ -1050,7 +1050,7 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
     message << QString();
     QDBusConnection::sessionBus().send(message);
 
-    kDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
+    kDebug(5006) << "Emitting D-Bus signal signalRefresh( " << type << " )" << endl;
   }
 }
 
