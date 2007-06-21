@@ -64,6 +64,8 @@ using KMail::AccountManager;
 #include <QFile>
 #include <QMap>
 #include <QTextCodec>
+#include <QDBusMessage>
+#include <QDBusConnection>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -957,10 +959,18 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     if ( mInTransit.contains( uid ) ) {
       mInTransit.remove( uid );
     }
-#ifdef __GNUC__
-#warning Port DCOP signals!
-#endif
 //    incidenceAdded( type, folder->location(), sernum, format, s );
+    QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "incidenceAdded");
+    message << type;
+    message << folder->location();
+    message << sernum;
+    message <<format;
+    message <<s;
+    QDBusConnection::sessionBus().send(message);
+
+
+
   } else {
     // go get the rest of it, then try again
     // TODO: Till, port me
@@ -1011,13 +1021,18 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         break;
     }
     if ( ok ) {
-        kDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
+        kDebug(5006) << "Emitting D-Bus signal incidenceDeleted( "
                       << type << ", " << folder->location() << ", " << uid
                       << " )" << endl;
-#ifdef __GNUC__
-#warning Port DCOP signal!
-#endif
+
 //        incidenceDeleted( type, folder->location(), uid );
+    QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "incidenceDeleted");
+    message << type;
+    message << folder->location();
+    message << uid;
+    QDBusConnection::sessionBus().send(message);
+
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -1028,10 +1043,13 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-#ifdef __GNUC__
-#warning Port DCOP signal!
-#endif
 //    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
+    QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "signalRefresh");
+    message << type;
+    message << QString();
+    QDBusConnection::sessionBus().send(message);
+
     kDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
   }
 }
@@ -1241,10 +1259,12 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   ExtraFolder* ef = mExtraFolders.find( location );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
-#ifdef __GNUC__
-#warning Port DCOP signal!
-#endif
 //    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
+    QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+    message << folderContentsType( folder->storage()->contentsType() );
+    message << location;
+    QDBusConnection::sessionBus().send(message);
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
@@ -1282,11 +1302,16 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
-#ifdef __GNUC__
-#warning Port DCOP signals!
-#endif
 //  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
 //                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
+      QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( contentsType );
+    message << location;
+    message << !folder->isReadOnly();
+    message<< folderIsAlarmRelevant( folder );
+    QDBusConnection::sessionBus().send(message);
+
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1428,9 +1453,21 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
   if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
-#ifdef __GNUC__
-#warning Port DCOP signals!
-#endif
+      QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+    message << contentsTypeStr;
+    message << location;
+    QDBusConnection::sessionBus().send(message);
+
+    message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << contentsTypeStr;
+    message << location;
+    message << folder->prettyUrl();
+    message<< !folder->isReadOnly();
+    message<< folderIsAlarmRelevant( folder );
+    QDBusConnection::sessionBus().send(message);
+
 //    subresourceDeleted( contentsTypeStr, location );
 
 //    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
@@ -1458,9 +1495,16 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
     mExtraFolders.setAutoDelete( true );
     mExtraFolders.insert( newLocation, ef );
   }
-#ifdef __GNUC__
-#warning Port DCOP signal!
-#endif
+
+  if ( folder )
+  {
+      QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+    message << folderContentsType(  folder->storage()->contentsType() );
+    message << oldLocation;
+    QDBusConnection::sessionBus().send(message);
+  }
+
 //  if (  folder )
 //    subresourceDeleted( folderContentsType(  folder->storage()->contentsType() ), oldLocation );
 
@@ -1676,16 +1720,54 @@ void KMailICalIfaceImpl::readConfig()
 
   // END TILL TODO
 
-#ifdef __GNUC__
-#warning Port DCOP signals!
-#endif
-//  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
+    //  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
+      QDBusMessage message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( KMail::ContentsTypeCalendar );
+    message << mCalendar->location();
+    message <<  mCalendar->label();
+    message<< true;
+    message<< true;
+    QDBusConnection::sessionBus().send(message);
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
+    message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( KMail::ContentsTypeTask );
+    message << mTasks->location();
+    message <<  mTasks->label();
+    message<< true;
+    message<< true;
+    QDBusConnection::sessionBus().send(message);
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
-//  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
-//  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
+    message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( KMail::ContentsTypeJournal );
+    message << mJournals->location();
+    message <<  mJournals->label();
+    message<< true;
+    message<< false;
+    QDBusConnection::sessionBus().send(message);
 
-  reloadFolderTree();
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
+    message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( KMail::ContentsTypeContact );
+    message << mContacts->location();
+    message <<  mContacts->label();
+    message<< true;
+    message<< false;
+    QDBusConnection::sessionBus().send(message);
+
+//  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
+    message =
+        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+    message << folderContentsType( KMail::ContentsTypeNote );
+    message << mNotes->location();
+    message <<  mNotes->label();
+    message<< true;
+    message<< false;
+    QDBusConnection::sessionBus().send(message);
+    reloadFolderTree();
 }
 
 void KMailICalIfaceImpl::slotCheckDone()
