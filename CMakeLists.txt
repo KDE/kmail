@@ -187,6 +187,7 @@ set(kmailprivate_LIB_SRCS
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp
    copyfolderjob.cpp messagecopyhelper.cpp
    localsubscriptiondialog.cpp
+   kmailical_adaptor.cpp
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
@@ -204,8 +205,8 @@ qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcom
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.kmail.xml kmkernel.h  KMKernel)
 
 # Generate org.kde.kmail.groupware.xml from kmailicalIface.h
-qt4_generate_dbus_interface( kmailicalIface.h org.kde.kmail.groupware.xml )
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml kmailicalIface.h KMailICalIface )
+#qt4_generate_dbus_interface( kmailicalIface.h org.kde.kmail.groupware.xml )
+#qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml kmailicalIface.h KMailICalIface )
 
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 

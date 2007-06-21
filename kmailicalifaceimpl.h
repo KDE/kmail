@@ -38,7 +38,6 @@
 #ifndef KMAILICALIFACEIMPL_H
 #define KMAILICALIFACEIMPL_H
 
-#include "kmailicalIface.h"
 #include "kmfoldertype.h"
 #include <kfoldertree.h>
 
@@ -47,7 +46,8 @@
 #include <QMap>
 //Added by qt3to4:
 #include <QList>
-
+#include "kmailical_adaptor.h"
+#include <kurl.h>
 class KMFolder;
 class KMMessage;
 class KMFolderDir;
@@ -81,14 +81,15 @@ public:
 }
 
 /** The implementation of the interface. */
-class KMailICalIfaceImpl : public KMailICalIface {
+class KMailICalIfaceImpl :public QObject {
   Q_OBJECT
 public:
   KMailICalIfaceImpl();
 
+
   bool isWritableFolder( const QString& type, const QString& resource );
 
-  StorageFormat storageFormat( const QString &resource );
+  KMailICalAdaptor::StorageFormat storageFormat( const QString &resource );
 
   /// Update a kolab storage entry.
   /// If message is not there, it is added and
@@ -114,7 +115,7 @@ public:
                                            int startIndex,
                                            int nbMessages );
 
-  QList<SubResource> subresourcesKolab( const QString& contentsType );
+  QList<KMailICalAdaptor::SubResource> subresourcesKolab( const QString& contentsType );
 
   bool triggerSync( const QString& contentsType );
 
@@ -193,9 +194,9 @@ public:
   void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
   /// @return the storage format of a given folder
-  StorageFormat storageFormat( KMFolder* folder ) const;
+  KMailICalAdaptor::StorageFormat storageFormat( KMFolder* folder ) const;
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.
-  void setStorageFormat( KMFolder* folder, StorageFormat format );
+  void setStorageFormat( KMFolder* folder, KMailICalAdaptor::StorageFormat format );
 
 
   static const char* annotationForContentsType( KMail::FolderContentsType type );
@@ -205,7 +206,7 @@ public:
   // Called when deletion of a folder from the server suceeded,
   // triggers fb re-generation
   void folderDeletedOnServer( const KUrl& folderURL );
-  void addFolderChange( KMFolder* folder, FolderChanges changes );
+  void addFolderChange( KMFolder* folder, KMailICalAdaptor::FolderChanges changes );
 
   // See CachedImapJob::slotPutMessageResult
   bool isResourceQuiet() const;
@@ -273,7 +274,7 @@ private:
                            int _changes );
   void triggerKolabFreeBusy( const KUrl& folderURL );
 
-  StorageFormat globalStorageFormat() const;
+  KMailICalAdaptor::StorageFormat globalStorageFormat() const;
 
   static bool folderIsAlarmRelevant( const KMFolder * );
 
@@ -294,10 +295,10 @@ private:
   // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.
   struct FolderInfo {
     FolderInfo() {} // for QMap
-    FolderInfo( StorageFormat f, FolderChanges c ) :
+    FolderInfo(KMailICalAdaptor::StorageFormat f, KMailICalAdaptor::FolderChanges c ) :
       mStorageFormat( f ), mChanges( c ) {}
-    StorageFormat mStorageFormat;
-    FolderChanges mChanges;
+    KMailICalAdaptor::StorageFormat mStorageFormat;
+    KMailICalAdaptor::FolderChanges mChanges;
   };
   // The storage format used for each folder that we care about
   typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
