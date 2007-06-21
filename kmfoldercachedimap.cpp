@@ -1492,6 +1492,9 @@ void KMFolderCachedImap::slotDeleteMessagesResult( KMail::FolderJob* job )
   if ( job->error() ) {
     // Skip the EXPUNGE state if deleting didn't work, no need to show two error messages
     mSyncState = SYNC_STATE_GET_MESSAGES;
+  } else {
+    // deleting on the server went fine, clear the pending deletions cache
+    mDeletedUIDsSinceLastSync.clear();
   }
   mProgress += 10;
   serverSyncInternal();
@@ -2657,7 +2660,6 @@ void KMFolderCachedImap::slotUpdateLastUid()
       }
   }
   mTentativeHighestUid = 0;
-  mDeletedUIDsSinceLastSync.clear();
 }
 
 bool KMFolderCachedImap::isMoveable() const
