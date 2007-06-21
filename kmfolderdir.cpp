@@ -108,10 +108,10 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   fld->setSystemFolder(aSysFldr);
 
   bool inserted = false;
-  QList<KMFolderNode*>::const_iterator it;
+  QListIterator<KMFolderNode*> it( *this);
   int index = 0;
-  for ( it = begin(); it != end(); ++it ) {
-    KMFolderNode* fNode = *it;
+  while ( it.hasNext() ) {
+    KMFolderNode* fNode = it.next();
     if (fNode->name().toLower() > fld->name().toLower()) {
       insert( index, fld );
       inserted = true;
@@ -299,10 +299,12 @@ bool KMFolderDir::reload(void)
 //-----------------------------------------------------------------------------
 KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
 {
-  QList<KMFolderNode*>::const_iterator it;
-  for ( it = begin(); it != end(); ++it ) {
-    if ( (*it) && (*it)->name() == aName)
-      return (*it);
+  QListIterator<KMFolderNode*> it(*this);
+  while ( it.hasNext() ) {
+      KMFolderNode* node = it.next();
+      if ( node && node->name() == aName ) {
+          return node;
+      }
   }
   return 0;
 }
