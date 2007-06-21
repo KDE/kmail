@@ -89,6 +89,7 @@ using KWallet::Wallet;
 #include "kmailinterface.h"
 KMKernel *KMKernel::mySelf = 0;
 #include "folderadaptor.h"
+#include "kmail_util.h"
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
@@ -163,7 +164,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     netCodec = QTextCodec::codecForLocale();
   }
   mMailService =  new MailServiceImpl();
-  QDBusConnection::sessionBus().connect(QString(), "/KMail", "org.kde.kmail", "kmailSelectFolder(QString)", this, SLOT(selectFolder(QString)) );
+  QDBusConnection::sessionBus().connect(QString(), "/KMail", DBUS_KMAIL, "kmailSelectFolder(QString)", this, SLOT(selectFolder(QString)) );
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -1002,7 +1003,7 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface("org.kde.kmail", "/MainApplication", "org.kde.KUniqueApplication", QDBusConnection::sessionBus());
+  QDBusInterface iface(DBUS_KMAIL, "/MainApplication", "org.kde.KUniqueApplication", QDBusConnection::sessionBus());
   QDBusReply<int> reply;
   if (!iface.isValid() || !(reply = iface.call("newInstance")).isValid())
   {

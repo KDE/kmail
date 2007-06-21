@@ -75,6 +75,8 @@ using KMail::AccountManager;
 #include <ktemporaryfile.h>
 #include <kconfiggroup.h>
 #include "groupwareadaptor.h"
+#include "kmail_util.h"
+
 
 using namespace KMail;
 
@@ -961,7 +963,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     }
 //    incidenceAdded( type, folder->location(), sernum, format, s );
     QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "incidenceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "incidenceAdded");
     message << type;
     message << folder->location();
     message << sernum;
@@ -1027,7 +1029,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 
 //        incidenceDeleted( type, folder->location(), uid );
     QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "incidenceDeleted");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "incidenceDeleted");
     message << type;
     message << folder->location();
     message << uid;
@@ -1045,7 +1047,7 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
   if( mUseResourceIMAP ) {
 //    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
     QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "signalRefresh");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "signalRefresh");
     message << type;
     message << QString();
     QDBusConnection::sessionBus().send(message);
@@ -1261,7 +1263,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Notify that the old folder resource is no longer available
 //    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
     QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
     message << folderContentsType( folder->storage()->contentsType() );
     message << location;
     QDBusConnection::sessionBus().send(message);
@@ -1305,7 +1307,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 //  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
 //                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
       QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( contentsType );
     message << location;
     message << !folder->isReadOnly();
@@ -1454,13 +1456,13 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
       QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
     message << contentsTypeStr;
     message << location;
     QDBusConnection::sessionBus().send(message);
 
     message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare",DBUS_KMAIL , "subresourceAdded");
     message << contentsTypeStr;
     message << location;
     message << folder->prettyUrl();
@@ -1499,7 +1501,7 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
   if ( folder )
   {
       QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceDeleted");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
     message << folderContentsType(  folder->storage()->contentsType() );
     message << oldLocation;
     QDBusConnection::sessionBus().send(message);
@@ -1722,7 +1724,7 @@ void KMailICalIfaceImpl::readConfig()
 
     //  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
       QDBusMessage message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( KMail::ContentsTypeCalendar );
     message << mCalendar->location();
     message <<  mCalendar->label();
@@ -1731,7 +1733,7 @@ void KMailICalIfaceImpl::readConfig()
     QDBusConnection::sessionBus().send(message);
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
     message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( KMail::ContentsTypeTask );
     message << mTasks->location();
     message <<  mTasks->label();
@@ -1740,7 +1742,7 @@ void KMailICalIfaceImpl::readConfig()
     QDBusConnection::sessionBus().send(message);
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
     message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( KMail::ContentsTypeJournal );
     message << mJournals->location();
     message <<  mJournals->label();
@@ -1750,7 +1752,7 @@ void KMailICalIfaceImpl::readConfig()
 
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
     message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( KMail::ContentsTypeContact );
     message << mContacts->location();
     message <<  mContacts->label();
@@ -1760,7 +1762,7 @@ void KMailICalIfaceImpl::readConfig()
 
 //  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
     message =
-        QDBusMessage::createSignal("/GroupWare", "org.kde.kmail", "subresourceAdded");
+        QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( KMail::ContentsTypeNote );
     message << mNotes->location();
     message <<  mNotes->label();

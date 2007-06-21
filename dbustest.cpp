@@ -3,6 +3,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
+#include <kmail_util.h>
 
 #include "kmailinterface.h"
 #include "mailcomposerinterface.h"
@@ -10,7 +11,6 @@
 
 #include <QByteArray>
 
-#define DBUS_KMAIL "org.kde.kmail"
 
 int main(int argc,char **argv)
 {
