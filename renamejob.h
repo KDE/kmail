@@ -84,6 +84,7 @@ protected:
   QString mNewImapPath;
   QString mOldName;
   QString mOldImapPath;
+  QStringList mOldImapPaths;
   KMFolder* mNewFolder;
   CopyFolderJob *mCopyFolderJob;
 };
