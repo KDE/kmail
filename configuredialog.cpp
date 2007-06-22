@@ -2341,7 +2341,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   // tmp. vars:
   QVBoxLayout *vlay;
   QHBoxLayout *hlay;
-  Q3GroupBox   *group;
+  QGroupBox   *group;
   QLabel      *label;
   KHBox       *hbox;
   QString      msg;
@@ -2436,7 +2436,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay->addItem( new QSpacerItem(0, 0) );
 
   // The "external editor" group:
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n("External Editor"), this );
+  group = new QGroupBox( i18n("External Editor"), this );
+  QLayout *layout = new QVBoxLayout( group );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mExternalEditorCheck = new QCheckBox(
@@ -2474,6 +2475,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            label, SLOT(setEnabled(bool)) );
+  layout->addWidget( mExternalEditorCheck );
+  layout->addWidget( hbox );
+  layout->addWidget( label );
 
   vlay->addWidget( group );
   vlay->addStretch( 100 );
@@ -2846,7 +2850,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
-  Q3GroupBox   *group;
+  QGroupBox   *group;
   QLabel      *label;
 
 
@@ -2854,7 +2858,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n("Repl&y Subject Prefixes"), this );
+  group = new QGroupBox( i18n("Repl&y Subject Prefixes"), this );
+  QLayout *layout = new QVBoxLayout( group );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
@@ -2881,11 +2886,15 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   mReplaceReplyPrefixCheck->setObjectName( "kcfg_ReplaceReplyPrefix" );
   connect( mReplaceReplyPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  layout->addWidget( label );
+  layout->addWidget( mReplyListEditor );
+  layout->addWidget( mReplaceReplyPrefixCheck );
 
   vlay->addWidget( group );
 
 
-  group = new Q3GroupBox(1, Qt::Horizontal, i18n("For&ward Subject Prefixes"), this );
+  group = new QGroupBox( i18n("For&ward Subject Prefixes"), this );
+  layout = new QVBoxLayout( group );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
@@ -2911,7 +2920,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   mReplaceForwardPrefixCheck->setObjectName( "kcfg_ReplaceForwardPrefix" );
   connect( mReplaceForwardPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
+  layout->addWidget( label );
+  layout->addWidget( mForwardListEditor );
+  layout->addWidget( mReplaceForwardPrefixCheck );
   vlay->addWidget( group );
 }
 
@@ -4548,8 +4559,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   vlay->setMargin( KDialog::marginHint() );
 
   // IMAP resource setup
-  Q3GroupBox * b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("&IMAP Resource Folder Options"),
-                                   this );
+  QGroupBox * b1 = new QGroupBox( i18n("&IMAP Resource Folder Options"), this );
+  QLayout *layout = new QVBoxLayout( b1 );
 
   mEnableImapResCB =
     new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
@@ -4649,6 +4660,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
+  layout->addWidget( mEnableImapResCB );
+  layout->addWidget( mBox );
   vlay->addWidget( b1 );
 
   mOnlyShowGroupwareFolders = new QCheckBox( i18n( "&Only show groupware folders for this account" ), mBox );
@@ -4664,7 +4677,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
-  b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("Groupware Compatibility && Legacy Options"), this );
+  b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
+  layout = new QVBoxLayout( b1 );
 
   gBox = new KVBox( b1 );
 #if 0
@@ -4705,6 +4719,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
            automaticSendingItem()->whatsThis().toUtf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  layout->addWidget( gBox );
   vlay->addWidget( b1 );
   vlay->addStretch( 10 ); // spacer
 }
