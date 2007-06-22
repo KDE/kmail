@@ -51,6 +51,23 @@
 
 using namespace KMail;
 
+template <typename T> static QStringList imapPaths( FolderStorage* storage )
+{
+  QStringList rv;
+  rv.append( static_cast<T>( storage )->imapPath() );
+  KMFolderDir* dir = storage->folder()->child();
+  if ( dir ) {
+    KMFolderNode *node = dir->first();
+    while ( node ) {
+      if ( !node->isDir() ) {
+        rv += imapPaths<T>( static_cast<KMFolder*>( node )->storage() );
+      }
+      node = dir->next();
+    }
+  }
+  return rv;
+}
+
 RenameJob::RenameJob( FolderStorage* storage, const QString& newName,
     KMFolderDir* newParent )
  : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
@@ -62,8 +79,10 @@ RenameJob::RenameJob( FolderStorage* storage, const QString& newName,
     mOldName = storage->name();
     if ( storage->folderType() == KMFolderTypeImap ) {
       mOldImapPath = static_cast<KMFolderImap*>(storage)->imapPath();
+//       mOldImapPaths = imapPaths<KMFolderImap*>( storage );
     } else if ( storage->folderType() == KMFolderTypeCachedImap ) {
       mOldImapPath = static_cast<KMFolderCachedImap*>(storage)->imapPath();
+      mOldImapPaths = imapPaths<KMFolderCachedImap*>( storage );
     }
   }
 }
@@ -215,8 +234,10 @@ void RenameJob::folderCopyComplete(bool success)
   {
     // tell the account (see KMFolderCachedImap::listDirectory2)
     KMAcctCachedImap* acct = static_cast<KMFolderCachedImap*>(mStorage)->account();
-    if ( acct )
-      acct->addDeletedFolder( mOldImapPath );
+    if ( acct ) {
+      for ( QStringList::ConstIterator it = mOldImapPaths.constBegin(); it != mOldImapPaths.constEnd(); ++it )
+        acct->addDeletedFolder( *it );
+    }
     kmkernel->dimapFolderMgr()->remove( mStorage->folder() );
   } else if ( mStorage->folderType() == KMFolderTypeSearch )
   {
