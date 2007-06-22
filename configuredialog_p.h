@@ -184,7 +184,7 @@ private:
   void setup();
 
 private:
-  K3ListView   *mListView;
+  QTreeWidget *mListView;
   QStringList mProfileList;
 };
 

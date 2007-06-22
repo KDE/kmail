@@ -321,13 +321,15 @@ ProfileDialog::ProfileDialog( QWidget * parent )
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( 0 );
 
-  mListView = new K3ListView( page );
+  mListView = new QTreeWidget( page );
   mListView->setObjectName( "mListView" );
-  mListView->addColumn( i18n("Available Profiles") );
-  mListView->addColumn( i18n("Description") );
-  mListView->setFullWidth( true );
+  mListView->setHeaderLabels( 
+    QStringList () << i18n("Available Profiles") << i18n("Description") 
+  );
   mListView->setAllColumnsShowFocus( true );
-  mListView->setSorting( -1 );
+  mListView->setSortingEnabled( false );
+  mListView->setRootIsDecorated( false );
+  mListView->setSelectionMode( QAbstractItemView::SingleSelection );
 
   QLabel *l = new QLabel(
 			       i18n("&Select a profile and click 'OK' to "
@@ -338,10 +340,14 @@ ProfileDialog::ProfileDialog( QWidget * parent )
 
   setup();
 
-  connect( mListView, SIGNAL(selectionChanged()),
+  connect( mListView, SIGNAL(itemSelectionChanged()),
 	   SLOT(slotSelectionChanged()) );
-  connect( mListView, SIGNAL(doubleClicked ( Q3ListViewItem *, const QPoint &, int ) ),
-	   SLOT(slotOk()) );
+  /* FIXME The dialog does not close when double click an item, but 
+   * the profile is selected. If the user clicks on Cancel after double
+   * click he has changed the profile.
+   */
+  //connect( mListView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem*, int ) ),
+	//   SLOT(slotOk()) );
 
   connect( this, SIGNAL(finished()), SLOT(deleteLater()) );
   connect( this, SIGNAL(okClicked()), SLOT( slotOk() ) );
@@ -351,7 +357,7 @@ ProfileDialog::ProfileDialog( QWidget * parent )
 
 void ProfileDialog::slotSelectionChanged()
 {
-  enableButtonOk( mListView->selectedItem() );
+  enableButtonOk( mListView->currentItem() );
 }
 
 void ProfileDialog::setup() {
@@ -364,7 +370,7 @@ void ProfileDialog::setup() {
 		<< " profiles:" << endl;
 
   // build the list and populate the list view:
-  Q3ListViewItem * listItem = 0;
+  QTreeWidgetItem * listItem = 0;
   for ( QStringList::const_iterator it = mProfileList.begin() ;
 	it != mProfileList.end() ; ++it ) {
     KConfig _profile( *it, KConfig::NoGlobals  );
@@ -381,12 +387,17 @@ void ProfileDialog::setup() {
 		      << "\" doesn't provide a description!" << endl;
       desc = i18nc("Missing profile description placeholder","Not available");
     }
-    listItem = new Q3ListViewItem( mListView, listItem, name, desc );
+    listItem = new QTreeWidgetItem( mListView, listItem );
+    listItem->setText( 0, name );
+    listItem->setText( 1, desc );
   }
 }
 
 void ProfileDialog::slotOk() {
-  const int index = mListView->itemIndex( mListView->selectedItem() );
+  if ( !mListView->currentItem() )
+    return; // none selected
+
+  const int index = mListView->indexOfTopLevelItem( mListView->currentItem() );
   if ( index < 0 )
     return; // none selected
 
