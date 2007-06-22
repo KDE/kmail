@@ -835,13 +835,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   vlay->addLayout( hlay, 10 ); // high stretch to suppress groupbox's growing
 
   // account list: left widget in hlay; stretch 1
-  mAccountList = new QTreeWidget( this );
+  mAccountList = new ListView( this );
   mAccountList->setObjectName( "accountList" );
   mAccountList->setHeaderLabels( QStringList() << "Name" << "Type" << "Folder" );
-  mAccountList->setAllColumnsShowFocus( true );
   mAccountList->setSortingEnabled( false );
-  mAccountList->setSelectionMode( QAbstractItemView::SingleSelection );
-  mAccountList->setRootIsDecorated( false );
 
   connect( mAccountList->selectionModel(),
            SIGNAL(
@@ -3085,11 +3082,9 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   glay->setColumnStretch( 1, 1 );
   mTagList = new ListView( this );
   mTagList->setObjectName( "tagList" );
-  mTagList->addColumn( i18n("Name") );
-  mTagList->addColumn( i18n("Value") );
-  mTagList->setAllColumnsShowFocus( true );
-  mTagList->setSorting( -1 );
-  connect( mTagList, SIGNAL(selectionChanged()),
+  mTagList->setHeaderLabels( QStringList() << i18n("Name") << i18n("Value") );
+  mTagList->setSortingEnabled( false );
+  connect( mTagList, SIGNAL(itemSelectionChanged()),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
   glay->addWidget( mTagList, 0, 0, 3, 2 );
 
@@ -3128,7 +3123,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 {
-  Q3ListViewItem * item = mTagList->selectedItem();
+  QTreeWidgetItem * item = mTagList->currentItem();
 
   if ( item ) {
     mTagNameEdit->setText( item->text( 0 ) );
@@ -3148,7 +3143,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text ) {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  Q3ListViewItem * item = mTagList->selectedItem();
+  QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 0, text );
   emit changed( true );
@@ -3158,7 +3153,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
 void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text ) {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  Q3ListViewItem * item = mTagList->selectedItem();
+  QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 1, text );
   emit changed( true );
@@ -3167,9 +3162,8 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
 
 void ComposerPage::HeadersTab::slotNewMimeHeader()
 {
-  Q3ListViewItem *listItem = new Q3ListViewItem( mTagList );
+  QTreeWidgetItem *listItem = new QTreeWidgetItem( mTagList );
   mTagList->setCurrentItem( listItem );
-  mTagList->setSelected( listItem, true );
   emit changed( true );
 }
 
@@ -3177,7 +3171,7 @@ void ComposerPage::HeadersTab::slotNewMimeHeader()
 void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 {
   // calling this w/o selection is a programming error:
-  Q3ListViewItem * item = mTagList->selectedItem();
+  QTreeWidgetItem *item = mTagList->currentItem();
   if ( !item ) {
     kDebug(5006) << "==================================================\n"
                   << "Error: Remove button was pressed although no custom header was selected\n"
@@ -3185,13 +3179,20 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     return;
   }
 
-  Q3ListViewItem * below = item->nextSibling();
-  delete item;
+  QTreeWidgetItem *below = mTagList->itemBelow( item );
 
-  if ( below )
-    mTagList->setSelected( below, true );
-  else if ( mTagList->lastItem() )
-    mTagList->setSelected( mTagList->lastItem(), true );
+  if ( below ) {
+    kDebug(5006) << "below" << endl;
+    mTagList->setCurrentItem( below );
+    delete item;
+    item = 0;
+  } else if ( mTagList->topLevelItemCount() > 0 ) {
+    delete item;
+    item = 0;
+    mTagList->setCurrentItem(
+      mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 ) 
+    );
+  }
   emit changed( true );
 }
 
@@ -3208,7 +3209,7 @@ void ComposerPage::HeadersTab::doLoadOther() {
   mTagNameEdit->clear();
   mTagValueEdit->clear();
 
-  Q3ListViewItem * item = 0;
+  QTreeWidgetItem * item = 0;
 
   int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
@@ -3216,12 +3217,14 @@ void ComposerPage::HeadersTab::doLoadOther() {
                          QByteArray("Mime #") + QByteArray().setNum(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
-    if( !name.isEmpty() )
-      item = new Q3ListViewItem( mTagList, item, name, value );
+    if( !name.isEmpty() ) {
+      item = new QTreeWidgetItem( mTagList, item );
+      item->setText( 0, name );
+      item->setText( 1, value );
+    }
   }
-  if ( mTagList->childCount() ) {
-    mTagList->setCurrentItem( mTagList->firstChild() );
-    mTagList->setSelected( mTagList->firstChild(), true );
+  if ( mTagList->topLevelItemCount() > 0 ) {
+    mTagList->setCurrentItem( mTagList->topLevelItem( 0 ) );
   }
   else {
     // disable the "Remove" button
@@ -3238,8 +3241,9 @@ void ComposerPage::HeadersTab::save() {
                       mMessageIdSuffixEdit->text() );
 
   int numValidEntries = 0;
-  Q3ListViewItem * item = mTagList->firstChild();
-  for ( ; item ; item = item->itemBelow() )
+  QTreeWidgetItem *item = 0;
+  for ( int i = 0; i < mTagList->topLevelItemCount(); ++i ) {
+    item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
       KConfigGroup config( KMKernel::config(), QByteArray("Mime #")
                              + QByteArray().setNum( numValidEntries ) );
@@ -3247,6 +3251,7 @@ void ComposerPage::HeadersTab::save() {
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
     }
+  }
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 

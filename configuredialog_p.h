@@ -378,7 +378,7 @@ private:
   QStringList occupiedNames();
 
 private:
-  QTreeWidget   *mAccountList;
+  ListView      *mAccountList;
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
@@ -754,7 +754,7 @@ private:
   QCheckBox   *mCreateOwnMessageIdCheck;
   QLineEdit   *mMessageIdSuffixEdit;
   QRegExpValidator *mMessageIdSuffixValidator;
-  Q3ListView   *mTagList;
+  ListView    *mTagList;
   QPushButton *mRemoveHeaderButton;
   QLineEdit   *mTagNameEdit;
   QLineEdit   *mTagValueEdit;
@@ -1060,7 +1060,7 @@ private:
 //
 //
 
-class ListView : public K3ListView {
+class ListView : public QTreeWidget {
   Q_OBJECT
 public:
   explicit ListView( QWidget *parent=0, int visibleItem=10 );

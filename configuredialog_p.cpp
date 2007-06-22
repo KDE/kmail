@@ -34,6 +34,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QShowEvent>
 #include <QVBoxLayout>
 #include <QResizeEvent>
@@ -136,29 +137,32 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
 }
 
 ListView::ListView( QWidget *parent, int visibleItem )
-  : K3ListView( parent )
+  : QTreeWidget( parent )
 {
+  setAllColumnsShowFocus( true );
+  setSelectionMode( QAbstractItemView::SingleSelection );
+  setRootIsDecorated( false );
   setVisibleItem(visibleItem);
 }
 
 
 void ListView::resizeEvent( QResizeEvent *e )
 {
-  K3ListView::resizeEvent(e);
+  QTreeWidget::resizeEvent(e);
   resizeColums();
 }
 
 
 void ListView::showEvent( QShowEvent *e )
 {
-  K3ListView::showEvent(e);
+  QTreeWidget::showEvent(e);
   resizeColums();
 }
 
 
 void ListView::resizeColums()
 {
-  int c = columns();
+  int c = columnCount();
   if( c == 0 )
   {
     return;
@@ -178,24 +182,26 @@ void ListView::resizeColums()
 
 void ListView::setVisibleItem( int visibleItem, bool updateSize )
 {
-  mVisibleItem = qMax( 1, visibleItem );
+  // FIXME is this really neccessary?
+  /*mVisibleItem = qMax( 1, visibleItem );
   if( updateSize == true )
   {
     QSize s = sizeHint();
     setMinimumSize( s.width() + verticalScrollBar()->sizeHint().width() +
 		    lineWidth() * 2, s.height() );
-  }
+  }*/
 }
 
 
 QSize ListView::sizeHint() const
 {
-  QSize s = Q3ListView::sizeHint();
+  QSize s = QTreeWidget::sizeHint();
 
-  int h = fontMetrics().height() + 2*itemMargin();
+  // FIXME indentation is horizontal distance
+  /*int h = fontMetrics().height() + 2*indentation();
   if( h % 2 > 0 ) { h++; }
 
-  s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());
+  s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());*/
   return s;
 }
 
