@@ -136,7 +136,9 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
                       "you can try refreshing the IMAP cache. If you do this, "
                       "you will loose all your local changes for this folder "
                       "and all its subfolders.</p>" );
-  topLayout->addWidget( new QLabel( txt, page ) );
+  QLabel *label = new QLabel(txt, page );
+  label->setWordWrap(true);
+  topLayout->addWidget( label );
   showButtonSeparator( true );
 
   QButtonGroup *group = new QButtonGroup( 0 );
