@@ -17,6 +17,29 @@ kde4_automoc(${mimelibtests_SRCS})
 kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS})
 target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY})
 
+########### next target ###############
+set(dbustest_SRCS dbustest.cpp )
+qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.kmail.xml)
+qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.mailcomposer.xml )
+
+kde4_automoc(${dbustest_SRCS})
+
+kde4_add_test_executable(dbustest ${dbustest_SRCS})
+
+target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
+
+
+########### next target ###############
+
+set(recipienteditortest_SRCS recipientseditortest.cpp )
+
+kde4_automoc(${recipienteditortest_SRCS})
+
+kde4_add_test_executable(recipienteditortest ${recipienteditortest_SRCS})
+
+target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBS} kmailprivate kdepim )
+
+
 ###### TODO port storagelayer tests to QTestLib
 
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp
