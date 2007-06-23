@@ -15,7 +15,7 @@ Exec=kmail --view %u
 Icon=kmail
 DocPath=kmail/index.html
 NoDisplay=true
-MimeType=message/rfc822;application/mbox;application/x-mimearchive
+MimeType=message/rfc822;application/mbox;application/x-mimearchive;
 
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
