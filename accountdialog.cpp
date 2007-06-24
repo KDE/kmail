@@ -431,7 +431,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
-  mLocal.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mLocal.intervalSpin->setRange( 1, 10000, 1, false );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( 1 );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
@@ -524,7 +524,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
-  mMaildir.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mMaildir.intervalSpin->setRange( 1, 10000, 1, false );
   mMaildir.intervalSpin->setSuffix( i18n(" min") );
   mMaildir.intervalSpin->setValue( 1 );
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
@@ -698,7 +698,7 @@ void AccountDialog::makePopAccountPage()
   mPop.filterOnServerSizeSpin = new KIntNumInput ( hbox );
   mPop.filterOnServerSizeSpin->setEnabled( false );
   hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
-  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
+  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, false );
   connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
           SLOT(slotFilterOnServerSizeChanged(int)));
   mPop.filterOnServerSizeSpin->setValue( 50000 );
@@ -721,7 +721,7 @@ void AccountDialog::makePopAccountPage()
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
   grid->addWidget( mPop.intervalLabel, 13, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
-  mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mPop.intervalSpin->setRange( 1, 10000, 1, false );
   mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( 1 );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
@@ -885,10 +885,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
-  button->setIconSet( 
+  button->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
-  QWhatsThis::add( button, 
+  QWhatsThis::add( button,
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
   grid->addWidget( box, row, 0 );
 
@@ -899,7 +899,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
-  mImap.editPNS->setIconSet( 
+  mImap.editPNS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editPNS->setAutoRaise( true );
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -911,7 +911,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
-  mImap.editONS->setIconSet( 
+  mImap.editONS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editONS->setAutoRaise( true );
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -923,7 +923,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
-  mImap.editSNS->setIconSet( 
+  mImap.editSNS->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
   mImap.editSNS->setAutoRaise( true );
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -1033,7 +1033,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
   const int kioskMinimumImapCheckInterval = GlobalSettings::minimumImapCheckInterval();
-  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, FALSE );
+  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, false );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
@@ -1187,25 +1187,25 @@ void AccountDialog::setupSettings()
     mPop.includeInCheck->setChecked( !mAccount->checkExclude() );
     mPop.precommand->setText( ap.precommand() );
     if (ap.useSSL())
-      mPop.encryptionSSL->setChecked( TRUE );
+      mPop.encryptionSSL->setChecked( true );
     else if (ap.useTLS())
-      mPop.encryptionTLS->setChecked( TRUE );
-    else mPop.encryptionNone->setChecked( TRUE );
+      mPop.encryptionTLS->setChecked( true );
+    else mPop.encryptionNone->setChecked( true );
     if (ap.auth() == "LOGIN")
-      mPop.authLogin->setChecked( TRUE );
+      mPop.authLogin->setChecked( true );
     else if (ap.auth() == "PLAIN")
-      mPop.authPlain->setChecked( TRUE );
+      mPop.authPlain->setChecked( true );
     else if (ap.auth() == "CRAM-MD5")
-      mPop.authCRAM_MD5->setChecked( TRUE );
+      mPop.authCRAM_MD5->setChecked( true );
     else if (ap.auth() == "DIGEST-MD5")
-      mPop.authDigestMd5->setChecked( TRUE );
+      mPop.authDigestMd5->setChecked( true );
     else if (ap.auth() == "NTLM")
-      mPop.authNTLM->setChecked( TRUE );
+      mPop.authNTLM->setChecked( true );
     else if (ap.auth() == "GSSAPI")
-      mPop.authGSSAPI->setChecked( TRUE );
+      mPop.authGSSAPI->setChecked( true );
     else if (ap.auth() == "APOP")
-      mPop.authAPOP->setChecked( TRUE );
-    else mPop.authUser->setChecked( TRUE );
+      mPop.authAPOP->setChecked( true );
+    else mPop.authUser->setChecked( true );
 
     slotEnableLeaveOnServerDays( mPop.leaveOnServerDaysCheck->isEnabled() ?
                                    ap.leaveOnServerDays() >= 1 : 0);
@@ -1246,25 +1246,25 @@ void AccountDialog::setupSettings()
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( TRUE );
+      mImap.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( TRUE );
-    else mImap.encryptionNone->setChecked( TRUE );
+      mImap.encryptionTLS->setChecked( true );
+    else mImap.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( TRUE );
+      mImap.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( TRUE );
+      mImap.authDigestMd5->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( TRUE );
+      mImap.authNTLM->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( TRUE );
+      mImap.authGSSAPI->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( TRUE );
+      mImap.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( TRUE );
+      mImap.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( TRUE );
-    else mImap.authUser->setChecked( TRUE );
+      mImap.authLogin->setChecked( true );
+    else mImap.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
@@ -1295,25 +1295,25 @@ void AccountDialog::setupSettings()
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( TRUE );
+      mImap.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( TRUE );
-    else mImap.encryptionNone->setChecked( TRUE );
+      mImap.encryptionTLS->setChecked( true );
+    else mImap.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( TRUE );
+      mImap.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( TRUE );
+      mImap.authDigestMd5->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( TRUE );
+      mImap.authGSSAPI->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( TRUE );
+      mImap.authNTLM->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( TRUE );
+      mImap.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( TRUE );
+      mImap.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( TRUE );
-    else mImap.authUser->setChecked( TRUE );
+      mImap.authLogin->setChecked( true );
+    else mImap.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
@@ -1511,7 +1511,7 @@ void AccountDialog::slotCheckPopCapabilities()
                                               const QStringList & ) ),
            this, SLOT( slotPopCapabilities( const QStringList &,
                                             const QStringList & ) ) );
-  mPop.checkCapabilities->setEnabled(FALSE);
+  mPop.checkCapabilities->setEnabled(false);
 }
 
 
@@ -1530,7 +1530,7 @@ void AccountDialog::slotCheckImapCapabilities()
                                               const QStringList & ) ),
            this, SLOT( slotImapCapabilities( const QStringList &,
                                              const QStringList & ) ) );
-  mImap.checkCapabilities->setEnabled(FALSE);
+  mImap.checkCapabilities->setEnabled(false);
 }
 
 
@@ -1920,9 +1920,9 @@ void AccountDialog::saveSettings()
     }
     ai.setNamespaces( map );
     ai.setNamespaceToDelimiter( delimMap );
-  }  
+  }
 
-  kmkernel->acctMgr()->writeConfig(TRUE);
+  kmkernel->acctMgr()->writeConfig( true );
 
   // get the new account and register the new destination folder
   // this is the target folder for local or pop accounts and the root folder
@@ -2080,7 +2080,7 @@ void AccountDialog::slotReloadNamespaces()
     connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     connect( ai, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( slotConnectionResult(int, const QString&) ) );    
+          this, SLOT( slotConnectionResult(int, const QString&) ) );
     ai->getNamespaces();
   }
 }
@@ -2092,7 +2092,7 @@ void AccountDialog::slotConnectionResult( int errorCode, const QString& )
     disconnect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     disconnect( ai, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( slotConnectionResult(int, const QString&) ) );    
+          this, SLOT( slotConnectionResult(int, const QString&) ) );
     mImap.personalNS->setText( QString::null );
   }
 }
@@ -2172,8 +2172,8 @@ void AccountDialog::initAccountForConnect()
       na.setAuth("GSSAPI");
     else if (mPop.authAPOP->isChecked())
       na.setAuth("APOP");
-    else na.setAuth("AUTO");    
-  } 
+    else na.setAuth("AUTO");
+  }
   else if ( type == "imap" || type == "cachedimap" ) {
     na.setHost( mImap.hostEdit->text().stripWhiteSpace() );
     na.setPort( mImap.portEdit->text().toInt() );
@@ -2196,7 +2196,7 @@ void AccountDialog::initAccountForConnect()
       na.setAuth("LOGIN");
     else if (mImap.authPlain->isChecked())
       na.setAuth("PLAIN");
-    else na.setAuth("*");    
+    else na.setAuth("*");
   }
 }
 
@@ -2235,7 +2235,7 @@ void NamespaceLineEdit::setText( const QString& text )
   KLineEdit::setText( text );
 }
 
-NamespaceEditDialog::NamespaceEditDialog( QWidget *parent, 
+NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
   : KDialogBase( parent, "edit_namespace", false, QString::null,
       Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
@@ -2261,7 +2261,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
     edit->setText( it.key() );
     QToolButton* button = new QToolButton( grid );
-    button->setIconSet( 
+    button->setIconSet(
       KGlobal::iconLoader()->loadIconSet( "editdelete", KIcon::Small, 0 ) );
     button->setAutoRaise( true );
     button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );

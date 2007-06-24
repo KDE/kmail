@@ -120,7 +120,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
     fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
+    fld->sendFolderComplete(false);
   }
 }
 
@@ -174,7 +174,7 @@ void KMAcctCachedImap::cancelMailCheck()
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
     fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
+    fld->sendFolderComplete(false);
   }
 }
 

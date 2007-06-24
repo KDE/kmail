@@ -212,9 +212,9 @@ public:
   virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
 
   /** Remove (first occurrence of) given message from the folder. */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = false);
+  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -263,7 +263,7 @@ public:
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  void close(bool force=FALSE);
+  void close(bool force=false);
   virtual void reallyDoClose() = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.

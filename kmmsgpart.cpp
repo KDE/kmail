@@ -555,7 +555,7 @@ QString KMMessagePart::fileName(void) const
 
   // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231)
   // in the Content-Disposision
-  if ( mContentDisposition.contains( "filename*", FALSE ) ) {
+  if ( mContentDisposition.contains( "filename*", false ) ) {
 
     // It's RFC 2231 encoded, so extract the file name with the 2231 method
     str = KMMsgBase::extractRFC2231HeaderField( mContentDisposition, "filename" );
@@ -565,7 +565,7 @@ QString KMMessagePart::fileName(void) const
 
     // Standard RFC 2047-encoded
     // search the start of the filename
-    int startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
+    int startOfFilename = mContentDisposition.find("filename=", 0, false);
     if (startOfFilename < 0)
       return QString::null;
     startOfFilename += 9;

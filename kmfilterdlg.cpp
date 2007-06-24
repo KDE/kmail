@@ -123,10 +123,10 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //=============================================================================
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
-  : KDialogBase( parent, name, FALSE /* modality */,
+  : KDialogBase( parent, name,  false  /* modality */,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
 		 Help|Ok|Apply|Cancel /* button mask */,
-		 Ok /* default btn */, FALSE /* separator */),
+		 Ok /* default btn */,  false  /* separator */),
   bPopFilter(popFilter)
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
@@ -360,7 +360,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 
   if (bPopFilter){
     mActionGroup->setAction( aFilter->action() );
-    mGlobalsBox->setEnabled(true);
+    mGlobalsBox->setEnabled( true );
     mShowLaterBtn->setChecked(mFilterList->showLaterMsgs());
   } else {
     mActionLister->setActionList( aFilter->actions() );
@@ -569,7 +569,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   : QGroupBox( 1, Horizontal, title, parent, name ),
     bPopFilter(popFilter)
 {
-  mFilterList.setAutoDelete(TRUE);
+  mFilterList.setAutoDelete( true );
   mIdxSelItem = -1;
 
   //----------- the list box
@@ -700,9 +700,9 @@ void KMFilterListBox::slotUpdateFilterName()
 
   if ( displayedName == shouldBeName ) return;
 
-  mListBox->blockSignals(TRUE);
+  mListBox->blockSignals( true );
   mListBox->changeItem( shouldBeName, mIdxSelItem );
-  mListBox->blockSignals(FALSE);
+  mListBox->blockSignals( false );
 }
 
 void KMFilterListBox::slotShowLaterToggled(bool aOn)
@@ -817,7 +817,7 @@ void KMFilterListBox::slotDelete()
   int oIdxSelItem = mIdxSelItem;
   mIdxSelItem = -1;
   // unselect all
-  mListBox->selectAll(FALSE);
+  mListBox->selectAll( false );
   // broadcast that all widgets let go
   // of the filter
   emit resetWidgets();
@@ -831,11 +831,11 @@ void KMFilterListBox::slotDelete()
   // and set the new current item.
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
-    mListBox->setSelected( oIdxSelItem, TRUE );
+    mListBox->setSelected( oIdxSelItem, true );
   else if ( count )
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
-    mListBox->setSelected( count - 1, TRUE );
+    mListBox->setSelected( count - 1, true );
   // the list is empty - keep index -1
 
   enableControls();
@@ -908,7 +908,7 @@ void KMFilterListBox::slotRename()
     return;
   }
 
-  bool okPressed = FALSE;
+  bool okPressed =  false ;
   KMFilter *filter = mFilterList.at( mIdxSelItem );
 
   // enableControls should make sure this method is
@@ -963,10 +963,10 @@ void KMFilterListBox::enableControls()
 void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
   assert(mListBox);
-  setEnabled(FALSE);
+  setEnabled( false );
   // we don't want the insertion to
   // cause flicker in the edit widgets.
-  blockSignals(TRUE);
+  blockSignals( true );
 
   // clear both lists
   mFilterList.clear();
@@ -990,8 +990,8 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
     mListBox->insertItem( (*it)->pattern()->name() );
   }
 
-  blockSignals(FALSE);
-  setEnabled(TRUE);
+  blockSignals( false );
+  setEnabled( true );
 
   // create an empty filter when there's none, to avoid a completely
   // disabled dialog (usability tests indicated that the new-filter
@@ -1015,12 +1015,12 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
   if ( mIdxSelItem < 0 ) {
     // none selected -> append
     mFilterList.append( aFilter );
-    mListBox->setSelected( mListBox->count() - 1, TRUE );
+    mListBox->setSelected( mListBox->count() - 1, true );
     //    slotSelected( mListBox->count() - 1 );
   } else {
     // insert just before selected
     mFilterList.insert( mIdxSelItem, aFilter );
-    mListBox->setSelected( mIdxSelItem, TRUE );
+    mListBox->setSelected( mIdxSelItem, true );
     //    slotSelected( mIdxSelItem );
   }
 
@@ -1069,9 +1069,9 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   : QHBox( parent, name )
 {
   int i;
-  mActionList.setAutoDelete(TRUE);
+  mActionList.setAutoDelete( true );
 
-  mComboBox = new QComboBox( FALSE, this );
+  mComboBox = new QComboBox(  false , this );
   assert( mComboBox );
   mWidgetStack = new QWidgetStack(this);
   assert( mWidgetStack );
@@ -1117,7 +1117,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 {
   int i=0;
-  bool found = FALSE;
+  bool found =  false ;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
   QString label = ( aAction ) ? aAction->label() : QString::null ;
 
@@ -1132,7 +1132,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
       // the combo box
       mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
       mWidgetStack->raiseWidget(i);
-      found = TRUE;
+      found = true;
     } else // clear the parameter widget
       mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
   if ( found ) return;
@@ -1185,7 +1185,7 @@ void KMFilterActionWidgetLister::setActionList( QPtrList<KMFilterAction> *aList 
 
   mActionList = aList;
 
-  ((QWidget*)parent())->setEnabled( TRUE );
+  ((QWidget*)parent())->setEnabled( true );
 
   if ( aList->count() == 0 ) {
     slotClear();
@@ -1219,7 +1219,7 @@ void KMFilterActionWidgetLister::reset()
 
   mActionList = 0;
   slotClear();
-  ((QWidget*)parent())->setEnabled( FALSE );
+  ((QWidget*)parent())->setEnabled(  false  );
 }
 
 QWidget* KMFilterActionWidgetLister::createWidget( QWidget *parent )
@@ -1280,11 +1280,11 @@ void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
   blockSignals( true );
   if(!mActionMap[aAction]->isChecked())
   {
-    mActionMap[aAction]->setChecked(true);
+    mActionMap[aAction]->setChecked( true );
   }
   blockSignals( false );
 
-  setEnabled(true);
+  setEnabled( true );
 }
 
 KMPopFilterAction  KMPopFilterActionWidget::action()
@@ -1300,11 +1300,11 @@ void KMPopFilterActionWidget::slotActionClicked(int aId)
 
 void KMPopFilterActionWidget::reset()
 {
-  blockSignals(TRUE);
-  mActionMap[Down]->setChecked( TRUE );
-  blockSignals(FALSE);
+  blockSignals( true );
+  mActionMap[Down]->setChecked( true );
+  blockSignals( false );
 
-  setEnabled( FALSE );
+  setEnabled(  false  );
 }
 
 #include "kmfilterdlg.moc"

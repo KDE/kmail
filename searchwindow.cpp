@@ -495,7 +495,7 @@ void SearchWindow::slotSearch()
       }
 
       if (!folder)
-        folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
+        folder = mgr->createFolder(fullName, false, KMFolderTypeSearch,
             &mgr->dir());
 
       mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
@@ -784,7 +784,7 @@ void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &,
 {
     if (!lvi)
         return;
-    mLbxMatches->setSelected( lvi, TRUE );
+    mLbxMatches->setSelected( lvi, true );
     mLbxMatches->setCurrentItem( lvi );
     // FIXME is this ever unGetMsg()'d?
     if (!message())

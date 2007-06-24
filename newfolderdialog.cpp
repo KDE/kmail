@@ -92,7 +92,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
 
-    mFormatComboBox = new QComboBox( FALSE, privateLayoutWidget, "mFormatComboBox" );
+    mFormatComboBox = new QComboBox( false, privateLayoutWidget, "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
     QWhatsThis::add( mFormatComboBox, i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
 
@@ -119,7 +119,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsLabel->setText( i18n( "Folder &contains:" ) );
     mContentsHBox->addWidget( mContentsLabel );
 
-    mContentsComboBox = new QComboBox( FALSE, privateLayoutWidget, "mContentsComboBox" );
+    mContentsComboBox = new QComboBox( false, privateLayoutWidget, "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
     QWhatsThis::add( mContentsComboBox, i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
     mContentsComboBox->insertItem( i18n( "Mail" ) );
@@ -160,7 +160,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
       mNamespacesLabel->setText( i18n( "Namespace for &folder:" ) );
       mNamespacesHBox->addWidget( mNamespacesLabel );
 
-      mNamespacesComboBox = new QComboBox( FALSE, privateLayoutWidget, "mNamespacesComboBox" );
+      mNamespacesComboBox = new QComboBox( false, privateLayoutWidget, "mNamespacesComboBox" );
       mNamespacesLabel->setBuddy( mNamespacesComboBox );
       QWhatsThis::add( mNamespacesComboBox, i18n( "Select the personal namespace the folder should be created in." ) );
       mNamespacesComboBox->insertStringList( namespaces );
@@ -251,7 +251,7 @@ void NewFolderDialog::slotOk()
     KMAcctImap *anAccount = selectedStorage->account();
     // check if a connection is available BEFORE creating the folder
     if (anAccount->makeConnection() == ImapAccountBase::Connected) {
-      newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
+      newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, false, KMFolderTypeImap, selectedFolderDir );
       if ( newFolder ) {
         QString imapPath, parent;
         if ( mNamespacesComboBox ) {
@@ -259,7 +259,7 @@ void NewFolderDialog::slotOk()
           parent = anAccount->addPathToNamespace( mNamespacesComboBox->currentText() );
           imapPath = anAccount->createImapPath( parent, fldName );
         } else {
-          imapPath = anAccount->createImapPath( selectedStorage->imapPath(), fldName );  
+          imapPath = anAccount->createImapPath( selectedStorage->imapPath(), fldName );
         }
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
         selectedStorage->createFolder(fldName, parent); // create it on the server
@@ -269,14 +269,14 @@ void NewFolderDialog::slotOk()
       }
     }
   } else if ( mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
-    newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
+    newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, false, KMFolderTypeCachedImap, selectedFolderDir );
     if ( newFolder ) {
       KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>( newFolder->storage() );
       newStorage->initializeFrom( selectedStorage );
       if ( mNamespacesComboBox ) {
         // create folder with namespace
-        QString path = selectedStorage->account()->createImapPath( 
+        QString path = selectedStorage->account()->createImapPath(
             mNamespacesComboBox->currentText(), fldName );
         newStorage->setImapPathForCreation( path );
       }
@@ -285,9 +285,9 @@ void NewFolderDialog::slotOk()
   } else {
     // local folder
     if (mFormatComboBox->currentItem() == 1)
-      newFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
+      newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMaildir, selectedFolderDir );
     else
-      newFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
+      newFolder = kmkernel->folderMgr()->createFolder(fldName, false, KMFolderTypeMbox, selectedFolderDir );
     if ( newFolder )
       success = true;
   }

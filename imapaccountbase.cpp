@@ -374,7 +374,7 @@ namespace KMail {
     // create the KIO-job
     if ( makeConnection() != Connected )
       return;// ## doesn't handle Connecting
-    KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+    KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd( url.url(), NULL );
     // a bit of a hack to save one slot
@@ -1182,7 +1182,7 @@ namespace KMail {
      if ( makeConnection() != Connected )
        return; // can't happen with dimap
 
-     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+     KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
      KIO::Scheduler::assignJobToSlave(slave(), job);
      ImapAccountBase::jobData jd( url.url(), folder );
      jd.path = path;
