@@ -101,6 +101,9 @@ public:
   KMFolderCachedImap(KMFolder* folder, const char* name=0);
   virtual ~KMFolderCachedImap();
 
+  /**  @reimpl */
+  void reallyDoClose( const char * owner );
+
   /** Initialize this storage from another one. Used when creating a child folder */
   void initializeFrom( KMFolderCachedImap* parent );
 
@@ -398,6 +401,7 @@ signals:
 private:
   void setReadOnly( bool readOnly );
   QString state2String( int state ) const;
+  void rememberDeletion( int );
 
   /** State variable for the synchronization mechanism */
   enum {
@@ -503,6 +507,7 @@ private:
   int mNamespacesToCheck;
   bool mPersonalNamespacesCheckDone;
   QString mImapPathCreation;
+  QMap<ulong,void*> mDeletedUIDsSinceLastSync;
 
   QuotaInfo mQuotaInfo;
 };

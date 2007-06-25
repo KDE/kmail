@@ -106,20 +106,12 @@ KMFolderImap::~KMFolderImap()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::close(const char *owner, bool aForced)
+void KMFolderImap::reallyDoClose(const char *owner)
 {
-  if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount == 0 && isSelected() && !aForced) {
+  if ( isSelected() ) {
       kdWarning(5006) << "Trying to close the selected folder " << label() <<
         " - ignoring! " << kdBacktrace() << endl;
-      mOpenCount++;
       return;
-  }
-  if (mOpenCount > 0 && !aForced) {
-    // The inherited close will decrement again, so we have to adjust.
-    mOpenCount++;
-    KMFolderMbox::close(owner, aForced);
-    return;
   }
 
   // FIXME is this still needed?
@@ -136,9 +128,7 @@ void KMFolderImap::close(const char *owner, bool aForced)
 
   mCheckingValidity = false;
 
-  // The inherited close will decrement again, so we have to adjust.
-  mOpenCount++;
-  KMFolderMbox::close(owner, aForced);
+  KMFolderMbox::reallyDoClose(owner);
 }
 
 KMFolder* KMFolderImap::trashFolder() const
@@ -1132,6 +1122,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
       // we notice when this changes
       account()->handleJobError( job, i18n("Error while querying the server status.") );
     }
+    kdDebug() << "error in slotCheckValidityResult\n";
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
     close("checkvalidity");
@@ -1212,6 +1203,7 @@ void KMFolderImap::getFolder(bool force)
   mGuessedUnreadMsgs = -1;
   if (mNoContent)
   {
+    kdDebug() << "getFolder " << force << " " << mContentState << endl;
     mContentState = imapFinished;
     emit folderComplete(this, true);
     return;
@@ -1260,6 +1252,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
       mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
+    kdDebug() << folder()->name() << " download " << url << endl;
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(account()->slave(), newJob);
     ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1369,6 +1362,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     KURL url = account()->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
+    kdDebug() << folder()->name() << " download " << url << endl;
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(account()->slave(), newJob);
     account()->insertJob(newJob, jd);
@@ -1908,11 +1902,13 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
        account()->setImapStatus(folder(), imappath, flags);
      }
   }
+  kdDebug() << folder()->name() << " setStatus " << mContentState << endl;
   if ( mContentState == imapListingInProgress ) {
     // we're currently get'ing this folder
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
     kdDebug(5006) << "Set status during folder listing, restarting listing." << endl;
+    kdDebug() << "disconnct slotListFolderResult\n";
     disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
     quiet( false );
     reallyGetFolder( QString::null );
@@ -2372,6 +2368,7 @@ void KMFolderImap::setImapPath( const QString& path )
 
 void KMFolderImap::finishMailCheck( const char *dbg, imapState state )
 {
+  kdDebug() << folder()->name() << " finishMailCheck " << dbg << " " << state << endl;
   quiet( false );
   mContentState = state;
   emit folderComplete( this, mContentState == imapFinished );

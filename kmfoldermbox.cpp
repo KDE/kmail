@@ -39,7 +39,6 @@
 #include <kprocess.h>
 #include <kconfig.h>
 
-#include <ctype.h>
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
@@ -91,6 +90,10 @@ KMFolderMbox::~KMFolderMbox()
 //-----------------------------------------------------------------------------
 int KMFolderMbox::open(const char *owner)
 {
+  mOwners.append( owner );
+  assert( mOwners.contains( "mainwidget" ) < 2 );
+
+  kdDebug() << "\nopen " << mOpenCount << " " << folder()->name() << " " << mOwners << ", adding: " << owner << " \n" << kdBacktrace() << endl;
   int rc = 0;
 
   mOpenCount++;
@@ -256,24 +259,8 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::close(const char *owner, bool aForced)
+void KMFolderMbox::reallyDoClose(const char *owner)
 {
-  if (!aForced)
-     assert(mOpenCount >= 0);
-
-  if (mOpenCount <= 0 || !mStream) { mOpenCount = 0; return; }
-  if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0 && !aForced) { assert(mStream); return; }
-
-#if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
-  if ( (folder() != kmkernel->inboxFolder())
-        && folder()->isSystemFolder() && !aForced )
-  {
-      mOpenCount = 1;
-      return;
-  }
-#endif
-
   if (mAutoCreateIndex)
   {
       if (KMFolderIndex::IndexOk != indexStatus()) {

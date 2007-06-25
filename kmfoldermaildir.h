@@ -68,7 +68,7 @@ public:
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(const char *owner, bool force=FALSE);
+  virtual void reallyDoClose(const char *owner);
 
   /** Create the necessary folders for a maildir folder. Usually you will
       want to use create() instead.

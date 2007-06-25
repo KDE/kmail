@@ -131,10 +131,8 @@ public:
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void remove();
 
-  /** Close folder. If force is TRUE the files are closed even if
-    others still use it (e.g. other mail reader windows). This also
-    cancels all pending jobs. */
-  virtual void close(const char *owner, bool force=FALSE);
+  /** Closes and cancels all pending jobs. */
+  virtual void reallyDoClose(const char *owner);
 
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
