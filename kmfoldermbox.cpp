@@ -90,10 +90,6 @@ KMFolderMbox::~KMFolderMbox()
 //-----------------------------------------------------------------------------
 int KMFolderMbox::open(const char *owner)
 {
-  mOwners.append( owner );
-  assert( mOwners.contains( "mainwidget" ) < 2 );
-
-  kdDebug() << "\nopen " << mOpenCount << " " << folder()->name() << " " << mOwners << ", adding: " << owner << " \n" << kdBacktrace() << endl;
   int rc = 0;
 
   mOpenCount++;
