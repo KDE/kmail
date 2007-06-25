@@ -104,7 +104,7 @@ void KMFilterAction::clearParamWidget( QWidget * ) const
 
 bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
 {
-  return FALSE;
+  return false;
 }
 
 int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
@@ -250,7 +250,7 @@ KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, c
 
 QWidget* KMFilterActionWithStringList::createParamWidget( QWidget* parent ) const
 {
-  QComboBox *cb = new QComboBox( FALSE, parent );
+  QComboBox *cb = new QComboBox( false, parent );
   cb->insertStringList( mParameterList );
   setParamWidgetValue( cb );
   return cb;
@@ -361,9 +361,9 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
     mFolder = aNewFolder;
     if ( aNewFolder )
       mFolderName = mFolder->idString();
-    return TRUE;
+    return true;
   } else
-    return FALSE;
+    return false;
 }
 
 //=============================================================================
@@ -463,7 +463,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
         kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
         return QString::null;
       }
-      tf->setAutoDelete(TRUE);
+      tf->setAutoDelete(true);
       aTempFileList.append( tf );
       tempFileName = tf->name();
       if ((*it) == -1)
@@ -511,10 +511,10 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // KProcess doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
   KTempFile * inFile = new KTempFile;
-  inFile->setAutoDelete(TRUE);
+  inFile->setAutoDelete(true);
 
   QPtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
+  atmList.setAutoDelete(true);
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
@@ -973,7 +973,7 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
 
 QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
 {
-  QComboBox *cb = new QComboBox( TRUE/*editable*/, parent );
+  QComboBox *cb = new QComboBox( true/*editable*/, parent );
   cb->setInsertionPolicy( QComboBox::AtBottom );
   setParamWidgetValue( cb );
   return cb;
@@ -1057,7 +1057,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QWidget *w = new QWidget( parent );
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
-  QComboBox *cb = new QComboBox( TRUE, w, "combo" );
+  QComboBox *cb = new QComboBox( true, w, "combo" );
   cb->setInsertionPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
   QLabel *l = new QLabel( i18n("With value:"), w );
@@ -1126,7 +1126,7 @@ const QString KMFilterActionAddHeader::displayString() const
 
 void KMFilterActionAddHeader::argsFromString( const QString argsStr )
 {
-  QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
+  QStringList l = QStringList::split( '\t', argsStr, true /*allow empty entries*/ );
   QString s;
   if ( l.count() < 2 ) {
     s = l[0];
@@ -1206,7 +1206,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
 
-  QComboBox *cb = new QComboBox( TRUE, w, "combo" );
+  QComboBox *cb = new QComboBox( true, w, "combo" );
   cb->setInsertionPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
 
@@ -1302,7 +1302,7 @@ const QString KMFilterActionRewriteHeader::displayString() const
 
 void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 {
-  QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
+  QStringList l = QStringList::split( '\t', argsStr, true /*allow empty entries*/ );
   QString s;
 
   s = l[0];
@@ -1712,10 +1712,10 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
   KTempFile * inFile = new KTempFile;
-  inFile->setAutoDelete(FALSE);
+  inFile->setAutoDelete(false);
 
   QPtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
+  atmList.setAutoDelete(true);
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
@@ -1912,7 +1912,7 @@ void KMFilterActionDict::init(void)
 KMFilterActionDict::KMFilterActionDict()
   : QDict<KMFilterActionDesc>(41)
 {
-  mList.setAutoDelete(TRUE);
+  mList.setAutoDelete(true);
   init();
 }
 

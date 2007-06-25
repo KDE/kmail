@@ -194,13 +194,13 @@ public:
   }
 
   /* Reimplemented from KMFolderMaildir */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = false)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMaildir::isReadOnly() || mReadOnly; }
- 
+
 
   /**
    * Emit the folderComplete signal

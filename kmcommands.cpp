@@ -466,7 +466,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( msg, id );
-  win->setCharset("", TRUE);
+  win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
 
@@ -491,7 +491,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus();
   win->show();
 
@@ -516,7 +516,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( fmsg );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->show();
 
   return OK;
@@ -679,7 +679,7 @@ KMCommand::Result KMEditMsgCommand::execute()
 
   KMail::Composer * win = KMail::makeComposer();
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.
-  win->setMsg(msg, FALSE, TRUE);
+  win->setMsg(msg, false, true);
   win->setFolder( parent );
   win->show();
 
@@ -708,7 +708,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
 
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
-  win->setMsg( newMsg, FALSE, TRUE );
+  win->setMsg( newMsg, false, true );
   win->show();
 
   return OK;
@@ -1087,7 +1087,7 @@ KMCommand::Result KMReplyToCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1108,9 +1108,9 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", TRUE);
+  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1133,7 +1133,7 @@ KMCommand::Result KMReplyListCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1156,7 +1156,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1179,7 +1179,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1458,7 +1458,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1483,7 +1483,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -2380,7 +2380,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     }
 
     KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
-    win->setCharset("", TRUE);
+    win->setCharset("", true);
     win->show();
   }
   else if ( mUrl.protocol() == "im" )
@@ -2641,20 +2641,20 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
           // carefully look for the part that is *not* the signature part:
           if( node->findType( DwMime::kTypeApplication,
                 DwMime::kSubtypePgpSignature,
-                TRUE, false ) ){
+                true, false ) ){
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
                 DwMime::kSubtypePgpSignature,
-                TRUE, false );
+                true, false );
           }else if( node->findType( DwMime::kTypeApplication,
                 DwMime::kSubtypePkcs7Mime,
-                TRUE, false ) ){
+                true, false ) ){
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
                 DwMime::kSubtypePkcs7Mime,
-                TRUE, false );
+                true, false );
           }else{
             dataNode = node->findTypeNot( DwMime::kTypeMultipart,
                 DwMime::kSubtypeUnknown,
-                TRUE, false );
+                true, false );
           }
 	}else{
 	  ObjectTreeParser otp( 0, 0, false, false, false );

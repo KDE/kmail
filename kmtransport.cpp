@@ -54,7 +54,7 @@ KMTransportInfo::KMTransportInfo() : mPasswdDirty( false ),
 {
   name = i18n("Unnamed");
   port = "25";
-  auth = FALSE;
+  auth = false;
   specifyHostname = false;
 }
 
@@ -559,22 +559,22 @@ void KMTransportDialog::setupSettings()
     mSmtp.localHostnameEdit->setText(mTransportInfo->localHostname);
 
     if (mTransportInfo->encryption == "TLS")
-      mSmtp.encryptionTLS->setChecked(TRUE);
+      mSmtp.encryptionTLS->setChecked(true);
     else if (mTransportInfo->encryption == "SSL")
-      mSmtp.encryptionSSL->setChecked(TRUE);
-    else mSmtp.encryptionNone->setChecked(TRUE);
+      mSmtp.encryptionSSL->setChecked(true);
+    else mSmtp.encryptionNone->setChecked(true);
 
     if (mTransportInfo->authType == "LOGIN")
-      mSmtp.authLogin->setChecked(TRUE);
+      mSmtp.authLogin->setChecked(true);
     else if (mTransportInfo->authType == "CRAM-MD5")
-      mSmtp.authCramMd5->setChecked(TRUE);
+      mSmtp.authCramMd5->setChecked(true);
     else if (mTransportInfo->authType == "DIGEST-MD5")
-      mSmtp.authDigestMd5->setChecked(TRUE);
+      mSmtp.authDigestMd5->setChecked(true);
     else if (mTransportInfo->authType == "NTLM")
-      mSmtp.authNTLM->setChecked(TRUE);
+      mSmtp.authNTLM->setChecked(true);
     else if (mTransportInfo->authType == "GSSAPI")
-      mSmtp.authGSSAPI->setChecked(TRUE);
-    else mSmtp.authPlain->setChecked(TRUE);
+      mSmtp.authGSSAPI->setChecked(true);
+    else mSmtp.authPlain->setChecked(true);
 
     slotRequiresAuthClicked();
     mSmtp.localHostnameEdit->setEnabled(mTransportInfo->specifyHostname);
@@ -727,7 +727,7 @@ void KMTransportDialog::slotCheckSmtpCapabilities()
            SLOT( slotSmtpCapabilities( const QStringList &,
                                        const QStringList &, const QString &,
                                        const QString &, const QString & ) ) );
-  mSmtp.checkCapabilities->setEnabled(FALSE);
+  mSmtp.checkCapabilities->setEnabled(false);
 }
 
 

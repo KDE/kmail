@@ -443,7 +443,7 @@ void KMFolderTree::readColorConfig (void)
   QColor c4=QColor(kapp->palette().active().base());
   QColor c5=QColor("red");
 
-  if (!conf->readBoolEntry("defaultColors",TRUE)) {
+  if (!conf->readBoolEntry("defaultColors",true)) {
     mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
     mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
     mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
@@ -471,7 +471,7 @@ void KMFolderTree::readConfig (void)
   // Custom/Ssystem font support
   {
     KConfigGroupSaver saver(conf, "Fonts");
-    if (!conf->readBoolEntry("defaultFonts",TRUE)) {
+    if (!conf->readBoolEntry("defaultFonts",true)) {
       QFont folderFont( KGlobalSettings::generalFont() );
       setFont(conf->readFontEntry("folder-font", &folderFont));
     }
@@ -504,7 +504,7 @@ void KMFolderTree::writeConfig()
 void KMFolderTree::updateUnreadAll()
 {
   bool upd = isUpdatesEnabled();
-  setUpdatesEnabled(FALSE);
+  setUpdatesEnabled(false);
 
   KMFolderDir* fdir;
   KMFolderNode* folderNode;
@@ -763,7 +763,7 @@ void KMFolderTree::delayedUpdate()
 {
   bool upd = isUpdatesEnabled();
   if ( upd ) {
-    setUpdatesEnabled(FALSE);
+    setUpdatesEnabled(false);
 
     for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
       KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -819,7 +819,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
 void KMFolderTree::prepareItem( KMFolderTreeItem* fti )
 {
   for ( QListViewItem * parent = fti->parent() ; parent ; parent = parent->parent() )
-    parent->setOpen( TRUE );
+    parent->setOpen( true );
   ensureItemVisible( fti );
 }
 
@@ -984,7 +984,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi, bool keepSelection )
      && (mLastItem->folder()->folderType() == KMFolderTypeImap))
   {
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder()->storage());
-    imapFolder->setSelected(FALSE);
+    imapFolder->setSelected(false);
   }
   mLastItem = fti;
 
@@ -992,7 +992,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi, bool keepSelection )
     clearSelection();
   setCurrentItem( qlvi );
   if ( !keepSelection )
-    setSelected( qlvi, TRUE );
+    setSelected( qlvi, true );
   ensureItemVisible( qlvi );
   if (!folder) {
     emit folderSelected(0); // Root has been selected
@@ -1255,7 +1255,7 @@ void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
   if (d->exec()) { // fti may be deleted here
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
-      qlvi->setOpen(TRUE);
+      qlvi->setOpen(true);
       blockSignals( true );
       setCurrentItem( qlvi );
       blockSignals( false );
@@ -1355,7 +1355,7 @@ void KMFolderTree::cleanupConfigFile()
       }
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
-      config->deleteGroup(*grpIt, TRUE);
+      config->deleteGroup(*grpIt, true);
       kdDebug(5006) << "Deleting information about folder " << name << endl;
     }
   }
@@ -1376,7 +1376,7 @@ void KMFolderTree::openFolder()
 {
     autoopen_timer.stop();
     if ( dropItem && !dropItem->isOpen() ) {
-        dropItem->setOpen( TRUE );
+        dropItem->setOpen( true );
         dropItem->repaint();
     }
 }
@@ -1456,7 +1456,7 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 
     setCurrentItem( oldCurrent );
     if ( oldSelected )
-      setSelected( oldSelected, TRUE );
+      setSelected( oldSelected, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1529,7 +1529,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     if ( oldSelected )
     {
       clearSelection();
-      setSelected( oldSelected, TRUE );
+      setSelected( oldSelected, true );
     }
 
     mCopySourceFolders.clear();

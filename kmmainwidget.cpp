@@ -145,9 +145,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     mShowingOfflineScreen( false )
 {
   // must be the first line of the constructor:
-  mStartupDone = FALSE;
+  mStartupDone = false;
   mSearchWin = 0;
-  mIntegrated  = TRUE;
+  mIntegrated  = true;
   mFolder = 0;
   mTemplateFolder = 0;
   mFolderThreadPref = false;
@@ -234,7 +234,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   toggleSystemTray();
 
   // must be the last line of the constructor:
-  mStartupDone = TRUE;
+  mStartupDone = true;
 }
 
 
@@ -1879,13 +1879,13 @@ void KMMainWidget::slotViewChange()
 {
   if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
   {
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),FALSE);
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),TRUE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),false);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),true);
   }
   else if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(1)))
   {
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),FALSE);
-    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),TRUE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),false);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),true);
   }
 
   //mMsgView->setInline(!mMsgView->isInline());
@@ -1921,7 +1921,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
     if ( mFolder->needsCompacting() && imap->autoExpunge() )
-      imap->expungeFolder(imap, TRUE);
+      imap->expungeFolder(imap, true);
   }
 
   // Re-enable the msg list and quicksearch if we're showing a splash
@@ -2309,7 +2309,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMarkAll()
 {
-  mHeaders->selectAll( TRUE );
+  mHeaders->selectAll( true );
 }
 
 //-----------------------------------------------------------------------------

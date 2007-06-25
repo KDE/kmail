@@ -190,7 +190,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox(mMainWidget);
-  mFcc->showOutboxFolder( FALSE );
+  mFcc->showOutboxFolder( false );
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(false,mMainWidget, "fromLine");
 
@@ -281,12 +281,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = false;
   mGrid = 0;
   mAtmListView = 0;
-  mAtmList.setAutoDelete(TRUE);
-  mAtmTempList.setAutoDelete(TRUE);
-  mAtmModified = FALSE;
-  mAutoDeleteMsg = FALSE;
+  mAtmList.setAutoDelete(true);
+  mAtmTempList.setAutoDelete(true);
+  mAtmModified = false;
+  mAutoDeleteMsg = false;
   mFolder = 0;
-  mAutoCharset = TRUE;
+  mAutoCharset = true;
   mFixedFontAction = 0;
   mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
@@ -305,7 +305,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QWhatsThis::add( mBtnTransport,
     GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
-  mSpellCheckInProgress=FALSE;
+  mSpellCheckInProgress=false;
 
   setCaption( i18n("Composer") );
   setMinimumSize(200,200);
@@ -417,7 +417,7 @@ KMComposeWin::~KMComposeWin()
   writeConfig();
   if (mFolder && mMsg)
   {
-    mAutoDeleteMsg = FALSE;
+    mAutoDeleteMsg = false;
     mFolder->addMsg(mMsg);
     // Ensure that the message is correctly and fully parsed
     mFolder->unGetMsg( mFolder->count() - 1 );
@@ -1283,7 +1283,7 @@ void KMComposeWin::setupActions(void)
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
 
-  QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
+  QStringList encodings = KMMsgBase::supportedEncodings(true);
   encodings.prepend( i18n("Auto-Detect"));
   mEncodingAction->setItems( encodings );
   mEncodingAction->setCurrentItem( -1 );
@@ -1464,7 +1464,7 @@ void KMComposeWin::setupActions(void)
   alignLeftAction = new KToggleAction (i18n("Align Left"), "text_left", 0,
                       this, SLOT(slotAlignLeft()), actionCollection(),
                       "align_left");
-  alignLeftAction->setChecked( TRUE );
+  alignLeftAction->setChecked( true );
   alignRightAction = new KToggleAction (i18n("Align Right"), "text_right", 0,
                       this, SLOT(slotAlignRight()), actionCollection(),
                       "align_right");
@@ -1530,7 +1530,7 @@ void KMComposeWin::updateCursorPosition()
 void KMComposeWin::setupEditor(void)
 {
   //QPopupMenu* menu;
-  mEditor->setModified(FALSE);
+  mEditor->setModified(false);
   QFontMetrics fm(mBodyFont);
   mEditor->setTabStopWidth(fm.width(QChar(' ')) * 8);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
@@ -2392,7 +2392,7 @@ void KMComposeWin::removeAttach(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMComposeWin::removeAttach(int idx)
 {
-  mAtmModified = TRUE;
+  mAtmModified = true;
   mAtmList.remove(idx);
   delete mAtmItemList.take(idx);
 
@@ -2550,7 +2550,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 
   QStringList encodings = mEncodingAction->items();
   int i = 0;
-  bool charsetFound = FALSE;
+  bool charsetFound = false;
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
@@ -2561,11 +2561,11 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
     {
       mEncodingAction->setCurrentItem( i );
       slotSetCharset();
-      charsetFound = TRUE;
+      charsetFound = true;
       break;
     }
   }
-  if (!aCharset.isEmpty() && !charsetFound) setCharset("", TRUE);
+  if (!aCharset.isEmpty() && !charsetFound) setCharset("", true);
 }
 
 
@@ -2603,7 +2603,7 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  KFileDialog fdlg(QString::null, QString::null, this, 0, true);
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption(i18n("Attach File"));
   fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
@@ -2759,7 +2759,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
       return;
     }
   }
-  mAtmModified = TRUE;
+  mAtmModified = true;
   if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
   // add the new attachment to the list
@@ -2773,11 +2773,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  KFileDialog fdlg(QString::null, QString::null, this, 0, true);
   fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));
-  fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
+  fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(false), 4711,
     false, 0, 0, 0);
   KComboBox *combo = fdlg.toolBar()->getCombo(4711);
   for (int i = 0; i < combo->count(); i++)
@@ -3098,7 +3098,7 @@ void KMComposeWin::slotAttachProperties()
   }
   if (dlg.exec())
   {
-    mAtmModified = TRUE;
+    mAtmModified = true;
     // values may have changed, so recreate the listbox line
     if( listItem ) {
       msgPartToItem(msgPart, listItem);
@@ -3690,7 +3690,7 @@ void KMComposeWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotClose()
 {
-  close(FALSE);
+  close(false);
 }
 
 
@@ -4117,7 +4117,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   RecentAddresses::self( KMKernel::config() )->add( to() );
 
   setModified( false );
-  mAutoDeleteMsg = FALSE;
+  mAutoDeleteMsg = false;
   mFolder = 0;
   cleanupAutoSave();
   close();
@@ -4396,7 +4396,7 @@ void KMComposeWin::slotSpellcheck()
 {
   if (mSpellCheckInProgress) return;
   mSubjectTextWasSpellChecked = false;
-  mSpellCheckInProgress=TRUE;
+  mSpellCheckInProgress=true;
   /*
     connect (mEditor, SIGNAL (spellcheck_progress (unsigned)),
     this, SLOT (spell_progress (unsigned)));
@@ -4440,7 +4440,7 @@ void KMComposeWin::polish()
 void KMComposeWin::slotSpellcheckDone(int result)
 {
   kdDebug(5006) << "spell check complete: result = " << result << endl;
-  mSpellCheckInProgress=FALSE;
+  mSpellCheckInProgress=false;
 
   switch( result )
   {

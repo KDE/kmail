@@ -1354,7 +1354,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   theMessage.deleteBodyParts();
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
-  theMessage.setAutomaticFields(TRUE); // == multipart/mixed
+  theMessage.setAutomaticFields(true); // == multipart/mixed
 
   // this is our *final* body part
   mNewBodyPart = new KMMessagePart;

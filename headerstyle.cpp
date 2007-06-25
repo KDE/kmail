@@ -306,19 +306,19 @@ namespace KMail {
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18n("To: ")+
-                       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->to(),false) + "<br>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(message->cc(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->cc(),false) + "<br>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(message->bcc(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->bcc(),false) + "<br>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(message->replyTo(),FALSE) + "<br>\n");
+                     KMMessage::emailAddrAsAnchor(message->replyTo(),false) + "<br>\n");
 
     headerStr += "</div>\n";
 
@@ -639,7 +639,7 @@ namespace KMail {
                  + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
                                 + i18n("(resent from %1)")
                                   .arg( KMMessage::emailAddrAsAnchor(
-                                    message->headerField( "Resent-From" ),FALSE) )
+                                    message->headerField( "Resent-From" ),false) )
                               : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
@@ -661,21 +661,21 @@ namespace KMail {
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("To: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->to(),false)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("CC: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->cc(),false)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("BCC: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->bcc(),false)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
