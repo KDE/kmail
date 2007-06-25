@@ -44,8 +44,8 @@ class FolderItem : public KFolderTreeItem
     FolderItem( KFolderTree * listView );
     FolderItem( KFolderTreeItem * listViewItem );
 
-    void setFolder( KMFolder * folder ) { mFolder = folder; };
-    const KMFolder * folder() { return mFolder; };
+    void setFolder( KMFolder * folder ) { mFolder = folder; }
+    const KMFolder * folder() { return mFolder; }
 
   private:
     KMFolder * mFolder;

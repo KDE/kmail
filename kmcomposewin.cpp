@@ -152,6 +152,7 @@ using MailTransport::TransportManager;
 #include <mimelib/mimepp.h>
 
 #include <algorithm>
+#include <memory>
 
 #include <sys/stat.h>
 #include <sys/types.h>

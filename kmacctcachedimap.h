@@ -182,8 +182,8 @@ public:
   virtual FolderStorage* rootFolder() const;
 
   /** return if the account passed the annotation test  */
-  bool annotationCheckPassed(){ return mAnnotationCheckPassed;};
-  void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; };
+  bool annotationCheckPassed(){ return mAnnotationCheckPassed;}
+  void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; }
 
 protected:
   friend class ::AccountManager;

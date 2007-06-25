@@ -43,8 +43,8 @@ class KMPopHeadersView : public K3ListView
 public:
   explicit KMPopHeadersView(QWidget *aParent=0, KMPopFilterCnfrmDlg *aDialog=0);
   ~KMPopHeadersView();
-  static const KMPopFilterAction mapToAction(int aColumn) { return (KMPopFilterAction)aColumn;};
-  static const int mapToColumn(KMPopFilterAction aAction) { return (int)aAction;};
+  static const KMPopFilterAction mapToAction(int aColumn) { return (KMPopFilterAction)aColumn;}
+  static const int mapToColumn(KMPopFilterAction aAction) { return (int)aAction;}
   static const char *mUnchecked[26];
   static const char *mChecked[26];
 protected:
@@ -68,7 +68,7 @@ public:
   KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction);
   ~KMPopHeadersViewItem();
   void setAction(KMPopFilterAction aAction);
-  KMPopFilterAction action() { return mAction; };
+  KMPopFilterAction action() { return mAction; }
   virtual void paintFocus(QPainter *, const QColorGroup & cg, const QRect &r);
   virtual QString key(int col, bool ascending) const;
 protected:
@@ -82,7 +82,7 @@ class KMPopFilterCnfrmDlg : public KDialog
 	friend class ::KMPopHeadersView;
   Q_OBJECT
 protected:
-  KMPopFilterCnfrmDlg() { };
+  KMPopFilterCnfrmDlg() { }
   QMap<Q3ListViewItem*, KMPopHeaders*> mItemMap;
   QList<KMPopHeadersViewItem *> mDelList;
   QList<KMPopHeaders *> mDDLList;

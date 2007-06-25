@@ -41,7 +41,7 @@ public:
   // settings by kwin doesn't work
   KMMainWin(QWidget *parent = 0);
   virtual ~KMMainWin();
-  KMMainWidget *mainKMWidget() const { return mKMMainWidget; };
+  KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
   StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
   ProgressDialog* progressDialog() const { return mProgressDialog; }
 

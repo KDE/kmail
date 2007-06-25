@@ -2622,7 +2622,8 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   const unsigned int length = s.length();
 
   // skip leading empty lines
-  for ( pos = 0; pos < length && s[pos] <= ' '; pos++ );
+  for ( pos = 0; pos < length && s[pos] <= ' '; pos++ )
+    ;
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 

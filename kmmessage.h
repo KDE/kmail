@@ -346,7 +346,7 @@ public:
   void setSubject(const QString& aStr);
 
   /** Calculate strippedSubject */
-  void initStrippedSubjectMD5() {};
+  void initStrippedSubjectMD5() {}
 
   /** Get or set the 'X-Mark' header field */
   QString xmark() const;
@@ -826,9 +826,9 @@ public:
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
 
   /** Get stored cursor position */
-  int getCursorPos() { return mCursorPos; };
+  int getCursorPos() { return mCursorPos; }
   /** Set cursor position as offset from message start */
-  void setCursorPos(int pos) { mCursorPos = pos; };
+  void setCursorPos(int pos) { mCursorPos = pos; }
 
   /* This is set in kmreaderwin if a message is being parsed to avoid
      other parts of kmail (e.g. kmheaders) destroying the message.

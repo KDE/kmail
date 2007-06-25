@@ -231,10 +231,10 @@ public:
     int childCount() const;
     bool processed() const { return mWasProcessed; }
 
-    KMail::Interface::BodyPartMemento * bodyPartMemento() const { return mBodyPartMemento; };
+    KMail::Interface::BodyPartMemento * bodyPartMemento() const { return mBodyPartMemento; }
     void setBodyPartMemento( KMail::Interface::BodyPartMemento * memento ) {
         mBodyPartMemento = memento;
-    };
+    }
 
 private:
     partNode*     mRoot;

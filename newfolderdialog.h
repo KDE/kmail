@@ -53,7 +53,7 @@ class NewFolderDialog : public KDialog
 
   public:
     NewFolderDialog( QWidget* parent = 0, KMFolder *folder = 0 );
-    ~NewFolderDialog() {};
+    ~NewFolderDialog() {}
 
     QLabel* mNameLabel;
     QLineEdit* mNameLineEdit;

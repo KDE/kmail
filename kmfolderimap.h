@@ -65,7 +65,7 @@ public:
     :mStatus(aStatus), mSerNum(0) {}
   KMMsgMetaData(const MessageStatus& aStatus, quint32 aSerNum)
     :mStatus(aStatus), mSerNum(aSerNum) {}
-  ~KMMsgMetaData() {};
+  ~KMMsgMetaData() {}
   const MessageStatus& status() const { return mStatus; }
   const MessageStatus& messageStatus() const { return mStatus; }
   const quint32 serNum() const { return mSerNum; }
@@ -216,7 +216,7 @@ void getUids(const QList<KMMessage*>& msgList, QList<ulong>& uids);
 */
 void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
-virtual int compact( bool ) { expungeFolder(this, false); return 0; };
+virtual int compact( bool ) { expungeFolder(this, false); return 0; }
 
 /**
 * Emit the folderComplete signal

@@ -71,18 +71,18 @@ namespace KMail {
       
       
       /** check the logging state */
-      bool isLogging() { return mLogging; };
+      bool isLogging() { return mLogging; }
       /** set the logging state */
       void setLogging( bool active )
       {
         mLogging = active; 
         emit logStateChanged();
-      };
+      }
       
       
       /** control the size of the log */
       void setMaxLogSize( long size = -1 );
-      long getMaxLogSize() { return mMaxLogSize; };
+      long getMaxLogSize() { return mMaxLogSize; }
       
       
       /** add/remove a content type to the set of logged ones */
@@ -93,30 +93,30 @@ namespace KMail {
         else
           mAllowedTypes &= ~contentType;
         emit logStateChanged();
-      };
+      }
 
       /** check a content type for inclusion in the set of logged ones */
       bool isContentTypeEnabled( ContentType contentType )
       { 
         return mAllowedTypes & contentType; 
-      };
+      }
 
       
       /** add a log entry */
       void add( const QString &logEntry, ContentType contentType );
       /** add a separating line in the log */
-      void addSeparator() { add( "------------------------------", meta ); };
+      void addSeparator() { add( "------------------------------", meta ); }
       /** discard collected log data */
       void clear() 
       {
         mLogEntries.clear(); 
         mCurrentLogSize = 0;
         emit logShrinked();
-      };
+      }
       
       
       /** get access to the log entries */
-      const QStringList & getLogEntries() { return mLogEntries; };
+      const QStringList & getLogEntries() { return mLogEntries; }
       /** dump the log - for testing purposes */
       void dump();
       /** save the log to a file - returns true if okay */
@@ -125,7 +125,7 @@ namespace KMail {
       /** destructor */
       virtual ~FilterLog();
       
-      static QString recode( const QString & plain ) { return Qt::escape(plain); };
+      static QString recode( const QString & plain ) { return Qt::escape(plain); }
       
     signals:
       void logEntryAdded(const QString& );

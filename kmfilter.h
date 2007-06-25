@@ -251,7 +251,7 @@ public:
       or toolbar. Default is no shortcut.
       @see setConfigureShortcut setConfigureToolbar
   */
-  void setShortcut( const KShortcut & shortcut ) { mShortcut = shortcut; };
+  void setShortcut( const KShortcut & shortcut ) { mShortcut = shortcut; }
 
   /** @return The shortcut assigned to the filter.
       @see setShortcut

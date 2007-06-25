@@ -87,7 +87,7 @@ public:
       call isEmpty yourself if you need valid rules. */
   static KMSearchRule* createInstanceFromConfig( const KConfigGroup & config, int aIdx );
 
-  virtual ~KMSearchRule() {};
+  virtual ~KMSearchRule() {}
 
   /** Tries to match the rule against the given KMMessage.
       @return true if the rule matched, false otherwise. Must be
