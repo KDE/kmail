@@ -3023,6 +3023,10 @@ void KMMainWidget::setupActions()
 					    actionCollection(),
 					    "apply_filter_actions" );
 
+  mCreateTodoAction = new KAction( i18n("Create Task..."), "mail_todo",
+                                   0, this, SLOT(slotCreateTodo()), actionCollection(),
+                                  "create_todo" );
+
   //----- View Menu
   // Unread Submenu
   KActionMenu * unreadMenu =
@@ -3422,6 +3426,7 @@ void KMMainWidget::updateMessageActions()
     redirectAction()->setEnabled( single_actions );
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );
+    createTodoAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
@@ -3975,4 +3980,13 @@ QString KMMainWidget::overrideEncoding() const
     return mMsgView->overrideEncoding();
   else
     return GlobalSettings::self()->overrideCharacterEncoding();
+}
+
+void KMMainWidget::slotCreateTodo()
+{
+  KMMessage *msg = mHeaders->currentMsg();
+  if ( !msg )
+    return;
+  KMCommand *command = new CreateTodoCommand( this, msg );
+  command->start();
 }

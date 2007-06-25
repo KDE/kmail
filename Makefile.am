@@ -15,6 +15,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/certmanager/lib/ui \
         -I$(top_srcdir)/indexlib \
         -I$(top_srcdir)/ktnef \
+        -I$(top_srcdir)/korganizer \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
         $(all_includes)
@@ -135,7 +136,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 templateparser.cpp copyfolderjob.cpp \
                 messagecopyhelper.cpp \
                 localsubscriptiondialog.cpp \
-                editorwatcher.cpp
+                editorwatcher.cpp \
+                kcalendariface.stub
 
 kmail_SOURCES = main.cpp
 
@@ -157,6 +159,7 @@ kmailIface_DCOPIDLNG = true
 kmailicalIface_DCOPIDLNG = true
 
 korganizeriface_DIR = $(top_srcdir)/korganizer
+kcalendariface_DIR = $(top_srcdir)/korganizer
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 

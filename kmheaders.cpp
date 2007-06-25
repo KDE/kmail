@@ -2068,7 +2068,7 @@ void KMHeaders::resetCurrentTime()
 {
     mDate.reset();
     // only reset exactly during minute switch
-    QTimer::singleShot( ( 60-QTime::currentTime().second() ) * 1000, 
+    QTimer::singleShot( ( 60-QTime::currentTime().second() ) * 1000,
         this, SLOT( resetCurrentTime() ) );
 }
 
@@ -2372,6 +2372,9 @@ void KMHeaders::slotRMB()
     if ( mOwner->trashThreadAction()->isEnabled() )
       mOwner->trashThreadAction()->plug(menu);
   }
+  menu->insertSeparator();
+  mOwner->createTodoAction()->plug( menu );
+
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
   menu->exec(QCursor::pos(), 0);

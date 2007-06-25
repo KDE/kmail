@@ -1084,4 +1084,14 @@ class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
     KTempFile mTempFile;
 };
 
+class KDE_EXPORT CreateTodoCommand : public KMCommand
+{
+  Q_OBJECT
+  public:
+    CreateTodoCommand( QWidget *parent, KMMessage *msg );
+
+  private:
+    Result execute();
+};
+
 #endif /*KMCommands_h*/

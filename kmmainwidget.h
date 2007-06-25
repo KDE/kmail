@@ -138,7 +138,8 @@ public:
   KAction *findInMessageAction() const { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
-  KAction *viewSourceAction() { return mViewSourceAction; }
+  KAction *viewSourceAction() const { return mViewSourceAction; }
+  KAction *createTodoAction() const { return mCreateTodoAction; }
 
   KActionMenu *statusMenu()  const{ return mStatusMenu; }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
@@ -411,6 +412,7 @@ protected slots:
   void slotFromFilter();
   void slotToFilter();
   void slotPrintMsg();
+  void slotCreateTodo();
 
   void slotConfigChanged();
   /** Remove the shortcut actions associated with a folder. */
@@ -443,7 +445,8 @@ private:
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
     *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
+    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
+    *mCreateTodoAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
     *mReplyListAction,
