@@ -62,7 +62,8 @@ Callback::Callback( KMMessage *msg, KMReaderWin *readerWin )
 }
 
 bool Callback::mailICal( const QString &to, const QString &iCal,
-                         const QString &subject, const QString &status ) const
+                         const QString &subject, const QString &status,
+                         bool delMessage ) const
 {
   kDebug(5006) << "Mailing message:\n" << iCal << endl;
 
@@ -86,9 +87,11 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   }
   msg->setTo( to );
   msg->setFrom( receiver() );
-  /* We want the triggering mail to be moved to the trash once this one
-   * has been sent successfully. Set a link header which accomplishes that. */
-  msg->link( mMsg, MessageStatus::statusDeleted() );
+
+  if ( delMessage )
+    /* We want the triggering mail to be moved to the trash once this one
+    * has been sent successfully. Set a link header which accomplishes that. */
+    msg->link( mMsg, MessageStatus::statusDeleted() );
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.

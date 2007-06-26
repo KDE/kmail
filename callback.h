@@ -62,7 +62,8 @@ class KMAIL_EXPORT Callback {
       @param status can be accepted/cancel/tentative
     */
     bool mailICal( const QString &to, const QString &iCal,
-                   const QString &subject, const QString &status ) const;
+                   const QString &subject, const QString &status,
+                   bool delMessage = true ) const;
 
     /**
       Returns the receiver of the mail.
