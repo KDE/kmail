@@ -21,7 +21,6 @@
 #include <QTreeWidget>
 
 #include <kdialog.h>
-#include <k3listview.h>
 #include <kcmodule.h>
 #include <klocale.h>
 #include "ui_composercryptoconfiguration.h"
