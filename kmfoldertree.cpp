@@ -1694,10 +1694,12 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
       int size = folder->storage()->folderSize();
       if ( size != fti->folderSize() ) {
         fti->setFolderSize( size );
-        fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
         repaint = true;
       }
     }
+  }
+  if ( fti->folderIsCloseToQuota() != folder->storage()->isCloseToQuota() ) {
+      fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
   }
 
   if (fti->parent() && !fti->parent()->isOpen())

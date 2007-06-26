@@ -328,6 +328,10 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
     configGroup.writeEntry( "UserRights", mUserRights );
 
+    configGroup.deleteEntry( "StorageQuotaUsage");
+    configGroup.deleteEntry( "StorageQuotaRoot");
+    configGroup.deleteEntry( "StorageQuotaLimit");
+
     if ( mQuotaInfo.isValid() ) {
       if ( mQuotaInfo.current().isValid() ) {
         configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current().toInt() );
@@ -336,10 +340,6 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
         configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max().toInt() );
       }
       configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
-    } else {
-      configGroup.deleteEntry( "StorageQuotaUsage");
-      configGroup.deleteEntry( "StorageQuotaRoot");
-      configGroup.deleteEntry( "StorageQuotaLimit");
     }
   }
 }
