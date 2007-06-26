@@ -2000,7 +2000,12 @@ bool KMHeaders::prevUnreadMessage()
 //-----------------------------------------------------------------------------
 void KMHeaders::slotNoDrag()
 {
-  mMousePressed = false;
+  // This causes Kolab issue 1569 (encrypted mails sometimes not dragable)
+  // This was introduced in r73594 to fix interference between dnd and
+  // pinentry, which is no longer reproducable now. However, since the
+  // original problem was probably a race and might reappear, let's keep
+  // this workaround in for now and just disable it.
+//   mMousePressed = false;
 }
 
 
