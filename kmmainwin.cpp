@@ -176,8 +176,8 @@ void KMMainWin::setupStatusBar()
   mLittleProgress = new StatusbarProgressWidget( mProgressDialog, statusBar() );
   mLittleProgress->show();
 
-  statusBar()->addPermanentWidget( mLittleProgress, 0 );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
+  statusBar()->addPermanentWidget( mLittleProgress, 0 );
   statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
   mLittleProgress->show();
 }
