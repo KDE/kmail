@@ -26,7 +26,7 @@ using KPIM::BroadcastStatus;
 #include "undostack.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
@@ -398,7 +398,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLatin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    QByteArray str = KPIM::kFileToByteArray( messageFile.path(), true, false );
+    QByteArray str = KPIMUtils::kFileToByteArray( messageFile.path(), true, false );
     if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
@@ -713,7 +713,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
 
     const QByteArray messageText =
-      KPIM::kFileToByteArray( msgUrl.path(), true, false );
+      KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 
@@ -892,7 +892,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
-      KPIM::kFileToByteArray( msgUrl.path(), true, false );
+      KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 

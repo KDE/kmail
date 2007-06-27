@@ -10,7 +10,7 @@
 #include <QRegExp>
 #include <QByteArray>
 
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
@@ -425,7 +425,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
 
-  if ( ! KPIM::kByteArrayToFile( msgText, tmp_file, false, false, false ) )
+  if ( ! KPIMUtils::kByteArrayToFile( msgText, tmp_file, false, false, false ) )
     kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") );
 
   QFile file(tmp_file);

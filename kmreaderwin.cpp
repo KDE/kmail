@@ -29,7 +29,7 @@
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
@@ -845,7 +845,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
     const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
     data.truncate( newsize );
   }
-  KPIM::kByteArrayToFile( data, mAtmCurrentName, false, false, false );
+  KPIMUtils::kByteArrayToFile( data, mAtmCurrentName, false, false, false );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
 
   mAtmUpdate = false;
@@ -1276,7 +1276,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
   adjustLayout();
 
   QString location = KStandardDirs::locate("data", "kmail/about/main.html");
-  QString content = KPIM::kFileToByteArray( location );
+  QString content = KPIMUtils::kFileToByteArray( location );
   content = content.arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage.css" ) );
   if ( QApplication::isRightToLeft() )
     content = content.arg( "@import \"" + KStandardDirs::locate( "data",
@@ -1681,7 +1681,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
     data.truncate( newsize );
   }
-  if( !KPIM::kByteArrayToFile( data, fname, false, false, false ) )
+  if( !KPIMUtils::kByteArrayToFile( data, fname, false, false, false ) )
     return QString();
 
   mTempFiles.append( fname );

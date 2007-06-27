@@ -63,7 +63,7 @@ using KRecentAddress::RecentAddresses;
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
 #include <libkpimidentities/identity.h>
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include <kpimutils/email.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
@@ -3392,7 +3392,7 @@ void KMComposeWin::viewAttach( int index )
   KTemporaryFile *atmTempFile = new KTemporaryFile();
   atmTempFile->open();
   mAtmTempList.append( atmTempFile );
-  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(),
+  KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(),
                           false, false, false );
   KMReaderMainWin *win =
     new KMReaderMainWin( msgPart, false, atmTempFile->fileName(), pname, mCharset );
@@ -3415,7 +3415,7 @@ void KMComposeWin::openAttach( int index )
   KUrl url;
   url.setPath( atmTempFile->fileName() );
 
-  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
+  KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(), false, false,
                           false );
   if ( ::chmod( QFile::encodeName( atmTempFile->fileName() ), S_IRUSR ) != 0) {
     QFile::remove(url.path());

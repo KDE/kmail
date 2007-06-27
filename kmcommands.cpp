@@ -120,7 +120,7 @@ using KMail::TemplateParser;
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -2925,7 +2925,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
       const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
       data.truncate( newsize );
     }
-    KPIM::kByteArrayToFile( data, mAtmName, false, false, false );
+    KPIMUtils::kByteArrayToFile( data, mAtmName, false, false, false );
   }
 
   KTemporaryFile *linkFile = new KTemporaryFile();

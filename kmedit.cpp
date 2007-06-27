@@ -40,7 +40,7 @@
 #include <QTextStream>
 #include <QTextEdit>
 
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include <kpimutils/email.h>
 #include <kpimutils/spellingfilter.h>
 
@@ -528,7 +528,7 @@ void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   setAutoUpdate(false);
   clear();
 
-  QByteArray ba = KPIM::kFileToByteArray( fileName, true, false );
+  QByteArray ba = KPIMUtils::kFileToByteArray( fileName, true, false );
   insertLine( QString::fromLocal8Bit( ba.data(), ba.size() ), -1 );
   setAutoUpdate(true);
   repaint();

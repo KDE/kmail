@@ -17,7 +17,7 @@
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
-#include <libkdepim/kfileio.h>
+#include <kpimutils/kfileio.h>
 #include <libkdepim/collectingprocess.h>
 using KPIM::CollectingProcess;
 #include <mimelib/message.h>
@@ -465,15 +465,15 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       aTempFileList.append( tf );
       tempFileName = tf->fileName();
       if ((*it) == -1)
-        KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+        KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                           false, false, false );
       else if (aMsg->numBodyParts() == 0)
-        KPIM::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
+        KPIMUtils::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
                           false, false, false );
       else {
         KMMessagePart msgPart;
         aMsg->bodyPart( (*it), &msgPart );
-        KPIM::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
+        KPIMUtils::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
                           false, false, false );
       }
       tf->close();
@@ -529,7 +529,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // write message to file
   QString tempFileName = inFile->fileName();
-  KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+  KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                   false, false, false );
   inFile->close();
 
@@ -1752,7 +1752,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   // write message to file
   QString tempFileName = inFile->fileName();
-  KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
+  KPIMUtils::kByteArrayToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
   inFile->close();
 
