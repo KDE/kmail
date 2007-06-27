@@ -533,6 +533,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   inFile->close();
 
   KProcess shProc;
+  shProc.setOutputChannelMode( KProcess::SeparateChannels );
   shProc.setShellCommand( commandLine );
   int result = shProc.execute();
 
