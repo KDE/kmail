@@ -18,8 +18,6 @@
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
 #include <kpimutils/kfileio.h>
-#include <libkdepim/collectingprocess.h>
-using KPIM::CollectingProcess;
 #include <mimelib/message.h>
 #include "kmfawidgets.h"
 #include "folderrequester.h"
@@ -41,6 +39,7 @@ using KMail::RegExpLineEdit;
 #include <kurlrequester.h>
 #include <phonon/audioplayer.h>
 #include <kshell.h>
+#include <kprocess.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -533,20 +532,11 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
                   false, false, false );
   inFile->close();
 
-  CollectingProcess shProc;
-  shProc.setUseShell(true);
-  shProc << commandLine;
+  KProcess shProc;
+  shProc.setShellCommand( commandLine );
+  int result = shProc.execute();
 
-  // run process:
-  if ( !shProc.start( K3Process::Block,
-                      withOutput ? K3Process::Stdout
-                                 : K3Process::NoCommunication ) ) {
-    qDeleteAll( atmList );
-    atmList.clear();
-    return ErrorButGoOn;
-  }
-
-  if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
+  if ( result != 0 ) {
     qDeleteAll( atmList );
     atmList.clear();
     return ErrorButGoOn;
@@ -554,7 +544,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   if ( withOutput ) {
     // read altered message:
-    QByteArray msgText = shProc.collectedStdout();
+    QByteArray msgText = shProc.readAllStandardOutput();
 
     if ( !msgText.isEmpty() ) {
     /* If the pipe through alters the message, it could very well
