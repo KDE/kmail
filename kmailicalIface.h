@@ -78,6 +78,8 @@ k_dcop:
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
 
+  virtual QStringList listAttachments( const QString &resource, Q_UINT32 sernum ) = 0;
+
   /// Update a kolab storage entry. Returns the new mail serial number,
   /// or 0 if something went wrong. Can be used for adding as well.
   virtual Q_UINT32 update( const QString& resource,

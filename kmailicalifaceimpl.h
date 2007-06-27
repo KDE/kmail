@@ -123,6 +123,9 @@ public:
                       Q_UINT32 sernum,
                       const QString& filename );
 
+  QStringList listAttachments( const QString &resource, Q_UINT32 sernum );
+
+
   bool removeSubresource( const QString& );
 
   bool addSubresource( const QString& resource,
