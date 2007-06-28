@@ -265,12 +265,12 @@ void KMFolderCachedImap::readConfig()
 //  kDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //               << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
-  mUserRights = config->readEntry( "UserRights", 0 ); // default is we don't know
+  mUserRights = group.readEntry( "UserRights", 0 ); // default is we don't know
   mOldUserRights = mUserRights;
 
-  int storageQuotaUsage = config->readEntry( "StorageQuotaUsage", -1 );
-  int storageQuotaLimit = config->readEntry( "StorageQuotaLimit", -1 );
-  QString storageQuotaRoot = config->readEntry( "StorageQuotaRoot", QString() );
+  int storageQuotaUsage = group.readEntry( "StorageQuotaUsage", -1 );
+  int storageQuotaLimit = group.readEntry( "StorageQuotaLimit", -1 );
+  QString storageQuotaRoot = group.readEntry( "StorageQuotaRoot", QString() );
   if ( !storageQuotaRoot.isNull() ) { // isEmpty() means we know there is no quota set
     mQuotaInfo.setName( "STORAGE" );
     mQuotaInfo.setRoot( storageQuotaRoot );
