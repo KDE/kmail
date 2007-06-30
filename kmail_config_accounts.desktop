@@ -14,7 +14,6 @@ X-KDE-CfgDlgHierarchy=KMail
 
 Name=Accounts
 Name[af]=Rekeninge
-Name[ar]=الحسابات
 Name[be]=Рахункі
 Name[br]=Kontoù
 Name[ca]=Comptes
@@ -64,7 +63,6 @@ Name[x-test]=xxAccountsxx
 Name[zh_TW]=帳號
 Comment=Setup for Sending and Receiving Messages
 Comment[af]=Opstel vir die stuur en ontvang van boodskappe
-Comment[ar]=تعيينات إرسال و إستقبال الرسائل
 Comment[ca]=Configuració per enviar i rebre missatges
 Comment[cs]=Nastavení odesílání a přijímání zpráv
 Comment[da]=Opsætning til at sende og modtage breve

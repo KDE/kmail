@@ -13,7 +13,6 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Identities
-Name[ar]=الهويات
 Name[be]=Увасабленні
 Name[br]=Anvelezhioù
 Name[ca]=Identitats
@@ -63,7 +62,6 @@ Name[x-test]=xxIdentitiesxx
 Name[zh_TW]=身份
 Comment=Manage Identities
 Comment[af]=Bestuur identiteite
-Comment[ar]=تدبير الهويات
 Comment[be]=Кіраванне увасабленнямі
 Comment[br]=Merañ an anvelezhioù
 Comment[ca]=Gestiona les identitats

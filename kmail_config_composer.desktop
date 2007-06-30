@@ -13,7 +13,6 @@ X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 
 Name=Composer
-Name[ar]=المحرر
 Name[br]=Skridaozer
 Name[ca]=Editor
 Name[cs]=Editor
