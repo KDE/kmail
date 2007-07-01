@@ -27,8 +27,8 @@
 #include "kmfoldersearch.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
 #include "expirejob.h"
 #include "compactionjob.h"
 #include "kmfoldertree.h"
@@ -622,7 +622,7 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
   if ( whoField.isEmpty() )
   {
     // default setting
-    const KPIM::Identity & identity =
+    const KPIMIdentities::Identity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
     if ( isSystemFolder() && folderType() != KMFolderTypeImap ) {

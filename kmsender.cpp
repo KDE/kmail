@@ -27,6 +27,8 @@
 #include <QByteArray>
 using namespace KMime::Types;
 
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include <mailtransport/transport.h>
 #include <mailtransport/transportjob.h>
 #include <mailtransport/transportmanager.h>
@@ -51,8 +53,6 @@ using namespace MailTransport;
 #include "kmfiltermgr.h"
 
 #include "kcursorsaver.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
 #include "progressmanager.h"
 #include "kmaccount.h"
 #include "kmfolderindex.h"
@@ -355,7 +355,7 @@ void KMSender::doSendMsg()
     mCurrentMsg->setStatus( status );
     mCurrentMsg->updateAttachmentState();
 
-    const KPIM::Identity & id =
+    const KPIMIdentities::Identity & id =
       kmkernel->identityManager()->identityForUoidOrDefault(
         mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
     if ( !mCurrentMsg->fcc().isEmpty() ) {
@@ -466,7 +466,7 @@ void KMSender::doSendMsg()
     // if we do not have a sender address then use the email address of the
     // message's identity or of the default identity unless those two are
     // also empty
-    const KPIM::Identity &id =
+    const KPIMIdentities::Identity &id =
       kmkernel->identityManager()->identityForUoidOrDefault(
         mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
     if ( !id.emailAddr().isEmpty() ) {

@@ -34,8 +34,8 @@ using KMail::AccountManager;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
@@ -60,7 +60,7 @@ using KMail::TemplateParser;
 #include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
-#include <kpgp.h>
+#include <kpgp/kpgp.h>
 #include <kdebug.h>
 #include <kio/netaccess.h>
 #include <kwallet.h>
@@ -1936,8 +1936,8 @@ bool KMKernel::folderIsDrafts(const KMFolder * folder)
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the drafts-folder
-  const KPIM::IdentityManager * im = identityManager();
-  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+  const KPIMIdentities::IdentityManager * im = identityManager();
+  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).drafts() == idString ) return true;
   return false;
 }
@@ -1952,8 +1952,8 @@ bool KMKernel::folderIsTemplates(const KMFolder * folder)
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the templates-folder
-  const KPIM::IdentityManager * im = identityManager();
-  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+  const KPIMIdentities::IdentityManager * im = identityManager();
+  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).templates() == idString ) return true;
   return false;
 }
@@ -1982,16 +1982,16 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the sent-folder
-  const KPIM::IdentityManager * im = identityManager();
-  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+  const KPIMIdentities::IdentityManager * im = identityManager();
+  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).fcc() == idString ) return true;
   return false;
 }
 
-KPIM::IdentityManager * KMKernel::identityManager() {
+KPIMIdentities::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
-    kDebug(5006) << "instantating KPIM::IdentityManager" << endl;
-    mIdentityManager = new KPIM::IdentityManager( false, this, "mIdentityManager" );
+    kDebug(5006) << "instantating KPIMIdentities::IdentityManager" << endl;
+    mIdentityManager = new KPIMIdentities::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
 }
@@ -2269,8 +2269,8 @@ void KMKernel::transportRemoved(int id, const QString & name)
 
   // reset all identities using the deleted transport
   QStringList changedIdents;
-  KPIM::IdentityManager * im = identityManager();
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  KPIMIdentities::IdentityManager * im = identityManager();
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
     if ( name == (*it).transport() ) {
       (*it).setTransport( QString() );
       changedIdents += (*it).identityName();
@@ -2297,8 +2297,8 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
   Q_UNUSED( id );
 
   QStringList changedIdents;
-  KPIM::IdentityManager * im = identityManager();
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  KPIMIdentities::IdentityManager * im = identityManager();
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
     if ( oldName == (*it).transport() ) {
       (*it).setTransport( newName );
       changedIdents << (*it).identityName();

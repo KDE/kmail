@@ -44,7 +44,7 @@ class QComboBox;
 class KMFolder;
 class KMFolderDir;
 class KIconButton;
-namespace KPIM { class IdentityCombo; }
+namespace KPIMIdentities { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
 template <typename T> class QPointer;
@@ -144,7 +144,7 @@ private:
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
   KLineEdit   *mNameEdit;
 
-  KPIM::IdentityCombo *mIdentityComboBox;
+  KPIMIdentities::IdentityCombo *mIdentityComboBox;
 
   KMFolderDialog* mDlg;
   bool mIsLocalSystemFolder;

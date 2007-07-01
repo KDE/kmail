@@ -35,8 +35,8 @@
 #include <ksieve/error.h>
 #include <ksieve/parser.h>
 #include <ksieve/scriptbuilder.h>
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 
 #include "kmacctimap.h"
 #include "accountmanager.h"

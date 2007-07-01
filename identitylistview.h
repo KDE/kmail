@@ -36,7 +36,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KPIM { class Identity; }
+namespace KPIMIdentities { class Identity; }
 class Q3DragObject;
 class QDropEvent;
 
@@ -50,22 +50,22 @@ namespace KMail {
   class IdentityListViewItem : public QTreeWidgetItem {
   public:
     IdentityListViewItem( IdentityListView *parent,
-                          const KPIM::Identity &ident );
+                          const KPIMIdentities::Identity &ident );
     IdentityListViewItem( IdentityListView *parent, QTreeWidgetItem *after,
-                          const KPIM::Identity &ident );
+                          const KPIMIdentities::Identity &ident );
 
     uint uoid() const { return mUOID; }
-    KPIM::Identity &identity() const;
-    virtual void setIdentity( const KPIM::Identity &ident );
+    KPIMIdentities::Identity &identity() const;
+    virtual void setIdentity( const KPIMIdentities::Identity &ident );
     void redisplay();
   private:
-    void init( const KPIM::Identity &ident );
+    void init( const KPIMIdentities::Identity &ident );
 
   protected:
     uint mUOID;
   };
 
-  /** @short A QTreeWidget for KPIM::Identity
+  /** @short A QTreeWidget for KPIMIdentities::Identity
     * @author Marc Mutz <mutz@kde.org>
     **/
   class IdentityListView : public QTreeWidget {

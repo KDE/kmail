@@ -84,7 +84,7 @@ class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
 
-namespace KPIM {
+namespace KPIMIdentities {
   class IdentityCombo;
   class Identity;
 }
@@ -471,7 +471,7 @@ public: // mailserviceimpl
     void addAttach( const KMMessagePart *msgPart );
 
   private:
-    const KPIM::Identity & identity() const;
+    const KPIMIdentities::Identity & identity() const;
     uint identityUid() const;
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     bool encryptToSelf() const;
@@ -675,7 +675,7 @@ public: // mailserviceimpl
     QWidget   *mMainWidget;
     MailTransport::TransportComboBox *mTransport;
     KMail::DictionaryComboBox *mDictionaryCombo;
-    KPIM::IdentityCombo    *mIdentity;
+    KPIMIdentities::IdentityCombo    *mIdentity;
     KMFolderComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
     KMLineEditSpell *mEdtSubject;

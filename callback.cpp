@@ -44,8 +44,8 @@
 
 #include <kpimutils/email.h>
 
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 
 #include <mimelib/enum.h>
 
@@ -98,9 +98,9 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   KConfigGroup options( KMKernel::config(), "Groupware" );
   if ( !options.readEntry( "LegacyMangleFromToHeaders", true ) ) {
     // Try and match the receiver with an identity
-    const KPIM::Identity &identity =
+    const KPIMIdentities::Identity &identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
-    if ( identity != KPIM::Identity::null() ) {
+    if ( identity != KPIMIdentities::Identity::null() ) {
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
       msg->setHeaderField( "X-KMail-Identity", QString::number( identity.uoid() ) );
@@ -156,7 +156,7 @@ QString Callback::receiver() const
   int found = 0;
   for ( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
     if ( kmkernel->identityManager()->identityForAddress( *it ) !=
-         KPIM::Identity::null() ) {
+         KPIMIdentities::Identity::null() ) {
       // Ok, this could be us
       ++found;
       mReceiver = *it;
@@ -166,7 +166,7 @@ QString Callback::receiver() const
   QStringList ccaddrs = KPIMUtils::splitAddressList( mMsg->cc() );
   for ( QStringList::Iterator it = ccaddrs.begin(); it != ccaddrs.end(); ++it ) {
     if ( kmkernel->identityManager()->identityForAddress( *it ) !=
-         KPIM::Identity::null() ) {
+         KPIMIdentities::Identity::null() ) {
       // Ok, this could be us
       ++found;
       mReceiver = *it;

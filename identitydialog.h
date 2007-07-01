@@ -47,7 +47,7 @@ namespace Kleo {
   class EncryptionKeyRequester;
   class SigningKeyRequester;
 }
-namespace KPIM {
+namespace KPIMIdentities {
   class Identity;
 }
 namespace KMail {
@@ -65,9 +65,9 @@ namespace KMail {
     IdentityDialog( QWidget * parent=0 );
     virtual ~IdentityDialog();
 
-    void setIdentity( /*_not_ const*/ KPIM::Identity & ident );
+    void setIdentity( /*_not_ const*/ KPIMIdentities::Identity & ident );
 
-    void updateIdentity( KPIM::Identity & ident );
+    void updateIdentity( KPIMIdentities::Identity & ident );
 
   public slots:
     void slotUpdateTransportCombo( const QStringList & sl );

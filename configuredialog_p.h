@@ -302,7 +302,7 @@ private slots:
       QTreeWidget::editItem on the selected item */
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
-      new name and sets it in the KPIM::IdentityManager */
+      new name and sets it in the KPIMIdentities::IdentityManager */
   void slotRenameIdentity( KMail::IdentityListViewItem *, const QString & );
   void slotContextMenu( KMail::IdentityListViewItem *, const QPoint & );
   void slotSetAsDefault();

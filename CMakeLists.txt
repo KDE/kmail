@@ -16,8 +16,8 @@ add_subdirectory( profiles )
 add_subdirectory( avscripts )
 add_subdirectory( tests )
 add_subdirectory( kconf_update )
-include_directories( ${CMAKE_SOURCE_DIR}/libkpgp
-  ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_SOURCE_DIR}/libkpimidentities ${CMAKE_BINARY_DIR}/libkdepim
+include_directories( 
+  ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/libkleo
   ${GPGME_INCLUDES}  ${CMAKE_SOURCE_DIR}/gpgmepp/

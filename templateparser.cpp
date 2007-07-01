@@ -40,8 +40,8 @@
 #include "customtemplates_kfg.h"
 #include "globalsettings_base.h"
 #include "kmkernel.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 
 #include "templateparser.h"
 

@@ -14,9 +14,9 @@
 #include "kmfoldermgr.h"
 #include "messagesender.h"
 #include "kmmainwidget.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identitycombo.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identitycombo.h>
 #include <kpimutils/kfileio.h>
 #include <mimelib/message.h>
 #include "kmfawidgets.h"
@@ -709,21 +709,21 @@ KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 
 QWidget * KMFilterActionIdentity::createParamWidget( QWidget * parent ) const
 {
-  KPIM::IdentityCombo * ic = new KPIM::IdentityCombo( kmkernel->identityManager(), parent );
+  KPIMIdentities::IdentityCombo * ic = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), parent );
   ic->setCurrentIdentity( mParameter );
   return ic;
 }
 
 void KMFilterActionIdentity::applyParamWidgetValue( QWidget * paramWidget )
 {
-  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  KPIMIdentities::IdentityCombo * ic = dynamic_cast<KPIMIdentities::IdentityCombo*>( paramWidget );
   assert( ic );
   mParameter = ic->currentIdentity();
 }
 
 void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 {
-  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  KPIMIdentities::IdentityCombo * ic = dynamic_cast<KPIMIdentities::IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentIndex( 0 );
   //ic->setCurrentIdentity( kmkernel->identityManager()->defaultIdentity() );
@@ -731,7 +731,7 @@ void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 
 void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
 {
-  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
+  KPIMIdentities::IdentityCombo * ic = dynamic_cast<KPIMIdentities::IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentIdentity( mParameter );
 }

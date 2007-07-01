@@ -56,8 +56,8 @@
 #include <gpgmepp/signingresult.h>
 #include <gpgmepp/context.h>
 
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 
 #include <ui/keyselectiondialog.h>
 #include <ui/keyapprovaldialog.h>
@@ -74,7 +74,7 @@
 #include <kmime/kmime_util.h>
 #include <kmime/kmime_codecs.h>
 
-#include <kpgpblock.h>
+#include <kpgp/kpgpblock.h>
 #include <kconfiggroup.h>
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -477,7 +477,7 @@ void MessageComposer::readFromComposeWin()
   mReferenceMessage->setReplyTo(mComposeWin->replyTo());
   mReferenceMessage->setBcc(mComposeWin->bcc());
 
-  const KPIM::Identity &id = mComposeWin->identity();
+  const KPIMIdentities::Identity &id = mComposeWin->identity();
 
   KMFolder *f = mComposeWin->mFcc->getFolder();
   assert( f != 0 );
@@ -705,7 +705,7 @@ void MessageComposer::adjustCryptFlags()
 			   signingChainCertNearExpiryWarningThresholdInDays() );
 
   if ( !mDisableCrypto ) {
-    const KPIM::Identity &id =
+    const KPIMIdentities::Identity &id =
       kmkernel->identityManager()->identityForUoidOrDefault( mIdentityUid );
 
     QStringList encryptToSelfKeys;

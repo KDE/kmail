@@ -263,7 +263,7 @@ public:
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
-      searches with KPIM::IdentityManager::identityForAddress()
+      searches with KPIMIdentities::IdentityManager::identityForAddress()
       and if that fails queries the KMMsgBase::parent() folder for a default.
    **/
   uint identityUoid() const;

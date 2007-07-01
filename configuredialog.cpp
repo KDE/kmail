@@ -40,7 +40,7 @@
 using KMail::AccountDialog;
 #include "messagesender.h"
 #include "kmfoldermgr.h"
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -68,7 +68,7 @@ using KMail::IdentityListViewItem;
 using KMail::IdentityDialog;
 
 // other kdenetwork headers:
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identity.h>
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;
 #include <kleo/cryptoconfig.h>
@@ -371,12 +371,12 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, con
 
 void IdentityPage::load()
 {
-  KPIM::IdentityManager *im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
   QTreeWidgetItem *item = 0;
-  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
     item = new IdentityListViewItem( mIdentityList, item, *it );
   }
   if ( mIdentityList->currentItem() ) {
@@ -413,7 +413,7 @@ void IdentityPage::slotNewIdentity()
 {
   Q_ASSERT( !mIdentityDialog );
 
-  KPIM::IdentityManager *im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   NewIdentityDialog dialog( im->shadowIdentities(), this );
   dialog.setObjectName( "new" );
 
@@ -427,7 +427,7 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-        KPIM::Identity &dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
+        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
         im->newFromExisting( dupThis, identityName );
         break;
       }
@@ -442,7 +442,7 @@ void IdentityPage::slotNewIdentity()
     //
     // Insert into listview:
     //
-    KPIM::Identity &newIdent = im->modifyIdentityForName( identityName );
+    KPIMIdentities::Identity &newIdent = im->modifyIdentityForName( identityName );
     QTreeWidgetItem *item = 0;
     if ( mIdentityList->selectedItems().size() > 0 ) {
       item = mIdentityList->selectedItems()[0];
@@ -494,7 +494,7 @@ void IdentityPage::slotRemoveIdentity()
 {
   Q_ASSERT( !mIdentityDialog );
 
-  KPIM::IdentityManager *im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   kFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
@@ -543,7 +543,7 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
   QString newName = text.trimmed();
   if ( !newName.isEmpty() &&
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
-    KPIM::Identity &ident = item->identity();
+    KPIMIdentities::Identity &ident = item->identity();
     ident.setIdentityName( newName );
     emit changed( true );
   }
@@ -580,7 +580,7 @@ void IdentityPage::slotSetAsDefault()
     return;
   }
 
-  KPIM::IdentityManager *im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   im->setAsDefault( item->identity().identityName() );
   refreshList();
 }

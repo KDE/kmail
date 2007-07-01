@@ -72,9 +72,8 @@
 #include <kaction.h>
 #include <kvbox.h>
 
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
-
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include <mailtransport/transportmanager.h>
 
 #include <kmime/kmime_mdn.h>
@@ -988,7 +987,7 @@ void KMMainWidget::slotCompose()
 void KMMainWidget::slotShowNewFromTemplate()
 {
   if ( mFolder ) {
-    const KPIM::Identity & ident =
+    const KPIMIdentities::Identity & ident =
       kmkernel->identityManager()->identityForUoidOrDefault( mFolder->identity() );
     mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
   }

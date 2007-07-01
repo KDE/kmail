@@ -52,8 +52,7 @@ using KMail::FolderRequester;
 #include "templatesconfiguration_kfg.h"
 
 // other kdepim headers:
-// libkdepim
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identity.h>
 #include <libkdepim/addresseelineedit.h>
 // libkleopatra:
 #include <ui/keyrequester.h>
@@ -624,7 +623,7 @@ namespace KMail {
     return true;
   }
 
-  void IdentityDialog::setIdentity( KPIM::Identity & ident ) {
+  void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
 
     setCaption( i18n("Edit Identity \"%1\"", ident.identityName() ) );
 
@@ -638,7 +637,9 @@ namespace KMail {
     mPGPEncryptionKeyRequester->setFingerprint( ident.pgpEncryptionKey() );
     mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
     mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
-    mPreferredCryptoMessageFormat->setCurrentIndex( format2cb( ident.preferredCryptoMessageFormat() ) );
+
+    mPreferredCryptoMessageFormat->setCurrentIndex( format2cb( 
+       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
 
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );
@@ -693,7 +694,7 @@ namespace KMail {
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
   }
 
-  void IdentityDialog::updateIdentity( KPIM::Identity & ident ) {
+  void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
@@ -704,7 +705,8 @@ namespace KMail {
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
-    ident.setPreferredCryptoMessageFormat( cb2format( mPreferredCryptoMessageFormat->currentIndex() ) );
+    ident.setPreferredCryptoMessageFormat( 
+       Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );

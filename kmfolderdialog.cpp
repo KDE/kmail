@@ -35,7 +35,7 @@
 #include "kmfolderdialog.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
-#include <libkpimidentities/identitycombo.h>
+#include <kpimidentities/identitycombo.h>
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
@@ -460,7 +460,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   ++row;
   label = new QLabel( i18n("&Sender identity:"), this );
   gl->addWidget( label, row, 0 );
-  mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), this );
+  mIdentityComboBox = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );
   mIdentityComboBox->setWhatsThis(

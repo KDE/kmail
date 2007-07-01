@@ -39,8 +39,8 @@
 using KMail::AccountManager;
 
 #include "globalsettings.h"
-#include "libkpimidentities/identity.h"
-#include "libkpimidentities/identitymanager.h"
+#include "kpimidentities/identity.h"
+#include "kpimidentities/identitymanager.h"
 #include "protocols.h"
 
 #include <libkdepim/servertest.h>
@@ -166,8 +166,8 @@ void AccountWizard::slotCurrentPageChanged( KPageWidgetItem *current )
   } else if ( current == mAccountInformationPage ) {
     if ( mRealName->text().isEmpty() && mEMailAddress->text().isEmpty() &&
          mOrganization->text().isEmpty() ) {
-      KPIM::IdentityManager *manager = mKernel->identityManager();
-      const KPIM::Identity &identity = manager->defaultIdentity();
+      KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
+      const KPIMIdentities::Identity &identity = manager->defaultIdentity();
 
       mRealName->setText( identity.fullName() );
       mEMailAddress->setText( identity.emailAddr() );
@@ -391,8 +391,8 @@ QLabel *AccountWizard::createInfoLabel( const QString &msg )
 void AccountWizard::accept()
 {
   // store identity information
-  KPIM::IdentityManager *manager = mKernel->identityManager();
-  KPIM::Identity &identity =
+  KPIMIdentities::IdentityManager *manager = mKernel->identityManager();
+  KPIMIdentities::Identity &identity =
     manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
 
   identity.setFullName( mRealName->text() );

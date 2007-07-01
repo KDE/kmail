@@ -29,7 +29,7 @@
 #include "kmreadermainwin.h"
 #include "messagesender.h"
 #include "kmmsgpartdlg.h"
-#include <kpgpblock.h>
+#include <kpgp/kpgpblock.h>
 #include <kaddrbook.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
@@ -60,9 +60,9 @@ using KRecentAddress::RecentAddresses;
 
 #include "kmfoldermaildir.h"
 #include <kio/jobuidelegate.h>
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identitycombo.h>
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identitycombo.h>
+#include <kpimidentities/identity.h>
 #include <kpimutils/kfileio.h>
 #include <kpimutils/email.h>
 #include <kleo/cryptobackendfactory.h>
@@ -216,7 +216,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     setComponentData( kmkernel->xmlGuiInstance() );
   }
   mMainWidget = new QWidget( this );
-  mIdentity = new KPIM::IdentityCombo( kmkernel->identityManager(), mMainWidget );
+  mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), mMainWidget );
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox( mMainWidget );
   mFcc->showOutboxFolder( false );
@@ -680,7 +680,7 @@ void KMComposeWin::readConfig( void )
   mIdentity->setCurrentIdentity( mId );
 
   kDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
-  const KPIM::Identity & ident =
+  const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
@@ -1454,7 +1454,7 @@ void KMComposeWin::setupActions( void )
   mSignAction->setIconText( i18n( "Sign" ) );
   actionCollection()->addAction("sign_message", mSignAction );
   // get PGP user id for the chosen identity
-  const KPIM::Identity & ident =
+  const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   // PENDING(marc): check the uses of this member and split it into
   // smime/openpgp and or enc/sign, if necessary:
@@ -1502,7 +1502,8 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
   connect(mCryptoModuleAction, SIGNAL(triggered(bool)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
-  mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+  mCryptoModuleAction->setCurrentItem( format2cb( 
+      Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
   slotSelectCryptoModule( true );
 
   QStringList styleItems;
@@ -1770,7 +1771,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     return;
   }
   mMsg = newMsg;
-  KPIM::IdentityManager * im = kmkernel->identityManager();
+  KPIMIdentities::IdentityManager * im = kmkernel->identityManager();
 
   mEdtFrom->setText( mMsg->from() );
   mEdtReplyTo->setText( mMsg->replyTo() );
@@ -1814,7 +1815,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     slotIdentityChanged( savedId );
   }
 
-  const KPIM::Identity &ident = im->identityForUoid( mIdentity->currentIdentity() );
+  const KPIMIdentities::Identity &ident = im->identityForUoid( mIdentity->currentIdentity() );
 
   // check for the presence of a DNT header, indicating that MDN's were requested
   QString mdnAddr = newMsg->headerField( "Disposition-Notification-To" );
@@ -2286,7 +2287,7 @@ void KMComposeWin::slotComposerDone( bool rc )
   setEnabled( true );
 }
 
-const KPIM::Identity & KMComposeWin::identity() const
+const KPIMIdentities::Identity & KMComposeWin::identity() const
 {
   return kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
 }
@@ -4079,7 +4080,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
       imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
     }
     if ( !theFolder && !imapTheFolder ) {
-      const KPIM::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
+      const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
       KMessageBox::information( 0,
                                 i18n("The custom drafts or templates folder for "
                                      "identify \"%1\" does not exist (anymore); "
@@ -4258,7 +4259,7 @@ void KMComposeWin::slotAppendSignature()
 {
   bool mod = mEditor->isModified();
 
-  const KPIM::Identity &ident =
+  const KPIMIdentities::Identity &ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   mOldSigText = ident.signatureText();
   if ( !mOldSigText.isEmpty() )  {
@@ -4306,7 +4307,7 @@ void KMComposeWin::slotCleanSpace()
   // Remove the signature for now.
   QString sig;
   bool restore = false;
-  const KPIM::Identity &ident =
+  const KPIMIdentities::Identity &ident =
     kmkernel->identityManager()->identityForUoid( mId );
   if ( !ident.isNull() ) {
     sig = ident.signatureText();
@@ -4495,7 +4496,7 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotIdentityChanged( uint uoid )
 {
-  const KPIM::Identity &ident =
+  const KPIMIdentities::Identity &ident =
     kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) {
     return;
@@ -4515,7 +4516,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   if ( mRecipientsEditor ) {
     // remove BCC of old identity and add BCC of new identity (if they differ)
-    const KPIM::Identity &oldIdentity =
+    const KPIMIdentities::Identity &oldIdentity =
       kmkernel->identityManager()->identityForUoidOrDefault( mId );
     if ( oldIdentity.bcc() != ident.bcc() ) {
       mRecipientsEditor->removeRecipient( oldIdentity.bcc(), Recipient::Bcc );

@@ -41,7 +41,7 @@
 
 #include <kleo/enum.h>
 
-#include <kpgp.h> // for Kpgp::Result
+#include <kpgp/kpgp.h> // for Kpgp::Result
 #include <gpgmepp/key.h>
 
 #include <vector>

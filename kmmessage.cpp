@@ -26,12 +26,12 @@ using KMail::HeaderStrategy;
 #include "templateparser.h"
 using KMail::TemplateParser;
 
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
 
 #include <cryptplugwrapperlist.h>
-#include <kpgpblock.h>
+#include <kpgp/kpgpblock.h>
 #include <kaddrbook.h>
 
 #include <kglobal.h>
@@ -1090,7 +1090,7 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   QString strId = msg->headerField( "X-KMail-Identity" ).trimmed();
   if ( !strId.isEmpty())
     id = strId.toUInt();
-  const KPIM::Identity & ident =
+  const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
 
   // X-KMail-Redirect-From: content
@@ -1577,7 +1577,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 
 void KMMessage::applyIdentity( uint id )
 {
-  const KPIM::Identity & ident =
+  const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
 
   if(ident.fullEmailAddr().isEmpty())

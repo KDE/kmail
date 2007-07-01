@@ -36,8 +36,8 @@
 
 #include "identitylistview.h"
 
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
 #include "kmkernel.h"
 
 #include <KLocale> // i18n
@@ -55,7 +55,7 @@ namespace KMail {
   //
 
   IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
-                                              const KPIM::Identity &ident )
+                                              const KPIMIdentities::Identity &ident )
     : QTreeWidgetItem( parent ), mUOID( ident.uoid() ) 
   {
     init( ident );
@@ -63,20 +63,20 @@ namespace KMail {
 
   IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
                                               QTreeWidgetItem *after,
-                                              const KPIM::Identity &ident )
+                                              const KPIMIdentities::Identity &ident )
     : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() ) 
   {
     init( ident );
   }
 
-  KPIM::Identity & IdentityListViewItem::identity() const 
+  KPIMIdentities::Identity & IdentityListViewItem::identity() const 
   {
-    KPIM::IdentityManager *im = kmkernel->identityManager();
+    KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
     Q_ASSERT( im );
     return im->modifyIdentityForUoid( mUOID );
   }
 
-  void IdentityListViewItem::setIdentity( const KPIM::Identity &ident ) 
+  void IdentityListViewItem::setIdentity( const KPIMIdentities::Identity &ident ) 
   {
     mUOID = ident.uoid();
     init( ident );
@@ -87,7 +87,7 @@ namespace KMail {
     init( identity() );
   }
 
-  void IdentityListViewItem::init( const KPIM::Identity &ident ) 
+  void IdentityListViewItem::init( const KPIMIdentities::Identity &ident ) 
   {
     if ( ident.isDefault() ) {
       // Add "(Default)" to the end of the default identity's name:
@@ -129,7 +129,7 @@ namespace KMail {
     if ( column == 0 && item ) {
       IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
       if ( lvItem ) {
-        KPIM::Identity& ident = lvItem->identity();
+        KPIMIdentities::Identity& ident = lvItem->identity();
         if ( ident.isDefault() ) {
           lvItem->setText( 0, ident.identityName() );
         }
@@ -174,7 +174,7 @@ namespace KMail {
 
   bool IdentityListView::acceptDrag( QDropEvent *e ) const {
     // disallow moving:
-    return e->source() != viewport() && KPIM::Identity::canDecode( e->mimeData() );
+    return e->source() != viewport() && KPIMIdentities::Identity::canDecode( e->mimeData() );
   }
 
   Q3DragObject *IdentityListView::dragObject() {

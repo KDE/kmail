@@ -28,8 +28,8 @@ using KMail::SieveJob;
 #include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctimap.h"
-#include <libkpimidentities/identitymanager.h>
-#include <libkpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identity.h>
 
 #include <kmime/kmime_header_parsing.h>
 using KMime::Types::AddrSpecList;
@@ -299,7 +299,7 @@ namespace KMail {
 
   QStringList Vacation::defaultMailAliases() {
     QStringList sl;
-    for ( KPIM::IdentityManager::ConstIterator it = kmkernel->identityManager()->begin() ;
+    for ( KPIMIdentities::IdentityManager::ConstIterator it = kmkernel->identityManager()->begin() ;
 	  it != kmkernel->identityManager()->end() ; ++it )
       if ( !(*it).emailAddr().isEmpty() )
 	sl.push_back( (*it).emailAddr() );

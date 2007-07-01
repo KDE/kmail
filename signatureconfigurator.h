@@ -18,8 +18,8 @@
 
 #include <QWidget>
 
-#include <libkpimidentities/identity.h> // for Signature::Type
-using KPIM::Signature;
+#include <kpimidentities/identity.h> // for Signature::Type
+using KPIMIdentities::Signature;
 
 class QComboBox;
 class QCheckBox;

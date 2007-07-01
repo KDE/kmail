@@ -59,7 +59,7 @@ class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class KMSender;
-namespace KPIM {
+namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
 }
@@ -258,7 +258,7 @@ public:
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
-  KPIM::IdentityManager *identityManager();
+  KPIMIdentities::IdentityManager *identityManager();
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
@@ -404,7 +404,7 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
-  mutable KPIM::IdentityManager *mIdentityManager;
+  mutable KPIMIdentities::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
   struct putData
   {
