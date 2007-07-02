@@ -143,7 +143,7 @@ class Composer : public KMail::SecondaryWindow
     /**
      * Add an attachment to the list.
      */
-    virtual void addAttach( const KMMessagePart *msgPart ) = 0;
+    virtual void addAttach( KMMessagePart *msgPart ) = 0;
 };
 
 }

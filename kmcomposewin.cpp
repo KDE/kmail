@@ -148,6 +148,7 @@ using MailTransport::TransportManager;
 #include <QList>
 #include <QRegExp>
 #include <QTextCodec>
+#include <QHeaderView>
 
 #include <mimelib/mimepp.h>
 
@@ -339,35 +340,15 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
 
   mAtmListView = new AttachmentListView( this, mSplitter );
-  mAtmListView->setObjectName( "attachment list view" );
-  mAtmListView->setSelectionMode( Q3ListView::Extended );
-  mAtmListView->addColumn( i18n("Name"), 200 );
-  mAtmListView->addColumn( i18n("Size"), 80 );
-  mAtmListView->addColumn( i18n("Encoding"), 120 );
-  int atmColType = mAtmListView->addColumn( i18n("Type"), 120 );
-  // Stretch "Type".
-  mAtmListView->header()->setStretchEnabled( true, atmColType );
-  mAtmEncryptColWidth = 80;
-  mAtmSignColWidth = 80;
-  mAtmCompressColWidth = 100;
-  mAtmColCompress = mAtmListView->addColumn( i18n("Compress"),
-                                             mAtmCompressColWidth );
-  mAtmColEncrypt = mAtmListView->addColumn( i18n("Encrypt"),
-                                            mAtmEncryptColWidth );
-  mAtmColSign = mAtmListView->addColumn( i18n("Sign"),
-                                         mAtmSignColWidth );
-  mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
-  mAtmListView->setColumnWidth( mAtmColSign, 0 );
-  mAtmListView->setAllColumnsShowFocus( true );
 
   connect( mAtmListView,
-           SIGNAL(doubleClicked(Q3ListViewItem*)),
+           SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
            SLOT(slotAttachProperties()) );
   connect( mAtmListView,
-           SIGNAL(rightButtonPressed(Q3ListViewItem*, const QPoint&, int)),
-           SLOT(slotAttachPopupMenu(Q3ListViewItem*, const QPoint&, int)) );
+           SIGNAL(rightButtonPressed(QTreeWidgetItem*)),
+           SLOT(slotAttachPopupMenu(QTreeWidgetItem*)) );
   connect( mAtmListView,
-           SIGNAL(selectionChanged()),
+           SIGNAL(itemSelectionChanged()),
            SLOT(slotUpdateAttachActions()) );
   connect( mAtmListView,
            SIGNAL(attachmentDeleted()),
@@ -1500,7 +1481,7 @@ void KMComposeWin::setupActions( void )
 
   mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
   actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
-  connect(mCryptoModuleAction, SIGNAL(triggered(bool)), SLOT(slotSelectCryptoModule()));
+  connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( 
       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
@@ -2342,7 +2323,7 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttach( const KMMessagePart *msgPart )
+void KMComposeWin::addAttach( KMMessagePart *msgPart )
 {
   mAtmList.append( (KMMessagePart*) msgPart );
 
@@ -2354,7 +2335,7 @@ void KMComposeWin::addAttach( const KMMessagePart *msgPart )
   }
 
   // add a line in the attachment listbox
-  KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView );
+  KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView, msgPart );
   msgPartToItem( msgPart, lvi );
   mAtmItemList.append( lvi );
 
@@ -2364,10 +2345,10 @@ void KMComposeWin::addAttach( const KMMessagePart *msgPart )
     mTempDir = 0;
   }
 
-  connect( lvi, SIGNAL( compress( int ) ),
-           this, SLOT( compressAttach( int ) ) );
-  connect( lvi, SIGNAL( uncompress( int ) ),
-           this, SLOT( uncompressAttach( int ) ) );
+  connect( lvi, SIGNAL( compress( KMAtmListViewItem* ) ),
+           this, SLOT( compressAttach( KMAtmListViewItem* ) ) );
+  connect( lvi, SIGNAL( uncompress( KMAtmListViewItem* ) ),
+           this, SLOT( uncompressAttach( KMAtmListViewItem* ) ) );
 
   slotUpdateAttachActions();
 }
@@ -2376,7 +2357,7 @@ void KMComposeWin::addAttach( const KMMessagePart *msgPart )
 void KMComposeWin::slotUpdateAttachActions()
 {
   int selectedCount = 0;
-  QList<Q3ListViewItem*>::const_iterator it = mAtmItemList.constBegin();
+  QList<KMAtmListViewItem*>::const_iterator it = mAtmItemList.constBegin();
   while ( it != mAtmItemList.constEnd() ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
@@ -2421,11 +2402,11 @@ void KMComposeWin::msgPartToItem( const KMMessagePart *msgPart,
 
   if ( loadDefaults ) {
     if( canSignEncryptAttachments() ) {
-      lvi->enableCryptoCBs( true );
+      mAtmListView->enableCryptoCBs( true );
       lvi->setEncrypt( mEncryptAction->isChecked() );
       lvi->setSign(    mSignAction->isChecked() );
     } else {
-      lvi->enableCryptoCBs( false );
+      mAtmListView->enableCryptoCBs( false );
     }
   }
 }
@@ -2920,90 +2901,10 @@ void KMComposeWin::slotSetCharset()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSelectCryptoModule( bool init )
 {
-  if ( !init ) {
+  if ( !init )
     setModified( true );
-  }
-  if ( canSignEncryptAttachments() ) {
-    // if the encrypt/sign columns are hidden then show them
-    if ( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
-      // set/unset signing/encryption for all attachments according to the
-      // state of the global sign/encrypt action
-      if ( !mAtmList.isEmpty() ) {
-        QList<Q3ListViewItem*>::const_iterator it;
-        for ( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
-          KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
-          if ( lvi ) {
-            lvi->setSign( mSignAction->isChecked() );
-            lvi->setEncrypt( mEncryptAction->isChecked() );
-          }
-        }
-      }
 
-      int totalWidth = 0;
-      // determine the total width of the columns
-      for ( int col=0; col < mAtmColEncrypt; col++ ) {
-        totalWidth += mAtmListView->columnWidth( col );
-      }
-      int reducedTotalWidth =
-        totalWidth - mAtmEncryptColWidth - mAtmSignColWidth;
-      // reduce the width of all columns so that the encrypt and sign column fit
-      int usedWidth = 0;
-      for ( int col=0; col < mAtmColEncrypt-1; col++ ) {
-        int newWidth = mAtmListView->columnWidth( col ) * reducedTotalWidth
-          / totalWidth;
-        mAtmListView->setColumnWidth( col, newWidth );
-        usedWidth += newWidth;
-      }
-      // the last column before the encrypt column gets the remaining space
-      // (because of rounding errors the width of this column isn't calculated
-      // the same way as the width of the other columns)
-      mAtmListView->setColumnWidth( mAtmColEncrypt-1,
-                                    reducedTotalWidth - usedWidth );
-      mAtmListView->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
-      mAtmListView->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
-      QList<Q3ListViewItem*>::const_iterator it;
-      for( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
-        KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
-        if ( lvi ) {
-          lvi->enableCryptoCBs( true );
-        }
-      }
-    }
-  } else {
-    // if the encrypt/sign columns are visible then hide them
-    if( 0 != mAtmListView->columnWidth( mAtmColEncrypt ) ) {
-      mAtmEncryptColWidth = mAtmListView->columnWidth( mAtmColEncrypt );
-      mAtmSignColWidth = mAtmListView->columnWidth( mAtmColSign );
-      int totalWidth = 0;
-      // determine the total width of the columns
-      for( int col=0; col < mAtmListView->columns(); col++ )
-        totalWidth += mAtmListView->columnWidth( col );
-      int reducedTotalWidth = totalWidth - mAtmEncryptColWidth
-        - mAtmSignColWidth;
-      // increase the width of all columns so that the visible columns take
-      // up the whole space
-      int usedWidth = 0;
-      for( int col=0; col < mAtmColEncrypt-1; col++ ) {
-        int newWidth = mAtmListView->columnWidth( col ) * totalWidth
-          / reducedTotalWidth;
-        mAtmListView->setColumnWidth( col, newWidth );
-        usedWidth += newWidth;
-      }
-      // the last column before the encrypt column gets the remaining space
-      // (because of rounding errors the width of this column isn't calculated
-      // the same way as the width of the other columns)
-      mAtmListView->setColumnWidth( mAtmColEncrypt-1, totalWidth - usedWidth );
-      mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
-      mAtmListView->setColumnWidth( mAtmColSign,    0 );
-      QList<Q3ListViewItem*>::const_iterator it;
-      for( it = mAtmItemList.constBegin(); it != mAtmItemList.constBegin(); ++it ) {
-        KMAtmListViewItem* lvi = static_cast<KMAtmListViewItem*> (*it);
-        if ( lvi ) {
-          lvi->enableCryptoCBs( false );
-        }
-      }
-    }
-  }
+  mAtmListView->enableCryptoCBs( canSignEncryptAttachments() );
 }
 
 static void showExportError( QWidget * w, const GpgME::Error & err )
@@ -3086,7 +2987,7 @@ void KMComposeWin::slotInsertPublicKey()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachPopupMenu( Q3ListViewItem *, const QPoint &, int )
+void KMComposeWin::slotAttachPopupMenu( QTreeWidgetItem* )
 {
   if ( !mAttachMenu ) {
     mAttachMenu = new QMenu( this );
@@ -3105,7 +3006,7 @@ void KMComposeWin::slotAttachPopupMenu( Q3ListViewItem *, const QPoint &, int )
   }
 
   int selectedCount = 0;
-  QList<Q3ListViewItem*>::const_iterator it = mAtmItemList.constBegin();
+  QList<KMAtmListViewItem*>::const_iterator it = mAtmItemList.constBegin();
   while ( it != mAtmItemList.constEnd() ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
@@ -3123,30 +3024,23 @@ void KMComposeWin::slotAttachPopupMenu( Q3ListViewItem *, const QPoint &, int )
 }
 
 //-----------------------------------------------------------------------------
-int KMComposeWin::currentAttachmentNum()
-{
-  return mAtmItemList.indexOf( mAtmListView->currentItem() );
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
-  int idx = currentAttachmentNum();
-  if ( idx < 0 ) {
+  KMAtmListViewItem *currentItem =
+      static_cast<KMAtmListViewItem*>( mAtmListView->currentItem() );
+  if ( !currentItem )
     return;
-  }
 
-  KMMessagePart *msgPart = mAtmList.at( idx );
+  KMMessagePart *msgPart = currentItem->attachment();
   msgPart->setCharset( mCharset );
 
   KMMsgPartDialogCompat dlg;
   dlg.setMsgPart( msgPart );
-  KMAtmListViewItem *listItem = (KMAtmListViewItem*)( mAtmItemList.at( idx ) );
-  if ( canSignEncryptAttachments() && listItem ) {
+  if ( canSignEncryptAttachments() ) {
     dlg.setCanSign( true );
     dlg.setCanEncrypt( true );
-    dlg.setSigned( listItem->isSign() );
-    dlg.setEncrypted( listItem->isEncrypt() );
+    dlg.setSigned( currentItem->isSign() );
+    dlg.setEncrypted( currentItem->isEncrypt() );
   } else {
     dlg.setCanSign( false );
     dlg.setCanEncrypt( false );
@@ -3154,12 +3048,10 @@ void KMComposeWin::slotAttachProperties()
   if ( dlg.exec() ) {
     mAtmModified = true;
     // values may have changed, so recreate the listbox line
-    if ( listItem ) {
-      msgPartToItem( msgPart, listItem );
-      if ( canSignEncryptAttachments() ) {
-        listItem->setSign( dlg.isSigned() );
-        listItem->setEncrypt( dlg.isEncrypted() );
-      }
+    msgPartToItem( msgPart, currentItem );
+    if ( canSignEncryptAttachments() ) {
+      currentItem->setSign( dlg.isSigned() );
+      currentItem->setEncrypt( dlg.isEncrypted() );
     }
   }
   if ( msgPart->typeStr().toLower() != "text" ) {
@@ -3168,39 +3060,26 @@ void KMComposeWin::slotAttachProperties()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::compressAttach( int idx )
+void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
 {
-  if ( idx < 0 ) {
+  if ( !attachmentItem )
     return;
-  }
 
-  int i;
-  for ( i = 0; i < mAtmItemList.count(); ++i ) {
-    if ( mAtmItemList.at( i )->itemPos() == idx ) {
-      break;
-    }
-  }
-
-  if ( i > mAtmItemList.count() ) {
-    return;
-  }
-
-  KMMessagePart *msgPart;
-  msgPart = mAtmList.at( i );
+  KMMessagePart *msgPart = attachmentItem->attachment();
   QByteArray array;
   QBuffer dev( &array );
   KZip zip( &dev );
   QByteArray decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( QIODevice::WriteOnly ) ) {
     KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
-    static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
+    attachmentItem->setCompress( false );
     return;
   }
 
   zip.setCompression( KZip::DeflateCompression );
   if ( ! zip.writeFile( msgPart->name(), "", "", decoded.data(), decoded.size()) ) {
     KMessageBox::sorry (0, i18n("KMail could not compress the file.") );
-    static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
+    attachmentItem->setCompress( false );
     return;
   }
   zip.close();
@@ -3211,12 +3090,11 @@ void KMComposeWin::compressAttach( int idx )
                                      QString(),
                                      KGuiItem( i18n("Keep") ),
                                      KGuiItem( i18n("Compress") ) ) == KMessageBox::Yes ) {
-      static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
+      attachmentItem->setCompress( false );
       return;
     }
   }
-  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedCodec(
-                                                                                msgPart->cteStr() );
+  attachmentItem->setUncompressedCodec( msgPart->cteStr() );
 
   msgPart->setCteStr( "base64" );
   msgPart->setBodyEncodedBinary( array );
@@ -3247,37 +3125,22 @@ void KMComposeWin::compressAttach( int idx )
   }
   msgPart->setContentDisposition( cDisp );
 
-  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedMimeType(
-                                                                                   msgPart->typeStr(), msgPart->subtypeStr() );
+  attachmentItem->setUncompressedMimeType( msgPart->typeStr(),
+                                           msgPart->subtypeStr() );
   msgPart->setTypeStr( "application" );
   msgPart->setSubtypeStr( "zip" );
 
-  KMAtmListViewItem *listItem = static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) );
-  msgPartToItem( msgPart, listItem, false );
+  msgPartToItem( msgPart, attachmentItem, false );
 }
 
 //-----------------------------------------------------------------------------
 
-void KMComposeWin::uncompressAttach( int idx )
+void KMComposeWin::uncompressAttach( KMAtmListViewItem *attachmentItem )
 {
-  if ( idx < 0 ) {
+  if ( !attachmentItem )
     return;
-  }
 
-  int i;
-  for ( i = 0; i < mAtmItemList.count(); ++i ) {
-    if ( mAtmItemList.at( i )->itemPos() == idx ) {
-      break;
-    }
-  }
-
-  if ( i > mAtmItemList.count() ) {
-    return;
-  }
-
-  KMMessagePart *msgPart;
-  msgPart = mAtmList.at( i );
-
+  KMMessagePart *msgPart = attachmentItem->attachment();
   QByteArray ba = msgPart->bodyDecodedBinary();
   QBuffer dev( &ba );
   KZip zip( &dev );
@@ -3286,7 +3149,7 @@ void KMComposeWin::uncompressAttach( int idx )
   decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( QIODevice::ReadOnly ) ) {
     KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
-    static_cast<KMAtmListViewItem *>( mAtmItemList.at( i ) )->setCompress( true );
+    attachmentItem->setCompress( true );
     return;
   }
   const KArchiveDirectory *dir = zip.directory();
@@ -3294,13 +3157,12 @@ void KMComposeWin::uncompressAttach( int idx )
   KZipFileEntry *entry;
   if ( dir->entries().count() != 1 ) {
     KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
-    static_cast<KMAtmListViewItem *>( mAtmItemList.at( i ) )->setCompress( true );
+    attachmentItem->setCompress( true );
     return;
   }
   entry = (KZipFileEntry*)dir->entry( dir->entries()[0] );
 
-  msgPart->setCteStr(
-                     static_cast<KMAtmListViewItem*>( mAtmItemList.at(i) )->uncompressedCodec() );
+  msgPart->setCteStr( attachmentItem->uncompressedCodec() );
 
   msgPart->setBodyEncodedBinary( entry->data() );
   QString name = entry->name();
@@ -3331,21 +3193,19 @@ void KMComposeWin::uncompressAttach( int idx )
   msgPart->setContentDisposition( cDisp );
 
   QByteArray type, subtype;
-  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->uncompressedMimeType( type,
-                                                                                 subtype );
+  attachmentItem->uncompressedMimeType( type, subtype );
 
   msgPart->setTypeStr( type );
   msgPart->setSubtypeStr( subtype );
 
-  KMAtmListViewItem *listItem = static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) );
-  msgPartToItem( msgPart, listItem, false );
+  msgPartToItem( msgPart, attachmentItem, false );
 }
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachView()
 {
   int i = 0;
-  QList<Q3ListViewItem*>::const_iterator it;
+  QList<KMAtmListViewItem*>::const_iterator it;
   for ( it = mAtmItemList.constBegin();
         it != mAtmItemList.constEnd(); ++it, ++i ) {
     if ( (*it)->isSelected() ) {
@@ -3358,7 +3218,7 @@ void KMComposeWin::slotAttachView()
 void KMComposeWin::slotAttachOpen()
 {
   int i = 0;
-  QList<Q3ListViewItem*>::const_iterator it;
+  QList<KMAtmListViewItem*>::const_iterator it;
   for ( it = mAtmItemList.constBegin();
         it != mAtmItemList.constEnd(); ++it, ++i ) {
     if ( (*it)->isSelected() ) {
@@ -3444,16 +3304,13 @@ void KMComposeWin::openAttach( int index )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachSave()
 {
-  KMMessagePart *msgPart;
-  QString fileName, pname;
-
-  int idx = currentAttachmentNum();
-  if ( idx < 0 ) {
+  KMAtmListViewItem *currentItem =
+      static_cast<KMAtmListViewItem*>( mAtmListView->currentItem() );
+  if ( !currentItem )
     return;
-  }
 
-  msgPart = mAtmList.at( idx );
-  pname = msgPart->name();
+  KMMessagePart *msgPart = currentItem->attachment();
+  QString pname = msgPart->name();
   if ( pname.isEmpty() ) {
     pname = "unnamed";
   }
@@ -3472,7 +3329,7 @@ void KMComposeWin::slotAttachRemove()
 {
   bool attachmentRemoved = false;
   for ( int i = 0; i < mAtmItemList.size(); ) {
-    Q3ListViewItem *cur = mAtmItemList[i];
+    KMAtmListViewItem *cur = mAtmItemList[i];
     if ( cur->isSelected() ) {
       removeAttach( i );
       attachmentRemoved = true;
@@ -3702,9 +3559,9 @@ void KMComposeWin::slotPaste()
     return;
   }
 
-  QMimeSource *mimeSource = QApplication::clipboard()->data();
-  if ( mimeSource->provides( "image/png" ) )  {
-    slotAttachPNGImageData( mimeSource->encodedData( "image/png" ) );
+  const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+  if ( mimeData->hasFormat( "image/png" ) )  {
+    slotAttachPNGImageData( mimeData->data( "image/png" ) );
   } else {
     QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
     qApp->notify( fw, &k );
@@ -3810,7 +3667,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // mark the attachments for (no) encryption
   if ( canSignEncryptAttachments() ) {
-    QList<Q3ListViewItem*>::const_iterator it;
+    QList<KMAtmListViewItem*>::const_iterator it;
     for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
       KMAtmListViewItem *entry = static_cast<KMAtmListViewItem*> (*it);
       if ( entry ) {
@@ -3857,7 +3714,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 
   // mark the attachments for (no) signing
   if ( canSignEncryptAttachments() ) {
-    QList<Q3ListViewItem*>::const_iterator it;
+    QList<KMAtmListViewItem*>::const_iterator it;
     for (it = mAtmItemList.constBegin(); it != mAtmItemList.constEnd(); ++it ) {
       KMAtmListViewItem *entry = static_cast<KMAtmListViewItem*> (*it);
       if ( entry ) {

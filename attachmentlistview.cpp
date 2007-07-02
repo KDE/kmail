@@ -3,6 +3,7 @@
 
     KMail, the KDE mail client.
     Copyright (c) 2003 Ingo Kloecker <kloecker@kde.org>
+    Copyright (c) 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License,
@@ -12,47 +13,69 @@
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, US
 */
 
+#include "attachmentlistview.h"
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-// my header file
-#include "attachmentlistview.h"
+#include <QHeaderView>
+#include <QContextMenuEvent>
+#include <QBuffer>
 
-// other KMail headers
-#include "kmmsgbase.h"
-#include "kmfolder.h"
-#include "kmcommands.h"
-#include "kmmsgdict.h"
-#include "composer.h"
+#include <klocale.h>
 #include <maillistdrag.h>
 
-// other module headers
-#include <QDragEnterEvent>
-#include <QDragMoveEvent>
-#include <QKeyEvent>
-#include <QDropEvent>
+#include "kmfolder.h"
+#include "kmmsgdict.h"
+#include "kmcommands.h"
+#include "composer.h"
 
-// other KDE headers
-#include <kurl.h>
 
-// other Qt headers
-#include <QBuffer>
-#include <QDataStream>
-#include <QEvent>
-#include <QString>
-
-// other headers (none)
-
+static const int encryptColumn = 5;
 
 namespace KMail {
 
 AttachmentListView::AttachmentListView( KMail::Composer * composer,
                                         QWidget* parent )
-  : K3ListView( parent ),
+  : QTreeWidget( parent ),
     mComposer( composer )
 {
   setAcceptDrops( true );
+  setObjectName( "attachment list view" );
+  setSelectionMode( QAbstractItemView::ExtendedSelection );
+  setIndentation( 0 );
+  setAllColumnsShowFocus( true );
+  QStringList headerNames;
+  headerNames << i18n("Name") << i18n("Size") << i18n("Encoding") 
+      << i18n("Type") << i18n("Compress") << i18n("Encrypt") 
+      << i18n("Sign");
+  setHeaderLabels( headerNames ); 
+
+  header()->setResizeMode( QHeaderView::Interactive );
+  header()->setResizeMode( 3, QHeaderView::Stretch );
+  header()->setStretchLastSection( false );
+  setColumnWidth( 0, 200);
+  setColumnWidth( 1, 80 );
+  setColumnWidth( 2, 120 );
+  setColumnWidth( 3, 120 );
+  setColumnWidth( 4, 100 );
+  setColumnWidth( 5, 80 );
+  setColumnWidth( 6, 80 );
+
+  // We can not enable automatic sorting, because that would resort the list
+  // when the list is sorted by size and the user clicks the compress checkbox.
+  header()->setSortIndicatorShown( true );
+  header()->setClickable( true );
+  connect( header(), SIGNAL(sectionClicked(int)), this, SLOT(slotSort()) );
+
+  enableCryptoCBs( false );
+
+  // This is needed because QTreeWidget forgets to update when a column is
+  // moved. It updates correctly when a column is resized, so trick it into
+  // thinking a column was resized when it is moved.
+  connect ( header(), SIGNAL(sectionMoved(int,int,int)),
+            header(), SIGNAL(sectionResized(int,int,int)) );
 }
 
 //-----------------------------------------------------------------------------
@@ -63,27 +86,99 @@ AttachmentListView::~AttachmentListView()
 
 //-----------------------------------------------------------------------------
 
-void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
+void AttachmentListView::enableCryptoCBs( bool enable )
 {
-  if( KPIM::MailList::canDecode( e->mimeData() ) )
-    e->setAccepted( true );
-  else
-    K3ListView::dragEnterEvent( e );
+  bool enabledBefore = areCryptoCBsEnabled();
+
+  // Show the crypto columns if they were hidden before
+  if ( enable && !enabledBefore ) {
+
+    // determine the total width of the columns
+    int totalWidth = 0;
+    for ( int col = 0; col < encryptColumn; col++ )
+      totalWidth += header()->sectionSize( col );
+
+    int reducedTotalWidth = totalWidth - mEncryptColWidth - mSignColWidth;
+
+    // reduce the width of all columns so that the encrypt and sign columns fit
+    int usedWidth = 0;
+    for ( int col = 0; col < encryptColumn - 1; col++ ) {
+      int newWidth = header()->sectionSize( col ) * reducedTotalWidth /
+          totalWidth;
+      setColumnWidth( col, newWidth );
+      usedWidth += newWidth;
+    }
+
+    // the last column before the encrypt column gets the remaining space
+    // (because of rounding errors the width of this column isn't calculated
+    // the same way as the width of the other columns)
+    setColumnWidth( encryptColumn - 1, reducedTotalWidth - usedWidth );
+    setColumnWidth( encryptColumn, mEncryptColWidth );
+    setColumnWidth( encryptColumn + 1, mSignColWidth );
+  }
+
+  // Hide the crypto columns if they were shown before
+  if ( !enable && enabledBefore ) {
+
+    mEncryptColWidth = columnWidth( encryptColumn );
+    mSignColWidth = columnWidth( encryptColumn + 1 );
+
+    // determine the total width of the columns
+    int totalWidth = 0;
+    for( int col = 0; col < header()->count(); col++ )
+      totalWidth += header()->sectionSize( col );
+
+    int reducedTotalWidth = totalWidth - mEncryptColWidth - mSignColWidth;
+
+    // increase the width of all columns so that the visible columns take
+    // up the whole space
+    int usedWidth = 0;
+    for( int col = 0; col < encryptColumn - 1; col++ ) {
+      int newWidth = header()->sectionSize( col ) * totalWidth /
+          reducedTotalWidth;
+      setColumnWidth( col, newWidth );
+      usedWidth += newWidth;
+    }
+
+    // the last column before the encrypt column gets the remaining space
+    // (because of rounding errors the width of this column isn't calculated
+    // the same way as the width of the other columns)
+    setColumnWidth( encryptColumn - 1, totalWidth - usedWidth );
+    setColumnWidth( encryptColumn, 0 );
+    setColumnWidth( encryptColumn + 1, 0 );
+  }
 }
 
 //-----------------------------------------------------------------------------
 
-void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
+bool AttachmentListView::areCryptoCBsEnabled()
 {
-  if( KPIM::MailList::canDecode( e->mimeData() ) )
-    e->setAccepted( true );
-  else
-    K3ListView::dragMoveEvent( e );
+  return ( header()->sectionSize( encryptColumn  ) != 0 );
 }
 
 //-----------------------------------------------------------------------------
 
-void AttachmentListView::contentsDropEvent( QDropEvent* e )
+void AttachmentListView::dragEnterEvent( QDragEnterEvent* e )
+{
+  if( KPIM::MailList::canDecode( e->mimeData() ) )
+    e->setAccepted( true );
+  else
+    QTreeWidget::dragEnterEvent( e );
+}
+
+//-----------------------------------------------------------------------------
+
+void AttachmentListView::dragMoveEvent( QDragMoveEvent* e )
+{
+  if( KPIM::MailList::canDecode( e->mimeData() ) )
+    e->setAccepted( true );
+  else
+    QTreeWidget::dragMoveEvent( e );
+}
+
+//-----------------------------------------------------------------------------
+
+void AttachmentListView::dropEvent( QDropEvent* e )
 {
   const QMimeData *md = e->mimeData();
   if( KPIM::MailList::canDecode( md ) ) {
@@ -122,7 +217,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
       }
     }
     else {
-      K3ListView::dropEvent( e );
+      QTreeWidget::dropEvent( e );
     }
   }
 }
@@ -134,6 +229,20 @@ void AttachmentListView::keyPressEvent( QKeyEvent * e )
   if ( e->key() == Qt::Key_Delete ) {
     emit attachmentDeleted();
   }
+}
+
+//-----------------------------------------------------------------------------
+
+void AttachmentListView::contextMenuEvent( QContextMenuEvent* event )
+{
+  emit rightButtonPressed( itemAt( event->pos() ) );
+}
+
+//-----------------------------------------------------------------------------
+
+void AttachmentListView::slotSort()
+{
+  sortByColumn( header()->sortIndicatorSection(), header()->sortIndicatorOrder() );
 }
 
 

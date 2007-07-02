@@ -1,6 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+  Copyright (c) 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,107 +18,65 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
+#include "kmatmlistview.h"
+
 #include <config.h>
 
-#include "kmatmlistview.h"
-#include <qcheckbox.h>
-#include <q3header.h>
+#include <QWidget>
+#include <QCheckBox>
+#include <QHBoxLayout>
 
-KMAtmListViewItem::KMAtmListViewItem( Q3ListView *parent )
+#include "attachmentlistview.h"
+
+KMAtmListViewItem::KMAtmListViewItem( KMail::AttachmentListView *parent,
+                                      KMMessagePart* attachment )
   : QObject(),
-    Q3ListViewItem( parent )
+    QTreeWidgetItem( parent ),
+    mAttachment( attachment ),
+    mParent( parent )
+
 {
-  mCBCompress = new QCheckBox( listView()->viewport() );
-  mCBEncrypt = new QCheckBox( listView()->viewport() );
-  mCBSign = new QCheckBox( listView()->viewport() );
-  mCBCompress->setVisible( true );
-  updateAllCheckBoxes();
+  mCBCompress = addCheckBox( 4 );
+  mCBEncrypt = addCheckBox( 5 );
+  mCBSign = addCheckBox( 6 );
 
   connect( mCBCompress, SIGNAL( clicked() ), this, SLOT( slotCompress() ) );
-  connect( listView()->header(), SIGNAL( sizeChange(int, int, int) ),
-           SLOT( slotHeaderChange( int, int, int ) ) );
-  connect( listView()->header(), SIGNAL( indexChange(int, int, int) ),
-           SLOT( slotHeaderChange( int, int, int ) ) );
-  connect( listView()->header(), SIGNAL( clicked( int ) ), SLOT( slotHeaderClick( int ) ) );
+}
+
+QCheckBox* KMAtmListViewItem::addCheckBox( int column )
+{
+  // We can not call setItemWidget() on the checkbox directly, because then
+  // the checkbox would be left-aligned. Therefore we create a helper widget
+  // with a layout to align the checkbox to the center.
+  QWidget *w = new QWidget();
+  QCheckBox *c = new QCheckBox();
+  QHBoxLayout *l = new QHBoxLayout();
+  l->insertWidget( 0, c, 0, Qt::AlignHCenter );
+  w->setBackgroundRole( QPalette::Base );
+  c->setBackgroundRole( QPalette::Base );
+  w->setLayout( l );
+  l->setMargin( 0 );
+  l->setSpacing( 0 );
+  w->show();
+  treeWidget()->setItemWidget( this, column, w );
+  return c;
 }
 
 KMAtmListViewItem::~KMAtmListViewItem()
 {
-  delete mCBEncrypt;
+  // The checkboxes should be automatically deleted by the treewidget
   mCBEncrypt = 0;
-  delete mCBSign;
   mCBSign = 0;
-  delete mCBCompress;
   mCBCompress = 0;
 }
 
-void KMAtmListViewItem::updateCheckBox( int headerSection, QCheckBox *cb )
+bool KMAtmListViewItem::operator < ( const QTreeWidgetItem & other ) const
 {
-  // Calculate some values to determine the x-position where the checkbox
-  // will be drawn
-  int sectionWidth = listView()->header()->sectionSize( headerSection );
-  int sectionPos = listView()->header()->sectionPos( headerSection );
-  int sectionOffset = sectionWidth / 2 - height() / 4;
-
-  //Resize and move the checkbox
-  cb->resize( sectionWidth - sectionOffset - 1, height() - 2 );
-  listView()->moveChild( cb, sectionPos + sectionOffset, itemPos() + 1 );
-
-  //Set the correct background color
-  if ( isSelected() ) {
-    cb->setBackgroundRole( QPalette::Highlight );
-  } else {
-    cb->setBackgroundRole( QPalette::QPalette::Base );
-  }
-}
-
-void KMAtmListViewItem::updateAllCheckBoxes()
-{
-  updateCheckBox( 4, mCBCompress );
-  updateCheckBox( 5, mCBEncrypt );
-  updateCheckBox( 6, mCBSign );
-}
-
-// Each time a cell is about to be painted, the item's checkboxes are updated
-// as well. This is necessary to keep the positions of the checkboxes
-// up-to-date. The signals which are, in the constructor of this class,
-// connected to the update slots are not sufficient because unfortunately,
-// Qt does not provide a signal for changed item positions, e.g. during
-// deleting or adding items. The problem with this is that this function
-// does not catch updates which are off-screen, which means under some
-// circumstances checkboxes have invalid positions. This should not happen
-// anymore, but was the cause of bug 113458. Therefore, both the signals
-// connected in the constructor and this function are necessary to keep the
-// checkboxes' positions in sync, and hopefully is enough.
-void KMAtmListViewItem::paintCell ( QPainter *p, const QColorGroup &cg,
-                                    int column, int width, int align )
-{
-  switch ( column ) {
-    case 4: updateCheckBox( 4, mCBCompress ); break;
-    case 5: updateCheckBox( 5, mCBEncrypt ); break;
-    case 6: updateCheckBox( 6, mCBSign ); break;
-  }
-
-  Q3ListViewItem::paintCell( p, cg, column, width, align );
-}
-
-int KMAtmListViewItem::compare( Q3ListViewItem *i, int col, bool ascending ) const
-{
-  if ( col != 1 ) {
-    return Q3ListViewItem::compare( i, col, ascending );
-  }
-
-  return mAttachmentSize -
-    (static_cast<KMAtmListViewItem*>(i))->mAttachmentSize;
-}
-
-void KMAtmListViewItem::enableCryptoCBs( bool on )
-{
-  // Show/Hide the appropriate checkboxes.
-  // This should not be necessary because the caller hides the columns
-  // containing the checkboxes anyway.
-  mCBEncrypt->setVisible( on );
-  mCBSign->setVisible( on );
+  if ( treeWidget()->sortColumn() != 1 )
+    return QTreeWidgetItem::operator < ( other );
+  else
+    return mAttachmentSize <
+        (static_cast<const KMAtmListViewItem*>( &other ))->mAttachmentSize;
 }
 
 void KMAtmListViewItem::setEncrypt( bool on )
@@ -127,9 +86,9 @@ void KMAtmListViewItem::setEncrypt( bool on )
   }
 }
 
-bool KMAtmListViewItem::isEncrypt()
+bool KMAtmListViewItem::isEncrypt() const
 {
-  if ( mCBEncrypt ) {
+  if ( mParent->areCryptoCBsEnabled() ) {
     return mCBEncrypt->isChecked();
   } else {
     return false;
@@ -143,9 +102,9 @@ void KMAtmListViewItem::setSign( bool on )
   }
 }
 
-bool KMAtmListViewItem::isSign()
+bool KMAtmListViewItem::isSign() const
 {
-  if ( mCBSign ) {
+  if ( mParent->areCryptoCBsEnabled() ) {
     return mCBSign->isChecked();
   } else {
     return false;
@@ -157,7 +116,7 @@ void KMAtmListViewItem::setCompress( bool on )
   mCBCompress->setChecked( on );
 }
 
-bool KMAtmListViewItem::isCompress()
+bool KMAtmListViewItem::isCompress() const
 {
   return mCBCompress->isChecked();
 }
@@ -165,23 +124,16 @@ bool KMAtmListViewItem::isCompress()
 void KMAtmListViewItem::slotCompress()
 {
   if ( mCBCompress->isChecked() ) {
-    emit compress( itemPos() );
+    emit compress( this );
   } else {
-        emit uncompress( itemPos() );
+    emit uncompress( this );
   }
 }
 
-// Update the item's checkboxes when the position of those change
-// due to different column positions
-void KMAtmListViewItem::slotHeaderChange( int, int, int )
+KMMessagePart* KMAtmListViewItem::attachment() const
 {
-  updateAllCheckBoxes();
+  return mAttachment;
 }
 
-// Update the item's checkboxes when the list is being sorted
-void KMAtmListViewItem::slotHeaderClick( int )
-{
-  updateAllCheckBoxes();
-}
 
 #include "kmatmlistview.moc"

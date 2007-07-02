@@ -31,8 +31,6 @@
 #include "messagesender.h"
 
 #include <QByteArray>
-#include <q3listview.h>
-
 #include <QCheckBox>
 #include <QClipboard>
 #include <QCloseEvent>
@@ -59,9 +57,9 @@
 class QCloseEvent;
 class QComboBox;
 class QGridLayout;
-class Q3ListView;
 class QPushButton;
 class QByteArray;
+class QTreeWidgetItem;
 class KMEdit;
 class KMComposeWin;
 class KMFolderComboBox;
@@ -399,13 +397,7 @@ public: // mailserviceimpl
     /**
      * Open a popup-menu in the attachments-listbox.
      */
-    void slotAttachPopupMenu( Q3ListViewItem *, const QPoint &, int );
-
-    /**
-     * Returns the number of the current attachment in the listbox,
-     * or -1 if there is no current attachment
-     */
-    int currentAttachmentNum();
+    void slotAttachPopupMenu( QTreeWidgetItem* );
 
     /**
      * Attachment operations.
@@ -468,7 +460,7 @@ public: // mailserviceimpl
     /**
      * Add an attachment to the list.
      */
-    void addAttach( const KMMessagePart *msgPart );
+    void addAttach( KMMessagePart *msgPart );
 
   private:
     const KPIMIdentities::Identity & identity() const;
@@ -667,8 +659,8 @@ public: // mailserviceimpl
     /**
      * Compress an attachemnt with the given index
      */
-    void compressAttach( int idx );
-    void uncompressAttach( int idx );
+    void compressAttach( KMAtmListViewItem *attachmentItem );
+    void uncompressAttach( KMAtmListViewItem *attachmentItem );
     void editorFocusChanged( bool gained );
 
   private:
@@ -694,13 +686,7 @@ public: // mailserviceimpl
     KMMessage *mMsg;
     QVector<KMMessage*> mComposedMessages;
     KMail::AttachmentListView *mAtmListView;
-    int mAtmColEncrypt;
-    int mAtmColSign;
-    int mAtmColCompress;
-    int mAtmEncryptColWidth;
-    int mAtmSignColWidth;
-    int mAtmCompressColWidth;
-    QList<Q3ListViewItem*> mAtmItemList;
+    QList<KMAtmListViewItem*> mAtmItemList;
     QList<KMMessagePart*> mAtmList;
     QMenu *mAttachMenu;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId;

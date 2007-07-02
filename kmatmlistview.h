@@ -1,6 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+  Copyright (c) 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,24 +21,27 @@
 #ifndef __KMAIL_KMATMLISTVIEW_H__
 #define __KMAIL_KMATMLISTVIEW_H__
 
-#include <q3listview.h>
+#include <QTreeWidgetItem>
 
 class QCheckBox;
+class KMMessagePart;
 
-class KMAtmListViewItem : public QObject, public Q3ListViewItem
+namespace KMail {
+class AttachmentListView;
+}
+
+class KMAtmListViewItem : public QObject, public QTreeWidgetItem
 {
   Q_OBJECT
 
 public:
-  KMAtmListViewItem( Q3ListView *parent );
+  explicit KMAtmListViewItem( KMail::AttachmentListView *parent, 
+                              KMMessagePart* attachment );
   virtual ~KMAtmListViewItem();
 
-  //A custom compare function is needed because the size column is
-  //human-readable and therefore doesn't sort correctly.
-  virtual int compare( Q3ListViewItem *i, int col, bool ascending ) const;
-
-  virtual void paintCell( QPainter *p, const QColorGroup &cg, int column,
-                          int width, int align );
+  // A custom compare operator is needed because the size column is
+  // human-readable and therefore doesn't sort correctly.
+  virtual bool operator < ( const QTreeWidgetItem & other ) const;
 
   void setUncompressedMimeType( const QByteArray &type, const QByteArray &subtype )
   {
@@ -54,32 +58,36 @@ public:
   void setUncompressedCodec( const QByteArray & codec ) { mCodec = codec; }
   QByteArray uncompressedCodec() const { return mCodec; }
 
-  void enableCryptoCBs( bool on );
   void setEncrypt( bool on );
-  bool isEncrypt();
+  bool isEncrypt() const;
   void setSign( bool on );
-  bool isSign();
+  bool isSign() const;
   void setCompress( bool on );
-  bool isCompress();
+  bool isCompress() const;
+
+  // Returns a pointer to the KMMessagePart this item is associated with.
+  KMMessagePart* attachment() const;
 
 signals:
-  void compress( int );
-  void uncompress( int );
+  void compress( KMAtmListViewItem* );
+  void uncompress( KMAtmListViewItem* );
 
 private slots:
   void slotCompress();
-  void slotHeaderChange( int, int, int );
-  void slotHeaderClick( int );
 
 private:
-  void updateCheckBox( int headerSection, QCheckBox *cb );
-  void updateAllCheckBoxes();
+
+  // This function adds a center-aligned checkbox to the specified column
+  // and then returns that checkbox.
+  QCheckBox* addCheckBox( int column );
 
   QCheckBox *mCBEncrypt;
   QCheckBox *mCBSign;
   QCheckBox *mCBCompress;
   QByteArray mType, mSubtype, mCodec;
   int mAttachmentSize;
+  KMMessagePart* mAttachment;
+  KMail::AttachmentListView *mParent;
 };
 
 #endif // __KMAIL_KMATMLISTVIEW_H__
