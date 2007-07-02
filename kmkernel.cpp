@@ -202,7 +202,7 @@ KMKernel::~KMKernel ()
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
   QString to, cc, bcc, subj, body;
-  QByteArrayList customHeaders;
+  QStringList customHeaders;
   KUrl messageFile;
   KUrl::List attachURLs;
   bool mailto = false;
@@ -214,7 +214,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->isSet("subject"))
   {
-     subj = QString::fromLocal8Bit(args->getOption("subject"));
+     subj = args->getOption("subject");
      // if kmail is called with 'kmail -session abc' then this doesn't mean
      // that the user wants to send a message with subject "ession" but
      // (most likely) that the user clicked on KMail's system tray applet
@@ -233,34 +233,34 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   if (args->isSet("cc"))
   {
      mailto = true;
-     cc = QString::fromLocal8Bit(args->getOption("cc"));
+     cc = args->getOption("cc");
   }
 
   if (args->isSet("bcc"))
   {
      mailto = true;
-     bcc = QString::fromLocal8Bit(args->getOption("bcc"));
+     bcc = args->getOption("bcc");
   }
 
   if (args->isSet("msg"))
   {
      mailto = true;
-     messageFile.setPath( QString::fromLocal8Bit(args->getOption("msg")) );
+     messageFile.setPath( args->getOption("msg") );
   }
 
   if (args->isSet("body"))
   {
      mailto = true;
-     body = QString::fromLocal8Bit(args->getOption("body"));
+     body = args->getOption("body");
   }
 
-  QByteArrayList attachList = args->getOptionList("attach");
+  QStringList attachList = args->getOptionList("attach");
   if (!attachList.isEmpty())
   {
      mailto = true;
-     for ( QByteArrayList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
+     for ( QStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
        if ( !(*it).isEmpty() )
-         attachURLs += KUrl( QString::fromLocal8Bit( *it ) );
+         attachURLs += KUrl( *it );
   }
 
   customHeaders = args->getOptionList("header");
@@ -274,7 +274,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   if ( args->isSet( "view" ) ) {
     viewOnly = true;
     const QString filename =
-      QString::fromLocal8Bit( args->getOption( "view" ) );
+      args->getOption( "view" );
     messageFile = KUrl( filename );
     if ( !messageFile.isValid() ) {
       messageFile = KUrl();
@@ -287,10 +287,10 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     // not called with "-session foo"
     for(int i= 0; i < args->count(); i++)
     {
-      if (strncasecmp(args->arg(i),"mailto:",7)==0)
+      if (args->arg(i).startsWith("mailto:", Qt::CaseInsensitive))
         to += args->url(i).path() + ", ";
       else {
-        QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
+        QString tmpArg = args->arg(i);
         KUrl url( tmpArg );
         if ( url.isValid() )
           attachURLs += url;
@@ -382,7 +382,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QString &body, int hidden,
                             const KUrl &messageFile,
                             const KUrl::List &attachURLs,
-                            const QByteArrayList &customHeaders )
+                            const QStringList &customHeaders )
 {
   kDebug(5006) << "KMKernel::openComposer called" << endl;
   KMMessage *msg = new KMMessage;
@@ -419,16 +419,16 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
   if (!customHeaders.isEmpty())
   {
-    for ( QByteArrayList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
+    for ( QStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
       if ( !(*it).isEmpty() )
       {
         const int pos = (*it).find( ':' );
         if ( pos > 0 )
         {
-          QByteArray header = (*it).left( pos ).trimmed();
+          QString header = (*it).left( pos ).trimmed();
           QString value = (*it).mid( pos+1 ).trimmed();
           if ( !header.isEmpty() && !value.isEmpty() )
-            msg->setHeaderField( header, value );
+            msg->setHeaderField( header.toUtf8(), value );
         }
       }
   }
@@ -1764,7 +1764,7 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const QString &subj, const QString &body,
                        const KUrl &messageFile,
                        const KUrl::List &attachURLs,
-                       const QByteArrayList &customHeaders )
+                       const QStringList &customHeaders )
 {
   if ( mailto )
     openComposer( to, cc, bcc, subj, body, 0, messageFile, attachURLs, customHeaders );

@@ -94,8 +94,8 @@ void Composer::slotClose()
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "testrecipienteditor",
-   "Test Recipient Editor", "0.1" );
+  KAboutData aboutData( "testrecipienteditor", 0,
+   ki18n("Test Recipient Editor"), "0.1" );
   KCmdLineArgs::init( argc, argv, &aboutData );
 
   KApplication app;

@@ -25,8 +25,6 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
-typedef QList<QByteArray> QByteArrayList;
-
 namespace KIO {
   class Job;
 }
@@ -99,7 +97,7 @@ public:
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
                     const KUrl &messageFile, const KUrl::List &attachURLs,
-                    const QByteArrayList &customHeaders);
+                    const QStringList &customHeaders);
 
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
@@ -219,7 +217,7 @@ public:
   void action( bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
                const KUrl &messageFile, const KUrl::List &attach,
-               const QByteArrayList &customHeaders );
+               const QStringList &customHeaders );
   void byteArrayToRemoteFile( const QByteArray&, const KUrl&,
                               bool overwrite = false );
   bool folderIsDraftOrOutbox(const KMFolder *);

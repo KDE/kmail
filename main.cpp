@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
   KMail::AboutData about;
 
   KCmdLineArgs::init(argc, argv, &about);
-  KCmdLineArgs::addCmdLineOptions( kmail_options ); // Add kmail options
+  KCmdLineArgs::addCmdLineOptions( kmail_options() ); // Add kmail options
   if (!KMailApplication::start())
      return 0;
 

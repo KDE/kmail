@@ -16,8 +16,8 @@ int main(int argc,char **argv)
 {
   kDebug(5006) << "Test KMail D-Bus interface." << endl;
 
-  KAboutData aboutData( "testKMailDBUS",
-   "Test for KMail D-Bus interface", "0.0" );
+  KAboutData aboutData( "testKMailDBUS", 0,
+   ki18n("Test for KMail D-Bus interface"), "0.0" );
   KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
 

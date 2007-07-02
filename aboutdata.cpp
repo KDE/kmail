@@ -211,17 +211,17 @@ namespace KMail {
   };
 
   AboutData::AboutData()
-    : KAboutData( "kmail", I18N_NOOP("KMail"),KMAIL_VERSION,
-                  I18N_NOOP("KDE Email Client"), License_GPL,
-                  I18N_NOOP("(c) 1997-2007, The KMail developers"), 0,
+    : KAboutData( "kmail", 0, ki18n("KMail"),KMAIL_VERSION,
+                  ki18n("KDE Email Client"), License_GPL,
+                  ki18n("(c) 1997-2007, The KMail developers"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
   {
     using KMail::authors;
     using KMail::credits;
     for ( unsigned int i = 0 ; i < sizeof authors / sizeof *authors ; ++i )
-      addAuthor( authors[i].name, authors[i].desc, authors[i].email, authors[i].web );
+      addAuthor( ki18n(authors[i].name), ki18n(authors[i].desc), authors[i].email, authors[i].web );
     for ( unsigned int i = 0 ; i < sizeof credits / sizeof *credits ; ++i )
-      addCredit( credits[i].name, credits[i].desc, credits[i].email, credits[i].web );
+      addCredit( ki18n(credits[i].name), ki18n(credits[i].desc), credits[i].email, credits[i].web );
   }
 
   AboutData::~AboutData() {
