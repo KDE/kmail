@@ -190,7 +190,7 @@ bool KMFolderDir::reload(void)
     return false;
   }
 
-  QFileInfoList fiList = dir.entryInfoList();
+  const QFileInfoList fiList = dir.entryInfoList();
   if (fiList.isEmpty())
   {
     QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>", fldPath);
@@ -277,11 +277,11 @@ bool KMFolderDir::reload(void)
   }
 
   QList<KMFolder*>::const_iterator jt;
-  for ( jt = folderList.begin();
-      ( ( folder = *jt ) && ( jt != folderList.end() ) ); ++jt )
+  for ( jt = folderList.constBegin(); jt != folderList.constEnd(); ++jt )
   {
-    for(QStringList::Iterator it = diList.begin();
-        it != diList.end();
+    folder = *jt;
+    for(QStringList::const_iterator it = diList.constBegin();
+        it != diList.constEnd();
         ++it)
       if (*it == '.' + folder->fileName() + ".directory")
       {

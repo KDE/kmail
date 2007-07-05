@@ -1483,7 +1483,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
   connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
-  mCryptoModuleAction->setCurrentItem( format2cb( 
+  mCryptoModuleAction->setCurrentItem( format2cb(
       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
   slotSelectCryptoModule( true );
 
@@ -2414,10 +2414,8 @@ void KMComposeWin::msgPartToItem( const KMMessagePart *msgPart,
 //-----------------------------------------------------------------------------
 void KMComposeWin::removeAttach( const QString &aUrl )
 {
-  int idx;
-  QList<KMMessagePart*>::const_iterator it;
-  for( idx = 0, it = mAtmList.begin();
-       (*it) && it != mAtmList.end(); ++it, idx++) {
+  QList<KMMessagePart*>::const_iterator it = mAtmList.begin();
+  for( int idx = 0; it != mAtmList.end(); ++it, idx++) {
     if ( (*it)->name() == aUrl ) {
       removeAttach( idx );
       return;

@@ -681,9 +681,9 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
                                 const QString& newPath )
 {
   if( dir ) {
-    KMFolderNode *node;
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = dir->begin(); (node = *it ) && it != dir->end(); ++it ) {
+    for ( it = dir->begin(); it != dir->end(); ++it ) {
+      KMFolderNode *node = *it;
       if( !node->isDir() ) {
         KMFolderCachedImap* imapFolder =
           static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());

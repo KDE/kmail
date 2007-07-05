@@ -19,66 +19,66 @@ class KMFolderMgr: public QObject
 
 public:
   KMFolderMgr(const QString& basePath, KMFolderDirType dirType = KMStandardDir);
-  virtual ~KMFolderMgr();
+  ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */
   QString basePath() const { return mBasePath; }
 
   /** Set base path. Also calls reload() on the base directory. */
-  virtual void setBasePath(const QString&);
+  void setBasePath(const QString&);
 
   /** Provides access to base directory */
   KMFolderRootDir& dir();
 
   /** Searches folder and returns it. Skips directories
     (objects of type KMFolderDir) if foldersOnly is true. */
-  virtual KMFolder* find(const QString& folderName, bool foldersOnly=true);
+  KMFolder* find(const QString& folderName, bool foldersOnly=true) const;
 
   /** Searches for a folder with the given id, recurses into directories */
-  virtual KMFolder* findIdString(const QString& folderId,
-     const uint id = 0, KMFolderDir *dir = 0);
+  KMFolder* findIdString(const QString& folderId,
+     const uint id = 0, const KMFolderDir *dir = 0) const;
 
   /** Uses find() to find given folder. If not found the folder is
    * created. Directories are skipped.
    * If an id is passed this searches for it
    */
-  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=true,
+  KMFolder* findOrCreate(const QString& folderName, bool sysFldr=true,
       const uint id = 0);
 
   /** Searches folder by id and returns it. Skips directories
     (objects of type KMFolderDir) */
-  virtual KMFolder* findById(const uint id);
+  KMFolder* findById(const uint id) const;
 
-  virtual void        getFolderURLS( QStringList& flist,
-                                     const QString& prefix=QString(),
-                                     KMFolderDir *adir=0 );
-  virtual KMFolder*   getFolderByURL( const QString& vpath,
-                                      const QString& prefix=QString(),
-                                      KMFolderDir *adir=0 );
+  void        getFolderURLS( QStringList& flist,
+                             const QString& prefix=QString(),
+                             const KMFolderDir *adir=0 ) const;
+  KMFolder*   getFolderByURL( const QString& vpath,
+                              const QString& prefix=QString(),
+                              const KMFolderDir *adir=0 ) const;
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  virtual KMFolder* createFolder(const QString& fName, bool sysFldr=false,
+  KMFolder* createFolder(const QString& fName, bool sysFldr=false,
 				 KMFolderType aFolderType=KMFolderTypeMbox,
 				 KMFolderDir *aFolderDir = 0);
 
   /** Physically remove given folder and delete the given folder object. */
-  virtual void remove(KMFolder* obsoleteFolder);
+  void remove(KMFolder* obsoleteFolder);
 
   /** emits changed() signal */
-  virtual void contentsChanged(void);
+  void contentsChanged(void);
 
   /** Reloads all folders, discarding the existing ones. */
-  virtual void reload(void);
+  void reload(void);
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders*/
-  virtual void createFolderList( QStringList *str,
+  void createFolderList( QStringList *str,
 				 QList<QPointer<KMFolder> > *folders );
 
   /** Auxillary function to facilitate creating a list of formatted
       folder names, suitable for showing in QComboBox */
-  virtual void createFolderList( QStringList *str,
+  void createFolderList( QStringList *str,
  				 QList<QPointer<KMFolder> > *folders,
   				 KMFolderDir *adir,
   				 const QString& prefix,
@@ -86,7 +86,7 @@ public:
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */
-  virtual void createI18nFolderList( QStringList *str,
+  void createI18nFolderList( QStringList *str,
 				 QList<QPointer<KMFolder> > *folders );
 
   /** fsync all open folders to disk */
@@ -117,7 +117,7 @@ public:
   /** Rename or move a folder */
   void renameFolder( KMFolder* folder, const QString& newName,
       KMFolderDir* newParent = 0 );
-  
+
   /** Copy a folder */
   void copyFolder( KMFolder* folder, KMFolderDir* newParent );
 

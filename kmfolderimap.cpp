@@ -63,7 +63,7 @@ using KMail::RenameJob;
 #include <QTextCodec>
 #include <QByteArray>
 #include <qtextdocument.h>
-
+#include <kimap/rfccodecs.h>
 #include <assert.h>
 
 KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
@@ -1779,31 +1779,19 @@ void KMFolderImap::slotCreateFolderResult(KJob * job)
 
 
 //-----------------------------------------------------------------------------
-static QTextCodec *sUtf7Codec = 0;
-
-QTextCodec * KMFolderImap::utf7Codec()
-{
-  if (!sUtf7Codec) sUtf7Codec = QTextCodec::codecForName("utf-7");
-  return sUtf7Codec;
-}
-
-
-//-----------------------------------------------------------------------------
 QString KMFolderImap::encodeFileName(const QString &name)
 {
-  QByteArray result = utf7Codec()->fromUnicode(name);
+  QString result = KIMAP::encodeImapFolderName(name);
   kDebug(5006) << "FILENAME before: " << name << endl;
   kDebug(5006) << "FILENAME after: " << result << endl;
-  kDebug(5006) << "FILENAME end: " << KUrl::toPercentEncoding( result, "/") << endl;
-  return KUrl::toPercentEncoding(result, "/");
+  return result;
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMFolderImap::decodeFileName(const QString &name)
 {
-  QString result = KUrl::fromPercentEncoding(name.toLatin1());
-  return utf7Codec()->toUnicode(result.toLatin1());
+  return KIMAP::decodeImapFolderName(name); 
 }
 
 //-----------------------------------------------------------------------------

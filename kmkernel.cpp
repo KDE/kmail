@@ -72,7 +72,6 @@ using KWallet::Wallet;
 #include <QList>
 #include <QObject>
 #include <QWidget>
-#include <qutf7codec.h>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -142,13 +141,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = KComponentData();
 
   new Kpgp::Module();
-
-  // register our own (libkdepim) utf-7 codec as long as Qt
-  // doesn't have it's own:
-  if ( !QTextCodec::codecForName("utf-7") ) {
-    kDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
-    (void) new QUtf7Codec();
-  }
 
   // In the case of Japan. Japanese locale name is "eucjp" but
   // The Japanese mail systems normally used "iso-2022-jp" of locale name.
@@ -1466,10 +1458,10 @@ void KMKernel::readConfig()
 void KMKernel::cleanupImapFolders()
 {
   KMAccount *acct = 0;
-  KMFolderNode *node;
   QList<KMFolderNode*>::iterator it = the_imapFolderMgr->dir().begin();
-  while ( ( node = *it ) && it != the_imapFolderMgr->dir().end() )
+  while ( it != the_imapFolderMgr->dir().end() )
   {
+    KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "imap" )) )
     {
@@ -1484,8 +1476,9 @@ void KMKernel::cleanupImapFolders()
   }
 
   it = the_dimapFolderMgr->dir().begin();
-  while ( ( node = *it ) && it != the_dimapFolderMgr->dir().end() )
+  while ( it != the_dimapFolderMgr->dir().end() )
   {
+    KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "cachedimap" )) )
     {

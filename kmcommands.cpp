@@ -2029,7 +2029,7 @@ KMCommand::Result KMMoveCommand::execute()
   mProgressItem->setTotalItems( mMsgList.count() );
 
   QList<KMMsgBase*>::const_iterator it;
-  for ( it = mMsgList.begin(); (*it) && !rc && it != mMsgList.end(); it++ ) {
+  for ( it = mMsgList.begin(); !rc && it != mMsgList.end() && (*it) ; it++ ) {
     msgBase = (*it);
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)

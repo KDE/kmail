@@ -179,7 +179,6 @@ void KMSearch::start()
   mFolders.append( mRoot );
   if ( recursive() ) {
     //Append all descendants to folders
-    KMFolderNode *node;
     KMFolder *folder;
     QList<QPointer<KMFolder> >::ConstIterator it;
     for ( it = mFolders.begin(); it != mFolders.end(); ++it ) {
@@ -194,7 +193,8 @@ void KMSearch::start()
         continue;
       }
       QList<KMFolderNode*>::const_iterator it;
-      for ( it = dir->begin(); (node = *it ) && it != dir->end(); ++it ) {
+      for ( it = dir->begin(); it != dir->end(); ++it ) {
+        KMFolderNode *node = *it;
         if ( !node->isDir() ) {
           KMFolder* kmf = dynamic_cast<KMFolder*>( node );
           if ( kmf ) {

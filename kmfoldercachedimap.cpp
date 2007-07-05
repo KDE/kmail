@@ -1157,11 +1157,11 @@ void KMFolderCachedImap::serverSyncInternal()
     mSubfoldersForSync.clear();
     mCurrentSubfolder = 0;
     if ( folder() && folder()->child() ) {
-      KMFolderNode *node = 0;
       QList<KMFolderNode*>::const_iterator it;
       for ( it = folder()->child()->begin();
-            ( node = *it ) && it != folder()->child()->end(); ++it )
+            it != folder()->child()->end(); ++it )
       {
+        KMFolderNode *node = *it;
         if ( !node->isDir() ) {
           KMFolderCachedImap *storage =
             static_cast<KMFolderCachedImap*>( static_cast<KMFolder*>( node )->storage() );
@@ -1398,10 +1398,9 @@ QList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 {
   QList<KMFolderCachedImap*> newFolders;
   if ( folder() && folder()->child() ) {
-    KMFolderNode *node = 0;
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin();
-          ( node = *it ) && it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+      KMFolderNode *node = *it;
       if ( !node->isDir() ) {
         if ( static_cast<KMFolder*>(node)->folderType() != KMFolderTypeCachedImap ) {
           kError(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
@@ -1434,7 +1433,7 @@ bool KMFolderCachedImap::deleteMessages()
    * us. So use msg pointers instead.
    */
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
-  for ( ; it != uidMap.end(); it++ ) {
+  for ( ; it != uidMap.constEnd(); it++ ) {
     ulong uid ( it.key() );
     if ( uid != 0 && !uidsOnServer.find( uid ) ) {
       msgsForDeletion.append( getMsg( *it ) );
@@ -1702,14 +1701,14 @@ void KMFolderCachedImap::setAccount( KMAcctCachedImap *aAccount )
     return;
   }
 
-  KMFolderNode *node = 0;
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = folder()->child()->begin();
-        ( node = *it ) && it != folder()->child()->end(); ++it )
+  for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    KMFolderNode *node = *it;
     if ( !node->isDir() ) {
       static_cast<KMFolderCachedImap*>(
         static_cast<KMFolder*>( node )->storage() )->setAccount( aAccount );
     }
+  }
 }
 
 void KMFolderCachedImap::listNamespaces()
@@ -1791,11 +1790,11 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList &subfolderNames,
   }
 
   folder()->createChildFolder();
-  KMFolderNode *node = 0;
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = folder()->child()->begin();
-        ( node = *it ) && it != folder()->child()->end(); ++it ) {
-    if ( !node->isDir() && node->name() == name ) {
+  KMFolderNode *node = 0;
+  for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+    if ( !(*it)->isDir() && (*it)->name() == name ) {
+      node = *it;
       break;
     }
   }
@@ -1874,15 +1873,14 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
   mSubfolderState = imapFinished;
 
   folder()->createChildFolder();
-  KMFolderNode *node = 0;
   bool root = ( this == mAccount->rootFolder() );
 
   QList<KMFolder*> toRemove;
   bool emptyList = ( root && mSubfolderNames.empty() );
   if ( !emptyList ) {
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin();
-          ( node = *it ) && it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+      KMFolderNode *node = *it;
       if (!node->isDir() ) {
         KMFolderCachedImap *f =
           static_cast<KMFolderCachedImap*>( static_cast<KMFolder*>( node )->storage() );
@@ -1934,7 +1932,7 @@ void KMFolderCachedImap::listDirectory2()
   bool root = ( this == mAccount->rootFolder() );
   if ( root && !mAccount->hasInbox() ) {
     KMFolderCachedImap *f = 0;
-    KMFolderNode *node;
+    KMFolderNode *node = 0;
     // create the INBOX
     QList<KMFolderNode*>::const_iterator it = folder()->child()->begin();
     for ( ; it != folder()->child()->end(); ++it ) {
@@ -1985,8 +1983,9 @@ void KMFolderCachedImap::listDirectory2()
     KMFolderCachedImap *f = 0;
     KMFolderNode *node = 0;
     for ( QList<KMFolderNode*>::ConstIterator it = folder()->child()->begin();
-          ( node = *it ) && it != folder()->child()->end(); ++it )
-      if ( !node->isDir() && node->name() == mSubfolderNames[i] ) {
+          it != folder()->child()->end(); ++it )
+      if ( !(*it)->isDir() && (*it)->name() == mSubfolderNames[i] ) {
+        node = *it;
         break;
       }
 
@@ -2113,11 +2112,10 @@ KMFolderCachedImap *KMFolderCachedImap::findParent( const QString &path,
     // extract name of the parent
     parent = parent.right( parent.length() - 1 );
     if ( parent != label() ) {
-      KMFolderNode *node = 0;
       // look for a better parent
       QList<KMFolderNode*>::const_iterator it;
-      for ( it = folder()->child()->begin();
-            ( node = *it ) && it != folder()->child()->end(); ++it ) {
+      for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+        KMFolderNode *node = *it;
         if ( node->name() == parent ) {
           KMFolder *fld = static_cast<KMFolder*>( node );
           KMFolderCachedImap *imapFld =
@@ -2348,10 +2346,9 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
   mSubfolderState = state;
   if ( state == imapNoInformation && folder()->child() ) {
     // pass through to children
-    KMFolderNode *node;
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = folder()->child()->begin();
-          ( node = *it ) && it != folder()->child()->end(); ++it ) {
+    for ( it = folder()->child()->begin(); it != folder()->child()->end(); ++it ) {
+      KMFolderNode *node = *it;
       if ( node->isDir() ) {
         continue;
       }

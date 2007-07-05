@@ -242,7 +242,6 @@ bool isSelected() { return mIsSelected; }
 */
 static QString encodeFileName(const QString &);
 static QString decodeFileName(const QString &);
-static QTextCodec * utf7Codec();
 
 /**
 * Convert message status to a list of IMAP flags

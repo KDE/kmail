@@ -68,10 +68,9 @@ void KMFolderMgr::expireAll() {
 }
 
 #define DO_FOR_ALL(function, folder_code) \
-  KMFolderNode* node; \
-  QList<KMFolderNode*>::iterator it; \
-  for ( it = dir->begin(); \
-      ( ( node = *it ) && it != dir->end() ); ++it ) { \
+  QList<KMFolderNode*>::const_iterator it; \
+  for ( it = dir->constBegin(); it != dir->constEnd(); ++it ) { \
+    KMFolderNode* node = *it; \
     if (node->isDir()) continue; \
     KMFolder *folder = static_cast<KMFolder*>(node); \
     folder_code \
@@ -190,14 +189,12 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
+KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly) const
 {
-  KMFolderNode* node;
-
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = mDir.begin();
-      ( ( node = *it ) && it != mDir.end() ); ++it )
+  for ( it = mDir.begin(); it != mDir.end(); ++it )
   {
+    KMFolderNode* node = *it;
     if (node->isDir() && foldersOnly) continue;
     if (node->name()==folderName) return (KMFolder*)node;
   }
@@ -205,7 +202,7 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 }
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findById(const uint id)
+KMFolder* KMFolderMgr::findById(const uint id) const
 {
   return findIdString( QString(), id );
 }
@@ -213,7 +210,7 @@ KMFolder* KMFolderMgr::findById(const uint id)
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findIdString( const QString& folderId,
                                      const uint id,
-                                     KMFolderDir *dir )
+                                     const KMFolderDir *dir ) const
 {
   if (!dir)
     dir = &mDir;
@@ -235,9 +232,9 @@ KMFolder* KMFolderMgr::findIdString( const QString& folderId,
 }
 
 void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
-                                 KMFolderDir *adir )
+                                 const KMFolderDir *adir ) const
 {
-  KMFolderDir* dir = adir ? adir : &mDir;
+  const KMFolderDir* dir = adir ? adir : &mDir;
 
   DO_FOR_ALL(
              {
@@ -251,9 +248,9 @@ void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
 
 KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
                                        const QString& prefix,
-                                       KMFolderDir *adir )
+                                       const KMFolderDir *adir ) const
 {
-  KMFolderDir* dir = adir ? adir : &mDir;
+  const KMFolderDir* dir = adir ? adir : &mDir;
   DO_FOR_ALL(
         {
           QString a = prefix + '/' + folder->name();
@@ -318,11 +315,11 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   if (aFolder->child())
   {
     // call remove for every child
-    KMFolderNode* node;
+
     QList<KMFolderNode*>::const_iterator it;
-    for ( it = (*aFolder->child()).begin();
-        ( (node = *it) && it != (*aFolder->child()).end() ); ++it )
+    for ( it = (*aFolder->child()).begin(); it != (*aFolder->child()).end(); ++it )
     {
+      KMFolderNode *node = *it;
       if (node->isDir()) continue;
       KMFolder *folder = static_cast<KMFolder*>(node);
       remove(folder);
@@ -347,9 +344,9 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
   }
 
   KMFolderDir* fdir = aFolder->parent();
-  KMFolderNode* fN;
   QList<KMFolderNode*>::const_iterator it;
-  for ( it = fdir->begin(); ( fN = *it ) && it != fdir->end(); ++it ) {
+  for ( it = fdir->begin(); it != fdir->end(); ++it ) {
+    KMFolderNode* fN = *it;
     if (fN->isDir() && (fN->name() == '.' + aFolder->fileName() + ".directory")) {
       removeDirAux(static_cast<KMFolderDir*>(fN));
       break;
