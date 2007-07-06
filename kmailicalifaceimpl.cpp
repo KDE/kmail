@@ -1259,7 +1259,6 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   ExtraFolder* ef = mExtraFolders.find( location );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
-//    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
     QDBusMessage message =
         QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
     message << folderContentsType( folder->storage()->contentsType() );
@@ -1504,9 +1503,6 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
     message << oldLocation;
     QDBusConnection::sessionBus().send(message);
   }
-
-//  if (  folder )
-//    subresourceDeleted( folderContentsType(  folder->storage()->contentsType() ), oldLocation );
 
 }
 
@@ -2027,6 +2023,73 @@ void KMailICalIfaceImpl::setResourceQuiet(bool q)
 bool KMailICalIfaceImpl::isResourceQuiet() const
 {
   return mResourceQuiet;
+}
+
+
+bool KMailICalIfaceImpl::addSubresource( const QString& resource,
+                                         const QString& parent,
+                                         const QString& contentsType )
+{
+  kDebug(5006) << "Adding subresource to parent: " << parent << " with name: " << resource << endl;
+  kDebug(5006) << "contents type: " << contentsType << endl;
+  KMFolder *folder = findResourceFolder( parent );
+  KMFolderDir *parentFolderDir = !parent.isEmpty() && folder ? folder->createChildFolder(): mFolderParentDir;
+  if ( !parentFolderDir || parentFolderDir->hasNamedFolder( resource ) ) return false;
+
+  KMFolderType type = mFolderType;
+  if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
+
+  KMFolder* newFolder = parentFolderDir->createFolder( resource, false, type );
+  if ( !newFolder ) return false;
+  if( mFolderType == KMFolderTypeImap )
+    static_cast<KMFolderImap*>( folder->storage() )->createFolder( resource );
+
+  StorageFormat defaultFormat = GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+  setStorageFormat( newFolder, folder ? storageFormat( folder ) : defaultFormat );
+  newFolder->storage()->setContentsType( folderContentsType( contentsType ) );
+  newFolder->storage()->writeConfig();
+  newFolder->open( "KMailICalIfaceImpl::addSubresource" );
+  connectFolder( newFolder );
+  reloadFolderTree();
+
+  return true;
+}
+
+bool KMailICalIfaceImpl::removeSubresource( const QString& location )
+{
+  kDebug(5006) << k_funcinfo << endl;
+
+  KMFolder *folder = findResourceFolder( location );
+
+  // We don't allow the default folders to be deleted, so check for 
+  // those first. It would be nicer to produce a more meaningful error,
+  // or prevent deletion of the builtin folders from the gui already.
+  if ( !folder || isStandardResourceFolder( folder ) )
+      return false;
+
+  // the folder will be removed, which implies closed, so make sure 
+  // nothing is using it anymore first
+
+  QDBusMessage message =
+      QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
+  message << folderContentsType( folder->storage()->contentsType() );
+  message << location;
+  QDBusConnection::sessionBus().send(message);
+
+  mExtraFolders.remove( location );
+  folder->disconnect( this );
+
+  if ( folder->folderType() == KMFolderTypeImap )
+    kmkernel->imapFolderMgr()->remove( folder );
+  else if ( folder->folderType() == KMFolderTypeCachedImap ) {
+    // Deleted by user -> tell the account (see KMFolderCachedImap::listDirectory2)
+    KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( folder->storage() );
+    KMAcctCachedImap* acct = storage->account();
+    if ( acct )
+      acct->addDeletedFolder( folder );
+    kmkernel->dimapFolderMgr()->remove( folder );
+  }
+  return true;
 }
 
 #include "kmailicalifaceimpl.moc"

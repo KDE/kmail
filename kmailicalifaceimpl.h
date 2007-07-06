@@ -125,6 +125,11 @@ public:
                       quint32 sernum,
                       const QString& filename );
 
+  bool removeSubresource( const QString& );
+
+  bool addSubresource( const QString& resource,
+                       const QString& parent,
+                       const QString& contentsType );
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
