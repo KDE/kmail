@@ -2822,10 +2822,10 @@ void KMMainWidget::setupActions()
   mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
   {
-  QAction *action = new KAction(KIcon("mail-find"), i18n("&Find Messages..."), this);
-  actionCollection()->addAction("search_messages", action );
-  connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
-  action->setShortcut(QKeySequence(Qt::Key_S));
+    QAction *action = new KAction(KIcon("mail-find"), i18n("&Find Messages..."), this);
+    actionCollection()->addAction("search_messages", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
+    action->setShortcut(QKeySequence(Qt::Key_S));
   }
 
   mFindInMessageAction = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
@@ -2834,10 +2834,10 @@ void KMMainWidget::setupActions()
   mFindInMessageAction->setShortcut(KStandardShortcut::shortcut(KStandardShortcut::Find));
 
   {
-  QAction *action = new KAction(i18n("Select &All Messages"), this);
-  actionCollection()->addAction("mark_all_messages", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
-  action->setShortcuts(KStandardShortcut::selectAll());
+    QAction *action = new KAction(i18n("Select &All Messages"), this);
+    actionCollection()->addAction("mark_all_messages", action );
+    connect(action, SIGNAL(triggered(bool) ), SLOT(slotMarkAll()));
+    action->setShortcuts(KStandardShortcut::selectAll());
   }
 
   //----- Folder Menu
