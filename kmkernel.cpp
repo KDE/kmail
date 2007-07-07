@@ -60,7 +60,7 @@ using KMail::TemplateParser;
 #include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
-#include <kpgp/kpgp.h>
+#include <libkpgp/kpgp.h>
 #include <kdebug.h>
 #include <kio/netaccess.h>
 #include <kwallet.h>

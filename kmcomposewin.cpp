@@ -29,7 +29,7 @@
 #include "kmreadermainwin.h"
 #include "messagesender.h"
 #include "kmmsgpartdlg.h"
-#include <kpgp/kpgpblock.h>
+#include <libkpgp/kpgpblock.h>
 #include <kaddrbook.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"

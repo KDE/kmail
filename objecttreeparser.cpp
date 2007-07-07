@@ -65,8 +65,8 @@
 
 #include <gpgmepp/importresult.h>
 
-#include <kpgp/kpgpblock.h>
-#include <kpgp/kpgp.h>
+#include <libkpgp/kpgpblock.h>
+#include <libkpgp/kpgp.h>
 #include <kpimutils/linklocator.h>
 using KPIMUtils::LinkLocator;
 

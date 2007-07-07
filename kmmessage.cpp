@@ -31,7 +31,7 @@ using KMail::TemplateParser;
 #include <kpimutils/email.h>
 
 #include <cryptplugwrapperlist.h>
-#include <kpgp/kpgpblock.h>
+#include <libkpgp/kpgpblock.h>
 #include <kaddrbook.h>
 
 #include <kglobal.h>

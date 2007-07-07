@@ -19,7 +19,7 @@
 
 #include <cryptplugwrapper.h>
 
-#include <kpgp/kpgp.h>
+#include <libkpgp/kpgp.h>
 #include <QString>
 #include <time.h>
 
