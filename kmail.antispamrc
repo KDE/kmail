@@ -239,4 +239,9 @@ DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
 SupportsUnsure=1
+ScoreName=CRM114
+ScoreHeader=X-CRM114-Status
+ScoreType=Bool
+ScoreValueRegexp=SPAM
+ScoreThresholdRegexp=
 
