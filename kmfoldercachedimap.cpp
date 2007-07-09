@@ -2889,8 +2889,9 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
       }
     }
   }
-  folder->close( "KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder" );
-  if ( root )
+ int msgCount = folder->count();
+ folder->close( "KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder" );
+ if ( root && msgCount == 0 )
     slotRescueDone( 0 ); // just in case there is nothing to rescue
 }
 
