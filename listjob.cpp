@@ -26,7 +26,6 @@
  *  your version.
  */
 
-#include "config.h"
 
 #include "listjob.h"
 #include "kmessagebox.h"

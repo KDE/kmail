@@ -30,7 +30,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "textsource.h"
 #include "kmmsgbase.h"

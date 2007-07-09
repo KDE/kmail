@@ -28,7 +28,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "headerlistquicksearch.h"
 

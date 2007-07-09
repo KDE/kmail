@@ -30,7 +30,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "interfaces/bodypartformatter.h"
 

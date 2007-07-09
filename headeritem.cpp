@@ -26,7 +26,6 @@
 **   your version.
 **
 *******************************************************************************/
-#include "config.h"
 #include "headeritem.h"
 
 #include "kmheaders.h"

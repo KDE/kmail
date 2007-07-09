@@ -27,7 +27,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "filterlog.h"
 

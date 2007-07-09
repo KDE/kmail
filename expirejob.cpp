@@ -26,7 +26,6 @@
  *  your version.
  */
 
-#include "config.h"
 
 #include "expirejob.h"
 #include "kmfolder.h"

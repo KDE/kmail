@@ -26,7 +26,6 @@
 **   your version.
 *******************************************************************************/
 
-#include "config.h"
 
 #include <QVariant>
 #include <QPushButton>

@@ -29,7 +29,6 @@
  *  your version.
  */
 
-#include "config.h"
 
 #include "annotationjobs.h"
 #include <kio/scheduler.h>

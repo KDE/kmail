@@ -31,7 +31,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "bodypartformatterfactory.h"
 #include "bodypartformatterfactory_p.h"

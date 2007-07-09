@@ -30,7 +30,6 @@
     you do not wish to do so, delete this exception statement from
     your version.
 */
-#include "config.h"
 
 #include "antispamconfig.h"
 

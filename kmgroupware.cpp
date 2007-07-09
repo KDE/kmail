@@ -34,7 +34,6 @@
     your version.
 */
 
-#include "config.h"
 
 #include "kmgroupware.h"
 #include "kmmessage.h"

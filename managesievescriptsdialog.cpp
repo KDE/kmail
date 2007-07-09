@@ -1,4 +1,3 @@
-#include "config.h"
 
 #include "managesievescriptsdialog.h"
 #include "managesievescriptsdialog_p.h"

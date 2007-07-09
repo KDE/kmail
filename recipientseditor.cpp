@@ -22,7 +22,6 @@
     without including the source code for Qt in the source distribution.
 */
 
-#include "config.h"
 
 #include "recipientseditor.h"
 
