@@ -78,7 +78,7 @@ private slots:
   /** result of a copy-operation */
   void slotCopyMessageResult( KJob *job );
   void slotCopyMessageInfoData( KJob *, const QString &data, const QString & );
-  void slotProcessedSize( KJob *, KIO::filesize_t processed );
+  void slotProcessedSize( KJob *, qulonglong processed );
 
 private:
   void execute();

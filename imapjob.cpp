@@ -343,8 +343,8 @@ void ImapJob::slotGetNextMessage()
            msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)) );
   if ( jd.total > 1 )
   {
-    connect(mJob, SIGNAL(processedSize(KJob *, KIO::filesize_t)),
-        this, SLOT(slotProcessedSize(KJob *, KIO::filesize_t)));
+    connect(mJob, SIGNAL(processedSize(KJob *, qulonglong)),
+        this, SLOT(slotProcessedSize(KJob *, qulonglong)));
   }
 }
 
@@ -664,7 +664,7 @@ void ImapJob::setParentFolder( const KMFolderImap* parent )
 }
 
 //-----------------------------------------------------------------------------
-void ImapJob::slotProcessedSize(KJob * job, KIO::filesize_t processed)
+void ImapJob::slotProcessedSize(KJob * job, qulonglong processed)
 {
   KMMessage *msg = mMsgList.first();
   if (!msg || !job) {

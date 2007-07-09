@@ -115,7 +115,7 @@ protected slots:
   virtual void slotRenameFolderResult( KJob *job );
   virtual void slotListMessagesResult( KJob * job );
   void slotDeleteNextMessages( KJob* job = 0 );
-  void slotProcessedSize( KJob *, KIO::filesize_t processed );
+  void slotProcessedSize( KJob *, qulonglong );
 
 private:
   KMFolderCachedImap *mFolder;
