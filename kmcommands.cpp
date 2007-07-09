@@ -1333,7 +1333,7 @@ KMCommand::Result KMForwardCommand::execute()
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
     win->setCharset( fwdMsg->codec()->name(), true );
-    // win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+    win->setBody( fwdMsg->bodyToUnicode() );
     win->show();
   }
 
