@@ -1,6 +1,5 @@
 // kmmsgpart.cpp
 
-#include <config.h>
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kcodecs.h>

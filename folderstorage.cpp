@@ -32,7 +32,6 @@
     your version.
 */
 
-#include <config.h>
 
 #include "folderstorage.h"
 #include "kmfolder.h"

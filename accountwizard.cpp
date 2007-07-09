@@ -27,7 +27,6 @@
 ******************************************************************************/
 
 #include "accountwizard.h"
-#include <config.h>
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"

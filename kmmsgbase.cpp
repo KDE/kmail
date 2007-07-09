@@ -1,6 +1,5 @@
 // kmmsgbase.cpp
 
-#include <config.h>
 #include <config-kmail.h>
 
 #include "globalsettings.h"

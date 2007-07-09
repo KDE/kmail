@@ -1,7 +1,6 @@
 /* kmail folder-list combo-box */
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
-#include <config.h>
 
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"

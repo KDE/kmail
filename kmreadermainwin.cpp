@@ -22,9 +22,6 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 #include <kicon.h>
 #include <q3accel.h>
 //Added by qt3to4:

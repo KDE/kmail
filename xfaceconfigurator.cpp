@@ -30,10 +30,6 @@
     your version.
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "xfaceconfigurator.h"
 #include <kdialog.h>
 #include <kfiledialog.h>

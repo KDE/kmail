@@ -21,7 +21,6 @@
  */
 
 // This must be first
-#include <config.h>
 #include "configuredialog.h"
 #include "configuredialog_p.h"
 #include <kcmodule.h>

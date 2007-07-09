@@ -29,7 +29,6 @@
     your version.
 */
 
-#include <config.h>
 #include "partNode.h"
 #include <klocale.h>
 #include <kdebug.h>

@@ -1,8 +1,5 @@
 // kmfoldernode.cpp
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "kmfolderdir.h"
 

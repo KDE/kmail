@@ -1,9 +1,5 @@
 // kmacctlocal.cpp
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "kmacctlocal.h"
 #include "kmfoldermbox.h"
 #include "kmacctfolder.h"

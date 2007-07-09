@@ -1,8 +1,5 @@
 // kmmsglist.cpp
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "kmmsglist.h"
 #include "kmmsgdict.h" // FIXME Till - move those into kmfolderindex

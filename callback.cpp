@@ -32,7 +32,6 @@
 
 #include "callback.h"
 
-#include <config.h>
 
 #include "kmkernel.h"
 #include "kmmessage.h"

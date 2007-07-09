@@ -18,7 +18,6 @@
  *
  */
 
-#include <config.h>
 
 #ifndef CUSTOMTEMPLATES_H
 #define CUSTOMTEMPLATES_H

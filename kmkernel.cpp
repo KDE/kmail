@@ -1,7 +1,4 @@
 /*  -*- mode: C++; c-file-style: "gnu" -*- */
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <config-kmail.h>
 #include "config.h"

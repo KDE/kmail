@@ -41,7 +41,6 @@
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <config.h>
 
 using namespace KMail;
 

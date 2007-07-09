@@ -1,9 +1,5 @@
 // KMail Account Manager
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "accountmanager.h"
 
 #include "kmaccount.h"

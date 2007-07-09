@@ -18,7 +18,6 @@
 
 #include "kmfolderindex.h"
 #include "kmfolder.h"
-#include <config.h>
 #include <config-kmail.h>
 #include <QFileInfo>
 #include <QTimer>

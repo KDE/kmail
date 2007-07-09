@@ -29,10 +29,6 @@
   your version.
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

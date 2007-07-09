@@ -21,7 +21,6 @@
  */
 
 // This must be first
-#include <config.h>
 #include <config-kmail.h>
 // my headers:
 #include "configuredialog.h"

@@ -1,7 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmheaders.cpp
 
-#include <config.h>
 
 #include "kmheaders.h"
 #include "headeritem.h"

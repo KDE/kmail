@@ -1,5 +1,4 @@
 // KMail Account
-#include <config.h>
 
 #include "kmaccount.h"
 

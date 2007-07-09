@@ -42,10 +42,6 @@
 
 #include "kmcommands.h"
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <errno.h>
 #include <mimelib/enum.h>
 #include <mimelib/field.h>

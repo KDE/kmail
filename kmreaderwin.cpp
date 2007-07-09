@@ -21,7 +21,6 @@
 // filehtmlwriter.out in the current working directory
 //#define KMAIL_READER_HTML_DEBUG 1
 #include <config-kmail.h>
-#include <config.h>
 
 #include "kmreaderwin.h"
 

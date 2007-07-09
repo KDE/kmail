@@ -18,7 +18,6 @@
  *
  */
 
-#include <config.h>
 
 #ifndef TEMPLATESINSERTCOMMAND_H
 #define TEMPLATESINSERTCOMMAND_H

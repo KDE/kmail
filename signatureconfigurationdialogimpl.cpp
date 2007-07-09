@@ -1,6 +1,5 @@
 #include "signatureconfigurationdialogimpl.h"
 
-#include <config.h>
 #include "cryptplugwrapper.h"
 
 #include <q3buttongroup.h>

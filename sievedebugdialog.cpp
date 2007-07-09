@@ -16,9 +16,6 @@
 // not useful enough for non-developers to have this in releases.
 #if !defined(NDEBUG)
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "sievedebugdialog.h"
 

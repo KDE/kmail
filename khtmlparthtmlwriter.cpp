@@ -29,7 +29,6 @@
     your version.
 */
 
-#include <config.h>
 
 #include "khtmlparthtmlwriter.h"
 

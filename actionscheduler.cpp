@@ -29,10 +29,6 @@
 */
 #include <kdebug.h> // FIXME
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "actionscheduler.h"
 
 #include "filterlog.h"

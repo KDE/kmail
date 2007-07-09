@@ -30,10 +30,6 @@
 
 #include "messagecomposer.h"
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "kmmsgpart.h"
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"

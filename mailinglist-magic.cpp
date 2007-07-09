@@ -1,7 +1,4 @@
 // -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "mailinglist-magic.h"
 

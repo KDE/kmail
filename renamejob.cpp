@@ -45,7 +45,6 @@
 #include <kio/job.h>
 #include <kio/global.h>
 #include <klocale.h>
-#include <config.h>
 #include <kconfiggroup.h>
 
 #include <QMap>

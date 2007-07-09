@@ -1,7 +1,4 @@
 // This must be first
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "klistboxdialog.h"
 #include <k3listbox.h>

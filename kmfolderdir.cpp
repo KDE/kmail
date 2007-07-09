@@ -1,6 +1,5 @@
 // kmfolderdir.cpp
 
-#include <config.h>
 
 #include "kmfolderdir.h"
 #include "kmfoldersearch.h"

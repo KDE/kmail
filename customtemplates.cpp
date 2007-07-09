@@ -18,7 +18,6 @@
  *
  */
 
-#include <config.h>
 
 #include <klocale.h>
 #include <kglobal.h>

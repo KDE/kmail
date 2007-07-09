@@ -16,7 +16,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <config.h>
 
 #include "kmsystemtray.h"
 #include "kmfolder.h"

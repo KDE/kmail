@@ -2,10 +2,6 @@
 // kmfoldermaildir.cpp
 // Author: Kurt Granroth <granroth@kde.org>
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <QDir>
 #include <QRegExp>
 #include <QByteArray>

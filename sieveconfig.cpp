@@ -12,10 +12,6 @@
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, US
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "sieveconfig.h"
 
 #include <knuminput.h>

@@ -1,8 +1,5 @@
 // kmacctmaildir.cpp
 #include <config-kmail.h>
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <QFileInfo>
 #include "kmacctmaildir.h"

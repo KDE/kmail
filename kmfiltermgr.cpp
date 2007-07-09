@@ -1,10 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmfiltermgr.cpp
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 // my header
 #include "kmfiltermgr.h"
 

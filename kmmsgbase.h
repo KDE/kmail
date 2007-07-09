@@ -24,7 +24,6 @@
 using KPIM::MessageStatus;
 
 // for large file support flags
-#include <config.h>
 #include <sys/types.h>
 #include <QString>
 #include <time.h>

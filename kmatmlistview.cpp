@@ -20,7 +20,6 @@
 
 #include "kmatmlistview.h"
 
-#include <config.h>
 
 #include <QWidget>
 #include <QCheckBox>

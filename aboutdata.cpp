@@ -29,10 +29,6 @@
     your version.
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "aboutdata.h"
 
 #include "kmversion.h"

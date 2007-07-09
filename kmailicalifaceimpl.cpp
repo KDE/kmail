@@ -32,10 +32,6 @@
     your version.
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmfoldertree.h"

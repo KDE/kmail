@@ -36,7 +36,6 @@
 #define FOLDERSTORAGE_H
 
 // for large file support
-#include <config.h>
 
 #include "kmfoldernode.h"
 #include "kmfoldertype.h"

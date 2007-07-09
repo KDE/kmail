@@ -31,10 +31,6 @@
 
 #include "kmfoldercachedimap.h"
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "globalsettings.h"
 #include "kmkernel.h"
 #include "undostack.h"

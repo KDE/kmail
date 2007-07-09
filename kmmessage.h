@@ -8,7 +8,6 @@
 /** @file This file defines Mime Message classes. */
 
 // for large file support
-#include <config.h>
 #include <sys/types.h>
 
 #include <mimelib/string.h>

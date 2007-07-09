@@ -28,10 +28,6 @@
     your version.
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "messageproperty.h"
 #include "actionscheduler.h"
 using namespace KMail;

@@ -20,7 +20,6 @@
 #ifndef kmmsginfo_h
 #define kmmsginfo_h
 
-#include <config.h>
 #include <sys/types.h>
 #include "kmmsgbase.h"
 #include <QByteArray>

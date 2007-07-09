@@ -30,7 +30,6 @@
 */
 
 
-#include <config.h>
 
 #include "kmmimeparttree.h"
 

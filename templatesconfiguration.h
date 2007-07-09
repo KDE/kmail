@@ -18,7 +18,6 @@
  *
  */
 
-#include <config.h>
 
 #ifndef TEMPLATESCONFIGURATION_H
 #define TEMPLATESCONFIGURATION_H

@@ -4,10 +4,6 @@
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
 
-// This must be first
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 // my header:
 #include "configuredialog_p.h"
