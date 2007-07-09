@@ -157,10 +157,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
       folderSelector->setFolder( destFolder );
   }
   slotUpdateControls();
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  clearWState( WState_Polished );
+  setAttribute(Qt::WA_WState_Polished);
 }
 
 /*
