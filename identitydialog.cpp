@@ -399,7 +399,6 @@ namespace KMail {
     mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
     glay->addWidget( mTransportCheck, row, 0 );
     mTransportCombo = new QComboBox( tab );
-    mTransportCombo->setEditable( true );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
     mTransportCombo->addItems( TransportManager::self()->transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );

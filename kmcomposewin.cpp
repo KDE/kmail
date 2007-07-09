@@ -222,7 +222,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mFcc = new KMFolderComboBox( mMainWidget );
   mFcc->showOutboxFolder( false );
   mTransport = new MailTransport::TransportComboBox( mMainWidget );
-  mTransport->setEditable( true );
   mEdtFrom = new KMLineEdit( false, mMainWidget, "fromLine" );
 
   mEdtReplyTo = new KMLineEdit( true, mMainWidget, "replyToLine" );
