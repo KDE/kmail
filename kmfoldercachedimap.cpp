@@ -452,7 +452,7 @@ int KMFolderCachedImap::addMsgInternal( KMMessage *msg, bool newMail, int *index
   // Add the message
   int rc = KMFolderMaildir::addMsg( msg, index_return );
 
-  if ( newMail && imapPath() == "/INBOX/" ) {
+  if ( newMail && (imapPath() == "/INBOX/" || !GlobalSettings::self()->filterOnlyDIMAPInbox()) ) {
     // This is a new message. Filter it
     mAccount->processNewMsg( msg );
   }
