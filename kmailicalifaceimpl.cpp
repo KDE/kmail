@@ -192,6 +192,8 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachment
     if ( part->hasHeaders()
          && attachmentName == part->Headers().ContentDisposition().Filename().c_str() )
       return part;
+    if ( part->hasHeaders() && attachmentName == part->Headers().ContentType().Name().c_str() )
+      return part;
   }
   return 0;
 }
