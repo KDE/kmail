@@ -193,7 +193,6 @@ set(kmailprivate_LIB_SRCS
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
 
-kde4_automoc(${kmailprivate_LIB_SRCS})
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui encryptionconfigurationdialog.ui templatesconfiguration_base.ui customtemplates_base.ui signatureconfigurationdialog.ui )
 
@@ -225,7 +224,6 @@ install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
 
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 
-kde4_automoc(${kcm_kmail_PART_SRCS})
 
 kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
@@ -240,7 +238,6 @@ install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 set(kmailpart_PART_SRCS kmail_part.cpp )
 
-kde4_automoc(${kmailpart_PART_SRCS})
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.kmailpart.xml kmail_part.h  KMailPart)
 
@@ -257,7 +254,6 @@ install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cpp )
 
-kde4_automoc(${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
 kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
@@ -272,7 +268,6 @@ install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${P
 
 set(kmail_SRCS main.cpp )
 
-kde4_automoc(${kmail_SRCS})
 
 kde4_add_executable(kmail ${kmail_SRCS})
 

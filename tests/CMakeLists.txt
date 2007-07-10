@@ -6,14 +6,12 @@ include_directories( ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/kmail  )
 ########### utiltests ###############
 
 set(utiltests_SRCS utiltests.cpp ../util.cpp )
-kde4_automoc(${utiltests_SRCS})
 kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
 target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY})
 
 ########### mimelibtests ###############
 
 set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp )
-kde4_automoc(${mimelibtests_SRCS})
 kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS})
 target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY})
 
@@ -22,7 +20,6 @@ set(dbustest_SRCS dbustest.cpp )
 qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.kmail.xml)
 qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.mailcomposer.xml )
 
-kde4_automoc(${dbustest_SRCS})
 
 kde4_add_test_executable(dbustest ${dbustest_SRCS})
 
@@ -33,7 +30,6 @@ target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 
 set(recipienteditortest_SRCS recipientseditortest.cpp )
 
-kde4_automoc(${recipienteditortest_SRCS})
 
 kde4_add_test_executable(recipienteditortest ${recipienteditortest_SRCS})
 
