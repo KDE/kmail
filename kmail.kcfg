@@ -219,6 +219,11 @@
         <whatsthis>&lt;p&gt;If you want to set the folder names of the IMAP storage to your local language, you can choose between these available languages.&lt;/p&gt;&lt;p&gt; Please note, that the only reason to do so is for compatibility with Microsoft Outlook. It is considered a bad idea to set this, since it makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So do not set this unless you have to.&lt;/p&gt;</whatsthis>
         <default>0</default>
       </entry>
+
+      <entry name="FilterOnlyDIMAPInbox" type="Bool">
+        <default>false</default>
+        <label>Only filter mails received in disconnected IMAP inbox.</label>
+      </entry>
     </group>
 
     <group name="Internal">
