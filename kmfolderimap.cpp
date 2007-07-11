@@ -557,8 +557,6 @@ void KMFolderImap::copyMsg(QList<KMMessage*>& msgList)
     QList<KMMessage*> temp_msgs = splitMessageList(*it, msgList);
 
     ImapJob *job = new ImapJob(temp_msgs, *it, ImapJob::tCopyMessage, this);
-    connect(job, SIGNAL(messageCopied(QPtrList<KMMessage>)),
-            SLOT(addMsgQuiet(QPtrList<KMMessage>)));
     connect(job, SIGNAL(result(KMail::FolderJob*)),
             SLOT(slotCopyMsgResult(KMail::FolderJob*)));
     job->start();
