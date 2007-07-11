@@ -24,7 +24,7 @@
 #include <kdemacros.h>
 
 #ifndef KMAIL_EXPORT
-# if defined(MAKE_KMAIL_LIB)
+# if defined(MAKE_KMAILPRIVATE_LIB)
    /* We are building this library */
 #  define KMAIL_EXPORT KDE_EXPORT
 # else
