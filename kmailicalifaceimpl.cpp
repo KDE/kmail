@@ -1394,7 +1394,7 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // We can hack the N case, but not the 0 case.
   // So the idea of a DCOP signal for this wouldn't work.
   if ( ( _changes & Contents ) ||
-       ( _changes & ACL ) ) {
+       ( _changes & KMail::ACL ) ) {
     if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
       triggerKolabFreeBusy( folderURL );
   }
