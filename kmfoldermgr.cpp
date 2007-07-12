@@ -150,16 +150,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
     }
    } else {
     // ~/Mail (or whatever the user specified) doesn't exist, create it
-
-
-    const QByteArray encodedName = QFile::encodeName( mBasePath );
-#ifdef Q_WS_WIN32
-    const bool mkdirSuccess = ::mkdir( encodedName ) == 0 && ::chmod( encodedName, S_IRWXU ) == 0;
-#else
-    const bool mkdirSuccess = ::mkdir( encodedName, S_IRWXU ) != -1;
-#endif    
-
-    if ( !mkdirSuccess ) {
+    if ( ::mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
                                  "modify the content of the folder '%2'.",
