@@ -23,7 +23,7 @@
 #include "kmmessage.h"
 #include "kmacctfolder.h"
 
-#include <k3process.h>
+#include <kprocess.h>
 #include <kaccount.h>
 
 #include <QList>
@@ -59,14 +59,14 @@ public:
   virtual ~KMPrecommand();
   bool start();
 
-protected slots:
-  void precommandExited(K3Process *);
-
 signals:
   void finished(bool);
 
-protected:
-  K3Process mPrecommandProcess;
+private slots:
+  void precommandExited(int errorCode, QProcess::ExitStatus status);
+
+private:
+  KProcess mPrecommandProcess;
   QString mPrecommand;
 };
 

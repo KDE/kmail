@@ -30,11 +30,11 @@ using KMail::FolderJob;
 #include <QEventLoop>
 #include <QByteArray>
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 
-#include <assert.h>
+#include <cassert>
 
 //----------------------
 #include "kmaccount.moc"
@@ -46,11 +46,10 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1", precommand ));
 
-  mPrecommandProcess.setUseShell(true);
-  mPrecommandProcess << precommand;
+  mPrecommandProcess.setShellCommand(precommand);
 
-  connect(&mPrecommandProcess, SIGNAL(processExited(K3Process *)),
-          SLOT(precommandExited(K3Process *)));
+  connect(&mPrecommandProcess, SIGNAL(processFinished(int, QProcess::ExitStatus)),
+          SLOT(precommandExited(int, QProcess::ExitStatus)));
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +61,8 @@ KMPrecommand::~KMPrecommand()
 //-----------------------------------------------------------------------------
 bool KMPrecommand::start()
 {
-  bool ok = mPrecommandProcess.start( K3Process::NotifyOnExit );
+  mPrecommandProcess.start();
+  const bool ok = mPrecommandProcess.waitForStarted();
   if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.",
      mPrecommand));
   return ok;
@@ -70,13 +70,13 @@ bool KMPrecommand::start()
 
 
 //-----------------------------------------------------------------------------
-void KMPrecommand::precommandExited(K3Process *p)
+void KMPrecommand::precommandExited(int exitCode, QProcess::ExitStatus)
 {
-  int exitCode = p->normalExit() ? p->exitStatus() : -1;
-  if (exitCode)
+ 
+  if (exitCode != 0)
     KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2",
        exitCode, strerror(exitCode)));
-  emit finished(!exitCode);
+  emit finished(exitCode == 0);
 }
 
 
