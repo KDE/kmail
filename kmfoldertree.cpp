@@ -42,7 +42,6 @@ using namespace KPIM;
 #include <QMenu>
 #include <QMouseEvent>
 #include <QPixmap>
-#include <QPainter>
 #include <QResizeEvent>
 #include <QRegExp>
 

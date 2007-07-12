@@ -1777,8 +1777,6 @@ void KMFolderImap::slotCreateFolderResult(KJob * job)
 QString KMFolderImap::encodeFileName(const QString &name)
 {
   QString result = KIMAP::encodeImapFolderName(name);
-  kDebug(5006) << "FILENAME before: " << name << endl;
-  kDebug(5006) << "FILENAME after: " << result << endl;
   return result;
 }
 
