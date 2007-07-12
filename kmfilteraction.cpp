@@ -31,7 +31,6 @@ using KMail::RegExpLineEdit;
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <k3process.h>
 #include <kurlrequester.h>
 #include <phonon/audioplayer.h>
 #include <kshell.h>
