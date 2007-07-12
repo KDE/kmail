@@ -33,7 +33,11 @@
 #include "kmfoldertree.h"
 #include "kmailicalifaceimpl.h"
 
-#include <errno.h>
+#include <cerrno>
+
+#ifdef Q_WS_WIN32
+#include <io.h>
+#endif
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -261,7 +265,12 @@ KMFolderDir* KMFolder::createChildFolder()
   QString childDir = path() + '/' + childName;
   if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
   {
-    if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
+#ifdef Q_WS_WIN32
+    const int mkdirResult = mkdir(QFile::encodeName(childDir));
+#else
+    const int mkdirResult = mkdir(QFile::encodeName(childDir), S_IRWXU);
+#endif
+      if ( mkdirResult != 0 
       && chmod(QFile::encodeName(childDir), S_IRWXU) != 0) {
       QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
       KMessageBox::information(0,i18n("Failed to create folder") + wmsg);

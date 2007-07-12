@@ -8,6 +8,7 @@
 #include "globalsettings.h"
 #include "folderstorage.h"
 
+#include <QFile>
 #include <QFileInfo>
 //Added by qt3to4:
 #include <Q3MemArray>
@@ -547,8 +548,9 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
   rentry->sync();
 
   off_t eof = ftell(fp);
-  QString filename = getFolderIdsLocation( storage );
-  truncate(QFile::encodeName(filename), eof);
+  QFile file(getFolderIdsLocation( storage ));
+  if (file.size() > eof)
+    file.resize(eof);
   fclose(rentry->fp);
   rentry->fp = 0;
 
