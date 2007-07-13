@@ -1230,7 +1230,11 @@ void KMKernel::testDir(const char *_name)
   QString foldersPath = QDir::homePath() + QString( _name );
   QFileInfo info( foldersPath );
   if ( !info.exists() ) {
+#ifdef Q_OS_WIN
+    if ( ::mkdir( QFile::encodeName( foldersPath ) ) == -1 ) {
+#else
     if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
+#endif
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
                                  "modify the content of the folder '%2'.",

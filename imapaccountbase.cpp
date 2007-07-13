@@ -719,9 +719,9 @@ void ImapAccountBase::slotNamespaceResult( KJob *job, const QString &str, const 
   nsDelimMap map;
   namespaceDelim nsDelim;
   QStringList ns = str.split( ",", QString::SkipEmptyParts );
-  for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it ) {
+  for ( QStringList::Iterator it2 = ns.begin(); it2 != ns.end(); ++it2 ) {
     // split, allow empty parts as we can get empty namespaces
-    QStringList parts = (*it).split( "=" );
+    QStringList parts = (*it2).split( "=" );
     imapNamespace section = imapNamespace( parts[0].toInt() );
     if ( map.contains( section ) ) {
       nsDelim = map[section];

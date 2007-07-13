@@ -34,6 +34,7 @@
 #include "kmailicalifaceimpl.h"
 
 #include <errno.h>
+#include <unistd.h> // W_OK
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -261,7 +262,11 @@ KMFolderDir* KMFolder::createChildFolder()
   QString childDir = path() + '/' + childName;
   if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
   {
+#ifdef Q_OS_WIN
+    if (mkdir(QFile::encodeName(childDir)) != 0
+#else
     if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
+#endif
       && chmod(QFile::encodeName(childDir), S_IRWXU) != 0) {
       QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
       KMessageBox::information(0,i18n("Failed to create folder") + wmsg);

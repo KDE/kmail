@@ -470,10 +470,10 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
 void KMSystemTray::updateNewMessages()
 {
-  for ( QMap<QPointer<KMFolder>, bool>::Iterator it = mPendingUpdates.begin();
-        it != mPendingUpdates.end(); ++it)
+  for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
+        it1 != mPendingUpdates.end(); ++it1)
   {
-  KMFolder *fldr = it.key();
+  KMFolder *fldr = it1.key();
   if ( !fldr ) // deleted folder
     continue;
 

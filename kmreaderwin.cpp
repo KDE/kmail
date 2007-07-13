@@ -121,7 +121,6 @@ using KMail::TeeHtmlWriter;
 #include <kglobalsettings.h>
 #include <krun.h>
 #include <ktemporaryfile.h>
-#include <k3process.h>
 #include <kdialog.h>
 #include <kaction.h>
 #include <kiconloader.h>
@@ -1701,7 +1700,11 @@ QString KMReaderWin::createTempDir( const QString &param )
 
   if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
     // Not there or not writable
+#ifdef Q_OS_WIN
+    if( ::mkdir( QFile::encodeName( fname ) ) != 0
+#else
     if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
+#endif
         || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
       return QString(); //failed create
 

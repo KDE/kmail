@@ -42,6 +42,7 @@
 
 #include "kmcommands.h"
 
+#include <unistd.h> // link()
 #include <errno.h>
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -2985,7 +2986,7 @@ void KMHandleAttachmentCommand::atmOpen()
 
   url.setPath( fname );
   lst.append( url );
-  if ( (KRun::run( *mOffer, lst, 0, autoDelete ) <= 0) && autoDelete ) {
+  if ( (!KRun::run( *mOffer, lst, 0, autoDelete )) && autoDelete ) {
       QFile::remove(url.path());
   }
 }

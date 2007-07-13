@@ -162,6 +162,24 @@ int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
   if ( dirinfo.exists() ) return EEXIST;
 
   // create the maildir directory structure
+#ifdef Q_OS_WIN
+  if ( ::mkdir( QFile::encodeName( folderPath ) ) > 0 ) {
+    kDebug(5006) << "Could not create folder " << folderPath << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/new" ) ) > 0 ) {
+    kDebug(5006) << "Could not create folder " << folderPath << "/new" << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/cur" ) ) > 0 ) {
+    kDebug(5006) << "Could not create folder " << folderPath << "/cur" << endl;
+    return errno;
+  }
+  if ( ::mkdir( QFile::encodeName( folderPath + "/tmp" ) ) > 0 ) {
+    kDebug(5006) << "Could not create folder " << folderPath << "/tmp" << endl;
+    return errno;
+  }
+#else
   if ( ::mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
     kDebug(5006) << "Could not create folder " << folderPath << endl;
     return errno;
@@ -178,6 +196,7 @@ int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
     kDebug(5006) << "Could not create folder " << folderPath << "/tmp" << endl;
     return errno;
   }
+#endif  // Q_OS_WIN
 
   return 0; // no error
 }
