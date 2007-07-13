@@ -86,8 +86,10 @@ void CopyFolderJob::copyMessagesToTargetDir()
     msgList.append( msgBase );
   }
   if ( msgList.count() == 0 ) {
-    slotCopyNextChild(); // no contents, check subfolders
     mStorage->blockSignals( false );
+    // ### be careful, after slotCopyNextChild() the source folder
+    // (including mStorage) might already be deleted!
+    slotCopyNextChild(); // no contents, check subfolders
   } else {
     KMCommand *command = new KMCopyCommand( mNewFolder, msgList );
     connect( command, SIGNAL( completed( KMCommand * ) ),
