@@ -37,7 +37,7 @@
 #include <QList>
 
 class KMMsgBase;
-class KPaintInfo;
+struct KPaintInfo;
 class KMFolder;
 class KMHeaders;
 

@@ -55,7 +55,7 @@ namespace KPIM {
 
 namespace KMail {
   struct ACLListEntry;
-  struct QuotaInfo;
+  class QuotaInfo;
   typedef QVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;

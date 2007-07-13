@@ -99,7 +99,7 @@ public:
   virtual void setMsgIdMD5(const QString&);
   virtual void setEncryptionState( const KMMsgEncryptionState, int idx = -1 );
   virtual void setSignatureState( const KMMsgSignatureState, int idx = -1 );
-  virtual void setMDNSentState( const KMMsgMDNSentState, int idx = -1 );
+  virtual void setMDNSentState( KMMsgMDNSentState, int idx = -1 );
   virtual void setUID(ulong);
 
   /** Grr.. c++! */

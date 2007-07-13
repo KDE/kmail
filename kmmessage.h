@@ -37,8 +37,8 @@ class KMForwardCommand;
 namespace KMime {
   class CharFreq;
   namespace Types {
-    class AddrSpec;
-    class Address;
+    struct AddrSpec;
+    struct Address;
     typedef QList<Address> AddressList;
     typedef QList<AddrSpec> AddrSpecList;
   }
