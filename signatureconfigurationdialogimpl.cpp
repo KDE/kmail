@@ -1,6 +1,6 @@
 #include "signatureconfigurationdialogimpl.h"
 
-#include "cryptplugwrapper.h"
+#include <libkleo/cryptplugwrapper.h>
 
 #include <q3buttongroup.h>
 #include <QRadioButton>

@@ -37,7 +37,7 @@
 #ifndef __KLEO_KEYRESOLVER_H__
 #define __KLEO_KEYRESOLVER_H__
 
-#include <ui/keyapprovaldialog.h>
+#include <libkleoui/keyapprovaldialog.h>
 
 #include <kleo/enum.h>
 

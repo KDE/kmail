@@ -72,9 +72,9 @@ using KMail::IdentityDialog;
 using KMime::DateFormatter;
 #include <kleo/cryptoconfig.h>
 #include <kleo/cryptobackendfactory.h>
-#include <ui/backendconfigwidget.h>
-#include <ui/keyrequester.h>
-#include <ui/keyselectiondialog.h>
+#include <libkleoui/backendconfigwidget.h>
+#include <libkleoui/keyrequester.h>
+#include <libkleoui/keyselectiondialog.h>
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;

@@ -68,8 +68,8 @@ using KRecentAddress::RecentAddresses;
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
 #include <kleo/specialjob.h>
-#include <ui/progressdialog.h>
-#include <ui/keyselectiondialog.h>
+#include <libkleoui/progressdialog.h>
+#include <libkleoui/keyselectiondialog.h>
 
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>

@@ -35,7 +35,7 @@
 
 #include "kmmsgbase.h"
 
-#include <cryptplugwrapper.h>
+#include <libkleo/cryptplugwrapper.h>
 
 class KMReaderWin;
 class KMMessagePart;

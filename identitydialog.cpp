@@ -51,7 +51,7 @@ using KMail::FolderRequester;
 #include <kpimidentities/identity.h>
 #include <libkdepim/addresseelineedit.h>
 // libkleopatra:
-#include <ui/keyrequester.h>
+#include <libkleoui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>
 
 #include <kpimutils/email.h>
