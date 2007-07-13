@@ -25,6 +25,7 @@
 #include <Q3MultiLineEdit>
 
 #include <kdialog.h>
+#include "kmail_export.h"
 
 class QCheckBox;
 class QTextStream;
@@ -32,7 +33,7 @@ class KHistoryComboBox;
 class KIntNumInput;
 class QMenu;
 
-class KDEUI_EXPORT KEdGotoLine : public KDialog
+class KMAIL_EXPORT KEdGotoLine : public KDialog
 {
     Q_OBJECT
 
@@ -52,7 +53,7 @@ private:
 };
 
 ///
-class KDEUI_EXPORT KEdFind : public KDialog
+class KMAIL_EXPORT KEdFind : public KDialog
 {
     Q_OBJECT
     Q_PROPERTY( QString text READ getText WRITE setText )
@@ -94,7 +95,7 @@ private:
 };
 
 ///
-class KDEUI_EXPORT KEdReplace : public KDialog
+class KMAIL_EXPORT KEdReplace : public KDialog
 {
     Q_OBJECT
 
@@ -151,7 +152,7 @@ private:
  * @author Bernd Johannes Wuebben <wuebben@math.cornell.edu>, Waldo Bastian <bastian@kde.org>
  **/
 
-class KDEUI_EXPORT_DEPRECATED KEdit : public Q3MultiLineEdit
+class KMAIL_EXPORT_DEPRECATED KEdit : public Q3MultiLineEdit
 {
     Q_OBJECT
 

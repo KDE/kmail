@@ -328,7 +328,6 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 #include "kmmsgpart.h"
 
 #include <klocale.h>
-#include <k3process.h>
 #include <kmessagebox.h>
 #include <khtml_part.h>
 

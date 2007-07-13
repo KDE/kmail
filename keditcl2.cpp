@@ -20,8 +20,12 @@
 */
 
 // remove when Q3PopupMenu is ported
+#ifndef QT3_SUPPORT
 #define QT3_SUPPORT
+#endif
+#ifndef QT3_SUPPORT_WARNINGS
 #define QT3_SUPPORT_WARNINGS
+#endif
 
 #include <limits.h> // INT_MAX
 
