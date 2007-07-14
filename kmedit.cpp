@@ -445,7 +445,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     charPos = charAt( viewportToContents(event->pos()), &para );
     QString paraText = text( para );
 
-    if( !paraText.at(charPos).isSpace() )
+    if( charPos < paraText.length() && !paraText.at(charPos).isSpace() )
     {
       //Get word right clicked on
       const QRegExp wordBoundary( "[\\s\\W]" );
