@@ -29,7 +29,7 @@ using KMail::TemplateParser;
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
 
-#include <libkleo/cryptplugwrapperlist.h>
+#include <kleo/cryptplugwrapperlist.h>
 #include <libkpgp/kpgpblock.h>
 #include <kaddrbook.h>
 

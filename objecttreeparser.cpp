@@ -50,8 +50,8 @@
 #include "globalsettings.h"
 #include "util.h"
 
-#include "libkleo/cryptplugwrapperlist.h"
-#include "libkleo/cryptplugfactory.h"
+#include "kleo/cryptplugwrapperlist.h"
+#include "kleo/cryptplugfactory.h"
 
 // other module headers
 #include <mimelib/enum.h>

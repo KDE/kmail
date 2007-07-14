@@ -1,6 +1,6 @@
 
 #include "encryptionconfigurationdialogimpl.h"
-#include <libkleo/cryptplugwrapper.h>
+#include <kleo/cryptplugwrapper.h>
 
 #include <q3buttongroup.h>
 #include <QRadioButton>

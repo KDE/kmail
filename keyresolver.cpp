@@ -40,7 +40,7 @@
 #include "kleo_util.h"
 
 #include <kpimutils/email.h>
-#include <libkleoui/keyselectiondialog.h>
+#include <kleo/ui/keyselectiondialog.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/keylistjob.h>
 #include <kleo/dn.h>
