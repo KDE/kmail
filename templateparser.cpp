@@ -30,6 +30,7 @@
 #include <kmessagebox.h>
 #include <kshell.h>
 #include <qfileinfo.h>
+#include <qdir.h>
 
 #include "kmmessage.h"
 #include "kmmsgbase.h"
@@ -226,7 +227,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         QString path = KShell::tildeExpand( q );
         QFileInfo finfo( path );
         if (finfo.isRelative() ) {
-          path = KShell::homeDir( "" );
+          path = QDir::homePath();
           path += '/';
           path += q;
         }
@@ -260,7 +261,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         QString path = KShell::tildeExpand( q );
         QFileInfo finfo( path );
         if (finfo.isRelative() ) {
-          path = KShell::homeDir( "" );
+          path = QDir::homePath();
           path += '/';
           path += q;
         }
