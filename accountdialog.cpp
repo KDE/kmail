@@ -278,25 +278,25 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 );
   setHelp("receiving-mail");
 
-  QString accountType = mAccount->type();
+  KAccount::Type accountType = mAccount->type();
 
-  if( accountType == "local" )
+  if( accountType == KAccount::Local )
   {
     makeLocalAccountPage();
   }
-  else if( accountType == "maildir" )
+  else if( accountType == KAccount::Maildir )
   {
     makeMaildirAccountPage();
   }
-  else if( accountType == "pop" )
+  else if( accountType == KAccount::Pop )
   {
     makePopAccountPage();
   }
-  else if( accountType == "imap" )
+  else if( accountType == KAccount::Imap )
   {
     makeImapAccountPage();
   }
-  else if( accountType == "cachedimap" )
+  else if( accountType == KAccount::DImap )
   {
     makeImapAccountPage(true);
   }
@@ -1220,8 +1220,8 @@ void AccountDialog::setupSettings()
   QComboBox *folderCombo = 0;
   int interval = mAccount->checkInterval();
 
-  QString accountType = mAccount->type();
-  if( accountType == "local" )
+  KAccount::Type accountType = mAccount->type();
+  if( accountType == KAccount::Local )
   {
     ProcmailRCParser procmailrcParser;
     KMAcctLocal *acctLocal = static_cast<KMAcctLocal*>(mAccount);
@@ -1262,7 +1262,7 @@ void AccountDialog::setupSettings()
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
   }
-  else if( accountType == "pop" )
+  else if( accountType == KAccount::Pop )
   {
     PopAccount &ap = *(PopAccount*)mAccount;
     mPop.nameEdit->setText( mAccount->name() );
@@ -1325,7 +1325,7 @@ void AccountDialog::setupSettings()
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
   }
-  else if( accountType == "imap" )
+  else if( accountType == KAccount::Imap )
   {
     KMAcctImap &ai = *(KMAcctImap*)mAccount;
     mImap.nameEdit->setText( mAccount->name() );
@@ -1377,7 +1377,7 @@ void AccountDialog::setupSettings()
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
-  else if( accountType == "cachedimap" )
+  else if( accountType == KAccount::DImap )
   {
     KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
     mImap.nameEdit->setText( mAccount->name() );
@@ -1426,7 +1426,7 @@ void AccountDialog::setupSettings()
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
-  else if( accountType == "maildir" )
+  else if( accountType == KAccount::Maildir )
   {
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
@@ -1448,7 +1448,8 @@ void AccountDialog::setupSettings()
   else // Unknown account type
     return;
 
-  if ( accountType == "imap" || accountType == "cachedimap" )
+  if ( accountType == KAccount::Imap ||
+       accountType == KAccount::DImap )
   {
     // settings for imap in general
     ImapAccountBase &ai = *(ImapAccountBase*)mAccount;
@@ -1863,8 +1864,8 @@ void AccountDialog::slotOk()
 
 void AccountDialog::saveSettings()
 {
-  QString accountType = mAccount->type();
-  if( accountType == "local" )
+  KAccount::Type accountType = mAccount->type();
+  if( accountType == KAccount::Local )
   {
     KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
 
@@ -1896,7 +1897,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()) );
 
   }
-  else if( accountType == "pop" )
+  else if( accountType == KAccount::Pop )
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ?
@@ -1925,7 +1926,7 @@ void AccountDialog::saveSettings()
     epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );
   }
-  else if( accountType == "imap" )
+  else if( accountType == KAccount::Imap )
   {
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
@@ -1956,7 +1957,7 @@ void AccountDialog::saveSettings()
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
-  else if( accountType == "cachedimap" )
+  else if( accountType == KAccount::DImap )
   {
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
@@ -1988,7 +1989,7 @@ void AccountDialog::saveSettings()
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
-  else if( accountType == "maildir" )
+  else if( accountType == KAccount::Maildir )
   {
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
@@ -2017,7 +2018,8 @@ void AccountDialog::saveSettings()
     mAccount->setPrecommand( mMaildir.precommand->text() );
   }
 
-  if ( accountType == "imap" || accountType == "cachedimap" )
+  if ( accountType == KAccount::Imap ||
+       accountType == KAccount::DImap )
   {
     // settings for imap in general
     ImapAccountBase &ai = *(ImapAccountBase*)mAccount;
@@ -2046,15 +2048,15 @@ void AccountDialog::saveSettings()
   KMAccount* newAcct = kmkernel->acctMgr()->find(mAccount->id());
   if (newAcct)
   {
-    if( accountType == "local" ) {
+    if( accountType == KAccount::Local ) {
       newAcct->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()), true );
-    } else if ( accountType == "pop" ) {
+    } else if ( accountType == KAccount::Pop ) {
       newAcct->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()), true );
-    } else if ( accountType == "maildir" ) {
+    } else if ( accountType == KAccount::Maildir ) {
       newAcct->setFolder( mFolderList.at(mMaildir.folderCombo->currentIndex()), true );
-    } else if ( accountType == "imap" ) {
+    } else if ( accountType == KAccount::Imap ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
-    } else if ( accountType == "cachedimap" ) {
+    } else if ( accountType == KAccount::DImap ) {
       newAcct->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()), true );
     }
   }
@@ -2148,20 +2150,20 @@ void AccountDialog::slotEnableMaildirInterval( bool state )
 
 void AccountDialog::slotFontChanged( void )
 {
-  QString accountType = mAccount->type();
-  if( accountType == "local" )
+  KAccount::Type accountType = mAccount->type();
+  if( accountType == KAccount::Local )
   {
     QFont titleFont( mLocal.titleLabel->font() );
     titleFont.setBold( true );
     mLocal.titleLabel->setFont(titleFont);
   }
-  else if( accountType == "pop" )
+  else if( accountType == KAccount::Pop )
   {
     QFont titleFont( mPop.titleLabel->font() );
     titleFont.setBold( true );
     mPop.titleLabel->setFont(titleFont);
   }
-  else if( accountType == "imap" )
+  else if( accountType == KAccount::Imap )
   {
     QFont titleFont( mImap.titleLabel->font() );
     titleFont.setBold( true );
@@ -2186,7 +2188,8 @@ void AccountDialog::slotClearPastResourceAllocations()
 
 void AccountDialog::slotReloadNamespaces()
 {
-  if ( mAccount->type() == "imap" || mAccount->type() == "cachedimap" )
+  if ( mAccount->type() == KAccount::Imap ||
+       mAccount->type() == KAccount::DImap )
   {
     initAccountForConnect();
     mImap.personalNS->setText( i18n("Fetching Namespaces...") );
@@ -2258,13 +2261,13 @@ const QString AccountDialog::namespaceListToString( const QStringList& list )
 
 void AccountDialog::initAccountForConnect()
 {
-  QString type = mAccount->type();
-  if ( type == "local" )
+  KAccount::Type type = mAccount->type();
+  if ( type == KAccount::Local )
     return;
 
   NetworkAccount &na = *(NetworkAccount*)mAccount;
 
-  if ( type == "pop" ) {
+  if ( type == KAccount::Pop ) {
     na.setHost( mPop.hostEdit->text().trimmed() );
     na.setPort( mPop.portEdit->text().toInt() );
     na.setLogin( mPop.loginEdit->text().trimmed() );
@@ -2290,7 +2293,8 @@ void AccountDialog::initAccountForConnect()
       na.setAuth("APOP");
     else na.setAuth("AUTO");
   }
-  else if ( type == "imap" || type == "cachedimap" ) {
+  else if ( type == KAccount::Imap ||
+            type == KAccount::DImap ) {
     na.setHost( mImap.hostEdit->text().trimmed() );
     na.setPort( mImap.portEdit->text().toInt() );
     na.setLogin( mImap.loginEdit->text().trimmed() );

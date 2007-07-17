@@ -87,13 +87,7 @@ PopAccount::~PopAccount()
   }
 }
 
-
 //-----------------------------------------------------------------------------
-QString PopAccount::type(void) const
-{
-  return "pop";
-}
-
 QString PopAccount::protocol() const {
   return useSSL() ? POP_SSL_PROTOCOL : POP_PROTOCOL;
 }

@@ -51,7 +51,6 @@ public:
   /**
    * Inherited methods.
    */
-  virtual QString type(void) const;
   virtual void processNewMail(bool);
   ConnectionState makeConnection();
 

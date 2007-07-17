@@ -517,7 +517,9 @@ void AntiSpamWizard::checkToolAvailability()
       AccountManager* mgr = kmkernel->acctMgr();
       KMAccount* account = mgr->first();
       while ( account ) {
-        if ( account->type() == "pop" || account->type().contains( "imap" ) ) {
+        if ( account->type() == KAccount::Pop ||
+             account->type() == KAccount::Imap ||
+             account->type() == KAccount::DImap ) {
           const NetworkAccount * n = dynamic_cast<const NetworkAccount*>( account );
           if ( n && n->host().toLower().contains( pattern.toLower() ) ) {
             mInfoPage->addAvailableTool( (*it).getVisibleName() );

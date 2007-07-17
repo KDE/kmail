@@ -163,6 +163,12 @@ Id=3.5.4
 File=kmailrc
 Group=FolderSelectionDialog
 RemoveKey=Size
+
+# Misc settings for KMail in KDE 4
+Id=4.0-misc
+File=kmailrc
+Script=kmail-4.0-misc.pl,perl
+
 #
 # Important notice:
 # If you add updates here, keep this text below them.

@@ -43,13 +43,6 @@ KMAcctMaildir::~KMAcctMaildir()
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctMaildir::type(void) const
-{
-  return "maildir";
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctMaildir::init() {
   KMAccount::init();
 

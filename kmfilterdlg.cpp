@@ -560,7 +560,7 @@ void KMFilterDlg::slotUpdateAccountList()
        a = kmkernel->acctMgr()->next() ) {
     Q3CheckListItem *listItem =
       new Q3CheckListItem( mAccountList, top, a->name(), Q3CheckListItem::CheckBox );
-    listItem->setText( 1, a->type() );
+    listItem->setText( 1, a->typeName() );
     listItem->setText( 2, QString( "%1" ).arg( a->id() ) );
     if ( mFilter )
       listItem->setOn( mFilter->applyOnAccount( a->id() ) );

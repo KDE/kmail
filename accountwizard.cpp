@@ -454,13 +454,13 @@ void AccountWizard::createAccount()
   switch ( mTypeBox->type() ) {
     case AccountTypeBox::Local:
     {
-      mAccount = acctManager->create( "local", i18n( "Local Account" ) );
+      mAccount = acctManager->create( KAccount::Local, i18n( "Local Account" ) );
       static_cast<KMAcctLocal*>( mAccount )->setLocation( mIncomingLocation->text() );
       break;
     }
     case AccountTypeBox::POP3:
     {
-      mAccount = acctManager->create( "pop", accountName() );
+      mAccount = acctManager->create( KAccount::Pop, accountName() );
       KMail::PopAccount *acct = static_cast<KMail::PopAccount*>( mAccount );
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
@@ -470,7 +470,7 @@ void AccountWizard::createAccount()
     }
     case AccountTypeBox::IMAP:
     {
-      mAccount = acctManager->create( "imap", accountName() );
+      mAccount = acctManager->create( KAccount::Imap, accountName() );
       KMAcctImap *acct = static_cast<KMAcctImap*>( mAccount );
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
@@ -480,7 +480,7 @@ void AccountWizard::createAccount()
     }
     case AccountTypeBox::dIMAP:
     {
-      mAccount = acctManager->create( "cachedimap", accountName() );
+      mAccount = acctManager->create( KAccount::DImap, accountName() );
       KMAcctCachedImap *acct = static_cast<KMAcctCachedImap*>( mAccount );
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
@@ -490,7 +490,7 @@ void AccountWizard::createAccount()
     }
     case AccountTypeBox::Maildir:
     {
-      mAccount = acctManager->create( "maildir", i18n( "Local Account" ) );
+      mAccount = acctManager->create( KAccount::Maildir, i18n( "Local Account" ) );
       static_cast<KMAcctMaildir*>( mAccount )->setLocation( mIncomingLocation->text() );
       break;
     }

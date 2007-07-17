@@ -32,7 +32,6 @@ public:
   QString procmailLockFileName(void) const { return mProcmailLockFileName; }
   void setProcmailLockFileName(const QString& s);
 
-  virtual QString type(void) const;
   virtual void processNewMail(bool);
   virtual void readConfig(KConfigGroup&);
   virtual void writeConfig(KConfigGroup&);

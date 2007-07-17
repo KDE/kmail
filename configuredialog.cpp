@@ -983,23 +983,20 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
   KMAcctSelDlg accountSelectorDialog( this );
   if( accountSelectorDialog.exec() != QDialog::Accepted ) return;
 
-  const char *accountType = 0;
+  KAccount::Type accountType;
   switch ( accountSelectorDialog.selected() ) {
-    case 0: accountType = "local";      break;
-    case 1: accountType = "pop";        break;
-    case 2: accountType = "imap";       break;
-    case 3: accountType = "cachedimap"; break;
-    case 4: accountType = "maildir";    break;
+    case 0: accountType = KAccount::Local;      break;
+    case 1: accountType = KAccount::Pop;        break;
+    case 2: accountType = KAccount::Imap;       break;
+    case 3: accountType = KAccount::DImap;      break;
+    case 4: accountType = KAccount::Maildir;    break;
 
     default:
-      // ### FIXME: How should this happen???
-      // replace with assert.
-      KMessageBox::sorry( this, i18n("Unknown account type selected") );
+      assert( 0 );
       return;
   }
 
-  KMAccount *account
-    = kmkernel->acctMgr()->create( QString::fromLatin1( accountType ) );
+  KMAccount *account = kmkernel->acctMgr()->create( accountType );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
     // recoverable?
@@ -1027,7 +1024,7 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
   QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, after );
   listItem->setText( 0, account->name() );
-  listItem->setText( 1, account->type() );
+  listItem->setText( 1, account->typeName() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1065,7 +1062,8 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         KMessageBox::sorry( this, i18n("Unable to locate account") );
         return;
       }
-      if ( account->type() == "imap" || account->type() == "cachedimap" )
+      if ( account->type() == KAccount::Imap ||
+           account->type() == KAccount::DImap )
       {
         ImapAccountBase* ai = static_cast<ImapAccountBase*>( account );
         if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
@@ -1096,7 +1094,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   account->setName( uniqueName( accountNames, account->name() ) );
 
   listItem->setText( 0, account->name() );
-  listItem->setText( 1, account->type() );
+  listItem->setText( 1, account->typeName() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1172,7 +1170,7 @@ void AccountsPage::ReceivingTab::doLoadOther() {
        a = kmkernel->acctMgr()->next() ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
     listItem->setText( 0, a->name() );
-    listItem->setText( 1, a->type() );
+    listItem->setText( 1, a->typeName() );
     if( a->folder() )
       listItem->setText( 2, a->folder()->label() );
     top = listItem;

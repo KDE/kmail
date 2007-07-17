@@ -41,13 +41,6 @@ KMAcctLocal::~KMAcctLocal()
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctLocal::type(void) const
-{
-  return "local";
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctLocal::init() {
   KMAccount::init();
 }

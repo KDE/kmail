@@ -1463,7 +1463,7 @@ void KMKernel::cleanupImapFolders()
   {
     KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-			  && ( acct->type() == "imap" )) )
+                      && ( acct->type() == KAccount::Imap )) )
     {
       ++it;
     } else {
@@ -1480,7 +1480,7 @@ void KMKernel::cleanupImapFolders()
   {
     KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-			  && ( acct->type() == "cachedimap" )) )
+			  && ( acct->type() == KAccount::DImap )) )
     {
       ++it;
     } else {
@@ -1495,7 +1495,7 @@ void KMKernel::cleanupImapFolders()
     KMFolderImap *fld;
     KMAcctImap *imapAcct;
 
-    if (acct->type() != "imap") continue;
+    if (acct->type() != KAccount::Imap) continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
       ->findOrCreate(QString::number(acct->id()), false, acct->id())->storage());
     fld->setNoContent(true);
@@ -1513,7 +1513,7 @@ void KMKernel::cleanupImapFolders()
     KMFolderCachedImap *cfld = 0;
     KMAcctCachedImap *cachedImapAcct;
 
-    if (acct->type() != "cachedimap" ) continue;
+    if (acct->type() != KAccount::DImap ) continue;
 
     KMFolder* fld = the_dimapFolderMgr->find(QString::number(acct->id()));
     if( fld )

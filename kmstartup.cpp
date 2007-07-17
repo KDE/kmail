@@ -105,7 +105,8 @@ void checkConfigUpdates() {
     "3.4a",
     "3.4b",
     "3.4.1",
-    "3.5.4"
+    "3.5.4",
+    "4.0-misc"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
   // Warning: do not remove entries in the above array, or the update-level check below will break

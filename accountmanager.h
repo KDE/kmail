@@ -56,9 +56,10 @@ class KMAIL_EXPORT AccountManager: public QObject
 
     /**
       Create a new account of given type with given name. Currently
-      the types "local" for local mail folders and "pop" are supported.
+      the types KAccount::Local for local mail folders and
+      KAccount::Pop are supported.
     */
-    KMAccount *create( const QString &type,
+    KMAccount *create( const KAccount::Type aType,
                        const QString &name = QString(),
                        uint id = 0 );
 

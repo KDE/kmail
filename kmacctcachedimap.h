@@ -72,7 +72,6 @@ public:
   /**
    * Inherited methods.
    */
-  virtual QString type() const;
   virtual void processNewMail( bool interactive );
 
   /**

@@ -69,11 +69,6 @@ KMAcctCachedImap::~KMAcctCachedImap()
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctCachedImap::type() const
-{
-  return "cachedimap";
-}
-
 void KMAcctCachedImap::init() {
   ImapAccountBase::init();
 }

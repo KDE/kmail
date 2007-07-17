@@ -3950,7 +3950,7 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
   bool hasImapAccount = false;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
        a = kmkernel->acctMgr()->next() ) {
-    if ( a->type() == "cachedimap" ) {
+    if ( a->type() == KAccount::DImap ) {
       hasImapAccount = true;
       break;
     }

@@ -72,7 +72,7 @@ void AccountManager::readConfig(void)
 {
   KConfig* config = KMKernel::config();
   KMAccount* acct;
-  QString acctType, acctName;
+  QString acctName;
   QString groupName;
   int i, num;
   uint id;
@@ -88,10 +88,9 @@ void AccountManager::readConfig(void)
   {
     groupName.sprintf("Account %d", i);
     KConfigGroup group(config, groupName);
-    acctType = group.readEntry("Type");
-    // Provide backwards compatibility
-    if (acctType == "advanced pop" || acctType == "experimental pop")
-      acctType = "pop";
+
+    KAccount::Type acctType = static_cast<KAccount::Type>( group.readEntry(
+        "Type", 42 ) );
     acctName = group.readEntry("Name");
     id = group.readEntry( "Id", 0 );
     if (acctName.isEmpty()) acctName = i18n("Account %1", i);
@@ -166,7 +165,8 @@ void AccountManager::processNextCheck( bool _newMail )
   }
   if ( !curAccount ) return; // no account or all of them are already checking
 
-  if ( curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
+  if ( curAccount->type() != KAccount::Imap && 
+       curAccount->type() != KAccount::DImap &&
        curAccount->folder() == 0 ) {
     QString tmp = i18n("Account %1 has no mailbox defined:\n"
         "mail checking aborted;\n"
@@ -194,30 +194,32 @@ void AccountManager::processNextCheck( bool _newMail )
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* AccountManager::create( const QString &aType, const QString &aName, uint id )
+KMAccount* AccountManager::create( const KAccount::Type aType,
+                                   const QString &aName, uint id )
 {
   KMAccount* act = 0;
   if ( id == 0 )
     id = createId();
 
-  if ( aType == "local" ) {
+  if ( aType == KAccount::Local) {
     act = new KMAcctLocal(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
     act->setFolder( kmkernel->inboxFolder() );
-  } else if ( aType == "maildir" ) {
+  } else if ( aType == KAccount::Maildir) {
     act = new KMAcctMaildir(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
     act->setFolder( kmkernel->inboxFolder() );
-  } else if ( aType == "pop" ) {
+  } else if ( aType == KAccount::Pop) {
     act = new KMail::PopAccount(this, aName.isEmpty() ? i18n("POP Account") : aName, id);
     act->setFolder( kmkernel->inboxFolder() );
-  } else if ( aType == "imap" ) {
+  } else if ( aType == KAccount::Imap) {
     act = new KMAcctImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
-  } else if (aType == "cachedimap") {
+  } else if (aType == KAccount::DImap) {
     act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
   }
   if ( !act ) {
       kWarning(5006) << "Attempt to instantiate a non-existing account type!" << endl;
       return 0;
   }
+  act->setType( aType );
   connect( act, SIGNAL( newMailsProcessed( const QMap<QString, int> & ) ),
                 this, SLOT( addToTotalNewMailCount( const QMap<QString, int> & ) ) );
   return act;

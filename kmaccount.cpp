@@ -167,7 +167,7 @@ void KMAccount::writeConfig(KConfigGroup& config)
   // ID, Name
   KAccount::writeConfig(config);
 
-  config.writeEntry("Type", type());
+  config.writeEntry("Type", static_cast<int> ( type() ) );
   config.writeEntry("Folder", mFolder ? mFolder->idString() : QString());
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
@@ -203,7 +203,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 
   // Save this one for readding
   KMFolderCachedImap* parent = 0;
-  if( type() == "cachedimap" )
+  if( type() == KAccount::DImap )
     parent = static_cast<KMFolderCachedImap*>( aMsg->storage() );
 
   // checks whether we should send delivery receipts
@@ -213,7 +213,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   // Set status of new messages that are marked as old to read, otherwise
   // the user won't see which messages newly arrived.
   // This is only valid for pop accounts and produces wrong stati for imap.
-  if ( type() != "cachedimap" && type() != "imap" ) {
+  if ( type() != KAccount::DImap && type() != KAccount::Imap ) {
     if ( aMsg->status().isOld() )
       aMsg->setStatus( MessageStatus::statusUnread() );  // -sanders
     //    aMsg->setStatus( MessageStatus::statusRead() );
@@ -239,7 +239,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   }
   else if (processResult == 1)
   {
-    if( type() == "cachedimap" )
+    if( type() == KAccount::DImap )
       ; // already done by caller: parent->addMsgInternal( aMsg, false );
     else {
       // TODO: Perhaps it would be best, if this if was handled by a virtual
@@ -269,8 +269,8 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   // Count number of new messages for each folder
   QString folderId;
   if ( processResult == 1 ) {
-    folderId = ( type() == "cachedimap" ) ? parent->folder()->idString()
-                                          : mFolder->idString();
+    folderId = ( type() == KAccount::DImap ) ? parent->folder()->idString()
+                                             : mFolder->idString();
   }
   else {
     folderId = aMsg->parent()->idString();

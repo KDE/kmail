@@ -89,11 +89,6 @@ public:
   static const int DefaultCheckInterval = 5;
 
   /**
-   * Returns type of the account
-   */
-  virtual QString type() const { return QString(); }
-
-  /**
    * Reimplemented, set account name
    */
   virtual void setName(const QString&);

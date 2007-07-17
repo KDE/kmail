@@ -97,13 +97,6 @@ KMAcctImap::~KMAcctImap()
   qDeleteAll( mOpenFolders );
 }
 
-
-//-----------------------------------------------------------------------------
-QString KMAcctImap::type() const
-{
-  return "imap";
-}
-
 //-----------------------------------------------------------------------------
 void KMAcctImap::pseudoAssign( const KMAccount * a ) {
   killAllJobs( true );
