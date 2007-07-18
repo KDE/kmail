@@ -51,9 +51,6 @@ class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
 
-namespace Kpgp {
-  class Config;
-}
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
