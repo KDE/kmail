@@ -2031,6 +2031,12 @@ void KMFolderTree::moveOrCopyFolder( QValueList<QGuardedPtr<KMFolder> > sources,
     }
   }
 
+  // de-select moved source folders (can cause crash due to unGetMsg() in KMHeaders)
+  if ( move ) {
+    doFolderSelected( indexOfFolder( destination ), false );
+    oldCurrent = currentItem();
+  }
+
   // do the actual move/copy
   for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
     KMFolder* source = *it;

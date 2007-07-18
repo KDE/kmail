@@ -1935,6 +1935,13 @@ KMCommand::Result KMCopyCommand::execute()
       idx = srcFolder->find(msgBase);
       assert(idx != -1);
       msg = srcFolder->getMsg(idx);
+      // corrupt IMAP cache, see FolderStorage::getMsg()
+      if ( msg == 0 ) {
+        KMessageBox::error( parentWidget(), i18n("Corrupt IMAP cache detected in folder %1. "
+            "Copying of messages aborted.").arg( srcFolder->prettyURL() ) );
+        deleteLater();
+        return Failed;
+      }
     }
 
     if (srcFolder && mDestFolder &&
