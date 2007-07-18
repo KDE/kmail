@@ -222,6 +222,10 @@
         <default>false</default>
         <label>Only filter mails received in disconnected IMAP inbox.</label>
       </entry>
+      <entry name="FilterGroupwareFolders" type="Bool">
+        <default>false</default>
+        <label>Also filter new mails received in groupware folders.</label>
+      </entry>
     </group>
 
     <group name="Internal">
