@@ -25,6 +25,11 @@
 #define kmacctseldlg_h
 
 #include <kdialog.h>
+#include <kaccount.h>
+
+class QButtonGroup;
+class QRadioButton;
+class QLayout;
 
 /** Select account from given list of account types */
 class KMAcctSelDlg: public KDialog
@@ -35,16 +40,18 @@ class KMAcctSelDlg: public KDialog
     KMAcctSelDlg( QWidget *parent=0 );
 
     /**
-     * Returns selected button from the account selection group:
-     * 0=local mail, 1=pop3.
+     * Returns selected button from the account selection group.
+     * By default, KAccount::Pop is selected.
      */
-    int selected(void) const;
-
-  private slots:
-    void buttonClicked(int);
+    KAccount::Type selected(void) const;
 
   private:
-    int mSelectedButton;
+
+    // Small Helper function which creates a new button and adds it to the
+    // layout and the button group.
+    QRadioButton *addButton( const KAccount::Type type, QLayout *layout );
+
+    QButtonGroup *mAccountTypeGroup;
 };
 
 

@@ -983,19 +983,7 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
   KMAcctSelDlg accountSelectorDialog( this );
   if( accountSelectorDialog.exec() != QDialog::Accepted ) return;
 
-  KAccount::Type accountType;
-  switch ( accountSelectorDialog.selected() ) {
-    case 0: accountType = KAccount::Local;      break;
-    case 1: accountType = KAccount::Pop;        break;
-    case 2: accountType = KAccount::Imap;       break;
-    case 3: accountType = KAccount::DImap;      break;
-    case 4: accountType = KAccount::Maildir;    break;
-
-    default:
-      assert( 0 );
-      return;
-  }
-
+  KAccount::Type accountType = accountSelectorDialog.selected();
   KMAccount *account = kmkernel->acctMgr()->create( accountType );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
@@ -1024,7 +1012,7 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
   QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, after );
   listItem->setText( 0, account->name() );
-  listItem->setText( 1, account->typeName() );
+  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1094,7 +1082,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   account->setName( uniqueName( accountNames, account->name() ) );
 
   listItem->setText( 0, account->name() );
-  listItem->setText( 1, account->typeName() );
+  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1170,7 +1158,7 @@ void AccountsPage::ReceivingTab::doLoadOther() {
        a = kmkernel->acctMgr()->next() ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
     listItem->setText( 0, a->name() );
-    listItem->setText( 1, a->typeName() );
+    listItem->setText( 1, KAccount::displayNameForType( a->type() ) );
     if( a->folder() )
       listItem->setText( 2, a->folder()->label() );
     top = listItem;

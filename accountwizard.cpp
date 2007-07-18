@@ -55,6 +55,7 @@ using namespace MailTransport;
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 #include <kvbox.h>
+#include <kmaccount.h>
 
 #include <QCheckBox>
 #include <QDir>
@@ -95,11 +96,11 @@ class AccountTypeBox : public QListWidget
     AccountTypeBox( QWidget *parent )
       : QListWidget( parent )
     {
-      mTypeList << i18n( "Local mailbox" );
-      mTypeList << i18n( "POP3" );
-      mTypeList << i18n( "IMAP" );
-      mTypeList << i18n( "Disconnected IMAP" );
-      mTypeList << i18n( "Maildir mailbox" );
+      mTypeList << KAccount::displayNameForType( KAccount::Local );
+      mTypeList << KAccount::displayNameForType( KAccount::Pop );
+      mTypeList << KAccount::displayNameForType( KAccount::Imap );
+      mTypeList << KAccount::displayNameForType( KAccount::DImap );
+      mTypeList << KAccount::displayNameForType( KAccount::Maildir );
 
       setSelectionBehavior( QAbstractItemView::SelectRows );
       addItems( mTypeList );

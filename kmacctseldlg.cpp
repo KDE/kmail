@@ -20,6 +20,7 @@
  *
  */
 
+#include "kmacctseldlg.h"
 
 #include <QGroupBox>
 #include <QButtonGroup>
@@ -28,8 +29,6 @@
 #include <QVBoxLayout>
 
 #include <klocale.h>
-
-#include "kmacctseldlg.moc"
 
 KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
   : KDialog( parent )
@@ -43,48 +42,37 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
   topLayout->setMargin( 0 );
 
   QGroupBox *group = new QGroupBox(i18n("Account Type"));
-
-  QButtonGroup *button = new QButtonGroup;
-  connect(button, SIGNAL(buttonClicked(int)), SLOT(buttonClicked(int)) );
-
   topLayout->addWidget( group, 10 );
+
   QVBoxLayout *vlay = new QVBoxLayout( group );
   vlay->setSpacing( spacingHint() );
   vlay->setMargin( spacingHint()*2 );
-  vlay->addSpacing( fontMetrics().lineSpacing() );
 
-  QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox") );
-  button->addButton(radioButton1,0);
-  vlay->addWidget( radioButton1 );
-  QRadioButton *radioButton2 = new QRadioButton( i18n("&POP3"));
-  button->addButton(radioButton2,1);
-  vlay->addWidget( radioButton2 );
-  QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"));
-  button->addButton(radioButton3,2);
-  vlay->addWidget( radioButton3 );
-  QRadioButton *radioButton4 = new QRadioButton( i18n("&Disconnected IMAP") );
-  button->addButton(radioButton4,3);
-  vlay->addWidget( radioButton4 );
-  QRadioButton *radioButton5 = new QRadioButton( i18n("&Maildir mailbox") );
-  button->addButton(radioButton5,4);
-  vlay->addWidget( radioButton5 );
-
-  vlay->addStretch( 10 );
+  mAccountTypeGroup = new QButtonGroup;
+  QRadioButton *radioButton1 = addButton( KAccount::Local, vlay );
+  QRadioButton *radioButton2 = addButton( KAccount::Pop, vlay );
+  QRadioButton *radioButton3 = addButton( KAccount::Imap, vlay );
+  QRadioButton *radioButton4 = addButton( KAccount::DImap, vlay );
+  QRadioButton *radioButton5 = addButton( KAccount::Maildir, vlay );
 
   radioButton2->setChecked(true); // Pop is most common ?
-  buttonClicked(1);
 }
 
-
-void KMAcctSelDlg::buttonClicked( int id )
+QRadioButton* KMAcctSelDlg::addButton( const KAccount::Type type, 
+                                       QLayout *layout )
 {
-  mSelectedButton = id;
+  QRadioButton *radioButton =
+      new QRadioButton( KAccount::displayNameForType (type ) );
+  mAccountTypeGroup->addButton( radioButton, type );
+  layout->addWidget( radioButton );
+  return radioButton;
 }
 
-
-int KMAcctSelDlg::selected( void ) const
+KAccount::Type KMAcctSelDlg::selected( void ) const
 {
-  return mSelectedButton;
+  return static_cast<KAccount::Type>( mAccountTypeGroup->checkedId() );
 }
+
+#include "kmacctseldlg.moc"
 
 
