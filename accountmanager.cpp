@@ -89,8 +89,7 @@ void AccountManager::readConfig(void)
     groupName.sprintf("Account %d", i);
     KConfigGroup group(config, groupName);
 
-    KAccount::Type acctType = static_cast<KAccount::Type>( group.readEntry(
-        "Type", 42 ) );
+    KAccount::Type acctType = KAccount::typeForName( group.readEntry( "Type" ) );
     acctName = group.readEntry("Name");
     id = group.readEntry( "Id", 0 );
     if (acctName.isEmpty()) acctName = i18n("Account %1", i);

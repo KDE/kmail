@@ -165,6 +165,13 @@ Group=FolderSelectionDialog
 RemoveKey=Size
 
 # Misc settings for KMail in KDE 4
+########## W A R N I N G #### W A R N I N G #### W A R N I N G #######
+# collection of small adjustments. Since updates will be added to this
+# script during the pre-4.0 development, trunk users should regularly
+# remove the "4.0-{misc,moves}-xx" keys from their kmailrc and kconf_updaterc.
+# For this to work, the script MUST be idempotent, ie. be robust
+# against being run multiple times.
+######################################################################
 Id=4.0-misc
 File=kmailrc
 Script=kmail-4.0-misc.pl,perl

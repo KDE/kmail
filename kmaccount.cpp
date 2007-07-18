@@ -167,7 +167,7 @@ void KMAccount::writeConfig(KConfigGroup& config)
   // ID, Name
   KAccount::writeConfig(config);
 
-  config.writeEntry("Type", static_cast<int> ( type() ) );
+  config.writeEntry("Type", KAccount::nameForType( type() ) );
   config.writeEntry("Folder", mFolder ? mFolder->idString() : QString());
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);

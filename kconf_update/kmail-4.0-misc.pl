@@ -22,23 +22,24 @@ while ( <> ) {
 my @accountGroups = grep { /^\[Account \d+\]/ } keys %configFile;
 
 # create new account type
-my $newType = 30;
+my $newType;
 foreach my $accountGroup (@accountGroups) {
     my $oldType = $configFile{$accountGroup}{'Type'};
-    if ( $oldType eq "pop" ) {
-        $newType = "6";
+    $newType = $oldType;
+    if ( $oldType eq "pop" or $oldType eq "6" ) {
+        $newType = "Pop";
     }
-    if ( $oldType eq "cachedimap" ) {
-        $newType = "4";
+    if ( $oldType eq "cachedimap" or $oldType eq "4" ) {
+        $newType = "DImap";
     }
-    if ( $oldType eq "local" ) {
-        $newType = "5";
+    if ( $oldType eq "local" or $oldType eq "5" ) {
+        $newType = "Local";
     }
-    if ( $oldType eq "maildir" ) {
-        $newType = "2";
+    if ( $oldType eq "maildir" or $oldType eq "2" ) {
+        $newType = "Maildir";
     }
-    if ( $oldType eq "imap" ) {
-        $newType = "0";
+    if ( $oldType eq "imap" or $oldType eq "0" ) {
+        $newType = "Imap";
     }
 
     # change the type entry this account
