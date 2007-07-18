@@ -23,6 +23,7 @@
 
 #include <kurl.h>
 #include <kxmlguiclient.h>
+#include <qguardedptr.h>
 #include <qlistview.h>
 #include <qvbox.h>
 #include <qvaluevector.h>
@@ -489,7 +490,7 @@ private:
   QVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
-  KMFolder     *mFolder;
+  QGuardedPtr<KMFolder> mFolder;
   KMFolder     *mTemplateFolder;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   KAction       *mlistFilterAction;

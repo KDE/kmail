@@ -357,13 +357,14 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
       break;
     }
   }
-  aFolder->parent()->remove(aFolder);
   // find the parent folder by stripping "." and ".directory" from the name
   QString parentName = fdir->name();
   parentName = parentName.mid( 1, parentName.length()-11 );
   KMFolderNode* parent = fdir->hasNamedFolder( parentName );
   if ( !parent && fdir->parent() ) // dimap obviously has a different structure
     parent = fdir->parent()->hasNamedFolder( parentName );
+  // aFolder will be deleted by the next call!
+  aFolder->parent()->remove(aFolder);
   // update the children state
   if ( parent )
     static_cast<KMFolder*>(parent)->storage()->updateChildrenState();
