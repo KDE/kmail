@@ -1980,7 +1980,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   // when the new folder is also an IMAP folder, because that's an
   // async operation and we don't want flicker if it results in just
   // a new splash.
-  bool newFolder = ( mFolder != aFolder );
+  bool newFolder = ( (KMFolder*)mFolder != aFolder );
   bool isNewImapFolder = aFolder && aFolder->folderType() == KMFolderTypeImap && newFolder;
   if( !mFolder
       || ( !isNewImapFolder && mShowBusySplashTimer )
@@ -3629,7 +3629,7 @@ void KMMainWidget::updateMessageActions()
       if(!(msg = mFolder->getMsg(aIdx)))
         return;
 
-      if (mFolder == kmkernel->outboxFolder())
+      if ((KMFolder*)mFolder == kmkernel->outboxFolder())
         mEditAction->setEnabled( !msg->transferInProgress() );
     }
 

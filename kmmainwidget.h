@@ -37,6 +37,7 @@
 #include <q3listview.h>
 #include <QMenu>
 #include <QHash>
+#include <QPointer>
 
 class Q3Accel;
 class QVBoxLayout;
@@ -504,7 +505,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KVBox        *mSearchAndHeaders;
     QToolBar     *mSearchToolBar;
     KMail::HeaderListQuickSearch *mQuickSearchLine;
-    KMFolder     *mFolder;
+    QPointer<KMFolder> mFolder;
     KMFolder     *mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
