@@ -21,36 +21,31 @@
 #ifndef searchwindow_h
 #define searchwindow_h
 
-#include <kdialog.h>
-#include <kxmlguiclient.h>
-
-//Added by qt3to4:
-#include <QStringList>
 #include <QPointer>
-
-#include <QCloseEvent>
-#include <QGridLayout>
-#include <QKeyEvent>
-#include <QLabel>
 #include <QList>
 
+#include <KDialog>
+#include <KXMLGUIClient>
+
 class QCheckBox;
-class QGridLayout;
+class QCloseEvent;
+class QKeyEvent;
 class QLabel;
 class QLineEdit;
 class K3ListView;
 class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
-class KAction;
 class KActionMenu;
 class KMFolder;
 class KMFolderSearch;
 class KMMainWidget;
 class KMMessage;
+class KMMsgBase;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
+
 namespace KMail {
   class FolderRequester;
 }

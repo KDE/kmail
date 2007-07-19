@@ -18,57 +18,55 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#include "kmcommands.h"
 #include "searchwindow.h"
-#include "kmmainwidget.h"
-#include "kmmsgdict.h"
-#include "kmmsgpart.h"
-#include "kmfolderimap.h"
+
+#include <QCheckBox>
+#include <QCloseEvent>
+#include <QComboBox>
+#include <QCursor>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
+#include <Q3PopupMenu>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QVBoxLayout>
+
+#include <KActionMenu>
+#include <KConfig>
+#include <KConfigGroup>
+#include <KDebug>
+#include <KIcon>
+#include <KIconLoader>
+#include <KLineEdit>
+#include <KStandardAction>
+#include <KStandardGuiItem>
+#include <kstatusbar.h>
+#include <KWindowSystem>
+
+#include "folderrequester.h"
+#include "kmcommands.h"
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
 #include "kmfoldertree.h"
 #include "kmheaders.h"
+#include "kmmainwidget.h"
+#include "kmmsgdict.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
-#include "folderrequester.h"
-#include "regexplineedit.h"
 #include "messagecopyhelper.h"
+#include "regexplineedit.h"
 #include "textsource.h"
-
-#include <kactionmenu.h>
-#include <kdebug.h>
-#include <kstatusbar.h>
-#include <kwindowsystem.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <kstandardaction.h>
-#include <kpushbutton.h>
-#include <kicon.h>
-#include <QCheckBox>
-#include <QLayout>
-//Added by qt3to4:
-#include <QCloseEvent>
-#include <QKeyEvent>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <klineedit.h>
-#include <QPushButton>
-#include <QRadioButton>
-#include <Q3PopupMenu>
-#include <QComboBox>
-#include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
-#include <QCursor>
 
 #include <maillistdrag.h>
 using namespace KPIM;
 
-#include <mimelib/enum.h>
 #include <mimelib/boyermor.h>
+#include <mimelib/enum.h>
 
 #include <assert.h>
 #include <stdlib.h>
-#include <kiconloader.h>
 
 namespace KMail {
 
