@@ -2838,6 +2838,10 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
       connect( command, SIGNAL(completed(KMCommand*)),
                SLOT(slotRescueDone(KMCommand*)) );
       ++mRescueCommandCount;
+    } else {
+      // nothing to rescue, close folder
+      // (we don't need to close it in the other case, it will be deleted anyway)
+      folder->close();
     }
   }
   if ( folder->child() ) {
@@ -2850,16 +2854,15 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
       node = folder->child()->next();
     }
   }
- int msgCount = folder->count();
- folder->close();
- if ( root && msgCount == 0 )
+ if ( root )
     slotRescueDone( 0 ); // just in case there is nothing to rescue
 }
 
 void KMFolderCachedImap::slotRescueDone(KMCommand * command)
 {
   // FIXME: check command result
-  --mRescueCommandCount;
+  if ( command )
+    --mRescueCommandCount;
   if ( mRescueCommandCount > 0 )
     return;
   for ( QValueList<KMFolder*>::ConstIterator it = mToBeDeletedAfterRescue.constBegin();
