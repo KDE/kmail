@@ -27,8 +27,8 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QMenu>
 #include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
-#include <Q3PopupMenu>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QVBoxLayout>
@@ -795,10 +795,10 @@ void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &
     updateContextMenuActions();
 
     mMenuToFolder.clear();
-    Q3PopupMenu *msgMoveMenu = new Q3PopupMenu(menu);
+    QMenu *msgMoveMenu = new QMenu(menu);
     mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage,
         this, &mMenuToFolder, msgMoveMenu );
-    Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
+    QMenu *msgCopyMenu = new QMenu(menu);
     mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage,
         this, &mMenuToFolder, msgCopyMenu );
 
