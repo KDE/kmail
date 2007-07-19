@@ -1778,9 +1778,6 @@ void KMMainWidget::slotStartCertManager()
                                     i18n( "KMail Error" ) );
   else
     kDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
-  // process continues to run even after the K3Process object goes
-  // out of scope here, since it is started in DontCare run mode.
-
 }
 
 //-----------------------------------------------------------------------------
