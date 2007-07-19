@@ -288,7 +288,7 @@ void KMFolder::setChild( KMFolderDir* aChild )
 
 bool KMFolder::noContent() const
 {
-  return mStorage->noContent();
+  return mStorage ? mStorage->noContent() : true;
 }
 
 void KMFolder::setNoContent( bool aNoContent )
