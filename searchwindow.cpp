@@ -29,7 +29,6 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QMenu>
-#include <QPushButton>
 #include <QRadioButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -41,6 +40,7 @@
 #include <KIcon>
 #include <KIconLoader>
 #include <KLineEdit>
+#include <KPushButton>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <kstatusbar.h>
@@ -111,7 +111,7 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
-  KDialog(0),
+  QWidget(0),
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
@@ -121,11 +121,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLastFocus(0),
   mKMMainWidget(w)
 {
-  setCaption( i18n("Find Messages") );
-  setButtons( User1 | User2 | Close );
-  setDefaultButton( User1 );
-  setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
-  setButtonGuiItem( User2, KStandardGuiItem::stop() );
+  setWindowTitle( i18n("Find Messages") );
+  setAttribute( Qt::WA_DeleteOnClose );
 #ifdef Q_OS_UNIX
   KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 #endif
@@ -136,41 +133,35 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   QWidget* searchWidget = new QWidget(this);
   QVBoxLayout *vbl = new QVBoxLayout( searchWidget );
   vbl->setObjectName( "kmfs_vbl" );
-  vbl->setSpacing( spacingHint() );
   vbl->setMargin( 0 );
 
-  QGroupBox * radioGroup = new QGroupBox( searchWidget );
-
-  mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), radioGroup );
-  vbl->addWidget( mChkbxAllFolders );
+  QFrame * radioFrame = new QFrame( searchWidget );
+  QVBoxLayout * radioLayout = new QVBoxLayout( radioFrame );
+  mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget );
 
   QHBoxLayout *hbl = new QHBoxLayout();
-  vbl->addLayout( hbl );
   hbl->setObjectName( "kmfs_hbl" );
-  hbl->setSpacing( spacingHint() );
 
-  mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), radioGroup );
-  hbl->addWidget(mChkbxSpecificFolders);
+  mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget );
   mChkbxSpecificFolders->setChecked(true);
 
   mCbxFolders = new FolderRequester( searchWidget,
       kmkernel->getKMMainWidget()->folderTree() );
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
-  hbl->addWidget(mCbxFolders);
 
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
-  hbl->addWidget(mChkSubFolders);
 
-  QWidget *spacer = new QWidget( searchWidget );
-  spacer->setObjectName( "spacer" );
-  spacer->setMinimumHeight( 2 );
-  vbl->addWidget( spacer );
+  radioLayout->addWidget( mChkbxAllFolders );
+  hbl->addWidget(mChkbxSpecificFolders);
+  hbl->addWidget(mCbxFolders);
+  hbl->addWidget(mChkSubFolders);
+  radioLayout->addLayout( hbl );
+
 
   mPatternEdit = new KMSearchPatternEdit( "", searchWidget , false, true );
   mPatternEdit->setFlat( true );
-  mPatternEdit->setContentsMargins( 0, 0, 0, 0 );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
   if (curFolder)
@@ -194,7 +185,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   mPatternEdit->setSearchPattern( mSearchPattern );
 
-  vbl->addWidget( mPatternEdit );
 
   // enable/disable widgets depending on radio buttons:
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
@@ -204,8 +194,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
+
   mLbxMatches = new MatchListView(searchWidget, this);
   mLbxMatches->setObjectName( "Find Messages" );
+  mLbxMatches->setAlternatingRowColors( true );
 
   /*
      Default is to sort by date. TODO: Unfortunately this sorts *while*
@@ -243,14 +235,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
            this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
   mLbxMatches->setDragEnabled( true );
 
-  vbl->addWidget(mLbxMatches);
 
   QHBoxLayout *hbl2 = new QHBoxLayout();
-  vbl->addLayout( hbl2 );
   hbl2->setObjectName( "kmfs_hbl2" );
-  hbl2->setSpacing( spacingHint() );
   mSearchFolderLbl = new QLabel(i18n("Search folder &name:"),searchWidget);
-  hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
   if (searchFolder)
     mSearchFolderEdt->setText(searchFolder->folder()->name());
@@ -258,26 +246,27 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
     mSearchFolderEdt->setText(i18n("Last Search"));
 
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
-  hbl2->addWidget(mSearchFolderEdt);
-  mSearchFolderBtn = new QPushButton(i18n("&Rename"), searchWidget);
+  mSearchFolderBtn = new KPushButton(i18n("&Rename"), searchWidget);
   mSearchFolderBtn->setEnabled(false);
-  hbl2->addWidget(mSearchFolderBtn);
-  mSearchFolderOpenBtn = new QPushButton(i18n("Op&en"), searchWidget);
+  mSearchFolderOpenBtn = new KPushButton(i18n("Op&en"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
-  hbl2->addWidget(mSearchFolderOpenBtn);
   connect( mSearchFolderEdt, SIGNAL( textChanged( const QString &)),
            this, SLOT( updateCreateButton( const QString & )));
   connect( mSearchFolderBtn, SIGNAL( clicked() ),
            this, SLOT( renameSearchFolder() ));
   connect( mSearchFolderOpenBtn, SIGNAL( clicked() ),
            this, SLOT( openSearchFolder() ));
+  hbl2->addWidget(mSearchFolderLbl);
+  hbl2->addWidget(mSearchFolderEdt);
+  hbl2->addWidget(mSearchFolderBtn);
+  hbl2->addWidget(mSearchFolderOpenBtn);
+
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertPermanentItem(i18n("AMiddleLengthText..."), 0);
   mStatusBar->changeItem(i18n("Ready."), 0);
   mStatusBar->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
   mStatusBar->insertPermanentItem(QString(), 1, 1);
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
-  vbl->addWidget(mStatusBar);
 
   int mainWidth = group.readEntry("SearchWidgetWidth", 0 );
   int mainHeight = group.readEntry("SearchWidgetHeight", 0 );
@@ -285,15 +274,33 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   if (mainWidth || mainHeight)
     resize(mainWidth, mainHeight);
 
-  setMainWidget(searchWidget);
-  setButtonsOrientation(Qt::Vertical);
+  //Create the search, stop and close buttons
+  QVBoxLayout *buttonLayout = new QVBoxLayout();
+  mSearchButton = new KPushButton( this );
+  mSearchButton->setGuiItem( KGuiItem( i18n("Search"), "edit-find" ) );
+  mStopButton = new KPushButton( this );
+  mStopButton->setGuiItem( KStandardGuiItem::Stop );
+  mStopButton->setEnabled( false );
+  mCloseButton = new KPushButton( this );
+  mCloseButton->setGuiItem( KStandardGuiItem::Close );
+  buttonLayout->addWidget( mSearchButton );
+  buttonLayout->addWidget( mStopButton );
+  buttonLayout->addStretch( 100 );
+  buttonLayout->addWidget( mCloseButton );
 
-  enableButton(User2, false);
+  //Bring all the layouts together
+  vbl->addWidget( radioFrame );
+  vbl->addWidget( mPatternEdit );
+  vbl->addWidget( mLbxMatches );
+  vbl->addLayout( hbl2 );
+  vbl->addWidget( mStatusBar );
+  QHBoxLayout *mainLayout = new QHBoxLayout( this );
+  mainLayout->addWidget( searchWidget );
+  mainLayout->addLayout( buttonLayout );
 
-  connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
-  connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
-  connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
-  connect(this,SIGNAL(closeClicked()),this,SLOT(slotClose()));
+  connect(mSearchButton, SIGNAL(clicked(bool)), SLOT(slotSearch()));
+  connect(mStopButton, SIGNAL(clicked(bool)), SLOT(slotStop()));
+  connect(mCloseButton,SIGNAL(clicked(bool)),this,SLOT(slotClose()));
   // give focus to the value field of the first search rule
   RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
   if ( r )
@@ -375,7 +382,7 @@ void SearchWindow::setEnabledSearchButton( bool )
   //Before when we selected a folder == "Local Folder" as that it was not a folder
   //search button was disable, and when we select "Search in all local folder"
   //Search button was never enabled :(
-  enableButton( User1, true );
+  mSearchButton->setEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -387,6 +394,7 @@ void SearchWindow::updStatus(void)
     QString folderName;
     if (search) {
         numMatches = search->foundCount();
+        count = search->searchCount();
         folderName = search->currentFolder();
     }
 
@@ -424,8 +432,12 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
         mFolder->stopSearch();
         return;
     }
+    if (evt->key() == Qt::Key_Return && !searching) {
+        slotSearch();
+        return;
+    }
 
-    KDialog::keyPressEvent(evt);
+    QWidget::keyPressEvent(evt);
 }
 
 
@@ -446,14 +458,13 @@ void SearchWindow::activateFolder(KMFolder *curFolder)
 void SearchWindow::slotSearch()
 {
   mLastFocus = focusWidget();
-  setButtonFocus( User1 );     // set focus so we don't miss key event
 
   mStopped = false;
   mFetchingInProgress = 0;
 
   mSearchFolderOpenBtn->setEnabled( true );
-  enableButton( User1, false );
-  enableButton( User2, true );
+  mSearchButton->setEnabled( false );
+  mStopButton->setEnabled( true );
 
   mLbxMatches->clear();
 
@@ -593,13 +604,13 @@ void SearchWindow::slotStop()
     mFolder->stopSearch();
   }
   mStopped = true;
-  enableButton( User2, false );
+  mStopButton->setEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotClose()
 {
-  accept();
+  close();
 }
 
 
@@ -613,7 +624,7 @@ void SearchWindow::closeEvent(QCloseEvent *e)
     mFolder->setSearch( new KMSearch() );
     QTimer::singleShot( 0, this, SLOT( slotClose() ) );
   } else {
-    KDialog::closeEvent( e );
+    QWidget::closeEvent( e );
   }
 }
 
@@ -691,14 +702,14 @@ void SearchWindow::enableGUI()
 {
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
-    enableButton(KDialog::Close, !searching);
+    mCloseButton->setEnabled(!searching);
     mCbxFolders->setEnabled(!searching);
     mChkSubFolders->setEnabled(!searching);
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);
-    enableButton(User1, !searching);
-    enableButton(User2, searching);
+    mSearchButton->setEnabled(!searching);
+    mStopButton->setEnabled(searching);
 }
 
 

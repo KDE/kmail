@@ -33,7 +33,6 @@ class QCloseEvent;
 class QKeyEvent;
 class QLabel;
 class QLineEdit;
-class QPushButton;
 class QRadioButton;
 class KActionMenu;
 class KMFolder;
@@ -58,7 +57,7 @@ namespace KMail {
    * results in a listview and allows triggering of operations such as printing
    * or moving on them.
    */
-class SearchWindow: public KDialog, virtual public KXMLGUIClient
+class SearchWindow: public QWidget, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -154,8 +153,11 @@ protected:
   MatchListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
-  QPushButton *mSearchFolderBtn;
-  QPushButton *mSearchFolderOpenBtn;
+  KPushButton *mSearchFolderBtn;
+  KPushButton *mSearchFolderOpenBtn;
+  KPushButton *mStopButton;
+  KPushButton *mSearchButton;
+  KPushButton *mCloseButton;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<QAction*,KMFolder*> mMenuToFolder;
