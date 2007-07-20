@@ -24,13 +24,14 @@
 #include <QCloseEvent>
 #include <QComboBox>
 #include <QCursor>
+#include <QHeaderView>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QMenu>
-#include <QObject> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <QPushButton>
 #include <QRadioButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 #include <KActionMenu>
@@ -72,50 +73,41 @@ namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
 
-// KListView sub-class for dnd support
-class MatchListView : public K3ListView
-{
-  public:
-    MatchListView( QWidget *parent, SearchWindow* sw ) :
-      K3ListView( parent ),
+MatchListView::MatchListView( QWidget *parent, SearchWindow* sw ) :
+      QTreeWidget( parent ),
       mSearchWindow( sw )
-    {}
+{}
 
-  protected:
-    virtual Q3DragObject* dragObject()
-    {
-      QList<KMMsgBase*> list = mSearchWindow->selectedMessages();
-      MailList mailList;
-      foreach ( KMMsgBase* msg, list ) {
-        if ( !msg )
-          continue;
-        MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
-                                 msg->subject(), msg->fromStrip(),
-                                 msg->toStrip(), msg->date() );
-        mailList.append( mailSummary );
-      }
-      QDrag *drag = new QDrag( viewport() );
-      drag->setMimeData( new QMimeData );
-      mailList.populateMimeData( drag->mimeData(), new KMTextSource );
+void MatchListView::contextMenuEvent( QContextMenuEvent* event )
+{
+  emit contextMenuRequested( itemAt( event->pos() ) );
+}
 
-      QPixmap pixmap;
-      if( mailList.count() == 1 )
-        pixmap = QPixmap( DesktopIcon("message", K3Icon::SizeSmall) );
-      else
-        pixmap = QPixmap( DesktopIcon("kmultiple", K3Icon::SizeSmall) );
+void MatchListView::startDrag ( Qt::DropActions supportedActions ) 
+{
+  QList<KMMsgBase*> list = mSearchWindow->selectedMessages();
+  MailList mailList;
+  foreach ( KMMsgBase* msg, list ) {
+    if ( !msg )
+      continue;
+    MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
+                             msg->subject(), msg->fromStrip(),
+                             msg->toStrip(), msg->date() );
+    mailList.append( mailSummary );
+  }
+  QDrag *drag = new QDrag( viewport() );
+  drag->setMimeData( new QMimeData );
+  mailList.populateMimeData( drag->mimeData(), new KMTextSource );
 
-      drag->setPixmap( pixmap );
-#ifdef __GNUC__
-#warning Fix me: QDrag incompatible with K3ListView::dragObject!
-#endif
-//      return drag;
-      drag->start();
-      return 0;
-    }
+  QPixmap pixmap;
+  if( mailList.count() == 1 )
+    pixmap = QPixmap( DesktopIcon("message", K3Icon::SizeSmall) );
+  else
+    pixmap = QPixmap( DesktopIcon("kmultiple", K3Icon::SizeSmall) );
 
-  private:
-    SearchWindow* mSearchWindow;
-};
+  drag->setPixmap( pixmap );
+  drag->exec( supportedActions );
+}
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
@@ -197,15 +189,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
       }
       mFolder = searchFolder;
   }
+  else
+      mSearchPattern->append( KMSearchRule::createInstance( "Subject" ) );
+
   mPatternEdit->setSearchPattern( mSearchPattern );
-  QObjectList list = mPatternEdit->queryList( 0, "mRuleField" );
-  QObject *object = 0;
-  if ( !list.isEmpty() )
-      object = list.first();
-  if (!searchFolder && object && ::qobject_cast<QComboBox*>(object)) {
-      QComboBox *box = static_cast<QComboBox*>(object);
-      box->setItemText( box->currentIndex(), "Subject" );
-  }
 
   vbl->addWidget( mPatternEdit );
 
@@ -230,31 +217,30 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
      solves the above problem, but speeds searches with many hits
      up considerably. - till
 
-     TODO: subclass K3ListViewItem and do proper (and performant)
+     TODO: subclass QTreeWidgetItem and do proper (and performant)
      comapare functions
   */
-  mLbxMatches->setSorting(2, false);
-  mLbxMatches->setShowSortIndicator(true);
-  mLbxMatches->setAllColumnsShowFocus(true);
-  mLbxMatches->setSelectionModeExt(K3ListView::Extended);
-  mLbxMatches->addColumn(i18n("Subject"),
-      group.readEntry( "SubjectWidth", 150 ) );
-  mLbxMatches->addColumn(i18n("Sender/Receiver"),
-      group.readEntry( "SenderWidth", 120 ) );
-  mLbxMatches->addColumn(i18n("Date"),
-      group.readEntry( "DateWidth", 120 ) );
-  mLbxMatches->addColumn(i18n("Folder"),
-      group.readEntry( "FolderWidth", 100 ) );
+  mLbxMatches->setSortingEnabled( true );
+  mLbxMatches->sortItems( 2, Qt::DescendingOrder );
+  mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+  mLbxMatches->setAllColumnsShowFocus( true );
+  mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
+  QStringList headerNames;
+  headerNames << i18n("Subject") << i18n("Sender/Receiver") << i18n("Date") 
+              << i18n("Folder") << "";
+  mLbxMatches->setHeaderLabels( headerNames ); 
+  mLbxMatches->header()->setStretchLastSection( false );
+  mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
+  mLbxMatches->setColumnWidth( 0, group.readEntry( "SubjectWidth", 150 ) );
+  mLbxMatches->setColumnWidth( 1, group.readEntry( "SenderWidth", 120 ) );
+  mLbxMatches->setColumnWidth( 2, group.readEntry( "DateWidth", 120 ) );
+  mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
+  mLbxMatches->setColumnWidth( 4, 0 );
 
-  mLbxMatches->addColumn(""); // should be hidden
-  mLbxMatches->setColumnWidthMode( MSGID_COLUMN, Q3ListView::Manual );
-  mLbxMatches->setColumnWidth(MSGID_COLUMN, 0);
-  mLbxMatches->header()->setResizeEnabled(false, MSGID_COLUMN);
-
-  connect(mLbxMatches, SIGNAL(doubleClicked(Q3ListViewItem *)),
-          this, SLOT(slotShowMsg(Q3ListViewItem *)));
-  connect( mLbxMatches, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int )),
-           this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int )));
+  connect(mLbxMatches, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+          this, SLOT(slotShowMsg(QTreeWidgetItem *,int)));
+  connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
+           this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
   mLbxMatches->setDragEnabled( true );
 
   vbl->addWidget(mLbxMatches);
@@ -472,9 +458,8 @@ void SearchWindow::slotSearch()
   mLbxMatches->clear();
 
   mSortColumn = mLbxMatches->sortColumn();
-  mSortOrder = mLbxMatches->sortOrder();
-  mLbxMatches->setSorting( -1 );
-  mLbxMatches->setShowSortIndicator( false );
+  mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
+  mLbxMatches->setSortingEnabled( false );
 
   // If we haven't openend an existing search folder, find or create one.
   if ( !mFolder ) {
@@ -545,8 +530,8 @@ void SearchWindow::searchDone()
     if (mCloseRequested)
         close();
 
-    mLbxMatches->setSorting(mSortColumn, mSortOrder == Qt::Ascending);
-    mLbxMatches->setShowSortIndicator(true);
+    mLbxMatches->setSortingEnabled( true );
+    mLbxMatches->sortByColumn( mSortColumn, mSortOrder );
 }
 
 void SearchWindow::slotAddMsg( int idx )
@@ -573,9 +558,13 @@ void SearchWindow::slotAddMsg( int idx )
     fName = pFolder->name();
   }
 
-  (void)new K3ListViewItem( mLbxMatches, mLbxMatches->lastItem(),
-                            msg->subject(), from, msg->dateIsoStr(),
-                            fName, QString::number( mFolder->serNum( idx ) ) );
+  QTreeWidgetItem *newItem = new QTreeWidgetItem( mLbxMatches );
+  newItem->setText( 0, msg->subject() );
+  newItem->setText( 1, from );
+  newItem->setText( 2, msg->dateIsoStr() );
+  newItem->setText( 3, fName );
+  newItem->setText( 4 ,QString::number( mFolder->serNum( idx ) ) );
+  mLbxMatches->addTopLevelItem( newItem );
   if ( unget ) {
     mFolder->unGetMsg( idx );
   }
@@ -585,11 +574,12 @@ void SearchWindow::slotRemoveMsg(KMFolder *, quint32 serNum)
 {
     if (!mFolder)
         return;
-    Q3ListViewItemIterator it(mLbxMatches);
-    while (it.current()) {
-        Q3ListViewItem *item = *it;
+    QTreeWidgetItemIterator it(mLbxMatches);
+    while ( (*it) ) {
+        QTreeWidgetItem *item = *it;
         if (serNum == (*it)->text(MSGID_COLUMN).toUInt()) {
-            delete item;
+            delete mLbxMatches->takeTopLevelItem(
+                mLbxMatches->indexOfTopLevelItem( item ) );
             return;
         }
         ++it;
@@ -674,7 +664,7 @@ void SearchWindow::folderInvalidated(KMFolder *folder)
 }
 
 //-----------------------------------------------------------------------------
-bool SearchWindow::slotShowMsg(Q3ListViewItem *item)
+bool SearchWindow::slotShowMsg(QTreeWidgetItem *item,int)
 {
     if(!item)
         return false;
@@ -718,8 +708,8 @@ QList<KMMsgBase*> SearchWindow::selectedMessages()
     QList<KMMsgBase*> msgList;
     KMFolder* folder = 0;
     int msgIndex = -1;
-    for (Q3ListViewItemIterator it(mLbxMatches); it.current(); it++)
-        if (it.current()->isSelected()) {
+    for (QTreeWidgetItemIterator it(mLbxMatches); (*it); it++)
+        if ((*it)->isSelected()) {
             KMMsgDict::instance()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
                                            &folder, &msgIndex);
             if (folder && msgIndex >= 0)
@@ -731,7 +721,7 @@ QList<KMMsgBase*> SearchWindow::selectedMessages()
 //-----------------------------------------------------------------------------
 KMMessage* SearchWindow::message()
 {
-    Q3ListViewItem *item = mLbxMatches->currentItem();
+    QTreeWidgetItem *item = mLbxMatches->currentItem();
     KMFolder* folder = 0;
     int msgIndex = -1;
     if (!item)
@@ -782,11 +772,11 @@ void SearchWindow::updateContextMenuActions()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &, int )
+void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
 {
     if (!lvi)
         return;
-    mLbxMatches->setSelected( lvi, true );
+    lvi->setSelected( lvi );
     mLbxMatches->setCurrentItem( lvi );
     // FIXME is this ever unGetMsg()'d?
     if (!message())

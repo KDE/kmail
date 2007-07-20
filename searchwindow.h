@@ -21,8 +21,9 @@
 #ifndef searchwindow_h
 #define searchwindow_h
 
-#include <QPointer>
 #include <QList>
+#include <QPointer>
+#include <QTreeWidget>
 
 #include <KDialog>
 #include <KXMLGUIClient>
@@ -32,8 +33,6 @@ class QCloseEvent;
 class QKeyEvent;
 class QLabel;
 class QLineEdit;
-class K3ListView;
-class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
 class KActionMenu;
@@ -48,6 +47,7 @@ class KStatusBar;
 
 namespace KMail {
   class FolderRequester;
+  class MatchListView;
 }
 
 namespace KMail {
@@ -103,9 +103,9 @@ protected slots:
   void renameSearchFolder();
   void openSearchFolder();
   void folderInvalidated(KMFolder *);
-  virtual bool slotShowMsg(Q3ListViewItem *);
+  virtual bool slotShowMsg(QTreeWidgetItem *,int);
   virtual void updateContextMenuActions();
-  virtual void slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int );
+  virtual void slotContextMenuRequested( QTreeWidgetItem* );
   virtual void copySelectedToFolder( QAction* );
   virtual void moveSelectedToFolder( QAction* );
   virtual void slotFolderActivated();
@@ -151,7 +151,7 @@ protected:
   QRadioButton *mChkbxSpecificFolders;
   KMail::FolderRequester *mCbxFolders;
   QCheckBox *mChkSubFolders;
-  K3ListView* mLbxMatches;
+  MatchListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
   QPushButton *mSearchFolderBtn;
@@ -171,6 +171,26 @@ protected:
   KMSearchPattern *mSearchPattern;
 
   static const int MSGID_COLUMN;
+};
+
+// QTreeWidget sub-class for dnd support
+// Internal, only used by SearchWindow.
+class MatchListView : public QTreeWidget
+{
+  Q_OBJECT
+
+  public:
+    MatchListView( QWidget *parent, SearchWindow* sw );
+
+  protected:
+
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual void startDrag( Qt::DropActions supportedActions );
+
+  private:
+    SearchWindow* mSearchWindow;
+  signals:
+    void contextMenuRequested( QTreeWidgetItem* item );
 };
 
 } // namespace KMail
