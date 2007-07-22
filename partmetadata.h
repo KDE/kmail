@@ -17,7 +17,7 @@
 #ifndef _KMAIL_PARTMETADATA_H_
 #define _KMAIL_PARTMETADATA_H_
 
-#include <kleo/cryptplugwrapper.h>
+#include "libkleo/cryptplugwrapper.h"
 
 #include <libkpgp/kpgp.h>
 #include <QString>

@@ -40,7 +40,7 @@
 #include <QByteArray>
 
 #include <mimelib/mediatyp.h>
-#include <kleo/cryptobackend.h>
+#include "libkleo/kleo/cryptobackend.h"
 #include <libkpgp/kpgp.h>
 
 #include <vector>

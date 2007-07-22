@@ -32,7 +32,7 @@
 #ifndef __KDEPIM_KMAIL_KLEO_UTIL_H__
 #define __KDEPIM_KMAIL_KLEO_UTIL_H__
 
-#include <kleo/enum.h>
+#include "libkleo/kleo/enum.h"
 
 static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
   Kleo::AutoFormat,

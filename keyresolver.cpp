@@ -40,10 +40,10 @@
 #include "kleo_util.h"
 
 #include <kpimutils/email.h>
-#include <kleo/ui/keyselectiondialog.h>
-#include <kleo/cryptobackendfactory.h>
-#include <kleo/keylistjob.h>
-#include <kleo/dn.h>
+#include "libkleo/ui/keyselectiondialog.h"
+#include "libkleo/kleo/cryptobackendfactory.h"
+#include "libkleo/kleo/keylistjob.h"
+#include "libkleo/kleo/dn.h"
 
 #include <gpgmepp/key.h>
 #include <gpgmepp/keylistresult.h>

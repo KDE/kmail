@@ -70,11 +70,11 @@ using KMail::IdentityDialog;
 #include <kpimidentities/identity.h>
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;
-#include <kleo/cryptoconfig.h>
-#include <kleo/cryptobackendfactory.h>
-#include <kleo/ui/backendconfigwidget.h>
-#include <kleo/ui/keyrequester.h>
-#include <kleo/ui/keyselectiondialog.h>
+#include "libkleo/kleo/cryptoconfig.h"
+#include "libkleo/kleo/cryptobackendfactory.h"
+#include "libkleo/ui/backendconfigwidget.h"
+#include "libkleo/ui/keyrequester.h"
+#include "libkleo/ui/keyselectiondialog.h"
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;

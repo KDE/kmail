@@ -52,7 +52,7 @@
 #include <libkdepim/addresseelineedit.h>
 #include <mimelib/mediatyp.h>
 
-#include <kleo/enum.h>
+#include "libkleo/kleo/enum.h"
 
 class QCloseEvent;
 class QComboBox;

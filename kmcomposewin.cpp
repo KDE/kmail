@@ -65,11 +65,11 @@ using KRecentAddress::RecentAddresses;
 #include <kpimidentities/identity.h>
 #include <kpimutils/kfileio.h>
 #include <kpimutils/email.h>
-#include <kleo/cryptobackendfactory.h>
-#include <kleo/exportjob.h>
-#include <kleo/specialjob.h>
-#include <kleo/ui/progressdialog.h>
-#include <kleo/ui/keyselectiondialog.h>
+#include "libkleo/kleo/cryptobackendfactory.h"
+#include "libkleo/kleo/exportjob.h"
+#include "libkleo/kleo/specialjob.h"
+#include "libkleo/ui/progressdialog.h"
+#include "libkleo/ui/keyselectiondialog.h"
 
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>

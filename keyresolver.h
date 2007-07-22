@@ -37,9 +37,8 @@
 #ifndef __KLEO_KEYRESOLVER_H__
 #define __KLEO_KEYRESOLVER_H__
 
-#include <kleo/ui/keyapprovaldialog.h>
-
-#include <kleo/enum.h>
+#include "libkleo/ui/keyapprovaldialog.h"
+#include "libkleo/kleo/enum.h"
 
 #include <libkpgp/kpgp.h> // for Kpgp::Result
 #include <gpgmepp/key.h>
