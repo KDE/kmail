@@ -280,7 +280,7 @@ install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
 ########### install files ###############
 
-install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_DIR})
+install( FILES KMail.desktop kmail_view.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
 install( FILES kmail.kcfg replyphrases.kcfg custommimeheader.kcfg customtemplates_kfg.kcfg templatesconfiguration_kfg.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
 install( FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
@@ -289,7 +289,7 @@ install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc kmail.notifyrc km
 install( FILES dbusmail.desktop dbusimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install( FILES application_octetstream.desktop  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter)
 
-install(FILES org.kde.kmail.kmailpart.xml org.kde.kmail.mailcomposer.xml DESTINATION ${DBUS_INTERFACES_DIR} )
+install(FILES org.kde.kmail.kmailpart.xml org.kde.kmail.mailcomposer.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
 
 kde4_install_icons( ${ICON_INSTALL_DIR} )
 
