@@ -123,6 +123,7 @@ using KMail::TeeHtmlWriter;
 #include <ktemporaryfile.h>
 #include <kdialog.h>
 #include <kaction.h>
+#include <kfontaction.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
 #include <kascii.h>
