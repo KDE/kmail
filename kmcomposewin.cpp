@@ -76,8 +76,8 @@ using KRecentAddress::RecentAddresses;
 #include <mailtransport/transportmanager.h>
 using MailTransport::TransportManager;
 
-#include <gpgmepp/context.h>
-#include <gpgmepp/key.h>
+#include <gpgme++/context.h>
+#include <gpgme++/key.h>
 
 #include <kabc/vcardconverter.h>
 #include <libkdepim/kvcarddrag.h>

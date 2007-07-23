@@ -78,7 +78,7 @@ using MailTransport::TransportManager;
 #include <QComboBox>
 
 // other headers:
-#include <gpgmepp/key.h>
+#include <gpgme++/key.h>
 #include <iterator>
 #include <algorithm>
 

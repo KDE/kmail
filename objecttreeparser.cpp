@@ -63,7 +63,7 @@
 #include "libkleo/kleo/cryptobackend.h"
 #include "libkleo/kleo/cryptobackendfactory.h"
 
-#include <gpgmepp/importresult.h>
+#include <gpgme++/importresult.h>
 
 #include <libkpgp/kpgpblock.h>
 #include <libkpgp/kpgp.h>

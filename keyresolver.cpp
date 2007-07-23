@@ -45,8 +45,8 @@
 #include "libkleo/kleo/keylistjob.h"
 #include "libkleo/kleo/dn.h"
 
-#include <gpgmepp/key.h>
-#include <gpgmepp/keylistresult.h>
+#include <gpgme++/key.h>
+#include <gpgme++/keylistresult.h>
 
 #include <kabc/stdaddressbook.h>
 #include <klocale.h>

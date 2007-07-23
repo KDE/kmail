@@ -46,11 +46,11 @@
 #include "kmedit.h"
 #include "util.h"
 
-#include <gpgmepp/key.h>
-#include <gpgmepp/keylistresult.h>
-#include <gpgmepp/encryptionresult.h>
-#include <gpgmepp/signingresult.h>
-#include <gpgmepp/context.h>
+#include <gpgme++/key.h>
+#include <gpgme++/keylistresult.h>
+#include <gpgme++/encryptionresult.h>
+#include <gpgme++/signingresult.h>
+#include <gpgme++/context.h>
 
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
