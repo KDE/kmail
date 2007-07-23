@@ -66,7 +66,10 @@ CopyFolderJob::~CopyFolderJob()
   if ( mNewFolder )
     mNewFolder->setMoveInProgress( false );
   if ( mStorage )
-    mStorage->close( "copyfolder" );
+  {
+    mStorage->folder()->setMoveInProgress( false );
+    mStorage->close("copyfolder");
+  }
 }
 
 /*
@@ -237,6 +240,7 @@ bool CopyFolderJob::createTargetDir()
   }
 
   mNewFolder->setMoveInProgress( true );
+  mStorage->folder()->setMoveInProgress( true );
 
   // inherit the folder type
   // FIXME we should probably copy over most if not all settings

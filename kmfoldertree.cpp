@@ -264,6 +264,11 @@ void KMFolderTreeItem::slotNameChanged()
   repaint();
 }
 
+//----------------------------------------------------------------------------
+void KMFolderTree::slotFolderMoveOrCopyOperationFinished()
+{
+  setDragEnabled( true );
+}
 
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
@@ -272,7 +277,7 @@ bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
     return false; // nothing can be dragged into search folders
 
   if ( KPIM::MailList::canDecode( e->mimeData() ) ) {
-    if ( !mFolder || mFolder->isReadOnly() ||
+    if ( !mFolder || mFolder->moveInProgress() || mFolder->isReadOnly() ||
         (mFolder->noContent() && childCount() == 0) ||
         (mFolder->noContent() && isOpen()) ) {
       return false;
@@ -389,6 +394,9 @@ void KMFolderTree::connectSignals()
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
+
+  connect(kmkernel->folderMgr(), SIGNAL(folderMoveOrCopyOperationFinished()),
+	  this, SLOT(slotFolderMoveOrCopyOperationFinished()));
 
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
           this, SLOT(doFolderListChanged()));
@@ -827,6 +835,11 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
     doFolderSelected( qlvi );
   }
   removeFromFolderToItemMap( aFolder );
+
+  if ( dropItem == fti ) { // The removed item is the dropItem
+    dropItem = 0; // it becomes invalid
+  }
+
   delete fti;
   updateCopyActions();
 }
@@ -1409,6 +1422,9 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
     dropItem = i;
     autoopen_timer.start( autoopenTime );
   }
+  else
+    dropItem = 0;
+
   e->setAccepted( acceptDrag(e) );
 }
 
@@ -1475,7 +1491,14 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     Q3ListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     int action = -1;
-
+    // Check that each pointer is not null
+    for ( QList<QPointer<KMFolder> >::ConstIterator it = mCopySourceFolders.constBegin();
+	  it != mCopySourceFolders.constEnd(); ++it ) {
+      if ( ! (*it) ) {
+	fti = 0;
+	break;
+      }
+    }
     if (fti && mCopySourceFolders.count() == 1)
     {
       KMFolder *source = mCopySourceFolders.first();
@@ -2023,6 +2046,9 @@ void KMFolderTree::copySelectedToFolder( QAction* act )
 void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolder* destination, bool move )
 {
   kDebug(5006) << k_funcinfo << "source: " << sources << " destination: " << destination << " move: " << move << endl;
+
+  // Disable drag during copy operation since it prevents from many crashes
+  setDragEnabled( false );
 
   KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
   if ( destination )
