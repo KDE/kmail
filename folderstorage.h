@@ -609,7 +609,7 @@ friend class KMMsgDict;
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
-  long mSize;
+  quint64 mSize;
   bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact :1;

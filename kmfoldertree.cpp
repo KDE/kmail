@@ -457,7 +457,7 @@ void KMFolderTree::readColorConfig (void)
                                         c2);
     mPaintInfo.colBack = conf.readEntry( "BackgroundColor",
                                         c4 );
-    mPaintInfo.colCloseToQuota = conf->readColorEntry("CloseToQuotaColor",&c5);
+    mPaintInfo.colCloseToQuota = conf.readEntry("CloseToQuotaColor", QColor( Qt::red ));
   }
   else {
     mPaintInfo.colFore = c1;
