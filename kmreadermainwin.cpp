@@ -294,20 +294,20 @@ void KMReaderMainWin::setupAccel()
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAllAction );
 
-  mReplyListAction  = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction  = new KAction( KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));
   mReplyActionMenu->addAction( mReplyListAction );
 
-  fontAction = new KFontAction( KIcon("text_font"), i18n("Select Font") );
-  actionCollection()->addAction( fontAction );
+  fontAction = new KFontAction( i18n("Select Font"), this );
+  actionCollection()->addAction( "text_font", fontAction );
   fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
   connect( fontAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction( KIcon("text_size"), i18n( "Select Size" ), this );
+  fontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
   fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
-  actionCollection()->addAction( fontSizeAction );
+  actionCollection()->addAction( "text_size", fontSizeAction );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
