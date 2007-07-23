@@ -682,7 +682,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) << "Command: DOW" << endl;
         i += strlen( "DOW" );
         QDateTime date = QDateTime::currentDateTime();
-        QString str = KGlobal::locale()->calendar()->weekDayName( date.date(), false );
+        QString str = KGlobal::locale()->calendar()->weekDayName( date.date(),
+                      KCalendarSystem::LongDayName );
         body.append( str );
 
       } else if ( cmd.startsWith( "TIMELONGEN" ) ) {
@@ -744,7 +745,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QDateTime date;
           date.setTime_t( mOrigMsg->date() );
-          QString str = KGlobal::locale()->calendar()->weekDayName( date.date(), false );
+          QString str = KGlobal::locale()->calendar()->weekDayName( date.date(),
+                        KCalendarSystem::LongDayName );
           body.append( str );
         }
 
