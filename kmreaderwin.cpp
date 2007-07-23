@@ -1100,6 +1100,13 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
   update( true );
 }
 
+
+void KMReaderWin::setPrintFont( const QFont& font )
+{
+
+  mCSSHelper->setPrintFont( font );
+}
+
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
@@ -2520,6 +2527,11 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   }
   // standard event processing
   return false;
+}
+
+KMail::CSSHelper* KMReaderWin::cssHelper()
+{
+  return mCSSHelper;
 }
 
 #include "kmreaderwin.moc"

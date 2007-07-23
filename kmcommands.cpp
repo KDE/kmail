@@ -1572,6 +1572,13 @@ KMPrintCommand::KMPrintCommand( QWidget *parent,
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
+  mOverrideFont = KGlobalSettings::generalFont();
+}
+
+
+void KMPrintCommand::setOverrideFont( const QFont& font )
+{
+  mOverrideFont = font;
 }
 
 KMCommand::Result KMPrintCommand::execute()
@@ -1583,6 +1590,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printWin.setUseFixedFont( mUseFixedFont );
   printWin.setOverrideEncoding( mEncoding );
+  printWin.setPrintFont( mOverrideFont );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
 

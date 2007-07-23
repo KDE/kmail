@@ -580,12 +580,15 @@ public:
                   bool useFixedFont = false,
                   const QString & encoding = QString() );
 
+  void setOverrideFont( const QFont& );
+
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
+  QFont mOverrideFont;
   QString mEncoding;
 };
 
