@@ -3022,7 +3022,6 @@ void KMComposeWin::slotInsertPublicKey()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 {
-  int editId, editWithId;
   if (!mAttachMenu)
   {
      mAttachMenu = new QPopupMenu(this);
@@ -3033,8 +3032,8 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
                              SLOT(slotAttachOpenWith()));
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
-     editId = mAttachMenu->insertItem( i18n("Edit"), this, SLOT(slotAttachEdit()) );
-     editWithId = mAttachMenu->insertItem( i18n("Edit With..."), this,
+     mEditId = mAttachMenu->insertItem( i18n("Edit"), this, SLOT(slotAttachEdit()) );
+     mEditWithId = mAttachMenu->insertItem( i18n("Edit With..."), this,
                                             SLOT(slotAttachEditWith()) );
      mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mSaveAsId = mAttachMenu->insertItem( SmallIconSet("filesaveas"), i18n("Save As..."), this,
@@ -3055,8 +3054,8 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   mAttachMenu->setItemEnabled( mOpenId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mOpenWithId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
-  mAttachMenu->setItemEnabled( editId, selectedCount == 1 );
-  mAttachMenu->setItemEnabled( editWithId, selectedCount == 1 );
+  mAttachMenu->setItemEnabled( mEditId, selectedCount == 1 );
+  mAttachMenu->setItemEnabled( mEditWithId, selectedCount == 1 );
   mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
   mAttachMenu->setItemEnabled( mPropertiesId, selectedCount == 1 );

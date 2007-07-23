@@ -727,7 +727,7 @@ private:
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
-  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId, mEditId, mEditWithId;
   bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
   bool mLastSignActionState, mLastEncryptActionState;
