@@ -36,6 +36,8 @@
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
+#include <KFontAction>
+#include <KFontSizeAction>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
@@ -297,14 +299,14 @@ void KMReaderMainWin::setupAccel()
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));
   mReplyActionMenu->addAction( mReplyListAction );
 
-  fontAction = new KFontAction( "Select Font", 0, actionCollection(),
-                               "text_font" );
+  fontAction = new KFontAction( KIcon("text_font"), i18n("Select Font") );
+  actionCollection()->addAction( fontAction );
   fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
   connect( fontAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
-  fontSizeAction = new KFontSizeAction( "Select Size", 0, actionCollection(),
-                                       "text_size" );
+  fontSizeAction = new KFontSizeAction( KIcon("text_size"), i18n( "Select Size" ), this );
   fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
+  actionCollection()->addAction( fontSizeAction );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 

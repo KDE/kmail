@@ -19,11 +19,12 @@ using KMail::MaildirJob;
 #include "kmmsgdict.h"
 #include "util.h"
 
+#include <kio/directorysizejob.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
-#include <kdirsize.h>
 
 #include <QDateTime>
 
@@ -1118,16 +1119,12 @@ void KMFolderMaildir::msgStatusChanged( const MessageStatus& oldStatus,
 size_t KMFolderMaildir::doFolderSize() const
 {
   if (mCurrentlyCheckingFolderSize) return -1;
-  KFileItemList list;
-  KFileItem *item = 0;
-  item = new KFileItem( S_IFDIR, -1, location() + "/cur" );
-  list.append( item );
-  item = new KFileItem( S_IFDIR, -1, location() + "/new" );
-  list.append( item );
-  item = new KFileItem( S_IFDIR, -1, location() + "/tmp" );
-  list.append( item );
+  QList<KFileItem> list;
+  list.append( KFileItem( S_IFDIR, -1, location() + "/cur" ) );
+  list.append( KFileItem( S_IFDIR, -1, location() + "/new" ) );
+  list.append( KFileItem( S_IFDIR, -1, location() + "/tmp" ) );
 
-  KDirSize* job = KDirSize::dirSizeJob( list );
+  KIO::DirectorySizeJob* job = KIO::directorySize( list );
   connect( job, SIGNAL( result( KIO::Job* ) ),
            this, SLOT( slotDirSizeJobResult( KIO::Job*) ) );
   mCurrentlyCheckingFolderSize = true;
@@ -1137,7 +1134,7 @@ size_t KMFolderMaildir::doFolderSize() const
 void KMFolderMaildir::slotDirSizeJobResult( KIO::Job* job )
 {
     mCurrentlyCheckingFolderSize = false;
-    KDirSize * dirsize = dynamic_cast<KDirSize*>( job );
+    KIO::DirectorySizeJob * dirsize = dynamic_cast<KIO::DirectorySizeJob*>( job );
     if ( !dirsize || dirsize->error() ) return;
     mSize = dirsize->totalSize();
     emit folderSizeChanged();
