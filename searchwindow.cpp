@@ -111,7 +111,7 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
-  QWidget(0),
+  KDialog(0),
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
@@ -121,8 +121,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLastFocus(0),
   mKMMainWidget(w)
 {
-  setWindowTitle( i18n("Find Messages") );
-  setAttribute( Qt::WA_DeleteOnClose );
+  setCaption( i18n("Find Messages") );
+  setButtons( User1 | User2 | Close );
+  setDefaultButton( User1 );
+  setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
+  setButtonGuiItem( User2, KStandardGuiItem::stop() );
 #ifdef Q_OS_UNIX
   KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
 #endif
@@ -274,19 +277,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   if (mainWidth || mainHeight)
     resize(mainWidth, mainHeight);
 
-  //Create the search, stop and close buttons
-  QVBoxLayout *buttonLayout = new QVBoxLayout();
-  mSearchButton = new KPushButton( this );
-  mSearchButton->setGuiItem( KGuiItem( i18n("Search"), "edit-find" ) );
-  mStopButton = new KPushButton( this );
-  mStopButton->setGuiItem( KStandardGuiItem::Stop );
-  mStopButton->setEnabled( false );
-  mCloseButton = new KPushButton( this );
-  mCloseButton->setGuiItem( KStandardGuiItem::Close );
-  buttonLayout->addWidget( mSearchButton );
-  buttonLayout->addWidget( mStopButton );
-  buttonLayout->addStretch( 100 );
-  buttonLayout->addWidget( mCloseButton );
+  setMainWidget(searchWidget);
+  setButtonsOrientation(Qt::Vertical);
+  enableButton(User2, false);
 
   //Bring all the layouts together
   vbl->addWidget( radioFrame );
@@ -294,13 +287,11 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   vbl->addWidget( mLbxMatches );
   vbl->addLayout( hbl2 );
   vbl->addWidget( mStatusBar );
-  QHBoxLayout *mainLayout = new QHBoxLayout( this );
-  mainLayout->addWidget( searchWidget );
-  mainLayout->addLayout( buttonLayout );
 
-  connect(mSearchButton, SIGNAL(clicked(bool)), SLOT(slotSearch()));
-  connect(mStopButton, SIGNAL(clicked(bool)), SLOT(slotStop()));
-  connect(mCloseButton,SIGNAL(clicked(bool)),this,SLOT(slotClose()));
+  connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
+  connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
+  connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+  connect(this,SIGNAL(closeClicked()),this,SLOT(slotClose()));
   // give focus to the value field of the first search rule
   RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
   if ( r )
@@ -382,7 +373,7 @@ void SearchWindow::setEnabledSearchButton( bool )
   //Before when we selected a folder == "Local Folder" as that it was not a folder
   //search button was disable, and when we select "Search in all local folder"
   //Search button was never enabled :(
-  mSearchButton->setEnabled( true );
+  enableButton( User1, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -432,12 +423,8 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
         mFolder->stopSearch();
         return;
     }
-    if (evt->key() == Qt::Key_Return && !searching) {
-        slotSearch();
-        return;
-    }
 
-    QWidget::keyPressEvent(evt);
+    KDialog::keyPressEvent(evt);
 }
 
 
@@ -458,13 +445,14 @@ void SearchWindow::activateFolder(KMFolder *curFolder)
 void SearchWindow::slotSearch()
 {
   mLastFocus = focusWidget();
+  setButtonFocus( User1 );     // set focus so we don't miss key event
 
   mStopped = false;
   mFetchingInProgress = 0;
 
   mSearchFolderOpenBtn->setEnabled( true );
-  mSearchButton->setEnabled( false );
-  mStopButton->setEnabled( true );
+  enableButton( User1, false );
+  enableButton( User2, true );
 
   mLbxMatches->clear();
 
@@ -604,13 +592,13 @@ void SearchWindow::slotStop()
     mFolder->stopSearch();
   }
   mStopped = true;
-  mStopButton->setEnabled( false );
+  enableButton( User2, false );
 }
 
 //-----------------------------------------------------------------------------
 void SearchWindow::slotClose()
 {
-  close();
+  accept();
 }
 
 
@@ -624,7 +612,7 @@ void SearchWindow::closeEvent(QCloseEvent *e)
     mFolder->setSearch( new KMSearch() );
     QTimer::singleShot( 0, this, SLOT( slotClose() ) );
   } else {
-    QWidget::closeEvent( e );
+    KDialog::closeEvent( e );
   }
 }
 
@@ -702,14 +690,14 @@ void SearchWindow::enableGUI()
 {
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
-    mCloseButton->setEnabled(!searching);
+    enableButton(KDialog::Close, !searching);
     mCbxFolders->setEnabled(!searching);
     mChkSubFolders->setEnabled(!searching);
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);
-    mSearchButton->setEnabled(!searching);
-    mStopButton->setEnabled(searching);
+    enableButton(User1, !searching);
+    enableButton(User2, searching);
 }
 
 

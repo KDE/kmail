@@ -57,7 +57,7 @@ namespace KMail {
    * results in a listview and allows triggering of operations such as printing
    * or moving on them.
    */
-class SearchWindow: public QWidget, virtual public KXMLGUIClient
+class SearchWindow: public KDialog, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -155,9 +155,6 @@ protected:
   QLineEdit *mSearchFolderEdt;
   KPushButton *mSearchFolderBtn;
   KPushButton *mSearchFolderOpenBtn;
-  KPushButton *mStopButton;
-  KPushButton *mSearchButton;
-  KPushButton *mCloseButton;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<QAction*,KMFolder*> mMenuToFolder;
