@@ -3239,9 +3239,11 @@ void KMMainWidget::setupActions()
           SLOT(slotToggleTotalColumn()));
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
-  mSizeColumnToggle = new KToggleAction( i18n("View->", "&Size Column"), 0, this,
-			       SLOT(slotToggleSizeColumn()),
-			       actionCollection(), "view_columns_size" );
+  mSizeColumnToggle = new KToggleAction( i18nc("View->", "&Size Column"), this );
+  actionCollection()->addAction("view_columns_size", mSizeColumnToggle );
+  connect(mSizeColumnToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
+          SLOT(slotToggleSizeColumn()));
+
   mSizeColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total size of messages in folders.") );
 
