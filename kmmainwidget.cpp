@@ -402,7 +402,8 @@ void KMMainWidget::readConfig(void)
           group.readEntry( "UnreadColumn", 1 );
       const int totalColumn =
           group.readEntry( "TotalColumn", 2 );
-      const int sizeColumn = config->readNumEntry("SizeColumn", 3);
+      const int sizeColumn =
+          group.readEntry("SizeColumn", 3);
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
