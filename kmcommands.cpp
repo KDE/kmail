@@ -75,6 +75,7 @@
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
 #include <kimproxy.h>
+#include <k3process.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -113,6 +114,7 @@ using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
+#include "editorwatcher.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -3204,6 +3206,198 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KJob * j
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   LaterDeleterWithCommandCompletion d( this );
   d.setResult( OK );
+}
+
+
+AttachmentModifyCommand::AttachmentModifyCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    KMCommand( parent, msg ),
+    mPartIndex( node->nodeId() ),
+    mSernum( 0 )
+{
+}
+
+AttachmentModifyCommand::~ AttachmentModifyCommand()
+{
+}
+
+KMCommand::Result AttachmentModifyCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg )
+    return Failed;
+  mSernum = msg->getMsgSerNum();
+
+  mFolder = msg->parent();
+  if ( !mFolder || !mFolder->storage() )
+    return Failed;
+
+  Result res = doAttachmentModify();
+  if ( res != OK )
+    return res;
+
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
+{
+  if ( !mFolder || !mFolder->storage() ) {
+    kWarning(5006) << k_funcinfo << "We lost the folder!" << endl;
+    setResult( Failed );
+    emit completed( this );
+    deleteLater();
+  }
+  int res = mFolder->addMsg( msg ) != 0;
+  if ( mFolder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap *f = static_cast<KMFolderImap*>( mFolder->storage() );
+    connect( f, SIGNAL(folderComplete(KMFolderImap*,bool)),
+             SLOT(messageStoreResult(KMFolderImap*,bool)) );
+  } else {
+    messageStoreResult( 0, res == 0 );
+  }
+}
+
+void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool success )
+{
+  Q_UNUSED( folder );
+  if ( success ) {
+    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
+    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
+    delCmd->start();
+    return;
+  }
+  kWarning(5006) << k_funcinfo << "Adding modified message failed." << endl;
+  setResult( Failed );
+  emit completed( this );
+  deleteLater();
+}
+
+void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
+{
+  setResult( cmd->result() );
+  emit completed( this );
+  deleteLater();
+}
+
+
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent )
+{
+  kDebug(5006) << k_funcinfo << endl;
+}
+
+KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
+{
+  kDebug(5006) << k_funcinfo << endl;
+}
+
+KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+  msg->removeBodyPart( dwpart );
+
+  // add dummy part to show that a attachment has been deleted
+  KMMessagePart dummyPart;
+  dummyPart.duplicate( part );
+  QString comment = i18n("This attachment has been deleted.");
+  if ( !part.fileName().isEmpty() )
+    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setContentDescription( comment );
+  dummyPart.setBodyEncodedBinary( QByteArray() );
+  QByteArray cd = dummyPart.contentDisposition();
+  if ( cd.toLower().indexOf( "inline" ) == 0 ) {
+    cd.replace( 0, 10, "attachment" );
+    dummyPart.setContentDisposition( cd );
+  } else if ( cd.isEmpty() ) {
+    dummyPart.setContentDisposition( "attachment" );
+  }
+  msg->addBodyPart( &dummyPart );
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  storeChangedMessage( newMsg );
+  return OK;
+}
+
+
+KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent )
+{
+  kDebug(5006) << k_funcinfo << endl;
+  mTempFile.setAutoRemove( true );
+}
+
+KMEditAttachmentCommand::~ KMEditAttachmentCommand()
+{
+}
+
+KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+
+  mTempFile.write( part.bodyDecodedBinary() );
+  mTempFile.flush();
+
+  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl(mTempFile.name()), part.typeStr() + "/" + part.subtypeStr(), false, this );
+  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
+  if ( !watcher->start() )
+    return Failed;
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
+{
+  kDebug(5006) << k_funcinfo << endl;
+  // anything changed?
+  if ( !watcher->fileChanged() ) {
+    kDebug(5006) << k_funcinfo << "File has not been changed" << endl;
+    setResult( Canceled );
+    emit completed( this );
+    deleteLater();
+  }
+
+  mTempFile.reset();
+  QByteArray data = mTempFile.readAll();
+
+  // build the new message
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  KMMessage::bodyPart( dwpart, &part, true );
+  msg->removeBodyPart( dwpart );
+
+  KMMessagePart att;
+  att.duplicate( part );
+  att.setBodyEncodedBinary( data );
+  msg->addBodyPart( &att );
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  storeChangedMessage( newMsg );
 }
 
 #include "kmcommands.moc"

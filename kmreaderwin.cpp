@@ -1921,6 +1921,12 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
+  action = menu->addAction(SmallIcon("edit"), i18n("Edit Attachment") );
+  connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
+  action = menu->addAction(SmallIcon("edit-delete"), i18n("Delete Attachment") );
+  connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
   if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     action = menu->addAction( i18n( "Decrypt With Chiasmus..." ) );
@@ -1930,9 +1936,6 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18n("Properties") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Properties );
-
-  menu->exec( p ,0 );
-  delete menu;
 }
 
 //-----------------------------------------------------------------------------
@@ -1966,12 +1969,18 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
-      node, message(), mAtmCurrent, mAtmCurrentName,
-      KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
-  connect( command, SIGNAL( showAttachment( int, const QString& ) ),
-      this, SLOT( slotAtmView( int, const QString& ) ) );
-  command->start();
+  if ( choice != KMHandleAttachmentCommand::Delete && choice != KMHandleAttachmentCommand::Edit ) {
+    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
+        node, message(), mAtmCurrent, mAtmCurrentName,
+        KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
+    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+        this, SLOT( slotAtmView( int, const QString& ) ) );
+    command->start();
+  } else if ( choice == KMHandleAttachmentCommand::Delete ) {
+    slotDeleteAttachment( node );
+  } else if ( choice == KMHandleAttachmentCommand::Edit ) {
+    slotEditAttachment( node );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2527,6 +2536,32 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   }
   // standard event processing
   return false;
+}
+
+void KMReaderWin::slotDeleteAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+       i18n("Deleting an attachment might invalidate any digital signature on this message."),
+       i18n("Delete Attachment"), KStandardGuiItem::del(), KStandardGuiItem::cancel(),
+       "DeleteAttachmentSignatureWarning" )
+     != KMessageBox::Continue ) {
+    return;
+  }
+  KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
+  command->start();
+}
+
+void KMReaderWin::slotEditAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+        i18n("Modifying an attachment might invalidate any digital signature on this message."),
+        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), KStandardGuiItem::cancel(),
+        "EditAttachmentSignatureWarning" )
+        != KMessageBox::Continue ) {
+    return;
+  }
+  KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
+  command->start();
 }
 
 KMail::CSSHelper* KMReaderWin::cssHelper()

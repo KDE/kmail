@@ -54,6 +54,7 @@ using KRecentAddress::RecentAddresses;
 #include "kleo_util.h"
 #include "stl_util.h"
 #include "recipientseditor.h"
+#include "editorwatcher.h"
 
 #include "attachmentcollector.h"
 #include "objecttreeparser.h"
@@ -342,7 +343,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   connect( mAtmListView,
            SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-           SLOT(slotAttachProperties()) );
+           SLOT(slotAttachEdit()) );
   connect( mAtmListView,
            SIGNAL(rightButtonPressed(QTreeWidgetItem*)),
            SLOT(slotAttachPopupMenu(QTreeWidgetItem*)) );
@@ -2993,6 +2994,9 @@ void KMComposeWin::slotAttachPopupMenu( QTreeWidgetItem* )
                                       SLOT(slotAttachOpen()) );
     mViewId = mAttachMenu->addAction( i18nc("to view", "View"), this,
                                       SLOT(slotAttachView())) ;
+    mEditAction = mAttachMenu->addAction( i18n("Edit"), this, SLOT(slotAttachEdit()) );
+    mEditWithAction = mAttachMenu->addAction( i18n("Edit With..."), this,
+                                            SLOT(slotAttachEditWith()) );
     mRemoveId = mAttachMenu->addAction( i18n("Remove"), this, SLOT(slotAttachRemove()) );
     mSaveAsId = mAttachMenu->addAction( KIcon("document-save-as"), i18n("Save As..."), this,
                                         SLOT( slotAttachSave() ) );
@@ -3013,6 +3017,8 @@ void KMComposeWin::slotAttachPopupMenu( QTreeWidgetItem* )
 
   mOpenId->setEnabled( selectedCount > 0 );
   mViewId->setEnabled( selectedCount > 0 );
+  mEditAction->setEnabled( selectedCount == 1 );
+  mEditWithAction->setEnabled( selectedCount == 1 );
   mRemoveId->setEnabled( selectedCount > 0 );
   mSaveAsId->setEnabled( selectedCount == 1 );
   mPropertiesId->setEnabled( selectedCount == 1 );
@@ -3233,6 +3239,28 @@ bool KMComposeWin::inlineSigningEncryptionSelected()
   return cryptoMessageFormat() == Kleo::InlineOpenPGPFormat;
 }
 
+void KMComposeWin::slotAttachEdit()
+{
+  int i = 0;
+  for ( QList<KMAtmListViewItem*>::ConstIterator it = mAtmItemList.constBegin();
+        it != mAtmItemList.constEnd(); ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      editAttach( i, false );
+    }
+  }
+}
+
+void KMComposeWin::slotAttachEditWith()
+{
+  int i = 0;
+  for ( QList<KMAtmListViewItem*>::ConstIterator it = mAtmItemList.constBegin();
+        it != mAtmItemList.constEnd(); ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      editAttach( i, true );
+    }
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::viewAttach( int index )
 {
@@ -3295,6 +3323,27 @@ void KMComposeWin::openAttach( int index )
     if ( ( !KRun::run( *offer, url, this, autoDelete ) ) && autoDelete ) {
       QFile::remove( url.path() );
     }
+  }
+}
+
+void KMComposeWin::editAttach(int index, bool openWith)
+{
+  KMMessagePart* msgPart = mAtmList.at(index);
+  const QString contentTypeStr =
+    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).lower();
+
+  KTemporaryFile* atmTempFile = new KTemporaryFile();
+  mAtmTempList.append( atmTempFile );
+  atmTempFile->setAutoRemove( true );
+  atmTempFile->writeBlock( msgPart->bodyDecodedBinary() );
+  atmTempFile->flush();
+
+
+  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl( atmTempFile->name() ), contentTypeStr, openWith, this );
+  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(slotEditDone(KMail::EditorWatcher*)) );
+  if ( watcher->start() ) {
+    mEditorMap.insert( watcher, msgPart );
+    mEditorTempFiles.insert( watcher, atmTempFile );
   }
 }
 
@@ -4906,4 +4955,19 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   assert( !GlobalSettings::chiasmusKey().isEmpty() );
   mEncryptWithChiasmus = true;
   resetter.disable();
+}
+
+void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
+{
+  kDebug(5006) << k_funcinfo << endl;
+  KMMessagePart *part = mEditorMap[ watcher ];
+  KTemporaryFile *tf = mEditorTempFiles[ watcher ];
+  mEditorMap.remove( watcher );
+  mEditorTempFiles.remove( watcher );
+  if ( !watcher->fileChanged() )
+    return;
+
+  tf->reset();
+  QByteArray data = tf->readAll();
+  part->setBodyEncodedBinary( data );
 }

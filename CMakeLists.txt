@@ -5,6 +5,9 @@ check_include_files(fcntl.h HAVE_FCNTL_H)
 check_include_files(byteswap.h HAVE_BYTESWAP_H)
 check_include_files(paths.h HAVE_PATHS_H)
 
+check_include_files(sys/inotify.h SYS_INOTIFY_H_FOUND)
+macro_bool_to_01(SYS_INOTIFY_H_FOUND HAVE_SYS_INOTIFY_H)
+
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
@@ -16,7 +19,7 @@ add_subdirectory( profiles )
 add_subdirectory( avscripts )
 add_subdirectory( tests )
 add_subdirectory( kconf_update )
-include_directories( 
+include_directories(
   ${CMAKE_SOURCE_DIR}/libkdepim ${CMAKE_BINARY_DIR}/libkdepim
   ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/mimelib
@@ -188,7 +191,8 @@ set(kmailprivate_LIB_SRCS
    keditcl1.cpp keditcl2.cpp folderadaptor.cpp
    copyfolderjob.cpp messagecopyhelper.cpp
    localsubscriptiondialog.cpp
-   groupwareadaptor.cpp 
+   groupwareadaptor.cpp
+   editorwatcher.cpp
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml)

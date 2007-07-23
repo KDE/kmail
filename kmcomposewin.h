@@ -94,6 +94,7 @@ namespace MailTransport {
 namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
+  class EditorWatcher;
 }
 
 namespace GpgME {
@@ -298,6 +299,7 @@ public: // mailserviceimpl
     void slotMarkAll();
 
     void slotFolderRemoved( KMFolder * );
+    void slotEditDone( KMail::EditorWatcher* watcher );
 
   public slots: // kmkernel
     /**
@@ -393,6 +395,8 @@ public: // mailserviceimpl
      * Enable/disable some actions in the Attach menu
      */
     void slotUpdateAttachActions();
+  void slotAttachEdit();
+  void slotAttachEditWith();
 
     /**
      * Open a popup-menu in the attachments-listbox.
@@ -579,6 +583,11 @@ public: // mailserviceimpl
     void setEncryption( bool encrypt, bool setByUser = false );
 
     /**
+      Edit the attachment with the given index.
+    */
+    void editAttach( int index, bool openWith );
+
+    /**
      * Turn signing on/off. If setByUser is true then a message box is shown
      * in case signing isn't possible.
      */
@@ -689,7 +698,7 @@ public: // mailserviceimpl
     QList<KMAtmListViewItem*> mAtmItemList;
     QList<KMMessagePart*> mAtmList;
     QMenu *mAttachMenu;
-    QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId;
+    QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId, *mEditAction, *mEditWithAction;
     bool mAutoDeleteMsg;
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;
@@ -838,6 +847,9 @@ public: // mailserviceimpl
 
   QString mdbusObjectPath;
   static int s_composerNumber;
+
+  QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
+  QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
 };
 
 #endif

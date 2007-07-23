@@ -62,6 +62,8 @@ protected slots:
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
+  void slotDelete();
+  void slotEdit();
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed
