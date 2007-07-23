@@ -121,7 +121,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName( "cal.ics" );
     // msgPart->setCteStr( attachCte ); // "base64" ?
-    msgPart->setBodyEncoded( iCal.utf8() );
+    msgPart->setBodyEncoded( iCal.toUtf8() );
     msgPart->setTypeStr( "text" );
     msgPart->setSubtypeStr( "calendar" );
     msgPart->setParameter( "method", "reply" );
@@ -129,7 +129,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   } else {
     msg->setHeaderField( "Content-Type",
                          "text/calendar; method=reply; charset=\"utf-8\"" );
-    msg->setBody( iCal.utf8() );
+    msg->setBody( iCal.toUtf8() );
   }
 
   if ( options.readEntry( "AutomaticSending", true ) ) {
