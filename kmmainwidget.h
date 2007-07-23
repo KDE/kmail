@@ -48,7 +48,6 @@ class QToolBar;
 class KActionMenu;
 class KConfig;
 class KToggleAction;
-class KToggleAction;
 
 class KMFolder;
 class KMFolderTree;
@@ -348,6 +347,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSetThreadStatusIgnored();
     void slotToggleUnread();
     void slotToggleTotalColumn();
+    void slotToggleSizeColumn();
     void slotSendQueued();
     void slotSendQueuedVia( QAction* );
     void slotOnlineStatus();
@@ -488,7 +488,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mMarkThreadAsNewAction, *mMarkThreadAsReadAction, *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadTodoAction, *mToggleThreadImportantAction,
       *mToggleTodoAction, *mToggleImportantAction;
-  KToggleAction* mSizeColumnToggle;
+    KToggleAction* mSizeColumnToggle;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
