@@ -88,13 +88,13 @@ class KMAIL_EXPORT AccountManager: public QObject
     /**
       First account of the list.
     */
-    const KMAccount *first() const { return first(); }
+    const KMAccount *first() const { return const_cast<AccountManager*>(this)->first(); }
     KMAccount *first();
 
     /**
       Next account of the list/
     */
-    const KMAccount *next() const { return next(); }
+    const KMAccount *next() const { return const_cast<AccountManager*>(this)->next(); }
     KMAccount *next();
 
     /**
