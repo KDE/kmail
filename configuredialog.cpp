@@ -1479,6 +1479,7 @@ static const struct {
   { "PGPMessageWarn", I18N_NOOP("OpenPGP Message - Unchecked Signature") },
   { "PGPMessageErr", I18N_NOOP("OpenPGP Message - Bad Signature") },
   { "HTMLWarningColor", I18N_NOOP("Border Around Warning Prepending HTML Messages") },
+  { "CloseToQuotaColor", I18N_NOOP("Folder Name and Size When Close to Quota") },
   { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
   { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
   { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
@@ -1517,11 +1518,26 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   connect( mRecycleColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  // close to quota threshold
+  QHBoxLayout *hbox = new QHBoxLayout(vlay);
+  QLabel *l = new QLabel( i18n("Close to quota threshold"), this );
+  hbox->addWidget( l );
+  l->setEnabled( false );
+  mCloseToQuotaThreshold = new QSpinBox( 0, 100, 1, this );
+  connect( mCloseToQuotaThreshold, SIGNAL( valueChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  mCloseToQuotaThreshold->setSuffix( i18n("%"));
+  hbox->addWidget( mCloseToQuotaThreshold );
+  hbox->addWidget( new QWidget(this), 2 );
+
   // {en,dir}able widgets depending on the state of mCustomColorCheck:
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            mColorList, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            mRecycleColorCheck, SLOT(setEnabled(bool)) );
+  connect( mCustomColorCheck, SIGNAL(toggled(bool)),
+           l, SLOT(setEnabled(bool)) );
+
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1531,6 +1547,7 @@ void AppearancePage::ColorsTab::doLoadOther() {
 
   mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
+  mCloseToQuotaThreshold->setValue( GlobalSettings::closeToQuotaThreshold() );
 
   static const QColor defaultColor[ numColorNames ] = {
     qApp->palette().color( QPalette::Base ), // bg
@@ -1545,21 +1562,24 @@ void AppearancePage::ColorsTab::doLoadOther() {
     Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
+    Qt::blue, // todo mgs
     QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
     QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
     Qt::red, // pgp bad
     QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
+    Qt::red, // close to quota
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
     Qt::white,     // colorbar html  fg
   };
 
-  for ( int i = 0 ; i < numColorNames ; i++ )
+  for ( int i = 0 ; i < numColorNames ; i++ ) {
     mColorList->setColor( i,
       reader.readEntry( colorNames[i].configName, defaultColor[i] ));
+  }
   connect( mColorList, SIGNAL( changed( ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1591,6 +1611,7 @@ void AppearancePage::ColorsTab::save() {
       reader.writeEntry( colorNames[i].configName, mColorList->color(i) );
 
   reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
+  GlobalSettings::setCloseToQuotaThreshold( mCloseToQuotaThreshold->value() );
 }
 
 QString AppearancePage::LayoutTab::helpAnchor() const {

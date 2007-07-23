@@ -51,6 +51,12 @@ class QuotaInfo {
   QuotaInfo() {} // for mStorageQuotaInfo
   QuotaInfo( const QString& _name, const QString& _root, const QVariant& _current, const QVariant& _max )
     : mName( _name ), mRoot( _root ), mCurrent( _current ),mMax( _max )  {}
+  bool operator==( const QuotaInfo & other ) const {
+    return mName == other.mName && mRoot == other.mRoot && mMax == other.mMax && mCurrent == other.mCurrent;
+  }
+  bool operator!=( const QuotaInfo & other ) const {
+    return !(operator==(other) );
+  }
   bool isValid() const { return !mName.isEmpty(); }
   bool isEmpty() const { return mName.isEmpty() || ( mRoot.isEmpty() && !mCurrent.isValid() && !mMax.isValid() ); }
 

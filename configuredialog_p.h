@@ -50,6 +50,7 @@ class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
+class QSpinBox;
 
 namespace KMail {
   class IdentityDialog;
@@ -464,6 +465,7 @@ private:
   QCheckBox    *mCustomColorCheck;
   ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
+  QSpinBox     *mCloseToQuotaThreshold;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab {

@@ -114,6 +114,9 @@ public:
 
   virtual IndexStatus indexStatus();
 
+  /**  reimp */
+  size_t doFolderSize() const;
+
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   const QString &partSpecifier, const AttachmentStrategy *as ) const;

@@ -228,6 +228,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     /** Reimplemented from KMFolderMaildir */
     virtual int addMsg( KMMessage *msg, int *index_return = 0 );
+ 
 
     /**
       Adds a message without clearing it's X-UID field.
@@ -290,6 +291,7 @@ class KMFolderCachedImap : public KMFolderMaildir
       @return 0 when not known yet, -1 if there was an error fetching them
     */
     int userRights() const { return mUserRights; }
+  void setQuotaInfo( const QuotaInfo & );
 
     /**
       Sets the user's rights on this folder.
@@ -353,6 +355,9 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     QStringList namespacesToList() { return mNamespacesToList; }
     void setNamespacesToList( QStringList list ) { mNamespacesToList = list; }
+
+    /**  \reimp */
+    bool isCloseToQuota() const;
 
     /**
       Specify an imap path that is used to create the folder on the server
@@ -456,11 +461,11 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     KMFolderCachedImap *findParent( const QString &path, const QString &name );
 
-  public slots:
-    /**
-      Adds the data a KIO::Job retrieves to the buffer.
-    */
-    void slotSimpleData( KIO::Job *job, const QByteArray &data );
+public slots:
+  /**
+   * Add the data a KIO::Job retrieves to the buffer
+   */
+  void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
     /**
       Troubleshoots the IMAP cache.

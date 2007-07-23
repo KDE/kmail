@@ -239,6 +239,13 @@ public:
   /** Number of new or unread messages in this folder. */
   virtual int countUnread();
 
+  /** Total size of the contents of this folder. */
+  size_t folderSize() const;
+
+  /** Return whether the folder is close to its quota limit, which can
+   * be reflected in the UI.  */
+  virtual bool isCloseToQuota() const;
+
   /** Called by KMMsgBase::setStatus when status of a message has changed
       required to keep the number unread messages variable current. */
   virtual void msgStatusChanged( const MessageStatus& oldStatus,
@@ -482,6 +489,9 @@ signals:
    */
   void searchDone( KMFolder*, quint32, const KMSearchPattern*, bool );
 
+  /** Emitted when the folder's size changes. */
+  void folderSizeChanged();
+
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
@@ -581,6 +591,8 @@ friend class KMMsgDict;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 
+  virtual size_t doFolderSize() const { return 0; };
+
   int mOpenCount;
   int mQuiet;
   bool mChanged :1;
@@ -597,6 +609,7 @@ friend class KMMsgDict;
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
+  long mSize;
   bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact :1;

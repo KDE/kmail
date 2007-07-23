@@ -589,6 +589,9 @@ signals:
   /** Emitted when the variables for the config of the view have changed */
   void viewConfigChanged();
 
+  /** Emitted when the folder's size changes. */
+  void folderSizeChanged( KMFolder * );
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   int updateIndex();
@@ -604,6 +607,8 @@ public slots:
 private slots:
   /** The type of contents of this folder changed. Do what is needed. */
   void slotContentsTypeChanged( KMail::FolderContentsType type );
+  /** Triggered by the storage when its size changed. */
+  void slotFolderSizeChanged();
 
 private:
   FolderStorage* mStorage;

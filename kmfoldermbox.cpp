@@ -1110,6 +1110,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     }
   }
   ++mTotalMsgs;
+  mSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
@@ -1332,6 +1333,14 @@ int KMFolderMbox::expungeContents()
   if (truncate(QFile::encodeName(location()), 0))
     rc = errno;
   return rc;
+}
+
+//-----------------------------------------------------------------------------
+/*virtual*/
+size_t KMFolderMbox::doFolderSize() const
+{
+  QFileInfo info( location() );
+  return info.size();
 }
 
 //-----------------------------------------------------------------------------

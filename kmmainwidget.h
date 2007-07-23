@@ -488,6 +488,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mMarkThreadAsNewAction, *mMarkThreadAsReadAction, *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadTodoAction, *mToggleThreadImportantAction,
       *mToggleTodoAction, *mToggleImportantAction;
+  KToggleAction* mSizeColumnToggle;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 

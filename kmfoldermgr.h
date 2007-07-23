@@ -121,6 +121,9 @@ public:
   /** Copy a folder */
   void copyFolder( KMFolder* folder, KMFolderDir* newParent );
 
+  /** Returns the parent Folder for the given folder or 0 on failure.  */
+  KMFolder* parentFolder( KMFolder* folder );
+
 public slots:
   /** GUI action: compact all folders that need to be compacted */
   void compactAll() { compactAllFolders( true ); }

@@ -12,6 +12,10 @@ namespace KMail {
   class MaildirJob;
   class AttachmentStrategy;
 }
+namespace KIO {
+    class Job;
+}
+
 using KMail::FolderJob;
 using KMail::MaildirJob;
 using KMail::AttachmentStrategy;
@@ -99,6 +103,9 @@ public:
 
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return false; }
+ 
+  /** reimp */
+  size_t doFolderSize() const;
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
@@ -135,6 +142,9 @@ protected:
    * into the KMMoveCommand, where it can safely happen at a much higher level. */
   int addMsgInternal( KMMessage* msg, int* index_return = 0, bool stripUid=false );
 
+private slots:
+  void slotDirSizeJobResult( KIO::Job* job );
+
 private:
   void readFileHeaderIntern( const QString& dir, const QString& file,
                              MessageStatus& status);
@@ -152,5 +162,6 @@ private:
   virtual IndexStatus indexStatus();
 
   int mIdxCount;
+  mutable bool mCurrentlyCheckingFolderSize;
 };
 #endif /*kmfoldermaildir_h*/

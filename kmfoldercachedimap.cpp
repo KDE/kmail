@@ -318,6 +318,10 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
     configGroup.writeEntry( "UserRights", mUserRights );
 
+    configGroup.deleteEntry( "StorageQuotaUsage");
+    configGroup.deleteEntry( "StorageQuotaRoot");
+    configGroup.deleteEntry( "StorageQuotaLimit");
+
     if ( mQuotaInfo.isValid() ) {
       if ( mQuotaInfo.current().isValid() ) {
         configGroup.writeEntry( "StorageQuotaUsage", mQuotaInfo.current().toInt() );
@@ -326,10 +330,6 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
         configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max().toInt() );
       }
       configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
-    } else {
-      configGroup.deleteEntry( "StorageQuotaUsage");
-      configGroup.deleteEntry( "StorageQuotaRoot");
-      configGroup.deleteEntry( "StorageQuotaLimit");
     }
   }
 }
@@ -2235,11 +2235,20 @@ void KMFolderCachedImap::slotReceivedACL( KMFolder *folder,
 
 void KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo &info )
 {
-  mQuotaInfo = info;
-  writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+  setQuotaInfo( info );
 }
 
-void KMFolderCachedImap::setACLList( const ACLList &arr )
+void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
+{
+    if ( info != mQuotaInfo ) {
+      mQuotaInfo = info;
+      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+      emit folderSizeChanged();
+    }
+}
+
+void
+KMFolderCachedImap::setACLList( const ACLList& arr )
 {
   mACLList = arr;
 }
@@ -2611,7 +2620,7 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job *job )
     if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
       // that's when the imap server doesn't support quota
       mAccount->setHasNoQuotaSupport();
-      mQuotaInfo = empty;
+      setQuotaInfo( empty );
     } else {
       kWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
     }
@@ -2761,6 +2770,18 @@ void KMFolderCachedImap::setAlarmsBlocked( bool blocked )
 bool KMFolderCachedImap::alarmsBlocked() const
 {
   return mAlarmsBlocked;
+}
+
+bool KMFolderCachedImap::isCloseToQuota() const
+{
+  bool closeToQuota = false;
+  if ( mQuotaInfo.isValid() && mQuotaInfo.max().toInt() > 0 ) {
+    const int ratio = mQuotaInfo.current().toInt() * 100  / mQuotaInfo.max().toInt();
+    //kdDebug(5006) << "Quota ratio: " << ratio << "% " << mQuotaInfo.toString() << endl;
+    closeToQuota = ( ratio > 0 && ratio >= GlobalSettings::closeToQuotaThreshold() );
+  }
+  //kdDebug(5006) << "Folder: " << folder()->prettyURL() << " is over quota: " << closeToQuota << endl;
+  return closeToQuota;
 }
 
 KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
