@@ -1922,12 +1922,16 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
-  action = menu->addAction(SmallIcon("edit"), i18n("Edit Attachment") );
-  connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
-  action = menu->addAction(SmallIcon("edit-delete"), i18n("Delete Attachment") );
-  connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
-  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
+  if ( GlobalSettings::self()->allowAttachmentEditing() ) {
+    action = menu->addAction(SmallIcon("edit"), i18n("Edit Attachment") );
+    connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
+    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
+  }
+  if ( GlobalSettings::self()->allowAttachmentDeletion() ) {
+    action = menu->addAction(SmallIcon("edit-delete"), i18n("Delete Attachment") );
+    connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
+    attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Delete );
+  }
   if ( name.endsWith( ".xia", Qt::CaseInsensitive ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     action = menu->addAction( i18n( "Decrypt With Chiasmus..." ) );
