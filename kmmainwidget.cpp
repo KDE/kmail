@@ -1038,6 +1038,14 @@ void KMMainWidget::slotShowNewFromTemplate()
         KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ) );
     templateAction->setData( idx );
   }
+
+  // If there are no templates available, add a menu entry which informs
+  // the user about this.
+  if ( mTemplateMenu->menu()->actions().isEmpty() ) {
+    QAction *noAction = mTemplateMenu->menu()->addAction(
+                                            i18n( "(no custom templates)" ) );
+    noAction->setEnabled( false );
+  }
 }
 
 
