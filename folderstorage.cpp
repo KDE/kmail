@@ -920,7 +920,7 @@ void FolderStorage::readConfig()
     mTotalMsgs = group.readEntry("TotalMsgs", -1 );
   mCompactable = group.readEntry("Compactable", true );
   if ( mSize == -1 )
-      mSize = config->readNumEntry("FolderSize", -1);
+      mSize = group.readEntry("FolderSize", -1);
   
   int type = group.readEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
