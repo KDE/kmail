@@ -28,6 +28,8 @@
 #ifndef LISTJOB_H
 #define LISTJOB_H
 
+#include <kio/udsentry.h>
+
 #include "folderjob.h"
 #include "imapaccountbase.h"
 

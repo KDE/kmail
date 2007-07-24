@@ -91,9 +91,9 @@ using KMail::TeeHtmlWriter;
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
 
-#include "libkleo/kleo/specialjob.h"
-#include "libkleo/kleo/cryptobackend.h"
-#include "libkleo/kleo/cryptobackendfactory.h"
+#include "kleo/specialjob.h"
+#include "kleo/cryptobackend.h"
+#include "kleo/cryptobackendfactory.h"
 
 // KABC includes
 #include <kabc/addressee.h>

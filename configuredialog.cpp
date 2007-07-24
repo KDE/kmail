@@ -70,8 +70,8 @@ using KMail::IdentityDialog;
 #include <kpimidentities/identity.h>
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;
-#include "libkleo/kleo/cryptoconfig.h"
-#include "libkleo/kleo/cryptobackendfactory.h"
+#include "kleo/cryptoconfig.h"
+#include "kleo/cryptobackendfactory.h"
 #include "libkleo/ui/backendconfigwidget.h"
 #include "libkleo/ui/keyrequester.h"
 #include "libkleo/ui/keyselectiondialog.h"

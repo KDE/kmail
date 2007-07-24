@@ -127,9 +127,9 @@ using KPIM::ProgressItem;
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
 
-#include "libkleo/kleo/specialjob.h"
-#include "libkleo/kleo/cryptobackend.h"
-#include "libkleo/kleo/cryptobackendfactory.h"
+#include "kleo/specialjob.h"
+#include "kleo/cryptobackend.h"
+#include "kleo/cryptobackendfactory.h"
 
 #include <QClipboard>
 #include <QDBusMessage>

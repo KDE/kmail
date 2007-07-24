@@ -22,6 +22,7 @@
 
 #include <kurl.h>
 #include <kio/global.h>
+#include <kio/udsentry.h>
 
 class QTextDecoder;
 namespace KIO {
