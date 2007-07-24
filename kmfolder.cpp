@@ -59,10 +59,10 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mExpireAction( ExpireDelete ),
     mUseCustomIcons( false ), mMailingListEnabled( false ),
     mAcctList( 0 ),
-    mIdentity( 0 ), // default identity
     mPutRepliesInSameFolder( false ),
     mIgnoreNewMail( false )
 {
+  mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeImap )
@@ -174,7 +174,8 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
   mMailingListEnabled = configGroup.readEntry( "MailingListEnabled", false );
   mMailingList.readConfig( configGroup );
 
-  mIdentity = configGroup.readEntry("Identity", 0 );
+  mIdentity = configGroup.readEntry("Identity",
+                        kmkernel->identityManager()->defaultIdentity().uoid() );
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
   uint savedId = configGroup.readEntry( "Id" , 0 );
