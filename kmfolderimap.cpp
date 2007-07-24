@@ -1438,9 +1438,9 @@ void KMFolderImap::slotListFolderEntries( KIO::Job *job,
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
         udsIt != uds.end(); udsIt++)
   {
-    const QString name = udsIt->stringValue( KIO::UDS_NAME );
-    const QString mimeType = udsIt->stringValue( KIO::UDS_MIME_TYPE );
-    const long long flags = udsIt->numberValue( KIO::UDS_ACCESS );
+    const QString name = udsIt->stringValue( KIO::UDSEntry::UDS_NAME );
+    const QString mimeType = udsIt->stringValue( KIO::UDSEntry::UDS_MIME_TYPE );
+    const long long flags = udsIt->numberValue( KIO::UDSEntry::UDS_ACCESS );
     if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") &&
         !(flags & 8)) {
       (*it).items.append(name + ',' + QString::number(flags));
@@ -2119,7 +2119,7 @@ void KMFolderImap::slotStatResult(KJob * job)
     account()->handleJobError( static_cast<KIO::Job*>(job), i18n("Error while getting folder information.") );
   } else {
     KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
-    const long long count = uds.numberValue( KIO::UDS_SIZE );
+    const long long count = uds.numberValue( KIO::UDSEntry::UDS_SIZE );
     if ( mReadOnly ) {
       mGuessedUnreadMsgs = -1;
       mGuessedUnreadMsgs = countUnread() + count - lastUid() - 1;

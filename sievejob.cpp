@@ -143,12 +143,12 @@ namespace KMail {
   void SieveJob::slotEntries( Job *, const UDSEntryList & l ) {
     // loop over entries:
     for ( UDSEntryList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-      // Loop over all UDS atoms to find the UDS_ACCESS and UDS_NAME atoms;
+      // Loop over all UDS atoms to find the UDSEntry::UDS_ACCESS and UDS_NAME atoms;
       // note if we find an exec'able file ( == active script )
       // or the requested filename (mUrl.fileName()).
-      const QString filename = it->stringValue( KIO::UDS_NAME );
+      const QString filename = it->stringValue( KIO::UDSEntry::UDS_NAME );
       mAvailableScripts.append( filename );
-      bool isActive = ( it->numberValue( KIO::UDS_ACCESS ) == 0700 );
+      bool isActive = ( it->numberValue( KIO::UDSEntry::UDS_ACCESS ) == 0700 );
 
       if ( isActive )
 	mActiveScriptName = filename;

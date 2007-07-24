@@ -198,10 +198,10 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
         udsIt != uds.end(); udsIt++ )
   {
     // get the needed information
-    const QString name = udsIt->stringValue( KIO::UDS_NAME );
-    const KUrl url = KUrl( udsIt->stringValue( KIO::UDS_URL ) ); // utf-8
-    const QString mimeType = udsIt->stringValue( KIO::UDS_MIME_TYPE );
-    const QString attributes = udsIt->stringValue( KIO::UDS_EXTRA );
+    const QString name = udsIt->stringValue( KIO::UDSEntry::UDS_NAME );
+    const KUrl url = KUrl( udsIt->stringValue( KIO::UDSEntry::UDS_URL ) ); // utf-8
+    const QString mimeType = udsIt->stringValue( KIO::UDSEntry::UDS_MIME_TYPE );
+    const QString attributes = udsIt->stringValue( KIO::UDSEntry::UDS_EXTRA );
     if ( (mimeType == "inode/directory" || mimeType == "message/digest"
           || mimeType == "message/directory")
          && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.') )
