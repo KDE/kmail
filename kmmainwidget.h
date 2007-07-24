@@ -377,7 +377,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMsgActivated(KMMessage*);
 
     void slotShowNewFromTemplate();
-    void slotNewFromTemplate( int );
+    void slotNewFromTemplate( QAction* );
 
     /** Update the undo action */
     void slotUpdateUndo();

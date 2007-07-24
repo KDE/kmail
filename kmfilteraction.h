@@ -185,7 +185,7 @@ public:
 
   /** Read extra arguments from given string. This type of filter
       action has no parameters, so this is a no-op. */
-  virtual void argsFromString(const QString &argStr) {}
+  virtual void argsFromString(const QString &/*argStr*/) {}
 
   /** Return extra arguments as string. Must not contain newlines. We
       return QString(), because we have no parameter. */

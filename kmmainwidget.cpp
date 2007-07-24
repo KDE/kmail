@@ -1031,19 +1031,22 @@ void KMMainWidget::slotShowNewFromTemplate()
     KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
 
     QString subj = mb->subject();
-    if ( subj.isEmpty() ) subj = i18n("No Subject");
-    mTemplateMenu->menu()->insertItem(
-      KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ), idx );
+    if ( subj.isEmpty() ) 
+      subj = i18n("No Subject");
+
+    QAction *templateAction = mTemplateMenu->menu()->addAction(
+        KStringHandler::rsqueeze( subj.replace( "&", "&&" ) ) );
+    templateAction->setData( idx );
   }
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotNewFromTemplate( int id )
+void KMMainWidget::slotNewFromTemplate( QAction *action )
 {
   if ( !mTemplateFolder )
     return;
-  newFromTemplate(mTemplateFolder->getMsg( id ) );
+  newFromTemplate( mTemplateFolder->getMsg( action->data().toInt() ) );
 }
 
 
@@ -2661,19 +2664,22 @@ void KMMainWidget::updateCustomTemplateMenus()
     ++idx;
   }
   if ( !replyc ) {
-      mCustomReplyActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomReplyActionMenu->menu()->setItemEnabled( 0, false );
-      mCustomReplyActionMenu->setEnabled( false );
+    QAction *noAction = mCustomReplyActionMenu->menu()->addAction(
+        i18n( "(no custom templates)" ) );
+    noAction->setEnabled( false );
+    mCustomReplyActionMenu->setEnabled( false );
   }
   if ( !replyallc ) {
-      mCustomReplyAllActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomReplyAllActionMenu->menu()->setItemEnabled( 0, false );
-      mCustomReplyAllActionMenu->setEnabled( false );
+    QAction *noAction = mCustomReplyAllActionMenu->menu()->addAction(
+        i18n( "(no custom templates)" ) );
+    noAction->setEnabled( false );
+    mCustomReplyAllActionMenu->setEnabled( false );
   }
   if ( !forwardc ) {
-      mCustomForwardActionMenu->menu()->insertItem( i18n( "(no custom templates)" ), 0 );
-      mCustomForwardActionMenu->menu()->setItemEnabled( 0, false );
-      mCustomForwardActionMenu->setEnabled( false );
+    QAction *noAction = mCustomForwardActionMenu->menu()->addAction(
+        i18n( "(no custom templates)" ) );
+    noAction->setEnabled( false );
+    mCustomForwardActionMenu->setEnabled( false );
   }
 
 }
@@ -2975,8 +2981,8 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("new_from_template", mTemplateMenu );
   connect( mTemplateMenu->menu(), SIGNAL( aboutToShow() ), this,
            SLOT( slotShowNewFromTemplate() ) );
-  connect( mTemplateMenu->menu(), SIGNAL( activated(int) ), this,
-           SLOT( slotNewFromTemplate(int) ) );
+  connect( mTemplateMenu->menu(), SIGNAL( triggered(QAction*) ), this,
+           SLOT( slotNewFromTemplate(QAction*) ) );
 
   {
     QAction *action = new KAction(KIcon("mail_post_to"), i18n("New Message t&o Mailing-List..."), this);
