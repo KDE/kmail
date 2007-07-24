@@ -89,16 +89,6 @@
         <default>inbox</default>
       </entry>
 
-      <entry name="QuotaUnit"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="KB"/>
-          <choice name="MB"/>
-          <choice name="GB"/>
-        </choices>
-        <default>MB</default>
-      </entry>
     </group>
 
     <group name="General">
@@ -142,12 +132,20 @@
       <entry name="FolderLoadingTimeout" type="Int" hidden="true">
          <default>1000</default>
       </entry>
-
       <entry name="CloseToQuotaThreshold" type="Int">
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
          <default>85</default>
       </entry>
-
+      <entry name="QuotaUnit"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="KB"/>
+          <choice name="MB"/>
+          <choice name="GB"/>
+        </choices>
+        <default>MB</default>
+      </entry>
     </group>
 <!-- General -->
 
@@ -417,6 +415,11 @@
         <default>200</default>
       </entry>
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
+
+      <entry name="MimetypesToStripWhenInlineForwarding" type="StringList">
+          <label>List of message part types to strip off mails that are being forwarded inline.</label>
+      </entry>
+
     </group>
 <!-- Composer -->
 
@@ -555,5 +558,25 @@
       <default code="true">TemplatesConfiguration::defaultQuoteString()</default>
     </entry>
   </group>
+
+    <group name="OutOfOffice">
+        <entry name="AllowOutOfOfficeSettings" type="Bool">
+            <default>true</default>
+            <label>Allow out-of-office settings to to be changeable by the user.</label>
+        </entry>
+        <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
+            <default>false</default>
+            <label>Allow users to upload out-of-office sieve scripts, but disallow them changin any settings, such as the domain to react to and the spam reaction switch.</label>
+        </entry>
+        <entry name="OutOfOfficeDomain" type="String">
+            <default></default>
+            <label>Send out-of-office replies to mails coming from this domain only.</label>
+        </entry>
+        <entry name="OutOfOfficeReactToSpam" type="Bool">
+            <default>false</default>
+            <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
+        </entry>
+    </group>
+
 
 </kcfg>

@@ -35,6 +35,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <QLineEdit>
 #include <QTextEdit>
 #include <kiconloader.h>
+#include <qvalidator.h>
 
 namespace KMail {
 
@@ -51,7 +52,7 @@ namespace KMail {
 #ifdef Q_OS_UNIX    
     KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
 #endif
-    static const int rows = 4;
+    static const int rows = 7;
     int row = -1;
 
     QGridLayout * glay = new QGridLayout( frame );
@@ -99,7 +100,24 @@ namespace KMail {
     glay->addWidget( tmpLabel, row, 0 );
     glay->addWidget( mMailAliasesEdit, row, 1 );
 
-    // row 5 is for stretch.
+    // "Send responses also to SPAM mail" checkbox:
+    ++row;
+    mSpamCheck = new QCheckBox( i18n("Do not send vacation replies to spam messages"), frame, "mSpamCheck" );
+    mSpamCheck->setChecked( true );
+    glay->addMultiCellWidget( mSpamCheck, row, row, 0, 1 );
+
+    //  domain checkbox and linedit:
+    ++row;
+    mDomainCheck = new QCheckBox( i18n("Only react to mail coming from domain"), frame, "mDomainCheck" );
+    mDomainCheck->setChecked( false );
+    mDomainEdit = new QLineEdit( frame, "mDomainEdit" );
+    mDomainEdit->setEnabled( false );
+    mDomainEdit->setValidator( new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), mDomainEdit ) );
+    glay->addWidget( mDomainCheck, row, 0 );
+    glay->addWidget( mDomainEdit, row, 1 );
+    connect( mDomainCheck, SIGNAL(toggled(bool)),
+             mDomainEdit, SLOT(setEnabled(bool)) );
+
     Q_ASSERT( row == rows - 1 );
   }
 
@@ -160,6 +178,33 @@ namespace KMail {
   void VacationDialog::slotIntervalSpinChanged ( int value ) {
     mIntervalSpin->setSuffix( i18np(" day", " days", value) );
   }
+ 
+  QString VacationDialog::domainName() const {
+    return mDomainCheck->isChecked() ? mDomainEdit->text() : QString::null ;
+  }
+
+  void VacationDialog::setDomainName( const QString & domain ) {
+    mDomainEdit->setText( domain );
+    if ( !domain.isEmpty() )
+      mDomainCheck->setChecked( true );
+  }
+
+  bool VacationDialog::sendForSpam() const {
+    return !mSpamCheck->isChecked();
+  }
+
+  void VacationDialog::setSendForSpam( bool enable ) {
+    mSpamCheck->setChecked( !enable );
+  }
+
+
+  /* virtual*/ 
+  void KMail::VacationDialog::enableDomainAndSendForSpam( bool enable ) {
+      mDomainCheck->setEnabled( enable );
+      mDomainEdit->setEnabled( enable );
+      mSpamCheck->setEnabled( enable );
+  }
+
 
 } // namespace KMail
 

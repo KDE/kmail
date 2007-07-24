@@ -48,13 +48,17 @@ namespace KMail {
     static QString defaultMessageText();
     static int defaultNotificationInterval();
     static QStringList defaultMailAliases();
+    static bool defaultSendForSpam();
+    static QString defaultDomainName();
 
   protected:
     static QString composeScript( const QString & messageText,
 				  int notificationInterval,
-				  const KMime::Types::AddrSpecList & aliases);
+				  const KMime::Types::AddrSpecList & aliases,
+                                  bool sendForSpam, const QString & excludeDomain );
     static bool parseScript( const QString & script, QString & messageText,
-			     int & notificationInterval, QStringList & aliases );
+			     int & notificationInterval, QStringList & aliases,
+                             bool & sendForSpam, QString & domainName );
     KUrl findURL() const;
     void handlePutResult( KMail::SieveJob * job, bool success, bool );
 

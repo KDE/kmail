@@ -1188,6 +1188,18 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
         header.RemoveField(field);
       field = nextField;
     }
+    // strip blacklisted parts
+    QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
+    for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
+      QString entry = (*it);
+      int sep = entry.find( '/' );
+      QByteArray type = entry.left( sep ).latin1();
+      QByteArray subtype = entry.mid( sep+1 ).latin1();
+      kdDebug( 5006 ) << "Looking for blacklisted type: " << type << "/" << subtype << endl;
+      while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
+        msg->mMsg->Body().RemoveBodyPart( part );
+      }
+    }
     msg->mMsg->Assemble();
 
     msg->initFromMessage( this );
@@ -1242,7 +1254,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
   else parser.process( this );
 
-  // QCString encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
+  // QByteArray encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
   // if (encoding.isEmpty()) encoding = "utf-8";
   // msg->setCharset(encoding);
   // force utf-8
@@ -1535,17 +1547,30 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 }
 
 QString KMMessage::replaceHeadersInString( const QString & s ) const {
-  QString result = s;
-  QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
-  Q_ASSERT( rx.isValid() );
-  int idx = 0;
-  while ( ( idx = rx.indexIn( result, idx ) ) != -1 ) {
-    QString replacement = headerField( rx.cap(1).toLatin1() );
-    result.replace( idx, rx.matchedLength(), replacement );
-    idx += replacement.length();
-  }
-  return result;
+    QString result = s;
+    QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
+    Q_ASSERT( rx.isValid() );
+
+    QRegExp rxDate( "\\$\\{date\\}" );
+    Q_ASSERT( rxDate.isValid() );
+
+    QString sDate = KMime::DateFormatter::formatDate(
+						     KMime::DateFormatter::Localized, date() );
+
+    int idx = 0;
+    if( ( idx = rxDate.search( result, idx ) ) != -1  ) {
+      result.replace( idx, rxDate.matchedLength(), sDate );
+    }
+
+    idx = 0;
+    while ( ( idx = rx.search( result, idx ) ) != -1 ) {
+      QString replacement = headerField( rx.cap(1).latin1() );
+      result.replace( idx, rx.matchedLength(), replacement );
+      idx += replacement.length();
+    }
+    return result;
 }
+
 
 KMMessage* KMMessage::createDeliveryReceipt() const
 {
@@ -2805,6 +2830,56 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
   }
   return part;
 }
+
+//-----------------------------------------------------------------------------
+DwBodyPart * KMMessage::findDwBodyPart( const QByteArray& type, const QByteArray&  subtype ) const
+{
+  DwBodyPart *part, *curpart;
+  QList< DwBodyPart* > parts;
+  // Get the DwBodyPart for this index
+
+  curpart = getFirstDwBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+    //dive into multipart messages
+    while(curpart
+	  && curpart->hasHeaders()
+	  && curpart->Headers().HasContentType()
+      && curpart->Body().FirstBodyPart()
+	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
+	parts.append( curpart );
+	curpart = curpart->Body().FirstBodyPart();
+    }
+    // this is where curPart->msgPart contains a leaf message part
+
+    // pending(khz): Find out WHY this look does not travel down *into* an
+    //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
+    if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
+      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+            << "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
+    }
+
+    if (curpart &&
+	curpart->hasHeaders() &&
+        curpart->Headers().HasContentType() &&
+	curpart->Headers().ContentType().TypeStr().c_str() == type &&
+	curpart->Headers().ContentType().SubtypeStr().c_str() == subtype) {
+	part = curpart;
+    } else {
+      // go up in the tree until reaching a node with next
+      // (or the last top-level node)
+      while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
+	curpart = parts.last();
+	parts.removeLast();
+      } ;
+      if (curpart)
+	curpart = curpart->Next();
+    }
+  }
+  return part;
+}
+
 
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {

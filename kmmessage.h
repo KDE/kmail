@@ -551,6 +551,10 @@ public:
       or zero, if no found. */
   DwBodyPart * findDwBodyPart( int type, int subtype ) const;
 
+  /** Return the first DwBodyPart matching a given Content-Type
+      or zero, if no found. */
+  DwBodyPart * findDwBodyPart( const QByteArray& type, const QByteArray&  subtype ) const;
+
   /** Return the first DwBodyPart matching a given partSpecifier
       or zero, if no found. */
   DwBodyPart* findDwBodyPart( DwBodyPart* part, const QString & partSpecifier );
