@@ -1853,7 +1853,7 @@ KMCommand::Result KMCopyCommand::execute()
       // corrupt IMAP cache, see FolderStorage::getMsg()
       if ( msg == 0 ) {
         KMessageBox::error( parentWidget(), i18n("Corrupt IMAP cache detected in folder %1. "
-            "Copying of messages aborted.").arg( srcFolder->prettyUrl() ) );
+            "Copying of messages aborted.", srcFolder->prettyUrl() ) );
         deleteLater();
         return Failed;
       }
@@ -3310,7 +3310,7 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
   dummyPart.duplicate( part );
   QString comment = i18n("This attachment has been deleted.");
   if ( !part.fileName().isEmpty() )
-    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+    comment = i18n( "The attachment '%1' has been deleted.", part.fileName() );
   dummyPart.setContentDescription( comment );
   dummyPart.setBodyEncodedBinary( QByteArray() );
   QByteArray cd = dummyPart.contentDisposition();
