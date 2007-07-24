@@ -1125,13 +1125,13 @@ size_t KMFolderMaildir::doFolderSize() const
   list.append( KFileItem( S_IFDIR, -1, location() + "/tmp" ) );
 
   KIO::DirectorySizeJob* job = KIO::directorySize( list );
-  connect( job, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( slotDirSizeJobResult( KIO::Job*) ) );
+  connect( job, SIGNAL( result( KJob* ) ),
+           this, SLOT( slotDirSizeJobResult( KJob*) ) );
   mCurrentlyCheckingFolderSize = true;
   return -1;
 }
 
-void KMFolderMaildir::slotDirSizeJobResult( KIO::Job* job )
+void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
 {
     mCurrentlyCheckingFolderSize = false;
     KIO::DirectorySizeJob * dirsize = dynamic_cast<KIO::DirectorySizeJob*>( job );

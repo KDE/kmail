@@ -5,15 +5,12 @@
 
 #include <QList>
 
-
+class KJob;
 class KMFolderMaildir;
 namespace KMail {
   class FolderJob;
   class MaildirJob;
   class AttachmentStrategy;
-}
-namespace KIO {
-    class Job;
 }
 
 using KMail::FolderJob;
@@ -143,7 +140,7 @@ protected:
   int addMsgInternal( KMMessage* msg, int* index_return = 0, bool stripUid=false );
 
 private slots:
-  void slotDirSizeJobResult( KIO::Job* job );
+  void slotDirSizeJobResult( KJob* job );
 
 private:
   void readFileHeaderIntern( const QString& dir, const QString& file,
