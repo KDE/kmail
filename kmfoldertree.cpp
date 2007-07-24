@@ -147,10 +147,10 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
   }
   KIconLoader * il = KIconLoader::global();
   QPixmap pm = il->loadIcon( icon, K3Icon::Small, size,
-                             K3Icon::DefaultState, 0, true );
+                             K3Icon::DefaultState, QStringList(), 0, true );
   if ( mFolder && pm.isNull() ) {
       pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
-                         K3Icon::DefaultState, 0, true );
+                         K3Icon::DefaultState, QStringList(), 0, true );
   }
 
   return pm;
@@ -169,21 +169,21 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
   KIconLoader * il = KIconLoader::global();
   if ( mFolder && mFolder->useCustomIcons() ) {
     pm = il->loadIcon( mFolder->unreadIconPath(), K3Icon::Small, size,
-                       K3Icon::DefaultState, 0, true );
+                       K3Icon::DefaultState, QStringList(), 0, true );
     if ( pm.isNull() )
       pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
-                         K3Icon::DefaultState, 0, true );
+                         K3Icon::DefaultState, QStringList(), 0, true );
   }
   if ( pm.isNull() ) {
     if ( mFolder && mFolder->noContent() ) {
       pm = il->loadIcon( "folder_grey_open", K3Icon::Small, size,
-                         K3Icon::DefaultState, 0, true );
+                         K3Icon::DefaultState, QStringList(), 0, true );
     } else {
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
-                         K3Icon::Small, size, K3Icon::DefaultState, 0, true );
+                         K3Icon::Small, size, K3Icon::DefaultState, QStringList(), 0, true );
       if ( pm.isNull() )
         pm = il->loadIcon( "folder-open", K3Icon::Small, size,
-                           K3Icon::DefaultState, 0, true );
+                           K3Icon::DefaultState, QStringList(), 0, true );
     }
   }
 
