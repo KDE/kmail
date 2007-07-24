@@ -55,8 +55,8 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
-#include "kleo/ui/keyselectiondialog.h"
-#include "kleo/ui/keyapprovaldialog.h"
+#include "libkleo/ui/keyselectiondialog.h"
+#include "libkleo/ui/keyapprovaldialog.h"
 #include "kleo/cryptobackendfactory.h"
 #include "kleo/keylistjob.h"
 #include "kleo/encryptjob.h"
