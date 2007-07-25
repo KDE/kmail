@@ -2850,7 +2850,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
           "on the server or you do not "
           "have sufficient access rights on the folder to upload them.</p>"
           "<p>All affected messages will therefore be moved to <b>%2</b> "
-          "to avoid data loss.</p>").arg( folder()->prettyUrl() ).arg( dest->prettyUrl() ),
+          "to avoid data loss.</p>", folder()->prettyUrl(), dest->prettyUrl() ),
           i18n("Insufficient access rights") );
     manualMove = false;
     break;
@@ -2863,7 +2863,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
           "have sufficient access rights on the folder now to upload them. "
           "Please contact your administrator to allow upload of new messages "
           "to you, or move them out of this folder.</p> "
-          "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyUrl() ) );
+          "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
     if ( KMessageBox::warningYesNo( 0, msg, QString::null, KGuiItem( i18n("Move") ), KGuiItem( i18n("Do Not Move") ) )
           == KMessageBox::Yes ) {
       KMail::FolderSelectionDialog dlg( kmkernel->getKMMainWidget(),

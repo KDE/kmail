@@ -3439,8 +3439,8 @@ KMCommand::Result CreateTodoCommand::execute()
 #endif
   }
 
-  QString txt = i18n("From: %1\nTo: %2\nSubject: %3").arg( msg->from() )
-                .arg( msg->to() ).arg( msg->subject() );
+  QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from(),
+                     msg->to(), msg->subject() );
 
   KTemporaryFile tf;
   tf.setAutoRemove( true );
@@ -3448,7 +3448,7 @@ KMCommand::Result CreateTodoCommand::execute()
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
 
   OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );
-  iface->openTodoEditor( i18n("Mail: %1").arg( msg->subject() ), txt,
+  iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
                          uri, tf.name(), QStringList(), "message/rfc822" );
   delete iface;
   tf.close();
