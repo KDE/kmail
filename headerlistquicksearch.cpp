@@ -48,13 +48,16 @@
 #include "kmheaders.h"
 #include "kmsearchpattern.h"
 #include "kmmainwidget.h"
+#include "kmmessagetag.h"
 
 namespace KMail {
 
 HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
                                               K3ListView *listView,
                                               KActionCollection *actionCollection )
-  : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
+  : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList(),
+    mComboStatusCount( 0 ), mFilterWithTag( false ), mTagLabel() 
+
 {
     // There is a clear button in the line, now, so this can go
     // keeping it for now, maybe we need it when k3listviewsearchline changes
@@ -78,24 +81,15 @@ HeaderListQuickSearch::HeaderListQuickSearch( QToolBar *parent,
 
   mStatusCombo = new QComboBox( parent );
   mStatusCombo->setObjectName( "quick search status combo box" );
-  mStatusCombo->addItem( SmallIcon( "system-run" ), i18n("Any Status") );
   parent->addWidget( mStatusCombo );
 
-  insertStatus( StatusUnread );
-  insertStatus( StatusNew );
-  insertStatus( StatusImportant );
-  insertStatus( StatusReplied );
-  insertStatus( StatusForwarded );
-  insertStatus( StatusToDo );
-  insertStatus( StatusHasAttachment );
-  insertStatus( StatusWatched );
-  insertStatus( StatusIgnored );
-  mStatusCombo->setCurrentIndex( 0 );
+  updateComboList();
+
   mStatusCombo->installEventFilter( this );
-  connect( mStatusCombo, SIGNAL ( activated( int ) ),
-           this, SLOT( slotStatusChanged( int ) ) );
 
   label->setBuddy( mStatusCombo );
+  connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
+           this, SLOT( updateComboList() ) );
 
   /* Disable the signal connected by K3ListViewSearchLine since it will call
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
@@ -153,6 +147,12 @@ bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QStrin
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
     if ( !msg || ! ( msg->messageStatus() & mStatus ) )
       return false;
+  } else if ( mFilterWithTag ) {
+    KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
+    const KMMsgBase *msg = headers->getMsgBaseForItem( item );
+    if ( !msg || !msg->tagList()
+              || msg->tagList()->find( mTagLabel ) == msg->tagList()->end() )
+      return false;
   }
   return K3ListViewSearchLine::itemMatches(item, s);
 }
@@ -162,15 +162,57 @@ void HeaderListQuickSearch::reset()
 {
   clear();
   mStatusCombo->setCurrentIndex( 0 );
+  mFilterWithTag = false;
   slotStatusChanged( 0 );
 }
 
+void HeaderListQuickSearch::updateComboList()
+{
+  disconnect( mStatusCombo, SIGNAL ( activated( int ) ),
+           this, SLOT( slotStatusChanged( int ) ) );
+  mStatusCombo->clear();
+  mStatusCombo->addItem( SmallIcon( "system-run" ), i18n("Any Status") );
+  insertStatus( StatusUnread );
+  insertStatus( StatusNew );
+  insertStatus( StatusImportant );
+  insertStatus( StatusReplied );
+  insertStatus( StatusForwarded );
+  insertStatus( StatusToDo );
+  insertStatus( StatusHasAttachment );
+  insertStatus( StatusWatched );
+  insertStatus( StatusIgnored );
+
+  mComboStatusCount = mStatusCombo->count();
+  
+  const QList<KMMessageTagDescription *> *msgTagList 
+                                        = kmkernel->msgTagMgr()->msgTagList();
+  for ( QList<KMMessageTagDescription *>::ConstIterator it = msgTagList->begin(); 
+                                              it != msgTagList->end(); ++it ) {
+    QString lineString = i18n("Tagged %1", (*it)->name() );
+    mStatusCombo->insertItem( SmallIcon( (*it)->toolbarIconName() ),
+                                                                  lineString );
+  }
+  mStatusCombo->setCurrentIndex( 0 );
+  mFilterWithTag = false;
+  connect( mStatusCombo, SIGNAL ( activated( int ) ),
+           this, SLOT( slotStatusChanged( int ) ) );
+}
 void HeaderListQuickSearch::slotStatusChanged( int index )
 {
-  if ( index == 0 )
+  if ( index == 0 ) {
     mStatus.clear();
-  else
+    mFilterWithTag = false;
+  } else if ( index < mComboStatusCount ) {
+    mFilterWithTag = false;
     mStatus = KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] );
+  }
+  else {
+    mStatus.clear();
+    mFilterWithTag = true;
+    KMMessageTagDescription *tmp_desc = 
+         kmkernel->msgTagMgr()->msgTagList()->at( index - mComboStatusCount );
+    mTagLabel = tmp_desc->label();
+  }
   updateSearch();
 }
 

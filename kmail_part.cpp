@@ -211,6 +211,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   kDebug(5006) << "KMailPart::guiActivateEvent" << endl;
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
+  mainWidget->initializeMessageTagActions();
   mainWidget->initializeFolderShortcutActions();
 }
 

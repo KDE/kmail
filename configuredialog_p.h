@@ -19,6 +19,7 @@
 #include <QResizeEvent>
 #include <QStackedWidget>
 #include <QTreeWidget>
+#include <QHash>
 
 #include <kdialog.h>
 #include <kcmodule.h>
@@ -36,6 +37,10 @@ class QFont;
 class QTabWidget;
 class QRegExpValidator;
 class QPoint;
+class QGroupBox;
+class QVGroupBox;
+class QLineEdit;
+class QSpinBox;
 
 class KButtonGroup;
 class KUrlRequester;
@@ -50,7 +55,12 @@ class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
-class QSpinBox;
+class KMMessageTagDescription;
+class K3ListBox;
+class KColorCombo;
+class KFontRequester;
+class KIconButton;
+class KKeySequenceWidget;
 
 namespace KMail {
   class IdentityDialog;
@@ -566,6 +576,92 @@ private: // data
   KButtonGroup *mSystemTrayGroup;
 };
 
+/**Configuration tab in the appearance page for modifying the available set of
++message tags*/
+class AppearancePageMessageTagTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  AppearancePageMessageTagTab( QWidget * parent=0);
+  ~AppearancePageMessageTagTab();
+
+  QString helpAnchor() const;
+
+  void save();
+  void installProfile( KConfig * profile );
+
+public slots:
+  /**Enables/disables Add button according to whether @p aText is empty.
+  Connected to signal of the line edit widget for adding tags
+  @param aText String to change add button according to
+  */
+  void slotAddLineTextChanged( const QString &aText );
+  /**Creates a generic tag with the visible name from the line edit widget for
+    adding tags. Adds it to the end of the list and selects. Empties the line
+    edit widget*/
+  void slotAddNewTag();
+  /**Removes the currently selected text in the list box.*/
+  void slotRemoveTag();
+  /**Increases the currently selected tag's priority and handles related visual
+  changes*/
+  void slotMoveTagUp();
+  /**Decreases the currently selected tag's priority and handles related visual
+  changes*/
+  void slotMoveTagDown();
+
+private slots:
+  /*Handles necessary processing when the selection in the edit box changes.
+  Records the unselected tag's information, and applies visual changes
+  necessary depending on the description of the new tag. Private since doesn't
+  change the selection of the edit box itself*/
+  void slotSelectionChanged( int aIndex );
+  /*This slot is necessary so that apply button is not activated when we are
+  only applying visual changes after selecting a new tag in the list box*/
+  void slotEmitChangeCheck();
+  /*Transfers the tag settings from the widgets to the internal data structures.
+  Private since passing a wrong parameter modifies another tag's data*/
+  void slotRecordTagSettings( int aIndex );
+  /*Transfers the tag settings from the internal data structures to the widgets.
+  Private since passing a wrong parameter visualizes another tag's data*/
+  void slotUpdateTagSettingWidgets( int aIndex );
+  /*Transfers changes in the tag name edit box to the list box for tags. Private
+  since calling externally decouples the name in the list box from name edit box*/
+  void slotNameLineTextChanged( const QString & );
+  /*Processes the shortcut button, OnurTodo is private needed? */
+  void slotShortcutCaptured( const QKeySequence & );
+
+
+private:
+  virtual void doLoadFromGlobalSettings();
+  void swapTagsInListBox( const int first, const int second );
+
+private: // data
+  QLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
+  QPushButton *mTagAddButton, *mTagRemoveButton,
+              *mTagUpButton, *mTagDownButton;
+
+  K3ListBox *mTagListBox;
+
+  QCheckBox *mTextColorCheck, 
+            *mTextFontCheck, *mInToolbarCheck;
+
+  QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;
+
+  KColorCombo *mTextColorCombo;
+
+  KFontRequester *mFontRequester;
+
+  KIconButton *mIconButton;
+
+  KKeySequenceWidget *mKeySequenceWidget;
+
+  QHash<QString,KMMessageTagDescription*> *mMsgTagDict;
+  QList<KMMessageTagDescription*> *mMsgTagList;
+  /*If true, changes to the widgets activate the Apply button*/
+  bool mEmitChanges;
+  /*Used to safely call slotRecordTagSettings when the selection in
+    list box changes*/
+  int mPreviousTag;
+};
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -581,6 +677,7 @@ public:
   typedef AppearancePageHeadersTab HeadersTab;
   typedef AppearancePageReaderTab ReaderTab;
   typedef AppearancePageSystemTrayTab SystemTrayTab;
+  typedef AppearancePageMessageTagTab MessageTagTab;
 
 private:
   FontsTab      *mFontsTab;
@@ -589,6 +686,7 @@ private:
   HeadersTab    *mHeadersTab;
   ReaderTab     *mReaderTab;
   SystemTrayTab *mSystemTrayTab;
+  MessageTagTab *mMessageTagTab;
 };
 
 //

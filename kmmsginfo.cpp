@@ -3,6 +3,7 @@
 
 #include "kmmsginfo.h"
 #include "kmmessage.h"
+#include "kmmessagetag.h"
 //#include "kmmsgpart.h" // for encode
 
 #include <stdlib.h>
@@ -190,6 +191,14 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->mdnSentState = msg.mdnSentState();
     kd->msgSizeServer = msg.msgSizeServer();
     kd->UID = msg.UID();
+    if ( msg.tagList() ) {
+      if ( !mTagList )
+        mTagList = new KMMessageTagList();
+      *mTagList = *msg.tagList();
+    } else {
+      delete mTagList;
+      mTagList = 0;
+    }
     return *this;
 }
 
@@ -280,6 +289,20 @@ QString KMMsgInfo::fileName(void) const
     return getStringPart(MsgFilePart);
 }
 
+//-----------------------------------------------------------------------------
+QString KMMsgInfo::tagString( void ) const
+{
+	return tagList()->join( "," );
+}
+KMMessageTagList* KMMsgInfo::tagList( void ) const
+{
+  if (mTagList)
+    return mTagList;
+  mTagList = new KMMessageTagList( KMMessageTagList::split( ",", 
+                              getStringPart( MsgTagPart ) ) );
+  mTagList->prioritySort();
+  return mTagList;
+}
 
 //-----------------------------------------------------------------------------
 QString KMMsgInfo::toStrip(void) const

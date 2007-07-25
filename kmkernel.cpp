@@ -119,6 +119,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
+  the_msgTagMgr = 0;
   mWin = 0;
   mMailCheckAborted = false;
   folderAdaptor=0;
@@ -1388,6 +1389,9 @@ void KMKernel::init()
     }
     kDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
   }
+  //Here because folderMgr's need it when they read the index and sort tags
+  the_msgTagMgr = new KMMessageTagMgr(); 
+  the_msgTagMgr->readConfig(); 
 
   // moved up here because KMMessage::stripOffPrefixes is used below
   KMMessage::readConfig();
@@ -1585,6 +1589,8 @@ void KMKernel::cleanup(void)
   the_msgSender = 0;
   delete the_filterActionDict;
   the_filterActionDict = 0;
+  delete the_msgTagMgr;
+  the_msgTagMgr = 0;
   delete the_undoStack;
   the_undoStack = 0;
   delete the_popFilterMgr;

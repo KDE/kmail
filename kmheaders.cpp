@@ -6,6 +6,7 @@
 #include "headeritem.h"
 using KMail::HeaderItem;
 
+#include "kmmessagetag.h"
 #include "kcursorsaver.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
@@ -1188,6 +1189,27 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
   }
 }
 
+
+//-----------------------------------------------------------------------------
+// TODO: Use KMCommand class
+void KMHeaders::setMessageTagList( const QString &taglabel ) 
+{
+  for ( Q3ListViewItemIterator it(this); it.current(); ++it )
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      HeaderItem *item = static_cast<HeaderItem*>( it.current() );
+      KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
+      if ( msgBase->tagList() ) {
+        KMMessageTagList tmp_list = *msgBase->tagList();
+        KMMessageTagList::iterator lit = tmp_list.find( taglabel );
+        if ( lit == tmp_list.end() ) {
+          tmp_list.append( taglabel );
+        } else {
+          tmp_list.remove( lit );
+        }
+        msgBase->setTagList( tmp_list );
+      }
+    }
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus( const MessageStatus& status, bool toggle)

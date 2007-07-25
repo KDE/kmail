@@ -58,6 +58,8 @@ class KMMessage;
 class KMFolder;
 class KMSystemTray;
 class KMHeaders;
+class KMMessageTagDescription;
+typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
 
 template <typename T> class QList;
 template <typename T, typename S> class QMap;
@@ -246,6 +248,18 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Add, remove or adjust the folder's shortcut. */
     void slotShortcutChanged( KMFolder *folder );
+
+  /**Clear and create actions for message tag toggling*/
+  void clearMessageTagActions();
+  void initializeMessageTagActions();
+  /**Adds if not existing/removes if existing the tag identified by @p aLabel 
+    in all selected messages*/
+  void slotUpdateMessageTagList( const QString &aLabel );
+  /**If @p aCount is 0, disables all tag related actions in menus. 
+     If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
+     If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
+    @param aCount Number of selected messages*/
+  void updateMessageTagActions( const int aCount );
 
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
@@ -548,7 +562,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
 #endif
     KActionCollection *mActionCollection;
-    QAction  *mToolbarActionSeparator;
+    QAction  *mToolbarActionSeparator,
+	     *mMessageTagToolbarActionSeparator;
     QVBoxLayout *mTopLayout;
     bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
     QList<QAction*> mFilterMenuActions;
@@ -556,6 +571,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<KMMetaFilterActionCommand*> mFilterCommands;
     QHash<QString,FolderShortcutCommand*> mFolderShortcutCommands;
     QPointer <KMail::FolderJob> mJob;
+
+   QList<MessageTagPtrPair> mMessageTagMenuActions; 
+   QList<QAction*> mMessageTagTBarActions;
+   QSignalMapper *mMessageTagToggleMapper;
 
     QVector<QString> mCustomTemplates;
     QList<KAction*> mCustomTemplateActions;

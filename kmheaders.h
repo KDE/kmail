@@ -92,6 +92,11 @@ public:
   virtual bool canUndo() const;
   virtual HeaderItem * prepareMove( int *contentX, int *contentY );
   virtual void finalizeMove( HeaderItem *item, int contentX, int contentY );
+  /**Toggles the tag that is identified through @p aLabel for every selected
+    message
+    @param aLabel 10 letter label that corresponds to the tag to be toggled
+  */
+  virtual void setMessageTagList( const QString &aLabel ); 
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. The second parameter is useful when the

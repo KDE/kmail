@@ -19,6 +19,7 @@
 
 #include "kmail_export.h"
 #include "kmmsgbase.h"
+#include "kmmessagetag.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 
@@ -70,6 +71,7 @@ class KMailICalIfaceImpl;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
+class KMMessageTagMgr;
 
 /**
  * @short Central point of coordination in KMail
@@ -253,6 +255,7 @@ public:
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMail::MessageSender *msgSender();
+  KMMessageTagMgr *msgTagMgr() { return the_msgTagMgr; }
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
@@ -404,6 +407,7 @@ private:
   KMFilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
+  KMMessageTagMgr *the_msgTagMgr;
   struct putData
   {
     KUrl url;

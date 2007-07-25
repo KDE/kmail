@@ -9,6 +9,7 @@
 #include "kmfolder.h"
 #include "kmheaders.h"
 #include "kmmsgdict.h"
+#include "kmmessagetag.h"
 #include "messageproperty.h"
 #include <QByteArray>
 using KMail::MessageProperty;
@@ -74,7 +75,8 @@ using KMail::MessageProperty;
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
   : mParent( aParentFolder ), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), mStatus()
+    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), 
+    mStatus(), mTagList( 0 )
 {
 }
 
@@ -83,6 +85,7 @@ KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
 KMMsgBase::~KMMsgBase()
 {
   MessageProperty::forget( this );
+  delete mTagList;
 }
 
 KMFolderIndex* KMMsgBase::storage() const
@@ -101,6 +104,16 @@ void KMMsgBase::assign(const KMMsgBase* other)
   mDirty  = other->mDirty;
   mIndexOffset = other->mIndexOffset;
   mIndexLength = other->mIndexLength;
+  //Not sure why these 4 are copied here, but mStatus is not. Nevertheless,
+  //it probably does no harm to copy the taglist here
+  if ( other->tagList() ) {
+   if ( !mTagList )
+     mTagList = new KMMessageTagList();
+   *mTagList = *other->tagList();
+  } else {
+    delete mTagList;
+    mTagList = 0;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -112,7 +125,7 @@ KMMsgBase& KMMsgBase::operator=(const KMMsgBase& other)
 
 
 //----------------------------------------------------------------------------
-KMMsgBase::KMMsgBase( const KMMsgBase& other )
+KMMsgBase::KMMsgBase( const KMMsgBase& other ) : mTagList( 0 )
 {
     assign( &other );
 }
@@ -1085,6 +1098,8 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   //these are completely arbitrary order
   tmp_str = fromStrip().trimmed();
   STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  tmp_str = tagString().stripWhiteSpace();
+  STORE_DATA_LEN(MsgTagPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = subject().trimmed();
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = toStrip().trimmed();
@@ -1200,6 +1215,24 @@ QString KMMsgBase::replacePrefixes( const QString& str,
     return newPrefix + ' ' + str;
   else
     return str;
+}
+
+void KMMsgBase::setTagList( const QString &aTagStr ) 
+{ 
+  setTagList( KMMessageTagList::split( ",", aTagStr ) ); 
+}
+
+void KMMsgBase::setTagList( const KMMessageTagList &aTagList ) 
+{ 
+  if ( !mTagList ) {
+    mTagList = new KMMessageTagList( aTagList );
+  } else {
+    if ( aTagList == *mTagList )
+      return;
+    *mTagList = aTagList; 
+  }
+  mTagList->prioritySort();
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------

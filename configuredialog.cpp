@@ -53,6 +53,7 @@ using KMail::ImapAccountBase;
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
+#include "kmmessagetag.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
@@ -97,6 +98,13 @@ using MailTransport::TransportManagementWidget;
 #include <k3resolver.h>
 #include <kconfiggroup.h>
 #include <kbuttongroup.h>
+#include <k3listbox.h>
+#include <kcolorcombo.h>
+#include <kfontrequester.h>
+#include <kicondialog.h>
+#include <kkeysequencewidget.h>
+#include <KIconButton>
+#include <KRandom>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -108,6 +116,9 @@ using MailTransport::TransportManagementWidget;
 #include <QLayout>
 #include <QList>
 #include <QRadioButton>
+#include <QLineEdit>
+#include <QGroupBox>
+#include <QToolTip>
 
 #include <QValidator>
 #include <QVBoxLayout>
@@ -1272,6 +1283,12 @@ AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent,
   mSystemTrayTab = new SystemTrayTab();
   addTab( mSystemTrayTab, i18n("System &Tray") );
 
+  //
+  // "Message Tag" tab:
+  //
+  mMessageTagTab = new MessageTagTab();
+  addTab( mMessageTagTab, i18n("&Message Tags") );
+
   load();
 }
 
@@ -2269,6 +2286,472 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
 void AppearancePage::SystemTrayTab::save() {
   GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
   GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
+}
+
+QString AppearancePage::MessageTagTab::helpAnchor() const {
+  return QString::fromLatin1("configure-appearance-messagetag");
+}
+
+AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
+  : ConfigModuleTab( parent )
+{
+  mEmitChanges = true;
+  mPreviousTag = -1;
+  mMsgTagDict = new QHash<QString,KMMessageTagDescription*>();
+  mMsgTagList = new QList<KMMessageTagDescription*>();
+
+  QHBoxLayout *maingrid = new QHBoxLayout( this, KDialog::marginHint(),
+                                          KDialog::spacingHint() );
+
+  //Lefthand side Listbox and friends
+
+    //Groupbox frame
+  mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
+  maingrid->addWidget( mTagsGroupBox );
+  QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox, 
+                              KDialog::marginHint(), KDialog::spacingHint() );
+  tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
+
+    //Listbox, add, remove row
+  QHBoxLayout *addremovegrid = new QHBoxLayout( tageditgrid );
+
+  mTagAddLineEdit = new QLineEdit( mTagsGroupBox );
+  addremovegrid->addWidget( mTagAddLineEdit );
+
+  mTagAddButton = new QPushButton( mTagsGroupBox );
+  QToolTip::add( mTagAddButton, i18n("Add new tag") );
+  mTagAddButton->setIconSet( BarIconSet( "add", K3Icon::SizeSmall ) );
+  addremovegrid->addWidget( mTagAddButton );
+
+  mTagRemoveButton = new QPushButton( mTagsGroupBox );
+  QToolTip::add( mTagRemoveButton, i18n("Remove selected tag") );
+  mTagRemoveButton->setIconSet( BarIconSet( "remove", K3Icon::SizeSmall ) );
+  addremovegrid->addWidget( mTagRemoveButton );
+
+    //Up and down buttons
+  QHBoxLayout *updowngrid = new QHBoxLayout( tageditgrid );
+
+  mTagUpButton = new QPushButton( mTagsGroupBox );
+  QToolTip::add( mTagUpButton, i18n("Increase tag priority") );
+  mTagUpButton->setIconSet( BarIconSet( "up", K3Icon::SizeSmall ) );
+  mTagUpButton->setAutoRepeat( true );
+  updowngrid->addWidget( mTagUpButton );
+
+  mTagDownButton = new QPushButton( mTagsGroupBox );
+  QToolTip::add( mTagDownButton, i18n("Decrease tag priority") );
+  mTagDownButton->setIconSet( BarIconSet( "down", K3Icon::SizeSmall ) );
+  mTagDownButton->setAutoRepeat( true );
+  updowngrid->addWidget( mTagDownButton );
+
+    //Listbox for tag names
+  QHBoxLayout *listboxgrid = new QHBoxLayout( tageditgrid );
+  mTagListBox = new K3ListBox( mTagsGroupBox );
+  mTagListBox->setMinimumWidth( 150 );
+  listboxgrid->addWidget( mTagListBox );
+
+  //RHS for individual tag settings
+
+    //Extra VBoxLayout for stretchers around settings
+  QVBoxLayout *tagsettinggrid = new QVBoxLayout( maingrid );
+  tagsettinggrid->addStretch( 10 );
+  
+    //Groupbox frame
+  mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
+                                      this );
+  tagsettinggrid->addWidget( mTagSettingGroupBox );
+  QGridLayout *settings = new QGridLayout( mTagSettingGroupBox, 8, 2, 
+                              KDialog::marginHint(), KDialog::spacingHint() );
+
+    //Stretcher layout for adding some space after the label
+  QVBoxLayout *spacer = new QVBoxLayout( this );
+  settings->addMultiCellLayout( spacer, 0, 0, 0, 1 );
+  spacer->addSpacing( 2 * KDialog::spacingHint() );
+
+    //First row for renaming
+  mTagNameLineEdit = new QLineEdit( mTagSettingGroupBox );
+  settings->addWidget( mTagNameLineEdit, 1, 1 );
+
+  QLabel *namelabel = new QLabel( i18n("Name") , mTagSettingGroupBox );
+  namelabel->setBuddy( mTagNameLineEdit );
+  settings->addWidget( namelabel , 1 , 0 );
+  
+  connect( mTagNameLineEdit, SIGNAL( textChanged( const QString& ) ),
+            this, SLOT( slotEmitChangeCheck( void ) ) );
+
+    //Second row for text color
+  mTextColorCheck = new QCheckBox( i18n("Change Te&xt Color"), 
+                                                        mTagSettingGroupBox );
+  settings->addWidget( mTextColorCheck, 2, 0 );
+
+  mTextColorCombo = new KColorCombo( mTagSettingGroupBox );
+  settings->addWidget( mTextColorCombo, 2, 1 );
+
+  connect( mTextColorCheck, SIGNAL( toggled( bool ) ),
+          mTextColorCombo, SLOT( setEnabled( bool ) ) );
+  connect( mTextColorCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+  connect( mTextColorCombo, SIGNAL( activated( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+
+    //Third for font selection
+  mTextFontCheck = new QCheckBox( i18n("Change Fo&nt"), 
+                                                        mTagSettingGroupBox );
+  settings->addWidget( mTextFontCheck, 3, 0 );
+
+  mFontRequester = new KFontRequester( mTagSettingGroupBox );
+  settings->addWidget( mFontRequester, 3, 1 );
+
+  connect( mTextFontCheck, SIGNAL( toggled( bool ) ),
+          mFontRequester, SLOT( setEnabled( bool ) ) );
+  connect( mTextFontCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+  connect( mFontRequester, SIGNAL( fontSelected( const QFont& ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+
+    //Fourth for toolbar icon
+  mIconButton = new KIconButton( mTagSettingGroupBox );
+  mIconButton->setIconSize( 16 );
+  mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Any, true );
+  settings->addWidget( mIconButton, 5, 1 );
+
+  QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"), 
+                                                        mTagSettingGroupBox );
+  iconlabel->setBuddy( mIconButton );
+  settings->addWidget( iconlabel, 5, 0 );
+
+  //We do not connect the checkbox to icon selector since icons are used in the
+  //menus as well
+  connect( mIconButton, SIGNAL( iconChanged( QString ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+
+    //Fifth for shortcut
+  mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
+  settings->addWidget( mKeySequenceWidget, 6, 1 );
+  QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
+  sclabel->setBuddy( mKeySequenceWidget );
+  settings->addWidget( sclabel, 6, 0 );
+  
+  connect( mKeySequenceWidget, SIGNAL( capturedShortcut ( const QKeySequence& ) ),
+          this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
+  
+    //Sixth for Toolbar checkbox
+  mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"), 
+                                                        mTagSettingGroupBox );
+  settings->addMultiCellWidget( mInToolbarCheck, 7, 7, 0, 1 );
+  connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
+          this, SLOT( slotEmitChangeCheck( void ) ) );
+ 
+  tagsettinggrid->addStretch( 10 );
+  
+  //Adjust widths for columns
+  maingrid->setStretchFactor( mTagsGroupBox, 1 );
+  maingrid->setStretchFactor( tagsettinggrid, 1 );
+  
+  //Other Connections
+    //For enabling the add button in case box is non-empty
+  connect( mTagAddLineEdit, SIGNAL( textChanged( const QString& ) ),
+          this, SLOT( slotAddLineTextChanged( const QString& ) ) );
+    //For on-the-fly updating of tag name in editbox
+  connect( mTagNameLineEdit, SIGNAL( textChanged( const QString& ) ),
+          this, SLOT( slotNameLineTextChanged( const QString& ) ) );
+
+  connect( mTagAddButton, SIGNAL( clicked( void ) ),
+          this, SLOT( slotAddNewTag( void ) ) );
+
+  connect( mTagRemoveButton, SIGNAL( clicked( void ) ),
+          this, SLOT( slotRemoveTag( void ) ) );
+
+  connect( mTagUpButton, SIGNAL( clicked( void ) ),
+          this, SLOT( slotMoveTagUp( void ) ) );
+
+  connect( mTagDownButton, SIGNAL( clicked( void ) ),
+          this, SLOT( slotMoveTagDown( void ) ) );
+
+  connect( mTagListBox, SIGNAL( highlighted( int ) ),
+          this, SLOT( slotSelectionChanged( int ) ) );
+}
+
+AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
+{
+  qDeleteAll(*mMsgTagDict);
+  delete mMsgTagDict;
+  delete mMsgTagList;
+}
+
+void AppearancePage::MessageTagTab::slotEmitChangeCheck()
+{
+  if ( mEmitChanges )
+    slotEmitChanged();
+}
+
+void AppearancePage::MessageTagTab::slotShortcutCaptured( const QKeySequence &sc )
+{
+  QKeySequence mySc(sc);
+  if ( mySc == mKeySequenceWidget->keySequence() ) 
+    return;
+  // FIXME work around a problem when reseting the shortcut via the shortcut dialog
+  // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
+  // so we additionally have to check for an empty string
+  if ( mySc.isEmpty() || mySc.toString().isEmpty() )
+    mySc = QKeySequence();
+  bool assign = true;
+  if ( !mySc.isEmpty() 
+       && !( kmkernel->getKMMainWidget()->shortcutIsValid( mySc ) ) ) {
+    QString title( i18n("Key Conflict") );
+    QString msg( i18n("The selected shortcut is already used, "
+          "would you still like to continue with the assignment?" ) );
+    assign = ( KMessageBox::warningYesNo( this, msg, title ) 
+                == KMessageBox::Yes );
+  } 
+  if ( assign ) {
+    mKeySequenceWidget->setKeySequence( mySc );
+    slotEmitChangeCheck();
+  }
+}
+
+void AppearancePage::MessageTagTab::slotMoveTagUp()
+{
+  int tmp_index = mTagListBox->currentItem();
+  if ( tmp_index <= 0 )
+    return;
+  swapTagsInListBox( tmp_index, tmp_index - 1 );
+    //Reached the first row
+  if ( 1 == tmp_index ) 
+    mTagUpButton->setEnabled( false );
+    //Escaped from last row
+  if ( int( mTagListBox->count() ) - 1 == tmp_index )
+    mTagDownButton->setEnabled( true );
+}
+void AppearancePage::MessageTagTab::slotMoveTagDown()
+{
+  int tmp_index = mTagListBox->currentItem();
+  if ( ( tmp_index < 0 ) 
+        || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
+    return;
+  swapTagsInListBox( tmp_index, tmp_index + 1 );
+    //Reached last row
+  if ( int( mTagListBox->count() ) - 2 == tmp_index ) 
+    mTagDownButton->setEnabled( false );
+    //Escaped from first row
+  if ( 0 == tmp_index )
+    mTagUpButton->setEnabled( true );
+}
+void AppearancePage::MessageTagTab::swapTagsInListBox( const int first, 
+                                                       const int second )
+{
+  QString tmp_label = mTagListBox->text( first );
+  KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
+ 
+  mMsgTagList->replace( first, mMsgTagList->at( second ) );
+  mMsgTagList->replace( second, tmp_ptr );  
+
+  disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
+          this, SLOT( slotSelectionChanged( int ) ) );
+  mTagListBox->changeItem( mTagListBox->text( second ) , first );
+  mTagListBox->changeItem( tmp_label, second );
+  mTagListBox->setSelected( second, true );
+  connect( mTagListBox, SIGNAL( highlighted( int ) ),
+          this, SLOT( slotSelectionChanged( int ) ) );
+  
+  mPreviousTag = second;
+
+  slotEmitChangeCheck();
+}
+
+void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex ) 
+{
+  if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) ) )
+    return;
+
+  KMMessageTagDescription *tmp_desc = mMsgTagList->at( aIndex );
+
+  //First row
+  tmp_desc->setName( mTagListBox->text( aIndex ) );
+  //Second row
+  tmp_desc->setTextColor( mTextColorCheck->isChecked() ?
+                          mTextColorCombo->color() : QColor() );
+  //Third row
+  tmp_desc->setTextFont( mTextFontCheck->isChecked() ?
+                          mFontRequester->font() : QFont() );
+  //Fourth row
+  tmp_desc->setIconName( mIconButton->icon() );
+  //Fifth row
+  tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
+  //Sixth row
+  tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );
+}
+
+void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
+{
+  //We are just updating the display, so no need to mark dirty
+  mEmitChanges = false;
+  //Check if selection is valid
+  if ( ( aIndex < 0 ) || ( mTagListBox->currentItem() < 0 ) ) {
+    mTagRemoveButton->setEnabled( false );
+    mTagUpButton->setEnabled( false );
+    mTagDownButton->setEnabled( false );
+
+    mTagNameLineEdit->setEnabled( false );
+    mTextColorCheck->setEnabled( false );
+    mTextFontCheck->setEnabled( false );
+    mInToolbarCheck->setEnabled( false );
+    mTextColorCombo->setEnabled( false );
+    mFontRequester->setEnabled( false );
+    mIconButton->setEnabled( false );
+    mKeySequenceWidget->setEnabled( false );
+
+    mEmitChanges = true;
+    return;
+  }
+
+  mTagRemoveButton->setEnabled( true );
+  mTagUpButton->setEnabled( ( 0 != aIndex ) );
+  mTagDownButton->setEnabled( 
+                          ( ( int( mMsgTagList->count() ) - 1 ) != aIndex ) );
+
+  KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentItem() );
+
+  //1st row
+  mTagNameLineEdit->setEnabled( true );
+  mTagNameLineEdit->setText( tmp_desc->name() );
+
+  //2nd row
+  QColor tmp_color = tmp_desc->textColor();
+  mTextColorCheck->setEnabled( true );
+  if ( tmp_color.isValid() ) {
+    mTextColorCombo->setColor( tmp_color );
+    mTextColorCheck->setChecked( true );
+  } else {
+    mTextColorCheck->setChecked( false );
+  }
+
+  //3rd row
+  QFont tmp_font = tmp_desc->textFont();
+  mTextFontCheck->setEnabled( true );
+  mTextFontCheck->setChecked( ( tmp_font != QFont() ) );
+  mFontRequester->setFont( tmp_font );
+
+  //4th row
+  mIconButton->setEnabled( true );
+  mIconButton->setIcon( tmp_desc->toolbarIconName() );
+
+  //5th row
+  mKeySequenceWidget->setEnabled( true );
+  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary() );
+
+  //6th row
+  mInToolbarCheck->setEnabled( true );
+  mInToolbarCheck->setChecked( tmp_desc->inToolbar() );
+
+  mEmitChanges = true;
+}
+
+void AppearancePage::MessageTagTab::slotSelectionChanged( int aIndex ) 
+{
+  //monur: Shouldn't be calling in this case 
+  //if (aIndex == mPreviousTag)
+  //return;
+  slotRecordTagSettings( mPreviousTag );
+  slotUpdateTagSettingWidgets( aIndex );
+  mPreviousTag = mTagListBox->currentItem();
+}
+
+void AppearancePage::MessageTagTab::slotRemoveTag() 
+{
+  int tmp_index = mTagListBox->currentItem();
+  if ( !( tmp_index < 0 ) ) {
+    KMMessageTagDescription *tmp_desc = mMsgTagList->takeAt( tmp_index );
+    mMsgTagDict->remove( tmp_desc->label() );
+    delete tmp_desc;
+    mPreviousTag = -1;
+    mTagListBox->removeItem( tmp_index );
+    slotEmitChangeCheck();
+  }
+}
+
+void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
+                                                             &aText )
+{
+  //If deleted all, leave the first character for the sake of not having an
+  //empty tag name
+  if ( aText.isEmpty() )
+    return;
+    //Disconnect so the tag information is not saved and reloaded with every
+    //letter
+    disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
+          this, SLOT( slotSelectionChanged( int ) ) );
+    mTagListBox->changeItem( aText, mTagListBox->currentItem() );
+    connect( mTagListBox, SIGNAL( highlighted( int ) ),
+          this, SLOT( slotSelectionChanged( int ) ) );
+}
+
+void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
+                                                            &aText )
+{
+  mTagAddButton->setEnabled( ! aText.isEmpty() );
+}
+
+void AppearancePage::MessageTagTab::slotAddNewTag()
+{
+  int tmp_priority = mMsgTagList->count();
+  QString tmp_label = KRandom::randomString( 10 );
+    //Very unlikely, but if the tag already exists, regenerate label
+  while ( kmkernel->msgTagMgr()->find( tmp_label ) )
+    tmp_label = KRandom::randomString( 10 );
+
+  KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_label,
+                                             mTagAddLineEdit->text(), 
+                                             tmp_priority );
+  mMsgTagDict->insert( tmp_desc->label() , tmp_desc );
+  mMsgTagList->append( tmp_desc );
+  slotEmitChangeCheck();
+  mTagAddLineEdit->setText( QString::null );
+  mTagListBox->insertItem( tmp_desc->name() );
+  mTagListBox->setSelected( tmp_priority, true );
+}
+
+void AppearancePage::MessageTagTab::doLoadFromGlobalSettings() 
+{
+  mMsgTagDict->clear();
+  mMsgTagList->clear();
+  mTagListBox->clear();
+
+  //Used for sorting, go through this routine so that mMsgTagList is properly
+  //ordered
+  KMMessageTagList tmp_list;
+  QHashIterator<QString,KMMessageTagDescription*> it( *( kmkernel->msgTagMgr()->msgTagDict() ) );
+  while (it.hasNext()) {
+    it.next();
+    tmp_list.append( it.value()->label() );
+  }
+  tmp_list.prioritySort();
+
+  //Disconnect so that insertItem's do not trigger an update procedure
+  disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
+              this, SLOT( slotSelectionChanged( int ) ) );
+  for ( KMMessageTagList::Iterator itl = tmp_list.begin(); 
+        itl != tmp_list.end(); ++itl ) {
+    const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
+    if ( tmp_desc ) {
+      mTagListBox->insertItem( tmp_desc->name() );
+      KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
+      mMsgTagDict->insert( *itl , insert_desc );
+      mMsgTagList->append( insert_desc );
+    }
+  }
+  connect( mTagListBox, SIGNAL( highlighted( int ) ),
+           this, SLOT( slotSelectionChanged( int ) ) );
+  slotUpdateTagSettingWidgets( -1 );
+  //Needed since the previous function doesn't affect add button
+  mTagAddButton->setEnabled( false );
+}
+
+//Profiling support complicates matters too much
+void AppearancePage::MessageTagTab::installProfile( KConfig * profile ) { }
+
+void AppearancePage::MessageTagTab::save() {
+  slotRecordTagSettings( mTagListBox->currentItem() );
+  kmkernel->msgTagMgr()->fillTagsFromList( mMsgTagList );
 }
 
 

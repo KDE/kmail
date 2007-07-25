@@ -17,6 +17,7 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
+#include "kmmessagetag.h"
 #include "headerstrategy.h"
 #include "globalsettings.h"
 using KMail::HeaderStrategy;
@@ -117,6 +118,14 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   mMDNSentState = msgInfo.mdnSentState();
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
+  if ( msgInfo.tagList() ) {
+    if ( !mTagList )
+      mTagList = new KMMessageTagList();
+    *mTagList = *msgInfo.tagList();
+  } else {
+    delete mTagList;
+    mTagList = 0;
+  }
   KMMsgBase::assign(&msgInfo);
 }
 
@@ -154,6 +163,7 @@ void KMMessage::init( DwMessage* aMsg )
   mDate    = 0;
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
+  mTagList = 0;
   mCursorPos = 0;
   mIsParsed = false;
 }
@@ -184,6 +194,14 @@ void KMMessage::assign( const KMMessage& other )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
   else
     mUnencryptedMsg = 0;
+  if ( other.tagList() ) {
+    if ( !mTagList )
+      mTagList = new KMMessageTagList();
+    *mTagList = *other.tagList();
+  } else {
+    delete mTagList; 
+    mTagList = 0;
+  }
   setDrafts( other.drafts() );
   setTemplates( other.templates() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
@@ -1989,6 +2007,17 @@ void KMMessage::setSubject(const QString& aStr)
   mDirty = true;
 }
 
+//Reimplement virtuals from KMMsgBase
+//-----------------------------------------------------------------------------
+//Different from KMMsgInfo as that reads from the index
+QString KMMessage::tagString() const 
+{
+  if ( mTagList )
+    return mTagList->join( "," ); 
+  return QString();
+}
+
+KMMessageTagList *KMMessage::tagList() const { return mTagList; }
 
 //-----------------------------------------------------------------------------
 QString KMMessage::xmark() const

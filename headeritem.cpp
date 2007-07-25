@@ -30,6 +30,8 @@
 
 #include "kmheaders.h"
 #include "kmfolder.h"
+#include "kmmessagetag.h"
+#include "kmkernel.h"
 
 #include <klocale.h>
 #include <kio/netaccess.h>
@@ -372,6 +374,27 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   QColor *color = const_cast<QColor *>( &headers->paintInfo()->colFore );
   QFont font = p->font();
   int weight = font.weight();
+
+  QColor tmp_fgcolor;
+  QFont tmp_font;
+  KMMessageTagList* tmp_taglist = mMsgBase->tagList();
+  if ( ( tmp_taglist ) && ( ! tmp_taglist->isEmpty() ) ) {
+    //Since the tag list is supposed to be priority sorted,
+    //only the first item is of interest
+    const KMMessageTagDescription* firstTag = kmkernel->msgTagMgr()->find(
+                                                        (*tmp_taglist)[0] );
+    if ( firstTag ) {
+      tmp_fgcolor = firstTag->textColor();
+      if ( tmp_fgcolor.isValid() ) {
+        color = &tmp_fgcolor;
+      }
+      QFont tmp_font = firstTag->textFont();
+      if ( tmp_font != QFont() ) {
+        font = tmp_font;
+        weight = QMAX( weight, font.weight() );
+      }
+    }
+  }
 
   // for color and font family "important" overrides "new" overrides "unread"
   // overrides "todo" for the weight we use the maximal weight

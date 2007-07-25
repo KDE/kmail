@@ -68,6 +68,9 @@ public:
 
 public slots:
    void reset();
+  /** Updates the list of tags in the combobox, mainly used to be connected to
+      KMTagMgr's msgTagListChanged() signal.*/
+   void updateComboList();
 
 protected:
     /**
@@ -89,6 +92,9 @@ private:
     QComboBox *mStatusCombo;
     KPIM::MessageStatus mStatus;
     QVector<QString> statusList;
+    int mComboStatusCount;
+    bool mFilterWithTag;
+    QString mTagLabel;
 };
 
 }

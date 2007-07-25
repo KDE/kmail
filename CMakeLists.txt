@@ -183,6 +183,7 @@ set(kmailprivate_LIB_SRCS
    managesievescriptsdialog.cpp
    chiasmuskeyselector.cpp
    util.cpp
+   kmmessagetag.cpp
    templateparser.cpp templatesconfiguration.cpp templatesinsertcommand.cpp
    customtemplates.cpp
    quotajobs.cpp

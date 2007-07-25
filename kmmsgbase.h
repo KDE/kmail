@@ -33,6 +33,7 @@ class QStringList;
 class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
+class KMMessageTagList;
 
 /** Flags for the encryption state. */
 typedef enum
@@ -108,6 +109,16 @@ public:
 
   /** Const reference to a status object of a message. */
   const MessageStatus& messageStatus() const;
+
+  /**Get a comma seperated list of tag labels*/
+  virtual QString tagString( void ) const = 0;
+  /**Get a pointer to the tag label list*/
+  virtual KMMessageTagList *tagList( void ) const = 0;
+  /**Split @p aString at commas and set the tag list to the resulting 
+  list and set dirty*/
+  virtual void setTagList( const QString &aString );
+  /**Set the tag list to @p aTagList and set dirty*/
+  virtual void setTagList( const KMMessageTagList &aTagList );
 
   /** Set status and mark dirty.  Optional optimization: @p idx may
    * specify the index of this message within the parent folder. */
@@ -336,6 +347,7 @@ protected:
   bool mDirty;
   bool mEnableUndo;
   mutable MessageStatus mStatus;
+  mutable KMMessageTagList *mTagList;
 
 public:
   enum MsgPartType
@@ -362,7 +374,8 @@ public:
     // and another unsigned long
     MsgStatusPart = 16,
     MsgSizeServerPart = 17,
-    MsgUIDPart = 18
+    MsgUIDPart = 18,
+    MsgTagPart = 19
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;

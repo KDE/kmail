@@ -752,6 +752,9 @@ public:
   void setStatus(const MessageStatus& status, int idx = -1);
   void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
+  virtual QString tagString( void ) const;
+  virtual KMMessageTagList *tagList( void ) const;
+
   /** Set encryption status of the message. */
   void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
 

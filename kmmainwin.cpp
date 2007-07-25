@@ -154,12 +154,14 @@ void KMMainWin::slotUpdateToolbars()
 {
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
+  mKMMainWidget->clearMessageTagActions();//OnurAdd
 
   createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   // plug dynamically created actions again
   mKMMainWidget->initializeFilterActions();
+  mKMMainWidget->initializeMessageTagActions();
 }
 
 void KMMainWin::setupStatusBar()

@@ -36,6 +36,7 @@
 #include <QDBusMessage>
 #include <QShortcut>
 #include <QProcess>
+#include <QSignalMapper>
 
 #include <q3accel.h>
 #include <q3stylesheet.h>
@@ -107,6 +108,7 @@ using KMail::SearchWindow;
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
+#include "kmmessagetag.h"
 #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "vacation.h"
@@ -173,6 +175,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   mFolderHtmlLoadExtPref = false;
   mSystemTray = 0;
   mDestructed = false;
+  mMessageTagToggleMapper = 0;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
   mJob = 0;
@@ -191,6 +194,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   // is extended in kdelibs.
   mToolbarActionSeparator = new QAction( this );
   mToolbarActionSeparator->setSeparator( true );
+
+  mMessageTagToolbarActionSeparator = new QAction( this );
+  mMessageTagToolbarActionSeparator->setSeparator( true );
 
   if( !s_mainWidgetList )
     mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
@@ -3180,6 +3186,7 @@ void KMMainWidget::setupActions()
   mToggleTodoAction->
     setCheckedState( KGuiItem( i18n("Remove &To-do Message Mark") ) );
   mStatusMenu->addAction( mToggleTodoAction );
+  //mStatusMenu->insertSeparator();
 
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
@@ -3631,6 +3638,7 @@ void KMMainWidget::updateMessageActions()
       MessageStatus status = mHeaders->currentMsg()->status();
       mToggleTodoAction->setChecked( status.isTodo() );
       mToggleImportantAction->setChecked( status.isImportant() );
+      updateMessageTagActions( count );
       if (thread_actions) {
         mToggleThreadTodoAction->setChecked( status.isTodo() );
         mToggleThreadImportantAction->setChecked( status.isImportant() );
@@ -3789,6 +3797,9 @@ void KMMainWidget::slotShowStartupFolder()
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
+  connect(kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
+	   this, SLOT( initializeMessageTagActions() ) ); 
+
   // plug shortcut filter actions now
   initializeFilterActions();
 
@@ -3819,6 +3830,118 @@ void KMMainWidget::slotShowStartupFolder()
 void KMMainWidget::slotShowTip()
 {
   KTipDialog::showTip( this, QString(), true );
+}
+
+void KMMainWidget::updateMessageTagActions( const int count )
+{
+  //TODO: Behaves differently according to number of messages selected
+  KToggleAction *aToggler = 0;
+  if ( 1 == count ) {
+    KMMessageTagList *aTagList = mHeaders->currentMsg()->tagList();
+    for ( QList<MessageTagPtrPair>::ConstIterator it =
+          mMessageTagMenuActions.constBegin(); 
+          it != mMessageTagMenuActions.constEnd(); ++it ) {
+      bool list_present = false;
+      if ( aTagList )
+        list_present = 
+           aTagList->find( QString((*it).second->name() ) ) != aTagList->end();
+      aToggler = static_cast<KToggleAction*>( (*it).second );
+      aToggler->setChecked( list_present );
+    }
+  } else if ( count > 1 ) {
+    for ( QList<MessageTagPtrPair>::ConstIterator it =
+          mMessageTagMenuActions.constBegin(); 
+          it != mMessageTagMenuActions.constEnd(); ++it ) {
+      aToggler = static_cast<KToggleAction*>( (*it).second );
+      aToggler->setChecked( false );
+      aToggler->setText( i18n("Toggle Message Tag %1", (*it).first->name() ) );
+    }
+  } 
+  else {
+    for ( QList<MessageTagPtrPair>::ConstIterator it =
+          mMessageTagMenuActions.constBegin(); 
+          it != mMessageTagMenuActions.constEnd(); ++it ) {
+      aToggler = static_cast<KToggleAction*>( (*it).second );
+      aToggler->setEnabled( false );
+    }
+  }
+}
+void KMMainWidget::slotUpdateMessageTagList( const QString &name ) 
+{
+  mHeaders->setMessageTagList( name );
+}
+
+void KMMainWidget::clearMessageTagActions()
+{
+  if ( !mMessageTagTBarActions.isEmpty() ) {
+    qDeleteAll(mMessageTagTBarActions);
+    mMessageTagTBarActions.clear();
+    if ( mGUIClient->factory() )
+      mGUIClient->unplugActionList( "toolbar_messagetag_actions" );
+  }
+  for ( QList<MessageTagPtrPair>::ConstIterator it =
+        mMessageTagMenuActions.constBegin(); 
+        it != mMessageTagMenuActions.constEnd(); ++it ) {
+    mStatusMenu->remove( (*it).second );
+    delete (*it).second;
+  } //Do this way, since there are other elements in the menu
+  mMessageTagMenuActions.clear();
+  delete mMessageTagToggleMapper;
+  mMessageTagToggleMapper = 0;
+}
+
+void KMMainWidget::initializeMessageTagActions() 
+{
+  clearMessageTagActions();
+  const QHash<QString,KMMessageTagDescription*> *tagDict = kmkernel->msgTagMgr()->msgTagDict();
+  if ( !tagDict )
+    return;
+  //Use a mapper to understand which tag button is triggered
+  mMessageTagToggleMapper = new QSignalMapper( this );
+  connect( mMessageTagToggleMapper, SIGNAL( mapped( const QString& ) ),
+    this, SLOT( slotUpdateMessageTagList( const QString& ) ) );
+  
+  //TODO: No need to do this anymore, just use the ordered list
+  const int numTags = tagDict->count();
+  if ( !numTags ) return;
+  for ( int i = 0; i < numTags; ++i ) {
+    mMessageTagMenuActions.append( MessageTagPtrPair( 0, 0 ) );
+  }
+  KAction *tagAction = 0;
+
+  QHashIterator<QString,KMMessageTagDescription*> it( *tagDict ); 
+  while( it.hasNext() ) {
+    it.next();
+    if ( ! it.value() || it.value()->isEmpty() )
+      continue;
+    QString cleanName = i18n("Message Tag %1", it.value()->name() );
+    cleanName.replace("&","&&");
+    tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()), 
+      cleanName, this );
+    tagAction->setShortcut( it.value()->shortcut() );
+    actionCollection()->addAction(it.value()->label().local8Bit(), tagAction);
+    connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map(void)));
+    //The shortcut configuration is done in the config. dialog
+    //Setting the below to true decouples action objects shortcut
+    //from that of the tag description
+    tagAction->setShortcutConfigurable( false );
+    mMessageTagToggleMapper->setMapping( tagAction, it.value()->label() );
+    MessageTagPtrPair ptr_pair( it.value(), tagAction );
+    //Relies on the fact that filters are always numbered from 0
+    mMessageTagMenuActions[it.value()->priority()] = ptr_pair;
+  }
+  for ( int i= 0; i < numTags; ++i ) {
+    mStatusMenu->popupMenu()->addAction( mMessageTagMenuActions[i].second );
+    if ( ( mMessageTagMenuActions[i].first )->inToolbar() )
+      mMessageTagTBarActions.append( mMessageTagMenuActions[i].second );
+  }
+
+  if ( !mMessageTagTBarActions.isEmpty() && mGUIClient->factory() ) {
+    //Separator doesn't work
+    //mMessageTagTBarActions.prepend( mMessageTagToolbarActionSeparator );
+    mGUIClient->plugActionList( "toolbar_messagetag_actions", 
+                                mMessageTagTBarActions );
+  }	
 }
 
 //-----------------------------------------------------------------------------
