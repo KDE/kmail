@@ -71,6 +71,7 @@ public Q_SLOTS:
   Q_SCRIPTABLE KMail::StorageFormat storageFormat( const QString& resource );
 
   Q_SCRIPTABLE QString getAttachment( const QString& resource, quint32 sernum, const QString& filename );
+  Q_SCRIPTABLE QStringList listAttachments( const QString &resource, quint32 sernum );
   Q_SCRIPTABLE quint32 update( const QString& resource,
                                quint32 sernum,
                                const QString& subject,

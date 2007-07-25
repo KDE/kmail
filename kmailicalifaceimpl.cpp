@@ -195,6 +195,8 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachment
     if ( part->hasHeaders()
          && attachmentName == part->Headers().ContentDisposition().Filename().c_str() )
       return part;
+    if ( part->hasHeaders() && attachmentName == part->Headers().ContentType().Name().c_str() )
+      return part;
   }
   return 0;
 }
@@ -882,6 +884,48 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   mResourceQuiet = quiet;
   return url;
 }
+
+QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, Q_UINT32 sernum)
+{
+  QStringList rv;
+  if( !mUseResourceIMAP )
+    return rv;
+
+  // Find the folder
+  KMFolder* f = findResourceFolder( resource );
+  if( !f ) {
+    kdError(5006) << "listAttachments(" << resource << ") : Not an IMAP resource folder" << endl;
+    return rv;
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "listAttachment(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return rv;
+  }
+
+  KMMessage* msg = findMessageBySerNum( sernum, f );
+  if( msg ) {
+    for ( DwBodyPart* part = msg->getFirstDwBodyPart(); part; part = part->Next() ) {
+      if ( part->hasHeaders() ) {
+        QString name;
+        DwMediaType& contentType = part->Headers().ContentType();
+        if ( QString( contentType.SubtypeStr().c_str() ).startsWith( "x-vnd.kolab." )
+           || QString( contentType.SubtypeStr().c_str() ).contains( "tnef" ) )
+          continue;
+        if ( !part->Headers().ContentDisposition().Filename().empty() )
+          name = part->Headers().ContentDisposition().Filename().c_str();
+        else if ( !contentType.Name().empty() )
+          name = contentType.Name().c_str();
+        if ( !name.isEmpty() )
+          rv.append( name );
+      }
+    }
+  } else {
+    kdDebug(5006) << "Message not found." << endl;
+  }
+
+  return rv;
+}
+
 
 // ============================================================================
 

@@ -128,6 +128,11 @@ QString GroupwareAdaptor::getAttachment( const QString& resource, quint32 sernum
   return url.path();
 }
 
+QStringList GroupwareAdaptor::listAttachments(const QString & resource, quint32 sernum)
+{
+  return mIcalImpl->listAttachments( resource, sernum );
+}
+
 quint32 GroupwareAdaptor::update( const QString& resource,
                                   quint32 sernum,
                                   const QString& subject,
