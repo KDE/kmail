@@ -2777,10 +2777,10 @@ bool KMFolderCachedImap::isCloseToQuota() const
   bool closeToQuota = false;
   if ( mQuotaInfo.isValid() && mQuotaInfo.max().toInt() > 0 ) {
     const int ratio = mQuotaInfo.current().toInt() * 100  / mQuotaInfo.max().toInt();
-    //kdDebug(5006) << "Quota ratio: " << ratio << "% " << mQuotaInfo.toString() << endl;
+    //kDebug(5006) << "Quota ratio: " << ratio << "% " << mQuotaInfo.toString() << endl;
     closeToQuota = ( ratio > 0 && ratio >= GlobalSettings::closeToQuotaThreshold() );
   }
-  //kdDebug(5006) << "Folder: " << folder()->prettyURL() << " is over quota: " << closeToQuota << endl;
+  //kDebug(5006) << "Folder: " << folder()->prettyURL() << " is over quota: " << closeToQuota << endl;
   return closeToQuota;
 }
 

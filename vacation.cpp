@@ -169,9 +169,9 @@ namespace {
       if ( const char * str = expected.string )
         if ( string.lower() != QString::fromUtf8( str ).lower() )
           found = false;
-      kdDebug(5006) << ( found ? "found:     " : "not found: " )
-                    << mState << " -> "
-                    << ( found ? expected.if_found : expected.if_not_found ) << endl;
+      kDebug(5006) << ( found ? "found:     " : "not found: " )
+                   << mState << " -> "
+                   << ( found ? expected.if_found : expected.if_not_found ) << endl;
       mState = found ? expected.if_found : expected.if_not_found ;
       assert( mState < mNodes.size() );
       if ( found )
@@ -181,29 +181,29 @@ namespace {
         doProcess( method, string );
       }
     }
-    void commandStart( const QString & identifier ) { kdDebug(5006) << k_funcinfo << endl; process( CommandStart, identifier ); }
-    void commandEnd() { kdDebug(5006) << k_funcinfo << endl; process( CommandEnd ); }
-    void testStart( const QString & identifier ) { kdDebug(5006) << k_funcinfo << endl; process( TestStart, identifier ); }
-    void testEnd() { kdDebug(5006) << k_funcinfo << endl; process( TestEnd ); }
-    void testListStart() { kdDebug(5006) << k_funcinfo << endl; process( TestListStart ); }
-    void testListEnd() { kdDebug(5006) << k_funcinfo << endl; process( TestListEnd ); }
-    void blockStart() { kdDebug(5006) << k_funcinfo << endl; process( BlockStart ); ++mNestingDepth; }
-    void blockEnd() { kdDebug(5006) << k_funcinfo << endl; --mNestingDepth; process( BlockEnd ); }
-    void hashComment( const QString & ) { kdDebug(5006) << k_funcinfo << endl; }
-    void bracketComment( const QString & ) { kdDebug(5006) << k_funcinfo << endl; }
-    void lineFeed() { kdDebug(5006) << k_funcinfo << endl; }
+    void commandStart( const QString & identifier ) { kDebug(5006) << k_funcinfo << endl; process( CommandStart, identifier ); }
+    void commandEnd() { kDebug(5006) << k_funcinfo << endl; process( CommandEnd ); }
+    void testStart( const QString & identifier ) { kDebug(5006) << k_funcinfo << endl; process( TestStart, identifier ); }
+    void testEnd() { kDebug(5006) << k_funcinfo << endl; process( TestEnd ); }
+    void testListStart() { kDebug(5006) << k_funcinfo << endl; process( TestListStart ); }
+    void testListEnd() { kDebug(5006) << k_funcinfo << endl; process( TestListEnd ); }
+    void blockStart() { kDebug(5006) << k_funcinfo << endl; process( BlockStart ); ++mNestingDepth; }
+    void blockEnd() { kDebug(5006) << k_funcinfo << endl; --mNestingDepth; process( BlockEnd ); }
+    void hashComment( const QString & ) { kDebug(5006) << k_funcinfo << endl; }
+    void bracketComment( const QString & ) { kDebug(5006) << k_funcinfo << endl; }
+    void lineFeed() { kDebug(5006) << k_funcinfo << endl; }
     void error( const KSieve::Error & ) {
-      kdDebug(5006) << k_funcinfo << endl;
+      kDebug(5006) << k_funcinfo << endl;
       mState = 0;
     }
-    void finished() { kdDebug(5006) << k_funcinfo << endl; }
+    void finished() { kDebug(5006) << k_funcinfo << endl; }
 
-    void taggedArgument( const QString & tag ) { kdDebug(5006) << k_funcinfo << endl; process( TaggedArgument, tag ); }
-    void stringArgument( const QString & string, bool, const QString & ) { kdDebug(5006) << k_funcinfo << endl; process( StringArgument, string ); }
-    void numberArgument( unsigned long number, char ) { kdDebug(5006) << k_funcinfo << endl; process( NumberArgument, QString::number( number ) ); }
-    void stringListArgumentStart() { kdDebug(5006) << k_funcinfo << endl; process( StringListArgumentStart ); }
-    void stringListEntry( const QString & string, bool, const QString & ) { kdDebug(5006) << k_funcinfo << endl; process( StringListEntry, string ); }
-    void stringListArgumentEnd() { kdDebug(5006) << k_funcinfo << endl; process( StringListArgumentEnd ); }
+    void taggedArgument( const QString & tag ) { kDebug(5006) << k_funcinfo << endl; process( TaggedArgument, tag ); }
+    void stringArgument( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo << endl; process( StringArgument, string ); }
+    void numberArgument( unsigned long number, char ) { kDebug(5006) << k_funcinfo << endl; process( NumberArgument, QString::number( number ) ); }
+    void stringListArgumentStart() { kDebug(5006) << k_funcinfo << endl; process( StringListArgumentStart ); }
+    void stringListEntry( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo << endl; process( StringListEntry, string ); }
+    void stringListArgumentEnd() { kDebug(5006) << k_funcinfo << endl; process( StringListArgumentEnd ); }
   };
 
   typedef GenericInformationExtractor GIE;

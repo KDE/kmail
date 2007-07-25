@@ -894,11 +894,11 @@ QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, Q_UINT
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
   if( !f ) {
-    kdError(5006) << "listAttachments(" << resource << ") : Not an IMAP resource folder" << endl;
+    kError(5006) << "listAttachments(" << resource << ") : Not an IMAP resource folder" << endl;
     return rv;
   }
   if ( storageFormat( f ) != StorageXML ) {
-    kdError(5006) << "listAttachment(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    kError(5006) << "listAttachment(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
     return rv;
   }
 
@@ -920,7 +920,7 @@ QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, Q_UINT
       }
     }
   } else {
-    kdDebug(5006) << "Message not found." << endl;
+    kDebug(5006) << "Message not found." << endl;
   }
 
   return rv;

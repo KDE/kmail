@@ -1213,7 +1213,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
       int sep = entry.find( '/' );
       QByteArray type = entry.left( sep ).latin1();
       QByteArray subtype = entry.mid( sep+1 ).latin1();
-      kdDebug( 5006 ) << "Looking for blacklisted type: " << type << "/" << subtype << endl;
+      kDebug( 5006 ) << "Looking for blacklisted type: " << type << "/" << subtype << endl;
       while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
         msg->mMsg->Body().RemoveBodyPart( part );
       }
@@ -2885,7 +2885,7 @@ DwBodyPart * KMMessage::findDwBodyPart( const QByteArray& type, const QByteArray
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
-      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+      kDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
             << "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
     }
 

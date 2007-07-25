@@ -3431,10 +3431,10 @@ KMCommand::Result CreateTodoCommand::execute()
       DCOPRef ref( dcopService, dcopService ); // talk to the KUniqueApplication or its kontact wrapper
       DCOPReply reply = ref.call( "load()" );
       if ( reply.isValid() && (bool)reply ) {
-        kdDebug() << "Loaded " << dcopService << " successfully" << endl;
+        kDebug() << "Loaded " << dcopService << " successfully" << endl;
         Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
       } else
-        kdWarning() << "Error loading " << dcopService << endl;
+        kWarning() << "Error loading " << dcopService << endl;
     }
 #endif
   }
