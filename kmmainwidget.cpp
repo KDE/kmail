@@ -2831,25 +2831,25 @@ void KMMainWidget::setupActions()
     {
     QAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );
-    connect( action, SIGNAL(triggered("bool")), SLOT(slotEditVacation()) );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()) );
     }
 
   {
     QAction *action = new KAction( i18n("Filter &Log Viewer..."), this );
     actionCollection()->addAction( "filter_log_viewer", action );
-    connect( action, SIGNAL(triggered("bool")), SLOT(slotFilterLogViewer()) );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotFilterLogViewer()) );
   }
 
   {
     QAction *action = new KAction( i18n("&Anti-Spam Wizard..."), this );
     actionCollection()->addAction( "antiSpamWizard", action );
-    connect( action, SIGNAL(triggered("bool")), SLOT(slotAntiSpamWizard()) );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiSpamWizard()) );
   }
 
   {
     QAction *action = new KAction( i18n("&Anti-Virus Wizard..."), this );
     actionCollection()->addAction( "antiVirusWizard", action );
-    connect( action, SIGNAL(triggered("bool")), SLOT(slotAntiVirusWizard()) );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotAntiVirusWizard()) );
   }
 
   //----- Edit Menu
