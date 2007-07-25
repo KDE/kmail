@@ -1192,7 +1192,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 
 //-----------------------------------------------------------------------------
 // TODO: Use KMCommand class
-void KMHeaders::setMessageTagList( const QString &taglabel ) 
+void KMHeaders::setMessageTagList( const QString &taglabel )
 {
   for ( Q3ListViewItemIterator it(this); it.current(); ++it )
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
@@ -2434,6 +2434,9 @@ void KMHeaders::slotRMB()
     if ( mOwner->trashThreadAction()->isEnabled() )
       menu->addAction( mOwner->trashThreadAction() );
   }
+  menu->insertSeparator();
+  menu->addAction( mOwner->createTodoAction() );
+
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
   menu->exec(QCursor::pos(), 0);

@@ -428,7 +428,7 @@ void KMMainWidget::readConfig(void)
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
       else if (sizeColumn == 2)
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
- 
+
       if (unreadColumn == 3)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
       else if (totalColumn == 3)
@@ -743,7 +743,7 @@ void KMMainWidget::createWidgets(void)
     mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
 			 mHeaders, SLOT( selectCurrentMessage() ) );
   }
-  
+
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
@@ -1037,7 +1037,7 @@ void KMMainWidget::slotShowNewFromTemplate()
     KMMsgBase *mb = mTemplateFolder->getMsgBase( idx );
 
     QString subj = mb->subject();
-    if ( subj.isEmpty() ) 
+    if ( subj.isEmpty() )
       subj = i18n("No Subject");
 
     QAction *templateAction = mTemplateMenu->menu()->addAction(
@@ -2821,19 +2821,19 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("antiSpamWizard", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiSpamWizard()));
   }
-  {  
+  {
     QAction *action = new KAction(i18n("&Anti-Virus Wizard..."), this);
     actionCollection()->addAction("antiVirusWizard", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotAntiVirusWizard()));
   }
 
-  if ( GlobalSettings::allowOutOfOfficeSettings() ) 
+  if ( GlobalSettings::allowOutOfOfficeSettings() )
     {
     QAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );
     connect( action, SIGNAL(triggered("bool")), SLOT(slotEditVacation()) );
     }
- 
+
   {
     QAction *action = new KAction( i18n("Filter &Log Viewer..."), this );
     actionCollection()->addAction( "filter_log_viewer", action );
@@ -3255,6 +3255,10 @@ void KMMainWidget::setupActions()
 
   mApplyFilterActionsMenu = new KActionMenu(i18n("A&pply Filter"), this);
   actionCollection()->addAction("apply_filter_actions", mApplyFilterActionsMenu );
+
+  mCreateTodoAction = new KAction( KIcon( "mail_todo" ), i18n("Create Task..."), this );
+  connect( mCreateTodoAction, SIGNAL(triggered()), SLOT(slotCreateTodo()) );
+  actionCollection()->addAction( "create_todo", mCreateTodoAction );
 
   //----- View Menu
   // Unread Submenu
@@ -3681,6 +3685,7 @@ void KMMainWidget::updateMessageActions()
 
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );
+    createTodoAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->status().isSent() )
@@ -3798,7 +3803,7 @@ void KMMainWidget::slotShowStartupFolder()
 	   this, SLOT( initializeFilterActions() ));
 
   connect(kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
-	   this, SLOT( initializeMessageTagActions() ) ); 
+	   this, SLOT( initializeMessageTagActions() ) );
 
   // plug shortcut filter actions now
   initializeFilterActions();
@@ -3839,34 +3844,34 @@ void KMMainWidget::updateMessageTagActions( const int count )
   if ( 1 == count ) {
     KMMessageTagList *aTagList = mHeaders->currentMsg()->tagList();
     for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin(); 
+          mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it ) {
       bool list_present = false;
       if ( aTagList )
-        list_present = 
+        list_present =
            aTagList->find( QString((*it).second->name() ) ) != aTagList->end();
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( list_present );
     }
   } else if ( count > 1 ) {
     for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin(); 
+          mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it ) {
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( false );
       aToggler->setText( i18n("Toggle Message Tag %1", (*it).first->name() ) );
     }
-  } 
+  }
   else {
     for ( QList<MessageTagPtrPair>::ConstIterator it =
-          mMessageTagMenuActions.constBegin(); 
+          mMessageTagMenuActions.constBegin();
           it != mMessageTagMenuActions.constEnd(); ++it ) {
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setEnabled( false );
     }
   }
 }
-void KMMainWidget::slotUpdateMessageTagList( const QString &name ) 
+void KMMainWidget::slotUpdateMessageTagList( const QString &name )
 {
   mHeaders->setMessageTagList( name );
 }
@@ -3880,7 +3885,7 @@ void KMMainWidget::clearMessageTagActions()
       mGUIClient->unplugActionList( "toolbar_messagetag_actions" );
   }
   for ( QList<MessageTagPtrPair>::ConstIterator it =
-        mMessageTagMenuActions.constBegin(); 
+        mMessageTagMenuActions.constBegin();
         it != mMessageTagMenuActions.constEnd(); ++it ) {
     mStatusMenu->remove( (*it).second );
     delete (*it).second;
@@ -3890,7 +3895,7 @@ void KMMainWidget::clearMessageTagActions()
   mMessageTagToggleMapper = 0;
 }
 
-void KMMainWidget::initializeMessageTagActions() 
+void KMMainWidget::initializeMessageTagActions()
 {
   clearMessageTagActions();
   const QHash<QString,KMMessageTagDescription*> *tagDict = kmkernel->msgTagMgr()->msgTagDict();
@@ -3900,7 +3905,7 @@ void KMMainWidget::initializeMessageTagActions()
   mMessageTagToggleMapper = new QSignalMapper( this );
   connect( mMessageTagToggleMapper, SIGNAL( mapped( const QString& ) ),
     this, SLOT( slotUpdateMessageTagList( const QString& ) ) );
-  
+
   //TODO: No need to do this anymore, just use the ordered list
   const int numTags = tagDict->count();
   if ( !numTags ) return;
@@ -3909,14 +3914,14 @@ void KMMainWidget::initializeMessageTagActions()
   }
   KAction *tagAction = 0;
 
-  QHashIterator<QString,KMMessageTagDescription*> it( *tagDict ); 
+  QHashIterator<QString,KMMessageTagDescription*> it( *tagDict );
   while( it.hasNext() ) {
     it.next();
     if ( ! it.value() || it.value()->isEmpty() )
       continue;
     QString cleanName = i18n("Message Tag %1", it.value()->name() );
     cleanName.replace("&","&&");
-    tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()), 
+    tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
       cleanName, this );
     tagAction->setShortcut( it.value()->shortcut() );
     actionCollection()->addAction(it.value()->label().local8Bit(), tagAction);
@@ -3939,9 +3944,9 @@ void KMMainWidget::initializeMessageTagActions()
   if ( !mMessageTagTBarActions.isEmpty() && mGUIClient->factory() ) {
     //Separator doesn't work
     //mMessageTagTBarActions.prepend( mMessageTagToolbarActionSeparator );
-    mGUIClient->plugActionList( "toolbar_messagetag_actions", 
+    mGUIClient->plugActionList( "toolbar_messagetag_actions",
                                 mMessageTagTBarActions );
-  }	
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -4349,4 +4354,13 @@ QString KMMainWidget::overrideEncoding() const
     return mMsgView->overrideEncoding();
   else
     return GlobalSettings::self()->overrideCharacterEncoding();
+}
+
+void KMMainWidget::slotCreateTodo()
+{
+  KMMessage *msg = mHeaders->currentMsg();
+  if ( !msg )
+    return;
+  KMCommand *command = new CreateTodoCommand( this, msg );
+  command->start();
 }

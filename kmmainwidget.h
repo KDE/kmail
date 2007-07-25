@@ -142,6 +142,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
     KAction *openAction() const { return mOpenAction; }
     KAction *viewSourceAction() { return mViewSourceAction; }
+    KAction *createTodoAction() { return mCreateTodoAction; }
 
     KActionMenu *statusMenu()  const{ return mStatusMenu; }
     KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
@@ -252,10 +253,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   /**Clear and create actions for message tag toggling*/
   void clearMessageTagActions();
   void initializeMessageTagActions();
-  /**Adds if not existing/removes if existing the tag identified by @p aLabel 
+  /**Adds if not existing/removes if existing the tag identified by @p aLabel
     in all selected messages*/
   void slotUpdateMessageTagList( const QString &aLabel );
-  /**If @p aCount is 0, disables all tag related actions in menus. 
+  /**If @p aCount is 0, disables all tag related actions in menus.
      If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
      If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
     @param aCount Number of selected messages*/
@@ -410,6 +411,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Settings menu */
     void slotToggleShowQuickSearch();
+  void slotCreateTodo();
 
     /** XML-GUI stuff */
     void slotEditNotifications();
@@ -475,7 +477,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
-      *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
+      *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
+      *mCreateTodoAction;
 
     // Composition actions
     KAction *mPrintAction,
@@ -572,7 +575,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QHash<QString,FolderShortcutCommand*> mFolderShortcutCommands;
     QPointer <KMail::FolderJob> mJob;
 
-   QList<MessageTagPtrPair> mMessageTagMenuActions; 
+   QList<MessageTagPtrPair> mMessageTagMenuActions;
    QList<QAction*> mMessageTagTBarActions;
    QSignalMapper *mMessageTagToggleMapper;
 

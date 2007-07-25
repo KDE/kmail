@@ -61,6 +61,7 @@
 #include <QProgressBar>
 
 #include <kpimutils/email.h>
+#include <kdbusservicestarter.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>
@@ -120,6 +121,7 @@ using KMail::TemplateParser;
 #include "globalsettings.h"
 
 #include <kpimutils/kfileio.h>
+#include "calendarinterface.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -3398,6 +3400,60 @@ void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
   newMsg->setStatus( msg->status() );
 
   storeChangedMessage( newMsg );
+}
+
+
+CreateTodoCommand::CreateTodoCommand(QWidget * parent, KMMessage * msg)
+  : KMCommand( parent, msg )
+{
+}
+
+KMCommand::Result CreateTodoCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
+
+  // korganizer starting code taken from the ical bpf plugin
+  QString error;
+  QString dbusService;
+  int result = KDBusServiceStarter::self()->findServiceFor( "DBUS/Organizer",
+                                         QString::null, &error, &dbusService );
+  if ( result == 0 ) {
+#warning Port me!
+#if 0
+    // OK, so korganizer (or kontact) is running. Now ensure the object we want is available
+    // [that's not the case when kontact was already running, but korganizer not loaded into it...]
+    static const char* const dcopObjectId = "KOrganizerIface";
+    QCString dummy;
+    if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) ) {
+      DCOPRef ref( dcopService, dcopService ); // talk to the KUniqueApplication or its kontact wrapper
+      DCOPReply reply = ref.call( "load()" );
+      if ( reply.isValid() && (bool)reply ) {
+        kdDebug() << "Loaded " << dcopService << " successfully" << endl;
+        Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
+      } else
+        kdWarning() << "Error loading " << dcopService << endl;
+    }
+#endif
+  }
+
+  QString txt = i18n("From: %1\nTo: %2\nSubject: %3").arg( msg->from() )
+                .arg( msg->to() ).arg( msg->subject() );
+
+  KTemporaryFile tf;
+  tf.setAutoRemove( true );
+  QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + "/" + msg->msgId();
+  tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
+
+  OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );
+  iface->openTodoEditor( i18n("Mail: %1").arg( msg->subject() ), txt,
+                         uri, tf.name(), QStringList(), "message/rfc822" );
+  delete iface;
+  tf.close();
+
+  return OK;
 }
 
 #include "kmcommands.moc"
