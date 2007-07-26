@@ -1337,7 +1337,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 
   colText = i18n( "Date" );
   if (mPaintInfo.orderOfArrival)
-    colText = i18n( "Date (Order of Arrival)" );
+    colText = i18n( "Order of Arrival" );
   setColumnText( mPaintInfo.dateCol, colText);
 
   colText = i18n( "Subject" );
@@ -2987,7 +2987,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 
     QString colText = i18n( "Date" );
     if (mPaintInfo.orderOfArrival)
-      colText = i18n( "Date (Order of Arrival)" );
+      colText = i18n( "Order of Arrival" );
     setColumnText( mPaintInfo.dateCol, colText);
 
     colText = i18n( "Subject" );
