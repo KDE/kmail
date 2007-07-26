@@ -2869,10 +2869,6 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("delete", mDeleteAction );
   connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
   mDeleteAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_Delete));
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
   mTrashThreadAction = new KAction(i18n("M&ove Thread to Trash"), this);
   actionCollection()->addAction("move_thread_to_trash", mTrashThreadAction );
@@ -3122,21 +3118,12 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("edit", mEditAction );
   connect(mEditAction, SIGNAL(triggered(bool)), SLOT(slotEditMsg()));
   mEditAction->setShortcut(QKeySequence(Qt::Key_T));
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mEditAction->plugAccel( actionCollection()->kaccel() );
 
   mUseAction = new KAction( KIcon( "document-new" ), i18n("New Message From &Template"),
                             actionCollection() );
   mUseAction->setShortcut( KShortcut( Qt::Key_N ) );
   connect( mUseAction, SIGNAL(triggered(bool)),
                             this, SLOT(slotUseTemplate()) );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  mUseAction->plugAccel( actionCollection()->kaccel() );
-
 
   //----- "Mark Message" submenu
   mStatusMenu = new KActionMenu(i18n("Mar&k Message"), this);
@@ -3335,10 +3322,6 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("display_message", dukeOfMonmoth );
   connect(dukeOfMonmoth, SIGNAL(triggered(bool) ), SLOT( slotDisplayCurrentMessage() ));
   dukeOfMonmoth->setShortcut(QKeySequence(Qt::Key_Return));
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
   {
@@ -3849,7 +3832,7 @@ void KMMainWidget::updateMessageTagActions( const int count )
       bool list_present = false;
       if ( aTagList )
         list_present =
-           aTagList->find( QString((*it).second->name() ) ) != aTagList->end();
+           ( aTagList->indexOf( QString((*it).second->name() ) ) != -1 );
       aToggler = static_cast<KToggleAction*>( (*it).second );
       aToggler->setChecked( list_present );
     }
@@ -3887,7 +3870,7 @@ void KMMainWidget::clearMessageTagActions()
   for ( QList<MessageTagPtrPair>::ConstIterator it =
         mMessageTagMenuActions.constBegin();
         it != mMessageTagMenuActions.constEnd(); ++it ) {
-    mStatusMenu->remove( (*it).second );
+    mStatusMenu->removeAction( (*it).second );
     delete (*it).second;
   } //Do this way, since there are other elements in the menu
   mMessageTagMenuActions.clear();
@@ -3924,7 +3907,7 @@ void KMMainWidget::initializeMessageTagActions()
     tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
       cleanName, this );
     tagAction->setShortcut( it.value()->shortcut() );
-    actionCollection()->addAction(it.value()->label().local8Bit(), tagAction);
+    actionCollection()->addAction(it.value()->label().toLocal8Bit(), tagAction);
     connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map(void)));
     //The shortcut configuration is done in the config. dialog
     //Setting the below to true decouples action objects shortcut
@@ -3936,7 +3919,7 @@ void KMMainWidget::initializeMessageTagActions()
     mMessageTagMenuActions[it.value()->priority()] = ptr_pair;
   }
   for ( int i= 0; i < numTags; ++i ) {
-    mStatusMenu->popupMenu()->addAction( mMessageTagMenuActions[i].second );
+    mStatusMenu->menu()->addAction( mMessageTagMenuActions[i].second );
     if ( ( mMessageTagMenuActions[i].first )->inToolbar() )
       mMessageTagTBarActions.append( mMessageTagMenuActions[i].second );
   }
@@ -4062,16 +4045,6 @@ void KMMainWidget::clearFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFolderShortcutActions()
 {
-
-  // If we are loaded as a part, this will be set to fals, since the part
-  // does xml loading. Temporarily set to true, in that case, so the
-  // accels are added to the collection as expected.
-#ifdef __GNUC__
-#warning Port me: *AutoConnectShortcuts has beeen removed from KActionCollection
-#endif
-//  bool old = actionCollection()->isAutoConnectShortcuts();
-
-//  actionCollection()->setAutoConnectShortcuts( true );
   QList< QPointer< KMFolder > > folders = kmkernel->allFolders();
   QList< QPointer< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
@@ -4079,7 +4052,6 @@ void KMMainWidget::initializeFolderShortcutActions()
     ++it;
     slotShortcutChanged( folder ); // load the initial accel
   }
-//  actionCollection()->setAutoConnectShortcuts( old );
 }
 
 //-----------------------------------------------------------------------------
