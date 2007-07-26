@@ -4,6 +4,7 @@
 #define KMCommands_h
 
 #include "kmail_export.h"
+#include "kmmsgbase.h"
 
 #include <mimelib/string.h>
 #include <messagestatus.h>
@@ -744,7 +745,7 @@ protected:
   // Needed for KMDeleteCommand for "move to trash"
   KMMoveCommand( quint32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
-  void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
+  void addMsg( KMMsgBase *msg ) { mSerNumList.append( msg->getMsgSerNum() ); }
   QVector<KMFolder*> mOpenedFolders;
 
 private:
@@ -752,7 +753,7 @@ private:
   void completeMove( Result result );
 
   KMFolder *mDestFolder;
-  QList<KMMsgBase*> mMsgList;
+  QList<quint32> mSerNumList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
   QList<quint32> mLostBoys;
