@@ -41,6 +41,7 @@ class QGroupBox;
 class QVGroupBox;
 class QLineEdit;
 class QSpinBox;
+class QListWidget;
 
 class KButtonGroup;
 class KUrlRequester;
@@ -56,7 +57,6 @@ class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
 class KMMessageTagDescription;
-class K3ListBox;
 class KColorCombo;
 class KFontRequester;
 class KIconButton;
@@ -613,7 +613,7 @@ private slots:
   Records the unselected tag's information, and applies visual changes
   necessary depending on the description of the new tag. Private since doesn't
   change the selection of the edit box itself*/
-  void slotSelectionChanged( int aIndex );
+  void slotSelectionChanged();
   /*This slot is necessary so that apply button is not activated when we are
   only applying visual changes after selecting a new tag in the list box*/
   void slotEmitChangeCheck();
@@ -639,7 +639,7 @@ private: // data
   QPushButton *mTagAddButton, *mTagRemoveButton,
               *mTagUpButton, *mTagDownButton;
 
-  K3ListBox *mTagListBox;
+  QListWidget *mTagListBox;
 
   QCheckBox *mTextColorCheck, 
             *mTextFontCheck, *mInToolbarCheck;

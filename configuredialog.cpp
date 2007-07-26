@@ -98,7 +98,6 @@ using MailTransport::TransportManagementWidget;
 #include <k3resolver.h>
 #include <kconfiggroup.h>
 #include <kbuttongroup.h>
-#include <k3listbox.h>
 #include <kcolorcombo.h>
 #include <kfontrequester.h>
 #include <kicondialog.h>
@@ -119,6 +118,7 @@ using MailTransport::TransportManagementWidget;
 #include <QLineEdit>
 #include <QGroupBox>
 #include <QToolTip>
+#include <QListWidget>
 
 #include <QValidator>
 #include <QVBoxLayout>
@@ -2305,14 +2305,14 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
   //Lefthand side Listbox and friends
 
-    //Groupbox frame
+  //Groupbox frame
   mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
   maingrid->addWidget( mTagsGroupBox );
   QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox, 
                               KDialog::marginHint(), KDialog::spacingHint() );
   tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
 
-    //Listbox, add, remove row
+  //Listbox, add, remove row
   QHBoxLayout *addremovegrid = new QHBoxLayout( tageditgrid );
 
   mTagAddLineEdit = new QLineEdit( mTagsGroupBox );
@@ -2328,7 +2328,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagRemoveButton->setIconSet( BarIconSet( "remove", K3Icon::SizeSmall ) );
   addremovegrid->addWidget( mTagRemoveButton );
 
-    //Up and down buttons
+  //Up and down buttons
   QHBoxLayout *updowngrid = new QHBoxLayout( tageditgrid );
 
   mTagUpButton = new QPushButton( mTagsGroupBox );
@@ -2343,19 +2343,19 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagDownButton->setAutoRepeat( true );
   updowngrid->addWidget( mTagDownButton );
 
-    //Listbox for tag names
+  //Listbox for tag names
   QHBoxLayout *listboxgrid = new QHBoxLayout( tageditgrid );
-  mTagListBox = new K3ListBox( mTagsGroupBox );
+  mTagListBox = new QListWidget( mTagsGroupBox );
   mTagListBox->setMinimumWidth( 150 );
   listboxgrid->addWidget( mTagListBox );
 
   //RHS for individual tag settings
 
-    //Extra VBoxLayout for stretchers around settings
+  //Extra VBoxLayout for stretchers around settings
   QVBoxLayout *tagsettinggrid = new QVBoxLayout( maingrid );
   tagsettinggrid->addStretch( 10 );
-  
-    //Groupbox frame
+
+  //Groupbox frame
   mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
                                       this );
   tagsettinggrid->addWidget( mTagSettingGroupBox );
@@ -2367,20 +2367,20 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   settings->addMultiCellLayout( spacer, 0, 0, 0, 1 );
   spacer->addSpacing( 2 * KDialog::spacingHint() );
 
-    //First row for renaming
+  //First row for renaming
   mTagNameLineEdit = new QLineEdit( mTagSettingGroupBox );
   settings->addWidget( mTagNameLineEdit, 1, 1 );
 
   QLabel *namelabel = new QLabel( i18n("Name") , mTagSettingGroupBox );
   namelabel->setBuddy( mTagNameLineEdit );
   settings->addWidget( namelabel , 1 , 0 );
-  
+
   connect( mTagNameLineEdit, SIGNAL( textChanged( const QString& ) ),
             this, SLOT( slotEmitChangeCheck( void ) ) );
 
-    //Second row for text color
-  mTextColorCheck = new QCheckBox( i18n("Change Te&xt Color"), 
-                                                        mTagSettingGroupBox );
+  //Second row for text color
+  mTextColorCheck = new QCheckBox( i18n("Change Te&xt Color"),
+                                   mTagSettingGroupBox );
   settings->addWidget( mTextColorCheck, 2, 0 );
 
   mTextColorCombo = new KColorCombo( mTagSettingGroupBox );
@@ -2393,9 +2393,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mTextColorCombo, SIGNAL( activated( int ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-    //Third for font selection
-  mTextFontCheck = new QCheckBox( i18n("Change Fo&nt"), 
-                                                        mTagSettingGroupBox );
+  //Third for font selection
+  mTextFontCheck = new QCheckBox( i18n("Change Fo&nt"), mTagSettingGroupBox );
   settings->addWidget( mTextFontCheck, 3, 0 );
 
   mFontRequester = new KFontRequester( mTagSettingGroupBox );
@@ -2408,14 +2407,14 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mFontRequester, SIGNAL( fontSelected( const QFont& ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-    //Fourth for toolbar icon
+  //Fourth for toolbar icon
   mIconButton = new KIconButton( mTagSettingGroupBox );
   mIconButton->setIconSize( 16 );
   mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Any, true );
   settings->addWidget( mIconButton, 5, 1 );
 
-  QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"), 
-                                                        mTagSettingGroupBox );
+  QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"),
+                                  mTagSettingGroupBox );
   iconlabel->setBuddy( mIconButton );
   settings->addWidget( iconlabel, 5, 0 );
 
@@ -2424,29 +2423,29 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mIconButton, SIGNAL( iconChanged( QString ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
-    //Fifth for shortcut
+  //Fifth for shortcut
   mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
   settings->addWidget( mKeySequenceWidget, 6, 1 );
   QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
-  
+
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged ( const QKeySequence& ) ),
           this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
-  
-    //Sixth for Toolbar checkbox
-  mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"), 
-                                                        mTagSettingGroupBox );
+
+  //Sixth for Toolbar checkbox
+  mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
+                                   mTagSettingGroupBox );
   settings->addMultiCellWidget( mInToolbarCheck, 7, 7, 0, 1 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
- 
+
   tagsettinggrid->addStretch( 10 );
-  
+
   //Adjust widths for columns
   maingrid->setStretchFactor( mTagsGroupBox, 1 );
   maingrid->setStretchFactor( tagsettinggrid, 1 );
-  
+
   //Other Connections
     //For enabling the add button in case box is non-empty
   connect( mTagAddLineEdit, SIGNAL( textChanged( const QString& ) ),
@@ -2467,8 +2466,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   connect( mTagDownButton, SIGNAL( clicked( void ) ),
           this, SLOT( slotMoveTagDown( void ) ) );
 
-  connect( mTagListBox, SIGNAL( highlighted( int ) ),
-          this, SLOT( slotSelectionChanged( int ) ) );
+  connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+          this, SLOT( slotSelectionChanged() ) );
 }
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
@@ -2511,7 +2510,7 @@ void AppearancePage::MessageTagTab::slotShortcutCaptured( const QKeySequence &sc
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
 {
-  int tmp_index = mTagListBox->currentItem();
+  int tmp_index = mTagListBox->currentRow();
   if ( tmp_index <= 0 )
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
@@ -2524,7 +2523,7 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
 }
 void AppearancePage::MessageTagTab::slotMoveTagDown()
 {
-  int tmp_index = mTagListBox->currentItem();
+  int tmp_index = mTagListBox->currentRow();
   if ( ( tmp_index < 0 ) 
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;
@@ -2539,20 +2538,20 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first, 
                                                        const int second )
 {
-  QString tmp_label = mTagListBox->text( first );
+  QString tmp_label = mTagListBox->item( first )->text();
   KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
- 
+
   mMsgTagList->replace( first, mMsgTagList->at( second ) );
   mMsgTagList->replace( second, tmp_ptr );  
 
-  disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
-          this, SLOT( slotSelectionChanged( int ) ) );
-  mTagListBox->changeItem( mTagListBox->text( second ) , first );
-  mTagListBox->changeItem( tmp_label, second );
-  mTagListBox->setSelected( second, true );
-  connect( mTagListBox, SIGNAL( highlighted( int ) ),
-          this, SLOT( slotSelectionChanged( int ) ) );
-  
+  disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+          this, SLOT( slotSelectionChanged() ) );
+  mTagListBox->item( first )->setText( mTagListBox->item( second )->text() );
+  mTagListBox->item( second )->setText( tmp_label );
+  mTagListBox->setCurrentItem( mTagListBox->item( second ) );
+  connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+          this, SLOT( slotSelectionChanged() ) );
+
   mPreviousTag = second;
 
   slotEmitChangeCheck();
@@ -2566,7 +2565,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   KMMessageTagDescription *tmp_desc = mMsgTagList->at( aIndex );
 
   //First row
-  tmp_desc->setName( mTagListBox->text( aIndex ) );
+  tmp_desc->setName( mTagListBox->item( aIndex )->text() );
   //Second row
   tmp_desc->setTextColor( mTextColorCheck->isChecked() ?
                           mTextColorCombo->color() : QColor() );
@@ -2586,7 +2585,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   //We are just updating the display, so no need to mark dirty
   mEmitChanges = false;
   //Check if selection is valid
-  if ( ( aIndex < 0 ) || ( mTagListBox->currentItem() < 0 ) ) {
+  if ( ( aIndex < 0 ) || ( mTagListBox->currentRow() < 0 ) ) {
     mTagRemoveButton->setEnabled( false );
     mTagUpButton->setEnabled( false );
     mTagDownButton->setEnabled( false );
@@ -2609,7 +2608,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagDownButton->setEnabled( 
                           ( ( int( mMsgTagList->count() ) - 1 ) != aIndex ) );
 
-  KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentItem() );
+  KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentRow() );
 
   //1st row
   mTagNameLineEdit->setEnabled( true );
@@ -2646,25 +2645,35 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mEmitChanges = true;
 }
 
-void AppearancePage::MessageTagTab::slotSelectionChanged( int aIndex ) 
+void AppearancePage::MessageTagTab::slotSelectionChanged() 
 {
   //monur: Shouldn't be calling in this case 
   //if (aIndex == mPreviousTag)
   //return;
   slotRecordTagSettings( mPreviousTag );
-  slotUpdateTagSettingWidgets( aIndex );
-  mPreviousTag = mTagListBox->currentItem();
+  slotUpdateTagSettingWidgets( mTagListBox->currentRow() );
+  mPreviousTag = mTagListBox->currentRow();
 }
 
 void AppearancePage::MessageTagTab::slotRemoveTag() 
 {
-  int tmp_index = mTagListBox->currentItem();
+  int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
     KMMessageTagDescription *tmp_desc = mMsgTagList->takeAt( tmp_index );
     mMsgTagDict->remove( tmp_desc->label() );
     delete tmp_desc;
     mPreviousTag = -1;
-    mTagListBox->removeItem( tmp_index );
+
+    //Before deleting the current item, make sure the selectionChanged signal
+    //is disconnected, so that the widgets will not get updated while the 
+    //deletion takes place.
+    disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+                this, SLOT( slotSelectionChanged() ) );
+    delete mTagListBox->takeItem( tmp_index );
+    connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+                this, SLOT( slotSelectionChanged() ) );
+
+    slotSelectionChanged();
     slotEmitChangeCheck();
   }
 }
@@ -2676,13 +2685,14 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
   //empty tag name
   if ( aText.isEmpty() )
     return;
-    //Disconnect so the tag information is not saved and reloaded with every
-    //letter
-    disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
-          this, SLOT( slotSelectionChanged( int ) ) );
-    mTagListBox->changeItem( aText, mTagListBox->currentItem() );
-    connect( mTagListBox, SIGNAL( highlighted( int ) ),
-          this, SLOT( slotSelectionChanged( int ) ) );
+
+  //Disconnect so the tag information is not saved and reloaded with every
+  //letter
+  disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+              this, SLOT( slotSelectionChanged() ) );
+  mTagListBox->currentItem()->setText( aText );
+  connect( mTagListBox, SIGNAL( itemSelectionChanged () ),
+           this, SLOT( slotSelectionChanged() ) );
 }
 
 void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
@@ -2706,8 +2716,10 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mMsgTagList->append( tmp_desc );
   slotEmitChangeCheck();
   mTagAddLineEdit->setText( QString::null );
-  mTagListBox->insertItem( tmp_desc->name() );
-  mTagListBox->setSelected( tmp_priority, true );
+  QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
+  newItem->setText( tmp_desc->name() );
+  mTagListBox->addItem( newItem );
+  mTagListBox->setCurrentItem( newItem );
 }
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings() 
@@ -2727,20 +2739,20 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   tmp_list.prioritySort();
 
   //Disconnect so that insertItem's do not trigger an update procedure
-  disconnect( mTagListBox, SIGNAL( highlighted( int ) ),
-              this, SLOT( slotSelectionChanged( int ) ) );
+  disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+              this, SLOT( slotSelectionChanged() ) );
   for ( KMMessageTagList::Iterator itl = tmp_list.begin(); 
         itl != tmp_list.end(); ++itl ) {
     const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
     if ( tmp_desc ) {
-      mTagListBox->insertItem( tmp_desc->name() );
+      mTagListBox->addItem( tmp_desc->name() );
       KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
       mMsgTagDict->insert( *itl , insert_desc );
       mMsgTagList->append( insert_desc );
     }
   }
-  connect( mTagListBox, SIGNAL( highlighted( int ) ),
-           this, SLOT( slotSelectionChanged( int ) ) );
+  connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
+           this, SLOT( slotSelectionChanged() ) );
   slotUpdateTagSettingWidgets( -1 );
   //Needed since the previous function doesn't affect add button
   mTagAddButton->setEnabled( false );
@@ -2750,7 +2762,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 void AppearancePage::MessageTagTab::installProfile( KConfig * profile ) { }
 
 void AppearancePage::MessageTagTab::save() {
-  slotRecordTagSettings( mTagListBox->currentItem() );
+  slotRecordTagSettings( mTagListBox->currentRow() );
   kmkernel->msgTagMgr()->fillTagsFromList( mMsgTagList );
 }
 
