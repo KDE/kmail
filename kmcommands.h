@@ -770,7 +770,7 @@ protected:
   // Needed for KMDeleteCommand for "move to trash"
   KMMoveCommand( Q_UINT32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
-  void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
+  void addMsg( KMMsgBase *msg ) { mSerNumList.append( msg->getMsgSerNum() ); }
   QValueVector<KMFolder*> mOpenedFolders;
 
 private:
@@ -778,7 +778,7 @@ private:
   void completeMove( Result result );
 
   KMFolder *mDestFolder;
-  QPtrList<KMMsgBase> mMsgList;
+  QValueList<Q_UINT32> mSerNumList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
   QValueList<Q_UINT32> mLostBoys;
