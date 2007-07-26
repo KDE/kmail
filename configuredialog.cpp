@@ -2431,7 +2431,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
   
-  connect( mKeySequenceWidget, SIGNAL( capturedShortcut ( const QKeySequence& ) ),
+  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged ( const QKeySequence& ) ),
           this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
   
     //Sixth for Toolbar checkbox
