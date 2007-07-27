@@ -104,6 +104,7 @@ using MailTransport::TransportManagementWidget;
 #include <kkeysequencewidget.h>
 #include <KIconButton>
 #include <KRandom>
+#include <KColorScheme>
 
 // Qt headers:
 #include <QBoxLayout>
@@ -1536,11 +1537,14 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // close to quota threshold
-  QHBoxLayout *hbox = new QHBoxLayout(vlay);
+  QHBoxLayout *hbox = new QHBoxLayout();
+  vlay->addLayout( hbox );
   QLabel *l = new QLabel( i18n("Close to quota threshold"), this );
   hbox->addWidget( l );
   l->setEnabled( false );
-  mCloseToQuotaThreshold = new QSpinBox( 0, 100, 1, this );
+  mCloseToQuotaThreshold = new QSpinBox( this );
+  mCloseToQuotaThreshold->setRange( 0, 100 );
+  mCloseToQuotaThreshold->setSingleStep( 1 );
   connect( mCloseToQuotaThreshold, SIGNAL( valueChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mCloseToQuotaThreshold->setSuffix( i18n("%"));
@@ -1568,13 +1572,16 @@ void AppearancePage::ColorsTab::doLoadOther() {
 
   static const QColor defaultColor[ numColorNames ] = {
     qApp->palette().color( QPalette::Base ), // bg
-    KGlobalSettings::alternateBackgroundColor(), // alt bg
+    KColorScheme( KColorScheme::View ).background(
+                  KColorScheme::AlternateBackground ).color() , // alt bg
     qApp->palette().color( QPalette::Text ), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
-    KGlobalSettings::linkColor(), // link
-    KGlobalSettings::visitedLinkColor(), // visited link
+    KColorScheme( KColorScheme::View ).foreground(
+                  KColorScheme::LinkText ).color(), // link
+    KColorScheme( KColorScheme::View ).foreground(
+                  KColorScheme::VisitedText ).color(),// visited link
     Qt::red, // misspelled words
     Qt::red, // new msg
     Qt::blue, // unread mgs
@@ -1590,7 +1597,7 @@ void AppearancePage::ColorsTab::doLoadOther() {
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
-    Qt::white,     // colorbar html  fg
+    Qt::white      // colorbar html  fg
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
@@ -2164,7 +2171,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   encodings.prepend( i18n( "Auto" ) );
   QStringList::Iterator it( encodings.begin() );
   QStringList::Iterator end( encodings.end() );
-  uint i = 0;
+  int i = 0;
   for( ; it != end; ++it)
   {
     if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
@@ -2300,51 +2307,56 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mMsgTagDict = new QHash<QString,KMMessageTagDescription*>();
   mMsgTagList = new QList<KMMessageTagDescription*>();
 
-  QHBoxLayout *maingrid = new QHBoxLayout( this, KDialog::marginHint(),
-                                          KDialog::spacingHint() );
+  QHBoxLayout *maingrid = new QHBoxLayout( this );
+  maingrid->setMargin( KDialog::marginHint() );
+  maingrid->setSpacing( KDialog::spacingHint() );
 
   //Lefthand side Listbox and friends
 
   //Groupbox frame
   mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
   maingrid->addWidget( mTagsGroupBox );
-  QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox, 
-                              KDialog::marginHint(), KDialog::spacingHint() );
+  QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox );
+  tageditgrid->setMargin( KDialog::marginHint() );
+  tageditgrid->setSpacing( KDialog::spacingHint() );
   tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
 
   //Listbox, add, remove row
-  QHBoxLayout *addremovegrid = new QHBoxLayout( tageditgrid );
+  QHBoxLayout *addremovegrid = new QHBoxLayout();
+  tageditgrid->addLayout( addremovegrid );
 
   mTagAddLineEdit = new QLineEdit( mTagsGroupBox );
   addremovegrid->addWidget( mTagAddLineEdit );
 
   mTagAddButton = new QPushButton( mTagsGroupBox );
-  QToolTip::add( mTagAddButton, i18n("Add new tag") );
-  mTagAddButton->setIconSet( BarIconSet( "list-add", K3Icon::SizeSmall ) );
+  mTagAddButton->setToolTip( i18n("Add new tag") );
+  mTagAddButton->setIcon( KIcon( "list-add" ) );
   addremovegrid->addWidget( mTagAddButton );
 
   mTagRemoveButton = new QPushButton( mTagsGroupBox );
-  QToolTip::add( mTagRemoveButton, i18n("Remove selected tag") );
-  mTagRemoveButton->setIconSet( BarIconSet( "list-remove", K3Icon::SizeSmall ) );
+  mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
+  mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
   addremovegrid->addWidget( mTagRemoveButton );
 
   //Up and down buttons
-  QHBoxLayout *updowngrid = new QHBoxLayout( tageditgrid );
+  QHBoxLayout *updowngrid = new QHBoxLayout();
+  tageditgrid->addLayout( updowngrid );
 
   mTagUpButton = new QPushButton( mTagsGroupBox );
-  QToolTip::add( mTagUpButton, i18n("Increase tag priority") );
-  mTagUpButton->setIconSet( BarIconSet( "arrow-up", K3Icon::SizeSmall ) );
+  mTagUpButton->setToolTip( i18n("Increase tag priority") );
+  mTagUpButton->setIcon( KIcon( "arrow-up" ) );
   mTagUpButton->setAutoRepeat( true );
   updowngrid->addWidget( mTagUpButton );
 
   mTagDownButton = new QPushButton( mTagsGroupBox );
-  QToolTip::add( mTagDownButton, i18n("Decrease tag priority") );
-  mTagDownButton->setIconSet( BarIconSet( "arrow-down", K3Icon::SizeSmall ) );
+  mTagDownButton->setToolTip( i18n("Decrease tag priority") );
+  mTagDownButton->setIcon( KIcon( "arrow-down" ) );
   mTagDownButton->setAutoRepeat( true );
   updowngrid->addWidget( mTagDownButton );
 
   //Listbox for tag names
-  QHBoxLayout *listboxgrid = new QHBoxLayout( tageditgrid );
+  QHBoxLayout *listboxgrid = new QHBoxLayout();
+  tageditgrid->addLayout( listboxgrid );
   mTagListBox = new QListWidget( mTagsGroupBox );
   mTagListBox->setMinimumWidth( 150 );
   listboxgrid->addWidget( mTagListBox );
@@ -2352,19 +2364,21 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //RHS for individual tag settings
 
   //Extra VBoxLayout for stretchers around settings
-  QVBoxLayout *tagsettinggrid = new QVBoxLayout( maingrid );
+  QVBoxLayout *tagsettinggrid = new QVBoxLayout();
+  maingrid->addLayout( tagsettinggrid );
   tagsettinggrid->addStretch( 10 );
 
   //Groupbox frame
   mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
                                       this );
   tagsettinggrid->addWidget( mTagSettingGroupBox );
-  QGridLayout *settings = new QGridLayout( mTagSettingGroupBox, 8, 2, 
-                              KDialog::marginHint(), KDialog::spacingHint() );
+  QGridLayout *settings = new QGridLayout( mTagSettingGroupBox );
+  settings->setMargin( KDialog::marginHint() );
+  settings->setSpacing( KDialog::spacingHint() );
 
-    //Stretcher layout for adding some space after the label
-  QVBoxLayout *spacer = new QVBoxLayout( this );
-  settings->addMultiCellLayout( spacer, 0, 0, 0, 1 );
+  //Stretcher layout for adding some space after the label
+  QVBoxLayout *spacer = new QVBoxLayout();
+  settings->addLayout( spacer, 0, 0, 1, 2 );
   spacer->addSpacing( 2 * KDialog::spacingHint() );
 
   //First row for renaming
@@ -2436,7 +2450,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
                                    mTagSettingGroupBox );
-  settings->addMultiCellWidget( mInToolbarCheck, 7, 7, 0, 1 );
+  settings->addWidget( mInToolbarCheck, 7, 0, 1, 2 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
@@ -2759,7 +2773,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 }
 
 //Profiling support complicates matters too much
-void AppearancePage::MessageTagTab::installProfile( KConfig * profile ) { }
+void AppearancePage::MessageTagTab::installProfile( KConfig * /*profile*/ ) { }
 
 void AppearancePage::MessageTagTab::save() {
   slotRecordTagSettings( mTagListBox->currentRow() );
@@ -3301,7 +3315,9 @@ QString ComposerPage::TemplatesTab::helpAnchor() const {
 ComposerPageTemplatesTab::ComposerPageTemplatesTab( QWidget * parent )
   : ConfigModuleTab ( parent )
 {
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  QVBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setMargin( 0 );
+  vlay->setSpacing( KDialog::spacingHint() );
 
   mWidget = new TemplatesConfiguration( this );
   vlay->addWidget( mWidget );
@@ -3325,7 +3341,9 @@ QString ComposerPage::CustomTemplatesTab::helpAnchor() const {
 ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent )
   : ConfigModuleTab ( parent )
 {
-  QVBoxLayout* vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  QVBoxLayout* vlay = new QVBoxLayout( this );
+  vlay->setMargin( 0 );
+  vlay->setSpacing( KDialog::spacingHint() );
 
   mWidget = new CustomTemplates( this );
   vlay->addWidget( mWidget );
@@ -4947,7 +4965,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Empty &trash on program exit" option:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout();
+  vlay->addLayout( hlay );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty local &trash folder on program exit"),
                                     this );
   hlay->addWidget( mEmptyTrashCheck );
@@ -4955,11 +4974,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Quota Units"
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mQuotaCmbBox = new QComboBox( false, this );
-  label = new QLabel( mQuotaCmbBox,
-                      i18n("Quota units: "), this );
-  mQuotaCmbBox->insertStringList( QStringList()
+  hlay = new QHBoxLayout();
+  vlay->addLayout( hlay );
+  mQuotaCmbBox = new QComboBox( this );
+  mQuotaCmbBox->setEditable( false );
+  label = new QLabel( i18n("Quota units: "), this );
+  label->setBuddy( mQuotaCmbBox );
+  mQuotaCmbBox->insertItems( 0, QStringList()
                    << i18n("KB")
                    << i18n("MB")
                    << i18n("GB") );
@@ -5045,7 +5066,7 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
-  GlobalSettings::self()->setQuotaUnit( mQuotaCmbBox->currentItem() );
+  GlobalSettings::self()->setQuotaUnit( mQuotaCmbBox->currentIndex() );
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {
@@ -5210,7 +5231,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mExchangeCompatibleInvitations = new QCheckBox( i18n( "Exchange compatible invitation naming" ), gBox );
   mExchangeCompatibleInvitations->setToolTip( i18n( "Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware e-mail. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands." ) );
   mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
-           exchangeCompatibleInvitationsItem()->whatsThis().utf8() ) );
+           exchangeCompatibleInvitationsItem()->whatsThis().toUtf8() ) );
   connect( mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
