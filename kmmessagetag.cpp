@@ -324,7 +324,6 @@ bool KMMessageTagList::compareTags( const QString &lhs, const QString &rhs)
 
 void KMMessageTagList::prioritySort() 
 {
-  //BLA
   //Use bubble sort for now
   int n = size();
   if ( !n )

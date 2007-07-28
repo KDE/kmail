@@ -3912,7 +3912,7 @@ void KMMainWidget::initializeMessageTagActions()
     if ( ! it.value() || it.value()->isEmpty() )
       continue;
     QString cleanName = i18n("Message Tag %1", it.value()->name() );
-    QString iconText = QString( "%1" ).arg( it.value()->name() );
+    QString iconText = it.value()->name();
     cleanName.replace("&","&&");
     tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
       cleanName, this );
