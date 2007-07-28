@@ -3156,22 +3156,18 @@ void KMMainWidget::setupActions()
   // -------- Toggle Actions
   mToggleImportantAction =
     new KToggleAction( KIcon( "mail-flag-kmail" ),
-                       i18n("Mark Message as &Important"), this );
+                       i18n("&Important"), this );
   actionCollection()->addAction( "status_flag", mToggleImportantAction );
   connect( mToggleImportantAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusImportant()) );
-  mToggleImportantAction->
-    setCheckedState( KGuiItem( i18n("Remove &Important Message Mark") ) );
   mStatusMenu->addAction( mToggleImportantAction );
 
   mToggleTodoAction =
     new KToggleAction( KIcon( "mail_todo" ),
-                       i18n("Mark Message as &To-do"), this );
+                       i18n("&To-do"), this );
   actionCollection()->addAction( "status_todo", mToggleTodoAction );
   connect( mToggleTodoAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusTodo()) );
-  mToggleTodoAction->
-    setCheckedState( KGuiItem( i18n("Remove &To-do Message Mark") ) );
   mStatusMenu->addAction( mToggleTodoAction );
   //mStatusMenu->insertSeparator();
 
@@ -3200,16 +3196,14 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->addSeparator();
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadImportantAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Thread as &Important"), this);
+  mToggleThreadImportantAction = new KToggleAction(KIcon("mail_flag"), i18n("&Important"), this);
   actionCollection()->addAction("thread_flag", mToggleThreadImportantAction );
   connect(mToggleThreadImportantAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusImportant()));
-  mToggleThreadImportantAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), this);
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("&To-do"), this);
   actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
-  mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
@@ -3911,7 +3905,7 @@ void KMMainWidget::initializeMessageTagActions()
     it.next();
     if ( ! it.value() || it.value()->isEmpty() )
       continue;
-    QString cleanName = i18n("Message Tag %1", it.value()->name() );
+    QString cleanName = it.value()->name();
     QString iconText = it.value()->name();
     cleanName.replace("&","&&");
     tagAction = new KToggleAction( KIcon(it.value()->toolbarIconName()),
