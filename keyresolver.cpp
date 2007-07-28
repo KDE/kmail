@@ -97,7 +97,7 @@ static inline bool WithRespectToKeyID( const GpgME::Key & left, const GpgME::Key
 }
 
 static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
-  if ( key.protocol() != GpgME::Context::OpenPGP ) {
+  if ( key.protocol() != GpgME::OpenPGP ) {
     return false;
   }
 #if 0
@@ -128,7 +128,7 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
 }
 
 static bool ValidTrustedSMIMEEncryptionKey( const GpgME::Key & key ) {
-  if ( key.protocol() != GpgME::Context::CMS )
+  if ( key.protocol() != GpgME::CMS )
     return false;
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
     return false;
@@ -137,9 +137,9 @@ static bool ValidTrustedSMIMEEncryptionKey( const GpgME::Key & key ) {
 
 static inline bool ValidTrustedEncryptionKey( const GpgME::Key & key ) {
   switch ( key.protocol() ) {
-  case GpgME::Context::OpenPGP:
+  case GpgME::OpenPGP:
     return ValidTrustedOpenPGPEncryptionKey( key );
-  case GpgME::Context::CMS:
+  case GpgME::CMS:
     return ValidTrustedSMIMEEncryptionKey( key );
   default:
     return false;
@@ -153,11 +153,11 @@ static inline bool ValidSigningKey( const GpgME::Key & key ) {
 }
 
 static inline bool ValidOpenPGPSigningKey( const GpgME::Key & key ) {
-  return key.protocol() == GpgME::Context::OpenPGP && ValidSigningKey( key );
+  return key.protocol() == GpgME::OpenPGP && ValidSigningKey( key );
 }
 
 static inline bool ValidSMIMESigningKey( const GpgME::Key & key ) {
-  return key.protocol() == GpgME::Context::CMS && ValidSigningKey( key );
+  return key.protocol() == GpgME::CMS && ValidSigningKey( key );
 }
 
 static inline bool NotValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
@@ -190,8 +190,8 @@ namespace {
 
     bool operator()( const GpgME::Key & key ) const {
       return
-	( isOpenPGP( format ) && key.protocol() != GpgME::Context::OpenPGP ) ||
-	( isSMIME( format )   && key.protocol() != GpgME::Context::CMS );
+	( isOpenPGP( format ) && key.protocol() != GpgME::OpenPGP ) ||
+	( isSMIME( format )   && key.protocol() != GpgME::CMS );
     }
 
     const Kleo::CryptoMessageFormat format;
@@ -474,7 +474,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 	: encryptKeyNearExpiryWarningThresholdInDays() );
   if ( threshold > -1 && daysTillExpiry <= threshold ) {
     const QString msg =
-      key.protocol() == GpgME::Context::OpenPGP
+      key.protocol() == GpgME::OpenPGP
       ? ( mine ? sign
 	  ? ki18np("<p>Your OpenPGP signing key</p><p align=center><b>%2</b> (KeyID 0x%3)</p>"
 		   "<p>expires in less than a day.</p>",
@@ -555,7 +555,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
 		       .subs( key.issuerSerial() )
 		       .toString() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
-					     key.protocol() == GpgME::Context::OpenPGP
+					     key.protocol() == GpgME::OpenPGP
 					     ? i18n("OpenPGP Key Expires Soon" )
 					     : i18n("S/MIME Certificate Expires Soon" ),
 					     KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
@@ -1185,10 +1185,10 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
       pref.smimeCertFingerprints.clear();
       const std::vector<GpgME::Key> & keys = items[i].keys;
       for ( std::vector<GpgME::Key>::const_iterator it = keys.begin(), end = keys.end() ; it != end ; ++it ) {
-        if ( it->protocol() == GpgME::Context::OpenPGP ) {
+        if ( it->protocol() == GpgME::OpenPGP ) {
           if ( const char * fpr = it->primaryFingerprint() )
             pref.pgpKeyFingerprints.push_back( fpr );
-        } else if ( it->protocol() == GpgME::Context::CMS ) {
+        } else if ( it->protocol() == GpgME::CMS ) {
           if ( const char * fpr = it->primaryFingerprint() )
             pref.smimeCertFingerprints.push_back( fpr );
         }

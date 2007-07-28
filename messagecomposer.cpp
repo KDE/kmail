@@ -1161,17 +1161,17 @@ static inline bool textMode( Kleo::CryptoMessageFormat f )
   return f == Kleo::InlineOpenPGPFormat;
 }
 
-static inline GpgME::Context::SignatureMode signingMode( Kleo::CryptoMessageFormat f )
+static inline GpgME::SignatureMode signingMode( Kleo::CryptoMessageFormat f )
 {
   switch ( f ) {
   case Kleo::SMIMEOpaqueFormat:
-    return GpgME::Context::Normal;
+    return GpgME::NormalSignatureMode;
   case Kleo::InlineOpenPGPFormat:
-    return GpgME::Context::Clearsigned;
+    return GpgME::Clearsigned;
   default:
   case Kleo::SMIMEFormat:
   case Kleo::OpenPGPMIMEFormat:
-    return GpgME::Context::Detached;
+    return GpgME::Detached;
   }
 }
 

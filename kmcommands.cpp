@@ -133,6 +133,8 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
+#include <gpgme++/error.h>
+
 #include <QClipboard>
 #include <QDBusMessage>
 #include <QDBusConnection>
