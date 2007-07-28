@@ -1,6 +1,7 @@
 [KMail Profile]
 Name=Purist
 Name[af]=Suiwer
+Name[bg]=Пуритан
 Name[cs]=Puristický
 Name[cy]=Puryddol
 Name[eo]=Puristo
@@ -42,6 +43,7 @@ Name[xh]=isiPurist
 Name[zh_TW]=較安全
 Comment=Most features turned off, KDE global settings are used
 Comment[af]=Meeste funksies af geskakel. KDE globale waardes word gebruik.
+Comment[bg]=Пуритански режим, при който повечето възможности за изключени
 Comment[ca]=La majoria de característiques estan desactivades, s'usarà l'arranjament global de KDE
 Comment[cs]=Většina funkcí je vypnuta a použije se globální nastavení KDE
 Comment[cy]=Y mwyafrif o nodweddion wedi'u diffodd, defnyddir gosodiadau eang KDE

@@ -1,6 +1,7 @@
 [KMail Profile]
 Name=Most Secure
 Name[af]=Veiligste
+Name[bg]=Сигурност
 Name[ca]=Més segur
 Name[cs]=Nejbezpečnější
 Name[cy]=Diogelaf
@@ -50,6 +51,7 @@ Name[x-test]=xxMost Securexx
 Name[zh_TW]=最安全
 Comment=Sets all necessary options to achieve maximum security
 Comment[af]=Stel al die nodige opsies om die maksimum sekuriteit te hê
+Comment[bg]=Режим, в който всички настройки за сигурност за включени
 Comment[ca]=Estableix totes les opcions necessàries per aconseguir una seguretat màxima
 Comment[cs]=Zapne všechny volby nutné k dosažení nejvyšší bezpečnosti
 Comment[cy]=Gosod pob nodwedd gofynnol i gyrchu diogelwch mwyaf

@@ -2,6 +2,7 @@
 Name=Default
 Name[af]=Standaard
 Name[be]=Прадвызначаны
+Name[bg]=Стандартен
 Name[br]=Dre ziouer
 Name[ca]=Omissió
 Name[cs]=Implicitní
@@ -58,6 +59,7 @@ Name[zh_TW]=預設
 Comment=Standard profile
 Comment[af]=Standaard profiel
 Comment[be]=Стандартны профіль
+Comment[bg]=Стандартен профил
 Comment[ca]=Perfil estàndard
 Comment[cs]=Standardní profil
 Comment[cy]=Proffil safonol

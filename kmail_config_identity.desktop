@@ -14,6 +14,7 @@ X-KDE-CfgDlgHierarchy=KMail
 
 Name=Identities
 Name[be]=Увасабленні
+Name[bg]=Самоличност
 Name[br]=Anvelezhioù
 Name[ca]=Identitats
 Name[cs]=Identity
@@ -64,6 +65,7 @@ Name[zh_TW]=身份
 Comment=Manage Identities
 Comment[af]=Bestuur identiteite
 Comment[be]=Кіраванне увасабленнямі
+Comment[bg]=Настройки на самоличността
 Comment[br]=Merañ an anvelezhioù
 Comment[ca]=Gestiona les identitats
 Comment[cs]=Správa identit
@@ -110,6 +112,7 @@ Comment[x-test]=xxManage Identitiesxx
 Comment[zh_TW]=管理身份
 Keywords=kmail,identity
 Keywords[be]=увасабленне,kmail,identity
+Keywords[bg]=Keywords=пощенски, клиент, е-поща, самоличност, информация, kmail, identity
 Keywords[br]=kmail,anvelezh
 Keywords[ca]=kmail,identitat
 Keywords[cs]=kmail,identita
