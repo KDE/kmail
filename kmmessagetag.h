@@ -145,20 +145,20 @@ class KMMessageTagMgr : public QObject
         name). Returns 0 if not found.
         @param aLabel 10 letter label to be searched for in the dictionary
     */
-		const KMMessageTagDescription *find( const QString &aLabel ) const;
+    const KMMessageTagDescription *find( const QString &aLabel ) const;
     /**Returns a pointer to the dictionary itself. Used to iterate over all
-tags. Shouldn't be used to modify tags.*/
-		const QHash<QString, KMMessageTagDescription*> *msgTagDict(void) const { return mTagDict; }
+       tags. Shouldn't be used to modify tags.*/
+    const QHash<QString, KMMessageTagDescription*> *msgTagDict(void) const { return mTagDict; }
     /**Returns a pointer to the priority ordered list*/
     const QList<KMMessageTagDescription *> *msgTagList(void) const { return mTagList; }
     /** @return @c true if the tags are modified after the initial config read*/
-		bool isDirty( void ) const { return mDirty; }
+    bool isDirty( void ) const { return mDirty; }
     /**Fills the tag dictionary from the given pointer list @p aTagList . The
-dictionary is cleared first, so @p aTagList should be a complete set of tags
-ordered in decreasing priority. The tag descriptions that @p aTagList points to
-are copied, so it is safe to delete them afterwards.
-     @param aTagList Pointer list that contains a full set of tags and is
-      priority ordered*/
+       dictionary is cleared first, so @p aTagList should be a complete set of 
+       tags ordered in decreasing priority. The tag descriptions that @p aTagList
+       points to are copied, so it is safe to delete them afterwards.
+       @param aTagList Pointer list that contains a full set of tags and is
+                       priority ordered*/
     void fillTagsFromList( const QList<KMMessageTagDescription*> *aTagList );
 
   signals:
@@ -168,7 +168,7 @@ are copied, so it is safe to delete them afterwards.
   private:
     //This function shouldn't be public since it doesn't emit msgTagListChanged
     void clear(void);
-  
+
     void addTag( KMMessageTagDescription *aDesc, bool emitChange = true );
 
     QHash<QString,KMMessageTagDescription*> *mTagDict;

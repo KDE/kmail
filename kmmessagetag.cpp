@@ -278,7 +278,7 @@ void KMMessageTagMgr::writeConfig( bool withSync )
 
   //first, delete all groups:
   QStringList tagGroups 
-      = config->groupList().grep( QRegExp( "MessageTag #\\d+" ) );
+      = config->groupList().filter( QRegExp( "MessageTag #\\d+" ) );
   for ( QStringList::Iterator it = tagGroups.begin(); 
         it != tagGroups.end(); ++it )
     config->deleteGroup( *it );
@@ -324,6 +324,7 @@ bool KMMessageTagList::compareTags( const QString &lhs, const QString &rhs)
 
 void KMMessageTagList::prioritySort() 
 {
+  //BLA
   //Use bubble sort for now
   int n = size();
   if ( !n )
@@ -345,7 +346,7 @@ void KMMessageTagList::prioritySort()
 const KMMessageTagList KMMessageTagList::split( const QString &aSep, 
                                         const QString &aStr )
 {
-  return KMMessageTagList( QStringList::split( aSep, aStr ) );
+  return KMMessageTagList( aStr.split( aSep, QString::SkipEmptyParts ) );
 }
 //----------------------------EO KMMessageTagList----------------------------------
 

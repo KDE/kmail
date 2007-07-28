@@ -2424,7 +2424,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Fourth for toolbar icon
   mIconButton = new KIconButton( mTagSettingGroupBox );
   mIconButton->setIconSize( 16 );
-  mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Any, true );
+  mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Action );
   settings->addWidget( mIconButton, 5, 1 );
 
   QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"),

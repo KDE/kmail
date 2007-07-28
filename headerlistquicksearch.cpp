@@ -151,7 +151,7 @@ bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QStrin
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
     if ( !msg || !msg->tagList()
-              || msg->tagList()->find( mTagLabel ) == msg->tagList()->end() )
+              || msg->tagList()->indexOf( mTagLabel ) == -1 )
       return false;
   }
   return K3ListViewSearchLine::itemMatches(item, s);
@@ -188,9 +188,8 @@ void HeaderListQuickSearch::updateComboList()
                                         = kmkernel->msgTagMgr()->msgTagList();
   for ( QList<KMMessageTagDescription *>::ConstIterator it = msgTagList->begin(); 
                                               it != msgTagList->end(); ++it ) {
-    QString lineString = i18n("Tagged %1", (*it)->name() );
-    mStatusCombo->insertItem( SmallIcon( (*it)->toolbarIconName() ),
-                                                                  lineString );
+    QString lineString = (*it)->name();
+    mStatusCombo->addItem( SmallIcon( (*it)->toolbarIconName() ), lineString );
   }
   mStatusCombo->setCurrentIndex( 0 );
   mFilterWithTag = false;
