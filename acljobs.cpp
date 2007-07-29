@@ -166,7 +166,7 @@ ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KUrl
 }
 
 ACLJobs::GetACLJob::GetACLJob( const KUrl& url, const QByteArray &packedArgs)
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs )
+  : KIO::SpecialJob( url, packedArgs )
 {
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
@@ -186,7 +186,7 @@ void ACLJobs::GetACLJob::slotInfoMessage( KJob*, const QString& str,const QStrin
 }
 
 ACLJobs::GetUserRightsJob::GetUserRightsJob( const KUrl& url, const QByteArray &packedArgs)
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
+  : KIO::SpecialJob( url, packedArgs)
 {
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
            SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
@@ -200,7 +200,7 @@ void ACLJobs::GetUserRightsJob::slotInfoMessage( KJob*, const QString& str,const
 
 ACLJobs::DeleteACLJob::DeleteACLJob( const KUrl& url, const QString& userId,
                                      const QByteArray &packedArgs)
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs ),
+  : KIO::SpecialJob( url, packedArgs ),
     mUserId( userId )
 {
 }

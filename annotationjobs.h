@@ -35,6 +35,8 @@
 #include <kio/job.h>
 #include <QVector>
 
+namespace KIO { class Slave; }
+
 namespace KMail {
 
 /// One entry in the annotation list: attribute name and attribute value
@@ -105,7 +107,7 @@ MultiUrlGetAnnotationJob* multiUrlGetAnnotation( KIO::Slave* slave,
 
 
 /// for getAnnotation()
-class GetAnnotationJob : public KIO::SimpleJob
+class GetAnnotationJob : public KIO::SpecialJob
 {
   Q_OBJECT
 public:

@@ -48,7 +48,7 @@ QuotaJobs::GetQuotarootJob* QuotaJobs::getQuotaroot(
 
 QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
                                              const QByteArray &packedArgs)
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs)
+  : KIO::SpecialJob( url, packedArgs)
 {
   connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
            SLOT(slotInfoMessage(KIO::Job*,const QString&)) );

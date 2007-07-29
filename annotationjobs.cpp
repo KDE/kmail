@@ -64,7 +64,7 @@ AnnotationJobs::GetAnnotationJob* AnnotationJobs::getAnnotation(
 
 AnnotationJobs::GetAnnotationJob::GetAnnotationJob( const KUrl& url, const QString& entry,
                                                     const QByteArray &packedArgs)
-  : KIO::SimpleJob( url, KIO::CMD_SPECIAL, packedArgs),
+  : KIO::SpecialJob( url, packedArgs),
     mEntry( entry )
 {
   connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),

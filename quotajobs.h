@@ -42,6 +42,8 @@
 
 #include "globalsettings.h"
 
+namespace KIO { class Slave; }
+
 namespace KMail {
 
 // One quota entry consisting of a name, the quota root,
@@ -134,7 +136,7 @@ class GetStorageQuotaJob;
 GetStorageQuotaJob* getStorageQuota( KIO::Slave* slave, const KUrl& url );
 
 /// for getQuotaroot()
-class GetQuotarootJob : public KIO::SimpleJob
+class GetQuotarootJob : public KIO::SpecialJob
 {
   Q_OBJECT
 public:

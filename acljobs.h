@@ -35,6 +35,8 @@
 #include <kio/job.h>
 #include <QVector>
 
+namespace KIO { class Slave; }
+
 namespace KMail {
 
   /// One entry in the ACL list: user and permissions
@@ -96,7 +98,7 @@ namespace ACLJobs {
   MultiSetACLJob* multiSetACL( KIO::Slave* slave, const KUrl& url, const ACLList& acl );
 
   /// List all ACLs for a given url
-  class GetACLJob : public KIO::SimpleJob
+  class GetACLJob : public KIO::SpecialJob
   {
     Q_OBJECT
   public:
@@ -111,7 +113,7 @@ namespace ACLJobs {
   };
 
   /// Get the users' rights for a given url
-  class GetUserRightsJob : public KIO::SimpleJob
+  class GetUserRightsJob : public KIO::SpecialJob
   {
     Q_OBJECT
   public:
@@ -126,7 +128,7 @@ namespace ACLJobs {
 
   /// Delete the permissions for a given user on a given url
   /// This class only exists to store the userid in the job
-  class DeleteACLJob : public KIO::SimpleJob
+  class DeleteACLJob : public KIO::SpecialJob
   {
     Q_OBJECT
   public:
