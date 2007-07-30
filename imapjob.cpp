@@ -88,9 +88,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   }
   KMFolder *msg_parent = msg->parent();
   if (msg_parent) {
-    if (!folder || folder!= msg_parent->storage()) {
-      msg_parent->open();
-    }
+    msg_parent->open();
   }
   mSrcFolder = msg_parent;
   // If there is a destination folder, this is a copy, move or put to an
