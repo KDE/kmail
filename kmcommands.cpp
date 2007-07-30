@@ -829,7 +829,8 @@ KUrl KMSaveMsgCommand::url()
 KMCommand::Result KMSaveMsgCommand::execute()
 {
   mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, false, false );
-  mJob->slotTotalSize( mTotalSize );
+#warning Port me!
+//  mJob->slotTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
   mJob->setReportDataSent( true );
   connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
@@ -948,7 +949,8 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
         mOffset = 0;
 
         mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, true, false );
-        mJob->slotTotalSize( mTotalSize );
+#warning Port me!
+//        mJob->slotTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
         mJob->setReportDataSent( true );
         connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
