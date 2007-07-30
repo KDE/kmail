@@ -473,9 +473,14 @@ void KMFolderIndex::fillMessageDict()
 
 KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
 {
-  KMMsgInfo *msgInfo = new KMMsgInfo( folder() );
+  KMMsgInfo *msgInfo = msg->msgInfo();
+  if ( !msgInfo )
+    msgInfo = new KMMsgInfo( folder() );
+
   *msgInfo = *msg;
   mMsgList.set( idx, msgInfo );
+  msg->setMsgInfo( 0 );
+  delete msg;
   return msgInfo;
 }
 

@@ -152,6 +152,7 @@ void KMMessage::init( DwMessage* aMsg )
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
   mCursorPos = 0;
+  mMsgInfo = 0;
   mIsParsed = false;
 }
 
@@ -190,6 +191,7 @@ void KMMessage::assign( const KMMessage& other )
 //-----------------------------------------------------------------------------
 KMMessage::~KMMessage()
 {
+  delete mMsgInfo;
   delete mMsg;
   kmkernel->undoStack()->msgDestroyed( this );
 }

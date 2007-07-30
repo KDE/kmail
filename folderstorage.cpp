@@ -464,7 +464,8 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
     if (msg->parent())
     {
       int idx = msg->parent()->find(msg);
-      take(idx);
+      if ( idx >= 0 )
+        take(idx);
     }
   }
 }

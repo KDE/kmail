@@ -814,7 +814,8 @@ KMMessage* KMFolderMbox::readMsg(int idx)
   assert(mi!=0 && !mi->isMessage());
   assert(mStream != 0);
 
-  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  KMMessage *msg = new KMMessage(*mi);
+  msg->setMsgInfo( mi ); // remember the KMMsgInfo object to that we can restore it when the KMMessage object is no longer needed
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->fromDwString(getDwString(idx));
   return msg;

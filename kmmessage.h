@@ -862,6 +862,11 @@ public:
   /** Set cursor position as offset from message start */
   void setCursorPos(int pos) { mCursorPos = pos; };
 
+  /** Get the KMMsgInfo object that was set with setMsgInfo(). */
+  KMMsgInfo* msgInfo() { return mMsgInfo; }
+  /** Set the KMMsgInfo object corresponding to this message. */
+  void setMsgInfo( KMMsgInfo* msgInfo ) { mMsgInfo = msgInfo; }
+
   /* This is set in kmreaderwin if a message is being parsed to avoid
      other parts of kmail (e.g. kmheaders) destroying the message.
      Parsing can take longer and can be async (in case of gpg mails) */
@@ -897,6 +902,7 @@ private:
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
   int mCursorPos;
+  KMMsgInfo* mMsgInfo; // used to remember the KMMsgInfo object this KMMessage replaced in the KMMsgList
 };
 
 

@@ -1384,18 +1384,22 @@ void KMHeaders::applyFiltersOnMsg()
         KApplication::kApplication()->eventLoop()->processEvents( QEventLoop::ExcludeUserInput, 50 );
       }
       int idx = msgBase->parent()->find(msgBase);
-      assert(idx != -1);
-      KMMessage * msg = msgBase->parent()->getMsg(idx);
-      if (msg->transferInProgress()) continue;
-      msg->setTransferInProgress(true);
-      if ( !msg->isComplete() )
-      {
-        FolderJob *job = mFolder->createJob(msg);
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-                     SLOT(slotFilterMsg(KMMessage*)));
-        job->start();
-      } else {
-        if (slotFilterMsg(msg) == 2) break;
+      if (idx >= 0) {
+        KMMessage * msg = msgBase->parent()->getMsg(idx);
+        if (msg->transferInProgress()) continue;
+        msg->setTransferInProgress(true);
+        if ( !msg->isComplete() )
+        {
+          FolderJob *job = mFolder->createJob(msg);
+          connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+                      SLOT(slotFilterMsg(KMMessage*)));
+          job->start();
+        } else {
+          if (slotFilterMsg(msg) == 2) break;
+        }
+      }
+      else {
+        kdDebug (5006) << "####### KMHeaders::applyFiltersOnMsg - Getting invalid index " << endl;
       }
       progressItem->incCompletedItems();
     }

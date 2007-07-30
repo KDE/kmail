@@ -425,12 +425,12 @@ int KMFolder::moveMsg(QPtrList<KMMessage> q, int* index_return )
 
 int KMFolder::find( const KMMsgBase* msg ) const
 {
-  return mStorage ? mStorage->find( msg ) : 0;
+  return mStorage ? mStorage->find( msg ) : -1;
 }
 
 int KMFolder::find( const KMMessage* msg ) const
 {
-  return mStorage ? mStorage->find( msg ) : 0;
+  return mStorage ? mStorage->find( msg ) : -1;
 }
 
 int KMFolder::count( bool cache ) const

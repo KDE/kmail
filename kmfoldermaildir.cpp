@@ -546,7 +546,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
 KMMessage* KMFolderMaildir::readMsg(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  KMMessage *msg = new KMMessage(*mi);
+  msg->setMsgInfo( mi ); // remember the KMMsgInfo object to that we can restore it when the KMMessage object is no longer needed
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->setComplete( true );
   msg->fromDwString(getDwString(idx));
