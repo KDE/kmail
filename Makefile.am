@@ -100,8 +100,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp kmglobalns.cpp configur
 		listjob.cpp renamejob.cpp copyfolderjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
-                accountcombobox.cpp quotajobs.cpp folderdiaquotatab.cpp \
-	        localsubscriptiondialog.cpp folderdiaquotatab_p.cpp
+		accountcombobox.cpp quotajobs.cpp folderdiaquotatab.cpp \
+		localsubscriptiondialog.cpp folderdiaquotatab_p.cpp \
+		foldersetselector.cpp
 
 kmail_SOURCES = main.cpp
 

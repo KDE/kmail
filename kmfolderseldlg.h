@@ -6,7 +6,7 @@
 #define kmfolderseldlg_h
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <simplefoldertree.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
 
@@ -14,20 +14,6 @@ class KMFolder;
 class KMFolderTree;
 class KMMainWidget;
 
-namespace KMail {
-
-  class SimpleFolderTree : public KListView
-  {
-    public:
-      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree,
-                        const QString & preSelection, bool mustBeReadWrite );
-
-      const KMFolder * folder() const;
-  };
-
-}
-
-//-----------------------------------------------------------------------------
 class KMFolderSelDlg: public KDialogBase
 {
   Q_OBJECT

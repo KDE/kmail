@@ -33,7 +33,6 @@
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
-#include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
 #include "kmmainwin.h"
 
@@ -359,7 +358,7 @@ void AntiSpamWizard::accept()
 
     /* Now that all the filters have been added to the list, tell
      * the filter manager about it. That will emit filterListUpdate
-     * which will result in the filter list in kmmainwidget being 
+     * which will result in the filter list in kmmainwidget being
      * initialized. This should happend only once. */
     KMKernel::self()->filterMgr()->appendFilters( filterList );
   }
