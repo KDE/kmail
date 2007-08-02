@@ -184,7 +184,9 @@ set(kmailprivate_LIB_SRCS
    chiasmuskeyselector.cpp
    util.cpp
    kmmessagetag.cpp
-   templateparser.cpp templatesconfiguration.cpp templatesinsertcommand.cpp
+   templateparser.cpp
+   templatesconfiguration.cpp
+   templatesinsertcommand.cpp
    customtemplates.cpp
    quotajobs.cpp
    folderdialogquotatab.cpp
