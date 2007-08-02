@@ -140,7 +140,7 @@ namespace KMail {
 
   void IdentityListView::commitData( QWidget *editor )
   {
-    kDebug(5006) << "after editing" << endl;
+    kDebug(5006) <<"after editing";
 
     if ( selectedItems().size() > 0 ) {
       IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
@@ -155,9 +155,9 @@ namespace KMail {
 
   void IdentityListView::slotCustomContextMenuRequested( const QPoint &pos )
   {
-    kDebug(5006) << "position: " << pos << endl;
+    kDebug(5006) <<"position:" << pos;
     QTreeWidgetItem *item = itemAt( pos );
-    kDebug(5006) << "item: " << item << endl;
+    kDebug(5006) <<"item:" << item;
     if ( item ) {
       IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
       if ( lvItem ) {

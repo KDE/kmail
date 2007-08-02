@@ -157,7 +157,7 @@ namespace KMail {
     case Inlined: return inlined();
     case Hidden:  return hidden();
     }
-    kFatal( 5006 ) << "AttachmentStrategy::create(): Unknown attachment startegy ( type == "
+    kFatal( 5006 ) <<"AttachmentStrategy::create(): Unknown attachment startegy ( type =="
 		    << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }

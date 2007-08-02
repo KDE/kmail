@@ -63,7 +63,7 @@ namespace KMail {
 
   void KHtmlPartHtmlWriter::begin( const QString & css ) {
     if ( mState != Ended ) {
-      kWarning( 5006 ) << "KHtmlPartHtmlWriter: begin() called on non-ended session!" << endl;
+      kWarning( 5006 ) <<"KHtmlPartHtmlWriter: begin() called on non-ended session!";
       reset();
     }
 
@@ -81,7 +81,7 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::end() {
-    kWarning( mState != Begun, 5006 ) << "KHtmlPartHtmlWriter: end() called on non-begun or queued session!" << endl;
+    kWarning( mState != Begun, 5006 ) <<"KHtmlPartHtmlWriter: end() called on non-begun or queued session!";
     mHtmlPart->end();
 
     resolveCidUrls();
@@ -103,7 +103,7 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::write( const QString & str ) {
-    kWarning( mState != Begun, 5006 ) << "KHtmlPartHtmlWriter: write() called in Ended or Queued state!" << endl;
+    kWarning( mState != Begun, 5006 ) <<"KHtmlPartHtmlWriter: write() called in Ended or Queued state!";
     mHtmlPart->write( str );
   }
 
@@ -144,7 +144,7 @@ namespace KMail {
       if ( url.protocol() == "cid" ) {
         EmbeddedPartMap::const_iterator it = mEmbeddedPartMap.find( url.path() );
         if ( it != mEmbeddedPartMap.end() ) {
-          kDebug(5006) << "Replacing " << url.prettyUrl() << " by " << it.value() << endl;
+          kDebug(5006) <<"Replacing" << url.prettyUrl() <<" by" << it.value();
           image.setSrc( it.value() );
         }
       }

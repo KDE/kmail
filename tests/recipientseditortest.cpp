@@ -58,7 +58,7 @@ Composer::Composer( QWidget *parent )
   mRecipients = new RecipientsEditor( this );
   topLayout->addWidget( mRecipients, 1, 0, 1, 2 );
 
-  kDebug(5006) << "SIZEHINT: " << mRecipients->sizeHint() << endl;
+  kDebug(5006) <<"SIZEHINT:" << mRecipients->sizeHint();
 
 //  mRecipients->setFixedHeight( 10 );
   

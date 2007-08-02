@@ -134,7 +134,7 @@ bool KMAcctLocal::preProcess()
   // run the precommand
   if (!runPrecommand(precommand()))
   {
-    kDebug(5006) << "cannot run precommand " << precommand() << endl;
+    kDebug(5006) <<"cannot run precommand" << precommand();
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     return false;
@@ -146,7 +146,7 @@ bool KMAcctLocal::preProcess()
     aStr = i18n("Cannot open file:");
     aStr += mMailFolder->path() + '/' + mMailFolder->name();
     KMessageBox::sorry(0, aStr);
-    kDebug(5006) << "cannot open file " << mMailFolder->path() << "/"
+    kDebug(5006) <<"cannot open file" << mMailFolder->path() <<"/"
       << mMailFolder->name() << endl;
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
@@ -154,7 +154,7 @@ bool KMAcctLocal::preProcess()
   }
 
   if (!mboxStorage->isLocked()) {
-    kDebug(5006) << "mailFolder could not be locked" << endl;
+    kDebug(5006) <<"mailFolder could not be locked";
     mMailFolder->close( "acctlocalMail" );
     checkDone( mHasNewMail, CheckError );
     QString errMsg = i18n( "Transmission failed: Could not lock %1." ,

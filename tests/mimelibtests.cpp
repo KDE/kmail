@@ -53,7 +53,7 @@ QByteArray MimeLibTester::readFile(const QString& fileName)
   QFile file( fileName );
   bool ok = file.open( QIODevice::ReadOnly );
   if ( !ok ) {
-    kError() << fileName << " not found!" << endl;
+    kError() << fileName <<" not found!";
     abort();
   }
   QByteArray data = file.readAll();

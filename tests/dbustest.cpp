@@ -14,7 +14,7 @@
 
 int main(int argc,char **argv)
 {
-  kDebug(5006) << "Test KMail D-Bus interface." << endl;
+  kDebug(5006) <<"Test KMail D-Bus interface.";
 
   KAboutData aboutData( "testKMailDBUS", 0,
    ki18n("Test for KMail D-Bus interface"), "0.0" );
@@ -28,12 +28,12 @@ int main(int argc,char **argv)
 
   if ( !composerDbusPath.isValid() )
   {
-    kDebug()<<"We can't connect to kmail\n";
+    kDebug()<<"We can't connect to kmail";
     exit( 1 );
   }
 
   QDBusObjectPath composerPath = composerDbusPath;
-  kDebug()<<"composerPath :"<<composerPath.path()<<endl;
+  kDebug()<<"composerPath :"<<composerPath.path();
   OrgKdeKmailMailcomposerInterface kmailComposerInterface( DBUS_KMAIL, composerPath.path(),  QDBusConnection::sessionBus());
 
   QByteArray data = "BEGIN:VCALENDAR\nEND:VCALENDAR";
@@ -41,7 +41,7 @@ int main(int argc,char **argv)
                              "publish","attachement;");
   kmailComposerInterface.send(2);
 
-  kDebug(5006) << "testDBus done." << endl;
+  kDebug(5006) <<"testDBus done.";
 
   return 0;
 }

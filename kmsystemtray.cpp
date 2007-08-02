@@ -68,7 +68,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mCount( 0 ),
     mNewMessagePopupId(-1)
 {
-  kDebug(5006) << "Initting systray" << endl;
+  kDebug(5006) <<"Initting systray";
 
   mLastUpdate = time( 0 );
   mUpdateTimer = new QTimer( this );
@@ -156,7 +156,7 @@ void KMSystemTray::setMode(int newMode)
 {
   if(newMode == mMode) return;
 
-  kDebug(5006) << "Setting systray mMode to " << newMode << endl;
+  kDebug(5006) <<"Setting systray mMode to" << newMode;
   mMode = newMode;
 
   switch ( mMode ) {
@@ -171,7 +171,7 @@ void KMSystemTray::setMode(int newMode)
       show();
     break;
   default:
-    kDebug(5006) << k_funcinfo << " Unknown systray mode " << mMode << endl;
+    kDebug(5006) << k_funcinfo <<" Unknown systray mode" << mMode;
   }
 }
 
@@ -299,7 +299,7 @@ void KMSystemTray::foldersChanged()
  */
 void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
 {
-  kDebug(5006) << "trigger: " << reason << endl;
+  kDebug(5006) <<"trigger:" << reason;
 
   // switch to kmail on left mouse button
   if( reason == QSystemTrayIcon::Trigger )
@@ -329,7 +329,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
     for(uint i=0; it != mFoldersWithUnread.end(); ++i)
     {
-      kDebug(5006) << "Adding folder" << endl;
+      kDebug(5006) <<"Adding folder";
       mPopupFolders.append( it.key() );
       QString item = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
       newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
@@ -339,7 +339,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagePopupId = contextMenu()->insertItem(i18n("New Messages In"),
                                                 newMessagesPopup, mNewMessagePopupId, 3);
 
-    kDebug(5006) << "Folders added" << endl;
+    kDebug(5006) <<"Folders added";
   }
 }
 
@@ -358,12 +358,12 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
     if((imap->account() != 0) &&
        (imap->account()->name() != 0) )
     {
-      kDebug(5006) << "IMAP folder, prepend label with type" << endl;
+      kDebug(5006) <<"IMAP folder, prepend label with type";
       rvalue = imap->account()->name() + "->" + rvalue;
     }
   }
 
-  kDebug(5006) << "Got label " << rvalue << endl;
+  kDebug(5006) <<"Got label" << rvalue;
 
   return rvalue;
 }
@@ -454,7 +454,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   if( !fldr ||
       fldr->folderType() == KMFolderTypeSearch )
   {
-    // kDebug(5006) << "Null or a search folder, can't mess with that" << endl;
+    // kDebug(5006) <<"Null or a search folder, can't mess with that";
     return;
   }
 
@@ -499,7 +499,7 @@ void KMSystemTray::updateNewMessages()
   {
     /** Add folder to our internal store, or update unread count if already mapped */
     mFoldersWithUnread.insert(fldr, unread);
-    //kDebug(5006) << "There are now " << mFoldersWithUnread.count() << " folders with unread" << endl;
+    //kDebug(5006) <<"There are now" << mFoldersWithUnread.count() <<" folders with unread";
   }
 
   /**
@@ -523,7 +523,7 @@ void KMSystemTray::updateNewMessages()
 
     if(unread == 0)
     {
-      kDebug(5006) << "Removing folder from internal store " << fldr->name() << endl;
+      kDebug(5006) <<"Removing folder from internal store" << fldr->name();
 
       /** Remove the folder from the internal store */
       mFoldersWithUnread.remove(fldr);

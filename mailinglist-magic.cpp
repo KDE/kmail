@@ -219,10 +219,10 @@ headerToAddress( const QString& header )
 
   while ( (start = header.indexOf( "<", start )) != -1 ) {
     if ( (end = header.indexOf( ">", ++start ) ) == -1 ) {
-      kDebug(5006)<<k_funcinfo<<"Serious mailing list header parsing error !"<<endl;
+      kDebug(5006)<<k_funcinfo<<"Serious mailing list header parsing error !";
       return addr;
     }
-    kDebug(5006)<<"Mailing list = "<<header.mid( start, end - start )<<endl;
+    kDebug(5006)<<"Mailing list ="<<header.mid( start, end - start );
     addr.append( header.mid( start, end - start ) );
   }
   return  addr;

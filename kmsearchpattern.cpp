@@ -812,7 +812,7 @@ void KMSearchPattern::purify() {
     --it;
     if ( (*it)->isEmpty() ) {
 #ifndef NDEBUG
-      kDebug(5006) << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
+      kDebug(5006) <<"KMSearchPattern::purify(): removing" << (*it)->asString();
 #endif
       erase( it );
       it = end();
@@ -825,7 +825,7 @@ void KMSearchPattern::readConfig( const KConfigGroup & config ) {
 
   mName = config.readEntry("name");
   if ( !config.hasKey("rules") ) {
-    kDebug(5006) << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
+    kDebug(5006) <<"KMSearchPattern::readConfig: found legacy config! Converting.";
     importLegacyConfig( config );
     return;
   }

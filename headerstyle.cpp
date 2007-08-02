@@ -512,7 +512,7 @@ namespace KMail {
       if ( addresses[0].photo().isIntern() )
       {
         // get photo data and convert to data: url
-        //kDebug( 5006 ) << "INTERNAL photo found" << endl;
+        //kDebug( 5006 ) <<"INTERNAL photo found";
         QImage photo = addresses[0].photo().data();
         if ( !photo.isNull() )
         {
@@ -530,7 +530,7 @@ namespace KMail {
       }
       else
       {
-        //kDebug( 5006 ) << "URL found" << endl;
+        //kDebug( 5006 ) <<"URL found";
         photoURL = addresses[0].photo().url();
         if ( photoURL.startsWith("/") )
           photoURL.prepend( "file:" );
@@ -538,7 +538,7 @@ namespace KMail {
     }
     else // TODO: find a usable one
     {
-      kDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
+      kDebug( 5006 ) <<"Multiple / No addressees matched email address; Count is" << addresses.count();
       userHTML = "&nbsp;";
     }
 
@@ -548,7 +548,7 @@ namespace KMail {
       if ( !faceheader.isEmpty() ) {
         QImage faceimage;
 
-        kDebug( 5006 ) << "Found Face: header" << endl;
+        kDebug( 5006 ) <<"Found Face: header";
 
         QByteArray facestring = faceheader.toUtf8();
         // Spec says header should be less than 998 bytes
@@ -565,13 +565,13 @@ namespace KMail {
               photoWidth = 48;
               photoHeight = 48;
             } else {
-              kDebug( 5006 ) << "Face: header image is" << faceimage.width() << "by" << faceimage.height() <<"not 48x48 Pixels" << endl;
+              kDebug( 5006 ) <<"Face: header image is" << faceimage.width() <<"by" << faceimage.height() <<"not 48x48 Pixels";
             }
           } else {
-            kDebug( 5006 ) << "Failed to load decoded png from Face: header" << endl;
+            kDebug( 5006 ) <<"Failed to load decoded png from Face: header";
           }
         } else {
-          kDebug( 5006 ) << "Face: header too long at " << facestring.length() << endl;
+          kDebug( 5006 ) <<"Face: header too long at" << facestring.length();
         }
       }
     }
@@ -593,7 +593,7 @@ namespace KMail {
 
     if( !photoURL.isEmpty() )
     {
-        //kDebug( 5006 ) << "Got a photo: " << photoURL << endl;
+        //kDebug( 5006 ) <<"Got a photo:" << photoURL;
       userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
           .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
       if ( presence.isEmpty() ) {
@@ -622,7 +622,7 @@ namespace KMail {
       presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );
-    kDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
+    kDebug( 5006 ) <<"final presence: '" << presence <<"'";
 #endif
 
 
@@ -766,7 +766,7 @@ namespace KMail {
     case Plain:  return plain();
     case Fancy:   return fancy();
     }
-    kFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
+    kFatal( 5006 ) <<"HeaderStyle::create(): Unknown header style ( type =="
                     << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }

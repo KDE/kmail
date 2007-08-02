@@ -44,7 +44,7 @@ namespace KMail {
   SieveJob::~SieveJob() {
     kill();
     delete mDec;
-    kDebug(5006) << "~SieveJob()" << endl;
+    kDebug(5006) <<"~SieveJob()";
   }
 
   void SieveJob::kill( KJob::KillVerbosity verbosity ) {
@@ -54,44 +54,41 @@ namespace KMail {
   void SieveJob::schedule( Command command ) {
     switch ( command ) {
     case Get:
-      kDebug(5006) << "SieveJob::schedule: get( " << mUrl.prettyUrl() << " )" << endl;
+      kDebug(5006) <<"SieveJob::schedule: get(" << mUrl.prettyUrl() <<" )";
       mJob = KIO::get( mUrl );
       connect( mJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
 	       SLOT(slotData(KIO::Job*,const QByteArray&)) );
       break;
     case Put:
-      kDebug(5006) << "SieveJob::schedule: put( " << mUrl.prettyUrl() << " )" << endl;
+      kDebug(5006) <<"SieveJob::schedule: put(" << mUrl.prettyUrl() <<" )";
       mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/ );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
 	       SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
       break;
     case Activate:
-      kDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.prettyUrl() << ", 0700 )"
-		<< endl;
+      kDebug(5006) <<"SieveJob::schedule: chmod(" << mUrl.prettyUrl() <<", 0700 )";
       mJob = KIO::chmod( mUrl, 0700 );
       break;
     case Deactivate:
-      kDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.prettyUrl() << ", 0600 )"
-		<< endl;
+      kDebug(5006) <<"SieveJob::schedule: chmod(" << mUrl.prettyUrl() <<", 0600 )";
       mJob = KIO::chmod( mUrl, 0600 );
       break;
     case SearchActive:
-      kDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyUrl() << " )" << endl;
+      kDebug(5006) <<"SieveJob::schedule: listDir(" << mUrl.prettyUrl() <<" )";
       {
 	KUrl url = mUrl;
 	QString query = url.query(); //save query part, because KUrl::cd() erases it
 	if ( !url.fileName().isEmpty() )
 		url.cd("..");
 	url.setQuery( query );
-	kDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.prettyUrl()
-		  << endl;
+	kDebug(5006) <<"SieveJob::schedule: listDir's real URL:" << url.prettyUrl();
 	mJob = KIO::listDir( url );
 	connect( mJob, SIGNAL(entries(KIO::Job*,const KIO::UDSEntryList&)),
 		 SLOT(slotEntries(KIO::Job*,const KIO::UDSEntryList&)) );
 	break;
       }
     case List:
-      kDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyUrl() << " )" << endl;
+      kDebug(5006) <<"SieveJob::schedule: listDir(" << mUrl.prettyUrl() <<" )";
       {
 	mJob = KIO::listDir( mUrl );
 	connect( mJob, SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList & ) ),
@@ -99,7 +96,7 @@ namespace KMail {
 	break;
       }
     case Delete:
-      kDebug(5006) << "SieveJob::schedule: delete( " << mUrl.prettyUrl() << " )" << endl;
+      kDebug(5006) <<"SieveJob::schedule: delete(" << mUrl.prettyUrl() <<" )";
       mJob = KIO::del( mUrl );
       break;
     default:
@@ -175,8 +172,7 @@ namespace KMail {
 
     if ( mSieveCapabilities.empty() ) {
       mSieveCapabilities = static_cast<KIO::Job*>(job)->queryMetaData( "sieveExtensions" ).split(' ', QString::SkipEmptyParts );
-      kDebug(5006) << "Received Sieve extensions supported:" << endl
-		    << mSieveCapabilities.join("\n") << endl;
+      kDebug(5006) <<"Received Sieve extensions supported:\n" << mSieveCapabilities.join("\n");
     }
 
     // check for errors:

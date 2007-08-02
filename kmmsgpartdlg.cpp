@@ -257,7 +257,7 @@ KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
   for ( int i = 0 ; i < mI18nizedEncodings.count() ; ++i )
     if ( s == mI18nizedEncodings.at(i) )
       return encodingTypes[i].encoding;
-  kFatal(5006) << "KMMsgPartDialog::encoding(): Unknown encoding encountered!"
+  kFatal(5006) <<"KMMsgPartDialog::encoding(): Unknown encoding encountered!"
                 << endl;
   return None; // keep compiler happy
 }
@@ -274,7 +274,7 @@ void KMMsgPartDialog::setEncoding( Encoding encoding ) {
       mEncoding->insertItem( 0, text );
       mEncoding->setCurrentIndex( 0 );
     }
-  kFatal(5006) << "KMMsgPartDialog::setEncoding(): "
+  kFatal(5006) <<"KMMsgPartDialog::setEncoding():"
     "Unknown encoding encountered!" << endl;
 }
 

@@ -112,7 +112,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
     }
   } else if ( KUrl::List::canDecode( md ) ) {
     KUrl::List urls = KUrl::List::fromMimeData( md );
-    //kDebug(5006) << "urlList" << endl;
+    //kDebug(5006) <<"urlList";
     KUrl::List::Iterator it = urls.begin();
     KABC::VCardConverter converter;
     KABC::Addressee::List list;

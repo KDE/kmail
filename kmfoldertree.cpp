@@ -244,7 +244,7 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
 
 void KMFolderTreeItem::slotIconsChanged()
 {
-  kDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo;
   // this is prone to change, so better check
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
@@ -547,7 +547,7 @@ void KMFolderTree::reload(bool openFolders)
 {
   if ( mReloading ) {
     // no parallel reloads are allowed
-    kDebug(5006) << "KMFolderTree::reload - already reloading" << endl;
+    kDebug(5006) <<"KMFolderTree::reload - already reloading";
     return;
   }
   mReloading = true;
@@ -1377,7 +1377,7 @@ void KMFolderTree::cleanupConfigFile()
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
       config->deleteGroup(*grpIt, KConfig::NLS);
-      kDebug(5006) << "Deleting information about folder " << name << endl;
+      kDebug(5006) <<"Deleting information about folder" << name;
     }
   }
 }
@@ -1552,7 +1552,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
             emit folderDropCopy( fti->folder() );
         } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
           if ( !MailList::canDecode( e->mimeData() ) ) {
-            kWarning() << k_funcinfo << "Could not decode drag data!" << endl;
+            kWarning() << k_funcinfo <<"Could not decode drag data!";
           } else {
             MailList list = MailList::fromMimeData( e->mimeData() );
             QList<quint32> serNums = MessageCopyHelper::serNumListFromMailList( list );
@@ -1660,10 +1660,10 @@ void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 {
-//  kDebug(5006) << "KMFolderTree::slotUpdateCountsDelayed()" << endl;
+//  kDebug(5006) <<"KMFolderTree::slotUpdateCountsDelayed()";
   if ( !mFolderToUpdateCount.contains( folder->idString() ) )
   {
-//    kDebug( 5006 )<< "adding " << folder->idString() << " to updateCountList " << endl;
+//    kDebug( 5006 )<<"adding" << folder->idString() <<" to updateCountList";
     mFolderToUpdateCount.insert( folder->idString(),folder );
   }
   if ( !mUpdateCountTimer->isActive() )
@@ -1673,7 +1673,7 @@ void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 
 void KMFolderTree::slotUpdateCountTimeout()
 {
-//  kDebug(5006) << "KMFolderTree::slotUpdateCountTimeout()" << endl;
+//  kDebug(5006) <<"KMFolderTree::slotUpdateCountTimeout()";
 
   QMap<QString,KMFolder*>::iterator it;
   for ( it= mFolderToUpdateCount.begin();
@@ -1689,7 +1689,7 @@ void KMFolderTree::slotUpdateCountTimeout()
 
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
- // kDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
+ // kDebug(5006) <<"KMFolderTree::slotUpdateCounts()";
   Q3ListViewItem * current;
   if (folder)
     current = indexOfFolder(folder);
@@ -1803,7 +1803,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
     // toggle KMenu
     mSizeAction->setChecked( isSizeActive() );
 
-  } else kDebug(5006) << "unknown column:" << column << endl;
+  } else kDebug(5006) <<"unknown column:" << column;
 
   // toggles the switches of the mainwin
   emit columnsChanged();
@@ -2045,7 +2045,7 @@ void KMFolderTree::copySelectedToFolder( QAction* act )
 //-----------------------------------------------------------------------------
 void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolder* destination, bool move )
 {
-  kDebug(5006) << k_funcinfo << "source: " << sources << " destination: " << destination << " move: " << move << endl;
+  kDebug(5006) << k_funcinfo <<"source:" << sources <<" destination:" << destination <<" move:" << move;
 
   // Disable drag during copy operation since it prevents from many crashes
   setDragEnabled( false );
@@ -2142,7 +2142,7 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
   for ( QList<QPointer<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
     KMFolder* source = *it;
     if ( move ) {
-      kDebug(5006) << "move folder " << (source ? source->label(): "Unknown") << " to "
+      kDebug(5006) <<"move folder" << (source ? source->label():"Unknown") <<" to"
         << ( destination ? destination->label() : "Local Folders" ) << endl;
       kmkernel->folderMgr()->moveFolder( source, parent );
     } else {

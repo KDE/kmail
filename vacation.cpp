@@ -169,7 +169,7 @@ namespace {
       if ( const char * str = expected.string )
         if ( string.lower() != QString::fromUtf8( str ).lower() )
           found = false;
-      kDebug(5006) << ( found ? "found:     " : "not found: " )
+      kDebug(5006) << ( found ?"found:" :"not found:" )
                    << mState << " -> "
                    << ( found ? expected.if_found : expected.if_not_found ) << endl;
       mState = found ? expected.if_found : expected.if_not_found ;
@@ -181,29 +181,29 @@ namespace {
         doProcess( method, string );
       }
     }
-    void commandStart( const QString & identifier ) { kDebug(5006) << k_funcinfo << endl; process( CommandStart, identifier ); }
-    void commandEnd() { kDebug(5006) << k_funcinfo << endl; process( CommandEnd ); }
-    void testStart( const QString & identifier ) { kDebug(5006) << k_funcinfo << endl; process( TestStart, identifier ); }
-    void testEnd() { kDebug(5006) << k_funcinfo << endl; process( TestEnd ); }
-    void testListStart() { kDebug(5006) << k_funcinfo << endl; process( TestListStart ); }
-    void testListEnd() { kDebug(5006) << k_funcinfo << endl; process( TestListEnd ); }
-    void blockStart() { kDebug(5006) << k_funcinfo << endl; process( BlockStart ); ++mNestingDepth; }
-    void blockEnd() { kDebug(5006) << k_funcinfo << endl; --mNestingDepth; process( BlockEnd ); }
-    void hashComment( const QString & ) { kDebug(5006) << k_funcinfo << endl; }
-    void bracketComment( const QString & ) { kDebug(5006) << k_funcinfo << endl; }
-    void lineFeed() { kDebug(5006) << k_funcinfo << endl; }
+    void commandStart( const QString & identifier ) { kDebug(5006) << k_funcinfo; process( CommandStart, identifier ); }
+    void commandEnd() { kDebug(5006) << k_funcinfo; process( CommandEnd ); }
+    void testStart( const QString & identifier ) { kDebug(5006) << k_funcinfo; process( TestStart, identifier ); }
+    void testEnd() { kDebug(5006) << k_funcinfo; process( TestEnd ); }
+    void testListStart() { kDebug(5006) << k_funcinfo; process( TestListStart ); }
+    void testListEnd() { kDebug(5006) << k_funcinfo; process( TestListEnd ); }
+    void blockStart() { kDebug(5006) << k_funcinfo; process( BlockStart ); ++mNestingDepth; }
+    void blockEnd() { kDebug(5006) << k_funcinfo; --mNestingDepth; process( BlockEnd ); }
+    void hashComment( const QString & ) { kDebug(5006) << k_funcinfo; }
+    void bracketComment( const QString & ) { kDebug(5006) << k_funcinfo; }
+    void lineFeed() { kDebug(5006) << k_funcinfo; }
     void error( const KSieve::Error & ) {
-      kDebug(5006) << k_funcinfo << endl;
+      kDebug(5006) << k_funcinfo;
       mState = 0;
     }
-    void finished() { kDebug(5006) << k_funcinfo << endl; }
+    void finished() { kDebug(5006) << k_funcinfo; }
 
-    void taggedArgument( const QString & tag ) { kDebug(5006) << k_funcinfo << endl; process( TaggedArgument, tag ); }
-    void stringArgument( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo << endl; process( StringArgument, string ); }
-    void numberArgument( unsigned long number, char ) { kDebug(5006) << k_funcinfo << endl; process( NumberArgument, QString::number( number ) ); }
-    void stringListArgumentStart() { kDebug(5006) << k_funcinfo << endl; process( StringListArgumentStart ); }
-    void stringListEntry( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo << endl; process( StringListEntry, string ); }
-    void stringListArgumentEnd() { kDebug(5006) << k_funcinfo << endl; process( StringListArgumentEnd ); }
+    void taggedArgument( const QString & tag ) { kDebug(5006) << k_funcinfo; process( TaggedArgument, tag ); }
+    void stringArgument( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo; process( StringArgument, string ); }
+    void numberArgument( unsigned long number, char ) { kDebug(5006) << k_funcinfo; process( NumberArgument, QString::number( number ) ); }
+    void stringListArgumentStart() { kDebug(5006) << k_funcinfo; process( StringListArgumentStart ); }
+    void stringListEntry( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo; process( StringListEntry, string ); }
+    void stringListArgumentEnd() { kDebug(5006) << k_funcinfo; process( StringListArgumentEnd ); }
   };
 
   typedef GenericInformationExtractor GIE;
@@ -323,7 +323,7 @@ namespace {
       : KSieve::ScriptBuilder(),
 	mContext( None ), mNotificationInterval( 0 )
     {
-      kDebug(5006) << "VacationDataExtractor instantiated" << endl;
+      kDebug(5006) <<"VacationDataExtractor instantiated";
     }
     virtual ~VacationDataExtractor() {}
 
@@ -333,7 +333,7 @@ namespace {
 
   private:
     void commandStart( const QString & identifier ) {
-      kDebug( 5006 ) << "VacationDataExtractor::commandStart( \"" << identifier << "\" )" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::commandStart( \"" << identifier <<"\" )";
       if ( identifier != "vacation" )
 	return;
       reset();
@@ -341,7 +341,7 @@ namespace {
     }
 
     void commandEnd() {
-      kDebug( 5006 ) << "VacationDataExtractor::commandEnd()" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::commandEnd()";
       mContext = None;
     }
 
@@ -355,14 +355,14 @@ namespace {
     void bracketComment( const QString & ) {}
     void lineFeed() {}
     void error( const KSieve::Error & e ) {
-      kDebug( 5006 ) << "VacationDataExtractor::error() ### "
+      kDebug( 5006 ) <<"VacationDataExtractor::error() ###"
 		      << e.asString() << " @ " << e.line() << "," << e.column()
 		      << endl;
     }
     void finished() {}
 
     void taggedArgument( const QString & tag ) {
-      kDebug( 5006 ) << "VacationDataExtractor::taggedArgument( \"" << tag << "\" )" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::taggedArgument( \"" << tag <<"\" )";
       if ( mContext != VacationCommand )
 	return;
       if ( tag == "days" )
@@ -372,7 +372,7 @@ namespace {
     }
 
     void stringArgument( const QString & string, bool, const QString & ) {
-      kDebug( 5006 ) << "VacationDataExtractor::stringArgument( \"" << string << "\" )" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::stringArgument( \"" << string <<"\" )";
       if ( mContext == Addresses ) {
 	mAliases.push_back( string );
 	mContext = VacationCommand;
@@ -383,7 +383,7 @@ namespace {
     }
 
     void numberArgument( unsigned long number, char ) {
-      kDebug( 5006 ) << "VacationDataExtractor::numberArgument( \"" << number << "\" )" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::numberArgument( \"" << number <<"\" )";
       if ( mContext != Days )
 	return;
       if ( number > INT_MAX )
@@ -395,13 +395,13 @@ namespace {
 
     void stringListArgumentStart() {}
     void stringListEntry( const QString & string, bool, const QString & ) {
-      kDebug( 5006 ) << "VacationDataExtractor::stringListEntry( \"" << string << "\" )" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::stringListEntry( \"" << string <<"\" )";
       if ( mContext != Addresses )
 	return;
       mAliases.push_back( string );
     }
     void stringListArgumentEnd() {
-      kDebug( 5006 ) << "VacationDataExtractor::stringListArgumentEnd()" << endl;
+      kDebug( 5006 ) <<"VacationDataExtractor::stringListArgumentEnd()";
       if ( mContext != Addresses )
 	return;
       mContext = VacationCommand;
@@ -414,7 +414,7 @@ namespace {
     QStringList mAliases;
 
     void reset() {
-      kDebug(5006) << "VacationDataExtractor::reset()" << endl;
+      kDebug(5006) <<"VacationDataExtractor::reset()";
       mContext = None;
       mNotificationInterval = 0;
       mAliases.clear();
@@ -431,7 +431,7 @@ namespace KMail {
   {
     setObjectName( name );
     mUrl = findURL();
-    kDebug(5006) << "Vacation: found url \"" << mUrl.prettyUrl() << "\"" << endl;
+    kDebug(5006) <<"Vacation: found url \"" << mUrl.prettyUrl() <<"\"";
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mSieveJob = SieveJob::get( mUrl );
@@ -442,7 +442,7 @@ namespace KMail {
   Vacation::~Vacation() {
     if ( mSieveJob ) mSieveJob->kill(); mSieveJob = 0;
     delete mDialog; mDialog = 0;
-    kDebug(5006) << "~Vacation()" << endl;
+    kDebug(5006) <<"~Vacation()";
   }
 
   static inline QString dotstuff( QString s ) { // krazy:exclude=passbyvalue
@@ -540,7 +540,7 @@ namespace KMail {
     // slave somehow omits the last \n, which results in a lone \r at
     // the end, leading to a parse error.
     const QByteArray scriptUTF8 = script.trimmed().toUtf8();
-    kDebug(5006) << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
+    kDebug(5006) <<"scriptUtf8 = \"" + scriptUTF8 +"\"";
     KSieve::Parser parser( scriptUTF8.begin(),
 			   scriptUTF8.begin() + scriptUTF8.length() );
     VacationDataExtractor vdx;
@@ -597,7 +597,7 @@ namespace KMail {
 
   void Vacation::slotGetResult( SieveJob * job, bool success,
 				const QString & script, bool active ) {
-    kDebug(5006) << "Vacation::slotGetResult( ??, " << success
+    kDebug(5006) <<"Vacation::slotGetResult( ??," << success
 	      << ", ?, " << active << " )" << endl
 	      << "script:" << endl
 	      << script << endl;
@@ -659,7 +659,7 @@ namespace KMail {
   }
 
   void Vacation::slotDialogOk() {
-    kDebug(5006) << "Vacation::slotDialogOk()" << endl;
+    kDebug(5006) <<"Vacation::slotDialogOk()";
     // compose a new script:
     const QString script = composeScript( mDialog->messageText(),
 				    mDialog->notificationInterval(),
@@ -668,7 +668,7 @@ namespace KMail {
                                     mDialog->domainName() );
     const bool active = mDialog->activateVacation();
 
-    kDebug(5006) << "script:" << endl << script << endl;
+    kDebug(5006) <<"script:" << endl << script;
 
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );
@@ -683,7 +683,7 @@ namespace KMail {
   }
 
   void Vacation::slotDialogCancel() {
-    kDebug(5006) << "Vacation::slotDialogCancel()" << endl;
+    kDebug(5006) <<"Vacation::slotDialogCancel()";
     mDialog->delayedDestruct();
     mDialog = 0;
     emit result( false );
@@ -705,7 +705,7 @@ namespace KMail {
 				: i18n("Sieve script installed successfully on the server.\n"
 				       "Out of Office reply has been deactivated.") );
 
-    kDebug(5006) << "Vacation::handlePutResult( ???, " << success << ", ? )"
+    kDebug(5006) <<"Vacation::handlePutResult( ???," << success <<", ? )"
 		  << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );

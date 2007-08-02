@@ -62,7 +62,7 @@ CopyFolderJob::CopyFolderJob( FolderStorage* const storage, KMFolderDir* const n
 
 CopyFolderJob::~CopyFolderJob()
 {
-  kDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo;
   if ( mNewFolder )
     mNewFolder->setMoveInProgress( false );
   if ( mStorage )
@@ -110,7 +110,7 @@ void CopyFolderJob::copyMessagesToTargetDir()
 
 void CopyFolderJob::slotCopyCompleted( KMCommand* command )
 {
-  kDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
+  kDebug(5006) << k_funcinfo << (command?command->result():0);
   disconnect( command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotCopyCompleted( KMCommand * ) ) );
 
@@ -135,7 +135,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
     mNextChildFolder->close( "copyfolder" ); // refcount
   // previous sibling failed
   if ( !success ) {
-    kDebug(5006) << "Failed to copy one subfolder, let's not continue:  " << mNewFolder->prettyUrl() << endl;
+    kDebug(5006) <<"Failed to copy one subfolder, let's not continue:" << mNewFolder->prettyUrl();
     rollback();
     emit folderCopyComplete( false );
     deleteLater();
@@ -166,7 +166,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
 
   KMFolderDir * const dir = mNewFolder->createChildFolder();
   if ( !dir ) {
-    kDebug(5006) << "Failed to create subfolders of:  " << mNewFolder->prettyUrl() << endl;
+    kDebug(5006) <<"Failed to create subfolders of:" << mNewFolder->prettyUrl();
     emit folderCopyComplete( false );
     deleteLater();
     return;
@@ -233,7 +233,7 @@ bool CopyFolderJob::createTargetDir()
   }
 
   if ( !success ) {
-      kWarning(5006) << k_funcinfo << "could not create folder" << endl;
+      kWarning(5006) << k_funcinfo <<"could not create folder";
       emit folderCopyComplete( false );
       deleteLater();
       return false;
@@ -246,7 +246,7 @@ bool CopyFolderJob::createTargetDir()
   // FIXME we should probably copy over most if not all settings
   mNewFolder->storage()->setContentsType( mStorage->contentsType(), true /*quiet*/ );
   mNewFolder->storage()->writeConfig();
-  kDebug(5006)<< "CopyJob::createTargetDir - " << mStorage->folder()->idString()
+  kDebug(5006)<<"CopyJob::createTargetDir -" << mStorage->folder()->idString()
     << " |=> " << mNewFolder->idString() << endl;
   return !waitForFolderCreation;
 }
@@ -272,7 +272,7 @@ void CopyFolderJob::rollback()
     } else if ( mNewFolder->folderType() == KMFolderTypeSearch )
     {
       // invalid
-      kWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
+      kWarning(5006) << k_funcinfo <<"cannot remove a search folder";
     } else {
       kmkernel->folderMgr()->remove( mNewFolder );
     }
@@ -286,7 +286,7 @@ void CopyFolderJob::folderCreationDone(const QString & name, bool success)
 {
   if ( mStorage->folder()->name() != name )
     return; // not our business
-  kDebug(5006) << k_funcinfo << success << endl;
+  kDebug(5006) << k_funcinfo << success;
 
   if ( !success ) {
     rollback();

@@ -199,7 +199,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int idx )
 {
-    //kDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
+    //kDebug(5006) <<"***setEncryptionState1(" << status <<" )";
     mDirty = true;
     if (storage())
         storage()->headerOfMsgChanged(this, idx);
@@ -207,7 +207,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int i
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
-    //kDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
+    //kDebug(5006) <<"***setEncryptionState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
 
     if( status.toLatin1() == (char)KMMsgEncryptionStateUnknown )
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -224,7 +224,7 @@ void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 
 void KMMsgBase::setSignatureState( const KMMsgSignatureState /*status*/, int idx )
 {
-    //kDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
+    //kDebug(5006) <<"***setSignatureState1(" << status <<" )";
     mDirty = true;
     if (storage())
          storage()->headerOfMsgChanged(this, idx);
@@ -238,7 +238,7 @@ void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
-    //kDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
+    //kDebug(5006) <<"***setSignatureState2(" << (status.isNull() ? '?' : status.toLatin1()) <<" )";
 
     if( status.toLatin1() == (char)KMMsgSignatureStateUnknown )
         setSignatureState( KMMsgSignatureStateUnknown, idx );
@@ -475,7 +475,7 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
 
       // valid encoding: decode and throw away separating LWSP
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
-      kFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
+      kFatal( !c, 5006 ) <<"No \"" << encoding <<"\" codec!?";
 
       QByteArray in = QByteArray::fromRawData( enc_start, pos - enc_start );
       const QByteArray enc = c->decode( in );
@@ -510,7 +510,7 @@ static const QByteArray especials = "()<>@,;:\"/[]?.= \033";
 QByteArray KMMsgBase::encodeRFC2047Quoted( const QByteArray & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
-  kFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
+  kFatal( !codec, 5006 ) <<"No \"" << codecName <<"\" found!?";
   QByteArray in = QByteArray::fromRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
   in.clear();
@@ -795,7 +795,7 @@ QByteArray KMMsgBase::autoDetectCharset(const QByteArray &_encoding, const QStri
        {
          const QTextCodec *codec = KMMsgBase::codecForName(encoding);
          if (!codec) {
-           kDebug(5006) << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding << "]" << endl;
+           kDebug(5006) <<"Auto-Charset: Something is wrong and I can not get a codec. [" << encoding <<"]";
          } else {
            if (codec->canEncode(text))
               return encoding;
@@ -852,7 +852,7 @@ namespace {
   template < typename T > void copy_from_stream( T & x ) {
     if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
       g_chunk_offset = g_chunk_length;
-      kDebug( 5006 ) << "This should never happen.. "
+      kDebug( 5006 ) <<"This should never happen.."
 		      << __FILE__ << ":" << __LINE__ << endl;
       x = 0;
     } else {
@@ -903,7 +903,7 @@ retry:
     }
     type = (MsgPartType) tmp;
     if(g_chunk_offset + l > mIndexLength) {
-	kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
+	kDebug(5006) <<"This should never happen.." << __FILE__ <<":" << __LINE__;
         if(using_mmap) {
             g_chunk_length = 0;
             g_chunk = 0;
@@ -981,7 +981,7 @@ retry:
     type = (MsgPartType) tmp;
 
     if (g_chunk_offset + l > mIndexLength) {
-      kDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
+      kDebug(5006) <<"This should never happen.." << __FILE__ <<":" << __LINE__;
       if(using_mmap) {
         g_chunk_length = 0;
         g_chunk = 0;
@@ -1198,7 +1198,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
                       .arg( prefixRegExps.join(")|(?:") );
   QRegExp rx( bigRegExp, Qt::CaseInsensitive );
   if ( !rx.isValid() ) {
-    kWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
+    kWarning(5006) <<"KMMessage::replacePrefixes(): bigRegExp = \""
                     << bigRegExp << "\"\n"
                     << "prefix regexp is invalid!" << endl;
     // try good ole Re/Fwd:

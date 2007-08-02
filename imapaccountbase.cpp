@@ -486,11 +486,11 @@ void ImapAccountBase::slotGetUserRightsResult( KJob *_job )
       // when the imap server doesn't support ACLs
       mACLSupport = false;
     } else {
-      kWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
+      kWarning(5006) <<"slotGetUserRightsResult:" << job->errorString();
     }
   } else {
 #ifndef NDEBUG
-    //kDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
+    //kDebug(5006) <<"User Rights:" << ACLJobs::permissionsToString( job->permissions() );
 #endif
     // Store the permissions
     if ( folder->folderType() == KMFolderTypeImap ) {
@@ -667,7 +667,7 @@ void ImapAccountBase::slotSchedulerSlaveConnected( KIO::Slave *aSlave )
 void ImapAccountBase::slotCapabilitiesResult( KJob*, const QString& result, const QString & )
 {
   mCapabilities = result.toLower().split( ' ', QString::SkipEmptyParts );
-  kDebug(5006) << "capabilities:" << mCapabilities << endl;
+  kDebug(5006) <<"capabilities:" << mCapabilities;
 }
 
 //-----------------------------------------------------------------------------
@@ -676,7 +676,7 @@ void ImapAccountBase::getNamespaces()
   disconnect( this, SIGNAL( connectionResult(int, const QString&) ),
               this, SLOT( getNamespaces() ) );
   if ( makeConnection() != Connected || !mSlave ) {
-    kDebug(5006) << "getNamespaces - wait for connection" << endl;
+    kDebug(5006) <<"getNamespaces - wait for connection";
     if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
       // when the connection is established slotSchedulerSlaveConnected notifies us
     } else {
@@ -734,14 +734,14 @@ void ImapAccountBase::slotNamespaceResult( KJob *job, const QString &str, const 
   }
   removeJob( it );
 
-  kDebug(5006) << "namespaces fetched" << endl;
+  kDebug(5006) <<"namespaces fetched";
   emit namespacesFetched( map );
 }
 
 //-----------------------------------------------------------------------------
 void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap &map )
 {
-  kDebug(5006) << "slotSaveNamespaces " << name() << endl;
+  kDebug(5006) <<"slotSaveNamespaces" << name();
   // extract the needed information
   mNamespaces.clear();
   mNamespaceToDelimiter.clear();
@@ -782,7 +782,7 @@ void ImapAccountBase::migratePrefix()
       if ( (*it).startsWith( mOldPrefix ) ) {
         // should be ok
         done = true;
-        kDebug(5006) << "migratePrefix - no migration needed" << endl;
+        kDebug(5006) <<"migratePrefix - no migration needed";
         break;
       }
     }
@@ -800,7 +800,7 @@ void ImapAccountBase::migratePrefix()
           mNamespaceToDelimiter.remove( QString() );
           mNamespaceToDelimiter[mOldPrefix] = delim;
         }
-        kDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
+        kDebug(5006) <<"migratePrefix - replaced empty with" << mOldPrefix;
         msg += i18n("The configuration was automatically migrated but you should check "
                     "your account configuration.");
       } else if ( list.count() == 1 ) {
@@ -814,18 +814,18 @@ void ImapAccountBase::migratePrefix()
           mNamespaceToDelimiter.remove( old );
           mNamespaceToDelimiter[mOldPrefix] = delim;
         }
-        kDebug(5006) << "migratePrefix - replaced single with " << mOldPrefix << endl;
+        kDebug(5006) <<"migratePrefix - replaced single with" << mOldPrefix;
         msg += i18n("The configuration was automatically migrated but you should check "
                     "your account configuration.");
       } else {
-        kDebug(5006) << "migratePrefix - migration failed" << endl;
+        kDebug(5006) <<"migratePrefix - migration failed";
         msg += i18n("It was not possible to migrate your configuration automatically "
                     "so please check your account configuration.");
       }
       KMessageBox::information( kmkernel->getKMMainWidget(), msg );
     }
   } else {
-    kDebug(5006) << "migratePrefix - no migration needed" << endl;
+    kDebug(5006) <<"migratePrefix - no migration needed";
   }
   mOldPrefix.clear();
 }
@@ -861,7 +861,7 @@ QString ImapAccountBase::namespaceForFolder( FolderStorage* storage )
 //-----------------------------------------------------------------------------
 QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
 {
-  kDebug(5006) << "delimiterForNamespace " << prefix << endl;
+  kDebug(5006) <<"delimiterForNamespace" << prefix;
   // try to match exactly
   if ( mNamespaceToDelimiter.contains( prefix ) ) {
     return mNamespaceToDelimiter[prefix];
@@ -884,7 +884,7 @@ QString ImapAccountBase::delimiterForNamespace( const QString &prefix )
     return mNamespaceToDelimiter[QString()];
   }
   // well, we tried
-  kDebug(5006) << "delimiterForNamespace - not found" << endl;
+  kDebug(5006) <<"delimiterForNamespace - not found";
   return QString();
 }
 
@@ -1025,7 +1025,7 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
     mErrorDialogIsActive = false;
   } else {
     if ( mErrorDialogIsActive ) {
-      kDebug(5006) << "suppressing error:" << errorMsg << endl;
+      kDebug(5006) <<"suppressing error:" << errorMsg;
     }
   }
   if ( job && !jobsKilled ) {
@@ -1039,7 +1039,7 @@ void ImapAccountBase::cancelMailCheck()
 {
   QMap<KJob*, jobData>::Iterator it = mapJobData.begin();
   while ( it != mapJobData.end() ) {
-    kDebug(5006) << "cancelMailCheck: job is cancellable: " << (*it).cancellable << endl;
+    kDebug(5006) <<"cancelMailCheck: job is cancellable:" << (*it).cancellable;
     if ( (*it).cancellable ) {
       it.key()->kill();
       QMap<KJob*, jobData>::Iterator rmit = it;
@@ -1127,7 +1127,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
 
   if ( !as ) {
-    kWarning(5006) << k_funcinfo << " - found no attachment strategy!" << endl;
+    kWarning(5006) << k_funcinfo <<" - found no attachment strategy!";
     return;
   }
 
@@ -1154,7 +1154,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   if ( (mBodyPartList.count() * 0.5) < partsToLoad ) {
     // more than 50% of the parts have to be loaded anyway so it is faster
     // to load the message completely
-    kDebug(5006) << "Falling back to normal mode" << endl;
+    kDebug(5006) <<"Falling back to normal mode";
     FolderJob *job =
       msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "TEXT" );
     job->start();
@@ -1162,16 +1162,16 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
   for ( it = parts.begin(); it != parts.end(); ++it ) {
     KMMessagePart *part = (*it);
-    kDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier()
+    kDebug(5006) <<"ImapAccountBase::handleBodyStructure - load" << part->partSpecifier()
                  << " (" << part->originalContentTypeStr() << ")" << endl;
     if ( part->loadHeaders() ) {
-      kDebug(5006) << "load HEADER" << endl;
+      kDebug(5006) <<"load HEADER";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier()+".MIME" );
       job->start();
     }
     if ( part->loadPart() ) {
-      kDebug(5006) << "load Part" << endl;
+      kDebug(5006) <<"load Part";
       FolderJob *job =
         msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, part->partSpecifier() );
       job->start();
@@ -1189,7 +1189,7 @@ void ImapAccountBase::constructParts( QDataStream &stream, int count, KMMessageP
     KMMessagePart* part = new KMMessagePart( stream );
     part->setParent( parentKMPart );
     mBodyPartList.append( part );
-    kDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier()
+    kDebug(5006) <<"ImapAccountBase::constructParts - created id" << part->partSpecifier()
                  << " of type " << part->originalContentTypeStr() << endl;
     DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
 
@@ -1235,7 +1235,7 @@ void ImapAccountBase::setImapStatus( KMFolder *folder, const QString &path,
                                      const QByteArray &flags )
 {
   // set the status on the server, the uids are integrated in the path
-  kDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
+  kDebug(5006) <<"setImapStatus path=" << path <<" to:" << flags;
   KUrl url = getUrl();
   url.setPath( path );
 

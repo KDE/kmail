@@ -223,12 +223,12 @@ void SubscriptionDialogBase::slotLoadFolders()
   // we need a connection
   if ( ai->makeConnection() == ImapAccountBase::Error )
   {
-    kWarning(5006) << "SubscriptionDialog - got no connection" << endl;
+    kWarning(5006) <<"SubscriptionDialog - got no connection";
     return;
   } else if ( ai->makeConnection() == ImapAccountBase::Connecting )
   {
     // We'll wait for the connectionResult signal from the account.
-    kDebug(5006) << "SubscriptionDialog - waiting for connection" << endl;
+    kDebug(5006) <<"SubscriptionDialog - waiting for connection";
     connect( ai, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
@@ -279,7 +279,7 @@ void SubscriptionDialogBase::processNext()
     completeListing = false;
   }
 
-//  kDebug(5006) << "process " << mCurrentNamespace << ",subscribed=" << mSubscribed << endl;
+//  kDebug(5006) <<"process" << mCurrentNamespace <<",subscribed=" << mSubscribed;
   ListJob* job = new ListJob( ai, type, 0, ai->addPathToNamespace( mCurrentNamespace ), completeListing );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -358,7 +358,7 @@ void SubscriptionDialogBase::show()
   {
     if( !account->onlySubscribedFolders() )
     {
-      kDebug(5006) << "Not subscribed!!!" << endl;
+      kDebug(5006) <<"Not subscribed!!!";
       int result = KMessageBox::questionYesNoCancel( this,
               i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?",
                 account->name() ),

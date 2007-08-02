@@ -142,7 +142,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
     for ( ; it2 != msgList.end(); ++it2 ) {
        KMMessage *msg = *it2;
        if ( msg->transferInProgress() ) {
-          kDebug(5006) << "KMAcctImap::killAllJobs - resetting mail" << endl;
+          kDebug(5006) <<"KMAcctImap::killAllJobs - resetting mail";
           msg->setTransferInProgress( false );
        }
     }
@@ -261,7 +261,7 @@ void KMAcctImap::cancelMailCheck()
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  kDebug(5006) << "processNewMail " << mCheckingSingleFolder << ",status="<<makeConnection()<<endl;
+  kDebug(5006) <<"processNewMail" << mCheckingSingleFolder <<",status="<<makeConnection();
   if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
        makeConnection() == ImapAccountBase::Error ) {
     // checks for mCountRemainChecks
@@ -491,7 +491,7 @@ void KMAcctImap::slotUpdateFolderList()
 {
   if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() )
   {
-    kWarning(5006) << "KMAcctImap::slotUpdateFolderList return" << endl;
+    kWarning(5006) <<"KMAcctImap::slotUpdateFolderList return";
     return;
   }
   QStringList strList;
@@ -550,7 +550,7 @@ ImapAccountBase::ConnectionState KMAcctImap::makeConnection()
 void KMAcctImap::slotResetConnectionError()
 {
   mSlaveConnectionError = false;
-  kDebug(5006) << k_funcinfo << endl;
+  kDebug(5006) << k_funcinfo;
 }
 
 void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )

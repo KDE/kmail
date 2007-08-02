@@ -122,7 +122,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
-    kDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
+    kDebug(5006) <<"KMFilterAction::sendMDN(): sending failed.";
     //delete mdn;
   }
 
@@ -453,7 +453,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       KTemporaryFile *tf = new KTemporaryFile();
       if ( !tf->open() ) {
         delete tf;
-        kDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
+        kDebug(5006) <<"KMFilterActionWithCommand: Could not create temp file!";
         return QString();
       }
       aTempFileList.append( tf );
@@ -1536,7 +1536,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( KMMessage *aMsg ) con
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
-    kDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
+    kDebug(5006) <<"KMFilterAction: could not forward message (sending failed)";
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;
@@ -1576,7 +1576,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
-    kDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
+    kDebug(5006) <<"KMFilterAction: could not redirect message (sending failed)";
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;
@@ -1673,7 +1673,7 @@ class PipeJob : public ThreadWeaver::Job
           filterFolder->addMsg( mMsg );
           handler->ignoreChanges( oldStatus );
         } else {
-          kDebug(5006) << "Warning: Cannot refresh the message from the external filter." << endl;
+          kDebug(5006) <<"Warning: Cannot refresh the message from the external filter.";
         }
       }
 

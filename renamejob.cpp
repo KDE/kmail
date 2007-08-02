@@ -142,7 +142,7 @@ void RenameJob::execute()
     KUrl dst( account->getUrl() );
     dst.setPath( mNewImapPath );
     KIO::SimpleJob *job = KIO::rename( src, dst, true );
-    kDebug(5006)<< "RenameJob::rename - " << src.prettyUrl()
+    kDebug(5006)<<"RenameJob::rename -" << src.prettyUrl()
       << " |=> " << dst.prettyUrl() << endl;
     ImapAccountBase::jobData jd( src.url() );
     account->insertJob( job, jd );
@@ -187,9 +187,9 @@ void RenameJob::slotRenameResult( KJob *job )
 
 void RenameJob::folderCopyComplete(bool success)
 {
-  kDebug(5006) << k_funcinfo << success << endl;
+  kDebug(5006) << k_funcinfo << success;
   if ( !success ) {
-    kWarning(5006) << k_funcinfo << "could not copy folder" << endl;
+    kWarning(5006) << k_funcinfo <<"could not copy folder";
     emit renameDone( mNewName, false );
     deleteLater();
     return;
@@ -202,7 +202,7 @@ void RenameJob::folderCopyComplete(bool success)
     mStorageTempOpened = 0;
   }
 
-  kDebug(5006) << "deleting old folder" << endl;
+  kDebug(5006) <<"deleting old folder";
   // move complete or not necessary
   // save our settings
   QString oldconfig = "Folder-" + mStorage->folder()->idString();
@@ -240,7 +240,7 @@ void RenameJob::folderCopyComplete(bool success)
   } else if ( mStorage->folderType() == KMFolderTypeSearch )
   {
     // invalid
-    kWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
+    kWarning(5006) << k_funcinfo <<"cannot remove a search folder";
   } else {
     kmkernel->folderMgr()->remove( mStorage->folder() );
   }

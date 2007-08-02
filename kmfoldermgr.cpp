@@ -383,7 +383,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
   if ( parentF )
     parentF->storage()->updateChildrenState();
   else
-    kWarning(5006) << "Can not find parent folder" << endl;
+    kWarning(5006) <<"Can not find parent folder";
 
   if (aFolder == mRemoveOrig) {
     // call only if we're removing the original parent folder
@@ -561,7 +561,7 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
 //-----------------------------------------------------------------------------
 void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 {
-  kDebug(5006) << "Copy folder: " << folder->prettyUrl() << endl;
+  kDebug(5006) <<"Copy folder:" << folder->prettyUrl();
   CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
   connect( job, SIGNAL( folderCopyComplete( bool ) ),
 	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
@@ -571,7 +571,7 @@ void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 //-----------------------------------------------------------------------------
 void KMFolderMgr::slotRenameDone( const QString&, bool success )
 {
-  kDebug(5006) << k_funcinfo << success << endl;
+  kDebug(5006) << k_funcinfo << success;
 }
 
 #include "kmfoldermgr.moc"

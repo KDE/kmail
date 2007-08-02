@@ -488,7 +488,7 @@ void ActionScheduler::enqueue(quint32 serNum)
 
 void ActionScheduler::processMessage()
 {
-kDebug(5006) << debug() << endl;
+kDebug(5006) << debug();
   QString statusMsg = i18n( "%1 messages waiting to be filtered",
                             mFetchSerNums.count() );
   KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -666,7 +666,7 @@ void ActionScheduler::moveMessage()
   if (!orgMsg || !orgMsg->parent()) {
     // Original message is gone, no point filtering it anymore
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
-    kDebug(5006) << "The original serial number is missing. "
+    kDebug(5006) <<"The original serial number is missing."
                   << "Cannot complete the filtering." << endl;
     mExecutingLock = false;
     processMessageTimer->start( 0 );

@@ -134,7 +134,7 @@ void CachedImapJob::execute()
   assert( mAccount != 0 );
   if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     // No connection to the IMAP server
-    kDebug(5006) << "mAccount->makeConnection() failed" << endl;
+    kDebug(5006) <<"mAccount->makeConnection() failed";
     mPassiveDestructor = true;
     delete this;
     return;
@@ -431,7 +431,7 @@ void CachedImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const
   if ( data.contains("UID") && mMsg )
   {
     int uid = (data.right(data.length()-4)).toInt();
-    kDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
+    kDebug( 5006 ) << k_funcinfo <<"Server told us uid is:" << uid;
     mMsg->setUID( uid );
   }
 }
@@ -623,24 +623,24 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
   if (a < 0) {
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
-    kDebug(5006) << "No uidvalidity available for folder "
+    kDebug(5006) <<"No uidvalidity available for folder"
                   << mFolder->objectName() << endl;
   }
   else {
     int b = cstr.indexOf("\r\n", a);
     if ( (b - a - 15) >= 0 ) {
       QString uidv = cstr.mid(a + 15, b - a - 15);
-      // kDebug(5006) << "New uidv = " << uidv << ", old uidv = "
+      // kDebug(5006) <<"New uidv =" << uidv <<", old uidv ="
       //               << mFolder->uidValidity() << endl;
       if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
-        // kDebug(5006) << "Expunging the mailbox " << mFolder->name()
+        // kDebug(5006) <<"Expunging the mailbox" << mFolder->name()
         //               << "!" << endl;
         mFolder->expunge();
         mFolder->setLastUid( 0 );
         mFolder->clearUidMap();
       }
     } else
-      kDebug(5006) << "No uidvalidity available for folder "
+      kDebug(5006) <<"No uidvalidity available for folder"
                     << mFolder->objectName() << endl;
   }
 

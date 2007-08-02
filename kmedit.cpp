@@ -218,7 +218,7 @@ void KMEdit::contentsDropEvent( QDropEvent *e )
       insert( md->text() );
       e->accept();
     } else {
-      kDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
+      kDebug(5006) <<"KMEdit::contentsDropEvent, unable to add dropped object";
       return KEdit::contentsDropEvent( e );
     }
   }
@@ -573,7 +573,7 @@ void KMEdit::spellcheck()
   mSpellLineEdit = !mSpellLineEdit;
 //  maybe for later, for now plaintext is given to KSpell
 //  if (textFormat() == Qt::RichText ) {
-//    kDebug(5006) << "KMEdit::spellcheck, spellchecking for RichText" << endl;
+//    kDebug(5006) <<"KMEdit::spellcheck, spellchecking for RichText";
 //    mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 //                    SLOT(slotSpellcheck2(KSpell*)),0,true,false,KSpell::HTML);
 //  }
@@ -628,7 +628,7 @@ void KMEdit::paste()
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
-    kDebug(5006)<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
+    kDebug(5006)<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) :"<<text;
     if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
     else
@@ -637,7 +637,7 @@ void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsign
 
 void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
 {
-    kDebug(5006)<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
+    kDebug(5006)<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) :"<<oldWord;
     if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
     else {
@@ -681,7 +681,7 @@ void KMEdit::slotSpellcheck2(K3Spell*)
                  replyPhrases.indentPrefix() );
         }
 
-        kDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
+        kDebug(5006) <<"spelling: new SpellingFilter with prefix=\"" << quotePrefix <<"\"";
         QTextEdit plaintext;
         plaintext.setText(text());
         plaintext.setAcceptRichText(false);
@@ -725,12 +725,12 @@ void KMEdit::slotSpellResult(const QString &s)
 
 void KMEdit::slotSpellDone()
 {
-  kDebug(5006)<<" void KMEdit::slotSpellDone()\n";
+  kDebug(5006)<<" void KMEdit::slotSpellDone()";
   K3Spell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
 
-  kDebug(5006) << "spelling: delete SpellingFilter" << endl;
+  kDebug(5006) <<"spelling: delete SpellingFilter";
   delete mSpellingFilter;
   mSpellingFilter = 0;
   mComposer->sujectLineWidget()->deselect();

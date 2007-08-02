@@ -610,9 +610,9 @@ int KMFolderSearch::create()
   assert( !folder()->name().isEmpty() );
   assert( mOpenCount == 0 );
 
-  kDebug(5006) << "Creating folder " << location() << endl;
+  kDebug(5006) <<"Creating folder" << location();
   if ( access( QFile::encodeName( location() ), F_OK ) == 0 ) {
-    kDebug(5006) << "KMFolderSearch::create call to access function failed."
+    kDebug(5006) <<"KMFolderSearch::create call to access function failed."
                  << endl;
     return EEXIST;
   }
@@ -778,7 +778,7 @@ int KMFolderSearch::writeIndex( bool )
     umask(old_umask);
 
     if (!tmpIndexStream) {
-        kDebug(5006) << "Cannot write '" << filename
+        kDebug(5006) <<"Cannot write '" << filename
             << strerror(errno) << " (" << errno << ")" << endl;
         truncate(QFile::encodeName(filename), 0);
         return -1;
@@ -1016,7 +1016,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
   if ( search()->searchPattern() != pattern ) {
     return;
   }
-  kDebug(5006) << folder->label() << ": serNum " << serNum
+  kDebug(5006) << folder->label() <<": serNum" << serNum
                << " matches?" << matches << endl;
   folder->open( "SearchExamineMsgDone" );
 

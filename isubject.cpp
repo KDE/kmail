@@ -27,7 +27,7 @@ namespace KMail {
 
   void ISubject::notify()
   {
-    kDebug(5006) << "ISubject::notify " << mObserverList.size() << endl;
+    kDebug(5006) <<"ISubject::notify" << mObserverList.size();
     for ( QVector<Interface::Observer*>::iterator it = mObserverList.begin() ; it != mObserverList.end() ; ++it )
       (*it)->update( this );
   }

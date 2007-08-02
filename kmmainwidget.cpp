@@ -914,7 +914,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kmkernel->acctMgr()->singleCheckMail( t );
   }
   else {
-    kDebug(5006) << k_funcinfo << " - account with name '" << item->data().toString() << "' not found" << endl;
+    kDebug(5006) << k_funcinfo <<" - account with name '" << item->data().toString() <<"' not found";
   }
 }
 
@@ -944,7 +944,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   for ( QStringList::const_iterator it = keys.begin();
         it != keys.end();
         ++it ) {
-    kDebug(5006) << newInFolder.find( *it ).value() << " new message(s) in "
+    kDebug(5006) << newInFolder.find( *it ).value() <<" new message(s) in"
                   << *it << endl;
 
     KMFolder *folder = kmkernel->findFolderById( *it );
@@ -1593,7 +1593,7 @@ void KMMainWidget::slotCustomReplyToMsg( int tid )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) << "Reply with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) <<"Reply with template:" << tmpl <<" (" << tid <<")";
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1607,7 +1607,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( int tid )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) << "Reply to All with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) <<"Reply to All with template:" << tmpl <<" (" << tid <<")";
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1620,7 +1620,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( int tid )
 void KMMainWidget::slotCustomForwardMsg( int tid )
 {
   QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) << "Forward with template: " << tmpl << " (" << tid << ")" << endl;
+  kDebug(5006) <<"Forward with template:" << tmpl <<" (" << tid <<")";
   KMMessageList* selected = mHeaders->selectedMsgs();
   KMCommand *command = 0L;
   if(selected && !selected->isEmpty()) {
@@ -1820,7 +1820,7 @@ void KMMainWidget::slotStartCertManager()
                                     "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
-    kDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
+    kDebug(5006) <<"\nslotStartCertManager(): certificate manager started.";
 }
 
 //-----------------------------------------------------------------------------
@@ -2197,12 +2197,12 @@ void KMMainWidget::slotSelectMessage(KMMessage* msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-  kDebug(5006) << "KMMainWidget::slotReplaceMsgByUnencryptedVersion()" << endl;
+  kDebug(5006) <<"KMMainWidget::slotReplaceMsgByUnencryptedVersion()";
   KMMessage* oldMsg = mHeaders->currentMsg();
   if( oldMsg ) {
-    kDebug(5006) << "KMMainWidget  -  old message found" << endl;
+    kDebug(5006) <<"KMMainWidget  -  old message found";
     if( oldMsg->hasUnencryptedMsg() ) {
-      kDebug(5006) << "KMMainWidget  -  extra unencrypted message found" << endl;
+      kDebug(5006) <<"KMMainWidget  -  extra unencrypted message found";
       KMMessage* newMsg = oldMsg->unencryptedMsg();
       // adjust the message id
       {
@@ -2226,7 +2226,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         mMsgView->setIdOfLastViewedMessage( msgId );
       }
       // insert the unencrypted message
-      kDebug(5006) << "KMMainWidget  -  adding unencrypted message to folder" << endl;
+      kDebug(5006) <<"KMMainWidget  -  adding unencrypted message to folder";
       mFolder->addMsg( newMsg );
       /* Figure out its index in the folder for selecting. This must be count()-1,
        * since we append. Be safe and do find, though, just in case. */
@@ -2241,18 +2241,18 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       mHeaders->setCurrentItemByIndex( newMsgIdx );
       // remove the old one
       if ( idx != -1 ) {
-        kDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
+        kDebug(5006) <<"KMMainWidget  -  deleting encrypted message";
         mFolder->take( idx );
       }
 
-      kDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
+      kDebug(5006) <<"KMMainWidget  -  updating message actions";
       updateMessageActions();
 
-      kDebug(5006) << "KMMainWidget  -  done." << endl;
+      kDebug(5006) <<"KMMainWidget  -  done.";
     } else
-      kDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
+      kDebug(5006) <<"KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND";
   } else
-    kDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
+    kDebug(5006) <<"KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND";
 }
 
 //-----------------------------------------------------------------------------
@@ -2462,7 +2462,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
     }
 
     urlMenuAdded=true;
-    kDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
+    kDebug( 0 ) << k_funcinfo <<" URL is:" << aUrl;
   }
 
 
@@ -4271,7 +4271,7 @@ void KMMainWidget::toggleSystemTray()
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
-    kDebug(5006) << "deleting systray" << endl;
+    kDebug(5006) <<"deleting systray";
     delete mSystemTray;
     mSystemTray = 0;
   }

@@ -646,9 +646,9 @@ void RecipientsView::setFocusTop()
   if ( !mLines.empty() ) {
     RecipientLine *line = mLines.first();
     if ( line ) line->activate();
-    else kWarning() << "No first" << endl;
+    else kWarning() <<"No first";
   }
-  else kWarning() << "No first" << endl;
+  else kWarning() <<"No first";
 }
 
 void RecipientsView::setFocusBottom()
@@ -658,7 +658,7 @@ void RecipientsView::setFocusBottom()
 #endif
   RecipientLine *line = mLines.last();
   if ( line ) line->activate();
-  else  kWarning() << "No last" << endl;
+  else  kWarning() <<"No last";
 }
 
 int RecipientsView::setFirstColumnWidth( int w )
@@ -792,7 +792,7 @@ void SideWidget::setFocus()
 void SideWidget::setTotal( int recipients, int lines )
 {
 #if 0
-  kDebug(5006) << "SideWidget::setTotal() recipients: " << recipients <<
+  kDebug(5006) <<"SideWidget::setTotal() recipients:" << recipients <<
     "  lines: " << lines << endl;
 #endif
 

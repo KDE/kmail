@@ -1572,7 +1572,7 @@ void AccountDialog::slotPipeliningClicked()
 
 void AccountDialog::slotPopEncryptionChanged(int id)
 {
-  kDebug(5006) << "slotPopEncryptionChanged( " << id << " )" << endl;
+  kDebug(5006) <<"slotPopEncryptionChanged(" << id <<" )";
   // adjust port
   if ( id == SSL || mPop.portEdit->text() == "995" )
     mPop.portEdit->setText( ( id == SSL ) ? "995" : "110" );
@@ -1597,7 +1597,7 @@ void AccountDialog::slotPopPasswordChanged(const QString& text)
 
 void AccountDialog::slotImapEncryptionChanged(int id)
 {
-  kDebug(5006) << "slotImapEncryptionChanged( " << id << " )" << endl;
+  kDebug(5006) <<"slotImapEncryptionChanged(" << id <<" )";
   // adjust port
   if ( id == SSL || mImap.portEdit->text() == "993" )
     mImap.portEdit->setText( ( id == SSL ) ? "993" : "143" );
@@ -1654,7 +1654,7 @@ void AccountDialog::slotCheckImapCapabilities()
 unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
 {
   unsigned int capa = 0;
-  kDebug( 5006 ) << k_funcinfo << l << endl;
+  kDebug( 5006 ) << k_funcinfo << l;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).toUpper();
     if ( cur == "PLAIN" )
@@ -1694,7 +1694,7 @@ void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
   else
     mCapaTLS = 0;
   mCapaSSL = popCapabilitiesFromStringList( capaSSL );
-  kDebug(5006) << "mCapaNormal = " << mCapaNormal
+  kDebug(5006) <<"mCapaNormal =" << mCapaNormal
                 << "; mCapaSSL = " << mCapaSSL
                 << "; mCapaTLS = " << mCapaTLS << endl;
   mPop.encryptionNone->setEnabled( !capaNormal.isEmpty() );
@@ -1708,7 +1708,7 @@ void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
 
 void AccountDialog::enablePopFeatures( unsigned int capa )
 {
-  kDebug(5006) << "enablePopFeatures( " << capa << " )" << endl;
+  kDebug(5006) <<"enablePopFeatures(" << capa <<" )";
   mPop.authPlain->setEnabled( capa & Plain );
   mPop.authLogin->setEnabled( capa & Login );
   mPop.authCRAM_MD5->setEnabled( capa & CRAM_MD5 );
@@ -1800,7 +1800,7 @@ void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
   else
     mCapaTLS = 0;
   mCapaSSL = imapCapabilitiesFromStringList( capaSSL );
-  kDebug(5006) << "mCapaNormal = " << mCapaNormal
+  kDebug(5006) <<"mCapaNormal =" << mCapaNormal
                 << "; mCapaSSL = " << mCapaSSL
                 << "; mCapaTLS = " << mCapaTLS << endl;
   mImap.encryptionNone->setEnabled( !capaNormal.isEmpty() );
@@ -1831,7 +1831,7 @@ void AccountDialog::slotFilterOnServerSizeChanged ( int value )
 
 void AccountDialog::enableImapAuthMethods( unsigned int capa )
 {
-  kDebug(5006) << "enableImapAuthMethods( " << capa << " )" << endl;
+  kDebug(5006) <<"enableImapAuthMethods(" << capa <<" )";
   mImap.authPlain->setEnabled( capa & Plain );
   mImap.authLogin->setEnabled( capa & Login );
   mImap.authCramMd5->setEnabled( capa & CRAM_MD5 );
@@ -1844,7 +1844,7 @@ void AccountDialog::enableImapAuthMethods( unsigned int capa )
 
 void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
-  kDebug(5006) << "checkHighest( " << btnGroup << " )" << endl;
+  kDebug(5006) <<"checkHighest(" << btnGroup <<" )";
   QAbstractButton *btn;
   foreach (btn, btnGroup->buttons()) {
     if (btn && btn->isEnabled()) {
@@ -1968,7 +1968,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
-    //kDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
+    //kDebug(5006) <<"account for folder" << mAccount->folder()->name();
 
     initAccountForConnect();
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;

@@ -208,10 +208,10 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
 
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
-    kDebug(5006) << "KMMsgDict::insert: Cannot insert the message, "
+    kDebug(5006) <<"KMMsgDict::insert: Cannot insert the message,"
       << "null pointer to storage. Requested serial: " << msgSerNum
       << endl;
-    kDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
+    kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
       << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
     return 0;
   }
@@ -252,10 +252,10 @@ void KMMsgDict::replace(unsigned long msgSerNum,
 {
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
-    kDebug(5006) << "KMMsgDict::replace: Cannot replace the message serial "
+    kDebug(5006) <<"KMMsgDict::replace: Cannot replace the message serial"
       << "number, null pointer to storage. Requested serial: " << msgSerNum
       << endl;
-    kDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
+    kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
       << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
     return;
   }
@@ -445,7 +445,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
     }
 
     //if (!msn)
-      //kDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
+      //kDebug(5006) <<"Dict found zero serial number in folder" << folder->label();
 
     // Insert into the dict. Don't use dict->replace() as we _know_
     // there is no entry with the same msn, we just made sure.
@@ -501,7 +501,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
       fp = fopen(QFile::encodeName(filename), "w+");
       if (!fp)
       {
-        kDebug(5006) << "Dict '" << filename
+        kDebug(5006) <<"Dict '" << filename
                       << "' cannot open with folder " << storage.label() << ": "
                       << strerror(errno) << " (" << errno << ")" << endl;
          delete rentry;
@@ -530,10 +530,10 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
   FILE *fp = rentry->fp;
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
-  // kDebug(5006) << "Dict writing for folder " << storage.label() << endl;
+  // kDebug(5006) <<"Dict writing for folder" << storage.label();
   quint32 count = rentry->getRealSize();
   if (!fwrite(&count, sizeof(count), 1, fp)) {
-    kDebug(5006) << "Dict cannot write count with folder " << storage.label() << ": "
+    kDebug(5006) <<"Dict cannot write count with folder" << storage.label() <<":"
                   << strerror(errno) << " (" << errno << ")" << endl;
     return -1;
   }
@@ -577,12 +577,12 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
     return 0;
   FILE *fp = rentry->fp;
 
-//  kDebug(5006) << "Dict appending for folder " << storage.label() << endl;
+//  kDebug(5006) <<"Dict appending for folder" << storage.label();
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
   quint32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
-    kDebug(5006) << "Dict cannot read count for folder " << storage.label() << ": "
+    kDebug(5006) <<"Dict cannot read count for folder" << storage.label() <<":"
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }
@@ -595,7 +595,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
      count = kmail_swap_32(count);
   fseek(fp, rentry->baseOffset, SEEK_SET);
   if (!fwrite(&count, sizeof(count), 1, fp)) {
-    kDebug(5006) << "Dict cannot write count for folder " << storage.label() << ": "
+    kDebug(5006) <<"Dict cannot write count for folder" << storage.label() <<":"
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }
@@ -608,7 +608,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
   if (rentry->swapByteOrder)
      msn = kmail_swap_32(msn);
   if (!fwrite(&msn, sizeof(msn), 1, fp)) {
-    kDebug(5006) << "Dict cannot write count for folder " << storage.label() << ": "
+    kDebug(5006) <<"Dict cannot write count for folder" << storage.label() <<":"
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }

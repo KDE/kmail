@@ -116,7 +116,7 @@ void TemplatesConfiguration::slotTextChanged()
 void TemplatesConfiguration::loadFromGlobal()
 {
   if ( !GlobalSettings::self()->phrasesConverted() ) {
-    kDebug(5006) << "Phrases to templates conversion" << endl;
+    kDebug(5006) <<"Phrases to templates conversion";
     importFromPhrases();
   }
 
@@ -365,7 +365,7 @@ void TemplatesConfiguration::loadFromPhrases()
 
 void TemplatesConfiguration::importFromPhrases()
 {
-  kDebug(5006) << "TemplatesConfiguration::importFromPhrases()" << endl;
+  kDebug(5006) <<"TemplatesConfiguration::importFromPhrases()";
 
   int currentNr = GlobalSettings::self()->replyCurrentLanguage();
 
@@ -494,11 +494,11 @@ void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCu
   } else if( toolBox1->currentItem() == page_forward ) {
     edit = textEdit_forward;
   } else {
-    kDebug(5006) << "Unknown current page in TemplatesConfiguration!" << endl;
+    kDebug(5006) <<"Unknown current page in TemplatesConfiguration!";
     return;
   }
 
-  // kDebug(5006) << "Insert command: " << cmd << endl;
+  // kDebug(5006) <<"Insert command:" << cmd;
 
   int para, index;
   edit->getCursorPosition( &para, &index );

@@ -82,9 +82,9 @@ MboxJob::startJob()
   switch( mType ) {
   case tGetMessage:
     {
-      kDebug(5006)<<msg<<endl;
-      kDebug(5006)<<this<<endl;
-      kDebug(5006)<<"Done"<<endl;
+      kDebug(5006)<<msg;
+      kDebug(5006)<<this;
+      kDebug(5006)<<"Done";
       //KMMessage* msg = mParent->getMsg( mParent->find( mMsgList.first() ) );
       msg->setComplete( true );
       emit messageRetrieved( msg );
@@ -105,7 +105,7 @@ MboxJob::startJob()
   case tCreateFolder:
   case tGetFolder:
   case tListMessages:
-    kDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
+    kDebug(5006)<<k_funcinfo<<"### Serious problem!";
     break;
   default:
     break;

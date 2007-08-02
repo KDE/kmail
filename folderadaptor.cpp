@@ -45,7 +45,7 @@ FolderAdaptor::FolderAdaptor( const QString& vpath )
   : mPath( vpath )
 {
   QDBusConnection::sessionBus().registerObject("/Folder", this,QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals );
-  //kDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
+  //kDebug(5006)<<"FolderIface folder ="<< mPath;
   mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
   if ( !mFolder )
     mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
@@ -133,7 +133,7 @@ FolderIface::messageRefs()
     } else
       return refList;
 
-    kDebug(5006)<<"refList == "<<messageCache.count()<<endl;
+    kDebug(5006)<<"refList =="<<messageCache.count();
 
     for( int i = 0; i < messageCache.size(); ++i ) {
       KMMsgBase *msg = messageCache[i];
@@ -143,7 +143,7 @@ FolderIface::messageRefs()
       }
     }
 
-    kDebug(5006)<<"Reflist size = "<<refList.count()<<endl;
+    kDebug(5006)<<"Reflist size ="<<refList.count();
     return refList;
 }*/
 

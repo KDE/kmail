@@ -140,7 +140,7 @@ void lockOrDie() {
   KConfig config(lockLocation, KConfig::OnlyLocal);
   KConfigGroup group(&config, "");
   int oldPid = group.readEntry("pid", -1 );
-  kDebug(5006) << "oldPid=" << oldPid << endl;
+  kDebug(5006) <<"oldPid=" << oldPid;
   const QString oldHostName = group.readEntry("hostname");
   const QString oldAppName = group.readEntry( "appName", appName );
   const QString oldProgramName = group.readEntry( "programName", programName );
@@ -164,10 +164,10 @@ void lockOrDie() {
       } else {
         path_buffer[length] = '\0';
         const QString path = QFile::decodeName( path_buffer );
-        kDebug(5006) << k_funcinfo << path << endl;
+        kDebug(5006) << k_funcinfo << path;
         const int pos = path.lastIndexOf( '/' );
         const QString fileName = path.mid( pos + 1 );
-        kDebug(5006) << "Found process " << oldPid
+        kDebug(5006) <<"Found process" << oldPid
                      << " running. It's: " << fileName << endl;
         first_instance = fileName != "kmail" && fileName != "kontact";
       }

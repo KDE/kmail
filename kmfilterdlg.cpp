@@ -394,11 +394,11 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
   mFilter = aFilter;
 
   if (!bPopFilter) {
-    kDebug(5006) << "apply on inbound == "
+    kDebug(5006) <<"apply on inbound =="
 		  << aFilter->applyOnInbound() << endl;
-    kDebug(5006) << "apply on outbound == "
+    kDebug(5006) <<"apply on outbound =="
 		  << aFilter->applyOnOutbound() << endl;
-    kDebug(5006) << "apply on explicit == "
+    kDebug(5006) <<"apply on explicit =="
 		  << aFilter->applyOnExplicit() << endl;
 
     // NOTE: setting these values activates the slot that sets them in
@@ -486,7 +486,7 @@ void KMFilterDlg::slotApplicabilityChanged()
       ++it;
     }
 
-    kDebug(5006) << "KMFilterDlg: setting filter to be applied at "
+    kDebug(5006) <<"KMFilterDlg: setting filter to be applied at"
                   << ( mFilter->applyOnInbound() ? "incoming " : "" )
                   << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
                   << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
@@ -699,7 +699,7 @@ bool KMFilterListBox::showLaterMsgs()
 void KMFilterListBox::slotUpdateFilterName()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotUpdateFilterName called while no filter is selected, ignoring. idx=" << mIdxSelItem << endl;
+    kDebug(5006) <<"KMFilterListBox::slotUpdateFilterName called while no filter is selected, ignoring. idx=" << mIdxSelItem;
     return;
   }
 
@@ -793,7 +793,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 
 void KMFilterListBox::slotSelected( int aIdx )
 {
-  kDebug(5006) << "KMFilterListBox::slotSelected called. idx=" << aIdx << endl;
+  kDebug(5006) <<"KMFilterListBox::slotSelected called. idx=" << aIdx;
   mIdxSelItem = aIdx;
 
   if ( mIdxSelItem >= 0 && mIdxSelItem < mFilterList.count() ) {
@@ -818,7 +818,7 @@ void KMFilterListBox::slotNew()
 void KMFilterListBox::slotCopy()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotCopy called while no filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotCopy called while no filter is selected, ignoring.";
     return;
   }
 
@@ -839,7 +839,7 @@ void KMFilterListBox::slotCopy()
 void KMFilterListBox::slotDelete()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotDelete called while no filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotDelete called while no filter is selected, ignoring.";
     return;
   }
 
@@ -881,11 +881,11 @@ void KMFilterListBox::slotDelete()
 void KMFilterListBox::slotUp()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotUp called while no filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotUp called while no filter is selected, ignoring.";
     return;
   }
   if ( mIdxSelItem == 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring.";
     return;
   }
 
@@ -896,11 +896,11 @@ void KMFilterListBox::slotUp()
 void KMFilterListBox::slotDown()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotDown called while no filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotDown called while no filter is selected, ignoring.";
     return;
   }
   if ( mIdxSelItem == (int)mListWidget->count() - 1 ) {
-    kDebug(5006) << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring.";
     return;
   }
 
@@ -911,7 +911,7 @@ void KMFilterListBox::slotDown()
 void KMFilterListBox::slotRename()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) << "KMFilterListBox::slotRename called while no filter is selected, ignoring." << endl;
+    kDebug(5006) <<"KMFilterListBox::slotRename called while no filter is selected, ignoring.";
     return;
   }
 
@@ -1192,7 +1192,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kDebug(5006) << "KMFilterActionWidgetLister: Clipping action list to "
+    kDebug(5006) <<"KMFilterActionWidgetLister: Clipping action list to"
 	      << mMaxWidgets << " items!" << endl;
 
     for ( ; superfluousItems ; superfluousItems-- )

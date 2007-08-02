@@ -207,7 +207,7 @@ void DistributionListDialog::slotUser1()
     DistributionListItem *item = static_cast<DistributionListItem *>( 
         mRecipientsList->topLevelItem( i ));
     if ( item && item->checkState( 0 ) == Qt::Checked ) {
-      kDebug() << "  " << item->addressee().fullEmail() << " " 
+      kDebug() <<"" << item->addressee().fullEmail() <<"" 
                << item->addressee().uid() << endl;
       if ( item->isTransient() ) {
         ab->insertAddressee( item->addressee() );
@@ -230,7 +230,7 @@ void DistributionListDialog::slotUser1()
       ab->releaseSaveTicket( ticket );
 
   if ( saveError )
-    kWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;
+    kWarning(5006) << k_funcinfo <<" Couldn't save new addresses in the distribution list just created to the address book";
 
   manager.save();
 

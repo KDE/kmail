@@ -37,7 +37,7 @@ static inline kdbgstream kmFatal( bool cond ) { return kFatal( cond, kmail_debug
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
 #define GRAB_TIMER(x) x ## _tmp2.msecsTo(QTime::currentTime())
 #define END_TIMER(x) x += GRAB_TIMER(x); x ## _tmp++
-#define SHOW_TIMER(x) kDebug(5006) << #x " == " << x << "(" << x ## _tmp << ")\n"
+#define SHOW_TIMER(x) kDebug(5006) << #x" ==" << x <<"(" << x ## _tmp <<")"
 #else
 #define CREATE_TIMER(x)
 #define START_TIMER(x)
@@ -51,7 +51,7 @@ static inline kdbgstream kmFatal( bool cond ) { return kFatal( cond, kmail_debug
 #define CREATE_COUNTER(x) int x ## _cnt=0
 #define RESET_COUNTER(x) x ## _cnt=0
 #define INC_COUNTER(x) x ## _cnt++
-#define SHOW_COUNTER(x) kDebug(5006) << #x " == " << x ## _cnt << endl
+#define SHOW_COUNTER(x) kDebug(5006) << #x" ==" << x ## _cnt
 #else
 #define CREATE_COUNTER(x)
 #define RESET_COUNTER(x)
