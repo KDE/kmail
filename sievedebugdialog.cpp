@@ -133,7 +133,7 @@ private:
     void error( const KSieve::Error & e )
     {
         kDebug( 5006 ) <<"###" << k_funcinfo <<"Error:" <<
-            e.asString() << " @ " << e.line() << "," << e.column() << endl;
+            e.asString() << "@" << e.line() << "," << e.column();
     }
 
     void finished()
@@ -309,9 +309,9 @@ void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
     const QString &script, bool active )
 {
     kDebug( 5006 ) <<"SieveDebugDialog::slotGetScript( ??," << success
-              << ", ?, " << active << " )" << endl
+              << ", ?," << active << ")" << endl
               << "script:" << endl
-              << script << endl;
+              << script;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     if ( script.isEmpty() )
@@ -334,7 +334,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
     const QStringList &scriptList, const QString &activeScript )
 {
     kDebug( 5006 ) << k_funcinfo <<"Success:" << success <<", List:" << scriptList.join("," ) <<
-        ", active: " << activeScript << endl;
+        ", active:" << activeScript;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     mEdit->append( i18n( "Sieve capabilities:\n" ) );

@@ -136,8 +136,7 @@ namespace KMail {
 
   void DictionaryComboBox::slotDictionaryChanged( int idx )
   {
-    kDebug( 5006 ) <<"DictionaryComboBox::slotDictionaryChanged(" << idx
-                    << " )" << endl;
+    kDebug( 5006 ) <<"DictionaryComboBox::slotDictionaryChanged(" << idx << ")";
     if( !mDictionaries.isEmpty())
     	emit dictionaryChanged( mDictionaries[idx] );
     emit dictionaryChanged( idx );

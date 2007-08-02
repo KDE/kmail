@@ -146,13 +146,13 @@ void AntiSpamWizard::accept()
 {
   if ( mSpamRulesPage ) {
     kDebug( 5006 ) <<"Folder name for messages classified as spam is"
-                    << mSpamRulesPage->selectedSpamFolderName() << endl;
+                    << mSpamRulesPage->selectedSpamFolderName();
     kDebug( 5006 ) <<"Folder name for messages classified as unsure is"
-                    << mSpamRulesPage->selectedUnsureFolderName() << endl;
+                    << mSpamRulesPage->selectedUnsureFolderName();
   }
   if ( mVirusRulesPage )
     kDebug( 5006 ) <<"Folder name for viruses is"
-                    << mVirusRulesPage->selectedFolderName() << endl;
+                    << mVirusRulesPage->selectedFolderName();
 
   KMFilterActionDict dict;
   QList<KMFilter*> filterList;

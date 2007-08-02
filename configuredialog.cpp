@@ -507,7 +507,7 @@ void IdentityPage::slotRemoveIdentity()
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   kFatal( im->shadowIdentities().count() < 2 )
-    << "Attempted to remove the last identity!" << endl;
+    << "Attempted to remove the last identity!";
 
   IdentityListViewItem *item = 0;
   if ( mIdentityList->selectedItems().size() > 0 ) {
@@ -1443,7 +1443,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
       needChange = true;
       mFont[i] = fonts.readEntry( fontNames[i].configName, QFont() );
       kDebug(5006) <<"got font \"" << fontNames[i].configName
-                << "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
+                << "\" thusly: \"" << mFont[i].toString() << "\"";
     }
   if ( needChange && mFontLocationCombo->currentIndex() > 0 )
     mFontChooser->setFont( mFont[ mFontLocationCombo->currentIndex() ],
@@ -2184,7 +2184,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   if ( i == encodings.size() ) {
     // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
     kWarning(5006) <<"Unknown override character encoding \"" << currentOverrideEncoding
-                   << "\". Resetting to Auto." << endl;
+                   << "\". Resetting to Auto.";
     mOverrideCharsetCombo->setCurrentIndex( 0 );
     GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
   }

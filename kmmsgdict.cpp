@@ -209,10 +209,9 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
     kDebug(5006) <<"KMMsgDict::insert: Cannot insert the message,"
-      << "null pointer to storage. Requested serial: " << msgSerNum
-      << endl;
+      << "null pointer to storage. Requested serial: " << msgSerNum;
     kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
+      << msg->toStrip() << ", Date:" << msg->dateStr();
     return 0;
   }
   if (index == -1)
@@ -253,10 +252,9 @@ void KMMsgDict::replace(unsigned long msgSerNum,
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
     kDebug(5006) <<"KMMsgDict::replace: Cannot replace the message serial"
-      << "number, null pointer to storage. Requested serial: " << msgSerNum
-      << endl;
+      << "number, null pointer to storage. Requested serial: " << msgSerNum;
     kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
+      << msg->toStrip() << ", Date:" << msg->dateStr();
     return;
   }
   if ( index == -1 )
@@ -502,8 +500,8 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
       if (!fp)
       {
         kDebug(5006) <<"Dict '" << filename
-                      << "' cannot open with folder " << storage.label() << ": "
-                      << strerror(errno) << " (" << errno << ")" << endl;
+                      << "' cannot open with folder" << storage.label() << ":"
+                      << strerror(errno) << "(" << errno << ")";
          delete rentry;
          rentry = 0;
          return 0;
@@ -534,7 +532,7 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
   quint32 count = rentry->getRealSize();
   if (!fwrite(&count, sizeof(count), 1, fp)) {
     kDebug(5006) <<"Dict cannot write count with folder" << storage.label() <<":"
-                  << strerror(errno) << " (" << errno << ")" << endl;
+                  << strerror(errno) << "(" << errno << ")";
     return -1;
   }
 
@@ -583,7 +581,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
   quint32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
     kDebug(5006) <<"Dict cannot read count for folder" << storage.label() <<":"
-                  << strerror(errno) << " (" << errno << ")" << endl;
+                  << strerror(errno) << "(" << errno << ")";
     return 0;
   }
   if (rentry->swapByteOrder)
@@ -596,7 +594,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
   fseek(fp, rentry->baseOffset, SEEK_SET);
   if (!fwrite(&count, sizeof(count), 1, fp)) {
     kDebug(5006) <<"Dict cannot write count for folder" << storage.label() <<":"
-                  << strerror(errno) << " (" << errno << ")" << endl;
+                  << strerror(errno) << "(" << errno << ")";
     return 0;
   }
 
@@ -609,7 +607,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
      msn = kmail_swap_32(msn);
   if (!fwrite(&msn, sizeof(msn), 1, fp)) {
     kDebug(5006) <<"Dict cannot write count for folder" << storage.label() <<":"
-                  << strerror(errno) << " (" << errno << ")" << endl;
+                  << strerror(errno) << "(" << errno << ")";
     return 0;
   }
 

@@ -355,14 +355,14 @@ namespace KMail {
         else
             s_serverConnections[host()] = 1;
         kDebug(5006) <<"check mail started - connections for host"
-                << host() << " now is "
-                << s_serverConnections[host()] << endl;
+                << host() << "now is"
+                << s_serverConnections[host()];
     } else {
             if ( s_serverConnections.find( host() ) != s_serverConnections.end() &&
                 s_serverConnections[host()] > 0 ) {
                 s_serverConnections[host()] -= 1;
                 kDebug(5006) <<"connections to server" << host()
-                        << " now " << s_serverConnections[host()] << endl;
+                        << "now" << s_serverConnections[host()];
             }
     }
 }
@@ -372,16 +372,15 @@ namespace KMail {
       bool offlineMode = KMKernel::isOffline();
 
       kDebug(5006) <<"for host" << host()
-              << " current connections="
+              << "current connections="
               << (s_serverConnections.find(host())==s_serverConnections.end() ? 0 : s_serverConnections[host()])
-              << " and limit is " << GlobalSettings::self()->maxConnectionsPerHost()
-              << endl;
+              << "and limit is" << GlobalSettings::self()->maxConnectionsPerHost();
       bool connectionLimitForHostReached = !host().isEmpty()
               && GlobalSettings::self()->maxConnectionsPerHost() > 0
               && s_serverConnections.find( host() ) != s_serverConnections.end()
               && s_serverConnections[host()] >= GlobalSettings::self()->maxConnectionsPerHost();
       kDebug(5006) <<"connection limit reached:"
-              << connectionLimitForHostReached << endl;
+              << connectionLimitForHostReached;
 
       return ( !connectionLimitForHostReached && !offlineMode );
   }

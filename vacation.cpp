@@ -170,8 +170,8 @@ namespace {
         if ( string.lower() != QString::fromUtf8( str ).lower() )
           found = false;
       kDebug(5006) << ( found ?"found:" :"not found:" )
-                   << mState << " -> "
-                   << ( found ? expected.if_found : expected.if_not_found ) << endl;
+                   << mState << "->"
+                   << ( found ? expected.if_found : expected.if_not_found );
       mState = found ? expected.if_found : expected.if_not_found ;
       assert( mState < mNodes.size() );
       if ( found )
@@ -356,8 +356,7 @@ namespace {
     void lineFeed() {}
     void error( const KSieve::Error & e ) {
       kDebug( 5006 ) <<"VacationDataExtractor::error() ###"
-		      << e.asString() << " @ " << e.line() << "," << e.column()
-		      << endl;
+		      << e.asString() << "@" << e.line() << "," << e.column();
     }
     void finished() {}
 
@@ -598,9 +597,9 @@ namespace KMail {
   void Vacation::slotGetResult( SieveJob * job, bool success,
 				const QString & script, bool active ) {
     kDebug(5006) <<"Vacation::slotGetResult( ??," << success
-	      << ", ?, " << active << " )" << endl
+	      << ", ?," << active << ")" << endl
 	      << "script:" << endl
-	      << script << endl;
+	      << script;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     if ( mUrl.protocol() == "sieve" && !job->sieveCapabilities().isEmpty() &&
@@ -705,8 +704,7 @@ namespace KMail {
 				: i18n("Sieve script installed successfully on the server.\n"
 				       "Out of Office reply has been deactivated.") );
 
-    kDebug(5006) <<"Vacation::handlePutResult( ???," << success <<", ? )"
-		  << endl;
+    kDebug(5006) <<"Vacation::handlePutResult( ???," << success <<", ? )";
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );
   }

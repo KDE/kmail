@@ -114,7 +114,7 @@ ImapAccountBase::~ImapAccountBase()
 {
   qDeleteAll (mBodyPartList );
   kWarning( mSlave, 5006 )
-    << "slave should have been destroyed by subclass!" << endl;
+    << "slave should have been destroyed by subclass!";
 }
 
 void ImapAccountBase::init()
@@ -1163,7 +1163,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   for ( it = parts.begin(); it != parts.end(); ++it ) {
     KMMessagePart *part = (*it);
     kDebug(5006) <<"ImapAccountBase::handleBodyStructure - load" << part->partSpecifier()
-                 << " (" << part->originalContentTypeStr() << ")" << endl;
+                 << "(" << part->originalContentTypeStr() << ")";
     if ( part->loadHeaders() ) {
       kDebug(5006) <<"load HEADER";
       FolderJob *job =
@@ -1190,7 +1190,7 @@ void ImapAccountBase::constructParts( QDataStream &stream, int count, KMMessageP
     part->setParent( parentKMPart );
     mBodyPartList.append( part );
     kDebug(5006) <<"ImapAccountBase::constructParts - created id" << part->partSpecifier()
-                 << " of type " << part->originalContentTypeStr() << endl;
+                 << "of type" << part->originalContentTypeStr();
     DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
 
     if ( parent ) {

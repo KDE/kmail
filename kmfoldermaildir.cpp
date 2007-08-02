@@ -641,9 +641,8 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   QFile f( file );
   if ( f.open( QIODevice::ReadOnly ) == false ) {
     kWarning(5006) <<"The file '" << QFile::encodeName(dir) <<"/" << file
-                   << "' could not be opened for reading the message. "
-                   << "Please check ownership and permissions."
-                   << endl;
+                   << "' could not be opened for reading the message."
+                   << "Please check ownership and permissions.";
     return;
   }
 
@@ -978,7 +977,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
       return true;
   }
 
-  kDebug(5006) <<"Can't delete" << abs_file <<"" << perror;
+  kDebug(5006) <<"Can't delete" << abs_file << perror;
   return false;
 }
 

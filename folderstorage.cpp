@@ -487,7 +487,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       // sanity check
       if (mCompactable && (msg->subject().isEmpty() != mbSubject.isEmpty())) {
         kDebug(5006) <<"Error:" << location() <<
-          " Index file is inconsistent with folder file. This should never happen." << endl;
+          "Index file is inconsistent with folder file. This should never happen.";
         mCompactable = false; // Don't compact
         writeConfig();
       }

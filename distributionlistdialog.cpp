@@ -207,8 +207,7 @@ void DistributionListDialog::slotUser1()
     DistributionListItem *item = static_cast<DistributionListItem *>( 
         mRecipientsList->topLevelItem( i ));
     if ( item && item->checkState( 0 ) == Qt::Checked ) {
-      kDebug() <<"" << item->addressee().fullEmail() <<"" 
-               << item->addressee().uid() << endl;
+      kDebug() << item->addressee().fullEmail() << item->addressee().uid();
       if ( item->isTransient() ) {
         ab->insertAddressee( item->addressee() );
       }

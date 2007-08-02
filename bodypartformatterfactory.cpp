@@ -86,7 +86,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
   TypeRegistry::iterator type_it = all->find( type );
   if ( type_it == all->end() ) {
     kDebug( 5006 ) <<"BodyPartFormatterFactory: instantiating new Subtype Registry for \""
-		    << type << "\"" << endl;
+		    << type << "\"";
     type_it = all->insert( std::make_pair( type, SubtypeRegistry() ) ).first;
     assert( type_it != all->end() );
   }
@@ -95,7 +95,7 @@ static void insertBodyPartFormatter( const char * type, const char * subtype,
   SubtypeRegistry::iterator subtype_it = subtype_reg.find( subtype );
   if ( subtype_it != subtype_reg.end() ) {
     kDebug( 5006 ) <<"BodyPartFormatterFactory: overwriting previously registered formatter for \""
-		    << type << "/" << subtype << "\"" << endl;
+		    << type << "/" << subtype << "\"";
     subtype_reg.erase( subtype_it ); subtype_it = subtype_reg.end();
   }
 
@@ -120,15 +120,15 @@ static void loadPlugins() {
       const char * type = plugin->type( i );
       if ( !type || !*type ) {
 	kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
-			  << "\" returned empty type specification for index "
-			  << i << endl;
+			  << "\" returned empty type specification for index"
+			  << i;
 	break;
       }
       const char * subtype = plugin->subtype( i );
       if ( !subtype || !*subtype ) {
 	kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
-			  << "\" returned empty subtype specification for index "
-			  << i << endl;
+			  << "\" returned empty subtype specification for index"
+			  << i;
 	break;
       }
       insertBodyPartFormatter( type, subtype, bfp );
@@ -177,7 +177,7 @@ const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::cre
 
   kWarning( !(*subtype_it).second, 5006 )
     << "BodyPartFormatterFactory: a null bodypart formatter sneaked in for \""
-    << type << "/" << subtype << "\"!" << endl;
+    << type << "/" << subtype << "\"!";
 
   return (*subtype_it).second;
 }

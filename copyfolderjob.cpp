@@ -247,7 +247,7 @@ bool CopyFolderJob::createTargetDir()
   mNewFolder->storage()->setContentsType( mStorage->contentsType(), true /*quiet*/ );
   mNewFolder->storage()->writeConfig();
   kDebug(5006)<<"CopyJob::createTargetDir -" << mStorage->folder()->idString()
-    << " |=> " << mNewFolder->idString() << endl;
+    << "|=>" << mNewFolder->idString();
   return !waitForFolderCreation;
 }
 

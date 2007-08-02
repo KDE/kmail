@@ -168,7 +168,7 @@ void lockOrDie() {
         const int pos = path.lastIndexOf( '/' );
         const QString fileName = path.mid( pos + 1 );
         kDebug(5006) <<"Found process" << oldPid
-                     << " running. It's: " << fileName << endl;
+                     << "running. It's:" << fileName;
         first_instance = fileName != "kmail" && fileName != "kontact";
       }
     } else

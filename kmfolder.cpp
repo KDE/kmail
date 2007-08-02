@@ -655,8 +655,7 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
     mWhoField = whoField;
   else {
     // this should not happen...
-    kDebug(5006) <<"Illegal setting" << whoField <<" for userWhoField!"
-                  << endl;
+    kDebug(5006) <<"Illegal setting" << whoField << "for userWhoField!";
     return; // don't use the value
   }
   mUserWhoField = whoField;

@@ -382,7 +382,7 @@ namespace KMail {
 
     if ( doCheck && cryptPlug ) {
       kDebug(5006) <<"ObjectTreeParser::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG"
-                    << cryptPlugLibName << endl;
+                    << cryptPlugLibName;
 
       // check whether the crypto plug-in is usable
       if ( cryptPlug->initStatus( 0 ) != CryptPlugWrapper::InitStatus_Ok ) {
@@ -521,8 +521,8 @@ namespace KMail {
       }
 
       kDebug(5006) <<"\n  key id:" << messagePart.keyId
-                    << "\n  key trust: " << messagePart.keyTrust
-                    << "\n  signer: " << messagePart.signer << endl;
+                    << "\n  key trust:" << messagePart.keyTrust
+                    << "\n  signer:" << messagePart.signer;
 
     } else {
       messagePart.creationTime.tm_year = 0;
@@ -618,7 +618,7 @@ namespace KMail {
       cryptPlug->freeSignatureMetaData( sigMeta );
 
     kDebug(5006) <<"\nObjectTreeParser::writeOpaqueOrMultipartSignedData: done, returning"
-                  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
+                  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" );
     return bIsOpaqueSigned;
   }
 
@@ -687,7 +687,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     const char* certificate = 0;
 
     kDebug(5006) <<"ObjectTreeParser::decryptMIME: going to call CRYPTPLUG"
-                  << cryptPlugLibName << endl;
+                  << cryptPlugLibName;
     int errId = 0;
     char* errTxt = 0;
     if ( mReader )
@@ -701,8 +701,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                        &sigMeta,
                                                        &errId,
                                                        &errTxt );
-    kDebug(5006) <<"ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
-                  << endl;
+    kDebug(5006) <<"ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
     aErrorText = CryptPlugWrapper::errorIdToText( errId, passphraseError );
     if ( bDecryptionOk )
       decryptedData = cleartext;
@@ -1109,7 +1108,7 @@ namespace KMail {
   bool ObjectTreeParser::processMultiPartSignedSubtype( partNode * node, ProcessResult & ) {
     if ( node->childCount() != 2 ) {
       kDebug(5006) <<"mulitpart/signed must have exactly two child parts!" << endl
-                    << "processing as multipart/mixed" << endl;
+                    << "processing as multipart/mixed";
       if ( node->firstChild() )
         stdChildHandling( node->firstChild() );
       return node->firstChild();
@@ -2477,7 +2476,7 @@ void ObjectTreeParser::writeBodyStr( const QByteArray& aStr, const QTextCodec *a
           if( !str.isEmpty() ) {
             htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
             kDebug( 5006 ) <<"Non-empty Non-OpenPGP block found: '" << str
-                            << "'" << endl;
+                            << "'";
             // treat messages with empty lines before the first clearsigned
             // block as fully signed/encrypted
             if( firstNonPgpBlock ) {

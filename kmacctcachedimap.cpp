@@ -103,7 +103,7 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
-  //kDebug(5006) <<"killAllJobs: disconnectSlave=" << disconnectSlave <<"" << mapJobData.count() <<" jobs in map.";
+  //kDebug(5006) <<"killAllJobs: disconnectSlave=" << disconnectSlave << mapJobData.count() <<" jobs in map.";
   QList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
   for( QList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderCachedImap *fld = *it;

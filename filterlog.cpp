@@ -119,7 +119,7 @@ void FilterLog::checkLogSize()
   if ( mCurrentLogSize > mMaxLogSize && mMaxLogSize > -1 )
   {
     kDebug(5006) <<"Filter log: memory limit reached, starting to discard old items, size ="
-                  << QString::number( mCurrentLogSize ) << endl;
+                  << QString::number( mCurrentLogSize );
     // avoid some kind of hysteresis, shrink the log to 90% of its maximum
     while ( mCurrentLogSize > ( mMaxLogSize * 0.9 ) )
     {
@@ -129,7 +129,7 @@ void FilterLog::checkLogSize()
         mCurrentLogSize -= (*it).length();
         mLogEntries.erase( it );
         kDebug(5006) <<"Filter log: new size ="
-                      << QString::number( mCurrentLogSize ) << endl;
+                      << QString::number( mCurrentLogSize );
       }
       else
       {

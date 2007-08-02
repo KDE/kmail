@@ -153,7 +153,7 @@ void KMMessagePart::setCharset( const QByteArray & c ) {
       << "Fix this caller:" << endl
       << "====================================================================" << endl
       << kBacktrace( 5 ) << endl
-      << "====================================================================" << endl;
+      << "====================================================================";
   mCharset = c;
 }
 
@@ -179,8 +179,8 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
   DwString dwCte;
   DwCteEnumToStr(allowedCte[0], dwCte);
   kDebug(5006) <<"CharFreq returned" << cf.type() <<"/"
-	    << cf.printableRatio() << " and I chose "
-	    << dwCte.c_str() << endl;
+	    << cf.printableRatio() << "and I chose"
+	    << dwCte.c_str();
 #endif
 
   setCte( allowedCte[0] ); // choose best fitting
@@ -210,7 +210,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
     }
   default:
     kWarning(5006) <<"setBodyEncodedBinary: unknown encoding '" << cteStr()
-		    << "'. Assuming binary." << endl;
+		    << "'. Assuming binary.";
     // fall through
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
@@ -238,8 +238,8 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
     break;
   default:
     kWarning(5006) <<"Calling" << k_funcinfo
-                   << " with something containing neither 7 nor 8 bit text!"
-                   << " Fix this caller: " << kBacktrace() << endl;
+                   << "with something containing neither 7 nor 8 bit text!"
+                   << "Fix this caller:" << kBacktrace();
     cte = 0;
   }
   setCte( cte );
@@ -265,7 +265,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
         result = codec->decode( mBody );
       else {
         kWarning(5006) <<"bodyDecodedBinary: unknown encoding '" << cteStr()
-                        << "'. Assuming binary." << endl;
+                        << "'. Assuming binary.";
         result = mBody;
       }
   }
@@ -284,7 +284,7 @@ QByteArray KMMessagePart::bodyDecoded(void) const
   QByteArray result = bodyDecodedBinary();
 
   //kWarning( qstrlen(result) != len, 5006 )
-  //  << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
+  //  << "KMMessagePart::bodyDecoded(): body is binary but used as text!";
 
   result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 

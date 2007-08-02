@@ -148,7 +148,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
   assert ( aRule );
 
   //kDebug(5006) <<"KMSearchRuleWidget::setRule("
-  //              << aRule->asString() << " )" << endl;
+  //              << aRule->asString() << ")";
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
@@ -317,7 +317,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
   int superfluousItems = (int)mRuleList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
     kDebug(5006) <<"KMSearchRuleWidgetLister: Clipping rule list to"
-		  << mMaxWidgets << " items!" << endl;
+		  << mMaxWidgets << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
       mRuleList->removeLast();

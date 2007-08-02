@@ -84,7 +84,7 @@ void KMFilterMgr::readConfig(void)
     if ( filter->isEmpty() ) {
 #ifndef NDEBUG
       kDebug(5006) <<"KMFilter::readConfig: filter" << filter->asString()
-                    << "is empty!" << endl;
+                    << "is empty!";
 #endif
       delete filter;
     } else
@@ -275,8 +275,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
     return processPop( msg );
 
   if ( set == NoSet ) {
-    kDebug(5006) <<"KMFilterMgr: process() called with not filter set selected"
-                  << endl;
+    kDebug(5006) <<"KMFilterMgr: process() called with not filter set selected";
     return 1;
   }
 

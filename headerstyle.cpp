@@ -767,7 +767,7 @@ namespace KMail {
     case Fancy:   return fancy();
     }
     kFatal( 5006 ) <<"HeaderStyle::create(): Unknown header style ( type =="
-                    << (int)type << " ) requested!" << endl;
+                    << (int)type << ") requested!";
     return 0; // make compiler happy
   }
 

@@ -147,7 +147,7 @@ bool KMAcctLocal::preProcess()
     aStr += mMailFolder->path() + '/' + mMailFolder->name();
     KMessageBox::sorry(0, aStr);
     kDebug(5006) <<"cannot open file" << mMailFolder->path() <<"/"
-      << mMailFolder->name() << endl;
+      << mMailFolder->name();
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return false;

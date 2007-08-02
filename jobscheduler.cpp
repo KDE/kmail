@@ -84,7 +84,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
   else {
 #ifdef DEBUG_SCHEDULER
     kDebug(5006) <<"JobScheduler: adding task" << task <<" (type" << task->taskTypeId()
-                  << ") for folder " << task->folder() << " " << task->folder()->label() << endl;
+                  << ") for folder" << task->folder() << task->folder()->label();
 #endif
     mTaskList.append( task );
     if ( immediate )
@@ -158,8 +158,8 @@ void JobScheduler::slotRunNextJob()
       kmkernel->searchFolderMgr()->tryReleasingFolder( folder );
 #ifdef DEBUG_SCHEDULER
       kDebug(5006) <<"   looking at folder" << folder->label()
-                    << " " << folder->location()
-                    << "  isOpened=" << (*it)->folder()->isOpened() << endl;
+                    << folder->location()
+                    << "isOpened=" << (*it)->folder()->isOpened();
 #endif
       if ( !folder->isOpened() ) {
         task = *it;
@@ -200,10 +200,10 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   mCurrentJob = mCurrentTask->run();
 #ifdef DEBUG_SCHEDULER
   kDebug(5006) <<"JobScheduler: task" << mCurrentTask
-                << " (type " << mCurrentTask->taskTypeId() << ")"
-                << " for folder " << mCurrentTask->folder()->label()
-                << " returned job " << mCurrentJob << " "
-                << ( mCurrentJob?mCurrentJob->className():0 ) << endl;
+                << "(type" << mCurrentTask->taskTypeId() << ")"
+                << "for folder" << mCurrentTask->folder()->label()
+                << "returned job" << mCurrentJob
+                << ( mCurrentJob?mCurrentJob->className():0 );
 #endif
   if ( !mCurrentJob ) { // nothing to do, e.g. folder deleted
     delete mCurrentTask;

@@ -2142,8 +2142,8 @@ void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolde
   for ( QList<QPointer<KMFolder> >::ConstIterator it = sources.constBegin(); it != sources.constEnd(); ++it ) {
     KMFolder* source = *it;
     if ( move ) {
-      kDebug(5006) <<"move folder" << (source ? source->label():"Unknown") <<" to"
-        << ( destination ? destination->label() : "Local Folders" ) << endl;
+      kDebug(5006) <<"move folder" << (source ? source->label():"Unknown") <<"to"
+        << ( destination ? destination->label() : "Local Folders" );
       kmkernel->folderMgr()->moveFolder( source, parent );
     } else {
       kmkernel->folderMgr()->copyFolder( source, parent );

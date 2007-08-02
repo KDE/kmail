@@ -253,8 +253,7 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
       else {
         // there was already a widget with this name, so discard this widget
         kDebug(5006) <<"RuleWidgetHandlerManager::createWidgets:"
-                      << w->objectName() << " already exists in functionStack"
-                      << endl;
+                      << w->objectName() << "already exists in functionStack";
         delete w; w = 0;
       }
     }
@@ -268,8 +267,7 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
       else {
         // there was already a widget with this name, so discard this widget
         kDebug(5006) <<"RuleWidgetHandlerManager::createWidgets:"
-                      << w->objectName() << " already exists in valueStack"
-                      << endl;
+                      << w->objectName() << "already exists in valueStack";
         delete w; w = 0;
       }
     }
@@ -338,7 +336,7 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
                                               QStackedWidget *valueStack ) const
 {
   //kDebug(5006) <<"RuleWidgetHandlerManager::update( \"" << field
-  //              << "\", ... )" << endl;
+  //              << "\", ... )";
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     if ( (*it)->update( field, functionStack, valueStack ) )
       return;
@@ -480,7 +478,7 @@ namespace {
     }
     else
       kDebug(5006) <<"TextRuleWidgetHandler::currentFunction:"
-                       "textRuleFuncCombo not found." << endl;
+                       "textRuleFuncCombo not found.";
     return KMSearchRule::FuncNone;
   }
 
@@ -511,7 +509,7 @@ namespace {
       }
       else {
         kDebug(5006) <<"TextRuleWidgetHandler::currentValue:"
-                         "categoryCombo not found." << endl;
+                         "categoryCombo not found.";
         return QString();
       }
     }
@@ -528,7 +526,7 @@ namespace {
       }
     else
       kDebug(5006) <<"TextRuleWidgetHandler::currentValue:"
-                       "regExpLineEdit not found." << endl;
+                       "regExpLineEdit not found.";
 
     // or anything else, like addressbook
     return QString();
@@ -635,7 +633,7 @@ namespace {
       else {
         kDebug(5006) <<"TextRuleWidgetHandler::setRule("
                       << rule->asString()
-                      << " ): unhandled function" << endl;
+                      << "): unhandled function";
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -803,7 +801,7 @@ namespace {
     }
     else
       kDebug(5006) <<"MessageRuleWidgetHandler::currentFunction:"
-                       "messageRuleFuncCombo not found." << endl;
+                       "messageRuleFuncCombo not found.";
     return KMSearchRule::FuncNone;
   }
 
@@ -834,7 +832,7 @@ namespace {
     }
     else
       kDebug(5006) <<"MessageRuleWidgetHandler::currentValue:"
-                       "regExpLineEdit not found." << endl;
+                       "regExpLineEdit not found.";
 
     return QString();
   }
@@ -936,7 +934,7 @@ namespace {
       else {
         kDebug(5006) <<"MessageRuleWidgetHandler::setRule("
                       << rule->asString()
-                      << " ): unhandled function" << endl;
+                      << "): unhandled function";
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -1075,7 +1073,7 @@ namespace {
     }
     else
       kDebug(5006) <<"StatusRuleWidgetHandler::currentFunction:"
-                       "statusRuleFuncCombo not found." << endl;
+                       "statusRuleFuncCombo not found.";
     return KMSearchRule::FuncNone;
   }
 
@@ -1105,7 +1103,7 @@ namespace {
     }
     else
       kDebug(5006) <<"StatusRuleWidgetHandler::currentStatusValue:"
-                       "statusRuleValueCombo not found." << endl;
+                       "statusRuleValueCombo not found.";
     return -1;
   }
 
@@ -1201,7 +1199,7 @@ namespace {
       else {
         kDebug(5006) <<"StatusRuleWidgetHandler::setRule("
                       << rule->asString()
-                      << " ): unhandled function" << endl;
+                      << "): unhandled function";
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );
@@ -1225,7 +1223,7 @@ namespace {
       else {
         kDebug(5006) <<"StatusRuleWidgetHandler::setRule("
                       << rule->asString()
-                      << " ): unhandled value" << endl;
+                      << "): unhandled value";
         statusCombo->setCurrentIndex( 0 );
       }
       statusCombo->blockSignals( false );
@@ -1330,7 +1328,7 @@ namespace {
     }
     else
       kDebug(5006) <<"NumericRuleWidgetHandler::currentFunction:"
-                       "numericRuleFuncCombo not found." << endl;
+                       "numericRuleFuncCombo not found.";
     return KMSearchRule::FuncNone;
   }
 
@@ -1360,7 +1358,7 @@ namespace {
     }
     else
       kDebug(5006) <<"NumericRuleWidgetHandler::currentValue:"
-                       "KIntNumInput not found." << endl;
+                       "KIntNumInput not found.";
     return QString();
   }
 
@@ -1462,7 +1460,7 @@ namespace {
       else {
         kDebug(5006) <<"NumericRuleWidgetHandler::setRule("
                       << rule->asString()
-                      << " ): unhandled function" << endl;
+                      << "): unhandled function";
         funcCombo->setCurrentIndex( 0 );
       }
       funcCombo->blockSignals( false );

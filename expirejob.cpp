@@ -156,7 +156,7 @@ void ExpireJob::done()
       // Expire by deletion, i.e. move to null target folder
       kDebug(5006) <<"ExpireJob: finished expiring in folder"
                     << mSrcFolder->location()
-                    << " " << count << " messages to remove." << endl;
+                    << count << "messages to remove.";
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
       connect( cmd, SIGNAL( completed( KMCommand * ) ),
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
@@ -176,9 +176,9 @@ void ExpireJob::done()
         kWarning(5006) << str;
       } else {
         kDebug(5006) <<"ExpireJob: finished expiring in folder"
-                      << mSrcFolder->location() << " "
-                      << mRemovedMsgs.count() << " messages to move to "
-                      << mMoveToFolder->label() << endl;
+                      << mSrcFolder->location()
+                      << mRemovedMsgs.count() << "messages to move to"
+                      << mMoveToFolder->label();
         KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
         connect( cmd, SIGNAL( completed( KMCommand * ) ),
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );

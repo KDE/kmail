@@ -505,7 +505,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       }
       if( !attachCharset.isEmpty() ) {
         // kDebug(5006) <<"KMKernel::openComposer set attachCharset to"
-        // << attachCharset << endl;
+        // << attachCharset;
         msgPart->setCharset( attachCharset );
       }
       // Don't show the composer window, if the automatic sending is checked
@@ -997,7 +997,7 @@ void KMKernel::raise()
   {
        QDBusError err = iface.lastError();
        kError() <<"Communication problem with kmail"
-                 << "Error message was: " << err.name() << ": \"" << err.message() << "\"" << endl;
+                 << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
   }
 
 }

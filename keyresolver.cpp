@@ -458,8 +458,8 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   static const double secsPerDay = 24 * 60 * 60;
   const int daysTillExpiry =
     1 + int( ::difftime( subkey.expirationTime(), time(0) ) / secsPerDay );
-  kDebug(5006) <<"Key 0x" << key.shortKeyID() <<" expires in less than"
-	           << daysTillExpiry << " days" << endl;
+  kDebug(5006) <<"Key 0x" << key.shortKeyID() <<"expires in less than"
+	           << daysTillExpiry << "days";
   const int threshold =
     ca
     ? ( key.isRoot()
@@ -1316,7 +1316,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   if ( !fingerprints.empty() ) {
     kDebug(5006) <<"Using encryption keys 0x"
 	             << fingerprints.join( ", 0x" )
-	             << " for " << person << endl;
+	             << "for" << person;
     std::vector<GpgME::Key> keys = lookup( fingerprints );
     if ( !keys.empty() ) {
       // Check if all of the keys are trusted and valid encryption keys
@@ -1385,7 +1385,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns,
   if ( patterns.empty() )
     return std::vector<GpgME::Key>();
   kDebug(5006) <<"Kleo::KeyResolver::lookup( \"" << patterns.join("\", \"" )
-	           << "\", " << secret << " )" << endl;
+	           << "\"," << secret << ")";
   std::vector<GpgME::Key> result;
   if ( mCryptoMessageFormats & (InlineOpenPGPFormat|OpenPGPMIMEFormat) )
     if ( const Kleo::CryptoBackend::Protocol * p = Kleo::CryptoBackendFactory::instance()->openpgp() ) {
@@ -1417,9 +1417,9 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items, CryptoMessageF
 			 std::back_inserter( si.keys ), IsNotForFormat( f ) );
     dump();
     kWarning( si.keys.empty() )
-      << "Kleo::KeyResolver::addKeys(): Fix EncryptionFormatPreferenceCounter. "
+      << "Kleo::KeyResolver::addKeys(): Fix EncryptionFormatPreferenceCounter."
       << "It detected a common format, but the list of such keys for recipient \""
-      << it->address << "\" is empty!" << endl;
+      << it->address << "\" is empty!";
     d->mFormatInfoMap[ f ].splitInfos.push_back( si );
   }
   dump();
@@ -1438,7 +1438,7 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
     }
     if ( f == AutoFormat )
       kWarning() <<"Kleo::KeyResolver::addKeys(): Something went wrong. Didn't find a format for \""
-                  << it->address << "\"" << endl;
+                  << it->address << "\"";
     else
       std::remove_copy_if( it->keys.begin(), it->keys.end(),
                            std::back_inserter( si.keys ), IsNotForFormat( f ) );

@@ -730,8 +730,7 @@ void KMComposeWin::autoSaveMessage()
   }
   KMMessage *msg = mComposedMessages.first();
 
-  kDebug(5006) << k_funcinfo <<"opening autoSaveFile" << mAutoSaveFilename
-               << endl;
+  kDebug(5006) << k_funcinfo <<"opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
   KSaveFile autoSaveFile( filename );
@@ -1959,7 +1958,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 #ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
   const int num = mMsg->numBodyParts();
   kDebug(5006) <<"KMComposeWin::setMsg() mMsg->numBodyParts="
-               << mMsg->numBodyParts() << endl;
+               << mMsg->numBodyParts();
 
   if ( num > 0 ) {
     KMMessagePart bodyPart;
@@ -2237,8 +2236,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   }
 
   if( mComposer ) {
-    kDebug(5006) <<"KMComposeWin::applyChanges() : applyChanges called twice"
-                 << endl;
+    kDebug(5006) <<"KMComposeWin::applyChanges() : applyChanges called twice";
     return;
   }
 
@@ -4026,8 +4024,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
 
 void KMComposeWin::slotContinueDoSend( bool sentOk )
 {
-  kDebug(5006) <<"KMComposeWin::slotContinueDoSend(" << sentOk <<" )"
-               << endl;
+  kDebug(5006) <<"KMComposeWin::slotContinueDoSend(" << sentOk <<")";
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinueDoSend( bool ) ) );
 
@@ -4688,7 +4685,7 @@ void KMComposeWin::cleanupAutoSave()
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
   if ( !mAutoSaveFilename.isEmpty() ) {
     kDebug(5006) << k_funcinfo <<"deleting autosave file"
-                 << mAutoSaveFilename << endl;
+                 << mAutoSaveFilename;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
     mAutoSaveFilename.clear();

@@ -99,7 +99,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     DwString type, subType;
     DwTypeEnumToStr( mType, type );
     DwSubtypeEnumToStr( mSubType, subType );
-    kDebug(5006) <<"\npartNode::partNode()" << type.c_str() <<"/" << subType.c_str() <<"";
+    kDebug(5006) <<"\npartNode::partNode()" << type.c_str() <<"/" << subType.c_str();
   }
 #endif
 }
@@ -164,7 +164,7 @@ partNode::~partNode() {
 #ifndef NDEBUG
 void partNode::dump( int chars ) const {
   kDebug(5006) << QString().fill( ' ', chars ) <<"+"
-		<< typeString() << '/' << subTypeString() << endl;
+		<< typeString() << '/' << subTypeString();
   if ( mChild )
     mChild->dump( chars + 1 );
   if ( mNext )
@@ -396,7 +396,7 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
   DwTypeEnumToStr( mType, typeStr );
   DwSubtypeEnumToStr( mSubType, subTypeStr );
   kDebug(5006) <<"partNode::findType() is looking at" << typeStr.c_str()
-                << "/" << subTypeStr.c_str() << endl;
+                << "/" << subTypeStr.c_str();
 #endif
     if(    (mType != DwMime::kTypeUnknown)
            && (    (type == DwMime::kTypeUnknown)

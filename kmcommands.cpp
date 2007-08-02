@@ -2151,7 +2151,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
      * Yes, it is really that broken. *sigh* So we cannot report error here, I guess. */
     if ( !mLostBoys.isEmpty() ) {
       kDebug(5006) <<"### Not all moved messages reported back that they were" << endl
-                    <<  "### added to the target folder. Did uidValidity change? " << endl;
+                    <<  "### added to the target folder. Did uidValidity change?";
     }
     completeMove( OK );
   } else {
@@ -2164,7 +2164,7 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
   if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
     //kDebug(5006) <<"KMMoveCommand::msgAddedToDestFolder different"
-    //                 "folder or invalid serial number." << endl;
+    //                 "folder or invalid serial number.";
     return;
   }
   mLostBoys.removeAll(serNum);

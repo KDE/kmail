@@ -395,11 +395,11 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 
   if (!bPopFilter) {
     kDebug(5006) <<"apply on inbound =="
-		  << aFilter->applyOnInbound() << endl;
+		  << aFilter->applyOnInbound();
     kDebug(5006) <<"apply on outbound =="
-		  << aFilter->applyOnOutbound() << endl;
+		  << aFilter->applyOnOutbound();
     kDebug(5006) <<"apply on explicit =="
-		  << aFilter->applyOnExplicit() << endl;
+		  << aFilter->applyOnExplicit();
 
     // NOTE: setting these values activates the slot that sets them in
     // the filter! So make sure we have the correct values _before_ we
@@ -489,8 +489,7 @@ void KMFilterDlg::slotApplicabilityChanged()
     kDebug(5006) <<"KMFilterDlg: setting filter to be applied at"
                   << ( mFilter->applyOnInbound() ? "incoming " : "" )
                   << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
-                  << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
-                  << endl;
+                  << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" );
   }
 }
 
@@ -1193,7 +1192,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
   int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
     kDebug(5006) <<"KMFilterActionWidgetLister: Clipping action list to"
-	      << mMaxWidgets << " items!" << endl;
+	      << mMaxWidgets << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
       mActionList->removeLast();

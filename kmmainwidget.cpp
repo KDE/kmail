@@ -944,8 +944,8 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   for ( QStringList::const_iterator it = keys.begin();
         it != keys.end();
         ++it ) {
-    kDebug(5006) << newInFolder.find( *it ).value() <<" new message(s) in"
-                  << *it << endl;
+    kDebug(5006) << newInFolder.find( *it ).value() << "new message(s) in"
+                  << *it;
 
     KMFolder *folder = kmkernel->findFolderById( *it );
 

@@ -1252,8 +1252,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage &theMessage,
   const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos =
     mKeyResolver->encryptionItems( Kleo::InlineOpenPGPFormat );
   kWarning( splitInfos.empty() )
-    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for InlineOpenPGPFormat"
-    << endl;
+    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for InlineOpenPGPFormat";
   std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it;
   for ( it = splitInfos.begin(); it != splitInfos.end(); ++it ) {
     const Kleo::KeyResolver::SplitInfo &splitInfo = *it;
@@ -1448,7 +1447,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
   }
 
   kDebug(5006) <<"mEarlyAddAttachments=" << mEarlyAddAttachments
-               << " mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody << endl;
+               << "mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody;
 
   // if an html message is to be generated, make a text/plain and text/html part
   if ( mIsRichText ) {
@@ -1539,7 +1538,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
         QList<int> dummy;
         it->part->setBodyAndGuessCte( body, dummy, false, it->sign );
         kDebug(5006) <<"Changed encoding of message part from"
-                     << cte << " to " << it->part->cteStr() << endl;
+                     << cte << "to" << it->part->cteStr();
       }
     }
   }
@@ -1698,8 +1697,8 @@ void MessageComposer::continueComposeMessage( KMMessage &theMessage,
   const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos =
     mKeyResolver->encryptionItems( format );
   kWarning( splitInfos.empty() )
-    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for "
-    << Kleo::cryptoMessageFormatToString( format ) << endl;
+    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for"
+    << Kleo::cryptoMessageFormatToString( format );
 
   if ( !splitInfos.empty() && doEncrypt && !saveMessagesEncrypted() ) {
     mJobs.push_front( new SetLastMessageAsUnencryptedVersionOfLastButOne( this ) );
@@ -1805,7 +1804,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
     msg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
     msg->headers().ContentType().CreateBoundary( 0 );
     kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                 << "set top level Content-Type to Multipart/Mixed" << endl;
+                 << "set top level Content-Type to Multipart/Mixed";
 
     // add our Body Part
     DwBodyPart *tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
@@ -1925,13 +1924,13 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
       msg->headers().ContentType().Parse();
       kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
                    << "set top level Content-Type from originalContentTypeStr()="
-                   << ourFineBodyPart.originalContentTypeStr() << endl;
+                   << ourFineBodyPart.originalContentTypeStr();
     } else {
       msg->headers().ContentType().FromString(
         ourFineBodyPart.typeStr() + '/' + ourFineBodyPart.subtypeStr() );
       kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                   << "set top level Content-Type to "
-                   << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
+                   << "set top level Content-Type to"
+                   << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr();
     }
     if ( !ourFineBodyPart.charset().isEmpty() ) {
       msg->setCharset( ourFineBodyPart.charset() );
@@ -1945,7 +1944,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
 
     if ( mDebugComposerCrypto ) {
       kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                   << "top level headers and body adjusted" << endl;
+                   << "top level headers and body adjusted";
     }
 
     // set body content
@@ -1962,10 +1961,10 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
 
   if ( mDebugComposerCrypto ) {
     kDebug(5006) <<"MessageComposer::addBodyAndAttachments():"
-                 << "Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
+                 << "Final message:\n|||" << msg->asString() << "|||\n\n";
     msg->headers().Assemble();
     kDebug(5006) <<"\n\n\nMessageComposer::addBodyAndAttachments():"
-                 << "Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
+                 << "Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n";
   }
 }
 

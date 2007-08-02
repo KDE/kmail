@@ -502,7 +502,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
   int index = mCollectionMap.count();
 
   kDebug(5006) <<"RecipientsPicker::insertCollection()" << coll->title()
-    << "  index: " << index << endl;
+    << "index:" << index;
 
   mCollectionCombo->insertItem( index, coll->title() );
   mCollectionMap.insert( index, coll );

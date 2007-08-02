@@ -75,7 +75,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
     if ( !scoreValid ) {
       score = -5.0;
       kDebug(5006) <<"Score could not be extracted from header '"
-                    << mField << "'" << endl;
+                    << mField << "'";
     } else {
       bool floatValid = false;
       switch ( (*it).scoreType() ) {
@@ -94,8 +94,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug(5006) <<"Score (" << scoreString <<") is no number"
-                          << endl;
+            kDebug(5006) <<"Score (" << scoreString <<") is no number";
           }
           else
             score *= 100.0;
@@ -105,8 +104,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug(5006) <<"Score (" << scoreString <<") is no number"
-                          << endl;
+            kDebug(5006) <<"Score (" << scoreString <<") is no number";
           }
           break;
 
@@ -114,8 +112,7 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           score = scoreString.toFloat( &floatValid );
           if ( !floatValid ) {
             score = -3.0;
-            kDebug(5006) <<"Score (" << scoreString <<") is no number"
-                          << endl;
+            kDebug(5006) <<"Score (" << scoreString <<") is no number";
             break;
           }
 
@@ -128,14 +125,14 @@ SpamScores SpamHeaderAnalyzer::getSpamScores( const KMMessage* message ) {
           else {
             score = -6.0;
             kDebug(5006) <<"Threshold could not be extracted from header '"
-                          << mField << "'" << endl;
+                          << mField << "'";
             break;
           }
           float threshold = thresholdString.toFloat( &floatValid );
           if ( !floatValid || ( threshold <= 0.0 ) ) {
             score = -4.0;
             kDebug(5006) <<"Threshold (" << thresholdString <<") is no"
-                          << "number or is negative" << endl;
+                          << "number or is negative";
             break;
           }
 

@@ -166,8 +166,8 @@ static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sTy
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = msg.getFirstDwBodyPart();
   while( part ){
-  //    kDebug(5006) << part->Headers().ContentType().TypeStr().c_str() <<""
-  //                << part->Headers().ContentType().SubtypeStr().c_str() << endl;
+  //    kDebug(5006) << part->Headers().ContentType().TypeStr().c_str()
+  //                << part->Headers().ContentType().SubtypeStr().c_str();
     if ( part->hasHeaders() ) {
       DwMediaType& contentType = part->Headers().ContentType();
       if ( startsWith ) {
@@ -208,7 +208,7 @@ static void debugBodyParts( const char* foo, const KMMessage& msg )
   for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
     if ( part->hasHeaders() ) {
       kDebug(5006) <<" bodypart:" << part;
-      kDebug(5006) <<"" << part->Headers().AsString().c_str();
+      kDebug(5006) << part->Headers().AsString().c_str();
     }
     else
       kDebug(5006) <<" part" << part <<" has no headers";
@@ -435,7 +435,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
       // Message stored
       sernum = msg->getMsgSerNum();
     kDebug(5006) <<"addIncidenceKolab(): Message done and saved. Sernum:"
-                  << sernum << endl;
+                  << sernum;
 
     //debugBodyParts( "after addMsg", *msg );
     addFolderChange( &folder,Contents );
@@ -494,7 +494,7 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
   int n = f->count();
   f->close( "kolabcount" );
   kDebug(5006) <<"KMailICalIfaceImpl::incidencesKolabCount("
-                << resource << " ) returned " << n << endl;
+                << resource << ") returned" << n;
   return n;
 }
 
@@ -522,7 +522,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
   int stopIndex = nbMessages == -1 ? f->count() :
                   qMin( f->count(), startIndex + nbMessages );
   kDebug(5006) <<"KMailICalIfaceImpl::incidencesKolab(" << mimetype <<","
-                << resource << " ) from " << startIndex << " to " << stopIndex << endl;
+                << resource << ") from" << startIndex << "to" << stopIndex;
 
   for(int i = startIndex; i < stopIndex; ++i) {
 #if 0
@@ -620,8 +620,8 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   if ( f ) {
     subResources.append( SubResource( f->location(),  f->prettyUrl(),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-    kDebug(5006) <<"Adding(1) folder" << f->location() <<"" <<
-      ( f->isReadOnly() ? "readonly" : "" ) << endl;
+    kDebug(5006) <<"Adding(1) folder" << f->location() <<
+      ( f->isReadOnly() ? "readonly" : "" );
   }
 
   // get the extra ones
@@ -632,8 +632,8 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
     if ( f && f->storage()->contentsType() == t ) {
       subResources.append( SubResource( f->location(), f->prettyUrl(),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
-      kDebug(5006) <<"Adding(2) folder" << f->location() <<"" <<
-              ( f->isReadOnly() ? "readonly" : "" ) << endl;
+      kDebug(5006) <<"Adding(2) folder" << f->location() <<
+              ( f->isReadOnly() ? "readonly" : "" );
     }
   }
 
@@ -724,10 +724,10 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
   Q_ASSERT( !resource.isEmpty() );
 
   kDebug(5006) <<"KMailICalIfaceImpl::update(" << resource <<"," << sernum <<" )";
-  kDebug(5006) << attachmentURLs <<"";
-  kDebug(5006) << attachmentMimetypes <<"";
-  kDebug(5006) << attachmentNames <<"";
-  kDebug(5006) <<"deleted attachments:" << deletedAttachments <<"";
+  kDebug(5006) << attachmentURLs;
+  kDebug(5006) << attachmentMimetypes;
+  kDebug(5006) << attachmentNames;
+  kDebug(5006) <<"deleted attachments:" << deletedAttachments;
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -1032,7 +1032,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     return;
 
   QString type = folderContentsType( folder->storage()->contentsType() );
-  //kDebug(5006) << folder <<"" << type <<"" << sernum;
+  //kDebug(5006) << folder << type << sernum;
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -1062,8 +1062,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     }
     if ( ok ) {
         kDebug(5006) <<"Emitting D-Bus signal incidenceDeleted("
-                      << type << ", " << folder->location() << ", " << uid
-                      << " )" << endl;
+                      << type << "," << folder->location() << "," << uid
+                      << ")";
 
 //        incidenceDeleted( type, folder->location(), uid );
     QDBusMessage message =
@@ -1729,9 +1729,9 @@ void KMailICalIfaceImpl::readConfig()
   // BEGIN TILL TODO The below only uses the dimap folder manager, which
   // will fail for all other folder types. Adjust.
 
-  kDebug(5006) << k_funcinfo <<"mCalendar=" << mCalendar <<"" << mCalendar->location();
-  kDebug(5006) << k_funcinfo <<"mContacts=" << mContacts <<"" << mContacts->location();
-  kDebug(5006) << k_funcinfo <<"mNotes=" << mNotes <<"" << mNotes->location();
+  kDebug(5006) << k_funcinfo <<"mCalendar=" << mCalendar << mCalendar->location();
+  kDebug(5006) << k_funcinfo <<"mContacts=" << mContacts << mContacts->location();
+  kDebug(5006) << k_funcinfo <<"mNotes=" << mNotes << mNotes->location();
 
   // Find all extra folders
   QStringList folderNames;

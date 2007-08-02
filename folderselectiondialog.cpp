@@ -157,7 +157,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
           } else {
             // chain somehow broken - what does cause this ???
             kDebug( 5006 ) <<"You shouldn't get here: depth=" << depth
-                            << "folder name=" << fti->text( 0 ) << endl;
+                            << "folder name=" << fti->text( 0 );
             item = new FolderItem( this );
             lastTopItem = item;
           }

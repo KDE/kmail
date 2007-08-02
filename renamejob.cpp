@@ -143,7 +143,7 @@ void RenameJob::execute()
     dst.setPath( mNewImapPath );
     KIO::SimpleJob *job = KIO::rename( src, dst, true );
     kDebug(5006)<<"RenameJob::rename -" << src.prettyUrl()
-      << " |=> " << dst.prettyUrl() << endl;
+      << "|=>" << dst.prettyUrl();
     ImapAccountBase::jobData jd( src.url() );
     account->insertJob( job, jd );
     KIO::Scheduler::assignJobToSlave( account->slave(), job );

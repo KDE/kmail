@@ -1092,7 +1092,7 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
       if ( i == encodings.size() ) {
         // the value of encoding is unknown => use Auto
         kWarning(5006) <<"Unknown override character encoding \"" << encoding
-                       << "\". Using Auto instead." << endl;
+                       << "\". Using Auto instead.";
         mSelectEncodingAction->setCurrentItem( 0 );
         mOverrideEncoding.clear();
       }
@@ -1143,8 +1143,8 @@ void KMReaderWin::readGlobalOverrideCodec()
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
-      kDebug(5006) <<"(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject() <<""
-        << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
+      kDebug(5006) <<"(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
+        << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
 
 	//Reset the level quote if the msg has changed.
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
@@ -1488,9 +1488,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
 #ifndef NDEBUG
   kDebug( 5006 )
-    << "parseMsg(KMMessage* aMsg "
+    << "parseMsg(KMMessage* aMsg"
     << ( aMsg == message() ? "==" : "!=" )
-    << " aMsg )" << endl;
+    << "aMsg )";
 #endif
 
   KMMessagePart msgPart;
@@ -1648,9 +1648,9 @@ kDebug(5006) <<"KMReaderWin  -  attach unencrypted message to aMsg";
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 {
   kFatal( !headerStyle(), 5006 )
-    << "trying to writeMsgHeader() without a header style set!" << endl;
+    << "trying to writeMsgHeader() without a header style set!";
   kFatal( !headerStrategy(), 5006 )
-    << "trying to writeMsgHeader() without a header strategy set!" << endl;
+    << "trying to writeMsgHeader() without a header strategy set!";
   QString href;
   if (hasVCard)
     href = QString("file:") + KUrl::toPercentEncoding( mTempFiles.last() );
@@ -2378,7 +2378,7 @@ KMMessage *KMReaderWin::message( KMFolder **aFolder ) const
     if (folder )
       message = folder->getMsg( index );
     if (!message)
-      kWarning(5006) <<"Attempt to reference invalid serial number" << mLastSerNum <<"";
+      kWarning(5006) <<"Attempt to reference invalid serial number" << mLastSerNum;
     return message;
   }
   return 0;

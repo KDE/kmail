@@ -624,24 +624,24 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
     // Something is seriously rotten here!
     // TODO: Tell the user that he has a problem
     kDebug(5006) <<"No uidvalidity available for folder"
-                  << mFolder->objectName() << endl;
+                  << mFolder->objectName();
   }
   else {
     int b = cstr.indexOf("\r\n", a);
     if ( (b - a - 15) >= 0 ) {
       QString uidv = cstr.mid(a + 15, b - a - 15);
       // kDebug(5006) <<"New uidv =" << uidv <<", old uidv ="
-      //               << mFolder->uidValidity() << endl;
+      //               << mFolder->uidValidity();
       if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
         // kDebug(5006) <<"Expunging the mailbox" << mFolder->name()
-        //               << "!" << endl;
+        //               << "!";
         mFolder->expunge();
         mFolder->setLastUid( 0 );
         mFolder->clearUidMap();
       }
     } else
       kDebug(5006) <<"No uidvalidity available for folder"
-                    << mFolder->objectName() << endl;
+                    << mFolder->objectName();
   }
 
   mAccount->removeJob(it);

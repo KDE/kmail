@@ -3051,7 +3051,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                     break;
                 }
                 if ((len < 0) || (len > KMAIL_MAX_KEY_LEN)) {
-                    kDebug(5006) <<"Whoa.2! len" << len <<"" << __FILE__ <<":" << __LINE__;
+                    kDebug(5006) <<"Whoa.2! len" << len << __FILE__ <<":" << __LINE__;
                     error = true;
                     continue;
                 }

@@ -853,7 +853,7 @@ namespace {
     if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
       g_chunk_offset = g_chunk_length;
       kDebug( 5006 ) <<"This should never happen.."
-		      << __FILE__ << ":" << __LINE__ << endl;
+		      << __FILE__ << ":" << __LINE__;
       x = 0;
     } else {
       // the memcpy is optimized out by the compiler for the values
@@ -1200,7 +1200,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
   if ( !rx.isValid() ) {
     kWarning(5006) <<"KMMessage::replacePrefixes(): bigRegExp = \""
                     << bigRegExp << "\"\n"
-                    << "prefix regexp is invalid!" << endl;
+                    << "prefix regexp is invalid!";
     // try good ole Re/Fwd:
     recognized = str.startsWith( newPrefix );
   } else { // valid rx

@@ -1695,8 +1695,8 @@ void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
     mCapaTLS = 0;
   mCapaSSL = popCapabilitiesFromStringList( capaSSL );
   kDebug(5006) <<"mCapaNormal =" << mCapaNormal
-                << "; mCapaSSL = " << mCapaSSL
-                << "; mCapaTLS = " << mCapaTLS << endl;
+                << "; mCapaSSL =" << mCapaSSL
+                << "; mCapaTLS =" << mCapaTLS;
   mPop.encryptionNone->setEnabled( !capaNormal.isEmpty() );
   mPop.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
   mPop.encryptionTLS->setEnabled( mCapaTLS != 0 );
@@ -1801,8 +1801,8 @@ void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
     mCapaTLS = 0;
   mCapaSSL = imapCapabilitiesFromStringList( capaSSL );
   kDebug(5006) <<"mCapaNormal =" << mCapaNormal
-                << "; mCapaSSL = " << mCapaSSL
-                << "; mCapaTLS = " << mCapaTLS << endl;
+                << "; mCapaSSL =" << mCapaSSL
+                << "; mCapaTLS =" << mCapaTLS;
   mImap.encryptionNone->setEnabled( !capaNormal.isEmpty() );
   mImap.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
   mImap.encryptionTLS->setEnabled( mCapaTLS != 0 );

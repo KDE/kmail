@@ -109,7 +109,7 @@ int MboxCompactionJob::executeNow( bool silent )
 
   if ( KMFolderIndex::IndexOk != mbox->indexStatus() ) {
     kDebug(5006) <<"Critical error:" << storage->location()
-                 << " has been modified by an external application while KMail was running." << endl;
+                 << "has been modified by an external application while KMail was running.";
     //      exit(1); backed out due to broken nfs
   }
 
@@ -123,8 +123,8 @@ int MboxCompactionJob::executeNow( bool silent )
   umask( old_umask );
   if (!mTmpFile) {
     kWarning(5006) <<"Couldn't start compacting" << mSrcFolder->label()
-                   << " : " << strerror( errno )
-                   << " while creating " << mTempName << endl;
+                   << ":" << strerror( errno )
+                   << "while creating" << mTempName;
     return errno;
   }
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
@@ -135,7 +135,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mCurrentIndex = 0;
 
   kDebug(5006) <<"MboxCompactionJob: starting to compact folder"
-               << mSrcFolder->location() << " into " << mTempName << endl;
+               << mSrcFolder->location() << "into" << mTempName;
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {
     mTimer.start( COMPACTIONJOB_TIMERINTERVAL );
@@ -239,7 +239,7 @@ int MaildirCompactionJob::executeNow( bool silent )
   mCurrentIndex = 0;
 
   kDebug(5006) <<"MaildirCompactionJob: starting to compact in folder"
-               << mSrcFolder->location() << endl;
+               << mSrcFolder->location();
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate ) {
     mTimer.start( COMPACTIONJOB_TIMERINTERVAL );

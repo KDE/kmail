@@ -282,7 +282,7 @@ void KMSearch::slotSearchFolderResult( KMFolder *folder,
     return;
   }
   kDebug(5006) << k_funcinfo << folder->label()
-               << " found " << serNums.count() << endl;
+               << "found" << serNums.count();
   mLastFolder = folder->label();
   QList<quint32>::Iterator it;
   for ( it = serNums.begin(); it != serNums.end(); ++it ) {
@@ -612,8 +612,7 @@ int KMFolderSearch::create()
 
   kDebug(5006) <<"Creating folder" << location();
   if ( access( QFile::encodeName( location() ), F_OK ) == 0 ) {
-    kDebug(5006) <<"KMFolderSearch::create call to access function failed."
-                 << endl;
+    kDebug(5006) <<"KMFolderSearch::create call to access function failed.";
     return EEXIST;
   }
 
@@ -779,7 +778,7 @@ int KMFolderSearch::writeIndex( bool )
 
     if (!tmpIndexStream) {
         kDebug(5006) <<"Cannot write '" << filename
-            << strerror(errno) << " (" << errno << ")" << endl;
+            << strerror(errno) << "(" << errno << ")";
         truncate(QFile::encodeName(filename), 0);
         return -1;
     }
@@ -1017,7 +1016,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     return;
   }
   kDebug(5006) << folder->label() <<": serNum" << serNum
-               << " matches?" << matches << endl;
+               << "matches?" << matches;
   folder->open( "SearchExamineMsgDone" );
 
   if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {

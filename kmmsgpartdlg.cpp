@@ -257,8 +257,7 @@ KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
   for ( int i = 0 ; i < mI18nizedEncodings.count() ; ++i )
     if ( s == mI18nizedEncodings.at(i) )
       return encodingTypes[i].encoding;
-  kFatal(5006) <<"KMMsgPartDialog::encoding(): Unknown encoding encountered!"
-                << endl;
+  kFatal(5006) <<"KMMsgPartDialog::encoding(): Unknown encoding encountered!";
   return None; // keep compiler happy
 }
 
@@ -275,7 +274,7 @@ void KMMsgPartDialog::setEncoding( Encoding encoding ) {
       mEncoding->setCurrentIndex( 0 );
     }
   kFatal(5006) <<"KMMsgPartDialog::setEncoding():"
-    "Unknown encoding encountered!" << endl;
+    "Unknown encoding encountered!";
 }
 
 void KMMsgPartDialog::setShownEncodings( int encodings ) {
@@ -436,7 +435,7 @@ void KMMsgPartDialogCompat::applyChanges()
   QByteArray cte;
   if (subtype == "rfc822" && type == "message")
     kWarning( encoding() != SevenBit && encoding() != EightBit, 5006 )
-      << "encoding on rfc822/message must be \"7bit\" or \"8bit\"" << endl;
+      << "encoding on rfc822/message must be \"7bit\" or \"8bit\"";
   switch ( encoding() ) {
   case SevenBit:        cte = "7bit";             break;
   case EightBit:        cte = "8bit";             break;
