@@ -48,7 +48,7 @@ SupportsUnsure=0
 ScoreName=Bogofilter
 ScoreHeader=X-Bogosity
 ScoreType=Decimal
-ScoreValueRegexp=spamicity=([\\\\d\\\\.]+)
+ScoreValueRegexp=spamicity=([\\d\\.]+)
 ScoreThresholdRegexp=
 
 [Spamtool #3]
@@ -114,7 +114,7 @@ SupportsUnsure=1
 ScoreName=Spambayes
 ScoreHeader=X-Spambayes-Classification
 ScoreType=Decimal
-ScoreValueRegexp=(?:spam|ham);\\ ([\\\\d\\\\.]+)
+ScoreValueRegexp=(?:spam|ham);\\ ([\\d\\.]+)
 ScoreThresholdRegexp=
 
 [Spamtool #6]
