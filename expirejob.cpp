@@ -125,7 +125,7 @@ void ExpireJob::slotDoWork()
     const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
     if (mb == 0)
       continue;
-    if ( ( mb->isImportant() || mb->isTodo() )
+    if ( ( mb->isImportant() || mb->isTodo() || mb->isWatched() )
       && GlobalSettings::self()->excludeImportantMailFromExpiry() )
        continue;
 
