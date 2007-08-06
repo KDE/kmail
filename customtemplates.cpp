@@ -342,7 +342,14 @@ void CustomTemplates::slotTypeActivated( int index )
 //btw, all the problems with KShortcut that you have are because KShortcut is a subclass of
 //QList<QKeySequence>. I have contacted Simon Hausmann who did this. I reworked the API, but
 //the list thing wasn't me. Really :) -- ahartmetz
-
+#ifdef __GNUC__
+#warning FIXME: Shortcut Handling broken
+// Shortcut handling is broken for custom templates, tags and filters.
+// The code assumes that the key sequence widget's shortcut is NOT already
+// set when this function is called, which is no longer the case with the
+// new KKeySequenceWidget.
+// This needs better support from KKeySequenceWidget. --tmcguire
+#endif
 void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
 {
   bool assign = true;

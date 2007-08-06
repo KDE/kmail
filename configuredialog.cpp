@@ -2497,6 +2497,14 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
     slotEmitChanged();
 }
 
+#ifdef __GNUC__
+#warning FIXME: Shortcut Handling broken
+// Shortcut handling is broken for custom templates, tags and filters.
+// The code assumes that the key sequence widget's shortcut is NOT already
+// set when this function is called, which is no longer the case with the
+// new KKeySequenceWidget.
+// This needs better support from KKeySequenceWidget. --tmcguire
+#endif
 void AppearancePage::MessageTagTab::slotShortcutCaptured( const QKeySequence &sc )
 {
   QKeySequence mySc(sc);

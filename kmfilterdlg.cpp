@@ -526,6 +526,14 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
   }
 }
 
+#ifdef __GNUC__
+#warning FIXME: Shortcut Handling broken
+// Shortcut handling is broken for custom templates, tags and filters.
+// The code assumes that the key sequence widget's shortcut is NOT already
+// set when this function is called, which is no longer the case with the
+// new KKeySequenceWidget.
+// This needs better support from KKeySequenceWidget. --tmcguire
+#endif
 void KMFilterDlg::slotCapturedShortcutChanged( const QKeySequence& ks )
 {
   if ( !ks.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( ks ) ) ) {
