@@ -23,6 +23,9 @@
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "folderstorage.h"
+#include "kmfolder.h"
+#include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
 #include "renamejob.h"
 #include "copyfolderjob.h"
 
@@ -178,6 +181,27 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 
   if (!aFolderDir)
     fldDir = &mDir;
+
+  // check if this is a dimap folder and the folder we want to create has been deleted
+  // since the last sync
+  if ( fldDir->owner() && fldDir->owner()->folderType() == KMFolderTypeCachedImap ) {
+    KMFolderCachedImap *storage = static_cast<KMFolderCachedImap*>( fldDir->owner()->storage() );
+    KMAcctCachedImap *account = storage->account();
+    // guess imap path
+    QString imapPath = storage->imapPath();
+    if ( !imapPath.endsWith( "/" ) )
+      imapPath += "/";
+    imapPath += fName;
+    if ( account->isDeletedFolder( imapPath ) || account->isDeletedFolder( imapPath + "/" )
+       || account->isPreviouslyDeletedFolder( imapPath )
+       || account->isPreviouslyDeletedFolder( imapPath + "/" ) ) {
+      KMessageBox::error( 0, i18n("A folder with the same name has been deleted since the last mail check."
+          "You need to check mails first before creating another folder with the same name."),
+          i18n("Could Not Create Folder") );
+      return 0;
+    }
+  }
+
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
     if ( fld->id() == 0 )
