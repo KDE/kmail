@@ -3328,17 +3328,28 @@ void KMComposeWin::editAttach(int index, bool openWith)
 {
   KMMessagePart* msgPart = mAtmList.at(index);
   const QString contentTypeStr =
-    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).lower();
+    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).toLower();
 
   KTemporaryFile* atmTempFile = new KTemporaryFile();
+  if ( !atmTempFile->open() ) {
+    KMessageBox::sorry( this,
+         i18n("KMail was unable to create the temporary file <filename>%1</filename>.\n"
+              "Because of this, editing this attachment is not possible.",
+              atmTempFile->fileName()),
+         i18n("Unable to edit attachment") );
+    return;
+  }
   mAtmTempList.append( atmTempFile );
   atmTempFile->setAutoRemove( true );
-  atmTempFile->writeBlock( msgPart->bodyDecodedBinary() );
+  atmTempFile->write( msgPart->bodyDecodedBinary() );
   atmTempFile->flush();
 
 
-  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl( atmTempFile->name() ), contentTypeStr, openWith, this );
-  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(slotEditDone(KMail::EditorWatcher*)) );
+  KMail::EditorWatcher *watcher = 
+      new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
+                                contentTypeStr, openWith, this );
+  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)),
+           SLOT(slotEditDone(KMail::EditorWatcher*)) );
   if ( watcher->start() ) {
     mEditorMap.insert( watcher, msgPart );
     mEditorTempFiles.insert( watcher, atmTempFile );
@@ -4967,4 +4978,13 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
   tf->reset();
   QByteArray data = tf->readAll();
   part->setBodyEncodedBinary( data );
+
+  // Find the listview item associated with this attachment and update it
+  KMAtmListViewItem *listviewItem;
+  foreach( listviewItem, mAtmItemList ) {
+    if ( listviewItem->attachment() == part ) {
+      msgPartToItem( part, listviewItem, false );
+      break;
+    }
+  }
 }
