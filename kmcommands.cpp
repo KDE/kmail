@@ -3362,6 +3362,10 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   if ( !part.isComplete() )
      return Failed;
 
+  if ( !mTempFile.open() ) {
+    kWarning(5006) << "KMEditAttachmentCommand: Unable to open temp file.";
+    return Failed;
+  }
   mTempFile.write( part.bodyDecodedBinary() );
   mTempFile.flush();
 
@@ -3450,6 +3454,10 @@ KMCommand::Result CreateTodoCommand::execute()
 
   KTemporaryFile tf;
   tf.setAutoRemove( true );
+  if ( !tf.open() ) {
+    kWarning(5006) << "CreateTodoCommand: Unable to open temp file.";
+    return Failed;
+  }
   QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + "/" + msg->msgId();
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
 
