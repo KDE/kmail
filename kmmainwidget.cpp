@@ -2559,7 +2559,7 @@ void KMMainWidget::updateCustomTemplateMenus()
 {
   if ( !mCustomTemplateActions.isEmpty() ) {
     for ( QList<KAction*>::iterator ait = mCustomTemplateActions.begin();
-	  ait != mCustomTemplateActions.end() ; ++ait ) {
+          ait != mCustomTemplateActions.end() ; ++ait ) {
       //(*ait)->unplugAll();
       delete (*ait);
     }
@@ -2575,7 +2575,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   delete mCustomForwardMapper;
 
   mCustomForwardActionMenu = new KActionMenu( KIcon( "mail_custom_forward" ),
-					      i18n("With Custom Template"), this );
+                                              i18n("With Custom Template"), this );
   actionCollection()->addAction( "custom_forward", mCustomForwardActionMenu );
   QSignalMapper *mCustomForwardMapper = new QSignalMapper( this );
   connect( mCustomForwardMapper, SIGNAL( mapped( int ) ),
@@ -2584,7 +2584,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   mForwardActionMenu->addAction( mCustomForwardActionMenu );
 
   mCustomReplyActionMenu = new KActionMenu( KIcon( "mail_custom_reply" ),
-					    i18n("Reply With Custom Template"), this );
+                                            i18n("Reply With Custom Template"), this );
   actionCollection()->addAction( "custom_reply", mCustomReplyActionMenu );
   QSignalMapper *mCustomReplyMapper = new QSignalMapper( this );
   connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
@@ -2593,7 +2593,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   mReplyActionMenu->addAction( mCustomReplyActionMenu );
 
   mCustomReplyAllActionMenu = new KActionMenu( KIcon( "mail_custom_reply_all" ),
-					       i18n("Reply to All With Custom Template"), this );
+                                               i18n("Reply to All With Custom Template"), this );
   actionCollection()->addAction( "custom_reply_all", mCustomReplyAllActionMenu );
   QSignalMapper *mCustomReplyAllMapper = new QSignalMapper( this );
   connect( mCustomReplyAllMapper, SIGNAL( mapped( int ) ),

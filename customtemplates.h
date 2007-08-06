@@ -25,10 +25,8 @@
 #include <QHash>
 
 #include "ui_customtemplates_base.h"
-#include "templatesinsertcommand.h"
 
 class KShortcut;
-class Q3ListViewItem;
 
 struct CustomTemplateItem;
 typedef QHash<QString,CustomTemplateItem*> CustomTemplateItemList;
@@ -69,12 +67,16 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
 
   protected:
 
-    Q3ListViewItem *mCurrentItem;
     CustomTemplateItemList mItemList;
 
     QPixmap mReplyPix;
     QPixmap mReplyAllPix;
     QPixmap mForwardPix;
+
+  private slots:
+
+    void slotHelpLinkClicked( const QString& );
+    void slotNameChanged( const QString & text );
 };
 
 struct CustomTemplateItem

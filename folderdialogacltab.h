@@ -41,6 +41,7 @@ class QStackedWidget;
 class KHBox;
 class Q3VButtonGroup;
 class K3ListView;
+class Q3ListViewItem;
 class QLabel;
 namespace KIO { class Job; }
 

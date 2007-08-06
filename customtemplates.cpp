@@ -1,37 +1,40 @@
 /*   -*- mode: C++; c-file-style: "gnu" -*-
- *   kmail: KDE mail client
- *   This file: Copyright (C) 2006 Dmitry Morozhnikov
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- */
+*   kmail: KDE mail client
+*   This file: Copyright (C) 2006 Dmitry Morozhnikov
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program; if not, write to the Free Software
+*   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+*
+*/
 
+#include "customtemplates.h"
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <qfont.h>
+#include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qtextedit.h>
 #include <qlineedit.h>
+#include <QWhatsThis>
 #include <qtoolbox.h>
+#include <QHeaderView>
+
+#include <klocale.h>
+#include <kglobal.h>
 #include <kdebug.h>
-#include <qfont.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
-#include <k3listview.h>
 #include <klineedit.h>
-#include <qcombobox.h>
 #include <kshortcut.h>
 #include <kmessagebox.h>
 #include <kkeysequencewidget.h>
@@ -42,10 +45,8 @@
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 
-#include "customtemplates.h"
-
 CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
-  : QWidget(parent), mCurrentItem( 0 )
+  : QWidget(parent)
 {
   setupUi(this);
   setObjectName(name);
@@ -54,65 +55,74 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   mEdit->setFont( f );
 
   mAdd->setIcon( KIcon( "list-add" ) );
+  mAdd->setEnabled( false );
   mRemove->setIcon( KIcon( "list-remove" ) );
 
-  mList->setColumnWidth( 0, 50 );
-  mList->setColumnWidth( 1, 100 );
+  mList->setColumnWidth( 0, 100 );
+  mList->header()->setStretchLastSection( true );
 
   mEditFrame->setEnabled( false );
 
   connect( mEdit, SIGNAL( textChanged() ),
-           this, SLOT( slotTextChanged( void ) ) );
+          this, SLOT( slotTextChanged( void ) ) );
+
+  connect( mName, SIGNAL( textChanged( const QString & ) ),
+           this, SLOT( slotNameChanged( const QString & ) ) );
 
   connect( mInsertCommand, SIGNAL( insertCommand(const QString&, int) ),
-           this, SLOT( slotInsertCommand(const QString&, int) ) );
+          this, SLOT( slotInsertCommand(const QString&, int) ) );
 
   connect( mAdd, SIGNAL( clicked() ),
-           this, SLOT( slotAddClicked() ) );
+          this, SLOT( slotAddClicked() ) );
   connect( mRemove, SIGNAL( clicked() ),
-           this, SLOT( slotRemoveClicked() ) );
-  connect( mList, SIGNAL( selectionChanged() ),
-           this, SLOT( slotListSelectionChanged() ) );
+          this, SLOT( slotRemoveClicked() ) );
+  connect( mList, SIGNAL( itemSelectionChanged() ),
+          this, SLOT( slotListSelectionChanged() ) );
   connect( mType, SIGNAL( activated( int ) ),
-           this, SLOT( slotTypeActivated( int ) ) );
+          this, SLOT( slotTypeActivated( int ) ) );
 
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged(const QKeySequence &) ),
-           this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
+          this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
 
   mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", K3Icon::Small );
   mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", K3Icon::Small );
   mForwardPix = KIconLoader().loadIcon( "mail-forward", K3Icon::Small );
 
   mType->clear();
-  mType->insertItem( QPixmap(), i18nc( "Message->", "Universal" ), TUniversal );
-  mType->insertItem( mReplyPix, i18nc( "Message->", "Reply" ), TReply );
-  mType->insertItem( mReplyAllPix, i18nc( "Message->", "Reply to All" ), TReplyAll );
-  mType->insertItem( mForwardPix, i18nc( "Message->", "Forward" ), TForward );
+  mType->addItem( QPixmap(), i18nc( "Message->", "Universal" ) );
+  mType->addItem( mReplyPix, i18nc( "Message->", "Reply" ) );
+  mType->addItem( mReplyAllPix, i18nc( "Message->", "Reply to All" ) );
+  mType->addItem( mForwardPix, i18nc( "Message->", "Forward" ) );
 
+  mHelp->setText( i18n( "<a href=\"whatsthis\">How does this work?</a>" ) );
+  connect( mHelp, SIGNAL( linkActivated ( const QString& ) ),
+          SLOT( slotHelpLinkClicked( const QString& ) ) );
+}
+
+void CustomTemplates::slotHelpLinkClicked( const QString& )
+{
   QString help =
       i18n( "<qt>"
-            "<p>Here you can add, edit, and delete custom message "
-            "templates to use when you compose a reply or forwarding message. "
-            "Create the custom template by selecting it using the right mouse "
-            " button menu or toolbar menu. Also, you can bind a keyboard "
-            "combination to the template for faster operations.</p>"
-            "<p>Message templates support substitution commands, "
-            "by simply typing them or selecting them from the "
-            "<i>Insert command</i> menu.</p>"
-            "<p>There are four types of custom templates: used to "
-            "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i>, and "
-            "<i>Universal</i> which can be used for all kinds of operations. "
-            "You cannot bind a keyboard shortcut to <i>Universal</i> templates.</p>"
-            "</qt>" );
+      "<p>Here you can add, edit, and delete custom message "
+      "templates to use when you compose a reply or forwarding message. "
+      "Create the custom template by selecting it using the right mouse "
+      " button menu or toolbar menu. Also, you can bind a keyboard "
+      "combination to the template for faster operations.</p>"
+      "<p>Message templates support substitution commands, "
+      "by simply typing them or selecting them from the "
+      "<i>Insert command</i> menu.</p>"
+      "<p>There are four types of custom templates: used to "
+      "<i>Reply</i>, <i>Reply to All</i>, <i>Forward</i>, and "
+      "<i>Universal</i> which can be used for all kinds of operations. "
+      "You cannot bind a keyboard shortcut to <i>Universal</i> templates.</p>"
+      "</qt>" );
 
-  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
-  mHelp->setOpenExternalLinks(true);
-  mHelp->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::LinksAccessibleByKeyboard);
+  QWhatsThis::showText( QCursor::pos(), help );
 }
 
 CustomTemplates::~CustomTemplates()
 {
-  qDeleteAll( mItemList );				// no auto-delete with QHash
+  qDeleteAll( mItemList ); // no auto-delete with QHash
 }
 
 QString CustomTemplates::indexToType( int index )
@@ -120,8 +130,7 @@ QString CustomTemplates::indexToType( int index )
   QString typeStr;
   switch ( index ) {
   case TUniversal:
-    // typeStr = i18n( "Any" ); break;
-    break;
+    typeStr = i18nc( "Message->", "Universal" ); break;
 /*  case TNewMessage:
     typeStr = i18n( "New Message" ); break;*/
   case TReply:
@@ -136,8 +145,19 @@ QString CustomTemplates::indexToType( int index )
   return typeStr;
 }
 
+void CustomTemplates::slotNameChanged( const QString & text )
+{
+  mAdd->setEnabled( !text.isEmpty() );
+}
+
 void CustomTemplates::slotTextChanged()
 {
+  if ( mList->currentItem() ) {
+    CustomTemplateItem *vitem = mItemList[ mList->currentItem()->text( 1 ) ];
+    if ( vitem )
+      vitem->mContent = mEdit->toPlainText();
+  }
+
   emit changed();
 }
 
@@ -154,43 +174,40 @@ void CustomTemplates::load()
         shortcut,
         static_cast<Type>( t.type() ) );
     mItemList.insert( *it, vitem );
-    Q3ListViewItem *item = new Q3ListViewItem( mList, typeStr, *it, t.content() );
+    QTreeWidgetItem *item = new QTreeWidgetItem( mList );
+    item->setText( 0, typeStr );
+    item->setText( 1, *it );
+    item->setText( 0, indexToType( t.type() ) );
     switch ( t.type() ) {
     case TReply:
-      item->setPixmap( 0, mReplyPix );
+      item->setIcon( 0, mReplyPix );
       break;
     case TReplyAll:
-      item->setPixmap( 0, mReplyAllPix );
+      item->setIcon( 0, mReplyAllPix );
       break;
     case TForward:
-      item->setPixmap( 0, mForwardPix );
+      item->setIcon( 0, mForwardPix );
       break;
     default:
-      item->setPixmap( 0, QPixmap() );
-      item->setText( 0, indexToType( t.type() ) );
+      item->setIcon( 0, QPixmap() );
       break;
     };
   }
+
+  mRemove->setEnabled( mList->topLevelItemCount() > 0 );
 }
 
 void CustomTemplates::save()
 {
-  if ( mCurrentItem ) {
-    CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
-    if ( vitem ) {
-      vitem->mContent = mEdit->text();
-      vitem->mShortcut = KShortcut(mKeySequenceWidget->keySequence(), QKeySequence());
-    }
-  }
   QStringList list;
-  Q3ListViewItemIterator lit( mList );
-  while ( lit.current() ) {
+  QTreeWidgetItemIterator lit( mList );
+  while ( *lit ) {
     list.append( (*lit)->text( 1 ) );
     ++lit;
   }
 
   for ( CustomTemplateItemList::const_iterator it = mItemList.begin();
-	it != mItemList.end(); ++it)
+        it != mItemList.end(); ++it)
   {
     const CustomTemplateItem *ti = it.value();
     CTemplates t( ti->mName );
@@ -213,13 +230,11 @@ void CustomTemplates::save()
 
 void CustomTemplates::slotInsertCommand( const QString &cmd, int adjustCursor )
 {
-  int para, index;
-  mEdit->getCursorPosition( &para, &index );
-  mEdit->insertAt( cmd, para, index );
-
-  index += adjustCursor;
-
-  mEdit->setCursorPosition( para, index + cmd.length() );
+  QTextCursor cursor = mEdit->textCursor();
+  cursor.insertText( cmd );
+  cursor.setPosition( cursor.position() + adjustCursor );
+  mEdit->setTextCursor( cursor );
+  mEdit->setFocus();
 }
 
 void CustomTemplates::slotAddClicked()
@@ -237,9 +252,13 @@ void CustomTemplates::slotAddClicked()
       KShortcut nullShortcut;
       vitem = new CustomTemplateItem( str, "", nullShortcut, TUniversal );
       mItemList.insert( str, vitem );
-      Q3ListViewItem *item =
-        new Q3ListViewItem( mList, indexToType( TUniversal ), str, "" );
-      mList->setSelected( item, true );
+      QTreeWidgetItem *item =
+        new QTreeWidgetItem( mList );
+      item->setText( 0, indexToType( TUniversal ) );
+      item->setText( 1, str );
+      mList->setCurrentItem( item );
+      mRemove->setEnabled( true );
+      mName->clear();
       mKeySequenceWidget->setEnabled( false );
       emit changed();
     }
@@ -248,31 +267,19 @@ void CustomTemplates::slotAddClicked()
 
 void CustomTemplates::slotRemoveClicked()
 {
-  if ( mCurrentItem ) {
-    CustomTemplateItem *vitem = mItemList.take( mCurrentItem->text( 1 ) );
-    if ( vitem ) {
-      delete vitem;
-    }
-    delete mCurrentItem;
-    mCurrentItem = 0;
-    emit changed();
-  }
+  delete mItemList.take( mList->currentItem()->text( 1 ) );
+  delete mList->takeTopLevelItem( mList->indexOfTopLevelItem ( 
+                                  mList->currentItem() ) );
+  mRemove->setEnabled( mList->topLevelItemCount() > 0 );
+  emit changed();
 }
 
 void CustomTemplates::slotListSelectionChanged()
 {
-  if ( mCurrentItem ) {
-    CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
-    if ( vitem ) {
-      vitem->mContent = mEdit->text();
-      vitem->mShortcut = KShortcut(mKeySequenceWidget->keySequence(), QKeySequence());
-    }
-  }
-  Q3ListViewItem *item = mList->selectedItem();
+  QTreeWidgetItem *item = mList->currentItem();
   if ( item ) {
     mEditFrame->setEnabled( true );
-    mCurrentItem = item;
-    CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
+    CustomTemplateItem *vitem = mItemList[ mList->currentItem()->text( 1 ) ];
     if ( vitem ) {
       // avoid emit changed()
       disconnect( mEdit, SIGNAL( textChanged() ),
@@ -280,7 +287,7 @@ void CustomTemplates::slotListSelectionChanged()
 
       mEdit->setText( vitem->mContent );
       mKeySequenceWidget->setKeySequence( vitem->mShortcut.primary() );
-      mType->setCurrentItem( vitem->mType );
+      mType->setCurrentIndex( mType->findText( indexToType ( vitem->mType ) ) );
 
       connect( mEdit, SIGNAL( textChanged() ),
               this, SLOT( slotTextChanged( void ) ) );
@@ -294,35 +301,35 @@ void CustomTemplates::slotListSelectionChanged()
     }
   } else {
     mEditFrame->setEnabled( false );
-    mCurrentItem = 0;
     mEdit->clear();
     // see above
     mKeySequenceWidget->clearKeySequence();
-    mType->setCurrentItem( 0 );
+    mType->setCurrentIndex( 0 );
   }
 }
 
 void CustomTemplates::slotTypeActivated( int index )
 {
-  if ( mCurrentItem ) {
+  if ( mList->currentItem() ) {
     // mCurrentItem->setText( 0, indexToType( index ) );
-    CustomTemplateItem *vitem = mItemList[ mCurrentItem->text( 1 ) ];
-    if ( !vitem ) {
+    CustomTemplateItem *vitem = mItemList[ mList->currentItem()->text( 1 ) ];
+    if ( !vitem )
       return;
-    }
+
     vitem->mType = static_cast<Type>(index);
+    mList->currentItem()->setText( 0, indexToType( vitem->mType ) );
     switch ( vitem->mType ) {
     case TReply:
-      mCurrentItem->setPixmap( 0, mReplyPix );
+      mList->currentItem()->setIcon( 0, mReplyPix );
       break;
     case TReplyAll:
-      mCurrentItem->setPixmap( 0, mReplyAllPix );
+      mList->currentItem()->setIcon( 0, mReplyAllPix );
       break;
     case TForward:
-      mCurrentItem->setPixmap( 0, mForwardPix );
+      mList->currentItem()->setIcon( 0, mForwardPix );
       break;
     default:
-      mCurrentItem->setPixmap( 0, QPixmap() );
+      mList->currentItem()->setIcon( 0, QPixmap() );
       break;
     };
 
@@ -351,37 +358,35 @@ void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
   {
     // check if shortcut is already used for custom templates
     for ( CustomTemplateItemList::iterator it = mItemList.begin();
-	  it != mItemList.end(); ++it )
+          it != mItemList.end(); ++it )
     {
       CustomTemplateItem *ti = it.value();
-      if ( !mCurrentItem || ti->mName != mCurrentItem->text( 1 ) )
+      QTreeWidgetItem *currentItem = mList->currentItem();
+      if ( !currentItem || ti->mName != currentItem->text( 1 ) )
       {
-	if ( ti->mShortcut == sc )
-	{
-#ifdef __GNUC__
-#warning Should use i18n() here and below, surely?
-#endif
-	  QString title( I18N_NOOP("Key Conflict") );
-	  QString msg( I18N_NOOP("The selected shortcut is already used "
-				 "for another custom template, "
-				 "would you still like to continue with the assignment?" ) );
-	  assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
-	  if ( assign )
-	  {
-	    ti->mShortcut.setPrimary(QKeySequence());
-	    ti->mShortcut.setAlternate(QKeySequence());
-	  }
-	  customused = true;
-	}
+        if ( ti->mShortcut == sc )
+        {
+          QString title = i18n( "Key Conflict" );
+          QString msg = i18n( "The selected shortcut is already used "
+                              "for another custom template, "
+                              "would you still like to continue with the assignment?" );
+          assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
+          if ( assign )
+          {
+            ti->mShortcut.setPrimary(QKeySequence());
+            ti->mShortcut.setAlternate(QKeySequence());
+          }
+          customused = true;
+        }
       }
     }
 
     // check if shortcut is used somewhere else
     if ( !customused && !kmkernel->getKMMainWidget()->shortcutIsValid( shortcut ) )
     {
-      QString title( I18N_NOOP("Key Conflict") );
-      QString msg( I18N_NOOP("The selected shortcut is already in use, "
-			     "would you still like to continue with the assignment?" ) );
+      QString title = i18n( "Key Conflict" );
+      QString msg = i18n( "The selected shortcut is already in use, "
+                          "would you still like to continue with the assignment?" );
       assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
     }
   }
@@ -390,6 +395,7 @@ void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
   {
     //this is rather pointless, the signal is called keySequence*Changed* now. It is safe, though.
     mKeySequenceWidget->setKeySequence( shortcut );
+    mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut = sc;
     emit changed();
   }
 }
