@@ -198,6 +198,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent, const char *name )
         mAccountList.append( a );
 
     mEdit = new QTextEdit( this );
+    mEdit->setReadOnly(true);
     setMainWidget( mEdit );
 
     mEdit->setText( i18n( "Collecting diagnostic information about Sieve support...\n\n" ) );
