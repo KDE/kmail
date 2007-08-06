@@ -264,6 +264,9 @@ protected slots:
   /** called, when a folder has been deleted */
   void slotFolderRemoved(KMFolder *);
 
+  /** called, when a folder has been moved or copied, successfully or not */
+  void slotFolderMoveOrCopyOperationFinished();
+
   /** Updates the folder tree (delayed), causing a "blink" */
   void refresh();
 

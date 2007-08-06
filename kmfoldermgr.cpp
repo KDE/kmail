@@ -551,6 +551,8 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
   connect( job, SIGNAL( renameDone( QString, bool ) ),
       this, SLOT( slotRenameDone( QString, bool ) ) );
+  connect( job, SIGNAL( renameDone( QString, bool ) ),
+	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
   job->start();
 }
 
@@ -559,6 +561,8 @@ void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 {
   kdDebug(5006) << "Copy folder: " << folder->prettyURL() << endl;
   CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
+  connect( job, SIGNAL( folderCopyComplete( bool ) ),
+	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
   job->start();
 }
 

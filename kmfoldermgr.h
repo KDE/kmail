@@ -165,6 +165,9 @@ signals:
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int idx);
 
+  /** Emitted when a folder has been moved or copied */
+  void folderMoveOrCopyOperationFinished();
+
 protected:
 
   /** Auxillary function to facilitate removal of a folder */
