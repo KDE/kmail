@@ -109,6 +109,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
 {
   QFrame* page = plainPage();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
+  // spell "lose" correctly. but don't cause a fuzzy.
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
                       "<p>If you have problems with synchronizing an IMAP "
                       "folder, you should first try rebuilding the index "
@@ -116,6 +117,14 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                       "not cause any problems.</p><p>If that is not enough, "
                       "you can try refreshing the IMAP cache. If you do this, "
                       "you will loose all your local changes for this folder "
+                      "and all its subfolders.</p>",
+                      "<p><b>Troubleshooting the IMAP cache.</b></p>"
+                      "<p>If you have problems with synchronizing an IMAP "
+                      "folder, you should first try rebuilding the index "
+                      "file. This will take some time to rebuild, but will "
+                      "not cause any problems.</p><p>If that is not enough, "
+                      "you can try refreshing the IMAP cache. If you do this, "
+                      "you will lose all your local changes for this folder "
                       "and all its subfolders.</p>" );
   topLayout->addWidget( new QLabel( txt, page ) );
 
