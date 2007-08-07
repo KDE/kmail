@@ -334,6 +334,8 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, con
   mIdentityList = new IdentityListView( this );
   connect( mIdentityList, SIGNAL( itemSelectionChanged() ),
            SLOT( slotIdentitySelectionChanged() ) );
+  connect( this, SIGNAL( changed(bool) ),
+           SLOT( slotIdentitySelectionChanged() ) );
   connect( mIdentityList, SIGNAL( rename( KMail::IdentityListViewItem *, const QString & ) ),
            SLOT( slotRenameIdentity(KMail::IdentityListViewItem *, const QString & ) ) );
   connect( mIdentityList, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
