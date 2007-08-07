@@ -605,10 +605,17 @@ public slots:
   void reallyAddCopyOfMsg(KMMessage* aMsg);
 
 private slots:
+
   /** The type of contents of this folder changed. Do what is needed. */
   void slotContentsTypeChanged( KMail::FolderContentsType type );
+
   /** Triggered by the storage when its size changed. */
   void slotFolderSizeChanged();
+
+  /** Triggered when the user changes the identity configuration.
+   *  It ensures that the folder identity stays valid by falling back
+   *  to the default identity if the current one became invalid. */
+  void slotIdentitiesChanged();
 
 private:
   FolderStorage* mStorage;

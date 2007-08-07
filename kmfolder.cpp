@@ -127,9 +127,12 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
-  
+
   connect( mStorage, SIGNAL( folderSizeChanged() ),
            this, SLOT( slotFolderSizeChanged() ) );
+
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotIdentitiesChanged() ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   // Meanwhile, readConfig must be done before registerWithMessageDict, since
@@ -176,6 +179,7 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
 
   mIdentity = configGroup.readEntry("Identity",
                         kmkernel->identityManager()->defaultIdentity().uoid() );
+  slotIdentitiesChanged();
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
   uint savedId = configGroup.readEntry( "Id" , 0 );
@@ -862,6 +866,14 @@ void KMFolder::slotFolderSizeChanged()
   if ( papa && papa != this ) {
     papa->slotFolderSizeChanged();
   }
+}
+
+void KMFolder::slotIdentitiesChanged()
+{
+  // Fall back to the default identity if the one used currently is invalid
+  if ( kmkernel->identityManager()->identityForUoid( mIdentity ).isNull() )
+    mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+
 }
 
 
