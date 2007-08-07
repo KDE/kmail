@@ -125,6 +125,7 @@ private slots:
    */
   void slotFolderNameChanged( const QString& );
   void slotFolderContentsSelectionChanged( int );
+  void slotIdentityCheckboxChanged();
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );
@@ -142,6 +143,7 @@ private:
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mNotifyOnNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
+  QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
 
   KPIMIdentities::IdentityCombo *mIdentityComboBox;

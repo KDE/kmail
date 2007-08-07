@@ -131,7 +131,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   connect( mStorage, SIGNAL( folderSizeChanged() ),
            this, SLOT( slotFolderSizeChanged() ) );
 
-  connect( kmkernel, SIGNAL( configChanged() ),
+  connect( kmkernel->identityManager(), SIGNAL( changed() ),
            this, SLOT( slotIdentitiesChanged() ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
@@ -177,8 +177,9 @@ void KMFolder::readConfig( KConfigGroup & configGroup )
   mMailingListEnabled = configGroup.readEntry( "MailingListEnabled", false );
   mMailingList.readConfig( configGroup );
 
-  mIdentity = configGroup.readEntry("Identity",
-                        kmkernel->identityManager()->defaultIdentity().uoid() );
+  mUseDefaultIdentity = configGroup.readEntry( "UseDefaultIdentity", true );
+  uint defaultIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+  mIdentity = configGroup.readEntry("Identity", defaultIdentity );
   slotIdentitiesChanged();
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
@@ -218,7 +219,8 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
   configGroup.writeEntry("MailingListEnabled", mMailingListEnabled);
   mMailingList.writeConfig( configGroup );
 
-  configGroup.writeEntry("Identity", mIdentity);
+  configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
+  configGroup.writeEntry( "Identity", mIdentity );
 
   configGroup.writeEntry("WhoField", mUserWhoField);
   configGroup.writeEntry("Id", mId);
@@ -612,6 +614,14 @@ void KMFolder::setMailingList( const MailingList& mlist )
   mStorage->writeConfig();
 }
 
+void KMFolder::setUseDefaultIdentity( bool useDefaultIdentity )
+{
+  mUseDefaultIdentity = useDefaultIdentity;
+  if ( mUseDefaultIdentity )
+    mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+  kmkernel->slotRequestConfigSync();
+}
+
 void KMFolder::setIdentity( uint identity )
 {
   mIdentity = identity;
@@ -870,10 +880,18 @@ void KMFolder::slotFolderSizeChanged()
 
 void KMFolder::slotIdentitiesChanged()
 {
-  // Fall back to the default identity if the one used currently is invalid
-  if ( kmkernel->identityManager()->identityForUoid( mIdentity ).isNull() )
-    mIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+  uint defaultIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
 
+  // The default identity may have changed, therefore set it again
+  // if necessary
+  if ( mUseDefaultIdentity )
+    mIdentity = defaultIdentity;
+
+  // Fall back to the default identity if the one used currently is invalid
+  if ( kmkernel->identityManager()->identityForUoid( mIdentity ).isNull() ) {
+    mIdentity = defaultIdentity;
+    mUseDefaultIdentity = true;
+  }
 }
 
 

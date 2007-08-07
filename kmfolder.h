@@ -383,6 +383,11 @@ public:
   { return mMailingList; }
   QString mailingListPostAddress() const;
 
+  /** Get / set wether the default identity should be used instead of the
+   *  identity specified by setIdentity(). */
+  void setUseDefaultIdentity( bool useDefaultIdentity );
+  bool useDefaultIdentity() const { return mUseDefaultIdentity; }
+
   void setIdentity(uint identity);
   uint identity() const { return mIdentity; }
 
@@ -649,6 +654,7 @@ private:
 
   AccountList* mAcctList;
 
+  bool mUseDefaultIdentity;
   uint mIdentity;
 
   /** name of the field that is used for "From" in listbox */

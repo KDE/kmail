@@ -434,6 +434,28 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   gl->setColumnStretch( 1, 100 ); // make the second column use all available space
   int row = -1;
 
+  // sender identity
+  ++row;
+  mUseDefaultIdentityCheckBox = new QCheckBox( i18n("Use &Default Identity"),
+                                               this );
+  gl->addWidget( mUseDefaultIdentityCheckBox );
+  connect( mUseDefaultIdentityCheckBox, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotIdentityCheckboxChanged() ) );
+  ++row;
+  label = new QLabel( i18n("&Sender identity:"), this );
+  gl->addWidget( label, row, 0 );
+  mIdentityComboBox = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), this );
+  label->setBuddy( mIdentityComboBox );
+  gl->addWidget( mIdentityComboBox, row, 1 );
+  mIdentityComboBox->setWhatsThis(
+      i18n( "Select the sender identity to be used when writing new mail "
+        "or replying to mail in this folder. This means that if you are in "
+        "one of your work folders, you can make KMail use the corresponding "
+        "sender email address, signature and signing or encryption keys "
+        "automatically. Identities can be set up in the main configuration "
+        "dialog. (Settings -> Configure KMail)") );
+
+
   // sender or receiver column?
   ++row;
   QString tip = i18n("Show Sender/Receiver Column in List of Messages");
@@ -453,23 +475,6 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   if (whoField.isEmpty()) mShowSenderReceiverComboBox->setCurrentIndex(0);
   else if (whoField == "From") mShowSenderReceiverComboBox->setCurrentIndex(1);
   else if (whoField == "To") mShowSenderReceiverComboBox->setCurrentIndex(2);
-
-
-  // sender identity
-  ++row;
-  label = new QLabel( i18n("&Sender identity:"), this );
-  gl->addWidget( label, row, 0 );
-  mIdentityComboBox = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), this );
-  label->setBuddy( mIdentityComboBox );
-  gl->addWidget( mIdentityComboBox, row, 1 );
-  mIdentityComboBox->setWhatsThis(
-      i18n( "Select the sender identity to be used when writing new mail "
-        "or replying to mail in this folder. This means that if you are in "
-        "one of your work folders, you can make KMail use the corresponding "
-        "sender email address, signature and signing or encryption keys "
-        "automatically. Identities can be set up in the main configuration "
-        "dialog. (Settings -> Configure KMail)") );
-
 
   // folder contents
   if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() ) {
@@ -497,7 +502,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
   } else {
     mContentsComboBox = 0;
   }
-  
+
   mIncidencesForComboBox = 0;
   mAlarmsBlockedCheckBox = 0;
 
@@ -585,6 +590,8 @@ void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) 
 
   // folder identity
   mIdentityComboBox->setCurrentIdentity( folder->identity() );
+  mUseDefaultIdentityCheckBox->setChecked( folder->useDefaultIdentity() );
+
   // ignore new mail
   mNotifyOnNewMailCheckBox->setChecked( !folder->ignoreNewMail() );
 
@@ -638,10 +645,17 @@ void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
 }
 
 //-----------------------------------------------------------------------------
+void FolderDialogGeneralTab::slotIdentityCheckboxChanged()
+{
+  mIdentityComboBox->setEnabled( !mUseDefaultIdentityCheckBox->isChecked() );
+}
+
+//-----------------------------------------------------------------------------
 bool FolderDialogGeneralTab::save()
 {
   KMFolder* folder = mDlg->folder();
   folder->setIdentity( mIdentityComboBox->currentIdentity() );
+  folder->setUseDefaultIdentity( mUseDefaultIdentityCheckBox->isChecked() );
   // set whoField
   if (mShowSenderReceiverComboBox->currentIndex() == 1)
     folder->setUserWhoField("From");
