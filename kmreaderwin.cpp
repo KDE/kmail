@@ -1417,7 +1417,7 @@ void KMReaderWin::updateReaderWin()
 
   htmlWriter()->reset();
 
-  KMFolder* folder;
+  KMFolder* folder = 0;
   if (message(&folder))
   {
     if ( mShowColorbar )
