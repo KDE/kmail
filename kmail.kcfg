@@ -221,7 +221,7 @@
       </entry>
 
       <entry name="FilterOnlyDIMAPInbox" type="Bool">
-        <default>false</default>
+        <default>true</default>
         <label>Only filter mails received in disconnected IMAP inbox.</label>
       </entry>
       <entry name="FilterGroupwareFolders" type="Bool">
