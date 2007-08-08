@@ -1408,7 +1408,7 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder = 0;
   if (message(&folder))
   {
-    if ( mShowColorbar )
+    if ( mShowColorbar ) {
       mColorBar->show();
     } else {
       mColorBar->hide();
