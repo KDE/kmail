@@ -24,6 +24,7 @@
 #include <qpushbutton.h>
 #include <qtextedit.h>
 #include <qlineedit.h>
+#include <QWhatsThis>
 #include <qtoolbox.h>
 #include <kdebug.h>
 #include <qfont.h>
@@ -64,9 +65,8 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
   connect( mInsertCommand, SIGNAL( insertCommand(const QString&, int) ),
            this, SLOT( slotInsertCommand(const QString &, int) ) );
 
-  QString help;
   if ( QString( name ) == "folder-templates" ) {
-    help =
+    mHelpString =
       i18n( "<qt>"
             "<p>Here you can create message templates to use when you "
             "compose new messages or replies, or when you forward messages.</p>"
@@ -78,7 +78,7 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "templates if they are specified.</p>"
             "</qt>" );
   } else if ( QString( name ) == "identity-templates" ) {
-    help =
+    mHelpString =
       i18n( "<qt>"
             "<p>Here you can create message templates to use when you "
             "compose new messages or replies, or when you forward messages.</p>"
@@ -90,7 +90,7 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "templates if they are specified.</p>"
             "</qt>" );
   } else {
-    help =
+    mHelpString =
       i18n( "<qt>"
             "<p>Here you can create message templates to use when you "
             "compose new messages or replies, or when you forward messages.</p>"
@@ -103,9 +103,14 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
             "</qt>" );
   }
 
-  mHelp->setText( i18n( "<a href=\"whatsthis:%1\">How does this work?</a>", help ) );
-  mHelp->setOpenExternalLinks(true);
-  mHelp->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::LinksAccessibleByKeyboard);
+  mHelp->setText( i18n( "<a href=\"whatsthis\">How does this work?</a>" ) );
+  connect( mHelp, SIGNAL( linkActivated ( const QString& ) ),
+           this, SLOT( slotHelpLinkClicked( const QString& ) ) );
+}
+
+void TemplatesConfiguration::slotHelpLinkClicked( const QString& )
+{
+  QWhatsThis::showText( QCursor::pos(), mHelpString );
 }
 
 void TemplatesConfiguration::slotTextChanged()
@@ -155,10 +160,10 @@ void TemplatesConfiguration::loadFromGlobal()
 
 void TemplatesConfiguration::saveToGlobal()
 {
-  GlobalSettings::self()->setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
-  GlobalSettings::self()->setTemplateReply( strOrBlank( textEdit_reply->text() ) );
-  GlobalSettings::self()->setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
-  GlobalSettings::self()->setTemplateForward( strOrBlank( textEdit_forward->text() ) );
+  GlobalSettings::self()->setTemplateNewMessage( strOrBlank( textEdit_new->toPlainText() ) );
+  GlobalSettings::self()->setTemplateReply( strOrBlank( textEdit_reply->toPlainText() ) );
+  GlobalSettings::self()->setTemplateReplyAll( strOrBlank( textEdit_reply_all->toPlainText() ) );
+  GlobalSettings::self()->setTemplateForward( strOrBlank( textEdit_forward->toPlainText() ) );
   GlobalSettings::self()->setQuoteString( lineEdit_quote->text() );
   GlobalSettings::self()->setPhrasesConverted( true );
   GlobalSettings::self()->writeConfig();
@@ -220,10 +225,10 @@ void TemplatesConfiguration::saveToIdentity( uint id )
 {
   Templates t( QString("IDENTITY_%1").arg( id ) );
 
-  t.setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
-  t.setTemplateReply( strOrBlank( textEdit_reply->text() ) );
-  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
-  t.setTemplateForward( strOrBlank( textEdit_forward->text() ) );
+  t.setTemplateNewMessage( strOrBlank( textEdit_new->toPlainText() ) );
+  t.setTemplateReply( strOrBlank( textEdit_reply->toPlainText() ) );
+  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->toPlainText() ) );
+  t.setTemplateForward( strOrBlank( textEdit_forward->toPlainText() ) );
   t.setQuoteString( lineEdit_quote->text() );
   t.writeConfig();
 }
@@ -306,10 +311,10 @@ void TemplatesConfiguration::saveToFolder( const QString &id )
 {
   Templates t( id );
 
-  t.setTemplateNewMessage( strOrBlank( textEdit_new->text() ) );
-  t.setTemplateReply( strOrBlank( textEdit_reply->text() ) );
-  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->text() ) );
-  t.setTemplateForward( strOrBlank( textEdit_forward->text() ) );
+  t.setTemplateNewMessage( strOrBlank( textEdit_new->toPlainText() ) );
+  t.setTemplateReply( strOrBlank( textEdit_reply->toPlainText() ) );
+  t.setTemplateReplyAll( strOrBlank( textEdit_reply_all->toPlainText() ) );
+  t.setTemplateForward( strOrBlank( textEdit_forward->toPlainText() ) );
   t.setQuoteString( lineEdit_quote->text() );
   t.writeConfig();
 }
@@ -483,15 +488,15 @@ QString TemplatesConfiguration::convertPhrases( const QString &str )
 
 void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCursor )
 {
-  Q3TextEdit* edit;
+  QTextEdit* edit;
 
-  if( toolBox1->currentItem() == page_new ) {
+  if( toolBox1->widget( toolBox1->currentIndex() ) == page_new ) {
     edit = textEdit_new;
-  } else if( toolBox1->currentItem() == page_reply ) {
+  } else if( toolBox1->widget( toolBox1->currentIndex() ) == page_reply ) {
     edit = textEdit_reply;
-  } else if( toolBox1->currentItem() == page_reply_all ) {
+  } else if( toolBox1->widget( toolBox1->currentIndex() ) == page_reply_all ) {
     edit = textEdit_reply_all;
-  } else if( toolBox1->currentItem() == page_forward ) {
+  } else if( toolBox1->widget( toolBox1->currentIndex() ) == page_forward ) {
     edit = textEdit_forward;
   } else {
     kDebug(5006) <<"Unknown current page in TemplatesConfiguration!";
@@ -499,14 +504,11 @@ void TemplatesConfiguration::slotInsertCommand( const QString &cmd, int adjustCu
   }
 
   // kDebug(5006) <<"Insert command:" << cmd;
-
-  int para, index;
-  edit->getCursorPosition( &para, &index );
-  edit->insertAt( cmd, para, index );
-
-  index += adjustCursor;
-
-  edit->setCursorPosition( para, index + cmd.length() );
+  QTextCursor cursor = edit->textCursor();
+  cursor.insertText( cmd );
+  cursor.setPosition( cursor.position() + adjustCursor );
+  edit->setTextCursor( cursor );
+  edit->setFocus();
 }
 
 QString TemplatesConfiguration::defaultNewMessage() {

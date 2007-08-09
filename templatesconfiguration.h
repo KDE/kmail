@@ -68,7 +68,11 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
   protected:
 
     QString strOrBlank( const QString &str );
+    QString mHelpString;
 
+  private slots:
+
+    void slotHelpLinkClicked( const QString& );
 };
 
 #endif // TEMPLATESCONFIGURATION_H
