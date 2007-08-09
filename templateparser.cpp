@@ -115,7 +115,7 @@ QString TemplateParser::getFName( const QString &str )
       }
     }
   } else if ( ( sep_pos = str.indexOf(',') ) > 0 ) {
-    unsigned int i;
+    int i;
     bool begin = false;
     for ( i = sep_pos; i < str.length(); ++i ) {
       QChar c = str[i];
@@ -127,7 +127,7 @@ QString TemplateParser::getFName( const QString &str )
       }
     }
   } else {
-    unsigned int i;
+    int i;
     for ( i = 0; i < str.length(); ++i ) {
       QChar c = str[i];
       if ( c.isLetterOrNumber() ) {
@@ -159,7 +159,7 @@ QString TemplateParser::getLName( const QString &str )
     }
   } else {
     if ( ( sep_pos = str.indexOf( ' ' ) ) > 0 ) {
-      unsigned int i;
+      int i;
       bool begin = false;
       for ( i = sep_pos; i < str.length(); ++i ) {
         QChar c = str[i];
@@ -490,7 +490,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         if ( mOrigMsg ) {
           QString hdr = q;
-          QString str = mOrigMsg->headerFields(hdr.local8Bit() ).join( ", " );
+          QString str = mOrigMsg->headerFields(hdr.toLocal8Bit() ).join( ", " );
           body.append( str );
         }
 
@@ -501,7 +501,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         int len = parseQuotes( "HEADER=", cmd, q );
         i += len;
         QString hdr = q;
-        QString str = mMsg->headerFields(hdr.local8Bit() ).join( ", " );
+        QString str = mMsg->headerFields(hdr.toLocal8Bit() ).join( ", " );
         body.append( str );
 
       } else if ( cmd.startsWith( "HEADER( " ) ) {
@@ -509,14 +509,14 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         kDebug(5006) <<"Command: HEADER(";
         QRegExp re = QRegExp( "^HEADER\\((.+)\\)" );
         re.setMinimal( true );
-        int res = re.search( cmd );
+        int res = re.indexIn( cmd );
         if ( res != 0 ) {
           // something wrong
           i += strlen( "HEADER( " );
         } else {
           i += re.matchedLength();
           QString hdr = re.cap( 1 );
-          QString str = mMsg->headerFields( hdr.local8Bit() ).join( ", " );
+          QString str = mMsg->headerFields( hdr.toLocal8Bit() ).join( ", " );
           body.append( str );
         }
 
@@ -838,7 +838,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
 
   if ( mAppend ) {
     QByteArray msg_body = mMsg->body();
-    msg_body.append( body.utf8() );
+    msg_body.append( body.toUtf8() );
     mMsg->setBody( msg_body );
   } else {
     mMsg->setBodyFromUnicode( body );
@@ -983,7 +983,7 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   mPipeRc = 0;
 
   K3Process proc;
-  QByteArray data = buf.local8Bit();
+  QByteArray data = buf.toLocal8Bit();
 
   // kDebug(5006) <<"Command data:" << data;
 
