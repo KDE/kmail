@@ -54,6 +54,7 @@ KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WF
   setAlignment( Qt::AlignHCenter | Qt::AlignTop );
   // Don't force a minimum height to the reader widget
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Ignored ) );
+  setAutoFillBackground( true );
   upd();
 }
 
@@ -90,11 +91,11 @@ QString KMail::HtmlStatusBar::message() const {
   switch ( mode() ) {
   case Html: // bold: "HTML Message"
     return i18n( "<qt><b><br>H<br>T<br>M<br>L<br> "
-		 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</b></qt>" );
+                 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</b></qt>" );
   case Normal: // normal: "No HTML Message"
     return i18n( "<qt><br>N<br>o<br> "
-		 "<br>H<br>T<br>M<br>L<br> "
-		 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</qt>" );
+                 "<br>H<br>T<br>M<br>L<br> "
+                 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</qt>" );
   default:
   case Neutral:
     return QString();
