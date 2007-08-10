@@ -6,16 +6,13 @@
 
 #include <QVariant>
 #include <QPushButton>
-#include <q3groupbox.h>
 #include <QCheckBox>
 #include <QSpinBox>
 #include <QLabel>
 #include <QRadioButton>
-#include <q3buttongroup.h>
 #include <QComboBox>
 #include <QLayout>
-
-//Added by qt3to4:
+#include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
