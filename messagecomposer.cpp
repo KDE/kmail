@@ -34,7 +34,6 @@
 #define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
-#include "klistboxdialog.h"
 #include "kcursorsaver.h"
 #include "messagesender.h"
 #include "kmfolder.h"

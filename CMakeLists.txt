@@ -54,7 +54,6 @@ set(kmailprivate_LIB_SRCS
    kmgroupware.cpp
    folderstorage.cpp
    csshelper.cpp
-   klistboxdialog.cpp
    actionscheduler.cpp
    messageproperty.cpp
    kmmsgpart.cpp
@@ -189,8 +188,11 @@ set(kmailprivate_LIB_SRCS
    quotajobs.cpp
    folderdialogquotatab.cpp
    folderdialogquotatab_p.cpp
-   keditcl1.cpp keditcl2.cpp folderadaptor.cpp
-   copyfolderjob.cpp messagecopyhelper.cpp
+   keditcl1.cpp
+   keditcl2.cpp
+   folderadaptor.cpp
+   copyfolderjob.cpp
+   messagecopyhelper.cpp
    localsubscriptiondialog.cpp
    groupwareadaptor.cpp
    editorwatcher.cpp

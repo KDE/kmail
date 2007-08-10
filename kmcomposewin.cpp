@@ -83,8 +83,6 @@ using MailTransport::TransportManager;
 #include <libkdepim/kvcarddrag.h>
 #include <kio/netaccess.h>
 
-#include "klistboxdialog.h"
-
 #include "messagecomposer.h"
 #include "chiasmuskeyselector.h"
 
