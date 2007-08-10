@@ -183,14 +183,14 @@ namespace KMail {
     mPGPSigningKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
     mPGPSigningKeyRequester->setDialogCaption( i18n("Your OpenPGP Signature Key") );
     msg = i18n("Select the OpenPGP key which should be used to "
-	       "digitally sign your messages.");
+               "digitally sign your messages.");
     mPGPSigningKeyRequester->setDialogMessage( msg );
 
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to digitally sign messages. You can also use GnuPG keys.</p>"
                "<p>You can leave this blank, but KMail will not be able "
                "to digitally sign emails using OpenPGP; "
-	       "normal mail functions will not be affected.</p>"
+               "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
     label = new QLabel( i18n("OpenPGP signing key:"), tab );
@@ -208,16 +208,16 @@ namespace KMail {
     mPGPEncryptionKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
     mPGPEncryptionKeyRequester->setDialogCaption( i18n("Your OpenPGP Encryption Key") );
     msg = i18n("Select the OpenPGP key which should be used when encrypting "
-	       "to yourself and for the \"Attach My Public Key\" "
-	       "feature in the composer.");
+               "to yourself and for the \"Attach My Public Key\" "
+               "feature in the composer.");
     mPGPEncryptionKeyRequester->setDialogMessage( msg );
 
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Public Key\" "
-	       "feature in the composer. You can also use GnuPG keys.</p>"
+               "feature in the composer. You can also use GnuPG keys.</p>"
                "<p>You can leave this blank, but KMail will not be able "
                "to encrypt copies of outgoing messages to you using OpenPGP; "
-	       "normal mail functions will not be affected.</p>"
+               "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
     label = new QLabel( i18n("OpenPGP encryption key:"), tab );
     label->setBuddy( mPGPEncryptionKeyRequester );
@@ -234,14 +234,14 @@ namespace KMail {
     mSMIMESigningKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
     mSMIMESigningKeyRequester->setDialogCaption( i18n("Your S/MIME Signature Certificate") );
     msg = i18n("Select the S/MIME certificate which should be used to "
-	       "digitally sign your messages.");
+               "digitally sign your messages.");
     mSMIMESigningKeyRequester->setDialogMessage( msg );
 
     msg = i18n("<qt><p>The S/MIME (X.509) certificate you choose here will be used "
                "to digitally sign messages.</p>"
                "<p>You can leave this blank, but KMail will not be able "
                "to digitally sign emails using S/MIME; "
-	       "normal mail functions will not be affected.</p></qt>");
+               "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( i18n("S/MIME signing certificate:"), tab );
     label->setBuddy( mSMIMESigningKeyRequester );
     mSMIMESigningKeyRequester->setWhatsThis( msg );
@@ -261,16 +261,16 @@ namespace KMail {
     mSMIMEEncryptionKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
     mSMIMEEncryptionKeyRequester->setDialogCaption( i18n("Your S/MIME Encryption Certificate") );
     msg = i18n("Select the S/MIME certificate which should be used when encrypting "
-	       "to yourself and for the \"Attach My Certificate\" "
-	       "feature in the composer.");
+               "to yourself and for the \"Attach My Certificate\" "
+               "feature in the composer.");
     mSMIMEEncryptionKeyRequester->setDialogMessage( msg );
 
     msg = i18n("<qt><p>The S/MIME certificate you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Certificate\" "
-	       "feature in the composer.</p>"
+               "feature in the composer.</p>"
                "<p>You can leave this blank, but KMail will not be able "
                "to encrypt copies of outgoing messages to you using S/MIME; "
-	       "normal mail functions will not be affected.</p></qt>");
+               "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( i18n("S/MIME encryption certificate:"), tab );
     label->setBuddy( mSMIMEEncryptionKeyRequester );
     mSMIMEEncryptionKeyRequester->setWhatsThis( msg );
@@ -412,22 +412,26 @@ namespace KMail {
     //
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&Templates") );
-    vlay = new QVBoxLayout( tab, marginHint(), spacingHint() );
+    vlay = new QVBoxLayout( tab );
+    vlay->setMargin( marginHint() );
+    vlay->setSpacing( spacingHint() );
     mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
     vlay->addWidget( mCustom );
     mWidget = new TemplatesConfiguration( tab , "identity-templates" );
     mWidget->setEnabled( false );
     vlay->addWidget( mWidget );
-    QHBoxLayout *btns = new QHBoxLayout( vlay, spacingHint() );
+    QHBoxLayout *btns = new QHBoxLayout();
+    btns->setSpacing( spacingHint() );
     mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), tab );
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
+    vlay->addLayout( btns );
     connect( mCustom, SIGNAL( toggled( bool ) ),
-	     mWidget, SLOT( setEnabled( bool ) ) );
+             mWidget, SLOT( setEnabled( bool ) ) );
     connect( mCustom, SIGNAL( toggled( bool ) ),
-	     mCopyGlobal, SLOT( setEnabled( bool ) ) );
+             mCopyGlobal, SLOT( setEnabled( bool ) ) );
     connect( mCopyGlobal, SIGNAL(clicked()),
-	     this, SLOT(slotCopyGlobal()) );
+             this, SLOT(slotCopyGlobal()) );
 
     //
     // Tab Widget: Signature
@@ -446,7 +450,7 @@ namespace KMail {
     mNameEdit->setFocus();
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
-	     SLOT(slotAboutToShow(QWidget*)) );
+             SLOT(slotAboutToShow(QWidget*)) );
     connect( this, SIGNAL(okClicked()),SLOT(slotOk()));
   }
 
@@ -474,7 +478,7 @@ namespace KMail {
   namespace {
     struct DoesntMatchEMailAddress {
       explicit DoesntMatchEMailAddress( const QString & s )
-	: email( s.trimmed().toLower() ) {}
+        : email( s.trimmed().toLower() ) {}
       bool operator()( const GpgME::Key & key ) const;
     private:
       bool checkForEmail( const char * email ) const;
@@ -485,8 +489,8 @@ namespace KMail {
     bool DoesntMatchEMailAddress::operator()( const GpgME::Key & key ) const {
       const std::vector<GpgME::UserID> uids = key.userIDs();
       for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it )
-	if ( checkForEmail( it->email() ? it->email() : it->id() ) )
-	  return false;
+        if ( checkForEmail( it->email() ? it->email() : it->id() ) )
+          return false;
       return true; // note the negation!
     }
 
@@ -497,12 +501,12 @@ namespace KMail {
 
     QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
       if ( !e || !*e )
-	return QString();
+        return QString();
       const QString em = QString::fromUtf8( e );
       if ( e[0] == '<' )
-	return em.mid( 1, em.length() - 2 );
+        return em.mid( 1, em.length() - 2 );
       else
-	return em;
+        return em;
     }
   }
 
