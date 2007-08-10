@@ -939,7 +939,7 @@ void FolderStorage::writeConfig()
   group.writeEntry( "TotalMsgs", mTotalMsgs );
   group.writeEntry( "Compactable", mCompactable );
   group.writeEntry( "ContentsType", (int)mContentsType );
-  group.writeEntry("FolderSize", mSize);
+  group.writeEntry( "FolderSize", mSize );
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( group );

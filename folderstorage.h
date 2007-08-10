@@ -250,7 +250,7 @@ public:
       required to keep the number unread messages variable current. */
   virtual void msgStatusChanged( const MessageStatus& oldStatus,
                                  const MessageStatus& newStatus,
-				 int idx);
+                                 int idx);
 
   /** Open folder for access.
     Does nothing if the folder is already opened. To reopen a folder
@@ -609,7 +609,7 @@ friend class KMMsgDict;
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
-  quint64 mSize;
+  qint64 mSize;
   bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact :1;
