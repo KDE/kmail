@@ -47,7 +47,7 @@
 namespace KMail {
 
   KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
-					    QObject * parent, const char * name )
+                                            QObject * parent, const char * name )
     : QObject( parent ), HtmlWriter(),
       mHtmlPart( part ), mState( Ended )
   {

@@ -51,7 +51,7 @@ namespace KMail {
     // Key is Content-Id, value is URL
     typedef QMap<QString, QString> EmbeddedPartMap;
     explicit KHtmlPartHtmlWriter( KHTMLPart * part,
-			 QObject * parent=0, const char * name = 0 );
+                                  QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
 
     void begin( const QString & cssDefs );

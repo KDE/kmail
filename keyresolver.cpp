@@ -55,7 +55,6 @@
 #include <kmessagebox.h>
 
 #include <QStringList>
-#include <q3tl.h>
 #include <algorithm>
 #include <memory>
 #include <iterator>

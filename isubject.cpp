@@ -2,8 +2,6 @@
 #include "isubject.h"
 #include "interfaces/observer.h"
 
-#include <q3tl.h>
-
 #include <kdebug.h>
 
 namespace KMail {

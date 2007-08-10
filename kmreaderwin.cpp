@@ -1900,7 +1900,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p )
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & )
 {
   mAtmCurrent = id;
   mAtmCurrentName = name;

@@ -47,7 +47,6 @@ using KPIM::ProgressManager;
 #include <QList>
 #include <QTextDocument>
 #include <QByteArray>
-#include <q3stylesheet.h>
 
 namespace KMail {
 

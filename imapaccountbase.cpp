@@ -67,7 +67,6 @@ using KIO::PasswordDialog;
 #include <QRegExp>
 #include <QTextDocument>
 #include <QByteArray>
-#include <q3stylesheet.h>
 
 namespace KMail {
 
