@@ -373,7 +373,8 @@ void CachedImapJob::slotPutNextMessage()
   int a = cstr.indexOf("\nX-UID: ");
   int b = cstr.indexOf('\n', a);
   if (a != -1 && b != -1 && cstr.indexOf("\n\n") > a) cstr.remove(a, b-a);
-  QByteArray mData(cstr.length() + cstr.count('\n'));
+  QByteArray mData;
+  mData.resize( cstr.length() + cstr.count('\n') );
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
     if ( *ch == '\n' ) {
