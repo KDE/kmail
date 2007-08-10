@@ -1902,7 +1902,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & )
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint &p )
 {
   mAtmCurrent = id;
   mAtmCurrentName = name;
@@ -1944,6 +1944,8 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(i18n("Properties") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Properties );
+  menu->exec( p );
+  delete menu;
 }
 
 //-----------------------------------------------------------------------------
