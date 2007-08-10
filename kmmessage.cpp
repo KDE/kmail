@@ -428,12 +428,12 @@ QString KMMessage::formatString(const QString& aStr) const
       ch = aStr[i++];
       switch (ch.toLatin1()) {
       case 'D':
-	/* I'm not too sure about this change. Is it not possible
-	   to have a long form of the date used? I don't
-	   like this change to a short XX/XX/YY date format.
-	   At least not for the default. -sanders */
-	result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
-						    date(), sReplyLanguage, false );
+        /* I'm not too sure about this change. Is it not possible
+           to have a long form of the date used? I don't
+           like this change to a short XX/XX/YY date format.
+           At least not for the default. -sanders */
+        result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
+            date(), sReplyLanguage, false );
         break;
       case 'e':
         result += from();
@@ -442,12 +442,12 @@ QString KMMessage::formatString(const QString& aStr) const
         result += fromStrip();
         break;
       case 'f':
-		{
+      {
         str = fromStrip();
 
         for (j=0; str[j]>' '; j++)
           ;
-		unsigned int strLength(str.length());
+        unsigned int strLength(str.length());
         for (; j < strLength && str[j] <= ' '; j++)
           ;
         result += str[0];
@@ -456,8 +456,8 @@ QString KMMessage::formatString(const QString& aStr) const
         else
           if (str[1]>' ')
             result += str[1];
-		}
-        break;
+      }
+      break;
       case 'T':
         result += toStrip();
         break;
@@ -758,27 +758,27 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     QList<Kpgp::Block> pgpBlocks;
     QList<QByteArray>  nonPgpBlocks;
     if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
-						    pgpBlocks,
-						    nonPgpBlocks ) ) {
+                                                    pgpBlocks,
+                                                    nonPgpBlocks ) ) {
       // Only decrypt/strip off the signature if there is only one OpenPGP
       // block in the message
       if ( pgpBlocks.count() == 1 ) {
-	Kpgp::Block &block = pgpBlocks.first();
-	if ( block.type() == Kpgp::PgpMessageBlock ||
-	     block.type() == Kpgp::ClearsignedBlock ) {
-	  if ( block.type() == Kpgp::PgpMessageBlock ) {
-	    // try to decrypt this OpenPGP block
-	    block.decrypt();
-	  } else {
-	    // strip off the signature
-	    block.verify();
-	    clearSigned = true;
-	  }
+        Kpgp::Block &block = pgpBlocks.first();
+        if ( block.type() == Kpgp::PgpMessageBlock ||
+             block.type() == Kpgp::ClearsignedBlock ) {
+          if ( block.type() == Kpgp::PgpMessageBlock ) {
+            // try to decrypt this OpenPGP block
+            block.decrypt();
+          } else {
+            // strip off the signature
+            block.verify();
+            clearSigned = true;
+          }
 
-	  result = codec->toUnicode( nonPgpBlocks.first() )
-	         + codec->toUnicode( block.text() )
-	         + codec->toUnicode( nonPgpBlocks.last() );
-	}
+          result = codec->toUnicode( nonPgpBlocks.first() )
+              + codec->toUnicode( block.text() )
+              + codec->toUnicode( nonPgpBlocks.last() );
+        }
       }
     }
   }
@@ -812,10 +812,10 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
 }
 
 QString KMMessage::asQuotedString( const QString& aHeaderStr,
-				   const QString& aIndentStr,
-				   const QString& selection /*.clear() */,
-				   bool aStripSignature /* = true */,
-				   bool allowDecryption /* = true */) const
+                                   const QString& aIndentStr,
+                                   const QString& selection /*.clear() */,
+                                   bool aStripSignature /* = true */,
+                                   bool allowDecryption /* = true */) const
 {
   QString content = selection.isEmpty() ?
     asPlainText( aStripSignature, allowDecryption ) : selection ;
@@ -1039,14 +1039,14 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 //      msg->setBody( cStr );
 //    }else{
 //      msg->setBody(asQuotedString(replyStr + '\n', sIndentPrefixStr, selection,
-//				  sSmartQuote, allowDecryption).toUtf8());
+//                                  sSmartQuote, allowDecryption).toUtf8());
 //    }
 //  }
 
   msg->setSubject( replySubject() );
 
   TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-			 selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
+                         selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
   if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
   else parser.process( this );
 
@@ -1207,9 +1207,9 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
     for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
       QString entry = (*it);
-      int sep = entry.find( '/' );
-      QByteArray type = entry.left( sep ).latin1();
-      QByteArray subtype = entry.mid( sep+1 ).latin1();
+      int sep = entry.indexOf( '/' );
+      QByteArray type = entry.left( sep ).toLatin1();
+      QByteArray subtype = entry.mid( sep+1 ).toLatin1();
       kDebug( 5006 ) <<"Looking for blacklisted type:" << type <<"/" << subtype;
       while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
         msg->mMsg->Body().RemoveBodyPart( part );
@@ -1286,36 +1286,36 @@ static const struct {
 } mdnMessageBoxes[] = {
   { "mdnNormalAsk", true,
     I18N_NOOP("This message contains a request to return a notification "
-	      "about your reception of the message.\n"
-	      "You can either ignore the request or let KMail send a "
-	      "\"denied\" or normal response.") },
+              "about your reception of the message.\n"
+              "You can either ignore the request or let KMail send a "
+              "\"denied\" or normal response.") },
   { "mdnUnknownOption", false,
     I18N_NOOP("This message contains a request to send a notification "
-	      "about your reception of the message.\n"
-	      "It contains a processing instruction that is marked as "
-	      "\"required\", but which is unknown to KMail.\n"
-	      "You can either ignore the request or let KMail send a "
-	      "\"failed\" response.") },
+              "about your reception of the message.\n"
+              "It contains a processing instruction that is marked as "
+              "\"required\", but which is unknown to KMail.\n"
+              "You can either ignore the request or let KMail send a "
+              "\"failed\" response.") },
   { "mdnMultipleAddressesInReceiptTo", true,
     I18N_NOOP("This message contains a request to send a notification "
-	      "about your reception of the message,\n"
-	      "but it is requested to send the notification to more "
-	      "than one address.\n"
-	      "You can either ignore the request or let KMail send a "
-	      "\"denied\" or normal response.") },
+              "about your reception of the message,\n"
+              "but it is requested to send the notification to more "
+              "than one address.\n"
+              "You can either ignore the request or let KMail send a "
+              "\"denied\" or normal response.") },
   { "mdnReturnPathEmpty", true,
     I18N_NOOP("This message contains a request to send a notification "
-	      "about your reception of the message,\n"
-	      "but there is no return-path set.\n"
-	      "You can either ignore the request or let KMail send a "
-	      "\"denied\" or normal response.") },
+              "about your reception of the message,\n"
+              "but there is no return-path set.\n"
+              "You can either ignore the request or let KMail send a "
+              "\"denied\" or normal response.") },
   { "mdnReturnPathNotInReceiptTo", true,
     I18N_NOOP("This message contains a request to send a notification "
-	      "about your reception of the message,\n"
-	      "but the return-path address differs from the address "
-	      "the notification was requested to be sent to.\n"
-	      "You can either ignore the request or let KMail send a "
-	      "\"denied\" or normal response.") },
+              "about your reception of the message,\n"
+              "but the return-path address differs from the address "
+              "the notification was requested to be sent to.\n"
+              "You can either ignore the request or let KMail send a "
+              "\"denied\" or normal response.") },
 };
 
 static const int numMdnMessageBoxes
@@ -1326,30 +1326,30 @@ static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
       if ( mdnMessageBoxes[i].canDeny ) {
-	const KCursorSaver saver( Qt::ArrowCursor );
-	int answer = QMessageBox::information( 0,
-			 i18n("Message Disposition Notification Request"),
-			 i18n( mdnMessageBoxes[i].text ),
-			 i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
-	return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
+        const KCursorSaver saver( Qt::ArrowCursor );
+        int answer = QMessageBox::information( 0,
+                         i18n("Message Disposition Notification Request"),
+                         i18n( mdnMessageBoxes[i].text ),
+                         i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
+        return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
       } else {
-	const KCursorSaver saver( Qt::ArrowCursor );
-	int answer = QMessageBox::information( 0,
-			 i18n("Message Disposition Notification Request"),
-			 i18n( mdnMessageBoxes[i].text ),
-			 i18n("&Ignore"), i18n("&Send") );
-	return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
+        const KCursorSaver saver( Qt::ArrowCursor );
+        int answer = QMessageBox::information( 0,
+                         i18n("Message Disposition Notification Request"),
+                         i18n( mdnMessageBoxes[i].text ),
+                         i18n("&Ignore"), i18n("&Send") );
+        return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
       }
     }
   kWarning(5006) <<"didn't find data for message box \""
-		  << what << "\"";
+                 << what << "\"";
   return 0;
 }
 
 KMMessage* KMMessage::createMDN( MDN::ActionMode a,
-				 MDN::DispositionType d,
-				 bool allowGUI,
-				 QList<MDN::DispositionModifier> m )
+                                 MDN::DispositionType d,
+                                 bool allowGUI,
+                                 QList<MDN::DispositionModifier> m )
 {
   // RFC 2298: At most one MDN may be issued on behalf of each
   // particular recipient by their user agent.  That is, once an MDN
@@ -1368,7 +1368,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
   if ( findDwBodyPart( DwMime::kTypeMessage,
-		       DwMime::kSubtypeDispositionNotification ) ) {
+                       DwMime::kSubtypeDispositionNotification ) ) {
     setMDNSentState( KMMsgMDNIgnore );
     return 0;
   }
@@ -1407,7 +1407,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     s = MDN::SentManually;
 
     special = i18n("Header \"Disposition-Notification-Options\" contained "
-		   "required, but unknown parameter");
+                   "required, but unknown parameter");
     d = MDN::Failed;
     m.clear(); // clear modifiers
   }
@@ -1416,7 +1416,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
   kDebug(5006) <<"KPIMUtils::splitAddressList(receiptTo):"
-	    << KPIMUtils::splitAddressList(receiptTo).join("\n");
+               << KPIMUtils::splitAddressList(receiptTo).join("\n");
   if ( KPIMUtils::splitAddressList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( "mdnMultipleAddressesInReceiptTo" );
@@ -1435,8 +1435,8 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, Qt::CaseSensitive ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
-			       "mdnReturnPathEmpty" :
-			       "mdnReturnPathNotInReceiptTo" );
+                               "mdnReturnPathEmpty" :
+                               "mdnReturnPathNotInReceiptTo" );
     s = MDN::SentManually;
   }
 
@@ -1505,10 +1505,10 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   //secondMsgPart.setCharset( "us-ascii" );
   //secondMsgPart.setCteStr( "7bit" );
   secondMsgPart.setBodyEncoded( MDN::dispositionNotificationBodyContent(
-	                    finalRecipient,
-			    rawHeaderField("Original-Recipient"),
-			    id(), /* Message-ID */
-			    d, a, s, m, special ) );
+                            finalRecipient,
+                            rawHeaderField("Original-Recipient"),
+                            id(), /* Message-ID */
+                            d, a, s, m, special ) );
   receipt->addBodyPart( &secondMsgPart );
 
   // message/rfc822 or text/rfc822-headers body part:
@@ -1563,23 +1563,23 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
 QString KMMessage::replaceHeadersInString( const QString & s ) const {
     QString result = s;
-    QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
+    QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", Qt::CaseInsensitive );
     Q_ASSERT( rx.isValid() );
 
     QRegExp rxDate( "\\$\\{date\\}" );
     Q_ASSERT( rxDate.isValid() );
 
     QString sDate = KMime::DateFormatter::formatDate(
-						     KMime::DateFormatter::Localized, date() );
+        KMime::DateFormatter::Localized, date() );
 
     int idx = 0;
-    if( ( idx = rxDate.search( result, idx ) ) != -1  ) {
+    if( ( idx = rxDate.indexIn( result, idx ) ) != -1  ) {
       result.replace( idx, rxDate.matchedLength(), sDate );
     }
 
     idx = 0;
-    while ( ( idx = rx.search( result, idx ) ) != -1 ) {
-      QString replacement = headerField( rx.cap(1).latin1() );
+    while ( ( idx = rx.indexIn( result, idx ) ) != -1 ) {
+      QString replacement = headerField( rx.cap(1).toLatin1() );
       result.replace( idx, rx.matchedLength(), replacement );
       idx += replacement.length();
     }
@@ -2820,12 +2820,12 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
   while (curpart && !part) {
     //dive into multipart messages
     while(curpart
-	  && curpart->hasHeaders()
-	  && curpart->Headers().HasContentType()
-      && curpart->Body().FirstBodyPart()
-	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
-	parts.append( curpart );
-	curpart = curpart->Body().FirstBodyPart();
+          && curpart->hasHeaders()
+          && curpart->Headers().HasContentType()
+          && curpart->Body().FirstBodyPart()
+          && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
+        parts.append( curpart );
+        curpart = curpart->Body().FirstBodyPart();
     }
     // this is where curPart->msgPart contains a leaf message part
 
@@ -2833,24 +2833,24 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if ( curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
       kDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
-		               << " " << curpart->Headers().ContentType().SubtypeStr().c_str();
+                   << " " << curpart->Headers().ContentType().SubtypeStr().c_str();
     }
 
     if (curpart &&
-	curpart->hasHeaders() &&
+        curpart->hasHeaders() &&
         curpart->Headers().HasContentType() &&
-	curpart->Headers().ContentType().Type() == type &&
-	curpart->Headers().ContentType().Subtype() == subtype) {
-	part = curpart;
+        curpart->Headers().ContentType().Type() == type &&
+        curpart->Headers().ContentType().Subtype() == subtype) {
+        part = curpart;
     } else {
       // go up in the tree until reaching a node with next
       // (or the last top-level node)
       while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
-	curpart = parts.last();
-	parts.removeLast();
+        curpart = parts.last();
+        parts.removeLast();
       } ;
       if (curpart)
-	curpart = curpart->Next();
+        curpart = curpart->Next();
     }
   }
   return part;
@@ -2869,12 +2869,12 @@ DwBodyPart * KMMessage::findDwBodyPart( const QByteArray& type, const QByteArray
   while (curpart && !part) {
     //dive into multipart messages
     while(curpart
-	  && curpart->hasHeaders()
-	  && curpart->Headers().HasContentType()
-      && curpart->Body().FirstBodyPart()
-	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
-	parts.append( curpart );
-	curpart = curpart->Body().FirstBodyPart();
+          && curpart->hasHeaders()
+          && curpart->Headers().HasContentType()
+          && curpart->Body().FirstBodyPart()
+          && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
+      parts.append( curpart );
+      curpart = curpart->Body().FirstBodyPart();
     }
     // this is where curPart->msgPart contains a leaf message part
 
@@ -2886,20 +2886,20 @@ DwBodyPart * KMMessage::findDwBodyPart( const QByteArray& type, const QByteArray
     }
 
     if (curpart &&
-	curpart->hasHeaders() &&
+        curpart->hasHeaders() &&
         curpart->Headers().HasContentType() &&
-	curpart->Headers().ContentType().TypeStr().c_str() == type &&
-	curpart->Headers().ContentType().SubtypeStr().c_str() == subtype) {
-	part = curpart;
+        curpart->Headers().ContentType().TypeStr().c_str() == type &&
+        curpart->Headers().ContentType().SubtypeStr().c_str() == subtype) {
+        part = curpart;
     } else {
       // go up in the tree until reaching a node with next
       // (or the last top-level node)
       while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
-	curpart = parts.last();
-	parts.removeLast();
+        curpart = parts.last();
+        parts.removeLast();
       } ;
       if (curpart)
-	curpart = curpart->Next();
+        curpart = curpart->Next();
     }
   }
   return part;
@@ -2970,7 +2970,7 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 
 //-----------------------------------------------------------------------------
 void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
-			 bool withBody)
+                         bool withBody)
 {
   if ( !aPart )
     return;
@@ -3094,30 +3094,30 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     while ( i1 < iL )
     {
       if( -1 == i2 )
-	i2 = iL;
+        i2 = iL;
       if( i1+1 < i2 ) {
-	parAV = additionalParam.mid( i1, (i2-i1) );
-	iM = parAV.indexOf('=');
-	if( -1 < iM )
+        parAV = additionalParam.mid( i1, (i2-i1) );
+        iM = parAV.indexOf('=');
+        if( -1 < iM )
         {
-	  parA = parAV.left( iM ).data();
-	  parV = parAV.right( parAV.length() - iM - 1 ).data();
-	  if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
+          parA = parAV.left( iM ).data();
+          parV = parAV.right( parAV.length() - iM - 1 ).data();
+          if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
           {
-	    parV.erase( 0,  1);
-	    parV.erase( parV.length()-1 );
-	  }
-	}
-	else
+            parV.erase( 0,  1);
+            parV.erase( parV.length()-1 );
+          }
+        }
+        else
         {
-	  parA = parAV.data();
-	  parV = "";
-	}
-	DwParameter *param;
-	param = new DwParameter;
-	param->SetAttribute( parA );
-	param->SetValue(     parV );
-	ct.AddParameter( param );
+          parA = parAV.data();
+          parV = "";
+        }
+        DwParameter *param;
+        param = new DwParameter;
+        param->SetAttribute( parA );
+        param->SetValue(     parV );
+        ct.AddParameter( param );
       }
       i1 = i2+1;
       i2 = additionalParam.indexOf( ';', i1 );
@@ -3140,11 +3140,11 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   if (!paramAttr.isEmpty())
   {
     QByteArray encoding = autoDetectCharset(charset, sPrefCharsets,
-					  aPart->parameterValue());
+                                            aPart->parameterValue());
     if (encoding.isEmpty()) encoding = "utf-8";
     QByteArray paramValue;
     paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
-						encoding);
+                                                encoding);
     DwParameter *param = new DwParameter;
     if (aPart->parameterValue() != QString(paramValue))
     {
@@ -3280,11 +3280,11 @@ QByteArray KMMessage::html2source( const QByteArray & src )
       break;
     case '\'': {
         *d++ = '&';
-	*d++ = 'a';
-	*d++ = 'p';
-	*d++ = 's';
-	*d++ = ';';
-	++s;
+        *d++ = 'a';
+        *d++ = 'p';
+        *d++ = 's';
+        *d++ = ';';
+        ++s;
       }
       break;
     default:
@@ -3660,7 +3660,7 @@ QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
       break;
     case '\n':
       if ( !removeLineBreaks )
-	result += "<br>";
+        result += "<br>";
       break;
     case '\r':
       // ignore CR
@@ -3829,7 +3829,7 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
     QString fullName = user.fullName();
     if ( fullName.contains( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) )
       address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
-	      + "\" <" + address + '>';
+                    + "\" <" + address + '>';
     else
       address = fullName + " <" + address + '>';
   }
