@@ -25,7 +25,7 @@
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <kstandarddirs.h>
-#include <phonon/audioplayer.h>
+#include <Phonon/MediaObject>
 
 #include <QHBoxLayout>
 
@@ -152,8 +152,9 @@ void KMSoundTestWidget::playSound()
     QString file = QString::fromLatin1("file:");
     if (parameter.startsWith(file))
         play = parameter.mid(file.length());
-    Phonon::AudioPlayer* player = new Phonon::AudioPlayer( Phonon::NotificationCategory, this );
-    player->play( KUrl( QFile::encodeName(play) ) );
+    Phonon::MediaObject* player = Phonon::createPlayer( Phonon::NotificationCategory, play );
+    player->play();
+    connect( player, SIGNAL( finished() ), player, SLOT( deleteLater() ) );
 }
 
 
