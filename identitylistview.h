@@ -37,7 +37,6 @@
 #include <QTreeWidgetItem>
 
 namespace KPIMIdentities { class Identity; }
-class Q3DragObject;
 class QDropEvent;
 
 namespace KMail {
@@ -88,8 +87,7 @@ namespace KMail {
     void rename( KMail::IdentityListViewItem *, const QString& );
 
   protected:
-    bool acceptDrag( QDropEvent * ) const;
-    Q3DragObject *dragObject();
+    virtual void startDrag ( Qt::DropActions supportedActions );
   };
 
 

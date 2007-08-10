@@ -168,25 +168,17 @@ namespace KMail {
     }
   }
 
-  bool IdentityListView::acceptDrag( QDropEvent *e ) const {
-    // disallow moving:
-    return e->source() != viewport() && KPIMIdentities::Identity::canDecode( e->mimeData() );
-  }
-
-  Q3DragObject *IdentityListView::dragObject() {
+  void IdentityListView::startDrag ( Qt::DropActions /*supportedActions*/ ) {
     IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
-    if ( !item ) return 0;
+    if ( !item )
+      return;
 
-    return 0;
-#ifdef __GNUC__
-#warning enable the QDrag-based code once the list view does no longer derive from Q3ListView...
-#endif
     QDrag *drag = new QDrag( viewport() );
     QMimeData *md = new QMimeData;
     drag->setMimeData( md );
     item->identity().populateMimeData( md );
     drag->setPixmap( SmallIcon("identity") );
-    //return drag;
+    drag->start();
   }
 
 } // namespace KMail
