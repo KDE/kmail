@@ -178,50 +178,50 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
 
     switch( curNode->type() ){
       case DwMime::kTypeText: {
-kDebug(5006) <<"* text *";
+          kDebug(5006) <<"* text *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeHtml:
-kDebug(5006) <<"html";
+            kDebug(5006) <<"html";
             break;
           case DwMime::kSubtypeXVCard:
-kDebug(5006) <<"v-card";
+            kDebug(5006) <<"v-card";
             break;
           case DwMime::kSubtypeRichtext:
-kDebug(5006) <<"rich text";
+            kDebug(5006) <<"rich text";
             break;
           case DwMime::kSubtypeEnriched:
-kDebug(5006) <<"enriched";
+            kDebug(5006) <<"enriched";
             break;
           case DwMime::kSubtypePlain:
-kDebug(5006) <<"plain";
+            kDebug(5006) <<"plain";
             break;
           default:
-kDebug(5006) <<"default";
+            kDebug(5006) <<"default";
             break;
           }
         }
         break;
       case DwMime::kTypeMultipart: {
-kDebug(5006) <<"* multipart *";
+          kDebug(5006) <<"* multipart *";
           bIsMultipart = true;
           switch( curNode->subType() ){
           case DwMime::kSubtypeMixed:
-kDebug(5006) <<"mixed";
+            kDebug(5006) <<"mixed";
             break;
           case DwMime::kSubtypeAlternative:
-kDebug(5006) <<"alternative";
+            kDebug(5006) <<"alternative";
             break;
           case DwMime::kSubtypeDigest:
-kDebug(5006) <<"digest";
+            kDebug(5006) <<"digest";
             break;
           case DwMime::kSubtypeParallel:
-kDebug(5006) <<"parallel";
+            kDebug(5006) <<"parallel";
             break;
           case DwMime::kSubtypeSigned:
-kDebug(5006) <<"signed";
+            kDebug(5006) <<"signed";
             break;
           case DwMime::kSubtypeEncrypted: {
-kDebug(5006) <<"encrypted";
+              kDebug(5006) <<"encrypted";
               if ( child ) {
                 /*
                     ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
@@ -236,16 +236,16 @@ kDebug(5006) <<"encrypted";
             }
             break;
           default :
-kDebug(5006) <<"(  unknown subtype  )";
+            kDebug(5006) <<"(  unknown subtype  )";
             break;
           }
         }
         break;
       case DwMime::kTypeMessage: {
-kDebug(5006) <<"* message *";
+          kDebug(5006) <<"* message *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
-kDebug(5006) <<"RfC 822";
+              kDebug(5006) <<"RfC 822";
               if ( child )
                 dataNode = child;
             }
@@ -254,25 +254,25 @@ kDebug(5006) <<"RfC 822";
         }
         break;
       case DwMime::kTypeApplication: {
-kDebug(5006) <<"* application *";
+          kDebug(5006) <<"* application *";
           switch( curNode->subType() ){
           case DwMime::kSubtypePostscript:
-kDebug(5006) <<"postscript";
+            kDebug(5006) <<"postscript";
             break;
           case DwMime::kSubtypeOctetStream: {
-kDebug(5006) <<"octet stream";
+              kDebug(5006) <<"octet stream";
               if ( child )
                 dataNode = child;
             }
             break;
           case DwMime::kSubtypePgpEncrypted:
-kDebug(5006) <<"pgp encrypted";
+            kDebug(5006) <<"pgp encrypted";
             break;
           case DwMime::kSubtypePgpSignature:
-kDebug(5006) <<"pgp signed";
+            kDebug(5006) <<"pgp signed";
             break;
           case DwMime::kSubtypePkcs7Mime: {
-kDebug(5006) <<"pkcs7 mime";
+              kDebug(5006) <<"pkcs7 mime";
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
               if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
@@ -283,37 +283,37 @@ kDebug(5006) <<"pkcs7 mime";
         }
         break;
       case DwMime::kTypeImage: {
-kDebug(5006) <<"* image *";
+          kDebug(5006) <<"* image *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeJpeg:
-kDebug(5006) <<"JPEG";
+            kDebug(5006) <<"JPEG";
             break;
           case DwMime::kSubtypeGif:
-kDebug(5006) <<"GIF";
+            kDebug(5006) <<"GIF";
             break;
           }
         }
         break;
       case DwMime::kTypeAudio: {
-kDebug(5006) <<"* audio *";
+          kDebug(5006) <<"* audio *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeBasic:
-kDebug(5006) <<"basic";
+            kDebug(5006) <<"basic";
             break;
           }
         }
         break;
       case DwMime::kTypeVideo: {
-kDebug(5006) <<"* video *";
+          kDebug(5006) <<"* video *";
           switch( curNode->subType() ){
           case DwMime::kSubtypeMpeg:
-kDebug(5006) <<"mpeg";
+            kDebug(5006) <<"mpeg";
             break;
           }
         }
         break;
       case DwMime::kTypeModel:
-kDebug(5006) <<"* model *";
+          kDebug(5006) <<"* model *";
         break;
     }
 
@@ -327,20 +327,20 @@ kDebug(5006) <<"* model *";
             ? &rootHeaders
             : 0 ) );
     if( dataNode == curNode ) {
-kDebug(5006) <<"dataNode == curNode:  Save curNode without replacing it.";
+      kDebug(5006) <<"dataNode == curNode:  Save curNode without replacing it.";
 
       // A) Store the headers of this part IF curNode is not the root node
       //    AND we are not replacing a node that already *has* replaced
       //    the root node in previous recursion steps of this function...
       if( headers ) {
         if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
-kDebug(5006) <<"dataNode is NOT replacing the root node:  Store the headers.";
+          kDebug(5006) <<"dataNode is NOT replacing the root node:  Store the headers.";
           resultingData += headers->AsString().c_str();
         } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
-kDebug(5006) <<"dataNode replace the root node:  Do NOT store the headers but change";
-kDebug(5006) <<"                                 the Message's headers accordingly.";
-kDebug(5006) <<"              old Content-Type =" << rootHeaders.ContentType().AsString().c_str();
-kDebug(5006) <<"              new Content-Type =" << headers->ContentType(   ).AsString().c_str();
+          kDebug(5006) <<"dataNode replace the root node:  Do NOT store the headers but change";
+          kDebug(5006) <<"                                 the Message's headers accordingly.";
+          kDebug(5006) <<"              old Content-Type =" << rootHeaders.ContentType().AsString().c_str();
+          kDebug(5006) <<"              new Content-Type =" << headers->ContentType(   ).AsString().c_str();
           rootHeaders.ContentType()             = headers->ContentType();
           theMessage.setContentTransferEncodingStr(
               headers->HasContentTransferEncoding()
@@ -354,12 +354,12 @@ kDebug(5006) <<"              new Content-Type =" << headers->ContentType(   ).A
 
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
-kDebug(5006) <<"is valid Multipart, processing children:";
+        kDebug(5006) <<"is valid Multipart, processing children:";
         QByteArray boundary = headers->ContentType().Boundary().c_str();
         curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
-kDebug(5006) <<"--boundary";
+          kDebug(5006) <<"--boundary";
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
             resultingData += '\n';
@@ -377,23 +377,23 @@ kDebug(5006) <<"--boundary";
                                     recCount + 1 );
           curNode = curNode->nextSibling();
         }
-kDebug(5006) <<"--boundary--";
+        kDebug(5006) <<"--boundary--";
         resultingData += "\n--";
         resultingData += boundary;
         resultingData += "--\n\n";
-kDebug(5006) <<"Multipart processing children - DONE";
+        kDebug(5006) <<"Multipart processing children - DONE";
       } else if( part ){
         // store simple part
-kDebug(5006) <<"is Simple part or invalid Multipart, storing body data .. DONE";
+        kDebug(5006) <<"is Simple part or invalid Multipart, storing body data .. DONE";
         resultingData += part->Body().AsString().c_str();
       }
     } else {
-kDebug(5006) <<"dataNode != curNode:  Replace curNode by dataNode.";
+      kDebug(5006) <<"dataNode != curNode:  Replace curNode by dataNode.";
       bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->parentNode();
       if( rootNodeReplaceFlag ) {
-kDebug(5006) <<"                      Root node will be replaced.";
+        kDebug(5006) <<"                      Root node will be replaced.";
       } else {
-kDebug(5006) <<"                      Root node will NOT be replaced.";
+        kDebug(5006) <<"                      Root node will NOT be replaced.";
       }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
@@ -451,8 +451,8 @@ const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent,
-			 QWidget *mainWindow,
-			 KActionCollection* actionCollection,
+                         QWidget *mainWindow,
+                         KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
   : QWidget(aParent, aFlags | Qt::WDestructiveClose),
     mAttachmentStrategy( 0 ),
@@ -506,9 +506,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mResizeTimer.setSingleShot( true );
   mDelayedMarkTimer.setSingleShot( true );
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
-  	   this, SLOT(updateReaderWin()) );
+           this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
-  	   this, SLOT(slotDelayedResize()) );
+           this, SLOT(slotDelayedResize()) );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
 
@@ -903,7 +903,7 @@ void KMReaderWin::readConfig(void)
   mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", false );
 
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
-			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
+                             HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
   KToggleAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
   if ( raction )
     raction->setChecked( true );
@@ -1014,7 +1014,7 @@ void KMReaderWin::initHtmlWidget(void)
   if ( !htmlWriter() )
 #ifdef KMAIL_READER_HTML_DEBUG
     mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString() ),
-				     new KHtmlPartHtmlWriter( mViewer, 0 ) );
+                                     new KHtmlPartHtmlWriter( mViewer, 0 ) );
 #else
     mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
 #endif
@@ -1063,7 +1063,7 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
 }
 
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
-					     const HeaderStrategy * strategy ) {
+                                             const HeaderStrategy * strategy ) {
   mHeaderStyle = style ? style : HeaderStyle::fancy();
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
   update( true );
@@ -1146,7 +1146,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       kDebug(5006) <<"(" << aMsg->getMsgSerNum() <<", last" << mLastSerNum <<")" << aMsg->subject()
         << aMsg->fromStrip() << ", readyToShow" << (aMsg->readyToShow());
 
-	//Reset the level quote if the msg has changed.
+  //Reset the level quote if the msg has changed.
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
     mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
   }
@@ -1323,24 +1323,24 @@ void KMReaderWin::displayAboutPage()
 {
   KLocalizedString info =
     ki18nc("%1: KMail version; %2: help:// URL; %3: homepage URL; "
-	 "%4: generated list of new features; "
-	 "%5: First-time user text (only shown on first start); "
+         "%4: generated list of new features; "
+         "%5: First-time user text (only shown on first start); "
          "%6: generated list of important changes; "
-	 "--- end of comment ---",
-	 "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
-	 "Desktop Environment. It is designed to be fully compatible with "
-	 "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
-	 "</p>\n"
-	 "<ul><li>KMail has many powerful features which are described in the "
-	 "<a href=\"%2\">documentation</a></li>\n"
-	 "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
-	 "new versions of KMail</li></ul>\n"
+         "--- end of comment ---",
+         "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
+         "Desktop Environment. It is designed to be fully compatible with "
+         "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
+         "</p>\n"
+         "<ul><li>KMail has many powerful features which are described in the "
+         "<a href=\"%2\">documentation</a></li>\n"
+         "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
+         "new versions of KMail</li></ul>\n"
          "%6\n" // important changes
          "%4\n" // new features
-	 "%5\n" // first start info
-	 "<p>We hope that you will enjoy KMail.</p>\n"
-	 "<p>Thank you,</p>\n"
-	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
+         "%5\n" // first start info
+         "<p>We hope that you will enjoy KMail.</p>\n"
+         "<p>Thank you,</p>\n"
+         "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
            .subs( KMAIL_VERSION ) // KMail version
            .subs( "help:/kmail/index.html" ) // KMail help:// URL
            .subs( "http://kontact.kde.org/kmail/" ); // KMail homepage URL
@@ -1361,11 +1361,11 @@ void KMReaderWin::displayAboutPage()
 
   if( kmkernel->firstStart() ) {
     info = info.subs( i18n("<p>Please take a moment to fill in the KMail "
-			  "configuration panel at Settings-&gt;Configure "
-			  "KMail.\n"
-			  "You need to create at least a default identity and "
-			  "an incoming as well as outgoing mail account."
-			  "</p>\n") );
+                           "configuration panel at Settings-&gt;Configure "
+                           "KMail.\n"
+                           "You need to create at least a default identity and "
+                           "an incoming as well as outgoing mail account."
+                           "</p>\n") );
   } else {
     info = info.subs( QString() ); // remove the place holder
   }
@@ -1456,8 +1456,8 @@ void KMReaderWin::displayMessage() {
 
   mMimePartTree->clear();
   showHideMimeTree( !msg || // treat no message as "text/plain"
-		    ( msg->type() == DwMime::kTypeText
-		      && msg->subtype() == DwMime::kSubtypePlain ) );
+                    ( msg->type() == DwMime::kTypeText
+                   && msg->subtype() == DwMime::kSubtypePlain ) );
 
   if ( !msg )
     return;
@@ -1520,12 +1520,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     cntEnc = aMsg->contentTransferEncodingStr();
 
   // fill the MIME part tree viewer
-  mRootNode->fillMimePartTree( 0,
-			       mMimePartTree,
-			       cntDesc,
-			       mainCntTypeStr,
-			       cntEnc,
-			       cntSize );
+  mRootNode->fillMimePartTree( 0, mMimePartTree, cntDesc, mainCntTypeStr,
+                               cntEnc, cntSize );
 
   // Check if any part of this message is a v-card
   // v-cards can be either text/x-vcard or text/directory, so we need to check
@@ -1644,7 +1640,7 @@ kDebug(5006) <<"KMReaderWin  -  attach unencrypted message to aMsg";
   } else {
     kDebug(5006) <<"KMReaderWin  -  finished parsing and displaying of message.";
     showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
-		      rootNodeCntSubtype == DwMime::kSubtypePlain );
+                      rootNodeCntSubtype == DwMime::kSubtypePlain );
   }
 
   aMsg->setIsBeingParsed( false );
@@ -1802,8 +1798,8 @@ void KMReaderWin::slotTouchMessage()
        message()->encryptionState() != KMMsgEncryptionStateUnknown )
     return;
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
-						   MDN::Displayed,
-						   true /* allow GUI */ ) )
+                                                   MDN::Displayed,
+                                                   true /* allow GUI */ ) )
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
       KMessageBox::error( this, i18n("Could not send MDN.") );
 }
@@ -2054,7 +2050,7 @@ void KMReaderWin::setMsgPart( partNode * node ) {
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
-			      const QString& aFileName, const QString& pname )
+                              const QString& aFileName, const QString& pname )
 {
   KCursorSaver busy(KBusyPtr::busy());
   if (kasciistricmp(aMsgPart->typeStr(), "message")==0) {
@@ -2242,7 +2238,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
       KGuiItem(open_text), KStandardGuiItem::cancel(),
       QString::fromLatin1("askSave") + mimetype->name() );
 
-  if( choice == KMessageBox::Yes ) {		// Save
+  if( choice == KMessageBox::Yes ) { // Save
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
         message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save,
@@ -2251,7 +2247,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
   }
-  else if( choice == KMessageBox::No ) {	// Open
+  else if( choice == KMessageBox::No ) { // Open
     KMHandleAttachmentCommand::AttachmentAction action = ( offer ?
         KMHandleAttachmentCommand::Open : KMHandleAttachmentCommand::OpenWith );
     mAtmUpdate = true;
@@ -2260,7 +2256,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
-  } else {					// Cancel
+  } else { // Cancel
     kDebug(5006) <<"Canceled opening attachment";
   }
 }
@@ -2401,7 +2397,7 @@ void KMReaderWin::slotUrlClicked()
   }
 
   KMCommand *command = new KMUrlClickedCommand( mUrlClicked, identity, this,
-						false, mainWidget );
+                                                false, mainWidget );
   command->start();
 }
 
@@ -2416,7 +2412,7 @@ void KMReaderWin::slotMailtoCompose()
 void KMReaderWin::slotMailtoForward()
 {
   KMCommand *command = new KMMailtoForwardCommand( mMainWindow, mUrlClicked,
-						   message() );
+                                                   message() );
   command->start();
 }
 
@@ -2424,7 +2420,7 @@ void KMReaderWin::slotMailtoForward()
 void KMReaderWin::slotMailtoAddAddrBook()
 {
   KMCommand *command = new KMMailtoAddAddrBookCommand( mUrlClicked,
-						       mMainWindow);
+                                                       mMainWindow);
   command->start();
 }
 
@@ -2432,7 +2428,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
   KMCommand *command = new KMMailtoOpenAddrBookCommand( mUrlClicked,
-							mMainWindow );
+                                                        mMainWindow );
   command->start();
 }
 
