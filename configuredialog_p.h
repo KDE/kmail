@@ -1159,10 +1159,9 @@ private:
 class ListView : public QTreeWidget {
   Q_OBJECT
 public:
-  explicit ListView( QWidget *parent=0, int visibleItem=10 );
+  explicit ListView( QWidget *parent=0 );
   void resizeColums();
 
-  void setVisibleItem( int visibleItem, bool updateSize=true );
   virtual QSize sizeHint() const;
 
 protected:

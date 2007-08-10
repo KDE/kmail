@@ -132,13 +132,12 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   enableButtonOk( true );
 }
 
-ListView::ListView( QWidget *parent, int visibleItem )
+ListView::ListView( QWidget *parent )
   : QTreeWidget( parent )
 {
   setAllColumnsShowFocus( true );
   setSelectionMode( QAbstractItemView::SingleSelection );
   setRootIsDecorated( false );
-  setVisibleItem(visibleItem);
 }
 
 
@@ -174,20 +173,6 @@ void ListView::resizeColums()
   }
   setColumnWidth( c-1, w3 );
 }
-
-
-void ListView::setVisibleItem( int visibleItem, bool updateSize )
-{
-  // FIXME is this really neccessary?
-  /*mVisibleItem = qMax( 1, visibleItem );
-  if( updateSize == true )
-  {
-    QSize s = sizeHint();
-    setMinimumSize( s.width() + verticalScrollBar()->sizeHint().width() +
-		    lineWidth() * 2, s.height() );
-  }*/
-}
-
 
 QSize ListView::sizeHint() const
 {
