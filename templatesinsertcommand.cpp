@@ -31,8 +31,9 @@
 
 TemplatesInsertCommand::TemplatesInsertCommand( QWidget *parent,
                                                 const char *name )
-  : QPushButton( parent, name )
+  : QPushButton( parent )
 {
+  setObjectName( name );
   setText( i18n( "&Insert Command..." ) );
   connect( this, SIGNAL( clicked() ),
            this, SLOT( slotClicked() ) );
@@ -379,8 +380,8 @@ TemplatesInsertCommand::~TemplatesInsertCommand()
 
 void TemplatesInsertCommand::slotClicked()
 {
-  QSize ps = mMenu->popupMenu()->sizeHint();
-  mMenu->popupMenu()->popup( mapToGlobal( QPoint( 0, -(ps.height()) ) ) );
+  QSize ps = mMenu->menu()->sizeHint();
+  mMenu->menu()->popup( mapToGlobal( QPoint( 0, -(ps.height()) ) ) );
 }
 
 void TemplatesInsertCommand::slotMapped( int cmd )
