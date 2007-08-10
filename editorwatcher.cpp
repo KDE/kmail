@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kopenwithdialog.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kmimetypetrader.h>
 #include <krun.h>
 
@@ -73,6 +73,7 @@ EditorWatcher::EditorWatcher(const KUrl & url, const QString &mimeType, bool ope
     mFileModified( true ) // assume the worst unless we know better
 {
   assert( mUrl.isLocalFile() );
+  mTimer.setSingleShot( true );
   connect( &mTimer, SIGNAL(timeout()), SLOT(checkEditDone()) );
 }
 
@@ -109,10 +110,12 @@ bool EditorWatcher::start()
 
   // start the editor
   QStringList params = KRun::processDesktopExec( *offer, list, false );
-  mEditor = new K3Process( this );
-  *mEditor << params;
-  connect( mEditor, SIGNAL(processExited(K3Process*)), SLOT(editorExited()) );
-  if ( !mEditor->start() )
+  mEditor = new KProcess( this );
+  mEditor->setProgram( params );
+  connect( mEditor, SIGNAL( finished( int, QProcess::ExitStatus ) ),
+           SLOT( editorExited() ) );
+  mEditor->start();
+  if ( !mEditor->waitForStarted() )
     return false;
   mEditorRunning = true;
 
@@ -146,14 +149,14 @@ void EditorWatcher::inotifyEvent()
     }
   }
 #endif
-  mTimer.start( 500, true );
+  mTimer.start( 500 );
 
 }
 
 void EditorWatcher::editorExited()
 {
   mEditorRunning = false;
-  mTimer.start( 500, true );
+  mTimer.start( 500 );
 }
 
 void EditorWatcher::checkEditDone()

@@ -25,7 +25,7 @@
 #include <qobject.h>
 #include <qtimer.h>
 
-class K3Process;
+class KProcess;
 
 namespace KMail {
 
@@ -54,7 +54,7 @@ class EditorWatcher : public QObject
     KUrl mUrl;
     QString mMimeType;
     bool mOpenWith;
-    K3Process *mEditor;
+    KProcess *mEditor;
 
     int mInotifyFd;
     int mInotifyWatch;
