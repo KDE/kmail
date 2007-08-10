@@ -118,8 +118,6 @@ set(kmailprivate_LIB_SRCS
    bodypartformatter.cpp
    bodypartformatterfactory.cpp
    partNode.cpp
-   signatureconfigurationdialogimpl.cpp
-   encryptionconfigurationdialogimpl.cpp
    mailsourceviewer.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
@@ -205,7 +203,7 @@ qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
 
 
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui encryptionconfigurationdialog.ui templatesconfiguration_base.ui customtemplates_base.ui signatureconfigurationdialog.ui )
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui )
 
 #kde4_add_dcop_skels(kmailprivate_LIB_SRCS
 #   kmailIface.h
