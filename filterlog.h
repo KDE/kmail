@@ -31,7 +31,6 @@
 
 #include <QObject>
 #include <QStringList>
-#include <q3stylesheet.h>
 #include <QTextDocument>
 
 namespace KMail {
