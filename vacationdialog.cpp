@@ -40,10 +40,11 @@ using KMime::HeaderParsing::parseAddressList;
 namespace KMail {
 
   VacationDialog::VacationDialog( const QString & caption, QWidget * parent,
-				  const char * name, bool modal )
+                                  const char * name, bool modal )
     : KDialog( parent )
   {
     setCaption( caption );
+    setObjectName( name );
     setButtons( Ok|Cancel|Default );
     setDefaultButton(  Ok );
     setModal( modal );
@@ -63,8 +64,8 @@ namespace KMail {
     // explanation label:
     ++row;
     glay->addWidget( new QLabel( i18n("Configure vacation "
-					       "notifications to be sent:"),
-					  frame ), row, 0, 1, 2 );
+                                      "notifications to be sent:"), 
+                                 frame ), row, 0, 1, 2 );
 
     // Activate checkbox:
     ++row;
@@ -102,15 +103,18 @@ namespace KMail {
 
     // "Send responses also to SPAM mail" checkbox:
     ++row;
-    mSpamCheck = new QCheckBox( i18n("Do not send vacation replies to spam messages"), frame, "mSpamCheck" );
+    mSpamCheck = new QCheckBox( i18n("Do not send vacation replies to spam messages"), frame );
+    mSpamCheck->setObjectName( "mSpamCheck" );
     mSpamCheck->setChecked( true );
-    glay->addMultiCellWidget( mSpamCheck, row, row, 0, 1 );
+    glay->addWidget( mSpamCheck, row, 0, 1, 2 );
 
     //  domain checkbox and linedit:
     ++row;
-    mDomainCheck = new QCheckBox( i18n("Only react to mail coming from domain"), frame, "mDomainCheck" );
+    mDomainCheck = new QCheckBox( i18n("Only react to mail coming from domain"), frame );
+    mDomainCheck->setObjectName( "mDomainCheck" );
     mDomainCheck->setChecked( false );
-    mDomainEdit = new QLineEdit( frame, "mDomainEdit" );
+    mDomainEdit = new QLineEdit( frame );
+    mDomainEdit->setObjectName( "mDomainEdit" );
     mDomainEdit->setEnabled( false );
     mDomainEdit->setValidator( new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), mDomainEdit ) );
     glay->addWidget( mDomainCheck, row, 0 );
@@ -159,7 +163,7 @@ namespace KMail {
     for ( AddressList::const_iterator it = al.begin() ; it != al.end() ; ++it ) {
       const MailboxList & mbl = (*it).mailboxList;
       for ( MailboxList::const_iterator jt = mbl.begin() ; jt != mbl.end() ; ++jt )
-	asl.push_back( (*jt).addrSpec() );
+        asl.push_back( (*jt).addrSpec() );
     }
     return asl;
   }

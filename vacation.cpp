@@ -167,7 +167,7 @@ namespace {
       if ( expected.method != Any && method != expected.method )
         found = false;
       if ( const char * str = expected.string )
-        if ( string.lower() != QString::fromUtf8( str ).lower() )
+        if ( string.toLower() != QString::fromUtf8( str ).toLower() )
           found = false;
       kDebug(5006) << ( found ?"found:" :"not found:" )
                    << mState << "->"
