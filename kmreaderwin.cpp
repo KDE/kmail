@@ -1527,7 +1527,13 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 			       cntEnc,
 			       cntSize );
 
+  // Check if any part of this message is a v-card
+  // v-cards can be either text/x-vcard or text/directory, so we need to check
+  // both.
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
+  if ( !vCardNode )
+    vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeDirectory );
+  
   bool hasVCard = false;
   if( vCardNode ) {
     // ### FIXME: We should only do this if the vCard belongs to the sender,
