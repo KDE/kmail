@@ -4473,6 +4473,23 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                   "Flat Files (\"mbox\" format)")
           << i18n("continuation of \"By default, &message folders on disk are\"",
                   "Directories (\"maildir\" format)") );
+  // and now: add QWhatsThis:
+  QString msg = i18n( "what's this help",
+                      "<qt><p>This selects which mailbox format will be "
+                      "the default for local folders:</p>"
+                      "<p><b>mbox:</b> KMail's mail "
+                      "folders are represented by a single file each. "
+                      "Individual messages are separated from each other by a "
+                      "line starting with \"From \". This saves space on "
+                      "disk, but may be less robust, e.g. when moving messages "
+                      "between folders.</p>"
+                      "<p><b>maildir:</b> KMail's mail folders are "
+                      "represented by real folders on disk. Individual messages "
+                      "are separate files. This may waste a bit of space on "
+                      "disk, but should be more robust, e.g. when moving "
+                      "messages between folders.</p></qt>");
+  QWhatsThis::add( mMailboxPrefCombo, msg );
+  QWhatsThis::add( label, msg );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
   connect( mMailboxPrefCombo, SIGNAL( activated( int ) ),
@@ -4520,23 +4537,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 
   vlay->addStretch( 1 );
 
-  // and now: add QWhatsThis:
-  QString msg = i18n( "what's this help",
-                      "<qt><p>This selects which mailbox format will be "
-                      "the default for local folders:</p>"
-                      "<p><b>mbox:</b> KMail's mail "
-                      "folders are represented by a single file each. "
-                      "Individual messages are separated from each other by a "
-                      "line starting with \"From \". This saves space on "
-                      "disk, but may be less robust, e.g. when moving messages "
-                      "between folders.</p>"
-                      "<p><b>maildir:</b> KMail's mail folders are "
-                      "represented by real folders on disk. Individual messages "
-                      "are separate files. This may waste a bit of space on "
-                      "disk, but should be more robust, e.g. when moving "
-                      "messages between folders.</p></qt>");
-  QWhatsThis::add( mMailboxPrefCombo, msg );
-  QWhatsThis::add( label, msg );
   // @TODO: Till, move into .kcgc file
   msg = i18n( "what's this help",
             "<qt><p>When jumping to the next unread message, it may occur "
