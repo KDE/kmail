@@ -755,7 +755,7 @@ public: // mailserviceimpl
     int mAttachFilesSend;
 
   private:
-    // helper method for slotInsert(My)PublicKey()
+  // helper method for slotInsert(My)PublicKey()
     void startPublicKeyExport();
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
@@ -776,7 +776,7 @@ public: // mailserviceimpl
 
     void slotContinueDoSend( bool );
     void slotContinuePrint( bool );
-    void slotContinueAutoSave( bool );
+    void slotContinueAutoSave();
 
     void slotEncryptChiasmusToggled( bool );
 

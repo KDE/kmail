@@ -719,8 +719,10 @@ void KMComposeWin::autoSaveMessage()
   applyChanges( true, true );
 
   // Don't continue before the applyChanges is done!
-  qApp->enter_loop();
+}
 
+void KMComposeWin::slotContinueAutoSave() 
+{
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
     kDebug(5006) <<"Composing the message failed.";
@@ -764,15 +766,8 @@ void KMComposeWin::autoSaveMessage()
   }
 
   if ( autoSaveInterval() > 0 ) {
-    mAutoSaveTimer->start( autoSaveInterval() );
+    updateAutoSave();
   }
-}
-
-void KMComposeWin::slotContinueAutoSave( bool )
-{
-  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueAutoSave( bool ) ) );
-  qApp->exit_loop();
 }
 
 //-----------------------------------------------------------------------------
