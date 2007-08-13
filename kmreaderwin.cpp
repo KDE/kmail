@@ -1020,11 +1020,11 @@ void KMReaderWin::initHtmlWidget(void)
 #endif
 
   connect(mViewer->browserExtension(),
-          SIGNAL(openUrlRequest(const KUrl &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KUrl &)));
+          SIGNAL(openUrlRequest(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)),this,
+          SLOT(slotUrlOpen(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)));
   connect(mViewer->browserExtension(),
-          SIGNAL(createNewWindow(const KUrl &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KUrl &)));
+          SIGNAL(createNewWindow(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)),this,
+          SLOT(slotUrlOpen(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
@@ -1875,7 +1875,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::URLArgs &)
+void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)
 {
   mUrlClicked = aUrl;
 

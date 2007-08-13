@@ -71,7 +71,8 @@ class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 namespace KParts {
-  struct URLArgs;
+  class BrowserArguments;
+  class OpenUrlArguments;
 }
 
 /**
@@ -321,7 +322,7 @@ public slots:
   void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
-  void slotUrlOpen(const KUrl &url, const KParts::URLArgs &args);
+  void slotUrlOpen(const KUrl &url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
 
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);

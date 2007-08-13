@@ -614,7 +614,7 @@ KMUrlOpenCommand::KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin )
 KMCommand::Result KMUrlOpenCommand::execute()
 {
   if ( !mUrl.isEmpty() )
-    mReaderWin->slotUrlOpen( mUrl, KParts::URLArgs() );
+    mReaderWin->slotUrlOpen( mUrl, KParts::OpenUrlArguments(), KParts::BrowserArguments() );
 
   return OK;
 }
