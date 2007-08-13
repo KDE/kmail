@@ -780,7 +780,7 @@ private slots:
 
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
-  void slotContinueAutoSave( bool );
+  void slotContinueAutoSave();
 
   void slotEncryptChiasmusToggled( bool );
 

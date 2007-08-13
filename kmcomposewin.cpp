@@ -709,15 +709,21 @@ void KMComposeWin::autoSaveMessage()
 
   if ( mAutoSaveTimer )
     mAutoSaveTimer->stop();
+
   connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueAutoSave( bool ) ) );
+           this, SLOT( slotContinueAutoSave() ) );
   // This method is called when KMail crashed, so don't try signing/encryption
   // and don't disable controls because it is also called from a timer and
   // then the disabling is distracting.
   applyChanges( true, true );
 
   // Don't continue before the applyChanges is done!
-  qApp->enter_loop();
+}
+
+void KMComposeWin::slotContinueAutoSave()
+{
+  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
+              this, SLOT( slotContinueAutoSave( bool ) ) );
 
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
@@ -761,14 +767,7 @@ void KMComposeWin::autoSaveMessage()
   }
 
   if ( autoSaveInterval() > 0 )
-    mAutoSaveTimer->start( autoSaveInterval() );
-}
-
-void KMComposeWin::slotContinueAutoSave( bool )
-{
-  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueAutoSave( bool ) ) );
-  qApp->exit_loop();
+    updateAutoSave();
 }
 
 //-----------------------------------------------------------------------------
@@ -2193,15 +2192,9 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
   kdDebug(5006) << "entering KMComposeWin::applyChanges" << endl;
 
-  if(!mMsg) {
+  if(!mMsg || mComposer) {
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
     emit applyChangesDone( false );
-    return;
-  }
-
-  if( mComposer ) {
-    kdDebug(5006) << "KMComposeWin::applyChanges() : applyChanges called twice"
-                  << endl;
     return;
   }
 
