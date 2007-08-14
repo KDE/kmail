@@ -27,7 +27,6 @@ class KMMessage;
 class QString;
 class KMFolder;
 class QObject;
-class K3Process;
 
 namespace KMail {
 
@@ -70,21 +69,12 @@ class TemplateParser : public QObject
     bool mNoQuote;
     bool mAllowDecryption;
     bool mSelectionIsBody;
-    int mPipeRc;
-    QString mPipeOut;
-    QString mPipeErr;
     bool mDebug;
     QString mQuoteString;
     bool mAppend;
 
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
-
-  protected slots:
-    void onProcessExited( K3Process *proc );
-    void onReceivedStdout( K3Process *proc, char *buffer, int buflen );
-    void onReceivedStderr( K3Process *proc, char *buffer, int buflen );
-    void onWroteStdin( K3Process *proc );
 };
 
 } // namespace KMail

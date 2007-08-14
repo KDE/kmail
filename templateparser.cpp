@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kcalendarsystem.h>
 #include <kglobal.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <qregexp.h>
 #include <qfile.h>
 #include <kmessagebox.h>
@@ -276,7 +276,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         }
 
       } else if ( cmd.startsWith( "QUOTEPIPE=" ) ) {
-        // pipe message body throw command and insert it as quotation
+        // pipe message body through command and insert it as quotation
         kDebug(5006) <<"Command: QUOTEPIPE=";
         QString q;
         int len = parseQuotes( "QUOTEPIPE=", cmd, q );
@@ -317,7 +317,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         }
 
       } else if ( cmd.startsWith( "TEXTPIPE=" ) ) {
-        // pipe message body throw command and insert it as is
+        // pipe message body through command and insert it as is
         kDebug(5006) <<"Command: TEXTPIPE=";
         QString q;
         int len = parseQuotes( "TEXTPIPE=", cmd, q );
@@ -329,7 +329,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         }
 
       } else if ( cmd.startsWith( "MSGPIPE=" ) ) {
-        // pipe full message throw command and insert result as is
+        // pipe full message through command and insert result as is
         kDebug(5006) <<"Command: MSGPIPE=";
         QString q;
         int len = parseQuotes( "MSGPIPE=", cmd, q );
@@ -341,7 +341,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         }
 
       } else if ( cmd.startsWith( "BODYPIPE=" ) ) {
-        // pipe message body generated so far throw command and insert result as is
+        // pipe message body generated so far through command and insert result as is
         kDebug(5006) <<"Command: BODYPIPE=";
         QString q;
         int len = parseQuotes( "BODYPIPE=", cmd, q );
@@ -351,7 +351,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         body.append( str );
 
       } else if ( cmd.startsWith( "CLEARPIPE=" ) ) {
-        // pipe message body generated so far throw command and
+        // pipe message body generated so far through command and
         // insert result as is replacing current body
         kDebug(5006) <<"Command: CLEARPIPE=";
         QString q;
@@ -978,121 +978,45 @@ QString TemplateParser::findTemplate()
 
 QString TemplateParser::pipe( const QString &cmd, const QString &buf )
 {
-  mPipeOut = "";
-  mPipeErr = "";
-  mPipeRc = 0;
+  KProcess process;
+  bool success, finished;
 
-  K3Process proc;
-  QByteArray data = buf.toLocal8Bit();
-
-  // kDebug(5006) <<"Command data:" << data;
-
-  proc << KShell::splitArgs( cmd, KShell::TildeExpand );
-  proc.setUseShell( true );
-  connect( &proc, SIGNAL( receivedStdout( K3Process *, char *, int ) ),
-           this, SLOT( onReceivedStdout( K3Process *, char *, int ) ) );
-  connect( &proc, SIGNAL( receivedStderr( K3Process *, char *, int ) ),
-           this, SLOT( onReceivedStderr( K3Process *, char *, int ) ) );
-  connect( &proc, SIGNAL( wroteStdin( K3Process * ) ),
-           this, SLOT( onWroteStdin( K3Process * ) ) );
-
-  if ( proc.start( K3Process::NotifyOnExit, K3Process::All ) ) {
-
-    bool pipe_filled = proc.writeStdin( data, data.length() );
-    if ( pipe_filled ) {
-      proc.closeStdin();
-
-      bool exited = proc.wait( PipeTimeout );
-      if ( exited ) {
-
-        if ( proc.normalExit() ) {
-
-          mPipeRc = proc.exitStatus();
-          if ( mPipeRc != 0 && mDebug ) {
-            if ( mPipeErr.isEmpty() ) {
-              KMessageBox::error( 0,
-                                  i18n( "Pipe command exit with status %1: %2",
-                                        mPipeRc, cmd ) );
-            } else {
-              KMessageBox::detailedError( 0,
-                                          i18n( "Pipe command exit with status %1: %2",
-                                                mPipeRc, cmd ), mPipeErr );
-            }
-          }
-
-        } else {
-
-          mPipeRc = -( proc.exitSignal() );
-          if ( mPipeRc != 0 && mDebug ) {
-            if ( mPipeErr.isEmpty() ) {
-              KMessageBox::error( 0,
-                                  i18n( "Pipe command killed by signal %1: %2",
-                                        -(mPipeRc), cmd ) );
-            } else {
-              KMessageBox::detailedError( 0,
-                                          i18n( "Pipe command killed by signal %1: %2",
-                                                -(mPipeRc), cmd ), mPipeErr );
-            }
-          }
-        }
-
-      } else {
-        // process does not exited after TemplateParser::PipeTimeout seconds, kill it
-        proc.kill();
-        proc.detach();
-        if ( mDebug ) {
-          KMessageBox::error( 0,
-                              i18n( "Pipe command did not finish within %1 seconds: %2",
-                              PipeTimeout, cmd ) );
-        }
+  process.setOutputChannelMode( KProcess::SeparateChannels );
+  process.setShellCommand( cmd ); 
+  process.start();
+  if ( process.waitForStarted( PipeTimeout ) ) {
+    process.write( buf.toAscii() );
+    if ( process.waitForBytesWritten( PipeTimeout ) ) {
+      process.closeWriteChannel();
+      if ( process.waitForFinished( PipeTimeout ) ) {
+        success = ( process.exitStatus() == QProcess::NormalExit );
+        finished = true;
       }
-
-    } else {
-      // can`t write to stdin of process
-      proc.kill();
-      proc.detach();
-      if ( mDebug ) {
-        if ( mPipeErr.isEmpty() ) {
-          KMessageBox::error( 0,
-                              i18n( "Cannot write to process stdin: %1", cmd ) );
-        } else {
-          KMessageBox::detailedError( 0,
-                                      i18n( "Cannot write to process stdin: %1",
-                                            cmd ), mPipeErr );
-        }
+      else {
+        finished = false;
+        success = false;
       }
     }
+    else {
+      success = false;
+      finished = false;
+    }
 
-  } else if ( mDebug ) {
-    KMessageBox::error( 0,
-                        i18n( "Cannot start pipe command from template: %1",
-                              cmd ) );
+    // The process has started, but did not finish in time. Kill it.
+    if ( !finished )
+      process.kill();
   }
+  else
+    success = false;
 
-  return mPipeOut;
-}
+  if ( !success && mDebug )
+    KMessageBox::error( 0, i18n( "Pipe command <command>%1</command> failed.",
+                                 cmd ) );
 
-void TemplateParser::onProcessExited( K3Process *proc )
-{
-  Q_UNUSED( proc );
-  // do nothing for now
-}
-
-void TemplateParser::onReceivedStdout( K3Process *proc, char *buffer, int buflen )
-{
-  Q_UNUSED( proc );
-  mPipeOut += QString::fromLocal8Bit( buffer, buflen );
-}
-
-void TemplateParser::onReceivedStderr( K3Process *proc, char *buffer, int buflen )
-{
-  Q_UNUSED( proc );
-  mPipeErr += QString::fromLocal8Bit( buffer, buflen );
-}
-
-void TemplateParser::onWroteStdin( K3Process *proc )
-{
-  proc->closeStdin();
+  if ( success )
+    return process.readAllStandardOutput();
+  else
+    return QString();
 }
 
 } // namespace KMail
