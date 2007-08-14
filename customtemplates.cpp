@@ -267,6 +267,9 @@ void CustomTemplates::slotAddClicked()
 
 void CustomTemplates::slotRemoveClicked()
 {
+  if ( !mList->currentItem() )
+    return;
+
   delete mItemList.take( mList->currentItem()->text( 1 ) );
   delete mList->takeTopLevelItem( mList->indexOfTopLevelItem ( 
                                   mList->currentItem() ) );
@@ -402,7 +405,10 @@ void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
   {
     //this is rather pointless, the signal is called keySequence*Changed* now. It is safe, though.
     mKeySequenceWidget->setKeySequence( shortcut );
-    mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut = sc;
+
+    if ( mList->currentItem() )
+      mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut = sc;
+
     emit changed();
   }
 }
