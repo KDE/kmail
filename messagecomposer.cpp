@@ -314,7 +314,24 @@ class ComposeMessageJob : public MessageComposerJob {
 
 MessageComposer::MessageComposer( KMComposeWin *win )
   : QObject( win ), mComposeWin( win ), mCurrentJob( 0 ),
-    mKeyResolver( 0 ), mIdentityUid( 0 ), mPerformingSignOperation( false )
+    mReferenceMessage( 0 ), mKeyResolver( 0 ), 
+    mUseOpportunisticEncryption( false ),
+    mSignBody( false ), mEncryptBody( false ),
+    mSigningRequested(  false ), mEncryptionRequested( false ),
+    mDoSign( false ), mDoEncrypt( false ),
+    mAllowedCryptoMessageFormats( 0 ),
+    mDisableCrypto( false ),
+    mDisableBreaking( false ),
+    mDebugComposerCrypto( false ),
+    mAutoCharset( true ),
+    mIsRichText( false ),
+    mIdentityUid( 0 ), mRc( true ),
+    mHoldJobs( false ),
+    mNewBodyPart( 0 ),
+    mEarlyAddAttachments( false ), mAllAttachmentsAreInBody( false ),
+    mPreviousBoundaryLevel( 0 ),
+    mEncryptWithChiasmus( false ),
+    mPerformingSignOperation( false )
 {
 }
 
