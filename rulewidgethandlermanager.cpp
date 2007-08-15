@@ -229,10 +229,13 @@ namespace {
   */
   int childCount( const QObject *parent, const QString &objName )
   {
-    QObjectList list = parent->queryList( 0, objName.toLatin1().data(), false, false );
-    if ( list.isEmpty() )
-      return 0;
-    const int count = list.count();
+    QObjectList list = parent->children();
+    QObject *item;
+    int count = 0;
+    foreach( item, list ) {
+      if ( item->objectName() == objName )
+        count++;
+    }
     return count;
   }
 }
@@ -445,7 +448,8 @@ namespace {
 
     // blank QLabel to hide value widget for in-address-book rule
     if ( number == 1 ) {
-      QLabel *label = new QLabel( "textRuleValueHider" );
+      QLabel *label = new QLabel( valueStack );
+      label->setObjectName( "textRuleValueHider" );
       label->setBuddy( valueStack );
       return label;
     }
@@ -778,7 +782,8 @@ namespace {
 
     // blank QLabel to hide value widget for has-attachment rule
     if ( number == 1 ) {
-      QLabel *label = new QLabel( "textRuleValueHider" );
+      QLabel *label = new QLabel( valueStack );
+      label->setObjectName( "textRuleValueHider" );
       label->setBuddy( valueStack );
       return label;
     }
