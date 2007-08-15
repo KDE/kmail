@@ -1045,10 +1045,15 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
   msg->setSubject( replySubject() );
 
-  TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                         selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
-  if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
-  else parser.process( this );
+  // If the reply shouldn't be blank, apply the template to the message
+  if ( !noQuote ) {
+    TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
+                           selection, sSmartQuote, allowDecryption, selectionIsBody );
+    if ( !tmpl.isEmpty() )
+      parser.process( tmpl, this );
+    else
+      parser.process( this );
+  }
 
   msg->link( this, MessageStatus::statusReplied() );
 
@@ -1264,10 +1269,12 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
   msg->setSubject( forwardSubject() );
 
   TemplateParser parser( msg, TemplateParser::Forward,
-    asPlainText( false, false ),
-    false, false, false, false);
-  if ( !tmpl.isEmpty() ) parser.process( tmpl, this );
-  else parser.process( this );
+                         asPlainText( false, false ),
+                         false, false, false);
+  if ( !tmpl.isEmpty() )
+    parser.process( tmpl, this );
+  else
+    parser.process( this );
 
   // QByteArray encoding = autoDetectCharset(charset(), sPrefCharsets, msg->body());
   // if (encoding.isEmpty()) encoding = "utf-8";

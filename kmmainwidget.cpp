@@ -1003,13 +1003,13 @@ void KMMainWidget::slotCompose()
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
       TemplateParser parser( msg, TemplateParser::NewMessage,
-			     "", false, false, false, false );
+                             QString(), false, false, false );
       parser.process( NULL, mFolder );
       win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
       TemplateParser parser( msg, TemplateParser::NewMessage,
-			     "", false, false, false, false );
+                             QString(), false, false, false );
       parser.process( NULL, NULL );
       win = KMail::makeComposer( msg );
   }
@@ -1583,7 +1583,7 @@ void KMMainWidget::slotReplyListToMsg()
 
   QString text = mMsgView? mMsgView->copyText() : "";
   KMCommand *command = new KMReplyListCommand( this, mHeaders->currentMsg(),
-					       text );
+                                               text );
   command->start();
 }
 
@@ -3091,7 +3091,7 @@ void KMMainWidget::setupActions()
   mFilterMenu = new KActionMenu(KIcon("search-filter"), i18n("&Create Filter"), this);
   actionCollection()->addAction("create_filter", mFilterMenu );
   connect( mFilterMenu, SIGNAL(activated()), this,
-	   SLOT(slotFilter()) );
+           SLOT(slotFilter()) );
   mSubjectFilterAction = new KAction(i18n("Filter on &Subject..."), this);
   actionCollection()->addAction("subject_filter", mSubjectFilterAction );
   connect(mSubjectFilterAction, SIGNAL(triggered(bool) ), SLOT(slotSubjectFilter()));

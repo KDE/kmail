@@ -1314,7 +1314,7 @@ KMCommand::Result KMForwardCommand::execute()
       {
 	KMMessage *msg = *it;
 	TemplateParser parser( fwdMsg, TemplateParser::Forward,
-			       msg->body(), false, false, false, false);
+			       msg->body(), false, false, false );
         parser.process( msg, 0, true );
 
         fwdMsg->link( (*it), MessageStatus::statusForwarded() );
@@ -1539,7 +1539,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     {
       KMMessage *msg = *it;
       TemplateParser parser( fwdMsg, TemplateParser::Forward,
-        msg->body(), false, false, false, false);
+        msg->body(), false, false, false );
         parser.process( msg, 0, true );
 
       fwdMsg->link( msg, MessageStatus::statusForwarded() );

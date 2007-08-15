@@ -51,10 +51,10 @@ static const int PipeTimeout = 15 * 1000;
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString &aselection,
-                                bool asmartQuote, bool anoQuote,
-                                bool aallowDecryption, bool aselectionIsBody ) :
+                                bool asmartQuote, bool aallowDecryption,
+                                bool aselectionIsBody ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ), mSelection( aselection ),
-  mSmartQuote( asmartQuote ), mNoQuote( anoQuote ),
+  mSmartQuote( asmartQuote ),
   mAllowDecryption( aallowDecryption ), mSelectionIsBody( aselectionIsBody ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false )
 {
@@ -282,7 +282,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         int len = parseQuotes( "QUOTEPIPE=", cmd, q );
         i += len;
         QString pipe_cmd = q;
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString str = pipe( pipe_cmd, mSelection );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
@@ -292,7 +292,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "QUOTE" ) ) {
         kDebug(5006) <<"Command: QUOTE";
         i += strlen( "QUOTE" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, mSelection,
                                                     mSmartQuote, mAllowDecryption );
           body.append( quote );
@@ -301,7 +301,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "QHEADERS" ) ) {
         kDebug(5006) <<"Command: QHEADERS";
         i += strlen( "QHEADERS" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString,
                                                     mOrigMsg->headerAsSendableString(),
                                                     mSmartQuote, false );
@@ -311,7 +311,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "HEADERS" ) ) {
         kDebug(5006) <<"Command: HEADERS";
         i += strlen( "HEADERS" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString str = mOrigMsg->headerAsSendableString();
           body.append( str );
         }

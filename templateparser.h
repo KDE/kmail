@@ -44,7 +44,7 @@ class TemplateParser : public QObject
 
   public:
     TemplateParser( KMMessage *amsg, const Mode amode, const QString &aselection,
-                    bool aSmartQuote, bool anoQuote, bool aallowDecryption,
+                    bool aSmartQuote, bool aallowDecryption,
                     bool aselectionIsBody );
 
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = NULL, bool append = false );
@@ -66,7 +66,6 @@ class TemplateParser : public QObject
     KMMessage *mOrigMsg;
     QString mSelection;
     bool mSmartQuote;
-    bool mNoQuote;
     bool mAllowDecryption;
     bool mSelectionIsBody;
     bool mDebug;

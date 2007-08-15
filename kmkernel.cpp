@@ -393,7 +393,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     }
     else {
       TemplateParser parser( msg, TemplateParser::NewMessage,
-			     "", false, false, false, false );
+                             QString(), false, false, false );
       parser.process( NULL, NULL );
     }
   }
@@ -402,7 +402,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
   else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
-			   "", false, false, false, false );
+                           QString(), false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -464,7 +464,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false, false );
+                           QString(), false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -565,7 +565,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
-			   "", false, false, false, false );
+                           QString(), false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -615,12 +615,12 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
 
   if ( useFolderId ) {
     TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false, false );
+                           QString(), false, false, false );
     parser.process( NULL, folder );
     win = makeComposer( msg, id );
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false, false );
+                           QString(), false, false, false );
     parser.process( NULL, NULL );
     win = makeComposer( msg );
   }
