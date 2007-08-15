@@ -3326,10 +3326,11 @@ void KMComposeWin::editAttach(int index, bool openWith)
   KTemporaryFile* atmTempFile = new KTemporaryFile();
   if ( !atmTempFile->open() ) {
     KMessageBox::sorry( this,
-         i18n("KMail was unable to create the temporary file <filename>%1</filename>.\n"
-              "Because of this, editing this attachment is not possible.",
-              atmTempFile->fileName()),
-         i18n("Unable to edit attachment") );
+         i18nc( "@info",
+                "KMail was unable to create the temporary file <filename>%1</filename>.\n"
+                "Because of this, editing this attachment is not possible.",
+                atmTempFile->fileName() ),
+         i18n( "Unable to edit attachment" ) );
     return;
   }
   mAtmTempList.append( atmTempFile );
