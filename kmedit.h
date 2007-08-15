@@ -91,6 +91,10 @@ public:
 
   unsigned int lineBreakColumn() const;
 
+  /** set cursor to absolute position pos */
+  void setCursorPositionFromStart(unsigned int pos);
+
+
 signals:
   void spellcheck_done( int result );
   void attachPNGImageData( const QByteArray &image );
