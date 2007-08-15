@@ -47,7 +47,7 @@
 
 namespace KMail {
 
-static const int PipeTimeout = 15;
+static const int PipeTimeout = 15 * 1000;
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString &aselection,
