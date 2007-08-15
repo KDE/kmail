@@ -37,23 +37,13 @@
 #include <kdebug.h>
 #include <kpushbutton.h>
 
-#include <QLayout>
-//Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <Q3ListBox>
+#include <QListWidget>
 
 //********************************************************
 // SimpleStringListEditor
 //********************************************************
-
-// small helper function:
-static inline Q3ListBoxItem * findSelectedItem( Q3ListBox * lb ) {
-  Q3ListBoxItem * item = 0;
-  for ( item = lb->firstItem() ; item && !item->isSelected() ;
-        item = item->next() ) ;
-  return item;
-}
 
 SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
                                                 ButtonCode buttons,
@@ -71,7 +61,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   hlay->setSpacing( KDialog::spacingHint() );
   hlay->setMargin( 0 );
 
-  mListBox = new Q3ListBox( this );
+  mListBox = new QListWidget( this );
   hlay->addWidget( mListBox, 1 );
 
   if ( buttons == None )
@@ -114,7 +104,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     vlay->addWidget( mModifyButton );
     connect( mModifyButton, SIGNAL(clicked()),
              this, SLOT(slotModify()) );
-    connect( mListBox, SIGNAL( doubleClicked( Q3ListBoxItem* ) ),
+    connect( mListBox, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ),
              this, SLOT( slotModify() ) );
   }
 
@@ -148,29 +138,28 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 
   vlay->addStretch( 1 ); // spacer
 
-  connect( mListBox, SIGNAL(selectionChanged()),
+  connect( mListBox, SIGNAL(itemSelectionChanged()),
            this, SLOT(slotSelectionChanged()) );
 }
 
 void SimpleStringListEditor::setStringList( const QStringList & strings ) {
   mListBox->clear();
-  mListBox->insertStringList( strings );
+  mListBox->addItems( strings );
 }
 
 void SimpleStringListEditor::appendStringList( const QStringList & strings ) {
-  mListBox->insertStringList( strings );
+  mListBox->addItems( strings );
 }
 
 QStringList SimpleStringListEditor::stringList() const {
   QStringList result;
-  for ( Q3ListBoxItem * item = mListBox->firstItem() ;
-	item ; item = item->next() )
-    result << item->text();
+  for ( int i = 0; i < mListBox->count(); i++ )
+    result << ( mListBox->item( i )->text() );
   return result;
 }
 
 void SimpleStringListEditor::setButtonText( ButtonCode button,
-					    const QString & text ) {
+                                            const QString & text ) {
   switch ( button ) {
   case Add:
     if ( !mAddButton ) break;
@@ -187,14 +176,14 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
   case Up:
   case Down:
     kDebug(5006) <<"SimpleStringListEditor: Cannot change text of"
-      "Up and Down buttons: they don't contains text!";
+                   "Up and Down buttons: they don't contains text!";
     return;
   default:
     if ( button & All )
       kDebug(5006) <<"SimpleStringListEditor::setButtonText: No such button!";
     else
       kDebug(5006) <<"SimpleStringListEditor::setButtonText: Can only set"
-	"text for one button at a time!";
+                     "text for one button at a time!";
     return;
   }
 
@@ -206,91 +195,64 @@ void SimpleStringListEditor::slotAdd() {
   bool ok = false;
   QString newEntry = KInputDialog::getText( i18n("New Value"),
                                             mAddDialogLabel, QString(),
-					    &ok, this );
+                                            &ok, this );
   // let the user verify the string before adding
   emit aboutToAdd( newEntry );
   if ( ok && !newEntry.isEmpty() )
-    mListBox->insertItem( newEntry );
+    mListBox->addItem( newEntry );
   emit changed();
 }
 
 void SimpleStringListEditor::slotRemove() {
-  delete findSelectedItem( mListBox ); // delete 0 is well-behaved...
-  emit changed();
+  if ( mListBox->currentItem() ) {
+    delete mListBox->takeItem( mListBox->currentRow() );
+    emit changed();
+  }
 }
 
 void SimpleStringListEditor::slotModify() {
-  Q3ListBoxItem * item = findSelectedItem( mListBox );
+  QListWidgetItem* item = mListBox->currentItem();
   if ( !item ) return;
 
   bool ok = false;
   QString newText = KInputDialog::getText( i18n("Change Value"),
                                            mAddDialogLabel, item->text(),
-					   &ok, this );
+                                           &ok, this );
   emit aboutToAdd( newText );
   if ( !ok || newText.isEmpty() || newText == item->text() ) return;
 
-  int index = mListBox->index( item );
-  delete item;
-  mListBox->insertItem( newText, index );
-  mListBox->setCurrentItem( index );
+  item->setText( newText );
   emit changed();
 }
 
 void SimpleStringListEditor::slotUp() {
-  Q3ListBoxItem * item = findSelectedItem( mListBox );
-  if ( !item || !item->prev() ) return;
+  QListWidgetItem *item = mListBox->currentItem();
+  int row = mListBox->currentRow();
+  if ( !item || row == 0 ) return;
 
-  // find the item that we want to insert after:
-  Q3ListBoxItem * pprev = item->prev()->prev();
-  // take the item from it's current position...
-  mListBox->takeItem( item );
-  // ...and insert it after the above mentioned item:
-  mListBox->insertItem( item, pprev );
-  // make sure the old item is still the current one:
+  mListBox->takeItem( row );
+  mListBox->insertItem( row - 1, item );
   mListBox->setCurrentItem( item );
-  // enable and disable controls:
-  if ( mRemoveButton )
-    mRemoveButton->setEnabled( true );
-  if ( mModifyButton )
-    mModifyButton->setEnabled( true );
-  if ( mUpButton )
-    mUpButton->setEnabled( item->prev() );
-  if ( mDownButton )
-    mDownButton->setEnabled( true );
+
   emit changed();
 }
 
 void SimpleStringListEditor::slotDown() {
-  Q3ListBoxItem * item  = findSelectedItem( mListBox );
-  if ( !item || !item->next() ) return;
+  QListWidgetItem *item = mListBox->currentItem();
+  int row = mListBox->currentRow();
+  if ( !item || row >= mListBox->count() - 1 ) return;
 
-  // find the item that we want to insert after:
-  Q3ListBoxItem * next = item->next();
-  // take the item from it's current position...
-  mListBox->takeItem( item );
-  // ...and insert it after the above mentioned item:
-  if ( next )
-    mListBox->insertItem( item, next );
-  else
-    mListBox->insertItem( item );
-  // make sure the old item is still the current one:
+  mListBox->takeItem( row );
+  mListBox->insertItem( row + 1, item );
   mListBox->setCurrentItem( item );
-  // enable and disable controls:
-  if ( mRemoveButton )
-    mRemoveButton->setEnabled( true );
-  if ( mModifyButton )
-    mModifyButton->setEnabled( true );
-  if ( mUpButton )
-    mUpButton->setEnabled( true );
-  if ( mDownButton )
-    mDownButton->setEnabled( item->next() );
+
   emit changed();
 }
 
 void SimpleStringListEditor::slotSelectionChanged() {
-  // try to find a selected item:
-  Q3ListBoxItem * item = findSelectedItem( mListBox );
+
+  QListWidgetItem * item = mListBox->currentItem();
+  int row = mListBox->currentRow();
 
   // if there is one, item will be non-null (ie. true), else 0
   // (ie. false):
@@ -299,9 +261,9 @@ void SimpleStringListEditor::slotSelectionChanged() {
   if ( mModifyButton )
     mModifyButton->setEnabled( item );
   if ( mUpButton )
-    mUpButton->setEnabled( item && item->prev() );
+    mUpButton->setEnabled( item && row > 0 );
   if ( mDownButton )
-    mDownButton->setEnabled( item && item->next() );
+    mDownButton->setEnabled( item && row < mListBox->count() - 1 );
 }
 
 
