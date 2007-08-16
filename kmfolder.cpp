@@ -504,6 +504,12 @@ void KMFolder::markUnreadAsRead()
 
 void KMFolder::remove()
 {
+  /* The storage needs to be open before remove is called, otherwise
+     it will not unregister the corresponding serial numbers from
+     the message dict, since its message list is empty, and the .ids
+     file contents are not loaded. That can lead to lookups in the
+     dict returning stale pointers to the folder later. */
+  mStorage->open();
   mStorage->remove();
 }
 
