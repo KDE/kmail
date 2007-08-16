@@ -525,7 +525,7 @@ void KMFolder::remove()
      the message dict, since its message list is empty, and the .ids
      file contents are not loaded. That can lead to lookups in the
      dict returning stale pointers to the folder later. */
-  mStorage->open();
+  mStorage->open("folderremoval");
   mStorage->remove();
 }
 
