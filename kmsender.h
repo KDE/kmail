@@ -96,11 +96,12 @@ private:
   /** sets replied/forwarded status in the linked message for @p aMsg. */
   void setStatusByLink(const KMMessage *aMsg);
 
-  /** Emit progress info - calculates a percent value based on the amount of bytes sent */
-  void emitProgressInfo( int currentFileProgress );
-
 private slots:
   void slotResult( KJob* job );
+
+  /** This slot should be called when the mail sending progress changes.
+      It updates the progressbar. */
+  void slotProcessedSize( KJob *job, qulonglong size );
 
   /** abort sending of the current message */
   void slotAbortSend();

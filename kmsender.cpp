@@ -253,9 +253,9 @@ bool KMSender::doSendQueued( const QString &customTransport )
 }
 
 //-----------------------------------------------------------------------------
-void KMSender::emitProgressInfo( int currentFileProgress )
+void KMSender::slotProcessedSize( KJob *, qulonglong size )
 {
-  int percent = (mTotalBytes) ? ( 100 * (mSentBytes+currentFileProgress) / mTotalBytes ) : 0;
+  int percent = (mTotalBytes) ? ( 100 * (mSentBytes+size) / mTotalBytes ) : 0;
   if (percent > 100) percent = 100;
   mProgressItem->setProgress(percent);
 }
@@ -594,6 +594,8 @@ void KMSender::doSendMsg()
     mTransportJob->setData( message );
 
     connect( mTransportJob, SIGNAL(result(KJob*)), SLOT(slotResult(KJob*)) );
+    connect( mTransportJob, SIGNAL(processedSize(KJob *, qulonglong)),
+             SLOT( slotProcessedSize(KJob *, qulonglong)) );
     mSendProcStarted = true;
     mTransportJob->start();
   }

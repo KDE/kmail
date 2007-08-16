@@ -286,6 +286,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           QString str = pipe( pipe_cmd, mSelection );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
+          if ( quote.endsWith( '\n' ) )
+            quote.chop( 1 );
           body.append( quote );
         }
 
@@ -295,6 +297,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, mSelection,
                                                     mSmartQuote, mAllowDecryption );
+          if ( quote.endsWith( '\n' ) )
+            quote.chop( 1 );
           body.append( quote );
         }
 
@@ -305,6 +309,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString,
                                                     mOrigMsg->headerAsSendableString(),
                                                     mSmartQuote, false );
+          if ( quote.endsWith( '\n' ) )
+               quote.chop( 1 );
           body.append( quote );
         }
 
