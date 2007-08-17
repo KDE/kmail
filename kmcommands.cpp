@@ -3429,7 +3429,7 @@ KMCommand::Result CreateTodoCommand::execute()
   QString error;
   QString dbusService;
   int result = KDBusServiceStarter::self()->findServiceFor( "DBUS/Organizer",
-                                         QString::null, &error, &dbusService );	//krazy:exclude=nullstrassign for old broken gcc
+                                         QString(), &error, &dbusService );
   if ( result == 0 ) {
 #warning Port me!
 #if 0

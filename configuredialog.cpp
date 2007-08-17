@@ -2739,7 +2739,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mMsgTagDict->insert( tmp_desc->label() , tmp_desc );
   mMsgTagList->append( tmp_desc );
   slotEmitChangeCheck();
-  mTagAddLineEdit->setText( QString::null );	//krazy:exclude=nullstrassign for old broken gcc
+  mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
   newItem->setText( tmp_desc->name() );
   mTagListBox->addItem( newItem );
