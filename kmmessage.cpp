@@ -844,7 +844,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
                                    bool selectionIsBody /* = false */,
-                                   const QString &tmpl /* = QString::null */ )
+                                   const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
@@ -1179,7 +1179,7 @@ QByteArray KMMessage::createForwardBody()
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
+KMMessage* KMMessage::createForward( const QString &tmpl /* = QString() */ )
 {
   KMMessage* msg = new KMMessage();
   QString id;

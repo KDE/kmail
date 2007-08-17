@@ -154,7 +154,7 @@ namespace {
     const std::map<QString,QString> & results() const { return mResults; }
 
   private:
-    void process( BuilderMethod method, const QString & string=QString::null ) {
+    void process( BuilderMethod method, const QString & string=QString::null ) {	//krazy:exclude=nullstrassign for old broken gcc
       doProcess( method, string );
       mRecursionGuard.clear();
     }
@@ -306,7 +306,7 @@ namespace {
 
     QString domainName() /*not const, since map::op[] isn't const*/ {
       return mResults.count( "stop" ) && mResults.count( "from" )
-        ? mResults["domainName"] : QString::null ;
+        ? mResults["domainName"] : QString::null ;	//krazy:exclude=nullstrassign for old broken gcc
     }
   };
 

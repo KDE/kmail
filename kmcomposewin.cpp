@@ -2133,7 +2133,7 @@ bool KMComposeWin::queryClose ()
     const int rc = KMessageBox::warningYesNoCancel( this,
                                                     i18n("Do you want to save the message for later or discard it?"),
                                                     i18n("Close Composer"),
-                                                    KGuiItem(savebut, "document-save", QString::null, savetext),
+                                                    KGuiItem(savebut, "document-save", QString::null, savetext),	//krazy:exclude=nullstrassign for old broken gcc
                                                     KStandardGuiItem::discard() );
     if ( rc == KMessageBox::Cancel )
       return false;

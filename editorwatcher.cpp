@@ -84,7 +84,7 @@ bool EditorWatcher::start()
   list.append( mUrl );
   KService::Ptr offer = KMimeTypeTrader::self()->preferredService( mMimeType, "Application" );
   if ( mOpenWith || !offer ) {
-    KOpenWithDialog dlg( list, i18n("Edit with:"), QString::null, 0 );
+    KOpenWithDialog dlg( list, i18n("Edit with:"), QString::null, 0 );	//krazy:exclude=nullstrassign for old broken gcc
     if ( !dlg.exec() )
       return false;
     offer = dlg.service();

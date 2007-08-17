@@ -184,7 +184,7 @@ namespace KMail {
   }
  
   QString VacationDialog::domainName() const {
-    return mDomainCheck->isChecked() ? mDomainEdit->text() : QString::null ;
+    return mDomainCheck->isChecked() ? mDomainEdit->text() : QString::null ;	//krazy:exclude=nullstrassign for old broken gcc
   }
 
   void VacationDialog::setDomainName( const QString & domain ) {

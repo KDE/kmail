@@ -2864,7 +2864,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
           "Please contact your administrator to allow upload of new messages "
           "to you, or move them out of this folder.</p> "
           "<p>Do you want to move these messages to another folder now?</p>", folder()->prettyUrl() ) );
-    if ( KMessageBox::warningYesNo( 0, msg, QString::null, KGuiItem( i18n("Move") ), KGuiItem( i18n("Do Not Move") ) )
+    if ( KMessageBox::warningYesNo( 0, msg, QString::null, KGuiItem( i18n("Move") ), KGuiItem( i18n("Do Not Move") ) )	//krazy:exclude=nullstrassign for old broken gcc
           == KMessageBox::Yes ) {
       KMail::FolderSelectionDialog dlg( kmkernel->getKMMainWidget(),
           i18n("Move Messages to Folder"), true );
