@@ -479,7 +479,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
 int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
                                               const QString& resource )
 {
-  Q_UNUSED( mimetype ); // honouring that would be too slow...
+  Q_UNUSED( mimetype ); // honoring that would be too slow...
 
   if( !mUseResourceIMAP )
     return 0;

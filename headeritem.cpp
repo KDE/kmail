@@ -391,7 +391,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
       QFont tmp_font = firstTag->textFont();
       if ( tmp_font != QFont() ) {
         font = tmp_font;
-        weight = QMAX( weight, font.weight() );
+        weight = qMax( weight, font.weight() );
       }
     }
   }

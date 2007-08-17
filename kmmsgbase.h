@@ -110,7 +110,7 @@ public:
   /** Const reference to a status object of a message. */
   const MessageStatus& messageStatus() const;
 
-  /**Get a comma seperated list of tag labels*/
+  /**Get a comma separated list of tag labels*/
   virtual QString tagString( void ) const = 0;
   /**Get a pointer to the tag label list*/
   virtual KMMessageTagList *tagList( void ) const = 0;

@@ -66,7 +66,7 @@ int KMailApplication::newInstance()
      return 0;
 
   // If the event loop hasn't been reached yet, the kernel is probably not
-  // fully initalized. Creating an instance would therefore fail, this is why
+  // fully initialized. Creating an instance would therefore fail, this is why
   // that is delayed until delayedInstanceCreation() is called.
   if ( !mEventLoopReached ) {
     kDebug(5006) <<"Delaying instance creation.";

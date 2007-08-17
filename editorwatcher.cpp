@@ -131,7 +131,7 @@ void EditorWatcher::inotifyEvent()
   char buffer[4096];
   ioctl( mInotifyFd, FIONREAD, &pending );
   while ( pending > 0 ) {
-    int size = read( mInotifyFd, buffer, QMIN( pending, (int)sizeof(buffer) ) );
+    int size = read( mInotifyFd, buffer, qMin( pending, (int)sizeof(buffer) ) );
     pending -= size;
     if ( size < 0 )
       break; // error
@@ -166,7 +166,7 @@ void EditorWatcher::checkEditDone()
   // nobody can edit that fast, we seem to be unable to detect
   // when the editor will be closed
   if ( mEditTime.elapsed() <= 3000 ) {
-    KMessageBox::error( 0, i18n("KMail is unable to detect when the choosen editor is closed. "
+    KMessageBox::error( 0, i18n("KMail is unable to detect when the chosen editor is closed. "
          "To avoid data loss, editing the attachment will be aborted."), i18n("Unable to edit attachment") );
   }
 
