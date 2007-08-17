@@ -28,7 +28,6 @@
 #include <KTreeWidgetSearchLine>
 
 #include <QDialog>
-#include <QToolTip>
 #include <QPixmap>
 #include <QTreeWidgetItem>
 
@@ -85,18 +84,6 @@ class RecipientViewItem : public QTreeWidgetItem
 
   private:
     RecipientItem *mRecipientItem;
-};
-
-class RecipientsListToolTip : public QToolTip
-{
-  public:
-    RecipientsListToolTip( QWidget *parent, QTreeWidget * );
-
-  protected:
-    void maybeTip( const QPoint &pos );
-
-  private:
-    QTreeWidget *mListView;
 };
 
 class RecipientsCollection

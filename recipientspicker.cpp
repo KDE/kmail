@@ -129,7 +129,7 @@ QString RecipientItem::toolTip() const
       if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
       else txt += (*it).email();
       txt += "</em>";
-      txt += "<li/>";
+      txt += "</li>";
     }
     txt += "</ul>";
   }
@@ -162,35 +162,6 @@ RecipientItem *RecipientViewItem::recipientItem() const
 {
   return mRecipientItem;
 }
-
-
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
-RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
-  K3ListView *listView )
-  : QToolTip( parent )
-{
-  mListView = listView;
-}
-
-void RecipientsListToolTip::maybeTip( const QPoint & pos )
-{
-  QRect r;
-  Q3ListViewItem *item = mListView->itemAt( pos );
-  RecipientViewItem *i = static_cast<RecipientViewItem *>( item );
-
-  if( item ) {
-    r = mListView->itemRect( item );
-    QString tipText( i->recipientItem()->toolTip() );
-    if ( !tipText.isEmpty() ) {
-      tip( r, tipText );
-    }
-  }
-}
-#endif
-
 
 RecipientsCollection::RecipientsCollection()
 {
@@ -317,12 +288,6 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mRecipientList, SIGNAL( returnPressed() ),
            SLOT( slotPicked() ) );
 
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
-  new RecipientsListToolTip( mRecipientList->viewport(), mRecipientList );
-#endif
   mSearchLine = new SearchLine( this, mRecipientList );
   searchLayout->addWidget( mSearchLine );
   label->setBuddy( label );
@@ -593,7 +558,10 @@ void RecipientsPicker::updateList()
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
   for( it = items.begin(); it != items.end(); ++it ) {
-    mRecipientList->addTopLevelItem( new RecipientViewItem( *it, mRecipientList ) );
+    RecipientViewItem *newItem = new RecipientViewItem( *it, mRecipientList );
+    for ( int i = 0; i < mRecipientList->columnCount(); i++ )
+      newItem->setToolTip( i, newItem->recipientItem()->toolTip() );
+    mRecipientList->addTopLevelItem( newItem );
   }
 
   mSearchLine->updateSearch();
