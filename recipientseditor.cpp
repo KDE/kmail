@@ -41,6 +41,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QScrollBar>
 #include <QTimer>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )

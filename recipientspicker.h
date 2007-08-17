@@ -23,20 +23,19 @@
 
 #include "recipientseditor.h"
 
-#include <k3listview.h>
-#include <k3listviewsearchline.h>
 #include <kabc/addressee.h>
 #include <kabc/stdaddressbook.h>
+#include <KTreeWidgetSearchLine>
 
-#include <QWidget>
 #include <QDialog>
-
-//Added by qt3to4:
+#include <QToolTip>
 #include <QPixmap>
-#include <QList>
-#include <QKeyEvent>
+#include <QTreeWidgetItem>
 
 class QComboBox;
+class QKeyEvent;
+class QTreeWidget;
+class QWidget;
 
 namespace KABC {
 class DistributionList;
@@ -77,10 +76,10 @@ class RecipientItem
     QString mKey;
 };
 
-class RecipientViewItem : public K3ListViewItem
+class RecipientViewItem : public QTreeWidgetItem
 {
   public:
-    RecipientViewItem( RecipientItem *, K3ListView * );
+    RecipientViewItem( RecipientItem *, QTreeWidget * );
 
     RecipientItem *recipientItem() const;
 
@@ -91,13 +90,13 @@ class RecipientViewItem : public K3ListViewItem
 class RecipientsListToolTip : public QToolTip
 {
   public:
-    RecipientsListToolTip( QWidget *parent, K3ListView * );
+    RecipientsListToolTip( QWidget *parent, QTreeWidget * );
 
   protected:
     void maybeTip( const QPoint &pos );
 
   private:
-    K3ListView *mListView;
+    QTreeWidget *mListView;
 };
 
 class RecipientsCollection
@@ -125,11 +124,11 @@ class RecipientsCollection
     QMap<QString, RecipientItem *> mKeyMap;
 };
 
-class SearchLine : public K3ListViewSearchLine
+class SearchLine : public KTreeWidgetSearchLine
 {
     Q_OBJECT
   public:
-    SearchLine( QWidget *parent, K3ListView *listView );
+    SearchLine( QWidget *parent, QTreeWidget *listView );
 
   signals:
     void downPressed();
@@ -138,11 +137,31 @@ class SearchLine : public K3ListViewSearchLine
     void keyPressEvent( QKeyEvent * );
 };
 
+//This is a TreeWidget which has an additional signal, returnPressed().
+class RecipientsTreeWidget : public QTreeWidget
+{
+  Q_OBJECT
+  public:
+    RecipientsTreeWidget( QWidget *parent );
+
+  signals:
+
+    //This signal is emitted whenever the user presses the return key and this
+    //widget has focus.
+    void returnPressed();
+
+  protected:
+
+    //This function is reimplemented so that the returnPressed() signal can
+    //be emitted.
+    virtual void keyPressEvent ( QKeyEvent *event );
+};
+
 using namespace KABC;
 
 class RecipientsPicker : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
   public:
     RecipientsPicker( QWidget *parent );
     ~RecipientsPicker();
@@ -175,7 +194,7 @@ class RecipientsPicker : public QDialog
     void slotToClicked();
     void slotCcClicked();
     void slotBccClicked();
-    void slotPicked( Q3ListViewItem * );
+    void slotPicked( QTreeWidgetItem * );
     void slotPicked();
     void setFocusList();
     void insertAddressBook( AddressBook * );
@@ -184,8 +203,8 @@ class RecipientsPicker : public QDialog
     KABC::StdAddressBook *mAddressBook;
 
     QComboBox *mCollectionCombo;
-    K3ListView *mRecipientList;
-    K3ListViewSearchLine *mSearchLine;
+    RecipientsTreeWidget *mRecipientList;
+    KTreeWidgetSearchLine *mSearchLine;
 
     QPushButton *mToButton;
     QPushButton *mCcButton;

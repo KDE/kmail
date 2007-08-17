@@ -26,7 +26,6 @@
 
 #include <libkdepim/recentaddresses.h>
 
-#include <k3listview.h>
 #include <klocale.h>
 #include <kabc/resource.h>
 #include <kiconloader.h>
@@ -45,6 +44,7 @@
 #include <QPixmap>
 #include <QPushButton>
 #include <QToolButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 RecipientItem::RecipientItem()
@@ -148,14 +148,14 @@ QString RecipientItem::recipientType() const
 }
 
 
-RecipientViewItem::RecipientViewItem( RecipientItem *item, K3ListView *listView )
-  : K3ListViewItem( listView ), mRecipientItem( item )
+RecipientViewItem::RecipientViewItem( RecipientItem *item, QTreeWidget *listView )
+  : QTreeWidgetItem( listView ), mRecipientItem( item )
 {
   setText( 0, item->recipientType() );
   setText( 1, item->name() );
   setText( 2, item->email() );
 
-  setPixmap( 1, item->icon() );
+  setIcon( 1, item->icon() );
 }
 
 RecipientItem *RecipientViewItem::recipientItem() const
@@ -243,8 +243,8 @@ void RecipientsCollection::deleteAll()
 }
 
 
-SearchLine::SearchLine( QWidget *parent, K3ListView *listView )
-  : K3ListViewSearchLine( parent, listView )
+SearchLine::SearchLine( QWidget *parent, QTreeWidget *listView )
+  : KTreeWidgetSearchLine( parent, listView )
 {
 }
 
@@ -252,17 +252,24 @@ void SearchLine::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Qt::Key_Down ) emit downPressed();
 
-  K3ListViewSearchLine::keyPressEvent( ev );
+  KTreeWidgetSearchLine::keyPressEvent( ev );
 }
 
+RecipientsTreeWidget::RecipientsTreeWidget( QWidget *parent )
+  : QTreeWidget( parent )
+{}
+
+void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
+  if ( event->key() == Qt::Key_Return )
+    emit returnPressed();
+  QTreeWidget::keyPressEvent( event );
+}
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : QDialog( parent ),
   mDistributionListManager( 0 )
 {
   setObjectName("RecipientsPicker");
-//  KWindowSystem::setType( winId(), NET::Dock );
-
   setWindowTitle( i18n("Select Recipient") );
 
   QBoxLayout *topLayout = new QVBoxLayout( this );
@@ -290,18 +297,25 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   label = new QLabel( i18n("&Search:"), this );
   searchLayout->addWidget( label );
 
-  mRecipientList = new K3ListView( this );
-  mRecipientList->setSelectionMode( Q3ListView::Extended );
+  mRecipientList = new RecipientsTreeWidget( this );
+  mRecipientList->setSelectionMode( QAbstractItemView::ExtendedSelection );
   mRecipientList->setAllColumnsShowFocus( true );
-  mRecipientList->setFullWidth( true );
+  mRecipientList->setIndentation( 0 );
+  mRecipientList->setAlternatingRowColors( true );
+  mRecipientList->setSortingEnabled( true );
+  mRecipientList->sortItems( 1, Qt::AscendingOrder );
+  mRecipientList->setHeaderLabels( QStringList() << i18n("->")
+                                                 << i18n("Name")
+                                                 << i18n("Email") );
+  mRecipientList->setColumnWidth( 0, 80);
+  mRecipientList->setColumnWidth( 1, 200 );
+  mRecipientList->setColumnWidth( 2, 200 );
   topLayout->addWidget( mRecipientList );
-  mRecipientList->addColumn( i18n("->") );
-  mRecipientList->addColumn( i18n("Name") );
-  mRecipientList->addColumn( i18n("Email") );
-  connect( mRecipientList, SIGNAL( doubleClicked( Q3ListViewItem *,
-    const QPoint &, int ) ), SLOT( slotPicked() ) );
-  connect( mRecipientList, SIGNAL( returnPressed( Q3ListViewItem * ) ),
-    SLOT( slotPicked() ) );
+
+  connect( mRecipientList, SIGNAL( itemDoubleClicked(QTreeWidgetItem*,int) ),
+           SLOT( slotPicked() ) );
+  connect( mRecipientList, SIGNAL( returnPressed() ),
+           SLOT( slotPicked() ) );
 
 #ifdef __GNUC__
 #warning Port me!
@@ -330,8 +344,6 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mBccButton = new QPushButton( i18n("Add as BCC"), this );
   buttonLayout->addWidget( mBccButton );
   connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
-  // BCC isn't commonly used, so hide it for now
-  //mBccButton->hide();
 
   QPushButton *closeButton = new QPushButton( i18n("&Cancel"), this );
   buttonLayout->addWidget( closeButton );
@@ -567,14 +579,9 @@ void RecipientsPicker::setDefaultButton( QPushButton *button )
 void RecipientsPicker::setDefaultType( Recipient::Type type )
 {
   mDefaultType = type;
-
-  if ( type == Recipient::To ) {
-    setDefaultButton( mToButton );
-  } else if ( type == Recipient::Cc ) {
-    setDefaultButton( mCcButton );
-  } else if ( type == Recipient::Bcc ) {
-    setDefaultButton( mBccButton );
-  }
+  mToButton->setDefault( type == Recipient::To );
+  mCcButton->setDefault( type == Recipient::Cc );
+  mBccButton->setDefault( type == Recipient::Bcc );
 }
 
 void RecipientsPicker::updateList()
@@ -586,7 +593,7 @@ void RecipientsPicker::updateList()
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
   for( it = items.begin(); it != items.end(); ++it ) {
-    new RecipientViewItem( *it, mRecipientList );
+    mRecipientList->addTopLevelItem( new RecipientViewItem( *it, mRecipientList ) );
   }
 
   mSearchLine->updateSearch();
@@ -607,7 +614,7 @@ void RecipientsPicker::slotBccClicked()
   pick( Recipient::Bcc );
 }
 
-void RecipientsPicker::slotPicked( Q3ListViewItem *viewItem )
+void RecipientsPicker::slotPicked( QTreeWidgetItem *viewItem )
 {
   RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
   if ( item ) {
@@ -626,11 +633,7 @@ void RecipientsPicker::pick( Recipient::Type type )
 {
   kDebug(5006) <<"RecipientsPicker::pick" << int( type );
 
-  int count = 0;
-  Q3ListViewItemIterator it( mRecipientList ,
-            Q3ListViewItemIterator::Visible | Q3ListViewItemIterator::Selected );
-  for ( ; it.current(); ++it )
-      ++count;
+  int count = mRecipientList->selectedItems().count();
 
   if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
@@ -642,10 +645,10 @@ void RecipientsPicker::pick( Recipient::Type type )
     return;
   }
 
-  it = Q3ListViewItemIterator( mRecipientList ,
-            Q3ListViewItemIterator::Visible | Q3ListViewItemIterator::Selected );
-  for ( ; it.current(); ++it ) {
-    RecipientViewItem *item = static_cast<RecipientViewItem *>( it.current() );
+  QList<QTreeWidgetItem*> selectedItems = mRecipientList->selectedItems();
+  QList<QTreeWidgetItem*>::iterator it = selectedItems.begin();
+  for ( ; it != selectedItems.end(); ++it ) {
+    RecipientViewItem *item = static_cast<RecipientViewItem *>( *it );
     if ( item ) {
       RecipientItem *i = item->recipientItem();
       Recipient r = i->recipient();
@@ -658,9 +661,10 @@ void RecipientsPicker::pick( Recipient::Type type )
 
 void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Qt::Key_Escape ) close();
+  if ( ev->key() == Qt::Key_Escape )
+    close();
 
-  QWidget::keyPressEvent( ev );
+  QDialog::keyPressEvent( ev );
 }
 
 void RecipientsPicker::readConfig()
