@@ -1693,7 +1693,7 @@ bool KMKernel::transferMail( QString & destinationDir )
   // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
   const QString kmailName = KGlobal::mainComponent().aboutData()()->programName();
   QString msg;
-  if ( KIO::NetAccess::exists( destinationDir, true, 0 ) ) {
+  if ( KIO::NetAccess::exists( destinationDir, KIO::NetAccess::SourceSide, 0 ) ) {
     // if destinationDir exists, we need to warn about possible
     // overwriting of files. otherwise, we don't have to
     msg = ki18nc( "%1-%3 is the application name, %4-%7 are folder path",

@@ -633,7 +633,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
                                          parentWidget() );
   if ( saveUrl.isEmpty() )
     return Canceled;
-  if ( KIO::NetAccess::exists( saveUrl, false, parentWidget() ) )
+  if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, parentWidget() ) )
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>",
@@ -2493,7 +2493,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
      }
 
 
-      if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
+      if ( KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
         if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" ,
                 curUrl.fileName() ),
@@ -3150,7 +3150,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
 // return true if we should proceed, false if we should abort
 static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
 {
-  if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
+  if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide /*dest*/, w ) ) {
     if ( KMessageBox::Cancel ==
          KMessageBox::warningContinueCancel(
                                             w,
