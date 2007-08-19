@@ -766,7 +766,9 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
        mDlg->folder()->folderType() != KMFolderTypeImap &&
        mDlg->folder()->folderType() != KMFolderTypeCachedImap;
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  QVBoxLayout *topLayout = new QVBoxLayout( this );
+  topLayout->setMargin( 0 );
+  topLayout->setSpacing( KDialog::spacingHint() );
 
   mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
   topLayout->addWidget( mCustom );
@@ -775,10 +777,12 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   mWidget->setEnabled( false );
   topLayout->addWidget( mWidget );
 
-  QHBoxLayout *btns = new QHBoxLayout( topLayout, KDialog::spacingHint() );
+  QHBoxLayout *btns = new QHBoxLayout();
+  btns->setSpacing( KDialog::spacingHint() );
   mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), this );
   mCopyGlobal->setEnabled( false );
   btns->addWidget( mCopyGlobal );
+  topLayout->addLayout( btns );
 
   connect( mCustom, SIGNAL(toggled(bool)),
         mWidget, SLOT(setEnabled(bool)) );
