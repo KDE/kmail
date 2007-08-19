@@ -283,7 +283,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         QString pipe_cmd = q;
         if ( mOrigMsg ) {
-          QString str = pipe( pipe_cmd, mSelection );
+          QString str =
+              pipe( pipe_cmd, mOrigMsg->asPlainText( mSmartQuote, mAllowDecryption ) );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
@@ -330,7 +331,8 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += len;
         QString pipe_cmd = q;
         if ( mOrigMsg ) {
-          QString str = pipe(pipe_cmd, mSelection );
+          QString str =
+              pipe(pipe_cmd, mOrigMsg->asPlainText( mSmartQuote, mAllowDecryption ) );
           body.append( str );
         }
 
@@ -991,9 +993,11 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   process.setShellCommand( cmd ); 
   process.start();
   if ( process.waitForStarted( PipeTimeout ) ) {
-    process.write( buf.toAscii() );
-    if ( process.waitForBytesWritten( PipeTimeout ) ) {
-      process.closeWriteChannel();
+    if ( !buf.isEmpty() )
+      process.write( buf.toAscii() );
+    if ( buf.isEmpty() || process.waitForBytesWritten( PipeTimeout ) ) {
+      if ( !buf.isEmpty() )
+        process.closeWriteChannel();
       if ( process.waitForFinished( PipeTimeout ) ) {
         success = ( process.exitStatus() == QProcess::NormalExit );
         finished = true;
