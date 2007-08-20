@@ -1154,10 +1154,12 @@ void KMComposeWin::getTransportMenu()
   availTransports = TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for ( it = availTransports.begin(); it != availTransports.end() ; ++it ) {
-    QAction *action = new QAction( (*it).replace( "&", "&&" ), mActNowMenu );
-    action->setData( TransportManager::self()->transportByName( *it )->id() );
-    mActNowMenu->addAction( action );
-    mActLaterMenu->addAction( action );
+    QAction *action1 = new QAction( (*it).replace( "&", "&&" ), mActNowMenu );
+    QAction *action2 = new QAction( (*it).replace( "&", "&&" ), mActLaterMenu );
+    action1->setData( TransportManager::self()->transportByName( *it )->id() );
+    action2->setData( TransportManager::self()->transportByName( *it )->id() );
+    mActNowMenu->addAction( action1 );
+    mActLaterMenu->addAction( action2 );
   }
 }
 
