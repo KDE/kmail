@@ -3622,7 +3622,7 @@ void KMComposeWin::slotPaste()
     const QString text = i18n("Please select whether you want to insert the content as text into the editor, "
         "or append the referenced file as an attachment.");
     const QString caption = i18n("Paste as text or attachment?");
-    int id = KMessageBox::questionYesNo( this, text, caption,
+    int id = KMessageBox::questionYesNoCancel( this, text, caption,
         KGuiItem( asText ),
         KGuiItem( asAttachment) );
     switch ( id) {
