@@ -56,6 +56,9 @@ namespace KMail {
   class DictionaryComboBox;
   class FolderRequester;
 }
+namespace MailTransport {
+  class TransportComboBox;
+}
 
 namespace KMail {
 
@@ -68,9 +71,6 @@ namespace KMail {
     void setIdentity( /*_not_ const*/ KPIMIdentities::Identity & ident );
 
     void updateIdentity( KPIMIdentities::Identity & ident );
-
-  public slots:
-    void slotUpdateTransportCombo( const QStringList & sl );
 
   protected slots:
     void slotAboutToShow( QWidget * w );
@@ -97,14 +97,14 @@ namespace KMail {
     Kleo::EncryptionKeyRequester *mSMIMEEncryptionKeyRequester;
     QComboBox                    *mPreferredCryptoMessageFormat;
     // "advanced" tab:
-    QLineEdit                    *mReplyToEdit;
-    QLineEdit                    *mBccEdit;
-    KMail::DictionaryComboBox    *mDictionaryCombo;
-    FolderRequester              *mFccCombo;
-    FolderRequester              *mDraftsCombo;
-    FolderRequester              *mTemplatesCombo;
-    QCheckBox                    *mTransportCheck;
-    QComboBox                    *mTransportCombo; // should be a KMTransportCombo...
+    QLineEdit                        *mReplyToEdit;
+    QLineEdit                        *mBccEdit;
+    KMail::DictionaryComboBox        *mDictionaryCombo;
+    FolderRequester                  *mFccCombo;
+    FolderRequester                  *mDraftsCombo;
+    FolderRequester                  *mTemplatesCombo;
+    QCheckBox                        *mTransportCheck;
+    MailTransport::TransportComboBox *mTransportCombo;
     // "templates" tab:
     TemplatesConfiguration       *mWidget;
     QCheckBox                    *mCustom;

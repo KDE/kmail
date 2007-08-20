@@ -74,7 +74,7 @@ public:
 
      @return true on success.
   */
-  bool sendQueued( const QString & transport=QString() ) { return doSendQueued( transport ); }
+  bool sendQueued( int transport = -1 ) { return doSendQueued( transport ); }
 
   virtual void readConfig() = 0;
   virtual void writeConfig( bool withSync = true ) = 0;
@@ -86,7 +86,7 @@ public:
   virtual void setSendQuotedPrintable( bool qp ) = 0;
 protected:
   virtual bool doSend( KMMessage * msg, short sendNow ) = 0;
-  virtual bool doSendQueued( const QString& transport ) = 0;
+  virtual bool doSendQueued( int transport = -1 ) = 0;
 };
 
 inline MessageSender::~MessageSender() {}

@@ -213,7 +213,7 @@ void KMSender::outboxMsgAdded( int idx )
 }
 
 //-----------------------------------------------------------------------------
-bool KMSender::doSendQueued( const QString &customTransport )
+bool KMSender::doSendQueued( int customTransportId  )
 {
   if ( !settingsOk() ) {
     return false;
@@ -247,7 +247,7 @@ bool KMSender::doSendQueued( const QString &customTransport )
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
-  mCustomTransport = customTransport;
+  mCustomTransport = customTransportId;
   doSendMsg();
   return true;
 }
@@ -523,19 +523,26 @@ void KMSender::doSendMsg()
     mSendInProgress = true;
   }
 
-  QString msgTransport = mCustomTransport;
-  if ( msgTransport.isEmpty() ) {
-    msgTransport = mCurrentMsg->headerField( "X-KMail-Transport" );
+  int msgTransport = mCustomTransport;
+  if ( msgTransport == -1 ) {
+    QString transportField = mCurrentMsg->headerField( "X-KMail-Transport" );
+    if ( !transportField.isEmpty() )
+      msgTransport = transportField.toInt();
   }
-  if ( msgTransport.isEmpty() ) {
-    msgTransport = TransportManager::self()->defaultTransportName();
+  if ( msgTransport == -1 ) {
+    msgTransport = TransportManager::self()->defaultTransportId();
   }
 
   if ( !mTransportJob ) {
+    Transport *transport = TransportManager::self()->transportById( msgTransport );
+    if ( transport )
+      mMethodStr = transport->name();
+    else
+      mMethodStr = QString::number( msgTransport );
+
     mTransportJob = TransportManager::self()->createTransportJob( msgTransport );
-    mMethodStr = msgTransport;
     if ( !mTransportJob ) {
-      KMessageBox::error( 0, i18n( "Transport '%1' is invalid.", msgTransport ),
+      KMessageBox::error( 0, i18n( "Transport '%1' is invalid.", mMethodStr ),
                           i18n( "Sending failed" ) );
       mProgressItem->cancel();
       mProgressItem->setComplete();
@@ -546,7 +553,7 @@ void KMSender::doSendMsg()
     if ( mTransportJob->transport()->encryption() == Transport::EnumEncryption::TLS ||
          mTransportJob->transport()->encryption() == Transport::EnumEncryption::SSL ) {
       mProgressItem->setUsesCrypto( true );
-    } else if ( !mCustomTransport.isEmpty() ) {
+    } else if ( mCustomTransport != -1 ) {
       int result = KMessageBox::warningContinueCancel(
         0,
         i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),
@@ -693,11 +700,7 @@ void KMSender::slotResult( KJob *job )
       }
       mCurrentMsg = 0;
       mFailedMessages++;
-      // reset cached password
-      QMap<QString, QString>::iterator pc;
-      if ( ( pc = mPasswdCache.find( mMethodStr ) ) != mPasswdCache.end() ) {
-        mPasswdCache.erase( pc );
-      }
+
       // Sending of message failed.
       if ( !errString.isEmpty() ) {
         int res = KMessageBox::Yes;

@@ -55,7 +55,9 @@ using KMail::FolderRequester;
 #include "kleo/cryptobackendfactory.h"
 
 #include <kpimutils/email.h>
+#include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
+#include <mailtransport/transportcombobox.h>
 using MailTransport::TransportManager;
 
 // other KDE headers:
@@ -83,6 +85,7 @@ using MailTransport::TransportManager;
 #include <algorithm>
 
 using namespace KPIM;
+using namespace MailTransport;
 
 namespace KMail {
 
@@ -398,9 +401,8 @@ namespace KMail {
     ++row;
     mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
     glay->addWidget( mTransportCheck, row, 0 );
-    mTransportCombo = new QComboBox( tab );
+    mTransportCombo = new TransportComboBox( tab );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-    mTransportCombo->addItems( TransportManager::self()->transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );
     connect( mTransportCheck, SIGNAL(toggled(bool)),
              mTransportCombo, SLOT(setEnabled(bool)) );
@@ -643,9 +645,12 @@ namespace KMail {
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );
     mBccEdit->setText( ident.bcc() );
-    mTransportCheck->setChecked( !ident.transport().isEmpty() );
-    mTransportCombo->setEditText( ident.transport() );
-    mTransportCombo->setEnabled( !ident.transport().isEmpty() );
+    int transport = ident.transport();
+    if ( !TransportManager::self()->transportIds().contains( transport ) )
+      transport = -1;
+    mTransportCheck->setChecked( transport != -1 );
+    mTransportCombo->setCurrentTransport( transport );
+    mTransportCombo->setEnabled( transport != -1 );
     mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
     if ( ident.fcc().isEmpty() ||
@@ -709,8 +714,8 @@ namespace KMail {
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
-    ident.setTransport( ( mTransportCheck->isChecked() ) ?
-                        mTransportCombo->currentText() : QString() );
+    ident.setTransport( mTransportCheck->isChecked() ?
+                        mTransportCombo->currentTransportId() : -1 );
     ident.setDictionary( mDictionaryCombo->currentDictionary() );
     ident.setFcc( mFccCombo->folder() ?
                   mFccCombo->folder()->idString() : QString() );
@@ -733,17 +738,6 @@ namespace KMail {
     ident.setXFace( mXFaceConfigurator->xface() );
     ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
   }
-
-  void IdentityDialog::slotUpdateTransportCombo( const QStringList & sl ) {
-    // save old setting:
-    QString content = mTransportCombo->currentText();
-    // update combo box:
-    mTransportCombo->clear();
-    mTransportCombo->addItems( sl );
-    // restore saved setting:
-    mTransportCombo->setEditText( content );
-  }
-
 }
 
 #include "identitydialog.moc"

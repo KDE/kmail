@@ -622,15 +622,6 @@ void IdentityPage::slotIdentitySelectionChanged()
   mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
-void IdentityPage::slotUpdateTransportCombo( const QStringList &sl )
-{
-  if ( mIdentityDialog ) {
-    mIdentityDialog->slotUpdateTransportCombo( sl );
-  }
-}
-
-
-
 // *************************************************************
 // *                                                           *
 // *                       AccountsPage                         *
@@ -790,8 +781,6 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
 void AccountsPage::SendingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
-
-  //int numTransports = general.readEntry("transports", 0 );
 
   mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );

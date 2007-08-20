@@ -13,6 +13,8 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
 #include <kpimutils/kfileio.h>
 #include <mimelib/message.h>
 #include "kmfawidgets.h"
@@ -609,6 +611,7 @@ KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMMessage* msg) co
 //=============================================================================
 // KMFilterActionSetTransport - set transport to...
 // Specify mail transport (smtp server) to be used when replying to a message
+// TODO: use TransportComboBox so the user does not enter an invalid transport
 //=============================================================================
 class KMFilterActionTransport: public KMFilterActionWithString
 {
@@ -632,7 +635,12 @@ KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg) cons
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-  msg->setHeaderField( "X-KMail-Transport", mParameter );
+  MailTransport::Transport *transport =
+      MailTransport::TransportManager::self()->transportByName( mParameter );
+  if ( transport )
+    msg->setHeaderField( "X-KMail-Transport", QString::number( transport->id() ) );
+  else
+    kWarning(5006) << "Transport" << mParameter << "invalid!";
   return GoOn;
 }
 

@@ -299,9 +299,6 @@ public:
   void load();
   void save();
 
-public slots:
-  void slotUpdateTransportCombo( const QStringList & );
-
 private slots:
   void slotNewIdentity();
   void slotModifyIdentity();

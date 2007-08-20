@@ -74,6 +74,7 @@ using KRecentAddress::RecentAddresses;
 
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
 using MailTransport::TransportManager;
 
 #include <gpgme++/context.h>
@@ -615,7 +616,7 @@ void KMComposeWin::readConfig( void )
   }
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
-  QString currentTransport = GlobalSettings::self()->currentTransport();
+  int currentTransport = GlobalSettings::self()->currentTransport();
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
@@ -664,9 +665,8 @@ void KMComposeWin::readConfig( void )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
-    mTransport->setEditText( currentTransport );
-  }
+  if ( mBtnTransport->isChecked() && currentTransport != -1 )
+    mTransport->setCurrentTransport( currentTransport );
 
   QString fccName = "";
   if ( mBtnFcc->isChecked() ) {
@@ -686,7 +686,7 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
   GlobalSettings::self()->setStickyFcc( mBtnFcc->isChecked() );
   GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
-  GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
+  GlobalSettings::self()->setCurrentTransport( mTransport->currentTransportId() );
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
@@ -712,7 +712,7 @@ void KMComposeWin::autoSaveMessage()
     mAutoSaveTimer->stop();
   }
   connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueAutoSave( bool ) ) );
+           this, SLOT( slotContinueAutoSave() ) );
   // This method is called when KMail crashed, so don't try signing/encryption
   // and don't disable controls because it is also called from a timer and
   // then the disabling is distracting.
@@ -1154,8 +1154,10 @@ void KMComposeWin::getTransportMenu()
   availTransports = TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for ( it = availTransports.begin(); it != availTransports.end() ; ++it ) {
-    mActNowMenu->addAction( (*it).replace( "&", "&&" ) );
-    mActLaterMenu->addAction( (*it).replace( "&", "&&" ) );
+    QAction *action = new QAction( (*it).replace( "&", "&&" ), mActNowMenu );
+    action->setData( TransportManager::self()->transportByName( *it )->id() );
+    mActNowMenu->addAction( action );
+    mActLaterMenu->addAction( action );
   }
 }
 
@@ -1860,15 +1862,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
 
-  QString transport = newMsg->headerField("X-KMail-Transport");
-  if ( !mBtnTransport->isChecked() && !transport.isEmpty() ) {
-    for ( int i=0; i<mTransport->count(); i++ ) {
-      if ( mTransport->itemText( i ) == transport ) {
-        mTransport->setCurrentIndex( i );
-      }
-    }
-    mTransport->setEditText( transport );
-  }
+  QString transportId = newMsg->headerField("X-KMail-Transport");
+  if ( !mBtnTransport->isChecked() && !transportId.isEmpty() )
+    mTransport->setCurrentTransport( transportId.toInt() );
 
   if ( !mBtnFcc->isChecked() ) {
     if ( !mMsg->fcc().isEmpty() ) {
@@ -2084,8 +2080,7 @@ bool KMComposeWin::isModified() const
            ( mEdtBcc && mEdtBcc->isModified() ) ||
            ( mRecipientsEditor && mRecipientsEditor->isModified() ) ||
            mEdtSubject->isModified() ||
-           mAtmModified ||
-           ( mTransport->lineEdit() && mTransport->lineEdit()->isModified() ) );
+           mAtmModified );
 }
 
 //-----------------------------------------------------------------------------
@@ -2101,8 +2096,6 @@ void KMComposeWin::setModified( bool modified )
     if ( mRecipientsEditor ) mRecipientsEditor->clearModified();
     mEdtSubject->setModified( false );
     mAtmModified =  false ;
-    if ( mTransport->lineEdit() )
-      mTransport->lineEdit()->setModified( false );
   }
 }
 
@@ -3945,17 +3938,6 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   KCursorSaver busy( KBusyPtr::busy() );
   mMsg->setDateToday();
 
-  // If a user sets up their outgoing messages preferences wrong and then
-  // sends mail that gets 'stuck' in their outbox, they should be able to
-  // rectify the problem by editing their outgoing preferences and
-  // resending.
-  // Hence this following conditional
-  QString hf = mMsg->headerField( "X-KMail-Transport" );
-  if ( ( mTransport->currentText() != mTransport->itemText( 0 ) ) ||
-       ( !hf.isEmpty() && ( hf != mTransport->itemText( 0 ) ) ) ) {
-    mMsg->setHeaderField( "X-KMail-Transport", mTransport->currentText() );
-  }
-
   mDisableBreaking = ( saveIn != KMComposeWin::None );
 
   const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() ) ||
@@ -4149,13 +4131,10 @@ void KMComposeWin::slotSaveTemplate()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNowVia( QAction *item )
 {
-#ifdef __GNUC__
-#warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
-#endif
-  QString temp = item->text().remove( "&" );
-  QStringList availTransports= TransportManager::self()->transportNames();
-  if ( availTransports.contains( temp ) ) {
-    mTransport->setItemText( mTransport->currentIndex(), temp );
+  QList<int> availTransports= TransportManager::self()->transportIds();
+  int transport = item->data().toInt();
+  if ( availTransports.contains( transport ) ) {
+    mTransport->setCurrentTransport( transport );
     slotSendNow();
   }
 }
@@ -4163,13 +4142,10 @@ void KMComposeWin::slotSendNowVia( QAction *item )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLaterVia( QAction *item )
 {
-#ifdef __GNUC__
-#warning "FIXME: Remove the remove("&") when the accalarator is no longer returned"
-#endif
-  QString temp = item->text().remove( "&" );
-  QStringList availTransports= TransportManager::self()->transportNames();
-  if ( availTransports.contains( temp ) ) {
-    mTransport->setItemText( mTransport->currentIndex(), temp );
+  QList<int> availTransports= TransportManager::self()->transportIds();
+  int transport = item->data().toInt();
+  if ( availTransports.contains( transport ) ) {
+    mTransport->setCurrentTransport( transport );
     slotSendLater();
   }
 }
@@ -4532,28 +4508,15 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   if ( !mBtnTransport->isChecked() ) {
-    QString transp = ident.transport();
-    if ( transp.isEmpty() ) {
+    int transportId = ident.transport();
+    if ( transportId == -1 ) {
       mMsg->removeHeaderField( "X-KMail-Transport" );
-      transp = mTransport->itemText( 0 );
-    } else {
-      mMsg->setHeaderField( "X-KMail-Transport", transp );
+      mTransport->setCurrentTransport(
+                               TransportManager::self()->defaultTransportId() );
     }
-    bool found = false;
-    int i;
-    for ( i = 0; i < mTransport->count(); i++ ) {
-      if ( mTransport->itemText( i ) == transp ) {
-        found = true;
-        mTransport->setCurrentIndex( i );
-        break;
-      }
-    }
-    if ( found == false ) {
-      if ( i == mTransport->maxCount() ) {
-        mTransport->setMaxCount( i + 1 );
-      }
-      mTransport->insertItem( i, transp );
-      mTransport->setCurrentIndex( i );
+    else {
+      mMsg->setHeaderField( "X-KMail-Transport", QString::number( transportId ) );
+      mTransport->setCurrentTransport( transportId );
     }
   }
 

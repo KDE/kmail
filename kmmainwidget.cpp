@@ -73,6 +73,7 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
 
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
@@ -1939,28 +1940,10 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 
   QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
   if (availTransports.contains(item->text()))
-    kmkernel->msgSender()->sendQueued( item->text() );
+    kmkernel->msgSender()->sendQueued(
+            MailTransport::TransportManager::self()->transportByName(
+                 item->text() )->id() );
 }
-
-//-----------------------------------------------------------------------------
-
-// Unused? TA20060825
-// void KMMainWidget::slotViewChange()
-// {
-//   if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
-//   {
-//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),false);
-//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),true);
-//   }
-//   else if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(1)))
-//   {
-//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),false);
-//     mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),true);
-//   }
-//
-//   //mMsgView->setInline(!mMsgView->isInline());
-// }
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
