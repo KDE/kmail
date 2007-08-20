@@ -171,7 +171,7 @@ void KMSystemTray::setMode(int newMode)
       show();
     break;
   default:
-    kDebug(5006) << k_funcinfo <<" Unknown systray mode" << mMode;
+    kDebug(5006) <<" Unknown systray mode" << mMode;
   }
 }
 

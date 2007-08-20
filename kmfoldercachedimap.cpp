@@ -2573,7 +2573,7 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
     for ( ; it != annotations.end(); ++it ) {
       const QString folderPath = it.key();
       const QString annotation = it.value();
-      kDebug(5006) << k_funcinfo <<"Folder:" << folderPath <<" has type:" << annotation;
+      kDebug(5006) <<"Folder:" << folderPath <<" has type:" << annotation;
       // we're only interested in the main type
       QString type( annotation );
       int dot = annotation.indexOf( '.' );
@@ -2588,9 +2588,9 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
            ( !type.isEmpty() &&
              type != KMailICalIfaceImpl::annotationForContentsType( ContentsTypeMail ) ) ) {
         folders.append( idx );
-        kDebug(5006) << k_funcinfo <<" subscribing to:" << folderPath;
+        kDebug(5006) <<" subscribing to:" << folderPath;
       } else {
-        kDebug(5006) << k_funcinfo <<" automatically unsubscribing from:" << folderPath;
+        kDebug(5006) <<" automatically unsubscribing from:" << folderPath;
         mAccount->changeLocalSubscription( folderPath, false );
       }
     }
@@ -2637,7 +2637,7 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
                                                 const QString &attribute,
                                                 const QString &value )
 {
-  kDebug(5006) << k_funcinfo << entry << attribute << value;
+  kDebug(5006) << entry << attribute << value;
   if ( entry == KOLAB_FOLDERTYPE ) {
     mAnnotationFolderTypeChanged = false;
   } else if ( entry == KOLAB_INCIDENCESFOR ) {
@@ -2751,7 +2751,7 @@ int KMFolderCachedImap::createIndexFromContentsRecursive()
     if ( !(*it)->isDir() ) {
       KMFolderCachedImap *storage =
         static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(*it)->storage());
-      kDebug(5006) << k_funcinfo <<"Re-indexing:" << storage->folder()->label();
+      kDebug(5006) <<"Re-indexing:" << storage->folder()->label();
       int rv = storage->createIndexFromContentsRecursive();
       if ( rv > 0 ) {
         return rv;
@@ -2787,7 +2787,7 @@ bool KMFolderCachedImap::isCloseToQuota() const
 KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
 {
   QList<unsigned long> newMsgs = findNewMessages();
-  kDebug(5006) << k_funcinfo << newMsgs <<" of" << count();
+  kDebug(5006) << newMsgs <<" of" << count();
   if ( newMsgs.isEmpty() )
     return 0;
   KMFolder *dest = 0;
@@ -2796,7 +2796,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
     // find the inbox of this account
     KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
     if ( !inboxFolder ) {
-      kWarning(5006) << k_funcinfo <<"inbox not found!";
+      kWarning(5006) <<"inbox not found!";
       break;
     }
     KMFolderDir *inboxDir = inboxFolder->child();
@@ -2808,7 +2808,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
     KMFolderNode *node;
     KMFolder *lfFolder = 0;
     if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
-      kDebug(5006) << k_funcinfo <<"creating lost+found folder";
+      kDebug(5006) <<"creating lost+found folder";
       KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
           i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
       if ( !folder || !folder->storage() )
@@ -2819,7 +2819,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
       folder->storage()->writeConfig();
       lfFolder = folder;
     } else {
-      kDebug(5006) << k_funcinfo <<"found lost+found folder";
+      kDebug(5006) <<"found lost+found folder";
       lfFolder = dynamic_cast<KMFolder*>( node );
     }
     if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
@@ -2836,7 +2836,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
       ++suffix;
       name = baseName + '-' + QString::number( suffix );
     }
-    kDebug(5006) << k_funcinfo <<"creating lost+found folder" << name;
+    kDebug(5006) <<"creating lost+found folder" << name;
     dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
     if ( !dest || !dest->storage() )
         break;
@@ -2890,7 +2890,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
 
 void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder, bool root )
 {
-  kDebug(5006) << k_funcinfo << folder << root;
+  kDebug(5006) << folder << root;
   if ( root )
     mToBeDeletedAfterRescue.append( folder );
   folder->open( "KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder" );

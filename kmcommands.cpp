@@ -200,7 +200,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result()
 {
   if ( mResult == Undefined ) {
-    kDebug(5006) << k_funcinfo <<"mResult is Undefined";
+    kDebug(5006) <<"mResult is Undefined";
   }
   return mResult;
 }
@@ -1955,7 +1955,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 {
   mPendingJobs.removeAll( job );
   if ( job->error() ) {
-    kDebug(5006) << k_funcinfo <<"folder job failed:" << job->error();
+    kDebug(5006) <<"folder job failed:" << job->error();
     // kill all pending jobs
     for ( QList<KMail::FolderJob*>::Iterator it = mPendingJobs.begin(); it != mPendingJobs.end(); ++it ) {
       disconnect( (*it), SIGNAL(result(KMail::FolderJob*)),
@@ -1976,7 +1976,7 @@ void KMCopyCommand::slotJobFinished(KMail::FolderJob * job)
 
 void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
 {
-  kDebug(5006) << k_funcinfo << success;
+  kDebug(5006) << success;
   if ( !success )
     setResult( Failed );
   mDestFolder->close( "kmcommand" );
@@ -2060,7 +2060,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
     msg = srcFolder->getMsg(idx);
     if ( !msg ) {
-      kDebug(5006) << k_funcinfo <<"No message found for serial number" << *it;
+      kDebug(5006) <<"No message found for serial number" << *it;
       continue;
     }
     bool undo = msg->enableUndo();
@@ -2832,7 +2832,7 @@ KMIMChatCommand::KMIMChatCommand( const KUrl &url, KMMessage *msg )
 
 KMCommand::Result KMIMChatCommand::execute()
 {
-  kDebug( 5006 ) << k_funcinfo <<" URL is:" << mUrl;
+  kDebug( 5006 ) <<" URL is:" << mUrl;
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
@@ -2939,7 +2939,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
 
   if ( atmFileInfo.size() == 0 )
   {
-    kDebug(5006) << k_funcinfo <<"rewriting attachment";
+    kDebug(5006) <<"rewriting attachment";
     // there is something wrong so write the file again
     QByteArray data = mNode->msgPart().bodyDecodedBinary();
     if ( mNode->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
@@ -2995,7 +2995,7 @@ void KMHandleAttachmentCommand::atmOpen()
   if ( !mOffer )
     mOffer = getServiceOffer();
   if ( !mOffer ) {
-    kDebug(5006) << k_funcinfo <<"got no offer";
+    kDebug(5006) <<"got no offer";
     return;
   }
 
@@ -3251,7 +3251,7 @@ KMCommand::Result AttachmentModifyCommand::execute()
 void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
 {
   if ( !mFolder || !mFolder->storage() ) {
-    kWarning(5006) << k_funcinfo <<"We lost the folder!";
+    kWarning(5006) <<"We lost the folder!";
     setResult( Failed );
     emit completed( this );
     deleteLater();
@@ -3275,7 +3275,7 @@ void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool succ
     delCmd->start();
     return;
   }
-  kWarning(5006) << k_funcinfo <<"Adding modified message failed.";
+  kWarning(5006) <<"Adding modified message failed.";
   setResult( Failed );
   emit completed( this );
   deleteLater();
@@ -3292,12 +3292,12 @@ void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
 KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
 }
 
 KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
 }
 
 KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
@@ -3342,7 +3342,7 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   mTempFile.setAutoRemove( true );
 }
 
@@ -3380,10 +3380,10 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
 
 void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   // anything changed?
   if ( !watcher->fileChanged() ) {
-    kDebug(5006) << k_funcinfo <<"File has not been changed";
+    kDebug(5006) <<"File has not been changed";
     setResult( Canceled );
     emit completed( this );
     deleteLater();

@@ -180,12 +180,12 @@ KMAcctImap* KMFolderImap::account() const
   if ( !mAccount ) {
     KMFolderDir *parentFolderDir = dynamic_cast<KMFolderDir*>( folder()->parent() );
     if ( !parentFolderDir ) {
-      kWarning() << k_funcinfo <<"No parent folder dir found for" << folder()->prettyUrl();
+      kWarning() <<"No parent folder dir found for" << folder()->prettyUrl();
       return 0;
     }
     KMFolder *parentFolder = parentFolderDir->owner();
     if ( !parentFolder ) {
-      kWarning() << k_funcinfo <<"No parent folder found for" << folder()->prettyUrl();
+      kWarning() <<"No parent folder found for" << folder()->prettyUrl();
       return 0;
     }
     KMFolderImap *parentStorage = dynamic_cast<KMFolderImap*>( parentFolder->storage() );
@@ -350,7 +350,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     assert( idx != -1 );
     aFolder->take( idx );
   } else {
-    kDebug(5006) << k_funcinfo <<"no parent";
+    kDebug(5006) <<"no parent";
   }
   if ( !account()->hasCapability("uidplus") ) {
     // Remember the status with the MD5 as key
@@ -394,7 +394,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
   if ( aFolder ) {
     aFolder->take( msgList );
   } else {
-    kDebug(5006) << k_funcinfo <<"no parent";
+    kDebug(5006) <<"no parent";
   }
   while ( !msgList.empty() )
     msgList.takeFirst();
@@ -531,7 +531,7 @@ int KMFolderImap::addMsg(QList<KMMessage*>& msgList, QList<int>& aIndex_ret)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCopyMsgResult( KMail::FolderJob* job )
 {
-  kDebug(5006) << k_funcinfo << job->error();
+  kDebug(5006) << job->error();
   if ( job->error() ) // getFolder() will not be called in this case
     emit folderComplete( this, false );
 }
@@ -1189,7 +1189,7 @@ void KMFolderImap::slotCheckValidityResult( KJob *job )
     if (uidValidity() != uidv)
     {
       // uidValidity changed
-      kDebug(5006) << k_funcinfo <<"uidValidty changed from"
+      kDebug(5006) <<"uidValidty changed from"
        << uidValidity() << "to" << uidv;
       if ( !uidValidity().isEmpty() )
       {
@@ -2372,7 +2372,7 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
 void KMFolderImap::setImapPath( const QString& path )
 {
   if ( path.isEmpty() ) {
-    kWarning(5006) << k_funcinfo <<"ignoring empty path";
+    kWarning(5006) <<"ignoring empty path";
   } else {
     mImapPath = path;
   }

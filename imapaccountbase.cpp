@@ -1126,7 +1126,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
 
   if ( !as ) {
-    kWarning(5006) << k_funcinfo <<" - found no attachment strategy!";
+    kWarning(5006) <<" - found no attachment strategy!";
     return;
   }
 

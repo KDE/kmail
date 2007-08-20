@@ -612,7 +612,7 @@ void KMSender::doSendMsg()
 //-----------------------------------------------------------------------------
 void KMSender::cleanup( void )
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   if ( mTransportJob && mSendProcStarted ) {
     mTransportJob->kill();
   }
@@ -786,7 +786,7 @@ void KMSender::setStatusByLink( const KMMessage *aMsg )
       }
       folder->close( "setstatus" );
     } else {
-      kWarning(5006) << k_funcinfo <<"Cannot update linked message, it could not be found!";
+      kWarning(5006) <<"Cannot update linked message, it could not be found!";
     }
   }
 }

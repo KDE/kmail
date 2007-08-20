@@ -702,11 +702,11 @@ void KMComposeWin::writeConfig( void )
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() ) {
     return;
   }
-  kDebug(5006) << k_funcinfo <<"autosaving message";
+  kDebug(5006) <<"autosaving message";
 
   if ( mAutoSaveTimer ) {
     mAutoSaveTimer->stop();
@@ -730,13 +730,13 @@ void KMComposeWin::slotContinueAutoSave()
   }
   KMMessage *msg = mComposedMessages.first();
 
-  kDebug(5006) << k_funcinfo <<"opening autoSaveFile" << mAutoSaveFilename;
+  kDebug(5006) <<"opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
     KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
   KSaveFile autoSaveFile( filename );
   int status = 0;
   bool opened = autoSaveFile.open();
-  kDebug(5006) << k_funcinfo <<"autoSaveFile.open() =" << opened;
+  kDebug(5006) <<"autoSaveFile.open() =" << opened;
   if ( opened ) { // no error
     autoSaveFile.setPermissions( QFile::ReadUser|QFile::WriteUser );
     kDebug(5006) <<"autosaving message in" << filename;
@@ -747,11 +747,11 @@ void KMComposeWin::slotContinueAutoSave()
     }
   }
   if ( status == 0 ) {
-    kDebug(5006) << k_funcinfo <<"closing autoSaveFile";
+    kDebug(5006) <<"closing autoSaveFile";
     autoSaveFile.finalize();
     mLastAutoSaveErrno = 0;
   } else {
-    kDebug(5006) << k_funcinfo <<"autosaving failed";
+    kDebug(5006) <<"autosaving failed";
     autoSaveFile.abort();
     if ( status != mLastAutoSaveErrno ) {
       // don't show the same error message twice
@@ -4028,9 +4028,9 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
   }
 
   theFolder->open( "composer" );
-  kDebug(5006) << k_funcinfo <<"theFolder=" << theFolder->name();
+  kDebug(5006) <<"theFolder=" << theFolder->name();
   if ( imapTheFolder ) {
-    kDebug(5006) << k_funcinfo <<"imapTheFolder=" << imapTheFolder->name();
+    kDebug(5006) <<"imapTheFolder=" << imapTheFolder->name();
   }
 
   bool sentOk = !( theFolder->addMsg( msg ) );
@@ -4655,7 +4655,7 @@ int KMComposeWin::autoSaveInterval() const
 
 void KMComposeWin::initAutoSave()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   // make sure the autosave folder exists
   KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
   if ( mAutoSaveFilename.isEmpty() ) {
@@ -4692,7 +4692,7 @@ void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
   if ( !mAutoSaveFilename.isEmpty() ) {
-    kDebug(5006) << k_funcinfo <<"deleting autosave file"
+    kDebug(5006) <<"deleting autosave file"
                  << mAutoSaveFilename;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
@@ -4964,7 +4964,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
 
 void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   KMMessagePart *part = mEditorMap[ watcher ];
   KTemporaryFile *tf = mEditorTempFiles[ watcher ];
   mEditorMap.remove( watcher );

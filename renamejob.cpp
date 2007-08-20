@@ -187,9 +187,9 @@ void RenameJob::slotRenameResult( KJob *job )
 
 void RenameJob::folderCopyComplete(bool success)
 {
-  kDebug(5006) << k_funcinfo << success;
+  kDebug(5006) << success;
   if ( !success ) {
-    kWarning(5006) << k_funcinfo <<"could not copy folder";
+    kWarning(5006) <<"could not copy folder";
     emit renameDone( mNewName, false );
     deleteLater();
     return;
@@ -240,7 +240,7 @@ void RenameJob::folderCopyComplete(bool success)
   } else if ( mStorage->folderType() == KMFolderTypeSearch )
   {
     // invalid
-    kWarning(5006) << k_funcinfo <<"cannot remove a search folder";
+    kWarning(5006) <<"cannot remove a search folder";
   } else {
     kmkernel->folderMgr()->remove( mStorage->folder() );
   }

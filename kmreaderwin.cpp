@@ -1037,7 +1037,7 @@ void KMReaderWin::initHtmlWidget(void)
 
 void KMReaderWin::contactStatusChanged( const QString &uid)
 {
-//  kDebug( 5006 ) << k_funcinfo <<" got a presence change for" << uid;
+//  kDebug( 5006 ) <<" got a presence change for" << uid;
   // get the list of nodes for this contact from the htmlView
   DOM::NodeList presenceNodes = mViewer->htmlDocument()
     .getElementsByName( DOM::DOMString( QString::fromLatin1("presence-") + uid ) );
@@ -1111,7 +1111,7 @@ void KMReaderWin::setPrintFont( const QFont& font )
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
-  kDebug(5006) << k_funcinfo <<" mOverrideEncoding == '" << mOverrideEncoding <<"'";
+  kDebug(5006) <<" mOverrideEncoding == '" << mOverrideEncoding <<"'";
   if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
     return 0;
   else

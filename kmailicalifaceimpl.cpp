@@ -350,7 +350,7 @@ static void setIcalVcardContentTypeHeader( KMMessage *msg, KMail::FolderContents
     msg->setSubtype( DwMime::kSubtypeXVCard );
     msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
   } else {
-    kWarning(5006) << k_funcinfo <<"Attempt to write non-groupware contents to folder";
+    kWarning(5006) <<"Attempt to write non-groupware contents to folder";
   }
 }
 
@@ -405,7 +405,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     setIcalVcardContentTypeHeader( msg, t );
     msg->setBodyEncoded( plainTextBody.toUtf8() );
   } else {
-    kWarning(5006) << k_funcinfo <<"Attempt to write to folder with unknown storage type";
+    kWarning(5006) <<"Attempt to write to folder with unknown storage type";
   }
 
   Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
@@ -644,7 +644,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
 
 bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   QList<SubResource> folderList = subresourcesKolab( contentsType );
   for ( QList<SubResource>::const_iterator it( folderList.begin() ),
                                                                     end( folderList.end() );
@@ -768,7 +768,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
         ( subtype.toLower() == "calendar" || subtype.toLower() == "x-vcard" ) );
 
     if ( storageFormat( f ) == StorageIcalVcard ) {
-      //kDebug(5006) << k_funcinfo <<" StorageFormatIcalVcard";
+      //kDebug(5006) <<" StorageFormatIcalVcard";
       if ( !messageWasIcalVcardFormat ) {
         setIcalVcardContentTypeHeader( newMsg, t );
       }
@@ -779,7 +779,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
         // convert
        setXMLContentTypeHeader( newMsg, plainTextBody );
       }
-      //kDebug(5006) << k_funcinfo <<" StorageFormatXML";
+      //kDebug(5006) <<" StorageFormatXML";
       // Add all attachments by reading them from their temp. files
       QStringList::ConstIterator iturl = attachmentURLs.begin();
       QStringList::ConstIterator itmime = attachmentMimetypes.begin();
@@ -1729,9 +1729,9 @@ void KMailICalIfaceImpl::readConfig()
   // BEGIN TILL TODO The below only uses the dimap folder manager, which
   // will fail for all other folder types. Adjust.
 
-  kDebug(5006) << k_funcinfo <<"mCalendar=" << mCalendar << mCalendar->location();
-  kDebug(5006) << k_funcinfo <<"mContacts=" << mContacts << mContacts->location();
-  kDebug(5006) << k_funcinfo <<"mNotes=" << mNotes << mNotes->location();
+  kDebug(5006) <<"mCalendar=" << mCalendar << mCalendar->location();
+  kDebug(5006) <<"mContacts=" << mContacts << mContacts->location();
+  kDebug(5006) <<"mNotes=" << mNotes << mNotes->location();
 
   // Find all extra folders
   QStringList folderNames;
@@ -1810,7 +1810,7 @@ void KMailICalIfaceImpl::slotCheckDone()
 {
   QString parentName = GlobalSettings::self()->theIMAPResourceFolderParent();
   KMFolder* folderParent = kmkernel->findFolderById( parentName );
-  //kDebug(5006) << k_funcinfo <<" folderParent=" << folderParent;
+  //kDebug(5006) <<" folderParent=" << folderParent;
   if ( folderParent )  // cool it exists now
   {
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
@@ -2047,7 +2047,7 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
     relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
   }
 #if 0
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   kDebug(5006) <<"Folder:" << folder->label() <<" has administer rights:" << administerRights;
   kDebug(5006) <<"and is relevant for owner:" << relevantForOwner;
   kDebug(5006) <<"and relevant for everyone:"  << relevantForEveryone;
@@ -2097,7 +2097,7 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
 
 bool KMailICalIfaceImpl::removeSubresource( const QString& location )
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
 
   KMFolder *folder = findResourceFolder( location );
 

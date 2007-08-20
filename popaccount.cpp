@@ -447,7 +447,7 @@ void PopAccount::slotMsgRetrieved(KJob*, const QString & infoMsg, const QString 
 void PopAccount::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    kDebug(5006) << k_funcinfo <<"stage == List";
+    kDebug(5006) <<"stage == List";
     // set the initial size of mUidsOfNextSeenMsgsDict to the number of
     // messages on the server + 10%
     mUidsOfNextSeenMsgsDict.reserve( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
@@ -458,7 +458,7 @@ void PopAccount::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    kDebug(5006) << k_funcinfo <<"stage == Uidl";
+    kDebug(5006) <<"stage == Uidl";
     mUidlFinished = true;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
@@ -540,7 +540,7 @@ void PopAccount::slotJobFinished() {
     }
   }
   else if (stage == Head) {
-    kDebug(5006) << k_funcinfo <<"stage == Head";
+    kDebug(5006) <<"stage == Head";
 
     // All headers have been downloaded, check which mail you want to get
     // data is in list mHeadersOnServer
@@ -744,7 +744,7 @@ void PopAccount::slotJobFinished() {
     connectJob();
   }
   else if (stage == Dele) {
-    kDebug(5006) << k_funcinfo <<"stage == Dele";
+    kDebug(5006) <<"stage == Dele";
     // remove the uids of all messages which have been deleted
     for ( QSet<QByteArray>::const_iterator it = idsOfMsgsToDelete.begin();
           it != idsOfMsgsToDelete.end(); ++it ) {
@@ -763,7 +763,7 @@ void PopAccount::slotJobFinished() {
     connectJob();
   }
   else if (stage == Quit) {
-    kDebug(5006) << k_funcinfo <<"stage == Quit";
+    kDebug(5006) <<"stage == Quit";
     saveUidList();
     job = 0;
     if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
@@ -785,7 +785,7 @@ void PopAccount::slotJobFinished() {
 //-----------------------------------------------------------------------------
 void PopAccount::processRemainingQueuedMessages()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
   processMsgsTimer.stop();
 
@@ -799,7 +799,7 @@ void PopAccount::processRemainingQueuedMessages()
 //-----------------------------------------------------------------------------
 void PopAccount::saveUidList()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
   if (!mUidlFinished) return;

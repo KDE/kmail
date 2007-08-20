@@ -1589,7 +1589,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
 
 void KMHeaders::slotMoveCompleted( KMCommand *command )
 {
-  kDebug(5006) << k_funcinfo << command->result();
+  kDebug(5006) << command->result();
   bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
     // make sure the current item is shown
@@ -2980,7 +2980,7 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
 
 bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
-    //kDebug(5006) << k_funcinfo << endl << kBacktrace();
+    //kDebug(5006) << endl << kBacktrace();
     //all cases
     qint32 column, ascending, threaded, discovered_count, sorted_count, appended;
     qint32 deleted_count = 0;

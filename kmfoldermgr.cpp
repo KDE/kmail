@@ -595,7 +595,7 @@ void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
 //-----------------------------------------------------------------------------
 void KMFolderMgr::slotRenameDone( const QString&, bool success )
 {
-  kDebug(5006) << k_funcinfo << success;
+  kDebug(5006) << success;
 }
 
 #include "kmfoldermgr.moc"

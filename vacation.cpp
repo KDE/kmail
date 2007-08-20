@@ -181,29 +181,29 @@ namespace {
         doProcess( method, string );
       }
     }
-    void commandStart( const QString & identifier ) { kDebug(5006) << k_funcinfo; process( CommandStart, identifier ); }
-    void commandEnd() { kDebug(5006) << k_funcinfo; process( CommandEnd ); }
-    void testStart( const QString & identifier ) { kDebug(5006) << k_funcinfo; process( TestStart, identifier ); }
-    void testEnd() { kDebug(5006) << k_funcinfo; process( TestEnd ); }
-    void testListStart() { kDebug(5006) << k_funcinfo; process( TestListStart ); }
-    void testListEnd() { kDebug(5006) << k_funcinfo; process( TestListEnd ); }
-    void blockStart() { kDebug(5006) << k_funcinfo; process( BlockStart ); ++mNestingDepth; }
-    void blockEnd() { kDebug(5006) << k_funcinfo; --mNestingDepth; process( BlockEnd ); }
-    void hashComment( const QString & ) { kDebug(5006) << k_funcinfo; }
-    void bracketComment( const QString & ) { kDebug(5006) << k_funcinfo; }
-    void lineFeed() { kDebug(5006) << k_funcinfo; }
+    void commandStart( const QString & identifier ) { kDebug(5006) ; process( CommandStart, identifier ); }
+    void commandEnd() { kDebug(5006) ; process( CommandEnd ); }
+    void testStart( const QString & identifier ) { kDebug(5006) ; process( TestStart, identifier ); }
+    void testEnd() { kDebug(5006) ; process( TestEnd ); }
+    void testListStart() { kDebug(5006) ; process( TestListStart ); }
+    void testListEnd() { kDebug(5006) ; process( TestListEnd ); }
+    void blockStart() { kDebug(5006) ; process( BlockStart ); ++mNestingDepth; }
+    void blockEnd() { kDebug(5006) ; --mNestingDepth; process( BlockEnd ); }
+    void hashComment( const QString & ) { kDebug(5006) ; }
+    void bracketComment( const QString & ) { kDebug(5006) ; }
+    void lineFeed() { kDebug(5006) ; }
     void error( const KSieve::Error & ) {
-      kDebug(5006) << k_funcinfo;
+      kDebug(5006) ;
       mState = 0;
     }
-    void finished() { kDebug(5006) << k_funcinfo; }
+    void finished() { kDebug(5006) ; }
 
-    void taggedArgument( const QString & tag ) { kDebug(5006) << k_funcinfo; process( TaggedArgument, tag ); }
-    void stringArgument( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo; process( StringArgument, string ); }
-    void numberArgument( unsigned long number, char ) { kDebug(5006) << k_funcinfo; process( NumberArgument, QString::number( number ) ); }
-    void stringListArgumentStart() { kDebug(5006) << k_funcinfo; process( StringListArgumentStart ); }
-    void stringListEntry( const QString & string, bool, const QString & ) { kDebug(5006) << k_funcinfo; process( StringListEntry, string ); }
-    void stringListArgumentEnd() { kDebug(5006) << k_funcinfo; process( StringListArgumentEnd ); }
+    void taggedArgument( const QString & tag ) { kDebug(5006) ; process( TaggedArgument, tag ); }
+    void stringArgument( const QString & string, bool, const QString & ) { kDebug(5006) ; process( StringArgument, string ); }
+    void numberArgument( unsigned long number, char ) { kDebug(5006) ; process( NumberArgument, QString::number( number ) ); }
+    void stringListArgumentStart() { kDebug(5006) ; process( StringListArgumentStart ); }
+    void stringListEntry( const QString & string, bool, const QString & ) { kDebug(5006) ; process( StringListEntry, string ); }
+    void stringListArgumentEnd() { kDebug(5006) ; process( StringListArgumentEnd ); }
   };
 
   typedef GenericInformationExtractor GIE;

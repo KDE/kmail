@@ -550,7 +550,7 @@ ImapAccountBase::ConnectionState KMAcctImap::makeConnection()
 void KMAcctImap::slotResetConnectionError()
 {
   mSlaveConnectionError = false;
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
 }
 
 void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )

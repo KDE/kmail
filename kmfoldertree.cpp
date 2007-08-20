@@ -244,7 +244,7 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
 
 void KMFolderTreeItem::slotIconsChanged()
 {
-  kDebug(5006) << k_funcinfo;
+  kDebug(5006) ;
   // this is prone to change, so better check
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
@@ -1552,7 +1552,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
             emit folderDropCopy( fti->folder() );
         } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
           if ( !MailList::canDecode( e->mimeData() ) ) {
-            kWarning() << k_funcinfo <<"Could not decode drag data!";
+            kWarning() <<"Could not decode drag data!";
           } else {
             MailList list = MailList::fromMimeData( e->mimeData() );
             QList<quint32> serNums = MessageCopyHelper::serNumListFromMailList( list );
@@ -2045,7 +2045,7 @@ void KMFolderTree::copySelectedToFolder( QAction* act )
 //-----------------------------------------------------------------------------
 void KMFolderTree::moveOrCopyFolder( QList<QPointer<KMFolder> > sources, KMFolder* destination, bool move )
 {
-  kDebug(5006) << k_funcinfo <<"source:" << sources <<" destination:" << destination <<" move:" << move;
+  kDebug(5006) <<"source:" << sources <<" destination:" << destination <<" move:" << move;
 
   // Disable drag during copy operation since it prevents from many crashes
   setDragEnabled( false );

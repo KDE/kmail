@@ -797,7 +797,7 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
     ok = ( nr > 0 );
   }
   if ( !ok )
-    kWarning(5006) << k_funcinfo <<" no item found for userId" << userId;
+    kWarning(5006) <<" no item found for userId" << userId;
 }
 
 void KMail::FolderDialogACLTab::slotChanged( bool b )

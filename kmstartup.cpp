@@ -164,7 +164,7 @@ void lockOrDie() {
       } else {
         path_buffer[length] = '\0';
         const QString path = QFile::decodeName( path_buffer );
-        kDebug(5006) << k_funcinfo << path;
+        kDebug(5006) << path;
         const int pos = path.lastIndexOf( '/' );
         const QString fileName = path.mid( pos + 1 );
         kDebug(5006) <<"Found process" << oldPid

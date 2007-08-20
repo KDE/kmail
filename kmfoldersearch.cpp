@@ -281,7 +281,7 @@ void KMSearch::slotSearchFolderResult( KMFolder *folder,
   if ( pattern != mSearchPattern ) {
     return;
   }
-  kDebug(5006) << k_funcinfo << folder->label()
+  kDebug(5006) << folder->label()
                << "found" << serNums.count();
   mLastFolder = folder->label();
   QList<quint32>::Iterator it;

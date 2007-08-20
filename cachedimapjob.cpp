@@ -432,7 +432,7 @@ void CachedImapJob::slotPutMessageInfoData(KJob *job, const QString &data, const
   if ( data.contains("UID") && mMsg )
   {
     int uid = (data.right(data.length()-4)).toInt();
-    kDebug( 5006 ) << k_funcinfo <<"Server told us uid is:" << uid;
+    kDebug( 5006 ) <<"Server told us uid is:" << uid;
     mMsg->setUID( uid );
   }
 }

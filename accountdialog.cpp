@@ -1654,7 +1654,7 @@ void AccountDialog::slotCheckImapCapabilities()
 unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
 {
   unsigned int capa = 0;
-  kDebug( 5006 ) << k_funcinfo << l;
+  kDebug( 5006 ) << l;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).toUpper();
     if ( cur == "PLAIN" )

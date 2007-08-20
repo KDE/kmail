@@ -915,7 +915,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kmkernel->acctMgr()->singleCheckMail( t );
   }
   else {
-    kDebug(5006) << k_funcinfo <<" - account with name '" << item->data().toString() <<"' not found";
+    kDebug(5006) <<" - account with name '" << item->data().toString() <<"' not found";
   }
 }
 
@@ -2445,7 +2445,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
     }
 
     urlMenuAdded=true;
-    kDebug( 0 ) << k_funcinfo <<" URL is:" << aUrl;
+    kDebug( 0 ) <<" URL is:" << aUrl;
   }
 
 

@@ -237,7 +237,7 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
     cte = DwMime::kCte8bit;
     break;
   default:
-    kWarning(5006) <<"Calling" << k_funcinfo
+    kWarning(5006) <<"Calling" 
                    << "with something containing neither 7 nor 8 bit text!"
                    << "Fix this caller:" << kBacktrace();
     cte = 0;

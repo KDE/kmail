@@ -377,7 +377,7 @@ void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
     return;
   KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(folder->storage());
   addDeletedFolder( storage->imapPath() );
-  kDebug(5006) << k_funcinfo << storage->imapPath();
+  kDebug(5006) << storage->imapPath();
 
   // Add all child folders too
   if( folder->child() ) {

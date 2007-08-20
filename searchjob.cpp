@@ -165,7 +165,7 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
     }
   }
 
-  kDebug(5006) << k_funcinfo << search <<";localSearch=" << mLocalSearchPattern->asString();
+  kDebug(5006) << search <<";localSearch=" << mLocalSearchPattern->asString();
   return search;
 }
 

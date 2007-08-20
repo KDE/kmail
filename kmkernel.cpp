@@ -1380,14 +1380,14 @@ void KMKernel::init()
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
   QString foldersPath = group.readPathEntry( "folders" );
-  kDebug(5006) << k_funcinfo <<"foldersPath (from config): '" << foldersPath <<"'";
+  kDebug(5006) <<"foldersPath (from config): '" << foldersPath <<"'";
 
   if ( foldersPath.isEmpty() ) {
     foldersPath = localDataPath() + "mail";
     if ( transferMail( foldersPath ) ) {
       group.writePathEntry( "folders", foldersPath );
     }
-    kDebug(5006) << k_funcinfo <<"foldersPath (after transferMail): '" << foldersPath <<"'";
+    kDebug(5006) <<"foldersPath (after transferMail): '" << foldersPath <<"'";
   }
   //Here because folderMgr's need it when they read the index and sort tags
   the_msgTagMgr = new KMMessageTagMgr(); 
@@ -1731,8 +1731,8 @@ bool KMKernel::transferMail( QString & destinationDir )
   }
 
   if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kDebug(5006) << k_funcinfo <<"Moving" << dir <<" to" << destinationDir <<" failed:" << KIO::NetAccess::lastErrorString();
-    kDebug(5006) << k_funcinfo <<"Deleting" << destinationDir;
+    kDebug(5006) <<"Moving" << dir <<" to" << destinationDir <<" failed:" << KIO::NetAccess::lastErrorString();
+    kDebug(5006) <<"Deleting" << destinationDir;
     KIO::NetAccess::del( destinationDir, 0 );
     destinationDir = dir;
     return false;
