@@ -1835,6 +1835,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       break;
   }
 
+  // if these headers are present, the state of the message should be overruled
+  mLastSignActionState = (mMsg->headerField( "X-KMail-SignatureActionEnabled" ) == "true");
+  mLastEncryptActionState = (mMsg->headerField( "X-KMail-EncryptActionEnabled" ) == "true");
+
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
@@ -4009,6 +4013,17 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
       toggleMarkup(false);
     }
   }
+
+  if (neverEncrypt && saveIn != KMComposeWin::None ) {
+      // we can't use the state of the mail itself, to remember the 
+      // signing and encryption state, so let's add a header instead
+    mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
+    mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );
+  } else {
+    mMsg->removeHeaderField( "X-KMail-SignatureActionEnabled" );
+    mMsg->removeHeaderField( "X-KMail-EncryptActionEnabled" );
+  }
+
 
   kdDebug(5006) << "KMComposeWin::doSend() - calling applyChanges()"
                 << endl;
