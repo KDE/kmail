@@ -3663,8 +3663,33 @@ void KMComposeWin::slotPaste()
   QMimeSource *mimeSource = QApplication::clipboard()->data();
   if ( mimeSource->provides("image/png") )  {
     slotAttachPNGImageData(mimeSource->encodedData("image/png"));
-  }
-  else {
+  } else if ( KURLDrag::canDecode( mimeSource ) ) {
+        KURL::List urlList;
+        if( KURLDrag::decode( mimeSource, urlList ) ) {
+            const QString asText = i18n("Add as Text");
+            const QString asAttachment = i18n("Add as Attachment");
+            const QString text = i18n("Please select whether you want to insert the content as text into the editor, "
+                    "or append the referenced file as an attachment.");
+            const QString caption = i18n("Paste as text or attachment?");
+
+            int id = KMessageBox::questionYesNo( this, text, caption, 
+                    KGuiItem( asText ), KGuiItem( asAttachment) );
+            switch ( id) {
+              case KMessageBox::Yes:
+                for ( KURL::List::Iterator it = urlList.begin();
+                     it != urlList.end(); ++it ) {
+                  mEditor->insert( (*it).url() );
+                }
+                break;
+              case KMessageBox::No:
+                for ( KURL::List::Iterator it = urlList.begin();
+                     it != urlList.end(); ++it ) {
+                  addAttach( *it );
+                }
+                break;
+            }
+        }
+  } else {
 
 #ifdef KeyPress
 #undef KeyPress

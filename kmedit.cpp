@@ -603,7 +603,7 @@ void KMEdit::paste()
     emit pasteImage();
   }
   else
-    KEdit::paste();
+    mComposer->slotPaste();
 }
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
