@@ -3096,7 +3096,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
 
   // row 0: help text
   glay->addWidget( new QLabel( i18n("<qt>The following placeholders are "
-				    "supported in the reply phrases:<br>"
+				    "supported in the reply phrases:<br />"
 				    "<table>"
 				    "<tr><td><b>%D</b>: date</td>"
 					"<td><b>%S</b>: subject</td>"
@@ -5252,11 +5252,11 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
                         "a mail. This switch changes the invitation mails to "
                         "be sent in the text of the mail instead; this is "
                         "necessary to send invitations and replies to "
-                        "Microsoft Outlook.<br>But, when you do this, you no "
+                        "Microsoft Outlook.<br />But, when you do this, you no "
                         "longer get descriptive text that mail programs "
                         "can read; so, to people who have email programs "
                         "that do not understand the invitations, the "
-                        "resulting messages look very odd.<br>People that have email "
+                        "resulting messages look very odd.<br />People that have email "
                         "programs that do understand invitations will still "
                         "be able to work with this.</qt>" );
     KMessageBox::information( this, txt, QString(),

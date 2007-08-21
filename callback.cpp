@@ -176,14 +176,14 @@ QString Callback::receiver() const
     QString selectMessage;
     if ( found == 0 ) {
       selectMessage = i18n("<qt>None of your identities match the "
-                           "receiver of this message,<br>please "
+                           "receiver of this message,<br />please "
                            "choose which of the following addresses "
-                           "is yours, if any:");
+                           "is yours, if any:</qt>");
     } else {
       selectMessage = i18n("<qt>Several of your identities match the "
-                           "receiver of this message,<br>please "
+                           "receiver of this message,<br />please "
                            "choose which of the following addresses "
-                           "is yours:");
+                           "is yours:</qt>");
     }
 
     mReceiver = KInputDialog::getItem(

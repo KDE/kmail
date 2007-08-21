@@ -307,8 +307,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders
   vbl->setMargin(0);
 
   QLabel *l = new QLabel(i18n("Messages to filter found on POP Account: <b>%1</b><p>"
-      "The messages shown exceed the maximum size limit you defined for this account.<br>You can select "
-      "what you want to do with them by checking the appropriate button.", aAccount), w);
+      "The messages shown exceed the maximum size limit you defined for this account.<br />You can select "
+      "what you want to do with them by checking the appropriate button.</p>", aAccount), w);
   vbl->addWidget(l);
 
   Q3GroupBox *upperBox = new Q3GroupBox(i18n("Messages Exceeding Size"), w);

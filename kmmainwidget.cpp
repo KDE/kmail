@@ -970,7 +970,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
   if ( GlobalSettings::self()->verboseNewMailNotification() ) {
     summary = i18nc( "%1 is a list of the number of new messages per folder",
-                    "<b>New mail arrived</b><br>%1" ,
+                    "<b>New mail arrived</b><br />%1" ,
                 summary );
   }
   else {
@@ -1216,7 +1216,7 @@ void KMMainWidget::slotRemoveFolder()
   QString title;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
     title = i18n("Delete Search");
-    str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br>"
+    str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                 "Any messages it shows will still be available in their original folder.</qt>",
              Qt::escape( mFolder->label() ) );
   } else {

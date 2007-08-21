@@ -300,7 +300,7 @@ void KMFilter::readConfig(KConfigGroup & config)
         }
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
-            i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>",
+            i18n("<qt>Unknown filter action <b>%1</b><br />in filter rule <b>%2</b>.<br />Ignoring it.</qt>",
               config.readEntry( actName, QString() ) ,
               mPattern.name() ) );
     }

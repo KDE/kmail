@@ -173,7 +173,7 @@ namespace KMail {
     label1 = new QLabel( i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
         "monochrome picture with every message. "
         "For example, this could be a picture of you or a glyph. "
-        "It is shown in the recipient's mail client (if supported)." ), page );
+        "It is shown in the recipient's mail client (if supported).</qt>" ), page );
     label1->setAlignment( Qt::AlignVCenter );
     label1->setWordWrap( true );
     page_vlay->addWidget( label1 );

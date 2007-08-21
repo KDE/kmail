@@ -90,12 +90,12 @@ void KMail::HtmlStatusBar::setMode( Mode m ) {
 QString KMail::HtmlStatusBar::message() const {
   switch ( mode() ) {
   case Html: // bold: "HTML Message"
-    return i18n( "<qt><b><br>H<br>T<br>M<br>L<br> "
-                 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</b></qt>" );
+    return i18n( "<qt><b><br />H<br />T<br />M<br />L<br /> "
+                 "<br />M<br />e<br />s<br />s<br />a<br />g<br />e</b></qt>" );
   case Normal: // normal: "No HTML Message"
-    return i18n( "<qt><br>N<br>o<br> "
-                 "<br>H<br>T<br>M<br>L<br> "
-                 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</qt>" );
+    return i18n( "<qt><br />N<br />o<br /> "
+                 "<br />H<br />T<br />M<br />L<br /> "
+                 "<br />M<br />e<br />s<br />s<br />a<br />g<br />e</qt>" );
   default:
   case Neutral:
     return QString();

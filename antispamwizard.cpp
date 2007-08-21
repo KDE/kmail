@@ -576,10 +576,10 @@ void AntiSpamWizard::slotBuildSummary()
       text = i18n( "<p>Messages classified as spam are not marked as read." );
 
     if ( mSpamRulesPage->moveSpamSelected() )
-      text += i18n( "<br>Spam messages are moved into the folder named <i>" )
+      text += i18n( "<br />Spam messages are moved into the folder named <i>" )
             + mSpamRulesPage->selectedSpamFolderName() + "</i>.</p>";
     else
-      text += i18n( "<br>Spam messages are not moved into a certain folder.</p>" );
+      text += i18n( "<br />Spam messages are not moved into a certain folder.</p>" );
 
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
           it != mToolList.end(); ++it ) {
@@ -897,7 +897,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
       "the responsiveness of KMail because anti-virus tool "
       "operations are usually time consuming; please consider "
       "deleting the filter rules created by the wizard to get "
-      "back to the former behavior."
+      "back to the former behavior.</p>"
       ) );
   mIntroText->setWordWrap(true);
   layout->addWidget( mIntroText );
@@ -994,7 +994,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
       i18n( "The default folder is the inbox folder, but you may change that "
             "in the folder view below.<p>"
             "Not all tools support a classification as unsure. If you haven't "
-            "selected a capable tool, you can't select a folder as well.") );
+            "selected a capable tool, you can't select a folder as well.</p>") );
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this, mainFolderTree );

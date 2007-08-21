@@ -1700,11 +1700,11 @@ bool KMKernel::transferMail( QString & destinationDir )
                   "<qt>The <i>%4</i> folder exists. "
                   "%1 now uses the <i>%5</i> folder for "
                   "its messages.<p>"
-                  "%2 can move the contents of <i>%6<i> into this folder for "
+                  "%2 can move the contents of <i>%6</i> into this folder for "
                   "you, though this may replace any existing files with "
-                  "the same name in <i>%7</i>.<p>"
+                  "the same name in <i>%7</i>.</p><p>"
                   "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></qt>" )
+                  "files now?</strong></p></qt>" )
           .subs( kmailName ).subs( kmailName ).subs( kmailName )
           .subs( dir ).subs( destinationDir ).subs( dir ).subs( destinationDir )
           .toString();
@@ -1716,7 +1716,7 @@ bool KMKernel::transferMail( QString & destinationDir )
                   "its messages. %2 can move the contents of <i>%6</i> into "
                   "this folder for you.<p>"
                   "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></qt>" )
+                  "files now?</strong></p></qt>" )
           .subs( kmailName ).subs( kmailName ).subs( kmailName )
           .subs( dir ).subs( destinationDir ).subs( dir )
           .toString();

@@ -221,7 +221,7 @@ namespace KMail {
                "<p>You can leave this blank, but KMail will not be able "
                "to encrypt copies of outgoing messages to you using OpenPGP; "
                "normal mail functions will not be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
+               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
     label = new QLabel( i18n("OpenPGP encryption key:"), tab );
     label->setBuddy( mPGPEncryptionKeyRequester );
     mPGPEncryptionKeyRequester->setWhatsThis( msg );

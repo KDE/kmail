@@ -1437,7 +1437,7 @@ namespace KMail {
       const GpgME::ImportResult res
         = smimeCrypto->importCertificate( certData.data(), certData.size() );
       if ( res.error() ) {
-        htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
+        htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br />"
                                    "Reason: %1", QString::fromLocal8Bit( res.error().asString() ) ) );
         return true;
       }

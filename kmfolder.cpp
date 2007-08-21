@@ -80,7 +80,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   dirinfo.setFile( mStorage->location() );
   if ( !dirinfo.exists() ) {
     int rc = mStorage->create();
-    QString msg = i18n("<qt>Error while creating file <b>%1</b>:<br>%2</qt>", aFolderName, strerror(rc));
+    QString msg = i18n("<qt>Error while creating file <b>%1</b>:<br />%2</qt>", aFolderName, strerror(rc));
     if ( rc ) {
       KMessageBox::information(0, msg);
     }

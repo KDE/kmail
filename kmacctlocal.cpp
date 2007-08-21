@@ -236,7 +236,7 @@ void KMAcctLocal::postProcess()
     if ( rc != 0 ) {
       KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                      i18n( "<qt>Cannot remove mail from "
-                                           "mailbox <b>%1</b>:<br>%2</qt>" ,
+                                           "mailbox <b>%1</b>:<br />%2</qt>" ,
                                        mMailFolder->location() ,
                                        strerror( rc ) ) );
     }

@@ -2126,7 +2126,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       KMessageBox::sorry( mComposeWin,
                           i18n( "<qt><p>Error: The backend did not return "
                                 "any encoded data.</p>"
-                                "<p>Please report this bug:<br>%1</p></qt>" ,
+                                "<p>Please report this bug:<br />%1</p></qt>" ,
                                 bugURL ) );
       bOk = false;
     }
@@ -2205,7 +2205,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
     bool anyway = ( KMessageBox::warningYesNo(
                       mComposeWin,
                       i18n("<qt>Not all characters fit into the chosen"
-                           " encoding.<br><br>Send the message anyway?</qt>"),
+                           " encoding.<br /><br />Send the message anyway?</qt>"),
                       i18n("Some Characters Will Be Lost"),
                       KGuiItem ( i18n("Lose Characters") ),
                       KGuiItem( i18n("Change Encoding") ) ) == KMessageBox::Yes );
