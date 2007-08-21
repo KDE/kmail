@@ -71,6 +71,7 @@ namespace KMail {
   class HeaderListQuickSearch;
   class SearchWindow;
   class ImapAccountBase;
+  class FavoriteFolderView;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -106,6 +107,7 @@ public:
   /** Easy access to main components of the window. */
   KMReaderWin* messageView(void) const { return mMsgView; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
+  KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
   static void cleanup();
 
@@ -440,13 +442,15 @@ private:
    */
   QString findCurrentImapPath();
 
+  void setupFolderView();
+
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
     *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-    *mCreateTodoAction;
+    *mCreateTodoAction, *mFavoritesCheckMailAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
     *mReplyListAction,
@@ -490,8 +494,12 @@ private:
   KToggleAction *mToggleShowQuickSearchAction;
 
   KMFolderTree *mFolderTree;
+  KMail::FavoriteFolderView *mFavoriteFolderView;
+  QWidget      *mFolderView;
+  QSplitter    *mFolderViewParent;
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
+  QSplitter    *mFolderViewSplitter;
   KMHeaders    *mHeaders;
   QVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
@@ -519,6 +527,7 @@ private:
   bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
        mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
+  bool mEnableFavoriteFolderView;
 
 //  QPopupMenu *mMessageMenu;
   KMail::SearchWindow *mSearchWin;

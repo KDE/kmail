@@ -255,7 +255,10 @@
         <whatsthis>This option enables or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
         <default>true</default>
       </entry>
-
+      <entry name="HideLocalInbox" type="Bool">
+        <label>Hide local inbox if unused</label>
+        <default>true</default>
+      </entry>
     </group>
 
     <group name="Composer">
@@ -587,5 +590,14 @@
         </entry>
     </group>
 
+  <group name="FavoriteFolderView">
+    <entry name="EnableFavoriteFolderView" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="FolderViewSplitterPosition" type="IntList"/>
+    <entry name="FavoriteFolderIds" type="IntList"/>
+    <entry name="FavoriteFolderNames" type="StringList"/>
+    <entry name="FavoriteFolderViewSeenInboxes" type="IntList"/>
+  </group>
 
 </kcfg>

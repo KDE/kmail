@@ -137,7 +137,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 messagecopyhelper.cpp \
                 localsubscriptiondialog.cpp \
                 editorwatcher.cpp \
-                kcalendariface.stub
+                kcalendariface.stub \
+                favoritefolderview.cpp \
+                foldertreebase.cpp
 
 kmail_SOURCES = main.cpp
 

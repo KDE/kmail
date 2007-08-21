@@ -18,8 +18,9 @@
 #ifndef __KMFOLDERTREE
 #define __KMFOLDERTREE
 
+#include "foldertreebase.h"
+
 #include <klocale.h>
-#include <kfoldertree.h>
 #include <kdepimmacros.h>
 
 #include <qguardedptr.h>
@@ -36,7 +37,6 @@ class KMFolder;
 class KMFolderDir;
 class KMFolderImap;
 class KMFolderTree;
-class KMMainWidget;
 class KMAccount;
 // duplication from kmcommands.h, to avoid the include
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -59,8 +59,8 @@ public:
                     KMFolder* folder );
   virtual ~KMFolderTreeItem();
 
-  QPixmap normalIcon(int size=16) const;
-  QPixmap unreadIcon(int size=16) const;
+  QPixmap normalIcon( int size ) const;
+  QPixmap unreadIcon( int size ) const;
 
   void setNeedsRepaint( bool value ) { mNeedsRepaint = value; }
   bool needsRepaint() const { return mNeedsRepaint; }
@@ -92,13 +92,18 @@ public slots:
 protected:
   void init();
   KMFolder* mFolder;
+  /** Returns true when top-level/account icons should be used */
+  virtual bool useTopLevelIcon() const { return depth() == 0; }
+  /** Returns the icon size. */
+  virtual int iconSize() const { return 16; }
+
 private:
   bool mNeedsRepaint;
 };
 
 //==========================================================================
 
-class KMFolderTree : public KFolderTree
+class KMFolderTree : public KMail::FolderTreeBase
 {
   Q_OBJECT
 
@@ -137,9 +142,6 @@ public:
   /** Read config options. */
   virtual void readConfig(void);
 
-  /** Read color options and set palette. */
-  void readColorConfig(void);
-
   /** Remove information about not existing folders from the config file */
   void cleanupConfigFile();
 
@@ -161,9 +163,6 @@ public:
   /** Set the checked/unchecked state of the unread and total column
    *  in the popup correctly */
   virtual void updatePopup() const;
-
-  /** Returns the main widget that this widget is a child of. */
-  KMMainWidget * mainWidget() const { return mMainWidget; }
 
   /** Select the folder and make sure it's visible */
   void showFolder( KMFolder* );
@@ -196,12 +195,6 @@ signals:
 
   /** The selected folder has changed to go to an unread message */
   void folderSelectedUnread( KMFolder * );
-
-  /** Messages have been dropped onto a folder */
-  void folderDrop(KMFolder*);
-
-  /** Messages have been dropped onto a folder with Ctrl */
-  void folderDropCopy(KMFolder*);
 
   /** unread/total/size column has changed */
   void columnsChanged();
@@ -311,9 +304,6 @@ protected slots:
   void updateCopyActions();
 
 protected:
-  /** Catch palette changes */
-  virtual bool event(QEvent *e);
-
   virtual void contentsMousePressEvent( QMouseEvent *e );
   virtual void contentsMouseReleaseEvent(QMouseEvent* me);
 
@@ -353,6 +343,10 @@ protected:
   /** Move or copy the folder @p source to @p destination. */
   void moveOrCopyFolder( QValueList<QGuardedPtr<KMFolder> > sources, KMFolder* destination, bool move=false );
 
+private slots:
+  void slotAddToFavorites();
+  void slotUnhideLocalInbox();
+
 private:
   /** total column */
   QListViewItemIterator mUpdateIterator;
@@ -363,7 +357,6 @@ private:
   int mTotalPop;
   int mSizePop;
 
-  KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
   QValueList<QGuardedPtr<KMFolder> > mCopySourceFolders;
