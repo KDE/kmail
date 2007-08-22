@@ -148,7 +148,7 @@ public:
    * An interval of zero (or less) disables the automatic checking.
    */
   virtual void setCheckInterval(int aInterval);
-  int checkInterval(void) const { return mInterval; }
+  int checkInterval() const;
 
   /**
    * This can be used to provide a more complex calculation later if we want
