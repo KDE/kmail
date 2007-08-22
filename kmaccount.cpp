@@ -289,6 +289,13 @@ void KMAccount::setCheckInterval(int aInterval)
   // Don't call installTimer from here! See #117935.
 }
 
+int KMAccount::checkInterval() const
+{
+  if ( mInterval <= 0 )
+    return mInterval;
+  return QMAX( mInterval, GlobalSettings::self()->minimumCheckInterval() );
+}
+
 //----------------------------------------------------------------------------
 void KMAccount::deleteFolderJobs()
 {
@@ -331,7 +338,7 @@ void KMAccount::installTimer()
   {
     mTimer->stop();
   }
-  mTimer->start(mInterval*60000);
+  mTimer->start( checkInterval() * 60000 );
 }
 
 
@@ -449,7 +456,7 @@ void KMAccount::checkDone( bool newmail, CheckStatus status )
   // Reset the timeout for automatic mailchecking. The user might have
   // triggered the check manually.
   if (mTimer)
-    mTimer->start(mInterval*60000);
+    mTimer->start( checkInterval() * 60000 );
   if ( mMailCheckProgressItem ) {
     // set mMailCheckProgressItem = 0 before calling setComplete() to prevent
     // a race condition
