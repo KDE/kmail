@@ -205,7 +205,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
     if ( c == '%' ) {
       QString cmd = tmpl.mid( i + 1 );
 
-      if ( cmd.startsWith( "-" ) ) {
+      if ( cmd.startsWith( '-' ) ) {
         // dnl
         kDebug(5006) <<"Command: -";
         dnl = true;
