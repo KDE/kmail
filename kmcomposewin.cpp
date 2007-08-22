@@ -1843,8 +1843,10 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   }
 
   // if these headers are present, the state of the message should be overruled
-  mLastSignActionState = (mMsg->headerField( "X-KMail-SignatureActionEnabled" ) == "true");
-  mLastEncryptActionState = (mMsg->headerField( "X-KMail-EncryptActionEnabled" ) == "true");
+  if ( mMsg->headers().FindField( "X-KMail-SignatureActionEnabled" ) )
+    mLastSignActionState = (mMsg->headerField( "X-KMail-SignatureActionEnabled" ) == "true");
+  if ( mMsg->headers().FindField( "X-KMail-EncryptActionEnabled" ) )
+    mLastEncryptActionState = (mMsg->headerField( "X-KMail-EncryptActionEnabled" ) == "true");
 
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
