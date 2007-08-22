@@ -717,10 +717,10 @@ void ImapAccountBase::slotNamespaceResult( KJob *job, const QString &str, const 
 
   nsDelimMap map;
   namespaceDelim nsDelim;
-  QStringList ns = str.split( ",", QString::SkipEmptyParts );
+  QStringList ns = str.split( ',', QString::SkipEmptyParts );
   for ( QStringList::Iterator it2 = ns.begin(); it2 != ns.end(); ++it2 ) {
     // split, allow empty parts as we can get empty namespaces
-    QStringList parts = (*it2).split( "=" );
+    QStringList parts = (*it2).split( '=' );
     imapNamespace section = imapNamespace( parts[0].toInt() );
     if ( map.contains( section ) ) {
       nsDelim = map[section];
@@ -844,7 +844,7 @@ QString ImapAccountBase::namespaceForFolder( FolderStorage* storage )
     QStringList::Iterator strit;
     for ( strit = it.value().begin(); strit != it.value().end(); ++strit ) {
       QString ns = *strit;
-      if ( ns.endsWith("/") || ns.endsWith(".") ) {
+      if ( ns.endsWith('/') || ns.endsWith('.') ) {
         // strip delimiter for the comparison
         ns = ns.left( ns.length()-1 );
       }
@@ -1337,10 +1337,10 @@ unsigned int ImapAccountBase::folderCount() const
 QString ImapAccountBase::addPathToNamespace( const QString &prefix )
 {
   QString myPrefix = prefix;
-  if ( !myPrefix.startsWith( "/" ) ) {
+  if ( !myPrefix.startsWith( '/' ) ) {
     myPrefix = '/' + myPrefix;
   }
-  if ( !myPrefix.endsWith( "/" ) ) {
+  if ( !myPrefix.endsWith( '/' ) ) {
     myPrefix += '/';
   }
 
@@ -1387,14 +1387,14 @@ QString ImapAccountBase::createImapPath( const QString &parent,
 {
   QString newName = parent;
   // strip / at the end
-  if ( newName.endsWith( "/" ) ) {
+  if ( newName.endsWith( '/' ) ) {
     newName = newName.left( newName.length() - 1 );
   }
   // add correct delimiter
   QString delim = delimiterForNamespace( newName );
   // should not happen...
   if ( delim.isEmpty() ) {
-    delim = "/";
+    delim = '/';
   }
   if ( !newName.isEmpty() &&
        !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
@@ -1402,7 +1402,7 @@ QString ImapAccountBase::createImapPath( const QString &parent,
   }
   newName = newName + folderName;
   // add / at the end
-  if ( !newName.endsWith("/") ) {
+  if ( !newName.endsWith('/') ) {
     newName = newName + '/';
   }
 
