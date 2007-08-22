@@ -38,14 +38,13 @@ using namespace KMail;
 // url and user are there only for the error message
 static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url, const QString& user ) {
   unsigned int perm = 0;
-  bool foundSeenPerm = false;
   uint len = str.length();
   for (uint i = 0; i < len; ++i) {
     QChar ch = str[i];
     switch ( ch.latin1() ) {
     case 'l': perm |= ACLJobs::List; break;
     case 'r': perm |= ACLJobs::Read; break;
-    case 's': foundSeenPerm = true; break;
+    case 's': perm |= ACLJobs::WriteSeenFlag; break;
     case 'w': perm |= ACLJobs::WriteFlags; break;
     case 'i': perm |= ACLJobs::Insert; break;
     case 'p': perm |= ACLJobs::Post; break;
@@ -55,7 +54,7 @@ static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url,
     default: break;
     }
   }
-  if ( ( perm & ACLJobs::Read ) && str.find( 's' ) == -1 ) {
+  if ( ( perm & ACLJobs::Read ) && !( perm & ACLJobs::WriteSeenFlag )  ) {
     // Reading without 'seen' is, well, annoying. Unusable, even.
     // So we treat 'rs' as a single one.
     // But if the permissions were set out of kmail, better check that both are set
@@ -75,7 +74,9 @@ static QCString permissionsToIMAPRights( unsigned int permissions ) {
   if ( permissions & ACLJobs::List )
     str += 'l';
   if ( permissions & ACLJobs::Read )
-    str += "rs";
+    str += 'r';
+  if ( permissions & ACLJobs::WriteSeenFlag )
+    str += 's';
   if ( permissions & ACLJobs::WriteFlags )
     str += 'w';
   if ( permissions & ACLJobs::Insert )

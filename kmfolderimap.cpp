@@ -1295,6 +1295,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
         // be considered correct.
         if (!mReadOnly)
           flagsToStatus( msgBase, serverFlags, false );
+        else
+          seenFlagToStatus( msgBase, serverFlags, false );
         idx++;
         uid = (*it).items.remove(uid);
         if ( msgBase->getMsgSerNum() > 0 ) {
@@ -1414,8 +1416,6 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
     msg->setStatus( KMMsgStatusFlag );
   if ( (flags & 2) && (oldStatus & KMMsgStatusReplied) == 0 )
     msg->setStatus( KMMsgStatusReplied );
-  if ( (flags & 1) && (oldStatus & KMMsgStatusOld) == 0 )
-    msg->setStatus( KMMsgStatusOld );
 
   // Toggle flags if they changed
 //  if ( ( (flags & 4) > 0 ) != ( (oldStatus & KMMsgStatusFlag) > 0 ) )
@@ -1424,6 +1424,17 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 //    msg->toggleStatus( KMMsgStatusReplied );
 //  if ( ( (flags & 1) > 0 ) != ( (oldStatus & KMMsgStatusOld) > 0 ) )
 //    msg->toggleStatus( KMMsgStatusOld );
+
+  seenFlagToStatus( msg, flags, newMsg );
+}
+
+void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
+{
+  if ( !msg ) return;
+
+  const KMMsgStatus oldStatus = msg->status();
+  if ( (flags & 1) && (oldStatus & KMMsgStatusOld) == 0 )
+    msg->setStatus( KMMsgStatusOld );
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
@@ -1843,7 +1854,6 @@ void KMFolderImap::setStatus(int idx, KMMsgStatus status, bool toggle)
 void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
   FolderStorage::setStatus(ids, status, toggle);
-  if (mReadOnly) return;
 
   /* The status has been already set in the local index. Update the flags on
    * the server. To avoid doing that for each message individually, group them
@@ -1855,6 +1865,38 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
    * this method with a list of uids. The 2 important mails need to get the string
    * \SEEN \FLAGGED while the others need to get just \SEEN. Build sets for each
    * of those and sort them, so the server can handle them efficiently. */
+
+  if ( mReadOnly ) { // mUserRights is not available here
+    // FIXME duplicated code in KMFolderCachedImap
+    QValueList<ulong> seenUids, unseenUids;
+    for ( QValueList<int>::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it ) {
+      KMMessage *msg = 0;
+      bool unget = !isMessage(*it);
+      msg = getMsg(*it);
+      if (!msg) continue;
+      if ( msg->status() & KMMsgStatusOld || msg->status() & KMMsgStatusRead )
+        seenUids.append( msg->UID() );
+      else
+        unseenUids.append( msg->UID() );
+      if (unget) unGetMsg(*it);
+    }
+    if ( !seenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( seenUids, true );
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        account()->setImapSeenStatus( folder(), imappath, true );
+      }
+    }
+    if ( !unseenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( unseenUids, true );
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        account()->setImapSeenStatus( folder(), imappath, false );
+      }
+    }
+    return;
+  }
+
   QMap< QString, QStringList > groups;
   for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it ) {
     KMMessage *msg = 0;

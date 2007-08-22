@@ -193,7 +193,7 @@ namespace KMail {
      */
     void changeSubscription(bool subscribe, const QString& imapPath);
 
-    /** 
+    /**
      * Returns whether the account is locally subscribed to the
      * folder @param imapPath. No relation to server side subscription above.
      */
@@ -232,6 +232,12 @@ namespace KMail {
      * Emits imapStatusChanged signal on success/error.
      */
     void setImapStatus( KMFolder* folder, const QString& path, const QCString& flags );
+
+    /**
+     * Set seen status on the server.
+     * Emits imapStatusChanged signal on success/error.
+     */
+    void setImapSeenStatus( KMFolder* folder, const QString& path, bool seen );
 
     /**
      * The KIO-Slave died
