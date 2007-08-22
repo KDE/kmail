@@ -1190,6 +1190,29 @@ namespace KMail {
      connect(job, SIGNAL(result(KIO::Job *)),
            SLOT(slotSetStatusResult(KIO::Job *)));
   }
+
+  void ImapAccountBase::setImapSeenStatus(KMFolder * folder, const QString & path, bool seen)
+  {
+     KURL url = getUrl();
+     url.setPath(path);
+
+     QByteArray packedArgs;
+     QDataStream stream( packedArgs, IO_WriteOnly);
+
+     stream << (int) 's' << url << seen;
+
+     if ( makeConnection() != Connected )
+       return; // can't happen with dimap
+
+     KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
+     KIO::Scheduler::assignJobToSlave(slave(), job);
+     ImapAccountBase::jobData jd( url.url(), folder );
+     jd.path = path;
+     insertJob(job, jd);
+     connect(job, SIGNAL(result(KIO::Job *)),
+           SLOT(slotSetStatusResult(KIO::Job *)));
+  }
+
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSetStatusResult(KIO::Job * job)
   {

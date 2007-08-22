@@ -373,6 +373,12 @@ public slots:
   static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
 
   /**
+   * Convert IMAP seen flag to a message status.
+   * @param newMsg specifies whether unseen messages are new or unread
+   */
+  static void seenFlagToStatus( KMMsgBase *msg, int flags, bool newMsg = true );
+
+  /**
    * Connected to the result signal of the copy/move job
    */
   void slotCopyMsgResult( KMail::FolderJob* job );

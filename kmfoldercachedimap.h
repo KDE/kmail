@@ -328,6 +328,7 @@ protected:
   void listMessages();
   void uploadNewMessages();
   void uploadFlags();
+  void uploadSeenFlags();
   void createNewFolders();
 
   void listDirectory2();
