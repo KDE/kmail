@@ -3369,7 +3369,7 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   mTempFile.write( part.bodyDecodedBinary() );
   mTempFile.flush();
 
-  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl(mTempFile.name()), part.typeStr() + "/" + part.subtypeStr(), false, this );
+  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl(mTempFile.name()), part.typeStr() + '/' + part.subtypeStr(), false, this );
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
@@ -3458,7 +3458,7 @@ KMCommand::Result CreateTodoCommand::execute()
     kWarning(5006) << "CreateTodoCommand: Unable to open temp file.";
     return Failed;
   }
-  QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + "/" + msg->msgId();
+  QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + '/' + msg->msgId();
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
 
   OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );

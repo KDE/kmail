@@ -270,7 +270,7 @@ void KMMessage::setTransferInProgress(bool value, bool force)
 
 bool KMMessage::isUrgent() const {
   return headerField( "Priority" ).contains( "urgent", Qt::CaseSensitive )
-    || headerField( "X-Priority" ).startsWith( "2" );
+    || headerField( "X-Priority" ).startsWith( '2' );
 }
 
 //-----------------------------------------------------------------------------
@@ -675,7 +675,7 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
            while( (it2 != part.end()) && (*it2).isEmpty())
              --it2;
 
-           if ((it2 != part.end()) && ((*it2).endsWith(":")))
+           if ((it2 != part.end()) && ((*it2).endsWith(':')))
            {
               fromLine = oldIndent + (*it2) + '\n';
               part.erase(it2);

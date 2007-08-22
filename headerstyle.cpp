@@ -532,7 +532,7 @@ namespace KMail {
       {
         //kDebug( 5006 ) <<"URL found";
         photoURL = addresses[0].photo().url();
-        if ( photoURL.startsWith("/") )
+        if ( photoURL.startsWith('/') )
           photoURL.prepend( "file:" );
       }
     }

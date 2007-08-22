@@ -2827,7 +2827,7 @@ KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
 
     // create subfolder for this incident
     QDate today = QDate::currentDate();
-    QString baseName = folder()->label() + "-" + QString::number( today.year() )
+    QString baseName = folder()->label() + '-' + QString::number( today.year() )
         + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
         + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
     QString name = baseName;

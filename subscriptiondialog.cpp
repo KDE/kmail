@@ -123,9 +123,9 @@ void SubscriptionDialogBase::createListViewItem( int i )
     for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it )
     {
       QString name = *it;
-      if (name.startsWith("/"))
+      if (name.startsWith('/'))
         name = name.right(name.length()-1);
-      if (name.endsWith("/"))
+      if (name.endsWith('/'))
         name.truncate(name.length()-1);
       KGroupInfo info(name);
       info.subscribed = false;
@@ -134,9 +134,9 @@ void SubscriptionDialogBase::createListViewItem( int i )
       for ( uint j = 0; j <= i; ++j )
         tmpPath << folders[j];
       QString path = tmpPath.join(mDelimiter);
-      if (!path.startsWith("/"))
+      if (!path.startsWith('/'))
         path = '/' + path;
-      if (!path.endsWith("/"))
+      if (!path.endsWith('/'))
         path = path + '/';
       info.path = path;
       item = 0;

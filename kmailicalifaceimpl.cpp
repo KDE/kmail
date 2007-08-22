@@ -1461,7 +1461,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
 
   // IMAP path is either /INBOX/<path> or /user/someone/<path>
   QString path = folderURL.path( KUrl::RemoveTrailingSlash );
-  Q_ASSERT( path.startsWith( "/" ) );
+  Q_ASSERT( path.startsWith( '/' ) );
   int secondSlash = path.indexOf( '/', 1 );
   if ( secondSlash == -1 ) {
     kWarning() <<"KCal::ResourceKolab::fromKMailFolderSynced path is too short:" << path;

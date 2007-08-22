@@ -685,7 +685,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
 {
   kDebug(5006) <<"KMKernel::dbusAddMessage called";
 
-  if ( foldername.isEmpty() || foldername.startsWith("."))
+  if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
 
   int retval;
@@ -720,7 +720,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
-          if(_newFolder.startsWith(".")) return -1;
+          if(_newFolder.startsWith('.')) return -1;
 
           if(root) {
             folder = the_folderMgr->findOrCreate(*it, false);
@@ -864,7 +864,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   // search for already existing emails.
   kDebug(5006) <<"KMKernel::dbusAddMessage_fastImport called";
 
-  if ( foldername.isEmpty() || foldername.startsWith("."))
+  if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
 
   int retval;
@@ -899,7 +899,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
-          if(_newFolder.startsWith(".")) return -1;
+          if(_newFolder.startsWith('.')) return -1;
 
           if(root) {
             folder = the_folderMgr->findOrCreate(*it, false);

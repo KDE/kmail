@@ -233,7 +233,7 @@ void NewFolderDialog::slotOk()
   }
 
   // folder names must not start with a '.'
-  if ( fldName.startsWith( "." ) ) {
+  if ( fldName.startsWith( '.' ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
   }

@@ -445,7 +445,7 @@ namespace KMail {
   }
 
   static inline QString dotstuff( QString s ) { // krazy:exclude=passbyvalue
-    if ( s.startsWith( "." ) )
+    if ( s.startsWith( '.' ) )
       return '.' + s.replace( "\n.", "\n.." );
     else
       return s.replace( "\n.", "\n.." );
