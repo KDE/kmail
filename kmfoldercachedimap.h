@@ -413,6 +413,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     void uploadNewMessages();
     void uploadFlags();
+    void uploadSeenFlags();
     void createNewFolders();
 
     /**

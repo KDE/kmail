@@ -1356,6 +1356,8 @@ void KMFolderImap::slotListFolderResult( KJob *job )
         // is what has to be considered correct.
         if ( !mReadOnly ) {
           flagsToStatus( msgBase, serverFlags, false );
+        } else {
+          seenFlagToStatus( msgBase, serverFlags, false );
         }
         idx++;
         uid = (*it).items.erase( uid );
@@ -1455,27 +1457,35 @@ void KMFolderImap::slotListFolderEntries( KIO::Job *job,
 //-----------------------------------------------------------------------------
 void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  MessageStatus status;
-
   if ( !msg ) return;
 
-  if (flags & 4)
-    status.setImportant();
-  if (flags & 2)
-    status.setReplied();
-  if (flags & 1)
-    status.setOld();
+  const KPIM::MessageStatus oldStatus = msg->status();
+  // Set flags if they are new
+  if ( (flags & 4) && oldStatus.isImportant() )
+    msg->status().setImportant();
+  if ( (flags & 2) && oldStatus.isReplied() )
+    msg->status().setReplied();
+
+  seenFlagToStatus( msg, flags, newMsg );
+}
+
+void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
+{
+  if ( !msg ) return;
+
+  const KPIM::MessageStatus oldStatus = msg->status();
+  if ( (flags & 1) && oldStatus.isOld() )
+    msg->status().setOld();
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
   // number of messages which actually show up as read can go out of sync.
   if ( ( msg->status().isOfUnknownStatus() ) || !(flags&1) ) {
     if (newMsg)
-      status.setNew();
+      msg->status().setNew();
     else
-      status.setUnread();
+      msg->status().setUnread();
   }
-  msg->setStatus( status );
 }
 
 
@@ -1783,7 +1793,7 @@ QString KMFolderImap::encodeFileName(const QString &name)
 //-----------------------------------------------------------------------------
 QString KMFolderImap::decodeFileName(const QString &name)
 {
-  return KIMAP::decodeImapFolderName(name); 
+  return KIMAP::decodeImapFolderName(name);
 }
 
 //-----------------------------------------------------------------------------
@@ -1882,9 +1892,6 @@ void KMFolderImap::setStatus( QList<int> &ids,
 {
   open( "setstatus" );
   FolderStorage::setStatus( ids, status, toggle );
-  if ( mReadOnly ) {
-    return;
-  }
 
   /* The status has been already set in the local index. Update the flags on
    * the server. To avoid doing that for each message individually, group them
@@ -1900,6 +1907,39 @@ void KMFolderImap::setStatus( QList<int> &ids,
    *   Build sets for each of those and sort them, so the server can handle
    *   them efficiently.
    */
+
+  if ( mReadOnly ) { // mUserRights is not available here
+    // FIXME duplicated code in KMFolderCachedImap
+    QList<ulong> seenUids, unseenUids;
+    for ( QList<int>::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it ) {
+      KMMessage *msg = 0;
+      bool unget = !isMessage(*it);
+      msg = getMsg(*it);
+      if (!msg) continue;
+      if ( msg->status().isOld() || msg->status().isRead() )
+        seenUids.append( msg->UID() );
+      else
+        unseenUids.append( msg->UID() );
+      if (unget) unGetMsg(*it);
+    }
+    if ( !seenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( seenUids, true );
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        account()->setImapSeenStatus( folder(), imappath, true );
+      }
+    }
+    if ( !unseenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( unseenUids, true );
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        account()->setImapSeenStatus( folder(), imappath, false );
+      }
+    }
+    close( "setstatus" );
+    return;
+  }
+
   QMap< QString, QStringList > groups;
   for ( QList<int>::Iterator it = ids.begin(); it != ids.end(); ++it ) {
     KMMessage *msg = 0;

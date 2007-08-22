@@ -1255,6 +1255,29 @@ void ImapAccountBase::setImapStatus( KMFolder *folder, const QString &path,
   connect( job, SIGNAL(result(KJob *)),
            SLOT(slotSetStatusResult(KJob *)) );
 }
+
+void ImapAccountBase::setImapSeenStatus(KMFolder * folder, const QString & path, bool seen)
+{
+   KUrl url = getUrl();
+   url.setPath(path);
+
+   QByteArray packedArgs;
+   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
+
+   stream << (int) 's' << url << seen;
+
+   if ( makeConnection() != Connected )
+     return; // can't happen with dimap
+
+   KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
+   KIO::Scheduler::assignJobToSlave(slave(), job);
+   ImapAccountBase::jobData jd( url.url(), folder );
+   jd.path = path;
+   insertJob(job, jd);
+   connect(job, SIGNAL(result(KIO::Job *)),
+           SLOT(slotSetStatusResult(KIO::Job *)));
+}
+
 //-----------------------------------------------------------------------------
 void ImapAccountBase::slotSetStatusResult( KJob *job )
 {

@@ -238,6 +238,12 @@ namespace KMail {
     void setImapStatus( KMFolder* folder, const QString& path, const QByteArray& flags );
 
     /**
+     * Set seen status on the server.
+     * Emits imapStatusChanged signal on success/error.
+     */
+    void setImapSeenStatus( KMFolder* folder, const QString& path, bool seen );
+
+    /**
      * The KIO-Slave died
      */
     void slaveDied() { mSlave = 0; killAllJobs(); }

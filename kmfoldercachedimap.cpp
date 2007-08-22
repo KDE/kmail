@@ -855,6 +855,11 @@ void KMFolderCachedImap::serverSyncInternal()
           uploadFlags();
           break;
         }
+      } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
+        if ( mStatusChangedLocally ) {
+          uploadSeenFlags();
+          break;
+        }
       }
     }
     // Else carry on
@@ -1345,6 +1350,51 @@ void KMFolderCachedImap::uploadFlags()
   serverSyncInternal();
 }
 
+void KMFolderCachedImap::uploadSeenFlags()
+{
+  if ( !uidMap.isEmpty() ) {
+    mStatusFlagsJobs = 0;
+    newState( mProgress, i18n("Uploading status of messages to server"));
+
+    QList<ulong> seenUids, unseenUids;
+    for( int i = 0; i < count(); ++i ) {
+      KMMsgBase* msg = getMsgBase( i );
+      if( !msg || msg->UID() == 0 )
+        // Either not a valid message or not one that is on the server yet
+        continue;
+
+      if ( msg->status().isOld() || msg->status().isRead() )
+        seenUids.append( msg->UID() );
+      else
+        unseenUids.append( msg->UID() );
+    }
+    if ( !seenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( seenUids, true );
+      mStatusFlagsJobs += sets.count();
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        mAccount->setImapSeenStatus( folder(), imappath, true );
+      }
+    }
+    if ( !unseenUids.isEmpty() ) {
+      QStringList sets = KMFolderImap::makeSets( unseenUids, true );
+      mStatusFlagsJobs += sets.count();
+      for( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it ) {
+        QString imappath = imapPath() + ";UID=" + ( *it );
+        mAccount->setImapSeenStatus( folder(), imappath, false );
+      }
+    }
+
+    if ( mStatusFlagsJobs ) {
+      connect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
+               this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
+      return;
+    }
+  }
+  newState( mProgress, i18n("No messages to upload to server"));
+  serverSyncInternal();
+}
+
 void KMFolderCachedImap::slotImapStatusChanged( KMFolder *folder, const QString&, bool cont )
 {
   if ( mSyncState == SYNC_STATE_INITIAL ) {
@@ -1630,6 +1680,8 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
           if ( !mReadOnly ) {
             /* The message is OK, update flags */
             KMFolderImap::flagsToStatus( existingMessage, flags );
+          } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
+            KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }
         }
       }
