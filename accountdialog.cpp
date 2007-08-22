@@ -431,7 +431,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
-  mLocal.intervalSpin->setRange( 1, 10000, 1, false );
+  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( 1 );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
@@ -524,7 +524,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
-  mMaildir.intervalSpin->setRange( 1, 10000, 1, false );
+  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mMaildir.intervalSpin->setSuffix( i18n(" min") );
   mMaildir.intervalSpin->setValue( 1 );
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
@@ -721,7 +721,7 @@ void AccountDialog::makePopAccountPage()
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
   grid->addWidget( mPop.intervalLabel, 13, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
-  mPop.intervalSpin->setRange( 1, 10000, 1, false );
+  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( 1 );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
@@ -1032,8 +1032,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  const int kioskMinimumImapCheckInterval = GlobalSettings::minimumImapCheckInterval();
-  mImap.intervalSpin->setRange( kioskMinimumImapCheckInterval, 10000, 1, false );
+  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1, false );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
