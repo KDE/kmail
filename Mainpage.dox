@@ -237,52 +237,40 @@ as follows :
         ---< actual folder types: KMFolderImap, KMFolderMbox... >--
 </pre>
 
-Besides the above mentioned classes one more relevant to our
-discussion is KMFolderMgr which as the name suggest serves as the
-folder manager.
-
 At the base KMail's folder design starts with KMFolderNode which
-inherits QObject. KMFolderNode is the base class encapsulating such
-common folder properties as the name, boolean saying whether the
-given folder is a directory storing the folders with mail or whether
-the folder is a folder holding mail directly and finally a
-KMFolderDir.
+inherits QObject. KMFolderNode is the base class encapsulating
+common folder properties such as the name and a boolean signifying whether
+the folder is a folder holding mail directly or a KMFolderDir.
+KMFolderNode's often do not have an on-disk representation, they are
+entities existing only within KMail's design. 
 
-KMFolderDir is, as one might say, a directory abstration which manages
-purely abstract KMFolder's. KMFolder's often don't have a disk based
-image, they are entities existing only within KMail's design. To
-manage the contents of one directory that may contain folders and/or
-other directories KMFolderDir was created.
-It inherits KMFolderNode and KMFolderNodeList. Yes, the inheritance is rather
-bogus and has to be fixed especially if you'll notice that
-KMFolderNode holds a pointer to the derived from it KMFolderDir. 
-KMFolderDir also inherits KMFolderNodeList which is a
-QPtrList<KMFolderNode>.  A special case of a KMFolderDir is known as
-KMFolderRootDir and is supposed to represent the toplevel KMFolderDir
-in the KMail's folder hierarchy. 
+KMFolderDir is a directory abstraction which holds KMFolderNode's.
+It inherits KMFolderNode and KMFolderNodeList which is a QPtrList<KMFolderNode>.
+A special case of a KMFolderDir is KMFolderRootDir; it represents
+the toplevel KMFolderDir in KMail's folder hierarchy. 
 
-KMFolderDir's serve as folder holders which are managed by
-KMFolderMgr's. KMail contains three main KMFolderMgr's. They can be
+KMFolderDir's contents are managed by KMFolderMgr's.
+KMail contains four main KMFolderMgr's. They can be
 accessed via KMKernel ( the "kmkernel" construct ). Those methods are :
--  KMFolderMgr *folderMgr() - which returns the folder manager for
+1) KMFolderMgr *folderMgr() - which returns the folder manager for
    the folders stored locally.
--  KMFolderMgr *imapFolderMgr() - which returns the folder manager
+2) KMFolderMgr *imapFolderMgr() - which returns the folder manager
    for all imap folders. They're handled a little differently because
    for all imap messages only headers are cached locally while the
    main contents of all messages is kept on the server.
--  KMFolderMgr *dimapFolderMgr() - which returns disconnected IMAP (dimap) 
+3) KMFolderMgr *dimapFolderMgr() - which returns disconnected IMAP (dimap) 
    folder manager. In dimap, both the headers and a copy of the full message
-   is cached locally.
--  KMFolderMgr *searchFolderMgr() - which returns the folder manager
-   for the search folders (the folders created by using the "find
-   messages" tool. Other email clients call that type of folders
+   are cached locally.
+4) KMFolderMgr *searchFolderMgr() - which returns the folder manager
+   for search folders (folders created by using the "find
+   messages" tool). Other email clients call this type of folder
    "virtual folders".
 
-Finally one has to remember FolderJob classes. These classes allow
-one to have asynchronous operations on KMFolder's. You simply create
-a Job on a heap, connect to one of its signals and wait till the job
-finishes. Folders serve as FolderJob's factories. For example to
-retrieve the full message from a folder you'd have to do something like :
+Finally there are the FolderJob classes. These classes allow
+asynchronous operations on KMFolder's. You create
+a Job on the heap, connect to one of its signals and wait for the job
+to finish. Folders serve as FolderJob's factories. For example, to
+retrieve the full message from a folder you do :
 
 \code
 FolderJob *job = folderParent->createJob( aMsg, tGetMessage );
