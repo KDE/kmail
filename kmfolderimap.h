@@ -190,7 +190,7 @@ public:
   /**
    * Change the status of several messages indicated by @p ids
    */
-  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
+  virtual void setStatus(QValueList<int>& _ids, KMMsgStatus status, bool toggle);
 
   /** generates sets of uids */
   static QStringList makeSets( QValueList<ulong>&, bool sort = true);
@@ -530,6 +530,12 @@ private:
   ProgressItem *mAddMessageProgressItem;
   // to-be-added folders
   QStringList mFoldersPendingCreation;
+
+  // push all flags to the server instead of just the changed once
+  // when doing a flag change the next time
+  // this is needed for migrating local flags from the time where we didn't
+  // have the ability to store them on the server
+  bool mUploadAllFlags;
 };
 
 #endif // kmfolderimap_h
