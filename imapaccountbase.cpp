@@ -769,10 +769,10 @@ void ImapAccountBase::migratePrefix()
 {
   if ( !mOldPrefix.isEmpty() && mOldPrefix != "/" ) {
     // strip /
-    if ( mOldPrefix.startsWith("/") ) {
+    if ( mOldPrefix.startsWith('/') ) {
       mOldPrefix = mOldPrefix.right( mOldPrefix.length() - 1 );
     }
-    if ( mOldPrefix.endsWith("/") ) {
+    if ( mOldPrefix.endsWith('/') ) {
       mOldPrefix = mOldPrefix.left( mOldPrefix.length() - 1 );
     }
     QStringList list = mNamespaces[PersonalNS];

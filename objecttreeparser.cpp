@@ -493,7 +493,7 @@ namespace KMail {
           QString email = QString::fromUtf8( ext.emailList[ iMail ] );
           // ### work around gpgme 0.3.x / cryptplug bug where the
           // ### email addresses are specified as angle-addr, not addr-spec:
-          if ( email.startsWith( "<" ) && email.endsWith( ">" ) )
+          if ( email.startsWith( '<' ) && email.endsWith( '>' ) )
             email = email.mid( 1, email.length() - 2 );
           messagePart.signerMailAddresses.append( email );
         }

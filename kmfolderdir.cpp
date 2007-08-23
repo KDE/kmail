@@ -210,7 +210,7 @@ bool KMFolderDir::reload(void)
     }
     // Collect subdirectories.
     if ( fileInfo.isDir() &&
-         fname.startsWith( "." ) && fname.endsWith( ".directory" ) ) {
+         fname.startsWith( '.' ) && fname.endsWith( ".directory" ) ) {
        diList.append(fname);
        continue;
     }

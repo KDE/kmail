@@ -69,7 +69,7 @@ void KMFilterActionWithAddressWidget::slotAddrBook()
   QString txt = mLineEdit->text().trimmed();
 
   if ( !txt.isEmpty() ) {
-    if ( !txt.endsWith( "," ) )
+    if ( !txt.endsWith( ',' ) )
       txt += ", ";
     else
       txt += ' ';

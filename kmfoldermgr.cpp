@@ -189,12 +189,12 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
     KMAcctCachedImap *account = storage->account();
     // guess imap path
     QString imapPath = storage->imapPath();
-    if ( !imapPath.endsWith( "/" ) )
-      imapPath += "/";
+    if ( !imapPath.endsWith( '/' ) )
+      imapPath += '/';
     imapPath += fName;
-    if ( account->isDeletedFolder( imapPath ) || account->isDeletedFolder( imapPath + "/" )
+    if ( account->isDeletedFolder( imapPath ) || account->isDeletedFolder( imapPath + '/' )
        || account->isPreviouslyDeletedFolder( imapPath )
-       || account->isPreviouslyDeletedFolder( imapPath + "/" ) ) {
+       || account->isPreviouslyDeletedFolder( imapPath + '/' ) ) {
       KMessageBox::error( 0, i18n("A folder with the same name has been deleted since the last mail check."
           "You need to check mails first before creating another folder with the same name."),
           i18n("Could Not Create Folder") );
