@@ -29,11 +29,13 @@ namespace KMail {
   class SieveConfig {
   public:
     SieveConfig( bool managesieveSupported=false, bool reuseConfig=true,
-		 unsigned int port=2000, const KURL & alternateURL=KURL() )
+		 unsigned int port=2000, const KURL & alternateURL=KURL(),
+                 const QString& vacationFileName = QString::null )
       : mManagesieveSupported( managesieveSupported ),
 	mReuseConfig( reuseConfig ),
 	mPort( port ),
-	mAlternateURL( alternateURL ) {}
+	mAlternateURL( alternateURL ),
+        mVacationFileName( vacationFileName ) {}
 
     SieveConfig( const SieveConfig & other )
       : mManagesieveSupported( other.managesieveSupported() ),
@@ -74,6 +76,7 @@ namespace KMail {
 
     void readConfig( const KConfigBase & config );
     void writeConfig( KConfigBase & config ) const;
+    QString toString() const;
 
   protected:
     bool mManagesieveSupported;
@@ -100,9 +103,12 @@ namespace KMail {
     KURL alternateURL() const;
     virtual void setAlternateURL( const KURL & url );
 
+    QString vacationFileName() const;
+    virtual void setVacationFileName( const QString & url );
+
     SieveConfig config() const {
       return SieveConfig( managesieveSupported(), reuseConfig(),
-			  port(), alternateURL() );
+			  port(), alternateURL(), vacationFileName() );
     }
 
     virtual void setConfig( const SieveConfig & config );
@@ -115,6 +121,7 @@ namespace KMail {
     QCheckBox * mSameConfigCheck;
     KIntSpinBox * mPortSpin;
     QLineEdit * mAlternateURLEdit;
+    QString mVacationFileName;
   };
 
 } // namespace KMail
