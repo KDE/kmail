@@ -1359,47 +1359,56 @@ void KMHeaders::applyFiltersOnMsg()
     int contentX, contentY;
     HeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
-    KMMessageList* msgList = selectedMsgs();
-    if (msgList->isEmpty())
+    //prevent issues with stale message pointers by using serial numbers instead
+    QValueList<unsigned long> serNums = KMMsgDict::serNumList( *selectedMsgs() );
+    if ( serNums.isEmpty() )
       return;
-    finalizeMove( nextItem, contentX, contentY );
 
+    finalizeMove( nextItem, contentX, contentY );
     CREATE_TIMER(filter);
     START_TIMER(filter);
 
     KCursorSaver busy( KBusyPtr::busy() );
     int msgCount = 0;
-    int msgCountToFilter = msgList->count();
+    int msgCountToFilter = serNums.count();
     ProgressItem* progressItem =
       ProgressManager::createProgressItem( "filter"+ProgressManager::getUniqueID(),
                                            i18n( "Filtering messages" ) );
     progressItem->setTotalItems( msgCountToFilter );
-    for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-      int diff = msgCountToFilter - ++msgCount;
-      if ( diff < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
+
+    for ( QValueList<unsigned long>::ConstIterator it = serNums.constBegin();
+          it != serNums.constEnd(); ++it ) {
+      msgCount++;
+      if ( msgCountToFilter - msgCount < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
         progressItem->updateProgress();
         QString statusMsg = i18n("Filtering message %1 of %2");
         statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
         KApplication::kApplication()->eventLoop()->processEvents( QEventLoop::ExcludeUserInput, 50 );
       }
-      int idx = msgBase->parent()->find(msgBase);
-      if (idx >= 0) {
-        KMMessage * msg = msgBase->parent()->getMsg(idx);
-        if (msg->transferInProgress()) continue;
+
+      KMFolder *folder = 0;
+      int idx;
+      KMMsgDict::instance()->getLocation( *it, &folder, &idx );
+      KMMessage *msg = 0;
+      if (folder)
+        msg = folder->getMsg(idx);
+      if (msg) {
+        if (msg->transferInProgress())
+          continue;
         msg->setTransferInProgress(true);
-        if ( !msg->isComplete() )
-        {
+        if (!msg->isComplete()) {
           FolderJob *job = mFolder->createJob(msg);
           connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-                      SLOT(slotFilterMsg(KMMessage*)));
+                  this, SLOT(slotFilterMsg(KMMessage*)));
           job->start();
         } else {
-          if (slotFilterMsg(msg) == 2) break;
+          if (slotFilterMsg(msg) == 2)
+            break;
         }
-      }
-      else {
-        kdDebug (5006) << "####### KMHeaders::applyFiltersOnMsg - Getting invalid index " << endl;
+      } else {
+        kdDebug (5006) << "####### KMHeaders::applyFiltersOnMsg -"
+                          " A message went missing during filtering " << endl;
       }
       progressItem->incCompletedItems();
     }

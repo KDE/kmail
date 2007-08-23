@@ -355,6 +355,20 @@ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 
 //-----------------------------------------------------------------------------
 
+//static
+QValueList<unsigned long> KMMsgDict::serNumList(QPtrList<KMMsgBase> msgList)
+{
+  QValueList<unsigned long> ret;
+  for ( unsigned int i = 0; i < msgList.count(); i++ ) {
+    unsigned long serNum = msgList.at(i)->getMsgSerNum();
+    assert( serNum );
+    ret.append( serNum );
+  }
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+
 QString KMMsgDict::getFolderIdsLocation( const FolderStorage &storage )
 {
   return storage.indexLocation() + ".ids";
