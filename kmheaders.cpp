@@ -2627,7 +2627,8 @@ bool KMHeaders::writeSortOrder()
         } else if( i->nextSibling()) {
           i = i->nextSibling();
         } else {
-            for(i=0; !i && s.count(); i = s.pop()->nextSibling());
+            for(i=0; !i && s.count(); i = s.pop()->nextSibling())
+              ;
         }
       }
     }
