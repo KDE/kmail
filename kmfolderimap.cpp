@@ -64,7 +64,8 @@ using KMail::RenameJob;
 #include <assert.h>
 
 KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
-  : KMFolderMbox(folder, aName)
+  : KMFolderMbox(folder, aName),
+    mUploadAllFlags( false )
 {
   mContentState = imapNoInformation;
   mSubfolderState = imapNoInformation;
@@ -226,6 +227,7 @@ void KMFolderImap::readConfig()
   }
   mNoContent = group.readEntry( "NoContent", false );
   mReadOnly = group.readEntry( "ReadOnly", false );
+  mUploadAllFlags = config->readBoolEntry( "UploadAllFlags", true );
 
   KMFolderMbox::readConfig();
 }
@@ -240,6 +242,7 @@ void KMFolderImap::writeConfig()
   group.writeEntry("ImapPath", mImapPath);
   group.writeEntry("NoContent", mNoContent);
   group.writeEntry("ReadOnly", mReadOnly);
+  config->writeEntry( "UploadAllFlags", mUploadAllFlags );
   KMFolderMbox::writeConfig();
 }
 
@@ -1887,11 +1890,21 @@ void KMFolderImap::setStatus( int idx,
   setStatus( ids, status, toggle );
 }
 
-void KMFolderImap::setStatus( QList<int> &ids,
+void KMFolderImap::setStatus( QList<int> &_ids,
                               const MessageStatus &status, bool toggle )
 {
   open( "setstatus" );
-  FolderStorage::setStatus( ids, status, toggle );
+  FolderStorage::setStatus(_ids, status, toggle);
+  QList<int> ids;
+  if ( mUploadAllFlags ) {
+    kdDebug(5006) << k_funcinfo << "Migrating all flags to the server" << endl;
+    ids.clear();
+    for ( int i = 0; i < count(); ++i )
+      ids << i;
+    mUploadAllFlags = false;
+  } else {
+    ids = _ids;
+  }
 
   /* The status has been already set in the local index. Update the flags on
    * the server. To avoid doing that for each message individually, group them

@@ -192,10 +192,10 @@ void deleteMessage(const QList<KMMessage*>& msgList);
 */
 virtual void setStatus(int idx, const MessageStatus& status, bool toggle);
 
-/**
-* Change the status of several messages indicated by @p ids
-*/
-virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle);
+  /**
+   * Change the status of several messages indicated by @p ids
+   */
+  virtual void setStatus(QList<int>& _ids, const MessageStatus& status, bool toggle);
 
 /** generates sets of uids */
 static QStringList makeSets( QList<ulong>&, bool sort = true);
@@ -535,6 +535,12 @@ private:
   // to-be-added folders
   QStringList mFoldersPendingCreation;
   QStringList owners;
+
+  // push all flags to the server instead of just the changed once
+  // when doing a flag change the next time
+  // this is needed for migrating local flags from the time where we didn't
+  // have the ability to store them on the server
+  bool mUploadAllFlags;
 };
 
 #endif // kmfolderimap_h

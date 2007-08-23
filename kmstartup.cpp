@@ -106,6 +106,7 @@ void checkConfigUpdates() {
     "3.4b",
     "3.4.1",
     "3.5.4",
+    "3.5.7-imap-flag-migration",
     "4.0-misc"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
