@@ -310,7 +310,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   mMsg->setUID(mfd.uid);
   mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
-    KMFolderImap::flagsToStatus(mMsg, mfd.flags);
+    KMFolderImap::flagsToStatus(mMsg, mfd.flags, true, mFolder->permanentFlags());
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
@@ -365,7 +365,7 @@ void CachedImapJob::slotPutNextMessage()
   }
 
   KURL url = mAccount->getUrl();
-  QString flags = KMFolderImap::statusToFlags( mMsg->status() );
+  QString flags = KMFolderImap::statusToFlags( mMsg->status(), mFolder->permanentFlags() );
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -528,7 +528,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  QString path = mAccount->createImapPath( mFolder->imapPath(), 
+  QString path = mAccount->createImapPath( mFolder->imapPath(),
       folder->folder()->name() );
   if ( !folder->imapPathForCreation().isEmpty() ) {
     // the folder knows it's namespace
@@ -644,6 +644,19 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
     } else
       kdDebug(5006) << "No uidvalidity available for folder "
                     << mFolder->name() << endl;
+  }
+
+  a = cstr.find( "X-PermanentFlags: " );
+  if ( a < 0 ) {
+    kdDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available" << endl;
+  } else {
+    int b = cstr.find( "\r\n", a );
+    if ( (b - a - 18) >= 0 ) {
+      int flags = cstr.mid( a + 18, b - a - 18 ).toInt();
+      emit permanentFlags( flags );
+    } else {
+      kdDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available" << endl;
+    }
   }
 
   mAccount->removeJob(it);

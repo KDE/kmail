@@ -192,7 +192,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
     mQuotaInfo(), mAlarmsBlocked( false ),
-    mRescueCommandCount( 0 )
+    mRescueCommandCount( 0 ),
+    mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
   setUidValidity("");
   // if we fail to read a uid file but there is one, nuke it
@@ -1354,7 +1355,7 @@ void KMFolderCachedImap::uploadFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
 
-      QString flags = KMFolderImap::statusToFlags(msg->status());
+      QString flags = KMFolderImap::statusToFlags(msg->status(), mPermanentFlags);
       // Collect uids for each typem of flags.
       QString uid;
       uid.setNum( msg->UID() );
@@ -1570,6 +1571,7 @@ void KMFolderCachedImap::checkUidValidity() {
   else {
     newState( mProgress, i18n("Checking folder validity"));
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
+    connect( job, SIGNAL(permanentFlags(int)), SLOT(slotPermanentFlags(int)) );
     connect( job, SIGNAL( result( KMail::FolderJob* ) ),
              this, SLOT( slotCheckUidValidityResult( KMail::FolderJob* ) ) );
     job->start();
@@ -1585,6 +1587,11 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
   }
   mProgress += 5;
   serverSyncInternal();
+}
+
+void KMFolderCachedImap::slotPermanentFlags(int flags)
+{
+  mPermanentFlags = flags;
 }
 
 /* This will only list the messages in a folder.
@@ -1720,7 +1727,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           // be considered correct.
           if (!mReadOnly) {
             /* The message is OK, update flags */
-            KMFolderImap::flagsToStatus( existingMessage, flags );
+            KMFolderImap::flagsToStatus( existingMessage, flags, true, mPermanentFlags );
           } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
             KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }

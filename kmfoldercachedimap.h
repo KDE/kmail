@@ -304,6 +304,9 @@ public:
   /**  \reimp */
   bool isCloseToQuota() const;
 
+  /** Flags that can be permanently stored on the server. */
+  int permanentFlags() const { return mPermanentFlags; }
+
 protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
@@ -318,6 +321,7 @@ protected slots:
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotCheckUidValidityResult( KMail::FolderJob* job );
+  void slotPermanentFlags( int flags );
   void slotTestAnnotationResult(KIO::Job *job);
   void slotGetAnnotationResult( KIO::Job* );
   void slotMultiUrlGetAnnotationResult( KIO::Job* );
@@ -538,6 +542,8 @@ private:
 
   QValueList<KMFolder*> mToBeDeletedAfterRescue;
   int mRescueCommandCount;
+
+  int mPermanentFlags;
 };
 
 #endif /*kmfoldercachedimap_h*/
