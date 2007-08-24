@@ -173,11 +173,12 @@ FavoriteFolderView::FavoriteFolderView(QWidget * parent) :
   setDragEnabled( true );
   setAcceptDrops( true );
   setRootIsDecorated( false );
-  setSelectionMode( QListView::Single );
+  setSelectionModeExt( KListView::Single );
   setSorting( -1 );
   setShowSortIndicator( false );
 
-  connect( this, SIGNAL(selectionChanged(QListViewItem*)), SLOT(selectionChanged(QListViewItem*)) );
+  connect( this, SIGNAL(selectionChanged()), SLOT(selectionChanged()) );
+  connect( this, SIGNAL(clicked(QListViewItem*)), SLOT(itemClicked(QListViewItem*)) );
   connect( this, SIGNAL(dropped(QDropEvent*,QListViewItem*)), SLOT(dropped(QDropEvent*,QListViewItem*)) );
   connect( this, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint &, int)),
            SLOT(contextMenu(QListViewItem*,const QPoint&)) );
@@ -263,20 +264,28 @@ KMFolderTreeItem* FavoriteFolderView::addFolder(KMFolder * folder, const QString
   return item;
 }
 
-void FavoriteFolderView::selectionChanged( QListViewItem *item )
+void FavoriteFolderView::selectionChanged()
 {
-  if ( !item )
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( selectedItem() );
+  if ( !fti )
     return;
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
   KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
   assert( ft );
   assert( fti );
   ft->showFolder( fti->folder() );
 }
 
+void FavoriteFolderView::itemClicked(QListViewItem * item)
+{
+  if ( item && !item->isSelected() )
+    item->setSelected( true );
+  item->repaint();
+}
+
 void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
 {
   blockSignals( true );
+  bool found = false;
   for ( QListViewItemIterator it( this ); it.current(); ++it ) {
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
     if ( fti->folder() == folder && !fti->isSelected() ) {
@@ -284,12 +293,18 @@ void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
       setCurrentItem( fti );
       ensureItemVisible( fti );
       fti->repaint();
+      found = true;
     } else if ( fti->folder() != folder && fti->isSelected() ) {
       fti->setSelected( false );
       fti->repaint();
     }
   }
   blockSignals( false );
+  if ( !found ) {
+    clearSelection();
+    setSelectionModeExt( KListView::NoSelection );
+    setSelectionModeExt( KListView::Single );
+  }
 }
 
 void FavoriteFolderView::folderRemoved(KMFolder * folder)

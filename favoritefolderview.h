@@ -70,7 +70,8 @@ class FavoriteFolderView : public FolderTreeBase
     static KMFolderTreeItem* findFolderTreeItem( KMFolder* folder );
 
   private slots:
-    void selectionChanged( QListViewItem *item );
+    void selectionChanged();
+    void itemClicked( QListViewItem *item );
     void folderRemoved( KMFolder *folder );
     void dropped( QDropEvent *e, QListViewItem *after );
     void contextMenu( QListViewItem *item, const QPoint &point );
