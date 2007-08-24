@@ -76,7 +76,6 @@ namespace KMail {
 
     void readConfig( const KConfigBase & config );
     void writeConfig( KConfigBase & config ) const;
-    QString toString() const;
 
   protected:
     bool mManagesieveSupported;
