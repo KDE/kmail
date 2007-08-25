@@ -25,6 +25,7 @@ using KMail::MaildirJob;
 #include <klocale.h>
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
+#include <krandom.h>
 
 #include <QDateTime>
 
@@ -45,6 +46,8 @@ using KMail::MaildirJob;
 #ifndef INIT_MSGS
 #define INIT_MSGS 8
 #endif
+
+using KPIMUtils::removeDirAndContentsRecursively;
 
 
 //-----------------------------------------------------------------------------
@@ -984,35 +987,6 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
 bool KMFolderMaildir::removeFile( const QString & filename )
 {
   return removeFile( location(), filename );
-}
-
-#include <sys/types.h>
-#include <dirent.h>
-#include <krandom.h>
-static bool removeDirAndContentsRecursively( const QString & path )
-{
-  bool success = true;
-
-  QDir d;
-  d.setPath( path );
-  d.setFilter( QDir::Files | QDir::Dirs | QDir::Hidden | QDir::NoSymLinks );
-
-  QFileInfoList list = d.entryInfoList();
-  QFileInfo fi;
-
-  Q_FOREACH( fi, list ) {
-    if( fi.isDir() ) {
-      if ( fi.fileName() != "." && fi.fileName() != ".." )
-        success = success && removeDirAndContentsRecursively( fi.absoluteFilePath() );
-    } else {
-      success = success && d.remove( fi.absoluteFilePath() );
-    }
-  }
-
-  if ( success ) {
-    success = success && d.rmdir( path ); // nuke ourselves, we should be empty now
-  }
-  return success;
 }
 
 //-----------------------------------------------------------------------------
