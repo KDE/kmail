@@ -217,11 +217,11 @@ redirect, forward, ...).
 
 \section folders Folders
 
-Files: kmfolder*.{h,cpp} and *job.{h,cpp}
+Files: kmfolder*.{h,cpp}, folderstorage.{h,cpp} and *job.{h,cpp}
 
 Contact Zack Rusin <zack@kde.org> with questions...
 
-The inheritance hierarchy among KMail folder structure looks
+The collaboration among KMail folder classes looks
 as follows :
 
 <pre>               
@@ -230,8 +230,13 @@ as follows :
                     /            \
                KMFolderDir        \
                                   KMFolder
+                                    .
+                                    .
+                                    v
+                               FolderStorage
                                     |
-                                KMFolderIndex
+                                    |
+                               KMFolderIndex
                                     |
                                     |
         ---< actual folder types: KMFolderImap, KMFolderMbox... >--
@@ -243,6 +248,14 @@ common folder properties such as the name and a boolean signifying whether
 the folder is a folder holding mail directly or a KMFolderDir.
 KMFolderNode's often do not have an on-disk representation, they are
 entities existing only within KMail's design. 
+
+KMFolder acts as the runtime representation of a folder with the physical
+storage part being represented by a member of type FolderStorage.
+KMFolder and FolderStorage have many functions with the same names and
+signatures, but there is no inheritance.
+KMFolderIndex contains some common indexing functionality for physical folders.
+Subclasses of KMFolderIndex finally interact directly with physical storage
+or with storage providers over the network.
 
 KMFolderDir is a directory abstraction which holds KMFolderNode's.
 It inherits KMFolderNode and KMFolderNodeList which is a QPtrList<KMFolderNode>.
@@ -266,11 +279,11 @@ accessed via KMKernel ( the "kmkernel" construct ). Those methods are :
    messages" tool). Other email clients call this type of folder
    "virtual folders".
 
-Finally there are the FolderJob classes. These classes allow
-asynchronous operations on KMFolder's. You create
-a Job on the heap, connect to one of its signals and wait for the job
-to finish. Folders serve as FolderJob's factories. For example, to
-retrieve the full message from a folder you do :
+FolderJob classes - These classes allow asynchronous operations on
+KMFolder's. You create a Job on the heap, connect to one of its 
+signals and wait for the job to finish. Folders serve as FolderJob
+factories. For example, to retrieve the full message from a folder
+you do :
 
 \code
 FolderJob *job = folderParent->createJob( aMsg, tGetMessage );
