@@ -7,8 +7,12 @@
 #include "kmaccount.h"
 #include "kmglobal.h"
 
+class KMFolderMbox;
+
 class KMAcctLocal: public KMAccount
 {
+  Q_OBJECT
+
 protected:
   friend class ::AccountManager;
 
@@ -37,8 +41,14 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
+signals:
+  virtual void preProcessExited( bool preProcessSuccess );
+
 private slots:
-  bool preProcess();
+  void preProcess();
+  void continuePreProcess( bool preCommandSuccess );
+  void continueProcess( bool preProcessSuccess );
+
   bool fetchMsg();
   void postProcess();
 
@@ -52,6 +62,8 @@ private:
   int mMsgsFetched;
   KMFolder *mMailFolder;
   QString mStatusMsgStub;
+
+  KMFolderMbox* mMboxStorage; // used during preprocess
 };
 
 #endif /*kmacctlocal_h*/

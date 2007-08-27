@@ -88,7 +88,6 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mInterval(0),
     mExclude(false),
     mCheckingMail(false),
-    mPrecommandSuccess(true),
     mHasInbox(false),
     mMailCheckProgressItem(0)
 {
@@ -350,11 +349,11 @@ void KMAccount::deinstallTimer()
 }
 
 //-----------------------------------------------------------------------------
-bool KMAccount::runPrecommand(const QString &precommand)
+void KMAccount::startPrecommand(const QString &precommand)
 {
   // Run the pre command if there is one
   if ( precommand.isEmpty() )
-    return true;
+    emit precommandExited( true );
 
   KMPrecommand precommandProcess(precommand, this);
 
@@ -365,18 +364,8 @@ bool KMAccount::runPrecommand(const QString &precommand)
           SLOT(precommandExited(bool)));
 
   kdDebug(5006) << "Running precommand " << precommand << endl;
-  if (!precommandProcess.start()) return false;
-
-  kapp->eventLoop()->enterLoop();
-
-  return mPrecommandSuccess;
-}
-
-//-----------------------------------------------------------------------------
-void KMAccount::precommandExited(bool success)
-{
-  mPrecommandSuccess = success;
-  kapp->eventLoop()->exitLoop();
+  if (!precommandProcess.start())
+    emit precommandExited( false );
 }
 
 //-----------------------------------------------------------------------------
