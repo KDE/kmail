@@ -654,16 +654,33 @@ private:
 /**
    RAII for KMFolder::open() / close().
 
-   Usage: const KMFolderCloser closer( folder );
+   Usage: const KMFolderOpener opener( folder );
 */
-class KMFolderCloser {
+class KMFolderOpener
+{
   KMFolder * f;
 public:
-  KMFolderCloser( KMFolder * folder ) : f( folder ) {}
-  ~KMFolderCloser() {
-    if ( f ) f->close();
+  inline KMFolderOpener( KMFolder * folder )
+   : f( folder )
+  {
+    assert( f ); //feel free to put a standard null guard here if it suits you better
+    f->open();
   }
-  KMFolder * folder() const { return f; }
+
+  //if you want the return value of open()
+  inline KMFolderOpener( KMFolder * folder, int * openReturnCode )
+    : f( folder )
+  {
+    assert( f ); //feel free to put a standard null guard here if it suits you better
+    *openReturnCode = f->open();
+  }
+
+  inline ~KMFolderOpener()
+  {
+    f->close();
+  }
+
+  inline KMFolder * folder() const { return f; }
 };
 
 #endif /*kmfolder_h*/

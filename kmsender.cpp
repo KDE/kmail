@@ -161,8 +161,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  kmkernel->outboxFolder()->open();
-  const KMFolderCloser openOutbox( kmkernel->outboxFolder() );
+  const KMFolderOpener openOutbox( kmkernel->outboxFolder() );
 
   aMsg->setStatus(KMMsgStatusQueued);
 
