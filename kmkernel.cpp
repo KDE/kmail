@@ -49,7 +49,6 @@ using KMail::TemplateParser;
 
 #include <kmessagebox.h>
 #include <knotification.h>
-#include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kpassivepopup.h>

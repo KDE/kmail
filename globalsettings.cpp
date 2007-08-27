@@ -23,7 +23,6 @@
 
 
 #include "globalsettings.h"
-#include <kstaticdeleter.h>
 #include <QTimer>
 
 GlobalSettings *GlobalSettings::mSelf = 0;
