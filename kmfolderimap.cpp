@@ -22,8 +22,6 @@
  */
 
 #include "kmfolderimap.h"
-
-
 #include "kmfolder.h"
 #include "kmfoldermbox.h"
 #include "kmfoldertree.h"
@@ -31,7 +29,6 @@
 #include "undostack.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
-#include "kmmsgdict.h"
 #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "imapjob.h"

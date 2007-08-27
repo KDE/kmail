@@ -36,7 +36,6 @@
 #include <QDBusMessage>
 #include <QShortcut>
 #include <QProcess>
-#include <QSignalMapper>
 
 #include <q3accel.h>
 #include <q3stylesheet.h>

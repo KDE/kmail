@@ -28,8 +28,8 @@
  *  your version.
  */
 
-#ifndef bodyiterator_h
-#define bodyiterator_h
+#ifndef BODYVISITOR_H
+#define BODYVISITOR_H
 
 #include <QList>
 #include <QStringList>
@@ -106,4 +106,4 @@ class BodyVisitorHidden: public BodyVisitor
 
 }
 
-#endif
+#endif // BODYVISITOR_H

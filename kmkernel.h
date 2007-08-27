@@ -1,7 +1,7 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 
-#ifndef _KMCONTROL
-#define _KMCONTROL
+#ifndef _KMKERNEL_H
+#define _KMKERNEL_H
 
 #include <QByteArray>
 #include <QLabel>
@@ -467,4 +467,4 @@ private:
   KMail::FolderAdaptor *folderAdaptor;
 };
 
-#endif
+#endif // _KMKERNEL_H

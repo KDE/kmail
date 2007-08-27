@@ -30,8 +30,8 @@
     your version.
 */
 
-#ifndef __KMAIL_IDENTITYLIST_H__
-#define __KMAIL_IDENTITYLIST_H__
+#ifndef __KMAIL_IDENTITYLISTVIEW_H__
+#define __KMAIL_IDENTITYLISTVIEW_H__
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>

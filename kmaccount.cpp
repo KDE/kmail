@@ -294,7 +294,7 @@ int KMAccount::checkInterval() const
 {
   if ( mInterval <= 0 )
     return mInterval;
-  return QMAX( mInterval, GlobalSettings::self()->minimumCheckInterval() );
+  return qMax( mInterval, GlobalSettings::self()->minimumCheckInterval() );
 }
 
 //----------------------------------------------------------------------------

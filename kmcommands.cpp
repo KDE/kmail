@@ -66,7 +66,6 @@
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
-#include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>

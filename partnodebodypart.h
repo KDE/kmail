@@ -31,8 +31,8 @@
     your version.
 */
 
-#ifndef __KMAIL_BODYPART_H_
-#define __KMAIL_BODYPART_H_
+#ifndef __KMAIL_PARTNODEBODYPART_H_
+#define __KMAIL_PARTNODEBODYPART_H_
 
 #include "interfaces/bodypart.h"
 
@@ -71,4 +71,4 @@ namespace KMail {
 
 } // namespace KMail
 
-#endif // __KMAIL_BODYPART_H_
+#endif // __KMAIL_PARTNODEBODYPART_H_

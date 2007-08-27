@@ -26,8 +26,8 @@
 **   your version.
 *******************************************************************************/
 
-#ifndef MAILINGLISTFOLDERPROPERTIESDIALOG_H
-#define MAILINGLISTFOLDERPROPERTIESDIALOG_H
+#ifndef MAILINGLISTPROPERTIESDIALOG_H
+#define MAILINGLISTPROPERTIESDIALOG_H
 
 #include "mailinglist-magic.h"
 #include <kdialog.h>
@@ -84,5 +84,4 @@ private:
 
 } // End of namespace KMail
 
-
-#endif // MAILINGLISTFOLDERPROPERTIESDIALOG_H
+#endif // MAILINGLISTPROPERTIESDIALOG_H

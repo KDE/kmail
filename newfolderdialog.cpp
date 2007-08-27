@@ -51,7 +51,6 @@
 #include "kmfoldercachedimap.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
-#include "folderstorage.h"
 #include "kmailicalifaceimpl.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"

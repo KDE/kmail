@@ -21,7 +21,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-
 #include "imapaccountbase.h"
 
 using KMail::SieveConfig;
@@ -33,7 +32,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
-#include "kmmainwin.h"
 #include "kmmsgpart.h"
 #include "acljobs.h"
 #include "kmfoldercachedimap.h"

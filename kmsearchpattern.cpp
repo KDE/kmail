@@ -24,7 +24,6 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
-#include "kmmsgdict.h"
 #include "kmfolder.h"
 
 #include <kpimutils/email.h>

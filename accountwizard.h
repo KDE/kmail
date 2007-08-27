@@ -26,8 +26,8 @@
 **   your version.
 ******************************************************************************/
 
-#ifndef KMWIZARD_H
-#define KMWIZARD_H
+#ifndef ACCOUNTWIZARD_H
+#define ACCOUNTWIZARD_H
 
 #include <KAssistantDialog>
 
@@ -143,4 +143,4 @@ class AccountWizard : public KAssistantDialog
     KPIM::ServerTest *mServerTest;
 };
 
-#endif
+#endif // ACCOUNTWIZARD_H

@@ -1,6 +1,6 @@
 // -*- c++ -*-
-#ifndef KMAcctExpPop_h
-#define KMAcctExpPop_h
+#ifndef POPACCOUNT_H
+#define POPACCOUNT_H
 
 #include "networkaccount.h"
 
@@ -236,6 +236,4 @@ protected slots:
 
 } // namespace KMail
 
-
-
-#endif /*KMAcctExpPop_h*/
+#endif // POPACCOUNT_H

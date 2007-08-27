@@ -42,7 +42,6 @@
 #include <QStackedWidget>
 #include <QString>
 #include <QObject>
-#include <QObject>
 
 #include <assert.h>
 
