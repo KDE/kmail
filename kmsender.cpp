@@ -161,11 +161,12 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  const KMFolderOpener openOutbox( kmkernel->outboxFolder() );
+  KMFolder * const outbox = kmkernel->outboxFolder();
+  const KMFolderOpener openOutbox( outbox );
 
   aMsg->setStatus(KMMsgStatusQueued);
 
-  if ( const int err = openOutbox.folder()->addMsg(aMsg) ) {
+  if ( const int err = outbox->addMsg(aMsg) ) {
     Q_UNUSED( err );
     KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
     return false;
@@ -182,10 +183,10 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
    * in this branch.
    * Note that the unencrypted mail will be lost if the mail remains in
    * the outbox across a restart anyhow, but that never worked, afaikt. */
-  const int idx = openOutbox.folder()->count() - 1;
+  const int idx = outbox->count() - 1;
   KMMessage * const unencryptedMsg = aMsg->unencryptedMsg();
-  openOutbox.folder()->unGetMsg( idx );
-  KMMessage * const tempMsg = openOutbox.folder()->getMsg( idx );
+  outbox->unGetMsg( idx );
+  KMMessage * const tempMsg = outbox->getMsg( idx );
   tempMsg->setUnencryptedMsg( unencryptedMsg );
 
   if ( !sendNow || mSendInProgress )
@@ -858,7 +859,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
     int index = -1;
     KMMsgDict::instance()->getLocation(msn, &folder, &index);
     if (folder && index != -1) {
-      folder->open();
+      KMFolderOpener openFolder(folder);
       if ( status == KMMsgStatusDeleted ) {
         // Move the message to the trash folder
         KMDeleteMsgCommand *cmd =
@@ -867,7 +868,6 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
       } else {
         folder->setStatus(index, status);
       }
-      folder->close();
     } else {
       kdWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
     }

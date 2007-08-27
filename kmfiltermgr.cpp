@@ -237,9 +237,7 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
       return 1;
     }
-    bool opened = folder->isOpened();
-    if ( !opened )
-      folder->open();
+    KMFolderOpener openFolder(folder);
     KMMsgBase *msgBase = folder->getMsgBase( idx );
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg( idx );
@@ -247,15 +245,11 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     if ( !msg || !beginFiltering( msg ) ) {
       if ( unGet )
         folder->unGetMsg( idx );
-      if ( !opened )
-        folder->close();
       return 1;
     }
     if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
       if ( unGet )
         folder->unGetMsg( idx );
-      if ( !opened )
-        folder->close();
       return 2;
     }
 
@@ -270,8 +264,6 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     }
     if ( unGet )
       folder->unGetMsg( idx );
-    if ( !opened )
-      folder->close();
   } else {
     result = 1;
   }

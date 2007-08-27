@@ -1139,7 +1139,7 @@ void FolderStorage::slotProcessNextSearchBatch()
       matchingSerNums.append( serNum );
   }
   mCurrentSearchedMsg = end;
-  bool complete = ( end == count() ) ? true : false;
+  bool complete = ( end >= count() );
   emit searchResult( folder(), matchingSerNums, mSearchPattern, complete );
   if ( !complete )
     QTimer::singleShot( 0, this, SLOT(slotProcessNextSearchBatch()) );

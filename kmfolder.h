@@ -656,6 +656,9 @@ private:
 
    Usage: const KMFolderOpener opener( folder );
 */
+/* This class is kept very lightweight to encourage its use. Any more comfort
+   would need another data element and slightly more code, so consider carefully
+   if you want that. */
 class KMFolderOpener
 {
   KMFolder * f;
@@ -664,7 +667,8 @@ public:
    : f( folder )
   {
     assert( f ); //feel free to put a standard null guard here if it suits you better
-    f->open();
+    if (f->open())
+      f = 0;
   }
 
   //if you want the return value of open()
@@ -672,15 +676,17 @@ public:
     : f( folder )
   {
     assert( f ); //feel free to put a standard null guard here if it suits you better
-    *openReturnCode = f->open();
+    int openRc = f->open();
+    *openReturnCode = openRc;
+    if (openRc)
+      f = 0;
   }
 
   inline ~KMFolderOpener()
   {
-    f->close();
+    if (f)
+      f->close();
   }
-
-  inline KMFolder * folder() const { return f; }
 };
 
 #endif /*kmfolder_h*/
