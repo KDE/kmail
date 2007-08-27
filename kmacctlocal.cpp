@@ -32,7 +32,8 @@ using KPIM::ProgressManager;
 KMAcctLocal::KMAcctLocal(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMAccount(aOwner, aAccountName, id), mHasNewMail( false ),
   mAddedOk( true ), mNumMsgs( 0 ),
-  mMsgsFetched( 0 ), mMailFolder( 0 )
+  mMsgsFetched( 0 ), mMailFolder( 0 ),
+  mMboxStorage( 0 )
 {
   mLock = procmail_lockfile;
 }
@@ -75,9 +76,14 @@ void KMAcctLocal::processNewMail(bool)
 {
   mHasNewMail = false;
 
-  if ( !preProcess() ) {
+  connect( this, SIGNAL(preProcessExited(bool)), SLOT(continueProcess()) );
+  preProcess();
+}
+
+void KMAcctLocal::continueProcess( bool preProcessSuccess )
+{
+  if ( !preProcessSuccess )
     return;
-  }
 
   QTime t;
   t.start();
@@ -98,29 +104,29 @@ void KMAcctLocal::processNewMail(bool)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctLocal::preProcess()
+void KMAcctLocal::preProcess()
 {
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, 0 );
       checkDone( mHasNewMail, CheckOK );
-      return false;
+      emit preProcessExited( false );
     }
   }
 
   mMailFolder = new KMFolder( 0, location(), KMFolderTypeMbox,
                               false /* no index */, false /* don't export sernums */ );
-  KMFolderMbox* mboxStorage =
+  mMboxStorage =
     static_cast<KMFolderMbox*>(mMailFolder->storage());
-  mboxStorage->setLockType( mLock );
+  mMboxStorage->setLockType( mLock );
   if ( mLock == procmail_lockfile)
-    mboxStorage->setProcmailLockFileName( mProcmailLockFileName );
+    mMboxStorage->setProcmailLockFileName( mProcmailLockFileName );
 
   if (!mFolder) {
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
-    return false;
+    emit preProcessExited( false );
   }
 
   //BroadcastStatus::instance()->reset();
@@ -138,14 +144,20 @@ bool KMAcctLocal::preProcess()
     false ); // no tls/ssl
 
   // run the precommand
-  if (!runPrecommand(precommand()))
+  connect( this, SIGNAL(precommandExited(bool)), SLOT(continuePreProcess(bool)) );
+  startPrecommand(precommand());
+}
+
+void KMAcctLocal::continuePreProcess( bool precommandSuccess )
+{
+  if ( !precommandSuccess )
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
-    return false;
+    emit preProcessExited( false );
   }
-  
+
   const int rc = mMailFolder->open("acctlocalMail");
   if ( rc != 0 ) {
     QString aStr;
@@ -156,17 +168,17 @@ bool KMAcctLocal::preProcess()
       << mMailFolder->name() << endl;
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
-    return false;
+    emit preProcessExited( false );
   }
 
-  if (!mboxStorage->isLocked()) {
+  if (!mMboxStorage->isLocked()) {
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mMailFolder->close("acctlocalMail");
     checkDone( mHasNewMail, CheckError );
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mMailFolder->location() );
     BroadcastStatus::instance()->setStatusMsg( errMsg );
-    return false;
+    emit preProcessExited( false );
   }
 
   mFolder->open("acctlocalFold");
@@ -180,7 +192,7 @@ bool KMAcctLocal::preProcess()
     .arg(mMailFolder->location()).arg( mNumMsgs );
 
   //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
-  return true;
+  emit preProcessExited( true );
 }
 
 
@@ -320,3 +332,5 @@ void KMAcctLocal::setProcmailLockFileName(const QString& s)
 {
     mProcmailLockFileName = s;
 }
+
+#include "kmacctlocal.moc"

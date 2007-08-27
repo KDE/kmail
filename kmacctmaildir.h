@@ -29,6 +29,9 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
+private slots:
+  void continueProcessNewMail( bool precommandSuccess );
+
 protected:
   QString mLocation;
   bool hasNewMail;

@@ -79,7 +79,6 @@ void KMAcctMaildir::pseudoAssign( const KMAccount * a )
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::processNewMail(bool)
 {
-  QTime t;
   hasNewMail = false;
 
   if ( precommand().isEmpty() ) {
@@ -90,15 +89,6 @@ void KMAcctMaildir::processNewMail(bool)
       return;
     }
   }
-
-  KMFolder mailFolder(0, location(), KMFolderTypeMaildir,
-                              false /* no index */, false /* don't export sernums */);
-
-  long num = 0;
-  long i;
-  int rc;
-  KMMessage* msg;
-  bool addedOk;
 
   if (!mFolder) {
     checkDone( hasNewMail, CheckError );
@@ -119,7 +109,23 @@ void KMAcctMaildir::processNewMail(bool)
     false ); // no tls/ssl
 
   // run the precommand
-  if (!runPrecommand(precommand()))
+  connect( this, SIGNAL(precommandExited(bool)), SLOT(continueProcessNewMail(bool)) );
+  startPrecommand( precommand() );
+}
+
+void KMAcctMaildir::continueProcessNewMail( bool precommandSuccess )
+{
+  QTime t;
+  long num = 0;
+  long i;
+  int rc;
+  KMMessage* msg;
+  bool addedOk;
+
+  KMFolder mailFolder(0, location(), KMFolderTypeMaildir,
+                            false /* no index */, false /* don't export sernums */);
+
+  if ( !precommandSuccess )
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     checkDone( hasNewMail, CheckError );

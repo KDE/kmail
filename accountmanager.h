@@ -97,8 +97,6 @@ public slots:
   void singleInvalidateIMAPFolders( KMAccount * );
 
   void intCheckMail( int, bool interactive = true );
-  /** Call processNextCheck with the false argument. **/
-  void slotProcessNextCheck();
   void processNextCheck( bool newMail );
 
   /** this slot increases the count of new mails to show a total number
