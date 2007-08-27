@@ -407,7 +407,7 @@ void SearchWindow::updStatus(void)
         folderName = search->currentFolder();
     }
 
-    if (mFolder && mFolder->search() && !mFolder->search()->running()) {
+    if (search && !search->running()) {
         procMsg = i18n("%n message searched", "%n messages searched",
                        numProcessed);
         if(!mStopped) {
