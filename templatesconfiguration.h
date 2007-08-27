@@ -31,7 +31,7 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
 
   public:
 
-    TemplatesConfiguration( QWidget *parent = 0, const char *name = 0 );
+    explicit TemplatesConfiguration( QWidget *parent = 0, const char *name = 0 );
 
     void loadFromGlobal();
     void saveToGlobal();

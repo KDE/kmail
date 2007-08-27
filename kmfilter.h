@@ -68,7 +68,7 @@ public:
   /** Constructor that initializes from given config group.
     * Filters are stored one by one in config groups, i.e.
     * one filter, one group. */
-  KMFilter( KConfigGroup & aConfig, bool popFilter = false);
+  explicit KMFilter( KConfigGroup & aConfig, bool popFilter = false);
 
   /** Copy constructor. Constructs a deep copy of @p aFilter. */
   KMFilter( const KMFilter & other );

@@ -57,7 +57,7 @@ class ImapJob : public FolderJob
   friend class ::KMAcctImap;
 
 public:
-  ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
+  explicit ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
            const QString &partSpecifier = QString(), const AttachmentStrategy *as = 0 );
   ImapJob( QList<KMMessage*>& msgList, const QString &sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );

@@ -76,7 +76,7 @@ class KMFilterListBox : public QGroupBox
   Q_OBJECT
 public:
   /** Constuctor. */
-  KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
+  explicit KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
 
   /** Destructor. */
   ~KMFilterListBox();
@@ -196,7 +196,7 @@ class KMFilterActionWidget : public KHBox
 public:
   /** Constructor. Creates a filter action widget with no type
       selected. */
-  KMFilterActionWidget( QWidget* parent=0, const char* name=0 );
+  explicit KMFilterActionWidget( QWidget* parent=0, const char* name=0 );
 
   /** Destructor. Clears mActionList. */
   ~KMFilterActionWidget();
@@ -230,7 +230,7 @@ class KMPopFilterActionWidget : public QGroupBox
 {
   Q_OBJECT
 public:
-  KMPopFilterActionWidget( const QString &title, QWidget* parent=0, const char* name=0 );
+  explicit KMPopFilterActionWidget( const QString &title, QWidget* parent=0, const char* name=0 );
   void setAction( KMPopFilterAction aAction );
   KMPopFilterAction action();
 
@@ -254,7 +254,7 @@ class KMFilterActionWidgetLister : public KWidgetLister
 {
   Q_OBJECT
 public:
-  KMFilterActionWidgetLister( QWidget *parent=0, const char* name=0 );
+  explicit KMFilterActionWidgetLister( QWidget *parent=0, const char* name=0 );
 
   virtual ~KMFilterActionWidgetLister();
 
@@ -340,7 +340,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg( QWidget* parent=0, bool popFilter=false,
+  explicit KMFilterDlg( QWidget* parent=0, bool popFilter=false,
                bool createDummyFilter=true );
 
   /** Called from KMFilterMgr. Creates a new filter and presets

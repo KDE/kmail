@@ -47,7 +47,7 @@ class Recipient
 
     enum Type { To, Cc, Bcc, Undefined };
 
-    Recipient( const QString &email = QString(), Type type = To );
+    explicit Recipient( const QString &email = QString(), Type type = To );
 
     void setType( Type );
     Type type() const;

@@ -31,7 +31,7 @@ class TemplatesInsertCommand : public QPushButton
   Q_OBJECT
 
   public:
-    TemplatesInsertCommand( QWidget *parent, const char *name = 0 );
+    explicit TemplatesInsertCommand( QWidget *parent, const char *name = 0 );
     ~TemplatesInsertCommand();
 
   public:

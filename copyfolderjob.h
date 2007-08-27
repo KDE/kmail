@@ -56,7 +56,7 @@ public:
    * @param storage of the folder that should be copied
    * @param newParent the target parent folder
    */
-  CopyFolderJob( FolderStorage* const storage, KMFolderDir* const newParent = 0 );
+  explicit CopyFolderJob( FolderStorage* const storage, KMFolderDir* const newParent = 0 );
 
   virtual ~CopyFolderJob();
 

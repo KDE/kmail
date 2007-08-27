@@ -113,8 +113,8 @@ class KMFolderTree : public KFolderTree
   Q_OBJECT
 
 public:
-  KMFolderTree( KMMainWidget *mainWidget, QWidget *parent=0,
-		const char *name=0 );
+  explicit KMFolderTree( KMMainWidget *mainWidget, QWidget *parent=0,
+			 const char *name=0 );
 
   /** Save config options */
   void writeConfig();

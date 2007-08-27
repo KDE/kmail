@@ -109,7 +109,7 @@ class KMComposeWin : public KMail::Composer
   friend class ::MessageComposer;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    KMComposeWin( KMMessage *msg=0, uint identity=0 );
+    explicit KMComposeWin( KMMessage *msg=0, uint identity=0 );
     ~KMComposeWin();
 
   public:

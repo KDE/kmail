@@ -18,7 +18,7 @@ class KMFolderMgr: public QObject
   Q_OBJECT
 
 public:
-  KMFolderMgr(const QString& basePath, KMFolderDirType dirType = KMStandardDir);
+  explicit KMFolderMgr(const QString& basePath, KMFolderDirType dirType = KMStandardDir);
   ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */

@@ -157,7 +157,7 @@ class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoComposeCommand( const KUrl &url, KMMessage *msg=0 );
+  explicit KMMailtoComposeCommand( const KUrl &url, KMMessage *msg=0 );
 
 private:
   virtual Result execute();
@@ -240,7 +240,7 @@ class KMAIL_EXPORT KMUrlCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget = 0 );
+  explicit KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget = 0 );
 
 private:
   virtual Result execute();
@@ -350,8 +350,8 @@ class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KUrl & url = KUrl(),
-                    const QString & encoding = QString() );
+  explicit KMOpenMsgCommand( QWidget *parent, const KUrl & url = KUrl(),
+            		     const QString & encoding = QString() );
 
 private:
   virtual Result execute();
@@ -823,7 +823,7 @@ class KMAIL_EXPORT KMResendMessageCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMResendMessageCommand( QWidget *parent, KMMessage *msg=0 );
+  explicit KMResendMessageCommand( QWidget *parent, KMMessage *msg=0 );
 
 private:
   virtual Result execute();
@@ -894,7 +894,7 @@ class KMAIL_EXPORT KMIMChatCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMIMChatCommand( const KUrl &url, KMMessage *msg=0 );
+  explicit KMIMChatCommand( const KUrl &url, KMMessage *msg=0 );
 
 private:
   /**

@@ -87,7 +87,7 @@ class KMAIL_EXPORT KMKernel : public QObject
   Q_OBJECT
 
 public:
-  KMKernel (QObject *parent=0, const char *name=0);
+  explicit KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
 
   /** dcop callable stuff */

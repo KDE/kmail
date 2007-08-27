@@ -45,8 +45,8 @@ class K3Process;
 class KMEdit : public KEdit {
   Q_OBJECT
 public:
-  KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
-         K3SpellConfig* spellConfig = 0,
+  explicit KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
+		  K3SpellConfig* spellConfig = 0,
 	 const char *name=0);
   ~KMEdit();
 

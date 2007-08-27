@@ -57,12 +57,12 @@ public:
   };
 
   /** Constructor. Populates the list with @p strings. */
-  SimpleStringListEditor( QWidget * parent=0,
-                          ButtonCode buttons=Unsorted,
-                          const QString & addLabel=QString(),
-                          const QString & removeLabel=QString(),
-                          const QString & modifyLabel=QString(),
-                          const QString & addDialogLabel=QString() );
+  explicit SimpleStringListEditor( QWidget * parent=0,
+                    		   ButtonCode buttons=Unsorted,
+                		   const QString & addLabel=QString(),
+                		   const QString & removeLabel=QString(),
+                		   const QString & modifyLabel=QString(),
+                		   const QString & addDialogLabel=QString() );
 
   /** Sets the list of strings displayed to @p strings */
   void setStringList( const QStringList & strings );

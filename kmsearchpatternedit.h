@@ -54,7 +54,7 @@ class KMSearchRuleWidget : public QWidget
 public:
   /** Constructor. You can give a KMSearchRule as parameter, which will
       be used to initialize the widget. */
-  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, bool headersOnly = false, bool absoluteDates = false );
+  explicit KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, bool headersOnly = false, bool absoluteDates = false );
 
   enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
 
@@ -119,7 +119,7 @@ class KMSearchRuleWidgetLister : public KWidgetLister
   friend class ::KMSearchPatternEdit;
 
 public:
-  KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
+  explicit KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
   virtual ~KMSearchRuleWidgetLister();
 
@@ -178,11 +178,11 @@ class KMSearchPatternEdit : public QGroupBox  {
 public:
   /** Constructor. The parent and name parameters are passed to the underlying
       QGroupBox, as usual. */
-  KMSearchPatternEdit(QWidget *parent=0, bool headersOnly = false,
+  explicit KMSearchPatternEdit(QWidget *parent=0, bool headersOnly = false,
                       bool absoluteDates = false);
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
-  KMSearchPatternEdit(const QString & title, QWidget *parent=0,
+  explicit KMSearchPatternEdit(const QString & title, QWidget *parent=0,
                       bool headersOnly = false, bool absoluteDates = false);
   ~KMSearchPatternEdit();
 

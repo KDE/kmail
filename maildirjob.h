@@ -44,7 +44,7 @@ class MaildirJob : public FolderJob
 {
   Q_OBJECT
 public:
-  MaildirJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
+  explicit MaildirJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
   MaildirJob( QList<KMMessage*>& msgList, const QString& sets,
               JobType jt = tGetMessage, KMFolder *folder = 0 );
   virtual ~MaildirJob();

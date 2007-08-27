@@ -52,7 +52,7 @@ class NewFolderDialog : public KDialog
   Q_OBJECT
 
   public:
-    NewFolderDialog( QWidget* parent = 0, KMFolder *folder = 0 );
+    explicit NewFolderDialog( QWidget* parent = 0, KMFolder *folder = 0 );
     ~NewFolderDialog() {}
 
     QLabel* mNameLabel;

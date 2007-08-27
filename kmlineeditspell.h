@@ -25,13 +25,12 @@
 #include <QMenu>
 #include <QDropEvent>
 
-
 class KMLineEdit : public KPIM::AddresseeLineEdit
 {
     Q_OBJECT
 public:
-    KMLineEdit(bool useCompletion, QWidget *parent = 0,
-               const char *name = 0);
+    explicit KMLineEdit(bool useCompletion, QWidget *parent = 0,
+    			const char *name = 0);
 
 signals:
     void focusUp();
@@ -58,8 +57,8 @@ class KMLineEditSpell : public KMLineEdit
 {
     Q_OBJECT
 public:
-    KMLineEditSpell(bool useCompletion, QWidget *parent = 0,
-               const char *name = 0);
+    explicit KMLineEditSpell(bool useCompletion, QWidget *parent = 0,
+    			     const char *name = 0);
     void highLightWord( unsigned int length, unsigned int pos );
     void spellCheckDone( const QString &s );
     void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);

@@ -51,10 +51,10 @@ namespace KMail {
 
   class ProcessResult {
   public:
-    ProcessResult( KMMsgSignatureState  inlineSignatureState  = KMMsgNotSigned,
-                   KMMsgEncryptionState inlineEncryptionState = KMMsgNotEncrypted,
-                   bool neverDisplayInline = false,
-                   bool isImage = false )
+    explicit ProcessResult( KMMsgSignatureState  inlineSignatureState  = KMMsgNotSigned,
+            		    KMMsgEncryptionState inlineEncryptionState = KMMsgNotEncrypted,
+    			    bool neverDisplayInline = false,
+    			    bool isImage = false )
       : mInlineSignatureState( inlineSignatureState ),
         mInlineEncryptionState( inlineEncryptionState ),
         mNeverDisplayInline( neverDisplayInline ),
@@ -98,12 +98,12 @@ namespace KMail {
     /** Internal. Copies the context of @p other, but not it's rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
-    ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
-                      bool showOneMimePart=false, bool keepEncryptions=false,
-                      bool includeSignatures=true,
-                      const KMail::AttachmentStrategy * attachmentStrategy=0,
-                      KMail::HtmlWriter * htmlWriter=0,
-                      KMail::CSSHelper * cssHelper=0 );
+    explicit ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
+        		       bool showOneMimePart=false, bool keepEncryptions=false,
+        		       bool includeSignatures=true,
+        		       const KMail::AttachmentStrategy * attachmentStrategy=0,
+            		       KMail::HtmlWriter * htmlWriter=0,
+        		       KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     QByteArray rawReplyString() const { return mRawReplyString; }

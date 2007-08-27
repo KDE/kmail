@@ -42,7 +42,7 @@ class KMMsgPartDialog: public KDialog
   Q_OBJECT
 
 public:
-  KMMsgPartDialog( const QString & caption=QString(),
+  explicit KMMsgPartDialog( const QString & caption=QString(),
 		   QWidget * parent=0 );
   virtual ~KMMsgPartDialog();
 
@@ -141,7 +141,7 @@ protected:
 class KMMsgPartDialogCompat : public KMMsgPartDialog {
   Q_OBJECT
 public:
-  KMMsgPartDialogCompat( const char * caption=0, bool=false );
+  explicit KMMsgPartDialogCompat( const char * caption=0, bool=false );
   virtual ~KMMsgPartDialogCompat();
 
   /** Display information about this message part. */

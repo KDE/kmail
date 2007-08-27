@@ -68,7 +68,7 @@ class FolderDialogTab : public QWidget
 {
   Q_OBJECT
 public:
-   FolderDialogTab( QWidget *parent=0, const char* name=0 )
+   explicit FolderDialogTab( QWidget *parent=0, const char* name=0 )
      : QWidget( parent ) { setObjectName( name ); }
 
   virtual void load() = 0;

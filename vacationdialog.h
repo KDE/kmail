@@ -38,7 +38,7 @@ namespace KMail {
   class VacationDialog : public KDialog {
     Q_OBJECT
   public:
-    VacationDialog( const QString & caption, QWidget * parent=0,
+    explicit VacationDialog( const QString & caption, QWidget * parent=0,
 		    const char * name=0, bool modal=true );
     virtual ~VacationDialog();
 

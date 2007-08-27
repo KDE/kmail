@@ -71,10 +71,10 @@ class partNode
 public:
     static partNode * fromMessage( const KMMessage * msg );
 
-    partNode( DwBodyPart* dwPart,
-              int explicitType    = DwMime::kTypeUnknown,
-              int explicitSubType = DwMime::kSubtypeUnknown,
-	      bool deleteDwBodyPart = false );
+    explicit partNode( DwBodyPart* dwPart,
+		       int explicitType    = DwMime::kTypeUnknown,
+		       int explicitSubType = DwMime::kSubtypeUnknown,
+		       bool deleteDwBodyPart = false );
 
     partNode( bool deleteDwBodyPart,
               DwBodyPart* dwPart );

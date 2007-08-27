@@ -57,7 +57,7 @@ namespace KMail {
         @param immediate True, if the Send Now button should be default
                          or false if the Queue button should be default
       */
-      RedirectDialog( QWidget *parent=0, bool immediate=true );
+      explicit RedirectDialog( QWidget *parent=0, bool immediate=true );
 
       /** Return the addresses for the redirection */
       QString to() { return mResentTo; };

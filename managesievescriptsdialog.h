@@ -17,7 +17,7 @@ class SieveEditor;
 class ManageSieveScriptsDialog : public KDialog {
   Q_OBJECT
 public:
-  ManageSieveScriptsDialog( QWidget * parent=0, const char * name=0 );
+  explicit ManageSieveScriptsDialog( QWidget * parent=0, const char * name=0 );
   ~ManageSieveScriptsDialog();
 
 private slots:
