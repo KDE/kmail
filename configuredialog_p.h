@@ -22,7 +22,9 @@
 #include <QHash>
 
 #include <kdialog.h>
+#define KDE3_SUPPORT
 #include <kcmodule.h>
+#undef KDE3_SUPPORT
 #include <klocale.h>
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
