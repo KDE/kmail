@@ -13,7 +13,7 @@
 #include <Q3MemArray>
 
 #include <kdebug.h>
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -142,7 +142,7 @@ public:
 };
 
 
-static KStaticDeleter<KMMsgDict> msgDict_sd;
+static K3StaticDeleter<KMMsgDict> msgDict_sd;
 KMMsgDict * KMMsgDict::m_self = 0;
 
 //-----------------------------------------------------------------------------

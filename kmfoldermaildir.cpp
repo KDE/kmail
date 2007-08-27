@@ -23,7 +23,7 @@ using KMail::MaildirJob;
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <kmessagebox.h>
 #include <krandom.h>
 
@@ -1007,7 +1007,7 @@ int KMFolderMaildir::removeContents()
 }
 
 static QRegExp *suffix_regex = 0;
-static KStaticDeleter<QRegExp> suffix_regex_sd;
+static K3StaticDeleter<QRegExp> suffix_regex_sd;
 
 //-----------------------------------------------------------------------------
 // static

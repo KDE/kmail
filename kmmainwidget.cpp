@@ -65,7 +65,7 @@
 #include <ktoolinvocation.h>
 #include <kxmlguifactory.h>
 #include <kstatusbar.h>
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <kaction.h>
 #include <kvbox.h>
 
@@ -150,7 +150,7 @@ using KMail::TemplateParser;
 #include "kmmainwidget.moc"
 
 QList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
-static KStaticDeleter<QList<KMMainWidget*> > mwlsd;
+static K3StaticDeleter<QList<KMMainWidget*> > mwlsd;
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,

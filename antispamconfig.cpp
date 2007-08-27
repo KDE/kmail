@@ -35,7 +35,7 @@
 
 #include <kascii.h>
 
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <QStringList>
@@ -43,7 +43,7 @@
 using namespace KMail;
 
 AntiSpamConfig * AntiSpamConfig::sSelf = 0;
-static KStaticDeleter<AntiSpamConfig> antispamconfig_sd;
+static K3StaticDeleter<AntiSpamConfig> antispamconfig_sd;
 
 AntiSpamConfig * AntiSpamConfig::instance() {
   if ( !sSelf ) {

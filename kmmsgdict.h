@@ -49,7 +49,7 @@ class FolderStorage;
  */
 class KMMsgDict
 {
-  template<class> friend class KStaticDeleter;
+  template<class> friend class K3StaticDeleter;
   public:
     /** Access the globally unique MessageDict */
     static const KMMsgDict* instance();
