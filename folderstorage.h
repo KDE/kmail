@@ -251,18 +251,19 @@ public:
 				 int idx);
 
   /** Open folder for access.
-    Does nothing if the folder is already opened. To reopen a folder
-    call close() first.
+    open() and close() use reference counting.
     Returns zero on success and an error code equal to the c-library
-    fopen call otherwise (errno). */
+    fopen call otherwise (errno).
+    @see KMFolderOpener */
   virtual int open() = 0;
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
   virtual int canAccess() = 0;
 
-  /** Close folder. If force is TRUE the files are closed even if
-    others still use it (e.g. other mail reader windows). */
+  /** Close folder. open() and close() use reference counting.
+    If @p force is TRUE the files are closed regardless of reference count,
+    and the reference count will be set to zero. */
   void close(bool force=false);
   virtual void reallyDoClose() = 0;
 
@@ -273,7 +274,7 @@ public:
   /** fsync buffers to disk */
   virtual void sync() = 0;
 
-  /** Test if folder is opened. */
+  /** Test if folder is opened, i.e. its reference count is greater than zero. */
   bool isOpened() const { return (mOpenCount>0); }
 
   /** Mark all new messages as unread. */
