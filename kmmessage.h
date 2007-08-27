@@ -125,8 +125,8 @@ public:
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
       unencrypted form that were sent in encrypted form.
-      NOTE: Target of this pointer becomes property of KMMessage,
-            and will be deleted in the d'tor.
+      NOTE: Ownership of @p unencrypted transfers to this KMMessage,
+            and it will be deleted in the d'tor.
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
 
