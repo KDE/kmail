@@ -2262,7 +2262,7 @@ Kleo::CryptoMessageFormat KMComposeWin::cryptoMessageFormat() const {
 bool KMComposeWin::encryptToSelf() const {
 //  return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
   KConfigGroup group( KMKernel::config(), "Composer" );
-  return group.readEntry( "crypto-encrypt-to-self", true );
+  return group.readBoolEntry( "crypto-encrypt-to-self", true );
 }
 
 bool KMComposeWin::queryExit ()
@@ -3676,7 +3676,7 @@ void KMComposeWin::slotPaste()
                     "or append the referenced file as an attachment.");
             const QString caption = i18n("Paste as text or attachment?");
 
-            int id = KMessageBox::questionYesNoCancel( this, text, caption, 
+            int id = KMessageBox::questionYesNoCancel( this, text, caption,
                     KGuiItem( asText ), KGuiItem( asAttachment) );
             switch ( id) {
               case KMessageBox::Yes:
@@ -4044,7 +4044,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   }
 
   if (neverEncrypt && saveIn != KMComposeWin::None ) {
-      // we can't use the state of the mail itself, to remember the 
+      // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
     mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
     mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );

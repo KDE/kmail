@@ -170,7 +170,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
     emit preProcessExited( false );
   }
 
-  if (!mMBoxStorage->isLocked()) {
+  if (!mMboxStorage->isLocked()) {
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mMailFolder->close();
     checkDone( mHasNewMail, CheckError );
