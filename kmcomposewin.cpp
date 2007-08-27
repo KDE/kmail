@@ -2279,7 +2279,9 @@ Kleo::CryptoMessageFormat KMComposeWin::cryptoMessageFormat() const
 
 bool KMComposeWin::encryptToSelf() const
 {
-  return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
+//  return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
+  KConfigGroup group( KMKernel::config(), "Composer" );
+  return group.readEntry( "crypto-encrypt-to-self", true );
 }
 
 bool KMComposeWin::queryExit ()
