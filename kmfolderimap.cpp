@@ -1440,7 +1440,7 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
   for ( int i = 0; i < numFlags; ++i ) {
     if ( ( (supportedFlags & imapFlagMap[i].imapFlag) == 0 || (supportedFlags & 64) == 0 )
          && !imapFlagMap[i].standardFlag ) {
-      kdDebug(5006) << k_funcinfo << "Flag " << imapFlagMap[i].imapFlag << " not supported by the server!" << endl;
+      //kdDebug(5006) << k_funcinfo << "Flag " << imapFlagMap[i].imapFlag << " not supported by the server!" << endl;
       continue;
     }
     if ( ((flags & imapFlagMap[i].imapFlag) > 0) != ((oldStatus & imapFlagMap[i].kmFlag) > 0) ) {
