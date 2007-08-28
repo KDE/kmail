@@ -78,37 +78,21 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
-  connect( mKeySeqWidget, SIGNAL( keySequenceChanged(const QKeySequence &) ),
-           this, SLOT( slotCapturedShortcut( const QKeySequence& ) ) );
+  connect( mKeySeqWidget, SIGNAL( validationHook ( const QKeySequence & ) ),
+           this, SLOT( slotValidationHook ( const QKeySequence & ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-  mKeySeqWidget->setKeySequence( folder->shortcut().primary() );
+  mKeySeqWidget->setKeySequence( folder->shortcut().primary(),
+                                 KKeySequenceWidget::NoValidate );
 }
 
 FolderShortcutDialog::~FolderShortcutDialog()
 {
 }
 
-#ifdef __GNUC__
-#warning FIXME: Shortcut Handling broken
-// Shortcut handling is broken for custom templates, tags and filters.
-// The code assumes that the key sequence widget's shortcut is NOT already
-// set when this function is called, which is no longer the case with the
-// new KKeySequenceWidget.
-// This needs better support from KKeySequenceWidget. --tmcguire
-#endif
-void FolderShortcutDialog::slotCapturedShortcut( const QKeySequence& sc )
+void FolderShortcutDialog::slotValidationHook( const QKeySequence &newSeq )
 {
-  if ( sc.isEmpty() ) {
-    mKeySeqWidget->setKeySequence( sc );
-  } else {
-    if( !mMainWidget->shortcutIsValid( sc ) ) {
-      QString msg( i18n( "The selected shortcut is already used, "
-            "please select a different one." ) );
-      KMessageBox::sorry( mMainWidget, msg );
-    } else {
-      mKeySeqWidget->setKeySequence( sc );
-    }
-  }
+    if( !mMainWidget->shortcutIsValid( newSeq, this ) )
+      mKeySeqWidget->denyValidation();
 }
 
 void FolderShortcutDialog::slotOk()

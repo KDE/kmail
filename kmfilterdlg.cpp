@@ -288,35 +288,35 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     // transfer changes from the 'Apply this filter on...'
     // combo box to the filter
     connect( mApplyOnIn, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnForAll, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnForTraditional, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnForChecked, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnOut, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnCtrlJ, SIGNAL(clicked()),
-  	     this, SLOT(slotApplicabilityChanged()) );
+             this, SLOT(slotApplicabilityChanged()) );
     connect( mAccountList, SIGNAL(clicked(Q3ListViewItem*)),
-  	     this, SLOT(slotApplicableAccountsChanged()) );
+             this, SLOT(slotApplicableAccountsChanged()) );
     connect( mAccountList, SIGNAL(spacePressed(Q3ListViewItem*)),
-  	     this, SLOT(slotApplicableAccountsChanged()) );
+             this, SLOT(slotApplicableAccountsChanged()) );
 
     // transfer changes from the 'stop processing here'
     // check box to the filter
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
-	     this, SLOT(slotStopProcessingButtonToggled(bool)) );
+             this, SLOT(slotStopProcessingButtonToggled(bool)) );
 
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
-	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
+             this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
-             this, SLOT( slotCapturedShortcutChanged( const QKeySequence& ) ) );
+    connect( mKeySeqWidget, SIGNAL( validationHook( const QKeySequence& ) ),
+             this, SLOT( slotValidationHook( const QKeySequence& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
-	     this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
+             this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
 
     connect( mFilterActionIconButton, SIGNAL( iconChanged( const QString& ) ),
              this, SLOT( slotFilterActionIconChanged( const QString& ) ) );
@@ -428,7 +428,8 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
-    mKeySeqWidget->setKeySequence( shortcut.primary() );
+    mKeySeqWidget->setKeySequence( shortcut.primary(),
+                                   KKeySequenceWidget::NoValidate );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
@@ -526,25 +527,15 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
   }
 }
 
-#ifdef __GNUC__
-#warning FIXME: Shortcut Handling broken
-// Shortcut handling is broken for custom templates, tags and filters.
-// The code assumes that the key sequence widget's shortcut is NOT already
-// set when this function is called, which is no longer the case with the
-// new KKeySequenceWidget.
-// This needs better support from KKeySequenceWidget. --tmcguire
-#endif
-void KMFilterDlg::slotCapturedShortcutChanged( const QKeySequence& ks )
+void KMFilterDlg::slotValidationHook( const QKeySequence &newSeq )
 {
-  if ( !ks.isEmpty() && !( kmkernel->getKMMainWidget()->shortcutIsValid( ks ) ) ) {
-    QString msg( i18n( "The selected shortcut is already used, "
-          "please select a different one." ) );
-    KMessageBox::sorry( this, msg );
-  } else {
-    mKeySeqWidget->setKeySequence( ks );
+  //TODO also check against other unsaved filter shortcuts
+
+  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
+    mKeySeqWidget->denyValidation();
+  else
     if ( mFilter )
-      mFilter->setShortcut( KShortcut(ks, QKeySequence()) );
-  }
+      mFilter->setShortcut( KShortcut( newSeq ) );
 }
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
@@ -682,7 +673,7 @@ KMFilterListBox::~KMFilterListBox()
 
 
 void KMFilterListBox::createFilter( const QByteArray & field,
-				    const QString & value )
+                                    const QString & value )
 {
   KMSearchRule *newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
 

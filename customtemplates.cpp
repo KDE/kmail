@@ -81,8 +81,8 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mType, SIGNAL( activated( int ) ),
           this, SLOT( slotTypeActivated( int ) ) );
 
-  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged(const QKeySequence &) ),
-          this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
+  connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence& ) ),
+           this, SLOT( slotValidationHook( const QKeySequence& ) ) );
 
   mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", K3Icon::Small );
   mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", K3Icon::Small );
@@ -289,7 +289,8 @@ void CustomTemplates::slotListSelectionChanged()
                   this, SLOT( slotTextChanged( void ) ) );
 
       mEdit->setText( vitem->mContent );
-      mKeySequenceWidget->setKeySequence( vitem->mShortcut.primary() );
+      mKeySequenceWidget->setKeySequence( vitem->mShortcut.primary(),
+                                          KKeySequenceWidget::NoValidate );
       mType->setCurrentIndex( mType->findText( indexToType ( vitem->mType ) ) );
 
       connect( mEdit, SIGNAL( textChanged() ),
@@ -342,72 +343,16 @@ void CustomTemplates::slotTypeActivated( int index )
   }
 }
 
-//btw, all the problems with KShortcut that you have are because KShortcut is a subclass of
-//QList<QKeySequence>. I have contacted Simon Hausmann who did this. I reworked the API, but
-//the list thing wasn't me. Really :) -- ahartmetz
-#ifdef __GNUC__
-#warning FIXME: Shortcut Handling broken
-// Shortcut handling is broken for custom templates, tags and filters.
-// The code assumes that the key sequence widget's shortcut is NOT already
-// set when this function is called, which is no longer the case with the
-// new KKeySequenceWidget.
-// This needs better support from KKeySequenceWidget. --tmcguire
-#endif
-void CustomTemplates::slotShortcutCaptured( const QKeySequence &shortcut )
+void CustomTemplates::slotValidationHook( const QKeySequence &newSeq )
 {
-  bool assign = true;
-  bool customused = false;
+  //TODO: check against other unsaved template shortcuts
 
-  KShortcut sc( shortcut );
-  if ( shortcut.isEmpty() )
-  {
-    sc.setPrimary(QKeySequence());
-    sc.setAlternate(QKeySequence());
-  }
-  else
-  {
-    // check if shortcut is already used for custom templates
-    for ( CustomTemplateItemList::iterator it = mItemList.begin();
-          it != mItemList.end(); ++it )
-    {
-      CustomTemplateItem *ti = it.value();
-      QTreeWidgetItem *currentItem = mList->currentItem();
-      if ( !currentItem || ti->mName != currentItem->text( 1 ) )
-      {
-        if ( ti->mShortcut == sc )
-        {
-          QString title = i18n( "Key Conflict" );
-          QString msg = i18n( "The selected shortcut is already used "
-                              "for another custom template, "
-                              "would you still like to continue with the assignment?" );
-          assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
-          if ( assign )
-          {
-            ti->mShortcut.setPrimary(QKeySequence());
-            ti->mShortcut.setAlternate(QKeySequence());
-          }
-          customused = true;
-        }
-      }
-    }
-
-    // check if shortcut is used somewhere else
-    if ( !customused && !kmkernel->getKMMainWidget()->shortcutIsValid( shortcut ) )
-    {
-      QString title = i18n( "Key Conflict" );
-      QString msg = i18n( "The selected shortcut is already in use, "
-                          "would you still like to continue with the assignment?" );
-      assign = ( KMessageBox::warningYesNo( this, msg, title ) == KMessageBox::Yes );
-    }
-  }
-
-  if ( assign )
-  {
-    //this is rather pointless, the signal is called keySequence*Changed* now. It is safe, though.
-    mKeySequenceWidget->setKeySequence( shortcut );
-
+  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
+    mKeySequenceWidget->denyValidation();
+  else {
     if ( mList->currentItem() )
-      mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut = sc;
+      mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut =
+          KShortcut( newSeq );
 
     emit changed();
   }

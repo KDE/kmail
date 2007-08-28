@@ -2435,8 +2435,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
 
-  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged ( const QKeySequence& ) ),
-          this, SLOT( slotShortcutCaptured( const QKeySequence& ) ) );
+  connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence & ) ),
+           this, SLOT( slotValidationHook( const QKeySequence & ) ) );
 
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
@@ -2488,37 +2488,14 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
     slotEmitChanged();
 }
 
-#ifdef __GNUC__
-#warning FIXME: Shortcut Handling broken
-// Shortcut handling is broken for custom templates, tags and filters.
-// The code assumes that the key sequence widget's shortcut is NOT already
-// set when this function is called, which is no longer the case with the
-// new KKeySequenceWidget.
-// This needs better support from KKeySequenceWidget. --tmcguire
-#endif
-void AppearancePage::MessageTagTab::slotShortcutCaptured( const QKeySequence &sc )
+void AppearancePage::MessageTagTab::slotValidationHook( const QKeySequence &newSeq )
 {
-  QKeySequence mySc(sc);
-  if ( mySc == mKeySequenceWidget->keySequence() ) 
-    return;
-  // FIXME work around a problem when reseting the shortcut via the shortcut dialog
-  // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
-  // so we additionally have to check for an empty string
-  if ( mySc.isEmpty() || mySc.toString().isEmpty() )
-    mySc = QKeySequence();
-  bool assign = true;
-  if ( !mySc.isEmpty() 
-       && !( kmkernel->getKMMainWidget()->shortcutIsValid( mySc ) ) ) {
-    QString title( i18n("Key Conflict") );
-    QString msg( i18n("The selected shortcut is already used, "
-          "would you still like to continue with the assignment?" ) );
-    assign = ( KMessageBox::warningYesNo( this, msg, title ) 
-                == KMessageBox::Yes );
-  } 
-  if ( assign ) {
-    mKeySequenceWidget->setKeySequence( mySc );
+  //TODO also check against other unsaved tag shortcuts
+
+  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
+    mKeySequenceWidget->denyValidation();
+  else
     slotEmitChangeCheck();
-  }
 }
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
@@ -2649,7 +2626,8 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
   //5th row
   mKeySequenceWidget->setEnabled( true );
-  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary() );
+  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary(),
+                                      KKeySequenceWidget::NoValidate );
 
   //6th row
   mInToolbarCheck->setEnabled( true );
@@ -4961,8 +4939,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
                       "are separate files. This may waste a bit of space on "
                       "disk, but should be more robust, e.g. when moving "
                       "messages between folders.</p></qt>");
-  QWhatsThis::add( mMailboxPrefCombo, msg );
-  QWhatsThis::add( label, msg );
+  mMailboxPrefCombo->setWhatsThis( msg );
+  label->setWhatsThis( msg );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
   connect( mMailboxPrefCombo, SIGNAL( activated( int ) ),

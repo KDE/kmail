@@ -4133,12 +4133,22 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->addClient( mGUIClient );
 }
 
-bool KMMainWidget::shortcutIsValid( const QKeySequence &sc ) const
+bool KMMainWidget::shortcutIsValid( const QKeySequence &sc, QWidget *parent ) const
 {
+  //TODO: also check against global shortcuts
+
   QList<QAction*> actions = actionCollection()->actions();
   foreach ( QAction *a, actions ) {
-    foreach ( QKeySequence otherSc, a->shortcuts() )
-      if ( sc == otherSc ) return false;
+    foreach ( QKeySequence otherSc, a->shortcuts() ) {
+      if ( sc == otherSc ) {
+        QString title( i18n( "Shortcut conflict" ) );
+        QString msg( i18n( "<qt>The selected shortcut is already used by the <b>%1</b> action.<br>"
+                           "Please select a different one.</qt>",
+                           a->text().remove('&') ) );
+        KMessageBox::sorry( parent, msg );
+        return false;
+      }
+    }
   }
   return true;
 }

@@ -626,7 +626,7 @@ private slots:
   since calling externally decouples the name in the list box from name edit box*/
   void slotNameLineTextChanged( const QString & );
   /*Processes the shortcut button, OnurTodo is private needed? */
-  void slotShortcutCaptured( const QKeySequence & );
+  void slotValidationHook( const QKeySequence &newSeq );
 
 
 private:

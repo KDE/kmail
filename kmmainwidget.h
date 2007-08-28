@@ -169,8 +169,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
       Checks a shortcut against the actioncollection and returns whether it
       is already used and therefor not valid or not.
+      If the shortcut is not valid, a message box is displayed informing the user
+      that the shortcut is already in use.
     */
-    bool shortcutIsValid( const QKeySequence& ) const;
+    bool shortcutIsValid( const QKeySequence&, QWidget* ) const;
 
     void modifyFolder( KMFolderTreeItem *folderItem );
 
