@@ -247,6 +247,8 @@ void KMFolderCachedImap::readConfig()
   }
   mNoContent = config->readBoolEntry( "NoContent", false );
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
+  if ( !config->readEntry( "FolderAttributes" ).isEmpty() )
+    mFolderAttributes = config->readEntry( "FolderAttributes" );
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
@@ -303,6 +305,7 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
+  configGroup.writeEntry( "FolderAttributes", mFolderAttributes );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
   if ( !mImapPathCreation.isEmpty() ) {
     if ( mImapPath.isEmpty() ) {
@@ -1963,9 +1966,9 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
-  mSubfolderAttributes = folderAttributes;
-
   mSubfolderState = imapFinished;
+  mSubfolderAttributes = folderAttributes;
+  kdDebug(5006) << "##### setting subfolder attributes: " << mSubfolderAttributes << endl;
 
   folder()->createChildFolder();
   KMFolderNode *node = folder()->child()->first();
@@ -1997,6 +2000,12 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
           }
         } else { // folder both local and on server
           //kdDebug(5006) << node->name() << " is on the server." << endl;
+
+          /**
+           * Store the folder attributes for every subfolder.
+           */
+          int index = mSubfolderNames.findIndex( node->name() );
+          f->mFolderAttributes = folderAttributes[ index ];
         }
       } else {
         //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
@@ -2156,6 +2165,8 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing( const QValueV
       f->setNoContent(mSubfolderMimeTypes[idx] == "inode/directory");
       f->setNoChildren(mSubfolderMimeTypes[idx] == "message/digest");
       f->setImapPath(mSubfolderPaths[idx]);
+      f->mFolderAttributes = mSubfolderAttributes[idx];
+      kdDebug(5006) << " ####### Attributes: " << f->mFolderAttributes <<endl;
       //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
       kmkernel->dimapFolderMgr()->contentsChanged();
     } else {

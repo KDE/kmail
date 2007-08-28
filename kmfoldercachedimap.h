@@ -307,6 +307,9 @@ public:
   /** Flags that can be permanently stored on the server. */
   int permanentFlags() const { return mPermanentFlags; }
 
+
+  QString folderAttributes() const { return mFolderAttributes; }
+
 protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
@@ -467,6 +470,7 @@ private:
   imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
+  QString     mFolderAttributes;
   QString     mAnnotationFolderType;
   IncidencesFor mIncidencesFor;
 

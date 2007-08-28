@@ -54,6 +54,8 @@ using KMail::AccountManager;
 #include "kmacctcachedimap.h"
 #include "acljobs.h"
 
+#include "scalix.h"
+
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/body.h>
@@ -335,17 +337,32 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   return bOK;
 }
 
-static void setIcalVcardContentTypeHeader( KMMessage *msg, KMail::FolderContentsType t )
+static void setIcalVcardContentTypeHeader( KMMessage *msg, KMail::FolderContentsType t, KMFolder *folder )
 {
+  KMAcctCachedImap::GroupwareType groupwareType = KMAcctCachedImap::GroupwareKolab;
+
+  KMFolderCachedImap *imapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
+  if ( imapFolder )
+    groupwareType = imapFolder->account()->groupwareType();
+
   msg->setType( DwMime::kTypeText );
   if ( t == KMail::ContentsTypeCalendar || t == KMail::ContentsTypeTask
       || t == KMail::ContentsTypeJournal ) {
     msg->setSubtype( DwMime::kSubtypeVCal );
-    msg->setHeaderField("Content-Type",
-        "text/calendar; method=REQUEST; charset=\"utf-8\"");
+
+    if ( groupwareType == KMAcctCachedImap::GroupwareKolab )
+      msg->setHeaderField("Content-Type",
+          "text/calendar; method=REQUEST; charset=\"utf-8\"");
+    else if ( groupwareType == KMAcctCachedImap::GroupwareScalix )
+      msg->setHeaderField("Content-Type",
+          "text/calendar; method=PUBLISH; charset=\"UTF-8\"");
+
   } else if ( t == KMail::ContentsTypeContact ) {
     msg->setSubtype( DwMime::kSubtypeXVCard );
-    msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+    if ( groupwareType == KMAcctCachedImap::GroupwareKolab )
+      msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+    else if ( groupwareType == KMAcctCachedImap::GroupwareScalix )
+      msg->setHeaderField( "Content-Type", "application/scalix-properties; charset=\"UTF-8\"" );
   } else {
     kdWarning(5006) << k_funcinfo << "Attempt to write non-groupware contents to folder" << endl;
   }
@@ -399,7 +416,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     setXMLContentTypeHeader( msg, plainTextBody );
   } else if ( storageFormat( &folder ) == StorageIcalVcard ) {
     const KMail::FolderContentsType t = folder.storage()->contentsType();
-    setIcalVcardContentTypeHeader( msg, t );
+    setIcalVcardContentTypeHeader( msg, t, &folder );
     msg->setBodyEncoded( plainTextBody.utf8() );
   } else {
     kdWarning(5006) << k_funcinfo << "Attempt to write to folder with unknown storage type" << endl;
@@ -766,7 +783,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     if ( storageFormat( f ) == StorageIcalVcard ) {
       //kdDebug(5006) << k_funcinfo << " StorageFormatIcalVcard " << endl;
       if ( !messageWasIcalVcardFormat ) {
-        setIcalVcardContentTypeHeader( newMsg, t );
+        setIcalVcardContentTypeHeader( newMsg, t, f );
       }
       newMsg->setBodyEncoded( plainTextBody.utf8() );
     } else if ( storageFormat( f ) == StorageXML ) {
@@ -1227,6 +1244,7 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
   KMFolder* aFolder = 0;
   int index;
   KMMsgDict::instance()->getLocation( serNum, &aFolder, &index );
+
   if( aFolder && aFolder != folder ) {
     kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) found it in folder " << aFolder->location() << ", expected " << folder->location() << endl;
   } else {
@@ -1558,144 +1576,222 @@ void KMailICalIfaceImpl::readConfig()
     folderType = folderParent->folderType();
   }
 
-  // Make sure the folder parent has the subdirs
-  // Globally there are 3 cases: nothing found, some stuff found by type/name heuristics, or everything found OK
-  bool noneFound = true;
-  bool mustFix = false; // true when at least one was found by heuristics
-  QValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
-  for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
-    if ( i != KMail::ContentsTypeMail ) {
-      results[i] = findStandardResourceFolder( folderParentDir, static_cast<KMail::FolderContentsType>(i) );
-      if ( results[i].found == StandardFolderSearchResult::FoundAndStandard )
-        noneFound = false;
-      else if ( results[i].found == StandardFolderSearchResult::FoundByType ||
-                results[i].found == StandardFolderSearchResult::FoundByName ) {
-        mustFix = true;
-        noneFound = false;
-      } else // NotFound
-        mustFix = true;
-    }
-  }
+  KMAcctCachedImap::GroupwareType groupwareType = dynamic_cast<KMFolderCachedImap *>( folderParent->storage() )->account()->groupwareType();
 
-  // Check if something changed
-  if( mUseResourceIMAP && !noneFound && !mustFix && mFolderParentDir == folderParentDir
-      && mFolderType == folderType ) {
-    // Nothing changed
-    if ( hideFolders != mHideFolders ) {
-      // Well, the folder hiding has changed
-      mHideFolders = hideFolders;
-      reloadFolderTree();
-    }
-    return;
-  }
-
-  if( noneFound || mustFix ) {
-    QString msg;
-    QString parentFolderName = folderParent != 0 ? folderParent->name() : folderParentDir->name();
-    if ( noneFound ) {
-      // No subfolder was found, so ask if we can make them
-      msg = i18n("KMail will now create the required groupware folders"
-                 " as subfolders of %1; if you do not want this, cancel"
-                 " and the IMAP resource will be disabled").arg(parentFolderName);
-    } else {
-      // Some subfolders were found, be more precise
-      QString operations = "<ul>";
-      for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
-        if ( i != KMail::ContentsTypeMail ) {
-          QString typeName = localizedDefaultFolderName( static_cast<KMail::FolderContentsType>( i ) );
-          if ( results[i].found == StandardFolderSearchResult::NotFound )
-            operations += "<li>" + i18n( "%1: no folder found. It will be created." ).arg( typeName ) + "</li>";
-          else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
-            operations += "<li>" + i18n( "%1: found folder %2. It will be set as the main groupware folder." ).
-                          arg( typeName ).arg( results[i].folder->label() ) + "</li>";
-        }
+  if ( groupwareType == KMAcctCachedImap::GroupwareKolab ) {
+    // Make sure the folder parent has the subdirs
+    // Globally there are 3 cases: nothing found, some stuff found by type/name heuristics, or everything found OK
+    bool noneFound = true;
+    bool mustFix = false; // true when at least one was found by heuristics
+    QValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
+    for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
+      if ( i != KMail::ContentsTypeMail ) {
+        results[i] = findStandardResourceFolder( folderParentDir, static_cast<KMail::FolderContentsType>(i) );
+        if ( results[i].found == StandardFolderSearchResult::FoundAndStandard )
+          noneFound = false;
+        else if ( results[i].found == StandardFolderSearchResult::FoundByType ||
+                  results[i].found == StandardFolderSearchResult::FoundByName ) {
+          mustFix = true;
+          noneFound = false;
+        } else // NotFound
+          mustFix = true;
       }
-      operations += "</ul>";
-
-      msg = i18n("<qt>KMail found the following groupware folders in %1 and needs to perform the following operations: %2"
-                 "<br>If you do not want this, cancel"
-                 " and the IMAP resource will be disabled").arg(parentFolderName, operations);
-
     }
 
-    if( KMessageBox::questionYesNo( 0, msg,
-                                    i18n("Standard Groupware Folders"), KStdGuiItem::cont(), KStdGuiItem::cancel() ) == KMessageBox::No ) {
-
-      GlobalSettings::self()->setTheIMAPResourceEnabled( false );
-      mUseResourceIMAP = false;
-      mFolderParentDir = 0;
-      mFolderParent = 0;
-      reloadFolderTree();
+    // Check if something changed
+    if( mUseResourceIMAP && !noneFound && !mustFix && mFolderParentDir == folderParentDir
+        && mFolderType == folderType ) {
+      // Nothing changed
+      if ( hideFolders != mHideFolders ) {
+        // Well, the folder hiding has changed
+        mHideFolders = hideFolders;
+        reloadFolderTree();
+      }
       return;
     }
-  }
 
-  // Make the new settings work
-  mUseResourceIMAP = true;
-  mFolderLanguage = GlobalSettings::self()->theIMAPResourceFolderLanguage();
-  if( mFolderLanguage > 3 ) mFolderLanguage = 0;
-  mFolderParentDir = folderParentDir;
-  mFolderParent = folderParent;
-  mFolderType = folderType;
-  mHideFolders = hideFolders;
+    if( noneFound || mustFix ) {
+      QString msg;
+      QString parentFolderName = folderParent != 0 ? folderParent->name() : folderParentDir->name();
+      if ( noneFound ) {
+        // No subfolder was found, so ask if we can make them
+        msg = i18n("KMail will now create the required groupware folders"
+                   " as subfolders of %1; if you do not want this, cancel"
+                   " and the IMAP resource will be disabled").arg(parentFolderName);
+      } else {
+        // Some subfolders were found, be more precise
+        QString operations = "<ul>";
+        for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
+          if ( i != KMail::ContentsTypeMail ) {
+            QString typeName = localizedDefaultFolderName( static_cast<KMail::FolderContentsType>( i ) );
+            if ( results[i].found == StandardFolderSearchResult::NotFound )
+              operations += "<li>" + i18n( "%1: no folder found. It will be created." ).arg( typeName ) + "</li>";
+            else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
+              operations += "<li>" + i18n( "%1: found folder %2. It will be set as the main groupware folder." ).
+                            arg( typeName ).arg( results[i].folder->label() ) + "</li>";
+          }
+        }
+        operations += "</ul>";
 
-  // Close the previous folders
-  cleanup();
+        msg = i18n("<qt>KMail found the following groupware folders in %1 and needs to perform the following operations: %2"
+                   "<br>If you do not want this, cancel"
+                   " and the IMAP resource will be disabled").arg(parentFolderName, operations);
 
-  // Set the new folders
-  mCalendar = initFolder( KMail::ContentsTypeCalendar );
-  mTasks    = initFolder( KMail::ContentsTypeTask );
-  mJournals = initFolder( KMail::ContentsTypeJournal );
-  mContacts = initFolder( KMail::ContentsTypeContact );
-  mNotes    = initFolder( KMail::ContentsTypeNote );
+      }
 
-  // Store final annotation (with .default) so that we won't ask again on next startup
-  if ( mCalendar->folderType() == KMFolderTypeCachedImap )
-    static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
-  if ( mTasks->folderType() == KMFolderTypeCachedImap )
-    static_cast<KMFolderCachedImap *>( mTasks->storage() )->updateAnnotationFolderType();
-  if ( mJournals->folderType() == KMFolderTypeCachedImap )
-    static_cast<KMFolderCachedImap *>( mJournals->storage() )->updateAnnotationFolderType();
-  if ( mContacts->folderType() == KMFolderTypeCachedImap )
-    static_cast<KMFolderCachedImap *>( mContacts->storage() )->updateAnnotationFolderType();
-  if ( mNotes->folderType() == KMFolderTypeCachedImap )
-    static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
+      if( KMessageBox::questionYesNo( 0, msg,
+                                      i18n("Standard Groupware Folders"), KStdGuiItem::cont(), KStdGuiItem::cancel() ) == KMessageBox::No ) {
 
-  // BEGIN TILL TODO The below only uses the dimap folder manager, which
-  // will fail for all other folder types. Adjust.
-
-  kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
-  kdDebug(5006) << k_funcinfo << "mContacts=" << mContacts << " " << mContacts->location() << endl;
-  kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
-
-  // Find all extra folders
-  QStringList folderNames;
-  QValueList<QGuardedPtr<KMFolder> > folderList;
-  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
-  for(QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
-      it != folderList.end(); ++it)
-  {
-    FolderStorage* storage = (*it)->storage();
-    if ( storage->contentsType() != 0 ) {
-      folderContentsTypeChanged( *it, storage->contentsType() );
+        GlobalSettings::self()->setTheIMAPResourceEnabled( false );
+        mUseResourceIMAP = false;
+        mFolderParentDir = 0;
+        mFolderParent = 0;
+        reloadFolderTree();
+        return;
+      }
     }
+
+    // Make the new settings work
+    mUseResourceIMAP = true;
+    mFolderLanguage = GlobalSettings::self()->theIMAPResourceFolderLanguage();
+    if( mFolderLanguage > 3 ) mFolderLanguage = 0;
+    mFolderParentDir = folderParentDir;
+    mFolderParent = folderParent;
+    mFolderType = folderType;
+    mHideFolders = hideFolders;
+
+    // Close the previous folders
+    cleanup();
+
+    // Set the new folders
+    mCalendar = initFolder( KMail::ContentsTypeCalendar );
+    mTasks    = initFolder( KMail::ContentsTypeTask );
+    mJournals = initFolder( KMail::ContentsTypeJournal );
+    mContacts = initFolder( KMail::ContentsTypeContact );
+    mNotes    = initFolder( KMail::ContentsTypeNote );
+
+    // Store final annotation (with .default) so that we won't ask again on next startup
+    if ( mCalendar->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
+    if ( mTasks->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mTasks->storage() )->updateAnnotationFolderType();
+    if ( mJournals->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mJournals->storage() )->updateAnnotationFolderType();
+    if ( mContacts->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mContacts->storage() )->updateAnnotationFolderType();
+    if ( mNotes->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
+
+    // BEGIN TILL TODO The below only uses the dimap folder manager, which
+    // will fail for all other folder types. Adjust.
+
+    kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
+    kdDebug(5006) << k_funcinfo << "mContacts=" << mContacts << " " << mContacts->location() << endl;
+    kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
+
+    // Find all extra folders
+    QStringList folderNames;
+    QValueList<QGuardedPtr<KMFolder> > folderList;
+    kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+    for(QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
+        it != folderList.end(); ++it)
+    {
+      FolderStorage* storage = (*it)->storage();
+      if ( storage->contentsType() != 0 ) {
+        folderContentsTypeChanged( *it, storage->contentsType() );
+      }
+    }
+
+    // If we just created them, they might have been registered as extra folders temporarily.
+    // -> undo that.
+    mExtraFolders.remove( mCalendar->location() );
+    mExtraFolders.remove( mTasks->location() );
+    mExtraFolders.remove( mJournals->location() );
+    mExtraFolders.remove( mContacts->location() );
+    mExtraFolders.remove( mNotes->location() );
+
+    // END TILL TODO
+
+    subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
+  } else if ( groupwareType == KMAcctCachedImap::GroupwareScalix ) {
+    // Make the new settings work
+    mUseResourceIMAP = true;
+    mFolderParentDir = folderParentDir;
+    mFolderParent = folderParent;
+    mFolderType = folderType;
+    mHideFolders = false;
+
+    // Close the previous folders
+    cleanup();
+
+    // Set the new folders
+    mCalendar = initScalixFolder( KMail::ContentsTypeCalendar );
+    mTasks    = initScalixFolder( KMail::ContentsTypeTask );
+    mJournals = 0;
+    mContacts = initScalixFolder( KMail::ContentsTypeContact );
+    mNotes    = initScalixFolder( KMail::ContentsTypeNote );
+
+    // Store final annotation (with .default) so that we won't ask again on next startup
+    if ( mCalendar->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
+    if ( mTasks->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mTasks->storage() )->updateAnnotationFolderType();
+    if ( mContacts->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mContacts->storage() )->updateAnnotationFolderType();
+    if ( mNotes->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
+
+    // BEGIN TILL TODO The below only uses the dimap folder manager, which
+    // will fail for all other folder types. Adjust.
+
+    kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
+    kdDebug(5006) << k_funcinfo << "mContacts=" << mContacts << " " << mContacts->location() << endl;
+    kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
+
+    // Find all extra folders
+    QStringList folderNames;
+    QValueList<QGuardedPtr<KMFolder> > folderList;
+    kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+    QValueList<QGuardedPtr<KMFolder> >::iterator it;
+    for(it = folderList.begin(); it != folderList.end(); ++it)
+    {
+      FolderStorage *storage = (*it)->storage();
+
+      if ( (*it)->folderType() == KMFolderTypeCachedImap ) {
+        KMFolderCachedImap *imapFolder = static_cast<KMFolderCachedImap*>( storage );
+
+        const QString attributes = imapFolder->folderAttributes();
+        if ( attributes.contains( "X-FolderClass" ) ) {
+          if ( !attributes.contains( "X-SpecialFolder" ) || (*it)->location().contains( "@" ) ) {
+            const Scalix::FolderAttributeParser parser( attributes );
+            if ( !parser.folderClass().isEmpty() ) {
+              FolderContentsType type = Scalix::Utils::scalixIdToContentsType( parser.folderClass() );
+              imapFolder->setContentsType( type );
+              folderContentsTypeChanged( *it, type );
+            }
+          }
+        }
+      }
+    }
+
+    // If we just created them, they might have been registered as extra folders temporarily.
+    // -> undo that.
+    mExtraFolders.remove( mCalendar->location() );
+    mExtraFolders.remove( mTasks->location() );
+    mExtraFolders.remove( mContacts->location() );
+    mExtraFolders.remove( mNotes->location() );
+
+    // END TILL TODO
+
+    subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
+    subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
   }
-
-  // If we just created them, they might have been registered as extra folders temporarily.
-  // -> undo that.
-  mExtraFolders.remove( mCalendar->location() );
-  mExtraFolders.remove( mTasks->location() );
-  mExtraFolders.remove( mJournals->location() );
-  mExtraFolders.remove( mContacts->location() );
-  mExtraFolders.remove( mNotes->location() );
-
-  // END TILL TODO
-
-  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
 
   reloadFolderTree();
 }
@@ -1748,6 +1844,59 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   if( folder->canAccess() != 0 ) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
                        .arg( folderName( itemType ) ) );
+    return 0;
+  }
+  folder->storage()->setContentsType( contentsType );
+  folder->setSystemFolder( true );
+  folder->storage()->writeConfig();
+  folder->open();
+  connectFolder( folder );
+  return folder;
+}
+
+KMFolder* KMailICalIfaceImpl::initScalixFolder( KMail::FolderContentsType contentsType )
+{
+  // Figure out what type of folder this is supposed to be
+  KMFolderType type = mFolderType;
+  if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
+
+  KMFolder* folder = 0;
+
+  // Find all extra folders
+  QStringList folderNames;
+  QValueList<QGuardedPtr<KMFolder> > folderList;
+  Q_ASSERT( kmkernel );
+  Q_ASSERT( kmkernel->dimapFolderMgr() );
+  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+  QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
+  for(; it != folderList.end(); ++it)
+  {
+    FolderStorage *storage = (*it)->storage();
+
+    if ( (*it)->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap *imapFolder = static_cast<KMFolderCachedImap*>( storage );
+
+      const QString attributes = imapFolder->folderAttributes();
+      if ( attributes.contains( "X-SpecialFolder" ) ) {
+        const Scalix::FolderAttributeParser parser( attributes );
+        if ( contentsType == Scalix::Utils::scalixIdToContentsType( parser.folderClass() ) ) {
+          folder = *it;
+          break;
+        }
+      }
+    }
+  }
+
+  if ( !folder ) {
+    return 0;
+  } else {
+    FolderInfo info = readFolderInfo( folder );
+    mFolderInfoMap.insert( folder, info );
+    //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
+  }
+
+  if( folder->canAccess() != 0 ) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your folder.") );
     return 0;
   }
   folder->storage()->setContentsType( contentsType );

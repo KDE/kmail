@@ -241,6 +241,7 @@ private slots:
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KMail::FolderContentsType contentsType );
+  KMFolder* initScalixFolder( KMail::FolderContentsType contentsType );
 
   void connectFolder( KMFolder* folder );
 
