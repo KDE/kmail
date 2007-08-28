@@ -1304,7 +1304,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
         // since we can't write our status back our local version is what has to
         // be considered correct.
         if (!mReadOnly)
-          flagsToStatus( msgBase, serverFlags, false, mPermanentFlags );
+          flagsToStatus( msgBase, serverFlags, false, mUploadAllFlags ? 31 : mPermanentFlags );
         else
           seenFlagToStatus( msgBase, serverFlags, false );
         idx++;
@@ -1438,9 +1438,8 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
 
   const KMMsgStatus oldStatus = msg->status();
   for ( int i = 0; i < numFlags; ++i ) {
-    if ( ( (supportedFlags & imapFlagMap[i].imapFlag) == 0 || (supportedFlags & 64) == 0 )
+    if ( ( (supportedFlags & imapFlagMap[i].imapFlag) == 0 && (supportedFlags & 64) == 0 )
          && !imapFlagMap[i].standardFlag ) {
-      //kdDebug(5006) << k_funcinfo << "Flag " << imapFlagMap[i].imapFlag << " not supported by the server!" << endl;
       continue;
     }
     if ( ((flags & imapFlagMap[i].imapFlag) > 0) != ((oldStatus & imapFlagMap[i].kmFlag) > 0) ) {
@@ -1610,7 +1609,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         }
         KMFolderMbox::addMsg(msg, 0);
         // Merge with the flags from the server.
-        flagsToStatus((KMMsgBase*)msg, flags, true, mPermanentFlags);
+        flagsToStatus((KMMsgBase*)msg, flags, true, mUploadAllFlags ? 31 : mPermanentFlags);
         // set the correct size
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
