@@ -359,6 +359,9 @@ class KMFolderCachedImap : public KMFolderMaildir
     /**  \reimp */
     bool isCloseToQuota() const;
 
+    /** Flags that can be permanently stored on the server. */
+    int permanentFlags() const { return mPermanentFlags; }
+
     /**
       Specify an imap path that is used to create the folder on the server
       Otherwise the parent folder is used to construct the path.
@@ -381,6 +384,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     */
     void slotConnectionResult( int errorCode, const QString &errorMsg );
 
+    void slotPermanentFlags( int flags );
     void slotCheckUidValidityResult( KMail::FolderJob *job );
     void slotTestAnnotationResult( KJob *job );
     void slotGetAnnotationResult( KJob *job );
@@ -641,6 +645,8 @@ public slots:
 
     QList<KMFolder*> mToBeDeletedAfterRescue;
     int mRescueCommandCount;
+
+  int mPermanentFlags;
 };
 
 #endif /*kmfoldercachedimap_h*/

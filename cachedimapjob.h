@@ -95,6 +95,10 @@ public:
 
   void setParentFolder( const KMFolderCachedImap* parent );
 
+signals:
+  // only emitted for uid validity checking jobs with PERMANENTFLAGS responses
+  void permanentFlags( int flags );
+
 protected:
   virtual void execute();
   void expungeFolder();

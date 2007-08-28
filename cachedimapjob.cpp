@@ -308,7 +308,7 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
   mMsg->setUID(mfd.uid);
   mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
-    KMFolderImap::flagsToStatus(mMsg, mfd.flags);
+    KMFolderImap::flagsToStatus(mMsg, mfd.flags, true, mFolder->permanentFlags());
   KUrl url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
@@ -363,7 +363,7 @@ void CachedImapJob::slotPutNextMessage()
   }
 
   KUrl url = mAccount->getUrl();
-  QString flags = KMFolderImap::statusToFlags( mMsg->status() );
+  QString flags = KMFolderImap::statusToFlags( mMsg->status(), mFolder->permanentFlags() );
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -643,6 +643,19 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
     } else
       kDebug(5006) <<"No uidvalidity available for folder"
                     << mFolder->objectName();
+  }
+
+  a = cstr.indexOf( "X-PermanentFlags: " );
+  if ( a < 0 ) {
+    kdDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available" << endl;
+  } else {
+    int b = cstr.indexOf( "\r\n", a );
+    if ( (b - a - 18) >= 0 ) {
+      int flags = cstr.mid( a + 18, b - a - 18 ).toInt();
+      emit permanentFlags( flags );
+    } else {
+      kdDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available" << endl;
+    }
   }
 
   mAccount->removeJob(it);

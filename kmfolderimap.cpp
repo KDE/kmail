@@ -224,7 +224,8 @@ void KMFolderImap::readConfig()
   }
   mNoContent = group.readEntry( "NoContent", false );
   mReadOnly = group.readEntry( "ReadOnly", false );
-  mUploadAllFlags = config->readBoolEntry( "UploadAllFlags", true );
+  mUploadAllFlags = config->readEntry( "UploadAllFlags", true );
+  mPermanentFlags = config->readEntry( "PermanentFlags", 31 /* default flags */ );
 
   KMFolderMbox::readConfig();
 }
@@ -239,7 +240,8 @@ void KMFolderImap::writeConfig()
   group.writeEntry("ImapPath", mImapPath);
   group.writeEntry("NoContent", mNoContent);
   group.writeEntry("ReadOnly", mReadOnly);
-  config->writeEntry( "UploadAllFlags", mUploadAllFlags );
+  group.writeEntry( "UploadAllFlags", mUploadAllFlags );
+  group.writeEntry( "PermanentFlags", mPermanentFlags );
   KMFolderMbox::writeConfig();
 }
 
@@ -1185,6 +1187,11 @@ void KMFolderImap::slotCheckValidityResult( KJob *job )
     if ( (b - a - 9) >= 0 )
       exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
     if ( !ok ) exists = -1;
+    a = cstr.indexOf( "X-PermanentFlags: " );
+    b = cstr.indexOf( "\r\n", a );
+    if ( a >= 0 && (b - a - 18) >= 0 )
+      mPermanentFlags = cstr.mid( a + 18, b - a - 18 ).toInt(&ok);
+    if ( !ok ) mPermanentFlags = 0;
     QString startUid;
     if (uidValidity() != uidv)
     {
@@ -1355,7 +1362,7 @@ void KMFolderImap::slotListFolderResult( KJob *job )
         // server since we can't write our status back our local version
         // is what has to be considered correct.
         if ( !mReadOnly ) {
-          flagsToStatus( msgBase, serverFlags, false );
+          flagsToStatus( msgBase, serverFlags, false, mUploadAllFlags ? 31 : mPermanentFlags );
         } else {
           seenFlagToStatus( msgBase, serverFlags, false );
         }
@@ -1455,16 +1462,36 @@ void KMFolderImap::slotListFolderEntries( KIO::Job *job,
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
+void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int supportedFlags )
 {
   if ( !msg ) return;
 
+  // see imap4/imapinfo.h for the magic numbers
+  static const struct {
+    const int imapFlag;
+    const KPIM::MessageStatus kmFlag;
+    const bool standardFlag;
+  } imapFlagMap[] = {
+    { 1, KPIM::MessageStatus::statusOld(), true },
+    { 2, KPIM::MessageStatus::statusReplied(), true },
+    { 4, KPIM::MessageStatus::statusImportant(), true },
+    { 128, KPIM::MessageStatus::statusForwarded(), false },
+    { 256, KPIM::MessageStatus::statusTodo(), false },
+    { 512, KPIM::MessageStatus::statusWatched(), false },
+    { 1024, KPIM::MessageStatus::statusIgnored(), false }
+  };
+  static const int numFlags = sizeof imapFlagMap / sizeof *imapFlagMap;
+
   const KPIM::MessageStatus oldStatus = msg->status();
-  // Set flags if they are new
-  if ( (flags & 4) && oldStatus.isImportant() )
-    msg->status().setImportant();
-  if ( (flags & 2) && oldStatus.isReplied() )
-    msg->status().setReplied();
+  for ( int i = 0; i < numFlags; ++i ) {
+    if ( ( (supportedFlags & imapFlagMap[i].imapFlag) == 0 && (supportedFlags & 64) == 0 )
+         && !imapFlagMap[i].standardFlag ) {
+      continue;
+    }
+    if ( ((flags & imapFlagMap[i].imapFlag) > 0) != (oldStatus & imapFlagMap[i].kmFlag) ) {
+      msg->toggleStatus( imapFlagMap[i].kmFlag );
+    }
+  }
 
   seenFlagToStatus( msg, flags, newMsg );
 }
@@ -1490,7 +1517,7 @@ void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderImap::statusToFlags( const MessageStatus& status )
+QString KMFolderImap::statusToFlags( const MessageStatus& status, int supportedFlags )
 {
   QString flags;
   if ( status.isDeleted() )
@@ -1501,7 +1528,16 @@ QString KMFolderImap::statusToFlags( const MessageStatus& status )
     if ( status.isReplied() )
       flags += "\\ANSWERED ";
     if ( status.isImportant() )
-      flags += "\\FLAGGED";
+      flags += "\\FLAGGED ";
+    // non standard flags
+    if ( status.isForwarded() && ((supportedFlags & 64) || (supportedFlags & 128)) )
+      flags += "KMAILFORWARDED ";
+    if ( status.isTodo() && ((supportedFlags & 64) || (supportedFlags & 256)) )
+      flags += "KMAILTODO ";
+    if ( status.isWatched() && ((supportedFlags & 64) || (supportedFlags & 512)) )
+      flags += "KMAILWATCHED ";
+    if ( status.isIgnored() && ((supportedFlags & 64) || (supportedFlags & 1024)) )
+      flags += "KMAILIGNORED ";
   }
 
   return flags.simplified();
@@ -1620,7 +1656,7 @@ void KMFolderImap::slotGetMessagesData( KIO::Job *job, const QByteArray &data )
         }
         KMFolderMbox::addMsg(msg, 0);
         // Merge with the flags from the server.
-        flagsToStatus((KMMsgBase*)msg, flags);
+        flagsToStatus((KMMsgBase*)msg, flags, true, mUploadAllFlags ? 31 : mPermanentFlags);
         // set the correct size
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
@@ -1894,7 +1930,7 @@ void KMFolderImap::setStatus( QList<int> &_ids,
   FolderStorage::setStatus(_ids, status, toggle);
   QList<int> ids;
   if ( mUploadAllFlags ) {
-    kdDebug(5006) << k_funcinfo << "Migrating all flags to the server" << endl;
+    kDebug(5006) << "Migrating all flags to the server";
     ids.clear();
     for ( int i = 0; i < count(); ++i )
       ids << i;
@@ -1958,7 +1994,7 @@ void KMFolderImap::setStatus( QList<int> &_ids,
     if ( !msg ) {
       continue;
     }
-    QString flags = statusToFlags( msg->status() );
+    QString flags = statusToFlags( msg->status(), mPermanentFlags );
     // Collect uids for each type of flags.
     groups[flags].append( QString::number( msg->UID() ) );
     if ( unget ) {

@@ -17,6 +17,7 @@ install(PROGRAMS
   kmail-3.3b1-misc.pl
   kmail-3.4-misc.pl
   kmail-3.4.1-update-status-filters.pl
+  kmail-3.5-trigger-flag-migration.pl
   kmail-4.0-misc.pl 
 DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
 

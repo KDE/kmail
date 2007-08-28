@@ -120,7 +120,7 @@ void ImapJob::init( JobType jt, const QString &sets, KMFolderImap *folder,
         curMsg = mSrcFolder->getMsg( idx );
       }
       KUrl url = account->getUrl();
-      QString flags = KMFolderImap::statusToFlags( curMsg->status() );
+      QString flags = KMFolderImap::statusToFlags( curMsg->status(), folder->permanentFlags() );
       url.setPath( folder->imapPath() + ";SECTION=" + flags );
       ImapAccountBase::jobData jd;
       jd.parent = 0; jd.offset = 0; jd.done = 0;

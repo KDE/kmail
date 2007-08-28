@@ -243,10 +243,10 @@ bool isSelected() { return mIsSelected; }
 static QString encodeFileName(const QString &);
 static QString decodeFileName(const QString &);
 
-/**
-* Convert message status to a list of IMAP flags
-*/
-static QString statusToFlags( const MessageStatus& status );
+  /**
+   * Convert message status to a list of IMAP flags
+   */
+  static QString statusToFlags( const KPIM::MessageStatus &status, int supportedFalgs);
 
 /**
 * Return the filename of the folder (reimplemented from KFolder)
@@ -322,6 +322,9 @@ virtual bool isMoveable() const;
 /** Initialize this storage from another one. Used when creating a child folder */
 void initializeFrom( KMFolderImap* parent, const QString &path, const QString &mimeType );
 
+  /** Returns the IMAP flags that can be stored on the server. */
+  int permanentFlags() const { return mPermanentFlags; }
+
 signals:
 void folderComplete(KMFolderImap *folder, bool success);
 
@@ -370,11 +373,11 @@ virtual void take(const QList<KMMessage*>&);
 */
 void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
-/**
-* Convert IMAP flags to a message status
-* @param newMsg specifies whether unseen messages are new or unread
-*/
-static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = true);
+  /**
+   * Convert IMAP flags to a message status
+   * @param newMsg specifies whether unseen messages are new or unread
+   */
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE, int supportedFalgs = 31 );
 
 /**
 * Connected to the result signal of the copy/move job
@@ -541,6 +544,10 @@ private:
   // this is needed for migrating local flags from the time where we didn't
   // have the ability to store them on the server
   bool mUploadAllFlags;
+
+  // PERMANENTFLAGS part of SELECT response, needed to determine if custom flags can be
+  // stored on the server
+  int mPermanentFlags;
 };
 
 #endif // kmfolderimap_h
