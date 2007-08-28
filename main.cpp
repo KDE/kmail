@@ -38,7 +38,7 @@ class KMailApplication : public KUniqueApplication
 public:
   KMailApplication() : KUniqueApplication(),
                        mDelayedInstanceCreation( false ),
-                       mEventLoopReached( false ) { };
+                       mEventLoopReached( false ) { }
   virtual int newInstance();
   void commitData(QSessionManager& sm);
   void setEventLoopReached();

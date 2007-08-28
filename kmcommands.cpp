@@ -138,6 +138,8 @@ using namespace KMime;
 #include <QDBusMessage>
 #include <QDBusConnection>
 
+#include <memory>
+
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
 public:

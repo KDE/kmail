@@ -48,7 +48,7 @@ class MailingListFolderPropertiesDialog : public KDialog
   Q_OBJECT
 public:
   MailingListFolderPropertiesDialog( QWidget *parent, KMFolder *folder );
-  ~MailingListFolderPropertiesDialog() {};
+  ~MailingListFolderPropertiesDialog() {}
 protected:
   void load();
   bool save();

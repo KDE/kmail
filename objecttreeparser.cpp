@@ -102,6 +102,7 @@ using KPIMUtils::LinkLocator;
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <memory>
 #include "chiasmuskeyselector.h"
 
 

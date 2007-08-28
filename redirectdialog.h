@@ -60,10 +60,10 @@ namespace KMail {
       explicit RedirectDialog( QWidget *parent=0, bool immediate=true );
 
       /** Return the addresses for the redirection */
-      QString to() { return mResentTo; };
+      QString to() { return mResentTo; }
 
       /** Returns the send mode */
-      bool sendImmediate() { return mImmediate; };
+      bool sendImmediate() { return mImmediate; }
 
     protected:
       /** Evaluate the settings, an empty To field is not allowed. */
