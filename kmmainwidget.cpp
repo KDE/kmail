@@ -432,8 +432,14 @@ void KMMainWidget::readConfig(void)
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
 
-  if ( mFolderViewSplitter && !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() )
+  if ( mFolderViewSplitter && !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
     mFolderViewSplitter->setSizes( GlobalSettings::self()->folderViewSplitterPosition() );
+  } else {
+    QValueList<int> defaults;
+    defaults << (int)(height() * 0.2) << (int)(height() * 0.8);
+    mFolderViewSplitter->setSizes( defaults );
+  }
+
   mFolderTree->readConfig();
   if ( mFavoriteFolderView )
     mFavoriteFolderView->readConfig();
