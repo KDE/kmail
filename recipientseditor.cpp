@@ -364,6 +364,8 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotTypeModified( RecipientLine * ) ) );
   connect( line->mEdit, SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
     SLOT( setCompletionMode( KGlobalSettings::Completion ) ) );
+  connect( line->mEdit, SIGNAL( textChanged ( const QString & ) ),
+           SLOT( calculateTotal() ) );
 
   if ( !mLines.isEmpty() ) {
     if ( mLines.count() == 1 ) {
@@ -417,6 +419,9 @@ void RecipientsView::slotTypeModified( RecipientLine *line )
       }
     }
   }
+
+  //Update the total tooltip
+  calculateTotal();
 }
 
 void RecipientsView::calculateTotal()
@@ -500,10 +505,6 @@ void RecipientsView::slotDeleteLine()
   unsigned int firstCC = 0;
   for( int i = pos; i < mLines.count(); ++i ) {
     RecipientLine *line = mLines.at( i );
-#ifdef __GNUC__
-#warning port from Q3ScrollView
-#endif
-    //moveChild( line, childX( line ), childY( line ) - mLineHeight );
     if ( line->recipientType() == Recipient::To )
       atLeastOneToLine = true;
     else if ( ( line->recipientType() == Recipient::Cc ) && ( i == 0 ) )
@@ -528,10 +529,7 @@ void RecipientsView::resizeView()
 void RecipientsView::activateLine( RecipientLine *line )
 {
   line->activate();
-#ifdef __GNUC__
-#warning port from Q3ScrollView
-#endif
-  //ensureVisible( 0, childY( line ) );
+  ensureWidgetVisible( line );
 }
 
 void RecipientsView::resizeEvent ( QResizeEvent *ev )
@@ -638,8 +636,10 @@ void RecipientsView::clearModified()
 
 void RecipientsView::setFocus()
 {
-  if ( !mLines.empty() && mLines.last()->isActive() ) setFocusBottom();
-  else setFocusTop();
+  if ( !mLines.empty() && mLines.last()->isActive() )
+    setFocusBottom();
+  else
+    setFocusTop();
 }
 
 void RecipientsView::setFocusTop()
@@ -647,19 +647,19 @@ void RecipientsView::setFocusTop()
   if ( !mLines.empty() ) {
     RecipientLine *line = mLines.first();
     if ( line ) line->activate();
-    else kWarning() <<"No first";
+    else kWarning(5006) <<"No first";
   }
-  else kWarning() <<"No first";
+  else kWarning(5006) <<"No first";
 }
 
 void RecipientsView::setFocusBottom()
 {
-#ifdef __GNUC__
-#warning port from Q3ScrollView
-#endif
   RecipientLine *line = mLines.last();
-  if ( line ) line->activate();
-  else  kWarning() <<"No last";
+  if ( line ) {
+    ensureWidgetVisible( line );
+    line->activate();
+  }
+  else  kWarning(5006) <<"No last";
 }
 
 int RecipientsView::setFirstColumnWidth( int w )
@@ -677,61 +677,6 @@ int RecipientsView::setFirstColumnWidth( int w )
   return mFirstColumnWidth;
 }
 
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
-RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
-  : QToolTip( parent ), mView( view )
-{
-}
-
-QString RecipientsToolTip::line( const Recipient &r )
-{
-  QString txt = r.email();
-
-  return "&nbsp;&nbsp;" + Qt::escape( txt ) + "<br/>";
-}
-
-void RecipientsToolTip::maybeTip( const QPoint & p )
-{
-  QString text = "<qt>";
-
-  QString to;
-  QString cc;
-  QString bcc;
-
-  Recipient::List recipients = mView->recipients();
-  Recipient::List::ConstIterator it;
-  for( it = recipients.begin(); it != recipients.end(); ++it ) {
-    switch( (*it).type() ) {
-      case Recipient::To:
-        to += line( *it );
-        break;
-      case Recipient::Cc:
-        cc += line( *it );
-        break;
-      case Recipient::Bcc:
-        bcc += line( *it );
-        break;
-      default:
-        break;
-    }
-  }
-
-  text += i18n("<b>To:</b><br/>") + to;
-  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br/>") + cc;
-  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br/>") + bcc;
-
-  text.append( "</qt>" );
-
-  QRect geometry( p + QPoint( 2, 2 ), QPoint( 400, 100 ) );
-
-  tip( QRect( p.x() - 20, p.y() - 20, 40, 40 ), text, geometry );
-}
-#endif
-
-
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   : QWidget( parent ), mView( view ), mRecipientPicker( 0 )
 {
@@ -747,12 +692,6 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   mTotalLabel->hide();
 
   topLayout->addStretch( 1 );
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
-  new RecipientsToolTip( view, mTotalLabel );
-#endif
 
   mDistributionListButton = new QPushButton( i18n("Save List..."), this );
   topLayout->addWidget( mDistributionListButton );
@@ -766,6 +705,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
   mSelectButton->setToolTip( i18n("Select recipients from address book") );
+  updateTotalToolTip();
 }
 
 SideWidget::~SideWidget()
@@ -792,11 +732,6 @@ void SideWidget::setFocus()
 
 void SideWidget::setTotal( int recipients, int lines )
 {
-#if 0
-  kDebug(5006) <<"SideWidget::setTotal() recipients:" << recipients <<
-    "lines:" << lines;
-#endif
-
   QString labelText;
   if ( recipients == 0 ) labelText = i18n("No recipients");
   else labelText = i18np("1 recipient","%1 recipients", recipients );
@@ -807,22 +742,53 @@ void SideWidget::setTotal( int recipients, int lines )
 
   if ( lines > 2 ) mDistributionListButton->show();
   else mDistributionListButton->hide();
+
+  updateTotalToolTip();
+}
+
+void SideWidget::updateTotalToolTip()
+{
+  QString text = "<qt>";
+
+  QString to;
+  QString cc;
+  QString bcc;
+
+  Recipient::List recipients = mView->recipients();
+  Recipient::List::ConstIterator it;
+  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+    QString emailLine = "&nbsp;&nbsp;" + Qt::escape( (*it).email() ) + "<br/>";
+    switch( (*it).type() ) {
+      case Recipient::To:
+        to += emailLine;
+        break;
+      case Recipient::Cc:
+        cc += emailLine;
+        break;
+      case Recipient::Bcc:
+        bcc += emailLine;
+        break;
+      default:
+        break;
+    }
+  }
+
+  text += i18n("<b>To:</b><br>") + to;
+  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br>") + cc;
+  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br>") + bcc;
+
+  text.append( "</qt>" );
+  mTotalLabel->setToolTip( text );
 }
 
 void SideWidget::pickRecipient()
 {
-#if 0
-  QString rec = KInputDialog::getText( "Pick Recipient",
-    "Email address of recipient" );
-  if ( !rec.isEmpty() ) emit pickedRecipient( rec );
-#else
   RecipientsPicker *p = picker();
   p->setDefaultType( mView->activeLine()->recipientType() );
   p->setRecipients( mView->recipients() );
   p->show();
   mPickerPositioner->reposition();
   p->raise();
-#endif
 }
 
 

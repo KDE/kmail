@@ -30,7 +30,6 @@
 #include <QComboBox>
 #include <QList>
 #include <QScrollArea>
-#include <QToolTip>
 
 class RecipientsPicker;
 
@@ -139,7 +138,7 @@ class RecipientLine : public QWidget
     void downPressed( RecipientLine * );
     void upPressed( RecipientLine * );
     void rightPressed();
-    void deleteLine(  RecipientLine * );
+    void deleteLine( RecipientLine * );
     void countChanged();
     void typeModified( RecipientLine * );
 
@@ -241,20 +240,6 @@ class RecipientsView : public QScrollArea
     QLayout *mTopLayout;
 };
 
-class RecipientsToolTip : public QToolTip
-{
-  public:
-    RecipientsToolTip( RecipientsView *, QWidget *parent );
-
-  protected:
-    void maybeTip( const QPoint & p );
-
-    QString line( const Recipient & );
-
-  private:
-    RecipientsView *mView;
-};
-
 class SideWidget : public QWidget
 {
     Q_OBJECT
@@ -267,7 +252,7 @@ class SideWidget : public QWidget
   public slots:
     void setTotal( int recipients, int lines );
     void setFocus();
-
+    void updateTotalToolTip();
     void pickRecipient();
 
   signals:
