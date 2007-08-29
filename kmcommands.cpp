@@ -3445,7 +3445,7 @@ KMCommand::Result CreateTodoCommand::execute()
         kDebug() <<"Loaded" << dcopService <<" successfully";
         Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
       } else
-        kWarning() <<"Error loading" << dcopService;
+        kWarning(5006) <<"Error loading" << dcopService;
     }
 #endif
   }

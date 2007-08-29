@@ -148,7 +148,7 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
 
 void KMMessagePart::setCharset( const QByteArray & c ) {
   if ( type() != DwMime::kTypeText )
-    kWarning()
+    kWarning(5006)
       << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
       << "Fix this caller:" << endl
       << "====================================================================" << endl
@@ -316,7 +316,7 @@ QString KMMessagePart::iconName() const
   if (mime) {
     fileName = mime->iconName();
   } else {
-    kWarning() <<"unknown mimetype" << mimeType;
+    kWarning(5006) <<"unknown mimetype" << mimeType;
   }
 
   if ( fileName.isEmpty() )

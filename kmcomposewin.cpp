@@ -2372,7 +2372,7 @@ QString KMComposeWin::prettyMimeType( const QString &type )
   const KMimeType::Ptr st = KMimeType::mimeType( t );
 
   if ( !st ) {
-    kWarning() <<"unknown mimetype" << t;
+    kWarning(5006) <<"unknown mimetype" << t;
     return QString();
   }
 
@@ -2458,7 +2458,7 @@ void KMComposeWin::addrBookSelInto()
       addrBookSelIntoOld();
     }
   } else {
-    kWarning() <<"To be implemented: call recipients picker.";
+    kWarning(5006) <<"To be implemented: call recipients picker.";
   }
 }
 

@@ -1552,7 +1552,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
             emit folderDropCopy( fti->folder() );
         } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
           if ( !MailList::canDecode( e->mimeData() ) ) {
-            kWarning() <<"Could not decode drag data!";
+            kWarning(5006) <<"Could not decode drag data!";
           } else {
             MailList list = MailList::fromMimeData( e->mimeData() );
             QList<quint32> serNums = MessageCopyHelper::serNumListFromMailList( list );

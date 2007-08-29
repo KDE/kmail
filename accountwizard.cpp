@@ -414,7 +414,7 @@ void AccountWizard::createTransport()
     if ( pathToSendmail.isEmpty() ) {
       pathToSendmail = KStandardDirs::findExe( "sendmail", "/usr/sbin" );
       if ( pathToSendmail.isEmpty() ) {
-        kWarning() <<"Could not find the sendmail binary for local delivery";
+        kWarning(5006) <<"Could not find the sendmail binary for local delivery";
         // setting the path to the most likely location
         pathToSendmail = "/usr/sbin/sendmail";
       }

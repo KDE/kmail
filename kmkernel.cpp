@@ -543,7 +543,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
 {
   MailTransport::Transport *t = MailTransport::TransportManager::self()->transportByName( transport, false );
   if ( !t ) {
-    kWarning() <<"The transport you entered is not available";
+    kWarning(5006) <<"The transport you entered is not available";
     return;
   }
   MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
@@ -1907,7 +1907,7 @@ void KMKernel::emergencyExit( const QString& reason )
                       "terminate now.\nThe error was:\n%1", reason );
   }
 
-  kWarning() << mesg;
+  kWarning(5006) << mesg;
   KNotification::event(KNotification::Catastrophe, mesg);
 
   ::exit(1);

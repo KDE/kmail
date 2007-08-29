@@ -178,12 +178,12 @@ KMAcctImap* KMFolderImap::account() const
   if ( !mAccount ) {
     KMFolderDir *parentFolderDir = dynamic_cast<KMFolderDir*>( folder()->parent() );
     if ( !parentFolderDir ) {
-      kWarning() <<"No parent folder dir found for" << folder()->prettyUrl();
+      kWarning(5006) <<"No parent folder dir found for" << folder()->prettyUrl();
       return 0;
     }
     KMFolder *parentFolder = parentFolderDir->owner();
     if ( !parentFolder ) {
-      kWarning() <<"No parent folder found for" << folder()->prettyUrl();
+      kWarning(5006) <<"No parent folder found for" << folder()->prettyUrl();
       return 0;
     }
     KMFolderImap *parentStorage = dynamic_cast<KMFolderImap*>( parentFolder->storage() );

@@ -586,7 +586,7 @@ bool partNode::isFirstTextPart() const {
   for ( const partNode * n = root ; n ; n = n->next() )
     if ( n->type() == DwMime::kTypeText )
       return n == this;
-  kFatal() <<"partNode::isFirstTextPart(): Didn't expect to end up here...";
+  kFatal(5006) <<"partNode::isFirstTextPart(): Didn't expect to end up here...";
   return false; // make comiler happy
 }
 

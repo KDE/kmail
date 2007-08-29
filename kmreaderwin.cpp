@@ -1501,7 +1501,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   aMsg->setIsBeingParsed( true );
 
   if ( mRootNode && !mRootNode->processed() ) {
-    kWarning() <<"The root node is not yet processed! Danger!";
+    kWarning(5006) <<"The root node is not yet processed! Danger!";
     return;
   } else {
     delete mRootNode;
