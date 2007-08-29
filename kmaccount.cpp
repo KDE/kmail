@@ -89,7 +89,8 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mExclude(false),
     mCheckingMail(false),
     mHasInbox(false),
-    mMailCheckProgressItem(0)
+    mMailCheckProgressItem(0),
+    mPrecommandProcess(0)
 {
   assert(aOwner != 0);
 }
@@ -355,19 +356,25 @@ void KMAccount::startPrecommand(const QString &precommand)
   if ( precommand.isEmpty() )
     emit precommandExited( true );
 
-  KMPrecommand precommandProcess(precommand, this);
+  KMPrecommand *mPrecommandProcess = new KMPrecommand(precommand, this);
 
   BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
-  connect(&precommandProcess, SIGNAL(finished(bool)),
-          SLOT(precommandExited(bool)));
+  connect(mPrecommandProcess, SIGNAL(finished(bool)),
+          SLOT(precommandFinished(bool)));
 
   kdDebug(5006) << "Running precommand " << precommand << endl;
-  if (!precommandProcess.start())
+  if (!mPrecommandProcess->start())
     emit precommandExited( false );
 }
+//-----------------------------------------------------------------------------
+void KMAccount::precommandFinished( bool success )
+{
+  delete mPrecommandProcess; mPrecommandProcess = 0;
 
+  emit precommandExited( success );
+}
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {

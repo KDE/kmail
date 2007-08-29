@@ -238,3 +238,6 @@ void KMAcctMaildir::setLocation(const QString& aLocation)
 {
   mLocation = aLocation;
 }
+
+#include "kmacctmaildir.moc"
+

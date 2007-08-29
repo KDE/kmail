@@ -76,7 +76,7 @@ void KMAcctLocal::processNewMail(bool)
 {
   mHasNewMail = false;
 
-  connect( this, SIGNAL(preProcessExited(bool)), SLOT(continueProcess()) );
+  connect( this, SIGNAL(preProcessExited(bool)), SLOT(continueProcess(bool)) );
   preProcess();
 }
 
@@ -112,6 +112,7 @@ void KMAcctLocal::preProcess()
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, 0 );
       checkDone( mHasNewMail, CheckOK );
       emit preProcessExited( false );
+      return;
     }
   }
 
@@ -127,6 +128,7 @@ void KMAcctLocal::preProcess()
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     emit preProcessExited( false );
+    return;
   }
 
   //BroadcastStatus::instance()->reset();
@@ -155,6 +157,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
     checkDone( mHasNewMail, CheckError );
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     emit preProcessExited( false );
+    return;
   }
 
   const int rc = mMailFolder->open();
@@ -178,6 +181,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
       .arg( mMailFolder->location() );
     BroadcastStatus::instance()->setStatusMsg( errMsg );
     emit preProcessExited( false );
+    return;
   }
 
   mFolder->open();
