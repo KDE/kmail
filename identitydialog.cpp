@@ -148,7 +148,7 @@ namespace KMail {
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Organization</h3>"
                "<p>This field should have the name of your organization "
-               "if you'd like it to be shown in the email header that "
+               "if you would like it to be shown in the email header that "
                "is sent out.</p>"
                "<p>It is safe (and normal) to leave this blank.</p></qt>");
     label->setWhatsThis( msg );
@@ -639,7 +639,7 @@ namespace KMail {
     mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
     mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
 
-    mPreferredCryptoMessageFormat->setCurrentIndex( format2cb( 
+    mPreferredCryptoMessageFormat->setCurrentIndex( format2cb(
        Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
 
     // "Advanced" tab:
@@ -709,7 +709,7 @@ namespace KMail {
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
-    ident.setPreferredCryptoMessageFormat( 
+    ident.setPreferredCryptoMessageFormat(
        Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );

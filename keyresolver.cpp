@@ -1328,7 +1328,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
       // notified about it as early as possible:
       keys = selectKeys( person,
 			 i18nc("if in your language something like "
-			      "'key(s)' isn't possible please "
+			      "'key(s)' is not possible please "
 			      "use the plural in the translation",
 			      "There is a problem with the "
 			      "encryption key(s) for \"%1\".\n\n"
@@ -1364,14 +1364,14 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   return selectKeys( person,
 		     matchingKeys.empty()
 		     ? i18nc("if in your language something like "
-			    "'key(s)' isn't possible please "
+			    "'key(s)' is not possible please "
 			    "use the plural in the translation",
 			    "No valid and trusted encryption key was "
 			    "found for \"%1\".\n\n"
 			    "Select the key(s) which should "
 			    "be used for this recipient.", person)
 		     : i18nc("if in your language something like "
-			    "'key(s)' isn't possible please "
+			    "'key(s)' is not possible please "
 			    "use the plural in the translation",
 			    "More than one key matches \"%1\".\n\n"
 			    "Select the key(s) which should "

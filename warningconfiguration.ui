@@ -371,7 +371,7 @@ The recommended SPHINX setting is 14 days.
           <item>
             <widget class="QPushButton" name="enableAllWarningsPB" >
               <property name="text" >
-                <string>Re-enable All "Don't Ask Again" Warnings</string>
+                <string>Re-enable All "Do not Ask Again" Warnings</string>
               </property>
             </widget>
           </item>

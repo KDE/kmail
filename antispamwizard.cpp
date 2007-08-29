@@ -663,7 +663,7 @@ void AntiSpamWizard::sortFilterOnExistance(
 //---------------------------------------------------------------------------
 AntiSpamWizard::SpamToolConfig::SpamToolConfig( const QString &toolId,
       int configVersion, int prio, const QString &name, const QString &exec,
-      const QString &url, const QString &filter, const QString &detection, 
+      const QString &url, const QString &filter, const QString &detection,
       const QString &spam, const QString &ham, const QString &noSpam,
       const QString &header, const QString &pattern, const QString &pattern2,
       const QString &serverPattern, bool detectionOnly, bool regExp,
@@ -947,7 +947,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
 {
   QString listName = visibleName;
-  
+
   QList<QListWidgetItem*> foundItems = mToolsList->findItems( listName, Qt::MatchFixedString );
   return (foundItems.size() > 0 && foundItems[0]->isSelected());
 }
@@ -993,8 +993,8 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mMoveUnsureRules->setWhatsThis(
       i18n( "The default folder is the inbox folder, but you may change that "
             "in the folder view below.<p>"
-            "Not all tools support a classification as unsure. If you haven't "
-            "selected a capable tool, you can't select a folder as well.</p>") );
+            "Not all tools support a classification as unsure. If you have not "
+            "selected a capable tool, you cannot select a folder as well.</p>") );
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this, mainFolderTree );

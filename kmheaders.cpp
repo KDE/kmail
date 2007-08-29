@@ -2327,7 +2327,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   if ( lvi && !rootDecoClicked ) {
     if ( lvi != currentItem() )
       highlightMessage( lvi );
-    /* Explicitely set selection state. This is necessary because we want to
+    /* Explicitly set selection state. This is necessary because we want to
      * also select all children of closed threads when the parent is selected. */
 
     // unless ctrl mask, set selected if it isn't already

@@ -1287,7 +1287,7 @@ void KMFolderCachedImap::uploadNewMessages()
         i18n("<p>Your access rights to folder <b>%1</b> have been restricted, "
              "it will no longer be possible to add messages to this folder.</p>",
              folder()->prettyUrl() ),
-        i18n("Acces rights revoked"), "KMailACLRevocationNotification" );
+        i18n("Access rights revoked"), "KMailACLRevocationNotification" );
     }
   }
   newState( mProgress, i18n("No messages to upload to server"));

@@ -228,7 +228,7 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     /** Reimplemented from KMFolderMaildir */
     virtual int addMsg( KMMessage *msg, int *index_return = 0 );
- 
+
 
     /**
       Adds a message without clearing it's X-UID field.
@@ -593,7 +593,7 @@ public slots:
       and not bumped up permaturely, as it is the watermark which is used
       to discern message which are not present locally, because they were
       deleted locally and now need to be deleted from the server,
-      from those which are new and need to be downloaded. Sucessfull
+      from those which are new and need to be downloaded. Successful
       downloading of all pending mail from the server sets this. Between
       invocations it is stored on disk in the uidcache file. It must not
       change during a sync.

@@ -298,7 +298,7 @@ KMMessageTagList* KMMsgInfo::tagList( void ) const
 {
   if (mTagList)
     return mTagList;
-  mTagList = new KMMessageTagList( KMMessageTagList::split( ",", 
+  mTagList = new KMMessageTagList( KMMessageTagList::split( ",",
                               getStringPart( MsgTagPart ) ) );
   mTagList->prioritySort();
   return mTagList;
@@ -698,7 +698,7 @@ void KMMsgInfo::setDate(time_t aUnixTime)
     mDirty = true;
 }
 
-//--- For compatability with old index files
+//--- For compatibility with old index files
 void KMMsgInfo::compat_fromOldIndexString(const QByteArray& str, bool toUtf8)
 {
     const char *start, *offset;
