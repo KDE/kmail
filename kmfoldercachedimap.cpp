@@ -1674,14 +1674,30 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
   // Start with something largish when rebuilding the cache
   if ( uidsOnServer.size() == 0 )
     uidsOnServer.resize( KMail::nextPrime( 2000 ) );
-  int flags;
   const int v = 42;
   while (pos >= 0) {
+      /*
     KMMessage msg;
     msg.fromString((*it).cdata.mid(16, pos - 16));
-    flags = msg.headerField("X-Flags").toInt();
-    bool deleted = ( flags & 8 );
-    ulong uid = msg.UID();
+    const int flags = msg.headerField("X-Flags").toInt();
+    const ulong size = msg.headerField("X-Length").toULong();
+    const ulong uid = msg.UID();
+       */
+    // The below is optimized for speed, not prettiness. The commented out chunk
+    // above was the solution copied from kmfolderimap, and it's 15-20% slower.
+    const QCString& entry( (*it).cdata );
+    const int indexOfUID = entry.find("X-UID", 16);
+    const int startOfUIDValue = indexOfUID  + 7;
+    const int indexOfLength = entry.find("X-Length", startOfUIDValue ); // we know length comes after UID
+    const int startOfLengthValue = indexOfLength + 10;
+    const int indexOfFlags = entry.find("X-Flags", startOfLengthValue ); // we know flags comes last
+    const int startOfFlagsValue = indexOfFlags + 9;
+
+    const int flags = entry.mid( startOfFlagsValue, entry.find( '\r', startOfFlagsValue ) - startOfFlagsValue ).toInt();
+    const ulong size = entry.mid( startOfLengthValue, entry.find( '\r', startOfLengthValue ) - startOfLengthValue ).toULong();
+    const ulong uid = entry.mid( startOfUIDValue, entry.find( '\r', startOfUIDValue ) - startOfUIDValue ).toULong();
+
+    const bool deleted = ( flags & 8 );
     if ( !deleted ) {
       if( uid != 0 ) {
         if ( uidsOnServer.count() == uidsOnServer.size() ) {
@@ -1744,7 +1760,6 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         // The message is new since the last sync, but we might have just uploaded it, in which case
         // the uid map already contains it.
         if ( !uidMap.contains( uid ) ) {
-          ulong size = msg.headerField("X-Length").toULong();
           mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
           if( imapPath() == "/INBOX/" )
             mUidsForDownload << uid;
