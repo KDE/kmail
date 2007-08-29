@@ -647,14 +647,14 @@ void CachedImapJob::slotCheckUidValidityResult(KJob * job)
 
   a = cstr.indexOf( "X-PermanentFlags: " );
   if ( a < 0 ) {
-    kdDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available" << endl;
+    kDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available";
   } else {
     int b = cstr.indexOf( "\r\n", a );
     if ( (b - a - 18) >= 0 ) {
       int flags = cstr.mid( a + 18, b - a - 18 ).toInt();
       emit permanentFlags( flags );
     } else {
-      kdDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available" << endl;
+      kDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available";
     }
   }
 
