@@ -269,6 +269,9 @@ protected slots:
   virtual void mailCheck();
   virtual void sendReceipts();
 
+private slots:
+  void precommandFinished( bool success );
+
 protected:
   KMAccount( AccountManager* owner, const QString& accountName, uint id);
 
@@ -324,6 +327,7 @@ private:
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
+  KMPrecommand *mPrecommandProcess;
 };
 
 #endif /*kmaccount_h*/

@@ -9,6 +9,8 @@
 
 class KMAcctMaildir: public KMAccount
 {
+  Q_OBJECT
+
 protected:
   friend class ::AccountManager;
 
