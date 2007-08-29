@@ -2,6 +2,7 @@
 // kmheaders.cpp
 
 
+#include <config-kmail.h>
 #include "kmheaders.h"
 #include "headeritem.h"
 using KMail::HeaderItem;
@@ -43,6 +44,9 @@ using namespace KPIM;
 #include <kdebug.h>
 #include <ktoggleaction.h>
 #include <kconfiggroup.h>
+#ifdef Nepomuk_FOUND
+#include <nepomuk/tag.h>
+#endif
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -1194,16 +1198,39 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 // TODO: Use KMCommand class
 void KMHeaders::setMessageTagList( const QString &taglabel )
 {
+  #ifdef Nepomuk_FOUND
+  //Set the visible name for the tag
+  const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( taglabel );
+  Nepomuk::Tag n_tag( taglabel );
+  if ( tmp_desc )
+	n_tag.setLabel( tmp_desc->name() );
+  #endif
   for ( Q3ListViewItemIterator it(this); it.current(); ++it )
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem *item = static_cast<HeaderItem*>( it.current() );
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
+      #ifdef Nepomuk_FOUND
+      Nepomuk::Resource n_resource( QString("kmail-email-%1").arg( msgBase->getMsgSerNum() ) );
+      #endif
       if ( msgBase->tagList() ) {
         KMMessageTagList tmp_list = *msgBase->tagList();
         KMMessageTagList::iterator lit = tmp_list.find( taglabel );
         if ( lit == tmp_list.end() ) {
           tmp_list.append( taglabel );
+          #ifdef Nepomuk_FOUND
+	  n_resource.addTag( n_tag );
+          #endif
         } else {
+          #ifdef Nepomuk_FOUND
+          QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
+	  for (int i = 0; i < n_tag_list.count(); ++i ) {
+		  if ( n_tag_list[i].identifiers()[0] == taglabel ) {
+			  n_tag_list.removeAt(i);
+			  break;
+		  }
+	  }
+	  n_resource.setTags( n_tag_list );
+          #endif
           tmp_list.remove( lit );
         }
         msgBase->setTagList( tmp_list );

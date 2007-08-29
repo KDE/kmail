@@ -8,3 +8,7 @@
 #cmakedefine HAVE_PATHS_H 1
 
 #cmakedefine HAVE_SYS_INOTIFY_H 1
+
+//TODO: Enable once the crash when tagging is fixed
+#undef Nepomuk_FOUND
+//#cmakedefine Nepomuk_FOUND 1
