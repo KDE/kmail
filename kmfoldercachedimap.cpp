@@ -1655,12 +1655,12 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
        */
     // The below is optimized for speed, not prettiness. The commented out chunk
     // above was the solution copied from kmfolderimap, and it's 15-20% slower.
-    const QCString& entry( (*it).cdata );
-    const int indexOfUID = entry.find("X-UID", 16);
+    const QByteArray& entry( (*it).cdata );
+    const int indexOfUID = entry.indexOf("X-UID", 16);
     const int startOfUIDValue = indexOfUID  + 7;
-    const int indexOfLength = entry.find("X-Length", startOfUIDValue ); // we know length comes after UID
+    const int indexOfLength = entry.indexOf("X-Length", startOfUIDValue ); // we know length comes after UID
     const int startOfLengthValue = indexOfLength + 10;
-    const int indexOfFlags = entry.find("X-Flags", startOfLengthValue ); // we know flags comes last
+    const int indexOfFlags = entry.indexOf("X-Flags", startOfLengthValue ); // we know flags comes last
     const int startOfFlagsValue = indexOfFlags + 9;
 
     const int flags = entry.mid( startOfFlagsValue, entry.find( '\r', startOfFlagsValue ) - startOfFlagsValue ).toInt();
