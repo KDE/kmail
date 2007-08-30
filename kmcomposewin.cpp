@@ -149,6 +149,7 @@ using MailTransport::TransportManager;
 #include <QRegExp>
 #include <QTextCodec>
 #include <QHeaderView>
+#include <Q3TextDrag>
 
 #include <mimelib/mimepp.h>
 
@@ -3636,10 +3637,9 @@ void KMComposeWin::slotPaste()
         }
         break;
     }
-  } else if ( QTextDrag::canDecode( mimeSource ) ) {
-      QString s;
-      if ( QTextDrag::decode( mimeSource, s ) )
-          mEditor->insert( s );
+  } else if ( mimeData->hasText() ) {
+      QString s = mimeData->text();
+      mEditor->insert( s );
   }
 }
 
