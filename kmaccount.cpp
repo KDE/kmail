@@ -353,8 +353,10 @@ void KMAccount::deinstallTimer()
 void KMAccount::startPrecommand(const QString &precommand)
 {
   // Run the pre command if there is one
-  if ( precommand.isEmpty() )
+  if ( precommand.isEmpty() ) {
     emit precommandExited( true );
+    return;
+  }
 
   KMPrecommand *mPrecommandProcess = new KMPrecommand(precommand, this);
 
