@@ -383,8 +383,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   connect( mEditor, SIGNAL(spellcheck_done(int)),
            this, SLOT(slotSpellcheckDone (int)) );
-  connect( mEditor, SIGNAL( pasteImage() ),
-           this, SLOT(slotPaste() ) );
   connect( mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
            this, SLOT( slotAttachPNGImageData(const QByteArray &) ) );
   connect( mEditor, SIGNAL( focusChanged(bool) ),
@@ -3638,9 +3636,10 @@ void KMComposeWin::slotPaste()
         }
         break;
     }
-  } else {
-    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
-    qApp->notify( fw, &k );
+  } else if ( QTextDrag::canDecode( mimeSource ) ) {
+      QString s;
+      if ( QTextDrag::decode( mimeSource, s ) )
+          mEditor->insert( s );
   }
 }
 
