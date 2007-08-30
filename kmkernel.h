@@ -14,7 +14,6 @@
 
 #include <kconfig.h>
 #include <kdeversion.h>
-#include <kimproxy.h>
 #include <kurl.h>
 
 #include "kmail_export.h"
@@ -309,12 +308,6 @@ public:
   // ### again.
   void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
   bool contextMenuShown() const { return mContextMenuShown; }
-
-  /**
-   * Get a reference to KMail's KIMProxy instance
-   * @return a pointer to a valid KIMProxy
-   */
-  ::KIMProxy* imProxy();
 
   /**
    * Returns true IFF the user has requested that the current mail checks

@@ -889,26 +889,6 @@ protected:
   virtual KUrl::List urls() const;
 };
 
-class KMAIL_EXPORT KMIMChatCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  explicit KMIMChatCommand( const KUrl &url, KMMessage *msg=0 );
-
-private:
-  /**
-   * Try to start a chat with the addressee associated the mail address in <i>url</i>.
-   * If there is no addressee for the email address, or more than one, a KMessageBox is shown to inform the user.
-   * If the addressee does not have instant messaging address(es), this is currently handled by the instant messaging client
-   * which handles the request, since we don't have a convenient API for extracting them using KABC.
-   */
-  virtual Result execute();
-
-  KUrl mUrl;
-  KMMessage *mMessage;
-};
-
 class KMAIL_EXPORT KMHandleAttachmentCommand : public KMCommand
 {
   Q_OBJECT

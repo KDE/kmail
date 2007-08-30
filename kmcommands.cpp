@@ -74,7 +74,6 @@
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
-#include <kimproxy.h>
 #include <k3process.h>
 // KIO headers
 #include <kio/job.h>
@@ -2293,13 +2292,6 @@ KMCommand::Result KMUrlClickedCommand::execute()
     win->setCharset("", true);
     win->show();
   }
-  else if ( mUrl.protocol() == "im" )
-  {
-#ifdef __GNUC__
-#warning "port me"
-#endif
-    //kmkernel->imProxy()->chatWithContact( mUrl.path() );
-  }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
            (mUrl.protocol() == "ftp")  || (mUrl.protocol() == "file")  ||
            (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
@@ -2824,52 +2816,6 @@ KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, KMFolder *f
 KUrl::List KMMailingListHelpCommand::urls() const
 {
   return mFolder->mailingList().helpURLS();
-}
-
-KMIMChatCommand::KMIMChatCommand( const KUrl &url, KMMessage *msg )
-  :mUrl( url ), mMessage( msg )
-{
-}
-
-KMCommand::Result KMIMChatCommand::execute()
-{
-  kDebug( 5006 ) <<" URL is:" << mUrl;
-  QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  // find UID for mail address
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-  KABC::Addressee::List addressees = addressBook->findByEmail( KPIMUtils::extractEmailAddress( addr ) ) ;
-
-  // start chat
-  if( addressees.count() == 1 ) {
-#ifdef __GNUC__
-#warning "port me"
-#endif
-    //kmkernel->imProxy()->chatWithContact( addressees[0].uid() );
-    return OK;
-  }
-  else
-  {
-    kDebug( 5006 ) <<"Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count =" << addressees.count();
-
-    QString apology;
-    if ( addressees.isEmpty() )
-      apology = i18n( "There is no Address Book entry for this email address. Add them to the Address Book and then add instant messaging addresses using your preferred messaging client." );
-    else
-    {
-      QStringList nameList;
-      KABC::Addressee::List::const_iterator it = addressees.begin();
-      KABC::Addressee::List::const_iterator end = addressees.end();
-      for ( ; it != end; ++it )
-      {
-          nameList.append( (*it).realName() );
-      }
-      QString names = nameList.join( QString::fromLatin1( ",\n" ) );
-      apology = i18n( "More than one Address Book entry uses this email address:\n %1\n it is not possible to determine who to chat with.", names );
-    }
-
-    KMessageBox::sorry( parentWidget(), apology );
-    return Failed;
-  }
 }
 
 KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,

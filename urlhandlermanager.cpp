@@ -41,7 +41,6 @@
 #include "kmkernel.h"
 #include "callback.h"
 
-#include <kimproxy.h>
 #include "stl_util.h"
 #include <kurl.h>
 #include <QProcess>
@@ -355,13 +354,6 @@ namespace {
         kmkernel->resumeNetworkJobs();
         return true;
       }
-
-//       if ( url.path() == "startIMApp" )
-//       {
-//         kmkernel->imProxy()->startPreferredApp();
-//         return true;
-//       }
-//       //FIXME: handle startIMApp urls in their own handler, or rename this one
     }
     return false;
   }
@@ -417,7 +409,7 @@ namespace {
 
 // defined in kmreaderwin.cpp...
 extern bool foundSMIMEData( const QString aUrl, QString & displayName,
-			    QString & libName, QString & keyId );
+                            QString & libName, QString & keyId );
 
 namespace {
   bool SMimeURLHandler::handleClick( const KUrl & url, KMReaderWin * w ) const {
@@ -430,8 +422,8 @@ namespace {
     lst << "-query" << keyId;
     if ( !QProcess::startDetached( "kleopatra",lst) )
       KMessageBox::error( w, i18n("Could not start certificate manager. "
-				  "Please check your installation."),
-			  i18n("KMail Error") );
+                                  "Please check your installation."),
+                             i18n("KMail Error") );
     return true;
   }
 

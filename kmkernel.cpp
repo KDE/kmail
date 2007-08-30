@@ -1418,7 +1418,6 @@ void KMKernel::init()
 
   the_msgSender = new KMSender;
   the_server_is_ready = true;
-  imProxy()->initialize();
   { // area for config group "Composer"
     KConfigGroup group(cfg, "Composer");
     if (group.readEntry("pref-charsets", QStringList() ).isEmpty())
@@ -2155,11 +2154,6 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
   if ( !folder )
     folder = the_searchFolderMgr->findIdString( idString );
   return folder;
-}
-
-::KIMProxy* KMKernel::imProxy()
-{
-  return KIMProxy::instance();
 }
 
 void KMKernel::enableMailCheck()

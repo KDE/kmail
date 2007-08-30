@@ -239,7 +239,6 @@ public:
   QAction *urlOpenAction() { return mUrlOpenAction; }
   QAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   QAction *addBookmarksAction() { return mAddBookmarksAction;}
-  QAction *startImChatAction() { return mStartIMChatAction; }
   // This function returns the complete data that were in this
   // message parts - *after* all encryption has been removed that
   // could be removed.
@@ -358,9 +357,6 @@ public slots:
   void slotSaveAttachments();
 
   void slotMessageArrived( KMMessage *msg );
-  /** start IM Chat with addressee */
-  void slotIMChat();
-  void contactStatusChanged( const QString &uid);
 
   void slotLevelQuote( int l );
   void slotTouchMessage();
@@ -503,7 +499,7 @@ private:
   KActionCollection *mActionCollection;
   QAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
+      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
   KUrl mUrlClicked;

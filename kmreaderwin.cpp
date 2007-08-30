@@ -473,7 +473,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mUrlOpenAction( 0 ),
     mUrlSaveAsAction( 0 ),
     mAddBookmarksAction( 0 ),
-    mStartIMChatAction( 0 ),
     mSelectAllAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
@@ -647,10 +646,6 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   ac->addAction("toggle_fixedfont", mToggleFixFontAction );
   connect(mToggleFixFontAction, SIGNAL(triggered(bool) ), SLOT(slotToggleFixedFont()));
   mToggleFixFontAction->setShortcut(QKeySequence(Qt::Key_X));
-
-  mStartIMChatAction  = new KAction(i18n("Chat &With..."), this);
-  ac->addAction("start_im_chat", mStartIMChatAction );
-  connect(mStartIMChatAction, SIGNAL(triggered(bool) ), SLOT(slotIMChat()));
 }
 
 // little helper function
@@ -1029,32 +1024,6 @@ void KMReaderWin::initHtmlWidget(void)
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
-  connect( kmkernel->imProxy(), SIGNAL( sigContactPresenceChanged( const QString & ) ),
-          this, SLOT( contactStatusChanged( const QString & ) ) );
-  connect( kmkernel->imProxy(), SIGNAL( sigPresenceInfoExpired() ),
-          this, SLOT( updateReaderWin() ) );
-}
-
-void KMReaderWin::contactStatusChanged( const QString &uid)
-{
-//  kDebug( 5006 ) <<" got a presence change for" << uid;
-  // get the list of nodes for this contact from the htmlView
-  DOM::NodeList presenceNodes = mViewer->htmlDocument()
-    .getElementsByName( DOM::DOMString( QString::fromLatin1("presence-") + uid ) );
-  for ( unsigned int i = 0; i < presenceNodes.length(); ++i ) {
-    DOM::Node n =  presenceNodes.item( i );
-    kDebug( 5006 ) <<"name is" << n.nodeName().string();
-    kDebug( 5006 ) <<"value of content was" << n.firstChild().nodeValue().string();
-#ifdef __GNUC__
-#warning Port KIMProxy usage!
-#endif
-/*    QString newPresence = kmkernel->imProxy()->presenceString( uid );
-    if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString() )
-      newPresence = QString::fromLatin1( "ENOIMRUNNING" );
-    n.firstChild().setNodeValue( newPresence );*/
-//    kDebug( 5006 ) <<"value of content is now" << n.firstChild().nodeValue().string();
-  }
-//  kDebug( 5006 ) <<"and we updated the above presence nodes" << uid;
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
@@ -2503,12 +2472,6 @@ void KMReaderWin::slotSaveMsg()
     delete saveCommand;
   else
     saveCommand->start();
-}
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotIMChat()
-{
-  KMCommand *command = new KMIMChatCommand( mUrlClicked, message() );
-  command->start();
 }
 
 //-----------------------------------------------------------------------------
