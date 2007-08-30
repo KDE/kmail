@@ -178,12 +178,12 @@ public:
   virtual void setPrecommand(const QString &cmd) { mPrecommand = cmd; }
 
   /**
-   * Runs the precommand. If the precommand is empty, the method
+   * Start the precommand. If the precommand is empty, the method
    * will just return success and not actually do anything
    *
-   * @return True if successful, false otherwise
+   * @return True if successful start, false otherwise
    */
-  bool runPrecommand(const QString &precommand);
+  void startPrecommand(const QString &precommand);
 
   static QString importPassword(const QString &);
 
@@ -234,6 +234,12 @@ public:
 
 signals:
   /**
+   * Emitted after the precommand exited, successfully or not
+   * @param success true if the command execution was successful.
+   */
+  virtual void precommandExited( bool success );
+
+  /**
    * Emitted after the mail check is finished.
    * @param newMail true if there was new mail
    * @param status the status of the mail check
@@ -249,7 +255,9 @@ signals:
 protected slots:
   virtual void mailCheck();
   virtual void sendReceipts();
-  virtual void precommandExited(bool);
+
+private slots:
+  void precommandFinished( bool success );
 
 protected:
   KMAccount( AccountManager* owner, const QString& accountName, uint id);
@@ -301,6 +309,7 @@ protected:
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
+  KMPrecommand *mPrecommandProcess;
 };
 
 #endif /*kmaccount_h*/

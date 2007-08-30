@@ -171,6 +171,11 @@ private:
 
 protected slots:
   /**
+   * Continue the job after precommand was executed
+   */
+  void continueJob( bool precommandSuccess );
+
+  /**
    * Messages are downloaded in the background and then once every x seconds
    * a batch of messages are processed. Messages are processed in batches to
    * reduce flicker (multiple refreshes of the qlistview of messages headers
