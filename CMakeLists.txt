@@ -25,8 +25,10 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
   ${GPGME_INCLUDES}
-  ${NEPOMUK_INCLUDES}
    )
+if(Nepomuk_FOUND)
+  include_directories( ${NEPOMUK_INCLUDES} )
+endif(Nepomuk_FOUND)
 
 
 ########### next target ###############
@@ -226,7 +228,11 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} ${KDE4_KDE3SUPPORT_LIBRARY} ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARIES} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBS} ${KDE4_KCAL_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KABC_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY})
+target_link_libraries(kmailprivate ${KDE4_KDE3SUPPORT_LIBRARY} ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARIES} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBS} ${KDE4_KCAL_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KABC_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY})
+
+if(Nepomuk_FOUND)
+   target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )
+endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
 install(TARGETS kmailprivate  DESTINATION ${LIB_INSTALL_DIR})
