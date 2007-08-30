@@ -1203,7 +1203,7 @@ void KMHeaders::setMessageTagList( const QString &taglabel )
   const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( taglabel );
   Nepomuk::Tag n_tag( taglabel );
   if ( tmp_desc )
-	n_tag.setLabel( tmp_desc->name() );
+    n_tag.setLabel( tmp_desc->name() );
   #endif
   for ( Q3ListViewItemIterator it(this); it.current(); ++it )
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
@@ -1218,18 +1218,18 @@ void KMHeaders::setMessageTagList( const QString &taglabel )
         if ( lit == tmp_list.end() ) {
           tmp_list.append( taglabel );
           #ifdef Nepomuk_FOUND
-	  n_resource.addTag( n_tag );
+          n_resource.addTag( n_tag );
           #endif
         } else {
           #ifdef Nepomuk_FOUND
           QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
-	  for (int i = 0; i < n_tag_list.count(); ++i ) {
-		  if ( n_tag_list[i].identifiers()[0] == taglabel ) {
-			  n_tag_list.removeAt(i);
-			  break;
-		  }
-	  }
-	  n_resource.setTags( n_tag_list );
+          for (int i = 0; i < n_tag_list.count(); ++i ) {
+            if ( n_tag_list[i].identifiers()[0] == taglabel ) {
+              n_tag_list.removeAt(i);
+              break;
+            }
+          }
+          n_resource.setTags( n_tag_list );
           #endif
           tmp_list.remove( lit );
         }
@@ -1608,8 +1608,9 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %1 selected messages?<br />"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-	 msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), KStandardGuiItem::del(), KStandardGuiItem::cancel(),
-	 "NoConfirmDelete") == KMessageBox::Cancel )
+              msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), 
+              KStandardGuiItem::del(), KStandardGuiItem::cancel(),
+              "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
   // remember the message to select afterwards
