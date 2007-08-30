@@ -599,10 +599,6 @@ void KMEdit::del()
 
 void KMEdit::paste()
 {
-  if ( ! QApplication::clipboard()->image().isNull() )  {
-    emit pasteImage();
-  }
-  else
     mComposer->slotPaste();
 }
 
