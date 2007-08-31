@@ -1,8 +1,0 @@
-File=kmail.kcfg
-ClassName=GlobalSettingsBase
-Mutators=true
-Singleton=true
-ItemAccessors=true
-SetUserTexts=true
-IncludeFiles=kapplication.h
-

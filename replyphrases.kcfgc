@@ -1,5 +1,0 @@
-File=replyphrases.kcfg
-ClassName=ReplyPhrases
-Mutators=true
-ItemAccessors=true
-SetUserTexts=true
