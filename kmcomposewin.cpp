@@ -2277,6 +2277,12 @@ bool KMComposeWin::addAttach(const KURL aUrl)
                         .arg( aUrl.prettyURL() ) );
     return false;
   }
+
+  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrURL() ).size() > 50*1024*1024 ) { // 50 MB
+    KMessageBox::sorry( this, i18n( "<qt><p>KMail does not support attaching files bigger than 50 MB.</p>" ) );
+    return false;
+  }
+
   KIO::TransferJob *job = KIO::get(aUrl);
   KIO::Scheduler::scheduleJob( job );
   atmLoadData ld;
