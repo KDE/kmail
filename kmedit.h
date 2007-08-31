@@ -9,6 +9,7 @@
 #include <keditcl.h>
 #include <qmap.h>
 #include <qstringlist.h>
+#include <qclipboard.h>
 
 class KMComposeWin;
 class KSpellConfig;
@@ -98,6 +99,8 @@ protected:
    */
   bool eventFilter(QObject*, QEvent*);
   void keyPressEvent( QKeyEvent* );
+  
+  void contentsMouseReleaseEvent( QMouseEvent * e );
 
 private slots:
   void slotExternalEditorTempFileChanged( const QString & fileName );
@@ -120,6 +123,7 @@ private:
   bool      mWasModifiedBeforeSpellCheck;
   KDictSpellingHighlighter *mSpellChecker;
   bool mSpellLineEdit;
+  QClipboard::Mode mPasteMode;
 };
 
 #endif // __KMAIL_KMEDIT_H__

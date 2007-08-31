@@ -239,6 +239,7 @@ private: // kmedit:
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
 
+  void paste( QClipboard::Mode mode );
 
 public: // callback
   /** Disabled signing and encryption completely for this composer window. */
@@ -282,9 +283,9 @@ private slots:
   void slotRedo();
   void slotCut();
   void slotCopy();
-  void slotPaste();
-  void slotPasteAsQuotation();
-  void slotPasteAsAttachment();
+  void slotPasteClipboard();
+  void slotPasteClipboardAsQuotation();
+  void slotPasteClipboardAsAttachment();
   void slotAddQuotes();
   void slotRemoveQuotes();
   void slotAttachPNGImageData(const QByteArray &image);

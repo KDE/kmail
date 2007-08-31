@@ -1225,7 +1225,7 @@ void KMComposeWin::setupActions(void)
   KStdAction::redo (this, SLOT(slotRedo()), actionCollection());
   KStdAction::cut (this, SLOT(slotCut()), actionCollection());
   KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
-  KStdAction::pasteText (this, SLOT(slotPaste()), actionCollection());
+  KStdAction::pasteText (this, SLOT(slotPasteClipboard()), actionCollection());
   KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
 
   KStdAction::find (this, SLOT(slotFind()), actionCollection());
@@ -1234,10 +1234,10 @@ void KMComposeWin::setupActions(void)
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
-  mPasteQuotation = new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
+  mPasteQuotation = new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteClipboardAsQuotation()),
                       actionCollection(), "paste_quoted");
 
-  (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteAsAttachment()),
+  (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteClipboardAsAttachment()),
                       actionCollection(), "paste_att");
 
   mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), 0, this,
@@ -1558,7 +1558,7 @@ void KMComposeWin::setupEditor(void)
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
   menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
-  menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
+  menu->insertItem(i18n("Paste"), this, SLOT(slotPasteClipboard()));
   menu->insertItem(i18n("Mark All"),this, SLOT(slotMarkAll()));
   menu->insertSeparator();
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
@@ -3496,7 +3496,7 @@ QString KMComposeWin::quotePrefixName() const
     return quotePrefix;
 }
 
-void KMComposeWin::slotPasteAsQuotation()
+void KMComposeWin::slotPasteClipboardAsQuotation()
 {
     if( mEditor->hasFocus() && msg() )
     {
@@ -3506,7 +3506,7 @@ void KMComposeWin::slotPasteAsQuotation()
     }
 }
 
-void KMComposeWin::slotPasteAsAttachment()
+void KMComposeWin::slotPasteClipboardAsAttachment()
 {
   KURL url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
   if ( url.isValid() ) {
@@ -3657,12 +3657,17 @@ void KMComposeWin::slotCopy()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotPaste()
+void KMComposeWin::slotPasteClipboard()
+{
+  paste( QClipboard::Clipboard );
+}
+
+void KMComposeWin::paste( QClipboard::Mode mode )
 {
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  QMimeSource *mimeSource = QApplication::clipboard()->data();
+  QMimeSource *mimeSource = QApplication::clipboard()->data( mode );
   if ( mimeSource->provides("image/png") )  {
     slotAttachPNGImageData(mimeSource->encodedData("image/png"));
   } else if ( KURLDrag::canDecode( mimeSource ) ) {
