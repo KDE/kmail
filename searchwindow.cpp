@@ -389,7 +389,7 @@ void SearchWindow::updStatus(void)
         folderName = search->currentFolder();
     }
 
-    if (mFolder && mFolder->search() && !mFolder->search()->running()) {
+    if (search && !search->running()) {
         if(!mStopped) {
             genMsg = i18n("Done");
             detailMsg = i18np("%1 match (%2)", "%1 matches (%2)", numMatches,

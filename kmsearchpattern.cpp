@@ -777,10 +777,7 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
     return false;
   }
 
-  bool opened = folder->isOpened();
-  if ( !opened ) {
-    folder->open( "searchptr" );
-  }
+  KMFolderOpener openFolder( folder, "searptr" );
   KMMsgBase *msgBase = folder->getMsgBase( idx );
   if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
@@ -790,9 +787,6 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
       folder->unGetMsg(idx);
   } else {
     res = matches( folder->getDwString(idx), ignoreBody );
-  }
-  if ( !opened ) {
-    folder->close( "searchptr" );
   }
   return res;
 }

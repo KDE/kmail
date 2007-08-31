@@ -154,12 +154,13 @@ void KMSearch::start()
 {
   //close all referenced folders
   QList<QPointer<KMFolder> >::Iterator fit;
-  for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
+  for ( fit = mOpenedFolders.begin(); fit != mOpenedFolders.end(); ++fit ) {
     if ( !(*fit) ) {
       continue;
     }
     (*fit)->close( "kmsearch" );
   }
+  mOpenedFolders.clear();
   mFolders.clear();
 
   if ( running() ) {
@@ -455,10 +456,6 @@ void KMFolderSearch::addSerNum( quint32 serNum )
   assert( aFolder && (idx != -1) );
   if ( mFolders.indexOf( aFolder ) == -1 ) {
     aFolder->open( "foldersearch" );
-    // Exceptional case, for when folder has invalid ids
-    if ( mInvalid ) {
-      return;
-    }
     mFolders.append( aFolder );
   }
   setDirty( true ); //TODO append a single entry to .ids file and sync.
@@ -886,10 +883,9 @@ bool KMFolderSearch::readIndex()
     }
     mSerNums.push_back( serNum );
     if ( mFolders.indexOf( folder ) == -1 ) {
-      folder->open( "foldersearch" );
-      if ( mInvalid ) { //Exceptional case for when folder has invalid ids
+      if ( mInvalid ) //exceptional case for when folder has invalid ids
         return false;
-      }
+      folder->open( "foldersearch" );
       mFolders.append( folder );
     }
     KMMsgBase *mb = folder->getMsgBase( folderIdx );
@@ -988,7 +984,7 @@ void KMFolderSearch::examineAddedMessage( KMFolder *aFolder, quint32 serNum )
   KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   assert( folder && (idx != -1) );
   assert( folder == aFolder );
-  folder->open( "examineAddedMessage" );
+  KMFolderOpener openFolder( folder, "examineAddedMessage" );
 
   // if we are already checking this folder, refcount
   if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
@@ -1004,7 +1000,6 @@ void KMFolderSearch::examineAddedMessage( KMFolder *aFolder, quint32 serNum )
     mFoldersCurrentlyBeingSearched.insert( folder, 1 );
   }
   folder->storage()->search( search()->searchPattern(), serNum );
-  folder->close( "examineAddedMessage" );
 }
 
 void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
@@ -1015,14 +1010,15 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
   if ( search()->searchPattern() != pattern ) {
     return;
   }
+  KMFolderOpener openFolder( folder, "SearchExamineMsgDone" );
   kDebug(5006) << folder->label() <<": serNum" << serNum
                << "matches?" << matches;
-  folder->open( "SearchExamineMsgDone" );
 
-  if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
-    unsigned int count = mFoldersCurrentlyBeingSearched[folder];
-    if ( count == 1 ) {
-      disconnect( folder->storage(),
+  Q_ASSERT( mFoldersCurrentlyBeingSearched.contains( folder ) );
+
+  unsigned int count = mFoldersCurrentlyBeingSearched[folder];
+  if ( count == 1 ) {
+    disconnect( folder->storage(),
                   SIGNAL( searchDone( KMFolder*, quint32,
                                       const KMSearchPattern*, bool ) ),
                   this,
@@ -1032,10 +1028,6 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     } else {
       mFoldersCurrentlyBeingSearched.insert( folder, count-1 );
     }
-  } else {
-    Q_ASSERT( 0 ); // Can't happen (TM)
-  }
-  folder->close( "earchExamineMsgDone" );
 
   if ( !matches ) {
     QVector<quint32>::const_iterator it;
@@ -1162,7 +1154,7 @@ void KMFolderSearch::propagateHeaderChanged( KMFolder *aFolder, int idx )
     ++pos;
   }
   // let's try if the message matches our search
-  aFolder->open( "foldersearch" );
+  KMFolderOpener openAFolder( aFolder, "foldersearch" );
 
   // if we are already checking this folder, refcount
   if ( mFoldersCurrentlyBeingSearched.contains( aFolder ) ) {

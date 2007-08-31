@@ -68,7 +68,7 @@ CopyFolderJob::~CopyFolderJob()
   if ( mStorage )
   {
     mStorage->folder()->setMoveInProgress( false );
-    mStorage->close("copyfolder");
+    mStorage->close( "copyfolder" );
   }
 }
 

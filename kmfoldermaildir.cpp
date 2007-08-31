@@ -449,12 +449,11 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 
   QFile file(tmp_file);
 
-  if (!isOpened())
+  KMFolderOpener openThis(folder(), "maildir");
+  if (openThis.openResult())
   {
-    opened = true;
-    rc = open( "maildir" );
-    kDebug(5006) <<"KMFolderMaildir::addMsg-open:" << rc <<" of folder:" << label();
-    if (rc) return rc;
+    kDebug(5006) <<"KMFolderMaildir::addMsg-open:" << openThis.openResult() <<" of folder:" << label();
+    return openThis.openResult();
   }
 
   // now move the file to the correct location
@@ -463,14 +462,11 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   if (moveInternal(tmp_file, new_loc, filename, aMsg->messageStatus()).isNull())
   {
     file.remove();
-    if ( opened ) {
-      close( "maildir" );
-    }
     return -1;
   }
 
-  if (msgParent)
-    if (idx >= 0) msgParent->take(idx);
+  if (msgParent && idx >= 0)
+    msgParent->take(idx);
 
   // just to be sure it does not end up in the index
   if ( stripUid ) aMsg->setUID( 0 );
@@ -552,22 +548,17 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
 	     "(No space left on device or insufficient quota?)\n"
 	     "Free space and sufficient quota are required to continue safely."));
       if (busy) kmkernel->kbp()->busy();
-      if (opened) close();
       */
       return error;
     }
   }
 
-  // some "paper work"
   if (index_return)
     *index_return = idx;
 
   emitMsgAddedSignals(idx);
   needsCompact = true;
 
-  if ( opened ) {
-    close( "maildir" );
-  }
 /*
 QFile fileD1( "testdat_xx-kmfoldermaildir-1" );
 if( fileD1.open( QIODevice::WriteOnly ) ) {

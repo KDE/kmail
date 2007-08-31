@@ -1024,7 +1024,7 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (!folder || (idx == -1))
       return false;
-    folder->open( "showmail" );
+    KMFolderOpener openFolder(folder, "showmail");
     KMMsgBase *msgBase = folder->getMsgBase(idx);
     if (!msgBase)
       return false;
@@ -1041,7 +1041,6 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 
     if (unGet)
       folder->unGetMsg(idx);
-    folder->close( "showmail" );
     return true;
   }
 
@@ -1055,7 +1054,7 @@ QString KMKernel::getFrom( quint32 serialNumber )
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
     return QString();
-  folder->open( "getFrom" );
+  KMFolderOpener openFolder(folder, "getFrom");
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (!msgBase)
     return QString();
@@ -1064,7 +1063,6 @@ QString KMKernel::getFrom( quint32 serialNumber )
   QString result = msg->from();
   if (unGet)
     folder->unGetMsg(idx);
-  folder->close( "getFrom" );
   return result;
 }
 
@@ -1086,17 +1084,16 @@ QString KMKernel::debugSernum( quint32 serialNumber )
     // different folder
     if (folder && (idx != -1)) {
       // everything is ok
-      folder->open( "debugser" );
+      KMFolderOpener openFolder( folder, "debugser" );
       msg = folder->getMsgBase( idx );
       if (msg) {
-	res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-		    .arg( msg->subject() )
-		    .arg( msg->fromStrip() )
-		    .arg( msg->dateStr() ) );
+        res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
+                             .arg( msg->subject() )
+                             .arg( msg->fromStrip() )
+                             .arg( msg->dateStr() ) );
       } else {
-	res.append( QString( "Invalid serial number." ) );
+        res.append( QString( "Invalid serial number." ) );
       }
-      folder->close( "debugser" );
     } else {
       res.append( QString( "Invalid serial number." ) );
     }
@@ -1263,8 +1260,8 @@ void KMKernel::recoverDeadLetters()
     return;
 
   KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  const int rc = folder.open( "recover" );
-  if ( rc ) {
+  KMFolderOpener openFolder( &folder, "recover" );
+  if ( !folder.isOpened() ) {
     perror( "cannot open autosave folder" );
     return;
   }
@@ -1279,7 +1276,6 @@ void KMKernel::recoverDeadLetters()
       win->show();
     }
   }
-  folder.close( "recover" );
 }
 
 //-----------------------------------------------------------------------------

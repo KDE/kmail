@@ -180,8 +180,8 @@ bool KMSender::doSend(KMMessage *aMsg, short sendNow )
     sendNow = mSendImmediate;
   }
 
-  kmkernel->outboxFolder()->open( "outbox" );
-  const KMFolderCloser openOutbox( "outbox", kmkernel->outboxFolder() );
+  KMFolder * const outbox = kmkernel->outboxFolder();
+  const KMFolderOpener openOutbox( outbox, "KMSender" );
 
   aMsg->setStatus( MessageStatus::statusQueued() );
 
@@ -774,7 +774,7 @@ void KMSender::setStatusByLink( const KMMessage *aMsg )
     int index = -1;
     KMMsgDict::instance()->getLocation( msn, &folder, &index );
     if ( folder && index != -1 ) {
-      folder->open( "setstatus" );
+      KMFolderOpener openFolder( folder, "setstatus" );
       if ( status.isDeleted() ) {
         // Move the message to the trash folder
         KMDeleteMsgCommand *cmd =
@@ -783,7 +783,6 @@ void KMSender::setStatusByLink( const KMMessage *aMsg )
       } else {
         folder->setStatus( index, status );
       }
-      folder->close( "setstatus" );
     } else {
       kWarning(5006) <<"Cannot update linked message, it could not be found!";
     }

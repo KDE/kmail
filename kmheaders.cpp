@@ -1489,7 +1489,7 @@ void KMHeaders::applyFiltersOnMsg()
         }
       } else {
         kDebug (5006) << "####### KMHeaders::applyFiltersOnMsg -"
-                          " A message went missing during filtering " << endl;
+                         " A message went missing during filtering " << endl;
       }
     progressItem->incCompletedItems();
     }

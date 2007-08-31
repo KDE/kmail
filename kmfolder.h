@@ -105,7 +105,7 @@ public:
   bool isSent() {
     return KMKernel::self()->folderIsSentMailFolder( this );
   }
-  /** Returns true if this folder is configured as a trash folder, localy or
+  /** Returns true if this folder is configured as a trash folder, locally or
     for one of the accounts. */
   bool isTrash() {
     return KMKernel::self()->folderIsTrash( this );
@@ -281,18 +281,21 @@ public:
                          int idx);
 
   /** Open folder for access.
-    Does nothing if the folder is already opened. To reopen a folder
-    call close() first.
+    open() and close() use reference counting.
     Returns zero on success and an error code equal to the c-library
-    fopen call otherwise (errno). */
+    fopen call otherwise (errno).
+    @p owner is for debugging. */
   int open( const char *owner );
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
   int canAccess();
 
-  /** Close folder. If force is true the files are closed even if
-    others still use it (e.g. other mail reader windows). */
+  /** Close folder.
+    open() and close() use reference counting.
+    If @p force is true the files are closed even if
+    others are still using it (e.g. other mail reader windows).
+    @p owner is for debugging. */
   void close( const char *owner, bool force=false );
 
   /** fsync buffers to disk */
@@ -673,19 +676,35 @@ private:
 /**
    RAII for KMFolder::open() / close().
 
-   Usage: const KMFolderCloser closer( folder );
+   Usage: const KMFolderOpener opener( folder );
 */
-class KMFolderCloser {
-  KMFolder * f;
-  QByteArray mOwner;
+class KMFolderOpener {
+  KMFolder * mFolder;
+  const char * const mOwner;
+  int mOpenRc;
+
 public:
-  KMFolderCloser( const char *owner, KMFolder *folder ) : f( folder ),  mOwner( owner ) {}
-  ~KMFolderCloser() {
-    if ( f ) {
-      f->close( mOwner );
-    }
+  KMFolderOpener( KMFolder *folder, const char *owner )
+   : mFolder( folder )
+   , mOwner( owner )
+  {
+    assert( folder ); //change if that's not what you want
+    mOpenRc = folder->open( owner );
   }
-  KMFolder * folder() const { return f; }
+
+  ~KMFolderOpener()
+  {
+    if ( !mOpenRc )
+      mFolder->close( mOwner );
+  }
+
+  KMFolder * folder() const { return mFolder; }
+  
+  int openResult() const { return mOpenRc; }
+  
+private:
+  //we forbid construction on the heap as good as we can
+  void * operator new( size_t size );
 };
 
 #endif /*kmfolder_h*/
