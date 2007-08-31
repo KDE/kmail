@@ -72,7 +72,16 @@ public:
   /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }
 
+  /** If we have mmap(2), then we have a pointer to the
+   *   mmap()ed index file; return a pointer to the memory
+   *   region containing the file.
+   */
   uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
+
+  /** If we have mmap(2), then we know the size of the
+    *   index file. Return it. 0 if we don't have mmap(2).
+    */
+  size_t indexStreamLength() const { return mIndexStreamPtrLength; }
 
   bool indexSwapByteOrder() { return mIndexSwapByteOrder; }
   int  indexSizeOfLong() { return mIndexSizeOfLong; }
@@ -122,7 +131,8 @@ protected:
   off_t mHeaderOffset;
 
   uchar *mIndexStreamPtr;
-  int mIndexStreamPtrLength, mIndexId;
+  size_t mIndexStreamPtrLength;
+  int mIndexId;
   bool mIndexSwapByteOrder; // Index file was written with swapped byte order
   int mIndexSizeOfLong; // Index file was written with longs of this size
 };

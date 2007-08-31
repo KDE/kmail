@@ -874,15 +874,20 @@ retry:
   bool swapByteOrder = storage()->indexSwapByteOrder();
   if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
-	free(g_chunk);
+      free(g_chunk);
     using_mmap = true;
+    if ( mIndexOffset > storage()->indexStreamLength() ) {
+      // This message has not been indexed yet, data would lie
+      // outside the index data structures so do not touch it.
+      return QString();
+    }
     g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
     if(!storage()->mIndexStream)
       return ret;
     if (g_chunk_length < mIndexLength)
-	g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
+      g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     off_t first_off=ftell(storage()->mIndexStream);
     fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
