@@ -2775,7 +2775,6 @@ bool KMHeaders::writeSortOrder()
         fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) <<"Error: Failure modifying" << sortFile <<"(No space left on device?)";
-        kWarning(5006) << __FILE__ <<":" << __LINE__;
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
@@ -2815,7 +2814,6 @@ void KMHeaders::appendItemToSortFile(HeaderItem *khi)
         fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
-        kWarning(5006) << __FILE__ <<":" << __LINE__;
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
@@ -3090,7 +3088,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                     break;
                 }
                 if ((len < 0) || (len > KMAIL_MAX_KEY_LEN)) {
-                    kDebug(5006) <<"Whoa.2! len" << len << __FILE__ <<":" << __LINE__;
+                    kDebug(5006) <<"Whoa.2! len" << len;
                     error = true;
                     continue;
                 }
@@ -3120,14 +3118,14 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 }
                 if ((id < 0) || (id >= mFolderCount) ||
                     (parent < -2) || (parent >= mFolderCount)) { // sanity checking
-                    kDebug(5006) <<"Whoa.1!" << __FILE__ <<":" << __LINE__;
+                    kDebug(5006) <<"Whoa.1!";
                     error = true;
                     continue;
                 }
 
                 if ((item=sortCache[id])) {
                     if (item->id() != -1) {
-                        kDebug(5006) <<"Whoa.3!" << __FILE__ <<":" << __LINE__;
+                        kDebug(5006) <<"Whoa.3!";
                         error = true;
                         continue;
                     }
@@ -3427,7 +3425,6 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
         kWarning(5006) <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
-        kWarning(5006) << __FILE__ <<":" << __LINE__;
 
         return true;
     }

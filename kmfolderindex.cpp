@@ -172,7 +172,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
       msgBase->setIndexOffset(tmp);
       msgBase->setIndexLength(len);
       if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-	kDebug(5006) <<"Whoa!" << __FILE__ <<":" << __LINE__;
+	kDebug(5006) <<"Whoa!";
     }
   }
 

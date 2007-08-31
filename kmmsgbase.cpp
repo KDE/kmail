@@ -852,8 +852,7 @@ namespace {
   template < typename T > void copy_from_stream( T & x ) {
     if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
       g_chunk_offset = g_chunk_length;
-      kDebug( 5006 ) <<"This should never happen.."
-		      << __FILE__ << ":" << __LINE__;
+      kDebug( 5006 ) <<"This should never happen..";
       x = 0;
     } else {
       // the memcpy is optimized out by the compiler for the values
@@ -903,7 +902,7 @@ retry:
     }
     type = (MsgPartType) tmp;
     if(g_chunk_offset + l > mIndexLength) {
-	kDebug(5006) <<"This should never happen.." << __FILE__ <<":" << __LINE__;
+	kDebug(5006) <<"This should never happen..";
         if(using_mmap) {
             g_chunk_length = 0;
             g_chunk = 0;
@@ -981,7 +980,7 @@ retry:
     type = (MsgPartType) tmp;
 
     if (g_chunk_offset + l > mIndexLength) {
-      kDebug(5006) <<"This should never happen.." << __FILE__ <<":" << __LINE__;
+      kDebug(5006) <<"This should never happen..";
       if(using_mmap) {
         g_chunk_length = 0;
         g_chunk = 0;

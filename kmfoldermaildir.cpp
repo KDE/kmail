@@ -527,7 +527,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     mb->setIndexOffset( ftell(mIndexStream) );
     mb->setIndexLength( len );
     if(fwrite(buffer, len, 1, mIndexStream) != 1)
-    kDebug(5006) <<"Whoa!" << __FILE__ <<":" << __LINE__;
+    kDebug(5006) <<"Whoa!";
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
