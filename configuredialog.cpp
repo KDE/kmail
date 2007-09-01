@@ -1563,15 +1563,15 @@ void AppearancePage::ColorsTab::doLoadOther() {
 
   static const QColor defaultColor[ numColorNames ] = {
     qApp->palette().color( QPalette::Base ), // bg
-    KColorScheme( KColorScheme::View ).background(
+    KColorScheme( QPalette::Normal, KColorScheme::View ).background(
                   KColorScheme::AlternateBackground ).color() , // alt bg
     qApp->palette().color( QPalette::Text ), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
-    KColorScheme( KColorScheme::View ).foreground(
+    KColorScheme( QPalette::Normal, KColorScheme::View ).foreground(
                   KColorScheme::LinkText ).color(), // link
-    KColorScheme( KColorScheme::View ).foreground(
+    KColorScheme( QPalette::Normal, KColorScheme::View ).foreground(
                   KColorScheme::VisitedText ).color(),// visited link
     Qt::red, // misspelled words
     Qt::red, // new msg
