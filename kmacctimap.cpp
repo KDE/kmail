@@ -68,9 +68,10 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
 
   QString serNumUri = KStandardDirs::locateLocal( "data", "kmail/unfiltered." +
-				   QString("%1").arg(KAccount::id()) );
+                                            QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
-  QStringList serNums = config.readEntry( "unfiltered" , QStringList() );
+  QStringList serNums =
+      config.group("Default").readEntry( "unfiltered" , QStringList() );
 
   for ( QStringList::ConstIterator it = serNums.begin();
 	it != serNums.end(); ++it ) {
@@ -86,14 +87,14 @@ KMAcctImap::~KMAcctImap()
   killAllJobs( true );
 
   QString serNumUri = KStandardDirs::locateLocal( "data", "kmail/unfiltered." +
-				   QString("%1").arg(KAccount::id()) );
+                                            QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums;
   QHashIterator<QString, int> it( mFilterSerNumsToSave );
   while ( it.hasNext() ) {
     serNums.append( it.key() );
   }
-  config.writeEntry( "unfiltered", serNums );
+  config.group("Default").writeEntry( "unfiltered", serNums );
   qDeleteAll( mOpenFolders );
 }
 
@@ -584,9 +585,9 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
     mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
 
   int filterResult = kmkernel->filterMgr()->process(msg,
-						    KMFilterMgr::Inbound,
-						    true,
-						    id() );
+                                                    KMFilterMgr::Inbound,
+                                                    true,
+                                                    id() );
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
     kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
