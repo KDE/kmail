@@ -220,7 +220,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
     mUseExtEditor( false ),
     mWasModifiedBeforeSpellCheck( false ),
     mSpellChecker( 0 ),
-    mSpellLineEdit( false )
+    mSpellLineEdit( false ),
+    mPasteMode( QClipboard::Clipboard )
 {
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
@@ -599,7 +600,21 @@ void KMEdit::del()
 
 void KMEdit::paste()
 {
-    mComposer->slotPaste();
+  mComposer->paste( mPasteMode );
+}
+
+// KMEdit indirectly inherits from QTextEdit, which has virtual paste() method,
+// but it controls whether it pastes clipboard or selection by an internal
+// flag that is not accessible in any way, so paste() being virtual is actually
+// useless, because reimplementations can't known where to paste from anyway.
+// Roll our own internal flag.
+void KMEdit::contentsMouseReleaseEvent( QMouseEvent * e )
+{
+  if( e->button() != Qt::MidButton )
+    return KEdit::contentsMouseReleaseEvent( e );
+  mPasteMode = QClipboard::Selection;
+  KEdit::contentsMouseReleaseEvent( e );
+  mPasteMode = QClipboard::Clipboard;
 }
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
