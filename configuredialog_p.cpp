@@ -389,8 +389,8 @@ void ProfileDialog::slotOk() {
 }
 
 
-ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModule( instance, parent, args )
+ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent )
+  : ConfigModule( instance, parent )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );

@@ -323,8 +323,8 @@ QString IdentityPage::helpAnchor() const
   return QString::fromLatin1( "configure-identity" );
 }
 
-IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModule( instance, parent, args ),
+IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
+  : ConfigModule( instance, parent ),
     mIdentityDialog( 0 )
 {
   QHBoxLayout *hlay = new QHBoxLayout( this );
@@ -631,8 +631,8 @@ QString AccountsPage::helpAnchor() const {
   return QString::fromLatin1("configure-accounts");
 }
 
-AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModuleWithTabs( instance, parent, args )
+AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
+  : ConfigModuleWithTabs( instance, parent )
 {
   //
   // "Receiving" tab:
@@ -1236,8 +1236,8 @@ QString AppearancePage::helpAnchor() const {
   return QString::fromLatin1("configure-appearance");
 }
 
-AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModuleWithTabs( instance, parent, args )
+AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent )
+  : ConfigModuleWithTabs( instance, parent )
 {
   //
   // "Fonts" tab:
@@ -2768,8 +2768,8 @@ QString ComposerPage::helpAnchor() const {
   return QString::fromLatin1("configure-composer");
 }
 
-ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModuleWithTabs( instance, parent, args )
+ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
+  : ConfigModuleWithTabs( instance, parent )
 {
   //
   // "General" tab:
@@ -3874,8 +3874,8 @@ QString SecurityPage::helpAnchor() const {
   return QString::fromLatin1("configure-security");
 }
 
-SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModuleWithTabs( instance, parent, args )
+SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
+  : ConfigModuleWithTabs( instance, parent )
 {
   //
   // "Reading" tab:
@@ -4797,8 +4797,8 @@ QString MiscPage::helpAnchor() const {
   return QString::fromLatin1("configure-misc");
 }
 
-MiscPage::MiscPage( const KComponentData &instance, QWidget *parent, const QStringList &args )
-  : ConfigModuleWithTabs( instance, parent, args )
+MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
+  : ConfigModuleWithTabs( instance, parent )
 {
   mFolderTab = new FolderTab();
   addTab( mFolderTab, i18n("&Folders") );

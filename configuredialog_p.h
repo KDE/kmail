@@ -22,9 +22,7 @@
 #include <QHash>
 
 #include <kdialog.h>
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 #include <klocale.h>
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
@@ -202,9 +200,8 @@ private:
 class ConfigModule : public KCModule {
   Q_OBJECT
 public:
-  explicit ConfigModule( const KComponentData &instance, QWidget *parent=0,
-                         const QStringList &args=QStringList() )
-     : KCModule ( instance, parent, args )
+  explicit ConfigModule( const KComponentData &instance, QWidget *parent=0 )
+     : KCModule ( instance, parent )
      {}
   ~ConfigModule() {}
 
@@ -264,8 +261,7 @@ private:
 class ConfigModuleWithTabs : public ConfigModule {
   Q_OBJECT
 public:
-  explicit ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0,
-                                 const QStringList &args=QStringList() );
+  explicit ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0 );
    ~ConfigModuleWithTabs() {}
 
   // don't reimplement any of those methods
@@ -292,8 +288,7 @@ private:
 class KMAIL_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
-  explicit IdentityPage( const KComponentData &instance, QWidget *parent = 0,
-                         const QStringList &args = QStringList() );
+  explicit IdentityPage( const KComponentData &instance, QWidget *parent = 0 );
   ~IdentityPage() {}
 
   QString helpAnchor() const;
@@ -405,8 +400,7 @@ private:
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  explicit AccountsPage( const KComponentData &instance, QWidget *parent=0,
-                         const QStringList &args=QStringList() );
+  explicit AccountsPage( const KComponentData &instance, QWidget *parent=0 );
   QString helpAnchor() const;
 
 
@@ -664,8 +658,7 @@ private: // data
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  explicit AppearancePage( const KComponentData &instance, QWidget *parent=0,
-                           const QStringList &args=QStringList() );
+  explicit AppearancePage( const KComponentData &instance, QWidget *parent=0 );
 
   QString helpAnchor() const;
 
@@ -881,8 +874,7 @@ private:
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  explicit ComposerPage( const KComponentData &instance, QWidget *parent=0,
-                         const QStringList &args=QStringList() );
+  explicit ComposerPage( const KComponentData &instance, QWidget *parent=0 );
 
   QString helpAnchor() const;
 
@@ -1034,8 +1026,7 @@ private:
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  explicit SecurityPage( const KComponentData &instance, QWidget *parent=0,
-                         const QStringList &args=QStringList() );
+  explicit SecurityPage( const KComponentData &instance, QWidget *parent=0 );
 
   QString helpAnchor() const;
 
@@ -1137,8 +1128,7 @@ private:
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  explicit MiscPage( const KComponentData &instance, QWidget *parent=0,
-                     const QStringList &args=QStringList() );
+  explicit MiscPage( const KComponentData &instance, QWidget *parent=0 );
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;
