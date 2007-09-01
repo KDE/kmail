@@ -1154,7 +1154,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
         truncate( QFile::encodeName( indexLocation() ), revert );
       }
       if ( errno ) {
-        kmkernel->emergencyExit( i18n("Could not add message to folder:") +
+        kmkernel->emergencyExit( i18n("Could not add message to folder: ") +
                                  QString::fromLocal8Bit( strerror( errno ) ) );
       } else {
         kmkernel->emergencyExit( i18n("Could not add message to folder (No space left on device?)") );

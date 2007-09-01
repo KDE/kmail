@@ -3084,7 +3084,7 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
                                      i18n("The compressed file is larger "
                                           "than the original. Do you want to keep the original one?" ),
                                      QString(),
-                                     KGuiItem( i18n("Keep") ),
+                                     KGuiItem( i18nc("don't compress", "Keep") ),
                                      KGuiItem( i18n("Compress") ) ) == KMessageBox::Yes ) {
       attachmentItem->setCompress( false );
       return;
