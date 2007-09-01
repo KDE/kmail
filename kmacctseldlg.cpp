@@ -49,13 +49,11 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent )
   vlay->setMargin( spacingHint()*2 );
 
   mAccountTypeGroup = new QButtonGroup;
-  QRadioButton *radioButton1 = addButton( KAccount::Local, vlay );
-  QRadioButton *radioButton2 = addButton( KAccount::Pop, vlay );
-  QRadioButton *radioButton3 = addButton( KAccount::Imap, vlay );
-  QRadioButton *radioButton4 = addButton( KAccount::DImap, vlay );
-  QRadioButton *radioButton5 = addButton( KAccount::Maildir, vlay );
-
-  radioButton2->setChecked(true); // Pop is most common ?
+  addButton( KAccount::Local, vlay );
+  addButton( KAccount::Pop, vlay )->setChecked(true); // Pop is most common ?
+  addButton( KAccount::Imap, vlay );
+  addButton( KAccount::DImap, vlay );
+  addButton( KAccount::Maildir, vlay );
 }
 
 QRadioButton* KMAcctSelDlg::addButton( const KAccount::Type type, 
