@@ -377,7 +377,7 @@ void slotSimpleData(KIO::Job * job, const QByteArray & data);
    * Convert IMAP flags to a message status
    * @param newMsg specifies whether unseen messages are new or unread
    */
-  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE, int supportedFalgs = 31 );
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = true, int supportedFalgs = 31 );
 
 /**
 * Connected to the result signal of the copy/move job
