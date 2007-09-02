@@ -170,10 +170,10 @@ public slots:
 public:
   //See base class for documentation
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int open();
+  virtual int open(const char *owner);
   virtual int canAccess();
   virtual void sync();
-  virtual void reallyDoClose();
+  virtual void reallyDoClose(const char* owner);
   virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;

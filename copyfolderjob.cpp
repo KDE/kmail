@@ -50,7 +50,7 @@ CopyFolderJob::CopyFolderJob( FolderStorage* const storage, KMFolderDir* const n
    mNewFolder( 0 ), mChildFolderNodeIterator( *mStorage->folder()->createChildFolder() ),
    mNextChildFolder( 0 )
 {
-  mStorage->open();
+  mStorage->open( "copyfolder" );
 }
 
 CopyFolderJob::~CopyFolderJob()
@@ -61,7 +61,7 @@ CopyFolderJob::~CopyFolderJob()
   if ( mStorage )
   {
     mStorage->folder()->setMoveInProgress( false );
-    mStorage->close();
+    mStorage->close( "copyfolder" );
   }
 }
 
@@ -126,7 +126,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
 {
   //kdDebug(5006) << k_funcinfo << endl;
   if ( mNextChildFolder )
-    mNextChildFolder->close(); // refcount
+    mNextChildFolder->close( "copyfolder" ); // refcount
   // previous sibling failed
   if ( !success ) {
     kdDebug(5006) << "Failed to copy one subfolder, let's not continue:  " << mNewFolder->prettyURL() << endl;
@@ -158,7 +158,7 @@ void CopyFolderJob::slotCopyNextChild( bool success )
     return;
   }
   // let it do its thing and report back when we are ready to do the next sibling
-  mNextChildFolder->open(); // refcount
+  mNextChildFolder->open( "copyfolder" ); // refcount
   FolderJob* job = new CopyFolderJob( mNextChildFolder->storage(), dir);
   connect( job, SIGNAL( folderCopyComplete( bool ) ),
            this, SLOT( slotCopyNextChild( bool ) ) );

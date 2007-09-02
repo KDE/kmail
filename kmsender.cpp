@@ -162,7 +162,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   if (sendNow==-1) sendNow = mSendImmediate;
 
   KMFolder * const outbox = kmkernel->outboxFolder();
-  const KMFolderOpener openOutbox( outbox );
+  const KMFolderOpener openOutbox( outbox, "outbox" );
 
   aMsg->setStatus(KMMsgStatusQueued);
 
@@ -219,11 +219,11 @@ bool KMSender::doSendQueued( const QString &customTransport )
 
   // open necessary folders
   mOutboxFolder = kmkernel->outboxFolder();
-  mOutboxFolder->open();
+  mOutboxFolder->open("dosendoutbox");
   mTotalMessages = mOutboxFolder->count();
   if (mTotalMessages == 0) {
     // Nothing in the outbox. We are done.
-    mOutboxFolder->close();
+    mOutboxFolder->close("dosendoutbox");
     mOutboxFolder = 0;
     return true;
   }
@@ -236,7 +236,7 @@ bool KMSender::doSendQueued( const QString &customTransport )
   mCurrentMsg = 0;
 
   mSentFolder = kmkernel->sentFolder();
-  mSentFolder->open();
+  mSentFolder->open("dosendsent");
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
@@ -352,7 +352,7 @@ void KMSender::doSendMsg()
       sentFolder = kmkernel->sentFolder();
 
     if ( sentFolder ) {
-      if ( const int err = sentFolder->open() ) {
+      if ( const int err = sentFolder->open("sentFolder") ) {
         Q_UNUSED( err );
         cleanup();
         return;
@@ -375,7 +375,7 @@ void KMSender::doSendMsg()
                    "Moving failing message to \"sent-mail\" folder."));
       if ( sentFolder ) {
         sentFolder->moveMsg(mCurrentMsg);
-        sentFolder->close();
+        sentFolder->close("sentFolder");
       }
       cleanup();
       return;
@@ -446,7 +446,7 @@ void KMSender::doSendMsg()
     	mCurrentMsg = 0;
     // no more message: cleanup and done
     if ( sentFolder != 0 )
-        sentFolder->close();
+        sentFolder->close("sentFolder");
     if ( someSent ) {
       if ( mSentMessages == mTotalMessages ) {
         setStatusMsg(i18n("%n queued message successfully sent.",
@@ -636,13 +636,13 @@ void KMSender::cleanup(void)
     mCurrentMsg = 0;
   }
   if ( mSentFolder ) {
-    mSentFolder->close();
+    mSentFolder->close("dosendsent");
     mSentFolder = 0;
   }
   if ( mOutboxFolder ) {
     disconnect( mOutboxFolder, SIGNAL(msgAdded(int)),
                 this, SLOT(outboxMsgAdded(int)) );
-    mOutboxFolder->close();
+    mOutboxFolder->close("dosendoutbox");
     if ( mOutboxFolder->count( true ) == 0 ) {
       mOutboxFolder->expunge();
     }
@@ -858,7 +858,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
     int index = -1;
     KMMsgDict::instance()->getLocation(msn, &folder, &index);
     if (folder && index != -1) {
-      KMFolderOpener openFolder(folder);
+      KMFolderOpener openFolder(folder, "setstatus");
       if ( status == KMMsgStatusDeleted ) {
         // Move the message to the trash folder
         KMDeleteMsgCommand *cmd =

@@ -122,7 +122,7 @@ ActionScheduler::~ActionScheduler()
 {
   schedulerList->remove( this );
   tempCloseFolders();
-  mSrcFolder->close();
+  mSrcFolder->close("actionschedsrc");
 
   if (mDeleteSrcFolder)
     tempFolderMgr->remove(mSrcFolder);
@@ -151,11 +151,11 @@ void ActionScheduler::setDefaultDestinationFolder( KMFolder *destFolder )
 
 void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 {
-  srcFolder->open();
+  srcFolder->open("actionschedsrc");
   if (mSrcFolder) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
 		this, SLOT(msgAdded(KMFolder*, Q_UINT32)) );
-    mSrcFolder->close();
+    mSrcFolder->close("actionschedsrc");
   }
   mSrcFolder = srcFolder;
   int i = 0;
@@ -188,7 +188,7 @@ int ActionScheduler::tempOpenFolder( KMFolder* aFolder )
   if ( aFolder == mSrcFolder.operator->() )
     return 0;
 
-  int rc = aFolder->open();
+  int rc = aFolder->open("actionsched");
   if (rc)
     return rc;
 
@@ -203,7 +203,7 @@ void ActionScheduler::tempCloseFolders()
   for (it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it) {
     KMFolder *folder = *it;
     if (folder)
-      folder->close();
+      folder->close("actionsched");
   }
   mOpenFolders.clear();
 }

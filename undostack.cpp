@@ -88,7 +88,7 @@ void UndoStack::undo()
     UndoInfo *info = mStack.take(0);
     emit undoStackChanged();
     QValueList<ulong>::iterator itr;
-    KMFolderOpener openDestFolder(info->destFolder);
+    KMFolderOpener openDestFolder(info->destFolder, "undodest");
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;
       KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);

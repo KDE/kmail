@@ -504,9 +504,9 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
     return 0;
   }
 
-  f->open();
+  f->open("kolabcount");
   int n = f->count();
-  f->close();
+  f->close("kolabcount");
   kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( "
                 << resource << " ) returned " << n << endl;
   return n;
@@ -531,7 +531,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
     return aMap;
   }
 
-  f->open();
+  f->open( "incidences" );
 
   int stopIndex = nbMessages == -1 ? f->count() :
                   QMIN( f->count(), startIndex + nbMessages );
@@ -577,6 +577,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 #endif
     }
   }
+  f->close( "incidences" );
   return aMap;
 }
 
@@ -630,8 +631,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
 
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
-  if ( f  ) {
-    subResources.append( SubResource( f->location(),  f->prettyURL(),
+  if ( f ) {
+    subResources.append( SubResource( f->location(), f->prettyURL(),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
@@ -749,7 +750,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     return rc;
   }
 
-  f->open();
+  f->open( "ifaceupdate" );
 
   KMMessage* msg = 0;
   if ( sernum != 0 ) {
@@ -832,7 +833,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                             attachmentMimetypes );
   }
 
-  f->close();
+  f->close("ifaceupdate");
   return rc;
 }
 
@@ -1849,7 +1850,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
-  folder->open();
+  folder->open("ifacefolder");
   connectFolder( folder );
   return folder;
 }
@@ -1902,7 +1903,7 @@ KMFolder* KMailICalIfaceImpl::initScalixFolder( KMail::FolderContentsType conten
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
-  folder->open();
+  folder->open( "scalixfolder" );
   connectFolder( folder );
   return folder;
 }
@@ -1944,7 +1945,7 @@ static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
   if( folder ) {
     folder->setSystemFolder( false );
     folder->disconnect( _this );
-    folder->close();
+    folder->close("ifacefolder");
   }
 }
 
@@ -2131,7 +2132,7 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
   setStorageFormat( newFolder, folder ? storageFormat( folder ) : defaultFormat );
   newFolder->storage()->setContentsType( folderContentsType( contentsType ) );
   newFolder->storage()->writeConfig();
-  newFolder->open();
+  newFolder->open( "ical_subresource" );
   connectFolder( newFolder );
   reloadFolderTree();
 

@@ -139,12 +139,12 @@ bool FolderTreeBase::hideLocalInbox() const
   KMFolder *localInbox = kmkernel->inboxFolder();
   assert( localInbox );
   // check if it is empty
-  localInbox->open();
+  localInbox->open( "foldertreebase" );
   if ( localInbox->count() > 0 ) {
-    localInbox->close();
+    localInbox->close( "foldertreebase" );
     return false;
   }
-  localInbox->close();
+  localInbox->close( "foldertreebase" );
   // check if it has subfolders
   if ( localInbox->child() && !localInbox->child()->isEmpty() )
     return false;

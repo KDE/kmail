@@ -1,5 +1,5 @@
 /* This file is part of KMail
- * Copyright (C) 2005 Luís Pedro Coelho <luis@luispedro.org>
+ * Copyright (C) 2005 Luï¿½s Pedro Coelho <luis@luispedro.org>
  *
  * KMail is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as
@@ -325,7 +325,7 @@ void KMMsgIndex::act() {
 		mPendingFolders.pop_back();
 		if ( !mOpenedFolders.count( f ) ) {
 			mOpenedFolders.insert( f );
-			f->open();
+			f->open("msgindex");
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
 		KConfig* config = KMKernel::config();
@@ -345,7 +345,7 @@ void KMMsgIndex::act() {
 	for ( std::set<KMFolder*>::const_iterator first = mOpenedFolders.begin(), past = mOpenedFolders.end();
 			first != past;
 			++first ) {
-		( *first )->close();
+		( *first )->close("msgindex");
 	}
 	mOpenedFolders.clear();
 	mState = s_idle;

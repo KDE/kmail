@@ -278,7 +278,7 @@ public:
   virtual bool isAutoExpire() const { return false; }
 
   /** Closes and cancels all pending jobs. */
-  virtual void reallyDoClose();
+  virtual void reallyDoClose(const char* owner);
 
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
@@ -437,7 +437,7 @@ protected:
   /** See if all folders are still present on server, otherwise delete them */
   void checkFolders( const QStringList& folderNames, const QString& ns );
 
-  void finishMailCheck( imapState state );
+  void finishMailCheck( const char *func, imapState state );
 
 protected slots:
 

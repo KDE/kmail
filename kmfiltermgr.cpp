@@ -237,7 +237,7 @@ int KMFilterMgr::process( Q_UINT32 serNum, const KMFilter *filter )
     if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
       return 1;
     }
-    KMFolderOpener openFolder(folder);
+    KMFolderOpener openFolder(folder, "filtermgr");
     KMMsgBase *msgBase = folder->getMsgBase( idx );
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg( idx );
@@ -415,7 +415,7 @@ void KMFilterMgr::deref(bool force)
     return;
   QValueVector< KMFolder *>::const_iterator it;
   for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it )
-    (*it)->close();
+    (*it)->close("filtermgr");
   mOpenFolders.clear();
 }
 
@@ -425,7 +425,7 @@ int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 {
   assert( aFolder );
 
-  int rc = aFolder->open();
+  int rc = aFolder->open("filermgr");
   if (rc) return rc;
 
   mOpenFolders.append( aFolder );

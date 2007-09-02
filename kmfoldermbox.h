@@ -76,10 +76,10 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open();
+  virtual int open(const char *owner);
 
   /** @reimpl */
-  virtual void reallyDoClose();
+  virtual void reallyDoClose(const char *owner);
 
   virtual int canAccess();
 
