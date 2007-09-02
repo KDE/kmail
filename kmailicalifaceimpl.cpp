@@ -149,11 +149,15 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
-
-  mExtraFolders.setAutoDelete( true );
-  mAccumulators.setAutoDelete( true );
 }
 
+KMailICalIfaceImpl::~KMailICalIfaceImpl()
+{
+  qDeleteAll( mExtraFolders );
+  qDeleteAll( mAccumulators );
+  mAccumulators.clear();
+  mExtraFolders.clear();
+}
 
 /* libkcal part of the interface, called from the resources using this
  * when incidences are added or deleted */
@@ -580,7 +584,10 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   quint32 sernum = msg->getMsgSerNum();
 
   // do we have an accumulator for this folder?
-  Accumulator *ac = mAccumulators.find( parent->location() );
+#ifdef __GNUC__
+#warning Where is the value actually inserted??? --tmcguire
+#endif
+  Accumulator *ac = mAccumulators.value( parent->location(), 0 );
   if( ac ) {
     QString s;
     if ( !vPartFoundAndDecoded( msg, s ) ) return;
@@ -593,7 +600,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
       /* if this was the last one we were waiting for, tell the resource
        * about the new incidences and clean up. */
       //asyncLoadResult( ac->incidences, ac->type, ac->folder );
-      mAccumulators.remove( ac->folder ); // autodelete
+      delete mAccumulators.take( ac->folder );
     }
   } else {
     /* We are not accumulating for this folder, so this one was added
@@ -626,9 +633,9 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
 
   // get the extra ones
   const KMail::FolderContentsType t = folderContentsType( contentsType );
-  Q3DictIterator<ExtraFolder> it( mExtraFolders );
-  for ( ; it.current(); ++it ){
-    f = it.current()->folder;
+  QHash<QString, KMail::ExtraFolder*>::iterator it = mExtraFolders.begin();
+  for ( ; it != mExtraFolders.end(); ++it) {
+    f = it.value()->folder;
     if ( f && f->storage()->contentsType() == t ) {
       subResources.append( SubResource( f->location(), f->prettyUrl(),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
@@ -1103,7 +1110,7 @@ void KMailICalIfaceImpl::slotRefreshFolder( KMFolder* folder)
   if( mUseResourceIMAP && folder ) {
     if( folder == mCalendar || folder == mContacts
         || folder == mNotes || folder == mTasks
-        || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
+        || folder == mJournals || mExtraFolders.contains( folder->location() ) ) {
       // Refresh the folder of this type
       KMail::FolderContentsType ct = folder->storage()->contentsType();
       slotRefresh( s_folderContentsType[ct].contentsTypeStr );
@@ -1147,7 +1154,7 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
 bool KMailICalIfaceImpl::isResourceFolder( KMFolder* folder ) const
 {
   return mUseResourceIMAP && folder &&
-    ( isStandardResourceFolder( folder ) || mExtraFolders.find( folder->location() )!=0 );
+    ( isStandardResourceFolder( folder ) || mExtraFolders.contains( folder->location() ) );
 }
 
 bool KMailICalIfaceImpl::isStandardResourceFolder( KMFolder* folder ) const
@@ -1176,7 +1183,7 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
   if( mUseResourceIMAP && folder ) {
     if( folder == mCalendar || folder == mContacts
         || folder == mNotes || folder == mTasks
-        || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
+        || folder == mJournals || mExtraFolders.contains( folder->location() ) ) {
       KMail::FolderContentsType ct = folder->storage()->contentsType();
       return s_folderContentsType[ct].treeItemType;
     }
@@ -1296,7 +1303,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
   // Check if already know that 'extra folder'
   const QString location = folder->location();
-  ExtraFolder* ef = mExtraFolders.find( location );
+  ExtraFolder* ef = mExtraFolders.value( location, 0 );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
     QDBusMessage message =
@@ -1307,14 +1314,14 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
-      mExtraFolders.remove( location );
+      delete mExtraFolders.take( location );
       folder->disconnect( this );
       return;
     }
     // So the type changed to another groupware type, ok.
   } else {
     if ( ef && !ef->folder ) // deleted folder, clean up
-      mExtraFolders.remove( location );
+      delete mExtraFolders.take( location );
     if ( contentsType == 0 )
         return;
 
@@ -1362,7 +1369,7 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
   if ( t < 1 || t > 5 )
     return 0;
 
-  ExtraFolder* ef = mExtraFolders.find( folder );
+  ExtraFolder* ef = mExtraFolders.value( folder, 0 );
   if ( ef && ef->folder && ef->folder->storage()->contentsType() == t )
     return ef->folder;
 
@@ -1526,13 +1533,11 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
                                                     const QString &newLocation )
 {
   KMFolder *folder = findResourceFolder( oldLocation );
-  ExtraFolder* ef = mExtraFolders.find( oldLocation );
+  ExtraFolder* ef = mExtraFolders.value( oldLocation, 0 );
   if ( ef ) {
     // reuse the ExtraFolder entry, but adjust the key
-    mExtraFolders.setAutoDelete( false );
-    mExtraFolders.remove( oldLocation );
-    mExtraFolders.setAutoDelete( true );
-    mExtraFolders.insert( newLocation, ef );
+    ExtraFolder *changedFolder = mExtraFolders.take( oldLocation );
+    mExtraFolders.insert( newLocation, changedFolder );
   }
 
   if ( folder )
@@ -1561,7 +1566,7 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
     return mJournals;
 
   // No luck. Try the extrafolders
-  ExtraFolder* ef = mExtraFolders.find( resource );
+  ExtraFolder* ef = mExtraFolders.value( resource, 0 );
   if ( ef )
     return ef->folder;
 
@@ -1748,11 +1753,16 @@ void KMailICalIfaceImpl::readConfig()
 
   // If we just created them, they might have been registered as extra folders temporarily.
   // -> undo that.
-  mExtraFolders.remove( mCalendar->location() );
-  mExtraFolders.remove( mTasks->location() );
-  mExtraFolders.remove( mJournals->location() );
-  mExtraFolders.remove( mContacts->location() );
-  mExtraFolders.remove( mNotes->location() );
+  if ( mExtraFolders.contains( mCalendar->location() ) )
+    delete mExtraFolders.take( mCalendar->location() );
+  if ( mExtraFolders.contains( mTasks->location() ) )
+    delete mExtraFolders.take( mTasks->location() );
+  if ( mExtraFolders.contains( mJournals->location() ) )
+    delete mExtraFolders.take( mJournals->location() );
+  if ( mExtraFolders.contains( mContacts->location() ) )
+    delete mExtraFolders.take( mContacts->location() );
+  if ( mExtraFolders.contains( mNotes->location() ) )
+    delete mExtraFolders.take( mNotes->location() );
 
   // END TILL TODO
 
@@ -2116,7 +2126,8 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
   message << location;
   QDBusConnection::sessionBus().send(message);
 
-  mExtraFolders.remove( location );
+  if ( mExtraFolders.contains( location ) )
+    delete mExtraFolders.take( location );
   folder->disconnect( this );
 
   if ( folder->folderType() == KMFolderTypeImap )

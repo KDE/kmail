@@ -38,16 +38,17 @@
 #ifndef KMAILICALIFACEIMPL_H
 #define KMAILICALIFACEIMPL_H
 
-#include "kmfoldertype.h"
-#include <kfoldertree.h>
-
-#include <q3dict.h>
 #include <QPointer>
 #include <QMap>
-//Added by qt3to4:
 #include <QList>
-#include "groupwareadaptor.h"
+#include <QHash>
+
 #include <kurl.h>
+
+#include <kfoldertree.h>
+#include "groupwareadaptor.h"
+#include "kmfoldertype.h"
+
 class KMFolder;
 class KMMessage;
 class KMFolderDir;
@@ -85,7 +86,7 @@ class KMailICalIfaceImpl :public QObject {
   Q_OBJECT
 public:
   KMailICalIfaceImpl();
-
+  ~KMailICalIfaceImpl();
 
   bool isWritableFolder( const QString& type, const QString& resource );
 
@@ -295,9 +296,9 @@ private:
 
   // The extra IMAP resource folders
   // Key: folder location. Data: folder.
-  Q3Dict<KMail::ExtraFolder> mExtraFolders;
+  QHash<QString, KMail::ExtraFolder*> mExtraFolders;
   // used for collecting incidences during async loading
-  Q3Dict<KMail::Accumulator> mAccumulators;
+  QHash<QString, KMail::Accumulator*> mAccumulators;
   // More info for each folder we care about (mContacts etc. as well as the extra folders)
   // The reason for storing it here is that it can be shared between
   // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.
