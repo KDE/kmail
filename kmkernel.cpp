@@ -874,7 +874,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
 
         int i;
 
-        mAddMsgCurrentFolder->open();
+        mAddMsgCurrentFolder->open("dcopadd");
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
           KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
 	  QString id = mb->msgIdMD5();
@@ -893,7 +893,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
             mAddMessageMsgIds.append(id);
           }
         }
-        mAddMsgCurrentFolder->close();
+        mAddMsgCurrentFolder->close("dcopadd");
       }
 
       QString msgId = msg->msgIdMD5();
@@ -1109,7 +1109,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (!folder || (idx == -1))
       return false;
-    KMFolderOpener openFolder(folder);
+    KMFolderOpener openFolder(folder, "showmail");
     KMMsgBase *msgBase = folder->getMsgBase(idx);
     if (!msgBase)
       return false;
@@ -1139,7 +1139,7 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
     return QString::null;
-  KMFolderOpener openFolder(folder);
+  KMFolderOpener openFolder(folder, "getFrom");
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (!msgBase)
     return QString::null;
@@ -1169,7 +1169,7 @@ QString KMKernel::debugSernum( Q_UINT32 serialNumber )
     // different folder
     if (folder && (idx != -1)) {
       // everything is ok
-      KMFolderOpener openFolder(folder);
+      KMFolderOpener openFolder(folder, "debugser");
       msg = folder->getMsgBase( idx );
       if (msg) {
         res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
@@ -1340,7 +1340,7 @@ void KMKernel::recoverDeadLetters()
     return;
 
   KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  KMFolderOpener openFolder( &folder );
+  KMFolderOpener openFolder( &folder, "recover" );
   if ( !folder.isOpened() ) {
     perror( "cannot open autosave folder" );
     return;
@@ -1399,7 +1399,7 @@ void KMKernel::initFolders(KConfig* cfg)
    * the index on each start to be on the save side. */
   //if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
   //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
-  the_outboxFolder->open();
+  the_outboxFolder->open("kmkernel");
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
   if (the_sentFolder->canAccess() != 0) {
@@ -1426,7 +1426,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_draftsFolder->setSystemFolder( true );
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString::null );
-  the_draftsFolder->open();
+  the_draftsFolder->open("kmkernel");
 
   the_templatesFolder =
     the_folderMgr->findOrCreate( cfg->readEntry( "templatesFolder",
@@ -1437,7 +1437,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_templatesFolder->setSystemFolder( true );
   if ( the_templatesFolder->userWhoField().isEmpty() )
     the_templatesFolder->setUserWhoField( QString::null );
-  the_templatesFolder->open();
+  the_templatesFolder->open("kmkernel");
 }
 
 
@@ -1586,7 +1586,7 @@ void KMKernel::cleanupImapFolders()
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
-    fld->close();
+    fld->close( "kernel", true );
   }
   the_imapFolderMgr->quiet(false);
 
@@ -1617,7 +1617,7 @@ void KMKernel::cleanupImapFolders()
     cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
     cfld->setAccount(cachedImapAcct);
     cachedImapAcct->setImapFolder(cfld);
-    cfld->close();
+    cfld->close("kmkernel");
   }
   the_dimapFolderMgr->quiet( false );
 }
@@ -1681,7 +1681,7 @@ void KMKernel::cleanup(void)
 
   if (the_trashFolder) {
 
-    the_trashFolder->close(true);
+    the_trashFolder->close("kmkernel", true);
 
     if (config->readBoolEntry("empty-trash-on-exit", true))
     {
@@ -1700,7 +1700,7 @@ void KMKernel::cleanup(void)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    folder->close(true);
+    folder->close("kmkernel", true);
   }
   strList.clear();
   folders.clear();
@@ -1709,7 +1709,7 @@ void KMKernel::cleanup(void)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    folder->close(true);
+    folder->close("kmkernel", true);
   }
 
   delete the_msgIndex;

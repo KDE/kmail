@@ -59,7 +59,7 @@ KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMaildir::~KMFolderMaildir()
 {
-  if (mOpenCount>0) close(true);
+  if (mOpenCount>0) close("~foldermaildir", true);
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
@@ -97,7 +97,7 @@ int KMFolderMaildir::canAccess()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::open()
+int KMFolderMaildir::open(const char *)
 {
   int rc = 0;
 
@@ -220,7 +220,7 @@ int KMFolderMaildir::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMaildir::reallyDoClose()
+void KMFolderMaildir::reallyDoClose(const char* owner)
 {
   if (mAutoCreateIndex)
   {
@@ -230,10 +230,10 @@ void KMFolderMaildir::reallyDoClose()
 
   mMsgList.clear(true);
 
-    if (mIndexStream) {
-	fclose(mIndexStream);
-	updateIndexStreamPtr(true);
-    }
+  if (mIndexStream) {
+    fclose(mIndexStream);
+    updateIndexStreamPtr(true);
+  }
 
   mOpenCount   = 0;
   mIndexStream = 0;
@@ -366,7 +366,6 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
   long len;
   unsigned long size;
-  bool opened = false;
   KMFolder* msgParent;
   QCString msgText;
   int idx(-1);
@@ -418,7 +417,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
   QFile file(tmp_file);
   size = msgText.length();
 
-  KMFolderOpener openThis(folder(), &rc);
+  KMFolderOpener openThis(folder(), "maildir");
+  rc = openThis.openResult();
   if (rc)
   {
     kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;

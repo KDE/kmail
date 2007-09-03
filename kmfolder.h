@@ -283,7 +283,7 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  int open();
+  int open(const char *owner);
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
@@ -291,7 +291,7 @@ public:
 
   /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  void close(bool force=false);
+  void close(const char *owner, bool force=false);
 
   /** fsync buffers to disk */
   void sync();
@@ -651,42 +651,40 @@ private:
   KShortcut mShortcut;
 };
 
+
 /**
    RAII for KMFolder::open() / close().
 
    Usage: const KMFolderOpener opener( folder );
 */
-/* This class is kept very lightweight to encourage its use. Any more comfort
-   would need another data element and slightly more code, so consider carefully
-   if you want that. */
-class KMFolderOpener
-{
-  KMFolder * f;
+class KMFolderOpener {
+  KMFolder* mFolder;
+  const char* const mOwner;
+  int mOpenRc;
+
 public:
-  inline KMFolderOpener( KMFolder * folder )
-   : f( folder )
+  KMFolderOpener( KMFolder* folder, const char* const owner )
+   : mFolder( folder )
+   , mOwner( owner )
   {
-    assert( f ); //feel free to put a standard null guard here if it suits you better
-    if (f->open())
-      f = 0;
+    assert( folder ); //change if that's not what you want
+    mOpenRc = folder->open( owner );
   }
 
-  //if you want the return value of open()
-  inline KMFolderOpener( KMFolder * folder, int * openReturnCode )
-    : f( folder )
+  ~KMFolderOpener()
   {
-    assert( f ); //feel free to put a standard null guard here if it suits you better
-    int openRc = f->open();
-    *openReturnCode = openRc;
-    if (openRc)
-      f = 0;
+    if ( !mOpenRc )
+      mFolder->close( mOwner );
   }
 
-  inline ~KMFolderOpener()
-  {
-    if (f)
-      f->close();
-  }
+  KMFolder* folder() const { return mFolder; }
+
+  int openResult() const { return mOpenRc; }
+
+private:
+  //we forbid construction on the heap as good as we can
+  void* operator new( size_t size );
 };
+
 
 #endif /*kmfolder_h*/

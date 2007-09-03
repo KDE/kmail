@@ -217,12 +217,12 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
-void KMFolderCachedImap::reallyDoClose()
+void KMFolderCachedImap::reallyDoClose( const char* owner )
 {
   if( !mFolderRemoved ) {
     writeUidCache();
   }
-  KMFolderMaildir::reallyDoClose();
+  KMFolderMaildir::reallyDoClose( owner );
 }
 
 void KMFolderCachedImap::initializeFrom( KMFolderCachedImap* parent )
@@ -452,7 +452,7 @@ void KMFolderCachedImap::reloadUidMap()
 {
   //kdDebug(5006) << "Reloading Uid Map " << endl;
   uidMap.clear();
-  open();
+  open("reloadUdi");
   for( int i = 0; i < count(); ++i ) {
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue;
@@ -460,7 +460,7 @@ void KMFolderCachedImap::reloadUidMap()
     //kdDebug(5006) << "Inserting: " << i << " with uid: " << uid << endl;
     uidMap.insert( uid, i );
   }
-  close();
+  close("reloadUdi");
   uidMapDirty = false;
 }
 
@@ -814,7 +814,7 @@ void KMFolderCachedImap::serverSyncInternal()
     foldersForDeletionOnServer.clear();
     newState( mProgress, i18n("Synchronizing"));
 
-    open();
+    open("cachedimap");
     if ( !noContent() )
         mAccount->addLastUnreadMsgCount( this, countUnread() );
 
@@ -825,7 +825,7 @@ void KMFolderCachedImap::serverSyncInternal()
       // kdDebug(5006) << "makeConnection said Error, aborting." << endl;
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
       newState( mProgress, i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
-      close();
+      close("cachedimap");
       emit folderComplete(this, false);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
@@ -1246,7 +1246,7 @@ void KMFolderCachedImap::serverSyncInternal()
       if( mSubfoldersForSync.isEmpty() ) {
         mSyncState = SYNC_STATE_INITIAL;
         mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
-        close();
+        close("cachedimap");
         emit folderComplete( this, true );
       } else {
         mCurrentSubfolder = mSubfoldersForSync.front();
@@ -1925,7 +1925,7 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
         f->setImapPath( mAccount->addPathToNamespace( name ) );
         f->setNoContent( true );
         f->setAccount( mAccount );
-        f->close();
+        f->close("cachedimap");
         kmkernel->dimapFolderMgr()->contentsChanged();
       }
     }
@@ -2067,7 +2067,7 @@ void KMFolderCachedImap::listDirectory2()
     }
     if (!node) {
       if ( f )
-        f->close();
+        f->close("cachedimap");
       kmkernel->dimapFolderMgr()->contentsChanged();
     }
     // so we have an INBOX
@@ -2174,7 +2174,7 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing( const QValueV
     if (newFolder) {
       KMFolderCachedImap *f = dynamic_cast<KMFolderCachedImap*>(newFolder->storage());
       kdDebug(5006) << " ####### Locally creating folder " << mSubfolderNames[idx] <<endl;
-      f->close();
+      f->close("cachedimap");
       f->setAccount(mAccount);
       f->mAnnotationFolderType = "FROMSERVER";
       f->setNoContent(mSubfolderMimeTypes[idx] == "inode/directory");
@@ -2246,7 +2246,7 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
 
     mSubfoldersForSync.clear();
     mSyncState = SYNC_STATE_INITIAL;
-    close();
+    close("cachedimap");
     emit folderComplete( this, false );
   }
 }
@@ -2388,7 +2388,7 @@ void KMFolderCachedImap::resetSyncState()
   if ( mSyncState == SYNC_STATE_INITIAL ) return;
   mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
-  close();
+  close("cachedimap");
   // Don't use newState here, it would revert to mProgress (which is < current value when listing messages)
   KPIM::ProgressItem *progressItem = mAccount->mailCheckProgressItem();
   QString str = i18n("Aborted");
@@ -2924,7 +2924,7 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
   kdDebug() << k_funcinfo << folder << " " << root << endl;
   if ( root )
     mToBeDeletedAfterRescue.append( folder );
-  folder->open();
+  folder->open("cachedimap");
   KMFolderCachedImap* storage = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
   if ( storage ) {
     KMCommand *command = storage->rescueUnsyncedMessages();
@@ -2935,7 +2935,7 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
     } else {
       // nothing to rescue, close folder
       // (we don't need to close it in the other case, it will be deleted anyway)
-      folder->close();
+      folder->close("cachedimap");
     }
   }
   if ( folder->child() ) {

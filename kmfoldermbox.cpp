@@ -84,12 +84,14 @@ KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMbox::~KMFolderMbox()
 {
-  if (mOpenCount>0) close(true);
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+  if (mOpenCount>0)
+    close("~kmfoldermbox", true);
+  if (kmkernel->undoStack())
+    kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::open()
+int KMFolderMbox::open(const char *owner)
 {
   int rc = 0;
 
@@ -253,7 +255,7 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::reallyDoClose()
+void KMFolderMbox::reallyDoClose(const char* owner)
 {
   if (mAutoCreateIndex)
   {
@@ -933,7 +935,8 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   bool editing = false;
   int growth = 0;
 
-  KMFolderOpener openThis(folder(), &rc);
+  KMFolderOpener openThis(folder(), "mboxaddMsg");
+  rc = openThis.openResult();
   if (rc)
   {
     kdDebug(5006) << "KMFolderMbox::addMsg-open: " << rc << " of folder: " << label() << endl;
@@ -1227,7 +1230,7 @@ int KMFolderMbox::compact( bool silent )
 
   if (openCount > 0)
   {
-    open();
+    open("mboxcompact");
     mOpenCount = openCount;
   }
   // If this is the current folder, the changed signal will ultimately call

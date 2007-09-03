@@ -160,7 +160,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
     return;
   }
 
-  const int rc = mMailFolder->open();
+  const int rc = mMailFolder->open("acctlocalMail");
   if ( rc != 0 ) {
     QString aStr;
     aStr = i18n("Cannot open file:");
@@ -175,7 +175,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
 
   if (!mMboxStorage->isLocked()) {
     kdDebug(5006) << "mailFolder could not be locked" << endl;
-    mMailFolder->close();
+    mMailFolder->close("acctlocalMail");
     checkDone( mHasNewMail, CheckError );
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mMailFolder->location() );
@@ -184,7 +184,7 @@ void KMAcctLocal::continuePreProcess( bool precommandSuccess )
     return;
   }
 
-  mFolder->open();
+  mFolder->open("acctlocalFold");
 
   mNumMsgs = mMailFolder->count();
 
@@ -274,10 +274,10 @@ void KMAcctLocal::postProcess()
   }
   // else warning is written already
 
-  mMailFolder->close();
+  mMailFolder->close("acctlocalMail");
   delete mMailFolder; mMailFolder = 0;
 
-  mFolder->close();
+  mFolder->close("acctlocalFold");
 
   checkDone( mHasNewMail, CheckOK );
 }

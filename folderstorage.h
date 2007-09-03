@@ -255,17 +255,17 @@ public:
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno).
     @see KMFolderOpener */
-  virtual int open() = 0;
+  virtual int open(const char* owner) = 0;
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
   virtual int canAccess() = 0;
 
   /** Close folder. open() and close() use reference counting.
-    If @p force is TRUE the files are closed regardless of reference count,
+    If @p force is true the files are closed regardless of reference count,
     and the reference count will be set to zero. */
-  void close(bool force=false);
-  virtual void reallyDoClose() = 0;
+  void close(const char* owner, bool force=false);
+  virtual void reallyDoClose(const char* owner) = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry. */

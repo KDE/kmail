@@ -103,7 +103,7 @@ public:
   virtual ~KMFolderCachedImap();
 
   /**  @reimpl */
-  void reallyDoClose();
+  void reallyDoClose(const char* owner);
 
   /** Initialize this storage from another one. Used when creating a child folder */
   void initializeFrom( KMFolderCachedImap* parent );

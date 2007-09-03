@@ -97,14 +97,14 @@ FolderStorage::~FolderStorage()
 }
 
 
-void FolderStorage::close( bool aForced )
+void FolderStorage::close( const char* owner, bool aForced )
 {
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
 
   // kdWarning() << "Really closing: " << folder()->prettyURL()  << kdBacktrace() << endl;
-  reallyDoClose();
+  reallyDoClose(owner);
 }
 
 //-----------------------------------------------------------------------------
@@ -609,14 +609,14 @@ int FolderStorage::moveMsg(KMMessage* aMsg, int* aIndex_ret)
   KMFolder* msgParent = aMsg->parent();
 
   if (msgParent)
-    msgParent->open();
+    msgParent->open("moveMsgSrc");
 
-  open();
+  open("moveMsgDest");
   int rc = addMsg(aMsg, aIndex_ret);
-  close();
+  close("moveMsgDest");
 
   if (msgParent)
-    msgParent->close();
+    msgParent->close("moveMsgSrc");
 
   return rc;
 }
@@ -629,18 +629,18 @@ int FolderStorage::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
   KMFolder* msgParent = aMsg->parent();
 
   if (msgParent)
-    msgParent->open();
+    msgParent->open("foldermovemsg");
 
   QValueList<int> index;
-  open();
+  open("moveMsg");
   int rc = addMsg(msglist, index);
-  close();
+  close("moveMsg");
   // FIXME: we want to have a QValueList to pass it back, so change this method
   if ( !index.isEmpty() )
     aIndex_ret = &index.first();
 
   if (msgParent)
-    msgParent->close();
+    msgParent->close("foldermovemsg");
 
   return rc;
 }
@@ -663,7 +663,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
   QString oldConfigString = "Folder-" + folder()->idString();
 
-  close(true);
+  close("rename", true);
 
   oldName = folder()->fileName();
   oldParent = folder()->parent();
@@ -724,7 +724,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
 
   if (openCount > 0)
   {
-    open();
+    open("rename");
     mOpenCount = openCount;
   }
   writeConfig();
@@ -746,7 +746,7 @@ void FolderStorage::remove()
   assert(!folder()->name().isEmpty());
 
   clearIndex( true, mExportsSernums ); // delete and remove from dict if necessary
-  close(true);
+  close("remove", true);
 
   if ( mExportsSernums ) {
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
@@ -775,7 +775,7 @@ int FolderStorage::expunge()
   assert(!folder()->name().isEmpty());
 
   clearIndex( true, mExportsSernums );   // delete and remove from dict, if needed
-  close( true );
+  close( "expunge", true );
 
   if ( mExportsSernums )
     KMMsgDict::mutableInstance()->removeFolderIds( *this );
@@ -791,7 +791,7 @@ int FolderStorage::expunge()
 
   if (openCount > 0)
   {
-    open();
+    open("expunge");
     mOpenCount = openCount;
   }
 
@@ -834,9 +834,9 @@ int FolderStorage::countUnread()
   if (mUnreadMsgs > -1)
     return mUnreadMsgs;
 
-  open(); // will update unreadMsgs
+  open("countunread"); // will update unreadMsgs
   int unread = mUnreadMsgs;
-  close();
+  close("countunread");
   return (unread > 0) ? unread : 0;
 }
 
@@ -952,8 +952,8 @@ void FolderStorage::writeConfig()
 //-----------------------------------------------------------------------------
 void FolderStorage::correctUnreadMsgsCount()
 {
-  open();
-  close();
+  open("countunreadmsg");
+  close("countunreadmsg");
   emit numUnreadMsgsChanged( folder() );
 }
 
@@ -1131,7 +1131,7 @@ void FolderStorage::slotProcessNextSearchBatch()
 {
   if ( !mSearchPattern ) return;
   QValueList<Q_UINT32> matchingSerNums;
-  int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
+  int end = ( count() - mCurrentSearchedMsg > 15 ) ? 15+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
     Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
