@@ -149,11 +149,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 foldertreebase.cpp \
                 scalix.cpp
 
-libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
-
 kmail_SOURCES = main.cpp
-
-kmail_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel  kmail_part.cpp
 
