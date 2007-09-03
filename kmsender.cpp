@@ -213,7 +213,7 @@ void KMSender::outboxMsgAdded( int idx )
 }
 
 //-----------------------------------------------------------------------------
-bool KMSender::doSendQueued( int customTransportId  )
+bool KMSender::doSendQueued( const QString &customTransport )
 {
   if ( !settingsOk() ) {
     return false;
@@ -247,7 +247,7 @@ bool KMSender::doSendQueued( int customTransportId  )
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
-  mCustomTransport = customTransportId;
+  mCustomTransport = customTransport;
   doSendMsg();
   return true;
 }
@@ -523,23 +523,15 @@ void KMSender::doSendMsg()
     mSendInProgress = true;
   }
 
-  int msgTransport = mCustomTransport;
-  if ( msgTransport == -1 ) {
-    QString transportField = mCurrentMsg->headerField( "X-KMail-Transport" );
-    if ( !transportField.isEmpty() )
-      msgTransport = transportField.toInt();
-  }
-  if ( msgTransport == -1 ) {
-    msgTransport = TransportManager::self()->defaultTransportId();
-  }
+  QString msgTransport = mCustomTransport;
+  if ( msgTransport.isEmpty() )
+    msgTransport = mCurrentMsg->headerField( "X-KMail-Transport" );
+
+  if ( msgTransport.isEmpty() )
+    msgTransport = TransportManager::self()->defaultTransportName();
 
   if ( !mTransportJob ) {
-    Transport *transport = TransportManager::self()->transportById( msgTransport );
-    if ( transport )
-      mMethodStr = transport->name();
-    else
-      mMethodStr = QString::number( msgTransport );
-
+    mMethodStr = msgTransport;
     mTransportJob = TransportManager::self()->createTransportJob( msgTransport );
     if ( !mTransportJob ) {
       KMessageBox::error( 0, i18n( "Transport '%1' is invalid.", mMethodStr ),
@@ -553,7 +545,7 @@ void KMSender::doSendMsg()
     if ( mTransportJob->transport()->encryption() == Transport::EnumEncryption::TLS ||
          mTransportJob->transport()->encryption() == Transport::EnumEncryption::SSL ) {
       mProgressItem->setUsesCrypto( true );
-    } else if ( mCustomTransport != -1 ) {
+    } else if ( !mCustomTransport.isEmpty() ) {
       int result = KMessageBox::warningContinueCancel(
         0,
         i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),

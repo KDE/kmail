@@ -65,7 +65,7 @@ protected:
   /** Send queued messages, using the specified transport or the
    * default, if none is given.
    */
-  bool doSendQueued( int customTransportId = -1 );
+  bool doSendQueued( const QString& transport=QString() );
 
 private:
   /** Returns true if sending is in progress. */
@@ -127,7 +127,7 @@ private:
 
   MailTransport::TransportJob* mTransportJob;
 
-  int mCustomTransport;
+  QString mCustomTransport;
   bool mSentOk, mSendAborted;
   QString mErrorMsg;
   QString mMethodStr;

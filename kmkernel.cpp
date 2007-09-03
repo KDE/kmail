@@ -2253,22 +2253,22 @@ KMail::MessageSender * KMKernel::msgSender() { return the_msgSender; }
 
 void KMKernel::transportRemoved(int id, const QString & name)
 {
-  Q_UNUSED( name );
+  Q_UNUSED( id );
 
   // reset all identities using the deleted transport
   QStringList changedIdents;
   KPIMIdentities::IdentityManager * im = identityManager();
   for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
-    if ( id == (*it).transport() ) {
-      (*it).setTransport( -1 );
+    if ( name == (*it).transport() ) {
+      (*it).setTransport( QString() );
       changedIdents += (*it).identityName();
     }
   }
 
   // if the deleted transport is the currently used transport reset it to default
-  int currentTransport = GlobalSettings::self()->currentTransport();
-  if ( id == currentTransport )
-    GlobalSettings::self()->setCurrentTransport( -1 );
+  const QString& currentTransport = GlobalSettings::self()->currentTransport();
+  if ( name == currentTransport )
+    GlobalSettings::self()->setCurrentTransport( QString() );
 
   if ( !changedIdents.isEmpty() ) {
     QString information = i18np( "This identity has been changed to use the default transport:",
@@ -2281,14 +2281,16 @@ void KMKernel::transportRemoved(int id, const QString & name)
 
 void KMKernel::transportRenamed(int id, const QString & oldName, const QString & newName)
 {
-  Q_UNUSED( oldName );
-  Q_UNUSED( newName );
+  Q_UNUSED( id );
 
   QStringList changedIdents;
   KPIMIdentities::IdentityManager * im = identityManager();
-  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it )
-    if ( id == (*it).transport() )
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( oldName == (*it).transport() ) {
+      (*it).setTransport( newName );
       changedIdents << (*it).identityName();
+    }
+  }
 
   if ( !changedIdents.isEmpty() ) {
     QString information =

@@ -1939,9 +1939,7 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 
   QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
   if (availTransports.contains(item->text()))
-    kmkernel->msgSender()->sendQueued(
-            MailTransport::TransportManager::self()->transportByName(
-                 item->text() )->id() );
+    kmkernel->msgSender()->sendQueued( item->text() );
 }
 
 //-----------------------------------------------------------------------------

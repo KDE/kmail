@@ -13,8 +13,6 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
 #include <kpimutils/kfileio.h>
 #include <mimelib/message.h>
 #include "kmfawidgets.h"
@@ -635,12 +633,7 @@ KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg) cons
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-  MailTransport::Transport *transport =
-      MailTransport::TransportManager::self()->transportByName( mParameter );
-  if ( transport )
-    msg->setHeaderField( "X-KMail-Transport", QString::number( transport->id() ) );
-  else
-    kWarning(5006) << "Transport" << mParameter << "invalid!";
+  msg->setHeaderField( "X-KMail-Transport", mParameter );
   return GoOn;
 }
 

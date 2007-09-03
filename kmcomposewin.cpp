@@ -76,6 +76,7 @@ using KRecentAddress::RecentAddresses;
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
 using MailTransport::TransportManager;
+using MailTransport::Transport;
 
 #include <gpgme++/context.h>
 #include <gpgme++/key.h>
@@ -615,7 +616,7 @@ void KMComposeWin::readConfig( void )
   }
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
-  int currentTransport = GlobalSettings::self()->currentTransport();
+  QString currentTransport = GlobalSettings::self()->currentTransport();
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
@@ -664,8 +665,12 @@ void KMComposeWin::readConfig( void )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  if ( mBtnTransport->isChecked() && currentTransport != -1 )
-    mTransport->setCurrentTransport( currentTransport );
+  if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
+    Transport *transport =
+        TransportManager::self()->transportByName( currentTransport );
+    if ( transport )
+      mTransport->setCurrentTransport( transport->id() );
+  }
 
   QString fccName = "";
   if ( mBtnFcc->isChecked() ) {
@@ -685,7 +690,7 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
   GlobalSettings::self()->setStickyFcc( mBtnFcc->isChecked() );
   GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
-  GlobalSettings::self()->setCurrentTransport( mTransport->currentTransportId() );
+  GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
@@ -1865,9 +1870,13 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
                           !ident.pgpEncryptionKey().isEmpty() );
 
-  QString transportId = newMsg->headerField("X-KMail-Transport");
-  if ( !mBtnTransport->isChecked() && !transportId.isEmpty() )
-    mTransport->setCurrentTransport( transportId.toInt() );
+  QString transportName = newMsg->headerField("X-KMail-Transport");
+  if ( !mBtnTransport->isChecked() && !transportName.isEmpty() ) {
+    Transport *transport =
+        TransportManager::self()->transportByName( transportName );
+    if ( transport )
+      mTransport->setCurrentTransport( transport->id() );
+  }
 
   if ( !mBtnFcc->isChecked() ) {
     if ( !mMsg->fcc().isEmpty() ) {
@@ -4513,15 +4522,17 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   }
 
   if ( !mBtnTransport->isChecked() ) {
-    int transportId = ident.transport();
-    if ( transportId == -1 ) {
+    QString transportName = ident.transport();
+    Transport *transport =
+        TransportManager::self()->transportByName( transportName, false );
+    if ( !transport ) {
       mMsg->removeHeaderField( "X-KMail-Transport" );
       mTransport->setCurrentTransport(
                                TransportManager::self()->defaultTransportId() );
     }
     else {
-      mMsg->setHeaderField( "X-KMail-Transport", QString::number( transportId ) );
-      mTransport->setCurrentTransport( transportId );
+      mMsg->setHeaderField( "X-KMail-Transport", transportName );
+      mTransport->setCurrentTransport( transport->id() );
     }
   }
 

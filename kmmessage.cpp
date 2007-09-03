@@ -1651,10 +1651,10 @@ void KMMessage::applyIdentity( uint id )
   else
     setHeaderField("X-KMail-Identity", QString::number( ident.uoid() ));
 
-  if (ident.transport() == -1)
+  if (ident.transport().isEmpty())
     removeHeaderField("X-KMail-Transport");
   else
-    setHeaderField("X-KMail-Transport", QString::number(ident.transport()));
+    setHeaderField("X-KMail-Transport", ident.transport());
 
   if (ident.fcc().isEmpty())
     setFcc( QString() );

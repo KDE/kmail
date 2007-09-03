@@ -645,12 +645,13 @@ namespace KMail {
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );
     mBccEdit->setText( ident.bcc() );
-    int transport = ident.transport();
-    if ( !TransportManager::self()->transportIds().contains( transport ) )
-      transport = -1;
-    mTransportCheck->setChecked( transport != -1 );
-    mTransportCombo->setCurrentTransport( transport );
-    mTransportCombo->setEnabled( transport != -1 );
+    QString transportName = ident.transport();
+    Transport *transport =
+              TransportManager::self()->transportByName( transportName, false );
+    mTransportCheck->setChecked( transport != 0 );
+    mTransportCombo->setEnabled( transport != 0 );
+    if ( transport )
+      mTransportCombo->setCurrentTransport( transport->id() );
     mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
     if ( ident.fcc().isEmpty() ||
@@ -714,8 +715,8 @@ namespace KMail {
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
-    ident.setTransport( mTransportCheck->isChecked() ?
-                        mTransportCombo->currentTransportId() : -1 );
+    ident.setTransport( ( mTransportCheck->isChecked() ) ?
+                          mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionary() );
     ident.setFcc( mFccCombo->folder() ?
                   mFccCombo->folder()->idString() : QString() );
