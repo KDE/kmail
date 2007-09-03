@@ -156,7 +156,7 @@ void PopAccount::processNewMail(bool _interactive)
     QString seenUidList = KStandardDirs::locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
                                        mHost + ':' + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
-    KConfigGroup group( &config, "General" );
+    KConfigGroup group( &config, "<default>" );
     QStringList uidsOfSeenMsgs = group.readEntry( "seenUidList" , QStringList() );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.reserve( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
@@ -821,7 +821,7 @@ void PopAccount::saveUidList()
   QString seenUidList = KStandardDirs::locateLocal( "data", "kmail/" + mLogin + ':' + '@' +
                                       mHost + ':' + QString::number( mPort ) );
   KConfig config( seenUidList );
-  KConfigGroup group( &config, "General" );
+  KConfigGroup group( &config, "<default>" );
   group.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   group.writeEntry( "seenUidTimeList", seenUidTimeList );
   QByteArray laterList;

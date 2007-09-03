@@ -71,7 +71,7 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
                                             QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums =
-      config.group("Default").readEntry( "unfiltered" , QStringList() );
+      config.group("<default>").readEntry( "unfiltered" , QStringList() );
 
   for ( QStringList::ConstIterator it = serNums.begin();
 	it != serNums.end(); ++it ) {
@@ -94,7 +94,7 @@ KMAcctImap::~KMAcctImap()
   while ( it.hasNext() ) {
     serNums.append( it.key() );
   }
-  config.group("Default").writeEntry( "unfiltered", serNums );
+  config.group("<default>").writeEntry( "unfiltered", serNums );
   qDeleteAll( mOpenFolders );
 }
 
