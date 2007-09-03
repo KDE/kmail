@@ -51,11 +51,6 @@ link_DATA = application_octetstream.desktop
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_LDADD   = libkmailprivate.la
-kmail_COMPILE_FIRST = templatesconfiguration_base.h
-
-$(srcdir)/customtemplates.h: customtemplates_base.h
-$(srcdir)/globalsettings.h: globalsettings_base.h
-$(srcdir)/templatesconfiguration.h: templatesconfiguration_base.h
 
 libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
@@ -153,7 +148,7 @@ kmail_SOURCES = main.cpp
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel  kmail_part.cpp
 
-libkmailpart_la_COMPILE_FIRST = templatesconfiguration_base.h
+libkmailpart_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
 check_PROGRAMS = dcoptest recipienteditortest
 
