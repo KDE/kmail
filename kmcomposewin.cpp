@@ -723,7 +723,7 @@ void KMComposeWin::autoSaveMessage()
 void KMComposeWin::slotContinueAutoSave()
 {
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueAutoSave( bool ) ) );
+              this, SLOT( slotContinueAutoSave() ) );
 
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
