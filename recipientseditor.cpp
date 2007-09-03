@@ -773,9 +773,9 @@ void SideWidget::updateTotalToolTip()
     }
   }
 
-  text += i18n("<b>To:</b><br>") + to;
-  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br>") + cc;
-  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br>") + bcc;
+  text += i18n("<b>To:</b><br/>") + to;
+  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br/>") + cc;
+  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br/>") + bcc;
 
   text.append( "</qt>" );
   mTotalLabel->setToolTip( text );
