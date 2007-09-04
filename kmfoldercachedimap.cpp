@@ -1663,9 +1663,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
     const int indexOfFlags = entry.indexOf("X-Flags", startOfLengthValue ); // we know flags comes last
     const int startOfFlagsValue = indexOfFlags + 9;
 
-    const int flags = entry.mid( startOfFlagsValue, entry.find( '\r', startOfFlagsValue ) - startOfFlagsValue ).toInt();
-    const ulong size = entry.mid( startOfLengthValue, entry.find( '\r', startOfLengthValue ) - startOfLengthValue ).toULong();
-    const ulong uid = entry.mid( startOfUIDValue, entry.find( '\r', startOfUIDValue ) - startOfUIDValue ).toULong();
+    const int flags = entry.mid( startOfFlagsValue, entry.indexOf( '\r', startOfFlagsValue ) - startOfFlagsValue ).toInt();
+    const ulong size = entry.mid( startOfLengthValue, entry.indexOf( '\r', startOfLengthValue ) - startOfLengthValue ).toULong();
+    const ulong uid = entry.mid( startOfUIDValue, entry.indexOf( '\r', startOfUIDValue ) - startOfUIDValue ).toULong();
 
     const bool deleted = ( flags & 8 );
 
