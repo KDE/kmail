@@ -45,7 +45,7 @@ public:
    */
   bool usePipelining(void) const { return mUsePipelining; }
   virtual void setUsePipelining(bool);
-
+ 
   /**
    * Shall messages be left on the server upon retreival (TRUE)
    * or deleted (FALSE).
@@ -170,11 +170,6 @@ protected:
   int dataCounter;
 
 protected slots:
-  /**
-   * Continue the job after precommand was executed
-   */
-  void continueJob( bool precommandSuccess );
-
   /**
    * Messages are downloaded in the background and then once every x seconds
    * a batch of messages are processed. Messages are processed in batches to

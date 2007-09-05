@@ -367,20 +367,14 @@ void PopAccount::slotAbortRequested()
 void PopAccount::startJob()
 {
   // Run the precommand
-  connect( this, SIGNAL(precommandExited(bool)), SLOT(continueJob(bool)) );
-  startPrecommand(precommand());
-}
-
-void PopAccount::continueJob( bool precommandSuccess )
-{
-  if ( !precommandSuccess )
-  {
-    KMessageBox::sorry(0,
-                       i18n("Could not execute precommand: %1").arg(precommand()),
-                       i18n("KMail Error Message"));
-    checkDone( false, CheckError );
-    return;
-  }
+  if (!runPrecommand(precommand()))
+    {
+      KMessageBox::sorry(0,
+                         i18n("Could not execute precommand: %1").arg(precommand()),
+                         i18n("KMail Error Message"));
+      checkDone( false, CheckError );
+      return;
+    }
   // end precommand code
 
   KURL url = getUrl();
