@@ -130,7 +130,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
                       "file. This will take some time to rebuild, but will "
                       "not cause any problems.</p><p>If that is not enough, "
                       "you can try refreshing the IMAP cache. If you do this, "
-                      "you will loose all your local changes for this folder "
+                      "you will lose all your local changes for this folder "
                       "and all its subfolders.</p>" );
   QLabel *label = new QLabel(txt, page );
   label->setWordWrap(true);
