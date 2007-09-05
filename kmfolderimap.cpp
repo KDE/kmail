@@ -1426,7 +1426,6 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int sup
     const int kmFlag;
     const bool standardFlag;
   } imapFlagMap[] = {
-    { 1, KMMsgStatusOld, true },
     { 2, KMMsgStatusReplied, true },
     { 4, KMMsgStatusFlag, true },
     { 128, KMMsgStatusForwarded, false },
