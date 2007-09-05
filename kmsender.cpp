@@ -759,6 +759,7 @@ void KMSender::slotIdle()
   cleanup();
 }
 
+
 //-----------------------------------------------------------------------------
 void KMSender::slotPrecommandFinished(bool normalExit)
 {
