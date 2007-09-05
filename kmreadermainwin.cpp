@@ -58,6 +58,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
   mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
   mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
+  mReaderWin->setDecryptMessageOverwrite( true );
   initKMReaderMainWin();
 }
 

@@ -830,6 +830,7 @@ private:
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
+  QCheckBox    *mAlwaysDecrypt;
 };
 
 

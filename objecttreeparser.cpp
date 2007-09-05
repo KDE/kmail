@@ -662,6 +662,20 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
   }
 
+  if ( !mReader->decryptMessage() ) {
+    QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
+    decryptedData = "<div style=\"font-size:large; text-align:center;"
+                      "padding-top:20pt;\">"
+                    + i18n("This message is encrypted.").utf8()
+                    + "</div>"
+                      "<div style=\"text-align:center; padding-bottom:20pt;\">"
+                      "<a href=\"kmail:decryptMessage\">"
+                      "<img src=\"" + iconName.utf8() + "\"/>"
+                    + i18n("Decrypt Message").utf8()
+                    + "</div>";
+    return false;
+  }
+
   if ( cryptPlug && !kmkernel->contextMenuShown() ) {
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
     QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );

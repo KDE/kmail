@@ -2117,6 +2117,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   // reset HTML override to the folder setting
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+  mMsgView->setDecryptMessageOverwrite( false );
 }
 
 //-----------------------------------------------------------------------------

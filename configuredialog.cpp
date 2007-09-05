@@ -3695,6 +3695,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
 
+  // encrypted messages group
+  group = new QVGroupBox( i18n("Encrypted Messages"), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+  mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
+  connect( mAlwaysDecrypt, SIGNAL(stateChanged(int)), this, SLOT(slotEmitChanged()) );
+  vlay->addWidget( group );
+
   // "Message Disposition Notification" groupbox:
   group = new QVGroupBox( i18n("Message Disposition Notifications"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
@@ -3784,6 +3791,8 @@ void SecurityPage::GeneralTab::doLoadOther() {
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
   mAutomaticallyImportAttachedKeysCheck->setChecked( reader.readBoolEntry( "AutoImportKeys", false ) );
 
+  mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
   int num = mdn.readNumEntry( "default-policy", 0 );
@@ -3854,6 +3863,7 @@ void SecurityPage::GeneralTab::save() {
   mdn.writeEntry( "default-policy", mMDNGroup->id( mMDNGroup->selected() ) );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->id( mOrigQuoteGroup->selected() ) );
   mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
+  GlobalSettings::self()->setAlwaysDecrypt( mAlwaysDecrypt->isChecked() );
 }
 
 

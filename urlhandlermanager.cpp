@@ -360,6 +360,12 @@ namespace {
         return true;
       }
 
+      if ( url.path() == "decryptMessage" ) {
+        w->setDecryptMessageOverwrite( true );
+        w->update( true );
+        return true;
+      }
+
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
@@ -386,12 +392,12 @@ namespace {
 
 namespace {
 
-  bool ExpandCollapseQuoteURLManager::handleClick( 
-      const KURL & url, KMReaderWin * w ) const 
+  bool ExpandCollapseQuoteURLManager::handleClick(
+      const KURL & url, KMReaderWin * w ) const
   {
     //  kmail:levelquote/?num      -> the level quote to collapse.
     //  kmail:levelquote/?-num      -> expand all levels quote.
-    if ( url.protocol() == "kmail" && url.path()=="levelquote" ) 
+    if ( url.protocol() == "kmail" && url.path()=="levelquote" )
     {
       QString levelStr= url.query().mid( 1,url.query().length() );
       bool isNumber;
@@ -402,8 +408,8 @@ namespace {
     }
     return false;
   }
-  QString ExpandCollapseQuoteURLManager::statusBarMessage( 
-      const KURL & url, KMReaderWin * ) const 
+  QString ExpandCollapseQuoteURLManager::statusBarMessage(
+      const KURL & url, KMReaderWin * ) const
   {
       if ( url.protocol() == "kmail" && url.path() == "levelquote" )
       {
