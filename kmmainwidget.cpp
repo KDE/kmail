@@ -3570,17 +3570,20 @@ void KMMainWidget::updateMessageActions()
     bool mass_actions = count >= 1;
     bool thread_actions = mass_actions && allSelectedInCommonThread &&
                           mHeaders->isThreaded();
+    bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
     mStatusMenu->setEnabled( mass_actions );
+    mToggleTodoAction->setEnabled( flags_available );
+    mToggleImportantAction->setEnabled( flags_available );
     mThreadStatusMenu->setEnabled( thread_actions );
     // these need to be handled individually, the user might have them
     // in the toolbar
-    mWatchThreadAction->setEnabled( thread_actions );
-    mIgnoreThreadAction->setEnabled( thread_actions );
+    mWatchThreadAction->setEnabled( thread_actions && flags_available );
+    mIgnoreThreadAction->setEnabled( thread_actions && flags_available );
     mMarkThreadAsNewAction->setEnabled( thread_actions );
     mMarkThreadAsReadAction->setEnabled( thread_actions );
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
-    mToggleThreadTodoAction->setEnabled( thread_actions );
-    mToggleThreadImportantAction->setEnabled( thread_actions );
+    mToggleThreadTodoAction->setEnabled( thread_actions && flags_available );
+    mToggleThreadImportantAction->setEnabled( thread_actions && flags_available );
     mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
