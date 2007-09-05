@@ -32,7 +32,6 @@
 class QPushButton;
 class QLabel;
 class QCheckBox;
-class ColorListBox;
 class QFont;
 class QTabWidget;
 class QRegExpValidator;
@@ -73,6 +72,10 @@ namespace Kleo {
   class BackendConfigWidget;
   class CryptoConfig;
   }
+
+namespace KPIM {
+  class ColorListBox;
+}
 
 class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
 {
@@ -466,7 +469,7 @@ private:
 
 private:
   QCheckBox    *mCustomColorCheck;
-  ColorListBox *mColorList;
+  KPIM::ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
   QSpinBox     *mCloseToQuotaThreshold;
 };

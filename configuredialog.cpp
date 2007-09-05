@@ -34,7 +34,7 @@
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
-#include "colorlistbox.h"
+#include <libkdepim/colorlistbox.h>
 #include "kmacctseldlg.h"
 using KMail::AccountDialog;
 #include "messagesender.h"
@@ -1512,7 +1512,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // color list box:
-  mColorList = new ColorListBox( this );
+  mColorList = new KPIM::ColorListBox( this );
   mColorList->setEnabled( false ); // since !mCustomColorCheck->isChecked()
   QStringList modeList;
   for ( int i = 0 ; i < numColorNames ; i++ )

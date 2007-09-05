@@ -94,7 +94,6 @@ set(kmailprivate_LIB_SRCS
    kmfoldercachedimap.cpp
    kmfoldermaildir.cpp
    popaccount.cpp
-   colorlistbox.cpp
    kmkernel.cpp
    accountdialog.cpp
    searchwindow.cpp
