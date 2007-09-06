@@ -636,6 +636,35 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   }
 }
 
+static QString subresourceLabelForPresentation( const KMFolder * folder )
+{
+    QString label = folder->prettyURL();
+    QStringList parts = QStringList::split( QString::fromLatin1("/"), label );
+    // In the common special case of some other user's folder shared with us
+    // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
+    // those a bit nicer.
+    if ( parts[1] == QString::fromLatin1("user") ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("%1's %2")
+            .arg( parts[2] )
+            .arg( remainder.join( QString::fromLatin1("/") ) );
+    }
+    // Another special case is our own folders, under the imap INBOX, make
+    // those prettier too
+    if ( parts[1] == QString::fromLatin1("inbox" ) ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("My %1")
+            .arg( remainder.join( QString::fromLatin1("/") ) );
+
+    }
+    return label;
+}
+
 /* list all available subresources */
 QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
@@ -644,7 +673,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f ) {
-    subResources.append( SubResource( f->location(), f->prettyURL(),
+    subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
@@ -656,7 +685,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t ) {
-      subResources.append( SubResource( f->location(), f->prettyURL(),
+      subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
@@ -1337,7 +1366,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     connectFolder( folder );
   }
   // Tell about the new resource
-  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
+  subresourceAdded( folderContentsType( contentsType ), location, subresourceLabelForPresentation(folder),
                     !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
 }
 
@@ -1482,7 +1511,7 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
     subresourceDeleted( contentsTypeStr, location );
 
-    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
+    subresourceAdded( contentsTypeStr, location, subresourceLabelForPresentation( folder ),
                       !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
 
   }
