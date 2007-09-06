@@ -617,6 +617,35 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   }
 }
 
+static QString subresourceLabelForPresentation( const KMFolder * folder )
+{
+    QString label = folder->prettyUrl();
+    QStringList parts = label.split( QChar('/') );
+    // In the common special case of some other user's folder shared with us
+    // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
+    // those a bit nicer.
+    if ( parts[1] == QLatin1String("user") ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("%1's %2")
+            .arg( parts[2] )
+            .arg( remainder.join( QLatin1String("/") ) );
+    }
+    // Another special case is our own folders, under the imap INBOX, make
+    // those prettier too
+    if ( parts[1] == QString::fromLatin1("inbox" ) ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("My %1")
+            .arg( remainder.join( QString::fromLatin1("/") ) );
+
+    }
+    return label;
+}
+
 /* list all available subresources */
 QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
@@ -625,7 +654,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString() );
   if ( f ) {
-    subResources.append( SubResource( f->location(),  f->prettyUrl(),
+    subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kDebug(5006) <<"Adding(1) folder" << f->location() <<
       ( f->isReadOnly() ? "readonly" : "" );
@@ -637,7 +666,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   for ( ; it != mExtraFolders.end(); ++it) {
     f = it.value()->folder;
     if ( f && f->storage()->contentsType() == t ) {
-      subResources.append( SubResource( f->location(), f->prettyUrl(),
+      subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
       kDebug(5006) <<"Adding(2) folder" << f->location() <<
               ( f->isReadOnly() ? "readonly" : "" );
@@ -1347,17 +1376,15 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
     connectFolder( folder );
   }
-  // Tell about the new resource
-//  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
-//                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-      QDBusMessage message =
+    // Tell about the new resource
+    QDBusMessage message =
         QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( contentsType );
     message << location;
+    message << subresourceLabelForPresentation( folder );
     message << !folder->isReadOnly();
-    message<< folderIsAlarmRelevant( folder );
+    message << folderIsAlarmRelevant( folder );
     QDBusConnection::sessionBus().send(message);
-
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1499,26 +1526,24 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
   if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
+
+    //    subresourceDeleted( contentsTypeStr, location );
       QDBusMessage message =
         QDBusMessage::createSignal("/GroupWare", DBUS_KMAIL, "subresourceDeleted");
     message << contentsTypeStr;
     message << location;
     QDBusConnection::sessionBus().send(message);
 
+    //    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
+    //                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
     message =
         QDBusMessage::createSignal("/GroupWare",DBUS_KMAIL , "subresourceAdded");
     message << contentsTypeStr;
     message << location;
-    message << folder->prettyUrl();
-    message<< !folder->isReadOnly();
-    message<< folderIsAlarmRelevant( folder );
+    message << subresourceLabelForPresentation( folder );
+    message << !folder->isReadOnly();
+    message << folderIsAlarmRelevant( folder );
     QDBusConnection::sessionBus().send(message);
-
-//    subresourceDeleted( contentsTypeStr, location );
-
-//    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
-//                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-
   }
 }
 
