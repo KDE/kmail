@@ -827,6 +827,11 @@ private slots:
    *  Updates signature actions when identity changes.
    */
   void slotUpdateSignatureActions();
+
+  /**
+   * Updates the visibility and text of the signature and encryption state indicators.
+   */
+  void slotUpdateSignatureAndEncrypionStateIndicators();
 private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
@@ -874,6 +879,9 @@ private:
 
   QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
   QMap<KMail::EditorWatcher*, KTempFile*> mEditorTempFiles;
+
+  QLabel *mSignatureStateIndicator;
+  QLabel *mEncryptionStateIndicator;
 };
 
 #endif

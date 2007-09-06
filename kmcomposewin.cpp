@@ -178,7 +178,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
+    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -289,9 +290,35 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAutoCharset = true;
   mFixedFontAction = 0;
   mTempDir = 0;
+  // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
-  mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
-  mSplitter->moveToFirst( mEditor );
+
+  QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
+  QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
+  QHBoxLayout *hbox = new QHBoxLayout( vbox );
+  {
+      mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+      mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
+      hbox->addWidget( mSignatureStateIndicator );
+
+      KConfigGroup reader( KMKernel::config(), "Reader" );
+      QPalette p( mSignatureStateIndicator->palette() );
+
+      QColor defaultSignedColor( 0x40, 0xFF, 0x40 ); // light green // pgp ok, trusted key
+      QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
+      p.setColor( QColorGroup::Background, reader.readColorEntry( "PGPMessageOkKeyOk", &defaultSignedColor ) );
+      mSignatureStateIndicator->setPalette( p );
+
+      mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+      mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
+      hbox->addWidget( mEncryptionStateIndicator );
+      p.setColor( QColorGroup::Background, reader.readColorEntry( "PGPMessageEncr" , &defaultEncryptedColor ) );
+      mEncryptionStateIndicator->setPalette( p );
+  }
+
+  mEditor = new KMEdit( editorAndCryptoStateIndicators, this, mDictionaryCombo->spellConfig() );
+  vbox->addWidget( mEditor );
+  mSplitter->moveToFirst( editorAndCryptoStateIndicators );
   mSplitter->setOpaqueResize( true );
 
   mEditor->initializeAutoSpellChecking();
@@ -354,6 +381,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupStatusBar();
   setupActions();
   setupEditor();
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
 
@@ -3770,6 +3798,7 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 void KMComposeWin::slotEncryptToggled(bool on)
 {
   setEncryption( on, true /* set by the user */ );
+  slotUpdateSignatureAndEncrypionStateIndicators();
 }
 
 
@@ -3820,6 +3849,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 void KMComposeWin::slotSignToggled(bool on)
 {
   setSigning( on, true /* set by the user */ );
+  slotUpdateSignatureAndEncrypionStateIndicators();
 }
 
 
@@ -5078,3 +5108,14 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
   part->setBodyEncodedBinary( data );
 }
 
+
+void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
+{
+    const bool showIndicatorsAlways = false; // FIXME config option?
+    mSignatureStateIndicator->setText( mSignAction->isChecked()? i18n("Message will signed") : i18n("Message will not be signed") );
+    mEncryptionStateIndicator->setText( mEncryptAction->isChecked()? i18n("Message will encrypted") : i18n("Message will not be encrypted") );
+    if ( !showIndicatorsAlways ) {
+      mSignatureStateIndicator->setShown( mSignAction->isChecked() );
+      mEncryptionStateIndicator->setShown( mEncryptAction->isChecked() );
+    }
+}
