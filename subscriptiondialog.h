@@ -36,6 +36,9 @@
 #include <ksubscription.h>
 #include "imapaccountbase.h"
 
+using KPIM::KSubscription;
+using KPIM::GroupItem;
+using KPIM::KGroupInfo;
 
 namespace KMail {
 

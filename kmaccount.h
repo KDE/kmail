@@ -43,9 +43,10 @@ namespace  KMail {
   class AccountManager;
 }
 using KMail::AccountManager;
-namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
+namespace KPIM { class ProgressItem; }
 using KPIM::ProgressItem;
+using KPIM::KAccount;
 
 class KMAccount;
 typedef QList< ::KMAccount* > AccountList;
