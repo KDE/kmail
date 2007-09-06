@@ -37,7 +37,7 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
-private slots:
+private:
   bool preProcess();
   bool fetchMsg();
   void postProcess();
