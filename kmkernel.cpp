@@ -151,7 +151,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     netCodec = QTextCodec::codecForLocale();
   }
   mMailService =  new MailServiceImpl();
-  QDBusConnection::sessionBus().connect(QString(), "/KMail", DBUS_KMAIL, "kmailSelectFolder(QString)", this, SLOT(selectFolder(QString)) );
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -963,7 +962,7 @@ QStringList KMKernel::folderList() const
   return folders;
 }
 
-QDBusObjectPath KMKernel::getFolder( const QString& vpath )
+QString KMKernel::getFolder( const QString& vpath )
 {
   QString adaptorName;
   const QString localPrefix = "/Local";
@@ -983,9 +982,10 @@ QDBusObjectPath KMKernel::getFolder( const QString& vpath )
         delete folderAdaptor;
       }
     folderAdaptor = new KMail::FolderAdaptor(adaptorName);
-    return QDBusObjectPath(vpath);
+    return vpath;
   }
-  return QDBusObjectPath();
+  kWarning(5006) << "Folder not found:" << vpath;
+  return QString();
 }
 
 void KMKernel::raise()

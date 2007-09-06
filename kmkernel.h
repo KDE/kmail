@@ -146,7 +146,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
 
   QStringList folderList() const;
-  QDBusObjectPath getFolder( const QString& vpath );
+  QString getFolder( const QString& vpath );
   void selectFolder( const QString &folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( quint32 serialNumber, const QString &messageId );

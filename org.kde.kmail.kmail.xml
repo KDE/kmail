@@ -61,7 +61,7 @@
       <arg name="numUnread" type="i" direction="out"/>
     </signal>
     <method name="getFolder">
-      <arg type="o" direction="out"/>
+      <arg type="s" direction="out"/>
       <arg name="vpath" type="s" direction="in"/>
     </method>
     <method name="openComposer">
