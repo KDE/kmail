@@ -128,6 +128,18 @@ const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContents
   return s_folderContentsType[type].annotation;
 }
 
+ExtraFolder::ExtraFolder( KMFolder* f )
+    : folder( f )
+{
+    folder->open("kmailicaliface::extrafolder");
+}
+
+ExtraFolder::~ExtraFolder() 
+{
+    folder->close("kmailicaliface::extrafolder");
+}
+
+
 /*
   This interface has three parts to it - libkcal interface;
   kmail interface; and helper functions.
