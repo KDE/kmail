@@ -58,7 +58,8 @@ namespace KMail {
   // Local helper class
 class ExtraFolder {
 public:
-  ExtraFolder( KMFolder* f ) : folder( f ) {}
+  ExtraFolder( KMFolder* f );
+  ~ExtraFolder();
   QPointer<KMFolder> folder;
 };
 
