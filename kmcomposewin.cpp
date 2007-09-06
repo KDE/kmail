@@ -1851,6 +1851,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     mLastSignActionState = (mMsg->headerField( "X-KMail-SignatureActionEnabled" ) == "true");
   if ( mMsg->headers().FindField( "X-KMail-EncryptActionEnabled" ) )
     mLastEncryptActionState = (mMsg->headerField( "X-KMail-EncryptActionEnabled" ) == "true");
+  if ( mMsg->headers().FindField( "X-KMail-CryptoMessageFormat" ) )
+    mCryptoModuleAction->setCurrentItem( format2cb( static_cast<Kleo::CryptoMessageFormat>(
+                    mMsg->headerField( "X-KMail-CryptoMessageFormat" ).toInt() ) ) );
 
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
@@ -3997,9 +4000,11 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
       // signing and encryption state, so let's add a header instead
     mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
     mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );
+    mMsg->setHeaderField( "X-KMail-CryptoMessageFormat", QString::number( cryptoMessageFormat() ) );
   } else {
     mMsg->removeHeaderField( "X-KMail-SignatureActionEnabled" );
     mMsg->removeHeaderField( "X-KMail-EncryptActionEnabled" );
+    mMsg->removeHeaderField( "X-KMail-CryptoMessageFormat" );
   }
 
   applyChanges( neverEncrypt );
