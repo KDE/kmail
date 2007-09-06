@@ -1592,7 +1592,8 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
 void KMailICalIfaceImpl::readConfig()
 {
-  bool enabled = GlobalSettings::self()->theIMAPResourceEnabled();
+  bool enabled = GlobalSettings::self()->theIMAPResourceEnabled() &&
+                 ( GlobalSettings::self()->theIMAPResourceAccount() != 0 );
 
   if( !enabled ) {
     if( mUseResourceIMAP == true ) {
