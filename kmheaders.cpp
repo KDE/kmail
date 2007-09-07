@@ -438,7 +438,7 @@ void KMHeaders::readColorConfig (void)
   QColor c4=QColor(qApp->palette().color( QPalette::Base ));
   QColor c5=QColor(0,0x7F,0);
   QColor c6=QColor(0,0x98,0);
-  QColor c7=KColorScheme(QPalette::Active, KColorScheme::View).background(KColorScheme::AlternateBackground).color();
+  QColor c7=KColorScheme( QPalette::Active, KColorScheme::View ).background( KColorScheme::AlternateBackground ).color();
 
   if (!config.readEntry( "defaultColors", true ) ) {
     mPaintInfo.colFore = config.readEntry( "ForegroundColor", c1 );
