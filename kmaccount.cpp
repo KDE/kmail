@@ -90,9 +90,9 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mInterval(0),
     mExclude(false),
     mCheckingMail(false),
+    mPrecommandSuccess(true),
     mHasInbox(false),
-    mMailCheckProgressItem(0),
-    mPrecommandProcess(0)
+    mMailCheckProgressItem(0)
 {
   assert(aOwner != 0);
 }
@@ -351,32 +351,34 @@ void KMAccount::deinstallTimer()
 }
 
 //-----------------------------------------------------------------------------
-void KMAccount::startPrecommand(const QString &precommand)
+bool KMAccount::runPrecommand(const QString &precommand)
 {
   // Run the pre command if there is one
-  if ( precommand.isEmpty() ) {
-    emit precommandExited( true );
-    return;
-  }
+  if ( precommand.isEmpty() )
+    return true;
 
-  KMPrecommand *mPrecommandProcess = new KMPrecommand(precommand, this);
+  KMPrecommand precommandProcess(precommand, this);
 
   BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1", precommand ));
 
-  connect(mPrecommandProcess, SIGNAL(finished(bool)),
-          SLOT(precommandFinished(bool)));
+  connect(&precommandProcess, SIGNAL(finished(bool)),
+          SLOT(precommandExited(bool)));
 
   kDebug(5006) <<"Running precommand" << precommand;
-  if (!mPrecommandProcess->start())
-    emit precommandExited( false );
+  if (!precommandProcess.start()) return false;
+
+  QEventLoop ().exec();
+
+  return mPrecommandSuccess;
 }
 
 //-----------------------------------------------------------------------------
-void KMAccount::precommandFinished(bool success)
+void KMAccount::precommandExited(bool success)
 {
-  delete mPrecommandProcess; mPrecommandProcess = 0;
-  emit precommandExited( success );
+  mPrecommandSuccess = success;
+
+  QEventLoop ().exit ();
 }
 
 //-----------------------------------------------------------------------------

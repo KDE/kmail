@@ -9,8 +9,6 @@
 
 class KMAcctMaildir: public KMAccount
 {
-  Q_OBJECT
-
 protected:
   friend class ::AccountManager;
 
@@ -29,9 +27,6 @@ public:
   virtual void processNewMail(bool);
   virtual void readConfig(KConfigGroup&);
   virtual void writeConfig(KConfigGroup&);
-
-private slots:
-  void continueProcessNewMail( bool precommandSuccess );
 
 protected:
   QString mLocation;
