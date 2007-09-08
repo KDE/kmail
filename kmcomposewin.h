@@ -286,14 +286,11 @@ public: // mailserviceimpl
     void slotClose();
     void slotHelp();
 
-    void slotFind();
-    void slotSearchAgain();
     void slotUndo();
     void slotRedo();
     void slotCut();
     void slotCopy();
     void slotPaste();
-    void slotPasteAsQuotation();
     void slotPasteAsAttachment();
     void slotAttachPNGImageData( const QByteArray &image );
     void slotFormatReset();

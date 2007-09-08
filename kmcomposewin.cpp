@@ -1283,14 +1283,14 @@ void KMComposeWin::setupActions( void )
   KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
   KStandardAction::find( mEditor, SLOT(slotFindText()), actionCollection() );
-  KStandardAction::findNext( this, SLOT(slotSearchAgain()), actionCollection() );
+  KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
   KStandardAction::replace( mEditor, SLOT(slotReplaceText()), actionCollection() );
   actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
-  connect( mPasteQuotation, SIGNAL(triggered(bool) ), SLOT( slotPasteAsQuotation()) );
+  connect( mPasteQuotation, SIGNAL(triggered(bool) ), mEditor, SLOT( slotPasteAsQuotation()) );
 
   action = new KAction( i18n("Paste as Attac&hment"), this );
   actionCollection()->addAction( "paste_att", action );
@@ -3398,18 +3398,6 @@ void KMComposeWin::slotAttachRemove()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotFind()
-{
-  mEditor->slotFindNext();
-}
-
-void KMComposeWin::slotSearchAgain()
-{
-//Laurent: fix me
-  //mEditor->repeatSearch();
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
   kDebug(5006) <<"KMComposeWin::slotUpdateFont";
@@ -3432,16 +3420,6 @@ QString KMComposeWin::quotePrefixName() const
 
   quotePrefix = msg()->formatString( quotePrefix );
   return quotePrefix;
-}
-
-void KMComposeWin::slotPasteAsQuotation()
-{
-  if ( mEditor->hasFocus() && msg() ) {
-    QString s = QApplication::clipboard()->text();
-    if ( !s.isEmpty() ) {
-      mEditor->insert( addQuotesToText( s ) );
-    }
-  }
 }
 
 QString KMComposeWin::smartQuote( const QString & msg )
