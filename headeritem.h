@@ -37,7 +37,9 @@
 #include <QList>
 
 class KMMsgBase;
-struct KPaintInfo;
+namespace KPIM {
+  struct KPaintInfo;
+}
 class KMFolder;
 class KMHeaders;
 
@@ -206,7 +208,7 @@ public:
   void paintCell( QPainter * p, const QColorGroup & cg,
                                 int column, int width, int align );
 
-  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder );
+  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPIM::KPaintInfo *paintInfo, int sortOrder );
 
   virtual QString key( int column, bool /*ascending*/ ) const;
 

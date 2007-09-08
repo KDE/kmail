@@ -52,6 +52,9 @@ class KMAccount;
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
 template <typename T> class QPointer;
 
+using KPIM::KFolderTree;
+using KPIM::KFolderTreeItem;
+
 class KMAIL_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
 {
   Q_OBJECT

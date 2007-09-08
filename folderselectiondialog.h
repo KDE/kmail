@@ -29,6 +29,8 @@ class KMFolder;
 class KMFolderTree;
 class KMMainWidget;
 
+using KPIM::KFolderTree;
+
 namespace KMail {
 
   class SimpleFolderTree : public KFolderTree

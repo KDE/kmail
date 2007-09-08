@@ -10,6 +10,7 @@ using KMail::HeaderItem;
 
 #include <k3listview.h>
 #include <kfoldertree.h> // for KPaintInfo
+using KPIM::KPaintInfo;
 #include <messagestatus.h>
 using KPIM::MessageStatus;
 
@@ -96,7 +97,7 @@ public:
     message
     @param aLabel 10 letter label that corresponds to the tag to be toggled
   */
-  virtual void setMessageTagList( const QString &aLabel ); 
+  virtual void setMessageTagList( const QString &aLabel );
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. The second parameter is useful when the
