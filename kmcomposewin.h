@@ -288,7 +288,6 @@ public: // mailserviceimpl
 
     void slotFind();
     void slotSearchAgain();
-    void slotReplace();
     void slotUndo();
     void slotRedo();
     void slotCut();

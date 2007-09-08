@@ -1282,10 +1282,10 @@ void KMComposeWin::setupActions( void )
   KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
   KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
-  KStandardAction::find( this, SLOT(slotFind()), actionCollection() );
+  KStandardAction::find( mEditor, SLOT(slotFindText()), actionCollection() );
   KStandardAction::findNext( this, SLOT(slotSearchAgain()), actionCollection() );
 
-  KStandardAction::replace( this, SLOT(slotReplace()), actionCollection() );
+  KStandardAction::replace( mEditor, SLOT(slotReplaceText()), actionCollection() );
   actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
@@ -3407,12 +3407,6 @@ void KMComposeWin::slotSearchAgain()
 {
 //Laurent: fix me
   //mEditor->repeatSearch();
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotReplace()
-{
-  mEditor->replaceText();
 }
 
 //-----------------------------------------------------------------------------
