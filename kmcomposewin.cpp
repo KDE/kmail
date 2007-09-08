@@ -21,7 +21,7 @@
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
 
-#include "kmedit.h"
+#include "kmcomposereditor.h"
 #include "kmlineeditspell.h"
 #include "kmatmlistview.h"
 
@@ -126,15 +126,13 @@ using MailTransport::Transport;
 #include "globalsettings.h"
 #include "replyphrases.h"
 
-#include <k3spell.h>
-#include <k3sconfig.h>
-#include <k3spelldlg.h>
-#include <k3syntaxhighlighter.h>
 #include <kcolordialog.h>
 #include <kzip.h>
 #include <ksavefile.h>
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>
+#include <kmstylelistselectaction.h>
+#include <sonnet/configdialog.h>
 
 #include <QByteArray>
 #include <q3header.h>
@@ -316,11 +314,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
-  mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
+  mEditor = new KMComposerEditor(this, mSplitter);
+
+  //mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
   mSplitter->insertWidget( 0, mEditor );
   mSplitter->setOpaqueResize( true );
 
-  mEditor->initializeAutoSpellChecking();
+  //mEditor->initializeAutoSpellChecking();
   mEditor->setTextFormat( Qt::PlainText );
   mEditor->setAcceptDrops( true );
 
@@ -1286,7 +1286,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::findNext( this, SLOT(slotSearchAgain()), actionCollection() );
 
   KStandardAction::replace( this, SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(slotSpellcheck()) );
+  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
@@ -1298,11 +1298,11 @@ void KMComposeWin::setupActions( void )
 
   mAddQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
   actionCollection()->addAction( "tools_quote", mAddQuoteChars );
-  connect( mAddQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotAddQuotes()) );
+  connect( mAddQuoteChars, SIGNAL(triggered(bool) ), mEditor, SLOT(slotAddQuotes()) );
 
   mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
   actionCollection()->addAction( "tools_unquote", mRemQuoteChars );
-  connect (mRemQuoteChars, SIGNAL(triggered(bool) ), SLOT(slotRemoveQuotes()) );
+  connect (mRemQuoteChars, SIGNAL(triggered(bool) ),mEditor, SLOT(slotRemoveQuotes()) );
 
   action = new KAction( i18n("Cl&ean Spaces"), this );
   actionCollection()->addAction( "clean_spaces", action );
@@ -1487,20 +1487,13 @@ void KMComposeWin::setupActions( void )
       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
   slotSelectCryptoModule( true );
 
-  QStringList styleItems;
-  styleItems << i18n( "Standard" );
-  styleItems << i18n( "Bulleted List (Disc)" );
-  styleItems << i18n( "Bulleted List (Circle)" );
-  styleItems << i18n( "Bulleted List (Square)" );
-  styleItems << i18n( "Ordered List (Decimal)" );
-  styleItems << i18n( "Ordered List (Alpha lower)" );
-  styleItems << i18n( "Ordered List (Alpha upper)" );
 
-  listAction = new KSelectAction(i18n("Select Style"), this);
+  listAction = new KMStyleListSelectAction(i18n("Select Style"), this);
   actionCollection()->addAction("text_list", listAction );
-  listAction->setItems( styleItems );
-  connect( listAction, SIGNAL( triggered( const QString& ) ),
-           SLOT( slotListAction( const QString& ) ) );
+
+  connect(listAction, SIGNAL(applyStyle(QTextListFormat::Style)),
+           mEditor,SLOT(slotChangeParagStyle(QTextListFormat::Style)));
+
   fontAction = new KFontAction(i18n("Select Font"), this);
   actionCollection()->addAction("text_font", fontAction );
   connect( fontAction, SIGNAL( triggered( const QString& ) ),
@@ -1512,32 +1505,32 @@ void KMComposeWin::setupActions( void )
 
   alignLeftAction = new KToggleAction( KIcon( "text-left" ), i18n("Align Left"), this );
   actionCollection()->addAction( "align_left", alignLeftAction );
-  connect( alignLeftAction, SIGNAL(triggered(bool)), SLOT(slotAlignLeft()) );
+  connect( alignLeftAction, SIGNAL(triggered(bool)), mEditor, SLOT(slotAlignLeft()) );
   alignLeftAction->setChecked( true );
   alignRightAction = new KToggleAction( KIcon( "text-right" ), i18n("Align Right"), this );
   actionCollection()->addAction( "align_right", alignRightAction );
-  connect( alignRightAction, SIGNAL(triggered(bool) ), SLOT(slotAlignRight()) );
+  connect( alignRightAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignRight()) );
   alignCenterAction = new KToggleAction( KIcon( "text-center" ), i18n("Align Center"), this );
   actionCollection()->addAction( "align_center", alignCenterAction );
-  connect( alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()) );
+  connect( alignCenterAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignCenter()) );
   textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
   actionCollection()->addAction( "text_bold", textBoldAction );
-  connect( textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold()));
+  connect( textBoldAction, SIGNAL(triggered(bool) ),mEditor, SLOT(slotTextBold(bool)));
   textBoldAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_B ) );
   textItalicAction = new KToggleAction( KIcon( "format-text-italic" ), i18n("&Italic"), this );
   actionCollection()->addAction( "text_italic", textItalicAction );
-  connect( textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic()) );
+  connect( textItalicAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextItalic(bool)) );
   textItalicAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_I ) );
   textUnderAction = new KToggleAction( KIcon( "format-text-underline" ), i18n("&Underline"), this );
   actionCollection()->addAction( "text_under", textUnderAction );
-  connect( textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder()) );
+  connect( textUnderAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextUnder(bool)) );
   textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
   actionFormatReset = new KAction( KIcon( "eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
   actionFormatColor = new KAction( KIcon( "colorize" ), i18n("Text Color..."), this );
   actionCollection()->addAction("format_color", actionFormatColor );
-  connect( actionFormatColor, SIGNAL(triggered(bool) ), SLOT( slotTextColor() ));
+  connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
 
   createGUI( "kmcomposerui.rc" );
   connect( toolBar( "htmlToolBar" )->toggleViewAction(),
@@ -1568,8 +1561,8 @@ void KMComposeWin::updateCursorPosition()
 {
   int col, line;
   QString temp;
-  line = mEditor->currentLine();
-  col = mEditor->currentColumn();
+  line = mEditor->linePosition();
+  col = mEditor->columnNumber ();
   temp = i18n(" Line: %1 ", line+1);
   statusBar()->changeItem( temp, 1 );
   temp = i18n(" Column: %1 ", col + 1 );
@@ -1583,12 +1576,7 @@ void KMComposeWin::setupEditor( void )
   QFontMetrics fm( mBodyFont );
   mEditor->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
 
-  if ( GlobalSettings::self()->wordWrap() ) {
-    mEditor->setWordWrap( Q3MultiLineEdit::FixedColumnWidth );
-    mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
-  } else {
-    mEditor->setWordWrap( Q3MultiLineEdit::NoWrap );
-  }
+  slotWordWrapToggled(GlobalSettings::self()->wordWrap());
 
   // Font setup
   slotUpdateFont();
@@ -1615,12 +1603,13 @@ void KMComposeWin::setupEditor( void )
      mEditor->installRBPopup(menu);
   */
   updateCursorPosition();
-  connect( mEditor, SIGNAL(CursorPositionChanged()), SLOT(updateCursorPosition()) );
+  connect( mEditor, SIGNAL(cursorPositionChanged()), SLOT(updateCursorPosition()) );
   connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
            this, SLOT( fontChanged( const QFont & ) ) );
-  connect( mEditor, SIGNAL( currentAlignmentChanged( int ) ),
+  //Laurent fixme.
+  /*connect( mEditor, SIGNAL( currentAlignmentChanged( int ) ),
            this, SLOT( alignmentChanged( int ) ) );
-
+  */
 }
 
 //-----------------------------------------------------------------------------
@@ -1694,6 +1683,8 @@ QString KMComposeWin::replyTo() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::verifyWordWrapLengthIsAdequate( const QString &body )
 {
+//Laurent: fix me
+#if 0
   int maxLineLength = 0;
   int curPos;
   int oldPos = 0;
@@ -1713,6 +1704,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate( const QString &body )
       mEditor->setWrapColumnOrWidth( maxLineLength );
     }
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2195,8 +2187,9 @@ bool KMComposeWin::userForgotAttachment()
     // check whether the non-quoted text contains one of the attachment key
     // words
     QRegExp quotationRx ("^([ \\t]*([|>:}#]|[A-Za-z]+>))+");
-    for ( int i = 0; i < mEditor->numLines(); ++i ) {
-      QString line = mEditor->textLine( i );
+    QTextDocument *doc = mEditor->document();
+    for (QTextBlock it = doc->begin(); it != doc->end(); it = it.next()) {
+      QString line = mEditor->text();
       gotMatch =    ( quotationRx.indexIn( line ) < 0 )
         && ( rx.indexIn( line ) >= 0 );
       if ( gotMatch ) {
@@ -3407,18 +3400,19 @@ void KMComposeWin::slotAttachRemove()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotFind()
 {
-  mEditor->search();
+  mEditor->slotFindNext();
 }
 
 void KMComposeWin::slotSearchAgain()
 {
-  mEditor->repeatSearch();
+//Laurent: fix me
+  //mEditor->repeatSearch();
 }
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotReplace()
 {
-  mEditor->replace();
+  mEditor->replaceText();
 }
 
 //-----------------------------------------------------------------------------
@@ -3456,6 +3450,11 @@ void KMComposeWin::slotPasteAsQuotation()
   }
 }
 
+QString KMComposeWin::smartQuote( const QString & msg )
+{
+  return KMMessage::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
+}
+
 void KMComposeWin::slotPasteAsAttachment()
 {
   KUrl url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
@@ -3484,30 +3483,6 @@ void KMComposeWin::slotPasteAsAttachment()
   }
 }
 
-void KMComposeWin::slotAddQuotes()
-{
-  if ( mEditor->hasFocus() && msg() ) {
-    // TODO: I think this is backwards.
-    // i.e, if no region is marked then add quotes to every line
-    // else add quotes only on the lines that are marked.
-
-    if ( mEditor->hasMarkedText() ) {
-      QString s = mEditor->markedText();
-      if ( !s.isEmpty() ) {
-        mEditor->insert( addQuotesToText( s ) );
-      }
-    } else {
-      int l =  mEditor->currentLine();
-      int c =  mEditor->currentColumn();
-      QString s =  mEditor->textLine( l );
-      s.prepend( quotePrefixName() );
-      mEditor->insertLine( s, l );
-      mEditor->removeLine( l + 1 );
-      mEditor->setCursorPosition( l, c + 2 );
-    }
-  }
-}
-
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
   QString answer = QString( inputText );
@@ -3518,44 +3493,6 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
   return KMMessage::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
 }
 
-QString KMComposeWin::removeQuotesFromText( const QString &inputText ) const
-{
-  QString s = inputText;
-
-  // remove first leading quote
-  QString quotePrefix = '^' + quotePrefixName();
-  QRegExp rx( quotePrefix );
-  s.remove( rx );
-
-  // now remove all remaining leading quotes
-  quotePrefix = '\n' + quotePrefixName();
-  QRegExp srx( quotePrefix );
-  s.replace( srx, "\n" );
-
-  return s;
-}
-
-void KMComposeWin::slotRemoveQuotes()
-{
-  if ( mEditor->hasFocus() && msg() ) {
-    // TODO: I think this is backwards.
-    // i.e, if no region is marked then remove quotes from every line
-    // else remove quotes only on the lines that are marked.
-
-    if ( mEditor->hasMarkedText() ) {
-      QString s = mEditor->markedText();
-      mEditor->insert( removeQuotesFromText( s ) );
-    } else {
-      int l = mEditor->currentLine();
-      int c = mEditor->currentColumn();
-      QString s = mEditor->textLine( l );
-      mEditor->insertLine( removeQuotesFromText( s ), l );
-      mEditor->removeLine( l + 1 );
-      mEditor->setCursorPosition( l, c - 2 );
-    }
-  }
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()
 {
@@ -3564,8 +3501,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if ( ::qobject_cast<KEdit*>( fw ) ) {
-    static_cast<Q3MultiLineEdit*>( fw )->undo();
+  if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
+    static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<QLineEdit*>( fw )) {
     static_cast<QLineEdit*>( fw )->undo();
   }
@@ -3578,8 +3515,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if ( ::qobject_cast<KEdit*>( fw ) ) {
-    static_cast<KEdit*>( fw )->redo();
+  if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
+    static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<QLineEdit*>( fw )) {
     static_cast<QLineEdit*>( fw )->redo();
   }
@@ -3593,8 +3530,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<KEdit*>( fw ) ) {
-    static_cast<KEdit*>(fw)->cut();
+  if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
+    static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<QLineEdit*>( fw ) ) {
     static_cast<QLineEdit*>( fw )->cut();
   }
@@ -3662,8 +3599,8 @@ void KMComposeWin::slotMarkAll()
 
   if ( ::qobject_cast<QLineEdit*>( fw ) ) {
     static_cast<QLineEdit*>( fw )->selectAll();
-  } else if (::qobject_cast<KEdit*>( fw )) {
-    static_cast<KEdit*>( fw )->selectAll();
+  } else if (::qobject_cast<KMComposerEditor*>( fw )) {
+    static_cast<KTextEdit*>( fw )->selectAll();
   }
 }
 
@@ -3811,11 +3748,10 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotWordWrapToggled( bool on )
 {
-  if ( on ) {
-    mEditor->setWordWrap( Q3MultiLineEdit::FixedColumnWidth );
+  mEditor->wordWrapToggled( on );
+  if (on)
+  {
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
-  } else {
-    mEditor->setWordWrap( Q3MultiLineEdit::NoWrap );
   }
 }
 
@@ -4191,24 +4127,10 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  bool mod = mEditor->isModified();
-
   const KPIMIdentities::Identity &ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   mOldSigText = ident.signatureText();
-  if ( !mOldSigText.isEmpty() )  {
-    mEditor->append( mOldSigText );
-    mEditor->setModified( mod );
-    if ( mPreserveUserCursorPosition ) {
-      mEditor->setContentsPos( mMsg->getCursorPos(), 0 );
-      // Only keep the cursor from the mMsg *once* based on the
-      // preserve-cursor-position setting; this handles the case where
-      // the message comes from a template with a specific cursor
-      // position set and the signature is appended automatically.
-      mPreserveUserCursorPosition = false;
-    }
-    mEditor->sync();
-  }
+  mPreserveUserCursorPosition = mEditor->appendSignature(mOldSigText, mPreserveUserCursorPosition);
 }
 
 //-----------------------------------------------------------------------------
@@ -4220,6 +4142,8 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCleanSpace()
 {
+//Laurent fix me
+#if 0
   // Originally we simply used the KEdit::cleanWhiteSpace() method,
   // but that code doesn't handle quoted-lines or signatures, so instead
   // we now simply use regexp's to squeeze sequences of tabs and spaces
@@ -4281,6 +4205,7 @@ void KMComposeWin::slotCleanSpace()
     mEditor->clear();
   }
   mEditor->insert( s );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4302,6 +4227,8 @@ void KMComposeWin::toggleMarkup( bool markup )
 {
   if ( markup ) {
     if ( !mUseHTMLEditor ) {
+//Laurent fix me
+#if 0
       kDebug(5006) <<"setting RichText editor";
       mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
       mHtmlMarkup = true;
@@ -4322,9 +4249,10 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->setModified( true );
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
-      mEditor->deleteAutoSpellChecking();
+      //mEditor->deleteAutoSpellChecking();
       mAutoSpellCheckingAction->setChecked( false );
       slotAutoSpellCheckingToggled( false );
+#endif
     }
   } else { // markup is to be turned off
     kDebug(5006) <<"setting PlainText editor";
@@ -4358,10 +4286,12 @@ void KMComposeWin::slotSubjectTextSpellChecked()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
+//Laurent Fix me
+/*
   if ( mEditor->autoSpellChecking( on ) == -1 ) {
     mAutoSpellCheckingAction->setChecked( false ); // set it to false again
   }
-
+*/
   QString temp;
   if ( on ) {
     temp = i18n( "Spellcheck: on" );
@@ -4371,21 +4301,6 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
   statusBar()->changeItem( temp, 3 );
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellcheck()
-{
-  if ( mSpellCheckInProgress ) {
-    return;
-  }
-  mSubjectTextWasSpellChecked = false;
-  mSpellCheckInProgress = true;
-  /*
-    connect (mEditor, SIGNAL(spellcheck_progress (unsigned)),
-    this, SLOT(spell_progress (unsigned)));
-  */
-
-  mEditor->spellcheck();
-}
 
 #ifdef __GNUC__
 #warning "ensurePolished() should be a const method, but we call non-const method"
@@ -4405,6 +4320,8 @@ void KMComposeWin::ensurePolished()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone( int result )
 {
+  //Laurent: fixme
+#if 0
   kDebug(5006) <<"spell check complete: result =" << result;
   mSpellCheckInProgress = false;
 
@@ -4420,6 +4337,7 @@ void KMComposeWin::slotSpellcheckDone( int result )
     break;
   }
   QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
+#endif
 }
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
@@ -4598,27 +4516,15 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  KDialog dlg( this );
-  dlg.setCaption( i18n("Spellchecker") );
-  dlg.setButtons( KDialog::Ok|KDialog::Cancel );
-  dlg.setDefaultButton( KDialog::Ok );
-  dlg.setModal( true );
-  dlg.showButtonSeparator( true );
-  Q3TabDialog qtd ( this, "tabdialog", true );
-  K3SpellConfig mKSpellConfig( &qtd );
-  mKSpellConfig.layout()->setMargin( KDialog::marginHint() );
+  //Laurent TODO fix me
+  KConfig config("kmailrc");
+  Sonnet::ConfigDialog *dialog = new Sonnet::ConfigDialog(&config, this);
+  KWindowSystem::setIcons( dialog->winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ), qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
 
-  qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
-  qtd.setCancelButton ();
-#ifdef Q_OS_UNIX
-  KWindowSystem::setIcons( qtd.winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ), qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
-#endif
-  qtd.setCancelButton( KStandardGuiItem::cancel().text() );
-  qtd.setOkButton( KStandardGuiItem::ok().text() );
-
-  if ( qtd.exec() ) {
-    mKSpellConfig.writeGlobalSettings();
+  if ( dialog->exec() ) {
+    //mKSpellConfig.writeGlobalSettings();
   }
+  delete dialog;
 }
 
 //-----------------------------------------------------------------------------
@@ -4765,91 +4671,23 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
   mAlwaysSend = bAlways;
 }
 
-void KMComposeWin::slotListAction( const QString &style )
-{
-  toggleMarkup( true );
-
-  if ( style == i18n( "Standard" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayBlock, Q3StyleSheetItem::ListDisc );
-  } else if ( style == i18n( "Bulleted List (Disc)" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListDisc );
-  } else if ( style == i18n( "Bulleted List (Circle)" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListCircle );
-  } else if ( style == i18n( "Bulleted List (Square)" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListSquare );
-  } else if ( style == i18n( "Ordered List (Decimal)" )) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListDecimal );
-  } else if ( style == i18n( "Ordered List (Alpha lower)" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListLowerAlpha );
-  } else if ( style == i18n( "Ordered List (Alpha upper)" ) ) {
-    mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListUpperAlpha );
-  }
-  mEditor->viewport()->setFocus();
-}
 
 void KMComposeWin::slotFontAction( const QString &font )
 {
   toggleMarkup( true );
-  mEditor->Q3TextEdit::setFamily( font );
-  mEditor->viewport()->setFocus();
+  mEditor->slotFontFamilyChanged(font);
 }
 
 void KMComposeWin::slotSizeAction( int size )
 {
   toggleMarkup( true );
-  mEditor->setPointSize( size );
-  mEditor->viewport()->setFocus();
-}
-
-void KMComposeWin::slotAlignLeft()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setAlignment( Qt::AlignLeft );
-}
-
-void KMComposeWin::slotAlignCenter()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setAlignment( Qt::AlignHCenter );
-}
-
-void KMComposeWin::slotAlignRight()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setAlignment( Qt::AlignRight );
-}
-
-void KMComposeWin::slotTextBold()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setBold( textBoldAction->isChecked() );
-}
-
-void KMComposeWin::slotTextItalic()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setItalic( textItalicAction->isChecked() );
-}
-
-void KMComposeWin::slotTextUnder()
-{
-  toggleMarkup( true );
-  mEditor->Q3TextEdit::setUnderline( textUnderAction->isChecked() );
+  mEditor->slotFontSizeChanged( size );
 }
 
 void KMComposeWin::slotFormatReset()
 {
   mEditor->setColor( mForeColor );
   mEditor->setCurrentFont( mSaveFont ); // fontChanged is called now
-}
-void KMComposeWin::slotTextColor()
-{
-  QColor color = mEditor->color();
-
-  if ( KColorDialog::getColor( color, this ) ) {
-    toggleMarkup( true );
-    mEditor->setColor( color );
-  }
 }
 
 void KMComposeWin::fontChanged( const QFont &f )

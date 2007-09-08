@@ -136,7 +136,7 @@ set(kmailprivate_LIB_SRCS
    aboutdata.cpp
    mailserviceimpl.cpp
    attachmentlistview.cpp
-   kmedit.cpp
+   kmcomposereditor.cpp
    kmlineeditspell.cpp
    kmatmlistview.cpp
    composer.cpp
@@ -190,8 +190,6 @@ set(kmailprivate_LIB_SRCS
    quotajobs.cpp
    folderdialogquotatab.cpp
    folderdialogquotatab_p.cpp
-   keditcl1.cpp
-   keditcl2.cpp
    folderadaptor.cpp
    copyfolderjob.cpp
    messagecopyhelper.cpp
