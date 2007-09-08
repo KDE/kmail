@@ -202,7 +202,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
           kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
     }
     else {
-        return KEdit::contentsDropEvent(e);
+        KEdit::contentsDropEvent(e);
     }
 }
 
