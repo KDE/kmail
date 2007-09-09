@@ -2,9 +2,6 @@
 "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <interface name="org.kde.kmail.kmail">
-    <signal name="kmailSelectFolder">
-      <arg type="s" name="folder"/>
-    </signal>
     <method name="checkMail"/>
     <method name="openReader"/>
     <method name="compactAllFolders"/>

@@ -89,12 +89,10 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0),
+  mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
   mContextMenuShown( false ), mWallet( 0 )
 {
-  (void) new KmailAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMail", this);
-  kDebug(5006) <<"KMKernel::KMKernel";
+  kDebug(5006);
   setObjectName( name );
   mySelf = this;
   the_startingUp = true;
@@ -129,9 +127,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // would be unexpected
   GlobalSettings::self();
 
-  // Set up DCOP interface
-  mICalIface = new KMailICalIfaceImpl();
-
   mJobScheduler = new JobScheduler( this );
 
   mXmlGuiInstance = KComponentData();
@@ -150,7 +145,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   } else {
     netCodec = QTextCodec::codecForLocale();
   }
-  mMailService =  new MailServiceImpl();
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -173,17 +167,23 @@ KMKernel::~KMKernel ()
 
   delete mICalIface;
   mICalIface = 0;
-#ifdef __GNUC__
-#warning: mMailservice delete crashes for me...
-#endif
-  //delete mMailService;
+  delete mMailService;
   mMailService = 0;
 
   GlobalSettings::self()->writeConfig();
   delete mWallet;
   mWallet = 0;
   mySelf = 0;
-  kDebug(5006) <<"KMKernel::~KMKernel";
+  kDebug(5006);
+}
+
+void KMKernel::setupDBus()
+{
+  (void) new KmailAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/KMail", this);
+  mICalIface = new KMailICalIfaceImpl();
+  mICalIface->readConfig();
+  mMailService =  new MailServiceImpl();
 }
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
@@ -1422,7 +1422,6 @@ void KMKernel::init()
     }
   }
   readConfig();
-  mICalIface->readConfig();
   // filterMgr->dump();
 
   the_weaver =  new ThreadWeaver::Weaver( this );
@@ -1607,7 +1606,8 @@ void KMKernel::cleanup(void)
     }
   }
 
-  mICalIface->cleanup();
+  if ( mICalIface )
+    mICalIface->cleanup();
 
   QList<QPointer<KMFolder> > folders;
   QStringList strList;
