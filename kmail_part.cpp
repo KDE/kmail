@@ -57,13 +57,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
-  (void) new KmailpartAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMailPart", this);
-
   kDebug(5006) <<"InstanceName:" << KGlobal::mainComponent().componentName();
-
   setComponentData(KMailFactory::componentData());
-
   kDebug(5006) <<"InstanceName:" << KGlobal::mainComponent().componentName();
 
   // import i18n data and icons from libraries:
@@ -85,6 +80,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
 
   kmsetSignalHandler(kmsignalHandler);
   kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
+  (void) new KmailpartAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/KMailPart", this);
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );
