@@ -2803,27 +2803,16 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KUrl url;
-  KFileDialog fdlg( url, QString(), this );
-  fdlg.setOperationMode( KFileDialog::Opening );
-  fdlg.okButton()->setText(i18n("&Insert"));
-  fdlg.setCaption(i18n("Insert File"));
-  KComboBox *combo = new KComboBox( this );
-  combo->addItems( KMMsgBase::supportedEncodings(false) );
-  fdlg.toolBar()->addWidget( combo );
-  for (int i = 0; i < combo->count(); i++)
-    if (KGlobal::charsets()->codecForName(KGlobal::charsets()->
-                                          encodingForName(combo->itemText(i)))
-        == QTextCodec::codecForLocale()) combo->setCurrentIndex(i);
-  if (!fdlg.exec()) return;
+  QString encodingStr;
+  KUrl u = mEditor->insertFile(KMMsgBase::supportedEncodings(false),encodingStr );
+  if( u.isEmpty()) return;
 
-  KUrl u = fdlg.selectedUrl();
   mRecentAction->addUrl(u);
   // Prevent race condition updating list when multiple composers are open
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).toLatin1();
+    QString encoding = KGlobal::charsets()->encodingForName(encodingStr).toLatin1();
     QStringList urls = group.readEntry( "recent-urls" , QStringList() );
     QStringList encodings = group.readEntry( "recent-encodings" , QStringList() );
     // Prevent config file from growing without bound
