@@ -4029,6 +4029,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vboxlayout->addWidget( label );
   vlay->addWidget( group );
 
+  // encrypted messages group
+  group = new QGroupBox( i18n("Encrypted Messages"), this );
+  vboxlayout = new QVBoxLayout( group );
+  mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
+  connect( mAlwaysDecrypt, SIGNAL(stateChanged(int)), this, SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mAlwaysDecrypt );
+  vlay->addWidget( group );
+
   // "Message Disposition Notification" groupbox:
   group = new QGroupBox( i18n("Message Disposition Notifications"), this );
 
@@ -4134,6 +4142,8 @@ void SecurityPage::GeneralTab::doLoadOther() {
   mAutomaticallyImportAttachedKeysCheck->setChecked(
       reader.readEntry( "AutoImportKeys", false ) );
 
+  mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
   int num = mdn.readEntry( "default-policy", 0 );
@@ -4209,6 +4219,7 @@ void SecurityPage::GeneralTab::save() {
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
   mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
+  GlobalSettings::self()->setAlwaysDecrypt( mAlwaysDecrypt->isChecked() );
 }
 
 

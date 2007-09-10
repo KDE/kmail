@@ -285,6 +285,12 @@ public:
 
   QWidget* mainWindow() { return mMainWindow; }
 
+  /** Returns wether the message should be decryted. */
+  bool decryptMessage() const;
+
+  /** Enforce message decryption. */
+  void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -510,6 +516,7 @@ private:
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
 	int mLevelQuote;
+  bool mDecrytMessageOverwrite;
 };
 
 

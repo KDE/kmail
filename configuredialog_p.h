@@ -926,6 +926,7 @@ private:
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
+  QCheckBox    *mAlwaysDecrypt;
   QString       mHtmlWhatsThis;
   QString       mExternalWhatsThis;
   QString       mReceiptWhatsThis;

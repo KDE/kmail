@@ -507,6 +507,10 @@
        <label>Allow to edit attachments of existing mails.</label>
      </entry>
 
+     <entry name="AlwaysDecrypt" type="Bool">
+      <default>false</default>
+      <label>Always decrypt messages when viewing or ask befor decrypting</label>
+     </entry>
     </group>
 
     <group name="TextIndex">

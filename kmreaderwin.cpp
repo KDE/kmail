@@ -477,7 +477,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    mSavedRelativePosition( 0 )
+    mSavedRelativePosition( 0 ),
+    mDecrytMessageOverwrite( false )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -2540,6 +2541,13 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 KMail::CSSHelper* KMReaderWin::cssHelper()
 {
   return mCSSHelper;
+}
+
+bool KMReaderWin::decryptMessage() const
+{
+  if ( !GlobalSettings::self()->alwaysDecrypt() )
+    return mDecrytMessageOverwrite;
+  return true;
 }
 
 #include "kmreaderwin.moc"

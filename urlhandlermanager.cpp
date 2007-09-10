@@ -354,6 +354,12 @@ namespace {
         kmkernel->resumeNetworkJobs();
         return true;
       }
+
+      if ( url.path() == "decryptMessage" ) {
+        w->setDecryptMessageOverwrite( true );
+        w->update( true );
+        return true;
+      }
     }
     return false;
   }
@@ -379,7 +385,7 @@ namespace {
   {
     //  kmail:levelquote/?num      -> the level quote to collapse.
     //  kmail:levelquote/?-num      -> expand all levels quote.
-    if ( url.protocol() == "kmail" && url.path()=="levelquote" ) 
+    if ( url.protocol() == "kmail" && url.path()=="levelquote" )
     {
       QString levelStr= url.query().mid( 1,url.query().length() );
       bool isNumber;
