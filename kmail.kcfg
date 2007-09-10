@@ -436,6 +436,11 @@
           <label>List of message part types to strip off mails that are being forwarded inline.</label>
       </entry>
 
+      <entry name="MaximumAttachmentSize" type="Int">
+          <label>The maximum size in MB that email attachments are allowed to have.</label>
+          <default>50</default>
+      </entry>
+
     </group>
 <!-- Composer -->
 

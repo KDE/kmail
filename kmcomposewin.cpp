@@ -2309,8 +2309,9 @@ bool KMComposeWin::addAttach(const KURL aUrl)
     return false;
   }
 
-  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrURL() ).size() > 50*1024*1024 ) { // 50 MB
-    KMessageBox::sorry( this, i18n( "<qt><p>KMail does not support attaching files bigger than 50 MB.</p>" ) );
+  const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
+  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrURL() ).size() > maxAttachmentSize*1024*1024 ) {
+    KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>" ).arg( maxAttachmentSize ) );
     return false;
   }
 
