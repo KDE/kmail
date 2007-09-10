@@ -4659,7 +4659,7 @@ void KMComposeWin::slotSizeAction( int size )
 void KMComposeWin::slotFormatReset()
 {
   mEditor->setColor( mForeColor );
-  mEditor->setCurrentFont( mSaveFont ); // fontChanged is called now
+  mEditor->setFont( mSaveFont ); // fontChanged is called now
 }
 
 void KMComposeWin::fontChanged( const QFont &f )
