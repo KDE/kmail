@@ -3192,8 +3192,7 @@ void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
 {
   mPhraseLanguageCombo->setCurrentIndex(
     mPhraseLanguageCombo->insertLanguage( lang ) );
-  KLocale locale("kmail");
-  locale.setLanguage( lang );
+  KLocale locale("kmail", lang);
   mLanguageList.append(
      LanguageItem( lang,
                    ki18n("On %D, you wrote:").toString( &locale ),
