@@ -3134,7 +3134,7 @@ void KMMainWidget::setupActions()
 
   mToggleTodoAction =
     new KToggleAction( KIcon( "mail_todo" ),
-                       i18n("&To-do"), this );
+                       i18n("&Action Item"), this );
   actionCollection()->addAction( "status_todo", mToggleTodoAction );
   connect( mToggleTodoAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusTodo()) );
@@ -3171,7 +3171,7 @@ void KMMainWidget::setupActions()
   connect(mToggleThreadImportantAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusImportant()));
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("&To-do"), this);
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("&Action Item"), this);
   actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mThreadStatusMenu->addAction( mToggleThreadTodoAction );
