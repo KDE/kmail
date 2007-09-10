@@ -46,7 +46,6 @@
 #include <kio/job.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
-//#include <keditcl.h>
 #include <ktempdir.h>
 
 #include <libkdepim/addresseelineedit.h>
