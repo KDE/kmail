@@ -43,9 +43,10 @@ namespace  KMail {
   class AccountManager;
 }
 using KMail::AccountManager;
-namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
+namespace KPIM { class ProgressItem; }
 using KPIM::ProgressItem;
+using KPIM::KAccount;
 
 class KMAccount;
 typedef QList< ::KMAccount* > AccountList;
@@ -178,12 +179,12 @@ public:
   virtual void setPrecommand(const QString &cmd) { mPrecommand = cmd; }
 
   /**
-   * Start the precommand. If the precommand is empty, the method
+   * Runs the precommand. If the precommand is empty, the method
    * will just return success and not actually do anything
    *
-   * @return True if successful start, false otherwise
+   * @return True if successful, false otherwise
    */
-  void startPrecommand(const QString &precommand);
+  bool runPrecommand(const QString &precommand);
 
   static QString importPassword(const QString &);
 
@@ -234,12 +235,6 @@ public:
 
 signals:
   /**
-   * Emitted after the precommand exited, successfully or not
-   * @param success true if the command execution was successful.
-   */
-  virtual void precommandExited( bool success );
-
-  /**
    * Emitted after the mail check is finished.
    * @param newMail true if there was new mail
    * @param status the status of the mail check
@@ -255,9 +250,7 @@ signals:
 protected slots:
   virtual void mailCheck();
   virtual void sendReceipts();
-
-private slots:
-  void precommandFinished( bool success );
+  virtual void precommandExited(bool);
 
 protected:
   KMAccount( AccountManager* owner, const QString& accountName, uint id);
@@ -309,7 +302,6 @@ protected:
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
-  KMPrecommand *mPrecommandProcess;
 };
 
 #endif /*kmaccount_h*/

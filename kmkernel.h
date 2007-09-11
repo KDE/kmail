@@ -77,7 +77,7 @@ class KMMessageTagMgr;
  *
  * The KMKernel class represents the core of KMail, where the different parts
  * come together and are coordinated. It is currently also the class which exports
- * KMail's main DCOP interfaces. The kernel is responsible for creating various
+ * KMail's main D-BUS interfaces. The kernel is responsible for creating various
  * (singleton) objects such as the UndoStack, the folder managers and filter
  * manager, etc.
  */
@@ -89,7 +89,7 @@ public:
   explicit KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
 
-  /** dcop callable stuff */
+  /** Start of D-Bus callable stuff */
 
   void checkMail ();
   QStringList accounts();
@@ -122,7 +122,7 @@ public:
   void setDefaultTransport( const QString & transport );
 
   /** D-Bus call used by the Kontact plugin to create a new message. */
-   QDBusObjectPath newMessage(const QString &to,
+  QDBusObjectPath newMessage(const QString &to,
                      const QString &cc,
                      const QString &bcc,
                      bool hidden,
@@ -146,7 +146,7 @@ public:
                                 const QString & MsgStatusFlags = QString());
 
   QStringList folderList() const;
-  QDBusObjectPath getFolder( const QString& vpath );
+  QString getFolder( const QString& vpath );
   void selectFolder( const QString &folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( quint32 serialNumber, const QString &messageId );
@@ -179,6 +179,9 @@ public:
   */
   void resumeNetworkJobs();
 
+  /** End of D-Bus callable stuff */
+
+
   /** A static helper function that asks the user
    * if they want to go online.
    * @return true if the user wants to go online
@@ -198,6 +201,7 @@ public:
   static KConfig *config();
 
   void init();
+  void setupDBus();
   void readConfig();
   void cleanupImapFolders();
   void testDir(const char *_name);

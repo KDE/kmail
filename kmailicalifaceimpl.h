@@ -46,6 +46,7 @@
 #include <kurl.h>
 
 #include <kfoldertree.h>
+using KPIM::KFolderTreeItem;
 #include "groupwareadaptor.h"
 #include "kmfoldertype.h"
 

@@ -20,7 +20,6 @@
  *
  */
 
-
 #ifndef kmacctseldlg_h
 #define kmacctseldlg_h
 
@@ -30,6 +29,8 @@
 class QButtonGroup;
 class QRadioButton;
 class QLayout;
+
+using KPIM::KAccount;
 
 /** Select account from given list of account types */
 class KMAcctSelDlg: public KDialog

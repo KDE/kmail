@@ -118,6 +118,7 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 
   processNextCheck( false );
 }
+
 //-----------------------------------------------------------------------------
 void AccountManager::processNextCheck( bool _newMail )
 {

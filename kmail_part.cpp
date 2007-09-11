@@ -57,27 +57,15 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
-  (void) new KmailpartAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMailPart", this);
-
-  kDebug(5006) <<"KMailPart()";
-  kDebug(5006) <<"  InstanceName:" << KGlobal::mainComponent().componentName();
-
+  kDebug(5006) <<"InstanceName:" << KGlobal::mainComponent().componentName();
   setComponentData(KMailFactory::componentData());
-
-  kDebug(5006) <<"KMailPart()...";
-  kDebug(5006) <<"  InstanceName:" << KGlobal::mainComponent().componentName();
+  kDebug(5006) <<"InstanceName:" << KGlobal::mainComponent().componentName();
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
 
 
   KMail::lockOrDie();
-
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
   KMKernel *mKMailKernel = new KMKernel();
@@ -91,10 +79,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &
   mKMailKernel->recoverDeadLetters();
 
   kmsetSignalHandler(kmsignalHandler);
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+  kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
+  (void) new KmailpartAdaptor( this );
+  QDBusConnection::sessionBus().registerObject("/KMailPart", this);
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );
@@ -162,7 +149,7 @@ KAboutData *KMailPart::createAboutData()
 
 bool KMailPart::openFile()
 {
-  kDebug(5006) <<"KMailPart:openFile()";
+  kDebug(5006);
 
   mainWidget->show();
   return true;
@@ -208,7 +195,7 @@ public:
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-  kDebug(5006) <<"KMailPart::guiActivateEvent";
+  kDebug(5006);
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
   mainWidget->initializeMessageTagActions();

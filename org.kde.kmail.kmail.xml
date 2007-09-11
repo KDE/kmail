@@ -2,9 +2,6 @@
 "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <interface name="org.kde.kmail.kmail">
-    <signal name="kmailSelectFolder">
-      <arg type="s" name="folder"/>
-    </signal>
     <method name="checkMail"/>
     <method name="openReader"/>
     <method name="compactAllFolders"/>
@@ -61,7 +58,7 @@
       <arg name="numUnread" type="i" direction="out"/>
     </signal>
     <method name="getFolder">
-      <arg type="o" direction="out"/>
+      <arg type="s" direction="out"/>
       <arg name="vpath" type="s" direction="in"/>
     </method>
     <method name="openComposer">

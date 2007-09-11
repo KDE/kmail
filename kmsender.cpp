@@ -749,6 +749,7 @@ void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
   mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
+
 //-----------------------------------------------------------------------------
 void KMSender::setStatusByLink( const KMMessage *aMsg )
 {

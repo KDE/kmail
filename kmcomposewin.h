@@ -46,7 +46,6 @@
 #include <kio/job.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
-#include <keditcl.h>
 #include <ktempdir.h>
 
 #include <libkdepim/addresseelineedit.h>
@@ -60,7 +59,8 @@ class QGridLayout;
 class QPushButton;
 class QByteArray;
 class QTreeWidgetItem;
-class KMEdit;
+class KMComposerEditor;
+
 class KMComposeWin;
 class KMFolderComboBox;
 class KMFolder;
@@ -81,6 +81,7 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
+class KMStyleListSelectAction;
 
 namespace KPIMIdentities {
   class IdentityCombo;
@@ -105,7 +106,8 @@ namespace GpgME {
 class KMComposeWin : public KMail::Composer
 {
   Q_OBJECT
-  friend class ::KMEdit;
+  friend class ::KMComposerEditor;
+
   friend class ::MessageComposer;
 
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
@@ -116,6 +118,8 @@ class KMComposeWin : public KMail::Composer
     static Composer *create( KMMessage *msg = 0, uint identity = 0 );
 
   QString dbusObjectPath() const;
+  QString quotePrefixName() const;
+  QString smartQuote( const QString & msg );
 public: // mailserviceimpl
     /**
      * From MailComposerIface
@@ -234,7 +238,6 @@ public: // mailserviceimpl
       * in lowercase.
       */
      static QString prettyMimeType( const QString &type );
-    QString quotePrefixName() const;
 
   private: // kmedit:
     KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
@@ -282,20 +285,14 @@ public: // mailserviceimpl
     void slotClose();
     void slotHelp();
 
-    void slotFind();
-    void slotSearchAgain();
-    void slotReplace();
     void slotUndo();
     void slotRedo();
     void slotCut();
     void slotCopy();
     void slotPaste();
-    void slotPasteAsQuotation();
     void slotPasteAsAttachment();
-    void slotAddQuotes();
-    void slotRemoveQuotes();
     void slotAttachPNGImageData( const QByteArray &image );
-
+    void slotFormatReset();
     void slotMarkAll();
 
     void slotFolderRemoved( KMFolder * );
@@ -330,7 +327,6 @@ public: // mailserviceimpl
     /**
      * Check spelling of text.
      */
-    void slotSpellcheck();
     void slotSpellcheckConfig();
     void slotSubjectTextSpellChecked();
 
@@ -443,17 +439,8 @@ public: // mailserviceimpl
      */
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
-    void slotListAction( const QString & );
     void slotFontAction( const QString & );
     void slotSizeAction( int );
-    void slotAlignLeft();
-    void slotAlignCenter();
-    void slotAlignRight();
-    void slotTextBold();
-    void slotTextItalic();
-    void slotTextUnder();
-    void slotFormatReset();
-    void slotTextColor();
     void fontChanged( const QFont & );
     void alignmentChanged( int );
 
@@ -690,7 +677,7 @@ public: // mailserviceimpl
     bool mDone;
     bool mAtmModified;
 
-    KMEdit *mEditor;
+    KMComposerEditor *mEditor;
     QGridLayout *mGrid;
     KMMessage *mMsg;
     QVector<KMMessage*> mComposedMessages;
@@ -729,7 +716,7 @@ public: // mailserviceimpl
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction;
 
-    KSelectAction *listAction;
+    KMStyleListSelectAction *listAction;
     KFontAction *fontAction;
     KFontSizeAction *fontSizeAction;
     KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction;
@@ -764,7 +751,6 @@ public: // mailserviceimpl
     bool mSubjectTextWasSpellChecked;
 
     QString addQuotesToText( const QString &inputText ) const;
-    QString removeQuotesFromText( const QString &inputText ) const;
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
 

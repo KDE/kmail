@@ -596,9 +596,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   quint32 sernum = msg->getMsgSerNum();
 
   // do we have an accumulator for this folder?
-#ifdef __GNUC__
-#warning Where is the value actually inserted??? --tmcguire
-#endif
+  // TODO (till): Remove this accumulator stuff, it is dead code.
   Accumulator *ac = mAccumulators.value( parent->location(), 0 );
   if( ac ) {
     QString s;
@@ -1617,7 +1615,8 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
 void KMailICalIfaceImpl::readConfig()
 {
-  bool enabled = GlobalSettings::self()->theIMAPResourceEnabled();
+  bool enabled = GlobalSettings::self()->theIMAPResourceEnabled() &&
+                 ( GlobalSettings::self()->theIMAPResourceAccount() != 0 );
 
   if( !enabled ) {
     if( mUseResourceIMAP == true ) {

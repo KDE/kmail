@@ -61,7 +61,7 @@ void KMailApplication::setEventLoopReached() {
 
 int KMailApplication::newInstance()
 {
-  kDebug(5006) <<"KMailApplication::newInstance()";
+  kDebug(5006);
   if (!kmkernel)
      return 0;
 
@@ -104,21 +104,11 @@ int main(int argc, char *argv[])
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
 
-
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
-
   KMail::lockOrDie();
 
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  kapp->dcopClient()->setDefaultObject( kmailKernel.objId() );
 
   // and session management
   kmailKernel.doSessionManagement();
@@ -128,10 +118,7 @@ int main(int argc, char *argv[])
 
   kmsetSignalHandler(kmsignalHandler);
 
-#ifdef __GNUC__
-#warning Port me!
-#endif
-//  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+  kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
 
   //If the instance hasn't been created yet, do that now

@@ -28,6 +28,7 @@
 **
 *******************************************************************************/
 
+#include <config-kmail.h>
 #include "kmmessagetag.h"
 #include "kmkernel.h"
 
@@ -40,6 +41,9 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <krandom.h>
+#ifdef Nepomuk_FOUND
+#include <nepomuk/resourcemanager.h>
+#endif
 
 //----------------------------KMMessageTagDescription------------------------------------
 KMMessageTagDescription::KMMessageTagDescription( const QString &aLabel, 
@@ -154,6 +158,9 @@ KMMessageTagMgr::KMMessageTagMgr() : mDirty( 0 )
 {
   mTagDict = new QHash<QString,KMMessageTagDescription *>();
   mTagList = new QList<KMMessageTagDescription *>();
+  #ifdef Nepomuk_FOUND
+  Nepomuk::ResourceManager::instance()->init(); 
+  #endif
 }
 
 KMMessageTagMgr::~KMMessageTagMgr() 

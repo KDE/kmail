@@ -42,8 +42,8 @@
 #include "kleo_util.h"
 #include "globalsettings.h"
 #include "custommimeheader.h"
-#include "kmedit.h"
 #include "util.h"
+#include "kmcomposereditor.h"
 
 #include <gpgme++/key.h>
 #include <gpgme++/keylistresult.h>
@@ -561,7 +561,8 @@ void MessageComposer::readFromComposeWin()
   // Hopefully we can get rid of this eventually, it's needed to be able
   // to break the plain/text version of a multipart/alternative (html) mail
   // according to the line breaks of the richtext version.
-  mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
+//Laurent fixme
+  //mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
 static QByteArray escape_quoted_string( const QByteArray &str ) {
   QByteArray result;
@@ -2170,6 +2171,8 @@ QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText ) con
 //-----------------------------------------------------------------------------
 QByteArray MessageComposer::breakLinesAndApplyCodec() const
 {
+//Laurent fixme
+#if 0
   QString text;
   QByteArray cText;
 
@@ -2231,6 +2234,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
     cText += '\n';
   }
   return cText;
+#endif
 }
 
 //-----------------------------------------------------------------------------
