@@ -1682,12 +1682,10 @@ QString KMComposeWin::replyTo() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::verifyWordWrapLengthIsAdequate( const QString &body )
 {
-//Laurent: fix me
-#if 0
   int maxLineLength = 0;
   int curPos;
   int oldPos = 0;
-  if ( mEditor->Q3MultiLineEdit::wordWrap() == Q3MultiLineEdit::FixedColumnWidth ) {
+  if ( mEditor->lineWrapMode () == QTextEdit::FixedColumnWidth ) {
     for ( curPos = 0; curPos < (int)body.length(); ++curPos ) {
       if ( body[curPos] == '\n' ) {
         if ( (curPos - oldPos ) > maxLineLength ) {
@@ -1699,11 +1697,10 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate( const QString &body )
     if ( ( curPos - oldPos ) > maxLineLength ) {
       maxLineLength = curPos - oldPos;
     }
-    if ( mEditor->wrapColumnOrWidth() < maxLineLength ) {
-      mEditor->setWrapColumnOrWidth( maxLineLength );
+    if ( mEditor->lineWrapColumnOrWidth() < maxLineLength ) {
+      mEditor->setLineWrapColumnOrWidth( maxLineLength );
     }
   }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4102,8 +4099,6 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCleanSpace()
 {
-//Laurent fix me
-#if 0
   // Originally we simply used the KEdit::cleanWhiteSpace() method,
   // but that code doesn't handle quoted-lines or signatures, so instead
   // we now simply use regexp's to squeeze sequences of tabs and spaces
@@ -4113,8 +4108,9 @@ void KMComposeWin::slotCleanSpace()
   // Signatures are respected (i.e. not cleaned).
 
   QString s;
-  if ( mEditor->hasMarkedText() ) {
-    s = mEditor->markedText();
+  QTextCursor cursor = mEditor->textCursor();
+  if ( cursor.hasSelection() ) {
+    s = cursor.selectedText();
     if ( s.isEmpty() ) {
       return;
     }
@@ -4161,11 +4157,10 @@ void KMComposeWin::slotCleanSpace()
   // If you use mEditor->setText( s ) then the undo history is cleared so
   // that isn't a good solution either.
   // TODO: is Qt4 better at handling the undo history??
-  if ( !mEditor->hasMarkedText() ) {
+  if ( !cursor.hasSelection() ) {
     mEditor->clear();
   }
   mEditor->insert( s );
-#endif
 }
 
 //-----------------------------------------------------------------------------
