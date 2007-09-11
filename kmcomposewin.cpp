@@ -148,7 +148,6 @@ using MailTransport::Transport;
 #include <QRegExp>
 #include <QTextCodec>
 #include <QHeaderView>
-#include <Q3TextDrag>
 
 #include <mimelib/mimepp.h>
 
