@@ -4158,7 +4158,7 @@ void KMComposeWin::slotCleanSpace()
   // that isn't a good solution either.
   // TODO: is Qt4 better at handling the undo history??
   if ( !cursor.hasSelection() ) {
-    mEditor->clear();
+    cursor.clearSelection();
   }
   mEditor->insert( s );
 }
@@ -4182,15 +4182,14 @@ void KMComposeWin::toggleMarkup( bool markup )
 {
   if ( markup ) {
     if ( !mUseHTMLEditor ) {
-//Laurent fix me
-#if 0
       kDebug(5006) <<"setting RichText editor";
       mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
       mHtmlMarkup = true;
-
+      QTextCursor cursor = mEditor->textCursor();
       // set all highlighted text caused by spelling back to black
-      int paraFrom, indexFrom, paraTo, indexTo;
-      mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo );
+      int startSelect = cursor.selectionStart ();
+      int endSelect = cursor.selectionEnd();
+      
       mEditor->selectAll();
       // save the buttonstates because setColor calls fontChanged
       bool _bold = textBoldAction->isChecked();
@@ -4198,7 +4197,8 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->setColor( QColor( 0, 0, 0 ) );
       textBoldAction->setChecked( _bold );
       textItalicAction->setChecked( _italic );
-      mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
+      //Laurent fix me
+      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
       mEditor->setTextFormat( Qt::RichText );
       mEditor->setModified( true );
@@ -4207,7 +4207,6 @@ void KMComposeWin::toggleMarkup( bool markup )
       //mEditor->deleteAutoSpellChecking();
       mAutoSpellCheckingAction->setChecked( false );
       slotAutoSpellCheckingToggled( false );
-#endif
     }
   } else { // markup is to be turned off
     kDebug(5006) <<"setting PlainText editor";
