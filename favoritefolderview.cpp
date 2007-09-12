@@ -81,7 +81,6 @@ class FavoriteFolderViewToolTip : public QToolTip
 
 using namespace KMail;
 
-
 FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, const QString & name, KMFolder * folder)
   : KMFolderTreeItem( parent, name, folder ),
   mOldName( folder->label() )
@@ -162,11 +161,14 @@ void FavoriteFolderViewItem::nameChanged()
 }
 
 
+QValueList<FavoriteFolderView*> FavoriteFolderView::mInstances;
 
-FavoriteFolderView::FavoriteFolderView(QWidget * parent) :
-    FolderTreeBase( kmkernel->getKMMainWidget(), parent ),
-    mContextMenuItem( 0 )
+FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * parent) :
+    FolderTreeBase( mainWidget, parent ),
+    mContextMenuItem( 0 ),
+    mReadingConfig( false )
 {
+  assert( mainWidget );
   addColumn( i18n("Favorite Folders") );
   setResizeMode( LastColumn );
   header()->setClickEnabled( false );
@@ -182,6 +184,7 @@ FavoriteFolderView::FavoriteFolderView(QWidget * parent) :
   connect( this, SIGNAL(dropped(QDropEvent*,QListViewItem*)), SLOT(dropped(QDropEvent*,QListViewItem*)) );
   connect( this, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint &, int)),
            SLOT(contextMenu(QListViewItem*,const QPoint&)) );
+  connect( this, SIGNAL(moved()), SLOT(notifyInstancesOnChange()) );
 
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(initializeFavorites()) );
@@ -198,10 +201,18 @@ FavoriteFolderView::FavoriteFolderView(QWidget * parent) :
   setFont( f );
 
   new FavoriteFolderViewToolTip( this );
+
+  mInstances.append( this );
+}
+
+FavoriteFolderView::~FavoriteFolderView()
+{
+  mInstances.remove( this );
 }
 
 void FavoriteFolderView::readConfig()
 {
+  mReadingConfig = true;
   clear();
   QValueList<int> folderIds = GlobalSettings::self()->favoriteFolderIds();
   QStringList folderNames = GlobalSettings::self()->favoriteFolderNames();
@@ -226,6 +237,7 @@ void FavoriteFolderView::readConfig()
   QTimer::singleShot( 0, this, SLOT(initializeFavorites()) );
 
   readColorConfig();
+  mReadingConfig = false;
 }
 
 void FavoriteFolderView::writeConfig()
@@ -243,7 +255,7 @@ void FavoriteFolderView::writeConfig()
 
 bool FavoriteFolderView::acceptDrag(QDropEvent * e) const
 {
-  KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   if ( e->provides( "application/x-qlistviewitem" ) &&
        (e->source() == ft->viewport() || e->source() == viewport() ) )
@@ -261,6 +273,7 @@ KMFolderTreeItem* FavoriteFolderView::addFolder(KMFolder * folder, const QString
   else
     item->moveItem( lastItem() );
   ensureItemVisible( item );
+  notifyInstancesOnChange();
   return item;
 }
 
@@ -269,7 +282,7 @@ void FavoriteFolderView::selectionChanged()
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( selectedItem() );
   if ( !fti )
     return;
-  KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   assert( fti );
   ft->showFolder( fti->folder() );
@@ -324,7 +337,7 @@ void FavoriteFolderView::folderRemoved(KMFolder * folder)
 void FavoriteFolderView::dropped(QDropEvent * e, QListViewItem * after)
 {
   QListViewItem* afterItem = after;
-  KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   if ( e->source() == ft->viewport() && e->provides( "application/x-qlistviewitem" ) ) {
     for ( QListViewItemIterator it( ft ); it.current(); ++it ) {
@@ -341,9 +354,7 @@ void FavoriteFolderView::dropped(QDropEvent * e, QListViewItem * after)
 
 void FavoriteFolderView::contextMenu(QListViewItem * item, const QPoint & point)
 {
-  KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
-  assert( mainWidget );
-  KMFolderTree *ft = mainWidget->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
   mContextMenuItem = fti;
@@ -354,15 +365,15 @@ void FavoriteFolderView::contextMenu(QListViewItem * item, const QPoint & point)
     contextMenu.insertItem( SmallIconSet("edit"), i18n("Rename Favorite"), this, SLOT(renameFolder()) );
     contextMenu.insertSeparator();
 
-    mainWidget->action("mark_all_as_read")->plug( &contextMenu );
+    mainWidget()->action("mark_all_as_read")->plug( &contextMenu );
     if ( fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->folderType() == KMFolderTypeCachedImap )
-      mainWidget->action("refresh_folder")->plug( &contextMenu );
+      mainWidget()->action("refresh_folder")->plug( &contextMenu );
     if ( fti->folder()->isMailingListEnabled() )
-      mainWidget->action("post_message")->plug( &contextMenu );
+      mainWidget()->action("post_message")->plug( &contextMenu );
 
     contextMenu.insertItem( SmallIconSet("configure_shortcuts"), i18n("&Assign Shortcut..."), fti, SLOT(assignShortcut()) );
     contextMenu.insertItem( i18n("Expire..."), fti, SLOT(slotShowExpiryProperties()) );
-    mainWidget->action("modify")->plug( &contextMenu );
+    mainWidget()->action("modify")->plug( &contextMenu );
   } else {
     contextMenu.insertItem( SmallIconSet("bookmark_add"), i18n("Add Favorite Folder..."),
                             this, SLOT(addFolder()) );
@@ -374,12 +385,13 @@ void FavoriteFolderView::removeFolder()
 {
   delete mContextMenuItem;
   mContextMenuItem = 0;
+  notifyInstancesOnChange();
 }
 
 void FavoriteFolderView::initializeFavorites()
 {
   QValueList<int> seenInboxes = GlobalSettings::self()->favoriteFolderViewSeenInboxes();
-  KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   for ( QListViewItemIterator it( ft ); it.current(); ++it ) {
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
@@ -404,6 +416,7 @@ void FavoriteFolderView::renameFolder()
   if ( !ok )
     return;
   mContextMenuItem->setText( 0, name );
+  notifyInstancesOnChange();
 }
 
 QString FavoriteFolderView::prettyName(KMFolderTreeItem * fti)
@@ -460,7 +473,6 @@ void FavoriteFolderView::readColorConfig()
   QPalette newPal = palette();
   newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
   setPalette( newPal );
-
 }
 
 void FavoriteFolderView::addFolder()
@@ -475,10 +487,10 @@ void FavoriteFolderView::addFolder()
   addFolder( folder, fti ? prettyName( fti ) : folder->label() );
 }
 
-KMFolderTreeItem * FavoriteFolderView::findFolderTreeItem(KMFolder * folder)
+KMFolderTreeItem * FavoriteFolderView::findFolderTreeItem(KMFolder * folder) const
 {
   assert( folder );
-  KMFolderTree *ft = kmkernel->getKMMainWidget()->folderTree();
+  KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   for ( QListViewItemIterator it( ft ); it.current(); ++it ) {
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
@@ -506,6 +518,18 @@ void FavoriteFolderView::checkMail()
         f->account()->processNewMailSingleFolder( fti->folder() );
       }
     }
+  }
+}
+
+void FavoriteFolderView::notifyInstancesOnChange()
+{
+  if ( mReadingConfig )
+    return;
+  writeConfig();
+  for ( QValueList<FavoriteFolderView*>::ConstIterator it = mInstances.begin(); it != mInstances.end(); ++it ) {
+    if ( (*it) == this || (*it)->mReadingConfig )
+      continue;
+    (*it)->readConfig();
   }
 }
 

@@ -48,7 +48,8 @@ class FavoriteFolderView : public FolderTreeBase
   Q_OBJECT
 
   public:
-    FavoriteFolderView( QWidget *parent = 0 );
+    FavoriteFolderView( KMMainWidget *mainWidget, QWidget *parent = 0 );
+    ~FavoriteFolderView();
 
     void readConfig();
     void writeConfig();
@@ -67,7 +68,7 @@ class FavoriteFolderView : public FolderTreeBase
 
   private:
     static QString prettyName( KMFolderTreeItem* fti );
-    static KMFolderTreeItem* findFolderTreeItem( KMFolder* folder );
+    KMFolderTreeItem* findFolderTreeItem( KMFolder* folder ) const;
 
   private slots:
     void selectionChanged();
@@ -79,9 +80,12 @@ class FavoriteFolderView : public FolderTreeBase
     void initializeFavorites();
     void renameFolder();
     void addFolder();
+    void notifyInstancesOnChange();
 
   private:
     KMFolderTreeItem* mContextMenuItem;
+    static QValueList<FavoriteFolderView*> mInstances;
+    bool mReadingConfig;
 };
 
 }

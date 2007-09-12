@@ -660,7 +660,7 @@ void KMMainWidget::createWidgets(void)
   // create list of folders
   mFolderViewSplitter = new QSplitter( Qt::Vertical, mFolderViewParent );
   mFolderViewSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-  mFavoriteFolderView = new KMail::FavoriteFolderView( mFolderViewSplitter );
+  mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewSplitter );
   if ( mFavoritesCheckMailAction )
   connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView, SLOT(checkMail()) );
   QWidget *folderTreeParent = mFolderViewParent;
