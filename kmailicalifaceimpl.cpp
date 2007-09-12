@@ -133,9 +133,10 @@ ExtraFolder::ExtraFolder( KMFolder* f )
     folder->open("kmailicaliface::extrafolder");
 }
 
-ExtraFolder::~ExtraFolder() 
+ExtraFolder::~ExtraFolder()
 {
-    folder->close("kmailicaliface::extrafolder");
+    if ( folder )
+        folder->close("kmailicaliface::extrafolder");
 }
 
 
