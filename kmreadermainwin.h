@@ -62,6 +62,7 @@ private slots:
   void slotFindNext();
   void slotFontAction(const QString &);
   void slotSizeAction(int);
+  void slotCreateTodo();
 
   void slotConfigChanged();
 
@@ -79,7 +80,7 @@ private:
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mReplyAction,
           *mReplyAllAction, *mReplyAuthorAction, *mReplyListAction, *mForwardInlineAction,
           *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
-          *mViewSourceAction;
+          *mViewSourceAction, *mCreateTodoAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   KFontAction *fontAction;
