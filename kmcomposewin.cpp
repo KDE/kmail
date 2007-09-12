@@ -3414,9 +3414,13 @@ QString KMComposeWin::smartQuote( const QString & msg )
 
 void KMComposeWin::slotPasteAsAttachment()
 {
-  KUrl url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
-  if ( url.isValid() ) {
-    addAttach( QApplication::clipboard()->text( QClipboard::Clipboard ) );
+  if ( KUrl::List::canDecode( QApplication::clipboard()->mimeData() ) )
+  {
+    QStringList data = QApplication::clipboard()->text().split("\n", QString::SkipEmptyParts);
+    for ( QStringList::Iterator it=data.begin(); it!=data.end(); ++it )
+    {
+      addAttach( *it );
+    }
     return;
   }
 
