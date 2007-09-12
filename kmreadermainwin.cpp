@@ -323,6 +323,9 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
+  mCreateTodoAction = new KAction( KIcon("mail_todo"), i18n("Create Task..."), this);
+  actionCollection()->addAction( "create_todo", mCreateTodoAction );
+  connect( mCreateTodoAction, SIGNAL(triggered(bool)), SLOT(slotCreateTodo()) );
 
   Q3Accel *accel = new Q3Accel(mReaderWin, "showMsg()");
   accel->connectItem(accel->insertItem(Qt::Key_Up),
@@ -416,6 +419,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
+    menu->addAction( mCreateTodoAction );
   }
   menu->exec(aPoint, 0);
   delete menu;
@@ -446,6 +450,14 @@ void KMReaderMainWin::slotSizeAction( int size )
   mReaderWin->cssHelper()->setBodyFont( f );
   mReaderWin->cssHelper()->setPrintFont( f );
   mReaderWin->update();
+}
+
+void KMReaderMainWin::slotCreateTodo()
+{
+  if ( !mMsg )
+    return;
+  KMCommand *command = new CreateTodoCommand( this, mMsg );
+  command->start();
 }
 
 #include "kmreadermainwin.moc"

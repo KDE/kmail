@@ -2490,6 +2490,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
       menu->addAction( mDeleteAction );
     else
       menu->addAction( mTrashAction );
+
+    menu->insertSeparator();
+    menu->addAction( mCreateTodoAction );
   }
   KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
