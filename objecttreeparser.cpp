@@ -1575,7 +1575,10 @@ namespace KMail {
             htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                      cryptPlugWrapper(),
                                                      node->trueFromAddress() ) );
-            writePartIcon( &node->msgPart(), node->nodeId() );
+            if ( mReader->decryptMessage() )
+              writePartIcon( &node->msgPart(), node->nodeId() );
+            else
+              htmlWriter()->queue( decryptedData );
             htmlWriter()->queue( writeSigstatFooter( messagePart ) );
           }
         } else {
