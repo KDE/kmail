@@ -19,7 +19,7 @@
 
 #include "vcardviewer.h"
 #include "kmaddrbook.h"
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 
 #include <addresseeview.h>
 using KPIM::AddresseeView;

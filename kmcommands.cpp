@@ -84,7 +84,7 @@
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermbox.h"

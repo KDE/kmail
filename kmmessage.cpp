@@ -32,7 +32,7 @@ using KMail::TemplateParser;
 
 #include "kleo/cryptplugwrapperlist.h"
 #include <libkpgp/kpgpblock.h>
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 
 #include <kglobal.h>
 #include <kascii.h>

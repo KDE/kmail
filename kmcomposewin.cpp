@@ -30,7 +30,7 @@
 #include "messagesender.h"
 #include "kmmsgpartdlg.h"
 #include <libkpgp/kpgpblock.h>
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
