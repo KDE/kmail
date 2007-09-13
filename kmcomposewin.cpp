@@ -724,7 +724,7 @@ void KMComposeWin::autoSaveMessage()
   // Don't continue before the applyChanges is done!
 }
 
-void KMComposeWin::slotContinueAutoSave() 
+void KMComposeWin::slotContinueAutoSave()
 {
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
@@ -2595,7 +2595,7 @@ void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KAddrBookExternal::openAddressBook( this );
+  KPIM::KAddrBookExternal::openAddressBook( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -3328,7 +3328,7 @@ void KMComposeWin::editAttach(int index, bool openWith)
   atmTempFile->flush();
 
 
-  KMail::EditorWatcher *watcher = 
+  KMail::EditorWatcher *watcher =
       new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
                                 contentTypeStr, openWith, this );
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)),
@@ -3890,7 +3890,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   kDebug(5006) <<"KMComposeWin::doSend() - calling applyChanges()";
 
   if (neverEncrypt && saveIn != KMComposeWin::None ) {
-      // we can't use the state of the mail itself, to remember the 
+      // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
     mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
     mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );
@@ -4193,7 +4193,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       // set all highlighted text caused by spelling back to black
       int startSelect = cursor.selectionStart ();
       int endSelect = cursor.selectionEnd();
-      
+
       mEditor->selectAll();
       // save the buttonstates because setColor calls fontChanged
       bool _bold = textBoldAction->isChecked();

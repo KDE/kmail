@@ -878,7 +878,7 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KAddrBookExternal::openAddressBook(this);
+  KPIM::KAddrBookExternal::openAddressBook(this);
 }
 
 

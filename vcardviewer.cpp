@@ -77,7 +77,7 @@ KMail::VCardViewer::~VCardViewer()
 
 void KMail::VCardViewer::slotUser1()
 {
-  KAddrBookExternal::addVCard( *itAddresseeList, this );
+  KPIM::KAddrBookExternal::addVCard( *itAddresseeList, this );
 }
 
 void KMail::VCardViewer::slotUser2()

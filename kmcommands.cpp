@@ -557,8 +557,8 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
-                               parentWidget() );
+  KPIM::KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+                                     parentWidget() );
 
   return OK;
 }
@@ -573,8 +573,8 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr), addr ,
-                                parentWidget() );
+  KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
+                                      addr, parentWidget() );
 
   return OK;
 }

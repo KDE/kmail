@@ -199,7 +199,7 @@ void KMMessage::assign( const KMMessage& other )
       mTagList = new KMMessageTagList();
     *mTagList = *other.tagList();
   } else {
-    delete mTagList; 
+    delete mTagList;
     mTagList = 0;
   }
   setDrafts( other.drafts() );
@@ -1447,8 +1447,8 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     s = MDN::SentManually;
   }
 
-  if ( a != KMime::MDN::AutomaticAction ) { 
-    //TODO: only ingore user settings for AutomaticAction if requested 
+  if ( a != KMime::MDN::AutomaticAction ) {
+    //TODO: only ingore user settings for AutomaticAction if requested
     if ( mode == 1 ) { // ask
       if ( !allowGUI ) return 0; // don't setMDNSentState here!
       mode = requestAdviceOnMDN( "mdnNormalAsk" );
@@ -2014,10 +2014,10 @@ void KMMessage::setSubject(const QString& aStr)
 //Reimplement virtuals from KMMsgBase
 //-----------------------------------------------------------------------------
 //Different from KMMsgInfo as that reads from the index
-QString KMMessage::tagString() const 
+QString KMMessage::tagString() const
 {
   if ( mTagList )
-    return mTagList->join( "," ); 
+    return mTagList->join( "," );
   return QString();
 }
 
@@ -3786,7 +3786,7 @@ QString KMMessage::expandAliases( const QString& recipients )
     QString receiver = (*it).trimmed();
 
     // try to expand distribution list
-    QString expandedList = KAddrBookExternal::expandDistributionList( receiver );
+    QString expandedList = KPIM::KAddrBookExternal::expandDistributionList( receiver );
     if ( !expandedList.isEmpty() ) {
       expandedRecipients += expandedList;
       continue;
