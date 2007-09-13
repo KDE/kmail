@@ -1571,7 +1571,7 @@ void KMComposeWin::updateCursorPosition()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor( void )
 {
-  mEditor->setModified( false );
+  mEditor->document()->setModified( false );
   QFontMetrics fm( mBodyFont );
   mEditor->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
 
@@ -2072,7 +2072,7 @@ void KMComposeWin::setFcc( const QString &idString )
 //-----------------------------------------------------------------------------
 bool KMComposeWin::isModified() const
 {
-  return ( mEditor->isModified() ||
+  return ( mEditor->document()->isModified() ||
            mEdtFrom->isModified() ||
            ( mEdtReplyTo && mEdtReplyTo->isModified() ) ||
            ( mEdtTo && mEdtTo->isModified() ) ||
@@ -2086,7 +2086,7 @@ bool KMComposeWin::isModified() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::setModified( bool modified )
 {
-  mEditor->setModified( modified );
+  mEditor->document()->setModified( modified );
   if ( !modified ) {
     mEdtFrom->setModified( false );
     if ( mEdtReplyTo ) mEdtReplyTo->setModified( false );
@@ -4205,7 +4205,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
       mEditor->setTextFormat( Qt::RichText );
-      mEditor->setModified( true );
+      mEditor->document()->setModified( true );
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
       //mEditor->deleteAutoSpellChecking();
@@ -4221,7 +4221,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->setTextFormat( Qt::PlainText );
       QString text = mEditor->text();
       mEditor->setText( text ); // otherwise the text still looks formatted
-      mEditor->setModified( true );
+      mEditor->document()->setModified( true );
       slotAutoSpellCheckingToggled( true );
     }
   }
