@@ -36,8 +36,6 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 using KMail::AccountManager;
-#include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
 
 #include <kparts/mainwindow.h>
 #include <kparts/genericfactory.h>

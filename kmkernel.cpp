@@ -28,7 +28,7 @@ using KMail::AccountManager;
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
+using KPIM::RecentAddresses;
 #include "kmmsgdict.h"
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -1385,8 +1385,8 @@ void KMKernel::init()
     kDebug(5006) <<"foldersPath (after transferMail): '" << foldersPath <<"'";
   }
   //Here because folderMgr's need it when they read the index and sort tags
-  the_msgTagMgr = new KMMessageTagMgr(); 
-  the_msgTagMgr->readConfig(); 
+  the_msgTagMgr = new KMMessageTagMgr();
+  the_msgTagMgr->readConfig();
 
   // moved up here because KMMessage::stripOffPrefixes is used below
   KMMessage::readConfig();

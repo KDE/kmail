@@ -37,7 +37,7 @@
 #include <addressesdialog.h>
 using KPIM::AddressesDialog;
 #include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
+using KPIM::RecentAddresses;
 
 #include <kiconloader.h>
 #include <klocale.h>

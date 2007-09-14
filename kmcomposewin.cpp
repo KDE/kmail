@@ -50,7 +50,7 @@ using KPIM::AddresseeEmailSelection;
 using KPIM::AddresseeSelectorDialog;
 #include <maillistdrag.h>
 #include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
+using KPIM::RecentAddresses;
 #include "kleo_util.h"
 #include "stl_util.h"
 #include "recipientseditor.h"

@@ -151,14 +151,14 @@ void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 
 void KMLineEdit::editRecentAddresses()
 {
-  KRecentAddress::RecentAddressDialog dlg( this );
-  dlg.setAddresses( KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses() );
+  KPIM::RecentAddressDialog dlg( this );
+  dlg.setAddresses( KPIM::RecentAddresses::self( KMKernel::config() )->addresses() );
   if ( !dlg.exec() )
     return;
-  KRecentAddress::RecentAddresses::self( KMKernel::config() )->clear();
+  KPIM::RecentAddresses::self( KMKernel::config() )->clear();
   const QStringList addrList = dlg.addresses();
   for ( QStringList::const_iterator it = addrList.begin(), end = addrList.end() ; it != end ; ++it )
-    KRecentAddress::RecentAddresses::self( KMKernel::config() )->add( *it );
+    KPIM::RecentAddresses::self( KMKernel::config() )->add( *it );
   loadContacts();
 }
 
@@ -172,7 +172,7 @@ void KMLineEdit::loadContacts()
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
     if ( KMKernel::self() ) {
       QStringList recent =
-        KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses();
+        KPIM::RecentAddresses::self( KMKernel::config() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
       int idx = addCompletionSource( i18n( "Recent Addresses" ) );
