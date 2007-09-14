@@ -39,7 +39,6 @@
 #include <QEvent>
 #include <QFile>
 #include <QCursor>
-//Added by qt3to4:
 #include <QKeyEvent>
 #include <QDropEvent>
 
@@ -102,9 +101,9 @@ void KMLineEdit::insertEmails( const QStringList & emails )
 void KMLineEdit::dropEvent(QDropEvent *event)
 {
   const QMimeData *md = event->mimeData();
-  if ( KVCardDrag::canDecode( md ) ) {
+  if ( KPIM::KVCardDrag::canDecode( md ) ) {
     KABC::Addressee::List list;
-    KVCardDrag::fromMimeData( md, list );
+    KPIM::KVCardDrag::fromMimeData( md, list );
 
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
