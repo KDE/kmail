@@ -19,12 +19,18 @@
     Boston, MA 02110-1301, USA.
 */
 
+#include <config.h> // for KDEPIM_NEW_DISTRLISTS
+
 #include "distributionlistdialog.h"
 
 #include <libemailfunctions/email.h>
 #include <kabc/resource.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
+
+#ifdef KDEPIM_NEW_DISTRLISTS
+#include <libkdepim/distributionlist.h>
+#endif
 
 #include <klistview.h>
 #include <klocale.h>
@@ -167,8 +173,10 @@ void DistributionListDialog::slotUser1()
     return;
   }
 
+#ifndef KDEPIM_NEW_DISTRLISTS
   KABC::DistributionListManager manager( ab );
   manager.load();
+#endif
 
   QString name = mTitleEdit->text();
 
@@ -180,13 +188,39 @@ void DistributionListDialog::slotUser1()
       return;
   }
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+  if ( !KPIM::DistributionList::findByName( ab, name ).isEmpty() ) {
+#else
   if ( manager.list( name ) ) {
+#endif
     KMessageBox::information( this,
       i18n( "<qt>Distribution list with the given name <b>%1</b> "
         "already exists. Please select a different name.</qt>" ).arg( name ) );
     return;
   }
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+  KPIM::DistributionList dlist;
+
+  i = mRecipientsList->firstChild();
+  while( i ) {
+    DistributionListItem *item = static_cast<DistributionListItem *>( i );
+    if ( item->isOn() ) {
+      kdDebug() << "  " << item->addressee().fullEmail() << endl;
+      if ( item->isTransient() ) {
+        ab->insertAddressee( item->addressee() );
+      }
+      if ( item->email() == item->addressee().preferredEmail() ) {
+        dlist.insertEntry( item->addressee() );
+      } else {
+        dlist.insertEntry( item->addressee(), item->email() );
+      }
+    }
+    i = i->nextSibling();
+  }
+
+  ab->insertAddressee( dlist );
+#else
   KABC::DistributionList *dlist = new KABC::DistributionList( &manager, name );
   i = mRecipientsList->firstChild();
   while( i ) {
@@ -204,6 +238,7 @@ void DistributionListDialog::slotUser1()
     }
     i = i->nextSibling();
   }
+#endif
 
   // FIXME: Ask the user which resource to save to instead of the default
   bool saveError = true;
@@ -217,7 +252,9 @@ void DistributionListDialog::slotUser1()
   if ( saveError )
     kdWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;
 
+#ifndef KDEPIM_NEW_DISTRLISTS
   manager.save();
+#endif
 
   close();
 }
