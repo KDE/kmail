@@ -37,7 +37,6 @@
 #include <QTreeWidgetItem>
 
 namespace KPIMIdentities { class Identity; }
-class QDropEvent;
 
 namespace KMail {
 

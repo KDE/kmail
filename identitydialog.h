@@ -39,7 +39,6 @@ class QLineEdit;
 class QCheckBox;
 class QComboBox;
 class QString;
-class QStringList;
 class TemplatesConfiguration;
 class KPushButton;
 

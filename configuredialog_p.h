@@ -37,7 +37,6 @@ class QTabWidget;
 class QRegExpValidator;
 class QPoint;
 class QGroupBox;
-class QVGroupBox;
 class QLineEdit;
 class QSpinBox;
 class QListWidget;
