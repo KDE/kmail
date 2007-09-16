@@ -81,7 +81,10 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
-class KMStyleListSelectAction;
+
+namespace KPIM {
+  class KMStyleListSelectAction;
+}
 
 namespace KPIMIdentities {
   class IdentityCombo;
@@ -716,7 +719,7 @@ public: // mailserviceimpl
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction;
 
-    KMStyleListSelectAction *listAction;
+    KPIM::KMStyleListSelectAction *listAction;
     KFontAction *fontAction;
     KFontSizeAction *fontSizeAction;
     KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction;
