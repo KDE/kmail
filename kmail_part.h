@@ -51,12 +51,10 @@ class KMAIL_EXPORT KMailPart: public KParts::ReadOnlyPart
 {
     Q_OBJECT
   public:
-    KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &);
+    KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
     virtual ~KMailPart();
 
     QWidget* parentWidget() const;
-
-    static KAboutData *createAboutData();
 
   public slots:
     virtual void save() { /*TODO*/ }

@@ -38,7 +38,8 @@
 using KMail::AccountManager;
 
 #include <kparts/mainwindow.h>
-#include <kparts/genericfactory.h>
+#include <kpluginfactory.h>
+#include <kpluginloader.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <ksettings/dispatcher.h>
@@ -47,11 +48,10 @@ using KMail::AccountManager;
 #include <QLayout>
 #include <kglobal.h>
 
+K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
+K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
 
-typedef KParts::GenericFactory< KMailPart > KMailFactory;
-K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
-
-KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QStringList &) :
+KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &) :
   KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
@@ -138,11 +138,6 @@ KMailPart::~KMailPart()
   kmkernel->cleanup();
   delete kmkernel;
   KMail::cleanup(); // pid file (see kmstartup.cpp)
-}
-
-KAboutData *KMailPart::createAboutData()
-{
-  return new KMail::AboutData();
 }
 
 bool KMailPart::openFile()
