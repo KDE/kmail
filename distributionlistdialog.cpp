@@ -201,6 +201,7 @@ void DistributionListDialog::slotUser1()
 
 #ifdef KDEPIM_NEW_DISTRLISTS
   KPIM::DistributionList dlist;
+  dlist.setName( name );
 
   i = mRecipientsList->firstChild();
   while( i ) {
