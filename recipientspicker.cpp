@@ -25,13 +25,16 @@
 
 #include <libkdepim/recentaddresses.h>
 
+#ifndef KDEPIM_NEW_DISTRLISTS
+#include <kabc/distributionlist.h>
+#endif
+
 #include <klistview.h>
 #include <klocale.h>
 #include <kabc/resource.h>
 #include <kiconloader.h>
 #include <kdialog.h>
 #include <kwin.h>
-#include <kabc/distributionlist.h>
 #include <kmessagebox.h>
 
 #include <qlayout.h>
@@ -40,11 +43,28 @@
 #include <qtoolbutton.h>
 #include <qlabel.h>
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+RecipientItem::RecipientItem( KABC::AddressBook *ab )
+  : mAddressBook( ab )
+{
+}
+#else
 RecipientItem::RecipientItem()
   : mDistributionList( 0 )
 {
 }
+#endif
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+void RecipientItem::setDistributionList( const KPIM::DistributionList &list )
+{
+  mDistributionList = list;
+
+  mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", KIcon::Small );
+
+  mKey = "D" + list.name();
+}
+#else
 void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
@@ -53,6 +73,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 
   mKey = "D" + list->name();
 }
+#endif
 
 void RecipientItem::setAddressee( const KABC::Addressee &a,
   const QString &email )
@@ -76,22 +97,46 @@ QPixmap RecipientItem::icon() const
 
 QString RecipientItem::name() const
 {
+#ifdef KDEPIM_NEW_DISTRLISTS
+  if ( !mAddressee.isEmpty() ) return mAddressee.realName();
+  else if ( !mDistributionList.isEmpty() ) return mDistributionList.name();
+  else return QString::null;
+#else
   if ( !mAddressee.isEmpty() ) return mAddressee.realName();
   else if ( mDistributionList ) return mDistributionList->name();
   else return QString::null;
+#endif
 }
 
 QString RecipientItem::email() const
 {
+#ifdef KDEPIM_NEW_DISTRLISTS
+  if ( mAddressee.isEmpty() && !mDistributionList.isEmpty() ) {
+    int count = mDistributionList.entries( mAddressBook ).count();
+    return i18n( "1 email address", "%n email addresses", count );
+  } else {
+    return mEmail;
+  }
+#else
   if ( mAddressee.isEmpty() &&  mDistributionList ) {
     int count = mDistributionList->entries().count();
     return i18n( "1 email address", "%n email addresses", count );
   } else {
     return mEmail;
   }
+#endif
   return QString::null;
 }
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+QString RecipientItem::recipient() const
+{
+  QString r;
+  if ( !mAddressee.isEmpty() ) r = mAddressee.fullEmail( mEmail );
+  else if ( !mDistributionList.isEmpty() ) r = mDistributionList.name();
+  return r;
+}
+#else
 QString RecipientItem::recipient() const
 {
   QString r;
@@ -99,6 +144,7 @@ QString RecipientItem::recipient() const
   else if ( mDistributionList ) r = mDistributionList->name();
   return r;
 }
+#endif
 
 QString RecipientItem::toolTip() const
 {
@@ -109,6 +155,25 @@ QString RecipientItem::toolTip() const
       txt += mAddressee.realName() + "<br/>";
     }
     txt += "<b>" + mEmail + "</b>";
+#ifdef KDEPIM_NEW_DISTRLISTS
+  } else if ( !mDistributionList.isEmpty() ) {
+    txt += "<b>" + i18n("Distribution List %1")
+      .arg( mDistributionList.name() ) + "</b>";
+    txt += "<ul>";
+    KPIM::DistributionList::Entry::List entries = mDistributionList.entries( mAddressBook );
+    KPIM::DistributionList::Entry::List::ConstIterator it;
+    for( it = entries.begin(); it != entries.end(); ++it ) {
+      txt += "<li>";
+      txt += (*it).addressee.realName() + " ";
+      txt += "<em>";
+      if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
+      else txt += (*it).email;
+      txt += "</em>";
+      txt += "<li/>";
+    }
+    txt += "</ul>";
+  }
+#else
   } else if ( mDistributionList ) {
     txt += "<b>" + i18n("Distribution List %1")
       .arg( mDistributionList->name() ) + "</b>";
@@ -126,6 +191,7 @@ QString RecipientItem::toolTip() const
     }
     txt += "</ul>";
   }
+#endif
 
   return txt;
 }
@@ -245,8 +311,10 @@ void SearchLine::keyPressEvent( QKeyEvent *ev )
 
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
-  : QDialog( parent, "RecipientsPicker" ),
-  mDistributionListManager( 0 )
+  : QDialog( parent, "RecipientsPicker" )
+#ifndef KDEPIM_NEW_DISTRLISTS
+    , mDistributionListManager( 0 )
+#endif
 {
 //  KWin::setType( winId(), NET::Dock );
 
@@ -349,7 +417,9 @@ RecipientsPicker::~RecipientsPicker()
 {
   writeConfig();
 
+#ifndef KDEPIM_NEW_DISTRLISTS
   delete mDistributionListManager;
+#endif
 
   mAllRecipients->deleteAll();
 
@@ -395,7 +465,11 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
     QStringList emails = (*it).emails();
     QStringList::ConstIterator it3;
     for( it3 = emails.begin(); it3 != emails.end(); ++it3 ) {
+#ifdef KDEPIM_NEW_DISTRLISTS
+      RecipientItem *item = new RecipientItem( mAddressBook );
+#else
       RecipientItem *item = new RecipientItem;
+#endif
       item->setAddressee( *it, *it3 );
       mAllRecipients->addItem( item );
 
@@ -441,6 +515,15 @@ void RecipientsPicker::insertDistributionLists()
   RecipientsCollection *collection = new RecipientsCollection;
   collection->setTitle( i18n("Distribution Lists") );
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+  QValueList<KPIM::DistributionList> lists = KPIM::DistributionList::allDistributionLists( mAddressBook );
+  for ( uint i = 0; i < lists.count(); ++i ) {
+    RecipientItem *item = new RecipientItem( mAddressBook );
+    item->setDistributionList( lists[ i ] );
+    mAllRecipients->addItem( item );
+    collection->addItem( item );
+  }
+#else
   delete mDistributionListManager;
   mDistributionListManager =
     new KABC::DistributionListManager( KABC::StdAddressBook::self( true ) );
@@ -457,6 +540,7 @@ void RecipientsPicker::insertDistributionLists()
     mAllRecipients->addItem( item );
     collection->addItem( item );
   }
+#endif
 
   insertCollection( collection );
 }
@@ -472,7 +556,11 @@ void RecipientsPicker::insertRecentAddresses()
 
   KABC::Addressee::List::ConstIterator it;
   for( it = recents.begin(); it != recents.end(); ++it ) {
+#ifdef KDEPIM_NEW_DISTRLISTS
+    RecipientItem *item = new RecipientItem( mAddressBook );
+#else
     RecipientItem *item = new RecipientItem;
+#endif
     item->setAddressee( *it, (*it).preferredEmail() );
     if ( !mAllRecipients->hasEquivalentItem( item ) ) {
       mAllRecipients->addItem( item );
@@ -533,7 +621,11 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
       a.setNameFromString( name );
       a.insertEmail( email );
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+      item = new RecipientItem( mAddressBook );
+#else
       item = new RecipientItem;
+#endif
       item->setAddressee( a, a.preferredEmail() );
       item->setRecipientType( (*it).typeLabel() );
       mAllRecipients->addItem( item );
