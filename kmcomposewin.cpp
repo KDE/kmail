@@ -30,7 +30,7 @@
 #include "messagesender.h"
 #include "kmmsgpartdlg.h"
 #include <libkpgp/kpgpblock.h>
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
@@ -50,7 +50,7 @@ using KPIM::AddresseeEmailSelection;
 using KPIM::AddresseeSelectorDialog;
 #include <maillistdrag.h>
 #include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
+using KPIM::RecentAddresses;
 #include "kleo_util.h"
 #include "stl_util.h"
 #include "recipientseditor.h"
@@ -724,7 +724,7 @@ void KMComposeWin::autoSaveMessage()
   // Don't continue before the applyChanges is done!
 }
 
-void KMComposeWin::slotContinueAutoSave() 
+void KMComposeWin::slotContinueAutoSave()
 {
   // Ok, it's done now - continue dead letter saving
   if ( mComposedMessages.isEmpty() ) {
@@ -1571,7 +1571,7 @@ void KMComposeWin::updateCursorPosition()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor( void )
 {
-  mEditor->setModified( false );
+  mEditor->document()->setModified( false );
   QFontMetrics fm( mBodyFont );
   mEditor->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
 
@@ -2075,7 +2075,7 @@ void KMComposeWin::setFcc( const QString &idString )
 //-----------------------------------------------------------------------------
 bool KMComposeWin::isModified() const
 {
-  return ( mEditor->isModified() ||
+  return ( mEditor->document()->isModified() ||
            mEdtFrom->isModified() ||
            ( mEdtReplyTo && mEdtReplyTo->isModified() ) ||
            ( mEdtTo && mEdtTo->isModified() ) ||
@@ -2089,7 +2089,7 @@ bool KMComposeWin::isModified() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::setModified( bool modified )
 {
-  mEditor->setModified( modified );
+  mEditor->document()->setModified( modified );
   if ( !modified ) {
     mEdtFrom->setModified( false );
     if ( mEdtReplyTo ) mEdtReplyTo->setModified( false );
@@ -2598,7 +2598,7 @@ void KMComposeWin::setCharset( const QByteArray &aCharset, bool forceDefault )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KAddrBookExternal::openAddressBook( this );
+  KPIM::KAddrBookExternal::openAddressBook( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -3331,7 +3331,7 @@ void KMComposeWin::editAttach(int index, bool openWith)
   atmTempFile->flush();
 
 
-  KMail::EditorWatcher *watcher = 
+  KMail::EditorWatcher *watcher =
       new KMail::EditorWatcher( KUrl( atmTempFile->fileName() ),
                                 contentTypeStr, openWith, this );
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)),
@@ -3417,9 +3417,13 @@ QString KMComposeWin::smartQuote( const QString & msg )
 
 void KMComposeWin::slotPasteAsAttachment()
 {
-  KUrl url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
-  if ( url.isValid() ) {
-    addAttach( QApplication::clipboard()->text( QClipboard::Clipboard ) );
+  if ( KUrl::List::canDecode( QApplication::clipboard()->mimeData() ) )
+  {
+    QStringList data = QApplication::clipboard()->text().split("\n", QString::SkipEmptyParts);
+    for ( QStringList::Iterator it=data.begin(); it!=data.end(); ++it )
+    {
+      addAttach( *it );
+    }
     return;
   }
 
@@ -3889,7 +3893,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   kDebug(5006) <<"KMComposeWin::doSend() - calling applyChanges()";
 
   if (neverEncrypt && saveIn != KMComposeWin::None ) {
-      // we can't use the state of the mail itself, to remember the 
+      // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
     mMsg->setHeaderField( "X-KMail-SignatureActionEnabled", mSignAction->isChecked()? "true":"false" );
     mMsg->setHeaderField( "X-KMail-EncryptActionEnabled", mEncryptAction->isChecked()? "true":"false"  );
@@ -4194,7 +4198,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       // set all highlighted text caused by spelling back to black
       int startSelect = cursor.selectionStart ();
       int endSelect = cursor.selectionEnd();
-      
+
       mEditor->selectAll();
       // save the buttonstates because setColor calls fontChanged
       bool _bold = textBoldAction->isChecked();
@@ -4206,7 +4210,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
       mEditor->setTextFormat( Qt::RichText );
-      mEditor->setModified( true );
+      mEditor->document()->setModified( true );
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
       //mEditor->deleteAutoSpellChecking();
@@ -4222,7 +4226,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->setTextFormat( Qt::PlainText );
       QString text = mEditor->text();
       mEditor->setText( text ); // otherwise the text still looks formatted
-      mEditor->setModified( true );
+      mEditor->document()->setModified( true );
       slotAutoSpellCheckingToggled( true );
     }
   }

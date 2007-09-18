@@ -74,7 +74,6 @@
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
-#include <k3process.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -84,7 +83,7 @@
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermbox.h"
@@ -557,8 +556,8 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
-                               parentWidget() );
+  KPIM::KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+                                     parentWidget() );
 
   return OK;
 }
@@ -573,8 +572,8 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr), addr ,
-                                parentWidget() );
+  KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
+                                      addr, parentWidget() );
 
   return OK;
 }
@@ -856,7 +855,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     return;
   }
   // No leftovers, process next message.
-  if ( mMsgListIndex < mMsgList.size() ) {
+  if ( mMsgListIndex < static_cast<unsigned int>( mMsgList.size() ) ) {
     KMMessage *msg = 0;
     int idx = -1;
     KMFolder * p = 0;
@@ -1750,9 +1749,7 @@ void KMMetaFilterActionCommand::start()
 
     int contentX, contentY;
     HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
-#ifdef __GNUC__
-#warning Port me!
-#endif
+
     QList<KMMsgBase*> msgList = *mHeaders->selectedMsgs(true);
     mHeaders->finalizeMove( nextItem, contentX, contentY );
 
@@ -3316,7 +3313,10 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
   mTempFile.write( part.bodyDecodedBinary() );
   mTempFile.flush();
 
-  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KUrl(mTempFile.name()), part.typeStr() + '/' + part.subtypeStr(), false, this );
+  KMail::EditorWatcher *watcher =
+      new KMail::EditorWatcher( KUrl( mTempFile.fileName() ),
+                                part.typeStr() + '/' + part.subtypeStr(),
+                                false, this );
   connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
   if ( !watcher->start() )
     return Failed;
@@ -3410,7 +3410,7 @@ KMCommand::Result CreateTodoCommand::execute()
 
   OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );
   iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
-                         uri, tf.name(), QStringList(), "message/rfc822" );
+                         uri, tf.fileName(), QStringList(), "message/rfc822" );
   delete iface;
   tf.close();
 

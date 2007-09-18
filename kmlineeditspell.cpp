@@ -39,7 +39,6 @@
 #include <QEvent>
 #include <QFile>
 #include <QCursor>
-//Added by qt3to4:
 #include <QKeyEvent>
 #include <QDropEvent>
 
@@ -102,9 +101,9 @@ void KMLineEdit::insertEmails( const QStringList & emails )
 void KMLineEdit::dropEvent(QDropEvent *event)
 {
   const QMimeData *md = event->mimeData();
-  if ( KVCardDrag::canDecode( md ) ) {
+  if ( KPIM::KVCardDrag::canDecode( md ) ) {
     KABC::Addressee::List list;
-    KVCardDrag::fromMimeData( md, list );
+    KPIM::KVCardDrag::fromMimeData( md, list );
 
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
@@ -151,14 +150,14 @@ void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 
 void KMLineEdit::editRecentAddresses()
 {
-  KRecentAddress::RecentAddressDialog dlg( this );
-  dlg.setAddresses( KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses() );
+  KPIM::RecentAddressDialog dlg( this );
+  dlg.setAddresses( KPIM::RecentAddresses::self( KMKernel::config() )->addresses() );
   if ( !dlg.exec() )
     return;
-  KRecentAddress::RecentAddresses::self( KMKernel::config() )->clear();
+  KPIM::RecentAddresses::self( KMKernel::config() )->clear();
   const QStringList addrList = dlg.addresses();
   for ( QStringList::const_iterator it = addrList.begin(), end = addrList.end() ; it != end ; ++it )
-    KRecentAddress::RecentAddresses::self( KMKernel::config() )->add( *it );
+    KPIM::RecentAddresses::self( KMKernel::config() )->add( *it );
   loadContacts();
 }
 
@@ -172,7 +171,7 @@ void KMLineEdit::loadContacts()
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
     if ( KMKernel::self() ) {
       QStringList recent =
-        KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses();
+        KPIM::RecentAddresses::self( KMKernel::config() )->addresses();
       QStringList::Iterator it = recent.begin();
       QString name, email;
       int idx = addCompletionSource( i18n( "Recent Addresses" ) );

@@ -500,8 +500,7 @@ namespace KMail {
         // Spec says header should be less than 998 bytes
         // Face: is 5 characters
         if ( facestring.length() < 993 ) {
-          QByteArray facearray;
-          KCodecs::base64Decode( facestring, facearray );
+          QByteArray facearray = QByteArray::fromBase64( facestring );
 
           QImage faceimage;
           if ( faceimage.loadFromData( facearray, "png" ) ) {
@@ -650,7 +649,7 @@ namespace KMail {
     buffer.open( QIODevice::WriteOnly );
     image.save( &buffer, fmt );
     return QString::fromLatin1("data:image/%1;base64,%2")
-           .arg( QString::fromLatin1( fmt ), QString::fromLatin1( KCodecs::base64Encode( ba ) ) );
+           .arg( QString::fromLatin1( fmt ), QString::fromLatin1( ba.toBase64() ) );
   }
 
   //

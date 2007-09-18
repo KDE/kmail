@@ -23,6 +23,8 @@
 #define KMCOMPOSEREDITOR_H
 
 #include <kmeditor.h>
+using namespace KPIM;
+
 class KMComposeWin;
 
 class KMComposerEditor : public KMeditor
@@ -47,5 +49,5 @@ class KMComposerEditor : public KMeditor
      void attachPNGImageData( const QByteArray &image );
 };
 
-#endif 
+#endif
 

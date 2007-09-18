@@ -250,7 +250,7 @@ signals: // Signals
   void actionChanged( const KMPopFilterAction aAction );
 };
 
-class KMFilterActionWidgetLister : public KWidgetLister
+class KMFilterActionWidgetLister : public KPIM::KWidgetLister
 {
   Q_OBJECT
 public:

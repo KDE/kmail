@@ -2172,10 +2172,9 @@ QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText ) con
 QByteArray MessageComposer::breakLinesAndApplyCodec() const
 {
 //Laurent fixme
+  QByteArray cText;
 #if 0
   QString text;
-  QByteArray cText;
-
   if ( mDisableBreaking || mIsRichText ) {
     text = mComposeWin->mEditor->text();
   } else {
@@ -2233,8 +2232,8 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
     kDebug(5006) <<"Added an <LF> on the last line";
     cText += '\n';
   }
-  return cText;
 #endif
+  return cText;
 }
 
 //-----------------------------------------------------------------------------

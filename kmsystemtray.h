@@ -30,7 +30,6 @@
 #include <time.h>
 
 class KMFolder;
-class QMouseEvent;
 class QPoint;
 
 /**

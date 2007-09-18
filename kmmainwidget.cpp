@@ -56,7 +56,7 @@
 #include <ktip.h>
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
-#include <kaddrbook.h>
+#include <kaddrbookexternal.h>
 #include <ktoggleaction.h>
 #include <knotification.h>
 #include <knotifyconfigwidget.h>
@@ -878,7 +878,7 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KAddrBookExternal::openAddressBook(this);
+  KPIM::KAddrBookExternal::openAddressBook(this);
 }
 
 

@@ -18,7 +18,6 @@ using KPIM::MessageStatus;
 #include <QMenu>
 
 class KProgressDialog;
-class KProcess;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;

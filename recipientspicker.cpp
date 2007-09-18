@@ -459,7 +459,7 @@ void RecipientsPicker::insertRecentAddresses()
 
   KConfig config( "kmailrc" );
   KABC::Addressee::List recents =
-    KRecentAddress::RecentAddresses::self( &config )->kabcAddresses();
+    KPIM::RecentAddresses::self( &config )->kabcAddresses();
 
   KABC::Addressee::List::ConstIterator it;
   for( it = recents.begin(); it != recents.end(); ++it ) {

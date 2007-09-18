@@ -55,7 +55,7 @@ using KMail::ImapAccountBase;
 #include "kmmainwidget.h"
 #include "kmmessagetag.h"
 #include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
+using KPIM::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
 
@@ -2505,7 +2505,7 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
     //Reached the first row
-  if ( 1 == tmp_index ) 
+  if ( 1 == tmp_index )
     mTagUpButton->setEnabled( false );
     //Escaped from last row
   if ( int( mTagListBox->count() ) - 1 == tmp_index )
@@ -2514,25 +2514,25 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
 void AppearancePage::MessageTagTab::slotMoveTagDown()
 {
   int tmp_index = mTagListBox->currentRow();
-  if ( ( tmp_index < 0 ) 
+  if ( ( tmp_index < 0 )
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;
   swapTagsInListBox( tmp_index, tmp_index + 1 );
     //Reached last row
-  if ( int( mTagListBox->count() ) - 2 == tmp_index ) 
+  if ( int( mTagListBox->count() ) - 2 == tmp_index )
     mTagDownButton->setEnabled( false );
     //Escaped from first row
   if ( 0 == tmp_index )
     mTagUpButton->setEnabled( true );
 }
-void AppearancePage::MessageTagTab::swapTagsInListBox( const int first, 
+void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
   QString tmp_label = mTagListBox->item( first )->text();
   KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
 
   mMsgTagList->replace( first, mMsgTagList->at( second ) );
-  mMsgTagList->replace( second, tmp_ptr );  
+  mMsgTagList->replace( second, tmp_ptr );
 
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
           this, SLOT( slotSelectionChanged() ) );
@@ -2547,7 +2547,7 @@ void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
   slotEmitChangeCheck();
 }
 
-void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex ) 
+void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 {
   if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) ) )
     return;
@@ -2595,7 +2595,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
-  mTagDownButton->setEnabled( 
+  mTagDownButton->setEnabled(
                           ( ( int( mMsgTagList->count() ) - 1 ) != aIndex ) );
 
   KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentRow() );
@@ -2636,9 +2636,9 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mEmitChanges = true;
 }
 
-void AppearancePage::MessageTagTab::slotSelectionChanged() 
+void AppearancePage::MessageTagTab::slotSelectionChanged()
 {
-  //monur: Shouldn't be calling in this case 
+  //monur: Shouldn't be calling in this case
   //if (aIndex == mPreviousTag)
   //return;
   slotRecordTagSettings( mPreviousTag );
@@ -2646,7 +2646,7 @@ void AppearancePage::MessageTagTab::slotSelectionChanged()
   mPreviousTag = mTagListBox->currentRow();
 }
 
-void AppearancePage::MessageTagTab::slotRemoveTag() 
+void AppearancePage::MessageTagTab::slotRemoveTag()
 {
   int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
@@ -2656,7 +2656,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
     mPreviousTag = -1;
 
     //Before deleting the current item, make sure the selectionChanged signal
-    //is disconnected, so that the widgets will not get updated while the 
+    //is disconnected, so that the widgets will not get updated while the
     //deletion takes place.
     disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
                 this, SLOT( slotSelectionChanged() ) );
@@ -2701,7 +2701,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     tmp_label = KRandom::randomString( 10 );
 
   KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_label,
-                                             mTagAddLineEdit->text(), 
+                                             mTagAddLineEdit->text(),
                                              tmp_priority );
   mMsgTagDict->insert( tmp_desc->label() , tmp_desc );
   mMsgTagList->append( tmp_desc );
@@ -2713,7 +2713,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mTagListBox->setCurrentItem( newItem );
 }
 
-void AppearancePage::MessageTagTab::doLoadFromGlobalSettings() 
+void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
   mMsgTagDict->clear();
   mMsgTagList->clear();
@@ -2732,7 +2732,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   //Disconnect so that insertItem's do not trigger an update procedure
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
               this, SLOT( slotSelectionChanged() ) );
-  for ( KMMessageTagList::Iterator itl = tmp_list.begin(); 
+  for ( KMMessageTagList::Iterator itl = tmp_list.begin();
         itl != tmp_list.end(); ++itl ) {
     const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
     if ( tmp_desc ) {
@@ -3036,7 +3036,7 @@ void ComposerPage::GeneralTab::save() {
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
 {
-  KRecentAddress::RecentAddressDialog dlg( this );
+  KPIM::RecentAddressDialog dlg( this );
   dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
   if ( dlg.exec() ) {
     RecentAddresses::self( KMKernel::config() )->clear();
@@ -3696,7 +3696,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     delete item;
     item = 0;
     mTagList->setCurrentItem(
-      mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 ) 
+      mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 )
     );
   }
   emit changed( true );

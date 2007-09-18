@@ -49,7 +49,6 @@
 #include <kabc/distributionlist.h>
 #endif
 #include <kabc/stdaddressbook.h>
-#include <kaddrbook.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
 #include <klocale.h>

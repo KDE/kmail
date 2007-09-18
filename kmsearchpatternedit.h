@@ -112,7 +112,7 @@ private:
 };
 
 
-class KMSearchRuleWidgetLister : public KWidgetLister
+class KMSearchRuleWidgetLister : public KPIM::KWidgetLister
 {
   Q_OBJECT
 
