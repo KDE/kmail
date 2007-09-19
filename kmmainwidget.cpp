@@ -904,7 +904,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
-  if( sendOnAll || (sendOnManual && sendOnCheck ) )
+  if( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual && sendOnCheck ) ) )
     slotSendQueued();
 
   if ( !newMail || newInFolder.isEmpty() )
