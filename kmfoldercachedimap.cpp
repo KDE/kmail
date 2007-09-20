@@ -141,7 +141,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
   mIndexScope = new QComboBox( hbox );
   mIndexScope->insertItem( i18n( "Only current folder" ) );
   mIndexScope->insertItem( i18n( "Current folder and all subfolders" ) );
-  mIndexScope->insertItem( i18n( "All folder of this account" ) );
+  mIndexScope->insertItem( i18n( "All folders of this account" ) );
   mIndexScope->setEnabled( false );
   topLayout->addWidget( hbox );
 
