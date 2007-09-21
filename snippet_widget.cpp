@@ -520,7 +520,7 @@ void SnippetWidget::showPopupMenu( QListViewItem * item, const QPoint & p, int )
 	popup.insertItem( i18n("Add Snippet..."), this, SLOT( slotAdd() ) );
 	popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
     } else {
-	popup.insertTitle(i18n("Code Snippets"));
+	popup.insertTitle(i18n("Text Snippets"));
 	
 	popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
     }
