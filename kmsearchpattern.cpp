@@ -782,9 +782,12 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
   if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg(idx);
-    res = matches( msg, ignoreBody );
-    if (unGet)
-      folder->unGetMsg(idx);
+    res = false;
+    if ( msg ) {
+      res = matches( msg, ignoreBody );
+      if (unGet)
+        folder->unGetMsg(idx);
+    }
   } else {
     res = matches( folder->getDwString(idx), ignoreBody );
   }
