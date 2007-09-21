@@ -1882,6 +1882,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     setEncryption( mLastEncryptActionState );
     setSigning( ( canOpenPGPSign || canSMIMESign ) && mLastSignActionState );
   }
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   // "Attach my public key" is only possible if the user uses OpenPGP
   // support and he specified his key:
@@ -5113,8 +5114,8 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
 void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
 {
     const bool showIndicatorsAlways = false; // FIXME config option?
-    mSignatureStateIndicator->setText( mSignAction->isChecked()? i18n("Message will signed") : i18n("Message will not be signed") );
-    mEncryptionStateIndicator->setText( mEncryptAction->isChecked()? i18n("Message will encrypted") : i18n("Message will not be encrypted") );
+    mSignatureStateIndicator->setText( mSignAction->isChecked()? i18n("Message will be signed") : i18n("Message will not be signed") );
+    mEncryptionStateIndicator->setText( mEncryptAction->isChecked()? i18n("Message will be encrypted") : i18n("Message will not be encrypted") );
     if ( !showIndicatorsAlways ) {
       mSignatureStateIndicator->setShown( mSignAction->isChecked() );
       mEncryptionStateIndicator->setShown( mEncryptAction->isChecked() );
