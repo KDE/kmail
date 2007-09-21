@@ -142,6 +142,8 @@ using KRecentAddress::RecentAddresses;
 
 #include "kmcomposewin.moc"
 
+#include "snippet_widget.h"
+
 KMail::Composer * KMail::makeComposer( KMMessage * msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
 }
@@ -171,7 +173,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mSubjectAction( 0 ),
     mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
     mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
-    mDictionaryAction( 0 ),
+    mDictionaryAction( 0 ), mSnippetAction( 0 ),
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
     mEncryptChiasmusAction( 0 ),
@@ -292,8 +294,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mTempDir = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter, "mSnippetSplitter");
 
-  QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
+  QWidget *editorAndCryptoStateIndicators = new QWidget( mSnippetSplitter );
   QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
   QHBoxLayout *hbox = new QHBoxLayout( vbox );
   {
@@ -318,7 +321,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   mEditor = new KMEdit( editorAndCryptoStateIndicators, this, mDictionaryCombo->spellConfig() );
   vbox->addWidget( mEditor );
-  mSplitter->moveToFirst( editorAndCryptoStateIndicators );
+
+  mSnippetWidget = new SnippetWidget( mEditor, mSnippetSplitter );
+  mSnippetWidget->QWidget::hide(); //default
+
+  //  mSplitter->moveToFirst( editorAndCryptoStateIndicators );
   mSplitter->setOpaqueResize( true );
 
   mEditor->initializeAutoSpellChecking();
@@ -1298,6 +1305,11 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "wordwrap");
   mWordWrapAction->setChecked(GlobalSettings::self()->wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
+
+  mSnippetAction = new KToggleAction ( i18n("&Snippets"), 0,
+				       actionCollection(), "snippets");
+  mSnippetAction->setChecked( false );
+  connect(mSnippetAction, SIGNAL(toggled(bool)), mSnippetWidget, SLOT(setShown(bool)) );
 
   mAutoSpellCheckingAction =
     new KToggleAction( i18n( "&Automatic Spellchecking" ), "spellcheck", 0,

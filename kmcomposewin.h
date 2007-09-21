@@ -75,6 +75,7 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
+class SnippetWidget;
 
 namespace KPIM {
   class IdentityCombo;
@@ -759,7 +760,7 @@ private:
   KToggleAction *mSubjectAction;
   KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
   KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-  KToggleAction *mDictionaryAction;
+  KToggleAction *mDictionaryAction, *mSnippetAction;
 
   KSelectAction *listAction;
   KFontAction *fontAction;
@@ -836,6 +837,7 @@ private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
   QSplitter *mSplitter;
+  QSplitter *mSnippetSplitter;
   struct atmLoadData
   {
     KURL url;
@@ -882,6 +884,8 @@ private:
 
   QLabel *mSignatureStateIndicator;
   QLabel *mEncryptionStateIndicator;
+
+  SnippetWidget *mSnippetWidget;
 };
 
 #endif

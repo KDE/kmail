@@ -80,6 +80,7 @@ signals:
   void pasteImage();
   void focusUp();
   void focusChanged( bool );
+  void insertSnippet();
 public slots:
   void initializeAutoSpellChecking();
   void slotSpellcheck2(KSpell*);

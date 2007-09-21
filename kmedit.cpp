@@ -200,7 +200,10 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         }
         else
           kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
-    }
+    } 
+    else if( e->provides("text/x-textsnippet") ) {
+	emit insertSnippet();
+    } 
     else {
         return KEdit::contentsDropEvent(e);
     }
