@@ -49,6 +49,7 @@ Name[tr]=En Güvenli
 Name[uk]=Найбільш безпечний
 Name[uz]=Жуда хавфсиз
 Name[x-test]=xxMost Securexx
+Name[zh_CN]=最安全
 Name[zh_TW]=最安全
 Comment=Sets all necessary options to achieve maximum security
 Comment[af]=Stel al die nodige opsies om die maksimum sekuriteit te hê
@@ -97,6 +98,7 @@ Comment[tg]=Тамоми параметрҳоро, ки барои ноилша�
 Comment[tr]=En yüksek güvenliği yakalamak için gerekli bütün takım seçenekleri
 Comment[uk]=Встановлює всі необхідні параметри для забезпечення максимальної безпеки
 Comment[x-test]=xxSets all necessary options to achieve maximum securityxx
+Comment[zh_CN]=设置所有必要的选项来达到最大的安全性
 Comment[zh_TW]=將所有設定設為最高安全狀態
 
 [Composer]

@@ -50,6 +50,7 @@ Name[tg]=Тазоди баланд
 Name[tr]=Yüksek Kontrast
 Name[uk]=Висока контрастність
 Name[x-test]=xxHigh Contrastxx
+Name[zh_CN]=高对比
 Name[zh_TW]=高反差
 Comment=Increased font sizes for visually impaired users
 Comment[af]=Vergroot die skrif tipe vir visueel gestremde gebruikers
@@ -102,6 +103,7 @@ Comment[uk]=Збільшений розмір шрифтів для людей �
 Comment[vi]=Tăng cỡ font cho người dùng tàn tật 
 Comment[x-test]=xxIncreased font sizes for visually impaired usersxx
 Comment[xh]=Ubungakanani bobukhulu begama bunyusiwe kubasebenzisi ababonayo
+Comment[zh_CN]=对有视觉障碍的用户增加字体大小
 Comment[zh_TW]=遞增字型大小以適合視覺障礙者
 
 [Reader]
