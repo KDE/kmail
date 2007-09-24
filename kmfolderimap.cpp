@@ -1487,13 +1487,13 @@ QString KMFolderImap::statusToFlags(KMMsgStatus status, int supportedFlags)
       flags += "\\FLAGGED ";
     // non standard flags
     if ( (status & KMMsgStatusForwarded) && ((supportedFlags & 64) || (supportedFlags & 128)) )
-      flags += "KMAILFORWARDED ";
+      flags += "$FORWARDED ";
     if ( (status & KMMsgStatusTodo) && ((supportedFlags & 64) || (supportedFlags & 256)) )
-      flags += "KMAILTODO ";
+      flags += "$TODO ";
     if ( (status & KMMsgStatusWatched) && ((supportedFlags & 64) || (supportedFlags & 512)) )
-      flags += "KMAILWATCHED ";
+      flags += "$WATCHED ";
     if ( (status & KMMsgStatusIgnored) && ((supportedFlags & 64) || (supportedFlags & 1024)) )
-      flags += "KMAILIGNORED ";
+      flags += "$IGNORED ";
   }
 
   return flags.simplifyWhiteSpace();
