@@ -112,6 +112,10 @@
         </choices>
         <default>ShowOnUnread</default>
       </entry>
+      <entry name="CloseDespiteSystemTray" type="Bool">
+          <label>Close the application when the mainwindow is closed, even if there is a system tray icon active.</label>
+        <default>false</default>
+      </entry>
       <entry name="VerboseNewMailNotification" type="Bool">
         <label>Verbose new mail notification</label>
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
