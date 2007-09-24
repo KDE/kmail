@@ -1,3 +1,4 @@
+set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 # This can be used for finding data files in the source dir, without installing them
 add_definitions( -DKDESRCDIR=\\"${CMAKE_CURRENT_SOURCE_DIR}\\" )
 
@@ -21,7 +22,7 @@ qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.kmail.xml)
 qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.mailcomposer.xml )
 
 
-kde4_add_test_executable(dbustest ${dbustest_SRCS})
+kde4_add_executable(dbustest TEST ${dbustest_SRCS})
 
 target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 
@@ -31,7 +32,7 @@ target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 set(recipienteditortest_SRCS recipientseditortest.cpp )
 
 
-kde4_add_test_executable(recipienteditortest ${recipienteditortest_SRCS})
+kde4_add_executable(recipienteditortest TEST ${recipienteditortest_SRCS})
 
 target_link_libraries(recipienteditortest  ${KDE4_KIO_LIBS} kmailprivate kdepim )
 
