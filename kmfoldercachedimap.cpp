@@ -175,7 +175,6 @@ void DImapTroubleShootDialog::slotDone()
   done( Ok );
 }
 
-
 KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   : KMFolderMaildir( folder, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
@@ -1810,7 +1809,6 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   newState( mProgress + (progressSpan * done) / total, QString::null );
 }
 
-
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
   assert( aAccount->isA("KMAcctCachedImap") );
@@ -2261,7 +2259,6 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   buff.close();
 }
 
-
 FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                  QString, const AttachmentStrategy* ) const
@@ -2331,7 +2328,6 @@ KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 {
   setQuotaInfo( info );
 }
-
 
 void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
 {
@@ -2636,7 +2632,6 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
   createFoldersNewOnServerAndFinishListing( folders );
 }
 
-
 void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -2661,8 +2656,6 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
   mProgress += 2;
   serverSyncInternal();
 }
-
-
 
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )
