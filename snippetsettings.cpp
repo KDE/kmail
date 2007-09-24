@@ -42,10 +42,6 @@ void SnippetSettings::slotOKClicked()
     _cfg->setToolTips(cbToolTip->isChecked());
     _cfg->setDelimiter(leDelimiter->text());
     _cfg->setInputMethod(btnGroup->selectedId());
-    _cfg->setAutoOpenGroups(btnGroupAutoOpen->selectedId());
-
-    if (_widget)
-        _widget->languageChanged();
 }
 
 

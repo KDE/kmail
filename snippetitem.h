@@ -51,20 +51,17 @@ it in the main QPtrList<SnippetItem>.
 */
 class SnippetGroup : public SnippetItem {
 public:
-    SnippetGroup(QListView * parent, QString name, int id, QString lang=i18n("All"));
+    SnippetGroup(QListView * parent, QString name, int id);
     ~SnippetGroup();
 
     int getId() { return iId; }
     static int getMaxId() { return iMaxId; }
-    QString getLanguage() { return strLanguage; }
     
     void setId(int id);
-    void setLanguage(QString lang) { strLanguage = lang; }
 
 private:
     static int iMaxId;
     int iId;
-    QString strLanguage;
 };
 
 #endif

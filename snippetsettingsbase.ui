@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>SnippetSettingsBase</class>
 <widget class="QWidget">
     <property name="name">
@@ -172,50 +172,6 @@
                             </property>
                         </spacer>
                     </hbox>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QButtonGroup" row="2" column="0">
-            <property name="name">
-                <cstring>btnGroupAutoOpen</cstring>
-            </property>
-            <property name="title">
-                <string>Automatically Open Groups</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QRadioButton" row="0" column="0">
-                    <property name="name">
-                        <cstring>rbOpenOnActiv</cstring>
-                    </property>
-                    <property name="text">
-                        <string>The group's language is the project's primary language</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>&lt;qt&gt;If the group's language is the same as the project's primary language, the group will be automatically opened.&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <widget class="QRadioButton" row="1" column="0">
-                    <property name="name">
-                        <cstring>rbOpenOnSupported</cstring>
-                    </property>
-                    <property name="text">
-                        <string>The group's language is supported by the project</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="checked">
-                        <bool>false</bool>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>&lt;qt&gt;Groups having a language which is supported by the current project will be opened automatically. &lt;br&gt;Even if the group's language is not the same as the project's primary language.&lt;/qt&gt;</string>
-                    </property>
                 </widget>
             </grid>
         </widget>

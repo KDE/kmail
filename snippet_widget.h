@@ -40,8 +40,6 @@ tooltips which contains the text of the snippet
 class SnippetWidget : public KListView, public QToolTip
 {
   Q_OBJECT
-
-  friend class SnippetSettings; //to allow SnippetSettings to call languageChanged()
   
 public:
     SnippetWidget(KMEdit* editor, QWidget* parent = 0);
@@ -53,7 +51,6 @@ public:
 
 private slots:
     void initConfig();
-    void languageChanged();
 
 protected:
     void maybeTip( const QPoint & );
