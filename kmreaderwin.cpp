@@ -513,7 +513,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mResizeTimer( 0, "mResizeTimer" ),
     mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mSavedRelativePosition( 0 ),
-    mDecrytMessageOverwrite( false )
+    mDecrytMessageOverwrite( false ),
+    mShowSignatureDetails( false )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;

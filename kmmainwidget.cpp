@@ -2118,6 +2118,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
+  mMsgView->setShowSignatureDetails( false );
 }
 
 //-----------------------------------------------------------------------------

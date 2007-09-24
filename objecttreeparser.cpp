@@ -2044,6 +2044,38 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
 }
 
 
+static QString writeSimpleSigstatHeader( const PartMetaData &block )
+{
+  QString html;
+  html += "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td>";
+
+  if ( block.signClass == "signErr" ) {
+    html += i18n( "Invalid signature." );
+  } else if ( block.signClass == "signOkKeyBad" || block.signClass == "signWarn" ) {
+    html += i18n( "Not enough information to check signature validity." );
+  } else if ( block.signClass == "signOkKeyOk" ) {
+    QString addr;
+    if ( !block.signerMailAddresses.isEmpty() )
+      addr = block.signerMailAddresses.first();
+    QString name = addr;
+    if ( name.isEmpty() )
+      name = block.signer;
+    if ( addr.isEmpty() ) {
+      html += i18n( "Signature is valid." );
+    } else {
+      html += i18n( "Signed by <a href=\"mailto:%1\">%2</a>." ).arg( addr ).arg( name );
+    }
+  } else {
+    // should not happen
+    html += i18n( "Unknown signature state" );
+  }
+  html += "</td><td align=\"right\">";
+  html += "<a href=\"kmail:showSignatureDetails\">";
+  html += i18n( "Show Details" );
+  html += "</a></div></td></tr></table>";
+  return html;
+}
+
 QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               CryptPlugWrapper * cryptPlug,
                                               const QString & fromAddress,
@@ -2052,7 +2084,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
     bool isSMIME = cryptPlug && cryptPlug->protocol().lower() == "smime";
     QString signer = block.signer;
 
-    QString htmlStr;
+    QString htmlStr, simpleHtmlStr;
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
     QString cellPadding("cellpadding=\"1\"");
 
@@ -2082,6 +2114,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
         }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
+    simpleHtmlStr = htmlStr;
 
     if( block.isSigned ) {
         QStringList& blockAddrs( block.signerMailAddresses );
@@ -2222,9 +2255,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     break;
             }
 
-            htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
+            QString frame = "<table cellspacing=\"1\" "+cellPadding+" "
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+            htmlStr += frame;
+            simpleHtmlStr += frame;
+            simpleHtmlStr += writeSimpleSigstatHeader( block );
             if( block.technicalProblem ) {
                 htmlStr += block.errorText;
             }
@@ -2298,7 +2334,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             } else {
                 htmlStr += statusStr;
             }
-            htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+            frame = "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+            htmlStr += frame;
+            simpleHtmlStr += frame;
 
         } else {
 
@@ -2306,9 +2344,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
 
             if( block.signer.isEmpty() || block.technicalProblem ) {
                 block.signClass = "signWarn";
-                htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
+                QString frame = "<table cellspacing=\"1\" "+cellPadding+" "
                     "class=\"" + block.signClass + "\">"
                     "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+                htmlStr += frame;
+                simpleHtmlStr += frame;
+                simpleHtmlStr += writeSimpleSigstatHeader( block );
                 if( block.technicalProblem ) {
                     htmlStr += block.errorText;
                 }
@@ -2340,7 +2381,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     htmlStr += "</i>";
                   }
                 }
-                htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+                frame = "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+                htmlStr += frame;
+                simpleHtmlStr += frame;
             }
             else
             {
@@ -2353,9 +2396,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         block.signClass = "signOkKeyBad";
                     else
                         block.signClass = "signOkKeyOk";
-                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
+                    QString frame = "<table cellspacing=\"1\" "+cellPadding+" "
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+                    htmlStr += frame;
+                    simpleHtmlStr += frame;
+                    simpleHtmlStr += writeSimpleSigstatHeader( block );
                     if( !block.keyId.isEmpty() )
                         htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
                                    .arg( keyWithWithoutURL )
@@ -2386,15 +2432,20 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         htmlStr += i18n( "The signature is valid, but the key is "
                                 "untrusted." );
                     }
-                    htmlStr += "</td></tr>"
+                    frame = "</td></tr>"
                         "<tr class=\"" + block.signClass + "B\"><td>";
+                    htmlStr += frame;
+                    simpleHtmlStr += frame;
                 }
                 else
                 {
                     block.signClass = "signErr";
-                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
+                    QString frame = "<table cellspacing=\"1\" "+cellPadding+" "
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+                    htmlStr += frame;
+                    simpleHtmlStr += frame;
+                    simpleHtmlStr += writeSimpleSigstatHeader( block );
                     if( !block.keyId.isEmpty() )
                         htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
                         .arg( keyWithWithoutURL )
@@ -2403,14 +2454,18 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
                     htmlStr += i18n("Warning: The signature is bad.");
-                    htmlStr += "</td></tr>"
+                    frame = "</td></tr>"
                         "<tr class=\"" + block.signClass + "B\"><td>";
+                    htmlStr += frame;
+                    simpleHtmlStr += frame;
                 }
             }
         }
     }
 
-    return htmlStr;
+    if ( mReader->showSignatureDetails() )
+      return htmlStr;
+    return simpleHtmlStr;
 }
 
 QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )

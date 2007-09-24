@@ -286,6 +286,12 @@ public:
   /** Enforce message decryption. */
   void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
 
+  /** Show signature details. */
+  bool showSignatureDetails() const { return mShowSignatureDetails; }
+
+  /** Show signature details. */
+  void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -517,6 +523,7 @@ private:
   float mSavedRelativePosition;
 	int mLevelQuote;
   bool mDecrytMessageOverwrite;
+  bool mShowSignatureDetails;
 };
 
 

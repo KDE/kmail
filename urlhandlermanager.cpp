@@ -366,6 +366,12 @@ namespace {
         return true;
       }
 
+      if ( url.path() == "showSignatureDetails" ) {
+        w->setShowSignatureDetails();
+        w->update( true );
+        return true;
+      }
+
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
