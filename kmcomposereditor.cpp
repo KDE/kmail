@@ -131,4 +131,21 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
   }
 }
 
+QString KMComposerEditor::brokenText() const
+{
+  QString temp;
+  QTextDocument* doc = document();
+  QTextBlock block = doc->begin();
+  while ( block.isValid() ) {
+    QTextLayout* layout = block.layout();
+    for ( int i = 0; i < layout->lineCount(); i++ ) {
+      QTextLine line = layout->lineAt( i );
+      temp += block.text().mid( line.textStart(), line.textLength() ) + "\n";
+    }
+    block = block.next();
+  }
+  return temp;
+}
+
+
 #include "kmcomposereditor.moc"

@@ -33,6 +33,7 @@ Name[ta]=பயன்பாட்டு எண்மம்
 Name[tg]=Миқдори зиёди бинарии барномот
 Name[tr]=Uygulama Sekizli Akışı
 Name[x-test]=xxApplication Octetstreamxx
+Name[zh_CN]=应用程序 Octetstream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[af]='n Inprop module wat die lyf gedeelte vir 'application/octet-stream' formateer
 Comment[bg]=Приставка за форматиране на двоични данни
@@ -76,6 +77,7 @@ Comment[tg]=Модули ба андозадарории application/octet-strea
 Comment[tr]=application/octet-stream için bir gövde biçimleyici eklentisi
 Comment[uk]=Втулок для форматування application/octet-stream
 Comment[x-test]=xxA bodypart formatter plugin for application/octet-streamxx
+Comment[zh_CN]=application/octet-stream 的正文格式化插件
 
 [Plugin]
 Type=application/octet-stream

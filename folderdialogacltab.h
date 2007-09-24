@@ -32,6 +32,8 @@
 #ifndef FOLDERDIALOGACLTAB_H
 #define FOLDERDIALOGACLTAB_H
 
+#include <config.h> // for KDEPIM_NEW_DISTRLISTS
+
 #include "kmfolderdialog.h"
 #include "kmfoldertype.h"
 class KJob;

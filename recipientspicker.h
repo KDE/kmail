@@ -21,6 +21,8 @@
 #ifndef RECIPIENTSPICKER_H
 #define RECIPIENTSPICKER_H
 
+#include <config.h> // for KDEPIM_NEW_DISTRLISTS
+
 #include "recipientseditor.h"
 
 #include <kabc/addressee.h>
@@ -36,19 +38,27 @@ class QKeyEvent;
 class QTreeWidget;
 class QWidget;
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+#include <libkdepim/distributionlist.h>
+#else
 namespace KABC {
 class DistributionList;
 class DistributionListManager;
 }
+#endif
 
 class RecipientItem
 {
   public:
     typedef QList<RecipientItem *> List;
 
+#ifdef KDEPIM_NEW_DISTRLISTS
+  RecipientItem( KABC::AddressBook *ab );
+  void setDistributionList( const KPIM::DistributionList& );
+#else
     RecipientItem();
-
     void setDistributionList( KABC::DistributionList * );
+#endif
     void setAddressee( const KABC::Addressee &, const QString &email );
 
     void setRecipientType( const QString &type );
@@ -67,7 +77,12 @@ class RecipientItem
   private:
     KABC::Addressee mAddressee;
     QString mEmail;
+#ifdef KDEPIM_NEW_DISTRLISTS
+  KPIM::DistributionList mDistributionList;
+  KABC::AddressBook *mAddressBook;
+#else
     KABC::DistributionList *mDistributionList;
+#endif
     QString mType;
 
     QPixmap mIcon;
@@ -201,7 +216,9 @@ class RecipientsPicker : public QDialog
     RecipientsCollection *mAllRecipients;
     RecipientsCollection *mSelectedRecipients;
 
+#ifndef KDEPIM_NEW_DISTRLISTS
     KABC::DistributionListManager *mDistributionListManager;
+#endif
 
     Recipient::Type mDefaultType;
 };

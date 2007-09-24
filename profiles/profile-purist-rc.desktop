@@ -40,6 +40,7 @@ Name[tr]=Pürist
 Name[uk]=Пуристичний
 Name[x-test]=xxPuristxx
 Name[xh]=isiPurist
+Name[zh_CN]=严格
 Name[zh_TW]=較安全
 Comment=Most features turned off, KDE global settings are used
 Comment[af]=Meeste funksies af geskakel. KDE globale waardes word gebruik.
@@ -92,6 +93,7 @@ Comment[uk]=Більшість функцій вимкнено, вживають
 Comment[vi]=Hầu hết các chức năng tắt, Thiết lập toàn cục của KDE được dùng 
 Comment[x-test]=xxMost features turned off, KDE global settings are usedxx
 Comment[xh]=Imisebenzi emininzi icinyiwe, izicwangciso ezingqukuva ze KDE ziyasetyenziswa
+Comment[zh_CN]=关闭大多数特性，使用 KDE 全局设置
 Comment[zh_TW]=大部份功能都關閉，使用 KDE 全域設定
 
 [Reader]

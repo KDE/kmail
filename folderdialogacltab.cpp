@@ -30,8 +30,6 @@
  *  your version.
  */
 
-#include <config.h>
-
 #include "folderdialogacltab.h"
 #include "acljobs.h"
 #include "kmfolderimap.h"
@@ -44,7 +42,7 @@
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
 #ifdef KDEPIM_NEW_DISTRLISTS
-#include <libkdepim/distributionlist.h> // libkdepim
+#include <libkdepim/distributionlist.h>
 #else
 #include <kabc/distributionlist.h>
 #endif
@@ -56,10 +54,7 @@
 
 #include <QLayout>
 #include <QLabel>
-
 #include <QRadioButton>
-
-//Added by qt3to4:
 #include <QGridLayout>
 #include <QList>
 #include <QVBoxLayout>
@@ -284,7 +279,14 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
     KPIM::DistributionList::Entry::List entryList = list.entries(addressBook);
     KPIM::DistributionList::Entry::List::ConstIterator it;
-    // (we share for loop with the old-distrlist-code)
+    for( it = entryList.begin(); it != entryList.end(); ++it ) {
+      QString email = (*it).email;
+      if ( email.isEmpty() )
+        email = addresseeToUserId( (*it).addressee, userIdFormat );
+      ACLListEntry entry( email, QString(), mPermissions );
+      entry.changed = true;
+      aclList.append( entry );
+    }
 #else
   // kaddrbook.cpp has a strange two-pass case-insensitive lookup; is it ok to be case sensitive?
   KABC::DistributionList* list = manager.list( userId() );
@@ -292,7 +294,6 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
     KABC::DistributionList::Entry::List entryList = list->entries();
     KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
-#endif
     for( it = entryList.begin(); it != entryList.end(); ++it ) {
       QString email = (*it).email();
       if ( email.isEmpty() )
@@ -301,6 +302,7 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
       entry.changed = true;
       aclList.append( entry );
     }
+#endif
   } else { // it wasn't a distribution list
     ACLListEntry entry( userId(), mInternalRightsList, mPermissions );
     if ( mModified ) {
