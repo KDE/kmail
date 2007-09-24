@@ -78,6 +78,9 @@ protected:
   void saveSelectedBodyParts( bool encoded );
   void restoreLayoutIfPresent();
 
+  /* reimpl */
+  void startDrag();
+
 protected:
   KMReaderWin* mReaderWin;
   KMMimePartTreeItem* mCurrentContextMenuItem;

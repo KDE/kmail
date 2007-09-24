@@ -2487,6 +2487,27 @@ partNode * KMReaderWin::partNodeForId( int id ) {
   return mRootNode ? mRootNode->findId( id ) : 0 ;
 }
 
+
+KURL KMReaderWin::tempFileUrlFromPartNode( const partNode * node )
+{
+  if (!node) return KURL();
+  QStringList::const_iterator it = mTempFiles.begin();
+  QStringList::const_iterator end = mTempFiles.end();
+
+  while ( it != end ) {
+      QString path = *it;
+      it++;
+      uint right = path.findRev('/');
+      uint left = path.findRev('.', right);
+
+      bool ok;
+      int res = path.mid(left + 1, right - left - 1).toInt(&ok);
+      if ( res == node->nodeId() )
+          return KURL( path );
+  }
+  return KURL();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveAttachments()
 {
@@ -2511,25 +2532,6 @@ void KMReaderWin::slotIMChat()
 {
   KMCommand *command = new KMIMChatCommand( mUrlClicked, message() );
   command->start();
-}
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::createAtmFileLink() const
-{
-  QFileInfo atmFileInfo(mAtmCurrentName);
-
-  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.extension() );
-
-  linkFile->setAutoDelete(true);
-  QString linkName = linkFile->name();
-  delete linkFile;
-
-  if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {
-    return linkName; // success
-  }
-  kdWarning(5006) << "Couldn't link to " << mAtmCurrentName << endl;
-  return QString::null;
 }
 
 //-----------------------------------------------------------------------------

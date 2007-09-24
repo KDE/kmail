@@ -49,6 +49,9 @@
 #include <qheader.h>
 #include <qpopupmenu.h>
 #include <qstyle.h>
+#include <kurldrag.h>
+#include <kurl.h>
+
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,
@@ -74,6 +77,7 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     setAllColumnsShowFocus( true );
     setShowToolTips( true );
     setSorting(-1);
+    setDragEnabled( true );
 }
 
 
@@ -128,8 +132,11 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
 
         QPopupMenu* popup = new QPopupMenu;
         popup->insertItem( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
+        /*
+         * FIXME mkae optional?
         popup->insertItem( i18n( "Save as &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
+        */
         popup->insertItem( i18n( "Save All Attachments..." ), this,
                            SLOT( slotSaveAll() ) );
         // edit + delete only for attachments
@@ -310,4 +317,20 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
   }
 }
 
+
+void KMMimePartTree::startDrag()
+{
+    KURL::List urls;
+    KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
+    if ( !item ) return;
+    partNode *node = item->node();
+    if ( !node ) return;
+    KURL url = mReaderWin->tempFileUrlFromPartNode( node );
+    if (!url.isValid() ) return;
+    urls.append( url );
+    KURLDrag *drag = new KURLDrag( urls, this );
+    drag->drag();
+}
+
 #include "kmmimeparttree.moc"
+

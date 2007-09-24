@@ -76,6 +76,7 @@ class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   friend void KMMimePartTree::itemClicked( QListViewItem* item );
   friend void KMMimePartTree::itemRightClicked( QListViewItem* item, const QPoint & );
   friend void KMMimePartTree::slotSaveAs();
+  friend void KMMimePartTree::startDrag();
 
   friend class KMail::ObjectTreeParser;
   friend class KMail::KHtmlPartHtmlWriter;
@@ -245,6 +246,8 @@ public:
   partNode* partNodeFromUrl(const KURL &url);
 
   partNode * partNodeForId( int id );
+
+  KURL tempFileUrlFromPartNode( const partNode * node );
 
   /** Returns id of message part from given URL or -1 if invalid. */
   static int msgPartFromUrl(const KURL &url);
@@ -450,7 +453,6 @@ private:
   void createWidgets();
   void createActions( KActionCollection * ac );
   void saveSplitterSizes( KConfigBase & c ) const;
-  QString createAtmFileLink() const;
 
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
