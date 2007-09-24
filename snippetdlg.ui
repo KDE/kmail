@@ -80,12 +80,6 @@
                     <property name="name">
                         <cstring>snippetName</cstring>
                     </property>
-                    <property name="font">
-                        <font>
-                            <family>Courier</family>
-                            <pointsize>11</pointsize>
-                        </font>
-                    </property>
                 </widget>
                 <spacer row="4" column="0">
                     <property name="name">
