@@ -445,6 +445,11 @@
           <default>50</default>
       </entry>
 
+      <entry name="ShowSnippetManager" type="Bool">
+          <label>Show the text snippet management and insertion panel in the composer</label>
+          <default>false</default>
+      </entry>
+
     </group>
 <!-- Composer -->
 

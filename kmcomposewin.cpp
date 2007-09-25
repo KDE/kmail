@@ -323,7 +323,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   vbox->addWidget( mEditor );
 
   mSnippetWidget = new SnippetWidget( mEditor, mSnippetSplitter );
-  mSnippetWidget->QWidget::hide(); //default
+  mSnippetWidget->setShown( GlobalSettings::self()->showSnippetManager() );
 
   //  mSplitter->moveToFirst( editorAndCryptoStateIndicators );
   mSplitter->setOpaqueResize( true );
@@ -726,6 +726,7 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
   GlobalSettings::self()->setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::self()->setComposerSize( size() );
+  GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
   KConfigGroupSaver saver( KMKernel::config(), "Geometry" );
   saveMainWindowSettings( KMKernel::config(), "Composer" );
@@ -1307,9 +1308,9 @@ void KMComposeWin::setupActions(void)
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   mSnippetAction = new KToggleAction ( i18n("&Snippets"), 0,
-				       actionCollection(), "snippets");
-  mSnippetAction->setChecked( false );
+                                       actionCollection(), "snippets");
   connect(mSnippetAction, SIGNAL(toggled(bool)), mSnippetWidget, SLOT(setShown(bool)) );
+  mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
   mAutoSpellCheckingAction =
     new KToggleAction( i18n( "&Automatic Spellchecking" ), "spellcheck", 0,
