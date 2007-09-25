@@ -6,7 +6,6 @@
  *  Copyright: See COPYING file that comes with this distribution
  */
 
-#include <klibloader.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -18,10 +17,6 @@
 #include <ktextedit.h>
 #include <kmessagebox.h>
 #include <qsplitter.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/editor.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/document.h>
 #include <kconfig.h>
 #include <qtooltip.h>
 #include <kpopupmenu.h>
@@ -33,8 +28,8 @@
 #include <qdragobject.h>
 #include <qtimer.h>
 #include <kcombobox.h>
-#include <kdeversion.h>
 #include <kmedit.h>
+#include <kiconloader.h>
 
 #include "snippetdlg.h"
 #include "snippetitem.h"
@@ -488,23 +483,23 @@ void SnippetWidget::showPopupMenu( QListViewItem * item, const QPoint & p, int )
 
     SnippetItem * selectedItem = static_cast<SnippetItem *>(item);
     if ( item ) {
-	popup.insertTitle( selectedItem->getName() );
-	popup.insertItem( i18n("Paste"), this, SLOT( slotExecuted() ) );
+        popup.insertTitle( selectedItem->getName() );
         if (dynamic_cast<SnippetGroup*>(item)) {
-            popup.insertItem( i18n("Edit group..."), this, SLOT( slotEditGroup() ) );
+            popup.insertItem( i18n("Edit &group..."), this, SLOT( slotEditGroup() ) );
         } else {
-            popup.insertItem( i18n("Edit..."), this, SLOT( slotEdit() ) );
+            popup.insertItem( SmallIconSet("editpaste"), i18n("&Paste"), this, SLOT( slotExecuted() ) );
+            popup.insertItem( SmallIconSet("edit"), i18n("&Edit..."), this, SLOT( slotEdit() ) );
         }
-	popup.insertItem( i18n("Remove"), this, SLOT( slotRemove() ) );
-	popup.insertSeparator();
-	popup.insertItem( i18n("Add Snippet..."), this, SLOT( slotAdd() ) );
-	popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
+        popup.insertItem( SmallIconSet("editdelete"), i18n("&Remove"), this, SLOT( slotRemove() ) );
+        popup.insertSeparator();
+        popup.insertItem( i18n("&Add Snippet..."), this, SLOT( slotAdd() ) );
+        popup.insertItem( i18n("Add G&roup..."), this, SLOT( slotAddGroup() ) );
     } else {
-	popup.insertTitle(i18n("Text Snippets"));
-	
-	popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
+        popup.insertTitle(i18n("Text Snippets"));
+
+        popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
     }
-    
+
     popup.exec(p);
 }
 
@@ -533,7 +528,7 @@ QString SnippetWidget::parseText(QString text, QString del)
       iEnd = text.find(del, iFound+1)+1;
       strName = text.mid(iFound, iEnd-iFound);
 
-      if ( strName != del+del  ) {  //if not doubel-delimiter 
+      if ( strName != del+del  ) {  //if not doubel-delimiter
         if (iInMeth == 0) { //if input-method "single" is selected
           if ( mapVar[strName].length() <= 0 ) {  // and not already in map
             strMsg=i18n("Please enter the value for <b>%1</b>:").arg(strName);
@@ -657,14 +652,12 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
   }
   layout->addMultiCellLayout( layoutVar, 1, 1, 0, 1 );
 
-  KPushButton * btn1 = new KPushButton( &dlg, "pushButton1" );
-  btn1->setText(i18n("&Cancel"));
+  KPushButton * btn1 = new KPushButton( KStdGuiItem::cancel(), &dlg, "pushButton1" );
   btn1->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)0, 0, 0,
                          btn1->sizePolicy().hasHeightForWidth() ) );
   layoutBtn->addWidget( btn1, 0, 0 );
 
-  KPushButton * btn2 = new KPushButton( &dlg, "pushButton2" );
-  btn2->setText(i18n("&Apply"));
+  KPushButton * btn2 = new KPushButton( KStdGuiItem::apply(), &dlg, "pushButton2" );
   btn2->setDefault( TRUE );
   btn2->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)0, 0, 0,
                          btn2->sizePolicy().hasHeightForWidth() ) );
@@ -774,12 +767,10 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
 
   layout->addMultiCellLayout( layoutVar, 1, 1, 0, 1 );
 
-  KPushButton * btn1 = new KPushButton( &dlg, "pushButton1" );
-  btn1->setText(i18n("&Cancel"));
+  KPushButton * btn1 = new KPushButton( KStdGuiItem::cancel(), &dlg, "pushButton1" );
   layoutBtn->addWidget( btn1, 0, 0 );
 
-  KPushButton * btn2 = new KPushButton( &dlg, "pushButton2" );
-  btn2->setText(i18n("&Apply"));
+  KPushButton * btn2 = new KPushButton( KStdGuiItem::apply(), &dlg, "pushButton2" );
   btn2->setDefault( TRUE );
   layoutBtn->addWidget( btn2, 0, 1 );
 
@@ -860,7 +851,7 @@ bool SnippetWidget::acceptDrag (QDropEvent *event) const
 void SnippetWidget::slotDropped(QDropEvent *e, QListViewItem *)
 {
   QListViewItem * item2 = itemAt(e->pos());
-  
+
   SnippetGroup *group = dynamic_cast<SnippetGroup *>(item2);
   if (!group)
     group = dynamic_cast<SnippetGroup *>(item2->parent());
@@ -903,7 +894,7 @@ void SnippetWidget::startDrag()
 
 void SnippetWidget::slotExecute()
 {
-    slotExecuted(currentItem());    
+    slotExecuted(currentItem());
 }
 
 
