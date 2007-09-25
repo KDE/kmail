@@ -923,26 +923,47 @@ void ImapAccountBase::slotSimpleResult( KJob *job )
 }
 
 //-----------------------------------------------------------------------------
-bool ImapAccountBase::handlePutError( KIO::Job *job, jobData &jd, KMFolder *folder )
+bool ImapAccountBase::handlePutError( KIO::Job* job, jobData& jd, KMFolder* folder )
 {
-  Q_ASSERT( !jd.msgList.isEmpty() );
-  KMMessage* msg = jd.msgList.first();
-  // Use double-quotes around the subject to keep the sentence readable,
-  // but don't use double quotes around the sender since from() might
-  // return a double-quoted name already
-  const QString subject =
-    msg->subject().isEmpty() ? i18n( "<unknown>" ) : QString("\"%1\"").arg( msg->subject() );
-  const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
-  QString myError = "<p><b>" +
-                    i18n("Error while uploading message") +
-                    "</b></p><p>" +
-                    i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.", msg->dateStr(), Qt::escape( from ), Qt::escape( subject ) ) +
-                    "</p><p>" +
-                    i18n("The destination folder was %1, which has the URL %2.", Qt::escape( folder->label() ), Qt::escape( jd.htmlURL() ) ) +
-                    "</p><p>" +
-                    i18n("The error message from the server communication is here:") +
-                    "</p>";
-  return handleJobError( job, myError );
+    Q_ASSERT( !jd.msgList.isEmpty() );
+    KMMessage* msg = jd.msgList.first();
+    // Use double-quotes around the subject to keep the sentence readable,
+    // but don't use double quotes around the sender since from() might return a double-quoted name already
+    const QString subject = msg->subject().isEmpty() ? i18n( "<unknown>" ) : QString("\"%1\"").arg( msg->subject() );
+    const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
+    QString myError = "<p><b>" + i18n("Error while uploading message")
+        + "</b></p><p>"
+        + i18n("Could not upload the message dated %1 from <i>%2</i> with subject <i>%3</i> to the server.").arg( msg->dateStr(), Qt::escape( from ), Qt::escape( subject ) )
+        + "</p><p>"
+        + i18n("The destination folder was: <b>%1</b>.").arg( Qt::escape( folder->prettyUrl() ) )
+        + "</p><p>"
+        + i18n("The server reported:") + "</p>";
+    return handleJobError( job, myError );
+}
+
+QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * job )
+{
+    QString error = _error;
+    if ( error.contains( "quota", Qt::CaseInsensitive ) ) return error;
+    // this is a quota error, prettify it a bit
+    JobIterator it = findJob( job );
+    QString quotaAsString( i18n("No detailed quota information available.") );
+    bool readOnly = false;
+    if (it != mapJobData.end()) {
+        const KMFolder * const folder = (*it).parent;
+        assert(folder);
+        const KMFolderCachedImap * const imap = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
+        if ( imap ) {
+            quotaAsString = imap->quotaInfo().toString();
+        }
+        readOnly = folder->isReadOnly();
+    }
+    error = i18n("The folder is too close to its quota limit. (%1)").arg( quotaAsString );
+    if ( readOnly ) {
+        error += i18n("\nSince you do not appear to have write privileges on this folder, "
+                "please ask the owner of the folder to free up some space in it.");
+    }
+    return error;
 }
 
 //-----------------------------------------------------------------------------
@@ -983,9 +1004,9 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
 
   // check if we still display an error
   if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED ) {
-    mErrorDialogIsActive = true;
-    QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
-    QString caption = i18n("Error");
+      mErrorDialogIsActive = true;
+      QString msg = context + '\n' + prettifyQuotaError( KIO::buildErrorString( errorCode, errorMsg ), job );
+      QString caption = i18n("Error");
 
     if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
       if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
@@ -1005,12 +1026,15 @@ bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg,
           KMessageBox::detailedError( QApplication::activeWindow(), msg,
                                       errors.join("\n").prepend("<qt>"), caption );
         } else {
-          KMessageBox::error( QApplication::activeWindow(), msg, caption );
-        }
+          if ( !errors.isEmpty() )
+              KMessageBox::detailedError( QApplication::activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
+          else
+              KMessageBox::error( QApplication::activeWindow(), msg, caption );
+          }
       }
     } else { // i.e. we have a chance to continue, ask the user about it
       if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
-        msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+        msg = QString( "<qt>") + context + prettifyQuotaError( errors[1], job ) + '\n' + errors[2];
         caption = errors[0];
       }
       int ret = KMessageBox::warningContinueCancel( QApplication::activeWindow(), msg, caption );
@@ -1060,13 +1084,6 @@ void ImapAccountBase::cancelMailCheck()
       ++jt;
     }
   }
-}
-
-//-----------------------------------------------------------------------------
-QString ImapAccountBase::jobData::htmlURL() const
-{
-  KUrl u( url );
-  return Qt::escape( u.prettyUrl() );
 }
 
 //-----------------------------------------------------------------------------
