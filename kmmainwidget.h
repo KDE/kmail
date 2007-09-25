@@ -266,6 +266,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
+    
+    /** Trigger the dialog for editing out-of-office scripts.  */
+    void slotEditVacation();
 
   signals:
     void messagesTransfered( bool );
@@ -339,7 +342,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCopyMsgToFolder( KMFolder *dest);
     void slotCopyMsg();
     void slotResendMsg();
-    void slotEditVacation();
     void slotDebugSieve();
     void slotStartCertManager();
     void slotStartWatchGnuPG();
@@ -442,6 +444,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotPrintMsg();
 
     void slotConfigChanged();
+    void slotCheckVacation();
 
     /**
       Remove the shortcut actions associated with a folder.

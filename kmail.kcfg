@@ -582,6 +582,10 @@
             <default>false</default>
             <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
         </entry>
+        <entry name="CheckOutOfOfficeOnStartup" type="Bool">
+              <default>true</default>
+              <label>Check if there is still an active out-of-office reply configured when starting KMail.</label>
+        </entry>
     </group>
 
 

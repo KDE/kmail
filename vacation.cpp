@@ -21,6 +21,7 @@
 #include <QByteArray>
 using KMail::SieveJob;
 #include "kmkernel.h"
+#include "kmmainwidget.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctimap.h"
@@ -425,8 +426,8 @@ namespace {
 
 namespace KMail {
 
-  Vacation::Vacation( QObject * parent, const char * name )
-    : QObject( parent ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false )
+  Vacation::Vacation( QObject * parent, bool checkOnly, const char * name )
+    : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false ), mCheckOnly( checkOnly )
   {
     setObjectName( name );
     mUrl = findURL();
@@ -467,9 +468,7 @@ namespace KMail {
       }
       addressesArgument += sl.join( ", " ) + " ] ";
     }
-    QString script = QString::fromLatin1("require \"vacation\";\n"
-					 "\n"
-					 "vacation ");
+    QString script = QString::fromLatin1("require \"vacation\";\n\n" );
     if ( !sendForSpam )
       script += QString::fromLatin1( "if header :contains \"X-Spam-Flag\" \"YES\""
                                      " { keep; stop; }\n" ); // FIXME?
@@ -478,7 +477,6 @@ namespace KMail {
       script += QString::fromLatin1( "if not address :domain :contains \"from\" \"%1\" { keep; stop; }\n" ).arg( domain );
 
     script += "vacation ";
-
     script += addressesArgument;
     if ( notificationInterval > 0 )
       script += QString::fromLatin1(":days %1 ").arg( notificationInterval );
@@ -602,7 +600,7 @@ namespace KMail {
 	      << script;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
-    if ( mUrl.protocol() == "sieve" && !job->sieveCapabilities().isEmpty() &&
+    if ( !mCheckOnly && mUrl.protocol() == "sieve" && !job->sieveCapabilities().isEmpty() &&
 	 !job->sieveCapabilities().contains("vacation") ) {
       KMessageBox::sorry( 0, i18n("Your server did not list \"vacation\" in "
 				  "its list of supported Sieve extensions;\n"
@@ -613,7 +611,7 @@ namespace KMail {
       return;
     }
 
-    if ( !mDialog )
+    if ( !mDialog && !mCheckOnly )
       mDialog = new VacationDialog( i18n("Configure \"Out of Office\" Replies"), 0, 0, false );
 
     QString messageText = defaultMessageText();
@@ -623,7 +621,7 @@ namespace KMail {
     QString domainName = defaultDomainName();
     if ( !success ) active = false; // default to inactive
 
-    if ( !success || !parseScript( script, messageText, notificationInterval, aliases, sendForSpam, domainName ) )
+    if ( !mCheckOnly && ( !success || !parseScript( script, messageText, notificationInterval, aliases, sendForSpam, domainName ) ) )
       KMessageBox::information( 0, i18n("Someone (probably you) changed the "
 					"vacation script on the server.\n"
 					"KMail is no longer able to determine "
@@ -631,19 +629,30 @@ namespace KMail {
 					"Default values will be used." ) );
 
     mWasActive = active;
-    mDialog->setActivateVacation( active );
-    mDialog->setMessageText( messageText );
-    mDialog->setNotificationInterval( notificationInterval );
-    mDialog->setMailAliases( aliases.join(", ") );
-    mDialog->setSendForSpam( sendForSpam );
-    mDialog->setDomainName( domainName );
-    mDialog->enableDomainAndSendForSpam( !GlobalSettings::allowOutOfOfficeUploadButNoSettings() );
+    if ( mDialog ) {
+      mDialog->setActivateVacation( active );
+      mDialog->setMessageText( messageText );
+      mDialog->setNotificationInterval( notificationInterval );
+      mDialog->setMailAliases( aliases.join(", ") );
+      mDialog->setSendForSpam( sendForSpam );
+      mDialog->setDomainName( domainName );
+      mDialog->enableDomainAndSendForSpam( !GlobalSettings::allowOutOfOfficeUploadButNoSettings() );
 
-    connect( mDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
-    connect( mDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCancel()) );
-    connect( mDialog, SIGNAL(defaultClicked()), SLOT(slotDialogDefaults()) );
+      connect( mDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
+      connect( mDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCancel()) );
+      connect( mDialog, SIGNAL(defaultClicked()), SLOT(slotDialogDefaults()) );
 
-    mDialog->show();
+      mDialog->show();
+    }
+
+    if ( mCheckOnly && mWasActive ) {
+      if ( KMessageBox::questionYesNo( 0, i18n( "There is still an active out-of-office reply configured.\n"
+                                        "Do you want to edit it?"), i18n("Out-of-office reply still active"),
+                                        KGuiItem( i18n( "Edit"), "edit" ), KGuiItem( i18n("Ignore"), "button_cancel" ) )
+           == KMessageBox::Yes ) {
+        kmkernel->getKMMainWidget()->slotEditVacation();
+      }
+    }
   }
 
   void Vacation::slotDialogDefaults() {
