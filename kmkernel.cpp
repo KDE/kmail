@@ -2319,7 +2319,7 @@ bool KMKernel::canQueryClose()
   if ( !widget )
     return true;
   KMSystemTray* systray = widget->systray();
-  if ( !systray || GlobalSettings::closeDespiteSystemTray() ) 
+  if ( !systray || GlobalSettings::closeDespiteSystemTray() )
       return true;
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     systray->hideKMail();
