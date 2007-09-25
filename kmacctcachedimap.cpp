@@ -48,7 +48,6 @@ using KMail::AccountManager;
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
