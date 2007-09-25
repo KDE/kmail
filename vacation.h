@@ -38,7 +38,7 @@ namespace KMail {
   class Vacation : public QObject {
     Q_OBJECT
   public:
-    Vacation( QObject * parent=0, const char * name=0 );
+    Vacation( QObject * parent=0, bool checkOnly = false, const char * name=0 );
     virtual ~Vacation();
 
     bool isUsable() const { return !mUrl.isEmpty(); }
@@ -79,6 +79,7 @@ namespace KMail {
     // GUI:
     KMail::VacationDialog * mDialog;
     bool mWasActive;
+    bool mCheckOnly;
   };
 
 } // namespace KMail

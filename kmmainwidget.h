@@ -241,6 +241,7 @@ public slots:
   void slotShortcutChanged( KMFolder *folder );
 
   void updateCustomTemplateMenus();
+  void slotEditVacation();
 
 signals:
   void messagesTransfered( bool );
@@ -311,7 +312,7 @@ protected slots:
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
-  void slotEditVacation();
+  void slotCheckVacation();
   void slotDebugSieve();
   void slotStartCertManager();
   void slotStartWatchGnuPG();

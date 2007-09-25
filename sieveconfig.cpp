@@ -41,6 +41,8 @@ namespace KMail {
 
     mAlternateURL = config.readEntry( "sieve-alternate-url" );
     mVacationFileName = config.readEntry( "sieve-vacation-filename", "kmail-vacation.siv" );
+    if ( mVacationFileName.isEmpty() )
+      mVacationFileName = "kmail-vacation.siv";
   }
 
   void SieveConfig::writeConfig( KConfigBase & config ) const {

@@ -241,6 +241,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 
   // must be the last line of the constructor:
   mStartupDone = true;
+
+  if ( GlobalSettings::checkOutOfOfficeOnStartup() )
+    QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 }
 
 
@@ -1745,6 +1748,14 @@ void KMMainWidget::slotApplyFilters()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotCheckVacation()
+{
+  if ( !kmkernel->askToGoOnline() )
+    return;
+
+  new Vacation( this, true /* check only */ );
+}
+
 void KMMainWidget::slotEditVacation()
 {
   if ( !kmkernel->askToGoOnline() ) {
