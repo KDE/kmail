@@ -875,12 +875,37 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
+      + i18n("Could not upload the message dated %1 from <i>%2</i> with subject <i>%3</i> to the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
       + "</p><p>"
-      + i18n("The destination folder was %1, which has the URL %2.").arg( QStyleSheet::escape( folder->label() ), QStyleSheet::escape( jd.htmlURL() ) )
+      + i18n("The destination folder was: <b>%1</b>.").arg( QStyleSheet::escape( folder->prettyURL() ) )
       + "</p><p>"
-      + i18n("The error message from the server communication is here:") + "</p>";
+      + i18n("The server reported:") + "</p>";
     return handleJobError( job, myError );
+  }
+
+  QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * job )
+  {
+      QString error = _error;
+      if ( error.find( "quota", 0, false ) == -1 ) return error;
+      // this is a quota error, prettify it a bit
+      JobIterator it = findJob( job );
+      QString quotaAsString( i18n("No detailed quota information available.") );
+      bool readOnly = false;
+      if (it != mapJobData.end()) {
+          const KMFolder * const folder = (*it).parent;
+          assert(folder);
+          const KMFolderCachedImap * const imap = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
+          if ( imap ) {
+              quotaAsString = imap->quotaInfo().toString();
+          }
+          readOnly = folder->isReadOnly();
+      }
+      error = i18n("The folder is too close to its quota limit. (%1)").arg( quotaAsString );
+      if ( readOnly ) {
+          error += i18n("\nSince you do not appear to have write privileges on this folder, "
+                  "please ask the owner of the folder to free up some space in it.");
+      }
+      return error;
   }
 
   //-----------------------------------------------------------------------------
@@ -918,7 +943,7 @@ namespace KMail {
     // check if we still display an error
     if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED ) {
       mErrorDialogIsActive = true;
-      QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
+      QString msg = context + '\n' + prettifyQuotaError( KIO::buildErrorString( errorCode, errorMsg ), job );
       QString caption = i18n("Error");
 
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
@@ -939,10 +964,10 @@ namespace KMail {
           else
               KMessageBox::error( kapp->activeWindow(), msg, caption );
           }
-      }
-      else { // i.e. we have a chance to continue, ask the user about it
+      } else { // i.e. we have a chance to continue, ask the user about it
         if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
-          msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+          QString error = prettifyQuotaError( errors[1], job );
+          msg = QString( "<qt>") + context + error + '\n' + errors[2];
           caption = errors[0];
         }
         int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
@@ -987,14 +1012,6 @@ namespace KMail {
       } else
         ++it;
     }
-  }
-
-
-  //-----------------------------------------------------------------------------
-  QString ImapAccountBase::jobData::htmlURL() const
-  {
-    KURL u(  url );
-    return u.htmlURL();
   }
 
   //-----------------------------------------------------------------------------

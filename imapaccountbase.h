@@ -150,9 +150,6 @@ namespace KMail {
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
           progressItem(0), quiet(_quiet), cancellable(_cancelable) {}
 
-      // Return "url" in a form that can be displayed in HTML (w/o password)
-      QString htmlURL() const;
-
       QString path;
       QString url;
       QString curNamespace;
@@ -518,6 +515,7 @@ namespace KMail {
     // used for writing the blacklist out to the config file
     QStringList locallyBlacklistedFolders() const;
     void localBlacklistFromStringList( const QStringList & );
+    QString prettifyQuotaError( const QString& _error, KIO::Job * job );
 
   protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
