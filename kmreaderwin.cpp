@@ -2656,7 +2656,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
     if ( !subHtml.isEmpty() ) {
       QString margin;
-      if ( node != mRootNode && headerStyle() != HeaderStyle::enterprise() )
+      if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
         margin = "padding:2px; margin:2px; ";
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
