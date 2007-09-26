@@ -777,15 +777,27 @@ namespace KMail {
 	else
 	    subjectDir = directionOf( i18n("No Subject") );
 
+	// colors depend on if its encapsulated or not
+        QColor fontColor(Qt::white);
+	QString linkColor = "class =\"white\"";
+	const QColor activeColor = qApp->palette().active().highlight();
+	QColor activeColorDark = activeColor.dark(130);
+        // reverse colors for encapsulated
+        if( !topLevel ){
+            activeColorDark = activeColor.dark(20);
+            fontColor = qApp->palette().active().text();
+	    linkColor = "";
+        }
+
 	QStringList headerParts;
 	if( strategy->showHeader( "to" ) )
-	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, "class=\"white\"" );
+	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, linkColor );
 
 	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, "class=\"white\"" );
+	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
 
 	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, "class=\"white\"" );
+	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
 
 	// remove all empty (modulo whitespace) entries and joins them via ", \n"
 	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
@@ -800,9 +812,6 @@ namespace KMail {
 	} else {
 	    dateString = message->dateStr();
 	}
-
-	const QColor activeColor = qApp->palette().active().highlight();
-	const QColor activeColorDark = activeColor.dark(130);
 
 	QString imgpath(locate("data","kmail/pics/"));
 	imgpath.append("enterprise_");
@@ -819,7 +828,7 @@ namespace KMail {
 	    "   <tr> \n"
 	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
 	    "   <td style=\"\"> \n"
-	    "    <table style=\"color: white ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
+	    "    <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
 
 	// subject
 	//strToHtml( message->subject() )
@@ -837,9 +846,9 @@ namespace KMail {
 	    if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
 		fromStr = message->fromStrip(); // let's use that
             // TODO vcard
-	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, "class=\"white\"" );
+	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, linkColor );
 	    if ( !vCardName.isEmpty() )
-	    fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" class=\"white\">" + i18n("[vCard]") + "</a>";
+	    fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
 	    //TDDO strategy date
 	    //if ( strategy->showHeader( "date" ) )
 	    headerStr +=
