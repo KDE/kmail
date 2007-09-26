@@ -422,7 +422,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false);
+  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false, bool topLevel=false);
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString::null if writing failed.

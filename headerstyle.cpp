@@ -112,12 +112,12 @@ namespace KMail {
     const HeaderStyle * prev() const { return fancy(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
   };
 
   QString BriefHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::brief();
@@ -207,7 +207,7 @@ namespace KMail {
     const HeaderStyle * prev() const { return brief(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
 
   private:
     QString formatAllMessageHeaders( const KMMessage * message ) const;
@@ -215,7 +215,7 @@ namespace KMail {
 
   QString PlainHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -357,7 +357,7 @@ namespace KMail {
     const HeaderStyle * prev() const { return plain(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
     static QString imgToDataUrl( const QImage & image,
                                  const char *fmt = "PNG" );
 
@@ -415,7 +415,7 @@ namespace KMail {
 
   QString FancyHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -750,12 +750,12 @@ namespace KMail {
     const HeaderStyle * prev() const { return fancy(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
   };
 
     QString EnterpriseHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
 	if ( !message ) return QString::null;
 	if ( !strategy )
 	    strategy = HeaderStrategy::brief();

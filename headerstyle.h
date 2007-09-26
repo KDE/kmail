@@ -80,7 +80,7 @@ namespace KMail {
     virtual QString format( const KMMessage * message,
 			    const KMail::HeaderStrategy * strategy,
 			    const QString & vCardName,
-			    bool printing=false ) const = 0;
+			    bool printing=false, bool topLevel = false ) const = 0;
   };
 
 } // namespace KMail

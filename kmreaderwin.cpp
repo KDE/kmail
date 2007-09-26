@@ -1579,7 +1579,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
+  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard, true ) );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -1688,7 +1688,7 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
+QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
 {
   kdFatal( !headerStyle(), 5006 )
     << "trying to writeMsgHeader() without a header style set!" << endl;
@@ -1698,7 +1698,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
   if (hasVCard)
     href = QString("file:") + KURL::encode_string( mTempFiles.last() );
 
-  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
+  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
 }
 
 
