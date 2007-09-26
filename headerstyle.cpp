@@ -779,16 +779,16 @@ namespace KMail {
 
 	QStringList headerParts;
 	if( strategy->showHeader( "to" ) )
-	    headerParts << KMMessage::emailAddrAsAnchor( message->to(),false,"", false );
-	
+	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, "class=\"white\"" );
+
 	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, "", false );
-	
+	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, "class=\"white\"" );
+
 	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, "", false );
+	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, "class=\"white\"" );
 
 	// remove all empty (modulo whitespace) entries and joins them via ", \n"
-	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" );
+	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
 
 	// Prepare the date string (when printing always use the localized date)
 	QString dateString;
@@ -808,7 +808,6 @@ namespace KMail {
 	imgpath.append("enterprise_");
 	const QString borderSettings(" padding-top: 0px; padding-bottom: 0px; border-width: 0px ");
 	QString headerStr (
-	    "<html><body style=\"background: #FFFFFF; padding-top: 0px; margin-top: 0px;\"> \n"
 	    "<div style=\"position: relative; width: 100%; top: 0px; margin-top: 4px;\"> \n"
 	    "<div style=\"margin-left: 8px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
 	    // #0057ae
@@ -838,15 +837,15 @@ namespace KMail {
 	    if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
 		fromStr = message->fromStrip(); // let's use that
             // TODO vcard
-	    //QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
-	    //if ( !vCardName.isEmpty() )
-	    //fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, "class=\"white\"" );
+	    if ( !vCardName.isEmpty() )
+	    fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" class=\"white\">" + i18n("[vCard]") + "</a>";
 	    //TDDO strategy date
 	    //if ( strategy->showHeader( "date" ) )
 	    headerStr +=
 		"     <tr> \n"
 		"      <td style=\"font-size: 6px; padding-left: 5px; padding-right: 24px; text-align: right; "+borderSettings+"\">"+i18n("From: ")+"</td> \n"
-		"      <td style=\""+borderSettings+"\">"+ fromStr +"</td> "
+		"      <td style=\""+borderSettings+"\">"+ fromPart +"</td> "
 		"     </tr> ";
 	}
 
