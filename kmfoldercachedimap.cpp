@@ -1745,7 +1745,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           // be considered correct.
           if (!mReadOnly) {
             /* The message is OK, update flags */
-            KMFolderImap::flagsToStatus( existingMessage, flags, true, mPermanentFlags );
+            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mPermanentFlags );
           } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
             KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }
