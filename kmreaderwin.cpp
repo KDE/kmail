@@ -562,6 +562,13 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
 
+  raction = new KRadioAction( i18n("View->headers->", "&Enterprise Headers"), 0,
+                              this, SLOT(slotEnterpriseHeaders()),
+                              ac, "view_headers_enterprise" );
+  raction->setToolTip( i18n("Show the list of headers in Enterprise style") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert(raction);
+
   raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0,
                               this, SLOT(slotFancyHeaders()),
                               ac, "view_headers_fancy" );
@@ -718,6 +725,11 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
     return static_cast<KRadioAction*>(mActionCollection->action(actionName));
   else
     return 0;
+}
+
+void KMReaderWin::slotEnterpriseHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
+                             HeaderStrategy::rich() );
 }
 
 void KMReaderWin::slotFancyHeaders() {

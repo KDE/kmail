@@ -57,7 +57,7 @@ namespace KMail {
     //
     // Factory methods:
     //
-    enum Type { Brief, Plain, Fancy };
+    enum Type { Brief, Plain, Fancy, Enterprise };
 
     static const HeaderStyle * create( Type type );
     static const HeaderStyle * create( const QString & type );
@@ -65,6 +65,7 @@ namespace KMail {
     static const HeaderStyle * brief();
     static const HeaderStyle * plain();
     static const HeaderStyle * fancy();
+    static const HeaderStyle * enterprise();
 
     //
     // Methods for handling the styles:

@@ -382,6 +382,7 @@ protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
   void slotFancyHeaders();
+  void slotEnterpriseHeaders();
   void slotStandardHeaders();
   void slotLongHeaders();
   void slotAllHeaders();

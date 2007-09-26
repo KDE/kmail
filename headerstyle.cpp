@@ -64,6 +64,8 @@ using namespace KPIM;
 #include <qapplication.h>
 #include <qregexp.h>
 
+#include <kstandarddirs.h>
+
 namespace KMail {
 
   //
@@ -288,7 +290,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       headerStr.append(i18n("From: ") +
-          KMMessage::emailAddrAsAnchor( fromStr, false) );
+          KMMessage::emailAddrAsAnchor( fromStr, "", false) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -733,6 +735,155 @@ namespace KMail {
            .arg( fmt, KCodecs::base64Encode( ba ) );
   }
 
+// #####################
+
+  class EnterpriseHeaderStyle : public HeaderStyle {
+    friend class ::KMail::HeaderStyle;
+  protected:
+    EnterpriseHeaderStyle() : HeaderStyle() {}
+    virtual ~EnterpriseHeaderStyle() {}
+
+  public:
+    const char * name() const { return "brief"; }
+    const HeaderStyle * next() const { return plain(); }
+    const HeaderStyle * prev() const { return fancy(); }
+
+    QString format( const KMMessage * message, const HeaderStrategy * strategy,
+                    const QString & vCardName, bool printing ) const;
+  };
+
+    QString EnterpriseHeaderStyle::format( const KMMessage * message,
+                                    const HeaderStrategy * strategy,
+                                    const QString & vCardName, bool printing ) const {
+	if ( !message ) return QString::null;
+	if ( !strategy )
+	    strategy = HeaderStrategy::brief();
+
+	// The direction of the header is determined according to the direction
+	// of the application layout.
+
+	QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
+	
+	// However, the direction of the message subject within the header is
+	// determined according to the contents of the subject itself. Since
+	// the "Re:" and "Fwd:" prefixes would always cause the subject to be
+	// considered left-to-right, they are ignored when determining its
+	// direction.
+
+	QString subjectDir;
+	if (!message->subject().isEmpty())
+	    subjectDir = directionOf( message->cleanSubject() );
+	else
+	    subjectDir = directionOf( i18n("No Subject") );
+
+	// Prepare the date string (when printing always use the localized date)
+	QString dateString;
+	if( printing ) {
+	    QDateTime dateTime;
+	    KLocale * locale = KGlobal::locale();
+	    dateTime.setTime_t( message->date() );
+	    dateString = locale->formatDateTime( dateTime );
+	} else {
+	    dateString = message->dateStr();
+	}
+
+	const QColor activeColor = qApp->palette().active().highlight();
+	const QColor activeColorDark = activeColor.dark(130);
+
+	QString imgpath(locate("data","kmail/pics/"));
+	imgpath.append("enterprise_");
+	const QString borderSettings(" padding-top: 0px; padding-bottom: 0px; border-width: 0px ");
+	QString headerStr (
+	    "<html><body style=\"background: #FFFFFF; padding: 0px; margin: 0px;\"> \n"
+	    "<div style=\"position: relative; width: 98%; top: 0px; margin-left: 10px; margin-top: 4px;\"> \n"
+	    "<div style=\"margin-left: 6px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
+	    // #0057ae
+	    "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; position: absolute; top: 14px; min-width: 200px; \" cellpadding=0> \n"
+	    "  <tr> \n"
+	    "   <td style=\"min-width: 6px; background-image: url("+imgpath+"top_left.png); \"></td> \n"
+	    "   <td style=\"height: 6px; width: 100%; background: url("+imgpath+"top.png); \"></td> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"top_right.png); \"></td> </tr> \n"
+	    "   <tr> \n"
+	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
+	    "   <td style=\"\"> \n"
+	    "    <table style=\"color: white; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");	
+
+	// subject
+	//strToHtml( message->subject() )
+	if ( strategy->showHeader( "subject" ) ){
+	    headerStr +=
+		"     <tr> \n"
+		"      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\"></td> \n"
+		"      <td style=\"font-weight: bolder; font-size: 120%;"+borderSettings+"\">"+message->subject()+"</td> \n"
+		"     </tr> \n";
+	}
+
+	// from
+	if ( strategy->showHeader( "from" ) ){
+	    QString fromStr = message->from();
+	    if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
+		fromStr = message->fromStrip(); // let's use that
+	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
+            // TODO vcard
+	    //if ( !vCardName.isEmpty() )
+	    //fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+	    //TDDO strategy date
+	    //if ( strategy->showHeader( "date" ) )
+	    headerStr += 
+		"     <tr> \n"
+		"      <td style=\"font-size: 6px; padding-left: 5px; padding-right: 24px; text-align: right; "+borderSettings+"\">"+i18n("From: ")+"</td> \n"
+		"      <td style=\""+borderSettings+"\">"
+		+ fromStr + /*"<span style=\"font-weight: normal;\">, " + dateString + "</span>"*/
+		"      </td> "
+		"     </tr> ";
+	}
+
+	// to, cc, bcc
+	// TODO check strategies, set commas
+	//if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
+	//if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
+	headerStr +=
+	    "     <tr> "
+	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18n("To: ")+"</td> "
+	    "      <td style=\""+borderSettings+"\">"
+	    + KMMessage::emailAddrAsAnchor(message->to(),false," style=\"color: white ! important;\"", false)
+	    +" "+ KMMessage::emailAddrAsAnchor(message->cc(),false,"",false)
+	    +" "+ KMMessage::emailAddrAsAnchor(message->bcc(),false,"",false) +
+	    "      </td> "
+	    "     </tr> ";
+
+	    // header-bottom
+	    headerStr += 
+	    "    </table> "
+	    "   </td> "
+	    "   <td style=\"min-width: 6px; max-height: 15px; background: url("+imgpath+"right.png); \"></td> "
+	    "  </tr> "
+	    "  <tr> "
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_left.png); \"></td> "
+	    "   <td style=\"height: 35px; width: 80%; background: url("+imgpath+"sbar.png);\"> "
+	    "    <img src=\""+imgpath+"sw.png\" style=\"margin: 0px; height: 30px; overflow:hidden; \"> "
+	    "    <img src=\""+imgpath+"sp_right.png\" style=\"float: right; \"> </td> "
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_right.png); \"></td> "
+	    "  </tr> "
+	    " </table> "
+	    "<div style=\"position: fixed; background: red; top: 0px; left: 0px; width: 95%;\">"
+	    "<img style=\"position: absolute; top: -15px; right: 50px; \" src=\""+imgpath+"icon.png\"> </div>";
+
+	// remove all empty (modulo whitespace) entries and joins them via ", \n"
+	//headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
+
+	headerStr += "</div>\n";
+	headerStr += "<div style=\"position:static; top:0px; z-index: 0; padding-top: 110px; padding-left: 10px;\">";
+
+	// TODO
+	// spam status
+	// ### iterate over the rest of strategy->headerToDisplay() (or
+	// ### all headers if DefaultPolicy == Display) (elsewhere, too)
+	return headerStr;
+  }
+
+// #####################
+
   //
   // HeaderStyle abstract base:
   //
@@ -750,6 +901,7 @@ namespace KMail {
     case Brief:  return brief();
     case Plain:  return plain();
     case Fancy:   return fancy();
+    case Enterprise: return enterprise();
     }
     kdFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
                     << (int)type << " ) requested!" << endl;
@@ -760,6 +912,7 @@ namespace KMail {
     QString lowerType = type.lower();
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "plain" )  return plain();
+    if ( lowerType == "enterprise" )  return enterprise();
     //if ( lowerType == "fancy" ) return fancy(); // not needed, see below
     // don't kdFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
@@ -769,6 +922,7 @@ namespace KMail {
   static const HeaderStyle * briefStyle = 0;
   static const HeaderStyle * plainStyle = 0;
   static const HeaderStyle * fancyStyle = 0;
+  static const HeaderStyle * enterpriseStyle = 0;  
 
   const HeaderStyle * HeaderStyle::brief() {
     if ( !briefStyle )
@@ -786,6 +940,12 @@ namespace KMail {
     if ( !fancyStyle )
       fancyStyle = new FancyHeaderStyle();
     return fancyStyle;
+  }
+
+  const HeaderStyle * HeaderStyle::enterprise() {
+    if ( !enterpriseStyle )
+      enterpriseStyle = new EnterpriseHeaderStyle();
+    return enterpriseStyle;
   }
 
 } // namespace KMail
