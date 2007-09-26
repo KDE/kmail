@@ -255,6 +255,8 @@ namespace KMail {
 
       ProcessResult processResult;
 
+      if ( mReader )
+        htmlWriter()->queue( QString::fromLatin1("<a name=\"att%1\"/>").arg( node->nodeId() ) );
       if ( const Interface::BodyPartFormatter * formatter
            = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
         PartNodeBodyPart part( *node, codecFor( node ) );
@@ -662,7 +664,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
   }
 
-  if ( !mReader->decryptMessage() ) {
+  if ( mReader && !mReader->decryptMessage() ) {
     QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
     decryptedData = "<div style=\"font-size:large; text-align:center;"
                       "padding-top:20pt;\">"

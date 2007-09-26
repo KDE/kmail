@@ -429,7 +429,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::iconName() const
+QString KMMessagePart::iconName( int size ) const
 {
   QCString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
@@ -447,7 +447,7 @@ QString KMMessagePart::iconName() const
   }
 
   fileName =
-    KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
+    KGlobal::instance()->iconLoader()->iconPath( fileName, size );
   return fileName;
 }
 

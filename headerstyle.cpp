@@ -353,7 +353,7 @@ namespace KMail {
 
   public:
     const char * name() const { return "fancy"; }
-    const HeaderStyle * next() const { return brief(); }
+    const HeaderStyle * next() const { return enterprise(); }
     const HeaderStyle * prev() const { return plain(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
@@ -714,6 +714,7 @@ namespace KMail {
                                     .arg( directionOf( onlineStatus ) )
                                     .arg(onlineStatus));
     */
+    headerStr.append( QString("<tr><td colspan=\"2\"><div id=\"attachmentInjectionPoint\"></div></td></tr>" ) );
     headerStr.append(
           QString( "</table></td><td align=\"center\">%1</td></tr></table>\n" ).arg(userHTML) );
 
@@ -744,8 +745,8 @@ namespace KMail {
     virtual ~EnterpriseHeaderStyle() {}
 
   public:
-    const char * name() const { return "brief"; }
-    const HeaderStyle * next() const { return plain(); }
+    const char * name() const { return "enterprise"; }
+    const HeaderStyle * next() const { return brief(); }
     const HeaderStyle * prev() const { return fancy(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
@@ -763,7 +764,7 @@ namespace KMail {
 	// of the application layout.
 
 	QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
-	
+
 	// However, the direction of the message subject within the header is
 	// determined according to the contents of the subject itself. Since
 	// the "Re:" and "Fwd:" prefixes would always cause the subject to be
@@ -806,7 +807,7 @@ namespace KMail {
 	    "   <tr> \n"
 	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
 	    "   <td style=\"\"> \n"
-	    "    <table style=\"color: white; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");	
+	    "    <table style=\"color: white; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
 
 	// subject
 	//strToHtml( message->subject() )
@@ -829,7 +830,7 @@ namespace KMail {
 	    //fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
 	    //TDDO strategy date
 	    //if ( strategy->showHeader( "date" ) )
-	    headerStr += 
+	    headerStr +=
 		"     <tr> \n"
 		"      <td style=\"font-size: 6px; padding-left: 5px; padding-right: 24px; text-align: right; "+borderSettings+"\">"+i18n("From: ")+"</td> \n"
 		"      <td style=\""+borderSettings+"\">"
@@ -853,7 +854,7 @@ namespace KMail {
 	    "     </tr> ";
 
 	    // header-bottom
-	    headerStr += 
+	    headerStr +=
 	    "    </table> "
 	    "   </td> "
 	    "   <td style=\"min-width: 6px; max-height: 15px; background: url("+imgpath+"right.png); \"></td> "
@@ -867,7 +868,9 @@ namespace KMail {
 	    "  </tr> "
 	    " </table> "
 	    "<div style=\"position: fixed; background: red; top: 0px; left: 0px; width: 95%;\">"
-	    "<img style=\"position: absolute; top: -15px; right: 50px; \" src=\""+imgpath+"icon.png\"> </div>";
+        "<div style=\"position: absolute; top: -15px; right: 50px; width:91px\">"
+	    "<img style=\"float:left\" src=\""+imgpath+"icon.png\">"
+        "<div id=\"attachmentInjectionPoint\"></div></div></div>";
 
 	// remove all empty (modulo whitespace) entries and joins them via ", \n"
 	//headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
@@ -922,7 +925,7 @@ namespace KMail {
   static const HeaderStyle * briefStyle = 0;
   static const HeaderStyle * plainStyle = 0;
   static const HeaderStyle * fancyStyle = 0;
-  static const HeaderStyle * enterpriseStyle = 0;  
+  static const HeaderStyle * enterpriseStyle = 0;
 
   const HeaderStyle * HeaderStyle::brief() {
     if ( !briefStyle )

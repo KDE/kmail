@@ -690,6 +690,8 @@ KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, cons
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() )
+    actionName = "view_headers_enterprise";
   if ( style == HeaderStyle::fancy() )
     actionName = "view_headers_fancy";
   else if ( style == HeaderStyle::brief() )
@@ -772,6 +774,10 @@ void KMReaderWin::slotCycleHeaderStyles() {
   const HeaderStyle * style = headerStyle();
 
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() ) {
+    slotFancyHeaders();
+    actionName = "view_headers_fancy";
+  }
   if ( style == HeaderStyle::fancy() ) {
     slotBriefHeaders();
     actionName = "view_headers_brief";
@@ -786,8 +792,8 @@ void KMReaderWin::slotCycleHeaderStyles() {
       slotAllHeaders();
       actionName = "view_headers_all";
     } else if ( strategy == HeaderStrategy::all() ) {
-      slotFancyHeaders();
-      actionName = "view_headers_fancy";
+      slotEnterpriseHeaders();
+      actionName = "view_headers_enterprise";
     }
   }
 
@@ -1509,6 +1515,8 @@ void KMReaderWin::displayMessage() {
 
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
+
+  QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
 
 
@@ -1772,13 +1780,18 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
   if (aUrl.isEmpty()) return -1;
 
+  bool ok;
+  if ( aUrl.url().startsWith( "#att" ) ) {
+    int res = aUrl.url().mid( 4 ).toInt( &ok );
+    if ( ok ) return res;
+  }
+
   if (!aUrl.isLocalFile()) return -1;
 
   QString path = aUrl.path();
   uint right = path.findRev('/');
   uint left = path.findRev('.', right);
 
-  bool ok;
   int res = path.mid(left + 1, right - left - 1).toInt(&ok);
   return (ok) ? res : -1;
 }
@@ -1978,6 +1991,8 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if ( mAtmCurrentName.isEmpty() && node )
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
   if ( choice < 7 ) {
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
         node, message(), mAtmCurrent, mAtmCurrentName,
@@ -2157,6 +2172,8 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
   if( node ) {
     mAtmCurrent = id;
     mAtmCurrentName = name;
+    if ( mAtmCurrentName.isEmpty() )
+      mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
     KMMessagePart& msgPart = node->msgPart();
     QString pname = msgPart.fileName();
@@ -2190,6 +2207,8 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kdWarning(5006) << "KMReaderWin::openAttachment - could not find node " << id << endl;
     return;
   }
+  if ( mAtmCurrentName.isEmpty() )
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
@@ -2599,6 +2618,79 @@ bool KMReaderWin::decryptMessage() const
   if ( !GlobalSettings::self()->alwaysDecrypt() )
     return mDecrytMessageOverwrite;
   return true;
+}
+
+void KMReaderWin::injectAttachments()
+{
+  // inject attachments in header view
+  // we have to do that after the otp has run so we also see encrypted parts
+  DOM::Document doc = mViewer->htmlDocument();
+  DOM::Element injectionPoint = doc.getElementById( "attachmentInjectionPoint" );
+  if ( injectionPoint.isNull() )
+    return;
+
+  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  if ( html.isEmpty() )
+    return;
+  if ( headerStyle() == HeaderStyle::fancy() )
+    html.prepend( "<div style=\"float:left;\">Attachments:&nbsp;</div>" );
+  assert( injectionPoint.tagName() == "div" );
+  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+}
+
+static QColor nextColor( const QColor & c )
+{
+  int h, s, v;
+  c.hsv( &h, &s, &v );
+  return QColor( (h + 50) % 360, QMAX(s, 64), v, QColor::Hsv );
+}
+
+QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
+{
+  if ( !node )
+    return QString();
+
+  QString html;
+  if ( node->firstChild() ) {
+    QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
+    if ( !subHtml.isEmpty() ) {
+      QString margin;
+      if ( node != mRootNode && headerStyle() != HeaderStyle::enterprise() )
+        margin = "padding:2px; margin:2px; ";
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += QString::fromLatin1("<div style=\"background:%1; %2"
+            "vertical-align:middle; float:left;\">").arg( bgColor.name() ).arg( margin );
+      html += subHtml;
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += "</div>";
+    }
+  } else {
+    QString label, icon;
+    icon = node->msgPart().iconName( KIcon::Small );
+    label = node->msgPart().contentDescription();
+    if( label.isEmpty() )
+      label = node->msgPart().name().stripWhiteSpace();
+    if( label.isEmpty() )
+      label = node->msgPart().fileName();
+    bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
+    if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
+      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
+          || node->msgPart().subtypeStr() == "pgp-signature"
+          || node->msgPart().subtypeStr() == "pkcs7-mime"
+          || node->msgPart().subtypeStr() == "pkcs7-signature";
+    }
+    typeBlacklisted = typeBlacklisted || node == mRootNode;
+    if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
+      html += "<div style=\"float:left; white-space:nowrap;\">";
+      html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
+      html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
+      html += label;
+      html += "</a></div>";
+    }
+  }
+
+  html += renderAttachments( node->nextSibling(), bgColor );
+  return html;
 }
 
 #include "kmreaderwin.moc"

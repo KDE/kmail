@@ -454,6 +454,7 @@ protected:
 
 private slots:
   void slotSetEncoding();
+  void injectAttachments();
 
 private:
   void adjustLayout();
@@ -466,6 +467,8 @@ private:
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
+
+  QString renderAttachments( partNode *node, const QColor &bgColor );
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
