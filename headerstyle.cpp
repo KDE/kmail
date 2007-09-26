@@ -873,7 +873,7 @@ namespace KMail {
 	    "  </tr> "
 	    " </table> "
 	    "<div style=\"position: fixed; background: red; top: 0px; left: 0px; width: 95%;\">"
-        "<div style=\"position: absolute; top: -15px; right: 50px; width:91px\">"
+        "<div style=\"position: absolute; top: -15px; right: 50px; width:91px; z-index:100;\">"
 	    "<img style=\"float:left\" src=\""+imgpath+"icon.png\">"
         "<div id=\"attachmentInjectionPoint\"></div></div></div>";
 
