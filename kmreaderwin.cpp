@@ -65,6 +65,7 @@ using KMail::TeeHtmlWriter;
 #endif
 
 #include <kasciistringtools.h>
+#include <kstringhandler.h>
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -2681,11 +2682,17 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     }
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
-      html += "<div style=\"float:left; white-space:nowrap;\">";
+      html += "<div style=\"float:left;\">";
+      html += "<span style=\"white-space:nowrap;\">";
       html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
-      html += label;
-      html += "</a></div>";
+      if ( headerStyle() == HeaderStyle::enterprise() ) {
+        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFontMetrics fm( bodyFont );
+        html += KStringHandler::rPixelSqueeze( label, fm, 140 );
+      } else
+        html += label;
+      html += "</a></span></div> ";
     }
   }
 
