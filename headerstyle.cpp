@@ -777,6 +777,19 @@ namespace KMail {
 	else
 	    subjectDir = directionOf( i18n("No Subject") );
 
+	QStringList headerParts;
+	if( strategy->showHeader( "to" ) )
+	    headerParts << KMMessage::emailAddrAsAnchor( message->to(),false,"", false );
+	
+	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
+	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, "", false );
+	
+	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
+	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, "", false );
+
+	// remove all empty (modulo whitespace) entries and joins them via ", \n"
+	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" );
+
 	// Prepare the date string (when printing always use the localized date)
 	QString dateString;
 	if( printing ) {
@@ -795,9 +808,9 @@ namespace KMail {
 	imgpath.append("enterprise_");
 	const QString borderSettings(" padding-top: 0px; padding-bottom: 0px; border-width: 0px ");
 	QString headerStr (
-	    "<html><body style=\"background: #FFFFFF; padding: 0px; margin: 0px;\"> \n"
-	    "<div style=\"position: relative; width: 98%; top: 0px; margin-left: 10px; margin-top: 4px;\"> \n"
-	    "<div style=\"margin-left: 6px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
+	    "<html><body style=\"background: #FFFFFF; padding-top: 0px; margin-top: 0px;\"> \n"
+	    "<div style=\"position: relative; width: 100%; top: 0px; margin-top: 4px;\"> \n"
+	    "<div style=\"margin-left: 8px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
 	    // #0057ae
 	    "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; position: absolute; top: 14px; min-width: 200px; \" cellpadding=0> \n"
 	    "  <tr> \n"
@@ -807,7 +820,7 @@ namespace KMail {
 	    "   <tr> \n"
 	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
 	    "   <td style=\"\"> \n"
-	    "    <table style=\"color: white; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
+	    "    <table style=\"color: white ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
 
 	// subject
 	//strToHtml( message->subject() )
@@ -824,8 +837,8 @@ namespace KMail {
 	    QString fromStr = message->from();
 	    if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
 		fromStr = message->fromStrip(); // let's use that
-	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
             // TODO vcard
+	    //QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
 	    //if ( !vCardName.isEmpty() )
 	    //fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
 	    //TDDO strategy date
@@ -833,23 +846,16 @@ namespace KMail {
 	    headerStr +=
 		"     <tr> \n"
 		"      <td style=\"font-size: 6px; padding-left: 5px; padding-right: 24px; text-align: right; "+borderSettings+"\">"+i18n("From: ")+"</td> \n"
-		"      <td style=\""+borderSettings+"\">"
-		+ fromStr + /*"<span style=\"font-weight: normal;\">, " + dateString + "</span>"*/
-		"      </td> "
+		"      <td style=\""+borderSettings+"\">"+ fromStr +"</td> "
 		"     </tr> ";
 	}
 
 	// to, cc, bcc
-	// TODO check strategies, set commas
-	//if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-	//if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
 	headerStr +=
 	    "     <tr> "
 	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18n("To: ")+"</td> "
 	    "      <td style=\""+borderSettings+"\">"
-	    + KMMessage::emailAddrAsAnchor(message->to(),false," style=\"color: white ! important;\"", false)
-	    +" "+ KMMessage::emailAddrAsAnchor(message->cc(),false,"",false)
-	    +" "+ KMMessage::emailAddrAsAnchor(message->bcc(),false,"",false) +
+	    +headerPart+
 	    "      </td> "
 	    "     </tr> ";
 
@@ -871,9 +877,6 @@ namespace KMail {
         "<div style=\"position: absolute; top: -15px; right: 50px; width:91px\">"
 	    "<img style=\"float:left\" src=\""+imgpath+"icon.png\">"
         "<div id=\"attachmentInjectionPoint\"></div></div></div>";
-
-	// remove all empty (modulo whitespace) entries and joins them via ", \n"
-	//headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
 	headerStr += "</div>\n";
 	headerStr += "<div style=\"position:static; top:0px; z-index: 0; padding-top: 110px; padding-left: 10px;\">";
