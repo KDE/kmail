@@ -25,7 +25,7 @@
           <choice name="SelectFirstUnreadNew"/>
           <choice name="SelectLastSelected"/>
         </choices>
-        <default>SelectFirstNew</default>
+        <default>SelectLastSelected</default>
       </entry>
       <entry name="NetworkState"  type="Enum">
         <choices>
