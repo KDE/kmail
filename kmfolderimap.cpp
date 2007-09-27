@@ -1530,13 +1530,13 @@ QString KMFolderImap::statusToFlags( const MessageStatus& status, int supportedF
       flags += "\\FLAGGED ";
     // non standard flags
     if ( status.isForwarded() && ((supportedFlags & 64) || (supportedFlags & 128)) )
-      flags += "KMAILFORWARDED ";
+      flags += "$FORWARDED ";
     if ( status.isTodo() && ((supportedFlags & 64) || (supportedFlags & 256)) )
-      flags += "KMAILTODO ";
+      flags += "$TODO ";
     if ( status.isWatched() && ((supportedFlags & 64) || (supportedFlags & 512)) )
-      flags += "KMAILWATCHED ";
+      flags += "$WATCHED ";
     if ( status.isIgnored() && ((supportedFlags & 64) || (supportedFlags & 1024)) )
-      flags += "KMAILIGNORED ";
+      flags += "$IGNORED ";
   }
 
   return flags.simplified();
