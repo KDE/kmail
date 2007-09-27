@@ -61,6 +61,8 @@
 #include <qstringlist.h>
 #include <qtl.h>
 
+#include <time.h>
+
 #include <algorithm>
 #include <memory>
 #include <iterator>
@@ -68,8 +70,8 @@
 #include <map>
 #include <set>
 #include <iostream>
+#include <cassert>
 
-#include <time.h>
 
 //
 // some predicates to be used in STL algorithms:
@@ -119,7 +121,7 @@ static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
     return false;
   const std::vector<GpgME::UserID> uids = key.userIDs();
   for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
-    if ( !it->isRevoked() && it->validity() >= GpgME::UserID::Marginal )
+    if ( !it->isRevoked() && it->validity() != GpgME::UserID::Marginal )
       return true;
 #if 0
     else
@@ -187,6 +189,64 @@ static inline bool NotValidOpenPGPSigningKey( const GpgME::Key & key ) {
 
 static inline bool NotValidSMIMESigningKey( const GpgME::Key & key ) {
   return !ValidSMIMESigningKey( key );
+}
+
+static QStringList keysAsStrings( const std::vector<GpgME::Key>& keys ) {
+  QStringList strings;
+  for ( std::vector<GpgME::Key>::const_iterator it = keys.begin() ; it != keys.end() ; ++it ) {
+    assert( !(*it).userID(0).isNull() );
+    strings.append( QString::fromUtf8( (*it).userID(0).email() ) );
+  }
+  return strings;
+}
+
+static inline std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgME::Key> & keys ) {
+
+  std::vector<GpgME::Key> fishies;
+  std::vector<GpgME::Key> ickies;
+  std::vector<GpgME::Key>::const_iterator it = keys.begin();
+  const std::vector<GpgME::Key>::const_iterator end = keys.end();
+  for ( ; it != end ; it++ ) {
+    const GpgME::Key key = *it;
+    assert( ValidTrustedEncryptionKey( key ) );
+    const std::vector<GpgME::UserID> uids = key.userIDs();
+    for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
+      if ( !it->isRevoked()  && it->validity() == GpgME::UserID::Marginal ) {
+        fishies.push_back( key );
+        break;
+      }
+      if ( !it->isRevoked()  && it->validity() < GpgME::UserID::Never ) {
+        ickies.push_back( key );
+        break;
+      }
+    }
+  }
+
+  if ( fishies.empty() && ickies.empty() )
+    return keys;
+
+  // if  some keys are not fully trusted, let the user confirm their use
+  QString msg = i18n("One or more of your configured OpenPGP encryption "
+                      "keys or S/MIME certificates is not fully trusted "
+                      "for encryption.");
+
+  if ( !fishies.empty() ) {
+    // certificates can't have marginal trust
+    msg += i18n( "\nThe following keys are only marginally trusted: \n");
+    msg += keysAsStrings( fishies ).join(",");
+  }
+  if ( !ickies.empty() ) {
+    msg += i18n( "\nThe following keys or certificates have unknown trust level: \n");
+    msg += keysAsStrings( ickies ).join(",");
+  }
+
+  if( KMessageBox::warningContinueCancel( 0, msg, i18n("Not Fully Trusted Encryption Keys"),
+                                              KStdGuiItem::cont(),
+                                              "not fully trusted encryption key warning" )
+          == KMessageBox::Continue )
+    return keys;
+  else
+    return std::vector<GpgME::Key>();
 }
 
 namespace {
@@ -1301,12 +1361,15 @@ std::vector<GpgME::Key> Kleo::KeyResolver::signingKeys( CryptoMessageFormat f ) 
 std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, const QString & msg, const std::vector<GpgME::Key> & selectedKeys ) const {
   Kleo::KeySelectionDialog dlg( i18n("Encryption Key Selection"),
 				msg, selectedKeys,
-				Kleo::KeySelectionDialog::ValidTrustedEncryptionKeys,
+				Kleo::KeySelectionDialog::ValidEncryptionKeys,
 				true, true ); // multi-selection and "remember choice" box
 
   if ( dlg.exec() != QDialog::Accepted )
     return std::vector<GpgME::Key>();
-  const std::vector<GpgME::Key> keys = dlg.selectedKeys();
+  std::vector<GpgME::Key> keys = dlg.selectedKeys();
+  keys.erase( std::remove_if( keys.begin(), keys.end(),
+                                      NotValidTrustedEncryptionKey ),
+                              keys.end() );
   if ( !keys.empty() && dlg.rememberSelection() )
     setKeysForAddress( person, dlg.pgpKeyFingerprints(), dlg.smimeFingerprints() );
   return keys;
@@ -1328,23 +1391,25 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
     if ( !keys.empty() ) {
       // Check if all of the keys are trusted and valid encryption keys
       if ( std::find_if( keys.begin(), keys.end(),
-			 NotValidTrustedEncryptionKey ) == keys.end() )
-	return keys;
+                         NotValidTrustedEncryptionKey ) != keys.end() ) {
 
-      // not ok, let the user select: this is not conditional on !quiet,
-      // since it's a bug in the configuration and the user should be
-      // notified about it as early as possible:
-      keys = selectKeys( person,
-			 i18n("if in your language something like "
-			      "'key(s)' isn't possible please "
-			      "use the plural in the translation",
-			      "There is a problem with the "
-			      "encryption key(s) for \"%1\".\n\n"
-			      "Please re-select the key(s) which should "
-			      "be used for this recipient.").arg(person),
-			 keys );
+        // not ok, let the user select: this is not conditional on !quiet,
+        // since it's a bug in the configuration and the user should be
+        // notified about it as early as possible:
+        keys = selectKeys( person,
+            i18n("if in your language something like "
+              "'key(s)' isn't possible please "
+              "use the plural in the translation",
+              "There is a problem with the "
+              "encryption key(s) for \"%1\".\n\n"
+              "Please re-select the key(s) which should "
+              "be used for this recipient.").arg(person),
+            keys );
+      }
+      keys = TrustedOrConfirmed( keys );
+
       if ( !keys.empty() )
-	return keys;
+        return keys;
       // hmmm, should we not return the keys in any case here?
     }
   }
@@ -1363,28 +1428,29 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 			matchingKeys.end() );
   }
 
+  matchingKeys = TrustedOrConfirmed( matchingKeys );
   if ( quiet || matchingKeys.size() == 1 )
     return matchingKeys;
 
   // no match until now, or more than one key matches; let the user
   // choose the key(s)
   // FIXME: let user get the key from keyserver
-  return selectKeys( person,
-		     matchingKeys.empty()
-		     ? i18n("if in your language something like "
-			    "'key(s)' isn't possible please "
-			    "use the plural in the translation",
-			    "No valid and trusted encryption key was "
-			    "found for \"%1\".\n\n"
-			    "Select the key(s) which should "
-			    "be used for this recipient.").arg(person)
-		     : i18n("if in your language something like "
-			    "'key(s)' isn't possible please "
-			    "use the plural in the translation",
-			    "More than one key matches \"%1\".\n\n"
-			    "Select the key(s) which should "
-			    "be used for this recipient.").arg(person),
-		     matchingKeys );
+  return TrustedOrConfirmed( selectKeys( person,
+          matchingKeys.empty()
+          ? i18n("if in your language something like "
+              "'key(s)' isn't possible please "
+              "use the plural in the translation",
+              "No valid and trusted encryption key was "
+              "found for \"%1\".\n\n"
+              "Select the key(s) which should "
+              "be used for this recipient.").arg(person)
+          : i18n("if in your language something like "
+              "'key(s)' isn't possible please "
+              "use the plural in the translation",
+              "More than one key matches \"%1\".\n\n"
+              "Select the key(s) which should "
+              "be used for this recipient.").arg(person),
+          matchingKeys ) );
 }
 
 
