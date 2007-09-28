@@ -328,8 +328,8 @@ void KMMimePartTree::startDrag()
     KURL url = mReaderWin->tempFileUrlFromPartNode( node );
     if (!url.isValid() ) return;
     urls.append( url );
-    KURLDrag drag( urls, this );
-    drag.dragCopy();
+    KURLDrag* drag = new KURLDrag( urls, this );
+    drag->drag();
 }
 
 #include "kmmimeparttree.moc"
