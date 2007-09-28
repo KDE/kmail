@@ -784,7 +784,7 @@ namespace KMail {
 	QColor activeColorDark = activeColor.dark(130);
         // reverse colors for encapsulated
         if( !topLevel ){
-            activeColorDark = activeColor.dark(20);
+            activeColorDark = activeColor.dark(50);
             fontColor = qApp->palette().active().text();
 	    linkColor = "";
         }
@@ -816,11 +816,20 @@ namespace KMail {
 	QString imgpath(locate("data","kmail/pics/"));
 	imgpath.append("enterprise_");
 	const QString borderSettings(" padding-top: 0px; padding-bottom: 0px; border-width: 0px ");
-	QString headerStr (
-	    "<div style=\"position: relative; width: 100%; top: 0px; margin-top: 4px;\"> \n"
-	    "<div style=\"margin-left: 8px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
+	QString headerStr ("");
+
+	// 3D borders
+	if(topLevel)
+	    headerStr += 
+		"<div style=\"position: fixed; top: 0px; left: 0px; background-color: #606060; "
+		"background-image: url("+imgpath+"shadow_left.png); width: 10px; min-height: 100%;\">&nbsp;</div>"
+		"<div style=\"position: fixed; top: 0px; right: 0px;  background-color: #606060; "
+		"background-image: url("+imgpath+"shadow_right.png); width: 10px; min-height: 100%;\">&nbsp;</div>";
+
+	headerStr += ""
+	    "<div style=\"margin-left: 8px; top: 0px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
 	    // #0057ae
-	    "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; position: absolute; top: 14px; min-width: 200px; \" cellpadding=0> \n"
+	    "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; top: 14px; min-width: 200px; \" cellpadding=0> \n"
 	    "  <tr> \n"
 	    "   <td style=\"min-width: 6px; background-image: url("+imgpath+"top_left.png); \"></td> \n"
 	    "   <td style=\"height: 6px; width: 100%; background: url("+imgpath+"top.png); \"></td> \n"
@@ -828,7 +837,7 @@ namespace KMail {
 	    "   <tr> \n"
 	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
 	    "   <td style=\"\"> \n"
-	    "    <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n");
+	    "    <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n";
 
 	// subject
 	//strToHtml( message->subject() )
@@ -848,7 +857,7 @@ namespace KMail {
             // TODO vcard
 	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, linkColor );
 	    if ( !vCardName.isEmpty() )
-	    fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
+		fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
 	    //TDDO strategy date
 	    //if ( strategy->showHeader( "date" ) )
 	    headerStr +=
@@ -866,28 +875,36 @@ namespace KMail {
 	    +headerPart+
 	    "      </td> "
 	    "     </tr> ";
+	
+	// header-bottom
+	headerStr +=
+	    "    </table> \n"
+	    "   </td> \n"
+	    "   <td style=\"min-width: 6px; max-height: 15px; background: url("+imgpath+"right.png); \"></td> \n"
+	    "  </tr> \n"
+	    "  <tr> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_left.png); \"></td> \n"
+	    "   <td style=\"height: 35px; width: 80%; background: url("+imgpath+"sbar.png);\"> \n"
+	    "    <img src=\""+imgpath+"sw.png\" style=\"margin: 0px; height: 30px; overflow:hidden; \"> \n"
+	    "    <img src=\""+imgpath+"sp_right.png\" style=\"float: right; \"> </td> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_right.png); \"></td> \n"
+	    "  </tr> \n"
+	    " </table> \n";
 
-	    // header-bottom
-	    headerStr +=
-	    "    </table> "
-	    "   </td> "
-	    "   <td style=\"min-width: 6px; max-height: 15px; background: url("+imgpath+"right.png); \"></td> "
-	    "  </tr> "
-	    "  <tr> "
-	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_left.png); \"></td> "
-	    "   <td style=\"height: 35px; width: 80%; background: url("+imgpath+"sbar.png);\"> "
-	    "    <img src=\""+imgpath+"sw.png\" style=\"margin: 0px; height: 30px; overflow:hidden; \"> "
-	    "    <img src=\""+imgpath+"sp_right.png\" style=\"float: right; \"> </td> "
-	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_right.png); \"></td> "
-	    "  </tr> "
-	    " </table> "
-	    "<div class=\"noprint\" style=\"position: fixed; background: red; top: 0px; left: 0px; width: 95%;\">"
-        "<div style=\"position: absolute; top: -15px; right: 50px; width:91px; z-index:100;\">"
-	    "<img style=\"float:left\" src=\""+imgpath+"icon.png\">"
-        "<div id=\"attachmentInjectionPoint\"></div></div></div>";
-
-	headerStr += "</div>\n";
-	headerStr += "<div style=\"position:static; top:0px; z-index: 0; padding-top: 110px; padding-left: 10px;\">";
+	// kmail icon
+	if(topLevel)
+	    headerStr += 
+		"<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 200px;\">\n"
+		"<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
+		"</div>\n";
+	
+	// attachments
+	headerStr +=
+	    "<div class=\"noprint\" style=\"position: fixed; top: 60px; right: 20px; width: 91px; height: 200px;\">"
+	    "<div id=\"attachmentInjectionPoint\"></div>"
+	    "</div>\n";
+	
+	headerStr += "<div style=\"padding: 6px;\">";
 
 	// TODO
 	// spam status
