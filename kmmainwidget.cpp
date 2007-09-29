@@ -3290,7 +3290,7 @@ void KMMainWidget::setupActions()
   {
     QAction *action = new KAction(i18n("&Next Message"), this);
     actionCollection()->addAction("go_next_message", action );
-    action->setShortcuts(KShortcut( "N;Right" ));
+    action->setShortcuts(KShortcut( "N; Right" ));
     action->setToolTip(i18n("Go to the next message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextMessage()));
   }
@@ -3312,7 +3312,7 @@ void KMMainWidget::setupActions()
     QAction *action = new KAction(i18n("&Previous Message"), this);
     actionCollection()->addAction("go_prev_message", action );
     action->setToolTip(i18n("Go to the previous message"));
-    action->setShortcuts(KShortcut( "P;Left" ));
+    action->setShortcuts(KShortcut( "P; Left" ));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevMessage()));
   }
   {
