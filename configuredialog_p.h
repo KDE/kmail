@@ -496,6 +496,7 @@ private: // data
   QGroupBox     *mMIMETreeModeGroupBox;
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
+  QCheckBox     *mFavoriteFolderViewCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {

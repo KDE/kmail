@@ -30,6 +30,7 @@
    <Separator/>
    <Action name="online_status" />
    <Action name="check_mail" />
+   <Action name="favorite_check_mail"/>
    <Action name="check_mail_in" />
    <Action name="send_queued" />
    <Action name="send_queued_via" />

@@ -1689,6 +1689,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
+  connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  vlay->addWidget( mFavoriteFolderViewCB );
+
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroupBox );
@@ -1718,6 +1722,7 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
+  mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1738,6 +1743,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
+  GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
 }
 
 //

@@ -196,7 +196,7 @@ class KMFolderDialog : public KPageDialog
 
 public:
   KMFolderDialog( KMFolder *folder, KMFolderDir *aFolderDir,
-		  KMFolderTree* parent, const QString& caption,
+                  KMFolderTree* parent, const QString& caption,
                   const QString& name = QString() );
 
   KMFolder* folder() const { return mFolder; }
@@ -228,12 +228,12 @@ private:
   QPointer<KMFolder> mFolder;
   QPointer<KMFolderDir> mFolderDir;
   QPointer<KMFolder> mParentFolder;
+  KMFolderTree* mFolderTree;
 
   bool mIsNewFolder; // if true, save() did set mFolder.
 
   QVector<KMail::FolderDialogTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day
-  KMFolderTree* mFolderTree;
 };
 
 #endif /*__KMFOLDERDIALOG_H*/
