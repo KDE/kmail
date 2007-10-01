@@ -122,13 +122,9 @@ void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
     return;
   }
 
-  QTimer::singleShot(0, this, SLOT(slotProcessNextCheck()));
+  processNextCheck(false);
 }
-//-----------------------------------------------------------------------------
-void AccountManager::slotProcessNextCheck()
-{
-  processNextCheck( false );
-}
+
 //-----------------------------------------------------------------------------
 void AccountManager::processNextCheck( bool _newMail )
 {

@@ -788,7 +788,7 @@ void PopAccount::slotJobFinished() {
     mSlave = 0;
     stage = Idle;
     if( mMailCheckProgressItem ) { // do this only once...
-      bool canceled = !kmkernel || kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
+      bool canceled = kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         this->name(), numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
@@ -1015,7 +1015,7 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
     mSlave = 0;
   }
 
-  if (interactive && kmkernel) {
+  if (interactive) {
     KMessageBox::error(kmkernel->mainWin(), KIO::buildErrorString(error, errorMsg));
   }
 
