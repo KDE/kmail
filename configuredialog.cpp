@@ -256,8 +256,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
 #ifdef Q_OS_UNIX
-  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
-                  qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
+  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ),
+                  qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
 #endif
   addModule ( "kmail_config_identity" );
   addModule ( "kmail_config_accounts" );
@@ -2421,7 +2421,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Fourth for toolbar icon
   mIconButton = new KIconButton( mTagSettingGroupBox );
   mIconButton->setIconSize( 16 );
-  mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Action );
+  mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
   settings->addWidget( mIconButton, 5, 1 );
 
   QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"),

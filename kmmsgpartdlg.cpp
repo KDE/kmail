@@ -332,7 +332,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   KMimeType::Ptr mt = KMimeType::mimeType( mimeType );
   if ( !mt.isNull() )
     mIcon->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mt->iconName(),
-                      K3Icon::Desktop ) );
+                      KIconLoader::Desktop ) );
   else 
     mIcon->setPixmap( DesktopIcon("unknown") );
 }

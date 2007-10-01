@@ -339,7 +339,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
     mNormalIconButton = new KIconButton( this );
     mNormalIconLabel->setBuddy( mNormalIconButton );
-    mNormalIconButton->setIconType( K3Icon::NoGroup , K3Icon::Place, false );
+    mNormalIconButton->setIconType( KIconLoader::NoGroup , KIconLoader::Place, false );
     mNormalIconButton->setIconSize( 16 );
     mNormalIconButton->setStrictIconSize( true );
     mNormalIconButton->setFixedSize( 28, 28 );
@@ -354,7 +354,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
     mUnreadIconButton = new KIconButton( this );
     mUnreadIconLabel->setBuddy( mUnreadIconButton );
-    mUnreadIconButton->setIconType( K3Icon::NoGroup, K3Icon::Place, false );
+    mUnreadIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Place, false );
     mUnreadIconButton->setIconSize( 16 );
     mUnreadIconButton->setStrictIconSize( true );
     mUnreadIconButton->setFixedSize( 28, 28 );

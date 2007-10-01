@@ -67,7 +67,7 @@ void RecipientItem::setDistributionList( const KPIM::DistributionList &list )
 {
   mDistributionList = list;
 
-  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", K3Icon::Small );
+  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", KIconLoader::Small );
 
   mKey = 'D' + list.name();
 }
@@ -76,7 +76,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
 
-  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", K3Icon::Small );
+  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", KIconLoader::Small );
 
   mKey = 'D' + list->name();
 }
@@ -92,7 +92,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   if ( !img.isNull() )
     mIcon = QPixmap::fromImage( img.scaled( 20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
   else
-    mIcon = KIconLoader::global()->loadIcon( "personal", K3Icon::Small );
+    mIcon = KIconLoader::global()->loadIcon( "personal", KIconLoader::Small );
 
   mKey = 'A' + a.preferredEmail();
 }

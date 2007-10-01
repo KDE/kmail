@@ -4477,7 +4477,7 @@ void KMComposeWin::slotSpellcheckConfig()
   //Laurent TODO fix me
   KConfig config("kmailrc");
   Sonnet::ConfigDialog *dialog = new Sonnet::ConfigDialog(&config, this);
-  KWindowSystem::setIcons( dialog->winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ), qApp->windowIcon().pixmap( IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
+  KWindowSystem::setIcons( dialog->winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
 
   if ( dialog->exec() ) {
     //mKSpellConfig.writeGlobalSettings();

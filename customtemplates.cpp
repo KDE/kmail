@@ -84,9 +84,9 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence& ) ),
            this, SLOT( slotValidationHook( const QKeySequence& ) ) );
 
-  mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", K3Icon::Small );
-  mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", K3Icon::Small );
-  mForwardPix = KIconLoader().loadIcon( "mail-forward", K3Icon::Small );
+  mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", KIconLoader::Small );
+  mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", KIconLoader::Small );
+  mForwardPix = KIconLoader().loadIcon( "mail-forward", KIconLoader::Small );
 
   mType->clear();
   mType->addItem( QPixmap(), i18nc( "Message->", "Universal" ) );
