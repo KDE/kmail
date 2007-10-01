@@ -169,12 +169,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMSystemTray *systray() const;
 
     /**
-      Checks a shortcut against the actioncollection and returns whether it
-      is already used and therefor not valid or not.
-      If the shortcut is not valid, a message box is displayed informing the user
-      that the shortcut is already in use.
+      Return the list of all action, in order to check shortcuts conflicts against them.
     */
-    bool shortcutIsValid( const QKeySequence&, QWidget* ) const;
+    QList<QAction*> actionList();
 
     void modifyFolder( KMFolderTreeItem *folderItem );
 

@@ -59,7 +59,7 @@ class CustomTemplates : public QWidget, public Ui::CustomTemplatesBase
     void slotRemoveClicked();
     void slotListSelectionChanged();
     void slotTypeActivated( int index );
-    void slotValidationHook( const QKeySequence &newSeq );
+    void slotShortcutChanged( const QKeySequence &newSeq );
 
   signals:
 

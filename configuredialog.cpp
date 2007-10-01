@@ -2440,9 +2440,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
+  mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
 
-  connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence & ) ),
-           this, SLOT( slotValidationHook( const QKeySequence & ) ) );
+  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
+		   this, SLOT( slotEmitChangeCheck() ) );
 
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
@@ -2492,16 +2493,6 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 {
   if ( mEmitChanges )
     slotEmitChanged();
-}
-
-void AppearancePage::MessageTagTab::slotValidationHook( const QKeySequence &newSeq )
-{
-  //TODO also check against other unsaved tag shortcuts
-
-  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
-    mKeySequenceWidget->denyValidation();
-  else
-    slotEmitChangeCheck();
 }
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
@@ -2571,6 +2562,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   //Fourth row
   tmp_desc->setIconName( mIconButton->icon() );
   //Fifth row
+  mKeySequenceWidget->applyStealShortcut();
   tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
   //Sixth row
   tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );

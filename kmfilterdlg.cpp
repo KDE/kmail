@@ -247,6 +247,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
       gl->addWidget( mKeySeqWidget, 7, 3, 1, 1);
       mKeySeqWidget->setEnabled( false );
+	  mKeySeqWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
@@ -312,8 +313,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
              this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mKeySeqWidget, SIGNAL( validationHook( const QKeySequence& ) ),
-             this, SLOT( slotValidationHook( const QKeySequence& ) ) );
+    connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
+             this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
              this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
@@ -527,15 +528,13 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
   }
 }
 
-void KMFilterDlg::slotValidationHook( const QKeySequence &newSeq )
+void KMFilterDlg::slotShortcutChanged( const QKeySequence &newSeq )
 {
-  //TODO also check against other unsaved filter shortcuts
-
-  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
-    mKeySeqWidget->denyValidation();
-  else
     if ( mFilter )
+    {
+      mKeySeqWidget->applyStealShortcut();
       mFilter->setShortcut( KShortcut( newSeq ) );
+    }
 }
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )

@@ -81,8 +81,10 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
   connect( mType, SIGNAL( activated( int ) ),
           this, SLOT( slotTypeActivated( int ) ) );
 
-  connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence& ) ),
-           this, SLOT( slotValidationHook( const QKeySequence& ) ) );
+  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
+          this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
+  
+  mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
 
   mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", KIconLoader::Small );
   mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", KIconLoader::Small );
@@ -343,19 +345,16 @@ void CustomTemplates::slotTypeActivated( int index )
   }
 }
 
-void CustomTemplates::slotValidationHook( const QKeySequence &newSeq )
+void CustomTemplates::slotShortcutChanged( const QKeySequence &newSeq )
 {
-  //TODO: check against other unsaved template shortcuts
-
-  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
-    mKeySequenceWidget->denyValidation();
-  else {
     if ( mList->currentItem() )
+    {
       mItemList[ mList->currentItem()->text( 1 ) ]->mShortcut =
           KShortcut( newSeq );
+      mKeySequenceWidget->applyStealShortcut();
+    }
 
     emit changed();
-  }
 }
 
 #include "customtemplates.moc"
