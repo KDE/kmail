@@ -458,11 +458,7 @@ void FavoriteFolderView::readColorConfig()
   FolderTreeBase::readColorConfig();
   // Custom/System color support
   KConfigGroup cg = KMKernel::config()->group( "Reader" );
-  //QColor c = KGlobalSettings::alternateBackgroundColor();
-  QColor c( Qt::yellow );
-#ifdef __GNUC__
-#warning Port me - how to get the alternate background color the KMail way?
-#endif
+  QColor c = palette().alternateBase();
   if ( !cg.readEntry( "defaultColors", true ) )
     mPaintInfo.colBack = cg.readEntry( "AltBackgroundColor", c );
   else
