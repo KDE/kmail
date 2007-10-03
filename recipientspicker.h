@@ -43,7 +43,6 @@ class QWidget;
 #else
 namespace KABC {
 class DistributionList;
-class DistributionListManager;
 }
 #endif
 
@@ -215,10 +214,6 @@ class RecipientsPicker : public QDialog
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
     RecipientsCollection *mSelectedRecipients;
-
-#ifndef KDEPIM_NEW_DISTRLISTS
-    KABC::DistributionListManager *mDistributionListManager;
-#endif
 
     Recipient::Type mDefaultType;
 };
