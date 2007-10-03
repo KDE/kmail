@@ -5,6 +5,7 @@ Comment[mk]=КПошта
 Comment[sv]=Kmail
 Comment[ta]=kஅஞ்சல்
 Comment[x-test]=xxKMailxx
+Comment[zh_TW]=KMail 郵件軟體
 
 [Event/new-mail-arrived]
 Name=New Mail Arrived
@@ -42,6 +43,7 @@ Name[tr]=Yeni E-posta Geldi
 Name[uk]=Отримана нова пошта
 Name[uz]=Янги хат келди
 Name[x-test]=xxNew Mail Arrivedxx
+Name[zh_TW]=新郵件抵達
 Comment=New mail arrived
 Comment[af]=Nuwe pos het gearriveer
 Comment[br]=Deuet eo ur postel nevez
@@ -78,6 +80,7 @@ Comment[tr]=Yeni e-posta geldi
 Comment[uk]=Надійшла нова пошта
 Comment[uz]=Янги хат келди
 Comment[x-test]=xxNew mail arrivedxx
+Comment[zh_TW]=新郵件抵達
 Sound=
 Action=None
 
