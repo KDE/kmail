@@ -256,8 +256,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtonGuiItem( User2, KGuiItem( i18n( "&Load Profile..." ) ) );
   setModal( modal );
 #ifdef Q_OS_UNIX
-  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( K3Icon::Desktop ), IconSize( K3Icon::Desktop ) ),
-                  qApp->windowIcon().pixmap(IconSize( K3Icon::Small ), IconSize( K3Icon::Small ) ) );
+  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ),
+                  qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
 #endif
   addModule ( "kmail_config_identity" );
   addModule ( "kmail_config_accounts" );
@@ -1689,6 +1689,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mFolderListGroup, SIGNAL ( buttonClicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
+  connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  vlay->addWidget( mFavoriteFolderViewCB );
+
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroupBox );
@@ -1718,6 +1722,7 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mMIMETreeLocationGroupBox, mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
+  mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1738,6 +1743,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
+  GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
 }
 
 //
@@ -2415,7 +2421,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Fourth for toolbar icon
   mIconButton = new KIconButton( mTagSettingGroupBox );
   mIconButton->setIconSize( 16 );
-  mIconButton->setIconType( K3Icon::NoGroup, K3Icon::Action );
+  mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
   settings->addWidget( mIconButton, 5, 1 );
 
   QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"),
@@ -2434,9 +2440,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
+  mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
 
-  connect( mKeySequenceWidget, SIGNAL( validationHook( const QKeySequence & ) ),
-           this, SLOT( slotValidationHook( const QKeySequence & ) ) );
+  connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
+		   this, SLOT( slotEmitChangeCheck() ) );
 
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
@@ -2486,16 +2493,6 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 {
   if ( mEmitChanges )
     slotEmitChanged();
-}
-
-void AppearancePage::MessageTagTab::slotValidationHook( const QKeySequence &newSeq )
-{
-  //TODO also check against other unsaved tag shortcuts
-
-  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
-    mKeySequenceWidget->denyValidation();
-  else
-    slotEmitChangeCheck();
 }
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
@@ -2565,6 +2562,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   //Fourth row
   tmp_desc->setIconName( mIconButton->icon() );
   //Fifth row
+  mKeySequenceWidget->applyStealShortcut();
   tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
   //Sixth row
   tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );

@@ -304,7 +304,7 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
     setText( 1, (mtp && !mtp->comment().isEmpty()) ? mtp->comment() : mimetype );
-    setPixmap( 0, mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), K3Icon::Small) : SmallIcon("unknown") );
+    setPixmap( 0, mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") );
   }
 }
 

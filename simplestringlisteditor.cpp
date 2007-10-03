@@ -114,7 +114,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
         "without a Down button??";
     mUpButton = new KPushButton( QString(), this );
     mUpButton->setIcon( KIcon( "go-up" ) );
-    mUpButton->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+    mUpButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
     mUpButton->setAutoDefault( false );
     mUpButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mUpButton );
@@ -128,7 +128,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
         "without an Up button??";
     mDownButton = new KPushButton( QString(), this );
     mDownButton->setIcon( KIcon( "go-down" ) );
-    mDownButton->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+    mDownButton->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
     mDownButton->setAutoDefault( false );
     mDownButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mDownButton );

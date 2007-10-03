@@ -131,7 +131,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   setButtons( Help|Ok|Apply|Cancel );
   setModal( false );
 #ifdef Q_OS_UNIX
-  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)) );
+  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
 #endif
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
@@ -247,6 +247,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
       gl->addWidget( mKeySeqWidget, 7, 3, 1, 1);
       mKeySeqWidget->setEnabled( false );
+	  mKeySeqWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addWidget( mConfigureToolbar, 8, 0, 1, 4 );
       mConfigureToolbar->setEnabled( false );
@@ -258,7 +259,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
 
       mFilterActionIconButton = new KIconButton( hbox );
       mFilterActionLabel->setBuddy( mFilterActionIconButton );
-      mFilterActionIconButton->setIconType( K3Icon::NoGroup, K3Icon::Action, false );
+      mFilterActionIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action, false );
       mFilterActionIconButton->setIconSize( 16 );
       mFilterActionIconButton->setIcon( "gear" );
       mFilterActionIconButton->setEnabled( false );
@@ -312,8 +313,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
              this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mKeySeqWidget, SIGNAL( validationHook( const QKeySequence& ) ),
-             this, SLOT( slotValidationHook( const QKeySequence& ) ) );
+    connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
+             this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
              this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
@@ -527,15 +528,13 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
   }
 }
 
-void KMFilterDlg::slotValidationHook( const QKeySequence &newSeq )
+void KMFilterDlg::slotShortcutChanged( const QKeySequence &newSeq )
 {
-  //TODO also check against other unsaved filter shortcuts
-
-  if( !kmkernel->getKMMainWidget()->shortcutIsValid( newSeq, this ) )
-    mKeySeqWidget->denyValidation();
-  else
     if ( mFilter )
+    {
+      mKeySeqWidget->applyStealShortcut();
       mFilter->setShortcut( KShortcut( newSeq ) );
+    }
 }
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
@@ -601,12 +600,12 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   mBtnUp = new KPushButton( QString(), hb );
   mBtnUp->setAutoRepeat( true );
   mBtnUp->setIcon( KIcon( "go-up" ) );
-  mBtnUp->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+  mBtnUp->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
   mBtnDown = new KPushButton( QString(), hb );
   mBtnDown->setAutoRepeat( true );
   mBtnDown->setIcon( KIcon( "go-down" ) );
-  mBtnDown->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+  mBtnDown->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
   mBtnUp->setToolTip( i18n("Up") );
   mBtnDown->setToolTip( i18n("Down") );
@@ -620,15 +619,15 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   hb->setSpacing(4);
   mBtnNew = new QPushButton( QString(), hb );
   mBtnNew->setIcon( KIcon( "document-new" ) );
-  mBtnNew->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+  mBtnNew->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
   mBtnCopy = new QPushButton( QString(), hb );
   mBtnCopy->setIcon( KIcon( "edit-copy" ) );
-  mBtnCopy->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+  mBtnCopy->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnCopy->setMinimumSize( mBtnCopy->sizeHint() * 1.2 );
   mBtnDelete = new QPushButton( QString(), hb );
   mBtnDelete->setIcon( KIcon( "edit-delete" ) );
-  mBtnDelete->setIconSize( QSize( K3Icon::SizeSmall, K3Icon::SizeSmall ) );
+  mBtnDelete->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
   mBtnNew->setToolTip( i18n("New") );

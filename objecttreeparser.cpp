@@ -659,7 +659,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   if ( !mReader->decryptMessage() ) {
-    QString iconName = KIconLoader::global()->iconPath( "decrypted", K3Icon::Small );
+    QString iconName = KIconLoader::global()->iconPath( "decrypted", KIconLoader::Small );
     decryptedData = "<div style=\"font-size:large; text-align:center;"
                       "padding-top:20pt;\">"
                     + i18n("This message is encrypted.").utf8()
@@ -1785,7 +1785,7 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
     QString href = "file:" + KUrl::toPercentEncoding( dir + QDir::separator() + att->name() );
 
     KMimeType::Ptr mimeType = KMimeType::mimeType( att->mimeTag() );
-    QString iconName = KIconLoader::global()->iconPath( mimeType->iconName(), K3Icon::Desktop );
+    QString iconName = KIconLoader::global()->iconPath( mimeType->iconName(), KIconLoader::Desktop );
 
     htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
                           iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +

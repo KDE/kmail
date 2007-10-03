@@ -76,6 +76,7 @@ namespace KMail {
   class HeaderListQuickSearch;
   class SearchWindow;
   class ImapAccountBase;
+  class FavoriteFolderView;
 }
 
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
@@ -109,6 +110,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView(void) const { return mMsgView; }
     KMFolderTree* folderTree(void) const  { return mFolderTree; }
+  KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
     static void cleanup();
 
@@ -167,12 +169,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMSystemTray *systray() const;
 
     /**
-      Checks a shortcut against the actioncollection and returns whether it
-      is already used and therefor not valid or not.
-      If the shortcut is not valid, a message box is displayed informing the user
-      that the shortcut is already in use.
+      Return the list of all action, in order to check shortcuts conflicts against them.
     */
-    bool shortcutIsValid( const QKeySequence&, QWidget* ) const;
+    QList<QAction*> actionList();
 
     void modifyFolder( KMFolderTreeItem *folderItem );
 
@@ -478,12 +477,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     QString findCurrentImapPath();
 
+  void setupFolderView();
+
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mCreateTodoAction;
+      *mCreateTodoAction, *mFavoritesCheckMailAction;
 
     // Composition actions
     KAction *mPrintAction,
@@ -522,8 +523,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction *mToggleShowQuickSearchAction;
 
     KMFolderTree *mFolderTree;
+    KMail::FavoriteFolderView *mFavoriteFolderView;
+    QWidget      *mFolderView;
+    QSplitter    *mFolderViewParent;
     KMReaderWin  *mMsgView;
     QSplitter    *mPanner1, *mPanner2;
+    QSplitter    *mFolderViewSplitter;
     KMHeaders    *mHeaders;
     KVBox        *mSearchAndHeaders;
     QToolBar     *mSearchToolBar;
@@ -550,6 +555,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
       mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
       mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
+    bool mEnableFavoriteFolderView;
 
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
@@ -570,28 +576,28 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
 #endif
     KActionCollection *mActionCollection;
-    QAction  *mToolbarActionSeparator,
-	     *mMessageTagToolbarActionSeparator;
+    QAction *mToolbarActionSeparator;
+    QAction *mMessageTagToolbarActionSeparator;
     QVBoxLayout *mTopLayout;
     bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
     QHash<QString,FolderShortcutCommand*> mFolderShortcutCommands;
-    QPointer <KMail::FolderJob> mJob;
+    QPointer<KMail::FolderJob> mJob;
 
-   QList<MessageTagPtrPair> mMessageTagMenuActions;
-   QList<QAction*> mMessageTagTBarActions;
-   QSignalMapper *mMessageTagToggleMapper;
+    QList<MessageTagPtrPair> mMessageTagMenuActions;
+    QList<QAction*> mMessageTagTBarActions;
+    QSignalMapper *mMessageTagToggleMapper;
 
     QVector<QString> mCustomTemplates;
     QList<KAction*> mCustomTemplateActions;
 
-    KMSystemTray  *mSystemTray;
+    KMSystemTray *mSystemTray;
     KConfig *mConfig;
     KXMLGUIClient *mGUIClient;
 
-    static QList<KMMainWidget*>* s_mainWidgetList;
+    static QList<KMMainWidget*> *s_mainWidgetList;
     bool mOpenedImapFolder;
 
     Q3Accel *mAccel;

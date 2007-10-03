@@ -20,6 +20,7 @@ using KMail::AccountManager;
 #include "acljobs.h"
 #include "messagecopyhelper.h"
 using KMail::MessageCopyHelper;
+#include "favoritefolderview.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -58,7 +59,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 {
   setObjectName( name );
   init();
-  setPixmap( 0, normalIcon() );
+  setPixmap( 0, normalIcon( iconSize() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -70,7 +71,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 {
   setObjectName( name );
   init();
-  setPixmap( 0, normalIcon() );
+  setPixmap( 0, normalIcon( iconSize() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
 {
   setObjectName( name );
   init();
-  setPixmap( 0, normalIcon() );
+  setPixmap( 0, normalIcon( iconSize() ) );
 }
 
 KMFolderTreeItem::~KMFolderTreeItem()
@@ -108,7 +109,7 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
 QPixmap KMFolderTreeItem::normalIcon(int size) const
 {
   QString icon;
-  if ( (!mFolder && type() == Root) || depth() == 0 ) {
+  if ( (!mFolder && type() == Root) || useTopLevelIcon() ) {
     switch ( protocol() ) {
       case KFolderTreeItem::Imap:
       case KFolderTreeItem::CachedImap:
@@ -146,11 +147,11 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     icon = mFolder->normalIconPath();
   }
   KIconLoader * il = KIconLoader::global();
-  QPixmap pm = il->loadIcon( icon, K3Icon::Small, size,
-                             K3Icon::DefaultState, QStringList(), 0, true );
+  QPixmap pm = il->loadIcon( icon, KIconLoader::Small, size,
+                             KIconLoader::DefaultState, QStringList(), 0, true );
   if ( mFolder && pm.isNull() ) {
-      pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
-                         K3Icon::DefaultState, QStringList(), 0, true );
+      pm = il->loadIcon( mFolder->normalIconPath(), KIconLoader::Small, size,
+                         KIconLoader::DefaultState, QStringList(), 0, true );
   }
 
   return pm;
@@ -160,7 +161,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 {
   QPixmap pm;
 
-  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder()
+  if ( !mFolder || useTopLevelIcon() || mFolder->isSystemFolder()
     || kmkernel->folderIsTrash( mFolder )
     || kmkernel->folderIsTemplates( mFolder )
     || kmkernel->folderIsDraftOrOutbox( mFolder ) )
@@ -168,22 +169,22 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 
   KIconLoader * il = KIconLoader::global();
   if ( mFolder && mFolder->useCustomIcons() ) {
-    pm = il->loadIcon( mFolder->unreadIconPath(), K3Icon::Small, size,
-                       K3Icon::DefaultState, QStringList(), 0, true );
+    pm = il->loadIcon( mFolder->unreadIconPath(), KIconLoader::Small, size,
+                       KIconLoader::DefaultState, QStringList(), 0, true );
     if ( pm.isNull() )
-      pm = il->loadIcon( mFolder->normalIconPath(), K3Icon::Small, size,
-                         K3Icon::DefaultState, QStringList(), 0, true );
+      pm = il->loadIcon( mFolder->normalIconPath(), KIconLoader::Small, size,
+                         KIconLoader::DefaultState, QStringList(), 0, true );
   }
   if ( pm.isNull() ) {
     if ( mFolder && mFolder->noContent() ) {
-      pm = il->loadIcon( "folder_grey_open", K3Icon::Small, size,
-                         K3Icon::DefaultState, QStringList(), 0, true );
+      pm = il->loadIcon( "folder_grey_open", KIconLoader::Small, size,
+                         KIconLoader::DefaultState, QStringList(), 0, true );
     } else {
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
-                         K3Icon::Small, size, K3Icon::DefaultState, QStringList(), 0, true );
+                         KIconLoader::Small, size, KIconLoader::DefaultState, QStringList(), 0, true );
       if ( pm.isNull() )
-        pm = il->loadIcon( "folder-open", K3Icon::Small, size,
-                           K3Icon::DefaultState, QStringList(), 0, true );
+        pm = il->loadIcon( "folder-open", KIconLoader::Small, size,
+                           KIconLoader::DefaultState, QStringList(), 0, true );
     }
   }
 
@@ -197,7 +198,7 @@ void KMFolderTreeItem::init()
 
   setProtocol( protocolFor( mFolder->folderType() ) );
 
-  if ( depth() == 0 )
+  if ( useTopLevelIcon() )
     setType(Root);
   else {
     if ( mFolder == kmkernel->inboxFolder() )
@@ -227,17 +228,18 @@ void KMFolderTreeItem::init()
   if ( !mFolder->isSystemFolder() )
     setRenameEnabled( 0, false );
 
-  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
-  tree->insertIntoFolderToItemMap( mFolder, this );
+  KMFolderTree* tree = dynamic_cast<KMFolderTree*>( listView() );
+  if ( tree )
+    tree->insertIntoFolderToItemMap( mFolder, this );
 }
 
 void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
   // adjust the icons if the folder is now newly unread or
   // now newly not-unread
   if ( newUnreadCount != 0 && unreadCount() == 0 )
-    setPixmap( 0, unreadIcon() );
+    setPixmap( 0, unreadIcon( iconSize() ) );
   if ( unreadCount() != 0 && newUnreadCount == 0 )
-    setPixmap( 0, normalIcon() );
+    setPixmap( 0, normalIcon( iconSize() ) );
 
   setUnreadCount( newUnreadCount );
 }
@@ -250,9 +252,9 @@ void KMFolderTreeItem::slotIconsChanged()
       setType( kmkernel->iCalIface().folderType(mFolder) );
 
   if ( unreadCount() > 0 )
-    setPixmap( 0, unreadIcon() );
+    setPixmap( 0, unreadIcon( iconSize() ) );
   else
-    setPixmap( 0, normalIcon() );
+    setPixmap( 0, normalIcon( iconSize() ) );
   emit iconChanged( this );
   repaint();
 }
@@ -315,7 +317,7 @@ void KMFolderTreeItem::properties()
   if ( !mFolder )
     return;
 
-  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  KMail::FolderTreeBase* tree = static_cast<KMail::FolderTreeBase*>( listView() );
   tree->mainWidget()->modifyFolder( this );
   //Nothing here the above may actually delete this KMFolderTreeItem
 }
@@ -328,7 +330,7 @@ void KMFolderTreeItem::assignShortcut()
 
   KMail::FolderShortcutDialog *shorty =
     new KMail::FolderShortcutDialog( mFolder,
-              static_cast<KMFolderTree *>( listView() )->mainWidget(),
+              kmkernel->getKMMainWidget(),
               listView() );
   shorty->exec();
   return;
@@ -340,7 +342,7 @@ void KMFolderTreeItem::assignShortcut()
 
 KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
                             const char *name )
-  : KFolderTree( parent, name )
+  : KMail::FolderTreeBase( mainWidget, parent, name )
 {
   oldSelected = 0;
   oldCurrent = 0;
@@ -435,48 +437,6 @@ void KMFolderTree::connectSignals()
            this, SLOT( slotRenameFolder( Q3ListViewItem*, int, const QString &)));
 
   connect( this, SIGNAL(folderSelected(KMFolder*)), SLOT(updateCopyActions()) );
-}
-
-//-----------------------------------------------------------------------------
-bool KMFolderTree::event(QEvent *e)
-{
-  if (e->type() == QEvent::ApplicationPaletteChange)
-  {
-     readColorConfig();
-     return true;
-  }
-  return K3ListView::event(e);
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::readColorConfig (void)
-{
-  // Custom/System color support
-  KConfigGroup conf( KMKernel::config(), "Reader" );
-  QColor c1=QColor(qApp->palette().color( QPalette::Text ));
-  QColor c2=QColor("blue");
-  QColor c4=QColor(qApp->palette().color( QPalette::Base ));
-  QColor c5=QColor("red");
-
-  if (!conf.readEntry( "defaultColors", true ) ) {
-    mPaintInfo.colFore = conf.readEntry( "ForegroundColor",
-                                        c1);
-    mPaintInfo.colUnread = conf.readEntry( "UnreadMessage",
-                                        c2);
-    mPaintInfo.colBack = conf.readEntry( "BackgroundColor",
-                                        c4 );
-    mPaintInfo.colCloseToQuota = conf.readEntry("CloseToQuotaColor", QColor( Qt::red ));
-  }
-  else {
-    mPaintInfo.colFore = c1;
-    mPaintInfo.colUnread = c2;
-    mPaintInfo.colBack = c4;
-    mPaintInfo.colCloseToQuota = c5;
-  }
-  QPalette newPal = qApp->palette();
-  newPal.setColor( QPalette::Base, mPaintInfo.colBack );
-  newPal.setColor( QPalette::Text, mPaintInfo.colFore );
-  setPalette( newPal );
 }
 
 //-----------------------------------------------------------------------------
@@ -747,6 +707,12 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       if ( kmkernel->iCalIface().hideResourceFolder( folder ) )
         // It is
         continue;
+
+      // hide local inbox if unused
+      if ( kmkernel->inboxFolder() == folder && hideLocalInbox() ) {
+        connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)), SLOT(slotUnhideLocalInbox()) );
+        continue;
+      }
 
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
@@ -1121,11 +1087,17 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
       folderMenu->addAction( mMainWidget->action("compact") );
 
-      folderMenu->addSeparator();
-      folderMenu->addAction( mMainWidget->action("empty") );
-      if ( !fti->folder()->isSystemFolder() )
-        folderMenu->addAction( mMainWidget->action("delete_folder") );
-      folderMenu->addSeparator();
+      if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
+        folderMenu->insertItem( SmallIconSet("bookmark_add"), i18n("Add to Favorite Folders"),
+                                this, SLOT(slotAddToFavorites()) );
+      }
+
+      folderMenu->insertSeparator();
+      folderMenu->addAction(mMainWidget->action("empty"));
+      if ( !fti->folder()->isSystemFolder() ) {
+        folderMenu->addAction(mMainWidget->action("delete_folder"));
+      }
+      folderMenu->insertSeparator();
     }
   }
 
@@ -1384,15 +1356,6 @@ void KMFolderTree::cleanupConfigFile()
 
 
 //-----------------------------------------------------------------------------
-// Drag and Drop handling -- based on the Troll Tech dirview example
-
-enum {
-  DRAG_COPY = 0,
-  DRAG_MOVE = 1,
-  DRAG_CANCEL = 2
-};
-
-//-----------------------------------------------------------------------------
 void KMFolderTree::openFolder()
 {
     autoopen_timer.stop();
@@ -1490,46 +1453,25 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     Q3ListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-    int action = -1;
+
     // Check that each pointer is not null
     for ( QList<QPointer<KMFolder> >::ConstIterator it = mCopySourceFolders.constBegin();
-	  it != mCopySourceFolders.constEnd(); ++it ) {
+          it != mCopySourceFolders.constEnd(); ++it ) {
       if ( ! (*it) ) {
-	fti = 0;
-	break;
+        fti = 0;
+        break;
       }
     }
-    if (fti && mCopySourceFolders.count() == 1)
-    {
+
+    if (fti && mCopySourceFolders.count() == 1) {
       KMFolder *source = mCopySourceFolders.first();
       // if we are dragging to ourselves or to our parent, set fti to 0 so nothing is done
-      if (source == fti->folder() || source->parent()->owner() == fti->folder()) fti = 0;
+      if (source == fti->folder() || source->parent()->owner() == fti->folder())
+        fti = 0;
     }
-    if ( fti && acceptDrag(e) && ( fti != oldSelected || e->source() == mMainWidget->headers()->viewport() ) )
-    {
-      //First, determine if we want to copy or to move the dropped contents
-      int keybstate = qApp->keyboardModifiers();
-      if ( keybstate & Qt::ControlModifier ) {
-        action = DRAG_COPY;
-      } else if ( keybstate & Qt::ShiftModifier ) {
-        action = DRAG_MOVE;
-      } else {
-        if ( GlobalSettings::self()->showPopupAfterDnD() || e->provides("application/x-qlistviewitem") ) {
-          KMenu *menu = new KMenu( this );
-          const QAction *dragMove = menu->addAction( i18n("&Move Here") );
-          const QAction *dragCopy = menu->addAction( SmallIcon("edit-copy"), i18n("&Copy Here") );
-          menu->addSeparator();
-          menu->addAction( SmallIcon("cancel"), i18n("C&ancel") );
-          const QAction *selectedAction = menu->exec( QCursor::pos() );
-          if ( selectedAction == dragMove )
-            action = DRAG_MOVE;
-          else if ( selectedAction == dragCopy )
-            action = DRAG_COPY;
-        }
-        else
-          action = DRAG_MOVE;
-      }
 
+    if ( fti && acceptDrag(e) && ( fti != oldSelected || e->source() == mMainWidget->headers()->viewport() ) ) {
+      int action = dndMode( e->provides("application/x-qlistviewitem") /* always ask */ );
       //If the dropped content is a folder, move/copy the folder
       if ( e->provides("application/x-qlistviewitem") ) {
         if ( (action == DRAG_COPY || action == DRAG_MOVE) && !mCopySourceFolders.isEmpty() ) {
@@ -1540,10 +1482,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
           }
           moveOrCopyFolder( mCopySourceFolders, fti->folder(), (action == DRAG_MOVE) );
         }
-      }
+      } else {
 
-      //If the dropped content are messages, move/copy the messages
-      else {
+        //If the dropped content are messages, move/copy the messages
         if ( e->source() == mMainWidget->headers()->viewport() ) {
           // KMHeaders does copy/move itself
           if ( action == DRAG_MOVE && fti->folder() )
@@ -2215,6 +2156,21 @@ void KMFolderTree::updateCopyActions()
     paste->setEnabled( false );
   else
     paste->setEnabled( true );
+}
+
+void KMFolderTree::slotAddToFavorites()
+{
+  KMail::FavoriteFolderView *favView = mMainWidget->favoriteFolderView();
+  assert( favView );
+  foreach ( const QPointer<KMFolder> &f, selectedFolders() )
+    favView->addFolder( f );
+}
+
+void KMFolderTree::slotUnhideLocalInbox()
+{
+  disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+              this, SLOT(slotUnhideLocalInbox()) );
+  reload();
 }
 
 #include "kmfoldertree.moc"

@@ -496,6 +496,7 @@ private: // data
   QGroupBox     *mMIMETreeModeGroupBox;
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
+  QCheckBox     *mFavoriteFolderViewCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
@@ -621,9 +622,6 @@ private slots:
   /*Transfers changes in the tag name edit box to the list box for tags. Private
   since calling externally decouples the name in the list box from name edit box*/
   void slotNameLineTextChanged( const QString & );
-  /*Processes the shortcut button, OnurTodo is private needed? */
-  void slotValidationHook( const QKeySequence &newSeq );
-
 
 private:
   virtual void doLoadFromGlobalSettings();

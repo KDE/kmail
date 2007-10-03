@@ -83,20 +83,16 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mKeySeqWidget->setKeySequence( folder->shortcut().primary(),
                                  KKeySequenceWidget::NoValidate );
+  mKeySeqWidget->setCheckActionList(mMainWidget->actionList());
 }
 
 FolderShortcutDialog::~FolderShortcutDialog()
 {
 }
 
-void FolderShortcutDialog::slotValidationHook( const QKeySequence &newSeq )
-{
-    if( !mMainWidget->shortcutIsValid( newSeq, this ) )
-      mKeySeqWidget->denyValidation();
-}
-
 void FolderShortcutDialog::slotOk()
 {
+  mKeySeqWidget->applyStealShortcut();
   mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) );
 }
 

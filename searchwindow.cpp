@@ -101,9 +101,9 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 
   QPixmap pixmap;
   if( mailList.count() == 1 )
-    pixmap = QPixmap( DesktopIcon("message", K3Icon::SizeSmall) );
+    pixmap = QPixmap( DesktopIcon("message", KIconLoader::SizeSmall) );
   else
-    pixmap = QPixmap( DesktopIcon("kmultiple", K3Icon::SizeSmall) );
+    pixmap = QPixmap( DesktopIcon("kmultiple", KIconLoader::SizeSmall) );
 
   drag->setPixmap( pixmap );
   drag->exec( supportedActions );
@@ -127,7 +127,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
 #ifdef Q_OS_UNIX
-  KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(K3Icon::Desktop),IconSize(K3Icon::Desktop)), qApp->windowIcon().pixmap(IconSize(K3Icon::Small),IconSize(K3Icon::Small)));
+  KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)));
 #endif
 
   KConfig* config = KMKernel::config();

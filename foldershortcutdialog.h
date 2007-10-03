@@ -58,7 +58,6 @@ public:
 
 protected slots:
   void slotOk();
-  void slotValidationHook( const QKeySequence &newSeq );
 
 private:
   KMFolder *mFolder;

@@ -44,6 +44,8 @@ set(kmailprivate_LIB_SRCS
    kmfolderdialog.cpp
    kmfoldertree.cpp
    kmfoldercombobox.cpp
+   foldertreebase.cpp
+   favoritefolderview.cpp
    kmaccount.cpp
    kmheaders.cpp
    headeritem.cpp

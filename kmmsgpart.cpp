@@ -330,7 +330,7 @@ QString KMMessagePart::iconName() const
   }
 
   fileName =
-    KIconLoader::global()->iconPath( fileName, K3Icon::Desktop );
+    KIconLoader::global()->iconPath( fileName, KIconLoader::Desktop );
   return fileName;
 }
 
