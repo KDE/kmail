@@ -302,7 +302,11 @@ protected:
   AccountManager*    mOwner;
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer;
-  int mInterval;
+  int mInterval; // this is a switch and a scalar at the same time. If it is 0,
+  // interval mail checking is turned off and the interval spinbox proposes a 
+  // default value. If it is non-null, it is the count of minutes between two
+  // automated mail checks. This means that as soon as you disable interval 
+  // mail checking, the value in the spin box returns to a default value.
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;

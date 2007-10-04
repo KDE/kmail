@@ -54,4 +54,6 @@ private:
 
 };
 
+const int defaultmailcheckintervalmin=5; // check for mail every X minutes 
+
 #endif /* KMAIL_GLOBALSETTINGS_H */

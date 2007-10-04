@@ -433,7 +433,7 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
   mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
-  mLocal.intervalSpin->setValue( 1 );
+  mLocal.intervalSpin->setValue( defaultmailcheckintervalmin );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
 
   label = new QLabel( i18n("&Destination folder:"), page );
@@ -526,7 +526,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalSpin = new KIntNumInput( page );
   mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
   mMaildir.intervalSpin->setSuffix( i18n(" min") );
-  mMaildir.intervalSpin->setValue( 1 );
+  mMaildir.intervalSpin->setValue( defaultmailcheckintervalmin );
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
   topLayout->addWidget( mMaildir.intervalSpin, 6, 1 );
 
@@ -723,7 +723,7 @@ void AccountDialog::makePopAccountPage()
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
   mPop.intervalSpin->setSuffix( i18n(" min") );
-  mPop.intervalSpin->setValue( 1 );
+  mPop.intervalSpin->setValue( defaultmailcheckintervalmin );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
   grid->addWidget( mPop.intervalSpin, 13, 1 );
 
@@ -1033,7 +1033,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
   mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1, FALSE );
-  mImap.intervalSpin->setValue( 1 );
+  mImap.intervalSpin->setValue( defaultmailcheckintervalmin );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
   grid->addWidget( mImap.intervalSpin, row, 1 );
@@ -1141,7 +1141,8 @@ void AccountDialog::setupSettings()
     else if (acctLocal->lockType() == lock_none)
       mLocal.lockNone->setChecked(true);
 
-    mLocal.intervalSpin->setValue( QMAX(1, interval) );
+    if ( interval <= 0 ) mLocal.intervalSpin->setValue( defaultmailcheckintervalmin );
+    else mLocal.intervalSpin->setValue( interval );
     mLocal.intervalCheck->setChecked( interval >= 1 );
 #if 0
     mLocal.resourceCheck->setChecked( mAccount->resource() );
@@ -1179,7 +1180,8 @@ void AccountDialog::setupSettings()
     mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
     mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
-    mPop.intervalSpin->setValue( QMAX(1, interval) );
+    if ( interval <= 0 ) mPop.intervalSpin->setValue( defaultmailcheckintervalmin );
+    else mPop.intervalSpin->setValue( interval );
 #if 0
     mPop.resourceCheck->setChecked( mAccount->resource() );
 #endif
@@ -1232,13 +1234,13 @@ void AccountDialog::setupSettings()
     mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
     mImap.includeInCheck->setChecked( !ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    if ( interval <= 0 ) mImap.intervalSpin->setValue( defaultmailcheckintervalmin );
+    else mImap.intervalSpin->setValue( interval );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
@@ -1284,10 +1286,9 @@ void AccountDialog::setupSettings()
     mImap.locallySubscribedFoldersCheck->setChecked( ai.onlyLocallySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    if ( interval <= 0 ) mImap.intervalSpin->setValue( defaultmailcheckintervalmin );
+    else mImap.intervalSpin->setValue( interval );
     mImap.includeInCheck->setChecked( !ai.checkExclude() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
@@ -1324,7 +1325,8 @@ void AccountDialog::setupSettings()
     mMaildir.nameEdit->setFocus();
     mMaildir.locationEdit->setEditText( acctMaildir->location() );
 
-    mMaildir.intervalSpin->setValue( QMAX(1, interval) );
+    if ( interval <= 0 ) mMaildir.intervalSpin->setValue( defaultmailcheckintervalmin );
+    else mMaildir.intervalSpin->setValue( interval );
     mMaildir.intervalCheck->setChecked( interval >= 1 );
 #if 0
     mMaildir.resourceCheck->setChecked( mAccount->resource() );
