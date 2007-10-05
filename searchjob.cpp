@@ -89,7 +89,7 @@ void SearchJob::searchCompleteFolder()
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int) 'E' << url;
-  KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+  KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
       SLOT(slotSearchData(KJob*,const QString&,const QString&)) );
@@ -381,7 +381,7 @@ void SearchJob::searchSingleMessage()
     QByteArray packedArgs;
     QDataStream stream( &packedArgs, QIODevice::WriteOnly );
     stream << (int) 'E' << url;
-    KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+    KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
         SLOT(slotSearchDataSingleMessage(KJob*,const QString&,const QString&)) );

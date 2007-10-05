@@ -262,7 +262,7 @@ void KMFolderImap::remove()
     emit removed(folder(), false);
     return;
   }
-  KIO::SimpleJob *job = KIO::file_delete(url, false);
+  KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd(url.url());
   jd.progressItem = ProgressManager::createProgressItem(
@@ -1110,7 +1110,7 @@ void KMFolderImap::checkValidity()
   }
   open( "checkvalidity" );
   ImapAccountBase::jobData jd( url.url() );
-  KIO::SimpleJob *job = KIO::get( url, false, false );
+  KIO::SimpleJob *job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( account()->slave(), job );
   account()->insertJob( job, jd );
   connect( job, SIGNAL( result( KJob * ) ),
@@ -1283,7 +1283,7 @@ void KMFolderImap::reallyGetFolder( const QString &startUid )
       mMailCheckProgressItem->setStatus( i18n("Retrieving message status") );
     }
     url.setPath( imapPath() + ";SECTION=UID FLAGS" );
-    KIO::SimpleJob *job = KIO::listDir( url, false );
+    KIO::SimpleJob *job = KIO::listDir( url, KIO::HideProgressInfo );
     open( "listfolder" );
     KIO::Scheduler::assignJobToSlave( account()->slave(), job );
     ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1302,7 +1302,7 @@ void KMFolderImap::reallyGetFolder( const QString &startUid )
     }
     url.setPath( imapPath() + ";UID=" + startUid + ":*;SECTION=ENVELOPE" );
     kDebug(5006) << folder()->name() <<" download" << url;
-    KIO::SimpleJob *newJob = KIO::get( url, false, false );
+    KIO::SimpleJob *newJob = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     KIO::Scheduler::assignJobToSlave( account()->slave(), newJob );
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
@@ -1421,7 +1421,7 @@ void KMFolderImap::slotListFolderResult( KJob *job )
     mContentState = imapDownloadInProgress;
     KUrl url = account()->getUrl();
     url.setPath( imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE" );
-    KIO::SimpleJob *newJob = KIO::get( url, false, false );
+    KIO::SimpleJob *newJob = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     kDebug(5006) << folder()->name() <<" download" << url;
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave( account()->slave(), newJob );
@@ -1872,7 +1872,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   url.setPath(msg_parent->imapPath() + ";UID=" + QString::number(uid) );
   if ( account()->makeConnection() != ImapAccountBase::Connected )
     return;
-  KIO::SimpleJob *job = KIO::file_delete(url, false);
+  KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
   account()->insertJob(job, jd);
@@ -1905,7 +1905,7 @@ void KMFolderImap::deleteMessage(const QList<KMMessage*>& msgList)
     url.setPath(msg_parent->imapPath() + ";UID=" + uid);
     if ( account()->makeConnection() != ImapAccountBase::Connected )
       return;
-    KIO::SimpleJob *job = KIO::file_delete(url, false);
+    KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
     KIO::Scheduler::assignJobToSlave(account()->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
     account()->insertJob(job, jd);
@@ -2118,7 +2118,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
   url.setPath(aFolder->imapPath() + ";UID=*");
   if ( account()->makeConnection() != ImapAccountBase::Connected )
     return;
-  KIO::SimpleJob *job = KIO::file_delete(url, false);
+  KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
   jd.quiet = quiet;
@@ -2180,7 +2180,7 @@ bool KMFolderImap::processNewMail(bool)
               false,
               account()->useSSL() || account()->useTLS() );
 
-  KIO::SimpleJob *job = KIO::stat(url, false);
+  KIO::SimpleJob *job = KIO::stat(url, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd(url.url(), folder() );
   jd.cancellable = true;
@@ -2284,7 +2284,7 @@ int KMFolderImap::expungeContents()
   url.setPath( imapPath() + ";UID=1:*");
   if ( account()->makeConnection() == ImapAccountBase::Connected )
   {
-    KIO::SimpleJob *job = KIO::file_delete(url, false);
+    KIO::SimpleJob *job = KIO::file_delete(url, KIO::HideProgressInfo);
     KIO::Scheduler::assignJobToSlave(account()->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
     jd.quiet = true;

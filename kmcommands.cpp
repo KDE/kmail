@@ -640,7 +640,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
         != KMessageBox::Continue)
       return Canceled;
   }
-  KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, true);
+  KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, KIO::Overwrite);
   connect(job, SIGNAL(result(KJob*)), SLOT(slotUrlSaveResult(KJob*)));
   setEmitsCompletedItself( true );
   return OK;
@@ -827,7 +827,7 @@ KUrl KMSaveMsgCommand::url()
 
 KMCommand::Result KMSaveMsgCommand::execute()
 {
-  mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, false, false );
+  mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR );
 #warning Port me!
 //  mJob->slotTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
@@ -947,7 +947,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
         == KMessageBox::Continue) {
         mOffset = 0;
 
-        mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, true, false );
+        mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, KIO::Overwrite );
 #warning Port me!
 //        mJob->slotTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
@@ -994,7 +994,7 @@ KMCommand::Result KMOpenMsgCommand::execute()
     setDeletesItself( false );
     return Canceled;
   }
-  mJob = KIO::get( mUrl, false, false );
+  mJob = KIO::get( mUrl, KIO::NoReload, KIO::HideProgressInfo );
   mJob->setReportDataSent( true );
   connect( mJob, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
            this, SLOT( slotDataArrived( KIO::Job*, const QByteArray & ) ) );
@@ -3146,7 +3146,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
     return;
 
   d.setDisabled( true ); // we got this far, don't delete yet
-  KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
+  KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, KIO::Overwrite );
   uploadJob->ui()->setWindow( parentWidget() );
   connect( uploadJob, SIGNAL(result(KJob*)),
            this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KJob*)) );
