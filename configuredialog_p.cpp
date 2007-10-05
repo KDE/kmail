@@ -40,7 +40,7 @@
 
 
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
-				      QWidget *parent )
+                                      QWidget *parent )
   : KDialog( parent )
 {
   setCaption( i18n("New Identity") );
@@ -100,9 +100,9 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   // enable/disable combobox and label depending on the third radio
   // button's state:
   connect( radio, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
   connect( radio, SIGNAL(toggled(bool)),
-	   mComboBox, SLOT(setEnabled(bool)) );
+           mComboBox, SLOT(setEnabled(bool)) );
 
   enableButtonOk( false ); // since line edit is empty
 }
@@ -110,8 +110,8 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
   int id = mButtonGroup->checkedId();
   assert( id == (int)Empty
-	  || id == (int)ControlCenter
-	  || id == (int)ExistingEntry );
+          || id == (int)ControlCenter
+          || id == (int)ExistingEntry );
   return static_cast<DuplicateMode>( id );
 }
 
@@ -190,7 +190,7 @@ QSize ListView::sizeHint() const
 static QString flagPng = QString::fromLatin1("/flag.png");
 
 NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
-				      QWidget *parent )
+                                      QWidget *parent )
   : KDialog( parent )
 {
   setCaption( i18n("New Language") );
@@ -213,12 +213,12 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   // extract a list of language tags that should not be included:
   QStringList suppressedAcronyms;
   for ( LanguageItemList::Iterator lit = suppressedLangs.begin();
-	lit != suppressedLangs.end(); ++lit )
+        lit != suppressedLangs.end(); ++lit )
     suppressedAcronyms << (*lit).mLanguage;
 
   // populate the combo box:
   for ( QStringList::ConstIterator it = pathList.begin();
-	it != pathList.end(); ++it )
+        it != pathList.end(); ++it )
   {
     KConfig entry( *it, KConfig::OnlyLocal);
     KConfigGroup group( &entry, "KCM Locale" );
@@ -231,7 +231,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
     if ( !suppressedAcronyms.contains( acronym )  ) {
       // not found:
       QString displayname = QString::fromLatin1("%1 (%2)")
-	.arg( name ).arg( acronym );
+          .arg( name ).arg( acronym );
       QPixmap flag( KStandardDirs::locate("locale", acronym + flagPng ) );
       mComboBox->addItem( flag, displayname );
     }
@@ -312,23 +312,22 @@ ProfileDialog::ProfileDialog( QWidget * parent )
   mListView->setRootIsDecorated( false );
   mListView->setSelectionMode( QAbstractItemView::SingleSelection );
 
-  QLabel *l = new QLabel(
-			       i18n("&Select a profile and click 'OK' to "
-				    "load its settings:"), page );
-	l->setBuddy( mListView );
-	vlay->addWidget( l );
+  QLabel *l = new QLabel( i18n("&Select a profile and click 'OK' to "
+                               "load its settings:"), page );
+  l->setBuddy( mListView );
+  vlay->addWidget( l );
   vlay->addWidget( mListView, 1 );
 
   setup();
 
   connect( mListView, SIGNAL(itemSelectionChanged()),
-	   SLOT(slotSelectionChanged()) );
+           SLOT(slotSelectionChanged()) );
   /* FIXME The dialog does not close when double click an item, but 
    * the profile is selected. If the user clicks on Cancel after double
    * click he has changed the profile.
    */
   //connect( mListView, SIGNAL(itemDoubleClicked ( QTreeWidgetItem*, int ) ),
-	//   SLOT(slotOk()) );
+  //   SLOT(slotOk()) );
 
   connect( this, SIGNAL(finished()), SLOT(deleteLater()) );
   connect( this, SIGNAL(okClicked()), SLOT( slotOk() ) );
@@ -347,25 +346,25 @@ void ProfileDialog::setup() {
   const QString profileFilenameFilter = QString::fromLatin1("kmail/profile-*-rc");
   mProfileList = KGlobal::dirs()->findAllResources( "data", profileFilenameFilter );
 
-  kDebug(5006) <<"Profile manager: found" << mProfileList.count()
-		<< "profiles:";
+  kDebug(5006) << "Profile manager: found" << mProfileList.count()
+               << "profiles:";
 
   // build the list and populate the list view:
   QTreeWidgetItem * listItem = 0;
   for ( QStringList::const_iterator it = mProfileList.begin() ;
-	it != mProfileList.end() ; ++it ) {
+        it != mProfileList.end() ; ++it ) {
     KConfig _profile( *it, KConfig::NoGlobals  );
     KConfigGroup profile(&_profile, "KMail Profile");
     QString name = profile.readEntry( "Name" );
     if ( name.isEmpty() ) {
-      kWarning(5006) <<"File \"" << (*it)
-		      << "\" doesn't provide a profile name!";
+      kWarning(5006) << "File \"" << (*it)
+                     << "\" doesn't provide a profile name!";
       name = i18nc("Missing profile name placeholder","Unnamed");
     }
     QString desc = profile.readEntry( "Comment" );
     if ( desc.isEmpty() ) {
-      kWarning(5006) <<"File \"" << (*it)
-		      << "\" doesn't provide a description!";
+      kWarning(5006) << "File \"" << (*it)
+                     << "\" doesn't provide a description!";
       desc = i18nc("Missing profile description placeholder","Not available");
     }
     listItem = new QTreeWidgetItem( mListView, listItem );
@@ -402,7 +401,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWid
 void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title ) {
   mTabWidget->addTab( tab, title );
   connect( tab, SIGNAL(changed( bool )),
-	        this, SIGNAL(changed( bool )) );
+           this, SIGNAL(changed( bool )) );
 }
 
 void ConfigModuleWithTabs::load() {
