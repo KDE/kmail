@@ -1088,16 +1088,16 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addAction( mMainWidget->action("compact") );
 
       if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
-        folderMenu->insertItem( SmallIconSet("bookmark_add"), i18n("Add to Favorite Folders"),
-                                this, SLOT(slotAddToFavorites()) );
+        folderMenu->addAction( KIcon("bookmark-new"), i18n("Add to Favorite Folders"),
+                               this, SLOT(slotAddToFavorites()) );
       }
 
-      folderMenu->insertSeparator();
+      folderMenu->addSeparator();
       folderMenu->addAction(mMainWidget->action("empty"));
       if ( !fti->folder()->isSystemFolder() ) {
         folderMenu->addAction(mMainWidget->action("delete_folder"));
       }
-      folderMenu->insertSeparator();
+      folderMenu->addSeparator();
     }
   }
 
@@ -1109,7 +1109,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     folderMenu->addAction(KIcon("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
-    folderMenu->insertItem(SmallIcon("bookmark_folder"),
+    folderMenu->addAction(SmallIcon("bookmark_folder"),
         i18n("Local Subscription..."), mMainWidget,
         SLOT(slotLocalSubscriptionDialog()));
 
@@ -1415,10 +1415,10 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                 case Qt::CopyAction:
                 break;
                 case Qt::MoveAction:
-                e->acceptAction();
+                e->acceptProposedAction();
                 break;
                 case Qt::LinkAction:
-                e->acceptAction();
+                e->acceptProposedAction();
                 break;
                 default:
                 ;
