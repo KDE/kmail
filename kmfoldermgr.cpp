@@ -314,7 +314,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
       know_type = true;
       KConfig *config = KMKernel::config();
       KConfigGroup group(config, "General");
-      if (config->hasKey("default-mailbox-format"))
+      if (group.hasKey("default-mailbox-format"))
       {
         if ( group.readEntry("default-mailbox-format", 1 ) == 0 )
           type = KMFolderTypeMbox;

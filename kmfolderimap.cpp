@@ -224,8 +224,8 @@ void KMFolderImap::readConfig()
   }
   mNoContent = group.readEntry( "NoContent", false );
   mReadOnly = group.readEntry( "ReadOnly", false );
-  mUploadAllFlags = config->readEntry( "UploadAllFlags", true );
-  mPermanentFlags = config->readEntry( "PermanentFlags", 31 /* default flags */ );
+  mUploadAllFlags = group.readEntry( "UploadAllFlags", true );
+  mPermanentFlags = group.readEntry( "PermanentFlags", 31 /* default flags */ );
 
   KMFolderMbox::readConfig();
 }

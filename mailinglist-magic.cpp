@@ -5,6 +5,7 @@
 #include "kmmessage.h"
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kurl.h>
 #include <kdebug.h>
 
