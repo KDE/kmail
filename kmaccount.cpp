@@ -86,7 +86,7 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mOwner(aOwner),
     mFolder(0),
     mTimer(0),
-    mInterval(defaultmailcheckintervalmin),
+    mInterval(0),
     mExclude(false),
     mCheckingMail(false),
     mPrecommandSuccess(true),
@@ -100,7 +100,7 @@ void KMAccount::init() {
   mTrash = kmkernel->trashFolder()->idString();
   mExclude = false;
   // when creating a new account, mail checking interval shall be default
-  mInterval = defaultmailcheckintervalmin;
+  mInterval = 0;
   mNewInFolder.clear();
 }
 
@@ -145,7 +145,7 @@ void KMAccount::readConfig(KConfig& config)
   mFolder = 0;
   folderName = config.readEntry("Folder");
   // if check-interval has been deleted from kmailrc, it shall be default
-  setCheckInterval(config.readNumEntry("check-interval", defaultmailcheckintervalmin));
+  setCheckInterval(config.readNumEntry("check-interval", 0));
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readPathEntry("precommand"));
