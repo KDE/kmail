@@ -594,7 +594,7 @@ void IdentityPage::slotSetAsDefault()
   }
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  im->setAsDefault( item->identity().identityName() );
+  im->setAsDefault( item->identity().uoid() );
   refreshList();
 }
 
