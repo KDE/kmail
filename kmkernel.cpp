@@ -334,10 +334,11 @@ void KMKernel::openReader( bool onlyCheck )
   KMainWindow *ktmw = 0;
   kDebug(5006) <<"KMKernel::openReader called";
 
-  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
-       it != KMainWindow::memberList().end(); ++it ) {
-    if ( ::qobject_cast<KMMainWin *>(*it) ) {
-      ktmw = (*it);
+  foreach ( KMainWindow *window, KMainWindow::memberList() )
+  {
+    if ( ::qobject_cast<KMMainWin *>( window ) )
+    {
+      ktmw = window;
       break;
     }
   }
