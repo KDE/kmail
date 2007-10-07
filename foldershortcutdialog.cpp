@@ -78,8 +78,6 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
   mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
-  connect( mKeySeqWidget, SIGNAL( validationHook ( const QKeySequence & ) ),
-           this, SLOT( slotValidationHook ( const QKeySequence & ) ) );
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
   mKeySeqWidget->setKeySequence( folder->shortcut().primary(),
                                  KKeySequenceWidget::NoValidate );
