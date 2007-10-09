@@ -44,7 +44,7 @@ KIO::SimpleJob* AnnotationJobs::setAnnotation(
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'M' << (int)'S' << url << entry << attributes;
 
-  KIO::SimpleJob* job = KIO::special( url, packedArgs, false );
+  KIO::SimpleJob* job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }

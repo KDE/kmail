@@ -164,7 +164,7 @@ void CachedImapJob::listMessages()
   KUrl url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";UID=1:*;SECTION=FLAGS RFC822.SIZE");
 
-  KIO::SimpleJob *job = KIO::get(url, false, false);
+  KIO::SimpleJob *job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.cancellable = true;
@@ -205,7 +205,7 @@ void CachedImapJob::slotDeleteNextMessages( KJob* job )
   url.setPath( mFolder->imapPath() +
                QString::fromLatin1(";UID=%1").arg(uids) );
 
-  KIO::SimpleJob *simpleJob = KIO::file_delete( url, false );
+  KIO::SimpleJob *simpleJob = KIO::file_delete( url, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( simpleJob, jd );
@@ -219,7 +219,7 @@ void CachedImapJob::expungeFolder()
   // Special URL that means EXPUNGE
   url.setPath( mFolder->imapPath() + QString::fromLatin1(";UID=*") );
 
-  KIO::SimpleJob *job = KIO::file_delete( url, false );
+  KIO::SimpleJob *job = KIO::file_delete( url, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( job, jd );
@@ -315,7 +315,7 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.cancellable = true;
   mMsg->setTransferInProgress(true);
-  KIO::SimpleJob *simpleJob = KIO::get(url, false, false);
+  KIO::SimpleJob *simpleJob = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect(simpleJob, SIGNAL(processedSize(KJob *, qulonglong)),
@@ -387,7 +387,7 @@ void CachedImapJob::slotPutNextMessage()
   jd.msgList.append( mMsg );
 
   mMsg->setTransferInProgress(true);
-  KIO::SimpleJob *simpleJob = KIO::put(url, 0, false, false, false);
+  KIO::SimpleJob *simpleJob = KIO::put(url, 0, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect( simpleJob, SIGNAL( result(KJob *) ),
@@ -579,7 +579,7 @@ void CachedImapJob::slotDeleteNextFolder( KJob *job )
   url.setPath(folderPath);
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.path = url.path();
-  KIO::SimpleJob *simpleJob = KIO::file_delete(url, false);
+  KIO::SimpleJob *simpleJob = KIO::file_delete(url, KIO::HideProgressInfo);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect( simpleJob, SIGNAL( result(KJob *) ),
@@ -594,7 +594,7 @@ void CachedImapJob::checkUidValidity()
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   jd.cancellable = true;
 
-  KIO::SimpleJob *job = KIO::get( url, false, false );
+  KIO::SimpleJob *job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL(result(KJob *)),
@@ -680,7 +680,7 @@ void CachedImapJob::renameFolder( const QString &newName )
   ImapAccountBase::jobData jd( newName, mFolder->folder() );
   jd.path = imapPath;
 
-  KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, false );
+  KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   mAccount->insertJob( simpleJob, jd );
   connect( simpleJob, SIGNAL(result(KJob *)),

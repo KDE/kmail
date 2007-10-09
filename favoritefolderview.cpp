@@ -30,6 +30,7 @@
 
 #include <libkdepim/maillistdrag.h>
 
+#include <kcolorscheme.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
@@ -55,7 +56,7 @@ FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, cons
   connect( folder, SIGNAL(nameChanged()), SLOT(nameChanged()) );
   connect( folder, SIGNAL(iconsChanged()), SLOT(slotIconsChanged()) );
 
-  connect( folder, SIGNAL(msgAdded(KMFolder*,Q_UINT32)), SLOT(updateCount()) );
+  connect( folder, SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(updateCount()) );
   connect( folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(msgRemoved(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
@@ -170,7 +171,7 @@ FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * pare
 
 FavoriteFolderView::~FavoriteFolderView()
 {
-  mInstances.remove( this );
+  mInstances.removeAll( this );
 }
 
 void FavoriteFolderView::readConfig()
@@ -180,7 +181,7 @@ void FavoriteFolderView::readConfig()
   QList<int> folderIds = GlobalSettings::self()->favoriteFolderIds();
   QStringList folderNames = GlobalSettings::self()->favoriteFolderNames();
   Q3ListViewItem *afterItem = 0;
-  for ( uint i = 0; i < folderIds.count(); ++i ) {
+  for ( int i = 0; i < folderIds.count(); ++i ) {
     KMFolder *folder = kmkernel->folderMgr()->findById( folderIds[i] );
     if ( !folder )
       folder = kmkernel->imapFolderMgr()->findById( folderIds[i] );
@@ -292,7 +293,7 @@ void FavoriteFolderView::folderRemoved(KMFolder * folder)
     if ( fti == mContextMenuItem )
       mContextMenuItem = 0;
   }
-  for ( uint i = 0; i < delItems.count(); ++i )
+  for ( int i = 0; i < delItems.count(); ++i )
     delete delItems[i];
 }
 
@@ -322,11 +323,11 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
   mContextMenuItem = fti;
   KMenu contextMenu;
   if ( fti && fti->folder() ) {
-    contextMenu.addAction( SmallIcon( "editdelete" ), i18n( "Remove From Favorites" ),
+    contextMenu.addAction( SmallIcon( "edit-delete" ), i18n( "Remove From Favorites" ),
                            this, SLOT( removeFolder() ) );
     contextMenu.addAction( SmallIcon( "edit" ), i18n( "Rename Favorite" ),
                            this, SLOT( renameFolder() ) );
-    contextMenu.insertSeparator();
+    contextMenu.addSeparator();
 
     contextMenu.addAction( mainWidget()->action( "mark_all_as_read" ) );
     if ( fti->folder()->folderType() == KMFolderTypeImap
@@ -337,12 +338,12 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
     if ( fti->folder()->isMailingListEnabled() )
       contextMenu.addAction( mainWidget()->action( "post_message" ) );
 
-    contextMenu.addAction( SmallIcon( "configure_shortcuts" ), i18n( "&Assign Shortcut..." ),
+    contextMenu.addAction( SmallIcon( "configure-shortcuts" ), i18n( "&Assign Shortcut..." ),
                            fti, SLOT( assignShortcut() ) );
     contextMenu.addAction( i18n( "Expire..." ), fti, SLOT(slotShowExpiryProperties()) );
     contextMenu.addAction( mainWidget()->action( "modify" ) );
   } else {
-    contextMenu.addAction( SmallIcon( "bookmark_add" ), i18n( "Add Favorite Folder..." ),
+    contextMenu.addAction( SmallIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ),
                            this, SLOT( addFolder() ) );
   }
   contextMenu.exec( point );
@@ -363,14 +364,14 @@ bool FavoriteFolderView::event( QEvent *e )
     if ( !headerRect.isValid() )
       return FolderTreeBase::event( e );
 
-    QString tipText = i18n("<qt><b>%1</b><br>Total: %2<br>Unread: %3<br>Size: %4" )
-        .arg( item->folder()->prettyUrl().replace( " ", "&nbsp;" ) )
-        .arg( item->totalCount() < 0 ? "-" : QString::number( item->totalCount() ) )
-        .arg( item->unreadCount() < 0 ? "-" : QString::number( item->unreadCount() ) )
-        .arg( KIO::convertSize( item->folderSize() ) );
+    QString tipText = i18n("<qt><b>%1</b><br>Total: %2<br>Unread: %3<br>Size: %4",
+        item->folder()->prettyUrl().replace( " ", "&nbsp;" ),
+        item->totalCount() < 0 ? "-" : QString::number( item->totalCount() ),
+        item->unreadCount() < 0 ? "-" : QString::number( item->unreadCount() ),
+        KIO::convertSize( item->folderSize() ) );
     QRect validIn( headerRect.left(), iRect.top(), headerRect.width(), iRect.height() );
     QToolTip::showText( he->pos(), tipText, this, validIn );
-
+    return true;
   } else {
     return FolderTreeBase::event( e );
   }
@@ -426,13 +427,13 @@ QString FavoriteFolderView::prettyName(KMFolderTreeItem * fti)
     if ( fti->protocol() == KFolderTreeItem::Local || fti->protocol() == KFolderTreeItem::NONE ) {
       name = i18n( "Local Inbox" );
     } else {
-      name = i18n( "Inbox of %1" ).arg( accountFti->text( 0 ) );
+      name = i18n( "Inbox of %1", accountFti->text( 0 ) );
     }
   } else {
     if ( fti->protocol() != KFolderTreeItem::Local && fti->protocol() != KFolderTreeItem::NONE ) {
-      name = i18n( "%1 on %2" ).arg( fti->text( 0 ) ).arg( accountFti->text( 0 ) );
+      name = i18n( "%1 on %2", fti->text( 0 ), accountFti->text( 0 ) );
     } else {
-      name = i18n( "%1 (local)" ).arg( fti->text( 0 ) );
+      name = i18n( "%1 (local)", fti->text( 0 ) );
     }
   }
   return name;
@@ -458,7 +459,8 @@ void FavoriteFolderView::readColorConfig()
   FolderTreeBase::readColorConfig();
   // Custom/System color support
   KConfigGroup cg = KMKernel::config()->group( "Reader" );
-  QColor c = palette().alternateBase();
+  QColor c = KColorScheme( QPalette::Normal, KColorScheme::View ).background(
+                           KColorScheme::AlternateBackground ).color();
   if ( !cg.readEntry( "defaultColors", true ) )
     mPaintInfo.colBack = cg.readEntry( "AltBackgroundColor", c );
   else

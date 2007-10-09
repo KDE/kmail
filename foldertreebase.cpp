@@ -30,6 +30,7 @@
 using KPIM::MailList;
 
 #include <kapplication.h>
+#include <kcolorscheme.h>
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <kmenu.h>
@@ -68,7 +69,7 @@ void FolderTreeBase::contentsDropEvent( QDropEvent *e )
         new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
       }
     }
-    e->accept( true );
+    e->setAccepted( true );
   } else {
     KFolderTree::contentsDropEvent( e );
   }
@@ -87,7 +88,7 @@ int FolderTreeBase::dndMode(bool alwaysAsk)
       KMenu menu;
       QAction *moveAction = menu.addAction( i18n( "&Move Here" ) );
       QAction *copyAction = menu.addAction( SmallIcon( "editcopy" ), i18n( "&Copy Here" ) );
-      menu.insertSeparator();
+      menu.addSeparator();
       QAction *cancelAction = menu.addAction( SmallIcon( "cancel" ), i18n( "C&ancel" ) );
 
       QAction *menuChoice = menu.exec( QCursor::pos() );
@@ -118,9 +119,9 @@ void FolderTreeBase::readColorConfig()
   KConfigGroup cg = KMKernel::config()->group( "Reader" );
 
   // Custom/System color support
-  QColor c1 = QColor( kapp->palette().active().text() );
+  QColor c1 = KColorScheme( QPalette::Active, KColorScheme::View ).foreground().color();
   QColor c2 = QColor( "blue" );
-  QColor c4 = QColor( kapp->palette().active().base() );
+  QColor c4 = KColorScheme( QPalette::Active, KColorScheme::View ).background().color();
   QColor c5 = QColor( "red" );
 
   if ( !cg.readEntry( "defaultColors", true ) ) {

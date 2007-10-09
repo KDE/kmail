@@ -128,7 +128,7 @@ KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KUrl& url, const QStri
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'S' << url << user << perm;
 
-  KIO::SimpleJob* job = KIO::special( url, packedArgs, false );
+  KIO::SimpleJob* job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( slave, job );
   return job;
 }

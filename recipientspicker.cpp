@@ -303,9 +303,6 @@ void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : QDialog( parent )
-#ifndef KDEPIM_NEW_DISTRLISTS
-    , mDistributionListManager( 0 )
-#endif
 {
   setObjectName("RecipientsPicker");
   setWindowTitle( i18n("Select Recipient") );
@@ -406,10 +403,6 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 RecipientsPicker::~RecipientsPicker()
 {
   writeConfig();
-
-#ifndef KDEPIM_NEW_DISTRLISTS
-  delete mDistributionListManager;
-#endif
 
   mAllRecipients->deleteAll();
 
@@ -514,17 +507,8 @@ void RecipientsPicker::insertDistributionLists()
     collection->addItem( item );
   }
 #else
-  delete mDistributionListManager;
-  mDistributionListManager =
-    new KABC::DistributionListManager( KABC::StdAddressBook::self( true ) );
-
-  mDistributionListManager->load();
-
-  QStringList lists = mDistributionListManager->listNames();
-
-  QStringList::Iterator listIt;
-  for ( listIt = lists.begin(); listIt != lists.end(); ++listIt ) {
-    KABC::DistributionList *list = mDistributionListManager->list( *listIt );
+  QList<KABC::DistributionList*> lists = mAddressBook->allDistributionLists();
+  foreach ( KABC::DistributionList *list, lists ) {
     RecipientItem *item = new RecipientItem;
     item->setDistributionList( list );
     mAllRecipients->addItem( item );

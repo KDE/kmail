@@ -1529,7 +1529,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KUrl& folderURL )
   kDebug(5006) <<"Triggering PFB update for" << folderURL <<" : getting" << httpURL;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.
-  /*KIO::Job* job =*/ KIO::get( httpURL, false, false /*no progress info*/ );
+  /*KIO::Job* job =*/ KIO::get( httpURL, KIO::NoReload, KIO::HideProgressInfo );
 }
 
 void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )

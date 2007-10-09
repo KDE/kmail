@@ -140,7 +140,7 @@ void ListJob::execute()
       + section );
   // go
   //kDebug(5006) <<"start listjob for" << url.path();
-  KIO::SimpleJob *job = KIO::listDir( url, false );
+  KIO::SimpleJob *job = KIO::listDir( url, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL(result(KJob *)),

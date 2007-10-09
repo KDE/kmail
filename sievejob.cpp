@@ -61,7 +61,7 @@ namespace KMail {
       break;
     case Put:
       kDebug(5006) <<"SieveJob::schedule: put(" << mUrl.prettyUrl() <<" )";
-      mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/ );
+      mJob = KIO::put( mUrl, 0600, KIO::Overwrite );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
 	       SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
       break;

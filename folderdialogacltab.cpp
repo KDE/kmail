@@ -199,11 +199,7 @@ public:
 
   void load( const ACLListEntry& entry );
   void save( ACLList& list,
-#ifdef KDEPIM_NEW_DISTRLISTS
              KABC::AddressBook* abook,
-#else
-             KABC::DistributionListManager& manager,
-#endif
              IMAPUserIdFormat userIdFormat );
 
   QString userId() const { return text( 0 ); }
@@ -265,11 +261,7 @@ void KMail::FolderDialogACLTab::ListViewItem::load( const ACLListEntry& entry )
 }
 
 void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
-#ifdef KDEPIM_NEW_DISTRLISTS
                                                  KABC::AddressBook* addressBook,
-#else
-                                                 KABC::DistributionListManager& manager,
-#endif
                                                  IMAPUserIdFormat userIdFormat )
 {
   // expand distribution lists
@@ -288,8 +280,7 @@ void KMail::FolderDialogACLTab::ListViewItem::save( ACLList& aclList,
       aclList.append( entry );
     }
 #else
-  // kaddrbook.cpp has a strange two-pass case-insensitive lookup; is it ok to be case sensitive?
-  KABC::DistributionList* list = manager.list( userId() );
+  KABC::DistributionList* list = addressBook->findDistributionListByName( userId(),  Qt::CaseInsensitive );
   if ( list ) {
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
     KABC::DistributionList::Entry::List entryList = list->entries();
@@ -671,19 +662,11 @@ bool KMail::FolderDialogACLTab::save()
   // listviewitems at the same time sounds dangerous, so let's just save into
   // ACLList and reload that.
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-#ifndef KDEPIM_NEW_DISTRLISTS
-  KABC::DistributionListManager manager( addressBook );
-  manager.load();
-#endif
   ACLList aclList;
   for ( Q3ListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     ACLitem->save( aclList,
-#ifdef KDEPIM_NEW_DISTRLISTS
                    addressBook,
-#else
-                   manager,
-#endif
                    mUserIdFormat );
   }
   loadListView( aclList );

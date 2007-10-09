@@ -26,7 +26,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kabc/stdaddressbook.h>
-#include <kabc/distributionlist.h>
 #include <kabc/vcardconverter.h>
 
 #include <QRegExp>
@@ -74,9 +73,8 @@ void KabcBridge::addresses(QStringList& result) // includes lists
       }
     }
   }
-  KABC::DistributionListManager manager( addressBook );
-  manager.load();
-  result += manager.listNames();
+
+  result += addressBook->allDistributionListNames();
 
   result.sort();
 }

@@ -200,13 +200,13 @@ namespace {
   }
 
   void loadWidget( QCheckBox * b, const KConfigGroup & c, const BoolConfigEntry & e ) {
-    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( c.name() == e.group );
     checkLockDown( b, c, e.key );
     b->setChecked( c.readEntry( e.key, e.defaultValue ) );
   }
 
   void loadWidget( QGroupBox * box, QButtonGroup * group, const KConfigGroup & c, const EnumConfigEntry & e ) {
-    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( c.name() == e.group );
     Q_ASSERT( group->buttons().size() == e.numItems );
     checkLockDown( box, c, e.key );
     const QString s = c.readEntry( e.key, e.items[e.defaultItem].key );
@@ -220,12 +220,12 @@ namespace {
   }
 
   void saveCheckBox( QCheckBox * b, KConfigGroup & c, const BoolConfigEntry & e ) {
-    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( c.name() == e.group );
     c.writeEntry( e.key, b->isChecked() );
   }
 
   void saveButtonGroup( QButtonGroup * group, KConfigGroup & c, const EnumConfigEntry & e ) {
-    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( c.name() == e.group );
     Q_ASSERT( group->buttons().size() == e.numItems );
     if (group->checkedId() != -1) {
       c.writeEntry( e.key, e.items[group->checkedId()].key );
@@ -594,7 +594,7 @@ void IdentityPage::slotSetAsDefault()
   }
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  im->setAsDefault( item->identity().identityName() );
+  im->setAsDefault( item->identity().uoid() );
   refreshList();
 }
 

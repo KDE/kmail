@@ -36,7 +36,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
-
+#include <kdialog.h>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QListWidget>

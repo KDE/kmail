@@ -141,7 +141,7 @@ void RenameJob::execute()
     src.setPath( mOldImapPath );
     KUrl dst( account->getUrl() );
     dst.setPath( mNewImapPath );
-    KIO::SimpleJob *job = KIO::rename( src, dst, true );
+    KIO::SimpleJob *job = KIO::rename( src, dst, KIO::Overwrite );
     kDebug(5006)<<"RenameJob::rename -" << src.prettyUrl()
       << "|=>" << dst.prettyUrl();
     ImapAccountBase::jobData jd( src.url() );

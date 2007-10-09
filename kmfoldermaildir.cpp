@@ -401,10 +401,8 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
-  bool opened = false;
   KMFolder* msgParent;
   int idx(-1);
-  int rc;
 
   // take message out of the folder it is currently in, if any
   msgParent = aMsg->parent();
@@ -1082,7 +1080,7 @@ void KMFolderMaildir::msgStatusChanged( const MessageStatus& oldStatus,
 size_t KMFolderMaildir::doFolderSize() const
 {
   if (mCurrentlyCheckingFolderSize) return -1;
-  QList<KFileItem> list;
+  KFileItemList list;
   list.append( KFileItem( S_IFDIR, -1, location() + "/cur" ) );
   list.append( KFileItem( S_IFDIR, -1, location() + "/new" ) );
   list.append( KFileItem( S_IFDIR, -1, location() + "/tmp" ) );

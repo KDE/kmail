@@ -388,7 +388,7 @@ void PopAccount::startJob()
     return;
   }
   url.setPath( "/index" );
-  job = KIO::get( url, false, false );
+  job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
   connectJob();
 }
 
@@ -453,7 +453,7 @@ void PopAccount::slotJobFinished() {
     mUidsOfNextSeenMsgsDict.reserve( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
     KUrl url = getUrl();
     url.setPath( "/uidl" );
-    job = KIO::get( url, false, false );
+    job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     connectJob();
     stage = Uidl;
   }
@@ -511,7 +511,7 @@ void PopAccount::slotJobFinished() {
       }
       mHeaderIndex = 0;
       url.setPath( "/headers/" + headerIds );
-      job = KIO::get( url, false, false );
+      job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
       connectJob();
       slotGetNextHdr();
       stage = Head;
@@ -533,7 +533,7 @@ void PopAccount::slotJobFinished() {
       }
       KUrl url = getUrl();
       url.setPath( "/download/" + ids );
-      job = KIO::get( url, false, false );
+      job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
       connectJob();
       slotGetNextMsg();
       processMsgsTimer.start(processingDelay);
@@ -633,7 +633,7 @@ void PopAccount::slotJobFinished() {
     }
     KUrl url = getUrl();
     url.setPath( "/download/" + ids );
-    job = KIO::get( url, false, false );
+    job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     connectJob();
     slotGetNextMsg();
     processMsgsTimer.start(processingDelay);
@@ -740,7 +740,7 @@ void PopAccount::slotJobFinished() {
       url.setPath( "/commit" );
       kDebug(5006) <<"url:" << url.prettyUrl();
     }
-    job = KIO::get( url, false, false );
+    job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     connectJob();
   }
   else if (stage == Dele) {
@@ -758,7 +758,7 @@ void PopAccount::slotJobFinished() {
         mHost ) );
     KUrl url = getUrl();
     url.setPath( "/commit" );
-    job = KIO::get( url, false, false );
+    job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
     stage = Quit;
     connectJob();
   }

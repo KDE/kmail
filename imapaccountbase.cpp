@@ -396,7 +396,7 @@ void ImapAccountBase::changeSubscription( bool subscribe, const QString &imapPat
   if ( makeConnection() != Connected ) {
     return;// ## doesn't handle Connecting
   }
-  KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+  KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mSlave, job );
   jobData jd( url.url(), NULL );
   // a bit of a hack to save one slot
@@ -577,7 +577,7 @@ void ImapAccountBase::slotNoopTimeout()
 
     stream << ( int ) 'N';
 
-    KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+    KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, KIO::HideProgressInfo );
     KIO::Scheduler::assignJobToSlave( mSlave, job );
     connect( job, SIGNAL(result( KJob * ) ),
              this, SLOT( slotSimpleResult( KJob * ) ) );
@@ -654,7 +654,7 @@ void ImapAccountBase::slotSchedulerSlaveConnected( KIO::Slave *aSlave )
   QByteArray packedArgs;
   QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int) 'c';
-  KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+  KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mSlave, job );
   connect( job, SIGNAL(infoMessage(KJob*, const QString&, const QString &)),
 	   SLOT(slotCapabilitiesResult(KJob*, const QString&, const QString&)) );
@@ -698,7 +698,7 @@ void ImapAccountBase::getNamespaces()
             SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
             this,
             SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
-  KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+  KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( mSlave, job );
   insertJob( job, jd );
   connect( job, SIGNAL( infoMessage(KJob*, const QString&, const QString&) ),
@@ -1262,7 +1262,7 @@ void ImapAccountBase::setImapStatus( KMFolder *folder, const QString &path,
     return; // can't happen with dimap
   }
 
-  KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+  KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
   KIO::Scheduler::assignJobToSlave( slave(), job );
   ImapAccountBase::jobData jd( url.url(), folder );
   jd.path = path;
@@ -1284,7 +1284,7 @@ void ImapAccountBase::setImapSeenStatus(KMFolder * folder, const QString & path,
    if ( makeConnection() != Connected )
      return; // can't happen with dimap
 
-   KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
+   KIO::SimpleJob *job = KIO::special(url, packedArgs, KIO::HideProgressInfo);
    KIO::Scheduler::assignJobToSlave(slave(), job);
    ImapAccountBase::jobData jd( url.url(), folder );
    jd.path = path;

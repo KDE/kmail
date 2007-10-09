@@ -334,10 +334,11 @@ void KMKernel::openReader( bool onlyCheck )
   KMainWindow *ktmw = 0;
   kDebug(5006) <<"KMKernel::openReader called";
 
-  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
-       it != KMainWindow::memberList().end(); ++it ) {
-    if ( ::qobject_cast<KMMainWin *>(*it) ) {
-      ktmw = (*it);
+  foreach ( KMainWindow *window, KMainWindow::memberList() )
+  {
+    if ( ::qobject_cast<KMMainWin *>( window ) )
+    {
+      ktmw = window;
       break;
     }
   }
@@ -1773,7 +1774,7 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL,
   bool overwrite)
 {
   // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether
-  KIO::Job *job = KIO::put(aURL, -1, overwrite, false);
+  KIO::Job *job = KIO::put(aURL, -1, overwrite ? KIO::Overwrite : KIO::DefaultFlags);
   putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
   mPutJobs.insert(job, pd);
   connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),

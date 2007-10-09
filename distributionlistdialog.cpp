@@ -185,11 +185,6 @@ void DistributionListDialog::slotUser1()
     return;
   }
 
-#ifndef KDEPIM_NEW_DISTRLISTS
-  KABC::DistributionListManager manager( ab );
-  manager.load();
-#endif
-
   QString name = mTitleEdit->text();
 
   if ( name.isEmpty() ) {
@@ -203,7 +198,7 @@ void DistributionListDialog::slotUser1()
 #ifdef KDEPIM_NEW_DISTRLISTS
   if ( !KPIM::DistributionList::findByName( ab, name ).isEmpty() ) {
 #else
-  if ( manager.list( name ) ) {
+  if ( ab->findDistributionListByName( name ) ) {
 #endif
     KMessageBox::information( this,
       i18n( "<qt>Distribution list with the given name <b>%1</b> "
@@ -233,7 +228,7 @@ void DistributionListDialog::slotUser1()
 
   ab->insertAddressee( dlist );
 #else
-  KABC::DistributionList *dlist = new KABC::DistributionList( &manager, name );
+  KABC::DistributionList *dlist = ab->createDistributionList( name );
 
   for (int i = 0; i < mRecipientsList->topLevelItemCount(); ++i) {
     DistributionListItem *item = static_cast<DistributionListItem *>(
@@ -264,8 +259,5 @@ void DistributionListDialog::slotUser1()
   if ( saveError )
     kWarning(5006) <<" Couldn't save new addresses in the distribution list just created to the address book";
 
-#ifndef KDEPIM_NEW_DISTRLISTS
-  manager.save();
-#endif
   close();
 }
