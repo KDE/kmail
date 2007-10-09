@@ -1433,7 +1433,11 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 			matchingKeys.end() );
   }
 
-  matchingKeys = TrustedOrConfirmed( matchingKeys );
+  // if called with quite == true (from EncryptionPreferenceCounter), we only want to
+  // check if there are keys for this recipients, not (yet) their validity, so
+  // don't show the untrusted encryption key warning in that case
+  if ( !quiet )
+    matchingKeys = TrustedOrConfirmed( matchingKeys );
   if ( quiet || matchingKeys.size() == 1 )
     return matchingKeys;
 
