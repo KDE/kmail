@@ -195,7 +195,12 @@ static QStringList keysAsStrings( const std::vector<GpgME::Key>& keys ) {
   QStringList strings;
   for ( std::vector<GpgME::Key>::const_iterator it = keys.begin() ; it != keys.end() ; ++it ) {
     assert( !(*it).userID(0).isNull() );
-    strings.append( QString::fromUtf8( (*it).userID(0).email() ) );
+    QString keyLabel = QString::fromUtf8( (*it).userID(0).email() );
+    if ( keyLabel.isEmpty() )
+      keyLabel = QString::fromUtf8( (*it).userID(0).name() );
+    if ( keyLabel.isEmpty() )
+      keyLabel = QString::fromUtf8( (*it).userID(0).id() );
+    strings.append( keyLabel );
   }
   return strings;
 }
