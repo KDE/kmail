@@ -237,6 +237,11 @@
         <default>false</default>
         <label>Also filter new mails received in groupware folders.</label>
       </entry>
+
+      <entry name="ImmediatlySyncDIMAPOnGroupwareChanges" type="Bool">
+        <default>true</default>
+        <label>Synchronize groupware changes in DIMAP folders immediately when being online.</label>
+      </entry>
     </group>
 
     <group name="Internal">
