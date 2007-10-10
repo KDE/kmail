@@ -1017,6 +1017,8 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
   {
+    if ( mFoldersQueuedForChecking.contains( folder ) )
+      return;
     mFoldersQueuedForChecking.append(folder);
     mCheckingSingleFolder = true;
     if ( checkingMail() )

@@ -466,6 +466,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
 
     //debugBodyParts( "after addMsg", *msg );
     addFolderChange( &folder, Contents );
+    syncFolder( &folder );
   } else
     kdError(5006) << "addIncidenceKolab(): Message *NOT* saved!\n";
 
@@ -495,6 +496,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   if( msg ) {
     // Message found - delete it and return happy
     deleteMsg( msg );
+    syncFolder( f );
     rc = true;
   } else {
     kdDebug(5006) << "Message not found, cannot remove serNum " << sernum << endl;
@@ -867,6 +869,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
       kdDebug(5006) << "forget about " << sernum << ", it's " << rc << " now" << endl;
     }
     addFolderChange( f, Contents );
+    syncFolder( f );
   } else {
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject, plainTextBody, customHeaders,
@@ -2211,6 +2214,16 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
     kmkernel->dimapFolderMgr()->remove( folder );
   }
   return true;
+}
+
+void KMailICalIfaceImpl::syncFolder(KMFolder * folder) const
+{
+  if ( kmkernel->isOffline() || !GlobalSettings::immediatlySyncDIMAPOnGroupwareChanges() )
+    return;
+  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
+  if ( !dimapFolder )
+    return;
+  dimapFolder->account()->processNewMailSingleFolder( folder );
 }
 
 #include "kmailicalifaceimpl.moc"
