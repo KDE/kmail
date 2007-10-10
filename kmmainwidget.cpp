@@ -460,9 +460,11 @@ void KMMainWidget::readConfig(void)
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
 
-  if ( mFolderViewSplitter && !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
+  if ( mFolderViewSplitter &&
+       mFolderViewSplitter->count() == 2 &&
+       !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
     mFolderViewSplitter->setSizes( GlobalSettings::self()->folderViewSplitterPosition() );
-  } else {
+  } else if ( mFolderViewSplitter->count() == 2 ) {
     QList<int> defaults;
     defaults << (int)(height() * 0.2) << (int)(height() * 0.8);
     mFolderViewSplitter->setSizes( defaults );
@@ -537,7 +539,7 @@ void KMMainWidget::writeConfig(void)
   if (mMsgView)
     mMsgView->writeConfig();
 
-  if ( mFolderViewSplitter )
+  if ( mFolderViewSplitter && mFolderViewSplitter->count() == 2 )
     GlobalSettings::setFolderViewSplitterPosition( mFolderViewSplitter->sizes() );
   mFolderTree->writeConfig();
   if ( mFavoriteFolderView )
@@ -693,7 +695,8 @@ void KMMainWidget::createWidgets(void)
   mFolderViewSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewSplitter );
   if ( mFavoritesCheckMailAction )
-  connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView, SLOT(checkMail()) );
+    connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView,
+             SLOT(checkMail()) );
   QWidget *folderTreeParent = mFolderViewParent;
   if ( GlobalSettings::enableFavoriteFolderView() ) {
     folderTreeParent = mFolderViewSplitter;
@@ -832,9 +835,8 @@ void KMMainWidget::activatePanners(void)
   }
 
   if (mMsgView) {
-    QObject::connect( mMsgView->copyAction(),
-		    SIGNAL( activated() ),
-		    mMsgView, SLOT( slotCopySelectedText() ));
+    QObject::connect( mMsgView->copyAction(), SIGNAL( activated() ),
+                      mMsgView, SLOT( slotCopySelectedText() ));
   }
 }
 
