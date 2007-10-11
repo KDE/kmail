@@ -1574,15 +1574,7 @@ void KMComposeWin::setupEditor(void)
   mEditor->setTabStopWidth(fm.width(QChar(' ')) * 8);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
-  if (GlobalSettings::self()->wordWrap())
-  {
-    mEditor->setWordWrap( QTextEdit::FixedColumnWidth );
-    mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
-  }
-  else
-  {
-    mEditor->setWordWrap( QTextEdit::NoWrap );
-  }
+  slotWordWrapToggled( GlobalSettings::self()->wordWrap() );
 
   // Font setup
   slotUpdateFont();
@@ -3915,7 +3907,7 @@ void KMComposeWin::slotWordWrapToggled(bool on)
   }
   else
   {
-    mEditor->setWordWrap( QTextEdit::NoWrap );
+    mEditor->setWordWrap( QTextEdit::WidgetWidth );
   }
 }
 
