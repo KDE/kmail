@@ -1357,7 +1357,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   // if no keys match the complete address look for keys which match
   // the canonical mail address
   if ( matchingKeys.empty() ) {
-    matchingKeys = lookup( address );
+    matchingKeys = lookup( '<' + address + '>' );
     matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
 					NotValidTrustedEncryptionKey ),
 			matchingKeys.end() );
