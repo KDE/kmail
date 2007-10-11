@@ -309,7 +309,7 @@
         <label></label>
         <default>78</default>
         <min>30</min>
-        <max>78</max>
+        <max>255</max>
       </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />

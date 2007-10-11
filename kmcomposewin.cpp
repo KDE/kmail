@@ -1575,7 +1575,7 @@ void KMComposeWin::setupEditor( void )
   QFontMetrics fm( mBodyFont );
   mEditor->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
 
-  slotWordWrapToggled(GlobalSettings::self()->wordWrap());
+  slotWordWrapToggled( GlobalSettings::self()->wordWrap() );
 
   // Font setup
   slotUpdateFont();
@@ -3716,6 +3716,10 @@ void KMComposeWin::slotWordWrapToggled( bool on )
   if (on)
   {
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
+  }
+  else
+  {
+    mEditor->setWordWrap( QTextEdit::WidgetWidth );
   }
 }
 
