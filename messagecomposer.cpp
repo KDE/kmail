@@ -2310,7 +2310,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
   QByteArray plainText( cText );
 
   const GpgME::EncryptionResult res =
-    job->exec( encryptionKeys, plainText, false, encryptedBody );
+    job->exec( encryptionKeys, plainText, true /* we do ownertrust ourselves */, encryptedBody );
   if ( res.error().isCanceled() ) {
     kDebug(5006) <<"encryption was canceled by user";
     return Kpgp::Canceled;
