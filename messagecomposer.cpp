@@ -2202,18 +2202,18 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
   assert( proto ); // hmmmm....?
 
   std::auto_ptr<Kleo::EncryptJob> job( proto->encryptJob( armor( format ),
-							  textMode( format ) ) );
+                                                          textMode( format ) ) );
   if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
-			i18n("This message could not be encrypted, "
-			     "since the chosen backend does not seem to support "
-			     "encryption; this should actually never happen, "
-			     "please report this bug.") );
+                        i18n("This message could not be encrypted, "
+                             "since the chosen backend does not seem to support "
+                             "encryption; this should actually never happen, "
+                             "please report this bug.") );
     return Kpgp::Failure;
   }
 
   const GpgME::EncryptionResult res =
-    job->exec( encryptionKeys, cText, false, encryptedBody );
+    job->exec( encryptionKeys, cText, true /* we do ownertrust ourselves */, encryptedBody );
   if ( res.error().isCanceled() ) {
     kdDebug() << "encryption was canceled by user" << endl;
     return Kpgp::Canceled;
