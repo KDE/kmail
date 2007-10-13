@@ -4193,10 +4193,10 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
   mFolderShortcutCommands.insert( folder->idString(), c );
 
-  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyUrl() );
-  QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
+  QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
+  QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
-  QAction * action = actionCollection()->addAction( normalizedName);
+  QAction * action = actionCollection()->addAction( normalizedName );
   action->setText( actionlabel );
   connect(action, SIGNAL(triggered(bool) ), c, SLOT(start()));
   action->setShortcuts(folder->shortcut());
