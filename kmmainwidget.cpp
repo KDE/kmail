@@ -612,10 +612,12 @@ void KMMainWidget::createWidgets(void)
 
   // create list of messages
   mSearchAndHeaders = new KVBox( headerParent );
-  mSearchToolBar = new QToolBar( mSearchAndHeaders);
+  mSearchToolBar = new QWidget( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
-  mSearchToolBar->setMovable( false );
+  mSearchToolBar->setLayout(new QHBoxLayout());
+  
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
+  mSearchToolBar->layout()->setMargin(0);
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );

@@ -55,7 +55,7 @@ public:
      * Constructs this widget and automatically adds it to the
      * parent.
      */
-    HeaderListQuickSearch( QToolBar *parent,
+    HeaderListQuickSearch( QWidget *parent,
                            K3ListView *listView,
                            KActionCollection *actionCollection );
     virtual ~HeaderListQuickSearch();
