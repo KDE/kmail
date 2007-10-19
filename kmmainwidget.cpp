@@ -2750,13 +2750,13 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
   }
   {
-    QAction *action = new KAction(KIcon("mail-get"), i18n("Check &Mail"), this);
+    QAction *action = new KAction(KIcon("mail-receive"), i18n("Check &Mail"), this);
     actionCollection()->addAction("check_mail", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
   }
 
-  mFavoritesCheckMailAction = new KAction( KIcon( "mail-get"),
+  mFavoritesCheckMailAction = new KAction( KIcon( "mail-receive"),
                                            i18n( "Check Mail in Favorite Folders" ), this );
   actionCollection()->addAction( "favorite_check_mail", mFavoritesCheckMailAction );
   mFavoritesCheckMailAction->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_L ) );
@@ -2765,7 +2765,7 @@ void KMMainWidget::setupActions()
              mFavoriteFolderView, SLOT(checkMail()) );
   }
 
-  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-get"), i18n("Check Ma&il"), this);
+  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Ma&il"), this);
   actionCollection()->addAction("check_mail_in", actActionMenu );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
   connect(actActionMenu, SIGNAL(activated()), this, SLOT(slotCheckMail()));
