@@ -2443,7 +2443,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
 
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
-		   this, SLOT( slotEmitChangeCheck() ) );
+           this, SLOT( slotEmitChangeCheck() ) );
 
   //Sixth for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
@@ -2459,10 +2459,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   maingrid->setStretchFactor( tagsettinggrid, 1 );
 
   //Other Connections
-    //For enabling the add button in case box is non-empty
+
+  //For enabling the add button in case box is non-empty
   connect( mTagAddLineEdit, SIGNAL( textChanged( const QString& ) ),
           this, SLOT( slotAddLineTextChanged( const QString& ) ) );
-    //For on-the-fly updating of tag name in editbox
+
+  //For on-the-fly updating of tag name in editbox
   connect( mTagNameLineEdit, SIGNAL( textChanged( const QString& ) ),
           this, SLOT( slotNameLineTextChanged( const QString& ) ) );
 
