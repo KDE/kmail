@@ -1775,6 +1775,8 @@ FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
 
 FolderShortcutCommand::~FolderShortcutCommand()
 {
+  if ( mAction && mAction->parentWidget() )
+    mAction->parentWidget()->removeAction( mAction );
   delete mAction;
 }
 

@@ -816,14 +816,14 @@ void KMMainWidget::activatePanners(void)
       mPanner2->addWidget( mMsgView );
     }
     mFolderViewParent = mPanner1;
-    mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
+    mFolderView->setParent( mFolderViewParent );
     mPanner1->setSizes( mPanner1Sep );
     mPanner1->setResizeMode( mFolderView, QSplitter::KeepSize );
     mPanner2->setSizes( mPanner2Sep );
     mPanner2->setStretchFactor( mPanner2->indexOf(mSearchAndHeaders), 0 );
   } else /* !mLongFolderList */ {
     mFolderViewParent = mPanner2;
-    mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
+    mFolderView->setParent( mFolderViewParent );
     mPanner2->addWidget( mSearchAndHeaders );
     mPanner1->insertWidget( 0, mPanner2 );
     if (mMsgView) {
@@ -4199,10 +4199,13 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
   QAction * action = actionCollection()->addAction( normalizedName );
+  mFolderTree->addAction( action );
   action->setText( actionlabel );
-  connect(action, SIGNAL(triggered(bool) ), c, SLOT(start()));
-  action->setShortcuts(folder->shortcut());
-  action->setIcon( KIcon( folder->unreadIconPath() ) );
+  connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
+  action->setShortcuts( folder->shortcut() );
+  action->setIcon( folder->useCustomIcons() ?
+                   KIcon( folder->unreadIconPath() ) :
+                   KIcon( "folder" ) );
   c->setAction( action ); // will be deleted along with the command
 }
 
@@ -4369,7 +4372,7 @@ void KMMainWidget::setupFolderView()
 {
   if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
     mFolderView = mFolderViewSplitter;
-    mFolderTree->reparent( mFolderViewSplitter, 0, QPoint( 0, 0 ) );
+    mFolderTree->setParent( mFolderViewSplitter );
     mFolderViewSplitter->show();
     mFavoriteFolderView->show();
   } else {
@@ -4377,7 +4380,7 @@ void KMMainWidget::setupFolderView()
     mFolderViewSplitter->hide();
     mFavoriteFolderView->hide();
   }
-  mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
-  mFolderViewParent->moveToFirst( mFolderView );
+  mFolderView->setParent( mFolderViewParent );
+  mFolderViewParent->insertWidget( 0, mFolderView );
   mFolderTree->show();
 }
