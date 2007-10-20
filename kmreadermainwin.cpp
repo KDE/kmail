@@ -314,7 +314,7 @@ void KMReaderMainWin::setupAccel()
   fontAction = new KFontAction( i18n("Select Font"), this );
   actionCollection()->addAction( "text_font", fontAction );
   fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
-  connect( fontAction, SIGNAL( activated( const QString& ) ),
+  connect( fontAction, SIGNAL( triggered( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
   fontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
   fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
