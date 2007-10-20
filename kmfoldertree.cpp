@@ -275,6 +275,13 @@ void KMFolderTree::slotFolderMoveOrCopyOperationFinished()
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
 {
+  // Do not allow drags from the favorite folder view, as they don't really
+  // make sense and do not work.
+  KMMainWidget *mainWidget = static_cast<KMFolderTree*>( listView() )->mainWidget();
+  assert( mainWidget );
+  if ( e->source() == mainWidget->favoriteFolderView()->viewport() )
+    return false;
+
   if ( protocol() == KFolderTreeItem::Search )
     return false; // nothing can be dragged into search folders
 
