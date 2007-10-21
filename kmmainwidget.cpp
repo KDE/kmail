@@ -2908,7 +2908,7 @@ void KMMainWidget::setupActions()
   mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
   {
-    QAction *action = new KAction(KIcon("mail-find"), i18n("&Find Messages..."), this);
+    QAction *action = new KAction(KIcon("edit-find-mail"), i18n("&Find Messages..."), this);
     actionCollection()->addAction("search_messages", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
     action->setShortcut(QKeySequence(Qt::Key_S));
@@ -3095,7 +3095,7 @@ void KMMainWidget::setupActions()
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAllAction );
 
-  mReplyListAction = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction = new KAction(KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));

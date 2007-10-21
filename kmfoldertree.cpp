@@ -133,7 +133,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     }
     // non-root search folders
     if ( protocol() == KMFolderTreeItem::Search ) {
-      icon = "mail-find";
+      icon = "edit-find-mail";
     }
     if ( mFolder && mFolder->noContent() ) {
       icon = "folder-grey";
