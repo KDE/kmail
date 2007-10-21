@@ -3028,7 +3028,7 @@ void KMMainWidget::setupActions()
 
   //----- Message Menu
   {
-    QAction *action = new KAction(KIcon("mail-new"), i18n("&New Message..."), this);
+    QAction *action = new KAction(KIcon("mail-message-new"), i18n("&New Message..."), this);
     actionCollection()->addAction("new_message", action );
     action->setIconText( i18n( "New" ) );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
