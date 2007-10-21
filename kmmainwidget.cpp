@@ -3355,10 +3355,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_next_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Plus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "find-previous" ) );
+      action->setIcon( KIcon( "edit-find-previous" ) );
       action->setIconText( i18n( "Previous" ) );
     } else {
-      action->setIcon( KIcon( "find-next" ) );
+      action->setIcon( KIcon( "edit-find-next" ) );
       action->setIconText( i18n( "Next" ) );
     }
     action->setToolTip(i18n("Go to the next unread message"));
@@ -3376,10 +3376,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_prev_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Minus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "find-next" ) );
+      action->setIcon( KIcon( "edit-find-next" ) );
       action->setIconText( i18n( "Next" ) );
     } else {
-      action->setIcon( KIcon( "find-previous" ) );
+      action->setIcon( KIcon( "edit-find-previous" ) );
       action->setIconText( i18n( "Previous" ) );
     }
     action->setToolTip(i18n("Go to the previous unread message"));
