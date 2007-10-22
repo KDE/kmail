@@ -279,7 +279,8 @@ bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
   // make sense and do not work.
   KMMainWidget *mainWidget = static_cast<KMFolderTree*>( listView() )->mainWidget();
   assert( mainWidget );
-  if ( e->source() == mainWidget->favoriteFolderView()->viewport() )
+  if ( mainWidget->favoriteFolderView() &&
+       e->source() == mainWidget->favoriteFolderView()->viewport() )
     return false;
 
   if ( protocol() == KFolderTreeItem::Search )
