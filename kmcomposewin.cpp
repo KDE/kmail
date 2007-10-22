@@ -3717,10 +3717,6 @@ void KMComposeWin::slotWordWrapToggled( bool on )
   {
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
-  else
-  {
-    mEditor->setWordWrap( QTextEdit::WidgetWidth );
-  }
 }
 
 //-----------------------------------------------------------------------------
