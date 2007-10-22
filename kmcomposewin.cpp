@@ -1427,7 +1427,7 @@ void KMComposeWin::setupActions( void )
     mEncryptChiasmusAction = 0;
   }
 
-  mEncryptAction = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"), this);
+  mEncryptAction = new KToggleAction(KIcon("document-encrypt"), i18n("&Encrypt Message"), this);
   mEncryptAction->setIconText( i18n( "Encrypt" ) );
   actionCollection()->addAction("encrypt_message", mEncryptAction );
   mSignAction = new KToggleAction(KIcon("signature"), i18n("&Sign Message"), this);
@@ -3642,9 +3642,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // show the appropriate icon
   if ( encrypt ) {
-    mEncryptAction->setIcon( KIcon( "encrypted" ) );
+    mEncryptAction->setIcon( KIcon( "document-encrypt" ) );
   } else {
-    mEncryptAction->setIcon( KIcon( "decrypted" ) );
+    mEncryptAction->setIcon( KIcon( "document-decrypt" ) );
   }
 
   // mark the attachments for (no) encryption
