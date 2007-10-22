@@ -599,6 +599,8 @@ void KMMainWidget::createWidgets(void)
 						actionCollection(), "headers quick search line" );
 #endif
   label->setBuddy( mQuickSearchLine );
+  connect( mQuickSearchLine, SIGNAL( requestFullSearch() ),
+           this, SLOT( slotRequestFullSearchFromQuickSearch() ) );
   mSearchToolBar->setStretchableWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
@@ -2788,7 +2790,7 @@ void KMMainWidget::setupActions()
 
 
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
-		      SLOT(slotSearch()), actionCollection(), "search_messages" );
+		      SLOT(slotRequestFullSearchFromQuickSearch()), actionCollection(), "search_messages" );
 
   mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
@@ -4081,3 +4083,21 @@ void KMMainWidget::setupFolderView()
   mFolderViewParent->moveToFirst( mFolderView );
   mFolderTree->show();
 }
+
+
+void KMMainWidget::slotRequestFullSearchFromQuickSearch()
+{
+    slotSearch();
+#ifdef HAVE_INDEXLIB
+    return;
+#endif
+    assert( mSearchWin );
+    KMSearchPattern pattern;
+    pattern.append( KMSearchRule::createInstance( "Subject", KMSearchRule::FuncContains, mQuickSearchLine->currentSearchTerm() ) );
+    int status = mQuickSearchLine->currentStatus();
+    if ( status != 0 ) {
+        pattern.append( new KMSearchRuleStatus( status ) );
+    }
+    mSearchWin->setSearchPattern( pattern );
+}
+

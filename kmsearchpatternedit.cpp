@@ -128,8 +128,8 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 {
   assert ( aRule );
 
-  //kdDebug(5006) << "KMSearchRuleWidget::setRule( "
-  //              << aRule->asString() << " )" << endl;
+//  kdDebug(5006) << "KMSearchRuleWidget::setRule( "
+//                << aRule->asString() << " )" << endl;
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
@@ -281,7 +281,7 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 {
   assert ( aList );
 
-  if ( mRuleList )
+  if ( mRuleList && mRuleList != aList )
     regenerateRuleListFromWidgets();
 
   mRuleList = aList;
@@ -314,7 +314,7 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
   QPtrListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
-    (static_cast<KMSearchRuleWidget*>(*wIt))->setRule( (*rIt) );
+    static_cast<KMSearchRuleWidget*>(*wIt)->setRule( (*rIt) );
   }
   for ( ; wIt.current() ; ++wIt )
     ((KMSearchRuleWidget*)(*wIt))->reset();

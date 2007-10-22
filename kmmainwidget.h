@@ -445,6 +445,9 @@ private:
 
   void setupFolderView();
 
+private slots:
+  void slotRequestFullSearchFromQuickSearch();
+
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
