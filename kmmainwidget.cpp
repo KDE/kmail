@@ -709,8 +709,7 @@ void KMMainWidget::createWidgets(void)
      mFolderView = mFolderTree;
   }
   connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
-            mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
-
+           mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
   connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
            this, SLOT(folderSelected(KMFolder*)));
   connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
@@ -727,6 +726,8 @@ void KMMainWidget::createWidgets(void)
   if ( mFavoriteFolderView ) {
     connect( mFavoriteFolderView, SIGNAL(folderDrop(KMFolder*)), SLOT(slotMoveMsgToFolder(KMFolder*)) );
     connect( mFavoriteFolderView, SIGNAL(folderDropCopy(KMFolder*)), SLOT(slotCopyMsgToFolder(KMFolder*)) );
+    connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
+             mFavoriteFolderView, SLOT( triggerUpdate() ) );
   }
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
