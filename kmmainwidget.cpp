@@ -1225,7 +1225,7 @@ void KMMainWidget::slotEmptyFolder()
       i18n("<qt>Are you sure you want to move all messages from "
            "folder <b>%1</b> to the trash?</qt>", Qt::escape( mFolder->label() ) );
 
-    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edit-trash"))
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
   }
   KCursorSaver busy(KBusyPtr::busy());
@@ -2880,7 +2880,7 @@ void KMMainWidget::setupActions()
   //----- Edit Menu
   mTrashAction = new KAction(i18n("&Move to Trash"), this);
   actionCollection()->addAction("move_to_trash", mTrashAction );
-  mTrashAction->setIcon(KIcon("edit-trash"));
+  mTrashAction->setIcon(KIcon("user-trash"));
   mTrashAction->setIconText( i18n( "Trash" ) );
   mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
   mTrashAction->setToolTip(i18n("Move message to trashcan"));
@@ -2898,7 +2898,7 @@ void KMMainWidget::setupActions()
   mTrashThreadAction = new KAction(i18n("M&ove Thread to Trash"), this);
   actionCollection()->addAction("move_thread_to_trash", mTrashThreadAction );
   mTrashThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Delete));
-  mTrashThreadAction->setIcon(KIcon("edit-trash"));
+  mTrashThreadAction->setIcon(KIcon("user-trash"));
   mTrashThreadAction->setToolTip(i18n("Move thread to trashcan") );
   connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
 
@@ -2963,7 +2963,7 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction = new KAction(KIcon("edit-trash"),
+  mEmptyFolderAction = new KAction(KIcon("user-trash"),
                                     "foo" /*set in updateFolderMenu*/, this);
   actionCollection()->addAction("empty", mEmptyFolderAction );
   connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
