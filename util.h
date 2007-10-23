@@ -39,9 +39,17 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
+
 #include <qobject.h>
 #include <qcstring.h>
+
+#include <kio/netaccess.h>
+#include <kmessagebox.h>
+#include <klocale.h>
+
 class DwString;
+class KURL;
+class QWidget;
 
 namespace KMail
 {
@@ -189,6 +197,25 @@ namespace Util {
       QObject *m_object;
       bool m_disabled;
     };
+
+    // return true if we should proceed, false if we should abort
+    static bool checkOverwrite( const KURL& url, QWidget* w )
+    {
+        if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
+            if ( KMessageBox::Cancel ==
+                    KMessageBox::warningContinueCancel(
+                        w,
+                        i18n( "A file named \"%1\" already exists. "
+                            "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
+                        i18n( "Overwrite File?" ),
+                        i18n( "&Overwrite" ) ) )
+                return false;
+        }
+        return true;
+    }
+
+
+
 }
 }
 

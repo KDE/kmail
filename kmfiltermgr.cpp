@@ -13,6 +13,8 @@
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
+#include "filterimporterexporter.h"
+using KMail::FilterImporterExporter;
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
@@ -68,75 +70,28 @@ void KMFilterMgr::clear()
 void KMFilterMgr::readConfig(void)
 {
   KConfig* config = KMKernel::config();
-  int numFilters;
-  QString grpName;
-
   clear();
-
-  KConfigGroupSaver saver(config, "General");
-
+  
   if (bPopFilter) {
-    numFilters = config->readNumEntry("popfilters",0);
+    KConfigGroupSaver saver(config, "General");
     mShowLater = config->readNumEntry("popshowDLmsgs",0);
-  } else {
-    numFilters = config->readNumEntry("filters",0);
-  }
-
-  for ( int i=0 ; i < numFilters ; ++i ) {
-    grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
-    KConfigGroupSaver saver(config, grpName);
-    KMFilter * filter = new KMFilter(config, bPopFilter);
-    filter->purify();
-    if ( filter->isEmpty() ) {
-#ifndef NDEBUG
-      kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
-		<< "is empty!" << endl;
-#endif
-      delete filter;
-    } else
-      mFilters.append(filter);
-  }
+  } 
+  mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
   KConfig* config = KMKernel::config();
 
-  // first, delete all groups:
-  QStringList filterGroups =
-    config->groupList().grep( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
-  for ( QStringList::Iterator it = filterGroups.begin() ;
-        it != filterGroups.end() ; ++it )
-    config->deleteGroup( *it );
-
-  // Now, write out the new stuff:
-  int i = 0;
-  QString grpName;
-  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin() ;
-        it != mFilters.constEnd() ; ++it ) {
-    if ( !(*it)->isEmpty() ) {
-      if ( bPopFilter )
-        grpName.sprintf("PopFilter #%d", i);
-      else
-        grpName.sprintf("Filter #%d", i);
-      KConfigGroupSaver saver(config, grpName);
-      (*it)->writeConfig(config);
-      ++i;
-    }
-  }
-
+  // Now, write out the new stuff:  
+  FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );
   KConfigGroupSaver saver(config, "General");
-  if (bPopFilter) {
-    config->writeEntry("popfilters", i);
-    config->writeEntry("popshowDLmsgs", mShowLater);
-  } else
-    config->writeEntry("filters", i);
+  if (bPopFilter)
+      config->writeEntry("popshowDLmsgs", mShowLater);
 
   if (withSync) config->sync();
 }
-
 
 int KMFilterMgr::processPop( KMMessage * msg ) const {
   for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin();

@@ -13,6 +13,8 @@
 #include "kmmainwidget.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
+#include "filterimporterexporter.h"
+using KMail::FilterImporterExporter;
 
 // other KDE headers:
 #include <kmessagebox.h>
@@ -125,12 +127,18 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
   : KDialogBase( parent, name,  false  /* modality */,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
-		 Help|Ok|Apply|Cancel /* button mask */,
+		 Help|Ok|Apply|Cancel|User1|User2 /* button mask */,
 		 Ok /* default btn */,  false  /* separator */),
   bPopFilter(popFilter)
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
+  setButtonText( User1, i18n("Import") );
+  setButtonText( User2, i18n("Export") );
+  connect( this, SIGNAL(user1Clicked()),
+           this, SLOT( slotImportFilters()) );
+  connect( this, SIGNAL(user2Clicked()),
+           this, SLOT( slotExportFilters()) );
 
   QWidget *w = new QWidget( this );
   setMainWidget( w );
@@ -724,21 +732,8 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  QValueList<KMFilter*> newFilters;
-  QStringList emptyFilters;
-  QPtrListIterator<KMFilter> it( mFilterList );
-  for ( it.toFirst() ; it.current() ; ++it ) {
-    KMFilter *f = new KMFilter( **it ); // deep copy
-    f->purify();
-    if ( !f->isEmpty() )
-      // the filter is valid:
-      newFilters.append( f );
-    else {
-      // the filter is invalid:
-      emptyFilters << f->name();
-      delete f;
-    }
-  }
+  QValueList<KMFilter*> newFilters = filtersForSaving();
+
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
 
@@ -757,14 +752,36 @@ void KMFilterListBox::slotApplyFilterChanges()
   fm->endUpdate();
   fm->writeConfig();
 
-  // report on invalid filters:
-  if ( !emptyFilters.empty() ) {
-    QString msg = i18n("The following filters have not been saved because they "
-		       "were invalid (e.g. containing no actions or no search "
-		       "rules).");
-    KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
-				  "ShowInvalidFilterWarning" );
-  }
+
+}
+
+QValueList<KMFilter*> KMFilterListBox::filtersForSaving() const
+{
+      QValueList<KMFilter*> filters;
+      QStringList emptyFilters;
+      QPtrListIterator<KMFilter> it( mFilterList );
+      for ( it.toFirst() ; it.current() ; ++it ) {
+        KMFilter *f = new KMFilter( **it ); // deep copy
+        f->purify();
+        if ( !f->isEmpty() )
+          // the filter is valid:
+          filters.append( f );
+        else {
+          // the filter is invalid:
+          emptyFilters << f->name();
+          delete f;
+        }
+      }
+      
+      // report on invalid filters:
+      if ( !emptyFilters.empty() ) {
+        QString msg = i18n("The following filters have not been saved because they "
+                   "were invalid (e.g. containing no actions or no search "
+                   "rules).");
+        KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
+                      "ShowInvalidFilterWarning" );
+      }
+      return filters;
 }
 
 void KMFilterListBox::slotSelected( int aIdx )
@@ -964,10 +981,11 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
   assert(mListBox);
   setEnabled( false );
+  emit resetWidgets();
   // we don't want the insertion to
   // cause flicker in the edit widgets.
   blockSignals( true );
-
+  
   // clear both lists
   mFilterList.clear();
   mListBox->clear();
@@ -1024,6 +1042,12 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
     //    slotSelected( mIdxSelItem );
   }
 
+}
+
+void KMFilterListBox::appendFilter( KMFilter* aFilter )
+{
+    mFilterList.append( aFilter );
+    mListBox->insertItem( aFilter->pattern()->name(), -1 );
 }
 
 void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
@@ -1305,6 +1329,30 @@ void KMPopFilterActionWidget::reset()
   blockSignals( false );
 
   setEnabled(  false  );
+}
+
+void KMFilterDlg::slotImportFilters()
+{
+    FilterImporterExporter importer( bPopFilter );
+    QValueList<KMFilter*> filters = importer.importFilters();
+    // FIXME message box how many were imported?
+    if (filters.isEmpty()) return;
+   
+    QValueListConstIterator<KMFilter*> it;
+    
+    for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
+        mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
+    }
+}
+
+void KMFilterDlg::slotExportFilters()
+{
+    FilterImporterExporter exporter( bPopFilter );
+    QValueList<KMFilter*> filters = mFilterList->filtersForSaving();
+    exporter.exportFilters( filters );
+    QValueList<KMFilter*>::iterator it;
+    for ( it = filters.begin(); it != filters.end(); ++it )
+        delete *it;
 }
 
 #include "kmfilterdlg.moc"

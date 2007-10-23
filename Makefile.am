@@ -73,6 +73,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
                 kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
                 kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
+		filterimporterexporter.cpp \
                 kmfilteraction.cpp kmsearchpattern.cpp \
                 kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
                 kmmsgbase.cpp kmmsglist.cpp kmaddrbook.cpp  \
