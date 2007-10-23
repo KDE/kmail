@@ -718,7 +718,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // hide local inbox if unused
       if ( kmkernel->inboxFolder() == folder && hideLocalInbox() ) {
-        connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)), SLOT(slotUnhideLocalInbox()) );
+        connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(slotUnhideLocalInbox()) );
         continue;
       }
 
@@ -2176,7 +2176,7 @@ void KMFolderTree::slotAddToFavorites()
 
 void KMFolderTree::slotUnhideLocalInbox()
 {
-  disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+  disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)),
               this, SLOT(slotUnhideLocalInbox()) );
   reload();
 }
