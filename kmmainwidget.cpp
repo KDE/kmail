@@ -463,9 +463,11 @@ void KMMainWidget::readConfig(void)
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
 
-  if ( mFolderViewSplitter && !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
+  if ( mFolderViewSplitter &&
+       mFolderViewSplitter->count() == 2 &&
+       !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
     mFolderViewSplitter->setSizes( GlobalSettings::self()->folderViewSplitterPosition() );
-  } else {
+  } else if ( mFolderViewSplitter->count() == 2 ) {
     QList<int> defaults;
     defaults << (int)(height() * 0.2) << (int)(height() * 0.8);
     mFolderViewSplitter->setSizes( defaults );
@@ -540,7 +542,7 @@ void KMMainWidget::writeConfig(void)
   if (mMsgView)
     mMsgView->writeConfig();
 
-  if ( mFolderViewSplitter )
+  if ( mFolderViewSplitter && mFolderViewSplitter->count() == 2 )
     GlobalSettings::setFolderViewSplitterPosition( mFolderViewSplitter->sizes() );
   mFolderTree->writeConfig();
   if ( mFavoriteFolderView )
@@ -613,10 +615,12 @@ void KMMainWidget::createWidgets(void)
 
   // create list of messages
   mSearchAndHeaders = new KVBox( headerParent );
-  mSearchToolBar = new QToolBar( mSearchAndHeaders);
+  mSearchToolBar = new QWidget( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
-  mSearchToolBar->setMovable( false );
+  mSearchToolBar->setLayout(new QHBoxLayout());
+  
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
+  mSearchToolBar->layout()->setMargin(0);
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );
@@ -696,7 +700,8 @@ void KMMainWidget::createWidgets(void)
   mFolderViewSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewSplitter );
   if ( mFavoritesCheckMailAction )
-  connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView, SLOT(checkMail()) );
+    connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView,
+             SLOT(checkMail()) );
   QWidget *folderTreeParent = mFolderViewParent;
   if ( GlobalSettings::enableFavoriteFolderView() ) {
     folderTreeParent = mFolderViewSplitter;
@@ -707,8 +712,7 @@ void KMMainWidget::createWidgets(void)
      mFolderView = mFolderTree;
   }
   connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
-            mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
-
+           mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
   connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
            this, SLOT(folderSelected(KMFolder*)));
   connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
@@ -725,6 +729,8 @@ void KMMainWidget::createWidgets(void)
   if ( mFavoriteFolderView ) {
     connect( mFavoriteFolderView, SIGNAL(folderDrop(KMFolder*)), SLOT(slotMoveMsgToFolder(KMFolder*)) );
     connect( mFavoriteFolderView, SIGNAL(folderDropCopy(KMFolder*)), SLOT(slotCopyMsgToFolder(KMFolder*)) );
+    connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
+             mFavoriteFolderView, SLOT( triggerUpdate() ) );
   }
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
@@ -814,14 +820,14 @@ void KMMainWidget::activatePanners(void)
       mPanner2->addWidget( mMsgView );
     }
     mFolderViewParent = mPanner1;
-    mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
+    mFolderView->setParent( mFolderViewParent );
     mPanner1->setSizes( mPanner1Sep );
     mPanner1->setResizeMode( mFolderView, QSplitter::KeepSize );
     mPanner2->setSizes( mPanner2Sep );
     mPanner2->setStretchFactor( mPanner2->indexOf(mSearchAndHeaders), 0 );
   } else /* !mLongFolderList */ {
     mFolderViewParent = mPanner2;
-    mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
+    mFolderView->setParent( mFolderViewParent );
     mPanner2->addWidget( mSearchAndHeaders );
     mPanner1->insertWidget( 0, mPanner2 );
     if (mMsgView) {
@@ -835,9 +841,8 @@ void KMMainWidget::activatePanners(void)
   }
 
   if (mMsgView) {
-    QObject::connect( mMsgView->copyAction(),
-		    SIGNAL( activated() ),
-		    mMsgView, SLOT( slotCopySelectedText() ));
+    QObject::connect( mMsgView->copyAction(), SIGNAL( activated() ),
+                      mMsgView, SLOT( slotCopySelectedText() ));
   }
 }
 
@@ -1224,7 +1229,7 @@ void KMMainWidget::slotEmptyFolder()
       i18n("<qt>Are you sure you want to move all messages from "
            "folder <b>%1</b> to the trash?</qt>", Qt::escape( mFolder->label() ) );
 
-    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edit-trash"))
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
   }
   KCursorSaver busy(KBusyPtr::busy());
@@ -2761,13 +2766,13 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
   }
   {
-    QAction *action = new KAction(KIcon("mail-get"), i18n("Check &Mail"), this);
+    QAction *action = new KAction(KIcon("mail-receive"), i18n("Check &Mail"), this);
     actionCollection()->addAction("check_mail", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
   }
 
-  mFavoritesCheckMailAction = new KAction( KIcon( "mail-get"),
+  mFavoritesCheckMailAction = new KAction( KIcon( "mail-receive"),
                                            i18n( "Check Mail in Favorite Folders" ), this );
   actionCollection()->addAction( "favorite_check_mail", mFavoritesCheckMailAction );
   mFavoritesCheckMailAction->setShortcut( QKeySequence( Qt::CTRL+Qt::SHIFT+Qt::Key_L ) );
@@ -2776,7 +2781,7 @@ void KMMainWidget::setupActions()
              mFavoriteFolderView, SLOT(checkMail()) );
   }
 
-  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-get"), i18n("Check Ma&il"), this);
+  KActionMenu *actActionMenu = new KActionMenu(KIcon("mail-receive"), i18n("Check Ma&il"), this);
   actionCollection()->addAction("check_mail_in", actActionMenu );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
   connect(actActionMenu, SIGNAL(activated()), this, SLOT(slotCheckMail()));
@@ -2891,7 +2896,7 @@ void KMMainWidget::setupActions()
   //----- Edit Menu
   mTrashAction = new KAction(i18n("&Move to Trash"), this);
   actionCollection()->addAction("move_to_trash", mTrashAction );
-  mTrashAction->setIcon(KIcon("edit-trash"));
+  mTrashAction->setIcon(KIcon("user-trash"));
   mTrashAction->setIconText( i18n( "Trash" ) );
   mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
   mTrashAction->setToolTip(i18n("Move message to trashcan"));
@@ -2909,7 +2914,7 @@ void KMMainWidget::setupActions()
   mTrashThreadAction = new KAction(i18n("M&ove Thread to Trash"), this);
   actionCollection()->addAction("move_thread_to_trash", mTrashThreadAction );
   mTrashThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Delete));
-  mTrashThreadAction->setIcon(KIcon("edit-trash"));
+  mTrashThreadAction->setIcon(KIcon("user-trash"));
   mTrashThreadAction->setToolTip(i18n("Move thread to trashcan") );
   connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
 
@@ -2919,7 +2924,7 @@ void KMMainWidget::setupActions()
   mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
   {
-    QAction *action = new KAction(KIcon("mail-find"), i18n("&Find Messages..."), this);
+    QAction *action = new KAction(KIcon("edit-find-mail"), i18n("&Find Messages..."), this);
     actionCollection()->addAction("search_messages", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
     action->setShortcut(QKeySequence(Qt::Key_S));
@@ -2974,7 +2979,7 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction = new KAction(KIcon("edit-trash"),
+  mEmptyFolderAction = new KAction(KIcon("user-trash"),
                                     "foo" /*set in updateFolderMenu*/, this);
   actionCollection()->addAction("empty", mEmptyFolderAction );
   connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
@@ -3039,7 +3044,7 @@ void KMMainWidget::setupActions()
 
   //----- Message Menu
   {
-    QAction *action = new KAction(KIcon("mail-new"), i18n("&New Message..."), this);
+    QAction *action = new KAction(KIcon("mail-message-new"), i18n("&New Message..."), this);
     actionCollection()->addAction("new_message", action );
     action->setIconText( i18n( "New" ) );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCompose()));
@@ -3106,7 +3111,7 @@ void KMMainWidget::setupActions()
   mReplyAllAction->setShortcut(QKeySequence(Qt::Key_A));
   mReplyActionMenu->addAction( mReplyAllAction );
 
-  mReplyListAction = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction = new KAction(KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mReplyListAction->setShortcut(QKeySequence(Qt::Key_L));
@@ -3366,10 +3371,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_next_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Plus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "find-previous" ) );
+      action->setIcon( KIcon( "edit-find-previous" ) );
       action->setIconText( i18n( "Previous" ) );
     } else {
-      action->setIcon( KIcon( "find-next" ) );
+      action->setIcon( KIcon( "edit-find-next" ) );
       action->setIconText( i18n( "Next" ) );
     }
     action->setToolTip(i18n("Go to the next unread message"));
@@ -3387,10 +3392,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_prev_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Minus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "find-next" ) );
+      action->setIcon( KIcon( "edit-find-next" ) );
       action->setIconText( i18n( "Next" ) );
     } else {
-      action->setIcon( KIcon( "find-previous" ) );
+      action->setIcon( KIcon( "edit-find-previous" ) );
       action->setIconText( i18n( "Previous" ) );
     }
     action->setToolTip(i18n("Go to the previous unread message"));
@@ -4206,14 +4211,17 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
   mFolderShortcutCommands.insert( folder->idString(), c );
 
-  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyUrl() );
-  QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
+  QString actionlabel = i18n( "Folder Shortcut %1", folder->prettyUrl() );
+  QString actionname = i18n( "Folder Shortcut %1", folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
-  QAction * action = actionCollection()->addAction( normalizedName);
+  QAction * action = actionCollection()->addAction( normalizedName );
+  mFolderTree->addAction( action );
   action->setText( actionlabel );
-  connect(action, SIGNAL(triggered(bool) ), c, SLOT(start()));
-  action->setShortcuts(folder->shortcut());
-  action->setIcon( KIcon( folder->unreadIconPath() ) );
+  connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
+  action->setShortcuts( folder->shortcut() );
+  action->setIcon( folder->useCustomIcons() ?
+                   KIcon( folder->unreadIconPath() ) :
+                   KIcon( "folder" ) );
   c->setAction( action ); // will be deleted along with the command
 }
 
@@ -4380,7 +4388,7 @@ void KMMainWidget::setupFolderView()
 {
   if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
     mFolderView = mFolderViewSplitter;
-    mFolderTree->reparent( mFolderViewSplitter, 0, QPoint( 0, 0 ) );
+    mFolderTree->setParent( mFolderViewSplitter );
     mFolderViewSplitter->show();
     mFavoriteFolderView->show();
   } else {
@@ -4388,7 +4396,7 @@ void KMMainWidget::setupFolderView()
     mFolderViewSplitter->hide();
     mFavoriteFolderView->hide();
   }
-  mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
-  mFolderViewParent->moveToFirst( mFolderView );
+  mFolderView->setParent( mFolderViewParent );
+  mFolderViewParent->insertWidget( 0, mFolderView );
   mFolderTree->show();
 }

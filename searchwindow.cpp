@@ -308,7 +308,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mReplyAllAction  = new KAction(KIcon("mail-reply-all"), i18n("Reply to &All..."), this);
   actionCollection()->addAction("search_reply_all", mReplyAllAction );
   connect(mReplyAllAction, SIGNAL(triggered(bool) ), SLOT(slotReplyAllToMsg()));
-  mReplyListAction  = new KAction(KIcon("mail-replylist"), i18n("Reply to Mailing-&List..."), this);
+  mReplyListAction  = new KAction(KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this);
   actionCollection()->addAction("search_reply_list", mReplyListAction );
   connect(mReplyListAction, SIGNAL(triggered(bool) ), SLOT(slotReplyListToMsg()));
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);

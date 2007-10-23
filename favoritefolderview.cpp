@@ -349,8 +349,14 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
   contextMenu.exec( point );
 }
 
-bool FavoriteFolderView::event( QEvent *e )
+//Port the code below to QTreeWidgetItem::setToolTip() once the folder tree stuff
+//is based on QTreeWidget. --tmcguire
+#ifdef __GNUC__
+#warning Port me!
+#endif
+bool FavoriteFolderView::event( QEvent */*e*/ )
 {
+  return true;/*
   if ( e->type() == QEvent::ToolTip ) {
     QHelpEvent *he = static_cast<QHelpEvent *>( e );
 
@@ -374,7 +380,7 @@ bool FavoriteFolderView::event( QEvent *e )
     return true;
   } else {
     return FolderTreeBase::event( e );
-  }
+  }*/
 }
 
 void FavoriteFolderView::removeFolder()

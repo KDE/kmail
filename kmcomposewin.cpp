@@ -1253,7 +1253,7 @@ void KMComposeWin::setupActions( void )
   action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
-  action = new KAction(KIcon("mail-new"), i18n("&New Composer"), this);
+  action = new KAction(KIcon("mail-message-new"), i18n("&New Composer"), this);
   actionCollection()->addAction("new_composer", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
   action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
@@ -1427,7 +1427,7 @@ void KMComposeWin::setupActions( void )
     mEncryptChiasmusAction = 0;
   }
 
-  mEncryptAction = new KToggleAction(KIcon("decrypted"), i18n("&Encrypt Message"), this);
+  mEncryptAction = new KToggleAction(KIcon("document-encrypt"), i18n("&Encrypt Message"), this);
   mEncryptAction->setIconText( i18n( "Encrypt" ) );
   actionCollection()->addAction("encrypt_message", mEncryptAction );
   mSignAction = new KToggleAction(KIcon("signature"), i18n("&Sign Message"), this);
@@ -3645,9 +3645,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // show the appropriate icon
   if ( encrypt ) {
-    mEncryptAction->setIcon( KIcon( "encrypted" ) );
+    mEncryptAction->setIcon( KIcon( "document-encrypt" ) );
   } else {
-    mEncryptAction->setIcon( KIcon( "decrypted" ) );
+    mEncryptAction->setIcon( KIcon( "document-decrypt" ) );
   }
 
   // mark the attachments for (no) encryption

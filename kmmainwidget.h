@@ -531,7 +531,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QSplitter    *mFolderViewSplitter;
     KMHeaders    *mHeaders;
     KVBox        *mSearchAndHeaders;
-    QToolBar     *mSearchToolBar;
+    QWidget     *mSearchToolBar;
     KMail::HeaderListQuickSearch *mQuickSearchLine;
     QPointer<KMFolder> mFolder;
     KMFolder     *mTemplateFolder;

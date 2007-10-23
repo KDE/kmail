@@ -133,7 +133,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     }
     // non-root search folders
     if ( protocol() == KMFolderTreeItem::Search ) {
-      icon = "mail-find";
+      icon = "edit-find-mail";
     }
     if ( mFolder && mFolder->noContent() ) {
       icon = "folder-grey";
@@ -275,6 +275,14 @@ void KMFolderTree::slotFolderMoveOrCopyOperationFinished()
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent* e) const
 {
+  // Do not allow drags from the favorite folder view, as they don't really
+  // make sense and do not work.
+  KMMainWidget *mainWidget = static_cast<KMFolderTree*>( listView() )->mainWidget();
+  assert( mainWidget );
+  if ( mainWidget->favoriteFolderView() &&
+       e->source() == mainWidget->favoriteFolderView()->viewport() )
+    return false;
+
   if ( protocol() == KFolderTreeItem::Search )
     return false; // nothing can be dragged into search folders
 
@@ -710,7 +718,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // hide local inbox if unused
       if ( kmkernel->inboxFolder() == folder && hideLocalInbox() ) {
-        connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)), SLOT(slotUnhideLocalInbox()) );
+        connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(slotUnhideLocalInbox()) );
         continue;
       }
 
@@ -1055,7 +1063,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       folderMenu->addAction( mMainWidget->action("compact_all_folders") );
       folderMenu->addAction( mMainWidget->action("expire_all_folders") );
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
-      folderMenu->addAction(KIcon("mail-get"), i18n("Check &Mail"),
+      folderMenu->addAction(KIcon("mail-receive"), i18n("Check &Mail"),
         this, SLOT(slotCheckMail()));
     }
   } else { // regular folders
@@ -2168,7 +2176,7 @@ void KMFolderTree::slotAddToFavorites()
 
 void KMFolderTree::slotUnhideLocalInbox()
 {
-  disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+  disconnect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)),
               this, SLOT(slotUnhideLocalInbox()) );
   reload();
 }

@@ -108,6 +108,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
                                  KGlobal::config().data());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
+  topLayout->setMargin(0);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
 

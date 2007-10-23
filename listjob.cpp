@@ -145,8 +145,8 @@ void ListJob::execute()
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL(result(KJob *)),
       this, SLOT(slotListResult(KJob *)) );
-  connect( job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntry::UDSEntryList &)),
-      this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntry::UDSEntryList &)) );
+  connect( job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
+      this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)) );
 }
 
 void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
