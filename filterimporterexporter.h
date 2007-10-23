@@ -1,7 +1,7 @@
 #ifndef __FILTERIMPORTEREXPORTER_H__
 #define __FILTERIMPORTEREXPORTER_H__
 
-#include <qvalueList.h>
+#include <qvaluelist.h>
 
 class KMFilter;
 class KConfig;
