@@ -1375,7 +1375,7 @@ void KMKernel::init()
   group.writeEntry("first-start", false);
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
-  QString foldersPath = group.readPathEntry( "folders" );
+  QString foldersPath = group.readPathEntry( "folders", QString() );
   kDebug(5006) <<"foldersPath (from config): '" << foldersPath <<"'";
 
   if ( foldersPath.isEmpty() ) {

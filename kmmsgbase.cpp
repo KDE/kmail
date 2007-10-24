@@ -1167,12 +1167,12 @@ static bool sReplaceSubjPrefix, sReplaceForwSubjPrefix;
 void KMMsgBase::readConfig()
 {
   KConfigGroup composerGroup( KMKernel::config(), "Composer" );
-  sReplySubjPrefixes = composerGroup.readEntry("reply-prefixes", QStringList(),',');
+  sReplySubjPrefixes = composerGroup.readEntry("reply-prefixes", QStringList());
   if (sReplySubjPrefixes.isEmpty())
     sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
   sReplaceSubjPrefix =
       composerGroup.readEntry( "replace-reply-prefix", true );
-  sForwardSubjPrefixes = composerGroup.readEntry("forward-prefixes", QStringList(),',');
+  sForwardSubjPrefixes = composerGroup.readEntry("forward-prefixes", QStringList());
   if (sForwardSubjPrefixes.isEmpty())
     sForwardSubjPrefixes << "Fwd:" << "FW:";
   sReplaceForwSubjPrefix =

@@ -1356,7 +1356,7 @@ void KMFolderTree::cleanupConfigFile()
       }
 
       //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
-      config->deleteGroup(*grpIt, KConfig::NLS);
+      config->deleteGroup(*grpIt, KConfig::Localized);
       kDebug(5006) <<"Deleting information about folder" << name;
     }
   }
