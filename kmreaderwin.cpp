@@ -2634,7 +2634,7 @@ void KMReaderWin::injectAttachments()
   if ( html.isEmpty() )
     return;
   if ( headerStyle() == HeaderStyle::fancy() )
-    html.prepend( "<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:"));
+    html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
   assert( injectionPoint.tagName() == "div" );
   static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
 }
