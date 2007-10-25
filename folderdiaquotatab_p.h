@@ -51,9 +51,6 @@ public:
     void setQuotaInfo( const KMail::QuotaInfo& info );
 
 private:
-    void readConfig();
-
-private:
     QLabel* mInfoLabel;
     QLabel* mRootLabel;
     QProgressBar* mProgressBar;

@@ -36,7 +36,6 @@ class FavoriteFolderViewItem : public KMFolderTreeItem
     int iconSize() const { return 22; }
 
   private slots:
-    void updateCount();
     void nameChanged();
 
   private:
@@ -81,6 +80,7 @@ class FavoriteFolderView : public FolderTreeBase
     void renameFolder();
     void addFolder();
     void notifyInstancesOnChange();
+    void refresh();
 
   private:
     KMFolderTreeItem* mContextMenuItem;

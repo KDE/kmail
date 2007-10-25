@@ -24,6 +24,8 @@ using KMail::AccountManager;
 #include "messagecopyhelper.h"
 using KMail::MessageCopyHelper;
 #include "favoritefolderview.h"
+#include "folderviewtooltip.h"
+using KMail::FolderViewToolTip;
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -334,6 +336,19 @@ void KMFolderTreeItem::assignShortcut()
   return;
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderTreeItem::updateCount()
+{
+    if ( !folder() ) {
+      setTotalCount( -1 );
+      return;
+    }
+    KMail::FolderTreeBase* tree = dynamic_cast<KMail::FolderTreeBase*>( listView() );
+    if ( !tree ) return;
+    
+    tree->slotUpdateCounts( folder(), true /* force update */ );
+}
+
 
 //=============================================================================
 
@@ -373,6 +388,11 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
   mSizePop = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
+  
+  connect( this, SIGNAL( triggerRefresh() ),
+           this, SLOT( refresh() ) );
+  
+  new FolderViewToolTip( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -571,20 +591,6 @@ void KMFolderTree::reload(bool openFolders)
                fti,SLOT(slotNameChanged()));
     connect(fti->folder(),SIGNAL(nameChanged()),
             fti,SLOT(slotNameChanged()));
-
-    // With the use of slotUpdateCountsDelayed is not necesary
-    // a specific processing for Imap
-#if 0
-    if (fti->folder()->folderType() == KMFolderTypeImap) {
-      // imap-only
-      KMFolderImap *imapFolder =
-        dynamic_cast<KMFolderImap*> ( fti->folder()->storage() );
-      disconnect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-          this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-      connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-          this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-    } else {*/
-#endif
 
     // we want to be noticed of changes to update the unread/total columns
     disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
@@ -1588,12 +1594,6 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
-{
-  if (success) slotUpdateCounts(folder->folder());
-}
-
-//-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 {
 //  kdDebug(5006) << "KMFolderTree::slotUpdateCountsDelayed()" << endl;
@@ -1621,73 +1621,6 @@ void KMFolderTree::slotUpdateCountTimeout()
   mFolderToUpdateCount.clear();
   mUpdateCountTimer->stop();
 
-}
-
-void KMFolderTree::slotUpdateCounts(KMFolder * folder)
-{
- // kdDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
-  QListViewItem * current;
-  if (folder)
-    current = indexOfFolder(folder);
-  else
-    current = currentItem();
-
-  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(current);
-  // sanity check
-  if (!fti) return;
-  if (!fti->folder()) fti->setTotalCount(-1);
-
-  // get the unread count
-  int count = 0;
-  if (folder && folder->noContent()) // always empty
-    count = -1;
-  else {
-    if ( fti->folder() )
-      count = fti->folder()->countUnread();
-  }
-
-  // set it
-  bool repaint = false;
-  if (fti->unreadCount() != count) {
-     fti->adjustUnreadCount( count );
-     repaint = true;
-  }
-  if (isTotalActive())
-  {
-    // get the total-count
-    if (fti->folder()->noContent())
-      count = -1;
-    else {
-      // get the cached count if the folder is not open
-      count = fti->folder()->count( !fti->folder()->isOpened() );
-    }
-    // set it
-    if ( count != fti->totalCount() ) {
-      fti->setTotalCount(count);
-      repaint = true;
-    }
-  }
-  if ( isSizeActive() ) {
-    if ( !fti->folder()->noContent()) {
-      int size = folder->storage()->folderSize();
-      if ( size != fti->folderSize() ) {
-        fti->setFolderSize( size );
-        repaint = true;
-      }
-    }
-  }
-  if ( fti->folderIsCloseToQuota() != folder->storage()->isCloseToQuota() ) {
-      fti->setFolderIsCloseToQuota( folder->storage()->isCloseToQuota() );
-  }
-
-  if (fti->parent() && !fti->parent()->isOpen())
-    repaint = false; // we're not visible
-  if (repaint) {
-    fti->setNeedsRepaint( true );
-    refresh();
-  }
-  // tell the kernel that one of the counts has changed
-  kmkernel->messageCountChanged();
 }
 
 void KMFolderTree::updatePopup() const
