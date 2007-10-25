@@ -139,6 +139,8 @@ namespace KMail {
   public: // kmkernel, attachmentlistview
     virtual bool addAttach( const KURL url ) = 0;
 
+    virtual void disableWordWrap() = 0;
+
   public: // kmcommand
     /**
      * Add an attachment to the list.

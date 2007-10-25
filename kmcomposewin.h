@@ -156,6 +156,8 @@ public: // kmkernel, kmcommands, callback
    void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE,
 	       bool allowDecryption=FALSE, bool isModified=FALSE);
 
+   void disableWordWrap();
+
 private: // kmedit
   /**
    * Returns message of the composer. To apply the user changes to the

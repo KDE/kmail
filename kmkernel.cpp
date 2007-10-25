@@ -549,7 +549,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       && GlobalSettings::self()->legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
-    cWin->slotWordWrapToggled( false );
+    cWin->disableWordWrap();
   else
     cWin->setCharset( "", true );
   if ( msgPart )
