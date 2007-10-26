@@ -1392,7 +1392,7 @@ void KMComposeWin::setupActions( void )
   mAttachMPK = new KAction(i18n("Attach &My Public Key"), this);
   actionCollection()->addAction("attach_my_public_key", mAttachMPK );
   connect( mAttachMPK, SIGNAL(triggered(bool) ), SLOT(slotInsertMyPublicKey()));
-  action = new KAction(KIcon("attach"), i18n("&Attach File..."), this);
+  action = new KAction(KIcon("mail-attachment"), i18n("&Attach File..."), this);
   action->setIconText( i18n( "Attach" ) );
   actionCollection()->addAction("attach", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotAttachFile()));
