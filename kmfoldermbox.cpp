@@ -271,10 +271,10 @@ void KMFolderMbox::close( const char *owner, bool aForced )
   kDebug(5006) <<"\nclose" << folder()->name() << mOwners
                << owner << mOpenCount;
 //             << owner << mOpenCount << kBacktrace();
-  QStringList::iterator it = mOwners.find( owner );
+  int ownerPos = mOwners.indexOf( owner );
   if ( !aForced && !mOwners.isEmpty() ) {
-    assert( it != mOwners.end() );
-    mOwners.remove( it );
+    assert( ownerPos != -1 );
+    mOwners.removeAt( ownerPos );
   } else {
     mOwners.clear();
   }
@@ -690,14 +690,14 @@ int KMFolderMbox::createIndexFromContents()
           contentTypeStr = contentTypeStr.trimmed();
           charset = "";
           if ( !contentTypeStr.isEmpty() ) {
-            int cidx = contentTypeStr.find( "charset=" );
+            int cidx = contentTypeStr.indexOf( "charset=" );
             if ( cidx != -1 ) {
               charset = contentTypeStr.mid( cidx + 8 );
               if ( !charset.isEmpty() && ( charset[0] == '"' ) ) {
                 charset = charset.mid( 1 );
               }
               cidx = 0;
-              while ( (unsigned int) cidx < charset.length() ) {
+              while ( cidx < charset.length() ) {
                 if ( charset[cidx] == '"' ||
                      ( !isalnum(charset[cidx]) &&
                        charset[cidx] != '-' && charset[cidx] != '_' ) ) {
@@ -893,7 +893,7 @@ QByteArray KMFolderMbox::escapeFrom( const DwString & str ) {
   if ( strLen <= STRDIM("From ") )
     return KMail::Util::ByteArray(str);
   // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
-  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1 );
+  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1, '\0' );
 
   const char * s = str.data();
   const char * const e = s + strLen - STRDIM("From ");
@@ -959,7 +959,7 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
   }
   QByteArray msgText;
   char endStr[3];
-  int idx = -1, rc;
+  int idx = -1;
   KMFolder* msgParent;
   bool editing = false;
   int growth = 0;

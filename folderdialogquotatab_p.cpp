@@ -52,8 +52,9 @@ using namespace KMail;
 struct QuotaInfo;
 
 QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
-        :QWidget( parent, name )
+        :QWidget( parent )
 {
+      setObjectName( name );
       QVBoxLayout *box = new QVBoxLayout(this);
       QWidget *stuff = new QWidget( this );
       QGridLayout* layout =
