@@ -3833,7 +3833,7 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
   // try to determine the real name
   const KUser user( loginName );
   if ( user.isValid() ) {
-    QString fullName = user.fullName();
+    QString fullName = user.property( KUser::FullName ).toString();
     if ( fullName.contains( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) )
       address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
                     + "\" <" + address + '>';

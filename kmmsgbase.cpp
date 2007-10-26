@@ -349,14 +349,13 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
     QString mimeName = (codec) ? QString(codec->name()).toLower() : (*it);
     if (!mimeNames.contains(mimeName) )
     {
-      encodings.append(KGlobal::charsets()->languageForEncoding(*it)
-        + " ( " + mimeName + " )");
-      mimeNames.insert(mimeName, true);
+      encodings.append( KGlobal::charsets()->descriptionForEncoding(*it) );
+      mimeNames.insert( mimeName, true );
     }
   }
   encodings.sort();
-  if (usAscii) encodings.prepend(KGlobal::charsets()
-    ->languageForEncoding("us-ascii") + " ( us-ascii )");
+  if (usAscii)
+    encodings.prepend(KGlobal::charsets()->descriptionForEncoding("us-ascii") );
   return encodings;
 }
 
@@ -371,7 +370,7 @@ namespace {
     if ( header.isEmpty() )
       return QByteArray();
 
-    QByteArray result( header.size() ); // size() >= length()+1 and size() is O(1)
+    QByteArray result( header.size(), '\0' ); // size() >= length()+1 and size() is O(1)
     char * d = result.data();
 
     for ( const char * s = header.data() ; *s ; )
@@ -719,7 +718,7 @@ QByteArray KMMsgBase::extractRFC2231HeaderField( const QByteArray &aStr,
     }
     pattern += '=';
 
-    QRegExp fnamePart( pattern, false );
+    QRegExp fnamePart( pattern, Qt::CaseInsensitive );
     int startPart = fnamePart.indexIn( aStr );
     int endPart;
     found = ( startPart >= 0 );
@@ -1102,7 +1101,7 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   //these are completely arbitrary order
   tmp_str = fromStrip().trimmed();
   STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = tagString().stripWhiteSpace();
+  tmp_str = tagString().trimmed();
   STORE_DATA_LEN(MsgTagPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = subject().trimmed();
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2, true);

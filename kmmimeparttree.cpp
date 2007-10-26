@@ -132,9 +132,9 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem* item,
                            SLOT( slotSaveAll() ) );
         // edit + delete only for attachments
         if ( mCurrentContextMenuItem->node()->nodeId() > 2 ) {
-          popup->insertItem( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
+          popup->addAction( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
                             this, SLOT( slotDelete() ) );
-          popup->insertItem( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
+          popup->addAction( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
                             this, SLOT( slotEdit() ) );
         }
         popup->exec( point );

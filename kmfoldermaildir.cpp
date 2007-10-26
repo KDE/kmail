@@ -728,7 +728,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
             charset = charset.mid( 1 );
           }
           cidx = 0;
-          while ( (unsigned int) cidx < charset.length() ) {
+          while ( cidx < charset.length() ) {
             if ( charset[cidx] == '"' ||
                  ( !isalnum(charset[cidx] ) &&
                    charset[cidx] != '-' && charset[cidx] != '_' ) ) {

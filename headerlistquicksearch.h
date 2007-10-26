@@ -56,8 +56,7 @@ public:
      * parent.
      */
     HeaderListQuickSearch( QWidget *parent,
-                           K3ListView *listView,
-                           KActionCollection *actionCollection );
+                           K3ListView *listView );
     virtual ~HeaderListQuickSearch();
 
     /**

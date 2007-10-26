@@ -57,6 +57,7 @@ using KMail::TemplateParser;
 #include <kconfiggroup.h>
 #include <libkpgp/kpgp.h>
 #include <kdebug.h>
+#include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 #include <kwallet.h>
 using KWallet::Wallet;
@@ -410,7 +411,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     for ( QStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
       if ( !(*it).isEmpty() )
       {
-        const int pos = (*it).find( ':' );
+        const int pos = (*it).indexOf( ':' );
         if ( pos > 0 )
         {
           QString header = (*it).left( pos ).trimmed();
@@ -1005,21 +1006,21 @@ void KMKernel::raise()
 bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
-  QObjectList l;
 
   // First look for a KMainWindow.
   for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
        it != KMainWindow::memberList().end(); ++it ) {
+
     // Then look for a KMMainWidget.
-    l	= (*it)->queryList("KMMainWidget");
-    if (!l.isEmpty() && l.first()) {
-      mainWidget = dynamic_cast<KMMainWidget *>(l.first());
+    QList<KMMainWidget*> l = (*it)->findChildren<KMMainWidget*>();
+    if ( !l.isEmpty() && l.first() ) {
+      mainWidget = l.first();
       if ( (*it)->isActiveWindow() )
         break;
     }
   }
 
-  if (mainWidget) {
+  if ( mainWidget ) {
     int idx = -1;
     KMFolder *folder = 0;
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
@@ -1822,7 +1823,10 @@ void KMKernel::slotResult(KJob *job)
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, true);
     }
-    else static_cast<KIO::Job*>(job)->showErrorDialog();
+    else {
+      KIO::JobUiDelegate *ui = static_cast<KIO::Job*>( job )->ui();
+      ui->showErrorMessage();
+    }
   }
   mPutJobs.erase(it);
 }
@@ -2089,12 +2093,9 @@ KMMainWidget *KMKernel::getKMMainWidget()
   QWidget *wid;
 
   Q_FOREACH( wid, l ) {
-    QObjectList l2 = wid->topLevelWidget()->queryList( "KMMainWidget" );
-    if (!l2.isEmpty() && l2.first()) {
-      KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>( l2.first() );
-      Q_ASSERT( kmmw );
-      return kmmw;
-    }
+    QList<KMMainWidget*> l2 = wid->topLevelWidget()->findChildren<KMMainWidget*>();
+    if ( !l2.isEmpty() && l2.first() )
+      return l2.first();
   }
   return 0;
 }

@@ -621,8 +621,7 @@ void KMMainWidget::createWidgets(void)
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );
-  mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders,
-                                                actionCollection() );
+  mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders );
   mQuickSearchLine->setObjectName( "headers quick search line" );
 
     connect( mHeaders, SIGNAL( messageListUpdated() ),

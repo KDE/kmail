@@ -1215,8 +1215,8 @@ void KMHeaders::setMessageTagList( const QString &taglabel )
       #endif
       if ( msgBase->tagList() ) {
         KMMessageTagList tmp_list = *msgBase->tagList();
-        KMMessageTagList::iterator lit = tmp_list.find( taglabel );
-        if ( lit == tmp_list.end() ) {
+        int tagPosition = tmp_list.indexOf( taglabel );
+        if ( tagPosition == -1 ) {
           tmp_list.append( taglabel );
           #ifdef Nepomuk_FOUND
           n_resource.addTag( n_tag );
@@ -1232,7 +1232,7 @@ void KMHeaders::setMessageTagList( const QString &taglabel )
           }
           n_resource.setTags( n_tag_list );
           #endif
-          tmp_list.remove( lit );
+          tmp_list.removeAt( tagPosition );
         }
         msgBase->setTagList( tmp_list );
       }
@@ -2474,7 +2474,7 @@ void KMHeaders::slotRMB()
     if ( mOwner->trashThreadAction()->isEnabled() )
       menu->addAction( mOwner->trashThreadAction() );
   }
-  menu->insertSeparator();
+  menu->addSeparator();
   menu->addAction( mOwner->createTodoAction() );
 
   KAcceleratorManager::manage(menu);

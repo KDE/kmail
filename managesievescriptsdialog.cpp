@@ -39,6 +39,7 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
 {
   setCaption( i18n( "Manage Sieve Scripts" ) );
   setButtons( Close );
+  setObjectName( name );
   setDefaultButton(  Close );
   setModal( false );
   setAttribute( Qt::WA_GroupLeader );
@@ -305,6 +306,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
 {
   setCaption( i18n( "Edit Sieve Script" ) );
   setButtons( Ok|Cancel );
+  setObjectName( name );
   setDefaultButton( Ok );
   setModal( true );
   QFrame *frame = new QFrame( this );

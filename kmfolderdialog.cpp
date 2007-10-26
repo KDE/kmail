@@ -83,15 +83,15 @@ using namespace KMail;
 static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
-			       KMFolderTree* aParent, const QString& aCap,
-			       const QString& aName):
+KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
+                                KMFolderTree* aParent, const QString& aCap,
+                                const QString& aName):
   KPageDialog( aParent ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mIsNewFolder( aFolder == 0 ),
-  mFolderTree( aParent )
+  mFolderTree( aParent ),
+  mIsNewFolder( aFolder == 0 )
 {
   setFaceType( Tabbed );
   setCaption( aCap );
@@ -128,8 +128,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   tab = new FolderDialogGeneralTab( this, aName, box );
   addTab( tab );
 
-  if (!mFolder->isSystemFolder() || mFolder->isMainInbox())
-  {							// not for special folders
+  // Don't add template tab for special folders
+  if (!mFolder->isSystemFolder() || mFolder->isMainInbox()) 
+  {
     box = new KVBox( this );
     addPage( box, i18n("Templates") );
     tab = new FolderDialogTemplatesTab( this, box );
@@ -160,6 +161,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+  connect( this, SIGNAL( applyClicked() ), SLOT( slotApply() ) ); 
 }
 
 void KMFolderDialog::addTab( FolderDialogTab* tab )
@@ -176,21 +178,13 @@ void KMFolderDialog::addTab( FolderDialogTab* tab )
 // Not used yet (no button), but ready to be used :)
 void KMFolderDialog::slotApply()
 {
-  if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
-    //KDialog::slotApply();
-#ifdef __GNUC__
-#warning "kde4: port it 'slotApply'"
-#endif
+  if ( mFolder.isNull() && !mIsNewFolder ) // deleted meanwhile?
     return;
-  }
+
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
     mIsNewFolder = false; // so it's not new anymore :)
-#ifdef __GNUC__
-#warning "kde4: port it slotApply"
-#endif
-  //KDialogBase::slotApply();
 }
 
 // Called when pressing Ok

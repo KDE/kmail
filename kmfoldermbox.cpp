@@ -967,7 +967,7 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
   KMFolderOpener openThis( folder(), "mboxaddMsg" );
   if ( openThis.openResult() )
   {
-    kdDebug(5006) << "KMFolderMbox::addMsg-open: " << openThis.openResult() << " of folder: " << label() << endl;
+    kDebug(5006) << "KMFolderMbox::addMsg-open: " << openThis.openResult() << " of folder: " << label() << endl;
     return openThis.openResult();
   }
 

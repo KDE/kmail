@@ -197,6 +197,12 @@ public:
 
   typedef QList<QPixmap> PixmapList;
 
+  /**
+   * Paints all pixmaps in the list side by side to one bigger pixmap,
+   * from left to right.
+   * The resulting pixmap will be returned and has the total width of all
+   * pixmap in the list and the height of the heighest one.
+   */
   QPixmap pixmapMerge( PixmapList pixmaps ) const;
 
   const QPixmap *cryptoIcon(KMMsgBase *msgBase) const;
