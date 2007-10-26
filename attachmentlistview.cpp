@@ -53,6 +53,7 @@ AttachmentListView::AttachmentListView( KMail::Composer * composer,
     mComposer( composer )
 {
   setAcceptDrops( true );
+  setDragEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -134,6 +135,11 @@ void AttachmentListView::keyPressEvent( QKeyEvent * e )
   }
 }
 
+/*virtual*/
+void AttachmentListView::startDrag()
+{
+    emit dragStarted();
+}
 
 } // namespace KMail
 

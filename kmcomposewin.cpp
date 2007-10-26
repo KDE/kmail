@@ -106,6 +106,7 @@ using KRecentAddress::RecentAddresses;
 #include <kuserprofile.h>
 #include <krun.h>
 #include <ktempdir.h>
+#include <kstandarddirs.h>
 //#include <keditlistbox.h>
 #include "globalsettings.h"
 #include "replyphrases.h"
@@ -382,6 +383,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect( mAtmListView,
            SIGNAL( attachmentDeleted() ),
            SLOT( slotAttachRemove() ) );
+  connect( mAtmListView,
+           SIGNAL( dragStarted() ),
+           SLOT( slotAttachmentDragStarted() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -468,6 +472,10 @@ KMComposeWin::~KMComposeWin()
     it = mMapAtmLoadData.begin();
   }
   deleteAll( mComposedMessages );
+
+  for ( std::set<KTempDir*>::iterator it = mTempDirs.begin() ; it != mTempDirs.end() ; ++it ) {
+      delete *it;
+  }
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )
@@ -2316,7 +2324,8 @@ bool KMComposeWin::addAttach(const KURL aUrl)
   }
 
   const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
-  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrURL() ).size() > maxAttachmentSize*1024*1024 ) {
+  const uint maximumAttachmentSizeInByte = maxAttachmentSize*1024*1024;
+  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrURL() ).size() > maximumAttachmentSizeInByte ) {
     KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>" ).arg( maxAttachmentSize ) );
     return false;
   }
@@ -5132,3 +5141,31 @@ void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
       mEncryptionStateIndicator->setShown( mEncryptAction->isChecked() );
     }
 }
+
+void KMComposeWin::slotAttachmentDragStarted()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  int idx = 0;
+  QStringList filenames;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++idx ) {
+    if ( (*it)->isSelected() ) {
+      KMMessagePart* msgPart = mAtmList.at(idx);
+      KTempDir * tempDir = new KTempDir(); // will be deleted on composer close
+      tempDir->setAutoDelete( true );
+      mTempDirs.insert( tempDir );
+      const QString fileName = tempDir->name() + "/" + msgPart->name();
+      KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(),
+                             fileName,
+                             false, false, false);
+      KURL url;
+      url.setPath( fileName );
+      filenames << url.path();
+    }
+  }
+  if ( filenames.isEmpty() ) return;
+
+  QUriDrag *drag  = new QUriDrag( mAtmListView );
+  drag->setFileNames( filenames );
+  drag->dragCopy();
+}
+

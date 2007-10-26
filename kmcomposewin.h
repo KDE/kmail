@@ -14,6 +14,8 @@
 #include "composer.h"
 #include "messagesender.h"
 
+#include <set>
+
 #include <qlabel.h>
 #include <qlistview.h>
 
@@ -422,6 +424,7 @@ private slots:
   void slotAttachOpenWith();
   void slotAttachEdit();
   void slotAttachEditWith();
+  void slotAttachmentDragStarted();
 
   /**
    * Select an email from the addressbook and add it to the line
@@ -888,6 +891,7 @@ private:
   QLabel *mEncryptionStateIndicator;
 
   SnippetWidget *mSnippetWidget;
+  std::set<KTempDir*> mTempDirs;
 };
 
 #endif
