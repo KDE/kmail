@@ -3450,8 +3450,9 @@ void KMMainWidget::setupActions()
 
 //  KStandardAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
   {
-    QAction *action = new KAction(KIcon("knotify"), i18n("Configure &Notifications..."), this);
-    actionCollection()->addAction("kmail_configure_notifications", action );
+    QAction *action = new KAction( KIcon("preferences-desktop-notification"),
+                                   i18n("Configure &Notifications..."), this );
+    actionCollection()->addAction( "kmail_configure_notifications", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditNotifications()));
   }
 
