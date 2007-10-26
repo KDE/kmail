@@ -1183,20 +1183,20 @@ void KMComposeWin::setupActions( void )
     actActionNowMenu->setIconText( i18n( "Send" ) );
     actionCollection()->addAction( "send_default_via", actActionNowMenu );
 
-    action = new KAction( KIcon( "queue" ), i18n("Send &Later"), this );
+    action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
     actionCollection()->addAction( "send_alternative", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
-    actActionLaterMenu = new KActionMenu( KIcon( "queue" ), i18n("Send &Later Via"), this );
+    actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
     actActionLaterMenu->setIconText( i18n( "Queue" ) );
     actionCollection()->addAction( "send_alternative_via", actActionLaterMenu );
 
   } else {
     //default = queue, alternative = send now
-    QAction *action = new KAction( KIcon( "queue" ), i18n("Send &Later"), this );
+    QAction *action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
     actionCollection()->addAction( "send_default", action );
     connect( action, SIGNAL(triggered(bool) ), SLOT(slotSendLater()) );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
-    actActionLaterMenu = new KActionMenu( KIcon( "queue" ), i18n("Send &Later Via"), this );
+    actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
     actionCollection()->addAction( "send_default_via", actActionLaterMenu );
 
     action = new KAction( KIcon( "mail-send" ), i18n("&Send Mail"), this );
