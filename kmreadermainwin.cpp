@@ -244,7 +244,7 @@ void KMReaderMainWin::setupAccel()
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
-  mSaveAtmAction  = new KAction(KIcon("attach"), i18n("Save A&ttachments..."), actionCollection() );
+  mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
 
   QAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );

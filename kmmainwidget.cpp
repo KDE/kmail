@@ -3244,7 +3244,7 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->addAction( mWatchThreadAction );
   mThreadStatusMenu->addAction( mIgnoreThreadAction );
 
-  mSaveAttachmentsAction = new KAction(KIcon("attach"), i18n("Save A&ttachments..."), this);
+  mSaveAttachmentsAction = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), this);
   actionCollection()->addAction("file_save_attachments", mSaveAttachmentsAction );
   connect(mSaveAttachmentsAction, SIGNAL(triggered(bool) ), SLOT(slotSaveAttachments()));
 
