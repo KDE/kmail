@@ -725,7 +725,14 @@ void KMMainWidget::createWidgets(void)
   if ( mFavoriteFolderView ) {
     connect( mFavoriteFolderView, SIGNAL(folderDrop(KMFolder*)), SLOT(slotMoveMsgToFolder(KMFolder*)) );
     connect( mFavoriteFolderView, SIGNAL(folderDropCopy(KMFolder*)), SLOT(slotCopyMsgToFolder(KMFolder*)) );
+
+    // Because of some bug, the favorite folder view is not updated when its
+    // size changes, which creates glitches like the horizontal scrollbar not
+    // appearing. To fix that, manually update the widget if the surrounding 
+    // splitters are moved.
     connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
+             mFavoriteFolderView, SLOT( triggerUpdate() ) );
+    connect( mFolderViewParent, SIGNAL( splitterMoved( int, int ) ),
              mFavoriteFolderView, SLOT( triggerUpdate() ) );
   }
 
