@@ -115,7 +115,7 @@ public:
   /** Set the header style and strategy. We only want them to be set
       together. */
   void setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
-				  const KMail::HeaderStrategy * strategy );
+                                  const KMail::HeaderStrategy * strategy );
 
   /** Getthe message header strategy. */
   const KMail::HeaderStrategy * headerStrategy() const {

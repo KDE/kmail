@@ -239,7 +239,7 @@ void KMReaderMainWin::setupAccel()
 
   //----- File Menu
   mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
-				      actionCollection() );
+                                           actionCollection() );
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
@@ -285,7 +285,7 @@ void KMReaderMainWin::setupAccel()
   mReplyActionMenu  = new KActionMenu(KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this);
   actionCollection()->addAction("message_reply_menu", mReplyActionMenu );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotReplyToMsg()) );
+           SLOT(slotReplyToMsg()) );
 
   mReplyAction  = new KAction(KIcon("mail-reply-sender"), i18n("&Reply..."), this);
   actionCollection()->addAction("reply", mReplyAction );
@@ -335,9 +335,9 @@ void KMReaderMainWin::setupAccel()
   accel->connectItem(accel->insertItem(KStandardShortcut::shortcut(KStandardShortcut::Copy).primary()), // ###### misses alternate(). Should be ported away from Q3Accel anyway.
                      mReaderWin, SLOT(slotCopySelectedText()));
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
-	  this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));
-  connect(mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
-	  mReaderWin, SLOT(slotUrlClicked()));
+           this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
+  connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
+           mReaderWin, SLOT(slotUrlClicked()) );
 
 }
 
@@ -390,8 +390,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     }
 
     if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
-				aMsg.parent()->isDrafts() ||
-				aMsg.parent()->isTemplates() ) ) ) {
+                                aMsg.parent()->isDrafts() ||
+                                aMsg.parent()->isTemplates() ) ) ) {
       // add the reply and forward actions only if we are not in a sent-mail,
       // drafts or templates folder
       //
@@ -402,12 +402,14 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
       menu->addSeparator();
     }
 
-    Q3PopupMenu* copyMenu = new Q3PopupMenu(menu);
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
-    if ( mainwin )
+    if ( mainwin ) {
+      QMenu* copyMenu = new QMenu( menu );
       mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-          &mMenuToFolder, copyMenu );
-    menu->addMenu( copyMenu );
+                                                &mMenuToFolder, copyMenu );
+      copyMenu->setTitle( i18n( "&Copy To" ) );
+      menu->addMenu( copyMenu );
+    }
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
