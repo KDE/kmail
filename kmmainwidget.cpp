@@ -2740,7 +2740,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
   }
   {
-    QAction *action = new KAction(KIcon("refresh"), i18n("&Refresh Local IMAP Cache"), this);
+    QAction *action = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
     actionCollection()->addAction("file_invalidate_imap_cache", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
   }
@@ -3036,7 +3036,7 @@ void KMMainWidget::setupActions()
   }
 
   mTemplateMenu = new KActionMenu( KIcon( "document-new" ), i18n("Message From &Template"),
-				   actionCollection() );
+                                   actionCollection() );
   mTemplateMenu->setDelayed( true );
   actionCollection()->addAction("new_from_template", mTemplateMenu );
   connect( mTemplateMenu->menu(), SIGNAL( aboutToShow() ), this,
