@@ -145,8 +145,7 @@ using KMail::TemplateParser;
 #endif
 
 #include "managesievescriptsdialog.h"
-#include "customtemplates.h"
-#include "customtemplates_kfg.h"
+#include "customtemplatesmenu.h"
 
 #include "kmmainwidget.moc"
 
@@ -188,13 +187,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   mConfig = config;
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
-
-  mCustomReplyActionMenu = 0;
-  mCustomReplyAllActionMenu = 0;
-  mCustomForwardActionMenu = 0;
-  mCustomReplyMapper = 0;
-  mCustomReplyAllMapper = 0;
-  mCustomForwardMapper = 0;
+  mCustomTemplateMenus = 0;
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -288,6 +281,7 @@ void KMMainWidget::destruct()
   delete mFolderTree;
   delete mSystemTray;
   delete mMsgView;
+  delete mCustomTemplateMenus;
   mDestructed = true;
 }
 
@@ -1079,14 +1073,15 @@ void KMMainWidget::slotCompose()
 // TODO: do we want the list sorted alphabetically?
 void KMMainWidget::slotShowNewFromTemplate()
 {
-  if ( mFolder ) {
+  if ( mFolder )
+  {
     const KPIMIdentities::Identity & ident =
       kmkernel->identityManager()->identityForUoidOrDefault( mFolder->identity() );
     mTemplateFolder = kmkernel->folderMgr()->findIdString( ident.templates() );
   }
-  else mTemplateFolder = kmkernel->templatesFolder();
-  if ( !mTemplateFolder )
-    return;
+
+  if ( !mTemplateFolder ) mTemplateFolder = kmkernel->templatesFolder();
+  if ( !mTemplateFolder ) return;
 
   mTemplateMenu->menu()->clear();
   for ( int idx = 0; idx<mTemplateFolder->count(); ++idx ) {
@@ -1105,7 +1100,7 @@ void KMMainWidget::slotShowNewFromTemplate()
   // the user about this.
   if ( mTemplateMenu->menu()->actions().isEmpty() ) {
     QAction *noAction = mTemplateMenu->menu()->addAction(
-                                            i18n( "(no custom templates)" ) );
+                                            i18n( "(no templates)" ) );
     noAction->setEnabled( false );
   }
 }
@@ -1645,11 +1640,10 @@ void KMMainWidget::slotReplyListToMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomReplyToMsg( int tid )
+void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
-  QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) <<"Reply with template:" << tmpl <<" (" << tid <<")";
+  kDebug(5006) <<"Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1659,11 +1653,10 @@ void KMMainWidget::slotCustomReplyToMsg( int tid )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomReplyAllToMsg( int tid )
+void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
-  QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) <<"Reply to All with template:" << tmpl <<" (" << tid <<")";
+  kDebug(5006) <<"Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                    mHeaders->currentMsg(),
                                                    text,
@@ -1673,10 +1666,9 @@ void KMMainWidget::slotCustomReplyAllToMsg( int tid )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomForwardMsg( int tid )
+void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
 {
-  QString tmpl = mCustomTemplates[ tid ];
-  kDebug(5006) <<"Forward with template:" << tmpl <<" (" << tid <<")";
+  kDebug(5006) <<"Forward with template:" << tmpl;
   KMMessageList* selected = mHeaders->selectedMsgs();
   KMCommand *command = 0L;
   if(selected && !selected->isEmpty()) {
@@ -2582,145 +2574,23 @@ void KMMainWidget::getTransportMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateCustomTemplateMenus()
 {
-  if ( !mCustomTemplateActions.isEmpty() ) {
-    for ( QList<KAction*>::iterator ait = mCustomTemplateActions.begin();
-          ait != mCustomTemplateActions.end() ; ++ait ) {
-      //(*ait)->unplugAll();
-      delete (*ait);
-    }
-    mCustomTemplateActions.clear();
+  if (!mCustomTemplateMenus)
+  {
+    mCustomTemplateMenus = new CustomTemplatesMenu(this,actionCollection());
+    connect(mCustomTemplateMenus,SIGNAL(replyTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomReplyToMsg(const QString& )));
+    connect(mCustomTemplateMenus,SIGNAL(replyAllTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomReplyAllToMsg(const QString& )));
+    connect(mCustomTemplateMenus,SIGNAL(forwardTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomForwardMsg(const QString& )));
   }
 
-  delete mCustomReplyActionMenu;
-  delete mCustomReplyAllActionMenu;
-  delete mCustomForwardActionMenu;
-
-  delete mCustomReplyMapper;
-  delete mCustomReplyAllMapper;
-  delete mCustomForwardMapper;
-
-  mCustomForwardActionMenu = new KActionMenu( KIcon( "mail_custom_forward" ),
-                                              i18n("With Custom Template"), this );
-  actionCollection()->addAction( "custom_forward", mCustomForwardActionMenu );
-  QSignalMapper *mCustomForwardMapper = new QSignalMapper( this );
-  connect( mCustomForwardMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotCustomForwardMsg( int ) ) );
   mForwardActionMenu->addSeparator();
-  mForwardActionMenu->addAction( mCustomForwardActionMenu );
+  mForwardActionMenu->addAction( mCustomTemplateMenus->forwardActionMenu() );
 
-  mCustomReplyActionMenu = new KActionMenu( KIcon( "mail_custom_reply" ),
-                                            i18n("Reply With Custom Template"), this );
-  actionCollection()->addAction( "custom_reply", mCustomReplyActionMenu );
-  QSignalMapper *mCustomReplyMapper = new QSignalMapper( this );
-  connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotCustomReplyToMsg( int ) ) );
   mReplyActionMenu->addSeparator();
-  mReplyActionMenu->addAction( mCustomReplyActionMenu );
-
-  mCustomReplyAllActionMenu = new KActionMenu( KIcon( "mail_custom_reply_all" ),
-                                               i18n("Reply to All With Custom Template"), this );
-  actionCollection()->addAction( "custom_reply_all", mCustomReplyAllActionMenu );
-  QSignalMapper *mCustomReplyAllMapper = new QSignalMapper( this );
-  connect( mCustomReplyAllMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotCustomReplyAllToMsg( int ) ) );
-  mReplyActionMenu->addAction( mCustomReplyAllActionMenu );
-
-  mCustomTemplates.clear();
-
-  QStringList list = GlobalSettingsBase::self()->customTemplates();
-  QStringList::iterator it = list.begin();
-  int idx = 0;
-  int replyc = 0;
-  int replyallc = 0;
-  int forwardc = 0;
-  for ( ; it != list.end(); ++it ) {
-    CTemplates t( *it );
-    mCustomTemplates.append( *it );
-
-    KAction *action;
-    switch ( t.type() ) {
-    case CustomTemplates::TReply:
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      action->setShortcut( t.shortcut() );
-      connect( action, SIGNAL(triggered(bool)), mCustomReplyMapper, SLOT(map()) );
-      mCustomReplyMapper->setMapping( action, idx );
-      mCustomReplyActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++replyc;
-      break;
-    case CustomTemplates::TReplyAll:
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      action->setShortcut( t.shortcut() );
-      connect( action, SIGNAL(triggered(bool)), mCustomReplyAllMapper, SLOT(map()) );
-      mCustomReplyAllMapper->setMapping( action, idx );
-      mCustomReplyAllActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++replyallc;
-      break;
-    case CustomTemplates::TForward:
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      action->setShortcut( t.shortcut() );
-      connect( action, SIGNAL(triggered(bool)), mCustomForwardMapper, SLOT(map()) );
-      mCustomForwardMapper->setMapping( action, idx );
-      mCustomForwardActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++forwardc;
-      break;
-    case CustomTemplates::TUniversal:
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      connect( action, SIGNAL(triggered(bool)), mCustomReplyMapper, SLOT(map()) );
-      mCustomReplyMapper->setMapping( action, idx );
-      mCustomReplyActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++replyc;
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      connect( action, SIGNAL(triggered(bool)), mCustomReplyAllMapper, SLOT(map()) );
-      mCustomReplyAllMapper->setMapping( action, idx );
-      mCustomReplyAllActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++replyallc;
-      action = new KAction( (*it).replace( "&", "&&" ),
-                            actionCollection() );
-                            // (*it).utf8() );
-      connect( action, SIGNAL(triggered(bool)), mCustomForwardMapper, SLOT(map()) );
-      mCustomForwardMapper->setMapping( action, idx );
-      mCustomForwardActionMenu->addAction( action );
-      mCustomTemplateActions.append( action );
-      ++forwardc;
-      break;
-    }
-
-    ++idx;
-  }
-  if ( !replyc ) {
-    QAction *noAction = mCustomReplyActionMenu->menu()->addAction(
-        i18n( "(no custom templates)" ) );
-    noAction->setEnabled( false );
-    mCustomReplyActionMenu->setEnabled( false );
-  }
-  if ( !replyallc ) {
-    QAction *noAction = mCustomReplyAllActionMenu->menu()->addAction(
-        i18n( "(no custom templates)" ) );
-    noAction->setEnabled( false );
-    mCustomReplyAllActionMenu->setEnabled( false );
-  }
-  if ( !forwardc ) {
-    QAction *noAction = mCustomForwardActionMenu->menu()->addAction(
-        i18n( "(no custom templates)" ) );
-    noAction->setEnabled( false );
-    mCustomForwardActionMenu->setEnabled( false );
-  }
-
+  mReplyActionMenu->addAction( mCustomTemplateMenus->replyActionMenu() );
+  mReplyActionMenu->addAction( mCustomTemplateMenus->replyAllActionMenu() );
 }
 
 
@@ -3678,8 +3548,6 @@ void KMMainWidget::updateMessageActions()
     mForwardAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );
 
-    if (mCustomForwardActionMenu) mCustomForwardActionMenu->setEnabled( mass_actions );
-
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
@@ -3699,8 +3567,12 @@ void KMMainWidget::updateMessageActions()
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
 
-    if (mCustomReplyActionMenu) mCustomReplyActionMenu->setEnabled( single_actions );
-    if (mCustomReplyAllActionMenu) mCustomReplyAllActionMenu->setEnabled( single_actions );
+    if (mCustomTemplateMenus)
+    {
+      mCustomTemplateMenus->forwardActionMenu()->setEnabled( mass_actions );
+      mCustomTemplateMenus->replyActionMenu()->setEnabled( single_actions );
+      mCustomTemplateMenus->replyAllActionMenu()->setEnabled( single_actions );
+    }
 
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );

@@ -22,10 +22,9 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
-#include <kicon.h>
 #include <q3accel.h>
-//Added by qt3to4:
-#include <Q3PopupMenu>
+
+#include <kicon.h>
 #include <kactionmenu.h>
 #include <klocale.h>
 #include <kstandardshortcut.h>
@@ -47,6 +46,7 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "csshelper.h"
+#include "customtemplatesmenu.h"
 
 #include "kmreadermainwin.h"
 
@@ -91,6 +91,7 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::initKMReaderMainWin() {
+  mCustomTemplateMenus = 0;
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
@@ -216,6 +217,38 @@ void KMReaderMainWin::slotRedirectMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl )
+{
+  kDebug(5006) <<"Reply with template:" << tmpl;
+  KMCommand *command = new KMCustomReplyToCommand( this,
+                                                   mReaderWin->message(),
+                                                   mReaderWin->copyText(),
+						   tmpl );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl )
+{
+  kDebug(5006) <<"Reply to All with template:" << tmpl;
+  KMCommand *command = new KMCustomReplyAllToCommand( this,
+                                                   mReaderWin->message(),
+                                                   mReaderWin->copyText(),
+                                                   tmpl );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
+{
+  kDebug(5006) <<"Forward with template:" << tmpl;
+  KMCommand *command = new KMCustomForwardCommand( this,
+						   mReaderWin->message(),
+						   0, tmpl );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotShowMsgSrc()
 {
   KMMessage *msg = mReaderWin->message();
@@ -264,17 +297,17 @@ void KMReaderMainWin::setupAccel()
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
            SLOT( slotForwardMsg() ) );
 
-  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
-  actionCollection()->addAction("message_forward_inline", mForwardAction );
-  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
-  mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
-  mForwardActionMenu->addAction( mForwardAction );
-
   mForwardAttachedAction  = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
   actionCollection()->addAction("message_forward_as_attachment", mForwardAttachedAction );
   mForwardAttachedAction->setShortcut(QKeySequence(Qt::Key_F));
   connect(mForwardAttachedAction, SIGNAL(triggered(bool) ), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( mForwardAttachedAction );
+
+  mForwardAction  = new KAction(KIcon("mail-forward"), i18n("&Inline..."), this);
+  actionCollection()->addAction("message_forward_inline", mForwardAction );
+  connect(mForwardAction, SIGNAL(triggered(bool) ), SLOT(slotForwardMsg()));
+  mForwardAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+  mForwardActionMenu->addAction( mForwardAction );
 
   mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this);
   actionCollection()->addAction("message_forward_redirect", mRedirectAction );
@@ -322,6 +355,11 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
+  mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
+  actionCollection()->addAction("copy_to", mCopyActionMenu );
+
+  updateMessageMenu();
+  updateCustomTemplateMenus();
 
   Q3Accel *accel = new Q3Accel(mReaderWin, "showMsg()");
   accel->connectItem(accel->insertItem(Qt::Key_Up),
@@ -338,10 +376,45 @@ void KMReaderMainWin::setupAccel()
            this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
   connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
            mReaderWin, SLOT(slotUrlClicked()) );
-
 }
 
 
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::updateCustomTemplateMenus()
+{
+  if (!mCustomTemplateMenus)
+  {
+    mCustomTemplateMenus = new CustomTemplatesMenu(this,actionCollection());
+    connect(mCustomTemplateMenus,SIGNAL(replyTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomReplyToMsg(const QString& )));
+    connect(mCustomTemplateMenus,SIGNAL(replyAllTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomReplyAllToMsg(const QString& )));
+    connect(mCustomTemplateMenus,SIGNAL(forwardTemplateSelected(const QString&)),
+	    this,SLOT(slotCustomForwardMsg(const QString& )));
+  }
+
+  mForwardActionMenu->addSeparator();
+  mForwardActionMenu->addAction( mCustomTemplateMenus->forwardActionMenu() );
+
+  mReplyActionMenu->addSeparator();
+  mReplyActionMenu->addAction( mCustomTemplateMenus->replyActionMenu() );
+  mReplyActionMenu->addAction( mCustomTemplateMenus->replyAllActionMenu() );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::updateMessageMenu()
+{
+  mMenuToFolder.clear();
+
+  KMMainWidget* mainwin = kmkernel->getKMMainWidget();
+  if ( mainwin )
+	  mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
+						    &mMenuToFolder, mCopyActionMenu->menu() );
+}
+
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint)
 {
   KMenu * menu = new KMenu;
@@ -394,22 +467,14 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
                                 aMsg.parent()->isTemplates() ) ) ) {
       // add the reply and forward actions only if we are not in a sent-mail,
       // drafts or templates folder
-      //
-      // FIXME: needs custom templates added to menu
-      // (see KMMainWidget::updateCustomTemplateMenus)
       menu->addAction( mReplyActionMenu );
       menu->addAction( mForwardActionMenu );
       menu->addSeparator();
     }
 
-    KMMainWidget* mainwin = kmkernel->getKMMainWidget();
-    if ( mainwin ) {
-      QMenu* copyMenu = new QMenu( menu );
-      mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-                                                &mMenuToFolder, copyMenu );
-      copyMenu->setTitle( i18n( "&Copy To" ) );
-      menu->addMenu( copyMenu );
-    }
+    updateMessageMenu();
+    menu->addAction( mCopyActionMenu );
+
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
@@ -448,5 +513,6 @@ void KMReaderMainWin::slotSizeAction( int size )
   mReaderWin->cssHelper()->setPrintFont( f );
   mReaderWin->update();
 }
+
 
 #include "kmreadermainwin.moc"

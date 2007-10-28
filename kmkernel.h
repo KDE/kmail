@@ -347,6 +347,10 @@ public:
 
   void raise();
 
+  /** Custom templates have changed, so all windows using them need
+      to regenerate their menus */
+  void updatedTemplates();
+
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -375,6 +379,7 @@ signals:
   void configChanged();
   void folderRemoved( KMFolder* aFolder );
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
+  void customTemplatesChanged();
 
 private slots:
   /** Updates identities when a transport has been deleted. */

@@ -2304,4 +2304,10 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
   }
 }
 
+void KMKernel::updatedTemplates()
+{
+  emit customTemplatesChanged();
+}
+
+
 #include "kmkernel.moc"

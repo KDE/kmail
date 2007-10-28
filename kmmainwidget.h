@@ -32,7 +32,6 @@
 #include <kvbox.h>
 
 #include <QList>
-#include <QVector>
 #include <QVBoxLayout>
 #include <q3listview.h>
 #include <QMenu>
@@ -60,6 +59,7 @@ class KMSystemTray;
 class KMHeaders;
 class KMMessageTagDescription;
 typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
+class CustomTemplatesMenu;
 
 template <typename T> class QList;
 template <typename T, typename S> class QMap;
@@ -120,14 +120,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *replyAuthorAction() const { return mReplyAuthorAction; }
     KAction *replyAllAction() const { return mReplyAllAction; }
     KAction *replyListAction() const { return mReplyListAction; }
-    KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
-    KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
     KActionMenu * replyMenu() const { return mReplyActionMenu; }
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
     KAction *forwardAction() const { return mForwardAction; }
     KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
     KAction *redirectAction() const { return mRedirectAction; }
-    KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
     KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KAction *printAction() const { return mPrintAction; }
@@ -262,9 +259,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
     @param aCount Number of selected messages*/
   void updateMessageTagActions( const int aCount );
-
-    /** Update the custom template menus. */
-    void updateCustomTemplateMenus();
 
   signals:
     void messagesTransfered( bool );
@@ -427,12 +421,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
     void slotReplyAllToMsg();
-    void slotCustomReplyToMsg( int tid );
-    void slotCustomReplyAllToMsg( int tid );
+    void slotCustomReplyToMsg(const QString& tmpl);
+    void slotCustomReplyAllToMsg(const QString& tmpl);
+    void slotCustomForwardMsg(const QString& tmpl);
     void slotForwardMsg();
     void slotForwardAttachedMsg();
     void slotRedirectMsg();
-    void slotCustomForwardMsg( int tid );
     void slotNoQuoteReplyToMsg();
     void slotSubjectFilter();
     void slotMailingListFilter();
@@ -474,7 +468,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     QString findCurrentImapPath();
 
-  void setupFolderView();
+    void setupFolderView();
+
+    /** Update the custom template menus. */
+    void updateCustomTemplateMenus();
 
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
@@ -498,10 +495,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KActionMenu *mTemplateMenu;
 
     // Custom template actions menu
-    KActionMenu *mCustomReplyActionMenu, *mCustomReplyAllActionMenu, *mCustomForwardActionMenu;
-
-    // Signal mappers for custom template actions
-    QSignalMapper *mCustomReplyMapper, *mCustomReplyAllMapper, *mCustomForwardMapper;
+    CustomTemplatesMenu *mCustomTemplateMenus;
 
     KActionMenu *mStatusMenu, *mThreadStatusMenu, *mMoveActionMenu,
       *mCopyActionMenu, *mApplyFilterActionsMenu;
@@ -586,9 +580,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<MessageTagPtrPair> mMessageTagMenuActions;
     QList<QAction*> mMessageTagTBarActions;
     QSignalMapper *mMessageTagToggleMapper;
-
-    QVector<QString> mCustomTemplates;
-    QList<KAction*> mCustomTemplateActions;
 
     KMSystemTray *mSystemTray;
     KConfig *mConfig;

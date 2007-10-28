@@ -189,6 +189,7 @@ set(kmailprivate_LIB_SRCS
    templatesconfiguration.cpp
    templatesinsertcommand.cpp
    customtemplates.cpp
+   customtemplatesmenu.cpp
    quotajobs.cpp
    folderdialogquotatab.cpp
    folderdialogquotatab_p.cpp
