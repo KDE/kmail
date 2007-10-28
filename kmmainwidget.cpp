@@ -2796,10 +2796,11 @@ void KMMainWidget::setupActions()
   connect( mTemplateMenu->popupMenu(), SIGNAL( activated(int) ), this,
            SLOT( slotNewFromTemplate(int) ) );
 
-  (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
+  KAction* newToML = new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
                       CTRL+SHIFT+Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
-
+  newToML->plugAccel( actionCollection()->kaccel() );
+ 
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
