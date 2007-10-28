@@ -49,11 +49,11 @@ private slots:
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
   void slotShowMsgSrc();
-  void slotFontAction(const QString &);
-  void slotSizeAction(int);
-  void slotCustomReplyToMsg(const QString &tmpl);
-  void slotCustomReplyAllToMsg(const QString &tmpl);
-  void slotCustomForwardMsg(const QString &tmpl);
+  void slotFontAction( const QString & );
+  void slotSizeAction( int );
+  void slotCustomReplyToMsg( const QString &tmpl );
+  void slotCustomReplyAllToMsg( const QString &tmpl );
+  void slotCustomForwardMsg( const QString &tmpl );
   void slotConfigChanged();
 
   void slotFolderRemoved( QObject* folderPtr );

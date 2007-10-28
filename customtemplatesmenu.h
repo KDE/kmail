@@ -48,14 +48,14 @@ public slots:
   void update();
 
 signals:
-  void replyTemplateSelected(const QString &tmpl);
-  void replyAllTemplateSelected(const QString &tmpl);
-  void forwardTemplateSelected(const QString &tmpl);
+  void replyTemplateSelected( const QString &tmpl );
+  void replyAllTemplateSelected( const QString &tmpl );
+  void forwardTemplateSelected( const QString &tmpl );
 
 private slots:
-  void slotReplySelected(int idx);
-  void slotReplyAllSelected(int idx);
-  void slotForwardSelected(int idx);
+  void slotReplySelected( int idx );
+  void slotReplyAllSelected( int idx );
+  void slotForwardSelected( int idx );
 
 private:
   void clear();

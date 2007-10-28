@@ -764,19 +764,19 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
 
-  QHBoxLayout *topItems = new QHBoxLayout(this);
+  QHBoxLayout *topItems = new QHBoxLayout( this );
   topLayout->addLayout( topItems );
 
   mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
-  topItems->addWidget( mCustom,Qt::AlignLeft );
+  topItems->addWidget( mCustom, Qt::AlignLeft );
 
-  mWidget = new TemplatesConfiguration( this , "folder-templates" );
+  mWidget = new TemplatesConfiguration( this, "folder-templates" );
   mWidget->setEnabled( false );
 
   // Move the help label outside of the templates configuration widget,
   // so that the help can be read even if the widget is not enabled.
-  topItems->addStretch(9);
-  topItems->addWidget(mWidget->helpLabel(),Qt::AlignRight);
+  topItems->addStretch( 9 );
+  topItems->addWidget( mWidget->helpLabel(), Qt::AlignRight );
 
   topLayout->addWidget( mWidget );
 
@@ -787,18 +787,18 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   btns->addWidget( mCopyGlobal );
   topLayout->addLayout( btns );
 
-  connect( mCustom, SIGNAL(toggled(bool)),
-        mWidget, SLOT(setEnabled(bool)) );
-  connect( mCustom, SIGNAL(toggled(bool)),
-        mCopyGlobal, SLOT(setEnabled(bool)) );
+  connect( mCustom, SIGNAL(toggled( bool )),
+           mWidget, SLOT(setEnabled( bool )) );
+  connect( mCustom, SIGNAL(toggled( bool )),
+           mCopyGlobal, SLOT(setEnabled( bool )) );
 
   connect( mCopyGlobal, SIGNAL(clicked()),
-        this, SLOT(slotCopyGlobal()) );
+           this, SLOT(slotCopyGlobal()) );
 
   initializeWithValuesFromFolder( mDlg->folder() );
 
-  connect( mWidget, SIGNAL( changed() ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mWidget, SIGNAL(changed()),
+           this, SLOT(slotEmitChanged( void )) );
 }
 
 void FolderDialogTemplatesTab::load()

@@ -217,21 +217,10 @@ void KMReaderMainWin::slotRedirectMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl )
+void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  kDebug(5006) <<"Reply with template:" << tmpl;
+  kDebug(5006) << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
-                                                   mReaderWin->message(),
-                                                   mReaderWin->copyText(),
-						   tmpl );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl )
-{
-  kDebug(5006) <<"Reply to All with template:" << tmpl;
-  KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
                                                    tmpl );
@@ -239,12 +228,23 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
+void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  kDebug(5006) <<"Forward with template:" << tmpl;
+  kDebug(5006) << "Reply to All with template:" << tmpl;
+  KMCommand *command = new KMCustomReplyAllToCommand( this,
+                                                      mReaderWin->message(),
+                                                      mReaderWin->copyText(),
+                                                      tmpl );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
+{
+  kDebug(5006) << "Forward with template:" << tmpl;
   KMCommand *command = new KMCustomForwardCommand( this,
-						   mReaderWin->message(),
-						   0, tmpl );
+                                                   mReaderWin->message(),
+                                                   0, tmpl );
   command->start();
 }
 
@@ -384,13 +384,13 @@ void KMReaderMainWin::updateCustomTemplateMenus()
 {
   if (!mCustomTemplateMenus)
   {
-    mCustomTemplateMenus = new CustomTemplatesMenu(this,actionCollection());
-    connect(mCustomTemplateMenus,SIGNAL(replyTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomReplyToMsg(const QString& )));
-    connect(mCustomTemplateMenus,SIGNAL(replyAllTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomReplyAllToMsg(const QString& )));
-    connect(mCustomTemplateMenus,SIGNAL(forwardTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomForwardMsg(const QString& )));
+    mCustomTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
+    connect( mCustomTemplateMenus, SIGNAL(replyTemplateSelected( const QString& )),
+             this, SLOT(slotCustomReplyToMsg( const QString& )) );
+    connect( mCustomTemplateMenus, SIGNAL(replyAllTemplateSelected( const QString& )),
+             this, SLOT(slotCustomReplyAllToMsg( const QString& )) );
+    connect( mCustomTemplateMenus, SIGNAL(forwardTemplateSelected( const QString& )),
+             this, SLOT(slotCustomForwardMsg( const QString& )) );
   }
 
   mForwardActionMenu->addSeparator();
@@ -409,8 +409,8 @@ void KMReaderMainWin::updateMessageMenu()
 
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-	  mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
-						    &mMenuToFolder, mCopyActionMenu->menu() );
+    mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
+                                              &mMenuToFolder, mCopyActionMenu->menu() );
 }
 
 

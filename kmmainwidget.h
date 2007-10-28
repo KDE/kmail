@@ -384,7 +384,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** etc. */
     void slotDisplayCurrentMessage();
-    void slotMsgActivated(KMMessage*);
+    void slotMsgActivated( KMMessage* );
 
     void slotShowNewFromTemplate();
     void slotNewFromTemplate( QAction* );
@@ -421,9 +421,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
     void slotReplyAllToMsg();
-    void slotCustomReplyToMsg(const QString& tmpl);
-    void slotCustomReplyAllToMsg(const QString& tmpl);
-    void slotCustomForwardMsg(const QString& tmpl);
+    void slotCustomReplyToMsg( const QString &tmpl );
+    void slotCustomReplyAllToMsg( const QString &tmpl );
+    void slotCustomForwardMsg( const QString &tmpl );
     void slotForwardMsg();
     void slotForwardAttachedMsg();
     void slotRedirectMsg();

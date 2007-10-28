@@ -1640,7 +1640,7 @@ void KMMainWidget::slotReplyListToMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl )
+void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   kDebug(5006) <<"Reply with template:" << tmpl;
@@ -1653,7 +1653,7 @@ void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl )
+void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 {
   QString text = mMsgView? mMsgView->copyText() : "";
   kDebug(5006) <<"Reply to All with template:" << tmpl;
@@ -1666,7 +1666,7 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
+void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 {
   kDebug(5006) <<"Forward with template:" << tmpl;
   KMMessageList* selected = mHeaders->selectedMsgs();
@@ -2574,15 +2574,15 @@ void KMMainWidget::getTransportMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateCustomTemplateMenus()
 {
-  if (!mCustomTemplateMenus)
+  if ( !mCustomTemplateMenus )
   {
-    mCustomTemplateMenus = new CustomTemplatesMenu(this,actionCollection());
-    connect(mCustomTemplateMenus,SIGNAL(replyTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomReplyToMsg(const QString& )));
-    connect(mCustomTemplateMenus,SIGNAL(replyAllTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomReplyAllToMsg(const QString& )));
-    connect(mCustomTemplateMenus,SIGNAL(forwardTemplateSelected(const QString&)),
-	    this,SLOT(slotCustomForwardMsg(const QString& )));
+    mCustomTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
+    connect( mCustomTemplateMenus, SIGNAL(replyTemplateSelected( const QString& )),
+             this, SLOT(slotCustomReplyToMsg( const QString& )) );
+    connect( mCustomTemplateMenus, SIGNAL(replyAllTemplateSelected( const QString& )),
+             this, SLOT(slotCustomReplyAllToMsg( const QString& )) );
+    connect( mCustomTemplateMenus, SIGNAL(forwardTemplateSelected( const QString& )),
+             this, SLOT(slotCustomForwardMsg( const QString& )) );
   }
 
   mForwardActionMenu->addSeparator();
@@ -2931,7 +2931,7 @@ void KMMainWidget::setupActions()
   mForwardActionMenu = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   actionCollection()->addAction("message_forward", mForwardActionMenu );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardMsg()) );
+           SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction(KIcon("mail-forward"), i18nc("Message->Forward->","As &Attachment..."), this);
   actionCollection()->addAction("message_forward_as_attachment", mForwardAttachedAction );
@@ -2952,7 +2952,7 @@ void KMMainWidget::setupActions()
   mReplyActionMenu = new KActionMenu(KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this);
   actionCollection()->addAction("message_reply_menu", mReplyActionMenu );
   connect( mReplyActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotReplyToMsg()) );
+           SLOT(slotReplyToMsg()) );
 
   mReplyAction = new KAction(KIcon("mail-reply-sender"), i18n("&Reply..."), this);
   actionCollection()->addAction("reply", mReplyAction );
@@ -3567,7 +3567,7 @@ void KMMainWidget::updateMessageActions()
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
 
-    if (mCustomTemplateMenus)
+    if ( mCustomTemplateMenus )
     {
       mCustomTemplateMenus->forwardActionMenu()->setEnabled( mass_actions );
       mCustomTemplateMenus->replyActionMenu()->setEnabled( single_actions );

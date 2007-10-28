@@ -418,19 +418,19 @@ namespace KMail {
     vlay->setMargin( marginHint() );
     vlay->setSpacing( spacingHint() );
 
-    QHBoxLayout *tlay = new QHBoxLayout(tab);
-    vlay->addLayout(tlay);
+    QHBoxLayout *tlay = new QHBoxLayout( tab );
+    vlay->addLayout( tlay );
 
     mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
-    tlay->addWidget(mCustom,Qt::AlignLeft);
+    tlay->addWidget( mCustom, Qt::AlignLeft );
 
-    mWidget = new TemplatesConfiguration( tab , "identity-templates" );
+    mWidget = new TemplatesConfiguration( tab, "identity-templates" );
     mWidget->setEnabled( false );
 
     // Move the help label outside of the templates configuration widget,
     // so that the help can be read even if the widget is not enabled.
-    tlay->addStretch(9);
-    tlay->addWidget(mWidget->helpLabel(),Qt::AlignRight);
+    tlay->addStretch( 9 );
+    tlay->addWidget( mWidget->helpLabel(), Qt::AlignRight );
 
     vlay->addWidget( mWidget );
 
@@ -440,10 +440,10 @@ namespace KMail {
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );
-    connect( mCustom, SIGNAL( toggled( bool ) ),
-             mWidget, SLOT( setEnabled( bool ) ) );
-    connect( mCustom, SIGNAL( toggled( bool ) ),
-             mCopyGlobal, SLOT( setEnabled( bool ) ) );
+    connect( mCustom, SIGNAL(toggled( bool )),
+             mWidget, SLOT(setEnabled( bool )) );
+    connect( mCustom, SIGNAL(toggled( bool )),
+             mCopyGlobal, SLOT(setEnabled( bool )) );
     connect( mCopyGlobal, SIGNAL(clicked()),
              this, SLOT(slotCopyGlobal()) );
 

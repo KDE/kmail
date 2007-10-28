@@ -55,7 +55,7 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
     static QString defaultForward();
     static QString defaultQuoteString();
 
-    QLabel *helpLabel() { return mHelp; }
+    QLabel *helpLabel() const { return mHelp; }
 
   public slots:
     void slotInsertCommand( const QString &cmd, int adjustCursor = 0 );

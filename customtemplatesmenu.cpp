@@ -50,18 +50,18 @@ CustomTemplatesMenu::CustomTemplatesMenu(QWidget *owner,KActionCollection *ac)
   mOwnerActionCollection->addAction( "custom_reply_all", mCustomReplyAllActionMenu );
 
   mCustomForwardMapper = new QSignalMapper( this );
-  connect( mCustomForwardMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotForwardSelected( int ) ) );
+  connect( mCustomForwardMapper, SIGNAL(mapped( int )),
+           this, SLOT(slotForwardSelected( int )) );
 
   mCustomReplyMapper = new QSignalMapper( this );
-  connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotReplySelected( int ) ) );
+  connect( mCustomReplyMapper, SIGNAL(mapped( int )),
+           this, SLOT(slotReplySelected( int )) );
 
   mCustomReplyAllMapper = new QSignalMapper( this );
-  connect( mCustomReplyAllMapper, SIGNAL( mapped( int ) ),
-           this, SLOT( slotReplyAllSelected( int ) ) );
+  connect( mCustomReplyAllMapper, SIGNAL(mapped( int )),
+           this, SLOT(slotReplyAllSelected( int )) );
 
-  connect(kmkernel,SIGNAL(customTemplatesChanged()),this,SLOT(update()));
+  connect( kmkernel, SIGNAL(customTemplatesChanged()), this, SLOT(update()) );
 
   update();
 }
@@ -87,9 +87,9 @@ void CustomTemplatesMenu::clear()
     for ( QList<KAction*>::iterator ait = mCustomTemplateActions.begin();
           ait != mCustomTemplateActions.end() ; ++ait ) {
       KAction *action = (*ait);
-      mCustomReplyMapper->removeMappings(action);
-      mCustomReplyAllMapper->removeMappings(action);
-      mCustomForwardMapper->removeMappings(action);
+      mCustomReplyMapper->removeMappings( action );
+      mCustomReplyAllMapper->removeMappings( action );
+      mCustomForwardMapper->removeMappings( action );
       delete action;
     }
     mCustomTemplateActions.clear();
@@ -192,22 +192,22 @@ void CustomTemplatesMenu::update()
 }
 
 
-void CustomTemplatesMenu::slotReplySelected(int idx)
+void CustomTemplatesMenu::slotReplySelected( int idx )
 {
   //kDebug(5006) << "selected idx=" << idx;
-  emit replyTemplateSelected(mCustomTemplates[idx]);
+  emit replyTemplateSelected( mCustomTemplates[idx] );
 }
 
-void CustomTemplatesMenu::slotReplyAllSelected(int idx)
+void CustomTemplatesMenu::slotReplyAllSelected( int idx )
 {
   //kDebug(5006) << "selected idx=" << idx;
-  emit replyAllTemplateSelected(mCustomTemplates[idx]);
+  emit replyAllTemplateSelected( mCustomTemplates[idx] );
 }
 
-void CustomTemplatesMenu::slotForwardSelected(int idx)
+void CustomTemplatesMenu::slotForwardSelected( int idx )
 {
   //kDebug(5006) << "selected idx=" << idx;
-  emit forwardTemplateSelected(mCustomTemplates[idx]);
+  emit forwardTemplateSelected( mCustomTemplates[idx] );
 }
 
 
