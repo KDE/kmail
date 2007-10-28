@@ -563,7 +563,7 @@ void KMMainWidget::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::createWidgets(void)
+void KMMainWidget::createWidgets()
 {
   mAccel = new Q3Accel(this, "createWidgets()");
 
@@ -609,7 +609,7 @@ void KMMainWidget::createWidgets(void)
   mSearchToolBar = new QWidget( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
   mSearchToolBar->setLayout(new QHBoxLayout());
-  
+
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
   mSearchToolBar->layout()->setMargin(0);
 
@@ -724,6 +724,7 @@ void KMMainWidget::createWidgets(void)
     // size changes, which creates glitches like the horizontal scrollbar not
     // appearing. To fix that, manually update the widget if the surrounding 
     // splitters are moved.
+    // The other workaround for this bug can be found in resizeEvent().
     connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
              mFavoriteFolderView, SLOT( triggerUpdate() ) );
     connect( mFolderViewParent, SIGNAL( splitterMoved( int, int ) ),
@@ -841,20 +842,6 @@ void KMMainWidget::activatePanners(void)
     QObject::connect( mMsgView->copyAction(), SIGNAL( activated() ),
                       mMsgView, SLOT( slotCopySelectedText() ));
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::hide()
-{
-  QWidget::hide();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::show()
-{
-  QWidget::show();
 }
 
 //-------------------------------------------------------------------------
@@ -4269,4 +4256,16 @@ void KMMainWidget::setupFolderView()
   mFolderView->setParent( mFolderViewParent );
   mFolderViewParent->insertWidget( 0, mFolderView );
   mFolderTree->show();
+}
+
+void KMMainWidget::resizeEvent( QResizeEvent *event ) {
+
+  Q_UNUSED( event );
+
+  // Because of some bug, the favorite folder view does not receive update
+  // events when the view is resized. Because of this, manually trigger an
+  // update if this widget is resized.
+  // The other workaround for this bug can be found in createWidgets().
+  if( mFavoriteFolderView )
+    mFavoriteFolderView->triggerUpdate();
 }

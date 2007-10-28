@@ -110,7 +110,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView(void) const { return mMsgView; }
     KMFolderTree* folderTree(void) const  { return mFolderTree; }
-  KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
+    KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
     static void cleanup();
 
@@ -182,8 +182,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMoveMsgToFolder( KMFolder *dest);
     void slotTrashMsg();   // move to trash
 
-    virtual void show();
-    virtual void hide();
     void slotCheckMail();
 
     /**
@@ -248,17 +246,21 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Add, remove or adjust the folder's shortcut. */
     void slotShortcutChanged( KMFolder *folder );
 
-  /**Clear and create actions for message tag toggling*/
-  void clearMessageTagActions();
-  void initializeMessageTagActions();
-  /**Adds if not existing/removes if existing the tag identified by @p aLabel
-    in all selected messages*/
-  void slotUpdateMessageTagList( const QString &aLabel );
-  /**If @p aCount is 0, disables all tag related actions in menus.
-     If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
-     If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
-    @param aCount Number of selected messages*/
-  void updateMessageTagActions( const int aCount );
+    /** Clear and create actions for message tag toggling */
+    void clearMessageTagActions();
+
+    void initializeMessageTagActions();
+
+    /** Adds if not existing/removes if existing the tag identified by @p aLabel
+        in all selected messages */
+    void slotUpdateMessageTagList( const QString &aLabel );
+
+    /** If @p aCount is 0, disables all tag related actions in menus.
+        If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
+        If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
+       @param aCount Number of selected messages
+    */
+    void updateMessageTagActions( const int aCount );
 
   signals:
     void messagesTransfered( bool );
@@ -275,6 +277,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     // helper functions for keeping reference to mFolder
     void openFolder();
     void closeFolder();
+
+    virtual void resizeEvent( QResizeEvent *event );
 
     KActionCollection *actionCollection() const { return mActionCollection; }
 
@@ -406,7 +410,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Settings menu */
     void slotToggleShowQuickSearch();
-  void slotCreateTodo();
+    void slotCreateTodo();
 
     /** XML-GUI stuff */
     void slotEditNotifications();
