@@ -65,48 +65,35 @@ TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *nam
   connect( mInsertCommand, SIGNAL( insertCommand(const QString&, int) ),
            this, SLOT( slotInsertCommand(const QString &, int) ) );
 
+  mHelpString =
+    i18n( "<qt>"
+	  "<p>Here you can create and manage templates to use when "
+	  "composing new messages, replies or forwarded messages.</p>"
+	  "<p>The message templates support substitution commands, "
+	  "either simply type them or select them from "
+	  "the <i>Insert command</i> menu.</p>" );
   if ( QString( name ) == "folder-templates" ) {
-    mHelpString =
-      i18n( "<qt>"
-            "<p>Here you can create message templates to use when you "
-            "compose new messages or replies, or when you forward messages.</p>"
-            "<p>The message templates support substitution commands "
-            "by simple typing them or selecting them from menu "
-            "<i>Insert command</i>.</p>"
-            "<p>Templates specified here are folder-specific. "
+    mHelpString +=
+      i18n( "<p>Templates specified here are folder-specific. "
             "They override both global templates and per-identity "
-            "templates if they are specified.</p>"
-            "</qt>" );
+            "templates.</p>" );
   } else if ( QString( name ) == "identity-templates" ) {
-    mHelpString =
-      i18n( "<qt>"
-            "<p>Here you can create message templates to use when you "
-            "compose new messages or replies, or when you forward messages.</p>"
-            "<p>The message templates support substitution commands "
-            "by simple typing them or selecting them from menu "
-            "<i>Insert command</i>.</p>"
-            "<p>Templates specified here are mail identity-wide. "
-            "They override global templates and are being overridden by per-folder "
-            "templates if they are specified.</p>"
-            "</qt>" );
+    mHelpString +=
+      i18n( "<p>Templates specified here are identity-specific. "
+            "They override global templates, but can be overridden by "
+	    "per-folder templates if they are specified.</p>" );
   } else {
-    mHelpString =
-      i18n( "<qt>"
-            "<p>Here you can create message templates to use when you "
-            "compose new messages or replies, or when you forward messages.</p>"
-            "<p>The message templates support substitution commands "
-            "by simple typing them or selecting them from menu "
-            "<i>Insert command</i>.</p>"
-            "<p>This is a global (default) template. They can be overridden "
-            "by per-identity templates and by per-folder templates "
-            "if they are specified.</p>"
-            "</qt>" );
+    mHelpString +=
+      i18n( "<p>These are global (default) templates. They can be overridden "
+            "by per-identity templates or per-folder templates "
+            "if they are specified.</p>" );
   }
 
   mHelp->setText( i18n( "<a href=\"whatsthis\">How does this work?</a>" ) );
   connect( mHelp, SIGNAL( linkActivated ( const QString& ) ),
            this, SLOT( slotHelpLinkClicked( const QString& ) ) );
 }
+
 
 void TemplatesConfiguration::slotHelpLinkClicked( const QString& )
 {
