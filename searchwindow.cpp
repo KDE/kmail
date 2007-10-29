@@ -301,7 +301,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   //set up actions
   KActionCollection *ac = actionCollection();
-  ac->setAssociatedWidget( this );
   mReplyAction  = new KAction(KIcon("mail-reply-sender"), i18n("&Reply..."), this);
   actionCollection()->addAction("search_reply", mReplyAction );
   connect(mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()));
@@ -343,6 +342,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
           this, SLOT(slotFolderActivated()));
 
+  ac->associateWidget( this );
 }
 
 //-----------------------------------------------------------------------------
