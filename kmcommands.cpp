@@ -1559,7 +1559,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
     KCursorSaver busy( KBusyPtr::busy() );
     KMMessage *fwdMsg = msg->createForward( mTemplate );
-kDebug() << "fwd msg pos" << msg->getCursorPos();
 
     uint id = msg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
     if ( id == 0 )
