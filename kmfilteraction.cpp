@@ -1761,7 +1761,7 @@ public:
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 private:
-  Phonon::MediaObject* mPlayer;
+  mutable Phonon::MediaObject* mPlayer;
 };
 
 KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString &aLabel )
@@ -1815,9 +1815,9 @@ const QString KMFilterActionWithTest::displayString() const
 
 
 KMFilterActionExecSound::KMFilterActionExecSound()
-  : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
+  : KMFilterActionWithTest( "play sound", i18n("Play Sound") ),
+    mPlayer(0)
 {
-  mPlayer = Phonon::createPlayer(Phonon::NotificationCategory);
 }
 
 KMFilterActionExecSound::~KMFilterActionExecSound()
@@ -1834,6 +1834,10 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage*) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
+
+  if ( !mPlayer )
+    mPlayer = Phonon::createPlayer(Phonon::NotificationCategory);
+
   mPlayer->setCurrentSource( mParameter );
   mPlayer->play();
   return GoOn;
