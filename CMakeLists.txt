@@ -228,10 +228,10 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS globalsettings_base.kcfgc replyphrases
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 
-target_link_libraries(kmailprivate ${KDE4_KDE3SUPPORT_LIBRARY} ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARIES} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBS} ${KDE4_KCAL_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KABC_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY})
+kdepim4_link_unique_libraries(kmailprivate ${KDE4_KHTML_LIBRARY} ${KDE4_THREADWEAVER_LIBRARY} ${KDE4_KMIME_LIBRARY} ${KDE4_KPIMIDENTITIES_LIBRARY} ${KDE4_PHONON_LIBRARY} ${KDE4_KNOTIFYCONFIG_LIBRARY} ${KDE4_KTNEF_LIBRARY} ${KDE4_KUTILS_LIBRARY} ${KDE4_MAILTRANSPORT_LIBRARY} ${KDE4_KIMAP_LIBRARY} kleo ${QGPGME_LIBRARIES} mimelib ksieve kpgp kdepim ${QT_QT3SUPPORT_LIBRARY})
 
 if(Nepomuk_FOUND)
-   target_link_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )
+   kdepim4_link_unique_libraries(kmailprivate ${NEPOMUK_LIBRARIES} )
 endif(Nepomuk_FOUND)
 
 set_target_properties(kmailprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
@@ -247,7 +247,7 @@ kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
 
 
 
-target_link_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kcm_kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -263,7 +263,7 @@ kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
 
 
 
-target_link_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -277,7 +277,7 @@ kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${km
 
 
 
-target_link_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
+kdepim4_link_unique_libraries(kmail_bodypartformatter_application_octetstream  ${KDE4_KDECORE_LIBS} )
 
 install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -289,7 +289,7 @@ set(kmail_SRCS main.cpp )
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
-target_link_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
+kdepim4_link_unique_libraries(kmail  ${KDE4_KDECORE_LIBS} kmailprivate )
 
 install(TARGETS kmail  DESTINATION ${BIN_INSTALL_DIR} )
 
