@@ -191,7 +191,7 @@ public:
     GroupwareKolab,    ///< A Kolab groupware account
     GroupwareScalix    ///< A Scalix groupware account
   };
-  Q_ENUMS( GroupwareType );
+  Q_ENUMS( GroupwareType )
 
   void setGroupwareType( GroupwareType type ){ mGroupwareType = type; }
   GroupwareType groupwareType() const { return mGroupwareType; }
