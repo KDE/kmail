@@ -54,7 +54,9 @@ using KMail::AccountManager;
 KMAcctCachedImap::KMAcctCachedImap( AccountManager* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
-    mAnnotationCheckPassed(false)
+    mAnnotationCheckPassed(false),
+    mGroupwareType( GroupwareKolab ),
+    mSentCustomLoginCommand(false)
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
@@ -319,6 +321,7 @@ void KMAcctCachedImap::readConfig( KConfigGroup & config ) {
   for( ; it != oldPaths.end() && nameit != newNames.end(); ++it, ++nameit ) {
     addRenamedFolder( *it, QString(), *nameit );
   }
+  mGroupwareType = (GroupwareType)config.readEntry( "groupwareType", (int)GroupwareKolab );
 }
 
 void KMAcctCachedImap::writeConfig( KConfigGroup & config ) {
@@ -331,6 +334,7 @@ void KMAcctCachedImap::writeConfig( KConfigGroup & config ) {
   for ( ; it != values.end() ; ++it )
     lstNames.append( (*it).mNewName );
   config.writeEntry( "renamed-folders-names", lstNames );
+  config.writeEntry( "groupwareType", (int)mGroupwareType );
 }
 
 void KMAcctCachedImap::invalidateIMAPFolders()

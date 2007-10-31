@@ -249,6 +249,9 @@ void KMFolderCachedImap::readConfig()
   mNoContent = group.readEntry( "NoContent", false );
   mReadOnly = group.readEntry( "ReadOnly", false );
 
+  if ( !group.readEntry( "FolderAttributes" ).isEmpty() )
+    mFolderAttributes = group.readEntry( "FolderAttributes" );
+
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
     // if there is an annotation, it has to be XML
@@ -296,6 +299,7 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
+  configGroup.writeEntry( "FolderAttributes", mFolderAttributes );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
   if ( !mImapPathCreation.isEmpty() ) {
     if ( mImapPath.isEmpty() ) {
@@ -1978,6 +1982,12 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
           }
         } else { // folder both local and on server
           //kDebug(5006) << node->name() <<" is on the server.";
+
+          /**
+           * Store the folder attributes for every subfolder.
+           */
+          int index = mSubfolderNames.indexOf( node->name() );
+          f->mFolderAttributes = folderAttributes[ index ];
         }
       } else {
         //kDebug(5006) <<"skipping dir node:" << node->name();
@@ -2159,6 +2169,7 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing(
       f->setNoContent( mSubfolderMimeTypes[idx] == "inode/directory" );
       f->setNoChildren( mSubfolderMimeTypes[idx] == "message/digest" );
       f->setImapPath( mSubfolderPaths[idx] );
+      f->mFolderAttributes = mSubfolderAttributes[idx];
       kmkernel->dimapFolderMgr()->contentsChanged();
     } else {
       kDebug(5006) <<"can't create folder" << mSubfolderNames[idx];

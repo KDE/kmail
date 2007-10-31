@@ -199,6 +199,7 @@ set(kmailprivate_LIB_SRCS
    localsubscriptiondialog.cpp
    groupwareadaptor.cpp
    editorwatcher.cpp
+   scalix.cpp
 )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS

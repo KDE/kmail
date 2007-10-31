@@ -93,7 +93,7 @@ GroupwareAdaptor::GroupwareAdaptor(KMailICalIfaceImpl* impl)
   :QDBusAbstractAdaptor( impl ), mIcalImpl( impl )
 {
   setAutoRelaySignals(true);
-  QDBusConnection::sessionBus().registerObject( "/GroupWare", this,QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals );
+  QDBusConnection::sessionBus().registerObject( "/Groupware", this,QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals );
 }
 
 

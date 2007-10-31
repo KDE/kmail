@@ -369,6 +369,8 @@ class KMFolderCachedImap : public KMFolderMaildir
     const QString &imapPathForCreation() { return mImapPathCreation; }
     void setImapPathForCreation( const QString &path ) { mImapPathCreation = path; }
 
+    QString folderAttributes() const { return mFolderAttributes; }
+
   protected slots:
     void slotGetMessagesData( KIO::Job *job, const QByteArray &data );
     void getMessagesResult( KMail::FolderJob *job, bool lastSet );
@@ -559,6 +561,7 @@ public slots:
     imapState   mContentState, mSubfolderState;
     QStringList mSubfolderNames, mSubfolderPaths,
       mSubfolderMimeTypes, mSubfolderAttributes;
+    QString     mFolderAttributes;
     QString     mAnnotationFolderType;
     IncidencesFor mIncidencesFor;
 
