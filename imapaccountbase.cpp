@@ -223,13 +223,13 @@ void ImapAccountBase::readConfig( KConfigGroup &config )
   }
   setNamespaces( map );
   // read namespace - delimiter
-  const namespaceDelim entries = config.entryMap();
+  const QStringList entries = config.keyList();
   namespaceDelim namespaceToDelimiter;
-  for ( namespaceDelim::ConstIterator it = entries.begin();
+  for ( QStringList::ConstIterator it = entries.begin();
         it != entries.end(); ++it ) {
-    if ( it.key().startsWith( "Namespace:" ) ) {
-      QString key = it.key().right( it.key().length() - 10 );
-      namespaceToDelimiter[key] = it.value();
+    if ( (*it).startsWith( "Namespace:" ) ) {
+      QString key = (*it).right( (*it).length() - 10 );
+      namespaceToDelimiter[key] = config.readEntry( *it, QString() );
     }
   }
   setNamespaceToDelimiter( namespaceToDelimiter );

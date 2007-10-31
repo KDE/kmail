@@ -83,15 +83,15 @@ using namespace KMail;
 static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
-			       KMFolderTree* aParent, const QString& aCap,
-			       const QString& aName):
+KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
+                                KMFolderTree* aParent, const QString& aCap,
+                                const QString& aName):
   KPageDialog( aParent ),
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mIsNewFolder( aFolder == 0 ),
-  mFolderTree( aParent )
+  mFolderTree( aParent ),
+  mIsNewFolder( aFolder == 0 )
 {
   setFaceType( Tabbed );
   setCaption( aCap );
@@ -128,8 +128,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   tab = new FolderDialogGeneralTab( this, aName, box );
   addTab( tab );
 
-  if (!mFolder->isSystemFolder() || mFolder->isMainInbox())
-  {							// not for special folders
+  // Don't add template tab for special folders
+  if (!mFolder->isSystemFolder() || mFolder->isMainInbox()) 
+  {
     box = new KVBox( this );
     addPage( box, i18n("Templates") );
     tab = new FolderDialogTemplatesTab( this, box );
@@ -160,6 +161,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
   connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+  connect( this, SIGNAL( applyClicked() ), SLOT( slotApply() ) ); 
 }
 
 void KMFolderDialog::addTab( FolderDialogTab* tab )
@@ -176,21 +178,13 @@ void KMFolderDialog::addTab( FolderDialogTab* tab )
 // Not used yet (no button), but ready to be used :)
 void KMFolderDialog::slotApply()
 {
-  if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
-    //KDialog::slotApply();
-#ifdef __GNUC__
-#warning "kde4: port it 'slotApply'"
-#endif
+  if ( mFolder.isNull() && !mIsNewFolder ) // deleted meanwhile?
     return;
-  }
+
   for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
     mIsNewFolder = false; // so it's not new anymore :)
-#ifdef __GNUC__
-#warning "kde4: port it slotApply"
-#endif
-  //KDialogBase::slotApply();
 }
 
 // Called when pressing Ok
@@ -770,11 +764,20 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
 
-  mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
-  topLayout->addWidget( mCustom );
+  QHBoxLayout *topItems = new QHBoxLayout( this );
+  topLayout->addLayout( topItems );
 
-  mWidget = new TemplatesConfiguration( this , "folder-templates" );
+  mCustom = new QCheckBox( i18n("&Use custom message templates"), this );
+  topItems->addWidget( mCustom, Qt::AlignLeft );
+
+  mWidget = new TemplatesConfiguration( this, "folder-templates" );
   mWidget->setEnabled( false );
+
+  // Move the help label outside of the templates configuration widget,
+  // so that the help can be read even if the widget is not enabled.
+  topItems->addStretch( 9 );
+  topItems->addWidget( mWidget->helpLabel(), Qt::AlignRight );
+
   topLayout->addWidget( mWidget );
 
   QHBoxLayout *btns = new QHBoxLayout();
@@ -784,18 +787,18 @@ KMail::FolderDialogTemplatesTab::FolderDialogTemplatesTab( KMFolderDialog *dlg,
   btns->addWidget( mCopyGlobal );
   topLayout->addLayout( btns );
 
-  connect( mCustom, SIGNAL(toggled(bool)),
-        mWidget, SLOT(setEnabled(bool)) );
-  connect( mCustom, SIGNAL(toggled(bool)),
-        mCopyGlobal, SLOT(setEnabled(bool)) );
+  connect( mCustom, SIGNAL(toggled( bool )),
+           mWidget, SLOT(setEnabled( bool )) );
+  connect( mCustom, SIGNAL(toggled( bool )),
+           mCopyGlobal, SLOT(setEnabled( bool )) );
 
   connect( mCopyGlobal, SIGNAL(clicked()),
-        this, SLOT(slotCopyGlobal()) );
+           this, SLOT(slotCopyGlobal()) );
 
   initializeWithValuesFromFolder( mDlg->folder() );
 
-  connect( mWidget, SIGNAL( changed() ),
-           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mWidget, SIGNAL(changed()),
+           this, SLOT(slotEmitChanged( void )) );
 }
 
 void FolderDialogTemplatesTab::load()

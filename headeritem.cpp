@@ -202,10 +202,9 @@ void HeaderItem::setup()
   setHeight( h );
 }
 
-typedef QList<QPixmap> PixmapList;
-
 QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
 {
+  // Calculate the width and height of the resulting pixmap
   int width = 0;
   int height = 0;
   for ( PixmapList::ConstIterator it = pixmaps.begin();
@@ -216,16 +215,21 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
 
   QPixmap res( width, height );
   QBitmap mask( width, height );
+  QPainter resultPainter( &res );
+  QPainter maskPainter( &mask );
   mask.clear();
 
+  // Paint all pixmaps of the list to the resulting pixmap
   int x = 0;
   for ( PixmapList::ConstIterator it = pixmaps.begin();
       it != pixmaps.end(); ++it ) {
-    bitBlt( &res, x, (height - (*it).height()) / 2, &(*it) );
-    bitBlt( &mask, x, (height - (*it).height()) / 2, &(*it).mask() );
+    resultPainter.drawPixmap( x, ( height - (*it).height() ) / 2, *it );
+    maskPainter.drawPixmap( x, (height - (*it).height()) / 2, (*it).mask() );
     x += (*it).width();
   }
 
+  resultPainter.end();
+  maskPainter.end();
   res.setMask( mask );
   return res;
 }

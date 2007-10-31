@@ -172,7 +172,7 @@ namespace {
               "<p>If you think this is an error, please contact him.</p></qt>");
 
   void checkLockDown( QWidget * w, const KConfigGroup & c, const char * key ) {
-    if ( c.entryIsImmutable( key ) ) {
+    if ( c.isEntryImmutable( key ) ) {
       w->setEnabled( false );
       w->setToolTip( i18n( lockedDownWarning ) );
     } else {
@@ -3015,7 +3015,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked(
         general.readEntry( "use-external-editor", false ) );
-    mEditorRequester->setPath( general.readPathEntry( "external-editor" ) );
+    mEditorRequester->setPath( general.readPathEntry( "external-editor", QString() ) );
   }
 }
 

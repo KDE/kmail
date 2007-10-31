@@ -15,6 +15,7 @@ class KActionMenu;
 class KMFolder;
 class KFontAction;
 class KFontSizeAction;
+class CustomTemplatesMenu;
 template <typename T, typename S> class QMap;
 
 class KMReaderMainWin : public KMail::SecondaryWindow
@@ -51,7 +52,9 @@ private slots:
   void slotFontAction(const QString &);
   void slotSizeAction(int);
   void slotCreateTodo();
-
+  void slotCustomReplyToMsg( const QString &tmpl );
+  void slotCustomReplyAllToMsg( const QString &tmpl );
+  void slotCustomForwardMsg( const QString &tmpl );
   void slotConfigChanged();
 
   void slotFolderRemoved( QObject* folderPtr );
@@ -59,6 +62,8 @@ private slots:
 private:
   void initKMReaderMainWin();
   void setupAccel();
+  void updateMessageMenu();
+  void updateCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
@@ -71,9 +76,12 @@ private:
           *mViewSourceAction, *mCreateTodoAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
+  KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
 
+  // Custom template actions menu
+  CustomTemplatesMenu *mCustomTemplateMenus;
 };
 
 #endif /*KMReaderMainWin_h*/

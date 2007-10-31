@@ -324,7 +324,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()));
   mForwardActionMenu->addAction( mForwardAttachedAction );
   mSaveAsAction = actionCollection()->addAction(KStandardAction::SaveAs,  "search_file_save_as", this, SLOT(slotSaveMsg()));
-  mSaveAtchAction  = new KAction(KIcon("attach"), i18n("Save Attachments..."), this);
+  mSaveAtchAction  = new KAction(KIcon("mail-attachment"), i18n("Save Attachments..."), this);
   actionCollection()->addAction("search_save_attachments", mSaveAtchAction );
   connect(mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()));
 

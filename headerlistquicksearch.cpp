@@ -53,8 +53,7 @@
 namespace KMail {
 
 HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
-                                              K3ListView *listView,
-                                              KActionCollection *actionCollection )
+                                              K3ListView *listView )
   : K3ListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList(),
     mComboStatusCount( 0 ), mFilterWithTag( false ), mTagLabel() 
 

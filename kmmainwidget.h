@@ -32,7 +32,6 @@
 #include <kvbox.h>
 
 #include <QList>
-#include <QVector>
 #include <QVBoxLayout>
 #include <q3listview.h>
 #include <QMenu>
@@ -60,6 +59,7 @@ class KMSystemTray;
 class KMHeaders;
 class KMMessageTagDescription;
 typedef QPair<KMMessageTagDescription*,KAction*> MessageTagPtrPair;
+class CustomTemplatesMenu;
 
 template <typename T> class QList;
 template <typename T, typename S> class QMap;
@@ -110,7 +110,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView(void) const { return mMsgView; }
     KMFolderTree* folderTree(void) const  { return mFolderTree; }
-  KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
+    KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
     static void cleanup();
 
@@ -120,14 +120,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *replyAuthorAction() const { return mReplyAuthorAction; }
     KAction *replyAllAction() const { return mReplyAllAction; }
     KAction *replyListAction() const { return mReplyListAction; }
-    KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
-    KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
     KActionMenu * replyMenu() const { return mReplyActionMenu; }
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
     KAction *forwardAction() const { return mForwardAction; }
     KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
     KAction *redirectAction() const { return mRedirectAction; }
-    KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
     KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KAction *printAction() const { return mPrintAction; }
@@ -185,8 +182,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMoveMsgToFolder( KMFolder *dest);
     void slotTrashMsg();   // move to trash
 
-    virtual void show();
-    virtual void hide();
     void slotCheckMail();
 
     /**
@@ -251,23 +246,24 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Add, remove or adjust the folder's shortcut. */
     void slotShortcutChanged( KMFolder *folder );
 
-  /**Clear and create actions for message tag toggling*/
-  void clearMessageTagActions();
-  void initializeMessageTagActions();
-  /**Adds if not existing/removes if existing the tag identified by @p aLabel
-    in all selected messages*/
-  void slotUpdateMessageTagList( const QString &aLabel );
-  /**If @p aCount is 0, disables all tag related actions in menus.
-     If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
-     If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
-    @param aCount Number of selected messages*/
-  void updateMessageTagActions( const int aCount );
+    /** Clear and create actions for message tag toggling */
+    void clearMessageTagActions();
 
-    /** Update the custom template menus. */
-    void updateCustomTemplateMenus();
+    void initializeMessageTagActions();
     
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();
+
+    /** Adds if not existing/removes if existing the tag identified by @p aLabel
+        in all selected messages */
+    void slotUpdateMessageTagList( const QString &aLabel );
+
+    /** If @p aCount is 0, disables all tag related actions in menus.
+        If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
+        If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
+       @param aCount Number of selected messages
+    */
+    void updateMessageTagActions( const int aCount );
 
   signals:
     void messagesTransfered( bool );
@@ -284,6 +280,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     // helper functions for keeping reference to mFolder
     void openFolder();
     void closeFolder();
+
+    virtual void resizeEvent( QResizeEvent *event );
 
     KActionCollection *actionCollection() const { return mActionCollection; }
 
@@ -392,7 +390,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** etc. */
     void slotDisplayCurrentMessage();
-    void slotMsgActivated(KMMessage*);
+    void slotMsgActivated( KMMessage* );
 
     void slotShowNewFromTemplate();
     void slotNewFromTemplate( QAction* );
@@ -414,7 +412,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Settings menu */
     void slotToggleShowQuickSearch();
-  void slotCreateTodo();
+    void slotCreateTodo();
 
     /** XML-GUI stuff */
     void slotEditNotifications();
@@ -429,12 +427,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
     void slotReplyAllToMsg();
-    void slotCustomReplyToMsg( int tid );
-    void slotCustomReplyAllToMsg( int tid );
+    void slotCustomReplyToMsg( const QString &tmpl );
+    void slotCustomReplyAllToMsg( const QString &tmpl );
+    void slotCustomForwardMsg( const QString &tmpl );
     void slotForwardMsg();
     void slotForwardAttachedMsg();
     void slotRedirectMsg();
-    void slotCustomForwardMsg( int tid );
     void slotNoQuoteReplyToMsg();
     void slotSubjectFilter();
     void slotMailingListFilter();
@@ -477,7 +475,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     QString findCurrentImapPath();
 
-  void setupFolderView();
+    void setupFolderView();
+
+    /** Update the custom template menus. */
+    void updateCustomTemplateMenus();
 
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
@@ -501,10 +502,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KActionMenu *mTemplateMenu;
 
     // Custom template actions menu
-    KActionMenu *mCustomReplyActionMenu, *mCustomReplyAllActionMenu, *mCustomForwardActionMenu;
-
-    // Signal mappers for custom template actions
-    QSignalMapper *mCustomReplyMapper, *mCustomReplyAllMapper, *mCustomForwardMapper;
+    CustomTemplatesMenu *mCustomTemplateMenus;
 
     KActionMenu *mStatusMenu, *mThreadStatusMenu, *mMoveActionMenu,
       *mCopyActionMenu, *mApplyFilterActionsMenu;
@@ -589,9 +587,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<MessageTagPtrPair> mMessageTagMenuActions;
     QList<QAction*> mMessageTagTBarActions;
     QSignalMapper *mMessageTagToggleMapper;
-
-    QVector<QString> mCustomTemplates;
-    QList<KAction*> mCustomTemplateActions;
 
     KMSystemTray *mSystemTray;
     KConfig *mConfig;

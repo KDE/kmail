@@ -138,7 +138,7 @@ void lockOrDie() {
     programName = i18n("KMail");
 
   QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
-  KConfig config(lockLocation, KConfig::OnlyLocal);
+  KConfig config(lockLocation, KConfig::SimpleConfig);
   KConfigGroup group(&config, "");
   int oldPid = group.readEntry("pid", -1 );
   kDebug(5006) <<"oldPid=" << oldPid;
@@ -256,7 +256,7 @@ void insertLibraryCataloguesAndIcons() {
 void cleanup()
 {
   const QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
-  KConfig config(lockLocation, KConfig::OnlyLocal);
+  KConfig config(lockLocation, KConfig::SimpleConfig);
   KConfigGroup group(&config, "");
   group.writeEntry("pid", -1);
   group.sync();

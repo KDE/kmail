@@ -225,9 +225,8 @@ void CustomTemplates::save()
   GlobalSettings::self()->setCustomTemplates( list );
   GlobalSettings::self()->writeConfig();
 
-  // update kmail menus related to custom templates
-  if ( kmkernel->getKMMainWidget() )
-    kmkernel->getKMMainWidget()->updateCustomTemplateMenus();
+  // update all menus related to custom templates
+  kmkernel->updatedTemplates();
 }
 
 void CustomTemplates::slotInsertCommand( const QString &cmd, int adjustCursor )

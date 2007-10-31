@@ -7,6 +7,7 @@
   <include>qtextcodec.h</include>
   <include>templatesconfiguration.h</include>
   <include>kglobalsettings.h</include>
+  <include>kcolorscheme.h</include>
   <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
       <entry name="DelayedMarkAsRead"  type="Bool">
@@ -458,10 +459,10 @@
        <default>true</default>
      </entry>
      <entry name="ForegroundColor" type="Color" key="ForegroundColor">
-       <default code="true">qApp->palette().active().text()</default>
+       <default code="true">KColorScheme( QPalette::Normal ).foreground().color()</default>
      </entry>
      <entry name="BackgroundColor" type="Color" key="BackgroundColor">
-       <default code="true">qApp->palette().active().base()</default>
+       <default code="true">KColorScheme( QPalette::Normal ).background().color()</default>
      </entry>
      <entry name="FallbackCharacterEncoding" type="String" key="FallbackCharacterEncoding">
        <default code="true"> QString( QTextCodec::codecForLocale()->name() ).toLower() == "eucjp" ? QString("jis7") : QString( QTextCodec::codecForLocale()->name() ).toLower()</default>

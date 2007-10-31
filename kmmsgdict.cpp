@@ -357,7 +357,7 @@ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 QList<unsigned long> KMMsgDict::serNumList(QList<KMMsgBase *> msgList)
 {
   QList<unsigned long> ret;
-  for ( unsigned int i = 0; i < msgList.count(); i++ ) {
+  for ( int i = 0; i < msgList.count(); i++ ) {
     unsigned long serNum = msgList.at(i)->getMsgSerNum();
     assert( serNum );
     ret.append( serNum );

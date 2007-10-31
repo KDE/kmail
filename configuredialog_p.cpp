@@ -220,7 +220,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   for ( QStringList::ConstIterator it = pathList.begin();
         it != pathList.end(); ++it )
   {
-    KConfig entry( *it, KConfig::OnlyLocal);
+    KConfig entry( *it, KConfig::SimpleConfig);
     KConfigGroup group( &entry, "KCM Locale" );
     // full name:
     QString name = group.readEntry( "Name" );

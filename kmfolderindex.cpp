@@ -248,7 +248,7 @@ bool KMFolderIndex::readIndex()
     }
     else
     {
-      QByteArray line(MAX_LINE);
+      QByteArray line( MAX_LINE, '\0' );
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {
@@ -487,7 +487,7 @@ void KMFolderIndex::recreateIndex()
   QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
   KMessageBox::error(0,
        i18n("The mail index for '%1' is corrupted and will be regenerated now, "
-            "but some information, including status flags, will be lost.", name()));
+            "but some information, including status flags, will be lost.", label()));
   QApplication::restoreOverrideCursor();
   createIndexFromContents();
   readIndex();

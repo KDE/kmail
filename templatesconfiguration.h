@@ -55,23 +55,20 @@ class TemplatesConfiguration : public QWidget, Ui::TemplatesConfigurationBase
     static QString defaultForward();
     static QString defaultQuoteString();
 
+    QLabel *helpLabel() const { return mHelp; }
+
   public slots:
-
     void slotInsertCommand( const QString &cmd, int adjustCursor = 0 );
-
     void slotTextChanged();
 
   signals:
-
     void changed();
 
   protected:
-
     QString strOrBlank( const QString &str );
     QString mHelpString;
 
   private slots:
-
     void slotHelpLinkClicked( const QString& );
 };
 

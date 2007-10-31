@@ -96,7 +96,7 @@ namespace KMail {
 
     mShrinkQuotes = GlobalSettings::self()->shrinkQuotes();
 
-    mBackingPixmapStr = pixmaps.readPathEntry("Readerwin");
+    mBackingPixmapStr = pixmaps.readPathEntry("Readerwin", QString());
     mBackingPixmapOn = !mBackingPixmapStr.isEmpty();
 
     recalculatePGPColors();

@@ -90,6 +90,7 @@ int FolderTreeBase::dndMode(bool alwaysAsk)
       QAction *copyAction = menu.addAction( SmallIcon( "edit-copy" ), i18n( "&Copy Here" ) );
       menu.addSeparator();
       QAction *cancelAction = menu.addAction( SmallIcon( "dialog-cancel" ), i18n( "C&ancel" ) );
+      menu.addAction( SmallIcon( "dialog-cancel" ), i18n( "C&ancel" ) );
 
       QAction *menuChoice = menu.exec( QCursor::pos() );
       if ( menuChoice == moveAction )
