@@ -50,11 +50,11 @@ QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
                                              const QByteArray &packedArgs)
   : KIO::SpecialJob( url, packedArgs)
 {
-  connect( this, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-           SLOT(slotInfoMessage(KIO::Job*,const QString&)) );
+  connect( this, SIGNAL(infoMessage(KJob*,const QString&)),
+           SLOT(slotInfoMessage(KJob*,const QString&)) );
 }
 
-void QuotaJobs::GetQuotarootJob::slotInfoMessage( KIO::Job*, const QString& str )
+void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str )
 {
   // Parse the result
   QStringList results = str.split("\r");

@@ -402,7 +402,7 @@ class KMFolderCachedImap : public KMFolderMaildir
     void slotDeleteMessagesResult( KMail::FolderJob *job );
     void slotImapStatusChanged( KMFolder *folder, const QString&, bool );
     void slotStorageQuotaResult( const QuotaInfo &info );
-    void slotQuotaResult( KIO::Job *job );
+    void slotQuotaResult( KJob *job );
 
   protected:
     /**

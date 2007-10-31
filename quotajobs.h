@@ -158,7 +158,7 @@ signals:
   void quotaInfoReceived( const QuotaInfoList& info );
 
 protected slots:
-  void slotInfoMessage( KIO::Job*, const QString& );
+  void slotInfoMessage( KJob*, const QString& );
 };
 
 /// for getStorageQuota()

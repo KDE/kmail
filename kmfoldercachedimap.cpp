@@ -1148,8 +1148,8 @@ void KMFolderCachedImap::serverSyncInternal()
       mAccount->insertJob(job, jd);
       connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
                SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
-      connect( job, SIGNAL(result(KIO::Job *)),
-               SLOT(slotQuotaResult(KIO::Job *)) );
+      connect( job, SIGNAL(result(KJob *)),
+               SLOT(slotQuotaResult(KJob *)) );
       break;
     }
   case SYNC_STATE_FIND_SUBFOLDERS:
@@ -2677,9 +2677,9 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
   createFoldersNewOnServerAndFinishListing( folders );
 }
 
-void KMFolderCachedImap::slotQuotaResult( KIO::Job *job )
+void KMFolderCachedImap::slotQuotaResult( KJob *job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob( job );
+  KMAcctCachedImap::JobIterator it = mAccount->findJob( static_cast<KIO::Job*>( job ) );
   Q_ASSERT( it != mAccount->jobsEnd() );
   if ( it == mAccount->jobsEnd() ) {
     return; // Shouldn't happen
@@ -2702,7 +2702,7 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job *job )
   }
 
   if ( mAccount->slave() ) {
-    mAccount->removeJob( job );
+    mAccount->removeJob( static_cast<KIO::Job*>( job ) );
   }
   mProgress += 2;
   serverSyncInternal();
