@@ -39,7 +39,7 @@ class FolderViewToolTip : public QToolTip
       
       if ( KMFolderCachedImap* imap = dynamic_cast<KMFolderCachedImap*>( item->folder()->storage() ) ) {
           QuotaInfo info = imap->quotaInfo();
-          if ( info.isValid() )
+          if ( info.isValid() && !info.isEmpty() )
               tipText += i18n("<br>Quota: %1").arg( info.toString() );
       }
       
