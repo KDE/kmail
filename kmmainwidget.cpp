@@ -2337,7 +2337,6 @@ void KMMainWidget::slotDisplayCurrentMessage()
 }
 
 //-----------------------------------------------------------------------------
-//called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
   if ( !msg ) return;
@@ -3833,7 +3832,7 @@ void KMMainWidget::initializeFilterActions()
       if(!addedSeparator) {
         mApplyFilterActionsMenu->popupMenu()->insertSeparator();
         addedSeparator = !addedSeparator;
-	mFilterMenuActions.append( new KActionSeparator());
+        mFilterMenuActions.append( new KActionSeparator());
       }
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
@@ -4095,7 +4094,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 #endif
     assert( mSearchWin );
     KMSearchPattern pattern;
-    pattern.append( KMSearchRule::createInstance( "Subject", KMSearchRule::FuncContains, mQuickSearchLine->currentSearchTerm() ) );
+    pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mQuickSearchLine->currentSearchTerm() ) );
     int status = mQuickSearchLine->currentStatus();
     if ( status != 0 ) {
         pattern.append( new KMSearchRuleStatus( status ) );
