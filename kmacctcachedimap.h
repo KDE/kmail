@@ -184,6 +184,21 @@ public:
   bool annotationCheckPassed(){ return mAnnotationCheckPassed;}
   void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; }
 
+  /** Describes whether the account is a groupware account. */
+  enum GroupwareType
+  {
+    GroupwareNone,     ///< Normal IMAP account
+    GroupwareKolab,    ///< A Kolab groupware account
+    GroupwareScalix    ///< A Scalix groupware account
+  };
+  Q_ENUMS( GroupwareType )
+
+  void setGroupwareType( GroupwareType type ){ mGroupwareType = type; }
+  GroupwareType groupwareType() const { return mGroupwareType; }
+
+  void setSentCustomLoginCommand( bool value ){ mSentCustomLoginCommand = value; }
+  bool sentCustomLoginCommand() const { return mSentCustomLoginCommand; }
+
 protected:
   friend class ::AccountManager;
   KMAcctCachedImap(AccountManager* owner, const QString& accountName, uint id);
@@ -207,6 +222,9 @@ private:
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session
   QMap<QString, RenamedFolder> mRenamedFolders;
   bool mAnnotationCheckPassed;
+
+  GroupwareType mGroupwareType;
+  bool mSentCustomLoginCommand;
 };
 
 #endif /*KMAcctCachedImap_h*/

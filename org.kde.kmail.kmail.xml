@@ -15,6 +15,9 @@
     <method name="accounts">
       <arg type="as" direction="out"/>
     </method>
+    <method name="checkAccount">
+      <arg name="accountName" type="s" direction="in"/>
+    </method>
     <method name="selectFolder">
       <arg name="folder" type="s" direction="in"/>
     </method>

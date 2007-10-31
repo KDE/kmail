@@ -249,6 +249,9 @@ void KMFolderCachedImap::readConfig()
   mNoContent = group.readEntry( "NoContent", false );
   mReadOnly = group.readEntry( "ReadOnly", false );
 
+  if ( !group.readEntry( "FolderAttributes" ).isEmpty() )
+    mFolderAttributes = group.readEntry( "FolderAttributes" );
+
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
     // if there is an annotation, it has to be XML
@@ -296,6 +299,7 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
+  configGroup.writeEntry( "FolderAttributes", mFolderAttributes );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
   if ( !mImapPathCreation.isEmpty() ) {
     if ( mImapPath.isEmpty() ) {
@@ -1148,8 +1152,8 @@ void KMFolderCachedImap::serverSyncInternal()
       mAccount->insertJob(job, jd);
       connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
                SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
-      connect( job, SIGNAL(result(KIO::Job *)),
-               SLOT(slotQuotaResult(KIO::Job *)) );
+      connect( job, SIGNAL(result(KJob *)),
+               SLOT(slotQuotaResult(KJob *)) );
       break;
     }
   case SYNC_STATE_FIND_SUBFOLDERS:
@@ -1978,6 +1982,12 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
           }
         } else { // folder both local and on server
           //kDebug(5006) << node->name() <<" is on the server.";
+
+          /**
+           * Store the folder attributes for every subfolder.
+           */
+          int index = mSubfolderNames.indexOf( node->name() );
+          f->mFolderAttributes = folderAttributes[ index ];
         }
       } else {
         //kDebug(5006) <<"skipping dir node:" << node->name();
@@ -2159,6 +2169,7 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing(
       f->setNoContent( mSubfolderMimeTypes[idx] == "inode/directory" );
       f->setNoChildren( mSubfolderMimeTypes[idx] == "message/digest" );
       f->setImapPath( mSubfolderPaths[idx] );
+      f->mFolderAttributes = mSubfolderAttributes[idx];
       kmkernel->dimapFolderMgr()->contentsChanged();
     } else {
       kDebug(5006) <<"can't create folder" << mSubfolderNames[idx];
@@ -2677,9 +2688,9 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KJob *job )
   createFoldersNewOnServerAndFinishListing( folders );
 }
 
-void KMFolderCachedImap::slotQuotaResult( KIO::Job *job )
+void KMFolderCachedImap::slotQuotaResult( KJob *job )
 {
-  KMAcctCachedImap::JobIterator it = mAccount->findJob( job );
+  KMAcctCachedImap::JobIterator it = mAccount->findJob( static_cast<KIO::Job*>( job ) );
   Q_ASSERT( it != mAccount->jobsEnd() );
   if ( it == mAccount->jobsEnd() ) {
     return; // Shouldn't happen
@@ -2702,7 +2713,7 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job *job )
   }
 
   if ( mAccount->slave() ) {
-    mAccount->removeJob( job );
+    mAccount->removeJob( static_cast<KIO::Job*>( job ) );
   }
   mProgress += 2;
   serverSyncInternal();

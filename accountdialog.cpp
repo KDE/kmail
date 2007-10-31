@@ -435,7 +435,9 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
-  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
+  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
+                                 10000, 1 );
+  mLocal.intervalSpin->setSliderEnabled( false );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( 1 );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
@@ -536,7 +538,9 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
-  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
+  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
+                                   10000, 1 );
+  mMaildir.intervalSpin->setSliderEnabled( false );
   mMaildir.intervalSpin->setSuffix( i18n(" min") );
   mMaildir.intervalSpin->setValue( 1 );
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
@@ -653,7 +657,8 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerDaysCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerDays(bool)) );
   mPop.leaveOnServerDaysSpin = new KIntNumInput( afterDaysBox );
-  mPop.leaveOnServerDaysSpin->setRange( 1, 365, 1, false );
+  mPop.leaveOnServerDaysSpin->setRange( 1, 365, 1 );
+  mPop.leaveOnServerDaysSpin->setSliderEnabled( false );
   connect( mPop.leaveOnServerDaysSpin, SIGNAL(valueChanged(int)),
            SLOT(slotLeaveOnServerDaysChanged(int)));
   mPop.leaveOnServerDaysSpin->setValue( 1 );
@@ -666,7 +671,8 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerCountCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerCount(bool)) );
   mPop.leaveOnServerCountSpin = new KIntNumInput( leaveOnServerCountBox );
-  mPop.leaveOnServerCountSpin->setRange( 1, 999999, 1, false );
+  mPop.leaveOnServerCountSpin->setRange( 1, 999999, 1 );
+  mPop.leaveOnServerCountSpin->setSliderEnabled( false );
   connect( mPop.leaveOnServerCountSpin, SIGNAL(valueChanged(int)),
            SLOT(slotLeaveOnServerCountChanged(int)));
   mPop.leaveOnServerCountSpin->setValue( 100 );
@@ -678,7 +684,8 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerSizeCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotEnableLeaveOnServerSize(bool)) );
   mPop.leaveOnServerSizeSpin = new KIntNumInput( leaveOnServerSizeBox );
-  mPop.leaveOnServerSizeSpin->setRange( 1, 999999, 1, false );
+  mPop.leaveOnServerSizeSpin->setRange( 1, 999999, 1 );
+  mPop.leaveOnServerSizeSpin->setSliderEnabled( false );
   mPop.leaveOnServerSizeSpin->setSuffix( i18n(" MB") );
   mPop.leaveOnServerSizeSpin->setValue( 10 );
   grid->addWidget( leaveOnServerSizeBox, 9, 0, 1, 2 );
@@ -719,18 +726,19 @@ void AccountDialog::makePopAccountPage()
   mPop.filterOnServerSizeSpin = new KIntNumInput ( hbox );
   mPop.filterOnServerSizeSpin->setEnabled( false );
   hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
-  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, false );
+  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100 );
+  mPop.filterOnServerSizeSpin->setSliderEnabled( false );
   connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
           SLOT(slotFilterOnServerSizeChanged(int)));
   mPop.filterOnServerSizeSpin->setValue( 50000 );
   grid->addWidget( hbox, 11, 0, 1, 2 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
-	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
+           mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
   connect( mPop.filterOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotFilterOnServerClicked() ) );
   QString msg = i18n("If you select this option, POP Filters will be used to "
-		     "decide what to do with messages. You can then select "
-		     "to download, delete or keep them on the server." );
+                     "decide what to do with messages. You can then select "
+                     "to download, delete or keep them on the server." );
   mPop.filterOnServerCheck->setWhatsThis( msg );
   mPop.filterOnServerSizeSpin->setWhatsThis( msg );
 
@@ -738,11 +746,13 @@ void AccountDialog::makePopAccountPage()
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
   grid->addWidget( mPop.intervalCheck, 12, 0, 1, 2 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
-	   this, SLOT(slotEnablePopInterval(bool)) );
+           this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
   grid->addWidget( mPop.intervalLabel, 13, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
-  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
+  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(),
+                               10000, 1 );
+  mPop.intervalSpin->setSliderEnabled( false );
   mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( 1 );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
@@ -772,8 +782,8 @@ void AccountDialog::makePopAccountPage()
   vlay->addLayout( buttonLay );
   mPop.checkCapabilities =
     new QPushButton( i18n("Check &What the Server Supports"), page2 );
-  connect(mPop.checkCapabilities, SIGNAL(clicked()),
-    SLOT(slotCheckPopCapabilities()));
+  connect( mPop.checkCapabilities, SIGNAL(clicked()),
+           SLOT(slotCheckPopCapabilities()) );
   buttonLay->addStretch();
   buttonLay->addWidget( mPop.checkCapabilities );
   buttonLay->addStretch();
@@ -793,14 +803,14 @@ void AccountDialog::makePopAccountPage()
   mPop.encryptionGroup->layout()->addWidget( mPop.encryptionNone );
   mPop.encryptionGroup->layout()->addWidget( mPop.encryptionSSL );
   mPop.encryptionGroup->layout()->addWidget( mPop.encryptionTLS );
-  
+
   mPop.encryptionButtonGroup = new QButtonGroup();
   mPop.encryptionButtonGroup->addButton( mPop.encryptionNone,NoEncryption );
   mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL,SSL );
   mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS,TLS );
-  
-  connect(mPop.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
-    SLOT(slotPopEncryptionChanged(int)));
+
+  connect( mPop.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
+           SLOT(slotPopEncryptionChanged(int)) );
   vlay->addWidget( mPop.encryptionGroup );
 
   mPop.authGroup = new QGroupBox( i18n("Authentication Method"), page2 );
@@ -830,7 +840,7 @@ void AccountDialog::makePopAccountPage()
   }
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
   mPop.authAPOP->setObjectName( "auth apop" );
-  
+
   mPop.authGroup->layout()->addWidget( mPop.authUser ); 
   mPop.authGroup->layout()->addWidget( mPop.authLogin );
   mPop.authGroup->layout()->addWidget( mPop.authPlain );
@@ -839,7 +849,7 @@ void AccountDialog::makePopAccountPage()
   mPop.authGroup->layout()->addWidget( mPop.authNTLM );
   mPop.authGroup->layout()->addWidget( mPop.authGSSAPI );
   mPop.authGroup->layout()->addWidget( mPop.authAPOP );
-  
+
   mPop.authButtonGroup = new QButtonGroup();
   mPop.authButtonGroup->addButton( mPop.authUser );
   mPop.authButtonGroup->addButton( mPop.authLogin );
@@ -854,8 +864,8 @@ void AccountDialog::makePopAccountPage()
 
   mPop.usePipeliningCheck =
     new QCheckBox( i18n("&Use pipelining for faster mail download"), page2 );
-  connect(mPop.usePipeliningCheck, SIGNAL(clicked()),
-    SLOT(slotPipeliningClicked()));
+  connect( mPop.usePipeliningCheck, SIGNAL(clicked()),
+           SLOT(slotPipeliningClicked()) );
   vlay->addWidget( mPop.usePipeliningCheck );
 
   vlay->addStretch();
@@ -1108,7 +1118,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1, false );
+  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1 );
+  mImap.intervalSpin->setSliderEnabled( false );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );

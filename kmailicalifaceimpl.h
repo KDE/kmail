@@ -128,7 +128,7 @@ public:
                       quint32 sernum,
                       const QString& filename );
 
-  QStringList listAttachments( const QString &resource, Q_UINT32 sernum );
+  QStringList listAttachments( const QString &resource, quint32 sernum );
 
 
   bool removeSubresource( const QString& );
@@ -246,6 +246,7 @@ private slots:
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KMail::FolderContentsType contentsType );
+  KMFolder* initScalixFolder( KMail::FolderContentsType contentsType );
 
   void connectFolder( KMFolder* folder );
 

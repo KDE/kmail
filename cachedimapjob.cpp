@@ -41,6 +41,7 @@
 #include "kmmsgdict.h"
 #include "maildirjob.h"
 #include "util.h"
+#include "scalix.h"
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
@@ -143,6 +144,34 @@ void CachedImapJob::execute()
 
   // All necessary conditions have been met. Register this job
   mAccount->mJobList.append(this);
+
+  /**
+   * The Scalix server requires to send him a custom X-SCALIX-ID command
+   * to switch it into a special mode.
+   *
+   * This should be done once after the login and before the first command.
+   */
+  if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareScalix ) {
+    if ( !mAccount->sentCustomLoginCommand() ) {
+      QByteArray packedArgs;
+      QDataStream stream( &packedArgs, IO_WriteOnly );
+
+      const QString command = QString( "X-SCALIX-ID " );
+      const QString argument = QString( "(\"name\" \"Evolution\" \"version\" \"2.10.0\")" );
+
+      stream << (int) 'X' << 'N' << command << argument;
+
+      const KUrl url = mAccount->getUrl();
+
+      ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+      jd.items << mFolder->label(); // for the err msg
+      KIO::SimpleJob *simpleJob = KIO::special( url.url(), packedArgs, false );
+      KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+      mAccount->insertJob(simpleJob, jd);
+
+      mAccount->setSentCustomLoginCommand( true );
+    }
+  }
 
   switch( mType ) {
   case tGetMessage:       slotGetNextMessage();     break;
@@ -535,16 +564,35 @@ void CachedImapJob::slotAddNextSubfolder( KJob * job )
   }
   url.setPath( path );
 
-  // Associate the jobData with the parent folder, not with the child
-  // This is necessary in case of an error while creating the subfolder,
-  // so that folderComplete is called on the parent (and the sync reset).
-  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
-  jd.items << folder->label(); // for the err msg
-  KIO::SimpleJob *simpleJob = KIO::mkdir(url);
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
-  mAccount->insertJob(simpleJob, jd);
-  connect( simpleJob, SIGNAL(result(KJob *)),
-           this, SLOT(slotAddNextSubfolder(KJob *)) );
+  if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareKolab ) {
+    // Associate the jobData with the parent folder, not with the child
+    // This is necessary in case of an error while creating the subfolder,
+    // so that folderComplete is called on the parent (and the sync resetted).
+    ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+    jd.items << folder->label(); // for the err msg
+    KIO::SimpleJob *simpleJob = KIO::mkdir(url);
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+    mAccount->insertJob(simpleJob, jd);
+    connect( simpleJob, SIGNAL(result(KJob *)),
+             this, SLOT(slotAddNextSubfolder(KJob *)) );
+  } else if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareScalix ) {
+    QByteArray packedArgs;
+    QDataStream stream( &packedArgs, IO_WriteOnly );
+
+    const QString command = QString( "X-CREATE-SPECIAL" );
+    const QString argument = QString( "%1 %2" ).arg( Scalix::Utils::contentsTypeToScalixId( folder->contentsType() ) )
+                                               .arg( path );
+
+    stream << (int) 'X' << 'N' << command << argument;
+
+    ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+    jd.items << folder->label(); // for the err msg
+    KIO::SimpleJob *simpleJob = KIO::special( url.url(), packedArgs, false );
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+    mAccount->insertJob(simpleJob, jd);
+    connect( simpleJob, SIGNAL(result(KJob *)),
+             this, SLOT(slotAddNextSubfolder(KJob *)) );
+  }
 }
 
 
