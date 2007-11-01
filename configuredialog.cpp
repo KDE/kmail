@@ -5185,6 +5185,11 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
+  mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
+  connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
+
   // Groupware functionality compatibility setup
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
   layout = new QVBoxLayout( b1 );
@@ -5281,6 +5286,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
   mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
+  mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -5350,6 +5356,7 @@ void MiscPage::GroupwareTab::save()
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
   GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled

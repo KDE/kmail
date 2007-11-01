@@ -2379,6 +2379,13 @@ void KMailICalIfaceImpl::syncFolder(KMFolder * folder) const
   KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
   if ( !dimapFolder )
     return;
+  // check if the folder exists already, otherwise sync its parent as well to create it
+  if ( dimapFolder->imapPath().isEmpty() ) {
+    if ( folder->parent() && folder->parent()->owner() )
+      syncFolder( folder->parent()->owner() );
+    else
+      return;
+  }
   dimapFolder->account()->processNewMailSingleFolder( folder );
 }
 
