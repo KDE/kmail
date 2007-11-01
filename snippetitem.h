@@ -12,35 +12,48 @@
 #include <klistview.h>
 #include <klocale.h>
 
-class QString;
+#include <qobject.h>
 
+class QString;
+class KAction;
 class SnippetGroup;
+
 
 /**
 This class represents one CodeSnippet-Item in the listview.
 It also holds the needed data for one snippet.
 @author Robert Gruber
 */
-class SnippetItem : public QListViewItem {
+class SnippetItem : public QObject, public QListViewItem {
 friend class SnippetGroup;
+
+    Q_OBJECT
 public:
     SnippetItem(QListViewItem * parent, QString name, QString text);
 
     ~SnippetItem();
     QString getName();
     QString getText();
+    using QListViewItem::parent;
     int getParent() { return iParent; }
     void resetParent();
     void setText(QString text);
     void setName(QString name);
+    void setAction( KAction* );
+    KAction* getAction();
     static SnippetItem * findItemByName(QString name, QPtrList<SnippetItem> &list);
     static SnippetGroup * findGroupById(int id, QPtrList<SnippetItem> &list);
+signals:
+    void execute( QListViewItem * );
+public slots:
+    void slotExecute();
     
 private:
   SnippetItem(QListView * parent, QString name, QString text);
   QString strName;
   QString strText;
   int iParent;
+  KAction *action;
 };
 
 /**

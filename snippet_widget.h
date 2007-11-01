@@ -30,6 +30,7 @@ class SnippetItem;
 class KTextEdit;
 class KConfig;
 class KMEdit;
+class KActionCollection;
 
 /**
 This is the widget which gets added to the right TreeToolView.
@@ -42,7 +43,7 @@ class SnippetWidget : public KListView, public QToolTip
   Q_OBJECT
   
 public:
-    SnippetWidget(KMEdit* editor, QWidget* parent = 0);
+    SnippetWidget(KMEdit* editor, KActionCollection* actionCollection, QWidget* parent = 0);
     ~SnippetWidget();
     QPtrList<SnippetItem> * getList() { return (&_list); }
     void writeConfig();
@@ -62,13 +63,15 @@ private:
     bool showMultiVarDialog(QMap<QString, QString> * map, QMap<QString, QString> * mapSave,
                             int & iWidth, int & iBasicHeight, int & iOneHeight);
     QString showSingleVarDialog(QString var, QMap<QString, QString> * mapSave, QRect & dlgSize);
+    SnippetItem* makeItem( SnippetItem* parent, const QString& name, const QString& text, const KShortcut& shortcut );
 
     QPtrList<SnippetItem> _list;
     QMap<QString, QString> _mapSaved;
     KConfig * _cfg;
     SnippetConfig _SnippetConfig;
     KMEdit* mEditor;
-
+    KActionCollection* mActionCollection;
+    
 public slots:
     void slotRemove();
     void slotEdit( QListViewItem* item_ = 0 );

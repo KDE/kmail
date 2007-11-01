@@ -323,7 +323,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEditor = new KMEdit( editorAndCryptoStateIndicators, this, mDictionaryCombo->spellConfig() );
   vbox->addWidget( mEditor );
 
-  mSnippetWidget = new SnippetWidget( mEditor, mSnippetSplitter );
+  mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setShown( GlobalSettings::self()->showSnippetManager() );
 
   //  mSplitter->moveToFirst( editorAndCryptoStateIndicators );

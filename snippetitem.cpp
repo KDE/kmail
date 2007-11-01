@@ -5,14 +5,14 @@
  *
  *  Copyright: See COPYING file that comes with this distribution
  */
+#include "snippetitem.h"
+
+#include <kaction.h>
 
 #include <qstring.h>
 
-
-#include "snippetitem.h"
-
 SnippetItem::SnippetItem(QListView * parent, QString name, QString text )
-			: QListViewItem( parent, name )
+			: QListViewItem( parent, name ), action(0)
 {
   strName = name;
   strText = text;
@@ -20,7 +20,7 @@ SnippetItem::SnippetItem(QListView * parent, QString name, QString text )
 }
 
 SnippetItem::SnippetItem(QListViewItem * parent, QString name, QString text)
-			: QListViewItem( parent, name )
+			: QListViewItem( parent, name ), action(0)
 {
   strName = name;
   strText = text;
@@ -29,6 +29,10 @@ SnippetItem::SnippetItem(QListViewItem * parent, QString name, QString text)
 
 SnippetItem::~SnippetItem()
 {
+    if ( action ) {
+        action->unplugAll();
+        delete action;
+    }
 }
 
 
@@ -73,6 +77,23 @@ void SnippetItem::resetParent()
   if (group)
     iParent = group->getId();
 }
+
+
+KAction* SnippetItem::getAction()
+{   
+    return action;
+}
+
+void SnippetItem::setAction(KAction * anAction)
+{
+    action = anAction;
+}
+
+void SnippetItem::slotExecute()
+{
+    emit execute( this );
+}
+
 
 SnippetItem * SnippetItem::findItemByName(QString name, QPtrList<SnippetItem> &list)
 {
@@ -123,3 +144,5 @@ void SnippetGroup::setId(int id)
     if (iId >= iMaxId)
         iMaxId = iId+1;
 }
+
+#include "snippetitem.moc"
