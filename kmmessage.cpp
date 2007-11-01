@@ -31,7 +31,6 @@ using KMail::HeaderStrategy;
 
 #include <kasciistringtools.h>
 
-#include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
 #include <kaddrbook.h>
 
@@ -3755,12 +3754,12 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
       if( stripped )
         address = KMMessage::stripEmailAddr( address );
       result += KMMessage::quoteHtmlChars( address, true );
-      if(aLink) 
+      if(aLink)
 	result += "</a>, ";
     }
   }
   // cut of the trailing ", "
-  if(aLink)  
+  if(aLink)
     result.truncate( result.length() - 2 );
 
   //kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail

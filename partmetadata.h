@@ -17,12 +17,12 @@
 #ifndef _KMAIL_PARTMETADATA_H_
 #define _KMAIL_PARTMETADATA_H_
 
-#include <cryptplugwrapper.h>
+#include <gpgmepp/verificationresult.h>
 
 #include <kpgp.h>
 #include <qstring.h>
 #include <qcstring.h>
-#include <time.h>
+#include <qdatetime.h>
 
 namespace KMail {
 
@@ -31,19 +31,16 @@ namespace KMail {
     PartMetaData()
       : isSigned( false ),
         isGoodSignature( false ),
-        sigStatusFlags( CryptPlugWrapper::SigStatus_UNKNOWN ),
+        sigSummary( GpgME::Signature::None ),
         isEncrypted( false ),
         isDecryptable( false ),
         technicalProblem( false ),
         isEncapsulatedRfc822Message( false )
     {
-      creationTime.tm_year = 0;
-      creationTime.tm_mon  = 1;
-      creationTime.tm_mday = 1;
     }
     bool isSigned;
     bool isGoodSignature;
-    CryptPlugWrapper::SigStatusFlags sigStatusFlags;
+    GpgME::Signature::Summary sigSummary;
     QString signClass;
     QString signer;
     QStringList signerMailAddresses;
@@ -52,7 +49,7 @@ namespace KMail {
     QString status;  // to be used for unknown plug-ins
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
     QString errorText;
-    tm creationTime;
+    QDateTime creationTime;
     bool isEncrypted;
     bool isDecryptable;
     QString decryptionError;

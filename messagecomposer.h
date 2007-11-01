@@ -45,7 +45,6 @@
 
 class KMMessage;
 class KMComposeWin;
-class CryptPlugWrapper;
 
 class MessageComposerJob;
 class EncryptMessageJob;
