@@ -1012,9 +1012,7 @@ private:
 
   QCheckBox* mHideGroupwareFolders;
   QCheckBox* mOnlyShowGroupwareFolders;
-  QCheckBox* mAutoResCB;
-  QCheckBox* mAutoDeclConflCB;
-  QCheckBox* mAutoDeclRecurCB;
+  QCheckBox* mSyncImmediately;
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;

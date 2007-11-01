@@ -4692,7 +4692,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mBox = new QWidget( b1 );
-  QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
+  QGridLayout* grid = new QGridLayout( mBox, 5, 2, 0, KDialog::spacingHint() );
   grid->setColStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
            mBox, SLOT( setEnabled(bool) ) );
@@ -4789,6 +4789,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
+  QToolTip::add( mSyncImmediately,
+                 i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
+  connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  grid->addMultiCellWidget( mSyncImmediately, 4, 4, 0, 1 );
+
   // Groupware functionality compatibility setup
   b1 = new QVGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
 
@@ -4874,6 +4880,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   mStorageFormatCombo->setCurrentItem(i);
   slotStorageFormatChanged( i );
   mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
+  mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -4924,6 +4931,7 @@ void MiscPage::GroupwareTab::save() {
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
   GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
