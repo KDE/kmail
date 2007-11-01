@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>SnippetDlg</class>
+<class>SnippetDlgBase</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>SnippetDlg</cstring>
+        <cstring>SnippetDlgBase</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -155,13 +155,13 @@
     <connection>
         <sender>btnAdd</sender>
         <signal>clicked()</signal>
-        <receiver>SnippetDlg</receiver>
+        <receiver>SnippetDlgBase</receiver>
         <slot>accept()</slot>
     </connection>
     <connection>
         <sender>btnCancel</sender>
         <signal>clicked()</signal>
-        <receiver>SnippetDlg</receiver>
+        <receiver>SnippetDlgBase</receiver>
         <slot>reject()</slot>
     </connection>
 </connections>
