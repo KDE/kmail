@@ -902,7 +902,7 @@ namespace KMail {
       }
       error = i18n("The folder is too close to its quota limit. (%1)").arg( quotaAsString );
       if ( readOnly ) {
-          error += i18n("\nSince you do not appear to have write privileges on this folder, "
+          error += i18n("\nSince you do not have write privileges on this folder, "
                   "please ask the owner of the folder to free up some space in it.");
       }
       return error;
