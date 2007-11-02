@@ -1290,9 +1290,11 @@ void KMMainWidget::slotRemoveFolder()
     }
   }
 
-  if (KMessageBox::warningContinueCancel(this, str, title,
-                                         KGuiItem( i18n("&Delete"), "edit-delete"))
-      == KMessageBox::Continue)
+  if ( KMessageBox::warningContinueCancel( this, str, title,
+                                           KGuiItem( i18n("&Delete"), "edit-delete" ),
+                                           KStandardGuiItem::cancel(), "",
+                                           KMessageBox::Notify | KMessageBox::Dangerous )
+      == KMessageBox::Continue )
   {
     if ( mFolder->hasAccounts() ) {
       // this folder has an account, so we need to change that to the inbox
