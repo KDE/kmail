@@ -60,6 +60,7 @@ using KMail::ListJob;
 
 #include "kmfolderseldlg.h"
 #include "kmcommands.h"
+#include "kmmainwidget.h"
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -697,6 +698,8 @@ void KMFolderCachedImap::slotTroubleshoot()
     }
     KMessageBox::information( 0, i18n( "The index of this folder has been "
                                        "recreated." ) );
+    writeIndex();
+    kmkernel->getKMMainWidget()->folderSelected();
   }
 }
 
