@@ -861,9 +861,7 @@ void KMMainWidget::slotSearch()
   }
 
   mSearchWin->show();
-#ifdef Q_OS_UNIX
   KWindowSystem::activateWindow( mSearchWin->winId() );
-#endif
 }
 
 
