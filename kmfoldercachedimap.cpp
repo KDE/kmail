@@ -52,6 +52,7 @@ using KMail::ImapAccountBase;
 using KMail::ListJob;
 #include "folderselectiondialog.h"
 #include "kmcommands.h"
+#include "kmmainwidget.h"
 #include "annotationjobs.h"
 #include "quotajobs.h"
 #include "groupwareadaptor.h"
@@ -654,6 +655,9 @@ void KMFolderCachedImap::slotTroubleshoot()
     }
     KMessageBox::information( 0, i18n( "The index of this folder has been "
                                        "recreated." ) );
+
+    writeIndex();
+    kmkernel->getKMMainWidget()->folderSelected();
   }
 }
 
