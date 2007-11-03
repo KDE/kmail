@@ -1333,7 +1333,7 @@ void KMPopFilterActionWidget::reset()
 
 void KMFilterDlg::slotImportFilters()
 {
-    FilterImporterExporter importer( bPopFilter );
+    FilterImporterExporter importer( this, bPopFilter );
     QValueList<KMFilter*> filters = importer.importFilters();
     // FIXME message box how many were imported?
     if (filters.isEmpty()) return;
@@ -1347,7 +1347,7 @@ void KMFilterDlg::slotImportFilters()
 
 void KMFilterDlg::slotExportFilters()
 {
-    FilterImporterExporter exporter( bPopFilter );
+    FilterImporterExporter exporter( this, bPopFilter );
     QValueList<KMFilter*> filters = mFilterList->filtersForSaving();
     exporter.exportFilters( filters );
     QValueList<KMFilter*>::iterator it;

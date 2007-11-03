@@ -5,6 +5,7 @@
 
 class KMFilter;
 class KConfig;
+class QWidget;
 
 namespace KMail
 {
@@ -16,7 +17,7 @@ namespace KMail
 class FilterImporterExporter
 {
 public:
-      FilterImporterExporter( bool popFilter = false );
+      FilterImporterExporter( QWidget* parent, bool popFilter = false );
       virtual ~FilterImporterExporter();
       
       /** Export the given filter rules to a file which 
@@ -32,6 +33,7 @@ public:
       static QValueList<KMFilter*> readFiltersFromConfig( KConfig* config, bool bPopFilter );
 private:
       bool mPopFilter;
+      QWidget* mParent;
 };
 
 }

@@ -72,8 +72,8 @@ void FilterImporterExporter::writeFiltersToConfig( const QValueList<KMFilter*>& 
 }
 
 
-FilterImporterExporter::FilterImporterExporter( bool popFilter )
-:mPopFilter( popFilter )
+FilterImporterExporter::FilterImporterExporter( QWidget* parent, bool popFilter )
+:mParent( parent), mPopFilter( popFilter )
 {
 }
 
@@ -83,7 +83,7 @@ FilterImporterExporter::~FilterImporterExporter()
 
 QValueList<KMFilter*> FilterImporterExporter::importFilters()
 {
-    QString fileName = KFileDialog::getOpenFileName( QDir::homeDirPath(), QString::null, 0, i18n("Import Filters") );
+    QString fileName = KFileDialog::getOpenFileName( QDir::homeDirPath(), QString::null, mParent, i18n("Import Filters") );
     if ( fileName.isEmpty() ) return QValueList<KMFilter*>();
     
     KConfig config( fileName );
@@ -94,7 +94,7 @@ QValueList<KMFilter*> FilterImporterExporter::importFilters()
 
 void FilterImporterExporter::exportFilters(const QValueList<KMFilter*> & filters )
 {
-    KURL saveUrl = KFileDialog::getSaveURL( QDir::homeDirPath(), QString::null, 0, i18n("Export Filters") );
+    KURL saveUrl = KFileDialog::getSaveURL( QDir::homeDirPath(), QString::null, mParent, i18n("Export Filters") );
     
     if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, 0 ) )
       return;
