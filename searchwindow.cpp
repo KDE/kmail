@@ -103,7 +103,7 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
   if( mailList.count() == 1 )
     pixmap = QPixmap( DesktopIcon("message", KIconLoader::SizeSmall) );
   else
-    pixmap = QPixmap( DesktopIcon("kmultiple", KIconLoader::SizeSmall) );
+    pixmap = QPixmap( DesktopIcon("item-drag-multiple", KIconLoader::SizeSmall) );
 
   drag->setPixmap( pixmap );
   drag->exec( supportedActions );
