@@ -67,7 +67,7 @@ void RecipientItem::setDistributionList( const KPIM::DistributionList &list )
 {
   mDistributionList = list;
 
-  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", KIconLoader::Small );
+  mIcon = KIconLoader::global()->loadIcon( "kontact_contacts", KIconLoader::Small );
 
   mKey = 'D' + list.name();
 }
@@ -76,7 +76,7 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 {
   mDistributionList = list;
 
-  mIcon = KIconLoader::global()->loadIcon( "kdmconfig", KIconLoader::Small );
+  mIcon = KIconLoader::global()->loadIcon( "kontact_contacts", KIconLoader::Small );
 
   mKey = 'D' + list->name();
 }

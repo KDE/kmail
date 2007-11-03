@@ -4040,7 +4040,7 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->removeClient( mGUIClient );
 
   if ( !mTroubleshootFolderAction ) {
-    mTroubleshootFolderAction = new KAction(KIcon("wizard"), i18n("&Troubleshoot IMAP Cache..."), this);
+    mTroubleshootFolderAction = new KAction(KIcon("plasmagik"), i18n("&Troubleshoot IMAP Cache..."), this);
     actionCollection()->addAction("troubleshoot_folder", mTroubleshootFolderAction );
     connect(mTroubleshootFolderAction, SIGNAL(triggered(bool)), SLOT(slotTroubleshootFolder()));
     if ( setState )

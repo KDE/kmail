@@ -14,7 +14,7 @@ public:
   explicit SieveEditor( QWidget * parent=0, const char * name=0 );
   ~SieveEditor();
 
-  QString script() const { return mTextEdit->text(); }
+  QString script() const { return mTextEdit->toPlainText(); }
   void setScript( const QString & script ) { mTextEdit->setText( script ); }
 
 private:
