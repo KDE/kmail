@@ -60,6 +60,7 @@ using KMail::ListJob;
 
 #include "kmfolderseldlg.h"
 #include "kmcommands.h"
+#include "kmmainwidget.h"
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -492,7 +493,6 @@ void KMFolderCachedImap::rememberDeletion( int idx )
   KMMsgBase *msg = getMsgBase( idx );
   assert(msg);
   ulong uid = msg->UID();
-  assert(uid>=0);
   mDeletedUIDsSinceLastSync.insert(uid, 0);
 //  kdDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyURL();
 }
@@ -678,6 +678,8 @@ void KMFolderCachedImap::slotTroubleshoot()
     }
     KMessageBox::information( 0, i18n( "The index of this folder has been "
                                        "recreated." ) );
+    writeIndex();
+    kmkernel->getKMMainWidget()->folderSelected();
   }
 }
 
