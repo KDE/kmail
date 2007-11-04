@@ -757,6 +757,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 
 QValueList<KMFilter*> KMFilterListBox::filtersForSaving() const
 {
+      const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
       QValueList<KMFilter*> filters;
       QStringList emptyFilters;
       QPtrListIterator<KMFilter> it( mFilterList );

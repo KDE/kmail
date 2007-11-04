@@ -32,8 +32,8 @@ public:
       static void writeFiltersToConfig( const QValueList<KMFilter*>& filters, KConfig* config, bool bPopFilter );
       static QValueList<KMFilter*> readFiltersFromConfig( KConfig* config, bool bPopFilter );
 private:
-      bool mPopFilter;
       QWidget* mParent;
+      bool mPopFilter;
 };
 
 }

@@ -7,11 +7,76 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kdialogbase.h>
+#include <klistview.h>
 
 #include <qregexp.h>
 
 
 using namespace KMail;
+
+class FilterSelectionDialog : public KDialogBase
+{
+public:
+    FilterSelectionDialog( QWidget * parent = 0 )
+        :KDialogBase( parent, "filterselection", true, i18n("Select Filters"), Ok|Cancel, Ok, true ),
+        wasCancelled( false )
+    {
+        filtersListView = new KListView( this );
+        setMainWidget(filtersListView);
+        filtersListView->setSorting( -1 );
+        filtersListView->setSelectionMode( QListView::NoSelection );
+        filtersListView->addColumn( i18n("Filters"), 300 );
+        filtersListView->setFullWidth( true );
+        resize( 300, 350 );
+    }
+
+    virtual ~FilterSelectionDialog()
+    {
+    }
+    
+    virtual void slotCancel()
+    {
+        wasCancelled = true;
+        KDialogBase::slotCancel();
+    }
+    
+    bool cancelled()
+    {
+        return wasCancelled;
+    }
+
+    void setFilters( const QValueList<KMFilter*>& filters )
+    {
+        originalFilters = filters;
+        filtersListView->clear();
+        QValueListConstIterator<KMFilter*> it = filters.constEnd();
+        while ( it != filters.constBegin() ) {
+            --it;
+            KMFilter* filter = *it;
+            QCheckListItem* item = new QCheckListItem( filtersListView, filter->name(), QCheckListItem::CheckBox );
+            item->setOn( true );
+        }
+    }
+    
+    QValueList<KMFilter*> selectedFilters() const
+    {
+        QValueList<KMFilter*> filters;
+        QListViewItemIterator it( filtersListView );
+        int i = 0;
+        while( it.current() ) {
+            QCheckListItem* item = static_cast<QCheckListItem*>( it.current() );
+            if ( item->isOn() )
+                filters << originalFilters[i];
+            ++i; ++it;
+        }
+        return filters;
+    }
+private:
+    KListView *filtersListView;
+    QValueList<KMFilter*> originalFilters;
+    bool wasCancelled;
+};
 
 /* static */
 QValueList<KMFilter*> FilterImporterExporter::readFiltersFromConfig( KConfig* config, bool bPopFilter )
@@ -88,8 +153,10 @@ QValueList<KMFilter*> FilterImporterExporter::importFilters()
     
     KConfig config( fileName );
     QValueList<KMFilter*> imported = readFiltersFromConfig( &config, mPopFilter );
-    // FIXME ask user to confirm which ones to import
-    return imported;
+    FilterSelectionDialog dlg( mParent );
+    dlg.setFilters( imported );
+    dlg.exec();
+    return dlg.cancelled() ? QValueList<KMFilter*>() : dlg.selectedFilters();
 }
 
 void FilterImporterExporter::exportFilters(const QValueList<KMFilter*> & filters )
@@ -100,7 +167,10 @@ void FilterImporterExporter::exportFilters(const QValueList<KMFilter*> & filters
       return;
     
     KConfig config( saveUrl.path() );
-    // FIXME ask user to confirm which ones to export
-    writeFiltersToConfig( filters, &config, mPopFilter );
+    FilterSelectionDialog dlg( mParent );
+    dlg.setFilters( filters );
+    dlg.exec();
+    if ( !dlg.cancelled() )
+        writeFiltersToConfig( dlg.selectedFilters(), &config, mPopFilter );
 }
 
