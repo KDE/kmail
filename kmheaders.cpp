@@ -2428,7 +2428,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
       if( count == 1 )
         pixmap = QPixmap( DesktopIcon("message", KIconLoader::SizeSmall) );
       else
-        pixmap = QPixmap( DesktopIcon("kmultiple", KIconLoader::SizeSmall) );
+        pixmap = QPixmap( DesktopIcon("item-drag-multiple", KIconLoader::SizeSmall) );
 
       // Calculate hotspot (as in Konqueror)
       if( !pixmap.isNull() ) {

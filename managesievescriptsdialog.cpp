@@ -112,7 +112,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
   Q3CheckListItem * last = 0;
   for ( KMAccount * a = am->first() ; a ; a = am->next() ) {
     last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
-    last->setPixmap( 0, SmallIcon( "server" ) );
+    last->setPixmap( 0, SmallIcon( "network-server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
       const KUrl u = ::findUrlForAccount( iab );
       if ( u.isEmpty() )

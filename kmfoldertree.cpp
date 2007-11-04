@@ -114,7 +114,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case KFolderTreeItem::Imap:
       case KFolderTreeItem::CachedImap:
       case KFolderTreeItem::News:
-        icon = "server"; break;
+        icon = "network-server"; break;
       case KFolderTreeItem::Search:
         icon = "zoom-original";break;
       default:
@@ -1114,10 +1114,10 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
       (fti->folder()->folderType() == KMFolderTypeImap ||
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
-    folderMenu->addAction(KIcon("bookmark_folder"),
+    folderMenu->addAction(KIcon("folder-bookmarks"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
-    folderMenu->addAction(SmallIcon("bookmark_folder"),
+    folderMenu->addAction(SmallIcon("folder-bookmarks"),
         i18n("Local Subscription..."), mMainWidget,
         SLOT(slotLocalSubscriptionDialog()));
 
@@ -1131,7 +1131,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap && !multiFolder ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-      folderMenu->addAction( KIcon("wizard"), i18n("&Troubleshoot IMAP Cache..."),
+      folderMenu->addAction( KIcon("plasmagik"), i18n("&Troubleshoot IMAP Cache..."),
                              folder, SLOT(slotTroubleshoot()) );
     }
     folderMenu->addSeparator();

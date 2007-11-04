@@ -1527,7 +1527,7 @@ void KMComposeWin::setupActions( void )
   actionFormatReset = new KAction( KIcon( "eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
-  actionFormatColor = new KAction( KIcon( "colorize" ), i18n("Text Color..."), this );
+  actionFormatColor = new KAction( KIcon( "color-line" ), i18n("Text Color..."), this );
   actionCollection()->addAction("format_color", actionFormatColor );
   connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
 

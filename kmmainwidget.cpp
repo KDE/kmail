@@ -865,9 +865,7 @@ void KMMainWidget::slotSearch()
   }
 
   mSearchWin->show();
-#ifdef Q_OS_UNIX
   KWindowSystem::activateWindow( mSearchWin->winId() );
-#endif
 }
 
 
@@ -1294,9 +1292,11 @@ void KMMainWidget::slotRemoveFolder()
     }
   }
 
-  if (KMessageBox::warningContinueCancel(this, str, title,
-                                         KGuiItem( i18n("&Delete"), "edit-delete"))
-      == KMessageBox::Continue)
+  if ( KMessageBox::warningContinueCancel( this, str, title,
+                                           KGuiItem( i18n("&Delete"), "edit-delete" ),
+                                           KStandardGuiItem::cancel(), "",
+                                           KMessageBox::Notify | KMessageBox::Dangerous )
+      == KMessageBox::Continue )
   {
     if ( mFolder->hasAccounts() ) {
       // this folder has an account, so we need to change that to the inbox
@@ -4056,7 +4056,7 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->removeClient( mGUIClient );
 
   if ( !mTroubleshootFolderAction ) {
-    mTroubleshootFolderAction = new KAction(KIcon("wizard"), i18n("&Troubleshoot IMAP Cache..."), this);
+    mTroubleshootFolderAction = new KAction(KIcon("plasmagik"), i18n("&Troubleshoot IMAP Cache..."), this);
     actionCollection()->addAction("troubleshoot_folder", mTroubleshootFolderAction );
     connect(mTroubleshootFolderAction, SIGNAL(triggered(bool)), SLOT(slotTroubleshootFolder()));
     if ( setState )
