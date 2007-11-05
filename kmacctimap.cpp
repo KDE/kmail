@@ -201,7 +201,6 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
     {
       job->kill();
     }
-    ++it;
   }
 }
 
@@ -216,7 +215,6 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
     {
       job->kill();
     }
-    ++it;
   }
 }
 
