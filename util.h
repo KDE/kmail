@@ -199,7 +199,7 @@ namespace Util {
     };
 
     // return true if we should proceed, false if we should abort
-    bool checkOverwrite( const KURL& url, QWidget* w )
+    inline bool checkOverwrite( const KURL& url, QWidget* w )
     {
         if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
             if ( KMessageBox::Cancel ==
