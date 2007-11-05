@@ -40,6 +40,10 @@ class KMReaderWin;
 
 #include <kdepimmacros.h>
 
+
+#include <libkcal/attendee.h> // only for an enum, we are not linking
+
+
 namespace KMail {
 
 /** This class is used for callback hooks needed by bodypart
@@ -64,6 +68,8 @@ public:
 
   /** Close the main window showing this message, if it's a secondary window. */
   void closeIfSecondaryWindow() const;
+  
+  bool askForComment( KCal::Attendee::PartStat status ) const;
 
 private:
   KMMessage* mMsg;

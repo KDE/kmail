@@ -72,7 +72,6 @@ using KRecentAddress::RecentAddresses;
 #include <libkdepim/kvcarddrag.h>
 #include <kio/netaccess.h>
 
-
 #include "klistboxdialog.h"
 
 #include "messagecomposer.h"

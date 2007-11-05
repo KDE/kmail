@@ -164,3 +164,14 @@ void Callback::closeIfSecondaryWindow() const
   if ( window )
     window->close();
 }
+
+bool Callback::askForComment( KCal::Attendee::PartStat status ) const
+{
+    if ( ( status != KCal::Attendee::Accepted 
+            && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+            == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
+        || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+        == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
+        return true;
+    return false;
+}
