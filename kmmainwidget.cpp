@@ -2169,7 +2169,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
        disconnect( mJob, 0, mMsgView, 0 );
        delete mJob;
     }
-    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0,
+    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, msg->parent(),
           "STRUCTURE", mMsgView->attachmentStrategy() );
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
             mMsgView, SLOT(slotMessageArrived(KMMessage*)));
