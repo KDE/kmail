@@ -2073,7 +2073,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    bool isSMIME = cryptProto == Kleo::CryptoBackendFactory::instance()->smime();;
+    const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
     QString signer = block.signer;
 
     QString htmlStr, simpleHtmlStr;
