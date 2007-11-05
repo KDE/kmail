@@ -544,6 +544,18 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
     if( job->error() ) {
       delete this;
       return;
+    } else {
+      KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( (*it).current->storage() );
+      KMFolderCachedImap* parentStorage = static_cast<KMFolderCachedImap*>( (*it).parent->storage() );
+      Q_ASSERT( storage );
+      Q_ASSERT( parentStorage );
+      if ( storage->imapPath().isEmpty() ) {
+        QString path = mAccount->createImapPath( parentStorage->imapPath(), storage->folder()->name() );
+        if ( !storage->imapPathForCreation().isEmpty() )
+          path = storage->imapPathForCreation();
+        storage->setImapPath( path );
+        storage->writeConfig();
+      }
     }
     mAccount->removeJob( it );
   }
@@ -565,18 +577,19 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   }
   url.setPath( path );
 
-  if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareKolab ) {
+  if ( mAccount->groupwareType() != KMAcctCachedImap::GroupwareScalix ) {
     // Associate the jobData with the parent folder, not with the child
     // This is necessary in case of an error while creating the subfolder,
     // so that folderComplete is called on the parent (and the sync resetted).
     ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
     jd.items << folder->label(); // for the err msg
+    jd.current = folder->folder();
     KIO::SimpleJob *simpleJob = KIO::mkdir(url);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
     mAccount->insertJob(simpleJob, jd);
     connect( simpleJob, SIGNAL(result(KIO::Job *)),
              this, SLOT(slotAddNextSubfolder(KIO::Job *)) );
-  } else if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareScalix ) {
+  } else {
     QByteArray packedArgs;
     QDataStream stream( packedArgs, IO_WriteOnly );
 
@@ -588,6 +601,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 
     ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
     jd.items << folder->label(); // for the err msg
+    jd.current = folder->folder();
     KIO::SimpleJob *simpleJob = KIO::special( url.url(), packedArgs, false );
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
     mAccount->insertJob(simpleJob, jd);

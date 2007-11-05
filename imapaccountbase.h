@@ -141,13 +141,13 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), progressItem(0),
+      jobData() : url(QString::null), parent(0), current(0), total(1), done(0), offset(0), progressItem(0),
                   onlySubscribed(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false,
           bool _cancelable = false )
-        : url(_url), parent(_parent), total(_total), done(_done), offset(0),
+        : url(_url), parent(_parent), current(0), total(_total), done(_done), offset(0),
           progressItem(0), quiet(_quiet), cancellable(_cancelable) {}
 
       QString path;
@@ -156,7 +156,7 @@ namespace KMail {
       QByteArray data;
       QCString cdata;
       QStringList items;
-      KMFolder *parent;
+      KMFolder *parent, *current;
       QPtrList<KMMessage> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
