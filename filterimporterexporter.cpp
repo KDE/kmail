@@ -151,7 +151,16 @@ FilterImporterExporter::~FilterImporterExporter()
 QValueList<KMFilter*> FilterImporterExporter::importFilters()
 {
     QString fileName = KFileDialog::getOpenFileName( QDir::homeDirPath(), QString::null, mParent, i18n("Import Filters") );
-    if ( fileName.isEmpty() ) return QValueList<KMFilter*>();
+    if ( fileName.isEmpty() ) 
+        return QValueList<KMFilter*>(); // cancel
+    
+    { // scoping
+        QFile f( fileName );
+        if ( !f.open( IO_ReadOnly ) ) {
+            KMessageBox::error( mParent, i18n("The selected file is not readable. Your file access permissions might be insufficient.") );
+            return QValueList<KMFilter*>();
+        }
+    }
     
     KConfig config( fileName );
     QValueList<KMFilter*> imported = readFiltersFromConfig( &config, mPopFilter );
