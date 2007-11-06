@@ -1832,10 +1832,18 @@ void KMReaderWin::slotTouchMessage()
   serNums.append( message()->getMsgSerNum() );
   KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
   command->start();
+
+  // should we send an MDN?
   if ( mNoMDNsWhenEncrypted &&
        message()->encryptionState() != KMMsgNotEncrypted &&
        message()->encryptionState() != KMMsgEncryptionStateUnknown )
     return;
+
+  KMFolder *folder = message()->parent();
+  if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+      folder->isDrafts() || folder->isTemplates())
+    return;
+
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
 						   MDN::Displayed,
 						   true /* allow GUI */ ) )
