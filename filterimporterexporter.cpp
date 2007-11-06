@@ -163,7 +163,7 @@ void FilterImporterExporter::exportFilters(const QValueList<KMFilter*> & filters
 {
     KURL saveUrl = KFileDialog::getSaveURL( QDir::homeDirPath(), QString::null, mParent, i18n("Export Filters") );
     
-    if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, 0 ) )
+    if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, mParent ) )
       return;
     
     KConfig config( saveUrl.path() );
