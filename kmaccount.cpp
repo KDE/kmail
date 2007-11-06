@@ -5,6 +5,7 @@
 
 #include "accountmanager.h"
 using KMail::AccountManager;
+#include "globalsettings.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
@@ -98,6 +99,7 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
 void KMAccount::init() {
   mTrash = kmkernel->trashFolder()->idString();
   mExclude = false;
+  // when creating a new account, mail checking interval shall be default
   mInterval = 0;
   mNewInFolder.clear();
 }
@@ -142,6 +144,7 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
   mFolder = 0;
   folderName = config.readEntry("Folder");
+  // if check-interval has been deleted from kmailrc, it shall be default
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
