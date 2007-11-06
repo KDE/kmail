@@ -193,6 +193,7 @@ KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaQuotaTab::accept()
     return Accepted;
   else
     assert(0);
+  return Accepted; // our code sanity checker doesn't know there is no coming back from assert(0)
 }
 
 bool KMail::FolderDiaQuotaTab::save()

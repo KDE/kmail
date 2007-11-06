@@ -1385,7 +1385,7 @@ void KMReaderWin::displayAboutPage()
 	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
-    .arg("http://kmail.kde.org/") // KMail homepage URL
+    .arg("http://kontact.kde.org/kmail/") // KMail homepage URL
     .arg("1.8").arg("3.4"); // prior KMail and KDE version
 
   QString featureItems;
@@ -1995,12 +1995,12 @@ void KMReaderWin::slotHandleAttachment( int choice )
   if ( mAtmCurrentName.isEmpty() && node )
     mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
   if ( choice < 7 ) {
-    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
-        node, message(), mAtmCurrent, mAtmCurrentName,
-        KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
-    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
-        this, SLOT( slotAtmView( int, const QString& ) ) );
-    command->start();
+  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
+      node, message(), mAtmCurrent, mAtmCurrentName,
+      KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
+  connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+      this, SLOT( slotAtmView( int, const QString& ) ) );
+  command->start();
   } else if ( choice == 7 ) {
     slotDeleteAttachment( node );
   } else if ( choice == 8 ) {

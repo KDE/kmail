@@ -1,5 +1,5 @@
 /* This file is part of KMail
- * Copyright (C) 2005 Lu�s Pedro Coelho <luis@luispedro.org>
+ * Copyright (C) 2005 Luís Pedro Coelho <luis@luispedro.org>
  *
  * KMail is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as
