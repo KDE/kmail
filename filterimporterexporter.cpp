@@ -81,6 +81,7 @@ private:
 /* static */
 QValueList<KMFilter*> FilterImporterExporter::readFiltersFromConfig( KConfig* config, bool bPopFilter )
 {
+    KConfigGroupSaver saver(config, "General");
     int numFilters = 0;
     if (bPopFilter)
       numFilters = config->readNumEntry("popfilters",0);
@@ -130,6 +131,7 @@ void FilterImporterExporter::writeFiltersToConfig( const QValueList<KMFilter*>& 
         ++i;
       }
     }
+    KConfigGroupSaver saver(config, "General");
     if (bPopFilter)
       config->writeEntry("popfilters", i);
     else

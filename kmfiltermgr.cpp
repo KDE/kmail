@@ -462,8 +462,11 @@ void KMFilterMgr::appendFilters( const QValueList<KMFilter*> &filters,
 
 void KMFilterMgr::setFilters( const QValueList<KMFilter*> &filters )
 {
+  beginUpdate();
   clear();
   mFilters = filters;
+  writeConfig( true );
+  endUpdate();
 }
 
 void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )

@@ -736,9 +736,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
-
-  // block attemts to use filters (currently a no-op)
-  fm->beginUpdate();
+  
   fm->setFilters( newFilters );
   if (fm->atLeastOneOnlineImapFolderTarget()) {
     QString str = i18n("At least one filter targets a folder on an online "
@@ -748,11 +746,6 @@ void KMFilterListBox::slotApplyFilterChanges()
     KMessageBox::information( this, str, QString::null,
 			      "filterDlgOnlineImapCheck" );
   }
-  // allow usage of the filters again.
-  fm->endUpdate();
-  fm->writeConfig();
-
-
 }
 
 QValueList<KMFilter*> KMFilterListBox::filtersForSaving() const
