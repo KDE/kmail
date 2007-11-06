@@ -52,7 +52,6 @@
 #include "interfaces/bodypartformatter.h"
 #include "globalsettings.h"
 #include "util.h"
-#include "dnbeautifier.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -67,6 +66,7 @@
 #include <kleo/verifyopaquejob.h>
 #include <kleo/keylistjob.h>
 #include <kleo/importjob.h>
+#include <kleo/dn.h>
 
 #include <gpgmepp/importresult.h>
 #include <gpgmepp/decryptionresult.h>
@@ -512,7 +512,7 @@ namespace KMail {
       // ### Ugh. We depend on two enums being in sync:
       messagePart.keyTrust = (Kpgp::Validity)signature.validity();
       if ( key.numUserIDs() > 0 && key.userID( 0 ).id() )
-        messagePart.signer = KMail::DNBeautifier::reorderDN( QString::fromUtf8( key.userID( 0 ).id() ) );
+        messagePart.signer = Kleo::DN( key.userID( 0 ).id() ).prettyDN();
       for ( uint iMail = 0; iMail < key.numUserIDs(); ++iMail ) {
         // The following if /should/ always result in TRUE but we
         // won't trust implicitely the plugin that gave us these data.
@@ -533,7 +533,7 @@ namespace KMail {
         messagePart.creationTime = QDateTime();
       if ( messagePart.signer.isEmpty() ) {
         if ( key.numUserIDs() > 0 && key.userID( 0 ).name() )
-          messagePart.signer = KMail::DNBeautifier::reorderDN( QString::fromUtf8( key.userID( 0 ).name() ) );
+          messagePart.signer = Kleo::DN( key.userID( 0 ).name() ).prettyDN();
         if ( !messagePart.signerMailAddresses.empty() ) {
           if ( messagePart.signer.isEmpty() )
             messagePart.signer = messagePart.signerMailAddresses.front();
