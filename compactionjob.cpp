@@ -66,7 +66,7 @@ void MboxCompactionJob::kill()
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
-    mSrcFolder->storage()->close( "mboxcompactjob" );
+    mSrcFolder->storage()->close( "mboxcompact" );
   }
 
   if ( mTmpFile ) {
@@ -128,7 +128,7 @@ int MboxCompactionJob::executeNow( bool silent )
     return errno;
   }
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
-  storage->open( "mboxcompactjob" );
+  storage->open( "mboxcompact" );
   mOpeningFolder = false;
   mFolderOpen = true;
   mOffset = 0;
