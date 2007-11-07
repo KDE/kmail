@@ -1013,6 +1013,7 @@ private:
   QCheckBox* mHideGroupwareFolders;
   QCheckBox* mOnlyShowGroupwareFolders;
   QCheckBox* mSyncImmediately;
+  QCheckBox* mDeleteInvitations;
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;

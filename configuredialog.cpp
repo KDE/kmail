@@ -4794,6 +4794,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
                  i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   grid->addMultiCellWidget( mSyncImmediately, 4, 4, 0, 1 );
+  
+  mDeleteInvitations = new QCheckBox( 
+             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().utf8() ), mBox );
+  QWhatsThis::add( mDeleteInvitations, i18n( GlobalSettings::self()
+             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().utf8() ) );
+    connect( mDeleteInvitations, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+    grid->addMultiCellWidget( mDeleteInvitations, 5, 5, 0, 1 );
 
   // Groupware functionality compatibility setup
   b1 = new QVGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
@@ -4881,6 +4888,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   slotStorageFormatChanged( i );
   mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
   mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
+  mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -4932,6 +4940,7 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
   GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
   GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
+  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mDeleteInvitations->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
