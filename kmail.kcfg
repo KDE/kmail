@@ -195,6 +195,17 @@
         <default>true</default>
       </entry>
 
+      <entry name="AskForCommentWhenReactingToInvitation"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="NeverAsk"/>
+          <choice name="AskForAllButAcceptance"/>
+          <choice name="AlwaysAsk"/>
+        </choices>
+        <default>AskForAllButAcceptance</default>
+      </entry>
+
     </group>
 
     <group name="IMAP Resource">

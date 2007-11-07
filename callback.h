@@ -39,6 +39,10 @@
 class KMMessage;
 class KMReaderWin;
 
+
+#include <kcal/attendee.h> // only for an enum, we are not linking
+
+
 namespace KMail {
 
 /** This class is used for callback hooks needed by bodypart
@@ -69,6 +73,8 @@ class KMAIL_EXPORT Callback {
       Returns the receiver of the mail.
     */
     QString receiver() const;
+  
+  bool askForComment( KCal::Attendee::PartStat status ) const;
 
     /**
       Closes the main window showing this message, if it's a secondary window.
