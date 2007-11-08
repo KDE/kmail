@@ -490,6 +490,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
+    mUpdateReaderWinTimer( 0, "mUpdateReaderWinTimer" ),
+    mResizeTimer( 0, "mResizeTimer" ),    
+    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
@@ -510,9 +513,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    updateReaderWinTimer( 0, "updateReaderWinTimer" ),
-    mResizeTimer( 0, "mResizeTimer" ),
-    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false )
@@ -540,7 +540,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 
-  connect( &updateReaderWinTimer, SIGNAL(timeout()),
+  connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
@@ -1250,13 +1250,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     // Avoid flicker, somewhat of a cludge
     if (force) {
       // stop the timer to avoid calling updateReaderWin twice
-      updateReaderWinTimer.stop();
+      mUpdateReaderWinTimer.stop();
       updateReaderWin();
     }
-    else if (updateReaderWinTimer.isActive())
-      updateReaderWinTimer.changeInterval( delay );
+    else if (mUpdateReaderWinTimer.isActive())
+      mUpdateReaderWinTimer.changeInterval( delay );
     else
-      updateReaderWinTimer.start( 0, true );
+      mUpdateReaderWinTimer.start( 0, true );
   }
 
   if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
@@ -1270,7 +1270,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
-  updateReaderWinTimer.stop();
+  mUpdateReaderWinTimer.stop();
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;
@@ -1840,8 +1840,9 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-      folder->isDrafts() || folder->isTemplates())
+  if (folder && 
+     (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+      folder->isDrafts() || folder->isTemplates() ) )
     return;
 
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
