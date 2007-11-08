@@ -732,6 +732,8 @@ void KMComposeWin::slotContinueAutoSave()
     return;
   }
   KMMessage *msg = mComposedMessages.first();
+  if ( !msg ) // a bit of extra defensiveness
+    return;
 
   kDebug(5006) <<"opening autoSaveFile" << mAutoSaveFilename;
   const QString filename =
