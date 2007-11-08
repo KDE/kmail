@@ -479,7 +479,7 @@ private:
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
-  QTimer updateReaderWinTimer;
+  QTimer mUpdateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
   QString mOverrideEncoding;
