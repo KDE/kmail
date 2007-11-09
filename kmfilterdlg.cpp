@@ -620,10 +620,10 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
   mBtnCopy = new QPushButton( QString::null, hb );
-  mBtnCopy->setPixmap( BarIcon( "editcopy", KIcon::SizeSmall ) );
+  mBtnCopy->setIconSet( BarIconSet( "editcopy", KIcon::SizeSmall ) );
   mBtnCopy->setMinimumSize( mBtnCopy->sizeHint() * 1.2 );
   mBtnDelete = new QPushButton( QString::null, hb );
-  mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
+  mBtnDelete->setIconSet( BarIconSet( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
   QToolTip::add( mBtnNew, i18n("New") );
