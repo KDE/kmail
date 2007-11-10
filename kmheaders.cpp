@@ -2573,6 +2573,8 @@ int KMHeaders::currentItemIndex()
 //-----------------------------------------------------------------------------
 void KMHeaders::setCurrentItemByIndex(int msgIdx)
 {
+  if ( !mFolder->isOpened() ) setFolder( mFolder );
+
   if ((msgIdx >= 0) && (msgIdx < (int)mItems.size())) {
     clearSelection();
     bool unchanged = (currentItem() == mItems[msgIdx]);
@@ -2581,6 +2583,7 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
     setSelectionAnchor( currentItem() );
     if (unchanged)
        highlightMessage( mItems[msgIdx], false);
+    makeHeaderVisible();
   }
 }
 
@@ -3079,6 +3082,9 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
 bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
     //kDebug(5006) << endl << kBacktrace();
+
+    if ( !mFolder->isOpened() ) mFolder->open( "kmheaders" );
+
     //all cases
     qint32 column, ascending, threaded, discovered_count, sorted_count, appended;
     qint32 deleted_count = 0;
