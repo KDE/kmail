@@ -263,7 +263,7 @@ ProcmailRCParser::expandVars(const QString &s)
 
 
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
-			      QWidget *parent )
+                              QWidget *parent )
   : KDialog( parent ),
     mAccount( account ),
     mServerTest( 0 ),
@@ -430,7 +430,7 @@ void AccountDialog::makeLocalAccountPage()
     new QCheckBox( i18n("Enable &interval mail checking"), page );
   topLayout->addWidget( mLocal.intervalCheck, 6, 0, 1, 3 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
-	   this, SLOT(slotEnableLocalInterval(bool)) );
+           this, SLOT(slotEnableLocalInterval(bool)) );
   mLocal.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
@@ -1113,7 +1113,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
   grid->addWidget( mImap.intervalCheck, row, 0, 1, 3 );
   connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
-	   this, SLOT(slotEnableImapInterval(bool)) );
+           this, SLOT(slotEnableImapInterval(bool)) );
   ++row;
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
@@ -1167,14 +1167,14 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionNone );
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionSSL );
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionTLS );
-  
+
   mImap.encryptionButtonGroup = new QButtonGroup();
   mImap.encryptionButtonGroup->addButton( mImap.encryptionNone,NoEncryption );
   mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL,SSL );
   mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS,TLS );
- 
-  connect(mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
-		      SLOT(slotImapEncryptionChanged(int)));
+
+  connect( mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
+           SLOT(slotImapEncryptionChanged(int)) );
 
   vlay->addWidget( mImap.encryptionGroup );
 
@@ -1896,7 +1896,7 @@ void AccountDialog::saveSettings()
     }
 
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
-			     mLocal.intervalSpin->value() : 0 );
+                                mLocal.intervalSpin->value() : 0 );
 #if 0
     mAccount->setResource( mLocal.resourceCheck->isChecked() );
 #endif
@@ -1911,7 +1911,7 @@ void AccountDialog::saveSettings()
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ?
-			     mPop.intervalSpin->value() : 0 );
+                                mPop.intervalSpin->value() : 0 );
 #if 0
     mAccount->setResource( mPop.resourceCheck->isChecked() );
 #endif
@@ -2019,7 +2019,7 @@ void AccountDialog::saveSettings()
         mAccount->setFolder( targetFolder );
     }
     mAccount->setCheckInterval( mMaildir.intervalCheck->isChecked() ?
-			     mMaildir.intervalSpin->value() : 0 );
+                                mMaildir.intervalSpin->value() : 0 );
 #if 0
     mAccount->setResource( mMaildir.resourceCheck->isChecked() );
 #endif
