@@ -1281,10 +1281,10 @@ void KMComposeWin::setupActions( void )
   KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
   KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
-  KStandardAction::find( mEditor, SLOT(slotFindText()), actionCollection() );
+  KStandardAction::find( mEditor, SLOT(slotFind()), actionCollection() );
   KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
-  KStandardAction::replace( mEditor, SLOT(slotReplaceText()), actionCollection() );
+  KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
   actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
