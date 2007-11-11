@@ -2977,7 +2977,7 @@ void KMMainWidget::setupActions()
   mNoQuoteReplyAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_R));
 
   //----- Create filter actions
-  mFilterMenu = new KActionMenu(KIcon("search-filter"), i18n("&Create Filter"), this);
+  mFilterMenu = new KActionMenu(KIcon("view-filter"), i18n("&Create Filter"), this);
   actionCollection()->addAction("create_filter", mFilterMenu );
   connect( mFilterMenu, SIGNAL(activated()), this,
            SLOT(slotFilter()) );
@@ -3124,7 +3124,7 @@ void KMMainWidget::setupActions()
   mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
   actionCollection()->addAction("copy_to", mCopyActionMenu );
 
-  mApplyAllFiltersAction = new KAction(KIcon("search-filter"), i18n("Appl&y All Filters"), this);
+  mApplyAllFiltersAction = new KAction(KIcon("view-filter"), i18n("Appl&y All Filters"), this);
   actionCollection()->addAction("apply_filters", mApplyAllFiltersAction );
   connect(mApplyAllFiltersAction, SIGNAL(triggered(bool) ), SLOT(slotApplyFilters()));
   mApplyAllFiltersAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_J));
