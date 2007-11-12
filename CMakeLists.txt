@@ -25,6 +25,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/mimelib
   ${CMAKE_SOURCE_DIR}/libkleo
   ${GPGME_INCLUDES}
+  ${Boost_INCLUDE_DIR}
    )
 if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
