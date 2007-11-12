@@ -3720,7 +3720,7 @@ void ComposerPage::HeadersTab::doLoadOther() {
   int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
-                         QByteArray("Mime #") + QByteArray().setNum(i) );
+                         QString("Mime #") + QString::number(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
     if( !name.isEmpty() ) {
@@ -3751,8 +3751,8 @@ void ComposerPage::HeadersTab::save() {
   for ( int i = 0; i < mTagList->topLevelItemCount(); ++i ) {
     item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::config(), QByteArray("Mime #")
-                             + QByteArray().setNum( numValidEntries ) );
+      KConfigGroup config( KMKernel::config(), QString("Mime #")
+                             + QString::number( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
