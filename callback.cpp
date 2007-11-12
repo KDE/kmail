@@ -217,3 +217,8 @@ bool Callback::askForComment( KCal::Attendee::PartStat status ) const
         return true;
     return false;
 }
+
+bool Callback::deleteInvitationAfterReply() const
+{
+    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem();
+}

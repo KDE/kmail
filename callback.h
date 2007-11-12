@@ -75,6 +75,7 @@ class KMAIL_EXPORT Callback {
     QString receiver() const;
   
   bool askForComment( KCal::Attendee::PartStat status ) const;
+  bool deleteInvitationAfterReply() const;
 
     /**
       Closes the main window showing this message, if it's a secondary window.
