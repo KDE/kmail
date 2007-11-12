@@ -70,6 +70,7 @@ public:
   void closeIfSecondaryWindow() const;
   
   bool askForComment( KCal::Attendee::PartStat status ) const;
+  bool deleteInvitationAfterReply() const;
 
 private:
   KMMessage* mMsg;
