@@ -69,7 +69,15 @@ void RecipientItem::setDistributionList( const KPIM::DistributionList &list )
 
   mIcon = KIconLoader::global()->loadIcon( "kontact_contacts", KIconLoader::Small );
 
-  mKey = 'D' + list.name();
+  mName = list.name();
+  mKey = list.name();
+
+  int count = list.entries( mAddressBook ).count();
+  mEmail = i18np( "1 email address", "%1 email addresses", count );
+
+  mRecipient = mName;
+
+  mTooltip = createTooltip( list );
 }
 #else
 void RecipientItem::setDistributionList( KABC::DistributionList *list )
@@ -78,7 +86,15 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
 
   mIcon = KIconLoader::global()->loadIcon( "kontact_contacts", KIconLoader::Small );
 
-  mKey = 'D' + list->name();
+  mName = list->name();
+  mKey = list->name();
+
+  int count = list->entries().count();
+  mEmail = i18np( "1 email address", "%1 email addresses", count );
+
+  mRecipient = mName;
+
+  mTooltip = createTooltip( list );
 }
 #endif
 
@@ -87,6 +103,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
 {
   mAddressee = a;
   mEmail = email;
+  mRecipient = mAddressee.fullEmail( mEmail );
 
   QImage img = a.photo().data();
   if ( !img.isNull() )
@@ -94,7 +111,14 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   else
     mIcon = KIconLoader::global()->loadIcon( "personal", KIconLoader::Small );
 
-  mKey = 'A' + a.preferredEmail();
+  mName = mAddressee.realName();
+  mKey = mAddressee.realName() + '|' + mEmail;
+
+  mTooltip = "<qt>";
+  if ( !mAddressee.realName().isEmpty() ) {
+    mTooltip += mAddressee.realName() + "<br/>";
+  }
+  mTooltip += "<b>" + mEmail + "</b>";
 }
 
 QPixmap RecipientItem::icon() const
@@ -104,103 +128,81 @@ QPixmap RecipientItem::icon() const
 
 QString RecipientItem::name() const
 {
-#ifdef KDEPIM_NEW_DISTRLISTS
-  if ( !mAddressee.isEmpty() ) return mAddressee.realName();
-  else if ( !mDistributionList.isEmpty() ) return mDistributionList.name();
-  else return QString();
-#else
-  if ( !mAddressee.isEmpty() ) return mAddressee.realName();
-  else if ( mDistributionList ) return mDistributionList->name();
-  else return QString();
-#endif
+  return mName;
 }
 
 QString RecipientItem::email() const
 {
-#ifdef KDEPIM_NEW_DISTRLISTS
-  if ( mAddressee.isEmpty() && !mDistributionList.isEmpty() ) {
-    int count = mDistributionList.entries( mAddressBook ).count();
-    return i18np( "1 email address", "%1 email addresses", count );
-  } else {
-    return mEmail;
-  }
-#else
-  if ( mAddressee.isEmpty() &&  mDistributionList ) {
-    int count = mDistributionList->entries().count();
-    return i18np( "1 email address", "%1 email addresses", count );
-  } else {
-    return mEmail;
-  }
-#endif
-  return QString();
+  return mEmail;
+}
+
+QString RecipientItem::recipient() const
+{
+  return mRecipient;
+}
+
+QString RecipientItem::tooltip() const
+{
+  return mTooltip;
 }
 
 #ifdef KDEPIM_NEW_DISTRLISTS
-QString RecipientItem::recipient() const
-{
-  QString r;
-  if ( !mAddressee.isEmpty() ) r = mAddressee.fullEmail( mEmail );
-  else if ( !mDistributionList.isEmpty() ) r = mDistributionList.name();
-  return r;
+KPIM::DistributionList& RecipientItem::distributionList() const {
+  return mDistributionList;
 }
 #else
-QString RecipientItem::recipient() const
-{
-  QString r;
-  if ( !mAddressee.isEmpty() ) r = mAddressee.fullEmail( mEmail );
-  else if ( mDistributionList ) r = mDistributionList->name();
-  return r;
+KABC::DistributionList * RecipientItem::distributionList() const {
+  return mDistributionList;
 }
 #endif
 
-QString RecipientItem::toolTip() const
+#ifdef KDEPIM_NEW_DISTRLISTS
+QString RecipientItem::createTooltip( KPIM::DistributionList &distributionList ) const
 {
   QString txt = "<qt>";
 
-  if ( !mAddressee.isEmpty() ) {
-    if ( !mAddressee.realName().isEmpty() ) {
-      txt += mAddressee.realName() + "<br/>";
-    }
-    txt += "<b>" + mEmail + "</b>";
-#ifdef KDEPIM_NEW_DISTRLISTS
-  } else if ( !mDistributionList.isEmpty() ) {
-    txt += "<b>" + i18n( "Distribution List %1", mDistributionList.name() ) + "</b>";
-    txt += "<ul>";
-    KPIM::DistributionList::Entry::List entries = mDistributionList.entries( mAddressBook );
-    KPIM::DistributionList::Entry::List::ConstIterator it;
-    for( it = entries.begin(); it != entries.end(); ++it ) {
-      txt += "<li>";
-      txt += (*it).addressee.realName() + ' ';
-      txt += "<em>";
-      if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
-      else txt += (*it).email;
-      txt += "</em>";
-      txt += "<li/>";
-    }
-    txt += "</ul>";
+  txt += "<b>" + i18n( "Distribution List %1", distributionList.name() ) + "</b>";
+  txt += "<ul>";
+  KPIM::DistributionList::Entry::List entries = distributionList.entries( mAddressBook );
+  KPIM::DistributionList::Entry::List::ConstIterator it;
+  for( it = entries.begin(); it != entries.end(); ++it ) {
+    txt += "<li>";
+    txt += (*it).addressee.realName() + ' ';
+    txt += "<em>";
+    if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
+    else txt += (*it).email;
+    txt += "</em>";
+    txt += "<li/>";
   }
-#else
-  } else if ( mDistributionList ) {
-    txt += "<b>" + i18n("Distribution List %1",
-        mDistributionList->name() ) + "</b>";
-    txt += "<ul>";
-    KABC::DistributionList::Entry::List entries = mDistributionList->entries();
-    KABC::DistributionList::Entry::List::ConstIterator it;
-    for( it = entries.begin(); it != entries.end(); ++it ) {
-      txt += "<li>";
-      txt += (*it).addressee().realName() + ' ';
-      txt += "<em>";
-      if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
-      else txt += (*it).email();
-      txt += "</em>";
-      txt += "</li>";
-    }
-    txt += "</ul>";
-  }
-#endif
+  txt += "</ul>";
+  txt += "</qt>";
 
   return txt;
 }
+#else
+QString RecipientItem::createTooltip( KABC::DistributionList *distributionList ) const
+{
+  QString txt = "<qt>";
+
+  txt += "<b>" + i18n("Distribution List %1", distributionList->name() ) + "</b>";
+  txt += "<ul>";
+  KABC::DistributionList::Entry::List entries = distributionList->entries();
+  KABC::DistributionList::Entry::List::ConstIterator it;
+  for( it = entries.begin(); it != entries.end(); ++it ) {
+    txt += "<li>";
+    txt += (*it).addressee().realName() + ' ';
+    txt += "<em>";
+    if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
+    else txt += (*it).email();
+    txt += "</em>";
+    txt += "</li>";
+  }
+  txt += "</ul>";
+  txt += "</qt>";
+
+  return txt;
+}
+#endif
 
 void RecipientItem::setRecipientType( const QString &type )
 {
@@ -211,7 +213,6 @@ QString RecipientItem::recipientType() const
 {
   return mType;
 }
-
 
 RecipientViewItem::RecipientViewItem( RecipientItem *item, QTreeWidget *listView )
   : QTreeWidgetItem( listView ), mRecipientItem( item )
@@ -230,11 +231,22 @@ RecipientItem *RecipientViewItem::recipientItem() const
 
 RecipientsCollection::RecipientsCollection()
 {
+  mIsReferenceContainer = false;
 }
 
 RecipientsCollection::~RecipientsCollection()
 {
-  clear();
+  deleteAll();
+}
+
+void RecipientsCollection::setReferenceContainer( bool isReferenceContainer )
+{
+  mIsReferenceContainer = isReferenceContainer;
+}
+
+bool RecipientsCollection::isReferenceContainer() const
+{
+  return mIsReferenceContainer;
 }
 
 void RecipientsCollection::setTitle( const QString &title )
@@ -249,19 +261,26 @@ QString RecipientsCollection::title() const
 
 void RecipientsCollection::addItem( RecipientItem *item )
 {
-  mItems.append( item );
-
   mKeyMap.insert( item->key(), item );
 }
 
 RecipientItem::List RecipientsCollection::items() const
 {
-  return mItems;
+  return mKeyMap.values();
 }
 
 bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
 {
   return mKeyMap.find( item->key() ) != mKeyMap.end();
+}
+
+RecipientItem * RecipientsCollection::getEquivalentItem( RecipientItem *item) const
+{
+  QMap<QString, RecipientItem *>::ConstIterator it;
+  it = mKeyMap.find( item->key() );
+  if ( it == mKeyMap.end() )
+    return 0;
+  return (*it);
 }
 
 void RecipientsCollection::clear()
@@ -271,9 +290,11 @@ void RecipientsCollection::clear()
 
 void RecipientsCollection::deleteAll()
 {
-  QMap<QString, RecipientItem *>::ConstIterator it;
-  for( it = mKeyMap.begin(); it != mKeyMap.end(); ++it ) {
-    delete *it;
+  if ( !isReferenceContainer() ) {
+    QMap<QString, RecipientItem *>::ConstIterator it;
+    for( it = mKeyMap.begin(); it != mKeyMap.end(); ++it ) {
+      delete *it;
+    }
   }
   clear();
 }
@@ -319,12 +340,9 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   mCollectionCombo = new QComboBox( this );
   resLayout->addWidget( mCollectionCombo );
-  resLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
+  resLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding ) );
 
-  connect( mCollectionCombo, SIGNAL( highlighted( int ) ),
-    SLOT( updateList() ) );
-  connect( mCollectionCombo, SIGNAL( activated( int ) ),
-    SLOT( updateList() ) );
+  connect( mCollectionCombo, SIGNAL( activated( int ) ), SLOT( updateList() ) );
 
   QBoxLayout *searchLayout = new QHBoxLayout();
   topLayout->addItem( searchLayout );
@@ -404,8 +422,6 @@ RecipientsPicker::~RecipientsPicker()
 {
   writeConfig();
 
-  mAllRecipients->deleteAll();
-
   QMap<int,RecipientsCollection *>::ConstIterator it;
   for( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
     delete *it;
@@ -415,18 +431,22 @@ RecipientsPicker::~RecipientsPicker()
 void RecipientsPicker::initCollections()
 {
   mAllRecipients = new RecipientsCollection;
+  mAllRecipients->setReferenceContainer( true );
   mAllRecipients->setTitle( i18n("All") );
-  insertCollection( mAllRecipients );
 
-  insertAddressBook( mAddressBook );
-
-  insertDistributionLists();
-
-  insertRecentAddresses();
+  mDistributionLists = new RecipientsCollection;
+  mDistributionLists->setTitle( i18n("Distribution Lists") );
 
   mSelectedRecipients = new RecipientsCollection;
   mSelectedRecipients->setTitle( i18n("Selected Recipients") );
+
+  insertCollection( mAllRecipients );
+  insertAddressBook( mAddressBook );
+  insertCollection( mDistributionLists );
+  insertRecentAddresses();
   insertCollection( mSelectedRecipients );
+
+  rebuildAllRecipientsList();
 }
 
 void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
@@ -454,12 +474,13 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
       RecipientItem *item = new RecipientItem;
 #endif
       item->setAddressee( *it, *it3 );
-      mAllRecipients->addItem( item );
 
       QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
       collIt = collectionMap.find( it->resource() );
       if ( collIt != collectionMap.end() ) {
         (*collIt)->addItem( item );
+      } else {
+        kDebug(5006) << "Collection for resource not found. shouldn't happen";
       }
 
       QStringList categories = (*it).categories();
@@ -470,6 +491,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
         RecipientsCollection *collection;
         if ( catMapIt == categoryMap.end() ) {
           collection = new RecipientsCollection;
+          collection->setReferenceContainer( true );
           collection->setTitle( *catIt );
           categoryMap.insert( *catIt, collection );
         } else {
@@ -490,33 +512,30 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
     insertCollection( *it3 );
   }
 
+  insertDistributionLists();
+  rebuildAllRecipientsList();
   updateList();
 }
 
 void RecipientsPicker::insertDistributionLists()
 {
-  RecipientsCollection *collection = new RecipientsCollection;
-  collection->setTitle( i18n("Distribution Lists") );
+  mDistributionLists->deleteAll();
 
 #ifdef KDEPIM_NEW_DISTRLISTS
   QList<KPIM::DistributionList> lists = KPIM::DistributionList::allDistributionLists( mAddressBook );
   for ( int i = 0; i < lists.count(); ++i ) {
     RecipientItem *item = new RecipientItem( mAddressBook );
     item->setDistributionList( lists[ i ] );
-    mAllRecipients->addItem( item );
-    collection->addItem( item );
+    mDistributionLists->addItem( item );
   }
 #else
   QList<KABC::DistributionList*> lists = mAddressBook->allDistributionLists();
   foreach ( KABC::DistributionList *list, lists ) {
     RecipientItem *item = new RecipientItem;
     item->setDistributionList( list );
-    mAllRecipients->addItem( item );
-    collection->addItem( item );
+    mDistributionLists->addItem( item );
   }
 #endif
-
-  insertCollection( collection );
 }
 
 void RecipientsPicker::insertRecentAddresses()
@@ -536,9 +555,6 @@ void RecipientsPicker::insertRecentAddresses()
     RecipientItem *item = new RecipientItem;
 #endif
     item->setAddressee( *it, (*it).preferredEmail() );
-    if ( !mAllRecipients->hasEquivalentItem( item ) ) {
-      mAllRecipients->addItem( item );
-    }
     collection->addItem( item );
   }
 
@@ -547,10 +563,18 @@ void RecipientsPicker::insertRecentAddresses()
 
 void RecipientsPicker::insertCollection( RecipientsCollection *coll )
 {
-  int index = mCollectionMap.count();
-
-  kDebug(5006) <<"RecipientsPicker::insertCollection()" << coll->title()
-    << "index:" << index;
+  int index = 0;
+  QMap<int,RecipientsCollection *>::ConstIterator it;
+  for ( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+    // ### This fails if there is more than one resource with the same name!
+    if ( (*it)->title() == coll->title() ) {
+      delete *it;
+      mCollectionMap.remove( index );
+      mCollectionMap.insert( index, coll );
+      return;
+    }
+    index++;
+  }
 
   mCollectionCombo->insertItem( index, coll->title() );
   mCollectionMap.insert( index, coll );
@@ -570,27 +594,37 @@ void RecipientsPicker::updateRecipient( const Recipient &recipient )
 
 void RecipientsPicker::setRecipients( const Recipient::List &recipients )
 {
-  RecipientItem::List allRecipients = mAllRecipients->items();
-  RecipientItem::List::ConstIterator itAll;
-  for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
-    (*itAll)->setRecipientType( QString() );
-  }
-
-  mSelectedRecipients->clear();
+  mSelectedRecipients->deleteAll();
 
   Recipient::List::ConstIterator it;
   for( it = recipients.begin(); it != recipients.end(); ++it ) {
     RecipientItem *item = 0;
-    for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
-      if ( (*itAll)->recipient() == (*it).email() ) {
-        (*itAll)->setRecipientType( (*it).typeLabel() );
-        item = *itAll;
+
+    // if recipient is a distribution list, create
+    // a detached copy.
+    RecipientItem::List items = mDistributionLists->items();
+    RecipientItem::List::ConstIterator distIt;
+#ifdef KDEPIM_NEW_DISTRLISTS
+    for ( distIt = items.begin(); distIt != items.end(); ++distIt ) {
+      if ( (*it).email() == (*distIt)->name() ) {
+        item = new RecipientItem( mAddressBook );
+        item->setDistributionList( (*distIt)->distributionList() );
       }
     }
+#else
+    for ( distIt = items.begin(); distIt != items.end(); ++distIt ) {
+      if ( (*it).email() == (*distIt)->name() ) {
+        item = new RecipientItem();
+        item->setDistributionList( (*distIt)->distributionList() );
+      }
+    }
+#endif
+
     if ( !item ) {
       KABC::Addressee a;
       QString name;
       QString email;
+
       KABC::Addressee::parseEmailAddress( (*it).email(), name, email );
       a.setNameFromString( name );
       a.insertEmail( email );
@@ -601,9 +635,9 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
       item = new RecipientItem;
 #endif
       item->setAddressee( a, a.preferredEmail() );
-      item->setRecipientType( (*it).typeLabel() );
-      mAllRecipients->addItem( item );
     }
+
+    item->setRecipientType( (*it).typeLabel() );
     mSelectedRecipients->addItem( item );
   }
 
@@ -612,7 +646,6 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
 
 void RecipientsPicker::setDefaultButton( QPushButton *button )
 {
-//  button->setText( "<qt><b>" + button->text() + "</b></qt>" );
   button->setDefault( true );
 }
 
@@ -624,6 +657,27 @@ void RecipientsPicker::setDefaultType( Recipient::Type type )
   mBccButton->setDefault( type == Recipient::Bcc );
 }
 
+void RecipientsPicker::rebuildAllRecipientsList()
+{
+  mAllRecipients->clear();
+
+  QMap<int,RecipientsCollection *>::ConstIterator it;
+  for( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+    // skip self
+    if ( (*it) == mAllRecipients )
+      continue;
+
+    kDebug(5006) << "processing collection" << (*it)->title();
+
+    RecipientItem::List coll = (*it)->items();
+
+    RecipientItem::List::ConstIterator rcptIt;
+    for ( rcptIt = coll.begin(); rcptIt != coll.end(); ++rcptIt ) {
+      mAllRecipients->addItem( *rcptIt );
+    }
+  }
+}
+
 void RecipientsPicker::updateList()
 {
   mRecipientList->clear();
@@ -633,9 +687,17 @@ void RecipientsPicker::updateList()
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
   for( it = items.begin(); it != items.end(); ++it ) {
+    if ( coll != mSelectedRecipients ) {
+      RecipientItem *selItem = mSelectedRecipients->getEquivalentItem( *it );
+      if ( selItem ) {
+        (*it)->setRecipientType( selItem->recipientType() );
+      } else {
+        (*it)->setRecipientType( QString() );
+      }
+    }
     RecipientViewItem *newItem = new RecipientViewItem( *it, mRecipientList );
     for ( int i = 0; i < mRecipientList->columnCount(); i++ )
-      newItem->setToolTip( i, newItem->recipientItem()->toolTip() );
+      newItem->setToolTip( i, newItem->recipientItem()->tooltip() );
     mRecipientList->addTopLevelItem( newItem );
   }
 
