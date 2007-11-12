@@ -37,15 +37,15 @@ CustomTemplatesMenu::CustomTemplatesMenu(QWidget *owner,KActionCollection *ac)
 {
   mOwnerActionCollection = ac;
 
-  mCustomForwardActionMenu = new KActionMenu( KIcon( "mail_custom_forward" ),
+  mCustomForwardActionMenu = new KActionMenu( KIcon( "mail-forward-custom" ),
                                               i18n("With Custom Template"), owner );
   mOwnerActionCollection->addAction( "custom_forward", mCustomForwardActionMenu );
 
-  mCustomReplyActionMenu = new KActionMenu( KIcon( "mail_custom_reply" ),
+  mCustomReplyActionMenu = new KActionMenu( KIcon( "mail-reply-custom" ),
                                             i18n("Reply With Custom Template"), owner );
   mOwnerActionCollection->addAction( "custom_reply", mCustomReplyActionMenu );
 
-  mCustomReplyAllActionMenu = new KActionMenu( KIcon( "mail_custom_reply_all" ),
+  mCustomReplyAllActionMenu = new KActionMenu( KIcon( "mail-reply-all-custom" ),
                                                i18n("Reply to All With Custom Template"), owner );
   mOwnerActionCollection->addAction( "custom_reply_all", mCustomReplyAllActionMenu );
 
