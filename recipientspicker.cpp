@@ -229,8 +229,10 @@ RecipientItem *RecipientViewItem::recipientItem() const
   return mRecipientItem;
 }
 
-RecipientsCollection::RecipientsCollection()
+RecipientsCollection::RecipientsCollection( const QString &id )
 {
+  mId = id;
+  mTitle = id;
   mIsReferenceContainer = false;
 }
 
@@ -299,6 +301,10 @@ void RecipientsCollection::deleteAll()
   clear();
 }
 
+QString RecipientsCollection::id() const
+{
+  return mId;
+}
 
 SearchLine::SearchLine( QWidget *parent, QTreeWidget *listView )
   : KTreeWidgetSearchLine( parent, listView )
@@ -430,15 +436,10 @@ RecipientsPicker::~RecipientsPicker()
 
 void RecipientsPicker::initCollections()
 {
-  mAllRecipients = new RecipientsCollection;
+  mAllRecipients = new RecipientsCollection( i18n("All") );
   mAllRecipients->setReferenceContainer( true );
-  mAllRecipients->setTitle( i18n("All") );
-
-  mDistributionLists = new RecipientsCollection;
-  mDistributionLists->setTitle( i18n("Distribution Lists") );
-
-  mSelectedRecipients = new RecipientsCollection;
-  mSelectedRecipients->setTitle( i18n("Selected Recipients") );
+  mDistributionLists = new RecipientsCollection( i18n("Distribution Lists") );
+  mSelectedRecipients = new RecipientsCollection( i18n("Selected Recipients") );
 
   insertCollection( mAllRecipients );
   insertAddressBook( mAddressBook );
@@ -456,7 +457,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
   QList<KABC::Resource*> resources = addressbook->resources();
   QList<KABC::Resource*>::const_iterator rit;
   for( rit = resources.constBegin(); rit != resources.constEnd() ; ++rit ) {
-    RecipientsCollection *collection = new RecipientsCollection;
+    RecipientsCollection *collection = new RecipientsCollection( (*rit)->identifier() );
     collectionMap.insert( *rit, collection );
     collection->setTitle( (*rit)->resourceName() );
   }
@@ -476,7 +477,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
       item->setAddressee( *it, *it3 );
 
       QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
-      collIt = collectionMap.find( it->resource() );
+      collIt = collectionMap.find( (*it).resource() );
       if ( collIt != collectionMap.end() ) {
         (*collIt)->addItem( item );
       } else {
@@ -490,9 +491,8 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
         catMapIt = categoryMap.find( *catIt );
         RecipientsCollection *collection;
         if ( catMapIt == categoryMap.end() ) {
-          collection = new RecipientsCollection;
+          collection = new RecipientsCollection( *catIt );
           collection->setReferenceContainer( true );
-          collection->setTitle( *catIt );
           categoryMap.insert( *catIt, collection );
         } else {
           collection = *catMapIt;
@@ -540,8 +540,7 @@ void RecipientsPicker::insertDistributionLists()
 
 void RecipientsPicker::insertRecentAddresses()
 {
-  RecipientsCollection *collection = new RecipientsCollection;
-  collection->setTitle( i18n("Recent Addresses") );
+  RecipientsCollection *collection = new RecipientsCollection( i18n("Recent Addresses") );
 
   KConfig config( "kmailrc" );
   KABC::Addressee::List recents =
@@ -566,8 +565,7 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
   int index = 0;
   QMap<int,RecipientsCollection *>::ConstIterator it;
   for ( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
-    // ### This fails if there is more than one resource with the same name!
-    if ( (*it)->title() == coll->title() ) {
+    if ( (*it)->id() == coll->id() ) {
       delete *it;
       mCollectionMap.remove( index );
       mCollectionMap.insert( index, coll );
@@ -667,7 +665,7 @@ void RecipientsPicker::rebuildAllRecipientsList()
     if ( (*it) == mAllRecipients )
       continue;
 
-    kDebug(5006) << "processing collection" << (*it)->title();
+    kDebug(5006) << "processing collection" << (*it)->id() << (*it)->title();
 
     RecipientItem::List coll = (*it)->items();
 

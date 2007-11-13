@@ -115,7 +115,7 @@ class RecipientViewItem : public QTreeWidgetItem
 class RecipientsCollection
 {
   public:
-    RecipientsCollection();
+    RecipientsCollection( const QString & );
     ~RecipientsCollection();
 
     void setReferenceContainer( bool );
@@ -135,10 +135,13 @@ class RecipientsCollection
 
     void deleteAll();
 
+    QString id() const;
+
   private:
     // flag to indicate if this collection contains just references
     // or should manage memory (de)allocation as well.
     bool mIsReferenceContainer;
+    QString mId;
     QString mTitle;
     QMap<QString, RecipientItem *> mKeyMap;
 };
