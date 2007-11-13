@@ -67,6 +67,7 @@ BodyVisitor::BodyVisitor()
   // groupware
   mBasicList += "APPLICATION/MS-TNEF";
   mBasicList += "TEXT/CALENDAR";
+  mBasicList += "TEXT/X-VCARD";
 }
 
 //-----------------------------------------------------------------------------
