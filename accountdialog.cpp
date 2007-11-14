@@ -1233,7 +1233,6 @@ void AccountDialog::setupSettings()
     mImap.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
     mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
-    mImap.intervalCheck->setChecked( interval >= 1 );
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
