@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=ServiceType
 X-KDE-ServiceType=DBUS/Mailer
 Comment=Mail program with a DBUS interface
