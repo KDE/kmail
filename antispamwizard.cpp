@@ -939,7 +939,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
     mToolsList->selectionModel()->clearSelection();
     mToolsList->setCurrentRow( 0 );
     mSelectionHint->setText( i18n("<p>Please select the tools to be used "
-                                  "for the spam detection and go "
+                                  "for the detection and go "
                                   "to the next page.</p>") );
   }
 }
