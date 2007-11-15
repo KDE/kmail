@@ -247,9 +247,7 @@ void CustomTemplates::slotAddClicked()
       // KShortcut::null() doesn't seem to be present, although documented
       // at http://developer.kde.org/documentation/library/cvs-api/kdelibs-apidocs/kdecore/html/classKShortcut.html
       // see slotShortcutChanged(). oh, and you should look up documentation on the english breakfast network!
-#ifdef __GNUC__
-#warning There must be a better way of doing this...
-#endif
+      // FIXME There must be a better way of doing this...
       KShortcut nullShortcut;
       vitem = new CustomTemplateItem( str, "", nullShortcut, TUniversal );
       mItemList.insert( str, vitem );

@@ -4260,9 +4260,7 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 }
 
 
-#ifdef __GNUC__
-#warning "ensurePolished() should be a const method, but we call non-const method"
-#endif
+// FIXME "ensurePolished() should be a const method, but we call non-const method"
 void KMComposeWin::ensurePolished()
 {
   // Ensure the html toolbar is appropriately shown/hidden
