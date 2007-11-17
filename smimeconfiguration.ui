@@ -5,12 +5,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>557</width>
-    <height>662</height>
+    <width>613</width>
+    <height>637</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
-   <item>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
     <widget class="QRadioButton" name="CRLRB" >
      <property name="whatsThis" >
       <string>If this option is selected, S/MIME certificates are validated using Certificate Revocation Lists (CRLs).</string>
@@ -23,7 +23,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0" >
     <widget class="QRadioButton" name="OCSPRB" >
      <property name="whatsThis" >
       <string>If this option is selected, S/MIME certificates are validated online using the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP responder below.</string>
@@ -33,16 +33,16 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="2" column="0" >
     <widget class="QGroupBox" name="OCSPGroupBox" >
      <property name="title" >
       <string>Online Certificate Validation</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <layout class="QHBoxLayout" >
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QVBoxLayout" >
         <item>
-         <layout class="QVBoxLayout" >
+         <layout class="QHBoxLayout" >
           <item>
            <widget class="QLabel" name="textLabel1" >
             <property name="text" >
@@ -54,6 +54,17 @@
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="OCSPResponderURL" >
+            <property name="whatsThis" >
+             <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
            <widget class="QLabel" name="textLabel2" >
             <property name="text" >
              <string>OCSP responder signature:</string>
@@ -63,35 +74,24 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QLineEdit" name="OCSPResponderURL" >
-            <property name="whatsThis" >
-             <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="Kleo::KeyRequester" native="1" name="OCSPResponderSignature" />
           </item>
          </layout>
         </item>
+        <item>
+         <widget class="QCheckBox" name="ignoreServiceURLCB" >
+          <property name="text" >
+           <string>Ignore service URL of certificates</string>
+          </property>
+         </widget>
+        </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="ignoreServiceURLCB" >
-        <property name="text" >
-         <string>Ignore service URL of certificates</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item>
+   <item row="3" column="0" >
     <widget class="QCheckBox" name="doNotCheckCertPolicyCB" >
      <property name="whatsThis" >
       <string>By default GnuPG uses the file ~/.gnupg/policies.txt to check if a certificate policy is allowed. If this option is selected, policies are not checked.</string>
@@ -101,7 +101,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="4" column="0" >
     <widget class="QCheckBox" name="neverConsultCB" >
      <property name="whatsThis" >
       <string>If this option is checked, Certificate Revocation Lists are never used to validate S/MIME certificates.</string>
@@ -111,7 +111,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="5" column="0" >
     <widget class="QCheckBox" name="fetchMissingCB" >
      <property name="whatsThis" >
       <string>If this option is checked, missing issuer certificates are fetched when necessary (this applies to both validation methods, CRLs and OCSP)</string>
@@ -121,204 +121,213 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QGroupBox" name="HTTPGroupBox" >
-     <property name="title" >
-      <string>HTTP Requests</string>
+   <item row="6" column="0" >
+    <widget class="QTabWidget" name="tabRequest" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QCheckBox" name="disableHTTPCB" >
-        <property name="whatsThis" >
-         <string>Entirely disables the use of HTTP for S/MIME.</string>
-        </property>
-        <property name="text" >
-         <string>Do not perform any HTTP requests</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frameHTTP" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="frameShape" >
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Plain</enum>
-        </property>
+     <widget class="QWidget" name="tabHTTP" >
+      <attribute name="title" >
+       <string>&amp;HTTP Request</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
         <layout class="QVBoxLayout" >
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
          <item>
-          <widget class="QCheckBox" name="ignoreHTTPDPCB" >
-           <property name="whatsThis" >
-            <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
+          <widget class="QGroupBox" name="HTTPGroupBox" >
+           <property name="title" >
+            <string/>
            </property>
-           <property name="text" >
-            <string>Ignore HTTP CRL distribution point of certificates</string>
-           </property>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QCheckBox" name="disableHTTPCB" >
+                <property name="whatsThis" >
+                 <string>Entirely disables the use of HTTP for S/MIME.</string>
+                </property>
+                <property name="text" >
+                 <string>Do not perform any HTTP requests</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="ignoreHTTPDPCB" >
+                <property name="whatsThis" >
+                 <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
+                </property>
+                <property name="text" >
+                 <string>Ignore HTTP CRL distribution point of certificates</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <widget class="QRadioButton" name="honorHTTPProxyRB" >
+                  <property name="whatsThis" >
+                   <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
+                  </property>
+                  <property name="text" >
+                   <string>Use system HTTP proxy:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="systemHTTPProxy" >
+                  <property name="text" >
+                   <string>no proxy</string>
+                  </property>
+                  <property name="wordWrap" >
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" >
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <widget class="QRadioButton" name="useCustomHTTPProxyRB" >
+                  <property name="text" >
+                   <string>Use this proxy for HTTP requests: </string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="customHTTPProxy" >
+                  <property name="whatsThis" >
+                   <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <layout class="QVBoxLayout" >
-             <item>
-              <widget class="QRadioButton" name="honorHTTPProxyRB" >
-               <property name="whatsThis" >
-                <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
-               </property>
-               <property name="text" >
-                <string>Use system HTTP proxy:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="useCustomHTTPProxyRB" >
-               <property name="text" >
-                <string>Use this proxy for HTTP requests: </string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" >
-             <item>
-              <widget class="QLabel" name="systemHTTPProxy" >
-               <property name="text" >
-                <string>no proxy</string>
-               </property>
-               <property name="wordWrap" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="customHTTPProxy" >
-               <property name="whatsThis" >
-                <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="LDAPGroupBox" >
-     <property name="title" >
-      <string>LDAP Requests</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QCheckBox" name="disableLDAPCB" >
-        <property name="whatsThis" >
-         <string>Entirely disables the use of LDAP for S/MIME.</string>
-        </property>
-        <property name="text" >
-         <string>Do not perform any LDAP requests</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frameLDAP" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="frameShape" >
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Plain</enum>
-        </property>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabLDAP" >
+      <attribute name="title" >
+       <string>&amp;LDAP Request</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
         <layout class="QVBoxLayout" >
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
          <item>
-          <widget class="QCheckBox" name="ignoreLDAPDPCB" >
-           <property name="whatsThis" >
-            <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
+          <widget class="QGroupBox" name="LDAPGroupBox" >
+           <property name="title" >
+            <string/>
            </property>
-           <property name="text" >
-            <string>Ignore LDAP CRL distribution point of certificates</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="customLDAPLabel" >
-             <property name="text" >
-              <string>Primary host for LDAP requests:</string>
-             </property>
-             <property name="wordWrap" >
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="customLDAPProxy" >
-             <property name="whatsThis" >
-              <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QCheckBox" name="disableLDAPCB" >
+                <property name="whatsThis" >
+                 <string>Entirely disables the use of LDAP for S/MIME.</string>
+                </property>
+                <property name="text" >
+                 <string>Do not perform any LDAP requests</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="ignoreLDAPDPCB" >
+                <property name="whatsThis" >
+                 <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
+                </property>
+                <property name="text" >
+                 <string>Ignore LDAP CRL distribution point of certificates</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <widget class="QLabel" name="customLDAPLabel" >
+                  <property name="text" >
+                   <string>Primary host for LDAP requests:</string>
+                  </property>
+                  <property name="wordWrap" >
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="customLDAPProxy" >
+                  <property name="whatsThis" >
+                   <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
 The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP port) is used.</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>31</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
-       </widget>
-      </item>
-     </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
-   <item>
+   <item row="7" column="0" >
     <spacer>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
      <property name="sizeHint" >
       <size>
        <width>20</width>
-       <height>73</height>
+       <height>51</height>
       </size>
      </property>
     </spacer>
@@ -391,22 +400,6 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <sender>honorHTTPProxyRB</sender>
    <signal>toggled(bool)</signal>
    <receiver>customHTTPProxy</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>disableLDAPCB</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frameLDAP</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >

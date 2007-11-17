@@ -4461,10 +4461,6 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
      | Kleo::KeySelectionDialog::PublicKeys );
   mWidget->OCSPResponderSignature->setMultipleKeysEnabled( false );
 
-  mWidget->OCSPGroupBox->layout()->setMargin( KDialog::marginHint() );
-  mWidget->HTTPGroupBox->layout()->setMargin( KDialog::marginHint() );
-  mWidget->LDAPGroupBox->layout()->setMargin( KDialog::marginHint() );
-
   mConfig = Kleo::CryptoBackendFactory::instance()->config();
 
   connect( mWidget->CRLRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
