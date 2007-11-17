@@ -47,9 +47,6 @@ typedef enum {
 
 #define HDR_FROM     0x01
 #define HDR_REPLY_TO 0x02
-#define HDR_TO       0x04
-#define HDR_CC       0x08
-#define HDR_BCC      0x10
 #define HDR_SUBJECT  0x20
 #define HDR_NEWSGROUPS  0x40
 #define HDR_FOLLOWUP_TO 0x80
@@ -59,7 +56,7 @@ typedef enum {
 #define HDR_DICTIONARY 0x800
 #define HDR_ALL      0xfff
 
-#define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
+#define HDR_STANDARD (HDR_SUBJECT)
 
 #include <algorithm>
 
