@@ -21,139 +21,100 @@
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
 
-#include "kmcomposereditor.h"
-#include "kmlineeditspell.h"
-#include "kmatmlistview.h"
-
-#include "kmmainwin.h"
-#include "kmreadermainwin.h"
-#include "messagesender.h"
-#include "kmmsgpartdlg.h"
+// KDEPIM includes
+#include "kleo/cryptobackendfactory.h"
+#include "kleo/exportjob.h"
+#include "kleo/specialjob.h"
 #include <libkpgp/kpgpblock.h>
-#include <kaddrbookexternal.h>
-#include "kmaddrbook.h"
-#include "kmmsgdict.h"
-#include "kmfolderimap.h"
-#include "kmfoldermgr.h"
-#include "kmfoldercombobox.h"
-#include "kmcommands.h"
-#include "kcursorsaver.h"
-#include "partNode.h"
-#include "attachmentlistview.h"
-using KMail::AttachmentListView;
-#include "dictionarycombobox.h"
-using KMail::DictionaryComboBox;
-#include "addressesdialog.h"
-using KPIM::AddressesDialog;
-#include "addresseeemailselection.h"
-using KPIM::AddresseeEmailSelection;
-using KPIM::AddresseeSelectorDialog;
-#include <maillistdrag.h>
-#include "recentaddresses.h"
+#include <libkleo/ui/progressdialog.h>
+#include <libkleo/ui/keyselectiondialog.h>
+
+// LIBKDEPIM includes
+#include <libkdepim/kaddrbookexternal.h>
+#include <libkdepim/kmstylelistselectaction.h>
+#include <libkdepim/recentaddresses.h>
+
 using KPIM::RecentAddresses;
-#include "kleo_util.h"
-#include "stl_util.h"
-#include "recipientseditor.h"
-#include "editorwatcher.h"
 
-#include "attachmentcollector.h"
-#include "objecttreeparser.h"
-
-#include "kmfoldermaildir.h"
-#include <kio/jobuidelegate.h>
+// KDEPIMLIBS includes
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
 #include <kpimutils/kfileio.h>
-#include <kpimutils/email.h>
-#include "kleo/cryptobackendfactory.h"
-#include "kleo/exportjob.h"
-#include "kleo/specialjob.h"
-#include "libkleo/ui/progressdialog.h"
-#include "libkleo/ui/keyselectiondialog.h"
-
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
+
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 
-#include <gpgme++/context.h>
-#include <gpgme++/key.h>
-
-#include <kabc/vcardconverter.h>
-#include <libkdepim/kvcarddrag.h>
-#include <kio/netaccess.h>
-
-#include "messagecomposer.h"
+// KMail includes
+#include "attachmentcollector.h"
+#include "attachmentlistview.h"
 #include "chiasmuskeyselector.h"
+#include "dictionarycombobox.h"
+#include "editorwatcher.h"
+#include "kleo_util.h"
+#include "kmatmlistview.h"
+#include "kmcommands.h"
+#include "kmcomposereditor.h"
+#include "kmfoldercombobox.h"
+#include "kmfolderimap.h"
+#include "kmfoldermaildir.h"
+#include "kmfoldermgr.h"
+#include "kmmainwin.h"
+#include "kmmsgpartdlg.h"
+#include "kmreadermainwin.h"
+#include "mailcomposeradaptor.h"
+#include "messagecomposer.h"
+#include "objecttreeparser.h"
+#include "partNode.h"
+#include "recipientseditor.h"
+#include "replyphrases.h"
+#include "stl_util.h"
 
-#include <kapplication.h>
-#include <kicon.h>
+using KMail::AttachmentListView;
+using KMail::DictionaryComboBox;
+
+// KDELIBS includes
 #include <kactioncollection.h>
 #include <kactionmenu.h>
+#include <kapplication.h>
 #include <kcharsets.h>
-#include <kcompletionbox.h>
-#include <kcursor.h>
-#include <kcombobox.h>
-#include <kstandardshortcut.h>
-#include <kmenu.h>
-#include <kmimetypetrader.h>
-#include <kedittoolbar.h>
-#include <kshortcutsdialog.h>
+#include <kcursorsaver.h>
 #include <kdebug.h>
+#include <kedittoolbar.h>
 #include <kfiledialog.h>
-#include <ktoolbar.h>
-#include <kwindowsystem.h>
-#include <kinputdialog.h>
-#include <kmessagebox.h>
-#include <kio/scheduler.h>
-#include <ktemporaryfile.h>
-#include <klocale.h>
-#include <kstatusbar.h>
-#include <kaction.h>
-#include <kstandardaction.h>
-#include <kdirwatch.h>
-#include <KStandardGuiItem>
-#include <kiconloader.h>
-#include <kpushbutton.h>
-#include <krun.h>
-#include <ktempdir.h>
-#include <ktoggleaction.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-//#include <keditlistbox.h>
-#include "globalsettings.h"
-#include "replyphrases.h"
-
-#include <kcolordialog.h>
-#include <kzip.h>
+#include <kinputdialog.h>
+#include <kmenu.h>
+#include <kmimetypetrader.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <krecentfilesaction.h>
+#include <krun.h>
 #include <ksavefile.h>
+#include <kshortcutsdialog.h>
+#include <kstandardshortcut.h>
+#include <kstatusbar.h>
+#include <ktoggleaction.h>
+#include <ktoolbar.h>
 #include <ktoolinvocation.h>
-#include <kconfiggroup.h>
-#include <kmstylelistselectaction.h>
+#include <kwindowsystem.h>
+#include <kzip.h>
+
+#include <kio/jobuidelegate.h>
+#include <kio/scheduler.h>
 #include <sonnet/configdialog.h>
 
-#include <QByteArray>
-#include <q3header.h>
-#include <q3tabdialog.h>
-
+// Qt includes
 #include <QBuffer>
+#include <QClipboard>
 #include <QEvent>
-#include <QFontDatabase>
-#include <QGridLayout>
-#include <QKeyEvent>
-#include <QLabel>
-#include <QList>
-#include <QRegExp>
-#include <QTextCodec>
-#include <QHeaderView>
+#include <QSplitter>
 
-#include <mimelib/mimepp.h>
-
-#include <algorithm>
-#include <memory>
-
+// System includes
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -161,9 +122,9 @@ using MailTransport::Transport;
 #include <errno.h>
 #include <fcntl.h>
 #include <assert.h>
-#include <krecentfilesaction.h>
+
+// MOC
 #include "kmcomposewin.moc"
-#include "mailcomposeradaptor.h"
 
 KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
@@ -251,7 +212,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mFolder = 0;
   mAutoCharset = true;
   mFixedFontAction = 0;
-  mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
   mEditor = new KMComposerEditor(this, mSplitter);
@@ -2130,12 +2090,6 @@ void KMComposeWin::addAttach( KMMessagePart *msgPart )
   KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView, msgPart );
   msgPartToItem( msgPart, lvi );
   mAtmItemList.append( lvi );
-
-  // the Attach file job has finished, so the possibly present tmp dir can be deleted now.
-  if ( mTempDir != 0 ) {
-    delete mTempDir;
-    mTempDir = 0;
-  }
 
   connect( lvi, SIGNAL( compress( KMAtmListViewItem* ) ),
            this, SLOT( compressAttach( KMAtmListViewItem* ) ) );

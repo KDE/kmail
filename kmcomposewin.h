@@ -30,38 +30,27 @@
 #include "composer.h"
 #include "messagesender.h"
 
-#include <QByteArray>
-#include <QCheckBox>
-#include <QClipboard>
-#include <QCloseEvent>
-#include <QEvent>
 #include <QFont>
-#include <QGridLayout>
-#include <QLabel>
 #include <QList>
 #include <QPalette>
-#include <QPushButton>
-#include <QSplitter>
+#include <QPointer>
 
-#include <kio/job.h>
 #include <kglobalsettings.h>
-#include <kdeversion.h>
-#include <ktempdir.h>
-
-#include <libkdepim/addresseelineedit.h>
-#include <mimelib/mediatyp.h>
-
 #include "kleo/enum.h"
 
-class QCloseEvent;
-class QComboBox;
-class QGridLayout;
-class QPushButton;
 class QByteArray;
+class QCheckBox;
+class QComboBox;
+class QEvent;
+class QGridLayout;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QSplitter;
 class QTreeWidgetItem;
-class KMComposerEditor;
 
 class KMComposeWin;
+class KMComposerEditor;
 class KMFolderComboBox;
 class KMFolder;
 class KMMessage;
@@ -71,8 +60,10 @@ class KFontAction;
 class KFontSizeAction;
 class KSelectAction;
 class KAction;
+class KJob;
 class KToggleAction;
 class KTemporaryFile;
+class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
@@ -99,6 +90,10 @@ namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
   class EditorWatcher;
+}
+
+namespace KIO {
+  class Job;
 }
 
 namespace GpgME {
@@ -791,9 +786,6 @@ public: // mailserviceimpl
 
     // Temp var for slotInsert(My)PublicKey():
     QString mFingerprint;
-
-    // Temp ptr for saving image from clipboard
-    KTempDir *mTempDir;
 
     RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
