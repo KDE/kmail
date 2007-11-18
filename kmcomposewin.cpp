@@ -122,6 +122,7 @@ using KMail::DictionaryComboBox;
 #include <errno.h>
 #include <fcntl.h>
 #include <assert.h>
+#include <memory>
 
 // MOC
 #include "kmcomposewin.moc"
