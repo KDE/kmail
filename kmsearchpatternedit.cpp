@@ -31,13 +31,13 @@ static const struct {
   const char *internalName;
   const char *displayName;
 } SpecialRuleFields[] = {
-  { "<message>",     I18N_NOOP( "<message>" )       },
-  { "<body>",        I18N_NOOP( "<body>" )          },
-  { "<any header>",  I18N_NOOP( "<any header>" )    },
-  { "<recipients>",  I18N_NOOP( "<recipients>" )    },
-  { "<size>",        I18N_NOOP( "<size in bytes>" ) },
-  { "<age in days>", I18N_NOOP( "<age in days>" )   },
-  { "<status>",      I18N_NOOP( "<status>" )        }
+  { "<message>",     I18N_NOOP( "Complete Message" )       },
+  { "<body>",        I18N_NOOP( "Body of Message" )          },
+  { "<any header>",  I18N_NOOP( "Anywhere in Headers" )    },
+  { "<recipients>",  I18N_NOOP( "All Recipients" )    },
+  { "<size>",        I18N_NOOP( "Size in Bytes" ) },
+  { "<age in days>", I18N_NOOP( "Age in Days" )   },
+  { "<status>",      I18N_NOOP( "Message Status" )        }
 };
 static const int SpecialRuleFieldsCount =
   sizeof( SpecialRuleFields ) / sizeof( *SpecialRuleFields );
@@ -78,8 +78,8 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
   mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
 
-  if ((currentText != "<message>") &&
-      (currentText != "<body>"))
+  if (( currentText != "<message>") &&
+      ( currentText != "<body>"))
     mRuleField->changeItem( QString::fromAscii( currentText ), 0 );
   else
     mRuleField->changeItem( QString::null, 0 );
@@ -208,12 +208,23 @@ int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
   return -1; // no pseudo header
 }
 
+static QString displayNameFromInternalName( const QString & internal )
+{
+  for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
+    if ( internal == SpecialRuleFields[i].internalName )
+      return i18n(SpecialRuleFields[i].displayName);
+  }
+  return internal.latin1();
+}
+
+
+
 int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
 {
   if ( aName.isEmpty() )
     return -1;
 
-  QString i18n_aName = i18n( aName );
+  QString i18n_aName = displayNameFromInternalName( aName );
 
   for ( int i = 1; i < mRuleField->count(); ++i ) {
     if ( mRuleField->text( i ) == i18n_aName )
