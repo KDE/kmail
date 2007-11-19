@@ -261,6 +261,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupStatusBar();
   setupActions();
   setupEditor();
+  rethinkFields();
 
   applyMainWindowSettings( KMKernel::config()->group( "Composer") );
 
