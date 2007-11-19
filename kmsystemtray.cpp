@@ -80,7 +80,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   mLightIconImage = loadIcon( "kmaillight" ).pixmap().toImage();
 
   setIcon(mDefaultIcon);
-#ifdef Q_OS_X11
+#ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
     QWidget * mainWin = mainWidget->topLevelWidget();
@@ -371,7 +371,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 {
-#ifdef Q_OS_X11
+#ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return false;
@@ -397,10 +397,10 @@ void KMSystemTray::showKMail()
     return;
   QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
   assert(mainWin);
-#ifdef Q_OS_X11
+#ifdef Q_WS_X11
   if(mainWin)
   {
-    KWindowSystem::WindowInfo cur =  KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
+    KWindowInfo::KWindowInfo cur =  KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
     if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
     // switch to appropriate desktop
     if ( mDesktopOfMainWin != NET::OnAllDesktops )
@@ -408,13 +408,15 @@ void KMSystemTray::showKMail()
     if ( !mParentVisible ) {
       if ( mDesktopOfMainWin == NET::OnAllDesktops )
         KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
-      mainWin->move( mPosOfMainWin );
-      mainWin->show();
     }
     KWindowSystem::activateWindow( mainWin->winId() );
-    mParentVisible = true;
   }
 #endif
+  if ( !mParentVisible ) {
+    mainWin->move( mPosOfMainWin );
+    mainWin->show();
+    mParentVisible = true;
+  }
   kmkernel->raise();
 
   //Fake that the folders have changed so that the icon status is correct
@@ -429,10 +431,10 @@ void KMSystemTray::hideKMail()
   assert(mainWin);
   if(mainWin)
   {
-#ifdef Q_OS_X11
+    mPosOfMainWin = mainWin->pos();
+#ifdef Q_WS_X11
     mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                           NET::WMDesktop ).desktop();
-    mPosOfMainWin = mainWin->pos();
     // iconifying is unnecessary, but it looks cooler
     KWindowSystem::minimizeWindow( mainWin->winId() );
 #endif

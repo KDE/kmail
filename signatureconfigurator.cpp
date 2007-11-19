@@ -219,7 +219,7 @@ namespace KMail {
   }
 
   QString SignatureConfigurator::fileURL() const {
-    QString file = mFileRequester->url().url();
+    QString file = mFileRequester->url().path();
 
     // Force the filename to be relative to ~ instead of $PWD depending
     // on the rest of the code (KRun::run in Edit and KFileItem on save)

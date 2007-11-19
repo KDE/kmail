@@ -1,5 +1,4 @@
 [Misc]
-Encoding=UTF-8
 Name=Application Octetstream
 Name[af]=Application/Octet-stream
 Name[ca]=Aplicació Octetstream
@@ -82,4 +81,4 @@ Comment[zh_CN]=application/octet-stream 的正文格式化插件
 
 [Plugin]
 Type=application/octet-stream
-X-KDE-Library=libkmail_bodypartformatter_application_octetstream
+X-KDE-Library=kmail_bodypartformatter_application_octetstream

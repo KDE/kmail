@@ -114,6 +114,7 @@ namespace KMail {
     setAllColumnsShowFocus( true );
     setSortingEnabled( false ); // disabled
     setSelectionMode( SingleSelection ); // ### Extended would be nicer...
+    setColumnWidth( 0, 175 );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ),

@@ -61,7 +61,7 @@ namespace {
 
 extern "C"
 KDE_EXPORT KMail::Interface::BodyPartFormatterPlugin *
-libkmail_bodypartformatter_application_octetstream_create_bodypart_formatter_plugin() {
+kmail_bodypartformatter_application_octetstream_create_bodypart_formatter_plugin() {
   return new Plugin();
 }
 

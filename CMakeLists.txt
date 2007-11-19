@@ -261,7 +261,7 @@ set(kmailpart_PART_SRCS kmail_part.cpp )
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.kmailpart.xml kmail_part.h  KMailPart)
 
-kde4_add_plugin(kmailpart WITH_PREFIX ${kmailpart_PART_SRCS})
+kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
 
 
 
@@ -275,7 +275,7 @@ install(TARGETS kmailpart  DESTINATION ${PLUGIN_INSTALL_DIR})
 set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cpp )
 
 
-kde4_add_plugin(kmail_bodypartformatter_application_octetstream WITH_PREFIX ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
+kde4_add_plugin(kmail_bodypartformatter_application_octetstream ${kmail_bodypartformatter_application_octetstream_PART_SRCS})
 
 
 

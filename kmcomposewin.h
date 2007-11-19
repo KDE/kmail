@@ -394,8 +394,8 @@ public: // mailserviceimpl
      * Enable/disable some actions in the Attach menu
      */
     void slotUpdateAttachActions();
-  void slotAttachEdit();
-  void slotAttachEditWith();
+    void slotAttachEdit();
+    void slotAttachEditWith();
 
     /**
      * Open a popup-menu in the attachments-listbox.
@@ -411,13 +411,6 @@ public: // mailserviceimpl
     void slotAttachSave();
     void slotAttachProperties();
 
-    /**
-     * Select an email from the addressbook and add it to the line
-     * the pressed button belongs to.
-     */
-    void slotAddrBookTo();
-    void slotAddrBookFrom();
-    void slotAddrBookReplyTo();
     void slotCleanSpace();
     void slotToggleMarkup();
     void toggleMarkup( bool markup );
@@ -493,14 +486,11 @@ public: // mailserviceimpl
      */
 
     void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            const QString &aLabelStr, QLabel *aLbl,
-                            QLineEdit *aEdt, QPushButton *aBtn = 0,
-                            const QString &toolTip = QString(),
-                            const QString &whatsThis = QString() );
+                            QLabel *aLbl, QLineEdit *aEdt,
+                            QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,
-                            const QString &labelStr, QLabel *lbl,
-                            QComboBox *cbx, QCheckBox *chk );
+                            QLabel *lbl, QComboBox *cbx, QCheckBox *chk );
 
     /**
      * Initialization methods
@@ -557,13 +547,6 @@ public: // mailserviceimpl
      */
     void msgPartToItem( const KMMessagePart *msgPart, KMAtmListViewItem *lvi,
                         bool loadDefaults = true );
-
-    /**
-     * Open addressbook and append selected addresses to the given edit field.
-     */
-    void addrBookSelInto();
-    void addrBookSelIntoOld();
-    void addrBookSelIntoNew();
 
   private:
     /**
@@ -668,14 +651,13 @@ public: // mailserviceimpl
     KMail::DictionaryComboBox *mDictionaryCombo;
     KPIMIdentities::IdentityCombo    *mIdentity;
     KMFolderComboBox *mFcc;
-    KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
+    KMLineEdit *mEdtFrom, *mEdtReplyTo;
     KMLineEditSpell *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
-    QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc;
+    QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
-    QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnReplyTo;
     bool mSpellCheckInProgress;
     bool mDone;
     bool mAtmModified;
@@ -713,7 +695,7 @@ public: // mailserviceimpl
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
     KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
-    KToggleAction *mReplyToAction, *mToAction, *mCcAction, *mBccAction;
+    KToggleAction *mReplyToAction;
     KToggleAction *mSubjectAction;
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
@@ -813,8 +795,6 @@ public: // mailserviceimpl
     // Temp ptr for saving image from clipboard
     KTempDir *mTempDir;
 
-    bool mClassicalRecipients;
-
     RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
 
@@ -825,20 +805,20 @@ public: // mailserviceimpl
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;
 
-  /** If the message in this composer has a cursor position set (for
-   *   instance because it comes from a template containing %CURSOR)
-   *   then we need to preserve that cursor position even when auto-
-   *   appending (or prepending) the signature during composer setup.
-   *   Set to true *once* (and only in setMsg() at that) to avoid
-   *   accidentally moving the cursor.
-   */
-  bool mPreserveUserCursorPosition;
+    /** If the message in this composer has a cursor position set (for
+     *   instance because it comes from a template containing %CURSOR)
+     *   then we need to preserve that cursor position even when auto-
+     *   appending (or prepending) the signature during composer setup.
+     *   Set to true *once* (and only in setMsg() at that) to avoid
+     *   accidentally moving the cursor.
+     */
+    bool mPreserveUserCursorPosition;
 
-  QString mdbusObjectPath;
-  static int s_composerNumber;
+    QString mdbusObjectPath;
+    static int s_composerNumber;
 
-  QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
-  QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
+    QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
+    QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
 };
 
 #endif

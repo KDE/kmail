@@ -76,7 +76,6 @@ PGPMessageWarn=255,255,64
 QuotedText1=0,127,0
 QuotedText2=0,111,0
 QuotedText3=0,95,0
-FlagMessage=0,127,0
 UnreadMessage=0,0,255
 defaultColors=false
 showColorbar=false
