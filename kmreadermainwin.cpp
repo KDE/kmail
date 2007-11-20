@@ -28,6 +28,7 @@
 
 #include <qaccel.h>
 #include <kapplication.h>
+#include <kedittoolbar.h>
 #include <klocale.h>
 #include <kstdaccel.h>
 #include <kwin.h>
@@ -43,6 +44,7 @@
 #include "kmfoldertree.h"
 #include "kmmsgdict.h"
 #include "csshelper.h"
+#include "messageactions.h"
 
 #include "globalsettings.h"
 
@@ -93,7 +95,7 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 void KMReaderMainWin::initKMReaderMainWin() {
   setCentralWidget( mReaderWin );
   setupAccel();
-  setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
+  setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
   setupForwardingActionsList();
   applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
   if ( ! mReaderWin->message() ) {
@@ -145,6 +147,7 @@ void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
   mReaderWin->slotTouchMessage();
   setCaption( msg->subject() );
   mMsg = msg;
+  mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
 
@@ -210,39 +213,6 @@ void KMReaderMainWin::slotPrintMsg()
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotReplyToMsg()
-{
-  KMCommand *command = new KMReplyToCommand( this, mReaderWin->message(),
-      mReaderWin->copyText() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotReplyAuthorToMsg()
-{
-  KMCommand *command = new KMReplyAuthorCommand( this, mReaderWin->message(),
-      mReaderWin->copyText() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotReplyAllToMsg()
-{
-  KMCommand *command = new KMReplyToAllCommand( this, mReaderWin->message(),
-      mReaderWin->copyText() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotReplyListToMsg()
-{
-  KMCommand *command = new KMReplyListCommand( this, mReaderWin->message(),
-      mReaderWin->copyText() );
   command->start();
 }
 
@@ -314,6 +284,8 @@ void KMReaderMainWin::setupAccel()
   if ( kmkernel->xmlGuiInstance() )
     setInstance( kmkernel->xmlGuiInstance() );
 
+  mMsgActions = new KMail::MessageActions( actionCollection(), this );
+  mMsgActions->setMessageView( mReaderWin );
   //----- File Menu
   //mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
   //                                actionCollection() );
@@ -396,33 +368,6 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu->insert( mForwardDigestAction );
   mForwardActionMenu->insert( mRedirectAction );
 
-  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
-                                      "mail_reply", actionCollection(),
-                                      "message_reply_menu" );
-  connect( mReplyActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotReplyToMsg()) );
-
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
-			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
-  mReplyActionMenu->insert( mReplyAction );
-
-  mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    SHIFT+Key_A, this,
-                                    SLOT(slotReplyAuthorToMsg()),
-                                    actionCollection(), "reply_author" );
-  mReplyActionMenu->insert( mReplyAuthorAction );
-
-  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Key_A, this, SLOT(slotReplyAllToMsg()),
-				 actionCollection(), "reply_all" );
-  mReplyActionMenu->insert( mReplyAllAction );
-
-  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Key_L, this,
-				  SLOT(slotReplyListToMsg()), actionCollection(),
-				  "reply_list" );
-  mReplyActionMenu->insert( mReplyListAction );
-
   fontAction = new KFontAction( "Select Font", 0, actionCollection(),
                                "text_font" );
   fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
@@ -433,11 +378,6 @@ void KMReaderMainWin::setupAccel()
   fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
-
-  mCreateTodoAction = new KAction( i18n("Create Task..."), "mail_todo",
-                                   0, this, SLOT(slotCreateTodo()), actionCollection(),
-                                   "create_todo" );
-
 
   QAccel *accel = new QAccel(mReaderWin, "showMsg()");
   accel->connectItem(accel->insertItem(Key_Up),
@@ -455,6 +395,8 @@ void KMReaderMainWin::setupAccel()
   connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
 	  mReaderWin, SLOT(slotUrlClicked()));
 
+  setStandardToolBarMenuEnabled(true);
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
 }
 
 
@@ -490,7 +432,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();
-    mReplyActionMenu->plug( menu );
+    mMsgActions->replyMenu()->plug( menu );
     menu->insertSeparator();
 
     mReaderWin->copyAction()->plug( menu );
@@ -513,7 +455,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       //
       // FIXME: needs custom templates added to menu
       // (see KMMainWidget::updateCustomTemplateMenus)
-      mReplyActionMenu->plug( menu );
+      mMsgActions->replyMenu()->plug( menu );
       mForwardActionMenu->plug( menu );
       menu->insertSeparator();
     }
@@ -531,7 +473,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     mPrintAction->plug( menu );
     mSaveAsAction->plug( menu );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );
-    mCreateTodoAction->plug( menu );
+    mMsgActions->createTodoAction()->plug( menu );
   }
   menu->exec(aPoint, 0);
   delete menu;
@@ -570,6 +512,20 @@ void KMReaderMainWin::slotCreateTodo()
     return;
   KMCommand *command = new CreateTodoCommand( this, mMsg );
   command->start();
+}
+
+void KMReaderMainWin::slotEditToolbars()
+{
+  saveMainWindowSettings( KMKernel::config(), "ReaderWindow" );
+  KEditToolbar dlg( guiFactory(), this );
+  connect( &dlg, SIGNAL(newToolbarConfig()), SLOT(slotUpdateToolbars()) );
+  dlg.exec();
+}
+
+void KMReaderMainWin::slotUpdateToolbars()
+{
+  createGUI("kmreadermainwin.rc");
+  applyMainWindowSettings(KMKernel::config(), "ReaderWindow");
 }
 
 #include "kmreadermainwin.moc"

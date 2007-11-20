@@ -29,6 +29,7 @@ using KPIM::ProgressItem;
 #include <maillistdrag.h>
 #include "globalsettings.h"
 using namespace KPIM;
+#include "messageactions.h"
 
 #include <kapplication.h>
 #include <kaccelmanager.h>
@@ -702,7 +703,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 
     mOwner->useAction()->setEnabled( mFolder ?
                          ( kmkernel->folderIsTemplates( mFolder ) ) : false );
-    mOwner->replyListAction()->setEnabled( mFolder ?
+    mOwner->messageActions()->replyListAction()->setEnabled( mFolder ?
                          mFolder->isMailingListEnabled() : false );
     if ( mFolder ) {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -1180,27 +1181,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   //  kdDebug() << k_funcinfo << endl;
-  SerNumList serNums;
-  QListViewItemIterator it(this, QListViewItemIterator::Selected|QListViewItemIterator::Visible);
-  while( it.current() ) {
-    if ( it.current()->isSelected() && it.current()->isVisible() ) {
-      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
-        // the item's parent is closed, don't traverse any more of this subtree
-        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
-        // travel towards the root until we find an ancestor with siblings
-        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
-          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
-        // move the iterator to that ancestor's next sibling
-        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
-        continue;
-      }
-
-      HeaderItem *item = static_cast<HeaderItem*>(it.current());
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      serNums.append( msgBase->getMsgSerNum() );
-    }
-    ++it;
-  }
+  SerNumList serNums = selectedVisibleSernums();
   if (serNums.empty())
     return;
 
@@ -2396,7 +2377,7 @@ void KMHeaders::slotRMB()
   } else {
     // show most used actions
     if( !mFolder->isSent() ) {
-      mOwner->replyMenu()->plug( menu );
+      mOwner->messageActions()->replyMenu()->plug( menu );
     }
     mOwner->forwardMenu()->plug( menu );
     if( mOwner->sendAgainAction()->isEnabled() ) {
@@ -2448,7 +2429,7 @@ void KMHeaders::slotRMB()
       mOwner->trashThreadAction()->plug(menu);
   }
   menu->insertSeparator();
-  mOwner->createTodoAction()->plug( menu );
+  mOwner->messageActions()->createTodoAction()->plug( menu );
 
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
@@ -3499,6 +3480,43 @@ void KMHeaders::setCopiedMessages(const QValueList< Q_UINT32 > & msgs, bool move
 bool KMHeaders::isMessageCut(Q_UINT32 serNum) const
 {
   return mMoveMessages && mCopiedMessages.contains( serNum );
+}
+
+QValueList< Q_UINT32 > KMHeaders::selectedSernums()
+{
+  QValueList<Q_UINT32> list;
+  for ( QListViewItemIterator it(this); it.current(); it++ ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      HeaderItem* item = static_cast<HeaderItem*>( it.current() );
+      list.append( item->msgSerNum() );
+    }
+  }
+  return list;
+}
+
+QValueList< Q_UINT32 > KMHeaders::selectedVisibleSernums()
+{
+  QValueList<Q_UINT32> list;
+  QListViewItemIterator it(this, QListViewItemIterator::Selected|QListViewItemIterator::Visible);
+  while( it.current() ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
+        // the item's parent is closed, don't traverse any more of this subtree
+        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
+        // travel towards the root until we find an ancestor with siblings
+        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
+          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
+        // move the iterator to that ancestor's next sibling
+        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
+        continue;
+      }
+      HeaderItem *item = static_cast<HeaderItem*>(it.current());
+      list.append( item->msgSerNum() );
+    }
+    ++it;
+  }
+
+  return list;
 }
 
 #include "kmheaders.moc"

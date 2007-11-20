@@ -30,6 +30,7 @@
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
+#include "messageactions.h"
 #include <kaction.h>
 
 class QVBoxLayout;
@@ -112,20 +113,14 @@ public:
   static void cleanup();
 
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
-  KAction *replyAction() const { return mReplyAction; }
-  KAction *replyAuthorAction() const { return mReplyAuthorAction; }
-  KAction *replyAllAction() const { return mReplyAllAction; }
-  KAction *replyListAction() const { return mReplyListAction; }
   KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
   KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
-  KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
   KAction *forwardInlineAction() const { return mForwardInlineAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *forwardDigestAction() const { return mForwardDigestAction; }
   KAction *redirectAction() const { return mRedirectAction; }
   KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
-  KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
   KAction *trashAction() const { return mTrashAction; }
@@ -133,7 +128,7 @@ public:
   KAction *trashThreadAction() const { return mTrashThreadAction; }
   KAction *deleteThreadAction() const { return mDeleteThreadAction; }
   KAction *saveAsAction() const { return mSaveAsAction; }
-  KAction *editAction() const { return mEditAction; }
+  KAction *editAction() const { return mMsgActions->editAction(); }
   KAction *useAction() const { return mUseAction; }
   KAction *sendAgainAction() const { return mSendAgainAction; }
   KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
@@ -141,9 +136,9 @@ public:
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
   KAction *viewSourceAction() const { return mViewSourceAction; }
-  KAction *createTodoAction() const { return mCreateTodoAction; }
+  KMail::MessageActions *messageActions() const { return mMsgActions; }
 
-  KActionMenu *statusMenu()  const{ return mStatusMenu; }
+  KActionMenu *statusMenu()  const{ return mMsgActions->messageStatusMenu(); }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
   KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
   KActionMenu *mopyActionMenu() const { return mCopyActionMenu; }
@@ -295,7 +290,6 @@ protected slots:
   void slotOverrideThread();
   void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
-  void slotEditMsg();
   void slotUseTemplate();
   //void slotTrashMsg();   // move to trash
   void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
@@ -322,12 +316,6 @@ protected slots:
   void slotCollapseThread();
   void slotCollapseAllThreads();
   void slotShowMsgSrc();
-  void slotSetMsgStatusNew();
-  void slotSetMsgStatusUnread();
-  void slotSetMsgStatusRead();
-  void slotSetMsgStatusTodo();
-  void slotSetMsgStatusSent();
-  void slotSetMsgStatusFlag();
   void slotSetThreadStatusNew();
   void slotSetThreadStatusUnread();
   void slotSetThreadStatusRead();
@@ -397,11 +385,6 @@ protected slots:
   void slotChangeCaption(QListViewItem*);
   void removeDuplicates();
 
-  /** Slot to reply to a message */
-  void slotReplyToMsg();
-  void slotReplyAuthorToMsg();
-  void slotReplyListToMsg();
-  void slotReplyAllToMsg();
   void slotCustomReplyToMsg( int tid );
   void slotCustomReplyAllToMsg( int tid );
   void slotForwardInlineMsg();
@@ -451,16 +434,14 @@ private slots:
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
-    *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
+    *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-    *mCreateTodoAction, *mFavoritesCheckMailAction;
+    *mFavoritesCheckMailAction;
   // Composition actions
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-    *mReplyListAction,
+  KAction *mPrintAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
-    *mRedirectAction, *mNoQuoteReplyAction;
-  KActionMenu *mReplyActionMenu;
+    *mRedirectAction;
   KActionMenu *mForwardActionMenu;
   // Filter actions
   KActionMenu *mFilterMenu;
@@ -477,15 +458,13 @@ private:
                 *mCustomReplyAllMapper,
                 *mCustomForwardMapper;
 
-  KActionMenu *mStatusMenu, *mThreadStatusMenu,
+  KActionMenu *mThreadStatusMenu,
     *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
   KAction *mMarkThreadAsNewAction;
   KAction *mMarkThreadAsReadAction;
   KAction *mMarkThreadAsUnreadAction;
   KToggleAction *mToggleThreadTodoAction;
   KToggleAction *mToggleThreadFlagAction;
-  KToggleAction *mToggleTodoAction;
-  KToggleAction *mToggleFlagAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
@@ -568,6 +547,8 @@ private:
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
+
+  KMail::MessageActions *mMsgActions;
 
   static QValueList<KMMainWidget*>* s_mainWidgetList;
 };

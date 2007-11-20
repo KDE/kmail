@@ -18,6 +18,10 @@ class KFontAction;
 class KFontSizeAction;
 template <typename T, typename S> class QMap;
 
+namespace KMail {
+class MessageActions;
+}
+
 class KMReaderMainWin : public KMail::SecondaryWindow
 {
   Q_OBJECT
@@ -47,10 +51,6 @@ private slots:
   void copySelectedToFolder( int menuId );
   void slotTrashMsg();
   void slotPrintMsg();
-  void slotReplyToMsg();
-  void slotReplyAllToMsg();
-  void slotReplyAuthorToMsg();
-  void slotReplyListToMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotForwardDigestMsg();
@@ -63,8 +63,10 @@ private slots:
   void slotFontAction(const QString &);
   void slotSizeAction(int);
   void slotCreateTodo();
+  void slotEditToolbars();
 
   void slotConfigChanged();
+  void slotUpdateToolbars();
 
   void slotFolderRemoved( QObject* folderPtr );
 
@@ -77,14 +79,13 @@ private:
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
-  KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mReplyAction,
-          *mReplyAllAction, *mReplyAuthorAction, *mReplyListAction, *mForwardInlineAction,
+  KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mForwardInlineAction,
           *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
-          *mViewSourceAction, *mCreateTodoAction;
-  KActionMenu *mReplyActionMenu;
+          *mViewSourceAction;
   KActionMenu *mForwardActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
+  KMail::MessageActions *mMsgActions;
 
 };
 

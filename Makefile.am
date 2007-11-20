@@ -148,7 +148,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 snippetitem.cpp \
                 snippetsettings.cpp \
                 snippetsettingsbase.ui \
-                scalix.cpp
+                scalix.cpp \
+                messageactions.cpp
 
 kmail_SOURCES = main.cpp
 

@@ -1473,20 +1473,6 @@ void KMMainWidget::slotForwardDigestMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotEditMsg()
-{
-  KMCommand *command = 0;
-  // edit, unlike send again, removes the message from the folder
-  // we only want that for templates and drafts folders
-  if ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
-       kmkernel->folderIsTemplates( mFolder ) )
-      command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
-  else
-      command = new KMResendMessageCommand( this, mHeaders->currentMsg() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotUseTemplate()
 {
   newFromTemplate( mHeaders->currentMsg() );
@@ -1527,46 +1513,9 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotReplyToMsg()
-{
-  QString text = mMsgView? mMsgView->copyText() : "";
-  KMCommand *command = new KMReplyToCommand( this, mHeaders->currentMsg(), text );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotReplyAuthorToMsg()
-{
-  QString text = mMsgView? mMsgView->copyText() : "";
-  KMCommand *command = new KMReplyAuthorCommand( this, mHeaders->currentMsg(), text );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotReplyAllToMsg()
-{
-  QString text = mMsgView? mMsgView->copyText() : "";
-  KMCommand *command = new KMReplyToAllCommand( this, mHeaders->currentMsg(), text );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
   KMCommand *command = new KMRedirectCommand( this, mHeaders->currentMsg() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotReplyListToMsg()
-{
-
-  QString text = mMsgView? mMsgView->copyText() : "";
-  KMCommand *command = new KMReplyListCommand( this, mHeaders->currentMsg(),
-					       text );
   command->start();
 }
 
@@ -2234,42 +2183,6 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusNew()
-{
-  mHeaders->setMsgStatus(KMMsgStatusNew);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusUnread()
-{
-  mHeaders->setMsgStatus(KMMsgStatusUnread);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusRead()
-{
-  mHeaders->setMsgStatus(KMMsgStatusRead);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusFlag()
-{
-  mHeaders->setMsgStatus(KMMsgStatusFlag, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusTodo()
-{
-  mHeaders->setMsgStatus(KMMsgStatusTodo, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusSent()
-{
-  mHeaders->setMsgStatus(KMMsgStatusSent, true);
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusNew()
 {
   mHeaders->setThreadStatus(KMMsgStatusNew);
@@ -2358,7 +2271,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   }
 
   if (kmkernel->folderIsDraftOrOutbox( mFolder ) ) {
-    slotEditMsg();
+    mMsgActions->editCurrentMessage();
     return;
   }
   if ( kmkernel->folderIsTemplates( mFolder ) ) {
@@ -2435,7 +2348,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
   if(mMsgView && !mMsgView->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();
-    mReplyActionMenu->plug(menu);
+    mMsgActions->replyMenu()->plug(menu);
     menu->insertSeparator();
 
     mMsgView->copyAction()->plug( menu );
@@ -2450,16 +2363,16 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       return;
     }
 
-    
+
     if ( mFolder->isTemplates() ) {
-      mUseAction->plug( menu ); 
+      mUseAction->plug( menu );
     } else {
 
       if ( !mFolder->isSent() )
-        mReplyActionMenu->plug( menu );
+        mMsgActions->replyMenu()->plug( menu );
       mForwardActionMenu->plug( menu );
     }
-    mEditAction->plug(menu);
+    editAction()->plug(menu);
     menu->insertSeparator();
 
     mCopyActionMenu->plug( menu );
@@ -2467,7 +2380,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 
     menu->insertSeparator();
 
-    mStatusMenu->plug( menu );
+    mMsgActions->messageStatusMenu()->plug( menu );
     menu->insertSeparator();
 
     viewSourceAction()->plug(menu);
@@ -2486,7 +2399,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mTrashAction->plug( menu );
 
     menu->insertSeparator();
-    mCreateTodoAction->plug( menu );
+    mMsgActions->createTodoAction()->plug( menu );
   }
   KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
@@ -2554,7 +2467,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   QSignalMapper *mCustomReplyMapper = new QSignalMapper( this );
   connect( mCustomReplyMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotCustomReplyToMsg( int ) ) );
-  mReplyActionMenu->insert( mCustomReplyActionMenu );
+  mMsgActions->replyMenu()->insert( mCustomReplyActionMenu );
 
   mCustomReplyAllActionMenu =
     new KActionMenu( i18n("Reply to All With Custom Template"),
@@ -2563,7 +2476,7 @@ void KMMainWidget::updateCustomTemplateMenus()
   QSignalMapper *mCustomReplyAllMapper = new QSignalMapper( this );
   connect( mCustomReplyAllMapper, SIGNAL( mapped( int ) ),
            this, SLOT( slotCustomReplyAllToMsg( int ) ) );
-  mReplyActionMenu->insert( mCustomReplyAllActionMenu );
+  mMsgActions->replyMenu()->insert( mCustomReplyAllActionMenu );
 
   mCustomTemplates.clear();
 
@@ -2673,6 +2586,9 @@ void KMMainWidget::updateCustomTemplateMenus()
 //-----------------------------------------------------------------------------
 void KMMainWidget::setupActions()
 {
+  mMsgActions = new KMail::MessageActions( actionCollection(), this );
+  mMsgActions->setMessageView( mMsgView );
+
   //----- File Menu
   mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
@@ -2887,7 +2803,7 @@ void KMMainWidget::setupActions()
                       CTRL+SHIFT+Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
   newToML->plugAccel( actionCollection()->kaccel() );
- 
+
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
@@ -2940,35 +2856,6 @@ void KMMainWidget::setupActions()
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
-  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
-                                      "mail_reply", actionCollection(),
-                                      "message_reply_menu" );
-  connect( mReplyActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotReplyToMsg()) );
-
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
-			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
-  mReplyActionMenu->insert( mReplyAction );
-
-  mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    SHIFT+Key_A, this,
-                                    SLOT(slotReplyAuthorToMsg()),
-                                    actionCollection(), "reply_author" );
-  mReplyActionMenu->insert( mReplyAuthorAction );
-
-  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Key_A, this, SLOT(slotReplyAllToMsg()),
-				 actionCollection(), "reply_all" );
-  mReplyActionMenu->insert( mReplyAllAction );
-
-  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Key_L, this,
-				  SLOT(slotReplyListToMsg()), actionCollection(),
-				  "reply_list" );
-  mReplyActionMenu->insert( mReplyListAction );
-
-  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
-    this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   //----- Create filter actions
   mFilterMenu = new KActionMenu( i18n("&Create Filter"), "filter", actionCollection(), "create_filter" );
@@ -2996,47 +2883,10 @@ void KMMainWidget::setupActions()
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
-                            SLOT(slotEditMsg()), actionCollection(), "edit" );
-  mEditAction->plugAccel( actionCollection()->kaccel() );
   mUseAction = new KAction( i18n("New Message From &Template"), "filenew",
                             Key_N, this, SLOT( slotUseTemplate() ),
                             actionCollection(), "use_template" );
   mUseAction->plugAccel( actionCollection()->kaccel() );
-
-  //----- "Mark Message" submenu
-  mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
-                                 actionCollection(), "set_status" );
-
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
-                                          i18n("Mark selected messages as read")),
-                                 0, this, SLOT(slotSetMsgStatusRead()),
-                                 actionCollection(), "status_read"));
-
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
-                                          i18n("Mark selected messages as new")),
-                                 0, this, SLOT(slotSetMsgStatusNew()),
-                                 actionCollection(), "status_new" ));
-
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
-                                          i18n("Mark selected messages as unread")),
-                                 0, this, SLOT(slotSetMsgStatusUnread()),
-                                 actionCollection(), "status_unread"));
-
-  mStatusMenu->insert( new KActionSeparator( this ) );
-
-  // -------- Toggle Actions
-  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "mail_flag",
-                                 0, this, SLOT(slotSetMsgStatusFlag()),
-                                 actionCollection(), "status_flag");
-  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
-  mStatusMenu->insert( mToggleFlagAction );
-
-  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &Action Item"), "mail_todo",
-                                 0, this, SLOT(slotSetMsgStatusTodo()),
-                                 actionCollection(), "status_todo");
-  mToggleTodoAction->setCheckedState( i18n("Remove &Action Item Message Mark") );
-  mStatusMenu->insert( mToggleTodoAction );
 
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
@@ -3106,10 +2956,6 @@ void KMMainWidget::setupActions()
   mApplyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter" ),
 					    actionCollection(),
 					    "apply_filter_actions" );
-
-  mCreateTodoAction = new KAction( i18n("Create Task..."), "mail_todo",
-                                   0, this, SLOT(slotCreateTodo()), actionCollection(),
-                                  "create_todo" );
 
   //----- View Menu
   // Unread Submenu
@@ -3426,6 +3272,11 @@ void KMMainWidget::updateMessageActions()
         count = 1;
       else
         count = selectedItems.count();
+      mMsgActions->setCurrentMessage( mHeaders->currentMsg() );
+      mMsgActions->setSelectedSernums( mHeaders->selectedSernums() );
+      mMsgActions->setSelectedVisibleSernums( mHeaders->selectedVisibleSernums() );
+    } else {
+      mMsgActions->setCurrentMessage( 0 );
     }
 
     updateListFilterAction();
@@ -3459,9 +3310,6 @@ void KMMainWidget::updateMessageActions()
     bool thread_actions = mass_actions && allSelectedInCommonThread &&
                           mHeaders->isThreaded();
     bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
-    mStatusMenu->setEnabled( mass_actions );
-    mToggleTodoAction->setEnabled( flags_available );
-    mToggleFlagAction->setEnabled( flags_available );
     mThreadStatusMenu->setEnabled( thread_actions );
     // these need to be handled individually, the user might have them
     // in the toolbar
@@ -3476,8 +3324,6 @@ void KMMainWidget::updateMessageActions()
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
-      mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-      mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
       if (thread_actions) {
         mToggleThreadTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
         mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
@@ -3498,20 +3344,12 @@ void KMMainWidget::updateMessageActions()
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
-    mEditAction->setEnabled( single_actions );
     mUseAction->setEnabled( single_actions &&
                             kmkernel->folderIsTemplates( mFolder ) );
-    replyMenu()->setEnabled( single_actions );
     filterMenu()->setEnabled( single_actions );
-    replyAction()->setEnabled( single_actions );
-    noQuoteReplyAction()->setEnabled( single_actions );
-    replyAuthorAction()->setEnabled( single_actions );
-    replyAllAction()->setEnabled( single_actions );
-    replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
     printAction()->setEnabled( single_actions );
     viewSourceAction()->setEnabled( single_actions );
-    createTodoAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions
           && ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
@@ -3540,7 +3378,7 @@ void KMMainWidget::updateMessageActions()
         return;
 
       if ((KMFolder*)mFolder == kmkernel->outboxFolder())
-        mEditAction->setEnabled( !msg->transferInProgress() );
+        editAction()->setEnabled( !msg->transferInProgress() );
     }
 
     mApplyAllFiltersAction->setEnabled(count);
