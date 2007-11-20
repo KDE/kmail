@@ -555,6 +555,7 @@ void KMMainWidget::createWidgets(void)
     Qt::Orientation orientation = mReaderWindowBelow ? Qt::Vertical : Qt::Horizontal;
     mPanner2 = new QSplitter( orientation, mPanner1, "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );
+    mPanner2->setChildrenCollapsible( false );
     mFolderViewParent = mPanner1;
     headerParent = mimeParent = messageParent = mPanner2;
   } else /* !mLongFolderList */ {
@@ -562,6 +563,7 @@ void KMMainWidget::createWidgets(void)
     // inferior splitter: folder tree vs. headers
     mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
     mPanner1->setOpaqueResize( opaqueResize );
+    mPanner1->setChildrenCollapsible( false );
     mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );
     headerParent = mFolderViewParent = mPanner2;

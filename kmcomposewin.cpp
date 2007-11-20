@@ -294,7 +294,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mTempDir = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter, "mSnippetSplitter");
+  mSnippetSplitter->setChildrenCollapsible( false );
 
   QWidget *editorAndCryptoStateIndicators = new QWidget( mSnippetSplitter );
   QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
