@@ -699,9 +699,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled( mFolder ?
-                         ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
-                           kmkernel->folderIsTemplates( mFolder ) ) : false );
+
     mOwner->useAction()->setEnabled( mFolder ?
                          ( kmkernel->folderIsTemplates( mFolder ) ) : false );
     mOwner->replyListAction()->setEnabled( mFolder ?
@@ -2393,11 +2391,8 @@ void KMHeaders::slotRMB()
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox( mFolder );
   bool tem_folder = kmkernel->folderIsTemplates( mFolder );
-  if ( out_folder ) {
-    mOwner->editAction()->plug(menu);
-  } else if ( tem_folder ) {
+  if ( tem_folder ) {
      mOwner->useAction()->plug( menu );
-     mOwner->editAction()->plug( menu );
   } else {
     // show most used actions
     if( !mFolder->isSent() ) {
@@ -2406,6 +2401,8 @@ void KMHeaders::slotRMB()
     mOwner->forwardMenu()->plug( menu );
     if( mOwner->sendAgainAction()->isEnabled() ) {
       mOwner->sendAgainAction()->plug( menu );
+    } else {
+      mOwner->editAction()->plug( menu );
     }
   }
   menu->insertSeparator();

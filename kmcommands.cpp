@@ -79,6 +79,8 @@
 #include <kio/job.h>
 #include <kio/netaccess.h>
 
+#include <libkpimidentities/identitymanager.h>
+
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -2813,24 +2815,27 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-  KMMessage *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
-    return Failed;
-  }
-  KMMessage *newMsg = new KMMessage(*msg);
-  newMsg->setCharset(msg->codec()->mimeName());
-  // the message needs a new Message-Id
-  newMsg->removeHeaderField( "Message-Id" );
-  newMsg->setParent( 0 );
+   KMMessage *msg = retrievedMessage();
+   if ( !msg || !msg->codec() ) {
+     return Failed;
+   }
+   KMMessage *newMsg = new KMMessage(*msg);
 
-  // adds the new date to the message
-  newMsg->removeHeaderField( "Date" );
+   QStringList whiteList;
+   whiteList << "To" << "Cc" << "Bcc" << "Subject";
+   newMsg->sanitizeHeaders( whiteList );      
 
-  KMail::Composer * win = KMail::makeComposer();
-  win->setMsg(newMsg, false, true);
-  win->show();
+   newMsg->setCharset(msg->codec()->mimeName());
+   newMsg->setParent( 0 );  
 
-  return OK;
+   // make sure we have an identity set, default, if necessary
+   newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
+
+   KMail::Composer * win = KMail::makeComposer();
+   win->setMsg(newMsg, false, true);
+   win->show();
+
+   return OK;
 }
 
 KMMailingListCommand::KMMailingListCommand( QWidget *parent, KMFolder *folder )

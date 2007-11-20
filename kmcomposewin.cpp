@@ -1796,32 +1796,36 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   }
   mEdtSubject->setText(mMsg->subject());
 
-  if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
+  const bool stickyIdentity = mBtnIdentity->isChecked();
+  const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
+  if (!stickyIdentity && messageHasIdentity)
     mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
 
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
-  if ( !mBtnIdentity->isChecked() ) {
+  if ( !stickyIdentity ) {
     disconnect(mIdentity,SIGNAL(identityChanged(uint)),
                this, SLOT(slotIdentityChanged(uint)));
   }
-   mIdentity->setCurrentIdentity( mId );
-  if ( !mBtnIdentity->isChecked() ) {
+  // load the mId into the gui, sticky or not, without emitting
+  mIdentity->setCurrentIdentity( mId );
+  const uint idToApply = mId;
+  if ( !stickyIdentity ) {
     connect(mIdentity,SIGNAL(identityChanged(uint)),
             this, SLOT(slotIdentityChanged(uint)));
-  }
-  else {
-    // make sure the header values are overwritten with the values of the
-    // sticky identity (the slot isn't called by the signal for new messages
-    // since the identity has already been set before the signal was connected)
-    uint savedId = mId;
-    if ( !newMsg->headerField("X-KMail-Identity").isEmpty() )
+  }  else {
+    // load the message's state into the mId, without applying it to the gui
+    // that's so we can detect that the id changed (because a sticky was set)
+    // on apply()
+    if ( messageHasIdentity )
       mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
     else
       mId = im->defaultIdentity().uoid();
-    slotIdentityChanged( savedId );
   }
-
+  // manually load the identity's value into the fields; either the one from the 
+  // messge, where appropriate, or the one from the sticky identity. What's in
+  // mId might have changed meanwhile, thus the save value
+  slotIdentityChanged( idToApply );
 
   const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 

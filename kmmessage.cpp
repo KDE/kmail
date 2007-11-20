@@ -1178,6 +1178,24 @@ QCString KMMessage::createForwardBody()
   return str;
 }
 
+void KMMessage::sanitizeHeaders( const QStringList& whiteList )
+{
+   // Strip out all headers apart from the content description and other 
+   // whitelisted ones, because we don't want to inherit them.
+   DwHeaders& header = mMsg->Headers();
+   DwField* field = header.FirstField();
+   DwField* nextField;
+   while (field)
+   {
+     nextField = field->Next();
+     if ( field->FieldNameStr().find( "ontent" ) == DwString::npos
+             && !whiteList.contains( QString::fromLatin1( field->FieldNameStr().c_str() ) ) )
+       header.RemoveField(field);
+     field = nextField;
+   }
+   mMsg->Assemble();
+}
+
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 {
@@ -1196,18 +1214,8 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     const int type = msg->type();
     const int subtype = msg->subtype();
 
-    // Strip out all headers apart from the content description ones, because we
-    // don't want to inherit them.
-    DwHeaders& header = msg->mMsg->Headers();
-    DwField* field = header.FirstField();
-    DwField* nextField;
-    while (field)
-    {
-      nextField = field->Next();
-      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos )
-        header.RemoveField(field);
-      field = nextField;
-    }
+    msg->sanitizeHeaders();
+    
     // strip blacklisted parts
     QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
     for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
@@ -2274,6 +2282,16 @@ void KMMessage::removeHeaderField(const QCString& aName)
 
   header.RemoveField(field);
   mNeedsAssembly = true;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::removeHeaderFields(const QCString& aName)
+{
+  DwHeaders & header = mMsg->Headers();
+  while ( DwField * field = header.FindField(aName) ) {
+    header.RemoveField(field);
+    mNeedsAssembly = true;
+  }
 }
 
 

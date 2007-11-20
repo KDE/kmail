@@ -204,6 +204,9 @@ public:
           KMime::MDN::DispositionType d,
           bool allowGUI=false,
           QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
+  
+  /** Remove all headers but the content description ones, and those in the white list. */
+  void sanitizeHeaders( const QStringList& whiteList = QStringList() );
 
   /** Parse the string and create this message from it. */
   void fromDwString(const DwString& str, bool setStatus=false);
@@ -466,6 +469,9 @@ public:
 
   /** Remove header field with given name */
   void removeHeaderField(const QCString& name);
+
+  /** Remove all header fields with given name */
+  void removeHeaderFields(const QCString& name);
 
   /** Get or set the 'Content-Type' header field
       The member functions that involve enumerated types (ints)

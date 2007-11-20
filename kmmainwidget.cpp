@@ -1473,7 +1473,14 @@ void KMMainWidget::slotForwardDigestMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditMsg()
 {
-  KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
+  KMCommand *command = 0;
+  // edit, unlike send again, removes the message from the folder
+  // we only want that for templates and drafts folders
+  if ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
+       kmkernel->folderIsTemplates( mFolder ) )
+      command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
+  else
+      command = new KMResendMessageCommand( this, mHeaders->currentMsg() );
   command->start();
 }
 
@@ -2441,16 +2448,16 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       return;
     }
 
-    if ( mFolder->isDrafts() || mFolder->isOutbox() ) {
-      mEditAction->plug(menu);
-    } else if ( mFolder->isTemplates() ) {
-      mUseAction->plug( menu );
-      mEditAction->plug( menu );
+    
+    if ( mFolder->isTemplates() ) {
+      mUseAction->plug( menu ); 
     } else {
+
       if ( !mFolder->isSent() )
         mReplyActionMenu->plug( menu );
       mForwardActionMenu->plug( menu );
     }
+    mEditAction->plug(menu);
     menu->insertSeparator();
 
     mCopyActionMenu->plug( menu );
@@ -3489,9 +3496,7 @@ void KMMainWidget::updateMessageActions()
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
-    mEditAction->setEnabled( single_actions &&
-                             ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
-                               kmkernel->folderIsTemplates( mFolder ) ) );
+    mEditAction->setEnabled( single_actions );
     mUseAction->setEnabled( single_actions &&
                             kmkernel->folderIsTemplates( mFolder ) );
     replyMenu()->setEnabled( single_actions );
@@ -3506,11 +3511,10 @@ void KMMainWidget::updateMessageActions()
     viewSourceAction()->setEnabled( single_actions );
     createTodoAction()->setEnabled( single_actions );
 
-    mSendAgainAction->setEnabled( single_actions &&
-             ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
+    mSendAgainAction->setEnabled( single_actions
+          && ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
           || ( mFolder && mHeaders->currentMsg() &&
-              ( kmkernel->folderIsDraftOrOutbox( mFolder )
-             || kmkernel->folderIsSentMailFolder( mFolder ) ) ) );
+               kmkernel->folderIsSentMailFolder( mFolder ) ) );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails
