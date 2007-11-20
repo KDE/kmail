@@ -1727,10 +1727,10 @@ void KMFolderTree::slotCheckMail()
     return;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
   KMFolder* folder = fti->folder();
-  if (folder && folder->folderType() == KMFolderTypeImap)
-  {
-    KMAccount* acct = static_cast<KMFolderImap*>(folder->storage())->account();
-    kmkernel->acctMgr()->singleCheckMail(acct, true);
+  if (folder && folder->storage() ) {
+      if ( KMAccount* acct = folder->storage()->account() ) {
+         kmkernel->acctMgr()->singleCheckMail(acct, true);
+      }
   }
 }
 

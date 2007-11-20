@@ -19,6 +19,9 @@ using KPIM::BroadcastStatus;
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identity.h>
+
 using KMail::FolderJob;
 
 #include <kapplication.h>
@@ -91,7 +94,8 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mCheckingMail(false),
     mPrecommandSuccess(true),
     mHasInbox(false),
-    mMailCheckProgressItem(0)
+    mMailCheckProgressItem(0),
+    mIdentityId(0)
 {
   assert(aOwner != 0);
 }
@@ -149,7 +153,7 @@ void KMAccount::readConfig(KConfig& config)
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readPathEntry("precommand"));
-
+  setIdentityId(config.readNumEntry("identity-id", 0));
   if (!folderName.isEmpty())
   {
     setFolder(kmkernel->folderMgr()->findIdString(folderName), true);
@@ -174,6 +178,10 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-exclude", mExclude);
   config.writePathEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
+  if ( mIdentityId && mIdentityId != kmkernel->identityManager()->defaultIdentity().uoid() )
+    config.writeEntry("identity-id", mIdentityId);
+  else
+    config.deleteEntry("identity-id");
 }
 
 
@@ -450,6 +458,7 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   setFolder( a->folder() );
   setPrecommand( a->precommand() );
   setTrash( a->trash() );
+  setIdentityId( a->identityId() );
 }
 
 //-----------------------------------------------------------------------------
