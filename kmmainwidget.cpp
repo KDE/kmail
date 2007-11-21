@@ -585,6 +585,7 @@ void KMMainWidget::createWidgets()
     mPanner2 = new QSplitter( orientation, mPanner1 );
     mPanner2->setObjectName( "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );
+    mPanner2->setChildrenCollapsible( false );
     mFolderViewParent = mPanner1;
     headerParent = mimeParent = messageParent = mPanner2;
   } else /* !mLongFolderList */ {
@@ -593,6 +594,7 @@ void KMMainWidget::createWidgets()
     mPanner1 = new QSplitter( Qt::Vertical, this );
     mPanner1->setObjectName( "panner 1" );
     mPanner1->setOpaqueResize( opaqueResize );
+    mPanner1->setChildrenCollapsible( false );
     mPanner2 = new QSplitter( Qt::Horizontal, mPanner1 );
     mPanner2->setObjectName( "panner 2" );
     mPanner2->setOpaqueResize( opaqueResize );

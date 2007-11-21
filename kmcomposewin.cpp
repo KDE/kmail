@@ -254,6 +254,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
+  mSplitter->setChildrenCollapsible( false );
   mEditor = new KMComposerEditor(this, mSplitter);
 
   //mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
