@@ -242,6 +242,12 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // must be the last line of the constructor:
   mStartupDone = true;
 
+
+  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
+  KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
+  mVacationScriptIndicator = new KStatusBarLabel( QString(), 0, sb );
+  mVacationScriptIndicator->hide();
+  connect( mVacationScriptIndicator, SIGNAL(itemReleased(int)), SLOT(slotEditVacation()) );
   if ( GlobalSettings::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 }
@@ -1710,10 +1716,12 @@ void KMMainWidget::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckVacation()
 {
+  updateVactionScriptStatus( false );
   if ( !kmkernel->askToGoOnline() )
     return;
 
-  new Vacation( this, true /* check only */ );
+  Vacation *vac = new Vacation( this, true /* check only */ );
+  connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
 }
 
 void KMMainWidget::slotEditVacation()
@@ -1726,6 +1734,7 @@ void KMMainWidget::slotEditVacation()
     return;
 
   mVacation = new Vacation( this );
+  connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
   if ( mVacation->isUsable() ) {
     connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
   } else {
@@ -3945,5 +3954,16 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         pattern.append( new KMSearchRuleStatus( status ) );
     }
     mSearchWin->setSearchPattern( pattern );
+}
+
+void KMMainWidget::updateVactionScriptStatus(bool active)
+{
+  if ( active ) {
+    mVacationScriptIndicator->setText( i18n("Out of office reply active") );
+    mVacationScriptIndicator->setPaletteBackgroundColor( Qt::yellow );
+    mVacationScriptIndicator->show();
+  } else {
+    mVacationScriptIndicator->hide();
+  }
 }
 

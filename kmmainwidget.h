@@ -43,6 +43,7 @@ class KConfig;
 class KRadioAction;
 class KToggleAction;
 class KMenuBar;
+class KStatusBarLabel;
 
 class KMFolder;
 class KMFolderDir;
@@ -175,6 +176,8 @@ public:
    * Sets up action list for forward menu.
   */
   void setupForwardingActionsList();
+
+  KStatusBarLabel* vacationScriptIndicator() const { return mVacationScriptIndicator; }
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -430,6 +433,7 @@ private:
 
 private slots:
   void slotRequestFullSearchFromQuickSearch();
+  void updateVactionScriptStatus( bool active );
 
 private:
   // Message actions
@@ -551,6 +555,8 @@ private:
   KMail::MessageActions *mMsgActions;
 
   static QValueList<KMMainWidget*>* s_mainWidgetList;
+
+  KStatusBarLabel *mVacationScriptIndicator;
 };
 
 #endif

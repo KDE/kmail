@@ -646,6 +646,7 @@ namespace KMail {
       mDialog->show();
     }
 
+    emit scriptActive( mWasActive );
     if ( mCheckOnly && mWasActive ) {
       if ( KMessageBox::questionYesNo( 0, i18n( "There is still an active out-of-office reply configured.\n"
                                         "Do you want to edit it?"), i18n("Out-of-office reply still active"),
@@ -676,6 +677,7 @@ namespace KMail {
                                     mDialog->sendForSpam(),
                                     mDialog->domainName() );
     const bool active = mDialog->activateVacation();
+    emit scriptActive( active );
 
     kdDebug(5006) << "script:" << endl << script << endl;
 
@@ -718,6 +720,7 @@ namespace KMail {
 		  << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );
+    emit scriptActive( activated );
   }
 
 

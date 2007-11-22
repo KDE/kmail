@@ -63,6 +63,8 @@ namespace KMail {
 
   signals:
     void result( bool success );
+    // indicates if the vaction script is active or not
+    void scriptActive( bool active );
 
   protected slots:
     void slotDialogDefaults();
