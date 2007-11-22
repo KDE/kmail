@@ -649,7 +649,7 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
 // not been done
 KMAcctCachedImap *KMFolderCachedImap::account() const
 {
-  if( (KMAcctCachedImap *)mAccount == 0 ) {
+  if( (KMAcctCachedImap *)mAccount == 0 && kmkernel && kmkernel->acctMgr() ) {
     // Find the account
     mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->findByName( name() ) );
   }
