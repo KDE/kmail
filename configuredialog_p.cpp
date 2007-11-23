@@ -429,11 +429,11 @@ void ConfigModuleWithTabs::defaults() {
   KCModule::defaults();
 }
 
-void ConfigModuleWithTabs::installProfile(KConfig * /* profile */ ) {
+void ConfigModuleWithTabs::installProfile( KConfig *profile ) {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
-      tab->installProfile();
+      tab->installProfile( profile );
   }
 }
 

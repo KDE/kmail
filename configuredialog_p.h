@@ -237,7 +237,7 @@ public:
   virtual void save() = 0;
   void defaults();
   // the below are optional
-  virtual void installProfile(){}
+  virtual void installProfile( KConfig* ) {};
 signals:
    // forwarded to the ConfigModule
   void changed(bool);
