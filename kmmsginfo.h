@@ -43,12 +43,12 @@ public:
                     const QByteArray& replyToId,
                     const QByteArray& replyToAuxId,
                     const QByteArray& msgId,
-		    KMMsgEncryptionState encryptionState,
-		    KMMsgSignatureState signatureState,
-		    KMMsgMDNSentState mdnSentState,
+                    KMMsgEncryptionState encryptionState,
+                    KMMsgSignatureState signatureState,
+                    KMMsgMDNSentState mdnSentState,
                     const QByteArray &prefCharset,
-		    off_t folderOffset=0, size_t msgSize=0,
-            size_t msgSizeServer = 0, ulong UID = 0);
+                    off_t folderOffset=0, size_t msgSize=0,
+                    size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Initialize with given values and set dirty flag to false. */
   virtual void init(const QByteArray& subject, const QByteArray& from,
@@ -57,13 +57,13 @@ public:
                     const QByteArray& replyToId,
                     const QByteArray& replyToAuxId,
                     const QByteArray& msgId,
-		    const QByteArray& fileName,
-		    KMMsgEncryptionState encryptionState,
-		    KMMsgSignatureState signatureState,
-		    KMMsgMDNSentState mdnSentState,
+                    const QByteArray& fileName,
+                    KMMsgEncryptionState encryptionState,
+                    KMMsgSignatureState signatureState,
+                    KMMsgMDNSentState mdnSentState,
                     const QByteArray &prefCharset,
-		    size_t msgSize=0,
-            size_t msgSizeServer = 0, ulong UID = 0);
+                    size_t msgSize=0,
+                    size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Inherited methods (see KMMsgBase for description): */
   virtual QString subject(void) const;
