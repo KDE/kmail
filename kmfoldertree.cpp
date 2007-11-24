@@ -367,8 +367,8 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 
   setSelectionModeExt( Extended );
 
-  int namecol = addColumn( i18n("Folder"), 250 );
-  header()->setStretchEnabled( true, namecol );
+  int namecol = addColumn( i18n( "Folder" ) );
+  header()->setStretchEnabled( false, namecol );
 
   // connect
   connectSignals();
