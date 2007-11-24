@@ -583,18 +583,18 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   return QDBusObjectPath(cWin->dbusObjectPath());
 }
 
-QDBusObjectPath KMKernel::newMessage(const QString &to,
-                             const QString &cc,
-                             const QString &bcc,
-                             bool hidden,
-                             bool useFolderId,
-                             const QString & /*messageFile*/,
-                             const QString &_attachURL)
+QDBusObjectPath KMKernel::newMessage( const QString &to,
+                                      const QString &cc,
+                                      const QString &bcc,
+                                      bool hidden,
+                                      bool useFolderId,
+                                      const QString & /*messageFile*/,
+                                      const QString &_attachURL)
 {
-  KUrl attachURL(_attachURL);
-  KMail::Composer * win = 0;
+  KUrl attachURL( _attachURL );
+  KMail::Composer *win = 0;
   KMMessage *msg = new KMMessage;
-  KMFolder *folder = NULL;
+  KMFolder *folder = 0;
   uint id = 0;
 
   if ( useFolderId ) {
@@ -607,34 +607,33 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
     msg->initHeader();
     win = makeComposer( msg );
   }
-  msg->setCharset("utf-8");
+  msg->setCharset( "utf-8" );
   //set basic headers
-  if (!to.isEmpty()) msg->setTo(to);
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-
-  if ( useFolderId ) {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-                           QString(), false, false, false );
-    parser.process( NULL, folder );
-    win = makeComposer( msg, id );
-  } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-                           QString(), false, false, false );
-    parser.process( NULL, NULL );
-    win = makeComposer( msg );
+  if ( !to.isEmpty() ) {
+    msg->setTo( to );
+  }
+  if ( !cc.isEmpty() ) {
+    msg->setCc( cc );
+  }
+  if ( !bcc.isEmpty() ) {
+    msg->setBcc( bcc );
   }
 
+  TemplateParser parser( msg, TemplateParser::NewMessage,
+                         QString(), false, false, false );
+  parser.process( NULL, folder );
+
+
   //Add the attachment if we have one
-  if(!attachURL.isEmpty() && attachURL.isValid()) {
-    win->addAttach(attachURL);
+  if ( !attachURL.isEmpty() && attachURL.isValid() ) {
+    win->addAttach( attachURL );
   }
 
   //only show window when required
-  if(!hidden) {
+  if ( !hidden ) {
     win->show();
   }
-  return QDBusObjectPath(win->dbusObjectPath());
+  return QDBusObjectPath( win->dbusObjectPath() );
 }
 
 int KMKernel::viewMessage( const KUrl & messageFile )
