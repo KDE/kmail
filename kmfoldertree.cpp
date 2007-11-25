@@ -519,6 +519,7 @@ void KMFolderTree::reload(bool openFolders)
     return;
   }
   mReloading = true;
+  setUpdatesEnabled( false );
 
   int top = contentsY();
   mLastItem = 0;
@@ -612,12 +613,10 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
-  disconnect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+    disconnect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
                this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
-  connect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
-               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
-
-
+    connect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+            this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
     disconnect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
                mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
@@ -656,6 +655,7 @@ void KMFolderTree::reload(bool openFolders)
   }
   refresh();
   mReloading = false;
+  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
