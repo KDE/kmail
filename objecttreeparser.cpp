@@ -705,9 +705,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       cryptProto = 0;
     } else {
       QByteArray plainText;
-      std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = job->exec( ciphertext, plainText );
-      GpgME::DecryptionResult decryptResult = res.first;
-      GpgME::VerificationResult verifyResult = res.second;
+      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = job->exec( ciphertext, plainText );
+      const GpgME::DecryptionResult & decryptResult = res.first;
+      const GpgME::VerificationResult & verifyResult = res.second;
       signatureFound = verifyResult.signatures().size() > 0;
       signatures = verifyResult.signatures();
       bDecryptionOk = !decryptResult.error();
