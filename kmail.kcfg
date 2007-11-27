@@ -470,7 +470,12 @@
       </entry>
 
       <entry name="ShowSnippetManager" type="Bool">
-          <label>Show the text snippet management and insertion panel in the composer</label>
+          <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
+          <default>false</default>
+      </entry>
+
+      <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
+          <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
           <default>false</default>
       </entry>
 
