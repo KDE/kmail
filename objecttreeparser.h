@@ -197,7 +197,8 @@ namespace KMail {
                         std::vector<GpgME::Signature> &signatures,
                         bool showWarning,
                         bool& passphraseError,
-                        QString& aErrorText );
+                        QString& aErrorText,
+                        QString& auditLog );
 
     bool processMailmanMessage( partNode * node );
 
