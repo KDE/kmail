@@ -453,21 +453,20 @@ namespace KMail {
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        QByteArray plainData = cleartext;
-        plainData.resize( cleartext.size() - 1 );
-        Kleo::VerifyDetachedJob *job = cryptProto->verifyDetachedJob();
-        if ( !job )
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
-        else
+        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
+          QByteArray plainData = cleartext;
+          plainData.resize( cleartext.size() - 1 );
           result = job->exec( signaturetext, plainData );
-      } else { // opaque
-        Kleo::VerifyOpaqueJob *job = cryptProto->verifyOpaqueJob();
-        QByteArray plainData;
-        if ( !job ) {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
         } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
+        }
+      } else { // opaque
+        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
+          QByteArray plainData;
           result = job->exec( signaturetext, plainData );
           cleartext = QCString( plainData.data(), plainData.size() + 1 );
+        } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       }
       signatures = result.signatures();
