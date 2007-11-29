@@ -1482,8 +1482,9 @@ namespace KMail {
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
         if ( (*it).error() )
-          htmlWriter()->queue( i18n( "Failed: %1 (%2)" ).arg( (*it).fingerprint() )
-                               .arg( QString::fromLocal8Bit( (*it).error().asString() ) ) );
+          htmlWriter()->queue( i18n( "Failed: %1 (%2)" )
+                               .arg( (*it).fingerprint(),
+                                     QString::fromLocal8Bit( (*it).error().asString() ) ) );
         else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
           if ( (*it).status() & GpgME::Import::ContainedSecretKey )
             htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
@@ -2047,7 +2048,7 @@ static QString writeSimpleSigstatHeader( const PartMetaData &block )
     if ( addr.isEmpty() ) {
       html += i18n( "Signature is valid." );
     } else {
-      html += i18n( "Signed by <a href=\"mailto:%1\">%2</a>." ).arg( addr ).arg( name );
+      html += i18n( "Signed by <a href=\"mailto:%1\">%2</a>." ).arg( addr, name );
     }
   } else {
     // should not happen
