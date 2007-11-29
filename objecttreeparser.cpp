@@ -665,7 +665,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                       "<a href=\"kmail:decryptMessage\">"
                       "<img src=\"" + iconName.utf8() + "\"/>"
                     + i18n("Decrypt Message").utf8()
-                    + "</div>";
+                    + "</a></div>";
     return false;
   }
 
