@@ -2057,7 +2057,7 @@ static QString writeSimpleSigstatHeader( const PartMetaData &block )
   html += "</td><td align=\"right\">";
   html += "<a href=\"kmail:showSignatureDetails\">";
   html += i18n( "Show Details" );
-  html += "</a></div></td></tr></table>";
+  html += "</a></td></tr></table>";
   return html;
 }
 
@@ -2072,7 +2072,7 @@ static QString endVerboseSigstatHeader()
   html += "</td><td align=\"right\" valign=\"top\" nowrap=\"nowrap\">";
   html += "<a href=\"kmail:hideSignatureDetails\">";
   html += i18n( "Hide Details" );
-  html += "</a></div></td></tr></table>";
+  html += "</a></td></tr></table>";
   return html;
 }
 
