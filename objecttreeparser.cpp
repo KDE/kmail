@@ -2158,14 +2158,14 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
         if( isSMIME )
             startKeyHREF =
                 QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
-                .arg( cryptProto->displayName() )
-                .arg( cryptProto->name() )
-                .arg( block.keyId );
+                .arg( cryptProto->displayName(),
+                      cryptProto->name(),
+                      block.keyId );
         QString keyWithWithoutURL
             = isSMIME
             ? QString("%1%2</a>")
-                .arg( startKeyHREF )
-                .arg( cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
+                .arg( startKeyHREF,
+                      cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
             : "0x" + QString::fromUtf8( block.keyId );
 
 
@@ -2207,8 +2207,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         certificate = "certificate";
                     else
                         certificate = QString("%1%2</a>")
-                                      .arg( startKeyHREF )
-                                      .arg( "certificate" );
+                                      .arg( startKeyHREF,
+                                            "certificate" );
                     if( !blockAddrs.empty() ){
                         if( blockAddrs.grep(
                                 msgFrom,
@@ -2244,8 +2244,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             "</u> " +
                             i18n("No mail address is stored in the %1 used for signing, "
                                  "so we cannot compare it to the sender's address %2.")
-                            .arg(certificate)
-                            .arg(msgFrom);
+                            .arg(certificate,msgFrom);
                     }
                     if( !greenCaseWarning.isEmpty() ) {
                         if( !statusStr.isEmpty() )
@@ -2296,8 +2295,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                                 .arg( keyWithWithoutURL );
                                 else
                                     htmlStr += i18n( "Message was signed on %1 with key %2." )
-                                                .arg( KGlobal::locale()->formatDateTime( created ) )
-                                                .arg( keyWithWithoutURL );
+                                                .arg( KGlobal::locale()->formatDateTime( created ),
+                                                      keyWithWithoutURL );
                             }
                             else {
                                 if( onlyShowKeyURL )
@@ -2305,9 +2304,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                             .arg( keyWithWithoutURL );
                                 else
                                     htmlStr += i18n( "Message was signed by %3 on %1 with key %2" )
-                                            .arg( KGlobal::locale()->formatDateTime( created ) )
-                                            .arg( keyWithWithoutURL )
-                                            .arg( signer );
+                                            .arg( KGlobal::locale()->formatDateTime( created ),
+                                                  keyWithWithoutURL,
+                                                  signer );
                             }
                         }
                         else {
@@ -2316,8 +2315,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                         .arg( keyWithWithoutURL );
                             else
                                 htmlStr += i18n( "Message was signed by %2 with key %1." )
-                                        .arg( keyWithWithoutURL )
-                                        .arg( signer );
+                                        .arg( keyWithWithoutURL,
+                                              signer );
                         }
                     }
                 }
@@ -2354,8 +2353,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     QDateTime created = block.creationTime;
                     if ( created.isValid() )
                         htmlStr += i18n( "Message was signed on %1 with unknown key %2." )
-                                .arg( KGlobal::locale()->formatDateTime( created ) )
-                                .arg( keyWithWithoutURL );
+                                .arg( KGlobal::locale()->formatDateTime( created ),
+                                      keyWithWithoutURL );
                     else
                         htmlStr += i18n( "Message was signed with unknown key %1." )
                                 .arg( keyWithWithoutURL );
@@ -2396,8 +2395,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     simpleHtmlStr += writeSimpleSigstatHeader( block );
                     if( !block.keyId.isEmpty() )
                         htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                                   .arg( keyWithWithoutURL )
-                                   .arg( signer );
+                                   .arg( keyWithWithoutURL,
+                                         signer );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
@@ -2440,8 +2439,8 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     simpleHtmlStr += writeSimpleSigstatHeader( block );
                     if( !block.keyId.isEmpty() )
                         htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                        .arg( keyWithWithoutURL )
-                        .arg( signer );
+                        .arg( keyWithWithoutURL,
+                              signer );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
