@@ -56,14 +56,14 @@ using std::find;
 KMail::URLHandlerManager * KMail::URLHandlerManager::self = 0;
 
 namespace {
-  class ShowHtmlSwitchURLHandler : public KMail::URLHandler {
+  class KMailProtocolURLHandler : public KMail::URLHandler {
   public:
-    ShowHtmlSwitchURLHandler() : KMail::URLHandler() {}
-    ~ShowHtmlSwitchURLHandler() {}
+    KMailProtocolURLHandler() : KMail::URLHandler() {}
+    ~KMailProtocolURLHandler() {}
 
     bool handleClick( const KURL &, KMReaderWin * ) const;
-    bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
-      return false;
+    bool handleContextMenuRequest( const KURL & url, const QPoint &, KMReaderWin * ) const {
+      return url.protocol() == "kmail";
     }
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   };
@@ -266,7 +266,7 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 //
 
 KMail::URLHandlerManager::URLHandlerManager() {
-  registerHandler( new ShowHtmlSwitchURLHandler() );
+  registerHandler( new KMailProtocolURLHandler() );
   registerHandler( new ExpandCollapseQuoteURLManager() );
   registerHandler( new SMimeURLHandler() );
   registerHandler( new MailToURLHandler() );
@@ -351,7 +351,7 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 #include <qstring.h>
 
 namespace {
-  bool ShowHtmlSwitchURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
+  bool KMailProtocolURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
     if ( url.protocol() == "kmail" ) {
       if ( !w )
         return false;
@@ -380,10 +380,11 @@ namespace {
       }
 
       if ( url.path() == "showSignatureDetails" ) {
-        w->setShowSignatureDetails();
+        w->setShowSignatureDetails( true );
         w->update( true );
         return true;
       }
+
       if ( url.path() == "hideSignatureDetails" ) {
         w->setShowSignatureDetails( false );
         w->update( true );
@@ -400,7 +401,7 @@ namespace {
     return false;
   }
 
-  QString ShowHtmlSwitchURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
+  QString KMailProtocolURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
     if ( url.protocol() == "kmail" )
     {
       if ( url.path() == "showHTML" )
@@ -408,7 +409,13 @@ namespace {
       if ( url.path() == "loadExternal" )
         return i18n("Load external references from the Internet for this message.");
       if ( url.path() == "goOnline" )
-        return i18n("Work online");
+        return i18n("Work online.");
+      if ( url.path() == "decryptMessage" )
+        return i18n("Decrypt message.");
+      if ( url.path() == "showSignatureDetails" )
+        return i18n("Show signature details.");
+      if ( url.path() == "hideSignatureDetails" )
+        return i18n("Hide signature details.");
     }
     return QString::null ;
   }
