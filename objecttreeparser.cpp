@@ -2063,16 +2063,31 @@ static QString writeSimpleSigstatHeader( const PartMetaData &block )
 
 static QString beginVerboseSigstatHeader()
 {
-  return "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td>";
+  return "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td rowspan=\"2\">";
 }
 
-static QString endVerboseSigstatHeader()
+static QString makeShowAuditLogLink( const QString & auditLog ) {
+  if ( auditLog.isEmpty() )
+    return i18n("No Audit Log available");
+
+  KURL url;
+  url.setProtocol( "kmail" );
+  url.setPath( "showAuditLog" );
+  url.addQueryItem( "log", auditLog );
+
+  return "<a href=\"" + url.htmlURL() + "\">" + i18n("Show Audit Log") + "</a>";
+}
+
+static QString endVerboseSigstatHeader( const PartMetaData & pmd )
 {
   QString html;
   html += "</td><td align=\"right\" valign=\"top\" nowrap=\"nowrap\">";
   html += "<a href=\"kmail:hideSignatureDetails\">";
   html += i18n( "Hide Details" );
-  html += "</a></td></tr></table>";
+  html += "</a></td></tr>";
+  html += "<tr><td align=\"right\" valign=\"bottom\" nowrap=\"nowrap\">";
+  html += makeShowAuditLogLink( pmd.auditLog );
+  html += "</td></tr></table>";
   return html;
 }
 
@@ -2330,7 +2345,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                 htmlStr += statusStr;
             }
             frame = "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-            htmlStr += endVerboseSigstatHeader() + frame;
+            htmlStr += endVerboseSigstatHeader( block ) + frame;
             simpleHtmlStr += frame;
 
         } else {
@@ -2373,7 +2388,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                   }
                 }
                 frame = "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-                htmlStr += endVerboseSigstatHeader() + frame;
+                htmlStr += endVerboseSigstatHeader( block ) + frame;
                 simpleHtmlStr += frame;
             }
             else
@@ -2425,7 +2440,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     }
                     frame = "</td></tr>"
                         "<tr class=\"" + block.signClass + "B\"><td>";
-                    htmlStr += endVerboseSigstatHeader() + frame;
+                    htmlStr += endVerboseSigstatHeader( block ) + frame;
                     simpleHtmlStr += frame;
                 }
                 else
@@ -2447,7 +2462,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     htmlStr += i18n("Warning: The signature is bad.");
                     frame = "</td></tr>"
                         "<tr class=\"" + block.signClass + "B\"><td>";
-                    htmlStr += endVerboseSigstatHeader() + frame;
+                    htmlStr += endVerboseSigstatHeader( block ) + frame;
                     simpleHtmlStr += frame;
                 }
             }

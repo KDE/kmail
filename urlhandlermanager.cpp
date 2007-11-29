@@ -127,6 +127,16 @@ namespace {
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   };
 
+  class ShowAuditLogURLHandler : public KMail::URLHandler {
+  public:
+      ShowAuditLogURLHandler() : KMail::URLHandler() {}
+      ~ShowAuditLogURLHandler() {}
+
+      bool handleClick( const KURL &, KMReaderWin * ) const;
+      bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const;
+      QString statusBarMessage( const KURL &, KMReaderWin * ) const;
+  };
+
   class FallBackURLHandler : public KMail::URLHandler {
   public:
     FallBackURLHandler() : KMail::URLHandler() {}
@@ -263,6 +273,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
   registerHandler( mBodyPartURLHandlerManager = new BodyPartURLHandlerManager() );
+  registerHandler( new ShowAuditLogURLHandler() );
   registerHandler( new FallBackURLHandler() );
 }
 
@@ -329,6 +340,8 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "kmmsgpart.h"
+
+#include <ui/messagebox.h>
 
 #include <klocale.h>
 #include <kprocess.h>
@@ -516,6 +529,35 @@ namespace {
     if ( !name.isEmpty() )
       return i18n( "Attachment: %1" ).arg( name );
     return i18n( "Attachment #%1 (unnamed)" ).arg( KMReaderWin::msgPartFromUrl( url ) );
+  }
+}
+
+namespace {
+  static QString extractAuditLog( const KURL & url ) {
+    if ( url.protocol() != "kmail" || url.path() != "showAuditLog" )
+      return QString();
+    assert( !url.queryItem( "log" ).isEmpty() );
+    return url.queryItem( "log" );
+  }
+
+  bool ShowAuditLogURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
+    const QString auditLog = extractAuditLog( url );
+    if ( auditLog.isEmpty() )
+        return false;
+    Kleo::MessageBox::auditLog( w, auditLog );
+    return true;
+  }
+
+  bool ShowAuditLogURLHandler::handleContextMenuRequest( const KURL & url, const QPoint &, KMReaderWin * w ) const {
+    // disable RMB for my own links:
+    return !extractAuditLog( url ).isEmpty();
+  }
+
+  QString ShowAuditLogURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
+    if ( extractAuditLog( url ).isEmpty() )
+      return QString();
+    else
+      return i18n("Show GnuPG Audit Log for this operation");
   }
 }
 
