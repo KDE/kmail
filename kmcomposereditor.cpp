@@ -147,5 +147,40 @@ QString KMComposerEditor::brokenText() const
   return temp;
 }
 
+void KMComposerEditor::setHtmlMode(bool mode) {
+  if ( mHtmlMode ) {
+    mHtmlMode = true;
+      // set all highlighted text caused by spelling back to black
+      int paraFrom, indexFrom, paraTo, indexTo;
+      // for the case we're in textmode, the user selects some text and decides to format this selected text
+      int startpos = textCursor().selectionStart();
+      //int endpos = selectionEnd();
+      selectAll();
+
+      setTextColor(QColor(0,0,0));
+
+      textCursor().setPosition( startpos, QTextCursor::MoveAnchor );
+      document()->setModified(true);
+  }
+  else {
+    mHtmlMode = false;
+    // like the next 2 lines, or should we selectAll and apply the default font?
+    QString text = toPlainText();
+    setPlainText(text);
+    document()->setModified(true);
+  }
+
+}
+
+bool KMComposerEditor::htmlMode() {
+  return mHtmlMode;
+}
+
+QString KMComposerEditor::text() {
+  if ( mHtmlMode )
+    return toHtml();
+  else
+    return toPlainText();
+}
 
 #include "kmcomposereditor.moc"

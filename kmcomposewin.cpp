@@ -147,7 +147,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
-    mUseHTMLEditor( false ),
+    mUserUsesHtml( false ),
     mId( id ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
@@ -222,7 +222,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setOpaqueResize( true );
 
   //mEditor->initializeAutoSpellChecking();
-  mEditor->setTextFormat( Qt::PlainText );
   mEditor->setAcceptDrops( true );
 
   mBtnIdentity->setWhatsThis(
@@ -454,7 +453,7 @@ void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody( const QString &body )
 {
-  mEditor->setText( body );
+  mEditor->setPlainText(body);
 }
 
 //-----------------------------------------------------------------------------
@@ -1284,7 +1283,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("text_list", listAction );
 
   connect(listAction, SIGNAL(applyStyle(QTextListFormat::Style)),
-           mEditor,SLOT(slotChangeParagStyle(QTextListFormat::Style)));
+           SLOT(slotChangeParagStyle(QTextListFormat::Style)));
 
   fontAction = new KFontAction(i18n("Select Font"), this);
   actionCollection()->addAction("text_font", fontAction );
@@ -1297,25 +1296,25 @@ void KMComposeWin::setupActions( void )
 
   alignLeftAction = new KToggleAction( KIcon( "text-left" ), i18n("Align Left"), this );
   actionCollection()->addAction( "align_left", alignLeftAction );
-  connect( alignLeftAction, SIGNAL(triggered(bool)), mEditor, SLOT(slotAlignLeft()) );
+  connect( alignLeftAction, SIGNAL(triggered(bool)), SLOT(slotAlignLeft()) );
   alignLeftAction->setChecked( true );
   alignRightAction = new KToggleAction( KIcon( "text-right" ), i18n("Align Right"), this );
   actionCollection()->addAction( "align_right", alignRightAction );
-  connect( alignRightAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignRight()) );
+  connect( alignRightAction, SIGNAL(triggered(bool) ), SLOT(slotAlignRight()) );
   alignCenterAction = new KToggleAction( KIcon( "text-center" ), i18n("Align Center"), this );
   actionCollection()->addAction( "align_center", alignCenterAction );
-  connect( alignCenterAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignCenter()) );
+  connect( alignCenterAction, SIGNAL(triggered(bool) ), SLOT(slotAlignCenter()) );
   textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
   actionCollection()->addAction( "text_bold", textBoldAction );
-  connect( textBoldAction, SIGNAL(triggered(bool) ),mEditor, SLOT(slotTextBold(bool)));
+  connect( textBoldAction, SIGNAL(triggered(bool) ), SLOT(slotTextBold(bool)));
   textBoldAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_B ) );
   textItalicAction = new KToggleAction( KIcon( "format-text-italic" ), i18n("&Italic"), this );
   actionCollection()->addAction( "text_italic", textItalicAction );
-  connect( textItalicAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextItalic(bool)) );
+  connect( textItalicAction, SIGNAL(triggered(bool) ), SLOT(slotTextItalic(bool)) );
   textItalicAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_I ) );
   textUnderAction = new KToggleAction( KIcon( "format-text-underline" ), i18n("&Underline"), this );
   actionCollection()->addAction( "text_under", textUnderAction );
-  connect( textUnderAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextUnder(bool)) );
+  connect( textUnderAction, SIGNAL(triggered(bool) ), SLOT(slotTextUnder(bool)) );
   textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
   actionFormatReset = new KAction( KIcon( "eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
@@ -3482,12 +3481,16 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
 
-  if ( mEditor->textFormat() == Qt::RichText ) {
+  if ( mEditor->htmlMode() ) {
+ kDebug(5006) <<"Html mode";
+ kDebug(5006) <<"mailtext : " << mEditor->text();
     mMsg->setHeaderField( "X-KMail-Markup", "true" );
   } else {
     mMsg->removeHeaderField( "X-KMail-Markup" );
+ kDebug(5006) <<"Plain text";
+ kDebug(5006) <<"mailtext : " << mEditor->text();
   }
-  if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
+  if ( mEditor->htmlMode() && inlineSigningEncryptionSelected() ) {
     QString keepBtnText = mEncryptAction->isChecked() ?
       mSignAction->isChecked() ? i18n( "&Keep markup, do not sign/encrypt" )
       : i18n( "&Keep markup, do not encrypt" )
@@ -3811,27 +3814,25 @@ void KMComposeWin::slotToggleMarkup()
 void KMComposeWin::toggleMarkup( bool markup )
 {
   if ( markup ) {
-    if ( !mUseHTMLEditor ) {
-      kDebug(5006) <<"setting RichText editor";
-      mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    if ( !mUserUsesHtml ) {
+      kDebug(5006) <<"user wants Html";
+      mUserUsesHtml = true; // set it directly to true. setColor hits another toggleMarkup
       mHtmlMarkup = true;
       QTextCursor cursor = mEditor->textCursor();
       // set all highlighted text caused by spelling back to black
       int startSelect = cursor.selectionStart ();
       int endSelect = cursor.selectionEnd();
 
-      mEditor->selectAll();
-      // save the buttonstates because setColor calls fontChanged
+      // save the buttonstates because setHtmlMode calls fontChanged
       bool _bold = textBoldAction->isChecked();
       bool _italic = textItalicAction->isChecked();
-      mEditor->setColor( QColor( 0, 0, 0 ) );
+      //mEditor->setColor( QColor( 0, 0, 0 ) );
+      mEditor->setHtmlMode(true);
       textBoldAction->setChecked( _bold );
       textItalicAction->setChecked( _italic );
       //Laurent fix me
       //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
-      mEditor->setTextFormat( Qt::RichText );
-      mEditor->document()->setModified( true );
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
       //mEditor->deleteAutoSpellChecking();
@@ -3842,12 +3843,10 @@ void KMComposeWin::toggleMarkup( bool markup )
     kDebug(5006) <<"setting PlainText editor";
     mHtmlMarkup = false;
     toolBar( "htmlToolBar" )->hide();
-    if ( mUseHTMLEditor ) { // it was turned on
-      mUseHTMLEditor = false;
-      mEditor->setTextFormat( Qt::PlainText );
-      QString text = mEditor->text();
-      mEditor->setText( text ); // otherwise the text still looks formatted
-      mEditor->document()->setModified( true );
+    if ( mUserUsesHtml ) { // it was turned on
+      mUserUsesHtml = false;
+      mEditor->switchTextMode( false );
+      // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
     }
   }
@@ -4014,7 +4013,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
          (GlobalSettings::self()->autoTextSignature() == "auto") ) {
       edtText.append( mOldSigText );
     }
-    mEditor->setText( edtText );
+    mEditor->setPlainText( edtText ); //yes?, plain?
   }
 
   // disable certain actions if there is no PGP user identity set
@@ -4202,6 +4201,28 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
   mAlwaysSend = bAlways;
 }
 
+void KMComposeWin::slotChangeParagStyle(QTextListFormat::Style style)
+{
+ toggleMarkup(true);
+ mEditor->slotChangeParagStyle(style);
+}
+void KMComposeWin::slotAlignLeft()
+{
+ toggleMarkup(true);
+ mEditor->slotAlignLeft();
+}
+
+void KMComposeWin::slotAlignCenter()
+{
+ toggleMarkup(true);
+ mEditor->slotAlignCenter();
+}
+
+void KMComposeWin::slotAlignRight()
+{
+ toggleMarkup(true);
+ mEditor->setAlignment( Qt::AlignRight );
+}
 
 void KMComposeWin::slotFontAction( const QString &font )
 {
@@ -4213,6 +4234,31 @@ void KMComposeWin::slotSizeAction( int size )
 {
   toggleMarkup( true );
   mEditor->slotFontSizeChanged( size );
+}
+
+void KMComposeWin::slotTextBold(bool bold)
+{
+  toggleMarkup(true);
+  mEditor->slotTextBold(bold);
+}
+
+void KMComposeWin::slotTextItalic(bool italic)
+{
+ toggleMarkup(true);
+ mEditor->slotTextItalic( italic );
+}
+
+void KMComposeWin::slotTextUnder(bool under)
+{
+ toggleMarkup(true);
+ mEditor->slotTextUnder(under);
+}
+
+void KMComposeWin::slotTextColor()
+{
+  // also if user cancels the dialog, html is turned on for now
+  toggleMarkup(true);
+  mEditor->slotTextColor();
 }
 
 void KMComposeWin::slotFormatReset()

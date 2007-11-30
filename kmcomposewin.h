@@ -34,6 +34,7 @@
 #include <QList>
 #include <QPalette>
 #include <QPointer>
+#include <QTextListFormat>
 
 #include <kglobalsettings.h>
 #include "kleo/enum.h"
@@ -430,7 +431,15 @@ public: // mailserviceimpl
      */
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
+    void slotChangeParagStyle(QTextListFormat::Style style);
     void slotFontAction( const QString & );
+    void slotAlignLeft();
+    void slotAlignCenter();
+    void slotAlignRight();
+    void slotTextBold(bool bold);
+    void slotTextItalic(bool italic);
+    void slotTextUnder(bool under);
+    void slotTextColor();
     void slotSizeAction( int );
     void fontChanged( const QFont & );
     void alignmentChanged( int );
@@ -675,8 +684,8 @@ public: // mailserviceimpl
     bool mConfirmSend;
     bool mDisableBreaking; // Move
     int mNumHeaders;
-    bool mUseHTMLEditor;
-    bool mHtmlMarkup;
+    bool mUserUsesHtml;
+    bool mHtmlMarkup; // is the toolbar visible or not
     QFont mBodyFont, mFixedFont;
     QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
