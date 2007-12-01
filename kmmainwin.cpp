@@ -27,36 +27,33 @@ KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow( 0 ),
       mReallyClose( false )
 {
-  setObjectName("kmail-mainwindow#");
+  setObjectName( "kmail-mainwindow#" );
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
   setAttribute( Qt::WA_GroupLeader );
 
   KGlobal::ref();
 
-  KAction *action  = new KAction(KIcon("window-new"), i18n("New &Window"), this);
-  actionCollection()->addAction("new_mail_client", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
+  KAction *action  = new KAction( KIcon("window-new"), i18n("New &Window"), this );
+  actionCollection()->addAction( "new_mail_client", action );
+  connect( action, SIGNAL( triggered(bool) ), SLOT( slotNewMailReader() ) );
 
   mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
-  setCentralWidget(mKMMainWidget);
+  setCentralWidget( mKMMainWidget );
   setupStatusBar();
-  if (kmkernel->xmlGuiInstance().isValid())
+  if ( kmkernel->xmlGuiInstance().isValid() )
     setComponentData( kmkernel->xmlGuiInstance() );
 
-  if ( kmkernel->firstInstance() )
-    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
+  setStandardToolBarMenuEnabled( true );
 
-  setStandardToolBarMenuEnabled(true);
+  KStandardAction::configureToolbars( this, SLOT( slotEditToolbars() ),
+                                      actionCollection() );
 
-  KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()),
-				actionCollection());
+  KStandardAction::keyBindings( mKMMainWidget, SLOT( slotEditKeys() ),
+                                actionCollection() );
 
-  KStandardAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
-                          actionCollection());
-
-  KStandardAction::quit( this, SLOT(slotQuit()), actionCollection());
+  KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
   createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
@@ -66,17 +63,20 @@ KMMainWin::KMMainWin(QWidget *)
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
            this, SLOT( displayStatusMsg(const QString&) ) );
 
-  connect(kmkernel, SIGNAL(configChanged()),
-    this, SLOT(slotConfigChanged()));
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 
-  connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
-	  SLOT(setCaption(const QString&)) );
+  connect( mKMMainWidget, SIGNAL( captionChangeRequest(const QString&) ),
+           SLOT( setCaption(const QString&) ) );
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
 
   if ( kmkernel->firstStart() )
     AccountWizard::start( kmkernel, this );
+
+  if ( kmkernel->firstInstance() )
+    QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }
 
 KMMainWin::~KMMainWin()
