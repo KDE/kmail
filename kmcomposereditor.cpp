@@ -152,14 +152,15 @@ void KMComposerEditor::setHtmlMode(bool mode) {
     mHtmlMode = true;
       // set all highlighted text caused by spelling back to black
       int paraFrom, indexFrom, paraTo, indexTo;
+      // set all highlighted text caused by spelling back to black
       // for the case we're in textmode, the user selects some text and decides to format this selected text
       int startpos = textCursor().selectionStart();
-      //int endpos = selectionEnd();
-      selectAll();
+      int endpos = textCursor().selectionEnd();
+      //selectAll();
+      //setTextColor(QColor(0,0,0));
 
-      setTextColor(QColor(0,0,0));
-
-      textCursor().setPosition( startpos, QTextCursor::MoveAnchor );
+      //Laurent fix me
+      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
       document()->setModified(true);
   }
   else {

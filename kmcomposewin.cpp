@@ -3818,20 +3818,12 @@ void KMComposeWin::toggleMarkup( bool markup )
       kDebug(5006) <<"user wants Html";
       mUserUsesHtml = true; // set it directly to true. setColor hits another toggleMarkup
       mHtmlMarkup = true;
-      QTextCursor cursor = mEditor->textCursor();
-      // set all highlighted text caused by spelling back to black
-      int startSelect = cursor.selectionStart ();
-      int endSelect = cursor.selectionEnd();
-
       // save the buttonstates because setHtmlMode calls fontChanged
       bool _bold = textBoldAction->isChecked();
       bool _italic = textItalicAction->isChecked();
-      //mEditor->setColor( QColor( 0, 0, 0 ) );
       mEditor->setHtmlMode(true);
       textBoldAction->setChecked( _bold );
       textItalicAction->setChecked( _italic );
-      //Laurent fix me
-      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
@@ -3840,11 +3832,12 @@ void KMComposeWin::toggleMarkup( bool markup )
       slotAutoSpellCheckingToggled( false );
     }
   } else { // markup is to be turned off
-    kDebug(5006) <<"setting PlainText editor";
+    kDebug(5006) <<" user wants textmode";
     mHtmlMarkup = false;
     toolBar( "htmlToolBar" )->hide();
     if ( mUserUsesHtml ) { // it was turned on
       mUserUsesHtml = false;
+      mEditor->setHtmlMode( false );
       mEditor->switchTextMode( false );
       // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
