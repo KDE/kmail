@@ -550,8 +550,8 @@ void MessageComposer::readFromComposeWin()
 
   for ( int i = 0; i < mComposeWin->mAtmList.count(); ++i )
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),
-					mComposeWin->signFlagOfAttachment( i ),
-					mComposeWin->encryptFlagOfAttachment( i ) ) );
+                                        mComposeWin->signFlagOfAttachment( i ),
+                                        mComposeWin->encryptFlagOfAttachment( i ) ) );
 
   mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
 

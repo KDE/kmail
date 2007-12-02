@@ -375,16 +375,15 @@ namespace {
 
     for ( const char * s = header.data() ; *s ; )
       if ( *s == '\r' ) { // ignore
-	++s;
-	continue;
+        ++s;
+        continue;
       } else if ( *s == '\n' ) { // unfold
-	while ( isBlank( *++s ) );
-	*d++ = ' ';
+        while ( isBlank( *++s ) );
+        *d++ = ' ';
       } else
-	*d++ = *s++;
+        *d++ = *s++;
 
     *d++ = '\0';
-
     result.truncate( d - result.data() );
     return result;
   }
@@ -452,25 +451,25 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
       pos += 2;
       for ( ; *pos != '?' && ( *pos==' ' || ispunct(*pos) || isalnum(*pos) );
             ++i, ++pos ) {
-	charset += *pos;
+        charset += *pos;
       }
       if ( *pos!='?' || i<4 )
-	goto invalid_encoded_word;
+        goto invalid_encoded_word;
 
       // get encoding and check delimiting question marks
       const char encoding[2] = { pos[1], '\0' };
       if (pos[2]!='?' || (encoding[0]!='Q' && encoding[0]!='q' &&
-			  encoding[0]!='B' && encoding[0]!='b'))
-	goto invalid_encoded_word;
+          encoding[0]!='B' && encoding[0]!='b'))
+        goto invalid_encoded_word;
       pos+=3; i+=3; // skip ?x?
       const char * enc_start = pos;
       // search for end of encoded part
       while ( *pos && !(*pos=='?' && *(pos+1)=='=') ) {
-	i++;
-	pos++;
+        i++;
+        pos++;
       }
       if ( !*pos )
-	goto invalid_encoded_word;
+        goto invalid_encoded_word;
 
       // valid encoding: decode and throw away separating LWSP
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
@@ -996,14 +995,14 @@ retry:
       assert(sizeOfLong == l);
       if (sizeOfLong == sizeof(ret))
       {
-	 copy_from_stream(ret);
-         if (swapByteOrder)
-         {
-            if (sizeof(ret) == 4)
-               ret = kmail_swap_32(ret);
-            else
-               ret = kmail_swap_64(ret);
-         }
+        copy_from_stream(ret);
+        if (swapByteOrder)
+        {
+          if (sizeof(ret) == 4)
+            ret = kmail_swap_32(ret);
+          else
+            ret = kmail_swap_64(ret);
+        }
       }
       else if (sizeOfLong == 4)
       {

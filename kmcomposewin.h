@@ -601,15 +601,15 @@ public: // mailserviceimpl
      */
     bool saveDraftOrTemplate( const QString &folderName, KMMessage *msg );
 
-    /**
-     * Send the message. Returns true if the message was sent successfully.
-     */
     enum SaveIn {
       None,
       Drafts,
       Templates
     };
 
+    /**
+     * Send the message. Returns true if the message was sent successfully.
+     */
     void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault,
                  KMComposeWin::SaveIn saveIn = KMComposeWin::None );
 

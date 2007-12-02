@@ -1712,24 +1712,24 @@ void KMReaderWin::printMsg()
 
 
 //-----------------------------------------------------------------------------
-int KMReaderWin::msgPartFromUrl(const KUrl &aUrl)
+int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
 {
-  if (aUrl.isEmpty()) return -1;
+  if ( aUrl.isEmpty() ) return -1;
 
-  if (!aUrl.isLocalFile()) return -1;
+  if ( !aUrl.isLocalFile() ) return -1;
 
   QString path = aUrl.path();
-  uint right = path.lastIndexOf('/');
-  uint left = path.lastIndexOf('.', right);
+  uint right = path.lastIndexOf( '/' );
+  uint left = path.lastIndexOf( '.', right );
 
   bool ok;
-  int res = path.mid(left + 1, right - left - 1).toInt(&ok);
-  return (ok) ? res : -1;
+  int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
+  return ( ok ) ? res : -1;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::resizeEvent(QResizeEvent *)
+void KMReaderWin::resizeEvent( QResizeEvent * )
 {
   if( !mResizeTimer.isActive() )
   {
@@ -1745,7 +1745,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
-  mSplitter->setGeometry(0, 0, width(), height());
+  mSplitter->setGeometry( 0, 0, width(), height() );
 }
 
 
@@ -1770,9 +1770,9 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder) {
-    if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-        folder->isDrafts() || folder->isTemplates())
+  if ( folder ) {
+    if ( folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+         folder->isDrafts() || folder->isTemplates() )
       return;
   }
 
@@ -1785,9 +1785,9 @@ void KMReaderWin::slotTouchMessage()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::closeEvent(QCloseEvent *e)
+void KMReaderWin::closeEvent( QCloseEvent *e )
 {
-  QWidget::closeEvent(e);
+  QWidget::closeEvent( e );
   writeConfig();
 }
 
