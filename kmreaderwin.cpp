@@ -1770,9 +1770,11 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-      folder->isDrafts() || folder->isTemplates())
-    return;
+  if (folder) {
+    if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+        folder->isDrafts() || folder->isTemplates())
+      return;
+  }
 
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
                                                    MDN::Displayed,
