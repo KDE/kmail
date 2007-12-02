@@ -69,7 +69,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   msg->setBody( iCal.utf8() );
   msg->setFrom( receiver() );
 
-  if ( delMessage && GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() )
+  if ( delMessage && deleteInvitationAfterReply() )
     /* We want the triggering mail to be moved to the trash once this one
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, KMMsgStatusDeleted );
@@ -178,5 +178,5 @@ bool Callback::askForComment( KCal::Attendee::PartStat status ) const
 
 bool Callback::deleteInvitationAfterReply() const
 {
-    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem();
+    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }
