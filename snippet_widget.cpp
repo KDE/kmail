@@ -99,7 +99,7 @@ SnippetWidget::~SnippetWidget()
  */
 void SnippetWidget::slotAdd()
 {
-  kdDebug(5006) << "Ender slotAdd()" << endl;
+  //kdDebug(5006) << "Ender slotAdd()" << endl;
   SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true);
 
   /*check if the user clicked a SnippetGroup
@@ -149,7 +149,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem* parent, const QString& name, 
  */
 void SnippetWidget::slotAddGroup()
 {
-  kdDebug(5006) << "Ender slotAddGroup()" << endl;
+  //kdDebug(5006) << "Ender slotAddGroup()" << endl;
   SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true);
   dlg.setShowShortcut( false );
   dlg.snippetText->setEnabled(false);
@@ -183,15 +183,20 @@ void SnippetWidget::slotRemove()
         == KMessageBox::Cancel)
       return;
 
-    for (SnippetItem *it=_list.first(); it; it=_list.next()) {
+    SnippetItem *it=_list.first();
+    while ( it ) {
       if (it->getParent() == group->getId()) {
-        kdDebug(5006) << "remove " << it->getName() << endl;
-        _list.remove(it);
+        SnippetItem *doomed = it;
+        it = _list.next();
+        //kdDebug(5006) << "remove " << doomed->getName() << endl;
+        _list.remove(doomed);
+      } else {
+        it = _list.next();
       }
     }
   }
 
-  kdDebug(5006) << "remove " << snip->getName() << endl;
+  //kdDebug(5006) << "remove " << snip->getName() << endl;
   _list.remove(snip);
 }
 
@@ -327,10 +332,10 @@ void SnippetWidget::writeConfig()
   int iGroupCount = 0;
 
   for ( item = _list.first(); item; item = _list.next() ) {  //write the snippet-list
-    kdDebug(5006) << "SnippetWidget::writeConfig() " << item->getName() << endl;
+    //kdDebug(5006) << "SnippetWidget::writeConfig() " << item->getName() << endl;
     SnippetGroup * group = dynamic_cast<SnippetGroup*>(item);
     if (group) {
-      kdDebug(5006) << "-->GROUP " << item->getName() << group->getId() << " " << iGroupCount<< endl;
+      //kdDebug(5006) << "-->GROUP " << item->getName() << group->getId() << " " << iGroupCount<< endl;
       strKeyName=QString("snippetGroupName_%1").arg(iGroupCount);
       strKeyId=QString("snippetGroupId_%1").arg(iGroupCount);
 
@@ -339,7 +344,7 @@ void SnippetWidget::writeConfig()
 
       iGroupCount++;
     } else if (dynamic_cast<SnippetItem*>(item)) {
-      kdDebug(5006) << "-->ITEM " << item->getName() << item->getParent() << " " << iSnipCount << endl;
+      //kdDebug(5006) << "-->ITEM " << item->getName() << item->getParent() << " " << iSnipCount << endl;
       strKeyName=QString("snippetName_%1").arg(iSnipCount);
       strKeyText=QString("snippetText_%1").arg(iSnipCount);
       strKeyId=QString("snippetParent_%1").arg(iSnipCount);
@@ -356,7 +361,7 @@ void SnippetWidget::writeConfig()
       }
       iSnipCount++;
     } else {
-      kdDebug(5006) << "-->ERROR " << item->getName() << endl;
+      //kdDebug(5006) << "-->ERROR " << item->getName() << endl;
     }
   }
   _cfg->writeEntry("snippetCount", iSnipCount);
@@ -406,7 +411,7 @@ void SnippetWidget::initConfig()
   SnippetItem *item;
   SnippetGroup *group;
 
-  kdDebug(5006) << "SnippetWidget::initConfig() " << endl;
+  //kdDebug(5006) << "SnippetWidget::initConfig() " << endl;
 
   //if entry doesn't get found, this will return -1 which we will need a bit later
   int iCount = _cfg->readNumEntry("snippetGroupCount", -1);
@@ -420,11 +425,11 @@ void SnippetWidget::initConfig()
 
     strNameVal = _cfg->readEntry(strKeyName, "");
     iIdVal = _cfg->readNumEntry(strKeyId, -1);
-    kdDebug(5006) << "Read group "  << " " << iIdVal << endl;
+    //kdDebug(5006) << "Read group "  << " " << iIdVal << endl;
 
     if (strNameVal != "" && iIdVal != -1) {
       group = new SnippetGroup(this, strNameVal, iIdVal);
-      kdDebug(5006) << "Created group " << group->getName() << " " << group->getId() << endl;
+      //kdDebug(5006) << "Created group " << group->getName() << " " << group->getId() << endl;
       _list.append(group);
     }
   }
@@ -449,17 +454,17 @@ void SnippetWidget::initConfig()
         strNameVal = _cfg->readEntry(strKeyName, "");
         strTextVal = _cfg->readEntry(strKeyText, "");
         iParentVal = _cfg->readNumEntry(strKeyId, -1);
-        kdDebug(5006) << "Read item " << strNameVal << " " << iParentVal << endl;
+        //kdDebug(5006) << "Read item " << strNameVal << " " << iParentVal << endl;
 
         if (strNameVal != "" && strTextVal != "" && iParentVal != -1) {
             KShortcut shortcut( _cfg->readEntry( QString("snippetShortcut_%1").arg(i), QString() ) );
             item = makeItem( SnippetItem::findGroupById(iParentVal, _list), strNameVal, strTextVal, shortcut );
-            kdDebug(5006) << "Created item " << item->getName() << " " << item->getParent() << endl;
+            //kdDebug(5006) << "Created item " << item->getName() << " " << item->getParent() << endl;
             _list.append(item);
         }
     }
   } else {
-      kdDebug() << "iCount is not -1";
+      //kdDebug() << "iCount is not -1";
   }
 
   iCount = _cfg->readNumEntry("snippetSavedCount", 0);
@@ -855,23 +860,23 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
  */
 bool SnippetWidget::acceptDrag (QDropEvent *event) const
 {
-  kdDebug(5006) << "Format: " << event->format() << "" << event->pos() << endl;
+  //kdDebug(5006) << "Format: " << event->format() << "" << event->pos() << endl;
 
   QListViewItem * item = itemAt(event->pos());
 
   if (item &&
       QString(event->format()).startsWith("text/plain") &&
       static_cast<SnippetWidget *>(event->source()) != this) {
-    kdDebug(5006) << "returning TRUE " << endl;
+    ///kdDebug(5006) << "returning TRUE " << endl;
     return TRUE;
   } else if(item &&
       QString(event->format()).startsWith("x-kmailsnippet") &&
       static_cast<SnippetWidget *>(event->source()) != this)
   {
-    kdDebug(5006) << "returning TRUE " << endl;
+    //kdDebug(5006) << "returning TRUE " << endl;
     return TRUE;
   } else {
-    kdDebug(5006) << "returning FALSE" << endl;
+    //kdDebug(5006) << "returning FALSE" << endl;
     event->acceptAction(FALSE);
     return FALSE;
   }
@@ -896,7 +901,7 @@ void SnippetWidget::slotDropped(QDropEvent *e, QListViewItem *)
   if ( e->provides("text/plain") && data.size()>0 ) {
     //get the data from the event...
     QString encData(data.data());
-    kdDebug(5006) << "encData: " << encData << endl;
+    //kdDebug(5006) << "encData: " << encData << endl;
 
     //... then fill the dialog with the given data
     SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true );
