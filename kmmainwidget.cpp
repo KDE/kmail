@@ -2649,7 +2649,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()));
   }
 
-  KActionMenu *sendActionMenu = new KActionMenu(KIcon("mail_send_via"), i18n("Send Queued Messages Via"), this);
+  KActionMenu *sendActionMenu = new KActionMenu(KIcon("mail-send-via"), i18n("Send Queued Messages Via"), this);
   actionCollection()->addAction("send_queued_via", sendActionMenu );
   sendActionMenu->setDelayed(true);
 
@@ -2680,7 +2680,7 @@ void KMMainWidget::setupActions()
     if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) action->setEnabled(false);
   }
   {
-    QAction *action = new KAction(KIcon("document-open"), i18n("&Import Messages..."), this);
+    QAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
     actionCollection()->addAction("import", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotImport()));
     if (KStandardDirs::findExe("kmailcvt").isEmpty()) action->setEnabled(false);
@@ -2795,21 +2795,21 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction( "new_folder", mNewFolderAction );
   connect( mNewFolderAction, SIGNAL(triggered(bool)), mFolderTree, SLOT(addChildFolder()) );
 
-  mModifyFolderAction = new KAction(KIcon("configure"), i18n("&Properties"), this);
+  mModifyFolderAction = new KAction(KIcon("document-properties"), i18n("&Properties"), this);
   actionCollection()->addAction("modify", mModifyFolderAction );
   connect(mModifyFolderAction, SIGNAL(triggered(bool)), SLOT(slotModifyFolder()));
 
   mFolderMailingListPropertiesAction = new KAction(i18n("&Mailing List Management..."), this);
   actionCollection()->addAction("folder_mailinglist_properties", mFolderMailingListPropertiesAction );
   connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT( slotFolderMailingListProperties()));
-  // mFolderMailingListPropertiesAction->setIcon(KIcon("folder_mailinglist_properties"));
+  // mFolderMailingListPropertiesAction->setIcon(KIcon("document-properties-mailing-list"));
 
   mFolderShortCutCommandAction = new KAction(KIcon("configure-shortcuts"), i18n("&Assign Shortcut..."), this);
   actionCollection()->addAction("folder_shortcut_command", mFolderShortCutCommandAction );
   connect(mFolderShortCutCommandAction, SIGNAL(triggered(bool) ), SLOT( slotFolderShortcutCommand() ));
 
 
-  mMarkAllAsReadAction = new KAction(KIcon("goto-page"), i18n("Mark All Messages as &Read"), this);
+  mMarkAllAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark All Messages as &Read"), this);
   actionCollection()->addAction("mark_all_as_read", mMarkAllAsReadAction );
   connect(mMarkAllAsReadAction, SIGNAL(triggered(bool)), SLOT(slotMarkAllAsRead()));
 
@@ -2909,7 +2909,7 @@ void KMMainWidget::setupActions()
            SLOT( slotNewFromTemplate(QAction*) ) );
 
   {
-    QAction *action = new KAction(KIcon("mail_post_to"), i18n("New Message t&o Mailing-List..."), this);
+    QAction *action = new KAction(KIcon("mail-message-new-list"), i18n("New Message t&o Mailing-List..."), this);
     actionCollection()->addAction("post_message", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPostToML()));
     action->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N));
@@ -3003,12 +3003,12 @@ void KMMainWidget::setupActions()
 
   mPrintAction = KStandardAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mEditAction = new KAction(KIcon("edit"), i18n("&Edit Message"), this);
+  mEditAction = new KAction(KIcon("document-properties"), i18n("&Edit Message"), this);
   actionCollection()->addAction("edit", mEditAction );
   connect(mEditAction, SIGNAL(triggered(bool)), SLOT(slotEditMsg()));
   mEditAction->setShortcut(QKeySequence(Qt::Key_T));
 
-  mUseAction = new KAction( KIcon( "document-new" ), i18n("New Message From &Template"),
+  mUseAction = new KAction( KIcon( "mail-message-new-from-template" ), i18n("New Message From &Template"),
                             actionCollection() );
   mUseAction->setShortcut( KShortcut( Qt::Key_N ) );
   connect( mUseAction, SIGNAL(triggered(bool)),
@@ -3019,21 +3019,21 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("set_status", mStatusMenu );
 
   {
-    QAction *action = new KAction(KIcon("kmmsgread"), i18n("Mark Message as &Read"), this);
+    QAction *action = new KAction(KIcon("mail-mark-read"), i18n("Mark Message as &Read"), this);
     actionCollection()->addAction("status_read", action );
     action->setToolTip(i18n("Mark selected messages as read"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusRead()));
     mStatusMenu->addAction(action);
   }
   {
-    QAction *action = new KAction(KIcon("kmmsgnew"), i18n("Mark Message as &New"), this);
+    QAction *action = new KAction(KIcon("mail-mark-new"), i18n("Mark Message as &New"), this);
     actionCollection()->addAction("status_new", action );
     action->setToolTip(i18n("Mark selected messages as new"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusNew()));
     mStatusMenu->addAction(action);
   }
   {
-    QAction *action = new KAction(KIcon("kmmsgunseen"), i18n("Mark Message as &Unread"), this);
+    QAction *action = new KAction(KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this);
     actionCollection()->addAction("status_unread", action );
     action->setToolTip(i18n("Mark selected messages as unread"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusUnread()));
@@ -3044,7 +3044,7 @@ void KMMainWidget::setupActions()
 
   // -------- Toggle Actions
   mToggleImportantAction =
-    new KToggleAction( KIcon( "mail-flag-kmail" ),
+    new KToggleAction( KIcon( "mail-mark-important" ),
                        i18n("Mark Message as &Important"), this );
   actionCollection()->addAction( "status_flag", mToggleImportantAction );
   connect( mToggleImportantAction, SIGNAL(triggered(bool) ),
@@ -3054,7 +3054,7 @@ void KMMainWidget::setupActions()
   mStatusMenu->addAction( mToggleImportantAction );
 
   mToggleTodoAction =
-    new KToggleAction( KIcon( "mail_todo" ),
+    new KToggleAction( KIcon( "mail-mark-task" ),
                        i18n("Mark Message as &To-do"), this );
   actionCollection()->addAction( "status_todo", mToggleTodoAction );
   connect( mToggleTodoAction, SIGNAL(triggered(bool) ),
@@ -3068,19 +3068,19 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
   actionCollection()->addAction("thread_status", mThreadStatusMenu );
 
-  mMarkThreadAsReadAction = new KAction(KIcon("kmmsgread"), i18n("Mark Thread as &Read"), this);
+  mMarkThreadAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark Thread as &Read"), this);
   actionCollection()->addAction("thread_read", mMarkThreadAsReadAction );
   connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusRead()));
   mMarkThreadAsReadAction->setToolTip(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
-  mMarkThreadAsNewAction = new KAction(KIcon("kmmsgnew"), i18n("Mark Thread as &New"), this);
+  mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-new"), i18n("Mark Thread as &New"), this);
   actionCollection()->addAction("thread_new", mMarkThreadAsNewAction );
   connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
   mMarkThreadAsNewAction->setToolTip( i18n("Mark all messages in the selected thread as new"));
   mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
-  mMarkThreadAsUnreadAction = new KAction(KIcon("kmmsgunseen"), i18n("Mark Thread as &Unread"), this);
+  mMarkThreadAsUnreadAction = new KAction(KIcon("mail-mark-unread"), i18n("Mark Thread as &Unread"), this);
   actionCollection()->addAction("thread_unread", mMarkThreadAsUnreadAction );
   connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusUnread()));
   mMarkThreadAsUnreadAction->setToolTip(i18n("Mark all messages in the selected thread as unread"));
@@ -3089,24 +3089,24 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->addSeparator();
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadImportantAction = new KToggleAction(KIcon("mail_flag"), i18n("Mark Thread as &Important"), this);
+  mToggleThreadImportantAction = new KToggleAction(KIcon("mail-mark-important"), i18n("Mark Thread as &Important"), this);
   actionCollection()->addAction("thread_flag", mToggleThreadImportantAction );
   connect(mToggleThreadImportantAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusImportant()));
   mToggleThreadImportantAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail_todo"), i18n("Mark Thread as &To-do"), this);
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("Mark Thread as &To-do"), this);
   actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadTodoAction );
 
   //------- "Watch and ignore thread" actions
-  mWatchThreadAction = new KToggleAction(KIcon("kmmsgwatched"), i18n("&Watch Thread"), this);
+  mWatchThreadAction = new KToggleAction(KIcon("mail-thread-watch"), i18n("&Watch Thread"), this);
   actionCollection()->addAction("thread_watched", mWatchThreadAction );
   connect(mWatchThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusWatched()));
 
-  mIgnoreThreadAction = new KToggleAction(KIcon("mail_ignore"), i18n("&Ignore Thread"), this);
+  mIgnoreThreadAction = new KToggleAction(KIcon("mail-thread-ignore"), i18n("&Ignore Thread"), this);
   actionCollection()->addAction("thread_ignored", mIgnoreThreadAction );
   connect(mIgnoreThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusIgnored()));
 
@@ -3132,7 +3132,7 @@ void KMMainWidget::setupActions()
   mApplyFilterActionsMenu = new KActionMenu(i18n("A&pply Filter"), this);
   actionCollection()->addAction("apply_filter_actions", mApplyFilterActionsMenu );
 
-  mCreateTodoAction = new KAction( KIcon( "mail_todo" ), i18n("Create Task..."), this );
+  mCreateTodoAction = new KAction( KIcon( "mail-mark-task" ), i18n("Create Task..."), this );
   connect( mCreateTodoAction, SIGNAL(triggered()), SLOT(slotCreateTodo()) );
   actionCollection()->addAction( "create_todo", mCreateTodoAction );
 
@@ -3225,12 +3225,11 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_next_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Plus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "edit-find-previous" ) );
-      action->setIconText( i18n( "Previous" ) );
+      action->setIcon( KIcon( "go-previous" ) );
     } else {
-      action->setIcon( KIcon( "edit-find-next" ) );
-      action->setIconText( i18n( "Next" ) );
+      action->setIcon( KIcon( "go-next" ) );
     }
+    action->setIconText( i18n( "Next" ) );
     action->setToolTip(i18n("Go to the next unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotNextUnreadMessage()));
   }
@@ -3246,12 +3245,11 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("go_prev_unread_message", action );
     action->setShortcut(QKeySequence(Qt::Key_Minus));
     if ( QApplication::isRightToLeft() ) {
-      action->setIcon( KIcon( "edit-find-next" ) );
-      action->setIconText( i18n( "Next" ) );
+      action->setIcon( KIcon( "go-next" ) );
     } else {
-      action->setIcon( KIcon( "edit-find-previous" ) );
-      action->setIconText( i18n( "Previous" ) );
+      action->setIcon( KIcon( "go-previous" ) );
     }
+    action->setIconText( i18n( "Previous" ) );
     action->setToolTip(i18n("Go to the previous unread message"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotPrevUnreadMessage()));
   }
@@ -3983,7 +3981,7 @@ void KMMainWidget::initializeFilterActions()
       QString as = i18n( "Filter %1", (*it)->name() );
       QString icon = (*it)->icon();
       if ( icon.isEmpty() ) {
-        icon = "gear";
+        icon = "system-run";
       }
       filterAction = new KAction( KIcon( icon ), as, actionCollection() );
       filterAction->setIconText( (*it)->toolbarName() );

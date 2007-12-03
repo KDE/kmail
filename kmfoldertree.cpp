@@ -116,7 +116,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case KFolderTreeItem::News:
         icon = "network-server"; break;
       case KFolderTreeItem::Search:
-        icon = "zoom-original";break;
+        icon = "system-search";break;
       default:
         icon = "folder";break;
     }
@@ -127,7 +127,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Outbox: icon = "folder-outbox"; break;
       case SentMail: icon = "folder-sent-mail"; break;
       case Trash: icon = "user-trash"; break;
-      case Drafts: icon = "edit"; break;
+      case Drafts: icon = "document-properties"; break;
       case Templates: icon = "document-new"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
@@ -177,7 +177,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
   }
   if ( pm.isNull() ) {
     if ( mFolder && mFolder->noContent() ) {
-      pm = il->loadIcon( "folder_grey_open", KIconLoader::Small, size,
+      pm = il->loadIcon( "folder-open-grey", KIconLoader::Small, size,
                          KIconLoader::DefaultState, QStringList(), 0, true );
     } else {
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),

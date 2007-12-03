@@ -972,7 +972,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
-  mImap.editPNS->setIcon( KIcon("edit") );
+  mImap.editPNS->setIcon( KIcon("document-properties") );
   mImap.editPNS->setAutoRaise( true );
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editPNS->setFixedSize( 22, 22 );
@@ -990,7 +990,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
-  mImap.editONS->setIcon( KIcon("edit") );
+  mImap.editONS->setIcon( KIcon("document-properties") );
   mImap.editONS->setAutoRaise( true );
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editONS->setFixedSize( 22, 22 );
@@ -1005,7 +1005,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
-  mImap.editSNS->setIcon( KIcon("edit") );
+  mImap.editSNS->setIcon( KIcon("document-properties") );
   mImap.editSNS->setAutoRaise( true );
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editSNS->setFixedSize( 22, 22 );

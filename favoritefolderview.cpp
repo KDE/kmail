@@ -325,7 +325,7 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
   if ( fti && fti->folder() ) {
     contextMenu.addAction( SmallIcon( "edit-delete" ), i18n( "Remove From Favorites" ),
                            this, SLOT( removeFolder() ) );
-    contextMenu.addAction( SmallIcon( "edit" ), i18n( "Rename Favorite" ),
+    contextMenu.addAction( SmallIcon( "edit-rename" ), i18n( "Rename Favorite" ),
                            this, SLOT( renameFolder() ) );
     contextMenu.addSeparator();
 

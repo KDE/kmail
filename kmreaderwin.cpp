@@ -1905,7 +1905,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
   if ( GlobalSettings::self()->allowAttachmentEditing() ) {
-    action = menu->addAction(SmallIcon("edit"), i18n("Edit Attachment") );
+    action = menu->addAction(SmallIcon("document-properties"), i18n("Edit Attachment") );
     connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
   }
@@ -2538,7 +2538,7 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 {
   if ( KMessageBox::warningContinueCancel( this,
         i18n("Modifying an attachment might invalidate any digital signature on this message."),
-        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), KStandardGuiItem::cancel(),
+        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "document-properties" ), KStandardGuiItem::cancel(),
         "EditAttachmentSignatureWarning" )
         != KMessageBox::Continue ) {
     return;
