@@ -1,5 +1,4 @@
 
-add_subdirectory( icons ) 
 
 
 
