@@ -328,7 +328,9 @@ RecipientsView::RecipientsView( QWidget *parent )
 
   addLine();
   setResizePolicy( QScrollView::Manual );
-  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+
+  viewport()->setPaletteBackgroundColor( paletteBackgroundColor() );
 }
 
 RecipientLine *RecipientsView::activeLine()
@@ -528,8 +530,11 @@ void RecipientsView::resizeView()
   resizeContents( width(), mLines.count() * mLineHeight );
 
   if ( mLines.count() < 6 ) {
-    setFixedHeight( mLineHeight * mLines.count() );
+//    setFixedHeight( mLineHeight * mLines.count() );
   }
+
+  parentWidget()->layout()->activate();
+  emit sizeHintChanged();
 }
 
 void RecipientsView::activateLine( RecipientLine *line )
@@ -543,6 +548,7 @@ void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )
   for( uint i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
+  ensureVisible( 0, mLines.count() * mLineHeight );
 }
 
 QSize RecipientsView::sizeHint() const
@@ -553,12 +559,9 @@ QSize RecipientsView::sizeHint() const
 QSize RecipientsView::minimumSizeHint() const
 {
   int height;
-
   uint numLines = 5;
-
   if ( mLines.count() < numLines ) height = mLineHeight * mLines.count();
   else height = mLineHeight * numLines;
-
   return QSize( 200, height );
 }
 
@@ -840,6 +843,9 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
     mSideWidget, SLOT( setTotal( int, int ) ) );
   connect( mRecipientsView, SIGNAL( focusRight() ),
     mSideWidget, SLOT( setFocus() ) );
+
+  connect( mRecipientsView, SIGNAL(sizeHintChanged()),
+           SIGNAL(sizeHintChanged()) );
 }
 
 RecipientsEditor::~RecipientsEditor()

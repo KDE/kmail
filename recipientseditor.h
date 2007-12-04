@@ -220,6 +220,7 @@ class RecipientsView : public QScrollView
     void focusDown();
     void focusRight();
     void completionModeChanged( KGlobalSettings::Completion );
+    void sizeHintChanged();
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
@@ -349,6 +350,7 @@ class RecipientsEditor : public QWidget
     void focusUp();
     void focusDown();
     void completionModeChanged( KGlobalSettings::Completion );
+    void sizeHintChanged();
 
   protected slots:
     void slotPickedRecipient( const Recipient & );

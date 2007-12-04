@@ -702,6 +702,8 @@ private slots:
     void compressAttach(int idx);
     void uncompressAttach(int idx);
     void editorFocusChanged(bool gained);
+    void recipientEditorSizeHintChanged();
+    void setMaximumHeaderSize();
 
 private:
   QWidget   *mMainWidget;
@@ -841,6 +843,8 @@ private slots:
 private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
+  QSplitter *mHeadersToEditorSplitter;
+  QWidget* mHeadersArea;
   QSplitter *mSplitter;
   QSplitter *mSnippetSplitter;
   struct atmLoadData
