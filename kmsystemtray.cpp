@@ -77,7 +77,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = loadIcon( "kmail" ).pixmap();
-  mLightIconImage = loadIcon( "kmaillight" ).pixmap().toImage();
+  mLightIconImage = loadIcon( "kmail-light" ).pixmap().toImage();
 
   setIcon(mDefaultIcon);
 #ifdef Q_WS_X11
