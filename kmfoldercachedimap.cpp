@@ -2007,8 +2007,9 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
   }
 
   mProgress += 5;
-  if ( mToBeDeletedAfterRescue.isEmpty() )
-    serverSyncInternal();
+
+  // just in case there is nothing to rescue
+  slotRescueDone( 0 );
 }
 
 void KMFolderCachedImap::listDirectory2()
@@ -3006,8 +3007,6 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
       }
     }
   }
- if ( root )
-    slotRescueDone( 0 ); // just in case there is nothing to rescue
 }
 
 void KMFolderCachedImap::slotRescueDone(KMCommand * command)
