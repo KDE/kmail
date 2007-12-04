@@ -201,7 +201,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "kmmsgundefinedencrypted"    ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
-    pixAttachment            = new QPixmap( KIcon(    "mail-attachment"            ) );
+    pixAttachment            = new QPixmap( KIconLoader().loadIcon( "mail-attachment", KIconLoader::Small ) );
     pixReadFwd               = new QPixmap( UserIcon( "mail-forwarded"             ) );
     pixReadReplied           = new QPixmap( UserIcon( "mail-replied"               ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "mail-forwarded-replied"     ) );
