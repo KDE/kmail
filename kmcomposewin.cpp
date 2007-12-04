@@ -163,8 +163,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
-    mPreserveUserCursorPosition( false )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -1818,11 +1817,11 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
   }
 
-  if ( mMsg->getCursorPos() > 0 ) {
-    // The message has a cursor position explicitly set, so avoid
-    // changing it when appending the signature.
-    mPreserveUserCursorPosition = true;
-  }
+  // Make sure the cursor is at the correct position, which is set by
+  // the template parser.
+  if ( mMsg->getCursorPos() > 0 )
+    mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
+
   setModified( isModified );
 }
 
@@ -3717,10 +3716,31 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  mOldSigText = ident.signatureText();
-  mPreserveUserCursorPosition = mEditor->appendSignature(mOldSigText, mPreserveUserCursorPosition);
+  insertSignatureHelper( KPIM::KMeditor::End );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotPrependSignature()
+{
+  insertSignatureHelper( KPIM::KMeditor::Start );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotInsertSignatureAtCursor()
+{
+  insertSignatureHelper( KPIM::KMeditor::AtCursor );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
+{
+  // Identity::signature() is not const, although it should be, therefore the
+  // const_cast.
+  KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
+      kmkernel->identityManager()->identityForUoidOrDefault(
+                                mIdentity->currentIdentity() ) );
+
+  mEditor->insertSignature( ident.signature(), placement );
 }
 
 //-----------------------------------------------------------------------------
@@ -4087,9 +4107,9 @@ void KMComposeWin::slotEditKeys()
 
 void KMComposeWin::setReplyFocus( bool hasMessage )
 {
+  // The cursor position is already set by setMsg(), so we only need to set the
+  // focus here.
   mEditor->setFocus();
-  if ( hasMessage )
-    mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
 }
 
 void KMComposeWin::setFocusToSubject()

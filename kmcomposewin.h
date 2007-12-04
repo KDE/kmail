@@ -27,16 +27,24 @@
 # endif
 #endif*/
 
+// KMail includes
 #include "composer.h"
 #include "messagesender.h"
 
+// Qt includes
 #include <QFont>
 #include <QList>
 #include <QPalette>
 #include <QPointer>
 #include <QTextListFormat>
 
+// KDE includes
 #include <kglobalsettings.h>
+
+// LIBKDEPIM includes
+#include <libkdepim/kmeditor.h>
+
+// Other includes
 #include "kleo/enum.h"
 
 class QByteArray;
@@ -213,9 +221,7 @@ public: // mailserviceimpl
 
   public: // kmcommand
     /**
-     * Sets the focus to the edit-widget and the cursor below the
-     * "On ... you wrote" line when hasMessage is true.
-     * Make sure you call this _after_ setMsg().
+     * Sets the focus to the edit-widget.
      */
      void setReplyFocus( bool hasMessage = true );
 
@@ -372,9 +378,19 @@ public: // mailserviceimpl
 
   private slots:
     /**
-     * Append signature file to the end of the text in the editor.
+     * Append signature to the end of the text in the editor.
      */
     void slotAppendSignature();
+
+    /**
+    * Prepend signature at the beginning of the text in the editor.
+    */
+    void slotPrependSignature();
+
+    /**
+    * Insert signature at the cursor position of the text in the editor.
+    */
+    void slotInsertSignatureAtCursor();
 
     /**
      * Attach sender's public key.
@@ -641,6 +657,14 @@ public: // mailserviceimpl
      */
     static bool validateAddresses( QWidget *parent, const QString &addresses );
 
+    /**
+     * Helper to insert the signature of the current identity arbitrarily
+     * in the editor, connecting slot functions to KMeditor::insertSignature().
+     * @param placement the position of the signature
+     */
+    void insertSignatureHelper( KPIM::KMeditor::Placement = KPIM::KMeditor::End );
+
+
   private slots:
     /**
      * Compress an attachemnt with the given index
@@ -805,15 +829,6 @@ public: // mailserviceimpl
 
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;
-
-    /** If the message in this composer has a cursor position set (for
-     *   instance because it comes from a template containing %CURSOR)
-     *   then we need to preserve that cursor position even when auto-
-     *   appending (or prepending) the signature during composer setup.
-     *   Set to true *once* (and only in setMsg() at that) to avoid
-     *   accidentally moving the cursor.
-     */
-    bool mPreserveUserCursorPosition;
 
     QString mdbusObjectPath;
     static int s_composerNumber;
