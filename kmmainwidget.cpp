@@ -342,6 +342,8 @@ void KMMainWidget::layoutSplitters()
   assert( !mSplitter1 );
   assert( !mSplitter2 );
 
+  // For some reason, this is necessary here so that the copy action still
+  // works after changing the folder layout.
   if ( mMsgView )
     disconnect( mMsgView->copyAction(), SIGNAL( activated() ),
                 mMsgView, SLOT( slotCopySelectedText() ) );
@@ -513,6 +515,7 @@ void KMMainWidget::layoutSplitters()
   //
   mTopLayout->addWidget( mSplitter1 );
 
+  // Make the copy action work, see disconnect comment above
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( activated() ),
              mMsgView, SLOT( slotCopySelectedText() ) );

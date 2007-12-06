@@ -447,14 +447,14 @@ public: // mailserviceimpl
      */
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
-    void slotChangeParagStyle(QTextListFormat::Style style);
+    void slotChangeParagStyle( QTextListFormat::Style style );
     void slotFontAction( const QString & );
     void slotAlignLeft();
     void slotAlignCenter();
     void slotAlignRight();
-    void slotTextBold(bool bold);
-    void slotTextItalic(bool italic);
-    void slotTextUnder(bool under);
+    void slotTextBold( bool bold );
+    void slotTextItalic( bool italic );
+    void slotTextUnder( bool under );
     void slotTextColor();
     void slotSizeAction( int );
     void fontChanged( const QFont & );

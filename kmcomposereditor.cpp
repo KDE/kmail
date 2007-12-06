@@ -147,37 +147,40 @@ QString KMComposerEditor::brokenText() const
   return temp;
 }
 
-void KMComposerEditor::setHtmlMode(bool mode) {
+void KMComposerEditor::setHtmlMode( bool /*mode*/ )
+{
   if ( mHtmlMode ) {
     mHtmlMode = true;
-      // set all highlighted text caused by spelling back to black
-      int paraFrom, indexFrom, paraTo, indexTo;
-      // set all highlighted text caused by spelling back to black
-      // for the case we're in textmode, the user selects some text and decides to format this selected text
-      int startpos = textCursor().selectionStart();
-      int endpos = textCursor().selectionEnd();
-      //selectAll();
-      //setTextColor(QColor(0,0,0));
 
-      //Laurent fix me
-      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
-      document()->setModified(true);
+    // set all highlighted text caused by spelling back to black
+    //int paraFrom, indexFrom, paraTo, indexTo;
+    // set all highlighted text caused by spelling back to black
+    // for the case we're in textmode, the user selects some text and decides to format this selected text
+    //int startpos = textCursor().selectionStart();
+    //int endpos = textCursor().selectionEnd();
+    //selectAll();
+    //setTextColor(QColor(0,0,0));
+
+    //Laurent fix me
+    //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
+    document()->setModified( true );
   }
   else {
     mHtmlMode = false;
     // like the next 2 lines, or should we selectAll and apply the default font?
     QString text = toPlainText();
-    setPlainText(text);
-    document()->setModified(true);
+    setPlainText( text );
+    document()->setModified( true );
   }
-
 }
 
-bool KMComposerEditor::htmlMode() {
+bool KMComposerEditor::htmlMode()
+{
   return mHtmlMode;
 }
 
-QString KMComposerEditor::text() {
+QString KMComposerEditor::text()
+{
   if ( mHtmlMode )
     return toHtml();
   else
