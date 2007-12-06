@@ -91,10 +91,8 @@ class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   friend class KMail::KHtmlPartHtmlWriter;
 
 public:
-  KMReaderWin( QWidget *parent,
-	       QWidget *mainWindow,
-	       KActionCollection *actionCollection,
-               Qt::WindowFlags f=0 );
+  KMReaderWin( QWidget *parent, QWidget *mainWindow,
+               KActionCollection *actionCollection, Qt::WindowFlags f = 0 );
   virtual ~KMReaderWin();
 
   /**

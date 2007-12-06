@@ -93,23 +93,23 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void destruct();
 
     /** Read configuration options before widgets are created. */
-    virtual void readPreConfig(void);
+    virtual void readPreConfig();
 
     /** Read configuration for current folder. */
-    virtual void readFolderConfig(void);
+    virtual void readFolderConfig();
 
     /** Write configuration for current folder. */
-    virtual void writeFolderConfig(void);
+    virtual void writeFolderConfig();
 
     /** Read configuration options after widgets are created. */
-    virtual void readConfig(void);
+    virtual void readConfig();
 
     /** Write configuration options. */
-    virtual void writeConfig(void);
+    virtual void writeConfig();
 
     /** Easy access to main components of the window. */
-    KMReaderWin* messageView(void) const { return mMsgView; }
-    KMFolderTree* folderTree(void) const  { return mFolderTree; }
+    KMReaderWin* messageView() const { return mMsgView; }
+    KMFolderTree* folderTree() const  { return mFolderTree; }
     KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
     static void cleanup();
@@ -269,10 +269,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   protected:
     void setupActions();
     void createWidgets();
-    void activatePanners();
+    void deleteWidgets();
     void showMsg( KMReaderWin *win, KMMessage *msg );
     void updateFileMenu();
     void newFromTemplate( KMMessage *msg );
+    void layoutSplitters();
 
     // helper functions for keeping reference to mFolder
     void openFolder();
@@ -472,8 +473,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     QString findCurrentImapPath();
 
-    void setupFolderView();
-
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
 
@@ -517,18 +516,15 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KToggleAction *mToggleShowQuickSearchAction;
 
+    KMail::HeaderListQuickSearch *mQuickSearchLine;
+    KMail::FavoriteFolderView    *mFavoriteFolderView;
+    QPointer<KMFolder> mFolder;
     KMFolderTree *mFolderTree;
-    KMail::FavoriteFolderView *mFavoriteFolderView;
-    QWidget      *mFolderView;
-    QSplitter    *mFolderViewParent;
     KMReaderWin  *mMsgView;
-    QSplitter    *mPanner1, *mPanner2;
-    QSplitter    *mFolderViewSplitter;
+    QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     KMHeaders    *mHeaders;
     KVBox        *mSearchAndHeaders;
-    QWidget     *mSearchToolBar;
-    KMail::HeaderListQuickSearch *mQuickSearchLine;
-    QPointer<KMFolder> mFolder;
+    QWidget      *mSearchToolBar;
     KMFolder     *mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
@@ -537,12 +533,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool          mConfirmEmpty;
     QString       mStartupFolder;
     int           mMessageStatusId;
-    QList<int>    mPanner1Sep, mPanner2Sep;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
     QMenu        *mSendMenu;
     QMenu        *mFileMenu;
-
     bool          mLongFolderList;
     bool          mStartupDone;
     KMMenuToFolder mMenuToFolder;

@@ -153,15 +153,16 @@ QList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
 static K3StaticDeleter<QList<KMMainWidget*> > mwlsd;
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
-                           KActionCollection *actionCollection, KConfig *config ) :
-    QWidget(parent),
+KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
+                            KActionCollection *actionCollection, KConfig *config ) :
+    QWidget( parent ),
     mFavoritesCheckMailAction( 0 ),
-    mFavoriteFolderView( 0 ),
-    mFolderView( 0 ),
-    mFolderViewParent( 0 ),
-    mFolderViewSplitter( 0 ),
     mQuickSearchLine( 0 ),
+    mFavoriteFolderView( 0 ),
+    mMsgView( 0 ),
+    mSplitter1( 0 ),
+    mSplitter2( 0 ),
+    mFolderViewSplitter( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
     mAccel( 0 )
@@ -182,12 +183,14 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   mDestructed = false;
   mMessageTagToggleMapper = 0;
   mActionCollection = actionCollection;
-  mTopLayout = new QVBoxLayout(this);
+  mTopLayout = new QVBoxLayout( this );
+  mTopLayout->setMargin( 0 );
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
+  setUpdatesEnabled( false ); //Enabled again in readConfig()
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -201,10 +204,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
   s_mainWidgetList->append( this );
 
-  mPanner1Sep << 1 << 1;
-  mPanner2Sep << 1 << 1;
-
-  setMinimumSize(400, 300);
+  setMinimumSize( 400, 300 );
 
   readPreConfig();
   createWidgets();
@@ -212,8 +212,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   setupActions();
 
   readConfig();
-
-  activatePanners();
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
 
@@ -225,26 +223,26 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
   connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
            this, SLOT( initializeIMAPActions() ) );
 
-  connect(kmkernel, SIGNAL( configChanged() ),
-          this, SLOT( slotConfigChanged() ));
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 
   // display the full path to the folder in the caption
-  connect(mFolderTree, SIGNAL(currentChanged(Q3ListViewItem*)),
-          this, SLOT(slotChangeCaption(Q3ListViewItem*)));
-  connect(mFolderTree, SIGNAL(selectionChanged()),
-          SLOT(updateFolderMenu()) );
+  connect( mFolderTree, SIGNAL( currentChanged(Q3ListViewItem*) ),
+           this, SLOT( slotChangeCaption(Q3ListViewItem*) ) );
+  connect( mFolderTree, SIGNAL( selectionChanged() ),
+           SLOT( updateFolderMenu() ) );
 
-  connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
+  connect( kmkernel->folderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
-  connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
+  connect( kmkernel->imapFolderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
-  connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
+  connect( kmkernel->dimapFolderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
-  connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
+  connect( kmkernel->searchFolderMgr(), SIGNAL( folderRemoved(KMFolder*) ),
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
   connect( kmkernel, SIGNAL( onlineStatusChanged( GlobalSettings::EnumNetworkState::type ) ),
            this, SLOT( slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type ) ) );
@@ -271,23 +269,23 @@ KMMainWidget::~KMMainWidget()
 //This method performs all cleanup that requires the kernel to exist.
 void KMMainWidget::destruct()
 {
-  if (mDestructed)
+  if ( mDestructed )
     return;
-  if (mSearchWin)
+  if ( mSearchWin )
     mSearchWin->close();
   writeConfig();
   writeFolderConfig();
-  delete mHeaders;
-  delete mFolderTree;
+  deleteWidgets();
   delete mSystemTray;
-  delete mMsgView;
   delete mCustomTemplateMenus;
+  mSystemTray = 0;
+  mCustomTemplateMenus = 0;
   mDestructed = true;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::readPreConfig(void)
+void KMMainWidget::readPreConfig()
 {
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
   const KConfigGroup general( KMKernel::config(), "General" );
@@ -305,13 +303,13 @@ void KMMainWidget::readPreConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::readFolderConfig(void)
+void KMMainWidget::readFolderConfig()
 {
-  if (!mFolder)
+  if ( !mFolder )
     return;
 
   KConfig *config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + mFolder->idString());
+  KConfigGroup group( config, "Folder-" + mFolder->idString() );
   mFolderThreadPref =
       group.readEntry( "threadMessagesOverride", false );
   mFolderThreadSubjPref =
@@ -324,22 +322,204 @@ void KMMainWidget::readFolderConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::writeFolderConfig(void)
+void KMMainWidget::writeFolderConfig()
 {
-  if (!mFolder)
+  if ( !mFolder )
     return;
 
   KConfig *config = KMKernel::config();
-  KConfigGroup group(config, "Folder-" + mFolder->idString());
+  KConfigGroup group( config, "Folder-" + mFolder->idString() );
   group.writeEntry( "threadMessagesOverride", mFolderThreadPref );
   group.writeEntry( "threadMessagesBySubject", mFolderThreadSubjPref );
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::layoutSplitters()
+{
+  // This function can only be called when the old splitters are already deleted
+  assert( !mSplitter1 );
+  assert( !mSplitter2 );
+
+  if ( mMsgView )
+    disconnect( mMsgView->copyAction(), SIGNAL( activated() ),
+                mMsgView, SLOT( slotCopySelectedText() ) );
+
+  // If long folder list is enabled, the splitters are:
+  // Splitter 1: FolderView vs (HeaderAndSearch vs MessageViewer)
+  // Splitter 2: HeaderAndSearch vs MessageViewer
+  //
+  // If long folder list is disabled, the splitters are:
+  // Splitter 1: (FolderView vs HeaderAndSearch) vs MessageViewer
+  // Splitter 2: FolderView vs HeaderAndSearch
+
+  // The folder view is both the folder tree and the favorite folder view, if
+  // enabled
+
+  const bool opaqueResize = KGlobalSettings::opaqueResize();
+  bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
+  bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
+
+  //
+  // Create the splitters
+  //
+  mSplitter1 = new QSplitter( this );
+  mSplitter1->setObjectName( "splitter1" );
+  mSplitter1->setOpaqueResize( opaqueResize );
+  mSplitter2 = new QSplitter( mSplitter1 );
+  mSplitter2->setObjectName( "splitter2" );
+  mSplitter2->setOpaqueResize( opaqueResize );
+  mSplitter1->addWidget( mSplitter2 );
+
+  //
+  // Set the layout of the splitters and calculate the widget's parents
+  //
+  QSplitter *folderViewParent, *folderTreeParent, *messageViewerParent;
+  if ( mLongFolderList ) {
+
+    mSplitter1->setOrientation( Qt::Horizontal );
+    Qt::Orientation splitter2orientation;
+    if ( !readerWindowAtSide )
+      splitter2orientation = Qt::Vertical;
+    else
+      splitter2orientation = Qt::Horizontal;
+    mSplitter2->setOrientation( splitter2orientation );
+    folderViewParent = mSplitter1;
+    messageViewerParent = mSplitter2;
+
+  } else {
+
+    Qt::Orientation splitter1orientation;
+    if ( !readerWindowAtSide )
+      splitter1orientation = Qt::Vertical;
+    else
+      splitter1orientation = Qt::Horizontal;
+    mSplitter1->setOrientation( splitter1orientation );
+    mSplitter2->setOrientation( Qt::Horizontal );
+    folderViewParent = mSplitter2;
+    messageViewerParent = mSplitter1;
+  }
+
+  //
+  // Add the widgets to the splitters and set the parents calculated above
+  //
+  int folderTreePosition = 0;
+  if ( mFavoriteFolderView ) {
+    mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
+    mFolderViewSplitter->setOpaqueResize( opaqueResize );
+    folderTreeParent = mFolderViewSplitter;
+    mFolderViewSplitter->addWidget( mFavoriteFolderView );
+    mFavoriteFolderView->setParent( mFolderViewSplitter );
+    folderViewParent->insertWidget( 0, mFolderViewSplitter );
+    folderTreePosition = 1;
+  } else
+    folderTreeParent = folderViewParent;
+
+  folderTreeParent->insertWidget( folderTreePosition, mFolderTree );
+  mSplitter2->addWidget( mSearchAndHeaders );
+  if ( mMsgView ) {
+    messageViewerParent->addWidget( mMsgView );
+    mMsgView->setParent( messageViewerParent );
+  }
+
+  mFolderTree->setParent( folderTreeParent );
+  mSearchAndHeaders->setParent( mSplitter2 );
+
+  //
+  // Set the stretch factors
+  //
+  mSplitter1->setStretchFactor( 0, 0 );
+  mSplitter2->setStretchFactor( 0, 0 );
+  mSplitter1->setStretchFactor( 1, 1 );
+  mSplitter2->setStretchFactor( 1, 1 );
+
+  // Because the reader windows's width increases a tiny bit after each restart
+  // in short folder list mode with mesage window at side, disable the stretching
+  // as a workaround here
+  if ( readerWindowAtSide && !mLongFolderList ) {
+    mSplitter1->setStretchFactor( 0, 1 );
+    mSplitter1->setStretchFactor( 1, 0 );
+  }
+
+  //
+  // Resize workaround for the favorite folder view
+  //
+  if ( mFavoriteFolderView ) {
+
+    // Because of some bug, the favorite folder view is not updated when its
+    // size changes, which creates glitches like the horizontal scrollbar not
+    // appearing. To fix that, manually update the widget if the surrounding 
+    // splitters are moved.
+    // The other workaround for this bug can be found in resizeEvent().
+    connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
+             mFavoriteFolderView, SLOT( triggerUpdate() ) );
+    connect( folderViewParent, SIGNAL( splitterMoved( int, int ) ),
+             mFavoriteFolderView, SLOT( triggerUpdate() ) );
+  }
+
+  //
+  // Set the sizes of the splitters to the values stored in the config
+  //
+  QList<int> splitter1Sizes;
+  QList<int> splitter2Sizes;
+  const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
+  int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
+  const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
+  int headerWidth = width() - folderViewWidth;
+  if ( readerWindowAtSide )
+    headerWidth = width() - folderViewWidth - messageViewerWidth;
+  int messageViewerHeight = height() - headerHeight;
+
+  // If the message viewer was hidden before, make sure it is not zero height
+  if ( messageViewerHeight < 10 && readerWindowBelow ) {
+    headerHeight /= 2;
+    messageViewerHeight = headerHeight;
+  }
+
+  int folderViewHeight;
+  if ( mLongFolderList ) {
+    if ( !readerWindowAtSide ) {
+      splitter1Sizes << folderViewWidth << headerWidth;
+      splitter2Sizes << headerHeight << messageViewerHeight;
+    } else {
+      splitter1Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
+      splitter2Sizes << headerWidth << messageViewerWidth;
+    }
+    folderViewHeight = height();
+  } else {
+    if ( !readerWindowAtSide ) {
+      splitter1Sizes << headerHeight << messageViewerHeight;
+      splitter2Sizes << folderViewWidth << headerWidth;
+    } else {
+      splitter1Sizes << headerWidth << messageViewerWidth;
+      splitter2Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
+    }
+    folderViewHeight = headerHeight;
+  }
+
+  mSplitter1->setSizes( splitter1Sizes );
+  mSplitter2->setSizes( splitter2Sizes );
+
+  if ( mFolderViewSplitter ) {
+    QList<int> splitterSizes;
+    int ffvHeight = GlobalSettings::self()->favoriteFolderViewHeight();
+    splitterSizes << ffvHeight << ( folderViewHeight - ffvHeight );
+    mFolderViewSplitter->setSizes( splitterSizes );
+  }
+
+  //
+  // Now add the splitters to the main layout
+  //
+  mTopLayout->addWidget( mSplitter1 );
+
+  if ( mMsgView )
+    connect( mMsgView->copyAction(), SIGNAL( activated() ),
+             mMsgView, SLOT( slotCopySelectedText() ) );
+}
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::readConfig(void)
+void KMMainWidget::readConfig()
 {
   KConfig *config = KMKernel::config();
 
@@ -348,95 +528,73 @@ void KMMainWidget::readConfig(void)
   bool oldReaderWindowBelow = mReaderWindowBelow;
   bool oldFavoriteFolderView = mEnableFavoriteFolderView;
 
-  QString str;
-  QSize siz;
+  // on startup, the layout is always new and we need to relayout the widgets
+  bool layoutChanged = !mStartupDone;
 
-  if (mStartupDone)
+  setUpdatesEnabled( false );
+  if ( mStartupDone )
   {
     writeConfig();
 
     readPreConfig();
     mHeaders->refreshNestedState();
 
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
-                    || ( oldReaderWindowActive != mReaderWindowActive )
-                    || ( oldReaderWindowBelow != mReaderWindowBelow )
-                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView );
+    layoutChanged = ( oldLongFolderList != mLongFolderList ) ||
+                    ( oldReaderWindowActive != mReaderWindowActive ) ||
+                    ( oldReaderWindowBelow != mReaderWindowBelow ) ||
+                    ( oldFavoriteFolderView != mEnableFavoriteFolderView );
 
 
     if( layoutChanged ) {
       hide();
-      // delete all panners
-      delete mPanner1; // will always delete the others
+      deleteWidgets();
       createWidgets();
     }
-
   }
 
   { // area for config group "Geometry"
     KConfigGroup group(config, "Geometry");
-    // size of the mainwin
-    QSize defaultSize(750,560);
-    siz = group.readEntry("MainWin", defaultSize );
-    if (!siz.isEmpty())
-      resize(siz);
-    // default width of the foldertree
-    static const int folderpanewidth = 250;
 
-    const int folderW = group.readEntry( "FolderPaneWidth", folderpanewidth );
-    const int headerW = group.readEntry( "HeaderPaneWidth", width()-folderpanewidth );
-    const int headerH = group.readEntry( "HeaderPaneHeight", 180 );
-    const int readerH = group.readEntry( "ReaderPaneHeight", 280 );
+    // Set the size of the mainwin
+    QSize defaultSize( 750, 560 );
+    QSize siz = group.readEntry( "MainWin", defaultSize );
+    if ( !siz.isEmpty() )
+      resize( siz );
 
-    mPanner1Sep.clear();
-    mPanner2Sep.clear();
-    QList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
-    QList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
-
-    widths << folderW << headerW;
-    heights << headerH << readerH;
-
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
-                    || ( oldReaderWindowActive != mReaderWindowActive )
-                    || ( oldReaderWindowBelow != mReaderWindowBelow );
-
-    if (!mStartupDone || layoutChanged )
+    // Set the proper column sizes for the folder tree
+    if ( layoutChanged )
     {
       /** unread / total columns
        * as we have some dependencies in this widget
        * it's better to manage these here */
       // The columns are shown by default.
-
-      const int unreadColumn =
-          group.readEntry( "UnreadColumn", 1 );
-      const int totalColumn =
-          group.readEntry( "TotalColumn", 2 );
-      const int sizeColumn =
-          group.readEntry("SizeColumn", 3);
+      const int unreadColumn = group.readEntry( "UnreadColumn", 1 );
+      const int totalColumn = group.readEntry( "TotalColumn", 2 );
+      const int sizeColumn = group.readEntry( "SizeColumn", 3 );
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
       * but otherwise the restoreLayout from KMFolderTree
       * doesn't know that to do */
-      if (unreadColumn == 1)
+      if ( unreadColumn == 1 )
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
-      else if (totalColumn == 1)
+      else if ( totalColumn == 1 )
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
-      else if (sizeColumn == 1)
+      else if ( sizeColumn == 1 )
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
 
-      if (unreadColumn == 2)
+      if ( unreadColumn == 2 )
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
-      else if (totalColumn == 2)
+      else if ( totalColumn == 2 )
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
-      else if (sizeColumn == 2)
+      else if ( sizeColumn == 2 )
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
 
-      if (unreadColumn == 3)
+      if ( unreadColumn == 3 )
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
-      else if (totalColumn == 3)
+      else if ( totalColumn == 3 )
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
-      else if (sizeColumn == 3)
+      else if ( sizeColumn == 3 )
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
 
       mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
@@ -448,58 +606,43 @@ void KMMainWidget::readConfig(void)
     }
   }
 
-  if (mMsgView)
-    mMsgView->readConfig();
+  { // Read the config of the folder views and the header
+    if ( mMsgView )
+      mMsgView->readConfig();
 
-  mHeaders->readConfig();
-  mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
+    mHeaders->readConfig();
+    mHeaders->restoreLayout( KMKernel::config(), "Header-Geometry" );
 
-  if ( mFolderViewSplitter &&
-       mFolderViewSplitter->count() == 2 &&
-       !GlobalSettings::self()->folderViewSplitterPosition().isEmpty() ) {
-    mFolderViewSplitter->setSizes( GlobalSettings::self()->folderViewSplitterPosition() );
-  } else if ( mFolderViewSplitter->count() == 2 ) {
-    QList<int> defaults;
-    defaults << (int)(height() * 0.2) << (int)(height() * 0.8);
-    mFolderViewSplitter->setSizes( defaults );
+    mFolderTree->readConfig();
+    mFolderTree->reload();
+
+    if ( mFavoriteFolderView )
+      mFavoriteFolderView->readConfig();
+    mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
   }
 
-  mFolderTree->readConfig();
-  if ( mFavoriteFolderView )
-    mFavoriteFolderView->readConfig();
-  mFavoritesCheckMailAction->setEnabled( GlobalSettings::self()->enableFavoriteFolderView() );
-
   { // area for config group "General"
-    KConfigGroup group(config, "General");
-    mBeepOnNew = group.readEntry("beep-on-mail", false );
-    mConfirmEmpty = group.readEntry("confirm-before-empty", true );
+    KConfigGroup group( config, "General" );
+    mBeepOnNew = group.readEntry( "beep-on-mail", false );
+    mConfirmEmpty = group.readEntry( "confirm-before-empty", true );
     // startup-Folder, defaults to system-inbox
-    mStartupFolder = group.readEntry("startupFolder", kmkernel->inboxFolder()->idString());
-    if (!mStartupDone)
+    mStartupFolder = group.readEntry( "startupFolder", kmkernel->inboxFolder()->idString() );
+    if ( !mStartupDone )
     {
       // check mail on startup
-      if ( group.readEntry("checkmail-startup", false ) )
+      if ( group.readEntry( "checkmail-startup", false ) )
         // do it after building the kmmainwin, so that the progressdialog is available
         QTimer::singleShot( 0, this, SLOT( slotCheckMail() ) );
     }
   }
 
-  // reload foldertree
-  mFolderTree->reload();
+  if ( layoutChanged )
+    layoutSplitters();
 
-  // Re-activate panners
-  if (mStartupDone)
+  if ( mStartupDone )
   {
     // Update systray
     toggleSystemTray();
-
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
-                    || ( oldReaderWindowActive != mReaderWindowActive )
-                    || ( oldReaderWindowBelow != mReaderWindowBelow )
-                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView );
-    if ( layoutChanged ) {
-      activatePanners();
-    }
 
     mFolderTree->showFolder( mFolder );
 
@@ -519,40 +662,32 @@ void KMMainWidget::readConfig(void)
   }
   updateMessageMenu();
   updateFileMenu();
+  setUpdatesEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMainWidget::writeConfig(void)
+void KMMainWidget::writeConfig()
 {
-  QString s;
   KConfig *config = KMKernel::config();
   KConfigGroup geometry( config, "Geometry" );
   KConfigGroup general( config, "General" );
 
-  if (mMsgView)
-    mMsgView->writeConfig();
-
-  if ( mFolderViewSplitter && mFolderViewSplitter->count() == 2 )
-    GlobalSettings::setFolderViewSplitterPosition( mFolderViewSplitter->sizes() );
   mFolderTree->writeConfig();
-  if ( mFavoriteFolderView )
-    mFavoriteFolderView->writeConfig();
 
   geometry.writeEntry( "MainWin", this->geometry().size() );
-
-  const QList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
-  const QList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
-
-  geometry.writeEntry( "FolderPaneWidth", widths[0] );
-  geometry.writeEntry( "HeaderPaneWidth", widths[1] );
-
-  // Only save when the widget is shown (to avoid saving a wrong value)
-  if ( mSearchAndHeaders && !mSearchAndHeaders->isHidden() ) {
-    geometry.writeEntry( "HeaderPaneHeight", heights[0] );
-    if (mReaderWindowActive) {
-      geometry.writeEntry( "ReaderPaneHeight", heights[1] );
-    }
+  GlobalSettings::self()->setFolderViewWidth( mFolderTree->width() );
+  int headersHeight = mSearchAndHeaders->height();
+  if ( headersHeight == 0 )
+    headersHeight = height() / 2;
+  GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
+  if ( mFavoriteFolderView ) {
+    GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteFolderView->height() );
+    mFavoriteFolderView->writeConfig();
+  }
+  if ( mMsgView ) {
+    if ( !mReaderWindowBelow )
+      GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
+    mMsgView->writeConfig();
   }
 
   // save the state of the unread/total-columns
@@ -561,93 +696,83 @@ void KMMainWidget::writeConfig(void)
   geometry.writeEntry( "SizeColumn", mFolderTree->sizeIndex() );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::deleteWidgets()
+{
+  // Simply delete the top splitter, which always is mSplitter1, regardless
+  // of the layout. This deletes all children.
+  delete mSplitter1;
+  mSearchAndHeaders = 0;
+  mSearchToolBar = 0;
+  mHeaders = 0;
+  mQuickSearchLine = 0;
+  mMsgView = 0;
+  mFolderTree = 0;
+  mFavoriteFolderView = 0;
+  mFolderViewSplitter = 0;
+  mSplitter1 = 0;
+  mSplitter2 = 0;
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::createWidgets()
 {
+  // Note that all widgets we create in this function have the parent 'this'.
+  // They will be properly reparented in layoutSplitters()
+
   mAccel = new Q3Accel(this, "createWidgets()");
 
-  // Create the splitters according to the layout settings
-  QWidget *headerParent = 0,
-            *mimeParent = 0, *messageParent = 0;
-
-  const bool opaqueResize = KGlobalSettings::opaqueResize();
-  if ( mLongFolderList ) {
-    // superior splitter: folder tree vs. rest
-    // inferior splitter: headers vs. message vs. mime tree
-    mPanner1 = new QSplitter( Qt::Horizontal, this );
-    mPanner1->setObjectName( "panner 1" );
-    mPanner1->setOpaqueResize( opaqueResize );
-    Qt::Orientation orientation = mReaderWindowBelow ? Qt::Vertical : Qt::Horizontal;
-    mPanner2 = new QSplitter( orientation, mPanner1 );
-    mPanner2->setObjectName( "panner 2" );
-    mPanner2->setOpaqueResize( opaqueResize );
-    mFolderViewParent = mPanner1;
-    headerParent = mimeParent = messageParent = mPanner2;
-  } else /* !mLongFolderList */ {
-    // superior splitter: ( folder tree + headers ) vs. message vs. mime
-    // inferior splitter: folder tree vs. headers
-    mPanner1 = new QSplitter( Qt::Vertical, this );
-    mPanner1->setObjectName( "panner 1" );
-    mPanner1->setOpaqueResize( opaqueResize );
-    mPanner2 = new QSplitter( Qt::Horizontal, mPanner1 );
-    mPanner2->setObjectName( "panner 2" );
-    mPanner2->setOpaqueResize( opaqueResize );
-    headerParent = mFolderViewParent = mPanner2;
-    mimeParent = messageParent = mPanner1;
-  }
-
-  mTopLayout->setMargin (0);
-  mTopLayout->addWidget( mPanner1 );
-
-  // BUG -sanders these accelerators stop working after switching
-  // between long/short folder layout
-  // Probably need to disconnect them first.
-
-  // create list of messages
-  mSearchAndHeaders = new KVBox( headerParent );
+  //
+  // Create header view and search bar
+  //
+  mSearchAndHeaders = new KVBox( this );
   mSearchToolBar = new QWidget( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
-  mSearchToolBar->setLayout(new QHBoxLayout());
+  mSearchToolBar->setLayout( new QHBoxLayout() );
 
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
-  mSearchToolBar->layout()->setMargin(0);
+  mSearchToolBar->layout()->setMargin( 0 );
 
   mHeaders = new KMHeaders( this, mSearchAndHeaders );
   mHeaders->setObjectName( "headers" );
   mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders );
   mQuickSearchLine->setObjectName( "headers quick search line" );
 
-    connect( mHeaders, SIGNAL( messageListUpdated() ),
+  connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
-  if ( !GlobalSettings::self()->quickSearchActive() ) mSearchToolBar->hide();
 
-  if (mReaderWindowActive) {
-    connect(mHeaders, SIGNAL(selected(KMMessage*)),
-            this, SLOT(slotMsgSelected(KMMessage*)));
-  }
-  connect(mHeaders, SIGNAL(activated(KMMessage*)),
-          this, SLOT(slotMsgActivated(KMMessage*)));
+  if ( !GlobalSettings::self()->quickSearchActive() )
+    mSearchToolBar->hide();
+
+  connect( mHeaders, SIGNAL( activated(KMMessage*) ),
+           this, SLOT( slotMsgActivated(KMMessage*) ) );
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
+
   mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Left),
                      mHeaders, SLOT(selectPrevMessage()));
   mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Right),
                      mHeaders, SLOT(selectNextMessage()));
 
-  if (mReaderWindowActive) {
-    mMsgView = new KMReaderWin(messageParent, this, actionCollection(), 0 );
+  //
+  // Create the reader window
+  //
+  if ( mReaderWindowActive ) {
+    mMsgView = new KMReaderWin( this, this, actionCollection(), 0 );
 
-    connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
-        this, SLOT(slotReplaceMsgByUnencryptedVersion()));
-    connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
-        this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)));
-    connect(mMsgView, SIGNAL(urlClicked(const KUrl&,int)),
-        mMsgView, SLOT(slotUrlClicked()));
-    connect(mHeaders, SIGNAL(maybeDeleting()),
-        mMsgView, SLOT(clearCache()));
-    connect(mMsgView, SIGNAL(noDrag()),
-        mHeaders, SLOT(slotNoDrag()));
+    connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
+             this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
+    connect( mMsgView, SIGNAL( popupMenu(KMMessage&,const KUrl&,const QPoint&) ),
+             this, SLOT( slotMsgPopup(KMMessage&,const KUrl&,const QPoint&) ) );
+    connect( mMsgView, SIGNAL( urlClicked(const KUrl&,int) ),
+             mMsgView, SLOT( slotUrlClicked() ) );
+    connect( mHeaders, SIGNAL( maybeDeleting() ),
+             mMsgView, SLOT( clearCache() ) );
+    connect( mMsgView, SIGNAL( noDrag() ),
+             mHeaders, SLOT( slotNoDrag() ) );
+    connect( mHeaders, SIGNAL( selected(KMMessage*) ),
+             this, SLOT( slotMsgSelected(KMMessage*) ) );
+
     mAccel->connectItem(mAccel->insertItem(Qt::Key_Up),
         mMsgView, SLOT(slotScrollUp()));
     mAccel->connectItem(mAccel->insertItem(Qt::Key_Down),
@@ -656,10 +781,54 @@ void KMMainWidget::createWidgets()
         mMsgView, SLOT(slotScrollPrior()));
     mAccel->connectItem(mAccel->insertItem(Qt::Key_PageDown),
         mMsgView, SLOT(slotScrollNext()));
-  } else {
-    mMsgView = NULL;
+
   }
 
+  //
+  // Create the folder tree
+  //
+  mFolderTree = new KMFolderTree( this, this, "folderTree" );
+  connect( mFolderTree, SIGNAL( folderSelected(KMFolder*) ),
+           this, SLOT( folderSelected(KMFolder*) ) );
+  connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
+           mQuickSearchLine, SLOT( reset() ) );
+  connect( mFolderTree, SIGNAL( folderSelectedUnread(KMFolder*) ),
+           this, SLOT( folderSelectedUnread(KMFolder*) ) );
+  connect( mFolderTree, SIGNAL( folderDrop(KMFolder*) ),
+           this, SLOT( slotMoveMsgToFolder(KMFolder*) ) );
+  connect( mFolderTree, SIGNAL( folderDropCopy(KMFolder*) ),
+           this, SLOT( slotCopyMsgToFolder(KMFolder*) ) );
+  connect( mFolderTree, SIGNAL( columnsChanged() ),
+           this, SLOT( slotFolderTreeColumnsChanged() ) );
+
+  //
+  // Create the favorite folder view
+  //
+  if ( mEnableFavoriteFolderView ) {
+    mFavoriteFolderView = new KMail::FavoriteFolderView( this, this );
+
+    if ( mFavoritesCheckMailAction )
+      connect( mFavoritesCheckMailAction, SIGNAL( activated() ),
+               mFavoriteFolderView, SLOT( checkMail() ) );
+
+    connect( mFolderTree, SIGNAL( folderSelected(KMFolder*) ),
+             mFavoriteFolderView, SLOT( folderTreeSelectionChanged(KMFolder*) ) );
+
+    connect( mFavoriteFolderView, SIGNAL( folderDrop(KMFolder*) ),
+             SLOT( slotMoveMsgToFolder(KMFolder*) ) );
+    connect( mFavoriteFolderView, SIGNAL( folderDropCopy(KMFolder*) ),
+             SLOT( slotCopyMsgToFolder(KMFolder*) ) );
+  }
+
+  //
+  // Create all kinds of actions
+  //
+  {
+    mRemoveDuplicatesAction = new KAction(i18n("Remove Duplicate Messages"), this);
+    actionCollection()->addAction("remove_duplicate_messages", mRemoveDuplicatesAction );
+    connect(mRemoveDuplicatesAction, SIGNAL(triggered(bool) ), SLOT(removeDuplicates()));
+    mRemoveDuplicatesAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Asterisk));
+  }
   {
     QAction *action = new KAction(i18n("Move Message to Folder"), this);
     actionCollection()->addAction("move_message_to_folder", action );
@@ -678,65 +847,6 @@ void KMMainWidget::createWidgets()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotJumpToFolder()));
     action->setShortcut(QKeySequence(Qt::Key_J));
   }
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
-                      this, SLOT(slotMoveMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_C),
-                      this, SLOT(slotCopyMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Qt::Key_J),
-                      this, SLOT(slotJumpToFolder()) );
-
-  // create list of folders
-  mFolderViewSplitter = new QSplitter( Qt::Vertical, mFolderViewParent );
-  mFolderViewSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-  mFavoriteFolderView = new KMail::FavoriteFolderView( this, mFolderViewSplitter );
-  if ( mFavoritesCheckMailAction )
-    connect( mFavoritesCheckMailAction, SIGNAL(activated()), mFavoriteFolderView,
-             SLOT(checkMail()) );
-  QWidget *folderTreeParent = mFolderViewParent;
-  if ( GlobalSettings::enableFavoriteFolderView() ) {
-    folderTreeParent = mFolderViewSplitter;
-    mFolderView = mFolderViewSplitter;
-  }
-  mFolderTree = new KMFolderTree(this, folderTreeParent, "folderTree");
-  if ( !GlobalSettings::enableFavoriteFolderView() ) {
-     mFolderView = mFolderTree;
-  }
-  connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
-           mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
-  connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
-           this, SLOT(folderSelected(KMFolder*)));
-  connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
-           mQuickSearchLine, SLOT( reset() ) );
-  connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
-         this, SLOT(folderSelectedUnread(KMFolder*)));
-  connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
-         this, SLOT(slotMoveMsgToFolder(KMFolder*)));
-  connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
-          this, SLOT(slotCopyMsgToFolder(KMFolder*)));
-  connect(mFolderTree, SIGNAL(columnsChanged()),
-          this, SLOT(slotFolderTreeColumnsChanged()));
-
-  if ( mFavoriteFolderView ) {
-    connect( mFavoriteFolderView, SIGNAL(folderDrop(KMFolder*)), SLOT(slotMoveMsgToFolder(KMFolder*)) );
-    connect( mFavoriteFolderView, SIGNAL(folderDropCopy(KMFolder*)), SLOT(slotCopyMsgToFolder(KMFolder*)) );
-
-    // Because of some bug, the favorite folder view is not updated when its
-    // size changes, which creates glitches like the horizontal scrollbar not
-    // appearing. To fix that, manually update the widget if the surrounding 
-    // splitters are moved.
-    // The other workaround for this bug can be found in resizeEvent().
-    connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
-             mFavoriteFolderView, SLOT( triggerUpdate() ) );
-    connect( mFolderViewParent, SIGNAL( splitterMoved( int, int ) ),
-             mFavoriteFolderView, SLOT( triggerUpdate() ) );
-  }
-
-  //Commands not worthy of menu items, but that deserve configurable keybindings
-  mRemoveDuplicatesAction = new KAction(i18n("Remove Duplicate Messages"), this);
-  actionCollection()->addAction("remove_duplicate_messages", mRemoveDuplicatesAction );
-  connect(mRemoveDuplicatesAction, SIGNAL(triggered(bool) ), SLOT(removeDuplicates()));
-  mRemoveDuplicatesAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Asterisk));
-
   {
     QAction *action = new KAction(i18n("Abort Current Operation"), this);
     actionCollection()->addAction("cancel", action );
@@ -794,54 +904,17 @@ void KMMainWidget::createWidgets()
                          mHeaders, SLOT( selectCurrentMessage() ) );
   }
 
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
+                      this, SLOT(slotMoveMsg()) );
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_C),
+                      this, SLOT(slotCopyMsg()) );
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_J),
+                      this, SLOT(slotJumpToFolder()) );
+
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, const QString&) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::activatePanners(void)
-{
-  if (mMsgView) {
-    QObject::disconnect( mMsgView->copyAction(),
-        SIGNAL( activated() ),
-        mMsgView, SLOT( slotCopySelectedText() ));
-  }
-
-  setupFolderView();
-  if ( mLongFolderList ) {
-    mSearchAndHeaders->setParent( mPanner2 );
-    if (mMsgView) {
-      mMsgView->setParent( mPanner2 );
-      mPanner2->addWidget( mMsgView );
-    }
-    mFolderViewParent = mPanner1;
-    mFolderView->setParent( mFolderViewParent );
-    mPanner1->setSizes( mPanner1Sep );
-    mPanner1->setResizeMode( mFolderView, QSplitter::KeepSize );
-    mPanner2->setSizes( mPanner2Sep );
-    mPanner2->setStretchFactor( mPanner2->indexOf(mSearchAndHeaders), 0 );
-  } else /* !mLongFolderList */ {
-    mFolderViewParent = mPanner2;
-    mFolderView->setParent( mFolderViewParent );
-    mPanner2->addWidget( mSearchAndHeaders );
-    mPanner1->insertWidget( 0, mPanner2 );
-    if (mMsgView) {
-      mMsgView->setParent( mPanner1 );
-      mPanner1->addWidget( mMsgView );
-    }
-    mPanner1->setSizes( mPanner1Sep );
-    mPanner2->setSizes( mPanner2Sep );
-    mPanner1->setStretchFactor( mPanner1->indexOf(mPanner2), 0 );
-    mPanner2->setStretchFactor( mPanner2->indexOf(mFolderView), 0 );
-  }
-
-  if (mMsgView) {
-    QObject::connect( mMsgView->copyAction(), SIGNAL( activated() ),
-                      mMsgView, SLOT( slotCopySelectedText() ));
-  }
 }
 
 //-------------------------------------------------------------------------
@@ -3676,10 +3749,10 @@ void KMMainWidget::slotShowStartupFolder()
   }
 
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
-	   this, SLOT( initializeFilterActions() ));
+           this, SLOT( initializeFilterActions() ) );
 
-  connect(kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
-	   this, SLOT( initializeMessageTagActions() ) );
+  connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
+           this, SLOT( initializeMessageTagActions() ) );
 
   // plug shortcut filter actions now
   initializeFilterActions();
@@ -3812,7 +3885,7 @@ void KMMainWidget::initializeMessageTagActions()
     tagAction->setShortcut( it.value()->shortcut() );
     tagAction->setIconText( iconText );
     actionCollection()->addAction(it.value()->label().toLocal8Bit(), tagAction);
-    connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map(void)));
+    connect(tagAction, SIGNAL(triggered(bool)), mMessageTagToggleMapper, SLOT(map()));
     //The shortcut configuration is done in the config dialog.
     //Setting the below to true decouples action objects shortcut
     //from that of the tag description
@@ -4239,23 +4312,6 @@ void KMMainWidget::slotCreateTodo()
   command->start();
 }
 
-void KMMainWidget::setupFolderView()
-{
-  if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
-    mFolderView = mFolderViewSplitter;
-    mFolderTree->setParent( mFolderViewSplitter );
-    mFolderViewSplitter->show();
-    mFavoriteFolderView->show();
-  } else {
-    mFolderView = mFolderTree;
-    mFolderViewSplitter->hide();
-    mFavoriteFolderView->hide();
-  }
-  mFolderView->setParent( mFolderViewParent );
-  mFolderViewParent->insertWidget( 0, mFolderView );
-  mFolderTree->show();
-}
-
 void KMMainWidget::resizeEvent( QResizeEvent *event ) {
 
   Q_UNUSED( event );
@@ -4263,7 +4319,7 @@ void KMMainWidget::resizeEvent( QResizeEvent *event ) {
   // Because of some bug, the favorite folder view does not receive update
   // events when the view is resized. Because of this, manually trigger an
   // update if this widget is resized.
-  // The other workaround for this bug can be found in createWidgets().
+  // The other workaround for this bug can be found in layoutSplitters().
   if( mFavoriteFolderView )
     mFavoriteFolderView->triggerUpdate();
 }
