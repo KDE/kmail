@@ -84,6 +84,9 @@ void SearchJob::searchCompleteFolder()
 
   // do the IMAP search  
   KURL url = mAccount->getUrl();
+  // for IMAP, you have to select a folder like inbox. If you select the "pure account",
+  // the kioslave stalls.
+  if ( mFolder->imapPath() == QString("/") ) return;
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
   QDataStream stream( packedArgs, IO_WriteOnly );
