@@ -85,16 +85,19 @@ void SearchJob::searchCompleteFolder()
 
   // do the IMAP search
   KUrl url = mAccount->getUrl();
-  url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
-  QByteArray packedArgs;
-  QDataStream stream( &packedArgs, QIODevice::WriteOnly );
-  stream << (int) 'E' << url;
-  KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
-      SLOT(slotSearchData(KJob*,const QString&,const QString&)) );
-  connect( job, SIGNAL(result(KJob *)),
-      SLOT(slotSearchResult(KJob *)) );
+  if ( mFolder->imapPath() != QString("/") )
+  { // the "/ folder" of an imap account makes the kioslave stall
+    url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
+    QByteArray packedArgs;
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly );
+    stream << (int) 'E' << url;
+    KIO::SimpleJob *job = KIO::special( url, packedArgs, KIO::HideProgressInfo );
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+    connect( job, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+        SLOT(slotSearchData(KJob*,const QString&,const QString&)) );
+    connect( job, SIGNAL(result(KJob *)),
+        SLOT(slotSearchResult(KJob *)) );
+  }
 }
 
 //-----------------------------------------------------------------------------
