@@ -1358,7 +1358,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::signingKeys( CryptoMessageFormat f ) 
 std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, const QString & msg, const std::vector<GpgME::Key> & selectedKeys ) const {
   Kleo::KeySelectionDialog dlg( i18n("Encryption Key Selection"),
 				msg, selectedKeys,
-				Kleo::KeySelectionDialog::ValidEncryptionKeys,
+				Kleo::KeySelectionDialog::ValidTrustedEncryptionKeys,
 				true, true ); // multi-selection and "remember choice" box
 
   if ( dlg.exec() != QDialog::Accepted )
