@@ -976,7 +976,7 @@ private:
 
 
 /** Base class for commands modifying attachements of existing messages. */
-class KDE_EXPORT AttachmentModifyCommand : public KMCommand
+class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
 {
   Q_OBJECT
   public:
@@ -1002,7 +1002,7 @@ class KDE_EXPORT AttachmentModifyCommand : public KMCommand
     QPointer<KMFolder> mFolder;
 };
 
-class KDE_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
+class KMAIL_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
 {
   Q_OBJECT
   public:
@@ -1014,7 +1014,7 @@ class KDE_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
 };
 
 
-class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
+class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
 {
   Q_OBJECT
   public:
@@ -1031,7 +1031,7 @@ class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
     KTemporaryFile mTempFile;
 };
 
-class KDE_EXPORT CreateTodoCommand : public KMCommand
+class KMAIL_EXPORT CreateTodoCommand : public KMCommand
 {
   Q_OBJECT
   public:
