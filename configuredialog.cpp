@@ -5187,9 +5187,9 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
   
   mDeleteInvitations = new QCheckBox( 
-             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().utf8() ), mBox );
-  QWhatsThis::add( mDeleteInvitations, i18n( GlobalSettings::self()
-             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().utf8() ) );
+             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
+  mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
+             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
     connect( mDeleteInvitations, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
     grid->addMultiCellWidget( mDeleteInvitations, 5, 5, 0, 1 );
 
