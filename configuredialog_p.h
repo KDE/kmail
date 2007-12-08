@@ -260,7 +260,7 @@ private:
  * ConfigModuleWithTabs represents a kcm with several tabs.
  * It simply forwards load and save operations to all tabs.
  */
-class ConfigModuleWithTabs : public ConfigModule {
+class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule {
   Q_OBJECT
 public:
   explicit ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0 );

@@ -828,7 +828,9 @@ KUrl KMSaveMsgCommand::url()
 KMCommand::Result KMSaveMsgCommand::execute()
 {
   mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //  mJob->slotTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
   mJob->setReportDataSent( true );
@@ -948,7 +950,9 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
         mOffset = 0;
 
         mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, KIO::Overwrite );
+#ifdef __GNUC__
 #warning Port me!
+#endif
 //        mJob->slotTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
         mJob->setReportDataSent( true );
@@ -3383,7 +3387,9 @@ KMCommand::Result CreateTodoCommand::execute()
   int result = KDBusServiceStarter::self()->findServiceFor( "DBUS/Organizer",
                                          QString(), &error, &dbusService );
   if ( result == 0 ) {
+#ifdef __GNUC__
 #warning Port me!
+#endif
 #if 0
     // OK, so korganizer (or kontact) is running. Now ensure the object we want is available
     // [that's not the case when kontact was already running, but korganizer not loaded into it...]
