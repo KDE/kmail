@@ -47,9 +47,9 @@
 #include "globalsettings.h"
 #include "quotajobs.h"
 
-using namespace KMail;
+namespace KMail { class QuotaInfo; }
 
-struct QuotaInfo;
+using namespace KMail;
 
 QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
         :QWidget( parent )
