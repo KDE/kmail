@@ -71,7 +71,7 @@ class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 namespace KParts {
-  class BrowserArguments;
+  struct BrowserArguments;
   class OpenUrlArguments;
 }
 
