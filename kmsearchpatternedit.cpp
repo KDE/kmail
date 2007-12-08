@@ -233,7 +233,7 @@ static QString displayNameFromInternalName( const QString & internal )
     if ( internal == SpecialRuleFields[i].internalName )
       return i18n(SpecialRuleFields[i].displayName);
   }
-  return internal.latin1();
+  return internal.toLatin1();
 }
 
 
