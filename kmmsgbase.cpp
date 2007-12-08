@@ -875,7 +875,7 @@ retry:
     if (g_chunk)
       free(g_chunk);
     using_mmap = true;
-    if ( mIndexOffset > storage()->indexStreamLength() ) {
+    if ( mIndexOffset > (off_t)storage()->indexStreamLength() ) {
       // This message has not been indexed yet, data would lie
       // outside the index data structures so do not touch it.
       return QString();
