@@ -56,6 +56,7 @@ namespace KMail {
       QString result;
       result += "SieveConfig: \n";
       result += "  sieve-vacation-filename: " + mVacationFileName + "\n\n";
+      return result;
   }
 
   SieveConfigEditor::SieveConfigEditor( QWidget * parent )
