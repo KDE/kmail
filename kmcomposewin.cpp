@@ -1315,7 +1315,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "text_under", textUnderAction );
   connect( textUnderAction, SIGNAL( triggered(bool) ), SLOT( slotTextUnder(bool) ) );
   textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
-  actionFormatReset = new KAction( KIcon( "eraser" ), i18n("Reset Font Settings"), this );
+  actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
   actionFormatColor = new KAction( KIcon( "color-line" ), i18n("Text Color..."), this );
