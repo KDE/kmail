@@ -1293,14 +1293,14 @@ void KMComposeWin::setupActions( void )
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  alignLeftAction = new KToggleAction( KIcon( "text-left" ), i18n("Align Left"), this );
+  alignLeftAction = new KToggleAction( KIcon( "format-justify-left" ), i18n("Align Left"), this );
   actionCollection()->addAction( "align_left", alignLeftAction );
   connect( alignLeftAction, SIGNAL( triggered(bool) ), SLOT( slotAlignLeft() ) );
   alignLeftAction->setChecked( true );
-  alignRightAction = new KToggleAction( KIcon( "text-right" ), i18n("Align Right"), this );
+  alignRightAction = new KToggleAction( KIcon( "format-justify-right" ), i18n("Align Right"), this );
   actionCollection()->addAction( "align_right", alignRightAction );
   connect( alignRightAction, SIGNAL( triggered(bool) ), SLOT( slotAlignRight() ) );
-  alignCenterAction = new KToggleAction( KIcon( "text-center" ), i18n("Align Center"), this );
+  alignCenterAction = new KToggleAction( KIcon( "format-justify-center" ), i18n("Align Center"), this );
   actionCollection()->addAction( "align_center", alignCenterAction );
   connect( alignCenterAction, SIGNAL( triggered(bool) ), SLOT( slotAlignCenter() ) );
   textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
