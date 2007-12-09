@@ -4024,9 +4024,13 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( appendNewSig ) {
     if ( (!mOldSigText.isEmpty()) &&
          (GlobalSettings::self()->autoTextSignature() == "auto") ) {
-      edtText.append( mOldSigText );
+      if ( mEditor->htmlMode() == false ) // TODO : support for adding according signature when changing identities in html
+        edtText.append( mOldSigText );
     }
-    mEditor->setPlainText( edtText ); //yes?, plain?
+    if ( mEditor->htmlMode() == false )
+      mEditor->setPlainText( edtText );
+    else
+      mEditor->setHtml( edtText );
   }
 
   // disable certain actions if there is no PGP user identity set

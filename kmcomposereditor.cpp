@@ -54,6 +54,8 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", c  );
   //TODO add it
   //static_cast<Sonnet::KEMailQuotingHighlighter*>(hightighter())->setQuoteColor(col1, col2, col3, col4);
+
+  mHtmlMode = false;
 }
 
 KMComposerEditor::~KMComposerEditor()
@@ -125,7 +127,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
       insert( md->text() );
       e->accept();
     } else {
-      kDebug(5006) <<"KMEdit::contentsDropEvent, unable to add dropped object";
+      kDebug(5006) <<"KMComposerEditor::dropEvent, unable to add dropped object";
       return KMeditor::dropEvent( e );
     }
   }
@@ -147,31 +149,34 @@ QString KMComposerEditor::brokenText() const
   return temp;
 }
 
-void KMComposerEditor::setHtmlMode( bool /*mode*/ )
+void KMComposerEditor::setHtmlMode( bool mode )
 {
-  if ( mHtmlMode ) {
-    mHtmlMode = true;
+  if ( mode ) {
+    if ( ! mHtmlMode ) {
+      mHtmlMode = true;
 
-    // set all highlighted text caused by spelling back to black
-    //int paraFrom, indexFrom, paraTo, indexTo;
-    // set all highlighted text caused by spelling back to black
-    // for the case we're in textmode, the user selects some text and decides to format this selected text
-    //int startpos = textCursor().selectionStart();
-    //int endpos = textCursor().selectionEnd();
-    //selectAll();
-    //setTextColor(QColor(0,0,0));
+      // set all highlighted text caused by spelling back to black
+      //int paraFrom, indexFrom, paraTo, indexTo;
+      // set all highlighted text caused by spelling back to black
+      // for the case we're in textmode, the user selects some text and decides to format this selected text
+      //int startpos = textCursor().selectionStart();
+      //int endpos = textCursor().selectionEnd();
+      //selectAll();
+      //setTextColor(QColor(0,0,0));
 
-    //Laurent fix me
-    //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
-    document()->setModified( true );
+      //Laurent fix me
+      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
+    }
   }
   else {
     mHtmlMode = false;
     // like the next 2 lines, or should we selectAll and apply the default font?
     QString text = toPlainText();
+    // TODO : set text to plaintext when changing from html to textmode
+    //kDebug(5006) <<"KMComposerEditor::setHtmlMode, text=" << text;
     setPlainText( text );
-    document()->setModified( true );
   }
+  document()->setModified( true );
 }
 
 bool KMComposerEditor::htmlMode()
