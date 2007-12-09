@@ -447,6 +447,7 @@ public: // mailserviceimpl
      */
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
+
     void slotChangeParagStyle( QTextListFormat::Style style );
     void slotFontAction( const QString & );
     void slotAlignLeft();
@@ -458,7 +459,7 @@ public: // mailserviceimpl
     void slotTextColor();
     void slotSizeAction( int );
     void fontChanged( const QFont & );
-    void alignmentChanged( int );
+    void slotCursorPositionChanged();
 
   public: // kmkernel, attachmentlistview
     bool addAttach( const KUrl &url );

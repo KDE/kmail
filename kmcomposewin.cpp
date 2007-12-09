@@ -1396,10 +1396,8 @@ void KMComposeWin::setupEditor( void )
   connect( mEditor, SIGNAL(cursorPositionChanged()), SLOT(updateCursorPosition()) );
   connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
            this, SLOT( fontChanged( const QFont & ) ) );
-  //Laurent fixme.
-  /*connect( mEditor, SIGNAL( currentAlignmentChanged( int ) ),
-           this, SLOT( alignmentChanged( int ) ) );
-  */
+  connect( mEditor, SIGNAL( cursorPositionChanged() ),
+           this, SLOT( slotCursorPositionChanged() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4230,18 +4228,24 @@ void KMComposeWin::slotAlignLeft()
 {
   toggleMarkup( true );
   mEditor->slotAlignLeft();
+  alignCenterAction->setChecked( false );
+  alignRightAction->setChecked( false );
 }
 
 void KMComposeWin::slotAlignCenter()
 {
   toggleMarkup( true );
   mEditor->slotAlignCenter();
+  alignLeftAction->setChecked( false );
+  alignRightAction->setChecked( false );
 }
 
 void KMComposeWin::slotAlignRight()
 {
   toggleMarkup( true );
   mEditor->setAlignment( Qt::AlignRight );
+  alignLeftAction->setChecked( false );
+  alignCenterAction->setChecked( false );
 }
 
 void KMComposeWin::slotFontAction( const QString &font )
@@ -4314,12 +4318,26 @@ void KMComposeWin::fontChanged( const QFont &f )
   fontSizeAction->setFontSize( f.pointSize() );
 }
 
-void KMComposeWin::alignmentChanged( int a )
+void KMComposeWin::slotCursorPositionChanged()
 {
-  //toggleMarkup();
-  alignLeftAction->setChecked( ( a == Qt::AlignLeft ) || ( a & Qt::AlignLeft ) );
-  alignCenterAction->setChecked( ( a & Qt::AlignHCenter ) );
-  alignRightAction->setChecked( ( a & Qt::AlignRight ) );
+  switch (mEditor->alignment() )
+  {
+    case Qt::AlignLeft :
+      alignLeftAction->setChecked( true );
+      alignCenterAction->setChecked( false );
+      alignRightAction->setChecked( false );
+      break;
+    case Qt::AlignHCenter :
+      alignLeftAction->setChecked( false );
+      alignCenterAction->setChecked( true );
+      alignRightAction->setChecked( false );
+      break;
+    case Qt::AlignRight :
+      alignLeftAction->setChecked( false );
+      alignCenterAction->setChecked( false );
+      alignRightAction->setChecked( true );
+      break;
+  }
 }
 
 namespace {
