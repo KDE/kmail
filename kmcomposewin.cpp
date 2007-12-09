@@ -3856,6 +3856,8 @@ void KMComposeWin::toggleMarkup( bool markup )
     if ( mUserUsesHtml ) { // it was turned on
       mUserUsesHtml = false;
       mEditor->setHtmlMode( false );
+      mEditor->selectAll();
+      mEditor->setCurrentFont( mSaveFont );
       mEditor->switchTextMode( false );
       // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
