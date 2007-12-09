@@ -84,19 +84,24 @@ void SearchJob::searchCompleteFolder()
 
   // do the IMAP search  
   KURL url = mAccount->getUrl();
-  // for IMAP, you have to select a folder like inbox. If you select the "pure account",
-  // the kioslave stalls.
-  if ( mFolder->imapPath() == QString("/") ) return;
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
   QDataStream stream( packedArgs, IO_WriteOnly );
   stream << (int) 'E' << url;
   KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-      SLOT(slotSearchData(KIO::Job*,const QString&)) );
-  connect( job, SIGNAL(result(KIO::Job *)),
-      SLOT(slotSearchResult(KIO::Job *)) );
+  if ( mFolder->imapPath() != QString( "/" ) )
+  {
+    KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
+    connect( job, SIGNAL( infoMessage( KIO::Job*, const QString& ) ),
+      SLOT( slotSearchData( KIO::Job*, const QString& ) ) );
+    connect( job, SIGNAL( result( KIO::Job * ) ),
+      SLOT( slotSearchResult( KIO::Job * ) ) );
+  }
+  else
+  { // for the "/ folder" of an imap account, searching blocks the kioslave
+    slotSearchData( job, QString() );
+    slotSearchResult( job );
+  }
 }
 
 //-----------------------------------------------------------------------------
