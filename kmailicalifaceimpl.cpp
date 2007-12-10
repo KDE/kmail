@@ -1340,6 +1340,8 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   KMFolder *srcFolder = msg->parent();
   int idx = srcFolder->find(msg);
   assert(idx != -1);
+  // kill existing jobs since we are about to delete the message
+  srcFolder->ignoreJobsForMessage( msg );
   srcFolder->removeMsg(idx);
   delete msg;
   addFolderChange( srcFolder, Contents );
