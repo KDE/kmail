@@ -124,6 +124,10 @@ public:
                       Q_UINT32 sernum,
                       const QString& filename );
 
+  QString attachmentMimetype( const QString &resource,
+                              Q_UINT32 sernum,
+                              const QString &filename );
+
   QStringList listAttachments( const QString &resource, Q_UINT32 sernum );
 
 

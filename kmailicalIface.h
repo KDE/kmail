@@ -77,6 +77,9 @@ k_dcop:
   virtual KURL getAttachment( const QString& resource,
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
+  virtual QString attachmentMimetype( const QString &resource,
+                                      Q_UINT32 sernum,
+                                      const QString &filename ) = 0;
 
   virtual QStringList listAttachments( const QString &resource, Q_UINT32 sernum ) = 0;
 
