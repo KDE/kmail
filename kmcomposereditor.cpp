@@ -55,6 +55,7 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
   //TODO add it
   //static_cast<Sonnet::KEMailQuotingHighlighter*>(hightighter())->setQuoteColor(col1, col2, col3, col4);
 
+  switchTextMode( false );
   mHtmlMode = false;
 }
 
@@ -115,7 +116,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
       if ( selectedAction == addAsTextAction ) {
         for ( KUrl::List::Iterator it = urlList.begin();
               it != urlList.end(); ++it ) {
-          insert( (*it).url() );
+          textCursor().insertText( (*it).url() );
         }
       } else if ( selectedAction == addAsAtmAction ) {
         for ( KUrl::List::Iterator it = urlList.begin();
@@ -124,7 +125,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
         }
       }
     } else if ( md->hasText() ) {
-      insert( md->text() );
+      textCursor().insertText( md->text() );
       e->accept();
     } else {
       kDebug(5006) <<"KMComposerEditor::dropEvent, unable to add dropped object";
@@ -166,15 +167,16 @@ void KMComposerEditor::setHtmlMode( bool mode )
 
       //Laurent fix me
       //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
+      switchTextMode( true );
     }
   }
   else {
     mHtmlMode = false;
     // like the next 2 lines, or should we selectAll and apply the default font?
-    QString text = toPlainText();
-    // TODO : set text to plaintext when changing from html to textmode
-    //kDebug(5006) <<"KMComposerEditor::setHtmlMode, text=" << text;
-    setPlainText( text );
+
+    selectAll();
+    setTextColor(QColor(0,0,0));
+    switchTextMode( false );
   }
   document()->setModified( true );
 }

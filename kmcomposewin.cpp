@@ -2303,9 +2303,9 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     (*it).data.resize((*it).data.size() + 1);
     (*it).data[(*it).data.size() - 1] = '\0';
     if ( const QTextCodec *codec = KGlobal::charsets()->codecForName((*it).encoding) ) {
-        mEditor->insert( codec->toUnicode( (*it).data ) );
+        mEditor->textCursor().insertText( codec->toUnicode( (*it).data ) );
     } else {
-        mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
+        mEditor->textCursor().insertText( QString::fromLocal8Bit( (*it).data ) );
     }
     mMapAtmLoadData.erase(it);
     if ( attachURLfound ) {
@@ -3162,7 +3162,7 @@ void KMComposeWin::slotPaste()
       case KMessageBox::Yes:
         for ( KUrl::List::ConstIterator it = urlList.begin();
             it != urlList.end(); ++it ) {
-          mEditor->insert( (*it).url() );
+          mEditor->textCursor().insertText( (*it).url() );
         }
         break;
       case KMessageBox::No:
@@ -3173,8 +3173,13 @@ void KMComposeWin::slotPaste()
         break;
     }
   } else if ( mimeData->hasText() ) {
-      QString s = mimeData->text();
-      mEditor->insert( s );
+      if ( mHtmlMarkup )
+      {
+        toggleMarkup( true );
+        mEditor->textCursor().insertHtml( mimeData->html() );
+      }
+      else
+        mEditor->textCursor().insertText( mimeData->text() );
   }
 }
 
@@ -3738,6 +3743,7 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
       kmkernel->identityManager()->identityForUoidOrDefault(
                                 mIdentity->currentIdentity() ) );
 
+  mOldSigText = ident.signatureText();
   mEditor->insertSignature( ident.signature(), placement );
 }
 
@@ -3858,7 +3864,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->setHtmlMode( false );
       mEditor->selectAll();
       mEditor->setCurrentFont( mSaveFont );
-      mEditor->switchTextMode( false );
+      mEditor->moveCursor( QTextCursor::Start, QTextCursor::MoveAnchor ); // deselect
       // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
     }
