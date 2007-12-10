@@ -398,6 +398,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
     }
   }
   KMFolder* parentF = parentFolder( aFolder );
+  assert( parentF != aFolder );
 
   // aFolder will be deleted by the next call!
   aFolder->parent()->remove(aFolder);

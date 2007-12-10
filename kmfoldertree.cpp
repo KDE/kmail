@@ -794,8 +794,9 @@ void KMFolderTree::slotFolderMoveOrCopyOperationFinished()
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
 {
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>
-    (indexOfFolder(aFolder));
+  QListViewItem *item = indexOfFolder(aFolder);
+  if (!item) return;
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*> ( item );
   if ( oldCurrent == fti )
     oldCurrent = 0;
   if ( oldSelected == fti )
