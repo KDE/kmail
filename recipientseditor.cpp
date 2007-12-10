@@ -32,6 +32,7 @@
 #include <libemailfunctions/email.h>
 
 #include <kapplication.h>
+#include <kcompletionbox.h>
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -535,6 +536,7 @@ void RecipientsView::resizeView()
 
   parentWidget()->layout()->activate();
   emit sizeHintChanged();
+  QTimer::singleShot( 0, this, SLOT(moveCompletionPopup()) );
 }
 
 void RecipientsView::activateLine( RecipientLine *line )
@@ -678,6 +680,20 @@ int RecipientsView::setFirstColumnWidth( int w )
 
   resizeView();
   return mFirstColumnWidth;
+}
+
+void RecipientsView::moveCompletionPopup()
+{
+  for( RecipientLine* line = mLines.first(); line; line = mLines.next() ) {
+    if ( line->lineEdit()->completionBox( false ) ) {
+      if ( line->lineEdit()->completionBox()->isVisible() ) {
+        // ### trigger moving, is there a nicer way to do that?
+        line->lineEdit()->completionBox()->hide();
+        line->lineEdit()->completionBox()->show();
+      }
+    }
+  }
+
 }
 
 RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
@@ -978,4 +994,5 @@ void RecipientsEditor::setCompletionMode( KGlobalSettings::Completion mode )
 {
   mRecipientsView->setCompletionMode( mode );
 }
+
 #include "recipientseditor.moc"
