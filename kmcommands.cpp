@@ -1913,7 +1913,7 @@ KMCommand::Result KMCopyCommand::execute()
   if (!localList.isEmpty())
   {
     QList<int> index;
-    mDestFolder->addMsg( localList, index );
+    mDestFolder->addMessages( localList, index );
     for ( QList<int>::Iterator it = index.begin(); it != index.end(); ++it ) {
       mDestFolder->unGetMsg( *it );
     }
@@ -2128,7 +2128,7 @@ KMCommand::Result KMMoveCommand::execute()
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
-      it.key()->removeMsg(*it.value());
+      it.key()->removeMessages(*it.value());
       delete it.value();
     }
     if ( !mCompleteWithAddedMsg ) {

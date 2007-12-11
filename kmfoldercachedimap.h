@@ -240,9 +240,6 @@ class KMFolderCachedImap : public KMFolderMaildir
 
     /** Reimplemented from KMFolderMaildir */
     virtual void removeMsg( int i, bool imapQuiet = false );
-    virtual void removeMsg( QList<KMMessage*> msgList, bool imapQuiet = false ){
-      FolderStorage::removeMsg( msgList, imapQuiet );
-    }
 
     /**
       Returns true if the folder is read-only; false otherwise.

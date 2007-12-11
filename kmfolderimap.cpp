@@ -394,7 +394,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
     msg->setTransferInProgress( false );
   }
   if ( aFolder ) {
-    aFolder->take( msgList );
+    aFolder->takeMessages( msgList );
   } else {
     kDebug(5006) <<"no parent";
   }
@@ -620,7 +620,7 @@ void KMFolderImap::take(const QList<KMMessage*>& msgList)
   deleteMessage(msgList);
 
   mLastUid = 0;
-  KMFolderMbox::take(msgList);
+  KMFolderMbox::takeMessages( msgList );
 }
 
 //-----------------------------------------------------------------------------

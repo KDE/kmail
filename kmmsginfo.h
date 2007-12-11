@@ -105,6 +105,7 @@ public:
   virtual void setUID(ulong);
 
   /** Grr.. c++! */
+  using KMMsgBase::setDate;
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
   virtual void setDate(const char* s1) { KMMsgBase::setDate(s1); }
 

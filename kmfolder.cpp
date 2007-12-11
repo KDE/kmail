@@ -388,9 +388,9 @@ KMMessage* KMFolder::take( int idx )
   return mStorage->take( idx );
 }
 
-void KMFolder::take( const QList<KMMessage*>& msgList )
+void KMFolder::takeMessages( const QList<KMMessage*>& msgList )
 {
-  mStorage->take( msgList );
+  mStorage->takeMessages( msgList );
 }
 
 int KMFolder::addMsg( KMMessage* msg, int* index_return )
@@ -403,9 +403,9 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
-int KMFolder::addMsg( QList<KMMessage*>& list, QList<int>& index_return )
+int KMFolder::addMessages( QList<KMMessage*>& list, QList<int>& index_return )
 {
-  return mStorage->addMsg( list, index_return );
+  return mStorage->addMessages( list, index_return );
 }
 
 void KMFolder::emitMsgAddedSignals( int idx )
@@ -418,9 +418,9 @@ void KMFolder::removeMsg( int i, bool imapQuiet )
   mStorage->removeMsg( i, imapQuiet );
 }
 
-void KMFolder::removeMsg( QList<KMMessage*> msgList, bool imapQuiet ) // TODO const ref
+void KMFolder::removeMessages( QList<KMMessage*> msgList, bool imapQuiet ) // TODO const ref
 {
-  mStorage->removeMsg( msgList, imapQuiet );
+  mStorage->removeMessages( msgList, imapQuiet );
 }
 
 int KMFolder::expungeOldMsg( int days )

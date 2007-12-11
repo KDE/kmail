@@ -1498,7 +1498,7 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   if ( !msgsForDeletion.isEmpty() ) {
-    removeMsg( msgsForDeletion );
+    removeMessages( msgsForDeletion );
   }
 
   /* Delete messages from the server that we don't have anymore */

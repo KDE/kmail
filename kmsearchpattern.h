@@ -55,13 +55,13 @@ public:
   */
   enum Function { FuncNone = -1,
                   FuncContains=0, FuncContainsNot,
-		  FuncEquals, FuncNotEqual,
-		  FuncRegExp, FuncNotRegExp,
-		  FuncIsGreater, FuncIsLessOrEqual,
-  		  FuncIsLess, FuncIsGreaterOrEqual,
-		  FuncIsInAddressbook, FuncIsNotInAddressbook,
+                  FuncEquals, FuncNotEqual,
+                  FuncRegExp, FuncNotRegExp,
+                  FuncIsGreater, FuncIsLessOrEqual,
+                  FuncIsLess, FuncIsGreaterOrEqual,
+                  FuncIsInAddressbook, FuncIsNotInAddressbook,
                   FuncIsInCategory, FuncIsNotInCategory,
-		  FuncHasAttachment, FuncHasNoAttachment};
+                  FuncHasAttachment, FuncHasNoAttachment};
   explicit KMSearchRule ( const QByteArray & field=0, Function=FuncContains,
                  const QString &contents=QString() );
   KMSearchRule ( const KMSearchRule &other );
@@ -72,7 +72,7 @@ public:
       priate subclass depending on the @p field. */
   static KMSearchRule* createInstance( const QByteArray & field=0,
                                       Function function=FuncContains,
-		                      const QString & contents=QString() );
+                                      const QString & contents=QString() );
 
   static KMSearchRule* createInstance( const QByteArray & field,
                                        const char * function,
@@ -170,7 +170,6 @@ private:
  *  as \<body\>
     @short This class represents a search pattern rule operating on a string.
 */
-
 class KMSearchRuleString : public KMSearchRule
 {
 public:
@@ -205,7 +204,6 @@ private:
     @short This class represents a search pattern rule operating on numerical
     values.
 */
-
 class KMSearchRuleNumerical : public KMSearchRule
 {
 public:
@@ -214,6 +212,10 @@ public:
   virtual bool isEmpty() const ;
 
   virtual bool matches( const KMMessage * msg ) const;
+
+  // Optimized matching not implemented, will use the unoptimized matching
+  // from KMSearchRule
+  using KMSearchRule::matches;
 
   /** Helper for the main matches() method. Does the actual comparing. */
   bool matchesInternal( long numericalValue, long numericalMsgContents,
@@ -284,13 +286,14 @@ class KMSearchRuleStatus : public KMSearchRule
 {
 public:
    explicit KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
-		       const QString & contents=QString() );
+                                const QString & contents=QString() );
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;
-  //Not possible to implement this form for status searching
-  virtual bool matches( const DwString &, KMMessage &,
-                        const DwBoyerMoore *,
-			int ) const;
+
+  //Not possible to implement optimized form for status searching
+  using KMSearchRule::matches;
+
+
   static MessageStatus statusFromEnglishName(const QString&);
   private:
   MessageStatus mStatus;

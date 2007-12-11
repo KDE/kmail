@@ -182,7 +182,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-  virtual void take(const QList<KMMessage*>& msgList);
+  virtual void takeMessages(const QList<KMMessage*>& msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -203,7 +203,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical
    * to addMsg(msg)
    */
-  virtual int addMsg( QList<KMMessage*>&, QList<int>& index_return );
+  virtual int addMessages( QList<KMMessage*>&, QList<int>& index_return );
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -215,8 +215,8 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = false);
-  virtual void removeMsg(const QList<KMMsgBase*>& msgList, bool imapQuiet = false);
-  virtual void removeMsg(const QList<KMMessage*>& msgList, bool imapQuiet = false);
+  virtual void removeMessages(const QList<KMMsgBase*>& msgList, bool imapQuiet = false);
+  virtual void removeMessages(const QList<KMMessage*>& msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */

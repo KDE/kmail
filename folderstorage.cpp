@@ -347,7 +347,7 @@ int FolderStorage::find( const KMMessage * msg ) const {
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const QList<KMMsgBase*>& msgList, bool imapQuiet)
+void FolderStorage::removeMessages(const QList<KMMsgBase*>& msgList, bool imapQuiet)
 {
   for( QList<KMMsgBase*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
@@ -359,7 +359,7 @@ void FolderStorage::removeMsg(const QList<KMMsgBase*>& msgList, bool imapQuiet)
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const QList<KMMessage*>& msgList, bool imapQuiet)
+void FolderStorage::removeMessages(const QList<KMMessage*>& msgList, bool imapQuiet)
 {
   for( QList<KMMessage*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
@@ -453,7 +453,7 @@ KMMessage* FolderStorage::take(int idx)
   return msg;
 }
 
-void FolderStorage::take(const QList<KMMessage*>& msgList)
+void FolderStorage::takeMessages(const QList<KMMessage*>& msgList)
 {
   for( QList<KMMessage*>::const_iterator it = msgList.begin();
       it != msgList.end(); ++it )
@@ -622,7 +622,7 @@ int FolderStorage::moveMsg( QList<KMMessage*> msglist, int *aIndex_ret )
 
   QList<int> index;
   open( "moveMsg" );
-  int rc = addMsg( msglist, index );
+  int rc = addMessages( msglist, index );
   close( "moveMsg" );
   // FIXME: we want to have a QValueList to pass it back, so change this method
   if ( !index.isEmpty() ) {
@@ -1151,7 +1151,7 @@ void FolderStorage::search( const KMSearchPattern* pattern, quint32 serNum )
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::addMsg( QList<KMMessage*>& msgList, QList<int>& index_ret )
+int FolderStorage::addMessages( QList<KMMessage*>& msgList, QList<int>& index_ret )
 {
   int ret = 0;
   int index;

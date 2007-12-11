@@ -92,7 +92,7 @@ MboxJob::startJob()
     break;
   case tDeleteMessage:
     {
-      mParent->removeMsg( mMsgList );
+      mParent->removeMessages( mMsgList );
     }
     break;
   case tPutMessage:
