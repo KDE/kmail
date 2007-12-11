@@ -331,7 +331,11 @@ void SnippetWidget::writeConfig()
   int iSnipCount = 0;
   int iGroupCount = 0;
 
-  for ( item = _list.first(); item; item = _list.next() ) {  //write the snippet-list
+  SnippetItem* lastItem=_list.last();
+  item=_list.first();
+  while ( item != 0) {
+
+    //kdDebug(5006) << "-->ERROR " << item->getName() << endl;
     //kdDebug(5006) << "SnippetWidget::writeConfig() " << item->getName() << endl;
     SnippetGroup * group = dynamic_cast<SnippetGroup*>(item);
     if (group) {
@@ -363,6 +367,7 @@ void SnippetWidget::writeConfig()
     } else {
       //kdDebug(5006) << "-->ERROR " << item->getName() << endl;
     }
+    item = _list.next();
   }
   _cfg->writeEntry("snippetCount", iSnipCount);
   _cfg->writeEntry("snippetGroupCount", iGroupCount);
