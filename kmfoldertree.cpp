@@ -368,7 +368,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   setSelectionModeExt( Extended );
 
   int namecol = addColumn( i18n( "Folder" ) );
-  header()->setStretchEnabled( false, namecol );
+  header()->setStretchEnabled( true, namecol );
 
   // connect
   connectSignals();
@@ -452,7 +452,7 @@ void KMFolderTree::readConfig (void)
 {
   readColorConfig();
 
-  // Custom/Ssystem font support
+  // Custom/System font support
   {
     KConfigGroup conf( KMKernel::config(), "Fonts" );
     if (!conf.readEntry( "defaultFonts", true ) )
@@ -477,7 +477,7 @@ void KMFolderTree::writeConfig()
   }
 
   // save the current layout
-  saveLayout(KMKernel::config(), "Geometry");
+  saveLayout( KMKernel::config(), "Geometry" );
 }
 
 //-----------------------------------------------------------------------------

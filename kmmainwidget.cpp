@@ -580,9 +580,9 @@ void KMMainWidget::readConfig()
        * as we have some dependencies in this widget
        * it's better to manage these here */
       // The columns are shown by default.
-      const int unreadColumn = group.readEntry( "UnreadColumn", 1 );
+      const int unreadColumn = group.readEntry( "UnreadColumn", -1 );
       const int totalColumn = group.readEntry( "TotalColumn", 2 );
-      const int sizeColumn = group.readEntry( "SizeColumn", 3 );
+      const int sizeColumn = group.readEntry( "SizeColumn", -1 );
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
@@ -609,11 +609,7 @@ void KMMainWidget::readConfig()
       else if ( sizeColumn == 3 )
         mFolderTree->addSizeColumn( i18n("Size"), 70 );
 
-      mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
-      mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
-      mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
-      mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
-
+      slotFolderTreeColumnsChanged();
       mFolderTree->updatePopup();
     }
   }
@@ -3229,16 +3225,16 @@ void KMMainWidget::setupActions()
 
   mUnreadColumnToggle = new KToggleAction(i18nc("View->Unread Count", "View in &Separate Column"), this);
   actionCollection()->addAction("view_unread_column", mUnreadColumnToggle );
-  connect(mUnreadColumnToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
-          SLOT(slotToggleUnread()));
+  connect( mUnreadColumnToggle, SIGNAL( triggered(Qt::MouseButtons, Qt::KeyboardModifiers) ),
+           SLOT( slotToggleUnread() ) );
 
   group->addAction( mUnreadColumnToggle );
   unreadMenu->addAction( mUnreadColumnToggle );
 
   mUnreadTextToggle = new KToggleAction(i18nc("View->Unread Count", "View After &Folder Name"), this);
   actionCollection()->addAction("view_unread_text", mUnreadTextToggle );
-  connect(mUnreadTextToggle, SIGNAL(triggered (Qt::MouseButtons, Qt::KeyboardModifiers)),
-          SLOT(slotToggleUnread()));
+  connect( mUnreadTextToggle, SIGNAL( triggered(Qt::MouseButtons, Qt::KeyboardModifiers) ),
+           SLOT( slotToggleUnread() ) );
   group->addAction( mUnreadTextToggle );
   unreadMenu->addAction( mUnreadTextToggle );
 
@@ -4242,6 +4238,7 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
 {
   mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
   mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
   mSizeColumnToggle->setChecked( mFolderTree->isSizeActive() );
 }
 
