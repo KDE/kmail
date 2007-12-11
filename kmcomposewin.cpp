@@ -1675,9 +1675,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
           // respect html part charset
           const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
           if ( codec ) {
-            mEditor->setText( codec->toUnicode( bodyDecoded ) );
+            mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
           } else {
-            mEditor->setText( QString::fromLocal8Bit( bodyDecoded ) );
+            mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
           }
         }
       }
