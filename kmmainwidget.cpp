@@ -152,6 +152,9 @@ using KMail::TemplateParser;
 QList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
 static K3StaticDeleter<QList<KMMainWidget*> > mwlsd;
 
+static const int defaultMinimumWidth = 400;
+static const int defaultMinimumHeight = 300;
+
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                             KActionCollection *actionCollection, KConfig *config ) :
@@ -204,7 +207,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
   s_mainWidgetList->append( this );
 
-  setMinimumSize( 400, 300 );
+  setMinimumSize( defaultMinimumWidth, defaultMinimumHeight );
 
   readPreConfig();
   createWidgets();
@@ -435,6 +438,8 @@ void KMMainWidget::layoutSplitters()
   mSplitter2->setStretchFactor( 0, 0 );
   mSplitter1->setStretchFactor( 1, 1 );
   mSplitter2->setStretchFactor( 1, 1 );
+  mFolderViewSplitter->setStretchFactor( 0, 0 );
+  mFolderViewSplitter->setStretchFactor( 1, 1 );
 
   // Because the reader windows's width increases a tiny bit after each restart
   // in short folder list mode with mesage window at side, disable the stretching
@@ -465,13 +470,23 @@ void KMMainWidget::layoutSplitters()
   //
   QList<int> splitter1Sizes;
   QList<int> splitter2Sizes;
+
+  // If the widget is now shown yet, it still has the minimum size. We need the
+  // correct size for the calculations, so ask the parent widget about it.
+  int realWidth = width();
+  int realHeight = height();
+  if ( realWidth == defaultMinimumWidth && realHeight == defaultMinimumHeight ) {
+    realWidth = parentWidget()->width();
+    realHeight = parentWidget()->height();
+  }
+
   const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
   int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
   const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
-  int headerWidth = width() - folderViewWidth;
+  int headerWidth = realWidth - folderViewWidth;
   if ( readerWindowAtSide )
-    headerWidth = width() - folderViewWidth - messageViewerWidth;
-  int messageViewerHeight = height() - headerHeight;
+    headerWidth = realWidth - folderViewWidth - messageViewerWidth;
+  int messageViewerHeight = realHeight - headerHeight;
 
   // If the message viewer was hidden before, make sure it is not zero height
   if ( messageViewerHeight < 10 && readerWindowBelow ) {
@@ -488,7 +503,7 @@ void KMMainWidget::layoutSplitters()
       splitter1Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
       splitter2Sizes << headerWidth << messageViewerWidth;
     }
-    folderViewHeight = height();
+    folderViewHeight = realHeight;
   } else {
     if ( !readerWindowAtSide ) {
       splitter1Sizes << headerHeight << messageViewerHeight;
@@ -557,12 +572,6 @@ void KMMainWidget::readConfig()
 
   { // area for config group "Geometry"
     KConfigGroup group(config, "Geometry");
-
-    // Set the size of the mainwin
-    QSize defaultSize( 750, 560 );
-    QSize siz = group.readEntry( "MainWin", defaultSize );
-    if ( !siz.isEmpty() )
-      resize( siz );
 
     // Set the proper column sizes for the folder tree
     if ( layoutChanged )
@@ -677,7 +686,6 @@ void KMMainWidget::writeConfig()
 
   mFolderTree->writeConfig();
 
-  geometry.writeEntry( "MainWin", this->geometry().size() );
   GlobalSettings::self()->setFolderViewWidth( mFolderTree->width() );
   int headersHeight = mSearchAndHeaders->height();
   if ( headersHeight == 0 )

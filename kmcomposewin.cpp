@@ -3476,6 +3476,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   KCursorSaver busy( KBusyPtr::busy() );
   mMsg->setDateToday();
 
+  mMsg->setHeaderField( "X-KMail-Transport", mTransport->currentText() );
+
   mDisableBreaking = ( saveIn != KMComposeWin::None );
 
   const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() ) ||
@@ -3994,6 +3996,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     }
   }
 
+  // If the transport sticky checkbox is not checked, set the transport
+  // from the new identity
   if ( !mBtnTransport->isChecked() ) {
     QString transportName = ident.transport();
     Transport *transport =
