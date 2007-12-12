@@ -3961,6 +3961,7 @@ void KMMainWidget::updateVactionScriptStatus(bool active)
   if ( active ) {
     mVacationScriptIndicator->setText( i18n("Out of office reply active") );
     mVacationScriptIndicator->setPaletteBackgroundColor( Qt::yellow );
+    mVacationScriptIndicator->setCursor( QCursor( Qt::PointingHandCursor ) );
     mVacationScriptIndicator->show();
   } else {
     mVacationScriptIndicator->hide();
