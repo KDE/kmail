@@ -121,6 +121,8 @@ namespace KMail {
 
   void VacationDialog::setMessageText( const QString & text ) {
     mTextEdit->setText( text );
+    const int height = ( mTextEdit->fontMetrics().lineSpacing() + 1 ) * 11;
+    mTextEdit->setMinimumHeight( height );
   }
 
   int VacationDialog::notificationInterval() const {
@@ -160,7 +162,7 @@ namespace KMail {
   void VacationDialog::slotIntervalSpinChanged ( int value ) {
     mIntervalSpin->setSuffix( i18n(" day", " days", value) );
   }
- 
+
   QString VacationDialog::domainName() const {
     return mDomainCheck->isChecked() ? mDomainEdit->text() : QString::null ;
   }
@@ -180,7 +182,7 @@ namespace KMail {
   }
 
 
-  /* virtual*/ 
+  /* virtual*/
   void KMail::VacationDialog::enableDomainAndSendForSpam( bool enable ) {
       mDomainCheck->setEnabled( enable );
       mDomainEdit->setEnabled( enable );
