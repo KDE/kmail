@@ -131,6 +131,12 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
 
         QPopupMenu* popup = new QPopupMenu;
+        if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
+             mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
+          popup->insertItem( SmallIcon("fileopen"), i18n("to open", "Open"), this, SLOT(slotOpen()) );
+          popup->insertItem( i18n("Open With..."), this, SLOT(slotOpenWith()) );
+          popup->insertItem( i18n("to view something", "View"), this, SLOT(slotView()) );
+        }
         popup->insertItem( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
         /*
          * FIXME mkae optional?
@@ -140,12 +146,17 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         popup->insertItem( i18n( "Save All Attachments..." ), this,
                            SLOT( slotSaveAll() ) );
         // edit + delete only for attachments
-        if ( mCurrentContextMenuItem->node()->nodeId() > 2 ) {
-          popup->insertItem( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
-                            this, SLOT( slotDelete() ) );
-          popup->insertItem( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
-                            this, SLOT( slotEdit() ) );
+        if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
+             mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
+          if ( GlobalSettings::self()->allowAttachmentDeletion() )
+            popup->insertItem( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
+                               this, SLOT( slotDelete() ) );
+          if ( GlobalSettings::self()->allowAttachmentEditing() )
+            popup->insertItem( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
+                               this, SLOT( slotEdit() ) );
         }
+        if ( mCurrentContextMenuItem->node()->nodeId() > 0 )
+          popup->insertItem( i18n("Properties"), this, SLOT(slotProperties()) );
         popup->exec( point );
         delete popup;
         mCurrentContextMenuItem = 0;
@@ -254,6 +265,40 @@ void KMMimePartTree::slotEdit()
   mReaderWin->slotEditAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
 }
 
+void KMMimePartTree::slotOpen()
+{
+  startHandleAttachmentCommand( KMHandleAttachmentCommand::Open );
+}
+
+void KMMimePartTree::slotOpenWith()
+{
+  startHandleAttachmentCommand( KMHandleAttachmentCommand::OpenWith );
+}
+
+void KMMimePartTree::slotView()
+{
+  startHandleAttachmentCommand( KMHandleAttachmentCommand::View );
+}
+
+void KMMimePartTree::slotProperties()
+{
+  startHandleAttachmentCommand( KMHandleAttachmentCommand::Properties );
+}
+
+void KMMimePartTree::startHandleAttachmentCommand(int type)
+{
+  QPtrList<QListViewItem> selected = selectedItems();
+  if ( selected.count() != 1 )
+    return;
+  partNode* node = static_cast<KMMimePartTreeItem*>( selected.first() )->node();
+  QString name = mReaderWin->tempFileUrlFromPartNode( node ).path();
+  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
+      node, mReaderWin->message(), node->nodeId(), name,
+      KMHandleAttachmentCommand::AttachmentAction( type ), 0, this );
+  connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+           mReaderWin, SLOT( slotAtmView( int, const QString& ) ) );
+  command->start();
+}
 
 //=============================================================================
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,

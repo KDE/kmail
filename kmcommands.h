@@ -1020,7 +1020,7 @@ private:
   partNode* mNode;
   KMMessage* mMsg;
   int mAtmId;
-  const QString& mAtmName;
+  QString mAtmName;
   AttachmentAction mAction;
   KService::Ptr mOffer;
   Kleo::SpecialJob *mJob;
