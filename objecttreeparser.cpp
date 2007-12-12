@@ -1562,7 +1562,7 @@ namespace KMail {
           htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       } else {
 
-        if ( passphraseError ) {
+        if ( passphraseError || smimeType.isEmpty() ) {
           isEncrypted = true;
           signTestNode = 0;
         }
