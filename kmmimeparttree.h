@@ -69,6 +69,7 @@ protected slots:
   void slotOpenWith();
   void slotView();
   void slotProperties();
+  void slotCopy();
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed

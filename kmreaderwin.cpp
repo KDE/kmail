@@ -108,6 +108,7 @@ using KMail::TeeHtmlWriter;
 #include <kiconloader.h>
 #include <kmdcodec.h>
 #include <kasciistricmp.h>
+#include <kurldrag.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -491,7 +492,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
     mUpdateReaderWinTimer( 0, "mUpdateReaderWinTimer" ),
-    mResizeTimer( 0, "mResizeTimer" ),    
+    mResizeTimer( 0, "mResizeTimer" ),
     mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
@@ -1840,7 +1841,7 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder && 
+  if (folder &&
      (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
       folder->isDrafts() || folder->isTemplates() ) )
     return;
@@ -1959,6 +1960,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+  menu->insertItem(SmallIcon("editcopy"), i18n("Copy"), 9 );
   if ( GlobalSettings::self()->allowAttachmentEditing() )
     menu->insertItem(SmallIcon("edit"), i18n("Edit Attachment"), 8 );
   if ( GlobalSettings::self()->allowAttachmentDeletion() )
@@ -2014,6 +2016,14 @@ void KMReaderWin::slotHandleAttachment( int choice )
     slotDeleteAttachment( node );
   } else if ( choice == 8 ) {
     slotEditAttachment( node );
+  } else if ( choice == 9 ) {
+    if ( !node ) return;
+    KURL::List urls;
+    KURL url = tempFileUrlFromPartNode( node );
+    if (!url.isValid() ) return;
+    urls.append( url );
+    KURLDrag* drag = new KURLDrag( urls, this );
+    QApplication::clipboard()->setData( drag, QClipboard::Clipboard );
   }
 }
 

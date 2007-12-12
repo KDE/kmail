@@ -46,6 +46,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
+#include <qclipboard.h>
 #include <qheader.h>
 #include <qpopupmenu.h>
 #include <qstyle.h>
@@ -148,6 +149,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         // edit + delete only for attachments
         if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
              mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
+          popup->insertItem( SmallIcon("editcopy"), i18n("Copy"), this, SLOT(slotCopy()) );
           if ( GlobalSettings::self()->allowAttachmentDeletion() )
             popup->insertItem( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
                                this, SLOT( slotDelete() ) );
@@ -298,6 +300,18 @@ void KMMimePartTree::startHandleAttachmentCommand(int type)
   connect( command, SIGNAL( showAttachment( int, const QString& ) ),
            mReaderWin, SLOT( slotAtmView( int, const QString& ) ) );
   command->start();
+}
+
+void KMMimePartTree::slotCopy()
+{
+  KURL::List urls;
+  KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
+  if ( !item ) return;
+  KURL url = mReaderWin->tempFileUrlFromPartNode( item->node() );
+  if ( !url.isValid() ) return;
+  urls.append( url );
+  KURLDrag* drag = new KURLDrag( urls, this );
+  QApplication::clipboard()->setData( drag, QClipboard::Clipboard );
 }
 
 //=============================================================================
