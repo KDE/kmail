@@ -85,6 +85,8 @@ const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 //helper
 static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart );
 
+QValueList<KMMessage*> KMMessage::sPendingDeletes;
+
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
   : KMMsgBase()
@@ -244,6 +246,15 @@ bool KMMessage::transferInProgress() const
 void KMMessage::setTransferInProgress(bool value, bool force)
 {
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
+  if ( !transferInProgress() && sPendingDeletes.contains( this ) ) {
+    sPendingDeletes.remove( this );
+    if ( parent() ) {
+      int idx = parent()->find( this );
+      if ( idx > 0 ) {
+        parent()->removeMsg( idx );
+      }
+    }
+  }
 }
 
 
@@ -1180,7 +1191,7 @@ QCString KMMessage::createForwardBody()
 
 void KMMessage::sanitizeHeaders( const QStringList& whiteList )
 {
-   // Strip out all headers apart from the content description and other 
+   // Strip out all headers apart from the content description and other
    // whitelisted ones, because we don't want to inherit them.
    DwHeaders& header = mMsg->Headers();
    DwField* field = header.FirstField();
@@ -1215,7 +1226,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     const int subtype = msg->subtype();
 
     msg->sanitizeHeaders();
-    
+
     // strip blacklisted parts
     QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
     for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
@@ -4350,4 +4361,9 @@ QCString KMMessage::mboxMessageSeparator()
       dateStr.truncate( len - 1 );
   }
   return "From " + str + " " + dateStr + "\n";
+}
+
+void KMMessage::deleteWhenUnused()
+{
+  sPendingDeletes << this;
 }

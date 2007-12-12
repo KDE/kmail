@@ -204,7 +204,7 @@ public:
           KMime::MDN::DispositionType d,
           bool allowGUI=false,
           QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
-  
+
   /** Remove all headers but the content description ones, and those in the white list. */
   void sanitizeHeaders( const QStringList& whiteList = QStringList() );
 
@@ -879,6 +879,9 @@ public:
   bool isBeingParsed() const { return mIsParsed; }
   void setIsBeingParsed( bool t ) { mIsParsed = t; }
 
+  /** Delete this message as soon as it no longer in use. */
+  void deleteWhenUnused();
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -909,6 +912,7 @@ private:
   DwBodyPart* mLastUpdated;
   int mCursorPos;
   KMMsgInfo* mMsgInfo; // used to remember the KMMsgInfo object this KMMessage replaced in the KMMsgList
+  static QValueList<KMMessage*> sPendingDeletes;
 };
 
 

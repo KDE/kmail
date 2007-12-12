@@ -1342,8 +1342,13 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   assert(idx != -1);
   // kill existing jobs since we are about to delete the message
   srcFolder->ignoreJobsForMessage( msg );
-  srcFolder->removeMsg(idx);
-  delete msg;
+  if ( !msg->transferInProgress() ) {
+    srcFolder->removeMsg(idx);
+    delete msg;
+  } else {
+    kdDebug(5006) << k_funcinfo << "Message cannot be deleted now because it is currently in use " << msg << endl;
+    msg->deleteWhenUnused();
+  }
   addFolderChange( srcFolder, Contents );
 }
 
