@@ -1709,9 +1709,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
            * server since we can't write our status back our local version
            * is what has to be considered correct.
            */
-          if ( !mReadOnly ) {
+          if ( !mReadOnly || !GlobalSettings::allowLocalFlags() ) {
             /* The message is OK, update flags */
-            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mPermanentFlags );
+            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mReadOnly ? INT_MAX : mPermanentFlags );
           } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
             KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }
