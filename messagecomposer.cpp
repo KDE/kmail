@@ -529,6 +529,7 @@ void MessageComposer::readFromComposeWin()
   // according to the line breaks of the richtext version.
   mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
+
 static QCString escape_quoted_string( const QCString & str ) {
   QCString result;
   const unsigned int str_len = str.length();
@@ -2082,7 +2083,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec()
   QString text;
   QCString cText;
 
-  if( mDisableBreaking || mIsRichText )
+  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() )
     text = mComposeWin->mEditor->text();
   else
     text = mComposeWin->mEditor->brokenText();
