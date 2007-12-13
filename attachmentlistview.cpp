@@ -66,7 +66,7 @@ AttachmentListView::~AttachmentListView()
 
 void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 {
-  if( e->provides( MailListDrag::format() ) )
+  if( e->provides( MailListDrag::format() ) || KURLDrag::canDecode( e ) )
     e->accept( true );
   else
     KListView::dragEnterEvent( e );
@@ -76,7 +76,7 @@ void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 
 void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 {
-  if( e->provides( MailListDrag::format() ) )
+  if( e->provides( MailListDrag::format() ) || KURLDrag::canDecode( e ) )
     e->accept( true );
   else
     KListView::dragMoveEvent( e );
