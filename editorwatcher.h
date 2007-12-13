@@ -69,6 +69,7 @@ class EditorWatcher : public QObject
     QTime mEditTime;
 
     bool mError;
+    bool mDone;
 };
 
 }

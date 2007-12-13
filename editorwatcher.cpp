@@ -69,7 +69,8 @@ EditorWatcher::EditorWatcher(const KURL & url, const QString &mimeType, bool ope
     mHaveInotify( false ),
     mFileOpen( false ),
     mEditorRunning( false ),
-    mFileModified( true ) // assume the worst unless we know better
+    mFileModified( true ), // assume the worst unless we know better
+    mDone( false )
 {
   assert( mUrl.isLocalFile() );
   connect( &mTimer, SIGNAL(timeout()), SLOT(checkEditDone()) );
@@ -157,8 +158,11 @@ void EditorWatcher::editorExited()
 
 void EditorWatcher::checkEditDone()
 {
-  if ( mEditorRunning || (mFileOpen && mHaveInotify) )
+  if ( mEditorRunning || (mFileOpen && mHaveInotify) || mDone )
     return;
+  // protect us against double-deletion by calling this method again while
+  // the subeventloop of the message box is running
+  mDone = true;
   // nobody can edit that fast, we seem to be unable to detect
   // when the editor will be closed
   if ( mEditTime.elapsed() <= 3000 ) {
@@ -169,7 +173,5 @@ void EditorWatcher::checkEditDone()
   emit editDone( this );
   deleteLater();
 }
-
-
 
 #include "editorwatcher.moc"
