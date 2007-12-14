@@ -438,8 +438,10 @@ void KMMainWidget::layoutSplitters()
   mSplitter2->setStretchFactor( 0, 0 );
   mSplitter1->setStretchFactor( 1, 1 );
   mSplitter2->setStretchFactor( 1, 1 );
-  mFolderViewSplitter->setStretchFactor( 0, 0 );
-  mFolderViewSplitter->setStretchFactor( 1, 1 );
+  if ( mFavoriteFolderView ) {
+    mFolderViewSplitter->setStretchFactor( 0, 0 );
+    mFolderViewSplitter->setStretchFactor( 1, 1 );
+  }
 
   // Because the reader windows's width increases a tiny bit after each restart
   // in short folder list mode with mesage window at side, disable the stretching
