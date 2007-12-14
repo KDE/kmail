@@ -337,7 +337,7 @@ void CachedImapJob::slotGetNextMessage(KJob * job)
   mMsg->setUID(mfd.uid);
   mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
-    KMFolderImap::flagsToStatus(mMsg, mfd.flags, true, mFolder->permanentFlags());
+    KMFolderImap::flagsToStatus(mMsg, mfd.flags, true, GlobalSettings::allowLocalFlags() ? mFolder->permanentFlags() : INT_MAX);
   KUrl url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
