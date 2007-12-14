@@ -720,8 +720,10 @@ void KMFilterListBox::slotShowLaterToggled(bool aOn)
 
 void KMFilterListBox::slotApplyFilterChanges()
 {
-  if ( mIdxSelItem >= 0 )
+  if ( mIdxSelItem >= 0 ) {
+    emit applyWidgets();
     slotSelected( mListBox->currentItem() );
+  }
 
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
@@ -736,7 +738,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
-  
+
   fm->setFilters( newFilters );
   if (fm->atLeastOneOnlineImapFolderTarget()) {
     QString str = i18n("At least one filter targets a folder on an online "
@@ -766,7 +768,7 @@ QValueList<KMFilter*> KMFilterListBox::filtersForSaving() const
           delete f;
         }
       }
-      
+
       // report on invalid filters:
       if ( !emptyFilters.empty() ) {
         QString msg = i18n("The following filters have not been saved because they "
@@ -979,7 +981,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   // we don't want the insertion to
   // cause flicker in the edit widgets.
   blockSignals( true );
-  
+
   // clear both lists
   mFilterList.clear();
   mListBox->clear();
@@ -1331,9 +1333,9 @@ void KMFilterDlg::slotImportFilters()
     QValueList<KMFilter*> filters = importer.importFilters();
     // FIXME message box how many were imported?
     if (filters.isEmpty()) return;
-   
+
     QValueListConstIterator<KMFilter*> it;
-    
+
     for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
         mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
     }
