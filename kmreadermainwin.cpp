@@ -166,6 +166,8 @@ void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
+  if ( !mMsg )
+    return;
   // find the real msg by its sernum
   KMFolder* parent;
   int index;
