@@ -1087,7 +1087,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
   KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
+  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", mEditor, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
@@ -3890,12 +3890,11 @@ void KMComposeWin::slotSubjectTextSpellChecked()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
-//Laurent Fix me
-/*
-  if ( mEditor->autoSpellChecking( on ) == -1 ) {
-    mAutoSpellCheckingAction->setChecked( false ); // set it to false again
-  }
-*/
+  // FIXME this doesn't work at the moment since KMeditor does not
+  // support continuous spell checking when in RichText mode, i.e.
+  // the createHighlighter() method is never called.
+  mEditor->setCheckSpellingEnabled( on );
+
   QString temp;
   if ( on ) {
     temp = i18n( "Spellcheck: on" );
