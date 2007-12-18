@@ -2174,7 +2174,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   QByteArray cText;
   QString text;
 
-  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() )
+  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
     text = mComposeWin->mEditor->text();
   } else {
     text = mComposeWin->mEditor->brokenText();
