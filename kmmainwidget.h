@@ -273,7 +273,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void showMsg( KMReaderWin *win, KMMessage *msg );
     void updateFileMenu();
     void newFromTemplate( KMMessage *msg );
-    void layoutSplitters();
 
     // helper functions for keeping reference to mFolder
     void openFolder();
@@ -296,6 +295,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
                           const QMap<QString, int> & newInFolder );
     void getAccountMenu();
     void getTransportMenu();
+    void layoutSplitters();
     void slotHelp();
     void slotFilter();
     void slotPopFilter();

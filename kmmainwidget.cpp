@@ -475,6 +475,8 @@ void KMMainWidget::layoutSplitters()
 
   // If the widget is now shown yet, it still has the minimum size. We need the
   // correct size for the calculations, so ask the parent widget about it.
+  // This should normally not happen since readConfig() delays the call to
+  // layoutSplitters() if the startup is not done yet, but better be safe.
   int realWidth = width();
   int realHeight = height();
   if ( realWidth == defaultMinimumWidth && realHeight == defaultMinimumHeight ) {
@@ -536,6 +538,9 @@ void KMMainWidget::layoutSplitters()
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( activated() ),
              mMsgView, SLOT( slotCopySelectedText() ) );
+
+  // Only re-enable the updates after we are done with the layouting
+  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -646,8 +651,16 @@ void KMMainWidget::readConfig()
     }
   }
 
-  if ( layoutChanged )
-    layoutSplitters();
+  if ( layoutChanged ) {
+
+    // If the startup is not yet done, the size of this widget is not calculated
+    // correctly. Therefore, wait until the next pass of the event loop using
+    // a timer.
+    if ( mStartupDone )
+      layoutSplitters();
+    else
+      QTimer::singleShot( 0, this, SLOT( layoutSplitters() ) );
+  }
 
   if ( mStartupDone )
   {
@@ -672,7 +685,6 @@ void KMMainWidget::readConfig()
   }
   updateMessageMenu();
   updateFileMenu();
-  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1049,6 +1061,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
+  //FIXME
   QDBusMessage message =
       QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
   QDBusConnection::sessionBus().send(message);
