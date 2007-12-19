@@ -83,6 +83,7 @@ using namespace KMail;
 #include <QRadioButton>
 
 #include <errno.h>
+#include <unistd.h>
 
 #define UIDCACHE_VERSION 1
 
@@ -2362,7 +2363,7 @@ void KMFolderCachedImap::slotMultiSetACLResult( KJob *job )
     static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   } else {
-    kmkernel->iCalIface().addFolderChange( folder(), ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
   }
 
   if ( mAccount->slave() ) {
@@ -2737,7 +2738,7 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
      * The incidences-for changed, we must trigger the freebusy creation.
      * HACK: in theory we would need a new enum value for this.
      */
-    kmkernel->iCalIface().addFolderChange( folder(), ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
   }
 }
 

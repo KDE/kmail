@@ -471,7 +471,7 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                   << sernum;
 
     //debugBodyParts( "after addMsg", *msg );
-    addFolderChange( &folder,Contents );
+    addFolderChange( &folder,ContentsChanged );
     syncFolder( &folder );
   } else
     kError(5006) <<"addIncidenceKolab(): Message *NOT* saved!";
@@ -875,7 +875,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
       rc = newMsg->getMsgSerNum();
       kDebug(5006) <<"forget about" << sernum <<", it's" << rc <<" now";
     }
-    addFolderChange( f, Contents );
+    addFolderChange( f, ContentsChanged );
     syncFolder( f );
   } else {
     // Message not found - store it newly
@@ -1345,7 +1345,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   assert(idx != -1);
   srcFolder->removeMsg(idx);
   delete msg;
-  addFolderChange( srcFolder, Contents );
+  addFolderChange( srcFolder, ContentsChanged );
 }
 
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
@@ -1501,8 +1501,8 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // there could be 0, 1, or N kolab resources at this point.
   // We can hack the N case, but not the 0 case.
   // So the idea of a DCOP signal for this wouldn't work.
-  if ( ( _changes & Contents ) ||
-       ( _changes & KMail::ACL ) ) {
+  if ( ( _changes & KMail::ContentsChanged ) ||
+       ( _changes & KMail::ACLChanged ) ) {
     if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
       triggerKolabFreeBusy( folderURL );
   }

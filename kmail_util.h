@@ -54,6 +54,6 @@ namespace KMail {
   enum StorageFormat { StorageIcalVcard, StorageXML };
 
   /// This bitfield indicates which changes have been made in a folder, at syncing time.
-  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
+  enum FolderChanges { NoChange = 0, ContentsChanged = 1, ACLChanged = 2 };
 }
 #endif
