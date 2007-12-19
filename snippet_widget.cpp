@@ -99,14 +99,25 @@ SnippetWidget::~SnippetWidget()
 void SnippetWidget::slotAdd()
 {
   //kdDebug(5006) << "Ender slotAdd()" << endl;
-  SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true);
+  SnippetDlg dlg( mActionCollection, this, "SnippetDlg");
 
   /*check if the user clicked a SnippetGroup
     If not, we set the group variable to the SnippetGroup
     which the selected item is a child of*/
   SnippetGroup * group = dynamic_cast<SnippetGroup*>(selectedItem());
-  if (!group)
+  if ( !group && selectedItem() )
     group = dynamic_cast<SnippetGroup*>(selectedItem()->parent());
+
+  /* still no group, let's make a default one */
+  if (!group ) {
+    if ( _list.isEmpty() ) {
+      group = new SnippetGroup(this, i18n("General"), SnippetGroup::getMaxId() );
+      _list.append( group );
+    } else {
+      group = dynamic_cast<SnippetGroup*>( _list.first() );
+    }
+  }
+  assert( group );
 
   /*fill the combobox with the names of all SnippetGroup entries*/
   for (SnippetItem *it=_list.first(); it; it=_list.next()) {
@@ -149,7 +160,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem* parent, const QString& name, 
 void SnippetWidget::slotAddGroup()
 {
   //kdDebug(5006) << "Ender slotAddGroup()" << endl;
-  SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true);
+  SnippetDlg dlg( mActionCollection, this, "SnippetDlg");
   dlg.setShowShortcut( false );
   dlg.snippetText->setEnabled(false);
   dlg.snippetText->setText("GROUP");
@@ -217,7 +228,7 @@ void SnippetWidget::slotEdit( QListViewItem* item )
     return;
 
   //init the dialog
-  SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true);
+  SnippetDlg dlg( mActionCollection, this, "SnippetDlg");
   dlg.snippetName->setText(pSnippet->getName());
   dlg.snippetText->setText(pSnippet->getText());
   dlg.keyButton->setShortcut( pSnippet->getAction()->shortcut(), false );
@@ -265,7 +276,7 @@ void SnippetWidget::slotEditGroup()
     return;
 
   //init the dialog
-  SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true );
+  SnippetDlg dlg( mActionCollection, this, "SnippetDlg" );
   dlg.setShowShortcut( false );
   dlg.snippetName->setText(pGroup->getName());
   dlg.snippetText->setText(pGroup->getText());
@@ -321,7 +332,6 @@ void SnippetWidget::writeConfig()
                                      //they get overwritten by a more recent entry
   _cfg->setGroup("SnippetPart");
 
-  SnippetItem *item;
   QString strKeyName="";
   QString strKeyText="";
   QString strKeyId="";
@@ -329,8 +339,7 @@ void SnippetWidget::writeConfig()
   int iSnipCount = 0;
   int iGroupCount = 0;
 
-  SnippetItem* lastItem=_list.last();
-  item=_list.first();
+  SnippetItem* item=_list.first();
   while ( item != 0) {
 
     //kdDebug(5006) << "-->ERROR " << item->getName() << endl;
@@ -535,13 +544,11 @@ void SnippetWidget::showPopupMenu( QListViewItem * item, const QPoint & p, int )
         }
         popup.insertItem( SmallIconSet("editdelete"), i18n("&Remove"), this, SLOT( slotRemove() ) );
         popup.insertSeparator();
-        popup.insertItem( i18n("&Add Snippet..."), this, SLOT( slotAdd() ) );
-        popup.insertItem( i18n("Add G&roup..."), this, SLOT( slotAddGroup() ) );
     } else {
         popup.insertTitle(i18n("Text Snippets"));
-
-        popup.insertItem( i18n("Add Group..."), this, SLOT( slotAddGroup() ) );
     }
+    popup.insertItem( i18n("&Add Snippet..."), this, SLOT( slotAdd() ) );
+    popup.insertItem( i18n("Add G&roup..."), this, SLOT( slotAddGroup() ) );
 
     popup.exec(p);
 }
@@ -907,7 +914,7 @@ void SnippetWidget::slotDropped(QDropEvent *e, QListViewItem *)
     //kdDebug(5006) << "encData: " << encData << endl;
 
     //... then fill the dialog with the given data
-    SnippetDlg dlg( mActionCollection, this, "SnippetDlg", true );
+    SnippetDlg dlg( mActionCollection, this, "SnippetDlg" );
     dlg.snippetName->clear();
     dlg.snippetText->setText(encData);
 
