@@ -195,9 +195,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mHeadersToEditorSplitter->setChildrenCollapsible( false );
   mHeadersArea = new QWidget( mHeadersToEditorSplitter );
   mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horData(), QSizePolicy::Maximum );
-  QValueList<int> defaultSizes;
-  defaultSizes << 0;
-  mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
   v->addWidget( mHeadersToEditorSplitter );
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
@@ -696,6 +693,15 @@ void KMComposeWin::readConfig(void)
   if (siz.height() < 200) siz.setHeight(200);
   resize(siz);
 
+  if ( !GlobalSettings::self()->snippetSplitterPosition().isEmpty() ) {
+    mSnippetSplitter->setSizes( GlobalSettings::self()->snippetSplitterPosition() );
+  } else {
+    QValueList<int> defaults;
+    defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
+    mSnippetSplitter->setSizes( defaults );
+  }
+
+
   mIdentity->setCurrentIdentity( mId );
 
   kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
@@ -750,6 +756,8 @@ void KMComposeWin::writeConfig(void)
 
   KConfigGroupSaver saver( KMKernel::config(), "Geometry" );
   saveMainWindowSettings( KMKernel::config(), "Composer" );
+  GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
+
   // make sure config changes are written to disk, cf. bug 127538
   GlobalSettings::self()->writeConfig();
 }

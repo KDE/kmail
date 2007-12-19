@@ -16,7 +16,6 @@
 #include <klineedit.h>
 #include <ktextedit.h>
 #include <kmessagebox.h>
-#include <qsplitter.h>
 #include <kconfig.h>
 #include <qtooltip.h>
 #include <kpopupmenu.h>

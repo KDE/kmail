@@ -474,6 +474,8 @@
           <default>false</default>
       </entry>
 
+      <entry name="SnippetSplitterPosition" type="IntList"/>
+
       <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
           <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
           <default>false</default>
