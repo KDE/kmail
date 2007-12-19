@@ -820,7 +820,7 @@ namespace KMail {
 
 	// 3D borders
 	if(topLevel)
-	    headerStr += 
+	    headerStr +=
 		"<div style=\"position: fixed; top: 0px; left: 0px; background-color: #606060; "
 		"background-image: url("+imgpath+"shadow_left.png); width: 10px; min-height: 100%;\">&nbsp;</div>"
 		"<div style=\"position: fixed; top: 0px; right: 0px;  background-color: #606060; "
@@ -875,7 +875,7 @@ namespace KMail {
 	    +headerPart+
 	    "      </td> "
 	    "     </tr> ";
-	
+
 	// header-bottom
 	headerStr +=
 	    "    </table> \n"
@@ -891,19 +891,20 @@ namespace KMail {
 	    "  </tr> \n"
 	    " </table> \n";
 
-	// kmail icon
-	if(topLevel)
-	    headerStr += 
-		"<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 200px;\">\n"
-		"<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
-		"</div>\n";
-	
-	// attachments
-	headerStr +=
-	    "<div class=\"noprint\" style=\"position: fixed; top: 60px; right: 20px; width: 91px; height: 200px;\">"
-	    "<div id=\"attachmentInjectionPoint\"></div>"
-	    "</div>\n";
-	
+    // kmail icon
+    if(topLevel) {
+        headerStr +=
+        "<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 200px;\">\n"
+        "<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
+        "</div>\n";
+
+        // attachments
+        headerStr +=
+        "<div class=\"noprint\" style=\"position: fixed; top: 60px; right: 20px; width: 91px; height: 200px;\">"
+        "<div id=\"attachmentInjectionPoint\"></div>"
+        "</div>\n";
+    }
+
 	headerStr += "<div style=\"padding: 6px;\">";
 
 	// TODO
