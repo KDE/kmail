@@ -291,10 +291,9 @@ void KMMessageTagMgr::writeConfig( bool withSync )
 
   // Now, write out the new stuff:
   int i = 0;
-  QString grpName;
-
   foreach ( KMMessageTagDescription *description, *mTagList ) {
     if ( ! description->isEmpty() ) {
+      QString grpName;
       grpName.sprintf( "MessageTag #%d", i );
       KConfigGroup group( config, grpName );
       description->writeConfig( group );
