@@ -116,24 +116,26 @@ static void loadPlugins() {
       kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it <<"\" is not valid!";
       continue;
     }
-    for ( int i = 0 ; const KMail::Interface::BodyPartFormatter * bfp = plugin->bodyPartFormatter( i ) ; ++i ) {
+    const KMail::Interface::BodyPartFormatter * bfp;
+    for ( int i = 0 ; (bfp = plugin->bodyPartFormatter( i )) ; ++i ) {
       const char * type = plugin->type( i );
       if ( !type || !*type ) {
-	kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
-			  << "\" returned empty type specification for index"
-			  << i;
-	break;
+        kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
+                  << "\" returned empty type specification for index"
+                  << i;
+        break;
       }
       const char * subtype = plugin->subtype( i );
       if ( !subtype || !*subtype ) {
-	kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
-			  << "\" returned empty subtype specification for index"
-			  << i;
-	break;
+        kWarning( 5006 ) <<"BodyPartFormatterFactory: plugin \"" << *it
+                  << "\" returned empty subtype specification for index"
+                  << i;
+        break;
       }
       insertBodyPartFormatter( type, subtype, bfp );
     }
-    for ( int i = 0 ; const KMail::Interface::BodyPartURLHandler * handler = plugin->urlHandler( i ) ; ++i )
+    const KMail::Interface::BodyPartURLHandler * handler;
+    for ( int i = 0 ; (handler = plugin->urlHandler( i )) ; ++i )
       KMail::URLHandlerManager::instance()->registerHandler( handler );
   }
 }
