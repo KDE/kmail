@@ -41,7 +41,7 @@ tooltips which contains the text of the snippet
 class SnippetWidget : public KListView, public QToolTip
 {
   Q_OBJECT
-  
+
 public:
     SnippetWidget(KMEdit* editor, KActionCollection* actionCollection, QWidget* parent = 0);
     ~SnippetWidget();
@@ -58,7 +58,7 @@ protected:
     bool acceptDrag (QDropEvent *event) const;
 
 private:
-    void insertIntoActiveView(QString text);
+    void insertIntoActiveView( const QString &text );
     QString parseText(QString text, QString del="$");
     bool showMultiVarDialog(QMap<QString, QString> * map, QMap<QString, QString> * mapSave,
                             int & iWidth, int & iBasicHeight, int & iOneHeight);
@@ -71,7 +71,7 @@ private:
     SnippetConfig _SnippetConfig;
     KMEdit* mEditor;
     KActionCollection* mActionCollection;
-    
+
 public slots:
     void slotRemove();
     void slotEdit( QListViewItem* item_ = 0 );

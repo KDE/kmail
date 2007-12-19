@@ -129,10 +129,10 @@ void SnippetWidget::slotAdd()
  */
 SnippetItem* SnippetWidget::makeItem( SnippetItem* parent, const QString& name, const QString& text, const KShortcut& shortcut )
 {
-    SnippetItem * item = new SnippetItem(parent, name, text); 
+    SnippetItem * item = new SnippetItem(parent, name, text);
     const QString actionName = i18n("Snippet %1").arg(name);
     const QString normalizedName = QString(actionName).replace(" ", "_");
-    if ( !mActionCollection->action(normalizedName.utf8() ) ) {  
+    if ( !mActionCollection->action(normalizedName.utf8() ) ) {
         KAction * action = new KAction( actionName, shortcut, item,
                                         SLOT( slotExecute() ), mActionCollection,
                                         normalizedName.utf8() );
@@ -304,10 +304,9 @@ void SnippetWidget::slotExecuted(QListViewItem * item)
     \fn SnippetWidget::insertIntoActiveView(QString text)
     Inserts the parameter text into the activ view
  */
-void SnippetWidget::insertIntoActiveView(QString text)
+void SnippetWidget::insertIntoActiveView( const QString &text )
 {
-    QTextStream *s = new QTextStream(text, IO_ReadWrite);
-    mEditor->insertText(s);
+    mEditor->insert( text );
 }
 
 
@@ -356,7 +355,7 @@ void SnippetWidget::writeConfig()
       _cfg->writeEntry(strKeyName, item->getName());
       _cfg->writeEntry(strKeyText, item->getText());
       _cfg->writeEntry(strKeyId, item->getParent());
-      
+
       KAction * action = item->getAction();
       assert( action );
       const KShortcut& sc = action->shortcut();
