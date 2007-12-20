@@ -98,9 +98,9 @@ public:
 
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return false; }
- 
+
   /** reimp */
-  size_t doFolderSize() const;
+  virtual qint64 doFolderSize() const;
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,

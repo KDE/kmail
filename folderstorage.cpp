@@ -840,7 +840,7 @@ int FolderStorage::countUnread()
   return (unread > 0) ? unread : 0;
 }
 
-size_t FolderStorage::folderSize() const
+qint64 FolderStorage::folderSize() const
 {
     if ( mSize != -1 ) {
         return mSize;
@@ -920,8 +920,8 @@ void FolderStorage::readConfig()
     mTotalMsgs = group.readEntry("TotalMsgs", -1 );
   mCompactable = group.readEntry("Compactable", true );
   if ( mSize == -1 )
-      mSize = group.readEntry("FolderSize", -1);
-  
+    mSize = group.readEntry( "FolderSize", -1 );
+
   int type = group.readEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );

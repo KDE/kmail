@@ -103,7 +103,7 @@ void FavoriteFolderViewItem::updateCount()
   }
 
   if ( !folder()->noContent() ) {
-    int size = folder()->storage()->folderSize();
+    qint64 size = folder()->storage()->folderSize();
     if ( size != folderSize() ) {
       setFolderSize( size );
       repaint = true;

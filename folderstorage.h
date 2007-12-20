@@ -240,7 +240,7 @@ public:
   virtual int countUnread();
 
   /** Total size of the contents of this folder. */
-  size_t folderSize() const;
+  qint64 folderSize() const;
 
   /** Return whether the folder is close to its quota limit, which can
    * be reflected in the UI.  */
@@ -594,7 +594,7 @@ friend class KMMsgDict;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 
-  virtual size_t doFolderSize() const { return 0; };
+  virtual qint64 doFolderSize() const { return 0; };
 
   int mOpenCount;
   int mQuiet;

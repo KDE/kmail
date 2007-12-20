@@ -23,8 +23,6 @@
 #include "kmfolderindex.h"
 #include "mboxjob.h"
 
-#include <sys/types.h> // for size_t
-
 #include <QList>
 
 namespace KMail {
@@ -115,7 +113,7 @@ public:
   virtual IndexStatus indexStatus();
 
   /**  reimp */
-  size_t doFolderSize() const;
+  virtual qint64 doFolderSize() const;
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
