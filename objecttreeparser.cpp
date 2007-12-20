@@ -719,7 +719,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                        &errTxt );
     kDebug(5006) <<"ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
     aErrorText = CryptPlugWrapper::errorIdToText( errId, passphraseError );
-    actuallyEncrypted = errId != GPG_ERR_NO_DATA;
+    actuallyEncrypted = gpg_err_code( errId ) != GPG_ERR_NO_DATA;
     if ( bDecryptionOk )
       decryptedData = cleartext;
     else if ( mReader && showWarning ) {
