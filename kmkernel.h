@@ -4,7 +4,6 @@
 #define _KMKERNEL_H
 
 #include <QByteArray>
-#include <QLabel>
 #include <QList>
 #include <QObject>
 #include <QString>
@@ -84,103 +83,166 @@ class KMMessageTagMgr;
 class KMAIL_EXPORT KMKernel : public QObject
 {
   Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmail")
 
 public:
   explicit KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
 
-  /** Start of D-Bus callable stuff */
+/**
+ * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
+ * otherwise they can't be accessed.
+ */
+public Q_SLOTS:
 
-  void checkMail ();
-  QStringList accounts();
-  void checkAccount (const QString &account);
-  /** returns id of composer if more are opened */
-  int openComposer (const QString &to, const QString &cc, const QString &bcc,
-                    const QString &subject, const QString &body, int hidden,
-                    const KUrl &messageFile, const KUrl::List &attachURLs,
-                    const QStringList &customHeaders);
+  Q_SCRIPTABLE void checkMail();
+  Q_SCRIPTABLE void openReader() { openReader( false ); }
 
-  int openComposer (const QString &to, const QString &cc,
-                    const QString &bcc, const QString &subject,
-                    const QString &body, int hidden,
-                    const QString &attachName,
-                    const QByteArray &attachCte,
-                    const QByteArray &attachData,
-                    const QByteArray &attachType,
-                    const QByteArray &attachSubType,
-                    const QByteArray &attachParamAttr,
-                    const QString &attachParamValue,
-                    const QByteArray &attachContDisp,
-                    const QByteArray &attachCharset);
-
-  QDBusObjectPath openComposer(const QString &to, const QString &cc,
-                               const QString &bcc, const QString &subject,
-                               const QString &body,bool hidden);
-
-  /** D-Bus call used to set the default transport. */
-
-  void setDefaultTransport( const QString & transport );
-
-  /** D-Bus call used by the Kontact plugin to create a new message. */
-  QDBusObjectPath newMessage(const QString &to,
-                     const QString &cc,
-                     const QString &bcc,
-                     bool hidden,
-                     bool useFolderId,
-                     const QString &messageFile,
-                     const QString &attachURL);
-
-  int sendCertificate( const QString& to, const QByteArray& certData );
-
-  void openReader() { openReader( false ); }
-
-  int dbusAddMessage(const QString & foldername, const QString & messagefile,
-                     const QString & MsgStatusFlags = QString());
-  int dbusAddMessage(const QString & foldername, const KUrl & messagefile,
-                     const QString & MsgStatusFlags = QString());
-  void dbusResetAddMessage();
-  /** add messages without rejecting duplicates */
-  int dbusAddMessage_fastImport(const QString & foldername, const QString & messagefile,
-                                const QString & MsgStatusFlags = QString());
-  int dbusAddMessage_fastImport(const QString & foldername, const KUrl & messagefile,
-                                const QString & MsgStatusFlags = QString());
-
-  QStringList folderList() const;
-  QString getFolder( const QString& vpath );
-  void selectFolder( const QString &folder );
-  int timeOfLastMessageCountChange() const;
-  virtual bool showMail( quint32 serialNumber, const QString &messageId );
-  virtual QString getFrom( quint32 serialNumber );
-  virtual QString debugScheduler();
-  virtual QString debugSernum( quint32 serialNumber );
-  int viewMessage( const KUrl & messageFile );
+  /**
+   * Compact all folders, used for the GUI action (and from D-Bus)
+   */
+  Q_SCRIPTABLE void compactAllFolders();
 
   /**
    * Pauses all background jobs and does not
    * allow new background jobs to be started.
-  */
-  virtual void pauseBackgroundJobs();
+   */
+  Q_SCRIPTABLE void pauseBackgroundJobs();
 
   /**
    * Resumes all background jobs and allows
    * new jobs to be started.
-  */
-  virtual void resumeBackgroundJobs();
+   */
+  Q_SCRIPTABLE void resumeBackgroundJobs();
 
   /**
    * Stops all network related jobs and enter offline mode
    * New network jobs cannot be started.
-  */
-  void stopNetworkJobs();
+   */
+  Q_SCRIPTABLE void stopNetworkJobs();
 
   /**
    * Resumes all network related jobs and enter online mode
    * New network jobs can be started.
-  */
-  void resumeNetworkJobs();
+   */
+  Q_SCRIPTABLE void resumeNetworkJobs();
 
-  /** End of D-Bus callable stuff */
+  Q_SCRIPTABLE QStringList folderList() const;
 
+  Q_SCRIPTABLE QStringList accounts();
+
+  /**
+   * Checks the account with the specified name for new mail.
+   * If the account name is empty, all accounts not excluded from manual
+   * mail check will be checked.
+   */
+  Q_SCRIPTABLE void checkAccount( const QString & account );
+
+  Q_SCRIPTABLE void selectFolder( const QString & folder );
+
+  Q_SCRIPTABLE QString getFolder( const QString & vpath );
+
+  Q_SCRIPTABLE bool canQueryClose();
+
+  /**
+   * D-Bus call used to set the default transport.
+   */
+  Q_SCRIPTABLE void setDefaultTransport( const QString & transport );
+
+  Q_SCRIPTABLE int timeOfLastMessageCountChange() const;
+
+  Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
+                                   const QString & messagefile,
+                                   const QString & MsgStatusFlags = QString() );
+
+  Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
+                                   const KUrl & messagefile,
+                                   const QString & MsgStatusFlags = QString() );
+
+  /**
+   * Add messages without rejecting duplicates
+   */
+  Q_SCRIPTABLE int dbusAddMessage_fastImport( const QString & foldername,
+                                              const QString & messagefile,
+                                              const QString & MsgStatusFlags = QString() );
+  Q_SCRIPTABLE int dbusAddMessage_fastImport( const QString & foldername,
+                                              const KUrl & messagefile,
+                                              const QString & MsgStatusFlags = QString() );
+
+  Q_SCRIPTABLE void dbusResetAddMessage();
+
+  Q_SCRIPTABLE int sendCertificate( const QString & to,
+                                    const QByteArray & certData );
+
+  Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
+
+  Q_SCRIPTABLE QString debugScheduler();
+
+  /**
+   * returns id of composer if more are opened
+   */
+  Q_SCRIPTABLE int openComposer( const QString & to,
+                                 const QString & cc,
+                                 const QString & bcc,
+                                 const QString & subject,
+                                 const QString & body,
+                                 int hidden,
+                                 const KUrl & messageFile,
+                                 const KUrl::List & attachURLs,
+                                 const QStringList & customHeaders );
+
+  Q_SCRIPTABLE int openComposer( const QString & to,
+                                 const QString & cc,
+                                 const QString & bcc,
+                                 const QString & subject,
+                                 const QString & body,
+                                 int hidden,
+                                 const QString & attachName,
+                                 const QByteArray & attachCte,
+                                 const QByteArray  &attachData,
+                                 const QByteArray & attachType,
+                                 const QByteArray & attachSubType,
+                                 const QByteArray & attachParamAttr,
+                                 const QString & attachParamValue,
+                                 const QByteArray & attachContDisp,
+                                 const QByteArray & attachCharset );
+
+  Q_SCRIPTABLE QDBusObjectPath openComposer( const QString & to,
+                                             const QString & cc,
+                                             const QString & bcc,
+                                             const QString & subject,
+                                             const QString & body,
+                                             bool hidden );
+
+  /**
+   * D-Bus call used by the Kontact plugin to create a new message.
+   */
+  Q_SCRIPTABLE QDBusObjectPath newMessage( const QString & to,
+                                           const QString & cc,
+                                           const QString & bcc,
+                                           bool hidden,
+                                           bool useFolderId,
+                                           const QString & messageFile,
+                                           const QString & attachURL );
+
+  Q_SCRIPTABLE bool showMail( quint32 serialNumber, const QString & messageId );
+
+  Q_SCRIPTABLE QString getFrom( quint32 serialNumber );
+
+  Q_SCRIPTABLE QString debugSernum( quint32 serialNumber );
+
+  Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
+
+Q_SIGNALS:
+
+  Q_SCRIPTABLE void unreadCountChanged();
+
+/**
+ * End of D-Bus callable stuff
+ */
+
+
+public:
 
   /** A static helper function that asks the user
    * if they want to go online.
@@ -266,8 +328,6 @@ public:
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
-  /** Compact all folders, used for the gui action (and from DCOP) */
-  void compactAllFolders();
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
@@ -296,7 +356,6 @@ public:
   bool unregisterSystemTrayApplet( const KSystemTrayIcon* );
 
   /// Reimplemented from KMailIface
-  bool handleCommandLine( bool noArgsOpensReader );
   void emergencyExit( const QString& reason );
 
   /** Returns a message serial number that hasn't been used yet. */
@@ -328,8 +387,6 @@ public:
    * This is used to cancel mail checks when closing the last mainwindow
    */
   void abortMailCheck();
-
-  bool canQueryClose();
 
   /**
    * Called by the folder tree if the count of unread/total messages changed.
@@ -446,7 +503,7 @@ private:
   MailServiceImpl *mMailService;
 
   // the time of the last change of the unread or total count of a folder;
-  // this can be queried via DCOP in order to determine whether the counts
+  // this can be queried via D-Bus in order to determine whether the counts
   // need to be updated (e.g. in the Summary in Kontact)
   int mTimeOfLastMessageCountChange;
 
@@ -462,10 +519,10 @@ private:
 
   KWallet::Wallet *mWallet;
 
-  // variables used by dcopAddMessage()
-  QStringList mAddMessageMsgIds;
-  QString     mAddMessageLastFolder;
-  KMFolder    *mAddMsgCurrentFolder;
+  // variables used by dbusAddMessage()
+  QStringList           mAddMessageMsgIds;
+  QString               mAddMessageLastFolder;
+  KMFolder             *mAddMsgCurrentFolder;
   KMail::FolderAdaptor *folderAdaptor;
 };
 

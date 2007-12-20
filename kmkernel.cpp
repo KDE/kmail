@@ -181,7 +181,7 @@ KMKernel::~KMKernel ()
 void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMail", this);
+  QDBusConnection::sessionBus().registerObject( "/KMail", this );
   mICalIface = new KMailICalIfaceImpl();
   mICalIface->readConfig();
   mMailService =  new MailServiceImpl();
@@ -207,7 +207,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      // that the user wants to send a message with subject "ession" but
      // (most likely) that the user clicked on KMail's system tray applet
      // which results in KMKernel::raise() calling "kmail kmail newInstance"
-     // via dcop which apparently executes the application with the original
+     // via D-Bus which apparently executes the application with the original
      // command line arguments and those include "-session ..." if
      // kmail/kontact was restored by session management
      if ( subj == "ession" ) {
@@ -312,7 +312,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  kmkernel->acctMgr()->checkMail(false);
+  kmkernel->acctMgr()->checkMail( false );
 }
 
 QStringList KMKernel::accounts()
@@ -320,13 +320,15 @@ QStringList KMKernel::accounts()
   return kmkernel->acctMgr()->getAccounts();
 }
 
-void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
+void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
-  kDebug(5006) <<"KMKernel::checkMail called";
-
-  KMAccount* acct = kmkernel->acctMgr()->findByName(account);
-  if (acct)
-    kmkernel->acctMgr()->singleCheckMail(acct, false);
+  if ( account.isEmpty() )
+    checkMail();
+  else {
+    KMAccount* acct = kmkernel->acctMgr()->findByName( account );
+    if ( acct )
+      kmkernel->acctMgr()->singleCheckMail (acct, false );
+  }
 }
 
 void KMKernel::openReader( bool onlyCheck )
@@ -682,7 +684,7 @@ int KMKernel::dbusAddMessage( const QString & foldername, const QString & msgUrl
 int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
                               const QString & MsgStatusFlags)
 {
-  kDebug(5006) <<"KMKernel::dbusAddMessage called";
+  kDebug(5006);
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -752,7 +754,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
     if ( mAddMsgCurrentFolder ) {
       if (readFolderMsgIds) {
 
-      	// OLD COMMENT:
+        // OLD COMMENT:
         // Try to determine if a message already exists in
         // the folder. The message id that is searched for, is
         // the subject line + the date. This should be quite
@@ -761,25 +763,25 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
         // If the subject is empty, the fromStrip string
         // is taken.
 
-	// NEW COMMENT from Danny Kukawka (danny.kukawka@web.de):
-	// subject line + the date is only unique if the following
-	// return a correct unique value:
-	// 	time_t  DT = mb->date();
-        // 	QString dt = ctime(&DT);
-	// But if the datestring in the Header isn't RFC conform
-	// subject line + the date isn't unique.
-	//
-	// The only uique headerfield is the Message-ID. In some
-	// cases this could be empty. I then I use the
-	// subject line + dateStr .
+        // NEW COMMENT from Danny Kukawka (danny.kukawka@web.de):
+        // subject line + the date is only unique if the following
+        // return a correct unique value:
+        //   time_t  DT = mb->date();
+        //   QString dt = ctime(&DT);
+        // But if the datestring in the Header isn't RFC conform
+        // subject line + the date isn't unique.
+        //
+        // The only uique headerfield is the Message-ID. In some
+        // cases this could be empty. I then I use the
+        // subject line + dateStr .
 
         int i;
 
         mAddMsgCurrentFolder->open( "dbusadd" );
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
           KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
-	  QString id = mb->msgIdMD5();
-	  if ( id.isEmpty() ) {
+          QString id = mb->msgIdMD5();
+          if ( id.isEmpty() ) {
             id = mb->subject();
             if ( id.isEmpty() )
               id = mb->fromStrip();
@@ -787,7 +789,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
               id = mb->toStrip();
 
             id += mb->dateStr();
-	  }
+          }
 
           //fprintf(stderr,"%s\n",(const char *) id);
           if ( !id.isEmpty() ) {
@@ -799,13 +801,13 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
 
       QString msgId = msg->msgIdMD5();
       if ( msgId.isEmpty()) {
-	msgId = msg->subject();
-	if ( msgId.isEmpty() )
+        msgId = msg->subject();
+        if ( msgId.isEmpty() )
           msgId = msg->fromStrip();
         if ( msgId.isEmpty() )
           msgId = msg->toStrip();
 
-	msgId += msg->dateStr();
+        msgId += msg->dateStr();
       }
 
       int k = mAddMessageMsgIds.indexOf( msgId );
@@ -831,7 +833,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
         }
       } else {
         //qDebug( "duplicate: " + msgId + "; subj: " + msg->subject() + ", from: " + msgId = msg->fromStrip());
-	retval = -4;
+        retval = -4;
       }
     } else {
       retval = -1;
@@ -861,7 +863,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 {
   // Use this function to import messages without
   // search for already existing emails.
-  kDebug(5006) <<"KMKernel::dbusAddMessage_fastImport called";
+  kDebug(5006);
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -991,13 +993,15 @@ QString KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface(DBUS_KMAIL, "/MainApplication", "org.kde.KUniqueApplication", QDBusConnection::sessionBus());
+  QDBusInterface iface( DBUS_KMAIL, "/MainApplication",
+                        "org.kde.KUniqueApplication",
+                        QDBusConnection::sessionBus());
   QDBusReply<int> reply;
-  if (!iface.isValid() || !(reply = iface.call("newInstance")).isValid())
+  if ( !iface.isValid() || !( reply = iface.call( "newInstance" ) ).isValid() )
   {
-       QDBusError err = iface.lastError();
-       kError() <<"Communication problem with kmail"
-                 << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
+    QDBusError err = iface.lastError();
+    kError() << "Communication problem with KMail. "
+             << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
   }
 
 }

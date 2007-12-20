@@ -4569,7 +4569,7 @@ void SecurityPage::SMimeTab::doLoadOther() {
   }
 
   // Force re-parsing gpgconf data, in case e.g. kleopatra or "configure backend" was used
-  // (which ends up calling us via dcop)
+  // (which ends up calling us via D-Bus)
   mConfig->clear();
 
   // Create config entries

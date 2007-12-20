@@ -231,7 +231,7 @@ void JobScheduler::slotJobFinished()
     restartTimer();
 }
 
-// DCOP call to pause any background jobs
+// D-Bus call to pause any background jobs
 void JobScheduler::pause()
 {
   mPendingImmediateTasks = 0;

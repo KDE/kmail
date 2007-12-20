@@ -203,11 +203,20 @@ set(kmailprivate_LIB_SRCS
    scalix.cpp
 )
 
+qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
+
+qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
+
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
-  ${CMAKE_SOURCE_DIR}/kmail/org.kde.kmail.kmail.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+  ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
   ${CMAKE_SOURCE_DIR}/korganizer/org.kde.Korganizer.Calendar.xml
 )
+
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h KMail::MailServiceImpl)
+
 
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui )
@@ -216,8 +225,7 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 #   kmailIface.h
 #   kmailicalIface.h
 #   folderIface.h )
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
-qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS org.kde.kmail.kmail.xml kmkernel.h  KMKernel)
+
 
 # Generate org.kde.kmail.groupware.xml from kmailicalIface.h
 #qt4_generate_dbus_interface( groupwareadaptor.h org.kde.kmail.groupware.xml )
@@ -258,12 +266,11 @@ install(TARGETS kcm_kmail  DESTINATION ${PLUGIN_INSTALL_DIR})
 
 set(kmailpart_PART_SRCS kmail_part.cpp )
 
-qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
-qt4_add_dbus_adaptor( kmailpart_PART_SRCS org.kde.kmail.kmailpart.xml kmail_part.h  KMailPart)
+qt4_generate_dbus_interface( kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a )
+qt4_add_dbus_adaptor( kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart )
+qt4_add_dbus_interfaces( kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml )
 
 kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
-
-
 
 kdepim4_link_unique_libraries(kmailpart  ${KDE4_KDECORE_LIBS} kmailprivate )
 
@@ -308,7 +315,13 @@ install( FILES kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc kmail.notifyrc km
 install( FILES dbusmail.desktop dbusimap.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install( FILES application_octetstream.desktop  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter)
 
-install(FILES org.kde.kmail.kmailpart.xml org.kde.kmail.mailcomposer.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+# Install the D-Bus interface XML files
+install( FILES
+         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
+         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+         ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
+         DESTINATION
+         ${DBUS_INTERFACES_INSTALL_DIR} )
 
 kde4_install_icons( ${ICON_INSTALL_DIR} )
 

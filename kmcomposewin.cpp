@@ -167,7 +167,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  QDBusConnection::sessionBus().registerObject(mdbusObjectPath , this );
+  QDBusConnection::sessionBus().registerObject( mdbusObjectPath , this );
 
   mSubjectTextWasSpellChecked = false;
   if ( kmkernel->xmlGuiInstance().isValid() ) {

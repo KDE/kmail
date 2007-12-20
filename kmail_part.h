@@ -49,7 +49,9 @@ class ActionManager;
 
 class KMAIL_EXPORT KMailPart: public KParts::ReadOnlyPart
 {
-    Q_OBJECT
+  Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmailpart")
+
   public:
     KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
     virtual ~KMailPart();
@@ -57,9 +59,9 @@ class KMAIL_EXPORT KMailPart: public KParts::ReadOnlyPart
     QWidget* parentWidget() const;
 
   public slots:
-    virtual void save() { /*TODO*/ }
-    virtual void exit();
-    virtual void updateEditMenu() {}
+    Q_SCRIPTABLE void save() { /*TODO*/ }
+    Q_SCRIPTABLE void exit();
+    void updateEditMenu() {}
     void exportFolder( KMFolder* folder );
     void slotIconChanged( KMFolderTreeItem *fti );
     void slotNameChanged( KMFolderTreeItem *fti );

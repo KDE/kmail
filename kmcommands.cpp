@@ -1662,9 +1662,10 @@ KMCommand::Result KMSetStatusCommand::execute()
      f->setStatus( (*it2), mStatus, mToggle );
      ++it2;
   }
+
   QDBusMessage message =
-    QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
-  QDBusConnection::sessionBus().send(message);
+    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+  QDBusConnection::sessionBus().send( message );
   return OK;
 }
 
@@ -3413,7 +3414,9 @@ KMCommand::Result CreateTodoCommand::execute()
   QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + '/' + msg->msgId();
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
 
-  OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );
+  OrgKdeKorganizerCalendarInterface *iface =
+      new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
+                                             QDBusConnection::sessionBus(), this );
   iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
                          uri, tf.fileName(), QStringList(), "message/rfc822" );
   delete iface;
