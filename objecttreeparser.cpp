@@ -643,6 +643,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       std::vector<GpgME::Signature> &signatures,
                                       bool showWarning,
                                       bool& passphraseError,
+                                      bool& actuallyEncrypted,
                                       QString& aErrorText,
                                       QString& auditLog )
 {
@@ -716,6 +717,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       bDecryptionOk = !decryptResult.error();
       passphraseError =  decryptResult.error().isCanceled()
         || decryptResult.error().code() == GPG_ERR_NO_SECKEY;
+      actuallyEncrypted = decryptResult.error().code() != GPG_ERR_NO_DATA;
       aErrorText = QString::fromLocal8Bit( decryptResult.error().asString() );
       auditLog = job->auditLogAsHtml();
 
@@ -1214,6 +1216,7 @@ namespace KMail {
     bool signatureFound;
     std::vector<GpgME::Signature> signatures;
     bool passphraseError;
+    bool actuallyEncrypted = true;
 
     bool bOkDecrypt = okDecryptMIME( *data,
                                      decryptedData,
@@ -1221,6 +1224,7 @@ namespace KMail {
                                      signatures,
                                      true,
                                      passphraseError,
+                                     actuallyEncrypted,
                                      messagePart.errorText,
                                      messagePart.auditLog );
 
@@ -1364,6 +1368,7 @@ namespace KMail {
         bool signatureFound;
         std::vector<GpgME::Signature> signatures;
         bool passphraseError;
+        bool actuallyEncrypted = true;
 
         bool bOkDecrypt = okDecryptMIME( *node,
                                          decryptedData,
@@ -1371,6 +1376,7 @@ namespace KMail {
                                          signatures,
                                          true,
                                          passphraseError,
+                                         actuallyEncrypted,
                                          messagePart.errorText,
                                          messagePart.auditLog );
 
@@ -1525,6 +1531,7 @@ namespace KMail {
       bool signatureFound;
       std::vector<GpgME::Signature> signatures;
       bool passphraseError;
+      bool actuallyEncrypted = true;
 
       if ( okDecryptMIME( *node,
                           decryptedData,
@@ -1532,6 +1539,7 @@ namespace KMail {
                           signatures,
                           false,
                           passphraseError,
+                          actuallyEncrypted,
                           messagePart.errorText,
                           messagePart.auditLog ) ) {
         kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
@@ -1550,8 +1558,11 @@ namespace KMail {
         if ( mReader )
           htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       } else {
-
-        if ( passphraseError || smimeType.isEmpty() ) {
+          // decryption failed, which could be because the part was encrypted but
+          // decryption failed, or because we didn't know if it was encrypted, tried,
+          // and failed. If the message was not actually encrypted, we continue
+          // assuming it's signed
+        if ( passphraseError || ( smimeType.isEmpty() && actuallyEncrypted ) ) {
           isEncrypted = true;
           signTestNode = 0;
         }
