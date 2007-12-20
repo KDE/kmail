@@ -28,9 +28,12 @@
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "folderviewtooltip.h"
+#include "korghelper.h"
 
 #include <libkdepim/maillistdrag.h>
+#include <libkdepim/kaddrbook.h>
 
+#include <dcopclient.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
@@ -59,7 +62,7 @@ FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, cons
   connect( folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(msgRemoved(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
-  
+
   QTimer::singleShot( 0, this, SLOT(updateCount()) );
 
   if ( unreadCount() > 0 )
@@ -203,6 +206,42 @@ void FavoriteFolderView::selectionChanged()
   assert( ft );
   assert( fti );
   ft->showFolder( fti->folder() );
+
+  if ( !fti->folder() || !fti->folder()->storage() )
+    return;
+  switch ( fti->folder()->storage()->contentsType() ) {
+    case KMail::ContentsTypeContact:
+      KAddrBookExternal::openAddressBook( this );
+      break;
+    case KMail::ContentsTypeNote:
+    {
+      QByteArray arg;
+      QDataStream s( arg, IO_WriteOnly );
+      s << QString( "kontact_knotesplugin" );
+      kapp->dcopClient()->send( "kontact", "KontactIface", "selectPlugin(QString)", arg );
+      break;
+    }
+    case KMail::ContentsTypeCalendar:
+    case KMail::ContentsTypeTask:
+    case KMail::ContentsTypeJournal:
+    {
+      KMail::KorgHelper::ensureRunning();
+      QByteArray arg;
+      QDataStream s( arg, IO_WriteOnly );
+      switch ( fti->folder()->storage()->contentsType() ) {
+        case KMail::ContentsTypeCalendar:
+          s << QString( "kontact_korganizerplugin" ); break;
+        case KMail::ContentsTypeTask:
+          s << QString( "kontact_todoplugin" ); break;
+        case KMail::ContentsTypeJournal:
+          s << QString( "kontact_journalplugin" ); break;
+        default: assert( false );
+      }
+      kapp->dcopClient()->send( "kontact", "KontactIface", "selectPlugin(QString)", arg );
+      break;
+    }
+    default: break;
+  }
 }
 
 void FavoriteFolderView::itemClicked(QListViewItem * item)
@@ -452,7 +491,7 @@ void FavoriteFolderView::notifyInstancesOnChange()
 }
 
 void FavoriteFolderView::refresh()
-{    
+{
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (!fti || !fti->folder())
@@ -460,6 +499,6 @@ void FavoriteFolderView::refresh()
     fti->repaint();
   }
   update();
-} 
+}
 
 #include "favoritefolderview.moc"

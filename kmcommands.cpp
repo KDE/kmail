@@ -114,6 +114,7 @@ using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
 #include "editorwatcher.h"
+#include "korghelper.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -2823,10 +2824,10 @@ KMCommand::Result KMResendMessageCommand::execute()
 
    QStringList whiteList;
    whiteList << "To" << "Cc" << "Bcc" << "Subject";
-   newMsg->sanitizeHeaders( whiteList );      
+   newMsg->sanitizeHeaders( whiteList );
 
    newMsg->setCharset(msg->codec()->mimeName());
-   newMsg->setParent( 0 );  
+   newMsg->setParent( 0 );
 
    // make sure we have an identity set, default, if necessary
    newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
@@ -3499,26 +3500,7 @@ KMCommand::Result CreateTodoCommand::execute()
     return Failed;
   }
 
-  // korganizer starting code taken from the ical bpf plugin
-  QString error;
-  QCString dcopService;
-  int result = KDCOPServiceStarter::self()->findServiceFor( "DCOP/Organizer",
-                                         QString::null, QString::null, &error, &dcopService );
-  if ( result == 0 ) {
-    // OK, so korganizer (or kontact) is running. Now ensure the object we want is available
-    // [that's not the case when kontact was already running, but korganizer not loaded into it...]
-    static const char* const dcopObjectId = "KOrganizerIface";
-    QCString dummy;
-    if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) ) {
-      DCOPRef ref( dcopService, dcopService ); // talk to the KUniqueApplication or its kontact wrapper
-      DCOPReply reply = ref.call( "load()" );
-      if ( reply.isValid() && (bool)reply ) {
-        kdDebug() << "Loaded " << dcopService << " successfully" << endl;
-        Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
-      } else
-        kdWarning() << "Error loading " << dcopService << endl;
-    }
-  }
+  KMail::KorgHelper::ensureRunning();
 
   QString txt = i18n("From: %1\nTo: %2\nSubject: %3").arg( msg->from() )
                 .arg( msg->to() ).arg( msg->subject() );
