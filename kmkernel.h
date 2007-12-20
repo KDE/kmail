@@ -152,21 +152,14 @@ public Q_SLOTS:
   Q_SCRIPTABLE int timeOfLastMessageCountChange() const;
 
   Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
-                                   const QString & messagefile,
-                                   const QString & MsgStatusFlags = QString() );
-
-  Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
-                                   const KUrl & messagefile,
+                                   const QString & messageFile,
                                    const QString & MsgStatusFlags = QString() );
 
   /**
    * Add messages without rejecting duplicates
    */
   Q_SCRIPTABLE int dbusAddMessage_fastImport( const QString & foldername,
-                                              const QString & messagefile,
-                                              const QString & MsgStatusFlags = QString() );
-  Q_SCRIPTABLE int dbusAddMessage_fastImport( const QString & foldername,
-                                              const KUrl & messagefile,
+                                              const QString & messageFile,
                                               const QString & MsgStatusFlags = QString() );
 
   Q_SCRIPTABLE void dbusResetAddMessage();
@@ -187,8 +180,8 @@ public Q_SLOTS:
                                  const QString & subject,
                                  const QString & body,
                                  int hidden,
-                                 const KUrl & messageFile,
-                                 const KUrl::List & attachURLs,
+                                 const QString & messageFile,
+                                 const QStringList & attachmentPaths,
                                  const QStringList & customHeaders );
 
   Q_SCRIPTABLE int openComposer( const QString & to,

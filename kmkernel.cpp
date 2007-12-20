@@ -372,8 +372,8 @@ void KMKernel::openReader( bool onlyCheck )
 int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
-                            const KUrl &messageFile,
-                            const KUrl::List &attachURLs,
+                            const QString &messageFile,
+                            const QStringList &attachmentPaths,
                             const QStringList &customHeaders )
 {
   kDebug(5006);
@@ -389,8 +389,10 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if (!bcc.isEmpty())
     msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLatin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    QByteArray str = KPIMUtils::kFileToByteArray( messageFile.path(), true, false );
+
+  KUrl messageUrl = KUrl( messageFile );
+  if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
+    QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.path(), true, false );
     if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
@@ -400,16 +402,16 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       parser.process( NULL, NULL );
     }
   }
-  else if (!body.isEmpty()) {
-    msg->setBody(body.toUtf8());
+  else if ( !body.isEmpty() ) {
+    msg->setBody( body.toUtf8() );
   }
   else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( 0, 0 );
   }
 
-  if (!customHeaders.isEmpty())
+  if ( !customHeaders.isEmpty() )
   {
     for ( QStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
       if ( !(*it).isEmpty() )
@@ -426,10 +428,11 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
+  cWin->setCharset( "", true );
+  KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
-    cWin->addAttach((*it));
-  if (hidden == 0) {
+    cWin->addAttach( (*it) );
+  if ( hidden == 0 ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -553,9 +556,10 @@ void KMKernel::setDefaultTransport( const QString & transport )
   MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
 }
 
-QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
-                               const QString &bcc, const QString &subject,
-                               const QString &body,bool hidden)
+QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
+                                        const QString &bcc,
+                                        const QString &subject,
+                                        const QString &body, bool hidden )
 {
   KMMessage *msg = new KMMessage;
   msg->initHeader();
@@ -676,13 +680,8 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   return 1;
 }
 
-int KMKernel::dbusAddMessage( const QString & foldername, const QString & msgUrlString,
-                              const QString & MsgStatusFlags)
-{
-  return dbusAddMessage(foldername, KUrl(msgUrlString), MsgStatusFlags);
-}
-
-int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
+int KMKernel::dbusAddMessage( const QString & foldername,
+                              const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
   kDebug(5006);
@@ -701,7 +700,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
     mAddMessageLastFolder = foldername;
   }
 
-  if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
+  KUrl msgUrl( messageFile );
+  if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
 
     const QByteArray messageText =
       KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
@@ -852,14 +852,7 @@ void KMKernel::dbusResetAddMessage()
 }
 
 int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
-                                         const QString & msgUrlString,
-                                         const QString & MsgStatusFlags)
-{
-  return dbusAddMessage_fastImport(foldername, KUrl(msgUrlString), MsgStatusFlags);
-}
-
-int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
-                                         const KUrl & msgUrl,
+                                         const QString & messageFile,
                                          const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
@@ -880,7 +873,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     mAddMessageLastFolder = foldername;
   }
 
-
+  KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
       KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
@@ -1766,7 +1759,9 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const QStringList &customHeaders )
 {
   if ( mailto )
-    openComposer( to, cc, bcc, subj, body, 0, messageFile, attachURLs, customHeaders );
+    openComposer( to, cc, bcc, subj, body, 0,
+                  messageFile.pathOrUrl(), attachURLs.toStringList(),
+                  customHeaders );
   else
     openReader( check );
 
