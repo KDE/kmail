@@ -322,6 +322,7 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
+  kDebug(5006);
   if ( account.isEmpty() )
     checkMail();
   else {
@@ -335,7 +336,7 @@ void KMKernel::openReader( bool onlyCheck )
 {
   mWin = 0;
   KMainWindow *ktmw = 0;
-  kDebug(5006) <<"KMKernel::openReader called";
+  kDebug(5006);
 
   foreach ( KMainWindow *window, KMainWindow::memberList() )
   {
@@ -375,7 +376,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
                             const KUrl::List &attachURLs,
                             const QStringList &customHeaders )
 {
-  kDebug(5006) <<"KMKernel::openComposer called";
+  kDebug(5006);
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -452,7 +453,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset )
 {
-  kDebug(5006) <<"KMKernel::openComposer()";
+  kDebug(5006);
 
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
