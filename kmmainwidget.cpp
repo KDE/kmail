@@ -685,6 +685,11 @@ void KMMainWidget::readConfig()
   }
   updateMessageMenu();
   updateFileMenu();
+
+  // Enable the updates again, but only if we didn't schedule a layout update
+  // with a singleshot timer (which will disable the updates itself then)
+  if ( mStartupDone && !layoutChanged )
+    setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1061,10 +1066,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
-  //FIXME
   QDBusMessage message =
-      QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
-  QDBusConnection::sessionBus().send(message);
+      QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+  QDBusConnection::sessionBus().send( message );
 
   // build summary for new mail message
   bool showNotification = false;
