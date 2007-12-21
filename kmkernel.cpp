@@ -372,7 +372,7 @@ void KMKernel::openReader( bool onlyCheck )
 
 int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
-                            const QString &body, int hidden,
+                            const QString &body, bool hidden,
                             const QString &messageFile,
                             const QStringList &attachmentPaths,
                             const QStringList &customHeaders )
@@ -433,7 +433,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach( (*it) );
-  if ( hidden == 0 ) {
+  if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -446,7 +446,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
-                            const QString &body, int hidden,
+                            const QString &body, bool hidden,
                             const QString &attachName,
                             const QByteArray &attachCte,
                             const QByteArray &attachData,
@@ -533,7 +533,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( msgPart )
     cWin->addAttach(msgPart);
 
-  if ( hidden == 0 && !iCalAutoSend ) {
+  if ( !hidden && !iCalAutoSend ) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -579,7 +579,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", true);
-  if (!hidden) {
+  if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()

@@ -179,7 +179,7 @@ public Q_SLOTS:
                                  const QString & bcc,
                                  const QString & subject,
                                  const QString & body,
-                                 int hidden,
+                                 bool hidden,
                                  const QString & messageFile,
                                  const QStringList & attachmentPaths,
                                  const QStringList & customHeaders );
@@ -189,7 +189,7 @@ public Q_SLOTS:
                                  const QString & bcc,
                                  const QString & subject,
                                  const QString & body,
-                                 int hidden,
+                                 bool hidden,
                                  const QString & attachName,
                                  const QByteArray & attachCte,
                                  const QByteArray  &attachData,
