@@ -129,6 +129,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   GlobalSettings::self();
 
   mJobScheduler = new JobScheduler( this );
+  mICalIface = new KMailICalIfaceImpl();
 
   mXmlGuiInstance = KComponentData();
 
@@ -182,7 +183,7 @@ void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
-  mICalIface = new KMailICalIfaceImpl();
+  mICalIface->registerWithDBus();
   mICalIface->readConfig();
   mMailService =  new MailServiceImpl();
 }

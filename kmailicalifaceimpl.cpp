@@ -157,7 +157,6 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mUseResourceIMAP( false ), mResourceQuiet( false ), mHideFolders( true )
 {
   setObjectName( "KMailICalIFaceImpl" );
-  (void) new GroupwareAdaptor( this );
 
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
@@ -171,6 +170,11 @@ KMailICalIfaceImpl::~KMailICalIfaceImpl()
   qDeleteAll( mAccumulators );
   mAccumulators.clear();
   mExtraFolders.clear();
+}
+
+void KMailICalIfaceImpl::registerWithDBus()
+{
+  (void) new GroupwareAdaptor( this );
 }
 
 /* libkcal part of the interface, called from the resources using this
