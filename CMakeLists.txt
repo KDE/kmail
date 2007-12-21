@@ -12,6 +12,9 @@ configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
+qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
+qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
+
 add_subdirectory( interfaces )
 add_subdirectory( about )
 add_subdirectory( pics )
@@ -203,10 +206,7 @@ set(kmailprivate_LIB_SRCS
    scalix.cpp
 )
 
-qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
-
-qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
