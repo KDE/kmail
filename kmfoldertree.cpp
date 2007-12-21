@@ -1682,7 +1682,7 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   }
   if ( isSizeActive() ) {
     if ( !fti->folder()->noContent()) {
-      int size = folder->storage()->folderSize();
+      qint64 size = folder->storage()->folderSize();
       if ( size != fti->folderSize() ) {
         fti->setFolderSize( size );
         repaint = true;
