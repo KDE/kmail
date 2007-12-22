@@ -4707,7 +4707,8 @@ void SecurityPage::SMimeTab::save() {
 }
 
 #ifdef __GNUC__
-#warning WTF?!?! Hand-made DCOP stuff?!?!
+// The DCOP stuff here is used by Kleopatra
+#warning Port the hand-made DCOP stuff to D-Bus
 #endif
 /*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {
