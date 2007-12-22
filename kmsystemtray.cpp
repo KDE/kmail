@@ -35,6 +35,7 @@ using KMail::AccountManager;
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
+#include <kcolorscheme.h>
 #include <kwindowsystem.h>
 #include <kdebug.h>
 #include <KMenu>
@@ -77,9 +78,24 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = loadIcon( "kmail" ).pixmap();
-  mLightIconImage = loadIcon( "kmail-light" ).pixmap().toImage();
+  QImage overlayImage = mDefaultIcon.copy().toImage();
 
-  setIcon(mDefaultIcon);
+  // derive a mono-color version of the icon
+  KColorScheme scheme( QPalette::Active, KColorScheme::Window );
+  mLightIconImage = overlayImage.copy();
+  mLightIconImage.fill(
+    scheme.background( KColorScheme::LinkBackground ).color().rgb() );
+  mLightIconImage.setAlphaChannel( overlayImage.alphaChannel() );
+
+  // overlay the link background color in order to get the "light icon" image.
+  KIconEffect::semiTransparent( overlayImage );
+  KIconEffect::overlay( mLightIconImage, overlayImage );
+  KIconEffect::semiTransparent( mLightIconImage );
+  KIconEffect::overlay( mLightIconImage, overlayImage );
+  KIconEffect::semiTransparent( overlayImage );
+  KIconEffect::overlay( mLightIconImage, overlayImage );
+
+  setIcon( mDefaultIcon );
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -190,7 +206,6 @@ void KMSystemTray::updateCount()
   if(mCount != 0)
   {
     int oldPixmapWidth = mDefaultIcon.size().width();
-    int oldPixmapHeight = mDefaultIcon.size().height();
 
     QString countString = QString::number( mCount );
     QFont countFont = KGlobalSettings::generalFont();
@@ -207,35 +222,13 @@ void KMSystemTray::updateCount()
       countFont.setPointSizeF( countFontSize );
     }
 
-    // Create an image which represents the number of unread messages
-    // and which has a transparent background.
-    // Unfortunately this required the following twisted code because for some
-    // reason text that is drawn on a transparent pixmap is invisible
-    // (apparently the alpha channel isn't changed when the text is drawn).
-    // Therefore I have to draw the text on a solid background and then remove
-    // the background by making it transparent with QPixmap::setMask. This
-    // involves the slow createHeuristicMask() function (from the API docs:
-    // "This function is slow because it involves transformation to a QImage,
-    // non-trivial computations and a transformation back to a QBitmap."). Then
-    // I have to convert the resulting QPixmap to a QImage in order to overlay
-    // the light KMail icon with the number (because KIconEffect::overlay only
-    // works with QImage). Finally the resulting QImage has to be converted
-    // back to a QPixmap.
-    // That's a lot of work for overlaying the KMail icon with the number of
-    // unread messages, but every other approach I tried failed miserably.
-    //                                                           IK, 2003-09-22
-    QPixmap numberPixmap( oldPixmapWidth, oldPixmapHeight );
-    numberPixmap.fill( Qt::white );
-    QPainter p( &numberPixmap );
-    p.setFont( countFont );
-    p.setPen( Qt::blue );
-    p.drawText( numberPixmap.rect(), Qt::AlignCenter, countString );
-    numberPixmap.setMask( numberPixmap.createHeuristicMask() );
-    QImage numberImage = numberPixmap.toImage();
-
     // Overlay the light KMail icon with the number image
     QImage iconWithNumberImage = mLightIconImage.copy();
-    KIconEffect::overlay( iconWithNumberImage, numberImage );
+    QPainter p( &iconWithNumberImage );
+    p.setFont( countFont );
+    KColorScheme scheme( QPalette::Active, KColorScheme::Window );
+    p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
+    p.drawText( iconWithNumberImage.rect(), Qt::AlignCenter, countString );
 
     setIcon( QPixmap::fromImage( iconWithNumberImage ) );
   } else
