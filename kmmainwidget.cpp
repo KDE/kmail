@@ -172,6 +172,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 {
   // must be the first line of the constructor:
   mStartupDone = false;
+  mWasEverShown = false;
   mSearchWin = 0;
   mIntegrated  = true;
   mFolder = 0;
@@ -473,24 +474,11 @@ void KMMainWidget::layoutSplitters()
   QList<int> splitter1Sizes;
   QList<int> splitter2Sizes;
 
-  // If the widget is now shown yet, it still has the minimum size. We need the
-  // correct size for the calculations, so ask the parent widget about it.
-  // This should normally not happen since readConfig() delays the call to
-  // layoutSplitters() if the startup is not done yet, but better be safe.
-  int realWidth = width();
-  int realHeight = height();
-  if ( realWidth == defaultMinimumWidth && realHeight == defaultMinimumHeight ) {
-    realWidth = parentWidget()->width();
-    realHeight = parentWidget()->height();
-  }
-
   const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
   int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
   const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
-  int headerWidth = realWidth - folderViewWidth;
-  if ( readerWindowAtSide )
-    headerWidth = realWidth - folderViewWidth - messageViewerWidth;
-  int messageViewerHeight = realHeight - headerHeight;
+  int headerWidth = GlobalSettings::self()->searchAndHeaderWidth();
+  int messageViewerHeight = GlobalSettings::self()->readerWindowHeight();
 
   // If the message viewer was hidden before, make sure it is not zero height
   if ( messageViewerHeight < 10 && readerWindowBelow ) {
@@ -498,7 +486,6 @@ void KMMainWidget::layoutSplitters()
     messageViewerHeight = headerHeight;
   }
 
-  int folderViewHeight;
   if ( mLongFolderList ) {
     if ( !readerWindowAtSide ) {
       splitter1Sizes << folderViewWidth << headerWidth;
@@ -507,7 +494,6 @@ void KMMainWidget::layoutSplitters()
       splitter1Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
       splitter2Sizes << headerWidth << messageViewerWidth;
     }
-    folderViewHeight = realHeight;
   } else {
     if ( !readerWindowAtSide ) {
       splitter1Sizes << headerHeight << messageViewerHeight;
@@ -516,7 +502,6 @@ void KMMainWidget::layoutSplitters()
       splitter1Sizes << headerWidth << messageViewerWidth;
       splitter2Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
     }
-    folderViewHeight = headerHeight;
   }
 
   mSplitter1->setSizes( splitter1Sizes );
@@ -525,7 +510,8 @@ void KMMainWidget::layoutSplitters()
   if ( mFolderViewSplitter ) {
     QList<int> splitterSizes;
     int ffvHeight = GlobalSettings::self()->favoriteFolderViewHeight();
-    splitterSizes << ffvHeight << ( folderViewHeight - ffvHeight );
+    int ftHeight = GlobalSettings::self()->folderTreeHeight();
+    splitterSizes << ffvHeight << ftHeight;
     mFolderViewSplitter->setSizes( splitterSizes );
   }
 
@@ -538,9 +524,6 @@ void KMMainWidget::layoutSplitters()
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( activated() ),
              mMsgView, SLOT( slotCopySelectedText() ) );
-
-  // Only re-enable the updates after we are done with the layouting
-  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -652,18 +635,11 @@ void KMMainWidget::readConfig()
   }
 
   if ( layoutChanged ) {
-
-    // If the startup is not yet done, the size of this widget is not calculated
-    // correctly. Therefore, wait until the next pass of the event loop using
-    // a timer.
-    if ( mStartupDone )
-      layoutSplitters();
-    else
-      QTimer::singleShot( 0, this, SLOT( layoutSplitters() ) );
+    layoutSplitters();
   }
 
-  if ( mStartupDone )
-  {
+  if ( mStartupDone ) {
+
     // Update systray
     toggleSystemTray();
 
@@ -685,11 +661,7 @@ void KMMainWidget::readConfig()
   }
   updateMessageMenu();
   updateFileMenu();
-
-  // Enable the updates again, but only if we didn't schedule a layout update
-  // with a singleshot timer (which will disable the updates itself then)
-  if ( mStartupDone && !layoutChanged )
-    setUpdatesEnabled( true );
+  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -701,19 +673,39 @@ void KMMainWidget::writeConfig()
 
   mFolderTree->writeConfig();
 
-  GlobalSettings::self()->setFolderViewWidth( mFolderTree->width() );
-  int headersHeight = mSearchAndHeaders->height();
-  if ( headersHeight == 0 )
-    headersHeight = height() / 2;
-  GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
-  if ( mFavoriteFolderView ) {
-    GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteFolderView->height() );
-    mFavoriteFolderView->writeConfig();
-  }
-  if ( mMsgView ) {
-    if ( !mReaderWindowBelow )
-      GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
-    mMsgView->writeConfig();
+  // Don't save the sizes of all the widgets when we were never shown.
+  // This can happen in Kontact, where the KMail plugin is automatically
+  // loaded, but not necessarily shown.
+  // This prevents invalid sizes from being saved 
+  if ( mWasEverShown ) {
+    GlobalSettings::self()->setFolderViewWidth( mFolderTree->width() );
+
+    // The height of the header widget can be 0, this happens when the user
+    // did not switch to the header widget onced and the "Welcome to KMail"
+    // HTML widget was shown the whole time
+    int headersHeight = mSearchAndHeaders->height();
+    if ( headersHeight == 0 )
+      headersHeight = height() / 2;
+
+    GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
+    GlobalSettings::self()->setSearchAndHeaderWidth( mSearchAndHeaders->width() );
+
+    if ( mFavoriteFolderView ) {
+      GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteFolderView->height() );
+      GlobalSettings::self()->setFolderTreeHeight( mFolderTree->height() );
+      mFavoriteFolderView->writeConfig();
+      if ( !mLongFolderList )
+        GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
+    }
+    else if ( !mLongFolderList )
+      GlobalSettings::self()->setFolderTreeHeight( mFolderTree->height() );
+
+    if ( mMsgView ) {
+      if ( !mReaderWindowBelow )
+        GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
+      mMsgView->writeConfig();
+      GlobalSettings::self()->setReaderWindowHeight( mMsgView->width() );
+    }
   }
 
   // save the state of the unread/total-columns
@@ -4339,9 +4331,9 @@ void KMMainWidget::slotCreateTodo()
   command->start();
 }
 
-void KMMainWidget::resizeEvent( QResizeEvent *event ) {
-
-  Q_UNUSED( event );
+void KMMainWidget::resizeEvent( QResizeEvent *event )
+{
+  QWidget::resizeEvent( event );
 
   // Because of some bug, the favorite folder view does not receive update
   // events when the view is resized. Because of this, manually trigger an
@@ -4349,4 +4341,10 @@ void KMMainWidget::resizeEvent( QResizeEvent *event ) {
   // The other workaround for this bug can be found in layoutSplitters().
   if( mFavoriteFolderView )
     mFavoriteFolderView->triggerUpdate();
+}
+
+void KMMainWidget::showEvent( QShowEvent *event )
+{
+  QWidget::showEvent( event );
+  mWasEverShown = true;
 }

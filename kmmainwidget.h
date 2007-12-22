@@ -270,6 +270,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void setupActions();
     void createWidgets();
     void deleteWidgets();
+    void layoutSplitters();
     void showMsg( KMReaderWin *win, KMMessage *msg );
     void updateFileMenu();
     void newFromTemplate( KMMessage *msg );
@@ -279,6 +280,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void closeFolder();
 
     virtual void resizeEvent( QResizeEvent *event );
+    virtual void showEvent( QShowEvent *event );
 
     KActionCollection *actionCollection() const { return mActionCollection; }
 
@@ -295,7 +297,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
                           const QMap<QString, int> & newInFolder );
     void getAccountMenu();
     void getTransportMenu();
-    void layoutSplitters();
     void slotHelp();
     void slotFilter();
     void slotPopFilter();
@@ -539,6 +540,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QMenu        *mFileMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
+    bool          mWasEverShown;
     KMMenuToFolder mMenuToFolder;
     int copyId, moveId, htmlId, threadId;
     bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
