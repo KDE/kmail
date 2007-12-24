@@ -3197,7 +3197,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("thread_watched", mWatchThreadAction );
   connect(mWatchThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusWatched()));
 
-  mIgnoreThreadAction = new KToggleAction(KIcon("mail-thread-ignore"), i18n("&Ignore Thread"), this);
+  mIgnoreThreadAction = new KToggleAction(KIcon("process-stop"), i18n("&Ignore Thread"), this);
   actionCollection()->addAction("thread_ignored", mIgnoreThreadAction );
   connect(mIgnoreThreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusIgnored()));
 
