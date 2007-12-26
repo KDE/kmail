@@ -75,7 +75,7 @@ using KMail::MessageProperty;
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
   : mParent( aParentFolder ), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), 
+    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ),
     mStatus(), mTagList( 0 )
 {
 }
@@ -391,8 +391,8 @@ namespace {
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
-                                        const QByteArray& prefCharset )
+QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
+                                        const QByteArray &prefCharset )
 {
   if ( aStr.isEmpty() ) {
     return QString();
@@ -406,9 +406,8 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray& aStr,
 
   if ( str.indexOf( "=?" ) < 0 ) {
     QByteArray charsetName;
-    if ( ! prefCharset.isEmpty() ) {
-      if ( kasciistricmp( prefCharset.data(), "us-ascii" ) ) {
-        // isn`t this foolproof?
+    if ( !prefCharset.isEmpty() ) {
+      if ( kasciistricmp( prefCharset.data(), "us-ascii" ) == 0 ) {
         charsetName = "utf-8";
       } else {
         charsetName = prefCharset;
@@ -1219,19 +1218,19 @@ QString KMMsgBase::replacePrefixes( const QString& str,
     return str;
 }
 
-void KMMsgBase::setTagList( const QString &aTagStr ) 
-{ 
-  setTagList( KMMessageTagList::split( ",", aTagStr ) ); 
+void KMMsgBase::setTagList( const QString &aTagStr )
+{
+  setTagList( KMMessageTagList::split( ",", aTagStr ) );
 }
 
-void KMMsgBase::setTagList( const KMMessageTagList &aTagList ) 
-{ 
+void KMMsgBase::setTagList( const KMMessageTagList &aTagList )
+{
   if ( !mTagList ) {
     mTagList = new KMMessageTagList( aTagList );
   } else {
     if ( aTagList == *mTagList )
       return;
-    *mTagList = aTagList; 
+    *mTagList = aTagList;
   }
   mTagList->prioritySort();
   mDirty = true;
