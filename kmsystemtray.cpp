@@ -77,7 +77,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
-  mDefaultIcon = loadIcon( "kmail" ).pixmap();
+  mDefaultIcon = loadIcon( "internet-mail" ).pixmap();
   QImage overlayImage = mDefaultIcon.copy().toImage();
 
   // derive a mono-color version of the icon
