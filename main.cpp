@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
      return 0;
 
   KMailApplication app;
-  QApplication::setWindowIcon( KIcon( "office-address-book" ) );
+  QApplication::setWindowIcon( KIcon( "internet-mail" ) );
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
