@@ -72,7 +72,7 @@ class KMMessageTagDescription
                   const QColor &aBackgroundColor = QColor(),
                   const QFont &aTextFont = QFont(),
                   const bool aInToolbar = false,
-                  const QString &aIconName = "rss_tag", 
+                  const QString &aIconName = "rss-tag",
                   const KShortcut &aShortcut = KShortcut() );
 
     /** Accessor functions */
