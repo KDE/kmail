@@ -108,7 +108,7 @@ public:
   /// Interrupt any running job for this folder and re-schedule it for later
   void notifyOpeningFolder( KMFolder* folder );
 
-  // DCOP calls
+  // D-Bus calls, called from KMKernel
   void pause();
   void resume();
 

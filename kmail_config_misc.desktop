@@ -1,5 +1,5 @@
 [Desktop Entry]
-Icon=misc
+Icon=preferences-other
 Type=Service
 X-KDE-ServiceTypes=KCModule
 
@@ -52,6 +52,7 @@ Name[pt]=Diversos
 Name[pt_BR]=Extras
 Name[ru]=Прочее
 Name[se]=Feará mii
+Name[sk]=Rôzne
 Name[sl]=Razno
 Name[sr]=Разно
 Name[sr@latin]=Razno
@@ -73,7 +74,7 @@ Comment[da]=Indstillinger der ikke passer ind andre steder
 Comment[de]=Verschiedene Einstellungen
 Comment[el]=Ρυθμίσεις που δεν ταιριάζουν κάπου αλλού
 Comment[eo]=Agordoj kiuj apartenas nenie alie
-Comment[es]=Opciones que no encajan en ningún otro sitio
+Comment[es]=Preferencias que no encajan en ningún otro sitio
 Comment[et]=Seadistused, mis ei sobi kuhugi mujale
 Comment[eu]=Beste inon egokitzen ez diren ezarpenak
 Comment[fa]=تنظیماتی که مناسب جای دیگر نیستند
@@ -102,6 +103,7 @@ Comment[pt]=Outras configurações
 Comment[pt_BR]=Preferências que não se encaixam em outros lugares
 Comment[ru]=Другие настройки
 Comment[se]=Heivehusat mat eai heive eará báikkiin
+Comment[sk]=Nastavenie, ktoré sa inam nehodí
 Comment[sl]=Nastavitve, ki ne spadajo drugam
 Comment[sr]=Поставке које не припадају другде
 Comment[sr@latin]=Postavke koje ne pripadaju drugde

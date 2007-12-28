@@ -323,8 +323,8 @@ public:
       sequence of whitespace-delimited prefixes at the beginning of
       #subject() is replaced by @p newPrefix
   **/
-  QString cleanSubject(const QStringList& prefixRegExps, bool replace,
-		       const QString& newPrefix) const;
+  QString cleanSubject( const QStringList& prefixRegExps, bool replace,
+                        const QString& newPrefix ) const;
 
   /** Return this mails subject, with all "forward" and "reply"
       prefixes removed */

@@ -45,6 +45,7 @@
 #include <KStandardGuiItem>
 #include <kstatusbar.h>
 #include <KWindowSystem>
+#include <kdeversion.h>
 
 #include "folderrequester.h"
 #include "kmcommands.h"
@@ -101,9 +102,9 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
 
   QPixmap pixmap;
   if( mailList.count() == 1 )
-    pixmap = QPixmap( DesktopIcon("message", KIconLoader::SizeSmall) );
+    pixmap = QPixmap( DesktopIcon("mail-message", KIconLoader::SizeSmall) );
   else
-    pixmap = QPixmap( DesktopIcon("item-drag-multiple", KIconLoader::SizeSmall) );
+    pixmap = QPixmap( DesktopIcon("document-multiple", KIconLoader::SizeSmall) );
 
   drag->setPixmap( pixmap );
   drag->exec( supportedActions );
@@ -342,7 +343,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
           this, SLOT(slotFolderActivated()));
 
-  ac->associateWidget( this );
+  ac->addAssociatedWidget( this );
+  foreach (QAction* action, ac->actions())
+#if QT_VERSION < KDE_MAKE_VERSION(4,4,0)
+    action->setShortcutContext(Qt::WidgetShortcut); // remove after Qt4.4 becomes mandatory
+#else
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+#endif
 }
 
 //-----------------------------------------------------------------------------

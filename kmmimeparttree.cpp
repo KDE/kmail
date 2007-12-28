@@ -132,9 +132,9 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem* item,
                            SLOT( slotSaveAll() ) );
         // edit + delete only for attachments
         if ( mCurrentContextMenuItem->node()->nodeId() > 2 ) {
-          popup->addAction( SmallIcon("editdelete"), i18n( "Delete Attachment" ),
+          popup->addAction( SmallIcon("edit-delete"), i18n( "Delete Attachment" ),
                             this, SLOT( slotDelete() ) );
-          popup->addAction( SmallIcon( "edit" ), i18n( "Edit Attachment" ),
+          popup->addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
                             this, SLOT( slotEdit() ) );
         }
         popup->exec( point );
@@ -300,7 +300,7 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
     setPixmap( 0, SmallIcon("folder") );
   } else if ( mimetype == "application/octet-stream" ) {
     setText( 1, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
-    setPixmap( 0, SmallIcon("unknown") );
+    setPixmap( 0, SmallIcon("application-octet-stream") );
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
     setText( 1, (mtp && !mtp->comment().isEmpty()) ? mtp->comment() : mimetype );

@@ -1560,31 +1560,29 @@ void AppearancePage::ColorsTab::doLoadOther() {
   mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
   mCloseToQuotaThreshold->setValue( GlobalSettings::closeToQuotaThreshold() );
+  KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
   static const QColor defaultColor[ numColorNames ] = {
-    qApp->palette().color( QPalette::Base ), // bg
-    KColorScheme( QPalette::Normal, KColorScheme::View ).background(
-                  KColorScheme::AlternateBackground ).color() , // alt bg
-    qApp->palette().color( QPalette::Text ), // fg
+    scheme.background( KColorScheme::NormalBackground ).color(), // bg
+    scheme.background( KColorScheme::AlternateBackground ).color(), // alt bg
+    scheme.foreground( KColorScheme::NormalText ).color(), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
-    KColorScheme( QPalette::Normal, KColorScheme::View ).foreground(
-                  KColorScheme::LinkText ).color(), // link
-    KColorScheme( QPalette::Normal, KColorScheme::View ).foreground(
-                  KColorScheme::VisitedText ).color(),// visited link
-    Qt::red, // misspelled words
+    scheme.foreground( KColorScheme::LinkText ).color(), // link
+    scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
+    scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words
     Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
-    Qt::blue, // todo mgs
-    QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
-    QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
-    QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
-    QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
+    scheme.foreground( KColorScheme::LinkText ).color(), // todo mgs
+    QColor( 0x00, 0x80, 0xFF ), // pgp encrypted
+    scheme.background( KColorScheme::PositiveBackground ).color(), // pgp ok, trusted key
+    QColor( 0xFF, 0xFF, 0x40 ), // pgp ok, untrusted key
+    QColor( 0xFF, 0xFF, 0x40 ), // pgp unchk
     Qt::red, // pgp bad
-    QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
-    Qt::red, // close to quota
+    QColor( 0xFF, 0x40, 0x40 ), // warning text color
+    scheme.foreground( KColorScheme::NegativeText ).color(), // close to quota
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
@@ -4580,7 +4578,7 @@ void SecurityPage::SMimeTab::doLoadOther() {
   }
 
   // Force re-parsing gpgconf data, in case e.g. kleopatra or "configure backend" was used
-  // (which ends up calling us via dcop)
+  // (which ends up calling us via D-Bus)
   mConfig->clear();
 
   // Create config entries
@@ -4718,7 +4716,8 @@ void SecurityPage::SMimeTab::save() {
 }
 
 #ifdef __GNUC__
-#warning WTF?!?! Hand-made DCOP stuff?!?!
+// The DCOP stuff here is used by Kleopatra
+#warning Port the hand-made DCOP stuff to D-Bus
 #endif
 /*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {

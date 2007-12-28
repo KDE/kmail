@@ -118,6 +118,10 @@ public:
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeSearch; }
 
+  // The search functions below are completely different things than the
+  // search functions of FolderStorage. Silence the compiler warning.
+  using FolderStorage::search;
+
   // Sets and runs the search used by the folder
   void setSearch(KMSearch *search);
   // Returns the current search used by the folder

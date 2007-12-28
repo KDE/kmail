@@ -451,6 +451,27 @@
       <entry name="ComposerSize" type="Size" key="composer">
         <default>QSize(480,510)</default>
       </entry>
+      <entry name="FolderViewWidth" type="Int">
+        <default>250</default>
+      </entry>
+      <entry name="FolderViewHeight" type="Int">
+        <default>500</default>
+      </entry>
+      <entry name="FolderTreeHeight" type="Int">
+        <default>400</default>
+      </entry>
+      <entry name="SearchAndHeaderHeight" type="Int">
+        <default>180</default>
+      </entry>
+      <entry name="SearchAndHeaderWidth" type="Int">
+        <default>450</default>
+      </entry>
+      <entry name="ReaderWindowWidth" type="Int">
+        <default>200</default>
+      </entry>
+      <entry name="ReaderWindowHeight" type="Int">
+        <default>320</default>
+      </entry>
 
     </group>
 
@@ -601,7 +622,9 @@
     <entry name="EnableFavoriteFolderView" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="FolderViewSplitterPosition" type="IntList"/>
+    <entry name="FavoriteFolderViewHeight" type="Int">
+      <default>100</default>
+    </entry>
     <entry name="FavoriteFolderIds" type="IntList"/>
     <entry name="FavoriteFolderNames" type="StringList"/>
     <entry name="FavoriteFolderViewSeenInboxes" type="IntList"/>

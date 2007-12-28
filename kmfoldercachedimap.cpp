@@ -1499,7 +1499,7 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   if ( !msgsForDeletion.isEmpty() ) {
-    removeMsg( msgsForDeletion );
+    removeMessages( msgsForDeletion );
   }
 
   /* Delete messages from the server that we don't have anymore */
@@ -2148,7 +2148,8 @@ void KMFolderCachedImap::listDirectory2()
     AnnotationJobs::MultiUrlGetAnnotationJob *job =
       AnnotationJobs::multiUrlGetAnnotation(
         mAccount->slave(), mAccount->getUrl(), paths, KOLAB_FOLDERTYPE );
-    ImapAccountBase::jobData jd( QString(), folder() );
+    const QString dummystring;
+    ImapAccountBase::jobData jd( dummystring, folder() );
     jd.cancellable = true;
     mAccount->insertJob( job, jd );
     connect( job, SIGNAL( result( KJob * ) ),

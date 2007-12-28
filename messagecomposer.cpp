@@ -550,12 +550,12 @@ void MessageComposer::readFromComposeWin()
 
   for ( int i = 0; i < mComposeWin->mAtmList.count(); ++i )
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),
-					mComposeWin->signFlagOfAttachment( i ),
-					mComposeWin->encryptFlagOfAttachment( i ) ) );
+                                        mComposeWin->signFlagOfAttachment( i ),
+                                        mComposeWin->encryptFlagOfAttachment( i ) ) );
 
   mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
 
-  mIsRichText = mComposeWin->mEditor->textFormat() == Qt::RichText;
+  mIsRichText = mComposeWin->mEditor->htmlMode();
   mIdentityUid = mComposeWin->identityUid();
   mText = breakLinesAndApplyCodec();
   // Hopefully we can get rid of this eventually, it's needed to be able

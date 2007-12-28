@@ -42,9 +42,21 @@ class KMComposerEditor : public KMeditor
     virtual QString quotePrefixName() const;
     virtual QString smartQuote( const QString & msg );
     QString brokenText() const;
-    
+
+    /**
+     * set html mode
+     */
+    void setHtmlMode( bool mode );
+    bool htmlMode();
+
+    /**
+     * Depending on htmlMode, return the text as Html or plain text
+     */
+    QString text();
+
   private:
      KMComposeWin *m_composerWin;
+     bool mHtmlMode;
   protected:
      void dropEvent( QDropEvent *e );
   signals:

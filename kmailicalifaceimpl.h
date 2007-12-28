@@ -90,6 +90,16 @@ public:
   KMailICalIfaceImpl();
   ~KMailICalIfaceImpl();
 
+  /**
+   * This registers the interface on the D-Bus session bus.
+   * This is not done automatically when KMailICalIfaceImpl is created,
+   * as we might not be ready for D-Bus calls during the initalization phase.
+   * However, KMail itself uses the interface during initalization, for example
+   * in KMFolderCachedImap::readConfig, so it needs to be ready before it is
+   * registered at D-Bus.
+   */
+  void registerWithDBus();
+
   bool isWritableFolder( const QString& type, const QString& resource );
 
   KMail::StorageFormat storageFormat( const QString &resource );

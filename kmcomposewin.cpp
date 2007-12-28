@@ -21,139 +21,100 @@
 #include "kmcomposewin.h"
 #undef REALLY_WANT_KMCOMPOSEWIN_H
 
-#include "kmcomposereditor.h"
-#include "kmlineeditspell.h"
-#include "kmatmlistview.h"
-
-#include "kmmainwin.h"
-#include "kmreadermainwin.h"
-#include "messagesender.h"
-#include "kmmsgpartdlg.h"
+// KDEPIM includes
+#include "kleo/cryptobackendfactory.h"
+#include "kleo/exportjob.h"
+#include "kleo/specialjob.h"
 #include <libkpgp/kpgpblock.h>
-#include <kaddrbookexternal.h>
-#include "kmaddrbook.h"
-#include "kmmsgdict.h"
-#include "kmfolderimap.h"
-#include "kmfoldermgr.h"
-#include "kmfoldercombobox.h"
-#include "kmcommands.h"
-#include "kcursorsaver.h"
-#include "partNode.h"
-#include "attachmentlistview.h"
-using KMail::AttachmentListView;
-#include "dictionarycombobox.h"
-using KMail::DictionaryComboBox;
-#include "addressesdialog.h"
-using KPIM::AddressesDialog;
-#include "addresseeemailselection.h"
-using KPIM::AddresseeEmailSelection;
-using KPIM::AddresseeSelectorDialog;
-#include <maillistdrag.h>
-#include "recentaddresses.h"
+#include <libkleo/ui/progressdialog.h>
+#include <libkleo/ui/keyselectiondialog.h>
+
+// LIBKDEPIM includes
+#include <libkdepim/kaddrbookexternal.h>
+#include <libkdepim/kmstylelistselectaction.h>
+#include <libkdepim/recentaddresses.h>
+
 using KPIM::RecentAddresses;
-#include "kleo_util.h"
-#include "stl_util.h"
-#include "recipientseditor.h"
-#include "editorwatcher.h"
 
-#include "attachmentcollector.h"
-#include "objecttreeparser.h"
-
-#include "kmfoldermaildir.h"
-#include <kio/jobuidelegate.h>
+// KDEPIMLIBS includes
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
 #include <kpimutils/kfileio.h>
-#include <kpimutils/email.h>
-#include "kleo/cryptobackendfactory.h"
-#include "kleo/exportjob.h"
-#include "kleo/specialjob.h"
-#include "libkleo/ui/progressdialog.h"
-#include "libkleo/ui/keyselectiondialog.h"
-
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
+
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 
-#include <gpgme++/context.h>
-#include <gpgme++/key.h>
-
-#include <kabc/vcardconverter.h>
-#include <libkdepim/kvcarddrag.h>
-#include <kio/netaccess.h>
-
-#include "messagecomposer.h"
+// KMail includes
+#include "attachmentcollector.h"
+#include "attachmentlistview.h"
 #include "chiasmuskeyselector.h"
+#include "dictionarycombobox.h"
+#include "editorwatcher.h"
+#include "kleo_util.h"
+#include "kmatmlistview.h"
+#include "kmcommands.h"
+#include "kmcomposereditor.h"
+#include "kmfoldercombobox.h"
+#include "kmfolderimap.h"
+#include "kmfoldermaildir.h"
+#include "kmfoldermgr.h"
+#include "kmmainwin.h"
+#include "kmmsgpartdlg.h"
+#include "kmreadermainwin.h"
+#include "mailcomposeradaptor.h"
+#include "messagecomposer.h"
+#include "objecttreeparser.h"
+#include "partNode.h"
+#include "recipientseditor.h"
+#include "replyphrases.h"
+#include "stl_util.h"
 
-#include <kapplication.h>
-#include <kicon.h>
+using KMail::AttachmentListView;
+using KMail::DictionaryComboBox;
+
+// KDELIBS includes
 #include <kactioncollection.h>
 #include <kactionmenu.h>
+#include <kapplication.h>
 #include <kcharsets.h>
-#include <kcompletionbox.h>
-#include <kcursor.h>
-#include <kcombobox.h>
-#include <kstandardshortcut.h>
-#include <kmenu.h>
-#include <kmimetypetrader.h>
-#include <kedittoolbar.h>
-#include <kshortcutsdialog.h>
+#include <kcursorsaver.h>
 #include <kdebug.h>
+#include <kedittoolbar.h>
 #include <kfiledialog.h>
-#include <ktoolbar.h>
-#include <kwindowsystem.h>
-#include <kinputdialog.h>
-#include <kmessagebox.h>
-#include <kio/scheduler.h>
-#include <ktemporaryfile.h>
-#include <klocale.h>
-#include <kstatusbar.h>
-#include <kaction.h>
-#include <kstandardaction.h>
-#include <kdirwatch.h>
-#include <KStandardGuiItem>
-#include <kiconloader.h>
-#include <kpushbutton.h>
-#include <krun.h>
-#include <ktempdir.h>
-#include <ktoggleaction.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-//#include <keditlistbox.h>
-#include "globalsettings.h"
-#include "replyphrases.h"
-
-#include <kcolordialog.h>
-#include <kzip.h>
+#include <kinputdialog.h>
+#include <kmenu.h>
+#include <kmimetypetrader.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <krecentfilesaction.h>
+#include <krun.h>
 #include <ksavefile.h>
+#include <kshortcutsdialog.h>
+#include <kstandardshortcut.h>
+#include <kstatusbar.h>
+#include <ktoggleaction.h>
+#include <ktoolbar.h>
 #include <ktoolinvocation.h>
-#include <kconfiggroup.h>
-#include <kmstylelistselectaction.h>
+#include <kwindowsystem.h>
+#include <kzip.h>
+
+#include <kio/jobuidelegate.h>
+#include <kio/scheduler.h>
 #include <sonnet/configdialog.h>
 
-#include <QByteArray>
-#include <q3header.h>
-#include <q3tabdialog.h>
-
+// Qt includes
 #include <QBuffer>
+#include <QClipboard>
 #include <QEvent>
-#include <QFontDatabase>
-#include <QGridLayout>
-#include <QKeyEvent>
-#include <QLabel>
-#include <QList>
-#include <QRegExp>
-#include <QTextCodec>
-#include <QHeaderView>
+#include <QSplitter>
 
-#include <mimelib/mimepp.h>
-
-#include <algorithm>
-#include <memory>
-
+// System includes
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -161,9 +122,10 @@ using MailTransport::Transport;
 #include <errno.h>
 #include <fcntl.h>
 #include <assert.h>
-#include <krecentfilesaction.h>
+#include <memory>
+
+// MOC
 #include "kmcomposewin.moc"
-#include "mailcomposeradaptor.h"
 
 KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
@@ -185,7 +147,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
     mFolder( 0 ),
-    mUseHTMLEditor( false ),
+    mUserUsesHtml( false ),
     mId( id ),
     mAttachPK( 0 ), mAttachMPK( 0 ),
     mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
@@ -201,12 +163,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
-    mPreserveUserCursorPosition( false )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  QDBusConnection::sessionBus().registerObject(mdbusObjectPath , this );
+  QDBusConnection::sessionBus().registerObject( mdbusObjectPath , this );
 
   mSubjectTextWasSpellChecked = false;
   if ( kmkernel->xmlGuiInstance().isValid() ) {
@@ -251,7 +212,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mFolder = 0;
   mAutoCharset = true;
   mFixedFontAction = 0;
-  mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
   mSplitter->setChildrenCollapsible( false );
@@ -262,7 +222,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setOpaqueResize( true );
 
   //mEditor->initializeAutoSpellChecking();
-  mEditor->setTextFormat( Qt::PlainText );
   mEditor->setAcceptDrops( true );
 
   mBtnIdentity->setWhatsThis(
@@ -301,6 +260,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupStatusBar();
   setupActions();
   setupEditor();
+  rethinkFields();
 
   applyMainWindowSettings( KMKernel::config()->group( "Composer") );
 
@@ -493,7 +453,7 @@ void KMComposeWin::slotAttachPNGImageData( const QByteArray &image )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody( const QString &body )
 {
-  mEditor->setText( body );
+  mEditor->setPlainText( body );
 }
 
 //-----------------------------------------------------------------------------
@@ -1130,7 +1090,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
   KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", this, SLOT(checkSpelling()) );
+  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", mEditor, SLOT(checkSpelling()) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
@@ -1324,8 +1284,8 @@ void KMComposeWin::setupActions( void )
   listAction = new KMStyleListSelectAction(i18n("Select Style"), this);
   actionCollection()->addAction("text_list", listAction );
 
-  connect(listAction, SIGNAL(applyStyle(QTextListFormat::Style)),
-           mEditor,SLOT(slotChangeParagStyle(QTextListFormat::Style)));
+  connect( listAction, SIGNAL( applyStyle(QTextListFormat::Style) ),
+           SLOT( slotChangeParagStyle(QTextListFormat::Style) ) );
 
   fontAction = new KFontAction(i18n("Select Font"), this);
   actionCollection()->addAction("text_font", fontAction );
@@ -1336,29 +1296,29 @@ void KMComposeWin::setupActions( void )
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  alignLeftAction = new KToggleAction( KIcon( "text-left" ), i18n("Align Left"), this );
+  alignLeftAction = new KToggleAction( KIcon( "format-justify-left" ), i18n("Align Left"), this );
   actionCollection()->addAction( "align_left", alignLeftAction );
-  connect( alignLeftAction, SIGNAL(triggered(bool)), mEditor, SLOT(slotAlignLeft()) );
+  connect( alignLeftAction, SIGNAL( triggered(bool) ), SLOT( slotAlignLeft() ) );
   alignLeftAction->setChecked( true );
-  alignRightAction = new KToggleAction( KIcon( "text-right" ), i18n("Align Right"), this );
+  alignRightAction = new KToggleAction( KIcon( "format-justify-right" ), i18n("Align Right"), this );
   actionCollection()->addAction( "align_right", alignRightAction );
-  connect( alignRightAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignRight()) );
-  alignCenterAction = new KToggleAction( KIcon( "text-center" ), i18n("Align Center"), this );
+  connect( alignRightAction, SIGNAL( triggered(bool) ), SLOT( slotAlignRight() ) );
+  alignCenterAction = new KToggleAction( KIcon( "format-justify-center" ), i18n("Align Center"), this );
   actionCollection()->addAction( "align_center", alignCenterAction );
-  connect( alignCenterAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotAlignCenter()) );
+  connect( alignCenterAction, SIGNAL( triggered(bool) ), SLOT( slotAlignCenter() ) );
   textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
   actionCollection()->addAction( "text_bold", textBoldAction );
-  connect( textBoldAction, SIGNAL(triggered(bool) ),mEditor, SLOT(slotTextBold(bool)));
+  connect( textBoldAction, SIGNAL( triggered(bool) ), SLOT( slotTextBold(bool) ) );
   textBoldAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_B ) );
   textItalicAction = new KToggleAction( KIcon( "format-text-italic" ), i18n("&Italic"), this );
   actionCollection()->addAction( "text_italic", textItalicAction );
-  connect( textItalicAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextItalic(bool)) );
+  connect( textItalicAction, SIGNAL( triggered(bool) ), SLOT( slotTextItalic(bool) ) );
   textItalicAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_I ) );
   textUnderAction = new KToggleAction( KIcon( "format-text-underline" ), i18n("&Underline"), this );
   actionCollection()->addAction( "text_under", textUnderAction );
-  connect( textUnderAction, SIGNAL(triggered(bool) ), mEditor,SLOT(slotTextUnder(bool)) );
+  connect( textUnderAction, SIGNAL( triggered(bool) ), SLOT( slotTextUnder(bool) ) );
   textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
-  actionFormatReset = new KAction( KIcon( "eraser" ), i18n("Reset Font Settings"), this );
+  actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
   actionFormatColor = new KAction( KIcon( "color-line" ), i18n("Text Color..."), this );
@@ -1439,10 +1399,8 @@ void KMComposeWin::setupEditor( void )
   connect( mEditor, SIGNAL(cursorPositionChanged()), SLOT(updateCursorPosition()) );
   connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
            this, SLOT( fontChanged( const QFont & ) ) );
-  //Laurent fixme.
-  /*connect( mEditor, SIGNAL( currentAlignmentChanged( int ) ),
-           this, SLOT( alignmentChanged( int ) ) );
-  */
+  connect( mEditor, SIGNAL( cursorPositionChanged() ),
+           this, SLOT( slotCursorPositionChanged() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1723,9 +1681,9 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
           // respect html part charset
           const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
           if ( codec ) {
-            mEditor->setText( codec->toUnicode( bodyDecoded ) );
+            mEditor->setHtml( codec->toUnicode( bodyDecoded ) );
           } else {
-            mEditor->setText( QString::fromLocal8Bit( bodyDecoded ) );
+            mEditor->setHtml( QString::fromLocal8Bit( bodyDecoded ) );
           }
         }
       }
@@ -1863,11 +1821,11 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
   }
 
-  if ( mMsg->getCursorPos() > 0 ) {
-    // The message has a cursor position explicitly set, so avoid
-    // changing it when appending the signature.
-    mPreserveUserCursorPosition = true;
-  }
+  // Make sure the cursor is at the correct position, which is set by
+  // the template parser.
+  if ( mMsg->getCursorPos() > 0 )
+    mEditor->setCursorPositionFromStart( mMsg->getCursorPos() );
+
   setModified( isModified );
 }
 
@@ -2137,12 +2095,6 @@ void KMComposeWin::addAttach( KMMessagePart *msgPart )
   msgPartToItem( msgPart, lvi );
   mAtmItemList.append( lvi );
 
-  // the Attach file job has finished, so the possibly present tmp dir can be deleted now.
-  if ( mTempDir != 0 ) {
-    delete mTempDir;
-    mTempDir = 0;
-  }
-
   connect( lvi, SIGNAL( compress( KMAtmListViewItem* ) ),
            this, SLOT( compressAttach( KMAtmListViewItem* ) ) );
   connect( lvi, SIGNAL( uncompress( KMAtmListViewItem* ) ),
@@ -2357,9 +2309,9 @@ void KMComposeWin::slotAttachFileResult( KJob *job )
     (*it).data.resize((*it).data.size() + 1);
     (*it).data[(*it).data.size() - 1] = '\0';
     if ( const QTextCodec *codec = KGlobal::charsets()->codecForName((*it).encoding) ) {
-        mEditor->insert( codec->toUnicode( (*it).data ) );
+        mEditor->textCursor().insertText( codec->toUnicode( (*it).data ) );
     } else {
-        mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
+        mEditor->textCursor().insertText( QString::fromLocal8Bit( (*it).data ) );
     }
     mMapAtmLoadData.erase(it);
     if ( attachURLfound ) {
@@ -3216,7 +3168,7 @@ void KMComposeWin::slotPaste()
       case KMessageBox::Yes:
         for ( KUrl::List::ConstIterator it = urlList.begin();
             it != urlList.end(); ++it ) {
-          mEditor->insert( (*it).url() );
+          mEditor->textCursor().insertText( (*it).url() );
         }
         break;
       case KMessageBox::No:
@@ -3227,8 +3179,13 @@ void KMComposeWin::slotPaste()
         break;
     }
   } else if ( mimeData->hasText() ) {
-      QString s = mimeData->text();
-      mEditor->insert( s );
+      if ( mHtmlMarkup )
+      {
+        toggleMarkup( true );
+        mEditor->textCursor().insertHtml( mimeData->html() );
+      }
+      else
+        mEditor->textCursor().insertText( mimeData->text() );
   }
 }
 
@@ -3525,6 +3482,8 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   KCursorSaver busy( KBusyPtr::busy() );
   mMsg->setDateToday();
 
+  mMsg->setHeaderField( "X-KMail-Transport", mTransport->currentText() );
+
   mDisableBreaking = ( saveIn != KMComposeWin::None );
 
   const bool neverEncrypt = ( mDisableBreaking && GlobalSettings::self()->neverEncryptDrafts() ) ||
@@ -3532,12 +3491,16 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
 
-  if ( mEditor->textFormat() == Qt::RichText ) {
+  if ( mEditor->htmlMode() ) {
+    kDebug(5006) << "Html mode";
+    kDebug(5006) << "mailtext :" << mEditor->text();
     mMsg->setHeaderField( "X-KMail-Markup", "true" );
   } else {
     mMsg->removeHeaderField( "X-KMail-Markup" );
+    kDebug(5006) << "Plain text";
+    kDebug(5006) << "mailtext :" << mEditor->text();
   }
-  if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
+  if ( mEditor->htmlMode() && inlineSigningEncryptionSelected() ) {
     QString keepBtnText = mEncryptAction->isChecked() ?
       mSignAction->isChecked() ? i18n( "&Keep markup, do not sign/encrypt" )
       : i18n( "&Keep markup, do not encrypt" )
@@ -3766,10 +3729,32 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+  insertSignatureHelper( KPIM::KMeditor::End );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotPrependSignature()
+{
+  insertSignatureHelper( KPIM::KMeditor::Start );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotInsertSignatureAtCursor()
+{
+  insertSignatureHelper( KPIM::KMeditor::AtCursor );
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
+{
+  // Identity::signature() is not const, although it should be, therefore the
+  // const_cast.
+  KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
+      kmkernel->identityManager()->identityForUoidOrDefault(
+                                mIdentity->currentIdentity() ) );
+
   mOldSigText = ident.signatureText();
-  mPreserveUserCursorPosition = mEditor->appendSignature(mOldSigText, mPreserveUserCursorPosition);
+  mEditor->insertSignature( ident.signature(), placement );
 }
 
 //-----------------------------------------------------------------------------
@@ -3863,27 +3848,17 @@ void KMComposeWin::slotToggleMarkup()
 void KMComposeWin::toggleMarkup( bool markup )
 {
   if ( markup ) {
-    if ( !mUseHTMLEditor ) {
-      kDebug(5006) <<"setting RichText editor";
-      mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    if ( !mUserUsesHtml ) {
+      kDebug(5006) << "user wants Html";
+      mUserUsesHtml = true; // set it directly to true. setColor hits another toggleMarkup
       mHtmlMarkup = true;
-      QTextCursor cursor = mEditor->textCursor();
-      // set all highlighted text caused by spelling back to black
-      int startSelect = cursor.selectionStart ();
-      int endSelect = cursor.selectionEnd();
-
-      mEditor->selectAll();
-      // save the buttonstates because setColor calls fontChanged
+      // save the buttonstates because setHtmlMode calls fontChanged
       bool _bold = textBoldAction->isChecked();
       bool _italic = textItalicAction->isChecked();
-      mEditor->setColor( QColor( 0, 0, 0 ) );
+      mEditor->setHtmlMode( true );
       textBoldAction->setChecked( _bold );
       textItalicAction->setChecked( _italic );
-      //Laurent fix me
-      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
 
-      mEditor->setTextFormat( Qt::RichText );
-      mEditor->document()->setModified( true );
       markupAction->setChecked( true );
       toolBar( "htmlToolBar" )->show();
       //mEditor->deleteAutoSpellChecking();
@@ -3891,15 +3866,16 @@ void KMComposeWin::toggleMarkup( bool markup )
       slotAutoSpellCheckingToggled( false );
     }
   } else { // markup is to be turned off
-    kDebug(5006) <<"setting PlainText editor";
+    kDebug(5006) <<" user wants textmode";
     mHtmlMarkup = false;
     toolBar( "htmlToolBar" )->hide();
-    if ( mUseHTMLEditor ) { // it was turned on
-      mUseHTMLEditor = false;
-      mEditor->setTextFormat( Qt::PlainText );
-      QString text = mEditor->text();
-      mEditor->setText( text ); // otherwise the text still looks formatted
-      mEditor->document()->setModified( true );
+    if ( mUserUsesHtml ) { // it was turned on
+      mUserUsesHtml = false;
+      mEditor->setHtmlMode( false );
+      mEditor->selectAll();
+      mEditor->setCurrentFont( mSaveFont );
+      mEditor->moveCursor( QTextCursor::Start, QTextCursor::MoveAnchor ); // deselect
+      // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
     }
   }
@@ -3922,12 +3898,11 @@ void KMComposeWin::slotSubjectTextSpellChecked()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
-//Laurent Fix me
-/*
-  if ( mEditor->autoSpellChecking( on ) == -1 ) {
-    mAutoSpellCheckingAction->setChecked( false ); // set it to false again
-  }
-*/
+  // FIXME this doesn't work at the moment since KMeditor does not
+  // support continuous spell checking when in RichText mode, i.e.
+  // the createHighlighter() method is never called.
+  mEditor->setCheckSpellingEnabled( on );
+
   QString temp;
   if ( on ) {
     temp = i18n( "Spellcheck: on" );
@@ -4028,6 +4003,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     }
   }
 
+  // If the transport sticky checkbox is not checked, set the transport
+  // from the new identity
   if ( !mBtnTransport->isChecked() ) {
     QString transportName = ident.transport();
     Transport *transport =
@@ -4064,9 +4041,13 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( appendNewSig ) {
     if ( (!mOldSigText.isEmpty()) &&
          (GlobalSettings::self()->autoTextSignature() == "auto") ) {
-      edtText.append( mOldSigText );
+      if ( mEditor->htmlMode() == false ) // TODO : support for adding according signature when changing identities in html
+        edtText.append( mOldSigText );
     }
-    mEditor->setText( edtText );
+    if ( mEditor->htmlMode() == false )
+      mEditor->setPlainText( edtText );
+    else
+      mEditor->setHtml( edtText );
   }
 
   // disable certain actions if there is no PGP user identity set
@@ -4147,9 +4128,11 @@ void KMComposeWin::slotEditKeys()
 
 void KMComposeWin::setReplyFocus( bool hasMessage )
 {
+  Q_UNUSED( hasMessage );
+
+  // The cursor position is already set by setMsg(), so we only need to set the
+  // focus here.
   mEditor->setFocus();
-  if ( hasMessage )
-    mEditor->setCursorPositionFromStart( (unsigned int) mMsg->getCursorPos() );
 }
 
 void KMComposeWin::setFocusToSubject()
@@ -4254,17 +4237,71 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
   mAlwaysSend = bAlways;
 }
 
+void KMComposeWin::slotChangeParagStyle( QTextListFormat::Style style )
+{
+  toggleMarkup( true );
+  mEditor->slotChangeParagStyle( style );
+}
+
+void KMComposeWin::slotAlignLeft()
+{
+  toggleMarkup( true );
+  mEditor->slotAlignLeft();
+  alignCenterAction->setChecked( false );
+  alignRightAction->setChecked( false );
+}
+
+void KMComposeWin::slotAlignCenter()
+{
+  toggleMarkup( true );
+  mEditor->slotAlignCenter();
+  alignLeftAction->setChecked( false );
+  alignRightAction->setChecked( false );
+}
+
+void KMComposeWin::slotAlignRight()
+{
+  toggleMarkup( true );
+  mEditor->setAlignment( Qt::AlignRight );
+  alignLeftAction->setChecked( false );
+  alignCenterAction->setChecked( false );
+}
 
 void KMComposeWin::slotFontAction( const QString &font )
 {
   toggleMarkup( true );
-  mEditor->slotFontFamilyChanged(font);
+  mEditor->slotFontFamilyChanged( font );
 }
 
 void KMComposeWin::slotSizeAction( int size )
 {
   toggleMarkup( true );
   mEditor->slotFontSizeChanged( size );
+}
+
+void KMComposeWin::slotTextBold( bool bold )
+{
+  toggleMarkup( true );
+  mEditor->slotTextBold( bold );
+}
+
+void KMComposeWin::slotTextItalic( bool italic )
+{
+ toggleMarkup( true );
+ mEditor->slotTextItalic( italic );
+}
+
+void KMComposeWin::slotTextUnder( bool under )
+{
+ toggleMarkup( true );
+ mEditor->slotTextUnder( under );
+}
+
+void KMComposeWin::slotTextColor()
+{
+  // also if user cancels the dialog, html is turned on for now
+  toggleMarkup( true );
+  mEditor->slotTextColor();
 }
 
 void KMComposeWin::slotFormatReset()
@@ -4300,12 +4337,26 @@ void KMComposeWin::fontChanged( const QFont &f )
   fontSizeAction->setFontSize( f.pointSize() );
 }
 
-void KMComposeWin::alignmentChanged( int a )
+void KMComposeWin::slotCursorPositionChanged()
 {
-  //toggleMarkup();
-  alignLeftAction->setChecked( ( a == Qt::AlignLeft ) || ( a & Qt::AlignLeft ) );
-  alignCenterAction->setChecked( ( a & Qt::AlignHCenter ) );
-  alignRightAction->setChecked( ( a & Qt::AlignRight ) );
+  switch (mEditor->alignment() )
+  {
+    case Qt::AlignLeft :
+      alignLeftAction->setChecked( true );
+      alignCenterAction->setChecked( false );
+      alignRightAction->setChecked( false );
+      break;
+    case Qt::AlignHCenter :
+      alignLeftAction->setChecked( false );
+      alignCenterAction->setChecked( true );
+      alignRightAction->setChecked( false );
+      break;
+    case Qt::AlignRight :
+      alignLeftAction->setChecked( false );
+      alignCenterAction->setChecked( false );
+      alignRightAction->setChecked( true );
+      break;
+  }
 }
 
 namespace {

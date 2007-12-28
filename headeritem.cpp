@@ -214,23 +214,18 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
   }
 
   QPixmap res( width, height );
-  QBitmap mask( width, height );
+  res.fill( Qt::transparent );
   QPainter resultPainter( &res );
-  QPainter maskPainter( &mask );
-  mask.clear();
 
   // Paint all pixmaps of the list to the resulting pixmap
   int x = 0;
   for ( PixmapList::ConstIterator it = pixmaps.begin();
       it != pixmaps.end(); ++it ) {
     resultPainter.drawPixmap( x, ( height - (*it).height() ) / 2, *it );
-    maskPainter.drawPixmap( x, (height - (*it).height()) / 2, (*it).mask() );
     x += (*it).width();
   }
 
   resultPainter.end();
-  maskPainter.end();
-  res.setMask( mask );
   return res;
 }
 

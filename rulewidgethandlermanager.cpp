@@ -1311,6 +1311,7 @@ namespace {
       return 0;
 
     KIntNumInput *numInput = new KIntNumInput( valueStack );
+    numInput->setSliderEnabled( false );
     numInput->setObjectName( "KIntNumInput" );
     QObject::connect( numInput, SIGNAL( valueChanged( int ) ),
                       receiver, SLOT( slotValueChanged() ) );
@@ -1430,10 +1431,12 @@ namespace {
     if ( field == "<size>" ) {
       numInput->setMinimum( 0 );
       numInput->setSuffix( i18n( " bytes" ) );
+      numInput->setSliderEnabled( false );
     }
     else {
       numInput->setMinimum( -10000 );
       numInput->setSuffix( i18n( " days" ) );
+      numInput->setSliderEnabled( false );
     }
   }
 

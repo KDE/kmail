@@ -502,16 +502,16 @@ void RecipientsView::slotDeleteLine()
   delete line;
 
   bool atLeastOneToLine = false;
-  unsigned int firstCC = 0;
+  int firstCC = -1;
   for( int i = pos; i < mLines.count(); ++i ) {
     RecipientLine *line = mLines.at( i );
     if ( line->recipientType() == Recipient::To )
       atLeastOneToLine = true;
-    else if ( ( line->recipientType() == Recipient::Cc ) && ( i == 0 ) )
+    else if ( ( line->recipientType() == Recipient::Cc ) && ( firstCC < 0 ) )
       firstCC = i;
   }
 
-  if ( !atLeastOneToLine )
+  if ( !atLeastOneToLine && ( firstCC >= 0 ) )
     mLines.at( firstCC )->setRecipientType( Recipient::To );
 
   calculateTotal();

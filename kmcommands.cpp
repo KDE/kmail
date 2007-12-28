@@ -1666,9 +1666,10 @@ KMCommand::Result KMSetStatusCommand::execute()
      f->setStatus( (*it2), mStatus, mToggle );
      ++it2;
   }
+
   QDBusMessage message =
-    QDBusMessage::createSignal("/KMail", "org.kde.kmail.kmail", "unreadCountChanged");
-  QDBusConnection::sessionBus().send(message);
+    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+  QDBusConnection::sessionBus().send( message );
   return OK;
 }
 
@@ -1917,7 +1918,7 @@ KMCommand::Result KMCopyCommand::execute()
   if (!localList.isEmpty())
   {
     QList<int> index;
-    mDestFolder->addMsg( localList, index );
+    mDestFolder->addMessages( localList, index );
     for ( QList<int>::Iterator it = index.begin(); it != index.end(); ++it ) {
       mDestFolder->unGetMsg( *it );
     }
@@ -2132,7 +2133,7 @@ KMCommand::Result KMMoveCommand::execute()
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
-      it.key()->removeMsg(*it.value());
+      it.key()->removeMessages(*it.value());
       delete it.value();
     }
     if ( !mCompleteWithAddedMsg ) {
@@ -3419,7 +3420,9 @@ KMCommand::Result CreateTodoCommand::execute()
   QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + '/' + msg->msgId();
   tf.write( msg->asDwString().c_str(), msg->asDwString().length() );
 
-  OrgKdeKorganizerCalendarInterface *iface = new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar", QDBusConnection::sessionBus(), this );
+  OrgKdeKorganizerCalendarInterface *iface =
+      new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
+                                             QDBusConnection::sessionBus(), this );
   iface->openTodoEditor( i18n("Mail: %1", msg->subject() ), txt,
                          uri, tf.fileName(), QStringList(), "message/rfc822" );
   delete iface;

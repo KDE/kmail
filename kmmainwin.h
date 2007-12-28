@@ -45,13 +45,6 @@ public:
   StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
   ProgressDialog* progressDialog() const { return mProgressDialog; }
 
-
-  /** Read configuration options after widgets are created. */
-  virtual void readConfig(void);
-
-  /** Write configuration options. */
-  virtual void writeConfig(void);
-
 public slots:
   void displayStatusMsg(const QString&);
   void slotEditToolbars();
@@ -63,7 +56,6 @@ protected:
 
 protected slots:
   void slotQuit();
-  void slotConfigChanged();
   void slotShowTipOnStart();
 
 private slots:

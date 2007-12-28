@@ -54,6 +54,9 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", c  );
   //TODO add it
   //static_cast<Sonnet::KEMailQuotingHighlighter*>(hightighter())->setQuoteColor(col1, col2, col3, col4);
+
+  switchTextMode( false );
+  mHtmlMode = false;
 }
 
 KMComposerEditor::~KMComposerEditor()
@@ -113,7 +116,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
       if ( selectedAction == addAsTextAction ) {
         for ( KUrl::List::Iterator it = urlList.begin();
               it != urlList.end(); ++it ) {
-          insert( (*it).url() );
+          textCursor().insertText( (*it).url() );
         }
       } else if ( selectedAction == addAsAtmAction ) {
         for ( KUrl::List::Iterator it = urlList.begin();
@@ -122,10 +125,10 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
         }
       }
     } else if ( md->hasText() ) {
-      insert( md->text() );
+      textCursor().insertText( md->text() );
       e->accept();
     } else {
-      kDebug(5006) <<"KMEdit::contentsDropEvent, unable to add dropped object";
+      kDebug(5006) <<"KMComposerEditor::dropEvent, unable to add dropped object";
       return KMeditor::dropEvent( e );
     }
   }
@@ -147,5 +150,48 @@ QString KMComposerEditor::brokenText() const
   return temp;
 }
 
+void KMComposerEditor::setHtmlMode( bool mode )
+{
+  if ( mode ) {
+    if ( ! mHtmlMode ) {
+      mHtmlMode = true;
+
+      // set all highlighted text caused by spelling back to black
+      //int paraFrom, indexFrom, paraTo, indexTo;
+      // set all highlighted text caused by spelling back to black
+      // for the case we're in textmode, the user selects some text and decides to format this selected text
+      //int startpos = textCursor().selectionStart();
+      //int endpos = textCursor().selectionEnd();
+      //selectAll();
+      //setTextColor(QColor(0,0,0));
+
+      //Laurent fix me
+      //mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo );
+      switchTextMode( true );
+    }
+  }
+  else {
+    mHtmlMode = false;
+    // like the next 2 lines, or should we selectAll and apply the default font?
+
+    selectAll();
+    setTextColor(QColor(0,0,0));
+    switchTextMode( false );
+  }
+  document()->setModified( true );
+}
+
+bool KMComposerEditor::htmlMode()
+{
+  return mHtmlMode;
+}
+
+QString KMComposerEditor::text()
+{
+  if ( mHtmlMode )
+    return toHtml();
+  else
+    return toPlainText();
+}
 
 #include "kmcomposereditor.moc"

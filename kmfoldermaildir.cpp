@@ -1077,7 +1077,7 @@ void KMFolderMaildir::msgStatusChanged( const MessageStatus& oldStatus,
 }
 
 /*virtual*/
-size_t KMFolderMaildir::doFolderSize() const
+qint64 KMFolderMaildir::doFolderSize() const
 {
   if (mCurrentlyCheckingFolderSize) return -1;
   KFileItemList list;

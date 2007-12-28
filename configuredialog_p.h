@@ -237,7 +237,7 @@ public:
   virtual void save() = 0;
   void defaults();
   // the below are optional
-  virtual void installProfile(){}
+  virtual void installProfile( KConfig* ) {};
 signals:
    // forwarded to the ConfigModule
   void changed(bool);
@@ -977,9 +977,7 @@ private:
   WarningConfiguration* mWidget;
 };
 
-#ifdef __GNUC__
-#warning This was a DCOPObject, so we probably need to port it to DBus!
-#endif
+//FIXME This  a DCOPObject, so we probably need to port it to DBus!
 class SecurityPageSMimeTab : public ConfigModuleTab {
   Q_OBJECT
 public:

@@ -88,7 +88,7 @@ void MaildirJob::startJob()
     break;
   case tDeleteMessage:
     {
-      static_cast<KMFolder*>(mParentFolder->folder())->removeMsg( mMsgList );
+      static_cast<KMFolder*>(mParentFolder->folder())->removeMessages( mMsgList );
     }
     break;
   case tPutMessage:

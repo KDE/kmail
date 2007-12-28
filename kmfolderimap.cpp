@@ -394,7 +394,7 @@ void KMFolderImap::addMsgQuiet(QList<KMMessage*> msgList)
     msg->setTransferInProgress( false );
   }
   if ( aFolder ) {
-    aFolder->take( msgList );
+    aFolder->takeMessages( msgList );
   } else {
     kDebug(5006) <<"no parent";
   }
@@ -620,7 +620,7 @@ void KMFolderImap::take(const QList<KMMessage*>& msgList)
   deleteMessage(msgList);
 
   mLastUid = 0;
-  KMFolderMbox::take(msgList);
+  KMFolderMbox::takeMessages( msgList );
 }
 
 //-----------------------------------------------------------------------------
@@ -1389,7 +1389,8 @@ void KMFolderImap::slotListFolderResult( KJob *job )
   for ( uid = (*it).items.begin(); uid != (*it).items.end(); ++uid ) {
     (*uid).truncate( (*uid).indexOf( "," ) );
   }
-  ImapAccountBase::jobData jd( QString(), (*it).parent );
+  const QString dummystring;
+  ImapAccountBase::jobData jd( dummystring, (*it).parent );
   jd.total = (*it).items.count();
   if ( jd.total == 0 ) {
     finishMailCheck( "listfolder", imapFinished );

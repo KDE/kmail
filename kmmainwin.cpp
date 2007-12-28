@@ -27,61 +27,61 @@ KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow( 0 ),
       mReallyClose( false )
 {
-  setObjectName("kmail-mainwindow#");
+  setObjectName( "kmail-mainwindow#" );
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
   setAttribute( Qt::WA_GroupLeader );
 
   KGlobal::ref();
 
-  KAction *action  = new KAction(KIcon("window-new"), i18n("New &Window"), this);
-  actionCollection()->addAction("new_mail_client", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()));
+  KAction *action  = new KAction( KIcon("window-new"), i18n("New &Window"), this );
+  actionCollection()->addAction( "new_mail_client", action );
+  connect( action, SIGNAL( triggered(bool) ), SLOT( slotNewMailReader() ) );
+
+  // Reading the config has to be done before setting up the main widget,
+  // because that needs a correct size
+  resize( 700, 500 ); // The default size
+  applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
 
   mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
-  mKMMainWidget->resize( 450, 600 );
-  setCentralWidget(mKMMainWidget);
+  setCentralWidget( mKMMainWidget );
   setupStatusBar();
-  if (kmkernel->xmlGuiInstance().isValid())
+  if ( kmkernel->xmlGuiInstance().isValid() )
     setComponentData( kmkernel->xmlGuiInstance() );
 
-  if ( kmkernel->firstInstance() )
-    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
+  setStandardToolBarMenuEnabled( true );
 
-  setStandardToolBarMenuEnabled(true);
+  KStandardAction::configureToolbars( this, SLOT( slotEditToolbars() ),
+                                      actionCollection() );
 
-  KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()),
-				actionCollection());
+  KStandardAction::keyBindings( mKMMainWidget, SLOT( slotEditKeys() ),
+                                actionCollection() );
 
-  KStandardAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
-                          actionCollection());
-
-  KStandardAction::quit( this, SLOT(slotQuit()), actionCollection());
+  KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
   createGUI( "kmmainwin.rc" );
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
-  applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
            this, SLOT( displayStatusMsg(const QString&) ) );
 
-  connect(kmkernel, SIGNAL(configChanged()),
-    this, SLOT(slotConfigChanged()));
-
-  connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
-	  SLOT(setCaption(const QString&)) );
+  connect( mKMMainWidget, SIGNAL( captionChangeRequest(const QString&) ),
+           SLOT( setCaption(const QString&) ) );
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
 
   if ( kmkernel->firstStart() )
     AccountWizard::start( kmkernel, this );
+
+  if ( kmkernel->firstInstance() )
+    QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }
 
 KMMainWin::~KMMainWin()
 {
-  saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
+  saveMainWindowSettings( KMKernel::config()->group( "Main Window") );
   KMKernel::config()->sync();
   KGlobal::deref();
 
@@ -134,7 +134,7 @@ void KMMainWin::slotNewMailReader()
 
   d = new KMMainWin();
   d->show();
-  d->resize(d->size());
+  d->resize( d->size() );
 }
 
 
@@ -181,34 +181,15 @@ void KMMainWin::setupStatusBar()
   mLittleProgress->show();
 }
 
-/** Read configuration options after widgets are created. */
-void KMMainWin::readConfig(void)
-{
-}
-
-/** Write configuration options. */
-void KMMainWin::writeConfig(void)
-{
-  mKMMainWidget->writeConfig();
-}
-
 void KMMainWin::slotQuit()
 {
   mReallyClose = true;
   close();
 }
 
-void KMMainWin::slotConfigChanged()
-{
-  readConfig();
-}
-
 //-----------------------------------------------------------------------------
 bool KMMainWin::queryClose()
 {
-  if ( kapp->sessionSaving() )
-    writeConfig();
-
   if ( kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose )
     return true;
   return kmkernel->canQueryClose();

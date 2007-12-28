@@ -116,18 +116,18 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case KFolderTreeItem::News:
         icon = "network-server"; break;
       case KFolderTreeItem::Search:
-        icon = "zoom-original";break;
+        icon = "system-search";break;
       default:
         icon = "folder";break;
     }
   } else {
     // special folders
     switch ( type() ) {
-      case Inbox: icon = "folder-inbox"; break;
-      case Outbox: icon = "folder-outbox"; break;
-      case SentMail: icon = "folder-sent-mail"; break;
+      case Inbox: icon = "mail-inbox"; break;
+      case Outbox: icon = "mail-outbox"; break;
+      case SentMail: icon = "mail-sent-mail"; break;
       case Trash: icon = "user-trash"; break;
-      case Drafts: icon = "edit"; break;
+      case Drafts: icon = "document-properties"; break;
       case Templates: icon = "document-new"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
@@ -177,7 +177,7 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
   }
   if ( pm.isNull() ) {
     if ( mFolder && mFolder->noContent() ) {
-      pm = il->loadIcon( "folder_grey_open", KIconLoader::Small, size,
+      pm = il->loadIcon( "folder-open-grey", KIconLoader::Small, size,
                          KIconLoader::DefaultState, QStringList(), 0, true );
     } else {
       pm = il->loadIcon( kmkernel->iCalIface().folderPixmap( type() ),
@@ -367,7 +367,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 
   setSelectionModeExt( Extended );
 
-  int namecol = addColumn( i18n("Folder"), 250 );
+  int namecol = addColumn( i18n( "Folder" ) );
   header()->setStretchEnabled( true, namecol );
 
   // connect
@@ -452,7 +452,7 @@ void KMFolderTree::readConfig (void)
 {
   readColorConfig();
 
-  // Custom/Ssystem font support
+  // Custom/System font support
   {
     KConfigGroup conf( KMKernel::config(), "Fonts" );
     if (!conf.readEntry( "defaultFonts", true ) )
@@ -477,7 +477,7 @@ void KMFolderTree::writeConfig()
   }
 
   // save the current layout
-  saveLayout(KMKernel::config(), "Geometry");
+  saveLayout( KMKernel::config(), "Geometry" );
 }
 
 //-----------------------------------------------------------------------------
@@ -519,6 +519,7 @@ void KMFolderTree::reload(bool openFolders)
     return;
   }
   mReloading = true;
+  setUpdatesEnabled( false );
 
   int top = contentsY();
   mLastItem = 0;
@@ -612,12 +613,10 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
-  disconnect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+    disconnect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
                this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
-  connect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
-               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
-
-
+    connect(fti->folder(), SIGNAL(folderSizeChanged( KMFolder* )),
+            this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
     disconnect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
                mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
@@ -656,6 +655,7 @@ void KMFolderTree::reload(bool openFolders)
   }
   refresh();
   mReloading = false;
+  setUpdatesEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1682,7 +1682,7 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   }
   if ( isSizeActive() ) {
     if ( !fti->folder()->noContent()) {
-      int size = folder->storage()->folderSize();
+      qint64 size = folder->storage()->folderSize();
       if ( size != fti->folderSize() ) {
         fti->setFolderSize( size );
         repaint = true;

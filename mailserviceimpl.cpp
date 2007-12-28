@@ -46,7 +46,7 @@ namespace KMail {
 
 MailServiceImpl::MailServiceImpl()
 {
-  new ServiceAdaptor(this);
+  new ServiceAdaptor( this );
   QDBusConnection::sessionBus().registerObject( "/MailTransportService", this );
 }
 

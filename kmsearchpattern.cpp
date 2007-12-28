@@ -651,13 +651,6 @@ bool KMSearchRuleStatus::isEmpty() const
   return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
-bool KMSearchRuleStatus::matches( const DwString &, KMMessage &,
-				  const DwBoyerMoore *, int ) const
-{
-  assert( 0 );
-  return false; // don't warn
-}
-
 bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 {
 

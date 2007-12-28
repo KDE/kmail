@@ -36,6 +36,8 @@ class QString;
 
 namespace KMail {
 
+  // This class implements the D-Bus interface
+  // libkdepim/interfaces/org.kde.mailtransport.service.xml
   class MailServiceImpl : public QObject 
   {
     Q_OBJECT

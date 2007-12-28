@@ -81,7 +81,7 @@ static void reloadFolderTree();
 
 // The index in this array is the KMail::FolderContentsType enum
 static const struct {
-  const char* contentsTypeStr; // the string used in the DCOP interface
+  const char* contentsTypeStr; // the string used in the D-Bus interface
   const char* mimetype;
   KFolderTreeItem::Type treeItemType;
   const char* annotation;
@@ -157,7 +157,6 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mUseResourceIMAP( false ), mResourceQuiet( false ), mHideFolders( true )
 {
   setObjectName( "KMailICalIFaceImpl" );
-  (void) new GroupwareAdaptor( this );
 
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
@@ -171,6 +170,11 @@ KMailICalIfaceImpl::~KMailICalIfaceImpl()
   qDeleteAll( mAccumulators );
   mAccumulators.clear();
   mExtraFolders.clear();
+}
+
+void KMailICalIfaceImpl::registerWithDBus()
+{
+  (void) new GroupwareAdaptor( this );
 }
 
 /* libkcal part of the interface, called from the resources using this
@@ -1500,7 +1504,7 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // This is done here instead of in the resource, because
   // there could be 0, 1, or N kolab resources at this point.
   // We can hack the N case, but not the 0 case.
-  // So the idea of a DCOP signal for this wouldn't work.
+  // So the idea of a D-Bus signal for this wouldn't work.
   if ( ( _changes & KMail::ContentsChanged ) ||
        ( _changes & KMail::ACLChanged ) ) {
     if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )

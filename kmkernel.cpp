@@ -129,6 +129,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   GlobalSettings::self();
 
   mJobScheduler = new JobScheduler( this );
+  mICalIface = new KMailICalIfaceImpl();
 
   mXmlGuiInstance = KComponentData();
 
@@ -181,8 +182,8 @@ KMKernel::~KMKernel ()
 void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
-  QDBusConnection::sessionBus().registerObject("/KMail", this);
-  mICalIface = new KMailICalIfaceImpl();
+  QDBusConnection::sessionBus().registerObject( "/KMail", this );
+  mICalIface->registerWithDBus();
   mICalIface->readConfig();
   mMailService =  new MailServiceImpl();
 }
@@ -207,7 +208,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      // that the user wants to send a message with subject "ession" but
      // (most likely) that the user clicked on KMail's system tray applet
      // which results in KMKernel::raise() calling "kmail kmail newInstance"
-     // via dcop which apparently executes the application with the original
+     // via D-Bus which apparently executes the application with the original
      // command line arguments and those include "-session ..." if
      // kmail/kontact was restored by session management
      if ( subj == "ession" ) {
@@ -312,7 +313,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  kmkernel->acctMgr()->checkMail(false);
+  kmkernel->acctMgr()->checkMail( false );
 }
 
 QStringList KMKernel::accounts()
@@ -320,20 +321,23 @@ QStringList KMKernel::accounts()
   return kmkernel->acctMgr()->getAccounts();
 }
 
-void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
+void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
-  kDebug(5006) <<"KMKernel::checkMail called";
-
-  KMAccount* acct = kmkernel->acctMgr()->findByName(account);
-  if (acct)
-    kmkernel->acctMgr()->singleCheckMail(acct, false);
+  kDebug(5006);
+  if ( account.isEmpty() )
+    checkMail();
+  else {
+    KMAccount* acct = kmkernel->acctMgr()->findByName( account );
+    if ( acct )
+      kmkernel->acctMgr()->singleCheckMail (acct, false );
+  }
 }
 
 void KMKernel::openReader( bool onlyCheck )
 {
   mWin = 0;
   KMainWindow *ktmw = 0;
-  kDebug(5006) <<"KMKernel::openReader called";
+  kDebug(5006);
 
   foreach ( KMainWindow *window, KMainWindow::memberList() )
   {
@@ -368,12 +372,12 @@ void KMKernel::openReader( bool onlyCheck )
 
 int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
-                            const QString &body, int hidden,
-                            const KUrl &messageFile,
-                            const KUrl::List &attachURLs,
+                            const QString &body, bool hidden,
+                            const QString &messageFile,
+                            const QStringList &attachmentPaths,
                             const QStringList &customHeaders )
 {
-  kDebug(5006) <<"KMKernel::openComposer called";
+  kDebug(5006);
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -386,8 +390,10 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if (!bcc.isEmpty())
     msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLatin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    QByteArray str = KPIMUtils::kFileToByteArray( messageFile.path(), true, false );
+
+  KUrl messageUrl = KUrl( messageFile );
+  if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
+    QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.path(), true, false );
     if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
@@ -397,16 +403,16 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       parser.process( NULL, NULL );
     }
   }
-  else if (!body.isEmpty()) {
-    msg->setBody(body.toUtf8());
+  else if ( !body.isEmpty() ) {
+    msg->setBody( body.toUtf8() );
   }
   else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( 0, 0 );
   }
 
-  if (!customHeaders.isEmpty())
+  if ( !customHeaders.isEmpty() )
   {
     for ( QStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
       if ( !(*it).isEmpty() )
@@ -423,10 +429,11 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
+  cWin->setCharset( "", true );
+  KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
-    cWin->addAttach((*it));
-  if (hidden == 0) {
+    cWin->addAttach( (*it) );
+  if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -439,7 +446,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
-                            const QString &body, int hidden,
+                            const QString &body, bool hidden,
                             const QString &attachName,
                             const QByteArray &attachCte,
                             const QByteArray &attachData,
@@ -450,7 +457,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset )
 {
-  kDebug(5006) <<"KMKernel::openComposer()";
+  kDebug(5006);
 
   KMMessage *msg = new KMMessage;
   KMMessagePart *msgPart = 0;
@@ -526,7 +533,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( msgPart )
     cWin->addAttach(msgPart);
 
-  if ( hidden == 0 && !iCalAutoSend ) {
+  if ( !hidden && !iCalAutoSend ) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -550,9 +557,10 @@ void KMKernel::setDefaultTransport( const QString & transport )
   MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
 }
 
-QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
-                               const QString &bcc, const QString &subject,
-                               const QString &body,bool hidden)
+QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
+                                        const QString &bcc,
+                                        const QString &subject,
+                                        const QString &body, bool hidden )
 {
   KMMessage *msg = new KMMessage;
   msg->initHeader();
@@ -571,7 +579,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", true);
-  if (!hidden) {
+  if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -583,18 +591,18 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
   return QDBusObjectPath(cWin->dbusObjectPath());
 }
 
-QDBusObjectPath KMKernel::newMessage(const QString &to,
-                             const QString &cc,
-                             const QString &bcc,
-                             bool hidden,
-                             bool useFolderId,
-                             const QString & /*messageFile*/,
-                             const QString &_attachURL)
+QDBusObjectPath KMKernel::newMessage( const QString &to,
+                                      const QString &cc,
+                                      const QString &bcc,
+                                      bool hidden,
+                                      bool useFolderId,
+                                      const QString & /*messageFile*/,
+                                      const QString &_attachURL)
 {
-  KUrl attachURL(_attachURL);
-  KMail::Composer * win = 0;
+  KUrl attachURL( _attachURL );
+  KMail::Composer *win = 0;
   KMMessage *msg = new KMMessage;
-  KMFolder *folder = NULL;
+  KMFolder *folder = 0;
   uint id = 0;
 
   if ( useFolderId ) {
@@ -607,34 +615,33 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
     msg->initHeader();
     win = makeComposer( msg );
   }
-  msg->setCharset("utf-8");
+  msg->setCharset( "utf-8" );
   //set basic headers
-  if (!to.isEmpty()) msg->setTo(to);
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-
-  if ( useFolderId ) {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-                           QString(), false, false, false );
-    parser.process( NULL, folder );
-    win = makeComposer( msg, id );
-  } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-                           QString(), false, false, false );
-    parser.process( NULL, NULL );
-    win = makeComposer( msg );
+  if ( !to.isEmpty() ) {
+    msg->setTo( to );
+  }
+  if ( !cc.isEmpty() ) {
+    msg->setCc( cc );
+  }
+  if ( !bcc.isEmpty() ) {
+    msg->setBcc( bcc );
   }
 
+  TemplateParser parser( msg, TemplateParser::NewMessage,
+                         QString(), false, false, false );
+  parser.process( NULL, folder );
+
+
   //Add the attachment if we have one
-  if(!attachURL.isEmpty() && attachURL.isValid()) {
-    win->addAttach(attachURL);
+  if ( !attachURL.isEmpty() && attachURL.isValid() ) {
+    win->addAttach( attachURL );
   }
 
   //only show window when required
-  if(!hidden) {
+  if ( !hidden ) {
     win->show();
   }
-  return QDBusObjectPath(win->dbusObjectPath());
+  return QDBusObjectPath( win->dbusObjectPath() );
 }
 
 int KMKernel::viewMessage( const KUrl & messageFile )
@@ -674,16 +681,11 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   return 1;
 }
 
-int KMKernel::dbusAddMessage( const QString & foldername, const QString & msgUrlString,
+int KMKernel::dbusAddMessage( const QString & foldername,
+                              const QString & messageFile,
                               const QString & MsgStatusFlags)
 {
-  return dbusAddMessage(foldername, KUrl(msgUrlString), MsgStatusFlags);
-}
-
-int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
-                              const QString & MsgStatusFlags)
-{
-  kDebug(5006) <<"KMKernel::dbusAddMessage called";
+  kDebug(5006);
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -699,7 +701,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
     mAddMessageLastFolder = foldername;
   }
 
-  if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
+  KUrl msgUrl( messageFile );
+  if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
 
     const QByteArray messageText =
       KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
@@ -753,7 +756,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
     if ( mAddMsgCurrentFolder ) {
       if (readFolderMsgIds) {
 
-      	// OLD COMMENT:
+        // OLD COMMENT:
         // Try to determine if a message already exists in
         // the folder. The message id that is searched for, is
         // the subject line + the date. This should be quite
@@ -762,25 +765,25 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
         // If the subject is empty, the fromStrip string
         // is taken.
 
-	// NEW COMMENT from Danny Kukawka (danny.kukawka@web.de):
-	// subject line + the date is only unique if the following
-	// return a correct unique value:
-	// 	time_t  DT = mb->date();
-        // 	QString dt = ctime(&DT);
-	// But if the datestring in the Header isn't RFC conform
-	// subject line + the date isn't unique.
-	//
-	// The only uique headerfield is the Message-ID. In some
-	// cases this could be empty. I then I use the
-	// subject line + dateStr .
+        // NEW COMMENT from Danny Kukawka (danny.kukawka@web.de):
+        // subject line + the date is only unique if the following
+        // return a correct unique value:
+        //   time_t  DT = mb->date();
+        //   QString dt = ctime(&DT);
+        // But if the datestring in the Header isn't RFC conform
+        // subject line + the date isn't unique.
+        //
+        // The only uique headerfield is the Message-ID. In some
+        // cases this could be empty. I then I use the
+        // subject line + dateStr .
 
         int i;
 
         mAddMsgCurrentFolder->open( "dbusadd" );
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
           KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
-	  QString id = mb->msgIdMD5();
-	  if ( id.isEmpty() ) {
+          QString id = mb->msgIdMD5();
+          if ( id.isEmpty() ) {
             id = mb->subject();
             if ( id.isEmpty() )
               id = mb->fromStrip();
@@ -788,7 +791,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
               id = mb->toStrip();
 
             id += mb->dateStr();
-	  }
+          }
 
           //fprintf(stderr,"%s\n",(const char *) id);
           if ( !id.isEmpty() ) {
@@ -800,13 +803,13 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
 
       QString msgId = msg->msgIdMD5();
       if ( msgId.isEmpty()) {
-	msgId = msg->subject();
-	if ( msgId.isEmpty() )
+        msgId = msg->subject();
+        if ( msgId.isEmpty() )
           msgId = msg->fromStrip();
         if ( msgId.isEmpty() )
           msgId = msg->toStrip();
 
-	msgId += msg->dateStr();
+        msgId += msg->dateStr();
       }
 
       int k = mAddMessageMsgIds.indexOf( msgId );
@@ -832,7 +835,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,const KUrl & msgUrl,
         }
       } else {
         //qDebug( "duplicate: " + msgId + "; subj: " + msg->subject() + ", from: " + msgId = msg->fromStrip());
-	retval = -4;
+        retval = -4;
       }
     } else {
       retval = -1;
@@ -850,19 +853,12 @@ void KMKernel::dbusResetAddMessage()
 }
 
 int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
-                                         const QString & msgUrlString,
-                                         const QString & MsgStatusFlags)
-{
-  return dbusAddMessage_fastImport(foldername, KUrl(msgUrlString), MsgStatusFlags);
-}
-
-int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
-                                         const KUrl & msgUrl,
+                                         const QString & messageFile,
                                          const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
   // search for already existing emails.
-  kDebug(5006) <<"KMKernel::dbusAddMessage_fastImport called";
+  kDebug(5006);
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
@@ -878,7 +874,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     mAddMessageLastFolder = foldername;
   }
 
-
+  KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QByteArray messageText =
       KPIMUtils::kFileToByteArray( msgUrl.path(), true, false );
@@ -992,13 +988,15 @@ QString KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface(DBUS_KMAIL, "/MainApplication", "org.kde.KUniqueApplication", QDBusConnection::sessionBus());
+  QDBusInterface iface( DBUS_KMAIL, "/MainApplication",
+                        "org.kde.KUniqueApplication",
+                        QDBusConnection::sessionBus());
   QDBusReply<int> reply;
-  if (!iface.isValid() || !(reply = iface.call("newInstance")).isValid())
+  if ( !iface.isValid() || !( reply = iface.call( "newInstance" ) ).isValid() )
   {
-       QDBusError err = iface.lastError();
-       kError() <<"Communication problem with kmail"
-                 << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
+    QDBusError err = iface.lastError();
+    kError() << "Communication problem with KMail. "
+             << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
   }
 
 }
@@ -1762,7 +1760,9 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const QStringList &customHeaders )
 {
   if ( mailto )
-    openComposer( to, cc, bcc, subj, body, 0, messageFile, attachURLs, customHeaders );
+    openComposer( to, cc, bcc, subj, body, 0,
+                  messageFile.pathOrUrl(), attachURLs.toStringList(),
+                  customHeaders );
   else
     openReader( check );
 

@@ -18,12 +18,13 @@ target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBR
 
 ########### next target ###############
 set(dbustest_SRCS dbustest.cpp )
-qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.kmail.xml)
-qt4_add_dbus_interfaces( dbustest_SRCS ../org.kde.kmail.mailcomposer.xml )
+qt4_add_dbus_interfaces( dbustest_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml)
+qt4_add_dbus_interfaces( dbustest_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml )
 
 
 kde4_add_executable(dbustest TEST ${dbustest_SRCS})
 
+add_dependencies(dbustest kmail)
 target_link_libraries(dbustest  ${KDE4_KIO_LIBS} )
 
 

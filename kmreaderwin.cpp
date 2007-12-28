@@ -1719,24 +1719,24 @@ void KMReaderWin::printMsg()
 
 
 //-----------------------------------------------------------------------------
-int KMReaderWin::msgPartFromUrl(const KUrl &aUrl)
+int KMReaderWin::msgPartFromUrl( const KUrl &aUrl )
 {
-  if (aUrl.isEmpty()) return -1;
+  if ( aUrl.isEmpty() ) return -1;
 
-  if (!aUrl.isLocalFile()) return -1;
+  if ( !aUrl.isLocalFile() ) return -1;
 
   QString path = aUrl.path();
-  uint right = path.lastIndexOf('/');
-  uint left = path.lastIndexOf('.', right);
+  uint right = path.lastIndexOf( '/' );
+  uint left = path.lastIndexOf( '.', right );
 
   bool ok;
-  int res = path.mid(left + 1, right - left - 1).toInt(&ok);
-  return (ok) ? res : -1;
+  int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
+  return ( ok ) ? res : -1;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::resizeEvent(QResizeEvent *)
+void KMReaderWin::resizeEvent( QResizeEvent * )
 {
   if( !mResizeTimer.isActive() )
   {
@@ -1752,7 +1752,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
-  mSplitter->setGeometry(0, 0, width(), height());
+  mSplitter->setGeometry( 0, 0, width(), height() );
 }
 
 
@@ -1777,10 +1777,11 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder && 
-     (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-      folder->isDrafts() || folder->isTemplates() ) )
-    return;
+  if ( folder ) {
+    if ( folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+         folder->isDrafts() || folder->isTemplates() )
+      return;
+  }
 
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
                                                    MDN::Displayed,
@@ -1791,9 +1792,9 @@ void KMReaderWin::slotTouchMessage()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::closeEvent(QCloseEvent *e)
+void KMReaderWin::closeEvent( QCloseEvent *e )
 {
-  QWidget::closeEvent(e);
+  QWidget::closeEvent( e );
   writeConfig();
 }
 
@@ -1911,7 +1912,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
   if ( GlobalSettings::self()->allowAttachmentEditing() ) {
-    action = menu->addAction(SmallIcon("edit"), i18n("Edit Attachment") );
+    action = menu->addAction(SmallIcon("document-properties"), i18n("Edit Attachment") );
     connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
     attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Edit );
   }
@@ -2544,7 +2545,7 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 {
   if ( KMessageBox::warningContinueCancel( this,
         i18n("Modifying an attachment might invalidate any digital signature on this message."),
-        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), KStandardGuiItem::cancel(),
+        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "document-properties" ), KStandardGuiItem::cancel(),
         "EditAttachmentSignatureWarning" )
         != KMessageBox::Continue ) {
     return;
