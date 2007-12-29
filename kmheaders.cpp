@@ -176,7 +176,6 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   setShowSortIndicator(true);
   setFocusPolicy( Qt::WheelFocus );
 
-  kDebug() << "Loading the important mail icon?";
   if (!pixmapsLoaded)
   {
     pixmapsLoaded = true;
@@ -189,8 +188,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixTodo                  = new QPixmap( UserIcon( "mail-task"                  ) );
     pixSent                  = new QPixmap( UserIcon( "mail-sent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "mail-forwarded"             ) );
-    kDebug() << "Loading the important mail icon!!";
-    pixFlag                  = new QPixmap( SmallIcon( "mail-read", 0, KIconLoader::DefaultState, QStringList(QString()) << QString() << "emblem-important" ) );
+    pixFlag                  = new QPixmap( SmallIcon( "emblem-important"          ) );
     pixWatched               = new QPixmap( UserIcon( "mail-thread-watch"          ) );
     pixIgnored               = new QPixmap( UserIcon( "mail-thread-ignored"        ) );
     pixSpam                  = new QPixmap( UserIcon( "mail-mark-junk"             ) );
