@@ -176,23 +176,25 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   setShowSortIndicator(true);
   setFocusPolicy( Qt::WheelFocus );
 
+  kDebug() << "Loading the important mail icon?";
   if (!pixmapsLoaded)
   {
     pixmapsLoaded = true;
-    pixNew                   = new QPixmap( UserIcon( "mail-new"                   ) );
-    pixUns                   = new QPixmap( KIconLoader().loadIcon( "mail-unread",       KIconLoader::Small ) );
+    pixNew                   = new QPixmap( SmallIcon( "mail-unread-new"           ) );
+    pixUns                   = new QPixmap( SmallIcon( "mail-unread"               ) );
     pixDel                   = new QPixmap( UserIcon( "mail-deleted"               ) );
-    pixRead                  = new QPixmap( KIconLoader().loadIcon( "mail-read",         KIconLoader::Small ) );
+    pixRead                  = new QPixmap( SmallIcon( "mail-read"                 ) );
     pixRep                   = new QPixmap( UserIcon( "mail-replied"               ) );
     pixQueued                = new QPixmap( UserIcon( "mail-queued"                ) );
     pixTodo                  = new QPixmap( UserIcon( "mail-task"                  ) );
     pixSent                  = new QPixmap( UserIcon( "mail-sent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "mail-forwarded"             ) );
-    pixFlag                  = new QPixmap( UserIcon( "mail-important"             ) );
+    kDebug() << "Loading the important mail icon!!";
+    pixFlag                  = new QPixmap( SmallIcon( "mail-read", 0, KIconLoader::DefaultState, QStringList(QString()) << QString() << "emblem-important" ) );
     pixWatched               = new QPixmap( UserIcon( "mail-thread-watch"          ) );
     pixIgnored               = new QPixmap( UserIcon( "mail-thread-ignored"        ) );
     pixSpam                  = new QPixmap( UserIcon( "mail-mark-junk"             ) );
-    pixHam                   = new QPixmap( KIconLoader().loadIcon( "mail-mark-notjunk", KIconLoader::Small ) );
+    pixHam                   = new QPixmap( SmallIcon( "mail-mark-notjunk"         ) );
     pixFullySigned           = new QPixmap( UserIcon( "mail-signed-verified"       ) );
     pixPartiallySigned       = new QPixmap( UserIcon( "mail-signed-partially"      ) );
     pixUndefinedSigned       = new QPixmap( UserIcon( "mail-signed"                ) );
@@ -201,7 +203,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "kmmsgundefinedencrypted"    ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
-    pixAttachment            = new QPixmap( KIconLoader().loadIcon( "mail-attachment",   KIconLoader::Small ) );
+    pixAttachment            = new QPixmap( SmallIcon( "mail-attachment"           ) );
     pixReadFwd               = new QPixmap( UserIcon( "mail-forwarded"             ) );
     pixReadReplied           = new QPixmap( UserIcon( "mail-replied"               ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "mail-forwarded-replied"     ) );
