@@ -74,6 +74,7 @@ using namespace KPIM;
 #include <QTextCodec>
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <errno.h>
 
 #include "textsource.h"

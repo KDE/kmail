@@ -82,6 +82,7 @@ using namespace KMail;
 #include <QLayout>
 #include <QRadioButton>
 
+#include <unistd.h>
 #include <errno.h>
 
 #define UIDCACHE_VERSION 1

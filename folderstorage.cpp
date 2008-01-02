@@ -58,6 +58,7 @@ using KMail::ListJob;
 #include <QRegExp>
 
 #include <mimelib/mimepp.h>
+#include <unistd.h>
 #include <errno.h>
 
 //-----------------------------------------------------------------------------
