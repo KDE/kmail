@@ -1251,7 +1251,7 @@ namespace KMail {
         node->setSignatureState( KMMsgFullySigned );
       } else {
         insertAndParseNewChildNode( *node,
-                                    &*decryptedData,
+                                    decryptedData.constData(),
                                     "encrypted data" );
       }
     } else {
@@ -1315,7 +1315,7 @@ namespace KMail {
       //mReader->parseMsgHeader( &rfc822message );
     // display the body of the encapsulated message
     insertAndParseNewChildNode( *node,
-                                &*rfc822messageStr,
+                                rfc822messageStr.constData(),
                                 "encapsulated message" );
     if ( mReader )
       htmlWriter()->queue( writeSigstatFooter( messagePart ) );
@@ -1383,7 +1383,7 @@ namespace KMail {
         if ( bOkDecrypt ) {
           // fixing the missing attachments bug #1090-b
           insertAndParseNewChildNode( *node,
-                                      &*decryptedData,
+                                      decryptedData.constData(),
                                       "encrypted data" );
         } else {
           mRawReplyString += decryptedData;
@@ -1542,7 +1542,7 @@ namespace KMail {
                                                    cryptPlugWrapper(),
                                                    node->trueFromAddress() ) );
         insertAndParseNewChildNode( *node,
-                                    &*decryptedData,
+                                    decryptedData.constData(),
                                     "encrypted data" );
         if ( mReader )
           htmlWriter()->queue( writeSigstatFooter( messagePart ) );
