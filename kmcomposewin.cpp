@@ -1121,7 +1121,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
-  mEncodingAction = new KSelectAction( KIcon( "character-set" ), i18n("Se&t Encoding"), this );
+  mEncodingAction = new KSelectAction( KIcon( "accessories-character-map" ), i18n("Se&t Encoding"), this );
   actionCollection()->addAction( "charsets", mEncodingAction );
   connect( mEncodingAction, SIGNAL(triggered(bool)), SLOT(slotSetCharset()) );
   mWordWrapAction = new KToggleAction( i18n( "&Wordwrap" ), this );
@@ -1221,7 +1221,7 @@ void KMComposeWin::setupActions( void )
   mEncryptAction = new KToggleAction(KIcon("document-encrypt"), i18n("&Encrypt Message"), this);
   mEncryptAction->setIconText( i18n( "Encrypt" ) );
   actionCollection()->addAction("encrypt_message", mEncryptAction );
-  mSignAction = new KToggleAction(KIcon("signature"), i18n("&Sign Message"), this);
+  mSignAction = new KToggleAction(KIcon("document-sign"), i18n("&Sign Message"), this);
   mSignAction->setIconText( i18n( "Sign" ) );
   actionCollection()->addAction("sign_message", mSignAction );
   // get PGP user id for the chosen identity
