@@ -74,7 +74,7 @@ class QuotaInfo {
   QString toString() const {
     if ( isValid() && !isEmpty() ) {
       readConfig();
-      int factor = static_cast<int> ( pow( 1000, (double)mFactor ) );
+      int factor = static_cast<int> ( pow( 1000.0, mFactor ) );
       return i18n("%1 of %2 %3 used", mCurrent.toInt() / factor,
                                       mMax.toInt() / factor, mUnits );
     }
