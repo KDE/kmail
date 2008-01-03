@@ -1052,7 +1052,7 @@ void KMComposeWin::setupActions( void )
 
   mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
 
-  action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
+  action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
   action = new KAction(KIcon("mail-message-new"), i18n("&New Composer"), this);
@@ -1318,7 +1318,7 @@ void KMComposeWin::setupActions( void )
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
-  actionFormatColor = new KAction( KIcon( "color-line" ), i18n("Text Color..."), this );
+  actionFormatColor = new KAction( KIcon( "format-stroke-color" ), i18n("Text Color..."), this );
   actionCollection()->addAction("format_color", actionFormatColor );
   connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
 
