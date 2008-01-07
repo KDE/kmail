@@ -87,14 +87,10 @@ KMMainWin::~KMMainWin()
 
   if ( !kmkernel->haveSystemTrayApplet() ) {
     // Check if this was the last KMMainWin
-    int not_withdrawn = 0;
-	for (int i = 0; i < KMainWindow::memberList().size(); ++i){
-
-      if ( !KMainWindow::memberList().at(i)->isHidden() &&
-           KMainWindow::memberList().at(i)->isTopLevel() &&
-           KMainWindow::memberList().at(i) != this &&
-           ::qobject_cast<KMMainWin *>( KMainWindow::memberList().at(i) )
-        )
+    uint not_withdrawn = 0;
+    foreach ( KMainWindow* window, KMainWindow::memberList() ) {
+      if ( !window->isHidden() && window->isTopLevel() &&
+           window != this && ::qobject_cast<KMMainWin *>( window ) )
         not_withdrawn++;
     }
 

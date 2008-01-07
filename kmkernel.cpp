@@ -1006,14 +1006,12 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
   KMMainWidget *mainWidget = 0;
 
   // First look for a KMainWindow.
-  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
-       it != KMainWindow::memberList().end(); ++it ) {
-
+  foreach ( KMainWindow* window, KMainWindow::memberList() ) {
     // Then look for a KMMainWidget.
-    QList<KMMainWidget*> l = (*it)->findChildren<KMMainWidget*>();
+    QList<KMMainWidget*> l = window->findChildren<KMMainWidget*>();
     if ( !l.isEmpty() && l.first() ) {
       mainWidget = l.first();
-      if ( (*it)->isActiveWindow() )
+      if ( window->isActiveWindow() )
         break;
     }
   }
@@ -1555,10 +1553,7 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::closeAllKMailWindows()
 {
-  QListIterator<KMainWindow*> it( KMainWindow::memberList() );
-  KMainWindow *window = 0;
-  while ( it.hasNext() ) {
-    window = it.next();
+  foreach ( KMainWindow* window, KMainWindow::memberList() ) {
     if ( ::qobject_cast<KMMainWin *>(window) ||
          ::qobject_cast<KMail::SecondaryWindow *>(window) )
     {
@@ -1744,9 +1739,8 @@ void KMKernel::dumpDeadLetters()
     return; //All documents should be saved before shutting down is set!
 
   // make all composer windows autosave their contents
-  QListIterator<KMainWindow*> it( KMainWindow::memberList() );
-  while ( it.hasNext() )
-    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( it.next() ) )
+  foreach ( KMainWindow* window, KMainWindow::memberList() )
+    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( window ) )
       win->autoSaveMessage();
 }
 
@@ -1999,9 +1993,8 @@ KMainWindow* KMKernel::mainWin()
   KMainWindow *kmWin = 0;
 
   // First look for a KMMainWin.
-  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
-       it != KMainWindow::memberList().end(); ++it )
-    if ( ::qobject_cast<KMMainWin *>(*it) )
+  foreach ( KMainWindow* window, KMainWindow::memberList() )
+    if ( ::qobject_cast<KMMainWin *>(window) )
       return kmWin;
 
   // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
