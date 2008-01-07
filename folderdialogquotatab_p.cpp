@@ -82,7 +82,7 @@ void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
       // casting to int is safe
       int current = info.current().toInt();
       int max = info.max().toInt();
-      int factor = static_cast<int> ( pow( 1000, mFactor ) );
+      int factor = static_cast<int> ( pow( 1000.0, mFactor ) );
       mProgressBar->setMaximum( max );
       mProgressBar->setValue( current );
       mInfoLabel->setText( i18n("%1 of %2 %3 used", current/factor,

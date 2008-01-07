@@ -3133,7 +3133,7 @@ void KMMainWidget::setupActions()
     mStatusMenu->addAction(action);
   }
   {
-    QAction *action = new KAction(KIcon("mail-mark-new"), i18n("Mark Message as &New"), this);
+    QAction *action = new KAction(KIcon("mail-mark-unread-new"), i18n("Mark Message as &New"), this);
     actionCollection()->addAction("status_new", action );
     action->setToolTip(i18n("Mark selected messages as new"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSetMsgStatusNew()));
@@ -3181,7 +3181,7 @@ void KMMainWidget::setupActions()
   mMarkThreadAsReadAction->setToolTip(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
-  mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-new"), i18n("Mark Thread as &New"), this);
+  mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-unread-new"), i18n("Mark Thread as &New"), this);
   actionCollection()->addAction("thread_new", mMarkThreadAsNewAction );
   connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
   mMarkThreadAsNewAction->setToolTip( i18n("Mark all messages in the selected thread as new"));
@@ -4143,7 +4143,7 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
     factory->removeClient( mGUIClient );
 
   if ( !mTroubleshootFolderAction ) {
-    mTroubleshootFolderAction = new KAction(KIcon("plasmagik"), i18n("&Troubleshoot IMAP Cache..."), this);
+    mTroubleshootFolderAction = new KAction(KIcon("tools-wizard"), i18n("&Troubleshoot IMAP Cache..."), this);
     actionCollection()->addAction("troubleshoot_folder", mTroubleshootFolderAction );
     connect(mTroubleshootFolderAction, SIGNAL(triggered(bool)), SLOT(slotTroubleshootFolder()));
     if ( setState )

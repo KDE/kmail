@@ -393,7 +393,7 @@ void KMSystemTray::showKMail()
 #ifdef Q_WS_X11
   if(mainWin)
   {
-    KWindowInfo::KWindowInfo cur =  KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
+    KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
     if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
     // switch to appropriate desktop
     if ( mDesktopOfMainWin != NET::OnAllDesktops )

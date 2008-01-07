@@ -103,7 +103,7 @@ Comment[uz]=Янги хат келди
 Comment[x-test]=xxNew mail arrivedxx
 Comment[zh_CN]=新邮件到达
 Comment[zh_TW]=新郵件抵達
-Sound=
+Sound=KDE-Im-New-Mail.ogg
 Action=None
 
 

@@ -264,7 +264,7 @@ void KMFilter::readConfig(KConfigGroup & config)
     bConfigureToolbar = config.readEntry( "ConfigureToolbar", false );
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mToolbarName = config.readEntry( "ToolbarName", name() );
-    mIcon = config.readEntry( "Icon", "gear" );
+    mIcon = config.readEntry( "Icon", "system-run" );
     bAutoNaming = config.readEntry( "AutomaticName", false );
 
     int i, numActions;

@@ -834,15 +834,13 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
   }
 
   bool emptyList = ( root && subfolderNames.empty() );
-  if ( !emptyList )
-  {
+  if ( !emptyList ) {
     checkFolders( subfolderNames, jobData.curNamespace );
   }
 
   KMFolderImap *f = 0;
   KMFolderNode *node = 0;
-  for ( int i = 0; i < subfolderNames.count(); i++ )
-  {
+  for ( int i = 0; i < subfolderNames.count(); i++ ) {
     bool settingsChanged = false;
     bool found = false;
     // create folders if necessary
@@ -850,27 +848,21 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     while ( it.hasNext() ) {
       node = it.next();
       if ( !node->isDir() && node->name() == subfolderNames[i] ) {
-        break;
         found = true;
+        break;
       }
     }
 
-    if ( !found ) {
-      node = 0;
-    }
-
-    if ( node ) {
-      f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
-    }
-    else if ( subfolderPaths[i].toUpper() != "/INBOX/" )
-    {
-      kDebug(5006) <<"create folder" << subfolderNames[i];
-      KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
+    if ( found ) {
+      f = static_cast<KMFolderImap*>( static_cast<KMFolder*>( node )->storage() );
+    } else if ( subfolderPaths[i].toUpper() != "/INBOX/" ) {
+      kDebug(5006) << "create folder" << subfolderNames[i];
+      KMFolder *fld = folder()->child()->createFolder( subfolderNames[i] );
       if ( fld ) {
         f = static_cast<KMFolderImap*> ( fld->storage() );
         settingsChanged = true;
       } else {
-        kWarning(5006) <<"can't create folder" << subfolderNames[i];
+        kWarning(5006) << "can't create folder" << subfolderNames[i];
       }
     }
     if ( f ) {

@@ -261,7 +261,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mFilterActionLabel->setBuddy( mFilterActionIconButton );
       mFilterActionIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action, false );
       mFilterActionIconButton->setIconSize( 16 );
-      mFilterActionIconButton->setIcon( "gear" );
+      mFilterActionIconButton->setIcon( "system-run" );
       mFilterActionIconButton->setEnabled( false );
 
       gl->addWidget( hbox, 9, 0, 1, 4 );
