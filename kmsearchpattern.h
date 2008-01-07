@@ -232,10 +232,10 @@ namespace KMail {
 
   // If you change the ordering here; also do it in the enum below
   static const MessageStatus StatusValues[] = {
-    { I18N_NOOP( "Important" ),        "mail-mark-important"    },
-    { I18N_NOOP( "New" ),              "mail-mark-unread-new"     },
-    { I18N_NOOP( "Unread" ),           "mail-mark-unread"         },
-    { I18N_NOOP( "Read" ),             "mail-mark-read"           },
+    { I18N_NOOP( "Important" ),        "emblem-important"    },
+    { I18N_NOOP( "New" ),              "mail-unread-new"     },
+    { I18N_NOOP( "Unread" ),           "mail-unread"         },
+    { I18N_NOOP( "Read" ),             "mail-read"           },
     { I18N_NOOP( "Old" ),              0                     },
     { I18N_NOOP( "Deleted" ),          "mail-deleted"        },
     { I18N_NOOP( "Replied" ),          "mail-replied"        },

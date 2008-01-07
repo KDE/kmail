@@ -180,16 +180,16 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   if (!pixmapsLoaded)
   {
     pixmapsLoaded = true;
-    pixNew                   = new QPixmap( SmallIcon( "mail-mark-unread-new"           ) );
-    pixUns                   = new QPixmap( SmallIcon( "mail-mark-unread"               ) );
+    pixNew                   = new QPixmap( SmallIcon( "mail-unread-new"           ) );
+    pixUns                   = new QPixmap( SmallIcon( "mail-unread"               ) );
     pixDel                   = new QPixmap( UserIcon( "mail-deleted"               ) );
-    pixRead                  = new QPixmap( SmallIcon( "mail-mark-read"                 ) );
+    pixRead                  = new QPixmap( SmallIcon( "mail-read"                 ) );
     pixRep                   = new QPixmap( UserIcon( "mail-replied"               ) );
     pixQueued                = new QPixmap( UserIcon( "mail-queued"                ) );
     pixTodo                  = new QPixmap( UserIcon( "mail-task"                  ) );
     pixSent                  = new QPixmap( UserIcon( "mail-sent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "mail-forwarded"             ) );
-    pixFlag                  = new QPixmap( SmallIcon( "mail-mark-important"          ) );
+    pixFlag                  = new QPixmap( SmallIcon( "emblem-important"          ) );
     pixWatched               = new QPixmap( UserIcon( "mail-thread-watch"          ) );
     pixIgnored               = new QPixmap( UserIcon( "mail-thread-ignored"        ) );
     pixSpam                  = new QPixmap( UserIcon( "mail-mark-junk"             ) );
@@ -1610,7 +1610,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %1 selected messages?<br />"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-              msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"),
+              msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), 
               KStandardGuiItem::del(), KStandardGuiItem::cancel(),
               "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
