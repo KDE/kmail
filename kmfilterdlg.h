@@ -230,7 +230,9 @@ class KMPopFilterActionWidget : public QGroupBox
 {
   Q_OBJECT
 public:
-  explicit KMPopFilterActionWidget( const QString &title, QWidget* parent=0, const char* name=0 );
+  explicit KMPopFilterActionWidget( const QString & title,
+                                    QWidget * parent = 0,
+                                    const char * name = 0 );
   void setAction( KMPopFilterAction aAction );
   KMPopFilterAction action();
 

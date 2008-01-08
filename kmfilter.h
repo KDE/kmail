@@ -30,10 +30,10 @@ class KConfigGroup;
 class KMMessage;
 class KMFilterAction;
 class KMFolder;
+class KMMsgBase;
 
 // maximum number of filter actions per filter
 const int FILTER_MAX_ACTIONS = 8;
-
 
 class KMFilter
 {

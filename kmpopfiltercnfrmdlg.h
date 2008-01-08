@@ -1,6 +1,7 @@
 /*
   Copyright (c) 2001 Heiko Hund <heiko@ist.eigentlich.net>
   Copyright (c) 2001 Thorsten Zachmann <T.Zachmann@zagge.de>
+  Copyright (c) 2008 Thomas McGuire <Thomas.McGuire@gmx.net>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,93 +24,156 @@
 #include "kmpopheaders.h"
 
 #include <kdialog.h>
-#include <k3listview.h>
 
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QMap>
-#include <QKeyEvent>
 #include <QList>
 
-class QWidget;
+class QButtonGroup;
+class QKeyEvent;
+class QRadioButton;
+class QSignalMapper;
 class QString;
+class QWidget;
 
 class KMPopFilterCnfrmDlg;
-/**
-  * @author Heiko Hund
-  */
-class KMPopHeadersView : public K3ListView
+
+// This treewidget shows KMPopHeadersViewItems.
+// It has 3 columns for radiobuttons, which show the current action of the item.
+// Additionally, it shows columns for subject, date, sender, receiver etc.
+// It automatically changes the action of all items when the column header
+// of one of the action column is clicked.
+// Also, the right and left keys can be used to select a different action
+// for the selected items.
+class KMPopHeadersView : public QTreeWidget
 {
   Q_OBJECT
 
 public:
-  explicit KMPopHeadersView(QWidget *aParent=0, KMPopFilterCnfrmDlg *aDialog=0);
-  ~KMPopHeadersView();
-  static const KMPopFilterAction mapToAction(int aColumn) { return (KMPopFilterAction)aColumn;}
-  static const int mapToColumn(KMPopFilterAction aAction) { return (int)aAction;}
-  static const char *mUnchecked[26];
-  static const char *mChecked[26];
-protected:
-  static const char *mLater[25];
-  static const char *mDown[20];
-  static const char *mDel[19];
-  void keyPressEvent( QKeyEvent *k);
 
-protected slots: // Protected slots
-  void slotPressed(Q3ListViewItem* aItem, const QPoint& aPoint, int aColumn);
+  explicit KMPopHeadersView( QWidget *parent, KMPopFilterCnfrmDlg *dialog );
+  ~KMPopHeadersView();
+
+  static const KMPopFilterAction mapToAction( int column ) {
+    return (KMPopFilterAction)column;
+  }
+
+  static const int mapToColumn( KMPopFilterAction action ) {
+    return (int)action;
+  }
+
+protected:
+
+  virtual void keyPressEvent( QKeyEvent *e );
+
+public slots:
+
+  // Call this, and only this, to sort a column (other than the first three
+  // columns)
+  void slotSectionClicked( int column );
+
+protected slots:
+
+  // Called when of the item's radiobuttons is clicked. It changes the actions
+  // of all selected items.
+  void slotRadioButtonClicked( QTreeWidgetItem* item, int column );
 
 private:
+
   KMPopFilterCnfrmDlg *mDialog;
+  int mLastSortColumn;
+  Qt::SortOrder mLastSortOrder;
 };
 
 
-
-class KMPopHeadersViewItem : public K3ListViewItem
+// This item represents the header of a message.
+// It has three radiobuttons to select the action of this message (download,
+// download later or delete).
+class KMPopHeadersViewItem : public QObject, public QTreeWidgetItem
 {
+  Q_OBJECT
+
 public:
-  KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction);
+  KMPopHeadersViewItem( KMPopHeadersView *parent, KMPopFilterAction action );
   ~KMPopHeadersViewItem();
-  void setAction(KMPopFilterAction aAction);
-  KMPopFilterAction action() { return mAction; }
-  virtual void paintFocus(QPainter *, const QColorGroup & cg, const QRect &r);
-  virtual QString key(int col, bool ascending) const;
+
+  // The date and size columns can't be sorted lexically, so they need to be
+  // remembered in a member variable and then compared with a custom compare
+  // operator
+  void setMessageSize( int messageSize ) { mSizeOfMessage = messageSize; }
+  void setIsoDate( const QString & isoDate ) { mIsoDate = isoDate; }
+  virtual bool operator < ( const QTreeWidgetItem & other ) const;
+
+  KMPopFilterAction action() const { return mAction; }
+  void setAction( KMPopFilterAction action );
+
+protected slots:
+  void slotActionChanged( int column );
+
+signals:
+  void radioButtonClicked( QTreeWidgetItem* item, int column );
+
 protected:
+  QRadioButton* addRadioButton( int column );
+  QRadioButton* buttonForAction( KMPopFilterAction action ) const;
+
+protected:
+  QButtonGroup *mActionGroup;
+  QRadioButton *mDownButton;
+  QRadioButton *mDeleteButton;
+  QRadioButton *mLaterButton;
+  QSignalMapper *mMapper;
+
   KMPopHeadersView *mParent;
   KMPopFilterAction mAction;
+
+  QString mIsoDate;
+  int mSizeOfMessage;
 };
 
 
+// This dialog shows treewidgets which show messages. The user can choose
+// to download, download later or delete these messages by clicking on the
+// messages' radiobuttons. The displayed information about these messages is
+// gained from the KMPopHeaders list given in the constructor.
+//
+// The constructor gets a list of KMPopHeaders. When the user changes the action
+// of one item, the corresponding KMPopHeaders action is also changed. This is
+// internally done by keeping a map of treewidget items and KMPopHeaders.
+//
+// The dialog consists of two treewidgets: The upper one shows the messages which
+// have no action set by filters, and the lower one shows the messages where a filter
+// rule already matched. The lower one is not shown by default, but can be enabled
+// by a checkbox (see slotToggled).
 class KMPopFilterCnfrmDlg : public KDialog
 {
-	friend class ::KMPopHeadersView;
+  friend class ::KMPopHeadersView;
   Q_OBJECT
+
 protected:
   KMPopFilterCnfrmDlg() { }
-  QMap<Q3ListViewItem*, KMPopHeaders*> mItemMap;
+  QMap<QTreeWidgetItem*, KMPopHeaders*> mItemMap;
   QList<KMPopHeadersViewItem *> mDelList;
   QList<KMPopHeaders *> mDDLList;
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
-  void setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg);
-
+  void setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg );
 
 public:
-  KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders, const QString & aAccount,
-                       bool aShowLaterMsgs = false, QWidget *aParent = 0 );
+  KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
+                       const QString & account,
+                       bool showLaterMsgs = false, QWidget *parent = 0 );
   ~KMPopFilterCnfrmDlg();
 
-public:
-  void setAction(Q3ListViewItem *aItem, KMPopFilterAction aAction);
+  // Don't call this from the outside. It is called by KMPopHeadersView to update
+  // the action of the KMPopHeaders in the map when the action of a treewidget
+  // item changes.
+  void setAction( QTreeWidgetItem *item, KMPopFilterAction action );
 
-protected slots: // Protected slots
-  /**
-    This Slot is called whenever a ListView item was pressed.
-    It checks for the column the button was pressed in and changes the action if the
-    click happened over a radio button column.
-    Of course the radio button state is changed as well if the above is true.
-*/
-  void slotPressed(Q3ListViewItem *aItem, const QPoint &aPnt, int aColumn);
-  void slotToggled(bool aOn);
-  void slotUpdateMinimumSize();
+protected slots:
+  void slotToggled( bool on );
 };
 
 #endif // KMPOPFILTERCNFRMDLG_H

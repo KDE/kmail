@@ -589,8 +589,9 @@ void PopAccount::slotJobFinished() {
     // if there are some messages which are not coverd by a filter
     // show the dialog
     headers = true;
-    if (dlgPopup) {
-      KMPopFilterCnfrmDlg dlg( mHeadersOnServer, this->name(), kmkernel->popFilterMgr()->showLaterMsgs() );
+    if ( dlgPopup ) {
+      KMPopFilterCnfrmDlg dlg( mHeadersOnServer, this->name(),
+                               kmkernel->popFilterMgr()->showLaterMsgs() );
       dlg.exec();
     }
 
@@ -600,7 +601,7 @@ void PopAccount::slotJobFinished() {
         //remove entries from the lists when the mails should not be downloaded
         //(deleted or downloaded later)
         mMsgsPendingDownload.remove( header->id() );
-        if ( header->action() == Delete) {
+        if ( header->action() == Delete ) {
           mHeaderDeleteUids.insert( header->uid() );
           mUidsOfNextSeenMsgsDict.insert( header->uid(), 1 );
           idsOfMsgsToDelete.insert( header->id() );

@@ -18,74 +18,68 @@
 */
 
 #include "kmpopheaders.h"
-#include <kdebug.h>
+#include "kmmessage.h"
 
 KMPopHeaders::KMPopHeaders()
-  : mAction(NoAction),
+  : mAction( NoAction ),
     mId(),
     mUid(),
-    mRuleMatched(false),
-    mHeader(0)
+    mRuleMatched( false ),
+    mHeader( 0 )
 {
 }
 
 KMPopHeaders::~KMPopHeaders()
 {
-  if (mHeader)
+  if ( mHeader )
     delete mHeader;
 }
 
-/** No descriptions */
-KMPopHeaders::KMPopHeaders( const QByteArray & aId, const QByteArray & aUid, KMPopFilterAction aAction )
-  : mAction(aAction),
-    mId(aId),
-    mUid(aUid),
-    mRuleMatched(false),
-    mHeader(0)
+KMPopHeaders::KMPopHeaders( const QByteArray & id, const QByteArray & uid,
+                            KMPopFilterAction action )
+  : mAction( action ),
+    mId( id ),
+    mUid( uid ),
+    mRuleMatched( false ),
+    mHeader( 0 )
 {
 }
 
-/** No descriptions */
 QByteArray KMPopHeaders::id() const
 {
   return mId;
 }
 
-/** No descriptions */
 QByteArray KMPopHeaders::uid() const
 {
   return mUid;
 }
 
-/** No descriptions */
 KMMessage * KMPopHeaders::header() const
 {
   return mHeader;
 }
 
-/** No descriptions */
-void KMPopHeaders::setHeader(KMMessage *aHeader)
+void KMPopHeaders::setHeader( KMMessage *header )
 {
-  mHeader = aHeader;
+  mHeader = header;
 }
 
-/** No descriptions */
 KMPopFilterAction KMPopHeaders::action() const
 {
   return mAction;
 }
 
-/** No descriptions */
-void KMPopHeaders::setAction(KMPopFilterAction aAction)
+void KMPopHeaders::setAction( KMPopFilterAction action )
 {
-  mAction = aAction;
+  mAction = action;
 }
-/** No descriptions */
-void KMPopHeaders::setRuleMatched(bool b)
+
+void KMPopHeaders::setRuleMatched( bool matched )
 {
-  mRuleMatched = b;
+  mRuleMatched = matched;
 }
-/** No descriptions */
+
 bool KMPopHeaders::ruleMatched() const
 {
   return mRuleMatched;
