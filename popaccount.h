@@ -8,6 +8,7 @@
 #include <QSet>
 #include <QQueue>
 
+class KMPopFilterCnfrmDlg;
 class KMPopHeaders;
 class KMMessage;
 
@@ -134,6 +135,7 @@ private:
   // predictable
   QMap<QByteArray, int> mMsgsPendingDownload;
 
+  KMPopFilterCnfrmDlg *mPopFilterConfirmationDialog;
   QList<KMPopHeaders *> mHeadersOnServer;
   int mHeaderIndex;
   bool headers;

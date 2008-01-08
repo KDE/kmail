@@ -52,6 +52,7 @@ namespace KMail {
 //-----------------------------------------------------------------------------
 PopAccount::PopAccount(AccountManager* aOwner, const QString& aAccountName, uint id)
   : NetworkAccount(aOwner, aAccountName, id),
+    mPopFilterConfirmationDialog( 0 ),
     mHeaderIndex( 0 )
 {
   init();
@@ -284,6 +285,12 @@ void PopAccount::slotCancel()
   processRemainingQueuedMessages();
   saveUidList();
   slotJobFinished();
+
+  // Close the pop filter confirmation dialog. Otherwise, KMail crashes because
+  // slotJobFinished(), which creates that dialog, will try to continue downloading
+  // when the user closes the dialog.
+  if ( mPopFilterConfirmationDialog )
+    mPopFilterConfirmationDialog->reject();
 }
 
 
@@ -590,54 +597,64 @@ void PopAccount::slotJobFinished() {
     // show the dialog
     headers = true;
     if ( dlgPopup ) {
-      KMPopFilterCnfrmDlg dlg( mHeadersOnServer, this->name(),
-                               kmkernel->popFilterMgr()->showLaterMsgs() );
-      dlg.exec();
+      mPopFilterConfirmationDialog =
+          new KMPopFilterCnfrmDlg( mHeadersOnServer, this->name(),
+                                   kmkernel->popFilterMgr()->showLaterMsgs() );
+      mPopFilterConfirmationDialog->exec();
     }
 
-    for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
-      const KMPopHeaders *header = mHeadersOnServer[i];
-      if ( header->action() == Delete || header->action() == Later) {
-        //remove entries from the lists when the mails should not be downloaded
-        //(deleted or downloaded later)
-        mMsgsPendingDownload.remove( header->id() );
-        if ( header->action() == Delete ) {
-          mHeaderDeleteUids.insert( header->uid() );
-          mUidsOfNextSeenMsgsDict.insert( header->uid(), 1 );
-          idsOfMsgsToDelete.insert( header->id() );
-          mTimeOfNextSeenMsgsMap.insert( header->uid(), time(0) );
-        }
-        else {
-          mHeaderLaterUids.insert( header->uid() );
-        }
-      }
-      else if ( header->action() == Down ) {
-        mHeaderDownUids.insert( header->uid() );
-      }
-    }
+    // The only case were the result code of the dialog is QDialog::Rejected
+    // should be when the mail check in canceled in slotCancel().
+    // This here would likely break if there is still a mail check active
+    // and Rejected is the result. But that shouldn't happen.
+    if ( mPopFilterConfirmationDialog->result() == QDialog::Accepted ) {
 
-    qDeleteAll( mHeadersOnServer );
-    mHeadersOnServer.clear();
-    stage = Retr;
-    numMsgs = mMsgsPendingDownload.count();
-    numBytesToRead = 0;
-    idsOfMsgs.clear();
-    QByteArray ids;
-    if ( numMsgs > 0 ) {
-      for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.begin();
-            it != mMsgsPendingDownload.end(); ++it ) {
-        numBytesToRead += it.value();
-        ids += it.key() + ',';
-        idsOfMsgs.append( it.key() );
+      for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
+        const KMPopHeaders *header = mHeadersOnServer[i];
+        if ( header->action() == Delete || header->action() == Later) {
+          //remove entries from the lists when the mails should not be downloaded
+          //(deleted or downloaded later)
+          mMsgsPendingDownload.remove( header->id() );
+          if ( header->action() == Delete ) {
+            mHeaderDeleteUids.insert( header->uid() );
+            mUidsOfNextSeenMsgsDict.insert( header->uid(), 1 );
+            idsOfMsgsToDelete.insert( header->id() );
+            mTimeOfNextSeenMsgsMap.insert( header->uid(), time(0) );
+          }
+          else {
+            mHeaderLaterUids.insert( header->uid() );
+          }
+        }
+        else if ( header->action() == Down ) {
+          mHeaderDownUids.insert( header->uid() );
+        }
       }
-      ids.chop( 1 ); // cut off the trailing ','
+
+      qDeleteAll( mHeadersOnServer );
+      mHeadersOnServer.clear();
+      stage = Retr;
+      numMsgs = mMsgsPendingDownload.count();
+      numBytesToRead = 0;
+      idsOfMsgs.clear();
+      QByteArray ids;
+      if ( numMsgs > 0 ) {
+        for ( QMap<QByteArray, int>::const_iterator it = mMsgsPendingDownload.begin();
+              it != mMsgsPendingDownload.end(); ++it ) {
+          numBytesToRead += it.value();
+          ids += it.key() + ',';
+          idsOfMsgs.append( it.key() );
+        }
+        ids.chop( 1 ); // cut off the trailing ','
+      }
+      KUrl url = getUrl();
+      url.setPath( "/download/" + ids );
+      job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
+      connectJob();
+      slotGetNextMsg();
+      processMsgsTimer.start(processingDelay);
     }
-    KUrl url = getUrl();
-    url.setPath( "/download/" + ids );
-    job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
-    connectJob();
-    slotGetNextMsg();
-    processMsgsTimer.start(processingDelay);
+    delete mPopFilterConfirmationDialog;
+    mPopFilterConfirmationDialog = 0;
   }
   else if (stage == Retr) {
     mMailCheckProgressItem->setProgress( 100 );
