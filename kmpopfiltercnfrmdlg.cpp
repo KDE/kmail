@@ -1,6 +1,7 @@
 /*
   Copyright (c) 2001 Heiko Hund <heiko@ist.eigentlich.net>
   Copyright (c) 2001 Thorsten Zachmann <T.Zachmann@zagge.de>
+  Copyright (c) 2008 Thomas McGuire <Thomas.McGuire@gmx.net>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -18,467 +19,461 @@
 */
 
 #include "kmpopfiltercnfrmdlg.h"
-#include "kmheaders.h"
-#include "kmfolder.h"
 
-#include <QLayout>
-#include <QLabel>
-#include <q3header.h>
+#include "kmmsgbase.h"
+#include "kmmessage.h"
+
+#include <QButtonGroup>
 #include <QCheckBox>
-#include <q3groupbox.h>
+#include <QGroupBox>
+#include <QHeaderView>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLayout>
+#include <QRadioButton>
+#include <QSignalMapper>
 #include <QTimer>
-#include <QPixmap>
 #include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kio/global.h>
 
+#include <kmime/kmime_dateformatter.h>
+
 #include <assert.h>
 
-////////////////////////////////////////
-///  view
-KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialog)
-      : K3ListView(aParent)
+KMPopHeadersView::KMPopHeadersView( QWidget *parent,
+                                    KMPopFilterCnfrmDlg *dialog )
+      : QTreeWidget( parent )
 {
-  mDialog=aDialog;
-  int mDownIndex=addColumn(QIcon(QPixmap(mDown)), QString(), 24);
-  assert( mDownIndex == Down ); //This code relies on the fact that radiobuttons are the first three columns for easier Column-Action mapping
-			        //it does not necessarily be true - you could redefine mapToColumn and mapToAction to eg. shift those numbers by 1
-  addColumn(QIcon(QPixmap(mLater)), QString(), 24);
-  addColumn(QIcon(QPixmap(mDel)), QString(), 24);
+  assert( dialog );
+  mDialog = dialog;
 
-  /*int subjCol =*/ addColumn(i18n("Subject"), 180);
-  /*int sendCol =*/ addColumn(i18n("Sender"), 150);
-  /*int recvCol =*/ addColumn(i18n("Receiver"), 150);
-  int dateCol = addColumn(i18n("Date"), 120);
-  int sizeCol = addColumn(i18n("Size"), 80);
+  QStringList headerNames;
+  headerNames << "" << "" << "" << i18n("Subject") << i18n("Sender")
+              << i18n("Receiver") << i18n("Date") << i18n("Size");
+  QTreeWidgetItem *headerItem = new QTreeWidgetItem( headerNames );
+  headerItem->setTextAlignment( 0, Qt::AlignHCenter );
+  headerItem->setTextAlignment( 1, Qt::AlignHCenter );
+  headerItem->setTextAlignment( 2, Qt::AlignHCenter );
+  headerItem->setTextAlignment( 7, Qt::AlignRight );
+  headerItem->setToolTip( 0, i18nc("@action:button", "Download all messages now") );
+  headerItem->setToolTip( 1, i18nc("@action:button", "Download all messages later") );
+  headerItem->setToolTip( 2, i18nc("@action:button", "Delete all messages") );
+  headerItem->setIcon( 0, KIcon( "mail-download-now" ) );
+  headerItem->setIcon( 1, KIcon( "mail-download-later" ) );
+  headerItem->setIcon( 2, KIcon( "edit-delete" ) );
+  setHeaderItem( headerItem );
+  header()->setResizeMode( QHeaderView::Interactive );
+  header()->setResizeMode( 0, QHeaderView::Fixed );
+  header()->setResizeMode( 1, QHeaderView::Fixed );
+  header()->setResizeMode( 2, QHeaderView::Fixed );
+  //### Why is this so horribly broken?? Suddenly, a horizontal scrollbar
+  //    is there, the sections can't be resized properly (other columns
+  //    suddenly change size, resizing stops) etc.
+  //    Disable it for now.
+  //header()->setResizeMode( 3, QHeaderView::Stretch );
+  header()->setStretchLastSection( false );
+  setColumnWidth( 0, 22 );    // Download Now icon
+  setColumnWidth( 1, 22 );    // Download Later icon
+  setColumnWidth( 2, 22 );    // Delete icon
+  setColumnWidth( 3, 180 );   // Subject
+  setColumnWidth( 4, 140 );   // Sender
+  setColumnWidth( 5, 140);    // Receiver
+  setColumnWidth( 6, 130 );   // Date
+  setColumnWidth( 7, 80 );    // Size
+  setAllColumnsShowFocus( true );
+  setIndentation( 0 );
+  header()->setSortIndicator( 7, Qt::DescendingOrder );
+  setSelectionMode( QAbstractItemView::ExtendedSelection );
+  setAlternatingRowColors ( true );
 
-  setAllColumnsShowFocus(true);
+  // We can not enable automatic sorting, because that would make the icon
+  // columns sortable. We want to change the action of all items when an icon
+  // column is clicked instead
+  header()->setSortIndicatorShown( true );
+  header()->setClickable( true );
+  connect( header(), SIGNAL( sectionClicked(int) ),
+           this, SLOT( slotSectionClicked(int) ) );
 
-  setColumnAlignment(Down, Qt::AlignHCenter);
-  setColumnAlignment(Later, Qt::AlignHCenter);
-  setColumnAlignment(Delete, Qt::AlignHCenter);
-  setColumnAlignment(sizeCol, Qt::AlignRight);
-
-  setSorting(dateCol, false);
-  setShowSortIndicator(true);
-  header()->setResizeEnabled(false, Down);
-  header()->setResizeEnabled(false, Later);
-  header()->setResizeEnabled(false, Delete);
-  header()->setClickEnabled(false, Down);
-  header()->setClickEnabled(false, Later);
-  header()->setClickEnabled(false, Delete);
+  // This code relies on the fact that radiobuttons are the first three
+  // columns for easier Column-Action mapping it does not necessarily be
+  // true - you could redefine mapToColumn and mapToAction to eg. shift
+  // those numbers by 1
+  assert( 0 == Down );
+  assert( 1 == Later );
+  assert( 2 == Delete );
 
   //we rely on fixed column order, so we forbid this
-  header()->setMovingEnabled(false);
-
-  connect(this, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
-        SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
+  header()->setMovable( false );
 }
 
 KMPopHeadersView::~KMPopHeadersView()
 {
 }
 
-//Handle keystrokes - Left and Right key select previous/next action correspondingly
+// Handle keystrokes - Left and Right key select previous/next
+// action correspondingly
 void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
 {
-    if (e->key() == Qt::Key_Left) {
-	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
-	    if (item&&mDialog) {
-		    if (item->action()) { //here we rely on the fact that the leftmost action is equal to 0!
-			    item->setAction((KMPopFilterAction)((int)item->action()-1));
-			    mDialog->setAction( selectedItem(), item->action());
-		    }
-	    }
-    } else if (e->key() == Qt::Key_Right) {
-	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
-	    if (item&&mDialog) {
-		    if (item->action()<NoAction-1) { //here we rely on the fact that right most action is one less than NoAction!
-			    item->setAction((KMPopFilterAction)((int)item->action()+1));
-			    mDialog->setAction( selectedItem(), item->action());
-		    }
-	    }
-    } else {
-	    Q3ListView::keyPressEvent( e );
+  if ( e->key() != Qt::Key_Left && e->key() != Qt::Key_Right ) {
+    QTreeWidget::keyPressEvent( e );
+    return;
+  }
+
+  // Loop through all selected items change the selected action to the action
+  // to the right/left if that key was pressed
+  foreach ( QTreeWidgetItem *item, selectedItems() ) {
+
+    KMPopHeadersViewItem *popItem
+        = dynamic_cast<KMPopHeadersViewItem*>( item );
+
+    assert( popItem );
+    assert( mDialog );
+
+    int newAction = popItem->action();
+    if ( e->key() == Qt::Key_Left ) {
+      // here we rely on the fact that the leftmost action is equal to 0!
+      if ( popItem->action() )
+        newAction = popItem->action() - 1;
     }
+    else if ( e->key() == Qt::Key_Right ) {
+      //here we rely on the fact that right most action is one less than NoAction!
+      if ( popItem->action() < NoAction - 1 )
+        newAction = popItem->action() + 1;
+    }
+    popItem->setAction( static_cast<KMPopFilterAction>( newAction ) );
+    mDialog->setAction( item, popItem->action() );
+    assert( popItem->action() >= 0 && popItem->action() < NoAction );
+  }
 }
 
-void KMPopHeadersView::slotPressed(Q3ListViewItem* aItem, const QPoint&, int aColumn) {
-  if ( !( aItem && aColumn>=0 && aColumn<NoAction ) ) return;
-  KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>(aItem);
-  assert( item );
-  item->setAction(mapToAction(aColumn));
+void KMPopHeadersView::slotRadioButtonClicked( QTreeWidgetItem* item, int column ) {
+  assert( item && column >= 0 && column < NoAction );
+  mDialog->setAction( item, mapToAction( column ) );
+
+  // If the user selected some items, but changed an unselected one, he probebly
+  // doesn't want to change the actions of the selected ones
+  if ( !item->isSelected() )
+    return;
+
+  // The user has selected at least one item and clicked on a radio button.
+  // Toogle all radiobuttons of the other selected items as well. This way,
+  // the user can quickly set many actions at once.
+  foreach ( QTreeWidgetItem *selectedItem, selectedItems() ) {
+    KMPopHeadersViewItem *popItem =
+        dynamic_cast<KMPopHeadersViewItem*>( selectedItem );
+    assert( popItem );
+    popItem->setAction( mapToAction( column ) );
+    mDialog->setAction( popItem, mapToAction( column ) );
+  }
 }
 
-const char *KMPopHeadersView::mUnchecked[26] = {
-"19 16 9 1",
-"  c None",
-"# c #000000",
-". c #ffffff",
-"a c #4a4c4a",
-"b c #524c52",
-"c c #efefef",
-"e c #fff2ff",
-"f c #f6f2f6",
-"g c #fff6ff",
-"                   ",
-"                   ",
-"         aaaa      ",
-"       ba####aa    ",
-"      a##....aac   ",
-"      a#......ec   ",
-"     a#........fc  ",
-"     a#........gc  ",
-"     a#........fc  ",
-"     b#........gc  ",
-"      a#......gc   ",
-"      age....gec   ",
-"       ccfgfgcc    ",
-"         cccc      ",
-"                   ",
-"                   ",};
-
-const char *KMPopHeadersView::mChecked[26] = {
-"19 16 9 1",
-"  c None",
-"# c #000000",
-". c #ffffff",
-"a c #4a4c4a",
-"b c #524c52",
-"c c #efefef",
-"e c #fff2ff",
-"f c #f6f2f6",
-"g c #fff6ff",
-"                   ",
-"                   ",
-"         aaaa      ",
-"       ba####aa    ",
-"      a##....aac   ",
-"      a#......ec   ",
-"     a#...##...fc  ",
-"     a#..####..gc  ",
-"     a#..####..fc  ",
-"     b#...##...gc  ",
-"      a#......gc   ",
-"      age....gec   ",
-"       ccfgfgcc    ",
-"         cccc      ",
-"                   ",
-"                   ",};
-
-const char *KMPopHeadersView::mLater[25] = {
-"16 16 8 1",
-". c None",
-"g c #303030",
-"c c #585858",
-"f c #a0a0a0",
-"b c #c0c000",
-"e c #dcdcdc",
-"a c #ffff00",
-"d c #ffffff",
-"................",
-"...........eaa..",
-"..........eaaa..",
-".........ebaab..",
-".........eaaa...",
-"........eaaab...",
-"........eaaa....",
-".......eaaab....",
-"eaae..ebaccccc..",
-"eaaae.eaacdedc..",
-"ebaaabaaabcdc...",
-".ebaaaaaa.fgf...",
-"..ebaaaa..cec...",
-"...ebaab.cdedc..",
-"........eccccc..",
-"................"};
-
-const char *KMPopHeadersView::mDown[20] = {
-"16 16 3 1",
-". c None",
-"a c #008000",
-"b c #00c000",
-"................",
-"............aa..",
-"...........aaa..",
-"..........baab..",
-"..........aaa...",
-".........baab...",
-".........aaa....",
-"........aaab....",
-".aa....baaa.....",
-".aaa...aaa......",
-".baaabaaab......",
-"..baaaaaa.......",
-"...baaaa........",
-"....baab........",
-"................",
-"................"};
-
-const char *KMPopHeadersView::mDel[19] = {
-"16 16 2 1",
-". c None",
-"# c #c00000",
-"................",
-"................",
-"..##.......##...",
-"..###.....###...",
-"...###...###....",
-"....###.###.....",
-".....#####......",
-"......###.......",
-".....#####......",
-"....###.###.....",
-"...###...###....",
-"..###.....###...",
-"..##.......##...",
-"................",
-"................",
-"................"};
-
-
-/////////////////////////////////////////
-/////////////////////////////////////////
-///  viewitem
-/////////////////////////////////////////
-/////////////////////////////////////////
-KMPopHeadersViewItem::KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction)
-      : K3ListViewItem(aParent)
+void KMPopHeadersView::slotSectionClicked( int column )
 {
-  mParent = aParent;
+  // If a normal column was clicked, just sort that column
+  if ( column > 2 ) {
+    mLastSortColumn = header()->sortIndicatorSection();
+    mLastSortOrder = header()->sortIndicatorOrder();
+    sortByColumn( mLastSortColumn, mLastSortOrder );
+  }
+
+  // If one of the action columns was clicked, change the action of all items
+  else {
+    for ( int i = 0; i < topLevelItemCount(); i++ ) {
+      KMPopHeadersViewItem *item =
+          static_cast<KMPopHeadersViewItem*>( topLevelItem( i ) );
+      item->setAction( mapToAction( column ) );
+      mDialog->setAction( item, mapToAction( column ) );
+    }
+
+    // Reset the sort indicator Qt now incorrectly set to the icon column
+    header()->setSortIndicator( mLastSortColumn, mLastSortOrder );
+  }
+}
+
+KMPopHeadersViewItem::KMPopHeadersViewItem( KMPopHeadersView *parent,
+                                            KMPopFilterAction action )
+  : QTreeWidgetItem( parent )
+{
+  mParent = parent;
   mAction = NoAction;
 
-  setPixmap(mParent->mapToColumn(Delete), QPixmap(KMPopHeadersView::mUnchecked));
-  setPixmap(mParent->mapToColumn(Down), QPixmap(KMPopHeadersView::mUnchecked));
-  setPixmap(mParent->mapToColumn(Later), QPixmap(KMPopHeadersView::mUnchecked));
+  setToolTip( 0, i18nc("@info:tooltip", "Download Now") );
+  setToolTip( 1, i18nc("@info:tooltip", "Download Later") );
+  setToolTip( 2, i18nc("@info:tooltip", "Delete") );
 
-  setAction( aAction );
+  mActionGroup = new QButtonGroup( parent );
+  mMapper = new QSignalMapper( parent );
+  for( int column = 0; column <= 2; column++ ) {
+    QRadioButton *button = addRadioButton( column );
+    mActionGroup->addButton( button, column );
+    // Don't accept focus, otherwise the right/left keys will incorrectly
+    // change the action
+    button->setFocusPolicy( Qt::NoFocus );
+    connect( button, SIGNAL( clicked(bool) ), mMapper, SLOT( map() ) );
+    mMapper->setMapping( button, column );
+  }
+  connect( mMapper, SIGNAL( mapped(int) ), this, SLOT( slotActionChanged(int) ) );
+
+  setAction( action );
+}
+
+// Taken and adapted from QCheckBox* KMAtmListViewItem::addCheckBox.
+QRadioButton* KMPopHeadersViewItem::addRadioButton( int column )
+{
+  // We can not call setItemWidget() on the radiobutton directly, because then
+  // the checkbox would be left-aligned. Therefore we create a helper widget
+  // with a layout to align the radiobutton to the center.
+  QWidget *w = new QWidget( treeWidget() );
+  QRadioButton *r = new QRadioButton();
+  QHBoxLayout *l = new QHBoxLayout();
+  l->insertWidget( 0, r, 0, Qt::AlignHCenter );
+  w->setBackgroundRole( QPalette::Base );
+  r->setBackgroundRole( QPalette::Base );
+  w->setLayout( l );
+  l->setMargin( 0 );
+  l->setSpacing( 0 );
+  w->show();
+  treeWidget()->setItemWidget( this, column, w );
+  return r;
 }
 
 KMPopHeadersViewItem::~KMPopHeadersViewItem()
 {
 }
 
-void KMPopHeadersViewItem::setAction(KMPopFilterAction aAction)
+void KMPopHeadersViewItem::slotActionChanged( int column )
 {
-  if(aAction != NoAction && aAction!=mAction)
-  {
-    if ( mAction!=NoAction ) setPixmap(mParent->mapToColumn(mAction), QPixmap(KMPopHeadersView::mUnchecked));
-    setPixmap(mParent->mapToColumn(aAction), QPixmap(KMPopHeadersView::mChecked));
-    mAction=aAction;
+  setAction( static_cast<KMPopFilterAction>( column ) );
+  emit radioButtonClicked( this, column );
+}
+
+void KMPopHeadersViewItem::setAction( KMPopFilterAction action )
+{
+  if ( action != NoAction && action != mAction ) {
+    if ( mAction != NoAction )
+      mActionGroup->button( mParent->mapToColumn( mAction ) )->setChecked( false );
+
+    mActionGroup->button( mParent->mapToColumn( action ) )->setChecked( true );
+    mAction = action;
   }
 }
 
-void KMPopHeadersViewItem::paintFocus(QPainter *, const QColorGroup &, const QRect &)
+bool KMPopHeadersViewItem::operator < ( const QTreeWidgetItem & other ) const
 {
+  switch( treeWidget()->sortColumn() ) {
+
+    case 3: { // subject column
+      const KMPopHeadersViewItem *otherItem =
+          (static_cast<const KMPopHeadersViewItem*>( &other ));
+      QString subject1 = KMMsgBase::skipKeyword( text( 3 ).toLower() );
+      QString subject2 = KMMsgBase::skipKeyword( otherItem->text( 3 ).toLower() );
+      return subject1 < subject2;
+    }
+
+    case 6: // date column
+      return  mIsoDate <
+          (static_cast<const KMPopHeadersViewItem*>( &other ))->mIsoDate;
+
+    case 7: // size column
+      return mSizeOfMessage <
+          (static_cast<const KMPopHeadersViewItem*>( &other ))->mSizeOfMessage;
+
+    default:
+      return QTreeWidgetItem::operator < ( other );
+  }
 }
 
-QString KMPopHeadersViewItem::key(int col, bool) const
+KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
+                                          const QString & account,
+                                          bool showLaterMsgs,
+                                          QWidget * parent )
+      : KDialog( parent )
 {
-  if (col == 3) return KMMsgBase::skipKeyword(text(col).toLower());
-  if ( col == 6 ) return text( 8 );
-  if ( col == 7 )
-    return text( col ).rightJustified(  10, '0', false );
-  return text(col);
-}
-
-/////////////////////////////////////////
-/////////////////////////////////////////
-///  dlg
-/////////////////////////////////////////
-/////////////////////////////////////////
-KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders, const QString & aAccount,
-                                          bool aShowLaterMsgs, QWidget *aParent )
-      : KDialog( aParent )
-{
+  setUpdatesEnabled( false );
   setCaption( i18n("POP Filter") );
   setButtons( Ok | Help );
+  setHelp( "popfilters" );
   unsigned int rulesetCount = 0;
-  //mHeaders = aHeaders;
-  mShowLaterMsgs = aShowLaterMsgs;
+  mShowLaterMsgs = showLaterMsgs;
   mLowerBoxVisible = false;
 
-  QWidget *w = new QWidget(this);
-  setMainWidget(w);
+  QWidget *mainWidget = new QWidget( this );
+  setMainWidget( mainWidget );
 
-  QVBoxLayout *vbl = new QVBoxLayout(w);
-  vbl->setSpacing(spacingHint());
-  vbl->setMargin(0);
+  QVBoxLayout *mainLayout = new QVBoxLayout( mainWidget );
+  mainLayout->setSpacing( spacingHint() );
+  mainLayout->setMargin( 0 );
 
-  QLabel *l = new QLabel(i18n("Messages to filter found on POP Account: <b>%1</b><p>"
-      "The messages shown exceed the maximum size limit you defined for this account.<br />You can select "
-      "what you want to do with them by checking the appropriate button.</p>", aAccount), w);
-  vbl->addWidget(l);
+  QLabel *infoLabel = new QLabel(
+            i18n( "Messages to filter found on POP Account: <b>%1</b><p>"
+                  "The messages shown exceed the maximum size limit you defined "
+                  "for this account.<br />You can select what you want to do "
+                  "with them by checking the appropriate button.</p>",
+                  account ), mainWidget );
+  mainLayout->addWidget( infoLabel );
 
-  Q3GroupBox *upperBox = new Q3GroupBox(i18n("Messages Exceeding Size"), w);
+  QGroupBox *upperBox = new QGroupBox( i18n("Messages Exceeding Size"), mainWidget );
+  QVBoxLayout *upperBoxLayout = new QVBoxLayout( upperBox );
   upperBox->hide();
-  KMPopHeadersView *lv = new KMPopHeadersView(upperBox, this);
-  vbl->addWidget(upperBox);
+  KMPopHeadersView *upperHeadersView = new KMPopHeadersView( upperBox, this );
+  upperBoxLayout->addWidget( upperHeadersView );
+  mainLayout->addWidget( upperBox );
 
-  Q3GroupBox *lowerBox = new Q3GroupBox(i18n("Ruleset Filtered Messages: none"), w);
-  QString checkBoxText((aShowLaterMsgs)?
-      i18n("Show messages matched by a ruleset and tagged 'Download' or 'Delete'"):
-      i18n("Show messages matched by a filter ruleset"));
-  QCheckBox* cb = new QCheckBox(checkBoxText, lowerBox);
-  cb->setEnabled(false);
-  mFilteredHeaders = new KMPopHeadersView(lowerBox, this);
+  QGroupBox *lowerBox = new QGroupBox( i18n("Ruleset Filtered Messages: none"),
+                                       mainWidget );
+  QVBoxLayout *lowerBoxLayout = new QVBoxLayout( lowerBox );
+  QString checkBoxText(
+      (showLaterMsgs) ?
+      i18n("Show messages matched by a ruleset and tagged 'Download' or 'Delete'") :
+      i18n("Show messages matched by a filter ruleset") );
+  QCheckBox* cb = new QCheckBox( checkBoxText, lowerBox );
+  cb->setEnabled( false );
+  mFilteredHeaders = new KMPopHeadersView( lowerBox, this );
   mFilteredHeaders->hide();
-  vbl->addWidget(lowerBox);
-
-  mFilteredHeaders->header()->setResizeEnabled(false, 8);
-  mFilteredHeaders->setColumnWidth(8, 0);
+  lowerBoxLayout->addWidget( cb );
+  lowerBoxLayout->addWidget( mFilteredHeaders );
+  mainLayout->addWidget( lowerBox );
 
   // fill the listviews with data from the headers
-  for ( int i = 0; i < aHeaders.count(); ++i ) {
-    KMPopHeaders *headers = aHeaders[i];
+  for ( int i = 0; i < headers.count(); ++i ) {
+    KMPopHeaders *header = headers[i];
     KMPopHeadersViewItem *lvi = 0;
 
-    if(headers->ruleMatched())
-    {
-      if(aShowLaterMsgs && headers->action() == Later)
-      {
+    if ( header->ruleMatched() ) {
+      if ( showLaterMsgs && header->action() == Later ) {
         // insert messages tagged 'later' only
-        lvi = new KMPopHeadersViewItem(mFilteredHeaders, headers->action());
+        lvi = new KMPopHeadersViewItem( mFilteredHeaders, header->action() );
+        mFilteredHeaders->addTopLevelItem( lvi );
         mFilteredHeaders->show();
         mLowerBoxVisible = true;
       }
-      else if(aShowLaterMsgs)
-      {
+      else if ( showLaterMsgs ) {
         // enable checkbox to show 'delete' and 'download' msgs
         // but don't insert them into the listview yet
-        mDDLList.append(headers);
-        cb->setEnabled(true);
+        mDDLList.append( header );
+        cb->setEnabled( true );
       }
-      else if(!aShowLaterMsgs)
-      {
+      else if ( !showLaterMsgs ) {
         // insert all messaged tagged by a ruleset, enable
         // the checkbox, but don't show the listview yet
-        lvi = new KMPopHeadersViewItem(mFilteredHeaders, headers->action());
-        cb->setEnabled(true);
+        lvi = new KMPopHeadersViewItem( mFilteredHeaders, header->action() );
+        mFilteredHeaders->addTopLevelItem( lvi );
+        cb->setEnabled( true );
       }
       rulesetCount++;
     }
-    else
-    {
+    else {
       // insert all messages not tagged by a ruleset
       // into the upper listview
-      lvi = new KMPopHeadersViewItem(lv, headers->action());
+      lvi = new KMPopHeadersViewItem( upperHeadersView, header->action() );
+      upperHeadersView->addTopLevelItem( lvi );
       upperBox->show();
     }
 
-    if(lvi)
-    {
-      mItemMap[lvi] = headers;
-      setupLVI(lvi,headers->header());
+    if ( lvi ) {
+      mItemMap[lvi] = header;
+      setupLVI( lvi, header->header() );
     }
   }
 
-  if(rulesetCount)
-      lowerBox->setTitle(i18n("Ruleset Filtered Messages: %1", rulesetCount));
+  // Initally sort the columns of the treewidgets by size
+  upperHeadersView->slotSectionClicked( 7 );
+  mFilteredHeaders->slotSectionClicked( 7 );
+
+  if ( rulesetCount )
+    lowerBox->setTitle( i18n("Ruleset Filtered Messages: %1", rulesetCount ) );
 
   // connect signals and slots
-  connect(lv, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
-      this, SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
-  connect(mFilteredHeaders, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
-      this, SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
-  connect(cb, SIGNAL(toggled(bool)),
-      this, SLOT(slotToggled(bool)));
+  connect( cb, SIGNAL( toggled(bool) ),
+           this, SLOT( slotToggled(bool) ) );
 
-  adjustSize();
-  QTimer::singleShot(0, this, SLOT(slotUpdateMinimumSize()));
+  resize( 800, 600 );
+  setUpdatesEnabled( true );
 }
 
 KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
 {
 }
 
-void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg)
+void KMPopFilterCnfrmDlg::setupLVI( KMPopHeadersViewItem *lvi, KMMessage *msg )
 {
-      // set the subject
-      QString tmp = msg->subject();
-      if(tmp.isEmpty())
-        tmp = i18n("no subject");
-      lvi->setText(3, tmp);
+  // set the subject
+  QString tmp = msg->subject();
+  if( tmp.isEmpty() )
+    tmp = i18n("No Subject");
+  lvi->setText( 3, tmp );
+  lvi->setToolTip( 3, tmp );
 
-      // set the sender
-      tmp = msg->fromStrip();
-      if(tmp.isEmpty())
-        tmp = i18n("unknown");
-      lvi->setText(4, tmp);
+  // set the sender
+  tmp = msg->fromStrip();
+  if( tmp.isEmpty() )
+    tmp = i18n("Unknown");
+  lvi->setText( 4, tmp );
+  lvi->setToolTip( 4, tmp );
 
-      // set the receiver
-      tmp = msg->toStrip();
-      if(tmp.isEmpty())
-        tmp = i18n("unknown");
-      lvi->setText(5, tmp);
+  // set the receiver
+  tmp = msg->toStrip();
+  if( tmp.isEmpty() )
+    tmp = i18n("Unknown");
+  lvi->setText( 5, tmp );
+  lvi->setToolTip( 5, tmp );
 
-      // set the date
-      lvi->setText(6, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
-      // set the size
-      lvi->setText(7, KIO::convertSize(msg->msgLength()));
-      // Date for sorting
-      lvi->setText(8, msg->dateIsoStr());
+  // set the date
+  lvi->setText( 6, KMime::DateFormatter::formatDate(
+                                   KMime::DateFormatter::Fancy, msg->date() ) );
+  lvi->setIsoDate( msg->dateIsoStr() );
+
+  // set the size
+  lvi->setText( 7, KIO::convertSize( msg->msgLength() ) );
+  lvi->setMessageSize( msg->msgLength() );
+
+  connect( lvi, SIGNAL( radioButtonClicked(QTreeWidgetItem*, int) ),
+           lvi->treeWidget(), SLOT( slotRadioButtonClicked(QTreeWidgetItem*,int) ) );
 }
 
-void KMPopFilterCnfrmDlg::setAction(Q3ListViewItem *aItem, KMPopFilterAction aAction)
+void KMPopFilterCnfrmDlg::setAction( QTreeWidgetItem *item,
+                                     KMPopFilterAction action )
 {
-    mItemMap[aItem]->setAction(aAction);
-}
-/**
-  This Slot is called whenever a ListView item was pressed.
-  It checks for the column the button was pressed in and changes the action if the
-  click happened over a radio button column.
-  Of course the radio button state is changed as well if the above is true.
-*/
-void KMPopFilterCnfrmDlg::slotPressed(Q3ListViewItem *aItem, const QPoint &, int aColumn)
-{
-  if ( aColumn>=0 && aColumn<NoAction ) setAction(aItem,KMPopHeadersView::mapToAction(aColumn));
+  mItemMap[item]->setAction( action );
 }
 
-void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
+void KMPopFilterCnfrmDlg::slotToggled( bool on )
 {
-  if(aOn)
-  {
-    if(mShowLaterMsgs)
-    {
-      // show download and delete msgs in the list view too
+  setUpdatesEnabled( false );
+  if ( on ) {
+    if ( mShowLaterMsgs ) {
+      // show download and deletek msgs in the list view too
       for ( int i = 0; i < mDDLList.count(); ++i ) {
         KMPopHeaders *headers = mDDLList[i];
-        KMPopHeadersViewItem *lvi = new KMPopHeadersViewItem(mFilteredHeaders, headers->action());
+        KMPopHeadersViewItem *lvi =
+            new KMPopHeadersViewItem( mFilteredHeaders, headers->action() );
+        mFilteredHeaders->addTopLevelItem( lvi );
         mItemMap[lvi] = headers;
-        mDelList.append(lvi);
-        setupLVI(lvi,headers->header());
+        mDelList.append( lvi );
+        setupLVI( lvi, headers->header() );
       }
     }
 
-    if(!mLowerBoxVisible)
-    {
+    if ( !mLowerBoxVisible ) {
       mFilteredHeaders->show();
     }
   }
-  else
-  {
-    if(mShowLaterMsgs)
-    {
+  else {
+    if ( mShowLaterMsgs ) {
       // delete download and delete msgs from the lower listview
       for ( int i = 0; i < mDelList.count(); ++i ) {
-        mFilteredHeaders->takeItem( mDelList[i] );
+        delete mDelList[i];
       }
       mDelList.clear();
     }
 
-    if(!mLowerBoxVisible)
-    {
+    if ( !mLowerBoxVisible ) {
       mFilteredHeaders->hide();
     }
   }
-  QTimer::singleShot(0, this, SLOT(slotUpdateMinimumSize()));
-}
-
-void KMPopFilterCnfrmDlg::slotUpdateMinimumSize()
-{
-  mainWidget()->setMinimumSize(mainWidget()->sizeHint());
+  setUpdatesEnabled( true );
 }
 
 #include "kmpopfiltercnfrmdlg.moc"

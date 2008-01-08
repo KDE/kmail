@@ -42,12 +42,14 @@ KMAtmListViewItem::KMAtmListViewItem( KMail::AttachmentListView *parent,
   connect( mCBCompress, SIGNAL( clicked() ), this, SLOT( slotCompress() ) );
 }
 
+// This function was also copied to
+// QRadioButton* KMPopHeadersViewItem::addRadioButton( int column )
 QCheckBox* KMAtmListViewItem::addCheckBox( int column )
 {
   // We can not call setItemWidget() on the checkbox directly, because then
   // the checkbox would be left-aligned. Therefore we create a helper widget
   // with a layout to align the checkbox to the center.
-  QWidget *w = new QWidget();
+  QWidget *w = new QWidget( treeWidget() );
   QCheckBox *c = new QCheckBox();
   QHBoxLayout *l = new QHBoxLayout();
   l->insertWidget( 0, c, 0, Qt::AlignHCenter );
