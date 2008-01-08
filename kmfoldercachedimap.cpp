@@ -84,6 +84,7 @@ using namespace KMail;
 
 #include <unistd.h>
 #include <errno.h>
+#include <unistd.h>
 
 #define UIDCACHE_VERSION 1
 
@@ -1710,9 +1711,9 @@ void KMFolderCachedImap::slotGetMessagesData( KIO::Job  *job, const QByteArray  
            * server since we can't write our status back our local version
            * is what has to be considered correct.
            */
-          if ( !mReadOnly ) {
+          if ( !mReadOnly || !GlobalSettings::allowLocalFlags() ) {
             /* The message is OK, update flags */
-            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mPermanentFlags );
+            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mReadOnly ? INT_MAX : mPermanentFlags );
           } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
             KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }
@@ -2008,8 +2009,9 @@ void KMFolderCachedImap::slotListResult( const QStringList &folderNames,
   }
 
   mProgress += 5;
-  if ( mToBeDeletedAfterRescue.isEmpty() )
-    serverSyncInternal();
+
+  // just in case there is nothing to rescue
+  slotRescueDone( 0 );
 }
 
 void KMFolderCachedImap::listDirectory2()
@@ -2363,7 +2365,7 @@ void KMFolderCachedImap::slotMultiSetACLResult( KJob *job )
     static_cast<KIO::Job*>(job)->ui()->setWindow( 0 );
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
   } else {
-    kmkernel->iCalIface().addFolderChange( folder(), ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
   }
 
   if ( mAccount->slave() ) {
@@ -2738,7 +2740,7 @@ void KMFolderCachedImap::slotAnnotationChanged( const QString &entry,
      * The incidences-for changed, we must trigger the freebusy creation.
      * HACK: in theory we would need a new enum value for this.
      */
-    kmkernel->iCalIface().addFolderChange( folder(), ACL );
+    kmkernel->iCalIface().addFolderChange( folder(), ACLChanged );
   }
 }
 
@@ -3008,8 +3010,6 @@ void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder
       }
     }
   }
- if ( root )
-    slotRescueDone( 0 ); // just in case there is nothing to rescue
 }
 
 void KMFolderCachedImap::slotRescueDone(KMCommand * command)

@@ -286,20 +286,17 @@ void KMMessageTagMgr::writeConfig( bool withSync )
   //first, delete all groups:
   QStringList tagGroups 
       = config->groupList().filter( QRegExp( "MessageTag #\\d+" ) );
-  for ( QStringList::Iterator it = tagGroups.begin(); 
-        it != tagGroups.end(); ++it )
-    config->deleteGroup( *it );
+  foreach ( const QString& group, tagGroups )
+    config->deleteGroup( group );
 
   // Now, write out the new stuff:
   int i = 0;
-  QString grpName;
-
-  QListIterator<KMMessageTagDescription *> it ( *mTagList );
-  while (it.hasNext()) {
-    if ( ! it.peekNext()->isEmpty() ) {
+  foreach ( KMMessageTagDescription *description, *mTagList ) {
+    if ( ! description->isEmpty() ) {
+      QString grpName;
       grpName.sprintf( "MessageTag #%d", i );
       KConfigGroup group( config, grpName );
-      it.next()->writeConfig( group );
+      description->writeConfig( group );
       ++i;
     }
   }

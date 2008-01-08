@@ -43,6 +43,8 @@
      <Separator/>
      <Action name="custom_forward" />
    </Menu>
+   <Separator/>
+   <Action name="create_todo"/>
    <Action name="send_again" />
    <Separator/>
    <Action name="copy_to" />
@@ -62,6 +64,8 @@
   <Separator/>
   <Action name="message_reply_menu" />
   <Action name="message_forward"/>
+  <Separator/>
+  <Action name="create_todo"/>
   <Separator/>
   <Action name="text_font" />
   <Action name="text_size" />

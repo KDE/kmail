@@ -58,6 +58,18 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
     mComboStatusCount( 0 ), mFilterWithTag( false ), mTagLabel() 
 
 {
+    // There is a clear button in the line, now, so this can go
+    // keeping it for now, maybe we need it when k3listviewsearchline changes
+    // TA20060825
+
+//   KAction *resetQuickSearch = new KAction( KIcon( QApplication::isRightToLeft() ? "edit-clear-locationbar-rtl" : "edit-clear-locationbar" ),
+//                                            i18n( "Reset Quick Search" ),
+//                                            actionCollection, "reset_quicksearch" );
+//   connect(resetQuickSearch, SIGNAL( triggered(bool)), SLOT( reset() ));
+//   parent->addAction( resetQuickSearch );
+//   resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
+//                                         "Resets the quick search so that "
+//                                         "all messages are shown again." ) );
   setClickMessage( i18n("Search") );
 
   parent->layout()->addWidget( this );

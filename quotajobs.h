@@ -42,6 +42,8 @@
 
 #include "globalsettings.h"
 
+#undef max
+
 namespace KIO { class Slave; }
 
 namespace KMail {

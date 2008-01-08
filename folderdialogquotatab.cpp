@@ -194,6 +194,7 @@ KMail::FolderDialogTab::AcceptStatus KMail::FolderDialogQuotaTab::accept()
     return Accepted;
   else
     assert(0);
+  return Canceled;
 }
 
 bool KMail::FolderDialogQuotaTab::save()

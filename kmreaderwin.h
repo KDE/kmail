@@ -71,7 +71,7 @@ class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 namespace KParts {
-  class BrowserArguments;
+  struct BrowserArguments;
   class OpenUrlArguments;
 }
 
@@ -283,6 +283,12 @@ public:
 
   QWidget* mainWindow() { return mMainWindow; }
 
+  /** Returns wether the message should be decryted. */
+  bool decryptMessage() const;
+
+  /** Enforce message decryption. */
+  void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -471,7 +477,7 @@ private:
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
-  QTimer updateReaderWinTimer;
+  QTimer mUpdateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
   QString mOverrideEncoding;
@@ -508,6 +514,7 @@ private:
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
 	int mLevelQuote;
+  bool mDecrytMessageOverwrite;
 };
 
 

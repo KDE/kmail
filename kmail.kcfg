@@ -28,7 +28,7 @@
           <choice name="SelectFirstUnreadNew"/>
           <choice name="SelectLastSelected"/>
         </choices>
-        <default>SelectFirstNew</default>
+        <default>SelectLastSelected</default>
       </entry>
       <entry name="NetworkState"  type="Enum">
         <choices>
@@ -113,6 +113,10 @@
         </choices>
         <default>ShowOnUnread</default>
       </entry>
+      <entry name="CloseDespiteSystemTray" type="Bool">
+          <label>Close the application when the mainwindow is closed, even if there is a system tray icon active.</label>
+        <default>false</default>
+      </entry>
       <entry name="VerboseNewMailNotification" type="Bool">
         <label>Verbose new mail notification</label>
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
@@ -184,6 +188,24 @@
         <whatsthis>When this is checked, you will not see the mail composer window. Instead, all invitation mails are sent automatically. If you want to see the mail before sending it, you can uncheck this option. However, be aware that the text in the composer window is in iCalendar syntax, and you should not try modifying it by hand.</whatsthis>
         <default>true</default>
       </entry>
+
+      <entry name="DeleteInvitationEmailsAfterSendingReply" type="Bool">
+        <label>Delete invitation emails after the reply to them has been sent</label>
+        <whatsthis>When this is checked, received invitation emails that have been replied to will be moved to the Trash folder, once the reply has been successfully sent.</whatsthis>
+        <default>true</default>
+      </entry>
+
+      <entry name="AskForCommentWhenReactingToInvitation"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="NeverAsk"/>
+          <choice name="AskForAllButAcceptance"/>
+          <choice name="AlwaysAsk"/>
+        </choices>
+        <default>AskForAllButAcceptance</default>
+      </entry>
+
     </group>
 
     <group name="IMAP Resource">
@@ -233,6 +255,11 @@
       <entry name="FilterGroupwareFolders" type="Bool">
         <default>false</default>
         <label>Also filter new mails received in groupware folders.</label>
+      </entry>
+
+      <entry name="ImmediatlySyncDIMAPOnGroupwareChanges" type="Bool">
+        <default>true</default>
+        <label>Synchronize groupware changes in DIMAP folders immediately when being online.</label>
       </entry>
     </group>
 
@@ -301,7 +328,7 @@
         <label></label>
         <default>78</default>
         <min>30</min>
-        <max>78</max>
+        <max>255</max>
       </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
@@ -514,6 +541,10 @@
        <label>Allow to edit attachments of existing mails.</label>
      </entry>
 
+     <entry name="AlwaysDecrypt" type="Bool">
+      <default>false</default>
+      <label>Always decrypt messages when viewing or ask befor decrypting</label>
+     </entry>
     </group>
 
     <group name="TextIndex">
@@ -580,6 +611,10 @@
         <entry name="OutOfOfficeReactToSpam" type="Bool">
             <default>false</default>
             <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
+        </entry>
+        <entry name="CheckOutOfOfficeOnStartup" type="Bool">
+              <default>true</default>
+              <label>Check if there is still an active out-of-office reply configured when starting KMail.</label>
         </entry>
     </group>
 

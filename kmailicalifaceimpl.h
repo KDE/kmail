@@ -262,6 +262,8 @@ private:
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
+  void syncFolder( KMFolder* folder ) const;
+
   struct StandardFolderSearchResult
   {
     enum FoundEnum { FoundAndStandard, NotFound, FoundByType, FoundByName };

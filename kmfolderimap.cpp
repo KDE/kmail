@@ -1353,8 +1353,11 @@ void KMFolderImap::slotListFolderResult( KJob *job )
         // if this is a read only folder, ignore status updates from the
         // server since we can't write our status back our local version
         // is what has to be considered correct.
-        if ( !mReadOnly ) {
-          flagsToStatus( msgBase, serverFlags, false, mUploadAllFlags ? 31 : mPermanentFlags );
+        if ( !mReadOnly || !GlobalSettings::allowLocalFlags() ) {
+          int supportedFlags = mUploadAllFlags ? 31 : mPermanentFlags;
+          if ( mReadOnly )
+            supportedFlags = INT_MAX;
+          flagsToStatus( msgBase, serverFlags, false, supportedFlags );
         } else {
           seenFlagToStatus( msgBase, serverFlags, false );
         }

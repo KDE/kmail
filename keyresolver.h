@@ -297,7 +297,7 @@ namespace Kleo {
     class SigningPreferenceCounter;
     friend class ::Kleo::KeyResolver::SigningPreferenceCounter;
 
-    class Private;
+    struct Private;
     Private * d;
 
     bool mEncryptToSelf;

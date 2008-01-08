@@ -475,7 +475,8 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                   << sernum;
 
     //debugBodyParts( "after addMsg", *msg );
-    addFolderChange( &folder,Contents );
+    addFolderChange( &folder,ContentsChanged );
+    syncFolder( &folder );
   } else
     kError(5006) <<"addIncidenceKolab(): Message *NOT* saved!";
 
@@ -505,6 +506,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   if( msg ) {
     // Message found - delete it and return happy
     deleteMsg( msg );
+    syncFolder( f );
     rc = true;
   } else {
     kDebug(5006) <<"Message not found, cannot remove serNum" << sernum;
@@ -648,6 +650,35 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   }
 }
 
+static QString subresourceLabelForPresentation( const KMFolder * folder )
+{
+    QString label = folder->prettyUrl();
+    QStringList parts = label.split( QChar('/') );
+    // In the common special case of some other user's folder shared with us
+    // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
+    // those a bit nicer.
+    if ( parts[1] == QLatin1String("user") ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("%1's %2")
+            .arg( parts[2] )
+            .arg( remainder.join( QLatin1String("/") ) );
+    }
+    // Another special case is our own folders, under the imap INBOX, make
+    // those prettier too
+    if ( parts[1] == QString::fromLatin1("inbox" ) ) {
+        QStringList remainder(parts);
+        remainder.pop_front();
+        remainder.pop_front();
+        label = i18n("My %1")
+            .arg( remainder.join( QString::fromLatin1("/") ) );
+
+    }
+    return label;
+}
+
 /* list all available subresources */
 QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
@@ -656,7 +687,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString() );
   if ( f ) {
-    subResources.append( SubResource( f->location(),  f->prettyUrl(),
+    subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                       !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kDebug(5006) <<"Adding(1) folder" << f->location() <<
       ( f->isReadOnly() ? "readonly" : "" );
@@ -668,7 +699,7 @@ QList<SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& content
   for ( ; it != mExtraFolders.end(); ++it) {
     f = it.value()->folder;
     if ( f && f->storage()->contentsType() == t ) {
-      subResources.append( SubResource( f->location(), f->prettyUrl(),
+      subResources.append( SubResource( f->location(), subresourceLabelForPresentation( f ),
                                         !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
       kDebug(5006) <<"Adding(2) folder" << f->location() <<
               ( f->isReadOnly() ? "readonly" : "" );
@@ -848,7 +879,8 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
       rc = newMsg->getMsgSerNum();
       kDebug(5006) <<"forget about" << sernum <<", it's" << rc <<" now";
     }
-    addFolderChange( f, Contents );
+    addFolderChange( f, ContentsChanged );
+    syncFolder( f );
   } else {
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject, plainTextBody, customHeaders,
@@ -1317,7 +1349,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   assert(idx != -1);
   srcFolder->removeMsg(idx);
   delete msg;
-  addFolderChange( srcFolder, Contents );
+  addFolderChange( srcFolder, ContentsChanged );
 }
 
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
@@ -1378,17 +1410,15 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
     connectFolder( folder );
   }
-  // Tell about the new resource
-//  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
-//                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-      QDBusMessage message =
+    // Tell about the new resource
+    QDBusMessage message =
         QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
     message << folderContentsType( contentsType );
     message << location;
+    message << subresourceLabelForPresentation( folder );
     message << !folder->isReadOnly();
-    message<< folderIsAlarmRelevant( folder );
+    message << folderIsAlarmRelevant( folder );
     QDBusConnection::sessionBus().send(message);
-
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1475,8 +1505,8 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // there could be 0, 1, or N kolab resources at this point.
   // We can hack the N case, but not the 0 case.
   // So the idea of a D-Bus signal for this wouldn't work.
-  if ( ( _changes & Contents ) ||
-       ( _changes & KMail::ACL ) ) {
+  if ( ( _changes & KMail::ContentsChanged ) ||
+       ( _changes & KMail::ACLChanged ) ) {
     if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
       triggerKolabFreeBusy( folderURL );
   }
@@ -1530,26 +1560,24 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
   if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
+
+    //    subresourceDeleted( contentsTypeStr, location );
       QDBusMessage message =
         QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceDeleted");
     message << contentsTypeStr;
     message << location;
     QDBusConnection::sessionBus().send(message);
 
+    //    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
+    //                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
     message =
         QDBusMessage::createSignal("/Groupware",DBUS_KMAIL , "subresourceAdded");
     message << contentsTypeStr;
     message << location;
-    message << folder->prettyUrl();
-    message<< !folder->isReadOnly();
-    message<< folderIsAlarmRelevant( folder );
+    message << subresourceLabelForPresentation( folder );
+    message << !folder->isReadOnly();
+    message << folderIsAlarmRelevant( folder );
     QDBusConnection::sessionBus().send(message);
-
-//    subresourceDeleted( contentsTypeStr, location );
-
-//    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
-//                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-
   }
 }
 
@@ -2346,6 +2374,23 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
     kmkernel->dimapFolderMgr()->remove( folder );
   }
   return true;
+}
+
+void KMailICalIfaceImpl::syncFolder(KMFolder * folder) const
+{
+  if ( kmkernel->isOffline() || !GlobalSettings::immediatlySyncDIMAPOnGroupwareChanges() )
+    return;
+  KMFolderCachedImap *dimapFolder = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
+  if ( !dimapFolder )
+    return;
+  // check if the folder exists already, otherwise sync its parent as well to create it
+  if ( dimapFolder->imapPath().isEmpty() ) {
+    if ( folder->parent() && folder->parent()->owner() )
+      syncFolder( folder->parent()->owner() );
+    else
+      return;
+  }
+  dimapFolder->account()->processNewMailSingleFolder( folder );
 }
 
 #include "kmailicalifaceimpl.moc"

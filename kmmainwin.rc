@@ -206,5 +206,6 @@
   <Separator/>
   <ActionList name="toolbar_filter_actions" />
   <ActionList name="toolbar_messagetag_actions" />
+  <Action name="create_todo"/>
  </ToolBar>
 </kpartgui>

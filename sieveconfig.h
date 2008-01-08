@@ -29,18 +29,20 @@ namespace KMail {
   class SieveConfig {
   public:
     explicit SieveConfig( bool managesieveSupported=false, bool reuseConfig=true,
-		 unsigned int port=2000, const KUrl & alternateURL=KUrl() )
+                          unsigned int port=2000, const KUrl & alternateURL=KUrl(),
+                          const QString& vacationFileName = QString() )
       : mManagesieveSupported( managesieveSupported ),
-	mReuseConfig( reuseConfig ),
-	mPort( port ),
-	mAlternateURL( alternateURL ) {}
+        mReuseConfig( reuseConfig ),
+        mPort( port ),
+        mAlternateURL( alternateURL ),
+        mVacationFileName( vacationFileName ) {}
 
     SieveConfig( const SieveConfig & other )
       : mManagesieveSupported( other.managesieveSupported() ),
-	mReuseConfig( other.reuseConfig() ),
-	mPort( other.port() ),
-	mAlternateURL( other.alternateURL() ),
-	mVacationFileName( other.vacationFileName() ) {}
+        mReuseConfig( other.reuseConfig() ),
+        mPort( other.port() ),
+        mAlternateURL( other.alternateURL() ),
+        mVacationFileName( other.vacationFileName() ) {}
 
     bool managesieveSupported() const {
       return mManagesieveSupported;
@@ -74,6 +76,7 @@ namespace KMail {
 
     void readConfig( const KConfigGroup & config );
     void writeConfig( KConfigGroup & config ) const;
+    QString toString() const;
 
   protected:
     bool mManagesieveSupported;
@@ -100,9 +103,12 @@ namespace KMail {
     KUrl alternateURL() const;
     virtual void setAlternateURL( const KUrl & url );
 
+    QString vacationFileName() const;
+    virtual void setVacationFileName( const QString & url );
+
     SieveConfig config() const {
       return SieveConfig( managesieveSupported(), reuseConfig(),
-			  port(), alternateURL() );
+			  port(), alternateURL(), vacationFileName() );
     }
 
     virtual void setConfig( const SieveConfig & config );
@@ -115,6 +121,7 @@ namespace KMail {
     QCheckBox * mSameConfigCheck;
     KIntSpinBox * mPortSpin;
     QLineEdit * mAlternateURLEdit;
+    QString mVacationFileName;
   };
 
 } // namespace KMail

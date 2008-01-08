@@ -69,7 +69,6 @@ namespace KMail {
   void NetworkAccount::init() {
     KMAccount::init();
 
-    mSieveConfig = SieveConfig();
     mLogin.clear();
     mPasswd.clear();
     mAuth = "*";

@@ -255,6 +255,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 
   // must be the last line of the constructor:
   mStartupDone = true;
+
+  if ( GlobalSettings::checkOutOfOfficeOnStartup() )
+    QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 }
 
 
@@ -747,7 +750,6 @@ void KMMainWidget::createWidgets()
   mSearchToolBar = new QWidget( mSearchAndHeaders);
   mSearchToolBar->setObjectName( "search toolbar" );
   mSearchToolBar->setLayout( new QHBoxLayout() );
-
   mSearchToolBar->layout()->setSpacing( KDialog::spacingHint() );
   mSearchToolBar->layout()->setMargin( 0 );
 
@@ -1901,6 +1903,14 @@ void KMMainWidget::slotApplyFilters()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotCheckVacation()
+{
+  if ( !kmkernel->askToGoOnline() )
+    return;
+
+  new Vacation( this, true /* check only */ );
+}
+
 void KMMainWidget::slotEditVacation()
 {
   if ( !kmkernel->askToGoOnline() ) {
@@ -2271,6 +2281,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   // reset HTML override to the folder setting
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+  mMsgView->setDecryptMessageOverwrite( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -2297,6 +2308,8 @@ void KMMainWidget::slotSelectMessage(KMMessage* msg)
     mHeaders->setCurrentMsg(idx);
     if (mMsgView)
       mMsgView->setMsg(msg);
+    else
+      slotMsgActivated(msg);
   }
 }
 
@@ -2615,6 +2628,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KUrl &aUrl, const QPoint& aPoi
       menu->addAction( mDeleteAction );
     else
       menu->addAction( mTrashAction );
+
+    menu->insertSeparator();
+    menu->addAction( mCreateTodoAction );
   }
   KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
@@ -3146,7 +3162,7 @@ void KMMainWidget::setupActions()
 
   mToggleTodoAction =
     new KToggleAction( KIcon( "mail-mark-task" ),
-                       i18n("Mark Message as &To-do"), this );
+                       i18n("&Action Item"), this );
   actionCollection()->addAction( "status_todo", mToggleTodoAction );
   connect( mToggleTodoAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusTodo()) );
@@ -3186,7 +3202,7 @@ void KMMainWidget::setupActions()
   mToggleThreadImportantAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("Mark Thread as &To-do"), this);
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("&Action Item"), this);
   actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );

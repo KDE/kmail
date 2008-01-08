@@ -193,6 +193,7 @@ namespace KMail {
                         CryptPlug::SignatureMetaData& sigMeta,
                         bool showWarning,
                         bool& passphraseError,
+                        bool& notActuallyEncrypted,
                         QString& aErrorText );
 
     bool processMailmanMessage( partNode * node );

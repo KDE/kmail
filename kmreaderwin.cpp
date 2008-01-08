@@ -458,6 +458,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
+    mUpdateReaderWinTimer( 0, "mUpdateReaderWinTimer" ),
+    mResizeTimer( 0, "mResizeTimer" ),    
+    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
@@ -477,7 +480,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
-    mSavedRelativePosition( 0 )
+    mSavedRelativePosition( 0 ),
+    mDecrytMessageOverwrite( false )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -503,13 +507,16 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 
   mResizeTimer.setSingleShot( true );
-  mDelayedMarkTimer.setSingleShot( true );
-  connect( &updateReaderWinTimer, SIGNAL(timeout()),
-           this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
            this, SLOT(slotDelayedResize()) );
+
+  mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
+
+  mUpdateReaderWinTimer.setSingleShot( true );
+  connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
+           this, SLOT(updateReaderWin()) );
 
 }
 
@@ -1181,15 +1188,15 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     // Avoid flicker, somewhat of a cludge
     if (force) {
       // stop the timer to avoid calling updateReaderWin twice
-      updateReaderWinTimer.stop();
+      mUpdateReaderWinTimer.stop();
       updateReaderWin();
     }
-    else if (updateReaderWinTimer.isActive()) {
-      updateReaderWinTimer.setSingleShot( true );
-      updateReaderWinTimer.start( delay );
+    else if (mUpdateReaderWinTimer.isActive()) {
+      mUpdateReaderWinTimer.setSingleShot( true );
+      mUpdateReaderWinTimer.start( delay );
     } else {
-      updateReaderWinTimer.setSingleShot( true );
-      updateReaderWinTimer.start( 0 );
+      mUpdateReaderWinTimer.setSingleShot( true );
+      mUpdateReaderWinTimer.start( 0 );
     }
   }
 
@@ -1205,7 +1212,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
-  updateReaderWinTimer.stop();
+  mUpdateReaderWinTimer.stop();
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;
@@ -2550,6 +2557,13 @@ void KMReaderWin::slotEditAttachment(partNode * node)
 KMail::CSSHelper* KMReaderWin::cssHelper()
 {
   return mCSSHelper;
+}
+
+bool KMReaderWin::decryptMessage() const
+{
+  if ( !GlobalSettings::self()->alwaysDecrypt() )
+    return mDecrytMessageOverwrite;
+  return true;
 }
 
 #include "kmreaderwin.moc"

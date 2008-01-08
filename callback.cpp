@@ -87,7 +87,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   msg->setTo( to );
   msg->setFrom( receiver() );
 
-  if ( delMessage )
+  if ( delMessage && deleteInvitationAfterReply() )
     /* We want the triggering mail to be moved to the trash once this one
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, MessageStatus::statusDeleted() );
@@ -205,4 +205,20 @@ void Callback::closeIfSecondaryWindow() const
   if ( window ) {
     window->close();
   }
+}
+
+bool Callback::askForComment( KCal::Attendee::PartStat status ) const
+{
+    if ( ( status != KCal::Attendee::Accepted 
+            && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+            == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
+        || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+        == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
+        return true;
+    return false;
+}
+
+bool Callback::deleteInvitationAfterReply() const
+{
+    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }

@@ -42,7 +42,7 @@ using KMail::RegExpLineEdit;
 
 // other headers:
 #include <assert.h>
-
+#include <string.h>
 
 //=============================================================================
 //
@@ -1657,7 +1657,7 @@ class PipeJob : public ThreadWeaver::Job
         if (! fgets( buffer, len, p ) ) break;
         int oldsize = ba.size();
         ba.resize( oldsize + strlen(buffer) );
-        qmemmove( ba.begin() + oldsize, buffer, strlen(buffer) );
+        memmove( ba.begin() + oldsize, buffer, strlen(buffer) );
       }
       pclose(p);
       if ( !ba.isEmpty() ) {

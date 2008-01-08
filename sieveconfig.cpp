@@ -39,6 +39,8 @@ namespace KMail {
 
     mAlternateURL = config.readEntry( "sieve-alternate-url" );
     mVacationFileName = config.readEntry( "sieve-vacation-filename", "kmail-vacation.siv" );
+    if ( mVacationFileName.isEmpty() )
+      mVacationFileName = "kmail-vacation.siv";
   }
 
   void SieveConfig::writeConfig( KConfigGroup & config ) const {
@@ -49,6 +51,13 @@ namespace KMail {
     config.writeEntry( "sieve-vacation-filename", mVacationFileName );
   }
 
+  QString SieveConfig::toString() const
+  {
+      QString result;
+      result += "SieveConfig: \n";
+      result += "  sieve-vacation-filename: " + mVacationFileName + "\n\n";
+      return result;
+  }
 
   SieveConfigEditor::SieveConfigEditor( QWidget * parent )
     : QWidget( parent )
@@ -150,11 +159,21 @@ namespace KMail {
     mAlternateURLEdit->setText( url.url() );
   }
 
+
+  QString SieveConfigEditor::vacationFileName() const {
+      return mVacationFileName;
+  }
+
+  void SieveConfigEditor::setVacationFileName( const QString& name ) {
+    mVacationFileName = name;
+  }
+
   void SieveConfigEditor::setConfig( const SieveConfig & config ) {
     setManagesieveSupported( config.managesieveSupported() );
     setReuseConfig( config.reuseConfig() );
     setPort( config.port() );
     setAlternateURL( config.alternateURL() );
+    setVacationFileName( config.vacationFileName() );
   }
 
 } // namespace KMail

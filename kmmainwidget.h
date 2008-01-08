@@ -250,6 +250,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void clearMessageTagActions();
 
     void initializeMessageTagActions();
+    
+    /** Trigger the dialog for editing out-of-office scripts.  */
+    void slotEditVacation();
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
@@ -338,7 +341,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCopyMsgToFolder( KMFolder *dest);
     void slotCopyMsg();
     void slotResendMsg();
-    void slotEditVacation();
     void slotDebugSieve();
     void slotStartCertManager();
     void slotStartWatchGnuPG();
@@ -441,6 +443,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotPrintMsg();
 
     void slotConfigChanged();
+    void slotCheckVacation();
 
     /**
       Remove the shortcut actions associated with a folder.

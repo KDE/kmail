@@ -4026,6 +4026,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   vboxlayout->addWidget( label );
   vlay->addWidget( group );
 
+  // encrypted messages group
+  group = new QGroupBox( i18n("Encrypted Messages"), this );
+  vboxlayout = new QVBoxLayout( group );
+  mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
+  connect( mAlwaysDecrypt, SIGNAL(stateChanged(int)), this, SLOT(slotEmitChanged()) );
+  vboxlayout->addWidget( mAlwaysDecrypt );
+  vlay->addWidget( group );
+
   // "Message Disposition Notification" groupbox:
   group = new QGroupBox( i18n("Message Disposition Notifications"), this );
 
@@ -4131,6 +4139,8 @@ void SecurityPage::GeneralTab::doLoadOther() {
   mAutomaticallyImportAttachedKeysCheck->setChecked(
       reader.readEntry( "AutoImportKeys", false ) );
 
+  mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
   int num = mdn.readEntry( "default-policy", 0 );
@@ -4206,6 +4216,7 @@ void SecurityPage::GeneralTab::save() {
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
   mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
+  GlobalSettings::self()->setAlwaysDecrypt( mAlwaysDecrypt->isChecked() );
 }
 
 
@@ -5169,6 +5180,18 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
+  mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
+  connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
+  
+  mDeleteInvitations = new QCheckBox( 
+             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
+  mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
+             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
+    connect( mDeleteInvitations, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+    grid->addMultiCellWidget( mDeleteInvitations, 5, 5, 0, 1 );
+
   // Groupware functionality compatibility setup
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
   layout = new QVBoxLayout( b1 );
@@ -5265,6 +5288,8 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   mStorageFormatCombo->setCurrentIndex(i);
   slotStorageFormatChanged( i );
   mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
+  mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
+  mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -5334,6 +5359,8 @@ void MiscPage::GroupwareTab::save()
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
   GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
+  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mDeleteInvitations->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled

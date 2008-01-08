@@ -60,6 +60,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
   mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
   mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
+  mReaderWin->setDecryptMessageOverwrite( true );
   initKMReaderMainWin();
 }
 
@@ -355,6 +356,10 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
+  mCreateTodoAction = new KAction( KIcon("mail_todo"), i18n("Create Task..."), this);
+  actionCollection()->addAction( "create_todo", mCreateTodoAction );
+  connect( mCreateTodoAction, SIGNAL(triggered(bool)), SLOT(slotCreateTodo()) );
+
   mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
   actionCollection()->addAction("copy_to", mCopyActionMenu );
 
@@ -482,6 +487,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoi
     menu->addAction( mPrintAction );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
+    menu->addAction( mCreateTodoAction );
   }
   menu->exec(aPoint, 0);
   delete menu;
@@ -514,5 +520,12 @@ void KMReaderMainWin::slotSizeAction( int size )
   mReaderWin->update();
 }
 
+void KMReaderMainWin::slotCreateTodo()
+{
+  if ( !mMsg )
+    return;
+  KMCommand *command = new CreateTodoCommand( this, mMsg );
+  command->start();
+}
 
 #include "kmreadermainwin.moc"

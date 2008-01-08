@@ -34,6 +34,7 @@
 #include "compactionjob.h"
 #include "util.h"
 
+#include <kde_file.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -344,6 +345,13 @@ void KMFolderMbox::sync()
 //-----------------------------------------------------------------------------
 int KMFolderMbox::lock()
 {
+#ifdef Q_WS_WIN
+# ifdef __GNUC__
+#  warning TODO implement mbox locking on Windows
+# else
+#  pragma WARNING( TODO implement mbox locking on Windows )
+# endif
+#else
   int rc;
   struct flock fl;
   fl.l_type=F_WRLCK;
@@ -470,6 +478,7 @@ int KMFolderMbox::lock()
 
 
   mFilesLocked = true;
+#endif
   return 0;
 }
 
@@ -496,6 +505,14 @@ KMFolderMbox::doCreateJob( QList<KMMessage*>& msgList, const QString& sets,
 //-----------------------------------------------------------------------------
 int KMFolderMbox::unlock()
 {
+#ifdef Q_WS_WIN
+# ifdef __GNUC__
+#  warning TODO implement mbox unlocking on Windows
+# else
+#  pragma WARNING( TODO implement mbox unlocking on Windows )
+# endif
+  return 0;
+#else
   int rc;
   struct flock fl;
   fl.l_type=F_UNLCK;
@@ -555,8 +572,8 @@ int KMFolderMbox::unlock()
       rc = 0;
       break;
   }
-
   return rc;
+#endif
 }
 
 
@@ -1196,7 +1213,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
   for ( int idx = startIndex; idx < stopIndex; ++idx ) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at( idx );
     size_t msize = mi->msgSize();
-    if ( mtext.size() < msize + 2 ) {
+    if ( (size_t) mtext.size() < msize + 2 ) {
       mtext.resize( msize+2 );
     }
     off_t folder_offset = mi->folderOffset();
@@ -1214,7 +1231,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
       fread( mtext.data(), 20, 1, mStream );
       if( i <= 0 ) { //woops we've reached the top of the file, last try..
         if ( mtext.indexOf( "from " ) ) {
-          if ( mtext.size() < (size_t)folder_offset ) {
+          if ( (size_t) mtext.size() < folder_offset ) {
               mtext.resize( folder_offset );
           }
           if( fseek( mStream, chunk_offset, SEEK_SET) == -1 ||

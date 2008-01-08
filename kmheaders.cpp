@@ -147,7 +147,7 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   act = mPopup->addAction(i18n("Important"));
   act->setCheckable(true);
   mColumns.insert(act, KPaintInfo::COL_IMPORTANT);
-  act = mPopup->addAction(i18n("Todo"));
+  act = mPopup->addAction(i18n("Action Item"));
   act->setCheckable(true);
   mColumns.insert(act, KPaintInfo::COL_TODO);
   act = mPopup->addAction(i18n("Attachment"));
@@ -295,6 +295,7 @@ void KMHeaders::slotToggleColumn(QAction* act, int mode)
   bool *show = 0;
   int  *col  = 0;
   int  width = 0;
+  int moveToCol = -1;
 
   switch ( mColumns[act] )
   {
@@ -309,56 +310,72 @@ void KMHeaders::slotToggleColumn(QAction* act, int mode)
     {
       show  = &mPaintInfo.showAttachment;
       col   = &mPaintInfo.attachmentCol;
-      width = pixAttachment->width();
+      width = pixAttachment->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_IMPORTANT:
     {
       show  = &mPaintInfo.showImportant;
       col   = &mPaintInfo.importantCol;
-      width = pixFlag->width();
+      width = pixFlag->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_TODO:
     {
       show  = &mPaintInfo.showTodo;
       col   = &mPaintInfo.todoCol;
-      width = pixTodo->width();
+      width = pixTodo->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_SPAM_HAM:
     {
       show  = &mPaintInfo.showSpamHam;
       col   = &mPaintInfo.spamHamCol;
-      width = pixSpam->width();
+      width = pixSpam->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_WATCHED_IGNORED:
     {
       show  = &mPaintInfo.showWatchedIgnored;
       col   = &mPaintInfo.watchedIgnoredCol;
-      width = pixWatched->width();
+      width = pixWatched->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_STATUS:
     {
       show  = &mPaintInfo.showStatus;
       col   = &mPaintInfo.statusCol;
-      width = pixNew->width();
+      width = pixNew->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_SIGNED:
     {
       show  = &mPaintInfo.showSigned;
       col   = &mPaintInfo.signedCol;
-      width = pixFullySigned->width();
+      width = pixFullySigned->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_CRYPTO:
     {
       show  = &mPaintInfo.showCrypto;
       col   = &mPaintInfo.cryptoCol;
-      width = pixFullyEncrypted->width();
+      width = pixFullyEncrypted->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_RECEIVER:
@@ -384,6 +401,8 @@ void KMHeaders::slotToggleColumn(QAction* act, int mode)
   if (*show) {
     header()->setResizeEnabled(true, *col);
     setColumnWidth(*col, width);
+    if ( moveToCol >= 0 )
+      header()->moveSection( *col, moveToCol );
   }
   else {
     header()->setResizeEnabled(false, *col);
@@ -2343,6 +2362,31 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     if ((e->button() == Qt::LeftButton) )
       mMousePressed = true;
   }
+
+  // check if we are on a status column and toggle it
+  if ( lvi && e->button() == Qt::LeftButton  && !( e->state() & (Qt::ShiftButton | Qt::ControlButton | Qt::AltButton | Qt::MetaButton) ) ) {
+    bool flagsToggleable = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
+    int section = header()->sectionAt( e->pos().x() );
+    HeaderItem *item = static_cast<HeaderItem*>( lvi );
+    KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
+    if ( section == mPaintInfo.flagCol && flagsToggleable ) {
+      setMsgStatus( KPIM::MessageStatus::statusImportant(), true );
+    } else if ( section == mPaintInfo.importantCol && flagsToggleable ) {
+      setMsgStatus( KPIM::MessageStatus::statusImportant(), true );
+    } else if ( section == mPaintInfo.todoCol && flagsToggleable ) {
+      setMsgStatus( KPIM::MessageStatus::statusTodo(), true );
+    } else if ( section == mPaintInfo.watchedIgnoredCol && flagsToggleable ) {
+      if ( msg->status().isWatched() || msg->status().isIgnored() )
+        setMsgStatus( KPIM::MessageStatus::statusIgnored(), true );
+      else
+        setMsgStatus( KPIM::MessageStatus::statusWatched(), true );
+    } else if ( section == mPaintInfo.statusCol ) {
+      if ( msg->status().isUnread() || msg->status().isNew() )
+        setMsgStatus( KPIM::MessageStatus::statusRead() );
+      else
+        setMsgStatus( KPIM::MessageStatus::statusUnread() );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2406,6 +2450,22 @@ void KMHeaders::highlightMessage(Q3ListViewItem* i)
 void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
+  mOwner->updateMessageActions();
+
+  // check if the user clicked into a status column and only show the respective menues
+  Q3ListViewItem *item = itemAt( viewport()->mapFromGlobal( QCursor::pos() ) );
+  if ( item ) {
+    int section = header()->sectionAt( viewportToContents( viewport()->mapFromGlobal( QCursor::pos() ) ).x() );
+    if ( section == mPaintInfo.flagCol || section == mPaintInfo.importantCol
+         || section == mPaintInfo.todoCol || section == mPaintInfo.statusCol ) {
+      mOwner->statusMenu()->menu()->exec( QCursor::pos() );
+      return;
+    }
+    if ( section == mPaintInfo.watchedIgnoredCol ) {
+      mOwner->threadStatusMenu()->menu()->exec( QCursor::pos() );
+      return;
+    }
+  }
 
   QMenu *menu = new QMenu(this);
 

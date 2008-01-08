@@ -564,6 +564,7 @@ void MessageComposer::readFromComposeWin()
 //Laurent fixme
   //mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
+
 static QByteArray escape_quoted_string( const QByteArray &str ) {
   QByteArray result;
   const unsigned int str_len = str.length();
@@ -2172,7 +2173,8 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
 {
   QByteArray cText;
   QString text;
-  if ( mDisableBreaking || mIsRichText ) {
+
+  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
     text = mComposeWin->mEditor->text();
   } else {
     text = mComposeWin->mEditor->brokenText();
@@ -2310,7 +2312,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray &encryptedBody,
   QByteArray plainText( cText );
 
   const GpgME::EncryptionResult res =
-    job->exec( encryptionKeys, plainText, false, encryptedBody );
+    job->exec( encryptionKeys, plainText, true /* we do ownertrust ourselves */, encryptedBody );
   if ( res.error().isCanceled() ) {
     kDebug(5006) <<"encryption was canceled by user";
     return Kpgp::Canceled;

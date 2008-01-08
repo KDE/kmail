@@ -630,6 +630,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       CryptPlug::SignatureMetaData& sigMeta,
                                       bool showWarning,
                                       bool& passphraseError,
+                                      bool& actuallyEncrypted,
                                       QString& aErrorText )
 {
   passphraseError = false;
@@ -656,6 +657,20 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       cryptPlugError = CANT_DECRYPT;
       cryptPlug = 0;
     }
+  }
+
+  if ( !mReader->decryptMessage() ) {
+    QString iconName = KIconLoader::global()->iconPath( "decrypted", KIconLoader::Small );
+    decryptedData = "<div style=\"font-size:large; text-align:center;"
+                      "padding-top:20pt;\">"
+                    + i18n("This message is encrypted.").utf8()
+                    + "</div>"
+                      "<div style=\"text-align:center; padding-bottom:20pt;\">"
+                      "<a href=\"kmail:decryptMessage\">"
+                      "<img src=\"" + iconName.utf8() + "\"/>"
+                    + i18n("Decrypt Message").utf8()
+                    + "</div>";
+    return false;
   }
 
   if ( cryptPlug && !kmkernel->contextMenuShown() ) {
@@ -704,6 +719,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                        &errTxt );
     kDebug(5006) <<"ObjectTreeParser::decryptMIME: returned from CRYPTPLUG";
     aErrorText = CryptPlugWrapper::errorIdToText( errId, passphraseError );
+    actuallyEncrypted = gpg_err_code( errId ) != GPG_ERR_NO_DATA;
     if ( bDecryptionOk )
       decryptedData = cleartext;
     else if ( mReader && showWarning ) {
@@ -1209,6 +1225,7 @@ namespace KMail {
     sigMeta.extended_info       = 0;
     sigMeta.extended_info_count = 0;
     bool passphraseError;
+    bool actuallyEncrypted = true;
 
     bool bOkDecrypt = okDecryptMIME( *data,
                                      decryptedData,
@@ -1216,6 +1233,7 @@ namespace KMail {
                                      sigMeta,
                                      true,
                                      passphraseError,
+                                     actuallyEncrypted,
                                      messagePart.errorText );
 
     // paint the frame
@@ -1361,6 +1379,7 @@ namespace KMail {
         sigMeta.extended_info       = 0;
         sigMeta.extended_info_count = 0;
         bool passphraseError;
+        bool actuallyEncrypted = true;
 
         bool bOkDecrypt = okDecryptMIME( *node,
                                          decryptedData,
@@ -1368,6 +1387,7 @@ namespace KMail {
                                          sigMeta,
                                          true,
                                          passphraseError,
+                                         actuallyEncrypted,
                                          messagePart.errorText );
 
         // paint the frame
@@ -1523,6 +1543,7 @@ namespace KMail {
       sigMeta.extended_info       = 0;
       sigMeta.extended_info_count = 0;
       bool passphraseError;
+      bool actuallyEncrypted = true;
 
       if ( okDecryptMIME( *node,
                           decryptedData,
@@ -1530,6 +1551,7 @@ namespace KMail {
                           sigMeta,
                           false,
                           passphraseError,
+                          actuallyEncrypted,
                           messagePart.errorText ) ) {
         kDebug(5006) <<"pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !";
         isEncrypted = true;
@@ -1547,8 +1569,11 @@ namespace KMail {
         if ( mReader )
           htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       } else {
-
-        if ( passphraseError ) {
+          // decryption failed, which could be because the part was encrypted but
+          // decryption failed, or because we didn't know if it was encrypted, tried,
+          // and failed. If the message was not actually encrypted, we continue
+          // assuming it's signed
+        if ( passphraseError || ( smimeType.isEmpty() && actuallyEncrypted ) ) {
           isEncrypted = true;
           signTestNode = 0;
         }
@@ -1561,7 +1586,10 @@ namespace KMail {
             htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                      cryptPlugWrapper(),
                                                      node->trueFromAddress() ) );
-            writePartIcon( &node->msgPart(), node->nodeId() );
+            if ( mReader->decryptMessage() )
+              writePartIcon( &node->msgPart(), node->nodeId() );
+            else
+              htmlWriter()->queue( QString::fromUtf8( decryptedData ) );
             htmlWriter()->queue( writeSigstatFooter( messagePart ) );
           }
         } else {
