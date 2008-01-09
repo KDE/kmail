@@ -200,6 +200,7 @@ set(kmailprivate_LIB_SRCS
    folderadaptor.cpp
    copyfolderjob.cpp
    messagecopyhelper.cpp
+   korghelper.cpp
    localsubscriptiondialog.cpp
    groupwareadaptor.cpp
    editorwatcher.cpp
