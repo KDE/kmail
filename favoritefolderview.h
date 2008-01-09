@@ -68,6 +68,7 @@ class FavoriteFolderView : public FolderTreeBase
   private:
     static QString prettyName( KMFolderTreeItem* fti );
     KMFolderTreeItem* findFolderTreeItem( KMFolder* folder ) const;
+    void handleGroupwareFolder( KMFolderTreeItem *fti );
 
   private slots:
     void selectionChanged();

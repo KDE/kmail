@@ -206,7 +206,11 @@ void FavoriteFolderView::selectionChanged()
   assert( ft );
   assert( fti );
   ft->showFolder( fti->folder() );
+  handleGroupwareFolder( fti );
+}
 
+void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
+{
   if ( !fti->folder() || !fti->folder()->storage() )
     return;
   switch ( fti->folder()->storage()->contentsType() ) {
@@ -249,6 +253,7 @@ void FavoriteFolderView::itemClicked(QListViewItem * item)
   if ( item && !item->isSelected() )
     item->setSelected( true );
   item->repaint();
+  handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
 }
 
 void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)
