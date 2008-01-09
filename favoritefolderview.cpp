@@ -27,8 +27,10 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
+#include "korghelper.h"
 
 #include <libkdepim/maillistdrag.h>
+#include <libkdepim/kaddrbookexternal.h>
 
 #include <kcolorscheme.h>
 #include <kdebug.h>
@@ -59,7 +61,6 @@ FavoriteFolderViewItem::FavoriteFolderViewItem(FavoriteFolderView * parent, cons
   connect( folder, SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(updateCount()) );
   connect( folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)), SLOT(updateCount()) );
   connect( folder, SIGNAL(msgRemoved(KMFolder*)), SLOT(updateCount()) );
-  connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
   connect( folder, SIGNAL(folderSizeChanged( KMFolder* )), SLOT(updateCount()) );
 
   updateCount();
@@ -249,6 +250,50 @@ void FavoriteFolderView::selectionChanged()
   KMFolderTree *ft = mainWidget()->folderTree();
   assert( ft );
   ft->showFolder( fti->folder() );
+  handleGroupwareFolder( fti );
+}
+
+static void selectKontactPlugin( const QString &plugin )
+{
+  QDBusInterface *kontact = new QDBusInterface( "org.kde.kontact",
+      "/KontactInterface", "org.kde.kontact.KontactInterface",
+       QDBusConnection::sessionBus() );
+  if ( kontact->isValid() )
+    kontact->call( "selectPlugin", plugin );
+  delete kontact;
+}
+
+void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
+{
+  if ( !fti->folder() || !fti->folder()->storage() )
+    return;
+  switch ( fti->folder()->storage()->contentsType() ) {
+    case KMail::ContentsTypeContact:
+      KPIM::KAddrBookExternal::openAddressBook( this );
+      break;
+    case KMail::ContentsTypeNote:
+      selectKontactPlugin( "kontact_knotesplugin" );
+      break;
+    case KMail::ContentsTypeCalendar:
+    case KMail::ContentsTypeTask:
+    case KMail::ContentsTypeJournal:
+    {
+      KMail::KorgHelper::ensureRunning();
+      QString plugin;
+      switch ( fti->folder()->storage()->contentsType() ) {
+        case KMail::ContentsTypeCalendar:
+          plugin = QLatin1String( "kontact_korganizerplugin" ); break;
+        case KMail::ContentsTypeTask:
+          plugin = QLatin1String( "kontact_todoplugin" ); break;
+        case KMail::ContentsTypeJournal:
+          plugin = QLatin1String( "kontact_journalplugin" ); break;
+        default: assert( false );
+      }
+      selectKontactPlugin( plugin );
+      break;
+    }
+    default: break;
+  }
 }
 
 void FavoriteFolderView::itemClicked(Q3ListViewItem * item)
@@ -256,6 +301,7 @@ void FavoriteFolderView::itemClicked(Q3ListViewItem * item)
   if ( item && !item->isSelected() )
     item->setSelected( true );
   item->repaint();
+  handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
 }
 
 void FavoriteFolderView::folderTreeSelectionChanged(KMFolder * folder)

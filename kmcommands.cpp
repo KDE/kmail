@@ -113,6 +113,7 @@ using KMail::RedirectDialog;
 #include "templateparser.h"
 using KMail::TemplateParser;
 #include "editorwatcher.h"
+#include "korghelper.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -3382,31 +3383,7 @@ KMCommand::Result CreateTodoCommand::execute()
     return Failed;
   }
 
-  // korganizer starting code taken from the ical bpf plugin
-  QString error;
-  QString dbusService;
-  int result = KDBusServiceStarter::self()->findServiceFor( "DBUS/Organizer",
-                                         QString(), &error, &dbusService );
-  if ( result == 0 ) {
-#ifdef __GNUC__
-#warning Port me!
-#endif
-#if 0
-    // OK, so korganizer (or kontact) is running. Now ensure the object we want is available
-    // [that's not the case when kontact was already running, but korganizer not loaded into it...]
-    static const char* const dcopObjectId = "KOrganizerIface";
-    QCString dummy;
-    if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) ) {
-      DCOPRef ref( dcopService, dcopService ); // talk to the KUniqueApplication or its kontact wrapper
-      DCOPReply reply = ref.call( "load()" );
-      if ( reply.isValid() && (bool)reply ) {
-        kDebug() <<"Loaded" << dcopService <<" successfully";
-        Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
-      } else
-        kWarning(5006) <<"Error loading" << dcopService;
-    }
-#endif
-  }
+  KMail::KorgHelper::ensureRunning();
 
   QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from(),
                      msg->to(), msg->subject() );
