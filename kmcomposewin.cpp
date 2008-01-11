@@ -2060,6 +2060,14 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
                                     aUrl.prettyUrl() ) );
     return false;
   }
+
+  const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
+  if ( maxAttachmentSize > 0 &&
+       aUrl.isLocalFile() && QFileInfo( aUrl.pathOrUrl() ).size() > maxAttachmentSize*1024*1024 ) {
+    KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>", maxAttachmentSize ) );
+    return false;
+  }
+
   KIO::TransferJob *job = KIO::get(aUrl);
   KIO::Scheduler::scheduleJob( job );
   atmLoadData ld;
