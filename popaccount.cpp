@@ -289,8 +289,13 @@ void PopAccount::slotCancel()
   // Close the pop filter confirmation dialog. Otherwise, KMail crashes because
   // slotJobFinished(), which creates that dialog, will try to continue downloading
   // when the user closes the dialog.
-  if ( mPopFilterConfirmationDialog )
+  if ( mPopFilterConfirmationDialog ) {
+
+    // Disconnect the signal, as we are already called from slotAbortRequested()
+    disconnect( mPopFilterConfirmationDialog, SIGNAL( rejected() ),
+                this, SLOT( slotAbortRequested() ) );
     mPopFilterConfirmationDialog->reject();
+  }
 }
 
 
@@ -332,11 +337,14 @@ void PopAccount::slotProcessPendingMsgs()
 //-----------------------------------------------------------------------------
 void PopAccount::slotAbortRequested()
 {
-  if (stage == Idle) return;
+  kDebug(5006);
+  if (stage == Idle)
+    return;
   disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
-           this, SLOT( slotAbortRequested() ) );
+              this, SLOT( slotAbortRequested() ) );
   stage = Quit;
-  if (job) job->kill();
+  if (job)
+    job->kill();
   job = 0;
   mSlave = 0;
   slotCancel();
@@ -600,13 +608,11 @@ void PopAccount::slotJobFinished() {
       mPopFilterConfirmationDialog =
           new KMPopFilterCnfrmDlg( mHeadersOnServer, this->name(),
                                    kmkernel->popFilterMgr()->showLaterMsgs() );
+      connect( mPopFilterConfirmationDialog, SIGNAL( rejected() ),
+               this, SLOT( slotAbortRequested() ) );
       mPopFilterConfirmationDialog->exec();
     }
 
-    // The only case were the result code of the dialog is QDialog::Rejected
-    // should be when the mail check in canceled in slotCancel().
-    // This here would likely break if there is still a mail check active
-    // and Rejected is the result. But that shouldn't happen.
     if ( mPopFilterConfirmationDialog->result() == QDialog::Accepted ) {
 
       for ( int i = 0; i < mHeadersOnServer.count(); ++i ) {
@@ -784,14 +790,17 @@ void PopAccount::slotJobFinished() {
     kDebug(5006) <<"stage == Quit";
     saveUidList();
     job = 0;
-    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+    if ( mSlave )
+      KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
     stage = Idle;
-    if( mMailCheckProgressItem ) { // do this only once...
-      bool canceled = !kmkernel || kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
+    if ( mMailCheckProgressItem ) { // do this only once...
+      bool canceled = !kmkernel || kmkernel->mailCheckAborted() ||
+                      mMailCheckProgressItem->canceled();
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        this->name(), numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
+                       this->name(), numMessages, numBytes, numBytesRead,
+                       numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
       checkDone( ( numMessages > 0 ), canceled ? CheckAborted : CheckOK );

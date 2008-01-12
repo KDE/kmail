@@ -293,7 +293,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
 {
   setUpdatesEnabled( false );
   setCaption( i18n("POP Filter") );
-  setButtons( Ok | Help );
+  setButtons( Ok | Help | Cancel );
   setHelp( "popfilters" );
   unsigned int rulesetCount = 0;
   mShowLaterMsgs = showLaterMsgs;
