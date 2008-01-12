@@ -239,7 +239,7 @@ public:
   virtual int countUnread();
 
   /** Total size of the contents of this folder. */
-  size_t folderSize() const;
+  Q_INT64 folderSize() const;
 
   /** Return whether the folder is close to its quota limit, which can
    * be reflected in the UI.  */
@@ -590,7 +590,7 @@ friend class KMMsgDict;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 
-  virtual size_t doFolderSize() const { return 0; };
+  virtual Q_INT64 doFolderSize() const { return 0; };
 
   int mOpenCount;
   int mQuiet;
@@ -608,7 +608,7 @@ friend class KMMsgDict;
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
-  long mSize;
+  Q_INT64 mSize;
   bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact :1;

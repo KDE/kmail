@@ -103,7 +103,7 @@ public:
   virtual bool isReadOnly() const { return false; }
  
   /** reimp */
-  size_t doFolderSize() const;
+  virtual Q_INT64 doFolderSize() const;
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,

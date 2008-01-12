@@ -1273,10 +1273,10 @@ int KMFolderMbox::expungeContents()
 
 //-----------------------------------------------------------------------------
 /*virtual*/
-size_t KMFolderMbox::doFolderSize() const
+Q_INT64 KMFolderMbox::doFolderSize() const
 {
   QFileInfo info( location() );
-  return info.size();
+  return (Q_INT64)(info.size());
 }
 
 //-----------------------------------------------------------------------------
