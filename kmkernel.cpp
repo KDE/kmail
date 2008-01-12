@@ -81,9 +81,11 @@ using KWallet::Wallet;
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
-KMKernel *KMKernel::mySelf = 0;
+
 #include "folderadaptor.h"
 #include "kmail_util.h"
+
+static KMKernel * mySelf = 0;
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
@@ -2036,6 +2038,12 @@ void KMKernel::slotEmptyTrash()
       trash->expunge();
     }
   }
+}
+
+KMKernel* KMKernel::self()
+{
+	assert(mySelf);
+	return mySelf;
 }
 
 KConfig* KMKernel::config()

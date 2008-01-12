@@ -252,7 +252,7 @@ public:
 
   /** normal control stuff */
 
-  static KMKernel *self() { return mySelf; }
+  static KMKernel *self();
   static KConfig *config();
 
   void init();
@@ -482,7 +482,7 @@ private:
   bool closed_by_user;
   bool the_firstInstance;
   bool mMailCheckAborted;
-  static KMKernel *mySelf;
+
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
   KComponentData mXmlGuiInstance;
