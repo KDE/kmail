@@ -1,19 +1,106 @@
 <ui version="4.0" >
- <class>SnippetDlg</class>
- <widget class="QDialog" name="SnippetDlg" >
+ <class>SnippetDlgBase</class>
+ <widget class="QDialog" name="SnippetDlgBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>289</height>
+    <width>338</width>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Add Snippet</string>
   </property>
   <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="nameLabel" >
+     <property name="text" >
+      <string>&amp;Name:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>snippetName</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KLineEdit" name="snippetName" />
+   </item>
    <item row="1" column="0" >
+    <widget class="QLabel" name="textLabelGroup" >
+     <property name="text" >
+      <string>Group:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="KComboBox" name="cbGroup" />
+   </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="textLabel" >
+     <property name="text" >
+      <string>&amp;Snippet:</string>
+     </property>
+     <property name="alignment" >
+      <set>Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>snippetText</cstring>
+     </property>
+    </widget>
+   </item>
+   <item rowspan="2" row="2" column="1" >
+    <widget class="KTextEdit" name="snippetText" >
+     <property name="font" >
+      <font>
+       <family>Courier</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>48</width>
+       <height>181</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="0" >
+    <widget class="QLabel" name="keyWidgetLabel" >
+     <property name="text" >
+      <string>Sh&amp;ortcut:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>keyWidget</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" >
+    <widget class="KKeySequenceWidget" name="keyWidget" />
+   </item>
+   <item row="5" column="0" colspan="2" >
     <layout class="QHBoxLayout" >
      <item>
       <spacer>
@@ -53,81 +140,6 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0" >
-    <layout class="QGridLayout" >
-     <item row="0" column="1" >
-      <widget class="KLineEdit" name="snippetName" />
-     </item>
-     <item row="4" column="0" >
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>20</width>
-         <height>80</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0" >
-      <widget class="QLabel" name="textLabel1" >
-       <property name="text" >
-        <string>&amp;Name:</string>
-       </property>
-       <property name="wordWrap" >
-        <bool>false</bool>
-       </property>
-       <property name="buddy" >
-        <cstring>snippetName</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" >
-      <widget class="QLabel" name="textLabel2" >
-       <property name="text" >
-        <string>&amp;Snippet:</string>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap" >
-        <bool>false</bool>
-       </property>
-       <property name="buddy" >
-        <cstring>snippetText</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" >
-      <widget class="QLabel" name="textLabelGroup" >
-       <property name="text" >
-        <string>Group:</string>
-       </property>
-       <property name="wordWrap" >
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" >
-      <widget class="KComboBox" name="cbGroup" />
-     </item>
-     <item rowspan="3" row="2" column="1" >
-      <widget class="KTextEdit" name="snippetText" >
-       <property name="font" >
-        <font>
-         <family>Courier</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
@@ -137,6 +149,11 @@
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KKeySequenceWidget</class>
+   <extends>QWidget</extends>
+   <header>kkeysequencewidget.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -173,7 +190,7 @@
   <connection>
    <sender>btnAdd</sender>
    <signal>clicked()</signal>
-   <receiver>SnippetDlg</receiver>
+   <receiver>SnippetDlgBase</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -189,7 +206,7 @@
   <connection>
    <sender>btnCancel</sender>
    <signal>clicked()</signal>
-   <receiver>SnippetDlg</receiver>
+   <receiver>SnippetDlgBase</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >

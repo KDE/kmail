@@ -221,7 +221,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
   mEditor = new KMComposerEditor(this, mSnippetSplitter);
 
-  mSnippetWidget = new SnippetWidget( mEditor, mSnippetSplitter );
+  mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   //H4X
   mSnippetWidget->show();
   //mSnippetWidget->setShown( GlobalSettings::self()->showSnippetManager() );
@@ -539,6 +539,15 @@ void KMComposeWin::readConfig( void )
   }
   resize( siz );
 
+  if ( !GlobalSettings::self()->snippetSplitterPosition().isEmpty() ) {
+    mSnippetSplitter->setSizes( GlobalSettings::self()->snippetSplitterPosition() );
+  } else {
+    QList<int> defaults;
+    defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
+    mSnippetSplitter->setSizes( defaults );
+  }
+
+
   mIdentity->setCurrentIdentity( mId );
 
   kDebug(5006) <<"KMComposeWin::readConfig." << mIdentity->currentIdentityName();
@@ -582,6 +591,8 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
   saveMainWindowSettings( KMKernel::config()->group( "Composer" ) );
+  GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
+
   // make sure config changes are written to disk, cf. bug 127538
   GlobalSettings::self()->writeConfig();
 }

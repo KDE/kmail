@@ -5,14 +5,15 @@
  *
  *  Copyright: See COPYING file that comes with this distribution
  */
+#include "snippetitem.h"
+
+#include <kaction.h>
 
 #include <qstring.h>
 
-
-#include "snippetitem.h"
-
 SnippetItem::SnippetItem( QTreeWidget *parent, const QString &name, const QString &text )
- : QTreeWidgetItem( parent, QStringList(name) )
+ : QTreeWidgetItem( parent, QStringList( name ) ),
+   action( 0 )
 {
   strName = name;
   strText = text;
@@ -20,7 +21,8 @@ SnippetItem::SnippetItem( QTreeWidget *parent, const QString &name, const QStrin
 }
 
 SnippetItem::SnippetItem( QTreeWidgetItem *parent, const QString &name, const QString &text )
- : QTreeWidgetItem( parent, QStringList(name) )
+ : QTreeWidgetItem( parent, QStringList( name ) ),
+   action( 0 )
 {
   strName = name;
   strText = text;
@@ -29,6 +31,9 @@ SnippetItem::SnippetItem( QTreeWidgetItem *parent, const QString &name, const QS
 
 SnippetItem::~SnippetItem()
 {
+  if ( action ) {
+    delete action;
+  }
 }
 
 
@@ -66,7 +71,23 @@ void SnippetItem::resetParent()
     iParent = group->getId();
 }
 
-SnippetItem * SnippetItem::findItemByName(const QString &name, const QList<SnippetItem *> &list)
+KAction* SnippetItem::getAction()
+{   
+    return action;
+}
+
+void SnippetItem::setAction(KAction * anAction)
+{
+    action = anAction;
+}
+
+void SnippetItem::slotExecute()
+{
+    emit execute( this );
+}
+
+
+SnippetItem * SnippetItem::findItemByName( const QString &name, const QList<SnippetItem *> &list)
 {
   foreach ( SnippetItem *const item, list ) {  //write the snippet-list
     if (item->getName() == name)
@@ -123,3 +144,5 @@ void SnippetGroup::setId(int id)
     if (iId >= iMaxId)
         iMaxId = iId+1;
 }
+
+#include "snippetitem.moc"

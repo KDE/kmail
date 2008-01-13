@@ -11,7 +11,6 @@
 
 #include <qstring.h>
 #include <QTreeWidget>
-#include <QDialog>
 #include <qrect.h>
 
 #include <libkdepim/kmeditor.h>
@@ -26,7 +25,7 @@ class SnippetItem;
 class KTextEdit;
 class KConfig;
 class QWidget;
-
+class KActionCollection;
 using KPIM::KMeditor;
 
 /**
@@ -40,7 +39,7 @@ class SnippetWidget : public QTreeWidget
   Q_OBJECT
 
 public:
-    SnippetWidget(KMeditor* editor, QWidget* parent = 0);
+    SnippetWidget(KMeditor *editor, KActionCollection *actionCollection, QWidget *parent = 0);
     ~SnippetWidget();
     QList<SnippetItem * > * getList() { return (&_list); }
     void writeConfig();
@@ -56,38 +55,32 @@ protected:
                        const QMimeData *data, Qt::DropAction action );
     void contextMenuEvent( QContextMenuEvent *e );
 private:
-    void insertIntoActiveView(QString text);
+    void insertIntoActiveView( const QString &text );
     QString parseText(QString text, QString del="$");
     bool showMultiVarDialog(QMap<QString, QString> * map, QMap<QString, QString> * mapSave,
                             int & iWidth, int & iBasicHeight, int & iOneHeight);
     QString showSingleVarDialog(QString var, QMap<QString, QString> * mapSave, QRect & dlgSize);
-    QTreeWidgetItem * selectedItem() const;
+    QTreeWidgetItem *selectedItem() const;
+    SnippetItem* makeItem( SnippetItem *parent, const QString &name,
+                           const QString &text, const QKeySequence &keySeq );
 
     QList<SnippetItem * > _list;
     QMap<QString, QString> _mapSaved;
     KConfig * _cfg;
     SnippetConfig _SnippetConfig;
-    KMeditor * mEditor;
+    KMeditor *mEditor;
+    KActionCollection* mActionCollection;
 
 public slots:
     void slotRemove();
-    void slotEdit( QTreeWidgetItem* item_ = 0 );
+    void slotEdit( QTreeWidgetItem *item_ = 0 );
     void slotEditGroup();
     void slotAdd();
     void slotAddGroup();
     void slotExecute();
 
 protected slots:
-    void slotExecuted(QTreeWidgetItem * item =  0);
-};
-
-#include "ui_snippetdlg.h"
-
-class SnippetDlg : public QDialog, public Ui::SnippetDlg
-{
-    Q_OBJECT
-public:
-    SnippetDlg( QWidget *parent );
+    void slotExecuted( QTreeWidgetItem *item =  0 );
 };
 
 #endif

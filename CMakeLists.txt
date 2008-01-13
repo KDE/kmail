@@ -55,6 +55,7 @@ set(kmailprivate_LIB_SRCS
    headeritem.cpp
    listjob.cpp
    kmcomposewin.cpp
+   snippetdlg.cpp
    snippet_widget.cpp
    snippetconfig.cpp
    snippetsettings.cpp
@@ -224,7 +225,7 @@ qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/libkdepim/interf
 
 
 
-kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlg.ui snippetsettingsbase.ui )
+kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningconfiguration.ui smimeconfiguration.ui templatesconfiguration_base.ui customtemplates_base.ui snippetdlgbase.ui snippetsettingsbase.ui )
 
 #kde4_add_dcop_skels(kmailprivate_LIB_SRCS
 #   kmailIface.h
