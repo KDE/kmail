@@ -127,6 +127,8 @@ using KMail::DictionaryComboBox;
 // MOC
 #include "kmcomposewin.moc"
 
+#include "snippet_widget.h"
+
 KMail::Composer *KMail::makeComposer( KMMessage *msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
 }
@@ -156,7 +158,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mReplyToAction( 0 ), mSubjectAction( 0 ),
     mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
     mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
-    mDictionaryAction( 0 ),
+    mDictionaryAction( 0 ), mSnippetAction( 0 ),
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
     mEncryptChiasmusAction( 0 ),
@@ -215,21 +217,22 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
   mSplitter->setChildrenCollapsible( false );
-  mEditor = new KMComposerEditor(this, mSplitter);
+  mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
+  mSnippetSplitter->setObjectName( "mSnippetSplitter" );
+  mEditor = new KMComposerEditor(this, mSnippetSplitter);
 
-  //mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
-  mSplitter->insertWidget( 0, mEditor );
+  mSnippetWidget = new SnippetWidget( mEditor, mSnippetSplitter );
+  //H4X
+  mSnippetWidget->show();
+  //mSnippetWidget->setShown( GlobalSettings::self()->showSnippetManager() );
+
   mSplitter->setOpaqueResize( true );
 
-  //mEditor->initializeAutoSpellChecking();
   mEditor->setAcceptDrops( true );
 
-  mBtnIdentity->setWhatsThis(
-                             GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
-  mBtnFcc->setWhatsThis(
-                        GlobalSettings::self()->stickyFccItem()->whatsThis() );
-  mBtnTransport->setWhatsThis(
-                              GlobalSettings::self()->stickyTransportItem()->whatsThis() );
+  mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
+  mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
+  mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
   mSpellCheckInProgress = false;
 
@@ -576,6 +579,7 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
   GlobalSettings::self()->setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::self()->setComposerSize( size() );
+  GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
   saveMainWindowSettings( KMKernel::config()->group( "Composer" ) );
   // make sure config changes are written to disk, cf. bug 127538
@@ -1131,6 +1135,11 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "wordwrap", mWordWrapAction );
   mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
   connect( mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)) );
+
+  mSnippetAction = new KToggleAction( i18n("&Snippets"), actionCollection());
+  mSnippetAction->setObjectName( "snippets" );
+  connect( mSnippetAction, SIGNAL(toggled(bool)), mSnippetWidget, SLOT(setShown(bool)) );
+  mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
   mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ), i18n("&Automatic Spellchecking"), this );
   actionCollection()->addAction( "options_auto_spellchecking", mAutoSpellCheckingAction );

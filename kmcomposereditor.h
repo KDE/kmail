@@ -59,8 +59,12 @@ class KMComposerEditor : public KMeditor
      bool mHtmlMode;
   protected:
      void dropEvent( QDropEvent *e );
+     bool canInsertFromMimeData( const QMimeData *source ) const;
+     void insertFromMimeData( const QMimeData *source );
+
   signals:
      void attachPNGImageData( const QByteArray &image );
+     void insertSnippet();
 };
 
 #endif

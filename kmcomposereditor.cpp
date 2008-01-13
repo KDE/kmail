@@ -134,6 +134,20 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
   }
 }
 
+bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
+{
+  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+    return true;
+  return KMeditor::canInsertFromMimeData( source );
+}
+
+void KMComposerEditor::insertFromMimeData( const QMimeData *source )
+{
+  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+    emit insertSnippet();
+  KMeditor::insertFromMimeData( source );
+}
+
 QString KMComposerEditor::brokenText() const
 {
   QString temp;

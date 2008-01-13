@@ -59,6 +59,7 @@
    <Action name="show_subject" />
    <Separator/>
    <Action name="toggle_fixedfont" />
+   <Action name="snippets" />
   </Menu>
   <Menu name="attach" >
    <text>&amp;Attach</text>

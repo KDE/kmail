@@ -74,6 +74,7 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
+class SnippetWidget;
 
 namespace KPIM {
   class KMStyleListSelectAction;
@@ -736,7 +737,7 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mSubjectAction;
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-    KToggleAction *mDictionaryAction;
+    KToggleAction *mDictionaryAction, *mSnippetAction;
 
     KPIM::KMStyleListSelectAction *listAction;
     KFontAction *fontAction;
@@ -804,6 +805,7 @@ class KMComposeWin : public KMail::Composer
     QColor mForeColor, mBackColor;
     QFont mSaveFont;
     QSplitter *mSplitter;
+    QSplitter *mSnippetSplitter;
     struct atmLoadData
     {
       KUrl url;
@@ -844,6 +846,8 @@ class KMComposeWin : public KMail::Composer
 
     QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
+
+    SnippetWidget *mSnippetWidget;
 };
 
 #endif

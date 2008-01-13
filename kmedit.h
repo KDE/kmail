@@ -21,7 +21,7 @@
 #define __KMAIL_KMEDIT_H__
 
 #include <kdeversion.h>
-#include <keditcl.h>
+#include <ktextedit.h>
 #include <QMap>
 #include <QStringList>
 #include <QDragEnterEvent>
@@ -42,7 +42,7 @@ class KDirWatch;
 class K3Process;
 
 
-class KMEdit : public KEdit {
+class KMEdit : public KTextEdit {
   Q_OBJECT
 public:
   explicit KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
@@ -118,7 +118,6 @@ protected:
    * Event filter that does Tab-key handling.
    */
   bool eventFilter(QObject*, QEvent*);
-  void keyPressEvent( QKeyEvent* );
 
 private slots:
   void slotExternalEditorTempFileChanged( const QString & fileName );

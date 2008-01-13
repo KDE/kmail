@@ -255,7 +255,6 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   return KEdit::eventFilter(o, e);
 }
 
-
 void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   if ( !mExtEditorTempFile )
     return;
