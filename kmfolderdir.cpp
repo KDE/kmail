@@ -33,6 +33,7 @@ KMFolderRootDir::~KMFolderRootDir()
   // WABA: We can't let KMFolderDir do this because by the time its
   // desctructor gets called, KMFolderRootDir is already destructed
   // Most notably the path.
+  qDeleteAll( begin(), end() ); // we own the pointers to our folders
   clear();
 }
 
@@ -86,8 +87,8 @@ KMFolderDir::KMFolderDir( KMFolder * owner, KMFolderDir* parent,
 //-----------------------------------------------------------------------------
 KMFolderDir::~KMFolderDir()
 {
+  qDeleteAll( begin(), end() ); // we own the pointers to our folders
   clear();
-  qDeleteAll( *this );
 }
 
 
@@ -176,6 +177,7 @@ bool KMFolderDir::reload(void)
   QStringList      diList;
   QList<KMFolder*> folderList;
 
+  qDeleteAll( begin(), end() ); // we own the pointers to our folders
   clear();
 
   const QString fldPath = path();
