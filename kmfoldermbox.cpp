@@ -102,9 +102,11 @@ int KMFolderMbox::open( const char *owner )
 {
   mOwners.append( owner );
 
+#ifdef FOLDER_REFCOUNT_DEBUGGING
   kDebug(5006) << endl << "open" << mOpenCount << folder()->name()
                << mOwners << ", adding:" << owner;
 //           << mOwners << ", adding:" << owner << kBacktrace();
+#endif
   int rc = 0;
 
   mOpenCount++;
@@ -269,9 +271,11 @@ int KMFolderMbox::create()
 //-----------------------------------------------------------------------------
 void KMFolderMbox::close( const char *owner, bool aForced )
 {
+#ifdef FOLDER_REFCOUNT_DEBUGGING
   kDebug(5006) <<"\nclose" << folder()->name() << mOwners
                << owner << mOpenCount;
 //             << owner << mOpenCount << kBacktrace();
+#endif
   int ownerPos = mOwners.indexOf( owner );
   if ( !aForced && !mOwners.isEmpty() ) {
     assert( ownerPos != -1 );
