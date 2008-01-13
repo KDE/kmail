@@ -26,7 +26,6 @@
 #include <QtGui/QContextMenuEvent>
 #include <qtimer.h>
 #include <kcombobox.h>
-#include <kmedit.h>
 #include <kiconloader.h>
 #include <kshortcut.h>
 #include <kaction.h>
@@ -188,7 +187,7 @@ void SnippetWidget::slotRemove()
     SnippetItem *it=_list.first();
     for ( int i = 0; i < _list.size(); i++ ) {
       if (_list[i]->getParent() == group->getId()) {
-        //kdDebug(5006) << "remove " << _list[i]->getName() << endl;
+        //kDebug(5006) << "remove " << _list[i]->getName();
         delete _list.takeAt( i );   //probably not worth optimizing
       }
     }
@@ -525,12 +524,12 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *e )
     This function is used to parse the given QString for variables. If found the user will be prompted
     for a replacement value. It returns the string text with all replacements made
  */
-QString SnippetWidget::parseText(QString text, QString del)
+QString SnippetWidget::parseText(const QString &text, const QString &del)
 {
   QString str = text;
-  QString strName = "";
-  QString strNew = "";
-  QString strMsg="";
+  QString strName;
+  QString strNew;
+  QString strMsg;
   int iFound = -1;
   int iEnd = -1;
   QMap<QString, QString> mapVar;
@@ -545,17 +544,17 @@ QString SnippetWidget::parseText(QString text, QString del)
       strName = text.mid(iFound, iEnd-iFound);
 
       if ( strName != del+del  ) {  //if not doubel-delimiter
-        if (iInMeth == 0) { //if input-method "single" is selected
+        if ( iInMeth == 0 ) { //if input-method "single" is selected
           if ( mapVar[strName].length() <= 0 ) {  // and not already in map
             strMsg=i18n("Please enter the value for <b>%1</b>:").arg(strName);
             strNew = showSingleVarDialog( strName, &_mapSaved, rSingle );
-            if (strNew=="")
-              return ""; //user clicked Cancle
+            if ( strNew.isEmpty() )
+              return QString(); //user clicked Cancel
           } else {
             continue; //we have already handled this variable
           }
         } else {
-          strNew = ""; //for inputmode "multi" just reset new valaue
+          strNew.clear(); //for inputmode "multi" just reset new valaue
         }
       } else {
         strNew = del; //if double-delimiter -> replace by single character
@@ -580,7 +579,7 @@ QString SnippetWidget::parseText(QString text, QString del)
         str.replace(it.key(), it.data());
       }
     } else {
-      return "";
+      return QString();
     }
 
     rMulti.setWidth(w);   //this is a hack to save the dialog's dimensions in only one QRect
@@ -866,7 +865,7 @@ bool SnippetWidget::acceptDrag (QDropEvent *event) const
   } else if(item &&
             event->provides("text/x-kmail-textsnippet") &&
             static_cast<SnippetWidget *>(event->source()) != this) {
-    //kDebug(5006) << "returning TRUE " << endl;
+    //kDebug(5006) << "returning TRUE ";
     return TRUE;
   } else {
     //kdebug(5006) << "returning FALSE";

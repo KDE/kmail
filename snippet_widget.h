@@ -56,7 +56,7 @@ protected:
     void contextMenuEvent( QContextMenuEvent *e );
 private:
     void insertIntoActiveView( const QString &text );
-    QString parseText(QString text, QString del="$");
+    QString parseText(const QString &text, const QString &del="$");
     bool showMultiVarDialog(QMap<QString, QString> * map, QMap<QString, QString> * mapSave,
                             int & iWidth, int & iBasicHeight, int & iOneHeight);
     QString showSingleVarDialog(QString var, QMap<QString, QString> * mapSave, QRect & dlgSize);
