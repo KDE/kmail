@@ -5184,13 +5184,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mSyncImmediately->setToolTip( i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
-  
+
   mDeleteInvitations = new QCheckBox( 
              i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
   mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
              ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
-    connect( mDeleteInvitations, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-    grid->addMultiCellWidget( mDeleteInvitations, 5, 5, 0, 1 );
+  connect( mDeleteInvitations, SIGNAL( toggled(bool) ),
+           SLOT( slotEmitChanged() ) );
+  grid->addWidget( mDeleteInvitations, 5, 0, 1, 2 );
 
   // Groupware functionality compatibility setup
   b1 = new QGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );

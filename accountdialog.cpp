@@ -1582,7 +1582,7 @@ void AccountDialog::slotPipeliningClicked()
 
 void AccountDialog::slotPopEncryptionChanged(int id)
 {
-  kDebug(5006) <<"slotPopEncryptionChanged(" << id <<" )";
+  kDebug(5006) << "ID:" << id;
   // adjust port
   if ( id == SSL || mPop.portEdit->text() == "995" )
     mPop.portEdit->setText( ( id == SSL ) ? "995" : "110" );

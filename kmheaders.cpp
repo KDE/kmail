@@ -2364,7 +2364,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }
 
   // check if we are on a status column and toggle it
-  if ( lvi && e->button() == Qt::LeftButton  && !( e->state() & (Qt::ShiftButton | Qt::ControlButton | Qt::AltButton | Qt::MetaButton) ) ) {
+  if ( lvi && e->button() == Qt::LeftButton &&
+       !( e->modifiers() & ( Qt::ShiftModifier | Qt::ControlModifier |
+                             Qt::AltModifier | Qt::MetaModifier ) ) ) {
     bool flagsToggleable = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
     int section = header()->sectionAt( e->pos().x() );
     HeaderItem *item = static_cast<HeaderItem*>( lvi );

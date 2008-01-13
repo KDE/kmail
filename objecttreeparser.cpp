@@ -660,15 +660,16 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   if ( !mReader->decryptMessage() ) {
-    QString iconName = KIconLoader::global()->iconPath( "decrypted", KIconLoader::Small );
+    QString iconName = KIconLoader::global()->iconPath( "document-decrypt",
+                                                        KIconLoader::Small );
     decryptedData = "<div style=\"font-size:large; text-align:center;"
                       "padding-top:20pt;\">"
-                    + i18n("This message is encrypted.").utf8()
+                    + i18n("This message is encrypted.").toUtf8()
                     + "</div>"
                       "<div style=\"text-align:center; padding-bottom:20pt;\">"
                       "<a href=\"kmail:decryptMessage\">"
-                      "<img src=\"" + iconName.utf8() + "\"/>"
-                    + i18n("Decrypt Message").utf8()
+                      "<img src=\"" + iconName.toUtf8() + "\"/>"
+                    + i18n("Decrypt Message").toUtf8()
                     + "</div>";
     return false;
   }

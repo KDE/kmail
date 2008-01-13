@@ -458,9 +458,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
-    mUpdateReaderWinTimer( 0, "mUpdateReaderWinTimer" ),
-    mResizeTimer( 0, "mResizeTimer" ),    
-    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
+    mUpdateReaderWinTimer( 0 ),
+    mResizeTimer( 0 ),
+    mDelayedMarkTimer( 0 ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
@@ -483,6 +483,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false )
 {
+  mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
+  mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );
+  mResizeTimer.setObjectName( "mResizeTimer" );
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
   mMimeTreeAtBottom = true;

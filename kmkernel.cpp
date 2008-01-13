@@ -2042,14 +2042,14 @@ void KMKernel::slotEmptyTrash()
 
 KMKernel* KMKernel::self()
 {
-	assert(mySelf);
-	return mySelf;
+  assert( mySelf );
+  return mySelf;
 }
 
 KConfig* KMKernel::config()
 {
-  assert(mySelf);
-  if (!mySelf->mConfig)
+  assert( mySelf );
+  if ( !mySelf->mConfig )
   {
     mySelf->mConfig = KSharedConfig::openConfig( "kmailrc" );
     // Check that all updates have been run on the config file:

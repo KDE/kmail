@@ -55,12 +55,11 @@ QuotaWidget::QuotaWidget( QWidget* parent, const char* name )
         :QWidget( parent )
 {
       setObjectName( name );
-      QVBoxLayout *box = new QVBoxLayout(this);
+      QVBoxLayout *box = new QVBoxLayout( this );
       QWidget *stuff = new QWidget( this );
-      QGridLayout* layout =
-          new QGridLayout( stuff, 3, 3,
-                           KDialog::marginHint(),
-                           KDialog::spacingHint() );
+      QGridLayout* layout = new QGridLayout( stuff );
+      layout->setMargin( KDialog::marginHint() );
+      layout->setSpacing( KDialog::spacingHint() );
       mInfoLabel = new QLabel("", stuff );
       mRootLabel = new QLabel("", stuff );
       mProgressBar = new QProgressBar( stuff );

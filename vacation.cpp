@@ -427,7 +427,8 @@ namespace {
 namespace KMail {
 
   Vacation::Vacation( QObject * parent, bool checkOnly, const char * name )
-    : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false ), mCheckOnly( checkOnly )
+    : QObject( parent ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false ),
+      mCheckOnly( checkOnly )
   {
     setObjectName( name );
     mUrl = findURL();
