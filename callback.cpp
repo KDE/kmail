@@ -209,16 +209,16 @@ void Callback::closeIfSecondaryWindow() const
 
 bool Callback::askForComment( KCal::Attendee::PartStat status ) const
 {
-    if ( ( status != KCal::Attendee::Accepted 
-            && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
-            == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
-        || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
-        == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
-        return true;
-    return false;
+  if ( ( status != KCal::Attendee::Accepted
+          && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+          == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
+      || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+      == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
+      return true;
+  return false;
 }
 
 bool Callback::deleteInvitationAfterReply() const
 {
-    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
+  return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }

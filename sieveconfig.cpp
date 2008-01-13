@@ -53,10 +53,10 @@ namespace KMail {
 
   QString SieveConfig::toString() const
   {
-      QString result;
-      result += "SieveConfig: \n";
-      result += "  sieve-vacation-filename: " + mVacationFileName + "\n\n";
-      return result;
+    QString result;
+    result += "SieveConfig: \n";
+    result += "  sieve-vacation-filename: " + mVacationFileName + "\n\n";
+    return result;
   }
 
   SieveConfigEditor::SieveConfigEditor( QWidget * parent )
@@ -161,7 +161,7 @@ namespace KMail {
 
 
   QString SieveConfigEditor::vacationFileName() const {
-      return mVacationFileName;
+    return mVacationFileName;
   }
 
   void SieveConfigEditor::setVacationFileName( const QString& name ) {

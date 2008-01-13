@@ -652,31 +652,27 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 
 static QString subresourceLabelForPresentation( const KMFolder * folder )
 {
-    QString label = folder->prettyUrl();
-    QStringList parts = label.split( QChar('/') );
-    // In the common special case of some other user's folder shared with us
-    // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
-    // those a bit nicer.
-    if ( parts[1] == QLatin1String("user") ) {
-        QStringList remainder(parts);
-        remainder.pop_front();
-        remainder.pop_front();
-        remainder.pop_front();
-        label = i18n("%1's %2")
-            .arg( parts[2] )
-            .arg( remainder.join( QLatin1String("/") ) );
-    }
-    // Another special case is our own folders, under the imap INBOX, make
-    // those prettier too
-    if ( parts[1] == QString::fromLatin1("inbox" ) ) {
-        QStringList remainder(parts);
-        remainder.pop_front();
-        remainder.pop_front();
-        label = i18n("My %1")
-            .arg( remainder.join( QString::fromLatin1("/") ) );
-
-    }
-    return label;
+  QString label = folder->prettyUrl();
+  QStringList parts = label.split( QChar('/') );
+  // In the common special case of some other user's folder shared with us
+  // the url looks like "Server Name/user/$USERNAME/Folder/Name". Make
+  // those a bit nicer.
+  if ( parts[1] == QLatin1String("user") ) {
+    QStringList remainder(parts);
+    remainder.pop_front();
+    remainder.pop_front();
+    remainder.pop_front();
+    label = i18n("%1's %2", parts[2], remainder.join( QLatin1String("/") ) );
+  }
+  // Another special case is our own folders, under the imap INBOX, make
+  // those prettier too
+  if ( parts[1] == QString::fromLatin1("inbox" ) ) {
+    QStringList remainder(parts);
+    remainder.pop_front();
+    remainder.pop_front();
+    label = i18n("My %1", remainder.join( QString::fromLatin1("/") ) );
+  }
+  return label;
 }
 
 /* list all available subresources */

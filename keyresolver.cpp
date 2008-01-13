@@ -240,8 +240,8 @@ static inline std::vector<GpgME::Key> TrustedOrConfirmed( const std::vector<GpgM
   }
 
   if( KMessageBox::warningContinueCancel( 0, msg, i18n("Not Fully Trusted Encryption Keys"),
-					       KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
-                                              "not fully trusted encryption key warning" )
+                                          KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
+                                          "not fully trusted encryption key warning" )
           == KMessageBox::Continue )
     return keys;
   else
@@ -1306,30 +1306,30 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
                          "decrypt the message if you encrypt it." );
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
-						 i18n("Missing Key Warning"),
-						 KGuiItem(i18n("&Encrypt")) )
-	 == KMessageBox::Cancel )
+                                             i18n("Missing Key Warning"),
+                                             KGuiItem(i18n("&Encrypt")) )
+         == KMessageBox::Cancel )
       return Kpgp::Canceled;
   }
 
   std::transform( d->mPrimaryEncryptionKeys.begin(), d->mPrimaryEncryptionKeys.end(),
-		  items.begin(),
-		  d->mPrimaryEncryptionKeys.begin(),
-		  CopyKeysAndEncryptionPreferences );
+                  items.begin(),
+                  d->mPrimaryEncryptionKeys.begin(),
+                  CopyKeysAndEncryptionPreferences );
   std::transform( d->mSecondaryEncryptionKeys.begin(), d->mSecondaryEncryptionKeys.end(),
-		  items.begin() + d->mPrimaryEncryptionKeys.size(),
-		  d->mSecondaryEncryptionKeys.begin(),
-		  CopyKeysAndEncryptionPreferences );
+                  items.begin() + d->mPrimaryEncryptionKeys.size(),
+                  d->mSecondaryEncryptionKeys.begin(),
+                  CopyKeysAndEncryptionPreferences );
 
   d->mOpenPGPEncryptToSelfKeys.clear();
   d->mSMIMEEncryptToSelfKeys.clear();
 
   std::remove_copy_if( senderKeys.begin(), senderKeys.end(),
-		       std::back_inserter( d->mOpenPGPEncryptToSelfKeys ),
-		       NotValidTrustedOpenPGPEncryptionKey );
+                       std::back_inserter( d->mOpenPGPEncryptToSelfKeys ),
+                       NotValidTrustedOpenPGPEncryptionKey );
   std::remove_copy_if( senderKeys.begin(), senderKeys.end(),
-		       std::back_inserter( d->mSMIMEEncryptToSelfKeys ),
-		       NotValidTrustedSMIMEEncryptionKey );
+                       std::back_inserter( d->mSMIMEEncryptToSelfKeys ),
+                       NotValidTrustedSMIMEEncryptionKey );
 
   return Kpgp::Ok;
 }
@@ -1413,15 +1413,14 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   // Now search all public keys for matching keys
   std::vector<GpgME::Key> matchingKeys = lookup( QStringList( person ) );
   matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
-				      NotValidTrustedEncryptionKey ),
-		      matchingKeys.end() );
+                      NotValidTrustedEncryptionKey ), matchingKeys.end() );
   // if no keys match the complete address look for keys which match
   // the canonical mail address
   if ( matchingKeys.empty() ) {
     matchingKeys = lookup( QStringList( address ) );
     matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
-					NotValidTrustedEncryptionKey ),
-			matchingKeys.end() );
+                                        NotValidTrustedEncryptionKey ),
+                                        matchingKeys.end() );
   }
 
   // if called with quite == true (from EncryptionPreferenceCounter), we only want to

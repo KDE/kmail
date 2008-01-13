@@ -356,7 +356,7 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  mCreateTodoAction = new KAction( KIcon("mail_todo"), i18n("Create Task..."), this);
+  mCreateTodoAction = new KAction( KIcon("mail-mark-task"), i18n("Create Task..."), this);
   actionCollection()->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(triggered(bool)), SLOT(slotCreateTodo()) );
 

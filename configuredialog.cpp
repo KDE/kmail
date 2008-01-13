@@ -4030,7 +4030,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   group = new QGroupBox( i18n("Encrypted Messages"), this );
   vboxlayout = new QVBoxLayout( group );
   mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
-  connect( mAlwaysDecrypt, SIGNAL(stateChanged(int)), this, SLOT(slotEmitChanged()) );
+  connect( mAlwaysDecrypt, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged() ) );
   vboxlayout->addWidget( mAlwaysDecrypt );
   vlay->addWidget( group );
 
