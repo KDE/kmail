@@ -133,7 +133,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
                                       const QString &text, const QKeySequence &keySeq )
 {
     SnippetItem *item = new SnippetItem(parent, name, text);
-    const QString actionName = i18n("Snippet %1").arg(name);
+    const QString actionName = i18n("Snippet %1", name);
     const QString normalizedName = QString(actionName).replace(" ", "_");
     if ( !mActionCollection->action( normalizedName ) ) {
         KAction *action = mActionCollection->addAction( normalizedName,
@@ -546,7 +546,7 @@ QString SnippetWidget::parseText(const QString &text, const QString &del)
       if ( strName != del+del  ) {  //if not doubel-delimiter
         if ( iInMeth == 0 ) { //if input-method "single" is selected
           if ( mapVar[strName].length() <= 0 ) {  // and not already in map
-            strMsg=i18n("Please enter the value for <b>%1</b>:").arg(strName);
+            strMsg=i18n("Please enter the value for <b>%1</b>:", strName);
             strNew = showSingleVarDialog( strName, &_mapSaved, rSingle );
             if ( strNew.isEmpty() )
               return QString(); //user clicked Cancel
@@ -762,7 +762,7 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
 
   labTop = new QLabel( &dlg, "label" );
   layoutTop->addWidget(labTop, 0, 0);
-  labTop->setText(i18n("Enter the replacement values for %1:").arg( var ));
+  labTop->setText( i18n("Enter the replacement values for %1:", var) );
   layout->addMultiCellLayout( layoutTop, 0, 0, 0, 1 );
 
 
