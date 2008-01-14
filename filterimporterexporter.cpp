@@ -151,7 +151,7 @@ QList<KMFilter *> FilterImporterExporter::importFilters()
             return QList<KMFilter *>();
         }
     }
-    
+
     KConfig config( fileName );
     QList<KMFilter *> imported = readFiltersFromConfig( &config, mPopFilter );
     FilterSelectionDialog dlg( mParent );
@@ -162,7 +162,7 @@ QList<KMFilter *> FilterImporterExporter::importFilters()
 void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
 {
     KUrl saveUrl = KFileDialog::getSaveUrl( QDir::homePath(), QString(), mParent, i18n("Export Filters") );
-    
+
     if ( saveUrl.isEmpty() || !Util::checkOverwrite( saveUrl, mParent ) )
       return;
 

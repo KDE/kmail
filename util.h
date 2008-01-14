@@ -57,6 +57,10 @@ namespace KMail
      * various places.
      */
 namespace Util {
+
+    // return true if we should proceed, false if we should abort
+    bool checkOverwrite( const KUrl &url, QWidget *w );
+
     /**
      * Convert all sequences of "\r\n" (carriage return followed by a line
      * feed) to a single "\n" (line feed). The conversion happens in place.
@@ -113,23 +117,6 @@ namespace Util {
       QObject *m_object;
       bool m_disabled;
     };
-
-    // return true if we should proceed, false if we should abort
-    static bool checkOverwrite( const KUrl &url, QWidget *w )
-    {
-      if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide, w ) ) {
-        if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel(
-             w,
-             i18n( "A file named \"%1\" already exists. "
-                   "Are you sure you want to overwrite it?", url.prettyUrl() ),
-             i18n( "Overwrite File?" ),
-             KStandardGuiItem::overwrite() ) )
-          return false;
-      }
-      return true;
-    }
-
-
 }
 }
 

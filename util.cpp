@@ -108,3 +108,17 @@ DwString KMail::Util::dwString( const QByteArray& str )
   return DwString( str.data(), str.size() );
 }
 
+bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
+{
+  if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide, w ) ) {
+    if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel(
+         w,
+         i18n( "A file named \"%1\" already exists. "
+             "Are you sure you want to overwrite it?", url.prettyUrl() ),
+             i18n( "Overwrite File?" ),
+                   KStandardGuiItem::overwrite() ) )
+      return false;
+  }
+  return true;
+}
+

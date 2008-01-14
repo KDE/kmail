@@ -46,7 +46,7 @@ public:
     KAction* getAction() const;
 
     //reimp
-    QVariant data(int column, int role) const;
+    virtual QVariant data(int column, int role) const;
 signals:
     void execute( QTreeWidgetItem * );
 public slots:
