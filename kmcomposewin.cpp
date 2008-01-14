@@ -222,7 +222,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mEditor = new KMComposerEditor(this, mSnippetSplitter);
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
-  mSnippetWidget->setShown( GlobalSettings::self()->showSnippetManager() );
+  mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
 
   mSplitter->setOpaqueResize( true );
 

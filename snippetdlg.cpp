@@ -70,12 +70,12 @@ void SnippetDlg::slotCapturedShortcut( const QKeySequence &ks )
 void SnippetDlg::setGroupMode( bool groupMode )
 {
   const bool full = !groupMode;
-  textLabelGroup->setShown( full );
-  cbGroup->setShown( full );
-  textLabel->setShown( full );
-  snippetText->setShown( full );
-  keyWidgetLabel->setShown( full );
-  keyWidget->setShown( full );
+  textLabelGroup->setVisible( full );
+  cbGroup->setVisible( full );
+  textLabel->setVisible( full );
+  snippetText->setVisible( full );
+  keyWidgetLabel->setVisible( full );
+  keyWidget->setVisible( full );
   if ( groupMode )
     resize( width(), minimumSizeHint().height() );
 }

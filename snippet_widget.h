@@ -66,10 +66,10 @@ private:
 
     QList<SnippetItem * > _list;
     QMap<QString, QString> _mapSaved;
+    KActionCollection* mActionCollection;
     KConfig * _cfg;
     SnippetConfig _SnippetConfig;
     KMeditor *mEditor;
-    KActionCollection* mActionCollection;
 
 public slots:
     void slotRemove();

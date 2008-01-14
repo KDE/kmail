@@ -33,20 +33,20 @@ public:
     SnippetItem(QTreeWidgetItem * parent, const QString &name, const QString &text);
 
     ~SnippetItem();
-    QString getName();
-    QString getText();
+    QString getName() const;
+    QString getText() const;
     using QTreeWidgetItem::parent;
-    int getParent() { return iParent; }
+    int getParent() const { return iParent; }
     void resetParent();
     void setText(const QString &text);
     void setName(const QString &name);
     static SnippetItem *findItemByName(const QString &name, const QList<SnippetItem * > &list);
     static SnippetGroup *findGroupById(int id, const QList<SnippetItem * > &list);
     void setAction( KAction* );
-    KAction* getAction();
+    KAction* getAction() const;
 
     //reimp
-    QVariant data(int column, int role);
+    QVariant data(int column, int role) const;
 signals:
     void execute( QTreeWidgetItem * );
 public slots:

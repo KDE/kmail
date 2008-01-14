@@ -36,20 +36,12 @@ SnippetItem::~SnippetItem()
   }
 }
 
-
-/*!
-    \fn SnippetItem::getName()
- */
-QString SnippetItem::getName()
+QString SnippetItem::getName() const
 {
   return strName;
 }
 
-
-/*!
-    \fn SnippetItem::getText
- */
-QString SnippetItem::getText()
+QString SnippetItem::getText() const
 {
   return strText;
 }
@@ -71,19 +63,19 @@ void SnippetItem::resetParent()
     iParent = group->getId();
 }
 
-KAction* SnippetItem::getAction()
-{   
-    return action;
+KAction* SnippetItem::getAction() const
+{
+  return action;
 }
 
 void SnippetItem::setAction(KAction * anAction)
 {
-    action = anAction;
+  action = anAction;
 }
 
 void SnippetItem::slotExecute()
 {
-    emit execute( this );
+  emit execute( this );
 }
 
 
@@ -106,7 +98,7 @@ SnippetGroup * SnippetItem::findGroupById(int id, const QList<SnippetItem *> &li
   return NULL;
 }
 
-QVariant SnippetItem::data(int column, int role)
+QVariant SnippetItem::data(int column, int role) const
 {
   if (role == Qt::ToolTipRole && column == 0) {
     //TODO also ask the view if we are supposed to show tooltips...
