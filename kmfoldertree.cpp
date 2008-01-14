@@ -710,12 +710,12 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       // it needs a folder e.g. to save it's state (open/close)
       fti = new KMFolderTreeItem( this, folder->label(), folder );
       fti->setExpandable( true );
-    } else {
-      // Check if this is an IMAP resource folder
-      if ( kmkernel->iCalIface().hideResourceFolder( folder ) )
-        // It is
-        continue;
 
+      // add child-folders
+      if (folder && folder->child()) {
+        addDirectory( folder->child(), fti );
+      }
+    } else {
       // hide local inbox if unused
       if ( kmkernel->inboxFolder() == folder && hideLocalInbox() ) {
         connect( kmkernel->inboxFolder(), SIGNAL(msgAdded(KMFolder*,quint32)), SLOT(slotUnhideLocalInbox()) );
@@ -733,20 +733,28 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
         fti->setExpandable( false );
       }
 
+      // add child-folders
+      if (folder && folder->child()) {
+        addDirectory( folder->child(), fti );
+      }
+
+      // Check if this is an IMAP resource folder or a no-content parent only
+      // containing groupware folders
+      if ( (kmkernel->iCalIface().hideResourceFolder( folder ) || folder->noContent())
+            && fti->childCount() == 0 && GlobalSettings::hideGroupwareFolders() ) {
+        // It is
+        delete fti;
+        continue;
+      }
+
       connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),
           this, SIGNAL(iconChanged(KMFolderTreeItem*)));
       connect (fti, SIGNAL(nameChanged(KMFolderTreeItem*)),
           this, SIGNAL(nameChanged(KMFolderTreeItem*)));
-
     }
     // restore last open-state
     fti->setOpen( readIsListViewItemOpen(fti) );
-
-    // add child-folders
-    if (folder && folder->child()) {
-      addDirectory( folder->child(), fti );
-    }
-   } // for-end
+  } // for-end
 }
 
 //-----------------------------------------------------------------------------
