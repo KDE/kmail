@@ -1145,8 +1145,8 @@ void KMComposeWin::setupActions( void )
   mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
   connect( mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)) );
 
-  mSnippetAction = new KToggleAction( i18n("&Snippets"), actionCollection());
-  mSnippetAction->setObjectName( "snippets" );
+  mSnippetAction = new KToggleAction( i18n("&Snippets"), this);
+  actionCollection()->addAction( "snippets", mSnippetAction );
   connect( mSnippetAction, SIGNAL(toggled(bool)), mSnippetWidget, SLOT(setShown(bool)) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
