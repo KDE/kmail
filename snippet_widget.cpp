@@ -88,7 +88,6 @@ SnippetWidget::~SnippetWidget()
 
 
 /*!
-    \fn SnippetWidget::slotAdd()
     Opens the dialog to add a snippet
  */
 void SnippetWidget::slotAdd()
@@ -148,7 +147,6 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
 }
 
 /*!
-    \fn SnippetWidget::slotAddGroup()
     Opens the didalog to add a snippet
  */
 void SnippetWidget::slotAddGroup()
@@ -157,7 +155,7 @@ void SnippetWidget::slotAddGroup()
   SnippetDlg dlg( mActionCollection, this );
   dlg.setObjectName( "SnippetDlg" );
   dlg.setGroupMode( true );
-  dlg.setCaption(i18n("Add Group"));
+  dlg.setWindowTitle( i18n("Add Group") );
 
   if (dlg.exec() == QDialog::Accepted) {
     _list.append( new SnippetGroup(this, dlg.snippetName->text(), SnippetGroup::getMaxId() ) );
@@ -166,7 +164,6 @@ void SnippetWidget::slotAddGroup()
 
 
 /*!
-    \fn SnippetWidget::slotRemove()
     Removes the selected snippet
  */
 void SnippetWidget::slotRemove()
@@ -184,7 +181,6 @@ void SnippetWidget::slotRemove()
         == KMessageBox::Cancel)
       return;
 
-    SnippetItem *it=_list.first();
     for ( int i = 0; i < _list.size(); i++ ) {
       if (_list[i]->getParent() == group->getId()) {
         //kDebug(5006) << "remove " << _list[i]->getName();
@@ -202,13 +198,12 @@ void SnippetWidget::slotRemove()
 
 
 /*!
-    \fn SnippetWidget::slotEdit()
     Opens the dialog of editing the selected snippet
  */
 void SnippetWidget::slotEdit( QTreeWidgetItem* item )
 {
   if( item == 0 ) {
-	item = currentItem();
+    item = currentItem();
   }
 
   SnippetGroup *pGroup = dynamic_cast<SnippetGroup*>(item);
@@ -224,7 +219,7 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
   dlg.keyWidget->setKeySequence( pSnippet->getAction()->shortcut().primary() );
   dlg.btnAdd->setText(i18n("&Apply"));
 
-  dlg.setCaption(i18n("Edit Snippet"));
+  dlg.setWindowTitle(i18n("Edit Snippet"));
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach (SnippetItem *item, _list) {
     if (dynamic_cast<SnippetGroup*>(item)) {
@@ -237,7 +232,7 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
     //update the QListView and the SnippetItem
     item->setText( 0, dlg.snippetName->text() );
     pSnippet->setName( dlg.snippetName->text() );
-    pSnippet->setText( dlg.snippetText->text() );
+    pSnippet->setText( dlg.snippetText->toPlainText() );
     pSnippet->getAction()->setShortcut( dlg.keyWidget->keySequence());
 
     /* if the user changed the parent we need to move the snippet */
@@ -253,7 +248,6 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
 }
 
 /*!
-    \fn SnippetWidget::slotEditGroup()
     Opens the dialog of editing the selected snippet-group
  */
 void SnippetWidget::slotEditGroup()
@@ -271,7 +265,7 @@ void SnippetWidget::slotEditGroup()
   dlg.setGroupMode( true );
   dlg.snippetName->setText(pGroup->getName());
   dlg.btnAdd->setText(i18n("&Apply"));
-  dlg.setCaption(i18n("Edit Group"));
+  dlg.setWindowTitle(i18n("Edit Group"));
 
   if (dlg.exec() == QDialog::Accepted) {
     //update the QListView and the SnippetGroup
@@ -298,7 +292,6 @@ void SnippetWidget::slotExecuted(QTreeWidgetItem * item)
 
 
 /*!
-    \fn SnippetWidget::insertIntoActiveView(QString text)
     Inserts the parameter text into the active view
  */
 void SnippetWidget::insertIntoActiveView( const QString &text )
@@ -308,7 +301,6 @@ void SnippetWidget::insertIntoActiveView( const QString &text )
 
 
 /*!
-    \fn SnippetWidget::writeConfig()
     Write the config file
  */
 void SnippetWidget::writeConfig()
@@ -365,13 +357,13 @@ void SnippetWidget::writeConfig()
   int iCount = 1;
   QMap<QString, QString>::Iterator it;
   for ( it = _mapSaved.begin(); it != _mapSaved.end(); ++it ) {  //write the saved variable values
-    if (it.data().length()<=0) continue;  //is the saved value has no length -> no need to save it
+    if (it.value().length()<=0) continue;  //is the saved value has no length -> no need to save it
 
     strKeyName=QString("snippetSavedName_%1").arg(iCount);
     strKeyText=QString("snippetSavedVal_%1").arg(iCount);
 
     kcg.writeEntry(strKeyName, it.key());
-    kcg.writeEntry(strKeyText, it.data());
+    kcg.writeEntry(strKeyText, it.value());
 
     iCount++;
   }
@@ -390,7 +382,6 @@ void SnippetWidget::writeConfig()
 }
 
 /*!
-    \fn SnippetWidget::initConfig()
     Initial read the config file
  */
 void SnippetWidget::initConfig()
@@ -491,8 +482,7 @@ void SnippetWidget::initConfig()
 
 
 /*!
-    \fn SnippetWidget::contextMenuEvent( QContextMenuEvent *e )
-    Shows the Popup-Menu if there is an item where the event occurred
+ * Shows the Popup-Menu if there is an item where the event occurred
 */
 void SnippetWidget::contextMenuEvent( QContextMenuEvent *e )
 {
@@ -504,10 +494,13 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *e )
         if (dynamic_cast<SnippetGroup*>(item)) {
             popup.addAction( i18n("Edit &group..."), this, SLOT( slotEditGroup() ) );
         } else {
-            popup.addAction( SmallIconSet("editpaste"), i18n("&Paste"), this, SLOT( slotExecuted() ) );
-            popup.addAction( SmallIconSet("edit"), i18n("&Edit..."), this, SLOT( slotEdit() ) );
+            popup.addAction( KIcon("edit-paste"), i18n("&Paste"),
+                             this, SLOT( slotExecuted() ) );
+            popup.addAction( KIcon("document-properties"), i18n("&Edit..."),
+                             this, SLOT( slotEdit() ) );
         }
-        popup.addAction( SmallIconSet("editdelete"), i18n("&Remove"), this, SLOT( slotRemove() ) );
+        popup.addAction( KIcon("edit-delete"), i18n("&Remove"),
+                         this, SLOT( slotRemove() ) );
         popup.addSeparator();
     } else {
         popup.addTitle(i18n("Text Snippets"));
@@ -538,9 +531,9 @@ QString SnippetWidget::parseText(const QString &text, const QString &del)
   QRect rMulti = _SnippetConfig.getMultiRect();
 
   do {
-    iFound = text.find(QRegExp("\\"+del+"[A-Za-z-_0-9\\s]*\\"+del), iEnd+1);  //find the next variable by this QRegExp
+    iFound = text.indexOf(QRegExp("\\"+del+"[A-Za-z-_0-9\\s]*\\"+del), iEnd+1);  //find the next variable by this QRegExp
     if (iFound >= 0) {
-      iEnd = text.find(del, iFound+1)+1;
+      iEnd = text.indexOf(del, iFound+1)+1;
       strName = text.mid(iFound, iEnd-iFound);
 
       if ( strName != del+del  ) {  //if not doubel-delimiter
@@ -576,7 +569,7 @@ QString SnippetWidget::parseText(const QString &text, const QString &del)
     if (showMultiVarDialog( &mapVar, &_mapSaved, w, bh, oh )) {  //generate and show the dialog
       QMap<QString, QString>::Iterator it;
       for ( it = mapVar.begin(); it != mapVar.end(); ++it ) {  //walk through the map and do the replacement
-        str.replace(it.key(), it.data());
+        str.replace(it.key(), it.value());
       }
     } else {
       return QString();
@@ -610,7 +603,8 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
 
   //if only var is the double-delimiter -> no need to show
   QMap<QString, QString>::Iterator it = map->begin();
-  if ( map->count() == 1 && it.data()==_SnippetConfig.getDelimiter()+_SnippetConfig.getDelimiter() )
+  if ( map->count() == 1 &&
+       it.value() == _SnippetConfig.getDelimiter() + _SnippetConfig.getDelimiter() )
     return true;
 
   QMap<QString, KTextEdit *> mapVar2Te;  //this map will help keeping track which TEXTEDIT goes with which variable
@@ -618,18 +612,23 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
 
   // --BEGIN-- building a dynamic dialog
   QDialog dlg(this);
-  dlg.setCaption(i18n("Enter Values for Variables"));
+  dlg.setWindowTitle(i18n("Enter Values for Variables"));
 
-  QGridLayout * layout = new QGridLayout( &dlg, 1, 1, 11, 6, "layout");
-  QGridLayout * layoutTop = new QGridLayout( 0, 1, 1, 0, 6, "layoutTop");
-  QGridLayout * layoutVar = new QGridLayout( 0, 1, 1, 0, 6, "layoutVar");
-  QGridLayout * layoutBtn = new QGridLayout( 0, 1, 1, 0, 6, "layoutBtn");
+  QGridLayout * layout = new QGridLayout( &dlg, 1, 1, 11, 6 );
+  QGridLayout * layoutTop = new QGridLayout( 0, 1, 1, 0, 6 );
+  QGridLayout * layoutVar = new QGridLayout( 0, 1, 1, 0, 6 );
+  QGridLayout * layoutBtn = new QGridLayout( 0, 1, 1, 0, 6 );
+  layout->setObjectName( "layout" );
+  layoutTop->setObjectName( "layoutTop" );
+  layoutTop->setObjectName( "layoutVar" );
+  layoutBtn->setObjectName( "layoutBtn" );
 
   KTextEdit *te = NULL;
   QLabel * labTop = NULL;
   QCheckBox * cb = NULL;
 
-  labTop = new QLabel( &dlg, "label" );
+  labTop = new QLabel( &dlg );
+  labTop->setObjectName( "label" );
   labTop->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)0, 0, 0,
                          labTop->sizePolicy().hasHeightForWidth() ) );
   labTop->setText(i18n("Enter the replacement values for these variables:"));
@@ -642,7 +641,8 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
     if (it.key() == _SnippetConfig.getDelimiter() + _SnippetConfig.getDelimiter())
       continue;
 
-    cb = new QCheckBox( &dlg, "cbVar" );
+    cb = new QCheckBox( &dlg );
+    cb->setObjectName( "cbVar" ); 
     cb->setChecked( FALSE );
     cb->setText(it.key());
     layoutVar->addWidget( cb, i ,0, Qt::AlignTop );
@@ -659,10 +659,10 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
     mapVar2Te[it.key()] = te;
     mapVar2Cb[it.key()] = cb;
 
-    QToolTip::add( cb, i18n("Enable this to save the value entered to the right as the default value for this variable") );
-    QWhatsThis::add( cb, i18n("If you enable this option, the value entered to the right will be saved. "
-                              "If you use the same variable later, even in another snippet, the value entered to the right "
-			      "will be the default value for that variable.") );
+    cb->setToolTip( i18n("Enable this to save the value entered to the right as the default value for this variable") );
+    cb->setWhatsThis( i18n("If you enable this option, the value entered to the right will be saved. "
+                           "If you use the same variable later, even in another snippet, the value entered to the right "
+                            "will be the default value for that variable.") );
 
     i++;
   }
@@ -704,12 +704,15 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
     for ( it2 = mapVar2Te.begin(); it2 != mapVar2Te.end(); ++it2 ) {
       if (it2.key() == _SnippetConfig.getDelimiter() + _SnippetConfig.getDelimiter())
         continue;
-      (*map)[it2.key()] = it2.data()->text();    //copy the entered values back to the given map
 
-      if (mapVar2Cb[it2.key()]->isChecked())     //if the checkbox is on; save the values for later
-        (*mapSave)[it2.key()] = it2.data()->text();
+      //copy the entered values back to the given map
+      (*map)[it2.key()] = it2.value()->toPlainText();    
+
+      //if the checkbox is on; save the values for later
+      if (mapVar2Cb[it2.key()]->isChecked())
+        (*mapSave)[it2.key()] = it2.value()->toPlainText();
       else
-        (*mapSave).erase(it2.key());
+        (*mapSave).remove(it2.key());
     }
     bReturn = true;
 
@@ -721,11 +724,11 @@ bool SnippetWidget::showMultiVarDialog(QMap<QString, QString> * map, QMap<QStrin
   //do some cleanup
   QMap<QString, KTextEdit *>::Iterator it1;
   for (it1 = mapVar2Te.begin(); it1 != mapVar2Te.end(); ++it1)
-    delete it1.data();
+    delete it1.value();
   mapVar2Te.clear();
   QMap<QString, QCheckBox *>::Iterator it2;
   for (it2 = mapVar2Cb.begin(); it2 != mapVar2Cb.end(); ++it2)
-    delete it2.data();
+    delete it2.value();
   mapVar2Cb.clear();
   delete layoutTop;
   delete layoutVar;
@@ -749,24 +752,30 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
 {
   // --BEGIN-- building a dynamic dialog
   QDialog dlg(this);
-  dlg.setCaption(i18n("Enter Values for Variables"));
+  dlg.setWindowTitle(i18n("Enter Values for Variables"));
 
-  QGridLayout * layout = new QGridLayout( &dlg, 1, 1, 11, 6, "layout");
-  QGridLayout * layoutTop = new QGridLayout( 0, 1, 1, 0, 6, "layoutTop");
-  QGridLayout * layoutVar = new QGridLayout( 0, 1, 1, 0, 6, "layoutVar");
-  QGridLayout * layoutBtn = new QGridLayout( 0, 2, 1, 0, 6, "layoutBtn");
+  QGridLayout * layout = new QGridLayout( &dlg, 1, 1, 11, 6 );
+  QGridLayout * layoutTop = new QGridLayout( 0, 1, 1, 0, 6 );
+  QGridLayout * layoutVar = new QGridLayout( 0, 1, 1, 0, 6 );
+  QGridLayout * layoutBtn = new QGridLayout( 0, 2, 1, 0, 6 );
+  layout->setObjectName( "layout" );
+  layoutTop->setObjectName( "layoutTop" );
+  layoutVar->setObjectName( "layoutVar" );
+  layoutBtn->setObjectName( "layoutBtn" );
 
   KTextEdit *te = NULL;
   QLabel * labTop = NULL;
   QCheckBox * cb = NULL;
 
-  labTop = new QLabel( &dlg, "label" );
+  labTop = new QLabel( &dlg );
+  labTop->setObjectName( "label" );
   layoutTop->addWidget(labTop, 0, 0);
   labTop->setText( i18n("Enter the replacement values for %1:", var) );
   layout->addMultiCellLayout( layoutTop, 0, 0, 0, 1 );
 
 
-  cb = new QCheckBox( &dlg, "cbVar" );
+  cb = new QCheckBox( &dlg );
+  cb->setObjectName( "cbVar" );
   cb->setChecked( FALSE );
   cb->setText(i18n( "Make value &default" ));
 
@@ -779,10 +788,10 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
     te->setText((*mapSave)[var]);
   }
 
-  QToolTip::add( cb, i18n("Enable this to save the value entered to the right as the default value for this variable") );
-  QWhatsThis::add( cb, i18n("If you enable this option, the value entered to the right will be saved. "
-                            "If you use the same variable later, even in another snippet, the value entered to the right "
-                            "will be the default value for that variable.") );
+  cb->setToolTip( i18n("Enable this to save the value entered to the right as the default value for this variable") );
+  cb->setWhatsThis( i18n("If you enable this option, the value entered to the right will be saved. "
+                         "If you use the same variable later, even in another snippet, the value entered to the right "
+                         "will be the default value for that variable.") );
 
   layout->addMultiCellLayout( layoutVar, 1, 1, 0, 1 );
 
@@ -809,11 +818,11 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
     dlg.setGeometry(dlgSize);
   if ( dlg.exec() == QDialog::Accepted ) {
     if (cb->isChecked())     //if the checkbox is on; save the values for later
-      (*mapSave)[var] = te->text();
+      (*mapSave)[var] = te->toPlainText();
     else
-      (*mapSave).erase(var);
+      (*mapSave).remove(var);
 
-    strReturn = te->text();    //copy the entered values back the the given map
+    strReturn = te->toPlainText();    //copy the entered values back the the given map
 
     dlgSize = dlg.geometry();
   }
@@ -906,7 +915,8 @@ bool SnippetWidget::dropMimeData( QTreeWidgetItem *parent, int index,
   if (dlg.exec() == QDialog::Accepted) {
     /* get the group that the user selected with the combobox */
     group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
-    _list.append( makeItem( group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.keyWidget->keySequence() ) );
+    _list.append( makeItem( group, dlg.snippetName->text(),
+                  dlg.snippetText->toPlainText(), dlg.keyWidget->keySequence() ) );
     return true;
   }
   return false;

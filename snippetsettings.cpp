@@ -16,6 +16,7 @@
 
 
 SnippetSettings::SnippetSettings( QWidget *parent, QString name )
+  : QWidget( parent )
 {
   setObjectName( name );
   setupUi( this );
@@ -23,6 +24,7 @@ SnippetSettings::SnippetSettings( QWidget *parent, QString name )
 }
 
 SnippetSettings::SnippetSettings( SnippetWidget *w, QWidget *parent, QString name )
+  : QWidget( parent )
 {
   setObjectName( name );
   setupUi( this );
@@ -35,10 +37,6 @@ SnippetSettings::~SnippetSettings()
 {
 }
 
-
-/*!
-    \fn SnippetSettings::slotOKClicked()
- */
 void SnippetSettings::slotOKClicked()
 {
     _cfg->setToolTips(cbToolTip->isChecked());
