@@ -83,6 +83,7 @@ set(kmailprivate_LIB_SRCS
    kmsender.cpp
    kmacctseldlg.cpp
    kmfiltermgr.cpp
+   filterimporterexporter.cpp
    kmsearchpatternedit.cpp
    kmfilteraction.cpp
    kmsearchpattern.cpp

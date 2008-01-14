@@ -9,6 +9,8 @@
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
+#include "filterimporterexporter.h"
+using KMail::FilterImporterExporter;
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
@@ -62,75 +64,28 @@ void KMFilterMgr::clear()
 void KMFilterMgr::readConfig(void)
 {
   KConfig* config = KMKernel::config();
-  int numFilters;
-  QString grpName;
-
   clear();
-
-  KConfigGroup group(config, "General");
-
+  
   if (bPopFilter) {
-    numFilters = group.readEntry( "popfilters", 0 );
+    KConfigGroup group = config->group( "General" );
     mShowLater = group.readEntry( "popshowDLmsgs", 0 );
-  } else {
-    numFilters = group.readEntry( "filters", 0 );
-  }
-
-  for ( int i=0 ; i < numFilters ; ++i ) {
-    grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
-    KConfigGroup group(config, grpName);
-    KMFilter * filter = new KMFilter(group, bPopFilter);
-    filter->purify();
-    if ( filter->isEmpty() ) {
-#ifndef NDEBUG
-      kDebug(5006) <<"KMFilter::readConfig: filter" << filter->asString()
-                    << "is empty!";
-#endif
-      delete filter;
-    } else
-      mFilters.append(filter);
-  }
+  } 
+  mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
   KConfig* config = KMKernel::config();
 
-  // first, delete all groups:
-  QStringList filterGroups =
-    config->groupList().filter( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
-  for ( QStringList::Iterator it = filterGroups.begin() ;
-        it != filterGroups.end() ; ++it )
-    config->deleteGroup( *it );
+  // Now, write out the new stuff:  
+  FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );
+  KConfigGroup group = config->group( "General" );
+  if (bPopFilter)
+      group.writeEntry("popshowDLmsgs", mShowLater);
 
-  // Now, write out the new stuff:
-  int i = 0;
-  QString grpName;
-  for ( QList<KMFilter*>::const_iterator it = mFilters.begin() ;
-        it != mFilters.end() ; ++it ) {
-    if ( !(*it)->isEmpty() ) {
-      if ( bPopFilter )
-        grpName.sprintf("PopFilter #%d", i);
-      else
-        grpName.sprintf("Filter #%d", i);
-      KConfigGroup group(config, grpName);
-      (*it)->writeConfig( group );
-      ++i;
-    }
-  }
-
-  KConfigGroup group(config, "General");
-  if (bPopFilter) {
-    group.writeEntry("popfilters", i);
-    group.writeEntry("popshowDLmsgs", mShowLater);
-  } else
-    group.writeEntry("filters", i);
-
-  if (withSync) config->sync();
+  if (withSync) group.sync();
 }
-
 
 int KMFilterMgr::processPop( KMMessage * msg ) const {
   for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
@@ -512,8 +467,11 @@ void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
 
 void KMFilterMgr::setFilters( const QList<KMFilter*> &filters )
 {
+  beginUpdate();
   clear();
   mFilters = filters;
+  writeConfig( true );
+  endUpdate();
 }
 
 void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )

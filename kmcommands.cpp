@@ -3102,23 +3102,6 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
            this, SLOT(slotAtmDecryptWithChiasmusResult(const GpgME::Error&,const QVariant&)) );
 }
 
-// return true if we should proceed, false if we should abort
-static bool checkOverwrite( const KUrl& url, bool& overwrite, QWidget* w )
-{
-  if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide /*dest*/, w ) ) {
-    if ( KMessageBox::Cancel ==
-         KMessageBox::warningContinueCancel(
-                                            w,
-                                            i18n( "A file named \"%1\" already exists. "
-                                                  "Are you sure you want to overwrite it?", url.prettyUrl() ),
-                                            i18n( "Overwrite File?" ),
-                                            KGuiItem(i18n( "&Overwrite" )) ) )
-      return false;
-    overwrite = true;
-  }
-  return true;
-}
-
 static const QString chomp( const QString & base, const QString & suffix, bool cs ) {
   return base.endsWith( suffix, cs?(Qt::CaseSensitive):(Qt::CaseInsensitive) ) ? base.left( base.length() - suffix.length() ) : base ;
 }
@@ -3152,8 +3135,8 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   if ( url.isEmpty() )
     return;
 
-  bool overwrite = false;
-  if ( !checkOverwrite( url, overwrite, parentWidget() ) )
+  bool overwrite = KMail::Util::checkOverwrite( url, parentWidget() );
+  if ( !overwrite )
     return;
 
   d.setDisabled( true ); // we got this far, don't delete yet

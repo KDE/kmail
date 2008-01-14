@@ -8,13 +8,15 @@ include_directories( ${CMAKE_SOURCE_DIR}/mimelib ${CMAKE_SOURCE_DIR}/kmail  )
 
 set(utiltests_SRCS utiltests.cpp ../util.cpp )
 kde4_add_unit_test(utiltests TESTNAME kmail-utiltests ${utiltests_SRCS})
-target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY})
+target_link_libraries(utiltests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
+                      ${KDE4_KIO_LIBS})
 
 ########### mimelibtests ###############
 
 set(mimelibtests_SRCS mimelibtests.cpp ../util.cpp )
 kde4_add_unit_test(mimelibtests TESTNAME kmail-mimelibtests ${mimelibtests_SRCS})
-target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY})
+target_link_libraries(mimelibtests mimelib ${QT_QTTEST_LIBRARY} ${QT_QTCORE_LIBRARY}
+                      ${KDE4_KIO_LIBS})
 
 ########### next target ###############
 set(dbustest_SRCS dbustest.cpp )

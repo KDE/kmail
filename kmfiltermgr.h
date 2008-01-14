@@ -45,7 +45,7 @@ public:
 
   /** Store filter rules in config file. */
   void writeConfig(bool withSync=true);
-
+  
   /** Open an edit dialog. If checkForEmptyFilterList is true, an empty filter
       is created to improve the visibility of the dialog in case no filter
       has been defined so far. */
