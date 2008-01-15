@@ -1496,7 +1496,7 @@ void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
   if ( !msg ) return;
 
   const KPIM::MessageStatus oldStatus = msg->status();
-  if ( (flags & 1) && oldStatus.isOld() )
+  if ( (flags & 1) && !oldStatus.isOld() )
     msg->status().setOld();
 
   // In case the message does not have the seen flag set, override our local
