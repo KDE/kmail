@@ -709,6 +709,7 @@ class KMComposeWin : public KMail::Composer
     QList<KMMessagePart*> mAtmList;
     QMenu *mAttachMenu;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId, *mEditAction, *mEditWithAction;
+    QAction *mCleanSpace;
     bool mAutoDeleteMsg;
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;

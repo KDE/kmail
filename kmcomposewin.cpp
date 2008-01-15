@@ -1121,9 +1121,9 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "tools_unquote", mRemQuoteChars );
   connect (mRemQuoteChars, SIGNAL(triggered(bool) ),mEditor, SLOT(slotRemoveQuotes()) );
 
-  action = new KAction( i18n("Cl&ean Spaces"), this );
-  actionCollection()->addAction( "clean_spaces", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotCleanSpace()) );
+  mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
+  actionCollection()->addAction( "clean_spaces", mCleanSpace );
+  connect( mCleanSpace, SIGNAL(triggered(bool) ), SLOT(slotCleanSpace()) );
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
   actionCollection()->addAction( "toggle_fixedfont", mFixedFontAction );
@@ -3890,6 +3890,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       //mEditor->deleteAutoSpellChecking();
       mAutoSpellCheckingAction->setChecked( false );
       slotAutoSpellCheckingToggled( false );
+      mCleanSpace->setEnabled(false);
     }
   } else { // markup is to be turned off
     kDebug(5006) <<" user wants textmode";
@@ -3903,6 +3904,7 @@ void KMComposeWin::toggleMarkup( bool markup )
       mEditor->moveCursor( QTextCursor::Start, QTextCursor::MoveAnchor ); // deselect
       // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
+      mCleanSpace->setEnabled(true);
     }
   }
 }
