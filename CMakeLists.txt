@@ -15,6 +15,10 @@ add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
 qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
 
+add_custom_target(kmail_xml ALL
+                  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
+                  COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it." )
+
 add_subdirectory( interfaces )
 add_subdirectory( about )
 add_subdirectory( pics )
