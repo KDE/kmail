@@ -1,13 +1,13 @@
 /*
- *  File : snippet_widget.h
+ *  File : snippetwidget.h
  *
  *  Author: Robert Gruber <rgruber@users.sourceforge.net>
  *
  *  Copyright: See COPYING file that comes with this distribution
  */
 
-#ifndef __SNIPPET_WIDGET_H__
-#define __SNIPPET_WIDGET_H__
+#ifndef __SNIPPETWIDGET_H__
+#define __SNIPPETWIDGET_H__
 
 #include <qstring.h>
 #include <QTreeWidget>

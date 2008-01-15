@@ -1,5 +1,5 @@
 /*
- *  File : snippet_widget.cpp
+ *  File : snippetwidget.cpp
  *
  *  Author: Robert Gruber <rgruber@users.sourceforge.net>
  *
@@ -33,7 +33,7 @@
 #include <kkeysequencewidget.h>
 
 #include "snippetitem.h"
-#include "snippet_widget.h"
+#include "snippetwidget.h"
 #include "snippetdlg.h"
 
 #include <cassert>
@@ -937,4 +937,4 @@ void SnippetWidget::slotExecute()
     slotExecuted(currentItem());
 }
 
-#include "snippet_widget.moc"
+#include "snippetwidget.moc"
