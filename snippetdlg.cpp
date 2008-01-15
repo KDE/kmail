@@ -25,8 +25,7 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
     setupUi( this );
     setModal( modal );
 
-    connect( keyWidget, SIGNAL( capturedKeySequence( const QKeySequence& ) ),
-             this, SLOT( slotCapturedShortcut( const QKeySequence& ) ) );
+    keyWidget->setCheckActionList( ac->actions() );
 
     //TODO tab order in designer!
     setTabOrder( snippetText, keyWidget );
@@ -40,31 +39,6 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
 SnippetDlg::~SnippetDlg()
 {
     // no need to delete child widgets, Qt does it all for us
-}
-
-static bool shortcutIsValid( const KActionCollection *actionCollection,
-                             const QKeySequence &ks )
-{
-  foreach ( QAction *const a, actionCollection->actions() ) {
-    foreach ( const QKeySequence &other, a->shortcuts() ) {
-      if ( ks == other )
-        return false;
-    }
-  }
-  return true;
-}
-
-void SnippetDlg::slotCapturedShortcut( const QKeySequence &ks )
-{
-
-  if ( ks == keyWidget->keySequence() )
-    return;
-  if ( !ks.isEmpty() && !shortcutIsValid( actionCollection, ks ) ) {
-    QString msg( i18n( "The selected shortcut is already used, "
-                       "please select a different one." ) );
-    KMessageBox::sorry( this, msg );
-    keyWidget->setKeySequence( QKeySequence() );
-  }
 }
 
 void SnippetDlg::setGroupMode( bool groupMode )

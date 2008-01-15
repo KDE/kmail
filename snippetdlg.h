@@ -23,9 +23,6 @@ public:
     void setGroupMode( bool groupMode );
 
     KActionCollection* actionCollection;
-
-private slots:
-    void slotCapturedShortcut( const QKeySequence &ks );  
 };
 
 #endif // SNIPPETDLG_H

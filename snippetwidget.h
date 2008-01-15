@@ -15,7 +15,6 @@
 
 #include <libkdepim/kmeditor.h>
 #include <ktexteditor/view.h>
-#include "snippetconfig.h"
 
 class QPushButton;
 class QTreeWidgetItem;
@@ -43,10 +42,9 @@ public:
     ~SnippetWidget();
     QList<SnippetItem * > * getList() { return (&_list); }
     void writeConfig();
-    SnippetConfig *  getSnippetConfig() { return (&_SnippetConfig); }
 
 private slots:
-    void initConfig();
+    void readConfig();
 
 protected:
     bool acceptDrag(QDropEvent *event) const;
@@ -56,10 +54,8 @@ protected:
     void contextMenuEvent( QContextMenuEvent *e );
 private:
     void insertIntoActiveView( const QString &text );
-    QString parseText(const QString &text, const QString &del="$");
-    bool showMultiVarDialog(QMap<QString, QString> * map, QMap<QString, QString> * mapSave,
-                            int & iWidth, int & iBasicHeight, int & iOneHeight);
-    QString showSingleVarDialog(QString var, QMap<QString, QString> * mapSave, QRect & dlgSize);
+    QString parseText( const QString &text );
+    QString showSingleVarDialog( QString var, QMap<QString, QString> * mapSave );
     QTreeWidgetItem *selectedItem() const;
     SnippetItem* makeItem( SnippetItem *parent, const QString &name,
                            const QString &text, const QKeySequence &keySeq );
@@ -69,7 +65,6 @@ private:
     KMeditor *mEditor;
     KActionCollection* mActionCollection;
     KConfig * _cfg;
-    SnippetConfig _SnippetConfig;
 
 public slots:
     void slotRemove();

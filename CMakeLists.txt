@@ -61,7 +61,6 @@ set(kmailprivate_LIB_SRCS
    kmcomposewin.cpp
    snippetdlg.cpp
    snippetwidget.cpp
-   snippetconfig.cpp
    snippetitem.cpp
    kmfolder.cpp
    kmmsgpartdlg.cpp
