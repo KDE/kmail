@@ -743,6 +743,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       if ( (kmkernel->iCalIface().hideResourceFolder( folder ) || folder->noContent())
             && fti->childCount() == 0 && GlobalSettings::hideGroupwareFolders() ) {
         // It is
+        removeFromFolderToItemMap( folder );
         delete fti;
         continue;
       }
