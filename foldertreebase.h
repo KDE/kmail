@@ -30,7 +30,7 @@ class FolderTreeBase : public KPIM::KFolderTree
 {
   Q_OBJECT
   public:
-    FolderTreeBase( KMMainWidget *mainWidget, QWidget *parent = 0, const char *name = 0 );
+    explicit FolderTreeBase( KMMainWidget *mainWidget, QWidget *parent = 0, const char *name = 0 );
 
     /** Returns the main widget that this widget is a child of. */
     KMMainWidget* mainWidget() const { return mMainWidget; }

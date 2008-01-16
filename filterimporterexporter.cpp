@@ -50,7 +50,7 @@ public:
             item->setCheckState( Qt::Checked );
         }
     }
-    
+
     QList<KMFilter *> selectedFilters() const
     {
         QList<KMFilter *> filters;
@@ -75,7 +75,7 @@ QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config
       numFilters = group.readEntry( "popfilters", 0 );
     else
       numFilters = group.readEntry( "filters", 0 );
-    
+
     QList<KMFilter *> filters;
     for ( int i=0 ; i < numFilters ; ++i ) {
       QString grpName;
@@ -95,7 +95,7 @@ QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KConfig *config
     return filters;
 }
 
-/* static */ 
+/* static */
 void FilterImporterExporter::writeFiltersToConfig( const QList<KMFilter *> &filters, KConfig *config, bool bPopFilter )
 {
     // first, delete all groups:
@@ -103,7 +103,7 @@ void FilterImporterExporter::writeFiltersToConfig( const QList<KMFilter *> &filt
       config->groupList().grep( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
     foreach ( const QString &s, filterGroups )
       config->deleteGroup( s );
-    
+
     int i = 0;
     for ( QList<KMFilter*>::ConstIterator it = filters.constBegin() ;
           it != filters.constEnd() ; ++it ) {
@@ -140,10 +140,10 @@ FilterImporterExporter::~FilterImporterExporter()
 
 QList<KMFilter *> FilterImporterExporter::importFilters()
 {
-    QString fileName = KFileDialog::getOpenFileName( QDir::homePath(), QString::null, mParent, i18n("Import Filters") );
-    if ( fileName.isEmpty() ) 
+    QString fileName = KFileDialog::getOpenFileName( QDir::homePath(), QString(), mParent, i18n("Import Filters") );
+    if ( fileName.isEmpty() )
         return QList<KMFilter *>(); // cancel
-    
+
     { // scoping
         QFile f( fileName );
         if ( !f.open( IO_ReadOnly ) ) {

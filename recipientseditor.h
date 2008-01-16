@@ -46,7 +46,7 @@ class Recipient
 
     enum Type { To, Cc, Bcc, Undefined };
 
-    Recipient( const QString &email = QString(), Type type = To );
+    Recipient( const QString &email = QString(), Type type = To ); //krazy:exclude=explicit
 
     void setType( Type );
     Type type() const;

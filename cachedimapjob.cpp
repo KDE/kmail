@@ -567,7 +567,7 @@ void CachedImapJob::slotAddNextSubfolder( KJob * job )
   if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareKolab ) {
     // Associate the jobData with the parent folder, not with the child
     // This is necessary in case of an error while creating the subfolder,
-    // so that folderComplete is called on the parent (and the sync resetted).
+    // so that folderComplete is called on the parent (and the sync is reset).
     ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
     jd.items << folder->label(); // for the err msg
     KIO::SimpleJob *simpleJob = KIO::mkdir(url);

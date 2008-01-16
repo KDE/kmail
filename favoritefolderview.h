@@ -50,13 +50,13 @@ class FavoriteFolderView : public FolderTreeBase
   Q_OBJECT
 
   public:
-    FavoriteFolderView( KMMainWidget *mainWidget, QWidget *parent = 0 );
+    explicit FavoriteFolderView( KMMainWidget *mainWidget, QWidget *parent = 0 );
     ~FavoriteFolderView();
 
     void readConfig();
     void writeConfig();
 
-    KMFolderTreeItem* addFolder( KMFolder *folder, const QString &name = QString::null,
+    KMFolderTreeItem* addFolder( KMFolder *folder, const QString &name = QString(),
                                  Q3ListViewItem *after = 0 );
 
   public slots:

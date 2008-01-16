@@ -554,7 +554,7 @@
 
      <entry name="AlwaysDecrypt" type="Bool">
       <default>false</default>
-      <label>Always decrypt messages when viewing or ask befor decrypting</label>
+      <label>Always decrypt messages when viewing or ask before decrypting</label>
      </entry>
     </group>
 

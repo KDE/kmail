@@ -20,7 +20,7 @@
 
 /**
  * This file contains helper classes for Scalix groupware support.
- * As the storage system of Scalix is quite similiar to Kolab we reuse some of
+ * As the storage system of Scalix is quite similar to Kolab we reuse some of
  * the exsiting code and replace other code by our own.
  *
  * Differences between Kolab and Scalix:

@@ -1629,7 +1629,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %1 selected messages?<br />"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-              msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"), 
+              msgList.count()>1 ? i18n("Delete Messages") : i18n("Delete Message"),
               KStandardGuiItem::del(), KStandardGuiItem::cancel(),
               "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
@@ -2454,7 +2454,7 @@ void KMHeaders::slotRMB()
   if (!topLevelWidget()) return; // safe bet
   mOwner->updateMessageActions();
 
-  // check if the user clicked into a status column and only show the respective menues
+  // check if the user clicked into a status column and only show the respective menus
   Q3ListViewItem *item = itemAt( viewport()->mapFromGlobal( QCursor::pos() ) );
   if ( item ) {
     int section = header()->sectionAt( viewportToContents( viewport()->mapFromGlobal( QCursor::pos() ) ).x() );

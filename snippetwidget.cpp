@@ -148,7 +148,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
 }
 
 /*!
-    Opens the didalog to add a snippet
+    Opens the dialog to add a snippet
  */
 void SnippetWidget::slotAddGroup()
 {
@@ -178,7 +178,7 @@ void SnippetWidget::slotRemove()
 
   if (group) {
     if (group->childCount() > 0 &&
-        KMessageBox::warningContinueCancel(this, i18n("Do you really want to remove this group and all its snippets?"),QString::null, KStandardGuiItem::del())
+        KMessageBox::warningContinueCancel(this, i18n("Do you really want to remove this group and all its snippets?"),QString(), KStandardGuiItem::del())
         == KMessageBox::Cancel)
       return;
 
@@ -310,7 +310,7 @@ void SnippetWidget::writeConfig()
 {
   if( !_cfg )
     return;
-  _cfg->deleteGroup("SnippetPart");  //this is neccessary otherwise delete entries will stay in list until
+  _cfg->deleteGroup("SnippetPart");  //this is necessary otherwise delete entries will stay in list until
                                      //they get overwritten by a more recent entry
   KConfigGroup kcg = _cfg->group("SnippetPart");
 
@@ -400,14 +400,14 @@ void SnippetWidget::readConfig()
     strKeyName=QString("snippetGroupName_%1").arg(i);
     strKeyId=QString("snippetGroupId_%1").arg(i);
 
-    QString strNameVal="";
+    QString strNameVal;
     int iIdVal=-1;
 
     strNameVal = kcg.readEntry(strKeyName, "");
     iIdVal = kcg.readEntry(strKeyId, -1);
     //kDebug(5006) << "Read group "  << " " << iIdVal;
 
-    if (strNameVal != "" && iIdVal != -1) {
+    if ( !strNameVal.isEmpty() && iIdVal != -1 ) {
       group = new SnippetGroup(this, strNameVal, iIdVal);
       //kDebug(5006) << "Created group " << group->getName() << " " << group->getId();
       _list.append(group);
@@ -427,8 +427,8 @@ void SnippetWidget::readConfig()
         strKeyText=QString("snippetText_%1").arg(i);
         strKeyId=QString("snippetParent_%1").arg(i);
 
-        QString strNameVal="";
-        QString strTextVal="";
+        QString strNameVal;
+        QString strTextVal;
         int iParentVal = -1;
 
         strNameVal = kcg.readEntry(strKeyName, "");
@@ -436,7 +436,7 @@ void SnippetWidget::readConfig()
         iParentVal = kcg.readEntry(strKeyId, -1);
         //kDebug(5006) << "Read item " << strNameVal << " " << iParentVal;
 
-        if (strNameVal != "" && strTextVal != "" && iParentVal != -1) {
+        if ( !strNameVal.isEmpty() && !strTextVal.isEmpty() && iParentVal != -1) {
             KShortcut shortcut( kcg.readEntry( QString("snippetShortcut_%1").arg(i), QString() ) );
             item = makeItem( SnippetItem::findGroupById( iParentVal, _list ), strNameVal, strTextVal, shortcut.primary() );
             //kDebug(5006) << "Created item " << item->getName() << " " << item->getParent();
@@ -542,7 +542,7 @@ QString SnippetWidget::parseText( const QString &text )
     This function constructs a dialog which contains a label and a linedit for the given variable
     It return either the entered value or an empty string if the user hit cancel
  */
-QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> * mapSave )
+QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QString> *mapSave )
 {
   // --BEGIN-- building a dynamic dialog
   QDialog dlg(this);
@@ -570,7 +570,7 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
 
   cb = new QCheckBox( &dlg );
   cb->setObjectName( "cbVar" );
-  cb->setChecked( FALSE );
+  cb->setChecked( false );
   cb->setText(i18n( "Make value &default" ));
 
   te = new KTextEdit( &dlg );
@@ -578,7 +578,7 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
   layoutVar->addWidget( te, 0, 1, Qt::AlignTop);
   layoutVar->addWidget( cb, 1, 1, Qt::AlignTop);
   if ((*mapSave)[var].length() > 0) {
-    cb->setChecked( TRUE );
+    cb->setChecked( true );
     te->setText((*mapSave)[var]);
   }
 
@@ -595,7 +595,7 @@ QString SnippetWidget::showSingleVarDialog(QString var, QMap<QString, QString> *
 
   KPushButton * btn2 = new KPushButton( KStandardGuiItem::apply(), &dlg );
   btn2->setObjectName( "pushButton2") ;
-  btn2->setDefault( TRUE );
+  btn2->setDefault( true );
   layoutBtn->addWidget( btn2, 0, 1 );
 
   layout->addMultiCellLayout( layoutBtn, 2, 2, 0, 1 );
@@ -658,17 +658,17 @@ bool SnippetWidget::acceptDrag (QDropEvent *event) const
   if (item &&
       QString(event->format()).startsWith("text/plain") &&
       static_cast<SnippetWidget *>(event->source()) != this) {
-    ///kDebug(5006) << "returning TRUE ";
-    return TRUE;
+    ///kDebug(5006) << "returning true ";
+    return true;
   } else if(item &&
             event->provides("text/x-kmail-textsnippet") &&
             static_cast<SnippetWidget *>(event->source()) != this) {
-    //kDebug(5006) << "returning TRUE ";
-    return TRUE;
+    //kDebug(5006) << "returning true ";
+    return true;
   } else {
-    //kdebug(5006) << "returning FALSE";
-    event->acceptAction(FALSE);
-    return FALSE;
+    //kdebug(5006) << "returning false";
+    event->acceptAction( false );
+    return false;
   }
 }
 

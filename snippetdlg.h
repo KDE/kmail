@@ -16,8 +16,8 @@ class SnippetDlg : public QDialog, public SnippetDlgBase
     Q_OBJECT
 
 public:
-    SnippetDlg( KActionCollection *ac, QWidget *parent = 0, bool modal = false,
-                Qt::WindowFlags f = 0 );
+    explicit SnippetDlg( KActionCollection *ac, QWidget *parent = 0,
+                         bool modal = false, Qt::WindowFlags f = 0 );
     ~SnippetDlg();
 
     void setGroupMode( bool groupMode );

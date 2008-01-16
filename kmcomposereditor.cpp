@@ -157,7 +157,7 @@ QString KMComposerEditor::brokenText() const
     QTextLayout* layout = block.layout();
     for ( int i = 0; i < layout->lineCount(); i++ ) {
       QTextLine line = layout->lineAt( i );
-      temp += block.text().mid( line.textStart(), line.textLength() ) + "\n";
+      temp += block.text().mid( line.textStart(), line.textLength() ) + '\n';
     }
     block = block.next();
   }

@@ -55,7 +55,7 @@ protected:
 private:
     void insertIntoActiveView( const QString &text );
     QString parseText( const QString &text );
-    QString showSingleVarDialog( QString var, QMap<QString, QString> * mapSave );
+    QString showSingleVarDialog( const QString &var, QMap<QString, QString> * mapSave );
     QTreeWidgetItem *selectedItem() const;
     SnippetItem* makeItem( SnippetItem *parent, const QString &name,
                            const QString &text, const QKeySequence &keySeq );
