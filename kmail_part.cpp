@@ -223,6 +223,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   mainWidget->initializeFilterActions();
   mainWidget->initializeFolderShortcutActions();
   mainWidget->setupForwardingActionsList();
+  mainWidget->updateVactionScriptStatus();
 }
 
 void KMailPart::exit()

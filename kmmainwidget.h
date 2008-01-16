@@ -178,6 +178,7 @@ public:
   void setupForwardingActionsList();
 
   KStatusBarLabel* vacationScriptIndicator() const { return mVacationScriptIndicator; }
+  void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -557,6 +558,7 @@ private:
   static QValueList<KMMainWidget*>* s_mainWidgetList;
 
   KStatusBarLabel *mVacationScriptIndicator;
+  bool mVacationIndicatorActive;
 };
 
 #endif

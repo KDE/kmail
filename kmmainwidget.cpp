@@ -148,7 +148,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     mFolderViewSplitter( 0 ),
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
-    mShowingOfflineScreen( false )
+    mShowingOfflineScreen( false ),
+    mVacationIndicatorActive( false )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -3958,6 +3959,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 
 void KMMainWidget::updateVactionScriptStatus(bool active)
 {
+  mVacationIndicatorActive = active;
   if ( active ) {
     mVacationScriptIndicator->setText( i18n("Out of office reply active") );
     mVacationScriptIndicator->setPaletteBackgroundColor( Qt::yellow );
