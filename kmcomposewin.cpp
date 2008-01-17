@@ -4119,9 +4119,7 @@ void KMComposeWin::slotSpellcheckConfig()
   Sonnet::ConfigDialog *dialog = new Sonnet::ConfigDialog(&config, this);
   KWindowSystem::setIcons( dialog->winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
 
-  if ( dialog->exec() ) {
-    //mKSpellConfig.writeGlobalSettings();
-  }
+  dialog->exec();
   delete dialog;
 }
 
