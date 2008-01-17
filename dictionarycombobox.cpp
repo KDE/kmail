@@ -40,11 +40,12 @@ namespace KMail {
 
   DictionaryComboBox::DictionaryComboBox( QWidget * parent )
     : QComboBox( parent ),
-      mDefaultDictionary( 0 )
+      mDefaultDictionary( 0 ),mspeller(0)
   {
     reloadCombo();
     connect( this, SIGNAL( activated( int ) ),
              this, SLOT( slotDictionaryChanged( int ) ) );
+    //TODO needs to update dictionary
     /*    connect( this, SIGNAL( dictionaryChanged( int ) ),
              mSpellConfig, SLOT( sSetDictionary( int ) ) );
     */
@@ -52,6 +53,7 @@ namespace KMail {
 
   DictionaryComboBox::~DictionaryComboBox()
   {
+    delete mspeller;
   }
 
   QString DictionaryComboBox::currentDictionaryName() const
@@ -118,23 +120,13 @@ namespace KMail {
       slotDictionaryChanged( mDefaultDictionary );
     }
   }
-  /*
-  K3SpellConfig* DictionaryComboBox::spellConfig() const
-  {
-    return mSpellConfig;
-  }
-  */
 
   void DictionaryComboBox::reloadCombo()
   {
     mspeller = new Sonnet::Speller();
-    insertStringList( mspeller->availableLanguageNames() );
-
-    /*    delete mSpellConfig;
-    mSpellConfig = new K3SpellConfig( 0, 0, false );
-    mSpellConfig->fillDicts( this, &mDictionaries );
+    mDictionaries = mspeller->availableLanguageNames();
+    insertStringList(mDictionaries);
     mDefaultDictionary = currentIndex();
-    */
   }
 
   void DictionaryComboBox::slotDictionaryChanged( int idx )

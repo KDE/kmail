@@ -58,8 +58,6 @@ namespace KMail {
     void setCurrentByDictionaryName( const QString & dictionaryName );
     void setCurrentByDictionary( const QString & dictionary );
 
-    //K3SpellConfig* spellConfig() const;
-
   signals:
     /** @em Emitted whenever the current dictionary changes. Either
      *  by user intervention or on setCurrentByDictionaryName() or on
