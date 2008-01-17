@@ -47,12 +47,12 @@ using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
 
+#include <kde_file.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kconfiggroup.h>
 
-//Added by qt3to4:
 #include <QFile>
 #include <QList>
 #include <QRegExp>
@@ -669,23 +669,23 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
   newSubDirLoc = folder()->subdirLocation();
   newIdsLoc = KMMsgDict::instance()->getFolderIdsLocation( *this );
 
-  if ( ::rename( QFile::encodeName( oldLoc ),
-                 QFile::encodeName( newLoc ) ) ) {
+  if ( KDE_rename( QFile::encodeName( oldLoc ),
+                   QFile::encodeName( newLoc ) ) ) {
     folder()->setName( oldName );
     folder()->setParent( oldParent );
     rc = errno;
   } else {
     // rename/move index file and index.sorted file
     if ( !oldIndexLoc.isEmpty() ) {
-      ::rename( QFile::encodeName( oldIndexLoc ),
-                QFile::encodeName( newIndexLoc ) );
-      ::rename( QFile::encodeName( oldIndexLoc ) + ".sorted",
-                QFile::encodeName( newIndexLoc ) + ".sorted" );
+      KDE_rename( QFile::encodeName( oldIndexLoc ),
+                  QFile::encodeName( newIndexLoc ) );
+      KDE_rename( QFile::encodeName( oldIndexLoc ) + ".sorted",
+                  QFile::encodeName( newIndexLoc ) + ".sorted" );
     }
 
     // rename/move serial number file
     if ( !oldIdsLoc.isEmpty() )
-      ::rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) );
+      KDE_rename( QFile::encodeName( oldIdsLoc ), QFile::encodeName( newIdsLoc ) );
 
     // rename/move the subfolder directory
     KMFolderDir *child = 0;
@@ -693,8 +693,8 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
       child = folder()->child();
     }
 
-    if ( !::rename( QFile::encodeName( oldSubDirLoc ),
-                    QFile::encodeName( newSubDirLoc ) ) ) {
+    if ( !KDE_rename( QFile::encodeName( oldSubDirLoc ),
+                      QFile::encodeName( newSubDirLoc ) ) ) {
       // now that the subfolder directory has been renamed and/or moved also
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)

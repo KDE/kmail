@@ -27,6 +27,7 @@
 #include "jobscheduler.h"
 
 #include <kdebug.h>
+#include <kde_file.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -801,7 +802,7 @@ int KMFolderSearch::writeIndex( bool )
     if (fsync(fileno(tmpIndexStream)) != 0) return errno;
     if (fclose(tmpIndexStream) != 0) return errno;
 
-    ::rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
+    KDE_rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
     mDirty = false;
     mUnlinked = false;
 

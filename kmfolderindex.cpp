@@ -11,19 +11,21 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "kmfolderindex.h"
 #include "kmfolder.h"
 #include <config-kmail.h>
+
+#include <kdebug.h>
+#include <kde_file.h>
+
 #include <QFileInfo>
 #include <QTimer>
 #include <QByteArray>
-#include <kdebug.h>
-
 #include <QDateTime>
 
 #define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
@@ -190,7 +192,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   if( fclose( tmpIndexStream ) != 0 )
     return errno;
 
-  ::rename(QFile::encodeName(tempName), QFile::encodeName(indexName));
+  KDE_rename(QFile::encodeName(tempName), QFile::encodeName(indexName));
   mHeaderOffset = nho;
   if (mIndexStream)
       fclose(mIndexStream);

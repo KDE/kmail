@@ -1,7 +1,6 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmheaders.cpp
 
-
 #include "kmheaders.h"
 #include <config-kmail.h>
 #include "headeritem.h"
@@ -32,6 +31,7 @@ using KPIM::ProgressItem;
 #include "globalsettings.h"
 using namespace KPIM;
 
+#include <kde_file.h>
 #include <kactionmenu.h>
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
@@ -2845,7 +2845,7 @@ bool KMHeaders::writeSortOrder()
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
-    ::rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
+    KDE_rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
   }
 
   return true;

@@ -34,6 +34,7 @@ using KPIM::BroadcastStatus;
 #include "kmfoldermaildir.h"
 
 #include <kdebug.h>
+#include <kde_file.h>
 #include <klocale.h>
 
 #include <QFile>
@@ -86,7 +87,7 @@ QString MboxCompactionJob::realLocation() const
   QFileInfo inf( location );
   if (inf.isSymLink()) {
     KUrl u; u.setPath( location );
-    // follow (and resolve) symlinks so that the final ::rename() always works
+    // follow (and resolve) symlinks so that the final KDE_rename() always works
     // KUrl gives us support for absolute and relative links transparently.
     return KUrl( u, inf.readLink() ).path();
   }
@@ -175,7 +176,7 @@ void MboxCompactionJob::done( int rc )
   if ( !rc ) {
     bool autoCreate = mbox->autoCreateIndex();
     QString box( realLocation() );
-    ::rename( QFile::encodeName( mTempName ), QFile::encodeName( box ) );
+    KDE_rename( QFile::encodeName( mTempName ), QFile::encodeName( box ) );
     mbox->writeIndex();
     mbox->writeConfig();
     mbox->setAutoCreateIndex( false );
