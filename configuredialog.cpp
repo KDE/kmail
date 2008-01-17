@@ -4710,8 +4710,8 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
-#ifdef __GNUC__
 // The DCOP stuff here is used by Kleopatra
+#ifdef __GNUC__
 #warning Port the hand-made DCOP stuff to D-Bus
 #endif
 /*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)

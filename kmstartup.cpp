@@ -151,7 +151,7 @@ void lockOrDie() {
     first_instance = true;
   } else if ( hostName == oldHostName && oldPid != getpid() ) {
     // check if the lock file is stale
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX //krazy:exclude=cpp
     if ( ::access("/proc", X_OK ) == 0 ) {
       // On linux with /proc we can even check that
       // it's really kmail and not something else
