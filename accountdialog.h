@@ -23,13 +23,15 @@
 #ifndef _ACCOUNT_DIALOG_H_
 #define _ACCOUNT_DIALOG_H_
 
+#include <config-kmail.h>
+#include "imapaccountbase.h"
+
 #include <kdialog.h>
 #include <klineedit.h>
+
 #include <QPointer>
-//Added by qt3to4:
 #include <QLabel>
 #include <QList>
-#include "imapaccountbase.h"
 
 class QRegExpValidator;
 class QCheckBox;

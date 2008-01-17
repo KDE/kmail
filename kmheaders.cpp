@@ -2,8 +2,8 @@
 // kmheaders.cpp
 
 
-#include <config-kmail.h>
 #include "kmheaders.h"
+#include <config-kmail.h>
 #include "headeritem.h"
 using KMail::HeaderItem;
 

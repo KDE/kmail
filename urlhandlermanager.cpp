@@ -322,8 +322,6 @@ QString KMail::URLHandlerManager::statusBarMessage( const KUrl & url, KMReaderWi
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
 #include "kmmessage.h"
-#include "kmreaderwin.h"
-#include "partNode.h"
 #include "kmmsgpart.h"
 
 #include <klocale.h>
@@ -380,8 +378,8 @@ namespace {
 
 namespace {
 
-  bool ExpandCollapseQuoteURLManager::handleClick( 
-      const KUrl & url, KMReaderWin * w ) const 
+  bool ExpandCollapseQuoteURLManager::handleClick(
+      const KUrl & url, KMReaderWin * w ) const
   {
     //  kmail:levelquote/?num      -> the level quote to collapse.
     //  kmail:levelquote/?-num      -> expand all levels quote.
@@ -396,8 +394,8 @@ namespace {
     }
     return false;
   }
-  QString ExpandCollapseQuoteURLManager::statusBarMessage( 
-      const KUrl & url, KMReaderWin * ) const 
+  QString ExpandCollapseQuoteURLManager::statusBarMessage(
+      const KUrl & url, KMReaderWin * ) const
   {
       if ( url.protocol() == "kmail" && url.path() == "levelquote" )
       {

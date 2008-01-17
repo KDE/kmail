@@ -27,7 +27,6 @@
     you do not wish to do so, delete this exception statement from
     your version.
 */
-#include <kdebug.h> // FIXME
 
 #include "actionscheduler.h"
 
@@ -43,6 +42,7 @@
 #include "accountmanager.h"
 using KMail::AccountManager;
 
+#include <kdebug.h>
 #include <kconfig.h>
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
@@ -488,7 +488,7 @@ void ActionScheduler::enqueue(quint32 serNum)
 
 void ActionScheduler::processMessage()
 {
-kDebug(5006) << debug();
+  kDebug(5006) << debug();
   QString statusMsg = i18n( "%1 messages waiting to be filtered",
                             mFetchSerNums.count() );
   KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -667,7 +667,7 @@ void ActionScheduler::moveMessage()
     // Original message is gone, no point filtering it anymore
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
     kDebug(5006) <<"The original serial number is missing."
-                  << "Cannot complete the filtering.";
+                 << "Cannot complete the filtering.";
     mExecutingLock = false;
     processMessageTimer->start( 0 );
     return;

@@ -120,13 +120,10 @@ using MailTransport::TransportManagementWidget;
 #include <QGroupBox>
 #include <QToolTip>
 #include <QListWidget>
-
 #include <QValidator>
 #include <QVBoxLayout>
 #include <QWhatsThis>
 #include <QDBusConnection>
-
-//Added by qt3to4:
 #include <q3buttongroup.h>
 #include <QTextCodec>
 #include <q3header.h>
@@ -5186,7 +5183,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   grid->addWidget( mSyncImmediately, 4, 0, 0, 1 );
 
-  mDeleteInvitations = new QCheckBox( 
+  mDeleteInvitations = new QCheckBox(
              i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ), mBox );
   mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
              ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );

@@ -12,29 +12,27 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   You should have received a copy of the GNU General Public License along
+ *   with this program; if not, write to the Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-
-
-#include <klocale.h>
-#include <kglobal.h>
-#include <qpushbutton.h>
-#include <qtextedit.h>
-#include <qlineedit.h>
-#include <QWhatsThis>
-#include <qtoolbox.h>
-#include <kdebug.h>
-#include <qfont.h>
-
+#include "templatesconfiguration.h"
 #include "ui_templatesconfiguration_base.h"
 #include "templatesconfiguration_kfg.h"
 #include "globalsettings.h"
 #include "replyphrases.h"
 
-#include "templatesconfiguration.h"
+#include <kdebug.h>
+#include <klocale.h>
+#include <kglobal.h>
+
+#include <qpushbutton.h>
+#include <qtextedit.h>
+#include <qlineedit.h>
+#include <QWhatsThis>
+#include <qtoolbox.h>
+#include <qfont.h>
 
 TemplatesConfiguration::TemplatesConfiguration( QWidget *parent, const char *name )
   : QWidget( parent )

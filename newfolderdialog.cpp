@@ -26,24 +26,6 @@
 **   your version.
 *******************************************************************************/
 
-
-#include <QVariant>
-#include <QPushButton>
-#include <QLabel>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QLayout>
-
-
-#include <QRegExp>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-
-#include <klocale.h>
-#include <kdialog.h>
-#include <kmessagebox.h>
-#include <kconfiggroup.h>
-
 #include "newfolderdialog.h"
 #include "kmfolder.h"
 #include "folderstorage.h"
@@ -55,11 +37,25 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 
+#include <klocale.h>
+#include <kdialog.h>
+#include <kmessagebox.h>
+#include <kconfiggroup.h>
+
+#include <QVariant>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QLayout>
+#include <QRegExp>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-    : KDialog( parent ),
-      mFolder( folder )
+  : KDialog( parent ), mFolder( folder )
 {
   setCaption( i18n( "New Folder" ) );
   setButtons( Ok | Cancel );
@@ -67,10 +63,10 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   setObjectName( "new_folder_dialog" );
   setAttribute( Qt::WA_DeleteOnClose );
   if ( mFolder ) {
-    setCaption( i18n("New Subfolder of %1", mFolder->prettyUrl() ) );
+    setCaption( i18n( "New Subfolder of %1", mFolder->prettyUrl() ) );
   }
-  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-  QWidget* privateLayoutWidget = new QWidget( this );
+  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+  QWidget *privateLayoutWidget = new QWidget( this );
   privateLayoutWidget->setObjectName( "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
   setMainWidget( privateLayoutWidget );

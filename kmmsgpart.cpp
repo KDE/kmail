@@ -1,22 +1,22 @@
 // kmmsgpart.cpp
 
-#include <kmimetype.h>
-#include <kdebug.h>
-#include <kcodecs.h>
-
 #include "kmmsgpart.h"
 #include "kmkernel.h"
 #include "kmmessage.h"
 #include "globalsettings.h"
 
-#include <kascii.h>
 #include <kmime/kmime_charfreq.h>
 #include <kmime/kmime_codecs.h>
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
 
+#include <kmimetype.h>
+#include <kdebug.h>
+#include <kcodecs.h>
+#include <kascii.h>
 #include <kiconloader.h>
+
 #include <QTextCodec>
 #include <QList>
 
@@ -237,7 +237,7 @@ void KMMessagePart::setMessageBody( const QByteArray &aBuf )
     cte = DwMime::kCte8bit;
     break;
   default:
-    kWarning(5006) <<"Calling" 
+    kWarning(5006) <<"Calling"
                    << "with something containing neither 7 nor 8 bit text!"
                    << "Fix this caller:" << kBacktrace();
     cte = 0;

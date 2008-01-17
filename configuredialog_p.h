@@ -197,7 +197,6 @@ private:
   QStringList mProfileList;
 };
 
-#include <kdialog.h>
 #include <kvbox.h>
 class ConfigModule : public KCModule {
   Q_OBJECT
@@ -634,7 +633,7 @@ private: // data
 
   QListWidget *mTagListBox;
 
-  QCheckBox *mTextColorCheck, 
+  QCheckBox *mTextColorCheck,
             *mTextFontCheck, *mInToolbarCheck;
 
   QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;

@@ -1,8 +1,6 @@
 // kmacctmaildir.cpp
-#include <config-kmail.h>
-
-#include <QFileInfo>
 #include "kmacctmaildir.h"
+#include <config-kmail.h>
 #include "kmfoldermaildir.h"
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
@@ -15,6 +13,7 @@ using KPIM::ProgressManager;
 #include <kdebug.h>
 #include <kconfiggroup.h>
 
+#include <QFileInfo>
 #include <QTime>
 
 #include <stdlib.h>

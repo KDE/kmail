@@ -6,25 +6,19 @@
  *  Copyright: See COPYING file that comes with this distribution
  */
 
+#include "snippetwidget.h"
+#include "snippetitem.h"
+#include "snippetdlg.h"
+
 #include <kdebug.h>
 #include <klocale.h>
-#include <qlayout.h>
 #include <kpushbutton.h>
-#include <qheaderview.h>
 #include <kmessagebox.h>
 #include <ktexteditor/editor.h>
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <kconfig.h>
-#include <qtooltip.h>
 #include <kmenu.h>
-#include <qregexp.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qdrag.h>
-#include <QtGui/QContextMenuEvent>
-#include <qtimer.h>
 #include <kcombobox.h>
 #include <kiconloader.h>
 #include <kshortcut.h>
@@ -32,9 +26,16 @@
 #include <kactioncollection.h>
 #include <kkeysequencewidget.h>
 
-#include "snippetitem.h"
-#include "snippetwidget.h"
-#include "snippetdlg.h"
+#include <qlayout.h>
+#include <qheaderview.h>
+#include <qtooltip.h>
+#include <qregexp.h>
+#include <qlabel.h>
+#include <qcheckbox.h>
+#include <qwhatsthis.h>
+#include <qdrag.h>
+#include <QContextMenuEvent>
+#include <qtimer.h>
 
 #include <cassert>
 

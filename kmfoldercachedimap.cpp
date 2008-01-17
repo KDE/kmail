@@ -84,7 +84,6 @@ using namespace KMail;
 
 #include <unistd.h>
 #include <errno.h>
-#include <unistd.h>
 
 #define UIDCACHE_VERSION 1
 

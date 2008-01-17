@@ -2,8 +2,8 @@
 
 #include <config-kmail.h>
 
-#include "globalsettings.h"
 #include "kmmsgbase.h"
+#include "globalsettings.h"
 
 #include "kmfolderindex.h"
 #include "kmfolder.h"

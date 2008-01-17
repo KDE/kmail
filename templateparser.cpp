@@ -12,26 +12,13 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   You should have received a copy of the GNU General Public License along
+ *   with this program; if not, write to the Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
 
-
-#include <qstring.h>
-#include <qdatetime.h>
-#include <klocale.h>
-#include <kcalendarsystem.h>
-#include <kglobal.h>
-#include <kprocess.h>
-#include <qregexp.h>
-#include <qfile.h>
-#include <kmessagebox.h>
-#include <kshell.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-
+#include "templateparser.h"
 #include "kmmessage.h"
 #include "kmmsgbase.h"
 #include "kmfolder.h"
@@ -40,10 +27,23 @@
 #include "customtemplates_kfg.h"
 #include "globalsettings_base.h"
 #include "kmkernel.h"
+
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
-#include "templateparser.h"
+#include <klocale.h>
+#include <kcalendarsystem.h>
+#include <kglobal.h>
+#include <kprocess.h>
+#include <kmessagebox.h>
+#include <kshell.h>
+
+#include <QString>
+#include <QDateTime>
+#include <QRegExp>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 namespace KMail {
 
@@ -990,7 +990,7 @@ QString TemplateParser::pipe( const QString &cmd, const QString &buf )
   bool success, finished;
 
   process.setOutputChannelMode( KProcess::SeparateChannels );
-  process.setShellCommand( cmd ); 
+  process.setShellCommand( cmd );
   process.start();
   if ( process.waitForStarted( PipeTimeout ) ) {
     if ( !buf.isEmpty() )

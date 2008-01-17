@@ -12,50 +12,12 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   You should have received a copy of the GNU General Public License along
+ *   with this program; if not, write to the Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#include <config-kmail.h>
 #include "accountdialog.h"
-
-#include <QButtonGroup>
-#include <QCheckBox>
-#include <QLayout>
-#include <QTabWidget>
-#include <QRadioButton>
-#include <QValidator>
-#include <QLabel>
-#include <QPushButton>
-
-
-#include <QComboBox>
-#include <QToolButton>
-#include <QGroupBox>
-#include <QGridLayout>
-#include <QTextStream>
-#include <QList>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QHash>
-
-#include <KGlobalSettings>
-#include <KFileDialog>
-#include <KLocale>
-#include <KDebug>
-#include <KMessageBox>
-#include <KNumInput>
-#include <KSeparator>
-#include <KProtocolInfo>
-#include <KIconLoader>
-#include <KMenu>
-
-#include <libkdepim/servertest.h>
-
-#include <netdb.h>
-#include <netinet/in.h>
-
 #include "sieveconfig.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
@@ -69,6 +31,40 @@
 #include "kmmainwidget.h"
 #include "kmfolder.h"
 #include "globalsettings.h"
+
+#include <libkdepim/servertest.h>
+
+#include <KGlobalSettings>
+#include <KFileDialog>
+#include <KLocale>
+#include <KDebug>
+#include <KMessageBox>
+#include <KNumInput>
+#include <KSeparator>
+#include <KProtocolInfo>
+#include <KIconLoader>
+#include <KMenu>
+
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QLayout>
+#include <QTabWidget>
+#include <QRadioButton>
+#include <QValidator>
+#include <QLabel>
+#include <QPushButton>
+#include <QComboBox>
+#include <QToolButton>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QTextStream>
+#include <QList>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QHash>
+
+#include <netdb.h>
+#include <netinet/in.h>
 
 #include <cassert>
 #include <stdlib.h>
@@ -841,11 +837,11 @@ void AccountDialog::makePopAccountPage()
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
   mPop.authAPOP->setObjectName( "auth apop" );
 
-  mPop.authGroup->layout()->addWidget( mPop.authUser ); 
+  mPop.authGroup->layout()->addWidget( mPop.authUser );
   mPop.authGroup->layout()->addWidget( mPop.authLogin );
   mPop.authGroup->layout()->addWidget( mPop.authPlain );
   mPop.authGroup->layout()->addWidget( mPop.authCRAM_MD5 );
-  mPop.authGroup->layout()->addWidget( mPop.authDigestMd5 ); 
+  mPop.authGroup->layout()->addWidget( mPop.authDigestMd5 );
   mPop.authGroup->layout()->addWidget( mPop.authNTLM );
   mPop.authGroup->layout()->addWidget( mPop.authGSSAPI );
   mPop.authGroup->layout()->addWidget( mPop.authAPOP );
@@ -855,7 +851,7 @@ void AccountDialog::makePopAccountPage()
   mPop.authButtonGroup->addButton( mPop.authLogin );
   mPop.authButtonGroup->addButton( mPop.authPlain );
   mPop.authButtonGroup->addButton( mPop.authCRAM_MD5 );
-  mPop.authButtonGroup->addButton( mPop.authDigestMd5 ); 
+  mPop.authButtonGroup->addButton( mPop.authDigestMd5 );
   mPop.authButtonGroup->addButton( mPop.authNTLM );
   mPop.authButtonGroup->addButton( mPop.authGSSAPI );
   mPop.authButtonGroup->addButton( mPop.authAPOP );
@@ -977,7 +973,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editPNS->setFixedSize( 22, 22 );
   connect( mImap.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
-  
+
   QGridLayout* listboxLayout = new QGridLayout;
   listboxLayout->setMargin( 0 );
   listboxLayout->setSpacing( KDialog::spacingHint() );
@@ -995,7 +991,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editONS->setFixedSize( 22, 22 );
   connect( mImap.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
-  
+
   listboxLayout->addWidget( label, 1, 0 );
   listboxLayout->addWidget( mImap.otherUsersNS, 1, 1 );
   listboxLayout->addWidget( mImap.editONS, 1, 2 );
@@ -1010,7 +1006,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   mImap.editSNS->setFixedSize( 22, 22 );
   connect( mImap.editSNS, SIGNAL(clicked()), this, SLOT(slotEditSharedNamespace()) );
-  
+
   listboxLayout->addWidget( label, 2, 0 );
   listboxLayout->addWidget( mImap.sharedNS, 2, 1 );
   listboxLayout->addWidget( mImap.editSNS, 2, 2 );
@@ -1157,7 +1153,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.encryptionGroup = new QGroupBox( i18n("Encryption"), page2 );
   mImap.encryptionGroup->setLayout( new QVBoxLayout() );
   mImap.encryptionNone =
-    new QRadioButton( i18n("&None"), mImap.encryptionGroup );  
+    new QRadioButton( i18n("&None"), mImap.encryptionGroup );
   mImap.encryptionSSL =
     new QRadioButton( i18n("Use &SSL for secure mail download"),
     mImap.encryptionGroup );
@@ -1192,7 +1188,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authNTLM = new QRadioButton( i18n("&NTLM"), mImap.authGroup );
   mImap.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mImap.authGroup );
   mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), mImap.authGroup );
-  
+
   mImap.authGroup->layout()->addWidget( mImap.authUser );
   mImap.authGroup->layout()->addWidget( mImap.authLogin );
   mImap.authGroup->layout()->addWidget( mImap.authPlain );
@@ -1201,7 +1197,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authGroup->layout()->addWidget( mImap.authNTLM );
   mImap.authGroup->layout()->addWidget( mImap.authGSSAPI );
   mImap.authGroup->layout()->addWidget( mImap.authAnonymous );
-  
+
   mImap.authButtonGroup = new QButtonGroup();
   mImap.authButtonGroup->addButton( mImap.authUser );
   mImap.authButtonGroup->addButton( mImap.authLogin );
@@ -1211,7 +1207,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authButtonGroup->addButton( mImap.authNTLM );
   mImap.authButtonGroup->addButton( mImap.authGSSAPI );
   mImap.authButtonGroup->addButton( mImap.authAnonymous );
-  
+
   vlay->addWidget( mImap.authGroup );
 
   vlay->addStretch();
