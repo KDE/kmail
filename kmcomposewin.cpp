@@ -96,8 +96,10 @@ using KMail::DictionaryComboBox;
 #include <krun.h>
 #include <ksavefile.h>
 #include <kshortcutsdialog.h>
+#include <kstandarddirs.h>
 #include <kstandardshortcut.h>
 #include <kstatusbar.h>
+#include <ktempdir.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <ktoolinvocation.h>
@@ -255,6 +257,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   connect( mAtmListView,
            SIGNAL(attachmentDeleted()),
            SLOT(slotAttachRemove()) );
+  connect( mAtmListView,
+           SIGNAL( dragStarted() ),
+           SLOT( slotAttachmentDragStarted() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -340,6 +345,10 @@ KMComposeWin::~KMComposeWin()
 
   qDeleteAll( mAtmList );
   qDeleteAll( mAtmTempList );
+
+  foreach ( KTempDir *const dir, mTempDirs ) {
+    delete dir;
+  }
 }
 
 
@@ -2086,8 +2095,8 @@ bool KMComposeWin::addAttach( const KUrl &aUrl )
   }
 
   const int maxAttachmentSize = GlobalSettings::maximumAttachmentSize();
-  if ( maxAttachmentSize > 0 &&
-       aUrl.isLocalFile() && QFileInfo( aUrl.pathOrUrl() ).size() > maxAttachmentSize*1024*1024 ) {
+  const uint maximumAttachmentSizeInBytes = maxAttachmentSize*1024*1024;
+  if ( aUrl.isLocalFile() && QFileInfo( aUrl.pathOrUrl() ).size() > maximumAttachmentSizeInBytes ) {
     KMessageBox::sorry( this, i18n( "<qt><p>Your administrator has disallowed attaching files bigger than %1 MB.</p>", maxAttachmentSize ) );
     return false;
   }
@@ -2735,7 +2744,7 @@ void KMComposeWin::compressAttach( KMAtmListViewItem *attachmentItem )
   if ( array.size() >= decoded.size() ) {
     if ( KMessageBox::questionYesNo( this,
                                      i18n( "The compressed file is larger "
-                                          "than the original. Do you want to keep the original one?" ),
+                                           "than the original. Do you want to keep the original one?" ),
                                      QString(),
                                      KGuiItem( i18nc("Do not compress", "Keep") ),
                                      KGuiItem( i18n("Compress") ) ) == KMessageBox::Yes ) {
@@ -2925,7 +2934,7 @@ void KMComposeWin::viewAttach( int index )
   atmTempFile->open();
   mAtmTempList.append( atmTempFile );
   KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->fileName(),
-                          false, false, false );
+                               false, false, false );
   KMReaderMainWin *win =
     new KMReaderMainWin( msgPart, false, atmTempFile->fileName(), pname, mCharset );
   win->show();
@@ -4503,3 +4512,35 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
     }
   }
 }
+
+void KMComposeWin::slotAttachmentDragStarted()
+{
+  kDebug(5006);
+  int idx = 0;
+  QList<QUrl> urls;
+  foreach ( KMAtmListViewItem *const item, mAtmItemList ) {
+    if ( item->isSelected() ) {
+      KMMessagePart *msgPart = mAtmList.at( idx );
+      KTempDir *tempDir = new KTempDir(); // will remove the directory on destruction
+      mTempDirs.append( tempDir );
+      const QString fileName = tempDir->name() + '/' + msgPart->name();
+      KPIMUtils::kByteArrayToFile( msgPart->bodyDecodedBinary(),
+                                   fileName,
+                                   false, false, false );
+      QUrl url;
+      url.setProtocol( "file" );
+      url.setPath( fileName );
+      urls.append( url );
+      idx++;
+    }
+  }
+  if ( urls.isEmpty() )
+    return;
+
+  QDrag *drag = new QDrag( mAtmListView );
+  QMimeData *mimeData = new QMimeData();
+  mimeData->setUrls( urls );
+  drag->setMimeData( mimeData );
+  drag->exec( Qt::CopyAction );
+}
+

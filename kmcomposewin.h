@@ -433,6 +433,7 @@ class KMComposeWin : public KMail::Composer
     void slotAttachRemove();
     void slotAttachSave();
     void slotAttachProperties();
+    void slotAttachmentDragStarted();
 
     void slotCleanSpace();
     void slotToggleMarkup();
@@ -851,6 +852,7 @@ class KMComposeWin : public KMail::Composer
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
 
     SnippetWidget *mSnippetWidget;
+    QList<KTempDir*> mTempDirs;
 };
 
 #endif

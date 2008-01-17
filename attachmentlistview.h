@@ -46,6 +46,7 @@ public Q_SLOTS:
 protected:
   virtual void keyPressEvent( QKeyEvent * e );
   virtual void contextMenuEvent( QContextMenuEvent * event );
+  virtual void startDrag( Qt::DropActions supportedActions );
 
 private:
   KMail::Composer * mComposer;
@@ -56,6 +57,7 @@ private:
 signals:
   void attachmentDeleted();
   void rightButtonPressed( QTreeWidgetItem * item );
+  void dragStarted();
 };
 
 } // namespace KMail
