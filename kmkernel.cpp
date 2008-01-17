@@ -39,6 +39,7 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 
+#include <kde_file.h>
 #include <kwindowsystem.h>
 #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
@@ -1222,29 +1223,25 @@ void KMKernel::slotSenderFinished()
 /********************************************************************/
 /*            Init, Exit, and handler  methods                      */
 /********************************************************************/
-void KMKernel::testDir(const char *_name)
+void KMKernel::testDir( const char *_name )
 {
   QString foldersPath = QDir::homePath() + QString( _name );
   QFileInfo info( foldersPath );
   if ( !info.exists() ) {
-#ifdef Q_OS_WIN
-    if ( ::mkdir( QFile::encodeName( foldersPath ) ) == -1 ) {
-#else
-    if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
-#endif
-      KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
-                                 "please make sure that you can view and "
-                                 "modify the content of the folder '%2'.",
-                              foldersPath, QDir::homePath() ) );
+    if ( KDE_mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
+      KMessageBox::sorry( 0, i18n( "KMail could not create folder '%1';\n"
+                                   "please make sure that you can view and "
+                                   "modify the content of the folder '%2'.",
+                                   foldersPath, QDir::homePath() ) );
       ::exit(-1);
     }
   }
   if ( !info.isDir() || !info.isReadable() || !info.isWritable() ) {
-    KMessageBox::sorry(0, i18n("The permissions of the folder '%1' are "
-                               "incorrect;\n"
-                               "please make sure that you can view and modify "
-                               "the content of this folder.",
-                            foldersPath ) );
+    KMessageBox::sorry( 0, i18n( "The permissions of the folder '%1' are "
+                                 "incorrect;\n"
+                                 "please make sure that you can view and "
+                                 "modify the content of this folder.",
+                                 foldersPath ) );
     ::exit(-1);
   }
 }
@@ -2179,7 +2176,7 @@ bool KMKernel::canQueryClose()
   if ( !widget )
     return true;
   KMSystemTray* systray = widget->systray();
-  if ( !systray || GlobalSettings::closeDespiteSystemTray() ) 
+  if ( !systray || GlobalSettings::closeDespiteSystemTray() )
       return true;
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     systray->hideKMail();

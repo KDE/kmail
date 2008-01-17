@@ -22,6 +22,7 @@ using KMail::MaildirJob;
 #include <kio/directorysizejob.h>
 
 #include <kdebug.h>
+#include <kde_file.h>
 #include <klocale.h>
 #include <k3staticdeleter.h>
 #include <kmessagebox.h>
@@ -154,53 +155,42 @@ int KMFolderMaildir::open( const char * )
 
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
+int KMFolderMaildir::createMaildirFolders( const QString &folderPath )
 {
   // Make sure that neither a new, cur or tmp subfolder exists already.
   QFileInfo dirinfo;
   dirinfo.setFile( folderPath + "/new" );
-  if ( dirinfo.exists() ) return EEXIST;
+  if ( dirinfo.exists() ) {
+    return EEXIST;
+  }
+
   dirinfo.setFile( folderPath + "/cur" );
-  if ( dirinfo.exists() ) return EEXIST;
+  if ( dirinfo.exists() ) {
+    return EEXIST;
+  }
+
   dirinfo.setFile( folderPath + "/tmp" );
-  if ( dirinfo.exists() ) return EEXIST;
+  if ( dirinfo.exists() ) {
+    return EEXIST;
+  }
 
   // create the maildir directory structure
-#ifdef Q_OS_WIN
-  if ( ::mkdir( QFile::encodeName( folderPath ) ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath;
+  if ( KDE_mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
+    kDebug(5006) << "Could not create folder" << folderPath;
     return errno;
   }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/new" ) ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/new";
+  if ( KDE_mkdir( QFile::encodeName( folderPath + "/new" ), S_IRWXU ) > 0 ) {
+    kDebug(5006) << "Could not create folder" << folderPath << "/new";
     return errno;
   }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/cur" ) ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/cur";
+  if ( KDE_mkdir( QFile::encodeName( folderPath + "/cur" ), S_IRWXU ) > 0 ) {
+    kDebug(5006) << "Could not create folder" << folderPath << "/cur";
     return errno;
   }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/tmp" ) ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/tmp";
+  if ( KDE_mkdir( QFile::encodeName( folderPath + "/tmp" ), S_IRWXU ) > 0 ) {
+    kDebug(5006) << "Could not create folder" << folderPath << "/tmp";
     return errno;
   }
-#else
-  if ( ::mkdir( QFile::encodeName( folderPath ), S_IRWXU ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath;
-    return errno;
-  }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/new" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/new";
-    return errno;
-  }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/cur" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/cur";
-    return errno;
-  }
-  if ( ::mkdir( QFile::encodeName( folderPath + "/tmp" ), S_IRWXU ) > 0 ) {
-    kDebug(5006) <<"Could not create folder" << folderPath <<"/tmp";
-    return errno;
-  }
-#endif  // Q_OS_WIN
 
   return 0; // no error
 }

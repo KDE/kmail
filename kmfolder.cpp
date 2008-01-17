@@ -37,6 +37,7 @@
 #include <unistd.h> // W_OK
 
 #include <kdebug.h>
+#include <kde_file.h> // KDE_mkdir
 #include <klocale.h>
 #include <kshortcut.h>
 #include <kmessagebox.h>
@@ -46,7 +47,7 @@
 #include <QList>
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
-                             KMFolderType aFolderType, bool withIndex, bool exportedSernums )
+                    KMFolderType aFolderType, bool withIndex, bool exportedSernums )
   : KMFolderNode( aParent, aFolderName ), mStorage(0),
     mChild( 0 ),
     mIsSystemFolder( false ),
@@ -265,30 +266,28 @@ QString KMFolder::subdirLocation() const
 
 KMFolderDir* KMFolder::createChildFolder()
 {
-  if( mChild )
+  if ( mChild ) {
     return mChild;
+  }
 
   QString childName = '.' + fileName() + ".directory";
   QString childDir = path() + '/' + childName;
-  if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
-  {
-#ifdef Q_OS_WIN
-    if (mkdir(QFile::encodeName(childDir)) != 0
-#else
-    if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
-#endif
-      && chmod(QFile::encodeName(childDir), S_IRWXU) != 0) {
-      QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
-      KMessageBox::information(0,i18n("Failed to create folder") + wmsg);
+  if ( access( QFile::encodeName( childDir ), W_OK ) != 0 ) {
+    // childDir does not exist or is not writable, so create it.
+    if ( KDE_mkdir( QFile::encodeName(childDir), S_IRWXU ) != 0 &&
+         chmod( QFile::encodeName(childDir), S_IRWXU) != 0 ) {
+      QString wmsg = QString( " '%1': %2" ).arg( childDir ).arg( strerror( errno ) );
+      KMessageBox::information( 0, i18n( "Failed to create folder" ) + wmsg );
       return 0;
     }
   }
 
   KMFolderDirType newType = KMStandardDir;
-  if( folderType() == KMFolderTypeCachedImap )
+  if ( folderType() == KMFolderTypeCachedImap ) {
     newType = KMDImapDir;
-  else if( folderType() == KMFolderTypeImap )
+  } else if ( folderType() == KMFolderTypeImap ) {
     newType = KMImapDir;
+  }
 
   mChild = new KMFolderDir( this, parent(), childName, newType );
   if( !mChild )

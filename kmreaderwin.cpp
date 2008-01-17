@@ -107,7 +107,7 @@ using KMail::TeeHtmlWriter;
 #include <dom/html_document.h>
 #include <dom/dom_string.h>
 
-
+#include <kde_file.h>
 #include <kactionmenu.h>
 // for the click on attachment stuff (dnaber):
 #include <kcharsets.h>
@@ -1508,7 +1508,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
   if ( !vCardNode )
     vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeDirectory );
-  
+
   bool hasVCard = false;
   if( vCardNode ) {
     // ### FIXME: We should only do this if the vCard belongs to the sender,
@@ -1688,15 +1688,13 @@ QString KMReaderWin::createTempDir( const QString &param )
   QString fname = tempFile->fileName();
   delete tempFile;
 
-  if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
+  if ( ::access( QFile::encodeName( fname ), W_OK ) != 0 ) {
     // Not there or not writable
-#ifdef Q_OS_WIN
-    if( ::mkdir( QFile::encodeName( fname ) ) != 0
-#else
-    if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
-#endif
-        || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
+    if( KDE_mkdir( QFile::encodeName( fname ), 0 ) != 0 ||
+        ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 ) {
       return QString(); //failed create
+    }
+  }
 
   assert( !fname.isNull() );
 
