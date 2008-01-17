@@ -34,9 +34,11 @@
 
 #include <QComboBox>
 
-class K3SpellConfig;
 class QStringList;
 class QString;
+namespace Sonnet {
+  class Speller;
+}
 
 namespace KMail {
 
@@ -56,7 +58,7 @@ namespace KMail {
     void setCurrentByDictionaryName( const QString & dictionaryName );
     void setCurrentByDictionary( const QString & dictionary );
 
-    K3SpellConfig* spellConfig() const;
+    //K3SpellConfig* spellConfig() const;
 
   signals:
     /** @em Emitted whenever the current dictionary changes. Either
@@ -74,8 +76,8 @@ namespace KMail {
 
   protected:
     QStringList mDictionaries;
-    K3SpellConfig* mSpellConfig;
     int mDefaultDictionary;
+    Sonnet::Speller *mspeller;
   };
 
 } // namespace KMail

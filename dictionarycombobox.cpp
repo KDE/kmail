@@ -31,8 +31,8 @@
 
 #include "dictionarycombobox.h"
 
-#include <k3sconfig.h>
 #include <kdebug.h>
+#include <sonnet/speller.h>
 
 #include <QStringList>
 
@@ -40,20 +40,18 @@ namespace KMail {
 
   DictionaryComboBox::DictionaryComboBox( QWidget * parent )
     : QComboBox( parent ),
-      mSpellConfig( 0 ),
       mDefaultDictionary( 0 )
   {
     reloadCombo();
     connect( this, SIGNAL( activated( int ) ),
              this, SLOT( slotDictionaryChanged( int ) ) );
-    connect( this, SIGNAL( dictionaryChanged( int ) ),
+    /*    connect( this, SIGNAL( dictionaryChanged( int ) ),
              mSpellConfig, SLOT( sSetDictionary( int ) ) );
+    */
   }
 
   DictionaryComboBox::~DictionaryComboBox()
   {
-    delete mSpellConfig;
-    mSpellConfig = 0;
   }
 
   QString DictionaryComboBox::currentDictionaryName() const
@@ -120,18 +118,23 @@ namespace KMail {
       slotDictionaryChanged( mDefaultDictionary );
     }
   }
-
+  /*
   K3SpellConfig* DictionaryComboBox::spellConfig() const
   {
     return mSpellConfig;
   }
+  */
 
   void DictionaryComboBox::reloadCombo()
   {
-    delete mSpellConfig;
+    mspeller = new Sonnet::Speller();
+    insertStringList( mspeller->availableLanguageNames() );
+
+    /*    delete mSpellConfig;
     mSpellConfig = new K3SpellConfig( 0, 0, false );
     mSpellConfig->fillDicts( this, &mDictionaries );
     mDefaultDictionary = currentIndex();
+    */
   }
 
   void DictionaryComboBox::slotDictionaryChanged( int idx )
