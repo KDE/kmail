@@ -1846,12 +1846,19 @@ bool foundSMIMEData( const QString aUrl,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
+  const KUrl url(aUrl);
+  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail"
+       || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
+    mViewer->setDNDEnabled( false );
+  } else {
+    mViewer->setDNDEnabled( true );
+  }
+
   if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     return;
   }
 
-  const KUrl url(aUrl);
   mUrlClicked = url;
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
