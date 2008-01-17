@@ -299,6 +299,8 @@ class KMComposeWin : public KMail::Composer
     void slotClose();
     void slotHelp();
 
+
+    void slotUpdateCheckSpellChecking(bool _b);
     void slotUndo();
     void slotRedo();
     void slotCut();

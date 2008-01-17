@@ -1158,7 +1158,8 @@ void KMComposeWin::setupActions( void )
   slotAutoSpellCheckingToggled( !GlobalSettings::self()->useExternalEditor() && spellChecking );
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
-
+  connect( mEditor, SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotUpdateCheckSpellChecking(bool)));
+ 
   QStringList encodings = KMMsgBase::supportedEncodings( true );
   encodings.prepend( i18n("Auto-Detect") );
   mEncodingAction->setItems( encodings );
@@ -1354,6 +1355,11 @@ void KMComposeWin::setupActions( void )
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
   }
+}
+
+void KMComposeWin::slotUpdateCheckSpellChecking(bool _b)
+{
+   mAutoSpellCheckingAction->setChecked(_b);
 }
 
 //-----------------------------------------------------------------------------
