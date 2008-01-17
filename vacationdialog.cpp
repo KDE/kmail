@@ -50,9 +50,7 @@ namespace KMail {
     setModal( modal );
     QFrame *frame = new QFrame( this );
     setMainWidget( frame );
-#ifdef Q_OS_UNIX    
     KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
-#endif
     static const int rows = 7;
     int row = -1;
 
@@ -64,7 +62,7 @@ namespace KMail {
     // explanation label:
     ++row;
     glay->addWidget( new QLabel( i18n("Configure vacation "
-                                      "notifications to be sent:"), 
+                                      "notifications to be sent:"),
                                  frame ), row, 0, 1, 2 );
 
     // Activate checkbox:
@@ -182,7 +180,7 @@ namespace KMail {
   void VacationDialog::slotIntervalSpinChanged ( int value ) {
     mIntervalSpin->setSuffix( i18np(" day", " days", value) );
   }
- 
+
   QString VacationDialog::domainName() const {
     return mDomainCheck->isChecked() ? mDomainEdit->text() : QString() ;
   }
@@ -202,7 +200,7 @@ namespace KMail {
   }
 
 
-  /* virtual*/ 
+  /* virtual*/
   void KMail::VacationDialog::enableDomainAndSendForSpam( bool enable ) {
       mDomainCheck->setEnabled( enable );
       mDomainEdit->setEnabled( enable );

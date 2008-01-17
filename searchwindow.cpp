@@ -84,7 +84,7 @@ void MatchListView::contextMenuEvent( QContextMenuEvent* event )
   emit contextMenuRequested( itemAt( event->pos() ) );
 }
 
-void MatchListView::startDrag ( Qt::DropActions supportedActions ) 
+void MatchListView::startDrag ( Qt::DropActions supportedActions )
 {
   QList<KMMsgBase*> list = mSearchWindow->selectedMessages();
   MailList mailList;
@@ -127,9 +127,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setDefaultButton( User1 );
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
-#ifdef Q_OS_UNIX
   KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)));
-#endif
 
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
@@ -222,9 +220,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
   QStringList headerNames;
-  headerNames << i18n("Subject") << i18n("Sender/Receiver") << i18n("Date") 
+  headerNames << i18n("Subject") << i18n("Sender/Receiver") << i18n("Date")
               << i18n("Folder") << "";
-  mLbxMatches->setHeaderLabels( headerNames ); 
+  mLbxMatches->setHeaderLabels( headerNames );
   mLbxMatches->header()->setStretchLastSection( false );
   mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
   mLbxMatches->setColumnWidth( 0, group.readEntry( "SubjectWidth", 150 ) );

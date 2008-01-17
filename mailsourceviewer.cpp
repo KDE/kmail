@@ -64,13 +64,11 @@ MailSourceViewer::MailSourceViewer( QWidget *parent )
   shortcut = new QShortcut( this );
   shortcut->setKey( Qt::Key_W+Qt::CTRL );
   connect( shortcut, SIGNAL( activated() ), SLOT( close() ) );
-#ifdef Q_OS_UNIX
   KWindowSystem::setIcons( winId(),
                   qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
                   IconSize( KIconLoader::Desktop ) ),
                   qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ),
                   IconSize( KIconLoader::Small ) ) );
-#endif  
   mSourceHighLighter = new MailSourceHighlighter( this );
 }
 
