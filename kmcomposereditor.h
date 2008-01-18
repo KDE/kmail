@@ -54,6 +54,8 @@ class KMComposerEditor : public KMeditor
      */
     QString text();
 
+    virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
+
   private:
      KMComposeWin *m_composerWin;
      bool mHtmlMode;

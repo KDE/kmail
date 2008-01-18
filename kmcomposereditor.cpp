@@ -35,6 +35,16 @@
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
  :KMeditor(parent),m_composerWin(win)
 {
+  switchTextMode( false );
+  mHtmlMode = false;
+}
+
+KMComposerEditor::~KMComposerEditor()
+{
+}
+
+void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter)
+{
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
@@ -52,15 +62,7 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
   QColor col3 = readerConfig.readEntry( "QuotedText2", defaultColor2  );
   QColor col4 = readerConfig.readEntry( "QuotedText1", defaultColor1  );
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", c  );
-  //TODO add it
-  //static_cast<KPIM::KEMailQuotingHighlighter*>(highlighter())->setQuoteColor(col1, col2, col3, col4);
-
-  switchTextMode( false );
-  mHtmlMode = false;
-}
-
-KMComposerEditor::~KMComposerEditor()
-{
+  highlighter->setQuoteColor(col1, col2, col3, col4);
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
