@@ -53,7 +53,7 @@ KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
   QColor col4 = readerConfig.readEntry( "QuotedText1", defaultColor1  );
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", c  );
   //TODO add it
-  //static_cast<Sonnet::KEMailQuotingHighlighter*>(hightighter())->setQuoteColor(col1, col2, col3, col4);
+  //static_cast<KPIM::KEMailQuotingHighlighter*>(highlighter())->setQuoteColor(col1, col2, col3, col4);
 
   switchTextMode( false );
   mHtmlMode = false;
