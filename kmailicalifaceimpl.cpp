@@ -657,13 +657,17 @@ static QString subresourceLabelForPresentation( const KMFolder * folder )
     }
     // Another special case is our own folders, under the imap INBOX, make
     // those prettier too
-    if ( parts[1] == QString::fromLatin1("inbox" ) ) {
+    const KMFolder *parent = folder;
+    while ( parent->parent() && parent->parent()->owner() ) {
+      parent = parent->parent()->owner();
+      if ( parent->isSystemFolder() ) {
         QStringList remainder(parts);
         remainder.pop_front();
         remainder.pop_front();
         label = i18n("My %1")
             .arg( remainder.join( QString::fromLatin1("/") ) );
-
+        break;
+      }
     }
     return label;
 }
