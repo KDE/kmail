@@ -28,8 +28,6 @@ class KActionCollection;
 using KPIM::KMeditor;
 
 /**
-It inherits QTreeWidget which is needed for showing the
-tooltips which contains the text of the snippet
 @author Robert Gruber
 */
 class SnippetWidget : public QTreeWidget

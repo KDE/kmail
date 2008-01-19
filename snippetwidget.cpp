@@ -328,10 +328,8 @@ void SnippetWidget::writeConfig()
   int iGroupCount = 0;
 
   foreach ( SnippetItem *const item, _list ) {  //write the snippet-list
-    //kDebug(5006) << "SnippetWidget::writeConfig() " << item->getName();
     SnippetGroup * group = dynamic_cast<SnippetGroup*>(item);
     if (group) {
-      //kDebug(5006) << "-->GROUP " << item->getName() << group->getId() << " " << iGroupCount;
       strKeyName=QString("snippetGroupName_%1").arg(iGroupCount);
       strKeyId=QString("snippetGroupId_%1").arg(iGroupCount);
 
@@ -340,7 +338,6 @@ void SnippetWidget::writeConfig()
 
       iGroupCount++;
     } else if (dynamic_cast<SnippetItem*>(item)) {
-      //kDebug(5006) << "-->ITEM " << item->getName() << item->getParent() << " " << iSnipCount;
       strKeyName=QString("snippetName_%1").arg(iSnipCount);
       strKeyText=QString("snippetText_%1").arg(iSnipCount);
       strKeyId=QString("snippetParent_%1").arg(iSnipCount);
@@ -358,7 +355,6 @@ void SnippetWidget::writeConfig()
       }
       iSnipCount++;
     } else {
-      //kDebug(5006) << "-->ERROR " << item->getName();
     }
   }
   kcg.writeEntry("snippetCount", iSnipCount);
@@ -422,9 +418,9 @@ void SnippetWidget::readConfig()
 
   /* Check if the snippetGroupCount property has been found
      if iCount is -1 this means, that the user has his snippets
-     stored without groups. Therefore we will call the
-     initConfigOldVersion() function below */
-  // should not happen since this function has been removed
+     stored without groups.
+     Should only happen with an empty config file.
+  */
 
   if (iCount != -1) {
     iCount = kcg.readEntry("snippetCount", 0);
@@ -450,7 +446,6 @@ void SnippetWidget::readConfig()
         }
     }
   } else {
-      //kDebug() << "iCount is not -1";
   }
 
   iCount = kcg.readEntry("snippetSavedCount", 0);

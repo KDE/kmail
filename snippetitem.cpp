@@ -81,7 +81,7 @@ void SnippetItem::slotExecute()
 
 SnippetItem * SnippetItem::findItemByName( const QString &name, const QList<SnippetItem *> &list)
 {
-  foreach ( SnippetItem *const item, list ) {  //write the snippet-list
+  foreach ( SnippetItem *const item, list ) {
     if (item->getName() == name)
         return item;
   }
@@ -90,7 +90,7 @@ SnippetItem * SnippetItem::findItemByName( const QString &name, const QList<Snip
 
 SnippetGroup * SnippetItem::findGroupById(int id, const QList<SnippetItem *> &list)
 {
-  foreach ( SnippetItem *const item, list ) {  //write the snippet-list
+  foreach ( SnippetItem *const item, list ) {
     SnippetGroup * group = dynamic_cast<SnippetGroup*>(item);
     if (group && group->getId() == id)
         return group;
@@ -98,23 +98,19 @@ SnippetGroup * SnippetItem::findGroupById(int id, const QList<SnippetItem *> &li
   return NULL;
 }
 
-/* * * * * * * * * * * * * * * * * * * *
-Deklaration for class SnippetGroup
-* * * * * * * * * * * * * * * * * * * */
-
 int SnippetGroup::iMaxId = 1;
 
 SnippetGroup::SnippetGroup( QTreeWidget *parent, const QString &name, int id )
  : SnippetItem( parent, name, "GROUP" )
 {
-    if (id > 0) {
-      iId = id;
-      if (id >= iMaxId)
-        iMaxId = id+1;
-    } else {
-      iId = iMaxId;
-      iMaxId++;
-    }
+  if (id > 0) {
+    iId = id;
+    if (id >= iMaxId)
+      iMaxId = id+1;
+  } else {
+    iId = iMaxId;
+    iMaxId++;
+  }
 }
 
 SnippetGroup::~SnippetGroup()

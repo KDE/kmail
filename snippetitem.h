@@ -61,7 +61,7 @@ private:
 /**
 This class represents one group in the listview.
 It is derived from SnippetItem in order to allow storing 
-it in the main QPtrList<SnippetItem>.
+it in the main QList<SnippetItem*>.
 @author Robert Gruber
 */
 class SnippetGroup : public SnippetItem {
