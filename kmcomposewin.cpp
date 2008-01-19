@@ -221,10 +221,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
-  mEditor = new KMComposerEditor(this, mSnippetSplitter);
+  mEditor = new KMComposerEditor( this, mSnippetSplitter );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
+  mSnippetSplitter->setCollapsible( 0, false );
 
   mSplitter->setOpaqueResize( true );
 
@@ -598,7 +599,8 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
   saveMainWindowSettings( KMKernel::config()->group( "Composer" ) );
-  GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
+  if ( mSnippetAction->isChecked() )
+    GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
 
   // make sure config changes are written to disk, cf. bug 127538
   GlobalSettings::self()->writeConfig();
@@ -1154,9 +1156,10 @@ void KMComposeWin::setupActions( void )
   mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
   connect( mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)) );
 
-  mSnippetAction = new KToggleAction( i18n("&Snippets"), this);
+  mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
   actionCollection()->addAction( "snippets", mSnippetAction );
-  connect( mSnippetAction, SIGNAL(toggled(bool)), mSnippetWidget, SLOT(setShown(bool)) );
+  connect( mSnippetAction, SIGNAL( toggled(bool) ),
+           mSnippetWidget, SLOT( setShown(bool) ) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
   mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ), i18n("&Automatic Spellchecking"), this );

@@ -305,7 +305,7 @@ void SnippetWidget::slotExecuted(QTreeWidgetItem * item)
  */
 void SnippetWidget::insertIntoActiveView( const QString &text )
 {
-    mEditor->insertPlainText( text );
+  mEditor->insertPlainText( text );
 }
 
 
