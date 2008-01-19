@@ -98,15 +98,6 @@ SnippetGroup * SnippetItem::findGroupById(int id, const QList<SnippetItem *> &li
   return NULL;
 }
 
-QVariant SnippetItem::data(int column, int role) const
-{
-  if (role == Qt::ToolTipRole && column == 0) {
-    //TODO also ask the view if we are supposed to show tooltips...
-    return getText();
-  }
-  return QTreeWidgetItem::data(column, role);
-}
-
 /* * * * * * * * * * * * * * * * * * * *
 Deklaration for class SnippetGroup
 * * * * * * * * * * * * * * * * * * * */

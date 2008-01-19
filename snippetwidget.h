@@ -28,7 +28,6 @@ class KActionCollection;
 using KPIM::KMeditor;
 
 /**
-This is the widget which gets added to the right TreeToolView.
 It inherits QTreeWidget which is needed for showing the
 tooltips which contains the text of the snippet
 @author Robert Gruber

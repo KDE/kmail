@@ -119,33 +119,36 @@ void SnippetWidget::slotAdd()
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach (SnippetItem *item, _list) {
     if (dynamic_cast<SnippetGroup*>(item)) {
-      dlg.cbGroup->insertItem(item->getName());
+      dlg.cbGroup->addItem(item->getName());
     }
   }
-  dlg.cbGroup->setCurrentText(group->getName());
+  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( group->getName() ) );
 
   if (dlg.exec() == QDialog::Accepted) {
       group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
-      _list.append( makeItem( group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.keyWidget->keySequence() ) );
+      _list.append( makeItem( group, dlg.snippetName->text(),
+                              dlg.snippetText->toPlainText(),
+                              dlg.keyWidget->keySequence() ) );
   }
 }
 
 SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
                                       const QString &text, const QKeySequence &keySeq )
 {
-    SnippetItem *item = new SnippetItem(parent, name, text);
-    const QString actionName = i18n("Snippet %1", name);
-    const QString normalizedName = QString(actionName).replace(" ", "_");
-    if ( !mActionCollection->action( normalizedName ) ) {
-        KAction *action = mActionCollection->addAction( normalizedName,
+  SnippetItem *item = new SnippetItem( parent, name, text );
+  const QString actionName = i18n( "Snippet %1", name );
+  const QString normalizedName = QString( actionName ).replace( " ", "_" );
+  item->setToolTip( 0, text );
+  if ( !mActionCollection->action( normalizedName ) ) {
+    KAction *action = mActionCollection->addAction( normalizedName,
                                                         item, SLOT( slotExecute() ) );
-        action->setText( actionName );
-        action->setShortcut( keySeq );
-        item->setAction( action );
-        connect( item, SIGNAL( execute( QTreeWidgetItem* ) ),
-                 this, SLOT( slotExecuted( QTreeWidgetItem* ) ) );
-    }
-    return item;
+    action->setText( actionName );
+    action->setShortcut( keySeq );
+    item->setAction( action );
+    connect( item, SIGNAL( execute( QTreeWidgetItem* ) ),
+             this, SLOT( slotExecuted( QTreeWidgetItem* ) ) );
+  }
+  return item;
 }
 
 /*!
@@ -185,8 +188,7 @@ void SnippetWidget::slotRemove()
 
     for ( int i = 0; i < _list.size(); i++ ) {
       if (_list[i]->getParent() == group->getId()) {
-        //kDebug(5006) << "remove " << _list[i]->getName();
-        delete _list.takeAt( i );   //probably not worth optimizing
+        delete _list.takeAt( i-- );
       }
     }
   }
@@ -226,16 +228,19 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach (SnippetItem *item, _list) {
     if (dynamic_cast<SnippetGroup*>(item)) {
-      dlg.cbGroup->insertItem(item->getName());
+      dlg.cbGroup->addItem( item->getName() );
     }
   }
-  dlg.cbGroup->setCurrentText(SnippetItem::findGroupById(pSnippet->getParent(), _list)->getName());
+  QString parentGroupText =
+      SnippetItem::findGroupById( pSnippet->getParent(), _list )->getName();
+  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parentGroupText ) );
 
   if (dlg.exec() == QDialog::Accepted) {
     //update the QListView and the SnippetItem
     item->setText( 0, dlg.snippetName->text() );
     pSnippet->setName( dlg.snippetName->text() );
     pSnippet->setText( dlg.snippetText->toPlainText() );
+    pSnippet->setToolTip( 0, pSnippet->getText() );
     if ( pSnippet->getAction() )
       pSnippet->getAction()->setShortcut( dlg.keyWidget->keySequence());
 
@@ -549,10 +554,18 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   QDialog dlg(this);
   dlg.setWindowTitle(i18n("Enter Values for Variables"));
 
-  QGridLayout * layout = new QGridLayout( &dlg, 1, 1, 11, 6 );
-  QGridLayout * layoutTop = new QGridLayout( 0, 1, 1, 0, 6 );
-  QGridLayout * layoutVar = new QGridLayout( 0, 1, 1, 0, 6 );
-  QGridLayout * layoutBtn = new QGridLayout( 0, 2, 1, 0, 6 );
+  QGridLayout * layout = new QGridLayout( &dlg );
+  QGridLayout * layoutTop = new QGridLayout();
+  QGridLayout * layoutVar = new QGridLayout();
+  QGridLayout * layoutBtn = new QGridLayout();
+  layout->setMargin( 11 );
+  layout->setSpacing( 6 );
+  layoutTop->setMargin( 0 );
+  layoutTop->setSpacing( 6 );
+  layoutVar->setMargin( 0 );
+  layoutVar->setSpacing( 6 );
+  layoutBtn->setMargin( 0 );
+  layoutBtn->setSpacing( 6 );
   layout->setObjectName( "layout" );
   layoutTop->setObjectName( "layoutTop" );
   layoutVar->setObjectName( "layoutVar" );
@@ -566,7 +579,7 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   labTop->setObjectName( "label" );
   layoutTop->addWidget(labTop, 0, 0);
   labTop->setText( i18n("Enter the replacement values for %1:", var) );
-  layout->addMultiCellLayout( layoutTop, 0, 0, 0, 1 );
+  layout->addLayout( layoutTop, 0, 0, 1, 2 );
 
 
   cb = new QCheckBox( &dlg );
@@ -588,7 +601,7 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
                          "If you use the same variable later, even in another snippet, the value entered to the right "
                          "will be the default value for that variable.") );
 
-  layout->addMultiCellLayout( layoutVar, 1, 1, 0, 1 );
+  layout->addLayout( layoutVar, 1, 0, 1, 2 );
 
   KPushButton * btn1 = new KPushButton( KStandardGuiItem::cancel(), &dlg );
   btn1->setObjectName( "pushButton1") ;
@@ -599,7 +612,7 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   btn2->setDefault( true );
   layoutBtn->addWidget( btn2, 0, 1 );
 
-  layout->addMultiCellLayout( layoutBtn, 2, 2, 0, 1 );
+  layout->addLayout( layoutBtn, 2, 0, 1, 2 );
   te->setFocus();
   // --END-- building a dynamic dialog
 
@@ -640,7 +653,7 @@ QTreeWidgetItem * SnippetWidget::selectedItem() const
 {
   if ( selectedItems().isEmpty() )
     return 0;
-  return selectedItems().first();
+  return currentItem();
 }
 
 
@@ -697,10 +710,10 @@ bool SnippetWidget::dropMimeData( QTreeWidgetItem *parent, int index,
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach ( SnippetItem *const si, _list ) {
     if ( dynamic_cast<SnippetGroup*>( si ) ) {
-      dlg.cbGroup->insertItem( si->getName() );
+      dlg.cbGroup->addItem( si->getName() );
     }
   }
-  dlg.cbGroup->setCurrentText(group->getName());
+  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( group->getName() ) );
 
   if (dlg.exec() == QDialog::Accepted) {
     /* get the group that the user selected with the combobox */
