@@ -46,11 +46,12 @@ private slots:
     void readConfig();
 
 protected:
-    bool acceptDrag(QDropEvent *event) const;
-    void startDrag( Qt::DropActions supportedActions );
-    bool dropMimeData( QTreeWidgetItem *parent, int index,
-                       const QMimeData *data, Qt::DropAction action );
-    void contextMenuEvent( QContextMenuEvent *e );
+    virtual void dragMoveEvent( QDragMoveEvent * event );
+    virtual void dragEnterEvent( QDragEnterEvent * event );
+    virtual void startDrag( Qt::DropActions supportedActions );
+    virtual void dropEvent( QDropEvent * event );
+    virtual void contextMenuEvent( QContextMenuEvent *e );
+
 private:
     void insertIntoActiveView( const QString &text );
     QString parseText( const QString &text );

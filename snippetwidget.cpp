@@ -658,54 +658,60 @@ QTreeWidgetItem * SnippetWidget::selectedItem() const
 
 
 /*!
-    Reimplementation from QListView.
     Check here if the data the user is about to drop fits our restrictions.
     We only accept dropps of plaintext, because from the dropped text
     we will create a snippet.
  */
-bool SnippetWidget::acceptDrag (QDropEvent *event) const
+void SnippetWidget::dragMoveEvent( QDragMoveEvent * event )
 {
-  //kDebug(5006) << "Format: " << event->format() << "" << event->pos();
-
   QTreeWidgetItem * item = itemAt(event->pos());
 
   if (item &&
-      QString(event->format()).startsWith("text/plain") &&
+      event->mimeData()->hasText() &&
       static_cast<SnippetWidget *>(event->source()) != this) {
-    ///kDebug(5006) << "returning true ";
-    return true;
-  } else if(item &&
-            event->provides("text/x-kmail-textsnippet") &&
-            static_cast<SnippetWidget *>(event->source()) != this) {
-    //kDebug(5006) << "returning true ";
-    return true;
+    event->setDropAction( Qt::CopyAction );
+    event->accept();
   } else {
-    //kdebug(5006) << "returning false";
-    event->acceptAction( false );
-    return false;
+    event->ignore();
   }
 }
 
-/*!
-    Called on drop.
-    Return true if we did use the data, false if we did not.
- */
-bool SnippetWidget::dropMimeData( QTreeWidgetItem *parent, int index,
-                                  const QMimeData *data, Qt::DropAction action )
+void SnippetWidget::dragEnterEvent( QDragEnterEvent * event )
 {
-  QTreeWidgetItem *item = parent->child( index );
-  SnippetGroup *group = dynamic_cast<SnippetGroup *>( item );
-  if ( !group )
-    group = dynamic_cast<SnippetGroup *>( parent );
+  if ( event->mimeData()->hasFormat("text/x-kmail-textsnippet") ||
+       event->mimeData()->hasText() ) {
+    event->setDropAction( Qt::CopyAction );
+    event->accept();
+  }
+}
 
-  if ( !group || !data->hasText() || data->text().isEmpty() )
-    return false;
+void SnippetWidget::dropEvent( QDropEvent * event )
+{
+  QTreeWidgetItem * item = itemAt( event->pos() );
+  if ( !item || !event->mimeData()->hasText() ) {
+    event->ignore();
+    return;
+  }
+  else {
+    event->setDropAction( Qt::CopyAction );
+    event->accept();
+  }
+
+  SnippetItem *snippet = dynamic_cast<SnippetItem *>( item );
+  SnippetGroup *group = dynamic_cast<SnippetGroup *>( item );
+  SnippetGroup *parent = 0;
+  if ( group )
+    parent = group;
+  else {
+    assert( dynamic_cast<SnippetGroup*>( snippet->parent() ) );
+    parent = static_cast<SnippetGroup*>( snippet->parent() );
+  }
 
   // fill the dialog with the given data
   SnippetDlg dlg( mActionCollection, this );
   dlg.setObjectName( "SnippetDlg" );
   dlg.snippetName->clear();
-  dlg.snippetText->setText( data->text() );
+  dlg.snippetText->setText( event->mimeData()->text() );
 
   /*fill the combobox with the names of all SnippetGroup entries*/
   foreach ( SnippetItem *const si, _list ) {
@@ -713,16 +719,15 @@ bool SnippetWidget::dropMimeData( QTreeWidgetItem *parent, int index,
       dlg.cbGroup->addItem( si->getName() );
     }
   }
-  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( group->getName() ) );
+  dlg.cbGroup->setCurrentIndex( dlg.cbGroup->findText( parent->getName() ) );
 
-  if (dlg.exec() == QDialog::Accepted) {
+  if ( dlg.exec() == QDialog::Accepted ) {
     /* get the group that the user selected with the combobox */
-    group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
+    group = dynamic_cast<SnippetGroup*>(
+             SnippetItem::findItemByName( dlg.cbGroup->currentText(), _list ) );
     _list.append( makeItem( group, dlg.snippetName->text(),
                   dlg.snippetText->toPlainText(), dlg.keyWidget->keySequence() ) );
-    return true;
   }
-  return false;
 }
 
 void SnippetWidget::startDrag( Qt::DropActions supportedActions )
