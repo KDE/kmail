@@ -62,8 +62,6 @@ void KMailApplication::setEventLoopReached() {
 int KMailApplication::newInstance()
 {
   kDebug(5006);
-  if (!kmkernel)
-     return 0;
 
   // If the event loop hasn't been reached yet, the kernel is probably not
   // fully initialized. Creating an instance would therefore fail, this is why
@@ -73,6 +71,9 @@ int KMailApplication::newInstance()
     mDelayedInstanceCreation = true;
     return 0;
   }
+  
+  if (!kmkernel)
+     return 0;
 
   if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
     kmkernel->handleCommandLine( true );
