@@ -958,7 +958,7 @@ QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * j
   bool readOnly = false;
   if ( it != mapJobData.end() ) {
     const KMFolder * const folder = (*it).parent;
-    assert(folder);
+    if( !folder ) return _error;
     const KMFolderCachedImap * const imap
         = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
     if ( imap ) {
