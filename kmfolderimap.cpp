@@ -410,7 +410,8 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
   list.append(aMsg);
   QList<int> index;
   int ret = addMsg(list, index);
-  aIndex_ret = &index.first();
+  if ( !index.isEmpty() )
+    aIndex_ret = &index.first();
   return ret;
 }
 
