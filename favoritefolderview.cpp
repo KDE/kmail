@@ -503,7 +503,7 @@ void FavoriteFolderView::contentsDragEnterEvent(QDragEnterEvent * e)
     setDropVisualizer( false );
     setDropHighlighter( false );
   }
-  FolderTreeBase::contentsDragEnterEvent( e );
+  e->accept();
 }
 
 void FavoriteFolderView::readColorConfig()

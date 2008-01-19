@@ -1405,7 +1405,7 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   else
     dropItem = 0;
 
-  e->setAccepted( acceptDrag(e) );
+  e->setAccepted( true );
 }
 
 //-----------------------------------------------------------------------------
