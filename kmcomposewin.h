@@ -472,8 +472,7 @@ class KMComposeWin : public KMail::Composer
     void fontChanged( const QFont & );
     void slotCursorPositionChanged();
 
-  void slotSpellCheckingStop();
-  void slotSpellCheckingCanceled();
+  void slotSpellCheckingStatus(const QString & status);
 
   public: // kmkernel, attachmentlistview
     bool addAttach( const KUrl &url );

@@ -227,6 +227,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor, SLOT( slotDictionaryChanged( const QString & ) ) );
   connect( mEditor, SIGNAL( highlighterCreated() ), this, SLOT( slotHighlighterCreated() ) );
+  connect( mEditor, SIGNAL( spellCheckStatus(const QString &)), this, SLOT( slotSpellCheckingStatus( const QString & ) ) );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -3980,18 +3981,11 @@ void KMComposeWin::ensurePolished()
   KMail::Composer::ensurePolished();
 }
 
-void KMComposeWin::slotSpellCheckingStop()
+void KMComposeWin::slotSpellCheckingStatus(const QString & status)
 {
-  statusBar()->changeItem( i18n(" Spell check stopped."), 0 );
+  statusBar()->changeItem( status, 0 );
   QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
 }
-
-void KMComposeWin::slotSpellCheckingCanceled()
-{
-  statusBar()->changeItem( i18n(" Spell check canceled."), 0 );
-  QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
-}
-
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
 {
