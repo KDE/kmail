@@ -180,6 +180,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mMainWidget = new QWidget( this );
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), mMainWidget );
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
+
+
   mFcc = new KMFolderComboBox( mMainWidget );
   mFcc->showOutboxFolder( false );
   mTransport = new MailTransport::TransportComboBox( mMainWidget );
@@ -222,6 +224,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
   mEditor = new KMComposerEditor( this, mSnippetSplitter );
+
+  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor, SLOT( slotDictionaryChanged( const QString & ) ) );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -1171,7 +1175,7 @@ void KMComposeWin::setupActions( void )
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
   connect( mEditor, SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotUpdateCheckSpellChecking(bool)));
- 
+
   QStringList encodings = KMMsgBase::supportedEncodings( true );
   encodings.prepend( i18n("Auto-Detect") );
   mEncodingAction->setItems( encodings );

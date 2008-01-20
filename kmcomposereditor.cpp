@@ -65,6 +65,16 @@ void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * 
   highlighter->setQuoteColor(col1, col2, col3, col4);
 }
 
+void KMComposerEditor::slotDictionaryChanged( const QString & dict )
+{
+  if ( highlighter() )
+  {
+    kDebug()<<" language bezfore: "<<highlighter()->currentLanguage();
+    highlighter()->setCurrentLanguage( dict );
+    kDebug()<<" language after :"<<highlighter()->currentLanguage();
+  }
+}
+
 QString KMComposerEditor::smartQuote( const QString & msg )
 {
   return m_composerWin->smartQuote(msg);

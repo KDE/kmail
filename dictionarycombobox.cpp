@@ -45,10 +45,6 @@ namespace KMail {
     reloadCombo();
     connect( this, SIGNAL( activated( int ) ),
              this, SLOT( slotDictionaryChanged( int ) ) );
-    //TODO needs to update dictionary
-    /*    connect( this, SIGNAL( dictionaryChanged( int ) ),
-             mSpellConfig, SLOT( sSetDictionary( int ) ) );
-    */
   }
 
   DictionaryComboBox::~DictionaryComboBox()
@@ -133,7 +129,11 @@ namespace KMail {
   {
     kDebug( 5006 ) <<"DictionaryComboBox::slotDictionaryChanged(" << idx << ")";
     if( !mDictionaries.isEmpty())
-    	emit dictionaryChanged( mDictionaries[idx] );
+      {
+        emit dictionaryChanged( mspeller->availableLanguages()[idx] );
+        //kDebug(5006)<<"mDictionaries[idx]mDictionaries[idx] :"<<mDictionaries[idx];
+        //kDebug(5006)<<" mspeller->availableLanguages()[i]  :"<<mspeller->availableLanguages()[idx];
+      }
     emit dictionaryChanged( idx );
   }
 
