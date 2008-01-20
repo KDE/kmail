@@ -361,7 +361,7 @@ namespace KMail {
 
     // "Dictionary" combo box and label:
     ++row;
-    mDictionaryCombo = new DictionaryComboBox( tab );
+    mDictionaryCombo = new KPIM::DictionaryComboBox( tab );
     glay->addWidget( mDictionaryCombo, row, 1 );
     label = new QLabel( i18n("D&ictionary:"), tab );
     label->setBuddy( mDictionaryCombo );

@@ -74,7 +74,7 @@ using MailTransport::Transport;
 #include "stl_util.h"
 
 using KMail::AttachmentListView;
-using KMail::DictionaryComboBox;
+using KPIM::DictionaryComboBox;
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -179,7 +179,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   }
   mMainWidget = new QWidget( this );
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), mMainWidget );
-  mDictionaryCombo = new DictionaryComboBox( mMainWidget );
+  mDictionaryCombo = new KPIM::DictionaryComboBox( mMainWidget );
 
 
   mFcc = new KMFolderComboBox( mMainWidget );

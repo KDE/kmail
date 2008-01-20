@@ -158,7 +158,6 @@ set(kmailprivate_LIB_SRCS
    bodyvisitor.cpp
    antispamwizard.cpp
    urlhandlermanager.cpp
-   dictionarycombobox.cpp
    secondarywindow.cpp
    filterlog.cpp
    filterlogdlg.cpp

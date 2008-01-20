@@ -52,9 +52,12 @@ namespace KPIMIdentities {
 namespace KMail {
   class SignatureConfigurator;
   class XFaceConfigurator;
-  class DictionaryComboBox;
   class FolderRequester;
 }
+namespace KPIM {
+  class DictionaryComboBox;
+}
+
 namespace MailTransport {
   class TransportComboBox;
 }
@@ -98,7 +101,7 @@ namespace KMail {
     // "advanced" tab:
     QLineEdit                        *mReplyToEdit;
     QLineEdit                        *mBccEdit;
-    KMail::DictionaryComboBox        *mDictionaryCombo;
+    KPIM::DictionaryComboBox        *mDictionaryCombo;
     FolderRequester                  *mFccCombo;
     FolderRequester                  *mDraftsCombo;
     FolderRequester                  *mTemplatesCombo;
