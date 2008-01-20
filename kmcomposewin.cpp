@@ -226,6 +226,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mEditor = new KMComposerEditor( this, mSnippetSplitter );
 
   connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor, SLOT( slotDictionaryChanged( const QString & ) ) );
+  connect( mEditor, SIGNAL( highlighterCreated() ), this, SLOT( slotHighlighterCreated() ) );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -360,6 +361,11 @@ KMComposeWin::~KMComposeWin()
 QString KMComposeWin::dbusObjectPath() const
 {
   return mdbusObjectPath;
+}
+
+void KMComposeWin::slotHighlighterCreated()
+{
+  mEditor->slotDictionaryChanged( mDictionaryCombo->realDictionaryName() );
 }
 
 //-----------------------------------------------------------------------------

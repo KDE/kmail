@@ -686,6 +686,8 @@ class KMComposeWin : public KMail::Composer
     void uncompressAttach( KMAtmListViewItem *attachmentItem );
     void editorFocusChanged( bool gained );
 
+    void slotHighlighterCreated();
+
   private:
     QWidget   *mMainWidget;
     MailTransport::TransportComboBox *mTransport;

@@ -1,7 +1,7 @@
 /**
  * kmeditor.cpp
  *
- * Copyright (C)  2007 Laurent Montel <montel@kde.org>
+ * Copyright (C)  2007, 2008 Laurent Montel <montel@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -63,6 +63,7 @@ void KMComposerEditor::changeHighlighterColors(KPIM::KEMailQuotingHighlighter * 
   QColor col4 = readerConfig.readEntry( "QuotedText1", defaultColor1  );
   QColor misspelled = readerConfig.readEntry( "MisspelledColor", c  );
   highlighter->setQuoteColor(col1, col2, col3, col4);
+
 }
 
 void KMComposerEditor::slotDictionaryChanged( const QString & dict )
