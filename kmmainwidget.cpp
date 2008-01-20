@@ -3162,7 +3162,7 @@ void KMMainWidget::setupActions()
 
   mToggleTodoAction =
     new KToggleAction( KIcon( "mail-mark-task" ),
-                       i18n("&Action Item"), this );
+                       i18n("Mark Message as &Action Item"), this );
   actionCollection()->addAction( "status_todo", mToggleTodoAction );
   connect( mToggleTodoAction, SIGNAL(triggered(bool) ),
            SLOT(slotSetMsgStatusTodo()) );
@@ -3202,7 +3202,7 @@ void KMMainWidget::setupActions()
   mToggleThreadImportantAction->setCheckedState( KGuiItem(i18n("Remove &Important Thread Mark")) );
   mThreadStatusMenu->addAction( mToggleThreadImportantAction );
 
-  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("&Action Item"), this);
+  mToggleThreadTodoAction = new KToggleAction(KIcon("mail-mark-task"), i18n("Mark Thread as &Action Item"), this);
   actionCollection()->addAction("thread_todo", mToggleThreadTodoAction );
   connect(mToggleThreadTodoAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusTodo()));
   mToggleThreadTodoAction->setCheckedState( KGuiItem(i18n("Remove &To-do Thread Mark")) );
