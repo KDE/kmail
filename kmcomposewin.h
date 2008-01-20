@@ -439,7 +439,6 @@ class KMComposeWin : public KMail::Composer
     void slotToggleMarkup();
     void toggleMarkup( bool markup );
     void htmlToolBarVisibilityChanged( bool visible );
-    void slotSpellcheckDone( int result );
     void slotSpellcheckDoneClearStatus();
 
   public slots: // kmkernel
@@ -472,6 +471,9 @@ class KMComposeWin : public KMail::Composer
     void slotSizeAction( int );
     void fontChanged( const QFont & );
     void slotCursorPositionChanged();
+
+  void slotSpellCheckingStop();
+  void slotSpellCheckingCanceled();
 
   public: // kmkernel, attachmentlistview
     bool addAttach( const KUrl &url );

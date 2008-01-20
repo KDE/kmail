@@ -296,8 +296,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
-  connect( mEditor, SIGNAL(spellcheck_done(int)),
-           this, SLOT(slotSpellcheckDone (int)) );
   connect( mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
            this, SLOT( slotAttachPNGImageData(const QByteArray &) ) );
   connect( mEditor, SIGNAL( focusChanged(bool) ),
@@ -3982,28 +3980,18 @@ void KMComposeWin::ensurePolished()
   KMail::Composer::ensurePolished();
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellcheckDone( int result )
+void KMComposeWin::slotSpellCheckingStop()
 {
-  //Laurent: fixme
-#if 0
-  kDebug(5006) <<"spell check complete: result =" << result;
-  mSpellCheckInProgress = false;
-
-  switch( result ) {
-  case KS_CANCEL:
-    statusBar()->changeItem( i18n(" Spell check canceled."), 0 );
-    break;
-  case KS_STOP:
-    statusBar()->changeItem( i18n(" Spell check stopped."), 0 );
-    break;
-  default:
-    statusBar()->changeItem( i18n(" Spell check complete."), 0 );
-    break;
-  }
+  statusBar()->changeItem( i18n(" Spell check stopped."), 0 );
   QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
-#endif
 }
+
+void KMComposeWin::slotSpellCheckingCanceled()
+{
+  statusBar()->changeItem( i18n(" Spell check canceled."), 0 );
+  QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
+}
+
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
 {
