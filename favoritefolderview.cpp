@@ -265,7 +265,7 @@ static void selectKontactPlugin( const QString &plugin )
 
 void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
 {
-  if ( !fti->folder() || !fti->folder()->storage() )
+  if ( !fti || !fti->folder() || !fti->folder()->storage() )
     return;
   switch ( fti->folder()->storage()->contentsType() ) {
     case KMail::ContentsTypeContact:
@@ -298,7 +298,8 @@ void FavoriteFolderView::handleGroupwareFolder( KMFolderTreeItem *fti )
 
 void FavoriteFolderView::itemClicked(Q3ListViewItem * item)
 {
-  if ( item && !item->isSelected() )
+  if ( !item ) return;
+  if ( !item->isSelected() )
     item->setSelected( true );
   item->repaint();
   handleGroupwareFolder( static_cast<KMFolderTreeItem*>( item ) );
