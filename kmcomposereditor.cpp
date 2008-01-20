@@ -74,6 +74,7 @@ void KMComposerEditor::slotDictionaryChanged( const QString & dict )
     highlighter()->setCurrentLanguage( dict );
     kDebug()<<" language after :"<<highlighter()->currentLanguage();
   }
+  setSpellCheckingLanguage(dict);
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
