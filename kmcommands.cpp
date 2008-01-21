@@ -1593,6 +1593,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setUseFixedFont( mUseFixedFont );
   printWin.setOverrideEncoding( mEncoding );
   printWin.setPrintFont( mOverrideFont );
+  printWin.setDecryptMessageOverwrite( true );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
 
