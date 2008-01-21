@@ -70,9 +70,9 @@ void KMComposerEditor::slotDictionaryChanged( const QString & dict )
 {
   if ( highlighter() )
   {
-    kDebug()<<" language bezfore: "<<highlighter()->currentLanguage();
+    //kDebug()<<" language before: "<<highlighter()->currentLanguage();
     highlighter()->setCurrentLanguage( dict );
-    kDebug()<<" language after :"<<highlighter()->currentLanguage();
+    //kDebug()<<" language after :"<<highlighter()->currentLanguage();
   }
   setSpellCheckingLanguage(dict);
 }
