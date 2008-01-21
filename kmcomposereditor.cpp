@@ -29,6 +29,7 @@
 
 #include <klocale.h>
 #include <kmenu.h>
+#include <kdeversion.h>
 
 #include <QBuffer>
 
@@ -74,7 +75,9 @@ void KMComposerEditor::slotDictionaryChanged( const QString & dict )
     highlighter()->setCurrentLanguage( dict );
     //kDebug()<<" language after :"<<highlighter()->currentLanguage();
   }
+#if KDE_IS_VERSION(4,0,80)
   setSpellCheckingLanguage(dict);
+#endif
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
