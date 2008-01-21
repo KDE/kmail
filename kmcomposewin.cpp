@@ -4511,11 +4511,10 @@ void KMComposeWin::slotEditDone(KMail::EditorWatcher * watcher)
 void KMComposeWin::slotAttachmentDragStarted()
 {
   kDebug(5006);
-  int idx = 0;
   QList<QUrl> urls;
   foreach ( KMAtmListViewItem *const item, mAtmItemList ) {
     if ( item->isSelected() ) {
-      KMMessagePart *msgPart = mAtmList.at( idx );
+      KMMessagePart *msgPart = item->attachment();
       KTempDir *tempDir = new KTempDir(); // will remove the directory on destruction
       mTempDirs.append( tempDir );
       const QString fileName = tempDir->name() + '/' + msgPart->name();
@@ -4523,10 +4522,9 @@ void KMComposeWin::slotAttachmentDragStarted()
                                    fileName,
                                    false, false, false );
       QUrl url;
-      url.setProtocol( "file" );
+      url.setScheme( "file" );
       url.setPath( fileName );
       urls.append( url );
-      idx++;
     }
   }
   if ( urls.isEmpty() )

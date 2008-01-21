@@ -38,8 +38,7 @@ AttachmentListView::AttachmentListView( KMail::Composer * composer,
   : QTreeWidget( parent ),
     mComposer( composer )
 {
-  setAcceptDrops( true );
-  setDragEnabled( true );  //H4X artifact of porting, revise!
+  setDragDropMode( QAbstractItemView::DragDrop );
   setObjectName( "attachment list view" );
   setSelectionMode( QAbstractItemView::ExtendedSelection );
   setIndentation( 0 );
@@ -158,11 +157,16 @@ bool AttachmentListView::areCryptoCBsEnabled()
 
 void AttachmentListView::dragEnterEvent( QDragEnterEvent* e )
 {
-  KUrl::List uriList = KUrl::List::fromMimeData( e->mimeData() );
-  if( KPIM::MailList::canDecode( e->mimeData() ) || !uriList.isEmpty() )
-    e->setAccepted( true );
-  else
-    QTreeWidget::dragEnterEvent( e );
+  // Ignore drags from ourself
+  if ( e->source() == this )
+    e->ignore();
+  else {
+    KUrl::List uriList = KUrl::List::fromMimeData( e->mimeData() );
+    if( KPIM::MailList::canDecode( e->mimeData() ) || !uriList.isEmpty() )
+      e->setAccepted( true );
+    else
+      QTreeWidget::dragEnterEvent( e );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -233,6 +237,7 @@ void AttachmentListView::keyPressEvent( QKeyEvent * e )
 
 void AttachmentListView::startDrag( Qt::DropActions supportedActions )
 {
+  Q_UNUSED( supportedActions );
   emit dragStarted();
 }
 
