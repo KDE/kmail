@@ -178,7 +178,7 @@ namespace KMail {
     QMimeData *md = new QMimeData;
     drag->setMimeData( md );
     item->identity().populateMimeData( md );
-    drag->setPixmap( SmallIcon("identity") );
+    drag->setPixmap( SmallIcon("user-identity") );
     drag->start();
   }
 
