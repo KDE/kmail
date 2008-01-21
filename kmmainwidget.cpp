@@ -168,7 +168,8 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFolderViewSplitter( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
-    mAccel( 0 )
+    mAccel( 0 ),
+    mVacationIndicatorActive( false )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -256,6 +257,12 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   // must be the last line of the constructor:
   mStartupDone = true;
 
+
+  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
+  KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
+  mVacationScriptIndicator = new QLabel( QString(), sb );
+  mVacationScriptIndicator->hide();
+  connect( mVacationScriptIndicator, SIGNAL(itemReleased(int)), SLOT(slotEditVacation()) );
   if ( GlobalSettings::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 }
@@ -462,7 +469,7 @@ void KMMainWidget::layoutSplitters()
 
     // Because of some bug, the favorite folder view is not updated when its
     // size changes, which creates glitches like the horizontal scrollbar not
-    // appearing. To fix that, manually update the widget if the surrounding 
+    // appearing. To fix that, manually update the widget if the surrounding
     // splitters are moved.
     // The other workaround for this bug can be found in resizeEvent().
     connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
@@ -679,7 +686,7 @@ void KMMainWidget::writeConfig()
   // Don't save the sizes of all the widgets when we were never shown.
   // This can happen in Kontact, where the KMail plugin is automatically
   // loaded, but not necessarily shown.
-  // This prevents invalid sizes from being saved 
+  // This prevents invalid sizes from being saved
   if ( mWasEverShown ) {
     GlobalSettings::self()->setFolderViewWidth( mFolderTree->width() );
 
@@ -1905,10 +1912,12 @@ void KMMainWidget::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckVacation()
 {
+  updateVactionScriptStatus( false );
   if ( !kmkernel->askToGoOnline() )
     return;
 
-  new Vacation( this, true /* check only */ );
+  Vacation *vac = new Vacation( this, true /* check only */ );
+  connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
 }
 
 void KMMainWidget::slotEditVacation()
@@ -1921,6 +1930,7 @@ void KMMainWidget::slotEditVacation()
     return;
 
   mVacation = new Vacation( this );
+  connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
   if ( mVacation->isUsable() ) {
     connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
   } else {
@@ -4363,4 +4373,19 @@ void KMMainWidget::showEvent( QShowEvent *event )
 {
   QWidget::showEvent( event );
   mWasEverShown = true;
+}
+
+void KMMainWidget::updateVactionScriptStatus( bool active )
+{
+  mVacationIndicatorActive = active;
+  if ( !active ) {
+    mVacationScriptIndicator->setText( i18n("Out of office reply active") );
+    QPalette palette;
+    palette.setColor( mVacationScriptIndicator->backgroundRole(), Qt::yellow );
+    mVacationScriptIndicator->setPalette( palette );
+    mVacationScriptIndicator->setCursor( QCursor( Qt::PointingHandCursor ) );
+    mVacationScriptIndicator->show();
+  } else {
+    mVacationScriptIndicator->hide();
+  }
 }

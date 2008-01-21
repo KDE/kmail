@@ -141,6 +141,8 @@ namespace KMail {
 
   void VacationDialog::setMessageText( const QString & text ) {
     mTextEdit->setText( text );
+    const int height = ( mTextEdit->fontMetrics().lineSpacing() + 1 ) * 11;
+    mTextEdit->setMinimumHeight( height );
   }
 
   int VacationDialog::notificationInterval() const {

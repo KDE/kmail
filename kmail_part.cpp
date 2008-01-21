@@ -111,6 +111,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   topLayout->setMargin(0);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
@@ -194,6 +195,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   mainWidget->initializeFilterActions();
   mainWidget->initializeMessageTagActions();
   mainWidget->initializeFolderShortcutActions();
+  mainWidget->updateVactionScriptStatus();
 }
 
 void KMailPart::exit()

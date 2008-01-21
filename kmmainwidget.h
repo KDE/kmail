@@ -178,6 +178,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void setAccelsEnabled( bool enabled = true );
 
+    QLabel* vacationScriptIndicator() const { return mVacationScriptIndicator; }
+    void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
+
   public slots:
     void slotMoveMsgToFolder( KMFolder *dest);
     void slotTrashMsg();   // move to trash
@@ -250,7 +253,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void clearMessageTagActions();
 
     void initializeMessageTagActions();
-    
+
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();
 
@@ -459,6 +462,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void showOfflinePage();
 
+    void updateVactionScriptStatus( bool active );
+
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
@@ -592,6 +597,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     bool mOpenedImapFolder;
 
     Q3Accel *mAccel;
+
+    QLabel *mVacationScriptIndicator;
+    bool mVacationIndicatorActive;
 };
 
 #endif
