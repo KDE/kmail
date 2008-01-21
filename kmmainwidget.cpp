@@ -4378,7 +4378,7 @@ void KMMainWidget::showEvent( QShowEvent *event )
 void KMMainWidget::updateVactionScriptStatus( bool active )
 {
   mVacationIndicatorActive = active;
-  if ( !active ) {
+  if ( active ) {
     mVacationScriptIndicator->setText( i18n("Out of office reply active") );
     QPalette palette;
     palette.setColor( mVacationScriptIndicator->backgroundRole(), Qt::yellow );
