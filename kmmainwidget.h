@@ -485,6 +485,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
 
+  private slots:
+    void slotRequestFullSearchFromQuickSearch();
+
+  private:
+
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,

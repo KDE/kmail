@@ -113,7 +113,7 @@ KMSearchRule * KMSearchRule::createInstance( const QByteArray & field,
                                              Function func,
                                              const QString & contents )
 {
-  KMSearchRule *ret;
+  KMSearchRule *ret = 0;
   if (field == "<status>")
     ret = new KMSearchRuleStatus( field, func, contents );
   else if ( field == "<age in days>" || field == "<size>" )
@@ -623,7 +623,15 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 // class KMSearchRuleStatus
 //
 //==================================================
-
+QString englishNameForStatus( const MessageStatus &status )
+{
+  for ( int i=0; i< numStatusNames; i++ ) {
+    if ( statusNames[i].status == status ) {
+      return statusNames[i].name;
+    }
+  }
+  return QString();
+}
 
 KMSearchRuleStatus::KMSearchRuleStatus( const QByteArray & field,
                                         Function func, const QString & aContents )
@@ -634,8 +642,13 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QByteArray & field,
   mStatus = statusFromEnglishName( aContents );
 }
 
-MessageStatus KMSearchRuleStatus::statusFromEnglishName(
-      const QString & aStatusString )
+KMSearchRuleStatus::KMSearchRuleStatus( MessageStatus status, Function func )
+ : KMSearchRule( "<status>", func, englishNameForStatus( status ) )
+{
+    mStatus = status;
+}
+
+MessageStatus KMSearchRuleStatus::statusFromEnglishName( const QString &aStatusString )
 {
   for ( int i=0; i< numStatusNames; i++ ) {
     if ( !aStatusString.compare( statusNames[i].name ) ) {

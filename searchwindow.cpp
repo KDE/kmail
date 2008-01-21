@@ -897,5 +897,12 @@ void SearchWindow::slotCutMsgs()
   mKMMainWidget->headers()->setCopiedMessages( list, true );
 }
 
+
+void SearchWindow::setSearchPattern( const KMSearchPattern &pattern )
+{
+    *mSearchPattern = pattern;
+    mPatternEdit->setSearchPattern( mSearchPattern );
+}
+
 } // namespace KMail
 #include "searchwindow.moc"

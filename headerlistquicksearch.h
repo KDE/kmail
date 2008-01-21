@@ -65,11 +65,24 @@ public:
      */
     bool eventFilter( QObject *watched, QEvent *event );
 
+    /**
+     * Returns the currently entered search text.
+     */
+    QString currentSearchTerm() const;
+
+    /**
+     * Returns the currently selected status filter.
+     */
+    KPIM::MessageStatus currentStatus() const;
+
 public slots:
    void reset();
   /** Updates the list of tags in the combobox, mainly used to be connected to
       KMTagMgr's msgTagListChanged() signal.*/
    void updateComboList();
+
+signals:
+    void requestFullSearch();
 
 protected:
     /**
@@ -92,6 +105,7 @@ private:
     KPIM::MessageStatus mStatus;
     QVector<QString> statusList;
     int mComboStatusCount;
+    mutable QString mCurrentSearchTerm;
     bool mFilterWithTag;
     QString mTagLabel;
 };

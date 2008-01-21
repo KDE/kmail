@@ -32,12 +32,11 @@
 #include "headerlistquicksearch.h"
 
 #include <QApplication>
-#include <QLabel>
 #include <QComboBox>
-
-#include <QTimer>
-//Added by qt3to4:
 #include <QEvent>
+#include <QLabel>
+#include <QTimer>
+#include <QToolButton>
 
 #include <kaction.h>
 #include <kiconloader.h>
@@ -78,7 +77,14 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   connect( kmkernel->msgTagMgr(), SIGNAL( msgTagListChanged() ),
            this, SLOT( updateComboList() ) );
 
-  /* Disable the signal connected by K3ListViewSearchLine since it will call
+  QToolButton *tb = new QToolButton( parent );
+  tb->setIcon( KIcon( "edit-find-mail" ) );
+  tb->setText( i18n( "Open Full Search" ) );
+  tb->setToolTip( tb->text() );
+  parent->layout()->addWidget( tb );
+  connect( tb, SIGNAL( clicked( bool ) ), SIGNAL( requestFullSearch() ) );
+
+  /* Disable the signal connected by KListViewSearchLine since it will call 
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
    * in getMsgBaseForItem( item ) wanting to access items which are no longer
    * there. Rather rely on KMHeaders::msgAdded and its signal. */
@@ -129,6 +135,7 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 
 bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QString &s) const
 {
+  mCurrentSearchTerm = s; // this "hack" used to work in the KDE3 version
   if ( !mStatus.isOfUnknownStatus() ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
@@ -207,6 +214,18 @@ void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
   mStatusCombo->addItem( SmallIcon( KMail::StatusValues[which].icon ),
     i18n( KMail::StatusValues[ which ].text ) );
   statusList.append( KMail::StatusValues[ which ].text );
+}
+
+
+QString HeaderListQuickSearch::currentSearchTerm() const
+{
+    return mCurrentSearchTerm;
+}
+
+
+KPIM::MessageStatus HeaderListQuickSearch::currentStatus() const
+{
+    return mStatus;
 }
 
 } // namespace KMail

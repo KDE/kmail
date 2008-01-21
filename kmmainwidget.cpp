@@ -765,6 +765,8 @@ void KMMainWidget::createWidgets()
   mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders );
   mQuickSearchLine->setObjectName( "headers quick search line" );
 
+  connect( mQuickSearchLine, SIGNAL( requestFullSearch() ),
+           this, SLOT( slotRequestFullSearchFromQuickSearch() ) );
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
 
@@ -2506,7 +2508,6 @@ void KMMainWidget::slotDisplayCurrentMessage()
 }
 
 //-----------------------------------------------------------------------------
-//called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
   if ( !msg ) return;
@@ -2891,10 +2892,9 @@ void KMMainWidget::setupActions()
   {
     QAction *action = new KAction(KIcon("edit-find-mail"), i18n("&Find Messages..."), this);
     actionCollection()->addAction("search_messages", action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
     action->setShortcut(QKeySequence(Qt::Key_S));
   }
-
   mFindInMessageAction = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
@@ -4108,11 +4108,9 @@ void KMMainWidget::initializeFilterActions()
                filterCommand, SLOT(start()) );
       filterAction->setShortcuts( (*it)->shortcut() );
       if ( !addedSeparator ) {
-        mApplyFilterActionsMenu->menu()->addSeparator();
-        addedSeparator = !addedSeparator;
-        QAction *a = new QAction( this );
-        a->setSeparator( true );
+        QAction *a = mApplyFilterActionsMenu->menu()->addSeparator();
         mFilterMenuActions.append( a );
+        addedSeparator = true;
       }
       mApplyFilterActionsMenu->menu()->addAction( filterAction );
       mFilterMenuActions.append( filterAction );
@@ -4373,6 +4371,22 @@ void KMMainWidget::showEvent( QShowEvent *event )
 {
   QWidget::showEvent( event );
   mWasEverShown = true;
+}
+
+void KMMainWidget::slotRequestFullSearchFromQuickSearch()
+{
+  slotSearch();
+#ifdef HAVE_INDEXLIB
+  return;
+#endif
+  assert( mSearchWin );
+  KMSearchPattern pattern;
+  pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mQuickSearchLine->currentSearchTerm() ) );
+  MessageStatus status = mQuickSearchLine->currentStatus();
+  if ( !status.isOfUnknownStatus() ) {
+    pattern.append( new KMSearchRuleStatus( status ) );
+  }
+  mSearchWin->setSearchPattern( pattern );
 }
 
 void KMMainWidget::updateVactionScriptStatus( bool active )
