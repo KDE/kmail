@@ -134,8 +134,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   setModal( false );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
-  setButtonText( User1, i18n("Import") );
-  setButtonText( User2, i18n("Export") );
+  setButtonText( User1, i18n("Import...") );
+  setButtonText( User2, i18n("Export...") );
   connect( this, SIGNAL(user1Clicked()),
            this, SLOT( slotImportFilters()) );
   connect( this, SIGNAL(user2Clicked()),
@@ -281,7 +281,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
 
   // load the filter parts into the edit widgets
   connect( mFilterList, SIGNAL(filterSelected(KMFilter*)),
-	   this, SLOT(slotFilterSelected(KMFilter*)) );
+           this, SLOT(slotFilterSelected(KMFilter*)) );
 
   if (bPopFilter){
     // set the state of the global setting 'show later msgs'
@@ -290,7 +290,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
 
     // set the action in the filter when changed
     connect( mActionGroup, SIGNAL(actionChanged(const KMPopFilterAction)),
-	     this, SLOT(slotActionChanged(const KMPopFilterAction)) );
+             this, SLOT(slotActionChanged(const KMPopFilterAction)) );
   } else {
     // transfer changes from the 'Apply this filter on...'
     // combo box to the filter
@@ -331,30 +331,30 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
 
   // reset all widgets here
   connect( mFilterList, SIGNAL(resetWidgets()),
-	   this, SLOT(slotReset()) );
+           this, SLOT(slotReset()) );
 
   connect( mFilterList, SIGNAL( applyWidgets() ),
            this, SLOT( slotUpdateFilter() ) );
 
   // support auto-naming the filter
   connect( mPatternEdit, SIGNAL(maybeNameChanged()),
-	   mFilterList, SLOT(slotUpdateFilterName()) );
+           mFilterList, SLOT(slotUpdateFilterName()) );
 
   // apply changes on 'Apply'
   connect( this, SIGNAL(applyClicked()),
-	   mFilterList, SLOT(slotApplyFilterChanges()) );
+           mFilterList, SLOT(slotApplyFilterChanges()) );
 
   // apply changes on 'OK'
   connect( this, SIGNAL(okClicked()),
-	   mFilterList, SLOT(slotApplyFilterChanges()) );
+           mFilterList, SLOT(slotApplyFilterChanges()) );
 
   // save dialog size on 'OK'
   connect( this, SIGNAL(okClicked()),
-	   this, SLOT(slotSaveSize()) );
+           this, SLOT(slotSaveSize()) );
 
   // destruct the dialog on OK, close and Cancel
   connect( this, SIGNAL(finished()),
-	   this, SLOT(slotFinished()) );
+           this, SLOT(slotFinished()) );
 
   KConfigGroup geometry( KMKernel::config(), "Geometry");
   const char * configKey
@@ -748,54 +748,53 @@ void KMFilterListBox::slotApplyFilterChanges()
   // their widget's data into our filter list.
 
   KMFilterMgr *fm;
-  if (bPopFilter)
+  if ( bPopFilter )
     fm = kmkernel->popFilterMgr();
   else
     fm = kmkernel->filterMgr();
 
   QList<KMFilter *> newFilters = filtersForSaving();
 
-  if (bPopFilter)
-    fm->setShowLaterMsgs(mShowLater);
+  if ( bPopFilter )
+    fm->setShowLaterMsgs( mShowLater );
 
   fm->setFilters( newFilters );
-  if (fm->atLeastOneOnlineImapFolderTarget()) {
+  if ( fm->atLeastOneOnlineImapFolderTarget() ) {
     QString str = i18n("At least one filter targets a folder on an online "
-		       "IMAP account. Such filters will only be applied "
-		       "when manually filtering and when filtering "
-		       "incoming online IMAP mail.");
-    KMessageBox::information( this, str, QString(),
-			      "filterDlgOnlineImapCheck" );
+                       "IMAP account. Such filters will only be applied "
+                       "when manually filtering and when filtering "
+                       "incoming online IMAP mail.");
+    KMessageBox::information( this, str, QString(), "filterDlgOnlineImapCheck" );
   }
 }
 
 QList<KMFilter *> KMFilterListBox::filtersForSaving() const
 {
-      const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
-      QList<KMFilter *> filters;
-      QStringList emptyFilters;
-      foreach ( KMFilter *const it, mFilterList ) {
-        KMFilter *f = new KMFilter( *it ); // deep copy
-        f->purify();
-        if ( !f->isEmpty() )
-          // the filter is valid:
-          filters.append( f );
-        else {
-          // the filter is invalid:
-          emptyFilters << f->name();
-          delete f;
-        }
-      }
+  const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
+  QList<KMFilter *> filters;
+  QStringList emptyFilters;
+  foreach ( KMFilter *const it, mFilterList ) {
+    KMFilter *f = new KMFilter( *it ); // deep copy
+    f->purify();
+    if ( !f->isEmpty() )
+      // the filter is valid:
+      filters.append( f );
+    else {
+      // the filter is invalid:
+      emptyFilters << f->name();
+      delete f;
+    }
+  }
 
-      // report on invalid filters:
-      if ( !emptyFilters.empty() ) {
-        QString msg = i18n("The following filters have not been saved because they "
-                   "were invalid (e.g. containing no actions or no search "
-                   "rules).");
-        KMessageBox::informationList( 0, msg, emptyFilters, QString(),
-                      "ShowInvalidFilterWarning" );
-      }
-      return filters;
+  // report on invalid filters:
+  if ( !emptyFilters.empty() ) {
+    QString msg = i18n("The following filters have not been saved because they "
+                       "were invalid (e.g. containing no actions or no search "
+                       "rules).");
+    KMessageBox::informationList( 0, msg, emptyFilters, QString(),
+                                  "ShowInvalidFilterWarning" );
+  }
+  return filters;
 }
 
 void KMFilterListBox::slotSelected( int aIdx )
@@ -1039,8 +1038,8 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
 
 void KMFilterListBox::appendFilter( KMFilter* aFilter )
 {
-    mFilterList.append( aFilter );
-    mListWidget->insertItems( -1, QStringList( aFilter->pattern()->name() ) );
+  mFilterList.append( aFilter );
+  mListWidget->insertItems( -1, QStringList( aFilter->pattern()->name() ) );
 }
 
 void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
@@ -1337,26 +1336,27 @@ void KMPopFilterActionWidget::reset()
 
 void KMFilterDlg::slotImportFilters()
 {
-    FilterImporterExporter importer( this, bPopFilter );
-    QList<KMFilter *> filters = importer.importFilters();
-    // FIXME message box how many were imported?
-    if (filters.isEmpty()) return;
+  FilterImporterExporter importer( this, bPopFilter );
+  QList<KMFilter *> filters = importer.importFilters();
 
-    QList<KMFilter*>::ConstIterator it;
+  // FIXME message box how many were imported?
+  if ( filters.isEmpty() ) return;
 
-    for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
-        mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
-    }
+  QList<KMFilter*>::ConstIterator it;
+
+  for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
+    mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
+  }
 }
 
 void KMFilterDlg::slotExportFilters()
 {
-    FilterImporterExporter exporter( this, bPopFilter );
-    QList<KMFilter *> filters = mFilterList->filtersForSaving();
-    exporter.exportFilters( filters );
-    QList<KMFilter *>::iterator it;
-    for ( it = filters.begin(); it != filters.end(); ++it )
-        delete *it;
+  FilterImporterExporter exporter( this, bPopFilter );
+  QList<KMFilter *> filters = mFilterList->filtersForSaving();
+  exporter.exportFilters( filters );
+  QList<KMFilter *>::iterator it;
+  for ( it = filters.begin(); it != filters.end(); ++it )
+    delete *it;
 }
 
 #include "kmfilterdlg.moc"

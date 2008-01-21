@@ -65,8 +65,8 @@ void KMFilterMgr::readConfig(void)
 {
   KConfig* config = KMKernel::config();
   clear();
-  
-  if (bPopFilter) {
+
+  if ( bPopFilter ) {
     KConfigGroup group = config->group( "General" );
     mShowLater = group.readEntry( "popshowDLmsgs", 0 );
   } 
@@ -81,10 +81,10 @@ void KMFilterMgr::writeConfig(bool withSync)
   // Now, write out the new stuff:  
   FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );
   KConfigGroup group = config->group( "General" );
-  if (bPopFilter)
+  if ( bPopFilter )
       group.writeEntry("popshowDLmsgs", mShowLater);
 
-  if (withSync) group.sync();
+  if ( withSync ) group.sync();
 }
 
 int KMFilterMgr::processPop( KMMessage * msg ) const {

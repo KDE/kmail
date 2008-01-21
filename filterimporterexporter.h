@@ -29,8 +29,10 @@ public:
        * and which filters to import. */
       QList<KMFilter *> importFilters();
 
-      static void writeFiltersToConfig( const QList<KMFilter *> &filters, KConfig *config, bool bPopFilter );
-      static QList<KMFilter *> readFiltersFromConfig( KConfig *config, bool bPopFilter );
+      static void writeFiltersToConfig( const QList<KMFilter *> &filters,
+                                        KConfig *config, bool bPopFilter );
+      static QList<KMFilter *> readFiltersFromConfig( KConfig *config,
+                                                      bool bPopFilter );
 private:
       QWidget *mParent;
       bool mPopFilter;

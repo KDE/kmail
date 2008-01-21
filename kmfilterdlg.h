@@ -97,11 +97,11 @@ public:
 
   /** Returns wheather the global option 'Show Later Msgs' is set or not */
   bool showLaterMsgs();
-  
+
   void insertFilter( KMFilter* aFilter );
-  
+
   void appendFilter( KMFilter* aFilter );
-  
+
   /** Returns a list of _copies_ of the current list of filters.
    * The list owns the contents and thus the caller needs to clean them
    * up. */
@@ -172,7 +172,7 @@ protected:
   bool mShowLater;
 private:
   void enableControls();
- 
+
   void swapNeighbouringFilters( int untouchedOne, int movedOne);
   bool bPopFilter;
 };
@@ -385,13 +385,13 @@ protected slots:
   void slotFinished();
   // update the list of accounts shown in the advanced tab
   void slotUpdateAccountList();
-  
-  
+
+
   /** Called when a user clicks the import filters button. Pops up
    * a dialog asking the user which file to import from and which
    * of the filters in that file to import. */
   void slotImportFilters();
-  
+
   /** Called when a user clicks the export filters button. Pops up
    * a dialog asking the user which filters to export and which 
    * file to export to. */
