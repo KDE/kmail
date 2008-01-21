@@ -1039,7 +1039,7 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
 void KMFilterListBox::appendFilter( KMFilter* aFilter )
 {
   mFilterList.append( aFilter );
-  mListWidget->insertItems( -1, QStringList( aFilter->pattern()->name() ) );
+  mListWidget->addItems( QStringList( aFilter->pattern()->name() ) );
 }
 
 void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
