@@ -322,9 +322,13 @@ const QPixmap *HeaderItem::pixmap(int col) const
     if ( !headers->mPaintInfo.showTodo )
       if ( status.isTodo() ) pixmaps << *KMHeaders::pixTodo;
 
-    static QPixmap mergedpix;
-    mergedpix = pixmapMerge( pixmaps );
-    return &mergedpix;
+    if ( !pixmaps.isEmpty() ) {
+      static QPixmap mergedpix;
+      mergedpix = pixmapMerge( pixmaps );
+      return &mergedpix;
+    }
+    else
+      return 0;
   }
   else if ( col == headers->paintInfo()->statusCol ) {
     return statusIcon(msgBase);
