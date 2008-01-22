@@ -632,7 +632,8 @@ namespace {
 	++s;
 	continue;
       } else if ( *s == '\n' ) { // unfold
-	while ( isBlank( *++s ) );
+	while ( isBlank( *++s ) )
+          ;
 	*d++ = ' ';
       } else
 	*d++ = *s++;
