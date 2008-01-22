@@ -454,7 +454,13 @@ void KMFolderSearch::addSerNum( quint32 serNum )
   int idx = -1;
   KMFolder *aFolder = 0;
   KMMsgDict::instance()->getLocation( serNum, &aFolder, &idx );
-  assert( aFolder && (idx != -1) );
+  // warn instead of assert() because of
+  // https://intevation.de/roundup/kolab/issue2216
+  if (!aFolder || (idx == -1)) {
+    kDebug(5006) << "Not adding message with serNum " << serNum
+                  << ": folder is " << aFolder << ", index is " << idx;
+    return;
+  }
   if ( mFolders.indexOf( aFolder ) == -1 ) {
     aFolder->open( "foldersearch" );
     mFolders.append( aFolder );

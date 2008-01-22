@@ -1127,9 +1127,10 @@ void FolderStorage::search( const KMSearchPattern* pattern )
 
 void FolderStorage::slotProcessNextSearchBatch()
 {
-  if ( !mSearchPattern ) return;
+  if ( !mSearchPattern )
+    return;
   QList<quint32> matchingSerNums;
-  int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
+  const int end = qMin( mCurrentSearchedMsg + 100, count() );
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
     quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
