@@ -220,7 +220,8 @@ void KMSearch::stop()
         QValueListConstIterator<QGuardedPtr<KMFolder> > jt;
         for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
-            if ( !folder ) continue;
+            if ( !folder )
+                continue;
             // explicitely stop jobs for this folder as it will not be closed below
             // when the folder is currently selected
             if ( folder->folderType() == KMFolderTypeImap ) {
@@ -242,8 +243,8 @@ void KMSearch::stop()
 }
 
 void KMSearch::indexFinished() {
-	mRunning = false;
-	mRunByIndex = false;
+    mRunning = false;
+    mRunByIndex = false;
 }
 
 void KMSearch::slotProcessNextBatch()
@@ -266,7 +267,7 @@ void KMSearch::slotProcessNextBatch()
                 SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
-          --mRemainingFolders;
+            --mRemainingFolders;
         mProcessNextBatchTimer->start( 0, true );
         return;
     }
@@ -277,7 +278,8 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
                                        const KMSearchPattern* pattern,
                                        bool complete )
 {
-    if ( pattern != mSearchPattern ) return;
+    if ( pattern != mSearchPattern )
+      return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     mLastFolder = folder->label();
     QValueListIterator<Q_UINT32> it;
@@ -443,7 +445,13 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     int idx = -1;
     KMFolder *aFolder = 0;
     KMMsgDict::instance()->getLocation(serNum, &aFolder, &idx);
-    assert(aFolder && (idx != -1));
+    // warn instead of assert() because of
+    // https://intevation.de/roundup/kolab/issue2216
+    if (!aFolder || (idx == -1)) {
+        kdDebug(5006) << "Not adding message with serNum " << serNum
+                      << ": folder is " << aFolder << ", index is " << idx << endl;
+        return;
+    }
     if(mFolders.findIndex(aFolder) == -1) {
         aFolder->open("foldersearch");
         mFolders.append(aFolder);
