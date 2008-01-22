@@ -178,35 +178,45 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     setComponentData( kmkernel->xmlGuiInstance() );
   }
   mMainWidget = new QWidget( this );
-  mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(), mMainWidget );
-  mDictionaryCombo = new KPIM::DictionaryComboBox( mMainWidget );
-
-
-  mFcc = new KMFolderComboBox( mMainWidget );
+  // splitter between the headers area and the actual editor
+  mHeadersToEditorSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mHeadersToEditorSplitter" );
+  mHeadersToEditorSplitter->setChildrenCollapsible( false );
+  mHeadersArea = new QWidget( mHeadersToEditorSplitter );
+  mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horData(),
+                               QSizePolicy::Maximum );
+  QList<int> defaultSizes;
+  defaultSizes << 0;
+  mHeadersToEditorSplitter->setSizes( defaultSizes );
+  QVBoxLayout *v = new QVBoxLayout( mMainWidget );
+  v->addWidget( mHeadersToEditorSplitter );
+  mIdentity = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
+  mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
+  mFcc = new KMFolderComboBox(mHeadersArea);
   mFcc->showOutboxFolder( false );
   mTransport = new MailTransport::TransportComboBox( mMainWidget );
-  mEdtFrom = new KMLineEdit( false, mMainWidget, "fromLine" );
-  mEdtReplyTo = new KMLineEdit( true, mMainWidget, "replyToLine" );
+  mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
+  mEdtReplyTo = new KMLineEdit( true, mHeadersArea, "replyToLine" );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
-  mRecipientsEditor = new RecipientsEditor( mMainWidget );
+  mRecipientsEditor = new RecipientsEditor( mHeadersArea );
   connect( mRecipientsEditor,
            SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
            SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
+  connect( mRecipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
 
-  mEdtSubject = new KMLineEditSpell( false, mMainWidget, "subjectLine" );
-  mLblIdentity = new QLabel( i18n("&Identity:"), mMainWidget );
-  mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mMainWidget );
-  mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mMainWidget );
-  mLblTransport = new QLabel( i18n("&Mail transport:"), mMainWidget );
-  mLblFrom = new QLabel( i18nc("sender address field", "&From:"), mMainWidget );
-  mLblReplyTo = new QLabel( i18n("&Reply to:"), mMainWidget );
-  mLblSubject = new QLabel( i18n("S&ubject:"), mMainWidget );
+  mEdtSubject = new KMLineEditSpell( false, mHeadersArea, "subjectLine" );
+  mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
+  mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
+  mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mHeadersArea );
+  mLblTransport = new QLabel( i18n("&Mail transport:"), mHeadersArea );
+  mLblFrom = new QLabel( i18nc("sender address field", "&From:"), mHeadersArea );
+  mLblReplyTo = new QLabel( i18n("&Reply to:"), mHeadersArea );
+  mLblSubject = new QLabel( i18n("S&ubject:"), mHeadersArea );
   QString sticky = i18n("Sticky");
-  mBtnIdentity = new QCheckBox( sticky, mMainWidget );
-  mBtnFcc = new QCheckBox( sticky, mMainWidget );
-  mBtnTransport = new QCheckBox( sticky, mMainWidget );
+  mBtnIdentity = new QCheckBox( sticky, mHeadersArea );
+  mBtnFcc = new QCheckBox( sticky, mHeadersArea );
+  mBtnTransport = new QCheckBox( sticky, mHeadersArea );
 
   mHtmlMarkup = GlobalSettings::self()->useHtmlMarkup();
   mShowHeaders = GlobalSettings::self()->headers();
@@ -223,19 +233,21 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
-  mEditor = new KMComposerEditor( this, mSnippetSplitter );
 
-  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor, SLOT( slotDictionaryChanged( const QString & ) ) );
+  mEditor = new KMComposerEditor( this, mSnippetSplitter );
+  v->addWidget( mEditor );
+  mEditor->setAcceptDrops( true );
+  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor,
+           SLOT( slotDictionaryChanged( const QString & ) ) );
   connect( mEditor, SIGNAL( highlighterCreated() ), this, SLOT( slotHighlighterCreated() ) );
-  connect( mEditor, SIGNAL( spellCheckStatus(const QString &)), this, SLOT( slotSpellCheckingStatus( const QString & ) ) );
+  connect( mEditor, SIGNAL( spellCheckStatus(const QString &)), this,
+           SLOT( slotSpellCheckingStatus( const QString & ) ) );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
   mSnippetSplitter->setCollapsible( 0, false );
 
   mSplitter->setOpaqueResize( true );
-
-  mEditor->setAcceptDrops( true );
 
   mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
   mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
@@ -799,7 +811,7 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   numRows = mNumHeaders + 1;
 
   delete mGrid;
-  mGrid = new QGridLayout( mMainWidget );
+  mGrid = new QGridLayout( mHeadersArea );
   mGrid->setSpacing( KDialog::spacingHint() );
   mGrid->setMargin( KDialog::marginHint() / 2 );
   mGrid->setColumnStretch( 0, 1 );
@@ -890,7 +902,6 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
   assert( row <= mNumHeaders + 1 );
 
-  mGrid->addWidget( mSplitter, row, 0, mNumHeaders - row + 2, 3 );
 
   if ( !mAtmList.isEmpty() ) {
     mAtmListView->show();
@@ -900,7 +911,9 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   resize( this->size() );
   repaint();
 
+  mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
   mGrid->activate();
+  mHeadersArea->show();
 
   slotUpdateAttachActions();
   mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
@@ -4535,5 +4548,15 @@ void KMComposeWin::slotAttachmentDragStarted()
   mimeData->setUrls( urls );
   drag->setMimeData( mimeData );
   drag->exec( Qt::CopyAction );
+}
+
+void KMComposeWin::recipientEditorSizeHintChanged()
+{
+  QTimer::singleShot( 1, this, SLOT(setMaximumHeaderSize()) );
+}
+
+void KMComposeWin::setMaximumHeaderSize()
+{
+  mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
 }
 

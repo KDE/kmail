@@ -34,6 +34,7 @@
 
 #include <KDebug>
 #include <KLocale>
+#include <KCompletionBox>
 #include <KMessageBox>
 
 #include <QKeyEvent>
@@ -326,6 +327,8 @@ RecipientsView::RecipientsView( QWidget *parent )
   mPage->setLayout( mTopLayout );
 
   addLine();
+
+  viewport()->setPaletteBackgroundColor( paletteBackgroundColor() );
 }
 
 RecipientLine *RecipientsView::activeLine()
@@ -522,8 +525,12 @@ void RecipientsView::slotDeleteLine()
 void RecipientsView::resizeView()
 {
   if ( mLines.count() < 6 ) {
-    setFixedHeight( mLineHeight * mLines.count() );
+//    setFixedHeight( mLineHeight * mLines.count() );
   }
+
+  parentWidget()->layout()->activate();
+  emit sizeHintChanged();
+  QTimer::singleShot( 0, this, SLOT(moveCompletionPopup()) );
 }
 
 void RecipientsView::activateLine( RecipientLine *line )
@@ -537,6 +544,7 @@ void RecipientsView::resizeEvent ( QResizeEvent *ev )
   for( int i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
+  ensureVisible( 0, mLines.count() * mLineHeight );
 }
 
 QSize RecipientsView::sizeHint() const
@@ -547,12 +555,9 @@ QSize RecipientsView::sizeHint() const
 QSize RecipientsView::minimumSizeHint() const
 {
   int height;
-
   int numLines = 5;
-
   if ( mLines.count() < numLines ) height = mLineHeight * mLines.count();
   else height = mLineHeight * numLines;
-
   return QSize( 200, height );
 }
 
@@ -675,6 +680,20 @@ int RecipientsView::setFirstColumnWidth( int w )
 
   resizeView();
   return mFirstColumnWidth;
+}
+
+void RecipientsView::moveCompletionPopup()
+{
+  foreach ( RecipientLine *const line, mLines ) {
+    if ( line->lineEdit()->completionBox( false ) ) {
+      if ( line->lineEdit()->completionBox()->isVisible() ) {
+        // ### trigger moving, is there a nicer way to do that?
+        line->lineEdit()->completionBox()->hide();
+        line->lineEdit()->completionBox()->show();
+      }
+    }
+  }
+
 }
 
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
@@ -818,6 +837,9 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
     mSideWidget, SLOT( setTotal( int, int ) ) );
   connect( mRecipientsView, SIGNAL( focusRight() ),
     mSideWidget, SLOT( setFocus() ) );
+
+  connect( mRecipientsView, SIGNAL(sizeHintChanged()),
+           SIGNAL(sizeHintChanged()) );
 }
 
 RecipientsEditor::~RecipientsEditor()
@@ -950,4 +972,5 @@ void RecipientsEditor::setCompletionMode( KGlobalSettings::Completion mode )
 {
   mRecipientsView->setCompletionMode( mode );
 }
+
 #include "recipientseditor.moc"

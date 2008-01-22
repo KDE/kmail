@@ -686,6 +686,8 @@ class KMComposeWin : public KMail::Composer
     void compressAttach( KMAtmListViewItem *attachmentItem );
     void uncompressAttach( KMAtmListViewItem *attachmentItem );
     void editorFocusChanged( bool gained );
+    void recipientEditorSizeHintChanged();
+    void setMaximumHeaderSize();
 
     void slotHighlighterCreated();
 
@@ -811,6 +813,8 @@ class KMComposeWin : public KMail::Composer
   private:
     QColor mForeColor, mBackColor;
     QFont mSaveFont;
+    QSplitter *mHeadersToEditorSplitter;
+    QWidget* mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
     struct atmLoadData
