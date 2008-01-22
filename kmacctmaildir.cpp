@@ -45,9 +45,9 @@ KMAcctMaildir::~KMAcctMaildir()
 void KMAcctMaildir::init() {
   KMAccount::init();
 
-  mLocation = getenv("MAIL");
+  mLocation = qgetenv("MAIL");
   if (mLocation.isNull()) {
-    mLocation = getenv("HOME");
+    mLocation = qgetenv("HOME");
     mLocation += "/Maildir/";
   }
 }

@@ -314,7 +314,7 @@ class ComposeMessageJob : public MessageComposerJob {
 
 MessageComposer::MessageComposer( KMComposeWin *win )
   : QObject( win ), mComposeWin( win ), mCurrentJob( 0 ),
-    mReferenceMessage( 0 ), mKeyResolver( 0 ), 
+    mReferenceMessage( 0 ), mKeyResolver( 0 ),
     mUseOpportunisticEncryption( false ),
     mSignBody( false ), mEncryptBody( false ),
     mSigningRequested(  false ), mEncryptionRequested( false ),
@@ -345,7 +345,7 @@ void MessageComposer::applyChanges( bool disableCrypto )
 {
   // Do the initial setup
   if ( getenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" ) != 0 ) {
-    QByteArray cE = getenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" );
+    QByteArray cE = qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" );
     mDebugComposerCrypto = cE == "1" || cE.toUpper() == "ON" || cE.toUpper() == "TRUE";
     kDebug(5006) <<"KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE";
   } else {

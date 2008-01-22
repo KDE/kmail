@@ -53,14 +53,12 @@ using namespace KPIM;
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
 
-//Added by qt3to4:
 #include <q3header.h>
 #include <q3ptrstack.h>
 #include <q3ptrqueue.h>
 #include <QMenu>
 #include <Q3MemArray>
 #include <q3listview.h>
-
 #include <QApplication>
 #include <QBuffer>
 #include <QEvent>
@@ -73,6 +71,7 @@ using namespace KPIM;
 #include <QStyle>
 #include <QTextCodec>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
@@ -1028,11 +1027,11 @@ void KMHeaders::msgAdded(int id)
           mImperfectlyThreadedList.removeAll( mItems[tryMe] );
           // The item was imperfectly thread before, now it's parent
           // is there. Update the .sorted file accordingly.
-          QString sortFile = KMAIL_SORT_FILE(mFolder);
-          FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
+          QString sortFile = KMAIL_SORT_FILE( mFolder );
+          FILE *sortStream = KDE_fopen( QFile::encodeName( sortFile ), "r+" );
           if (sortStream) {
             mItems[tryMe]->sortCacheItem()->updateSortFile( sortStream, mFolder );
-            fclose (sortStream);
+            fclose( sortStream );
           }
         }
       }
@@ -2713,10 +2712,10 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
   if ( update_discover ) {
     //update the discovered change count
     qint32 discovered_count = 0;
-    fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
+    KDE_fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
     fread( &discovered_count, sizeof(discovered_count), 1, sortStream );
     discovered_count++;
-    fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
+    KDE_fseek( sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET );
     fwrite( &discovered_count, sizeof(discovered_count), 1, sortStream );
   }
 }
@@ -2754,7 +2753,7 @@ bool KMHeaders::writeSortOrder()
     }
     QString tempName = sortFile + ".temp";
     unlink(QFile::encodeName(tempName));
-    FILE *sortStream = fopen(QFile::encodeName(tempName), "w");
+    FILE *sortStream = KDE_fopen(QFile::encodeName(tempName), "w");
     if (!sortStream)
       return false;
 
@@ -2830,7 +2829,7 @@ bool KMHeaders::writeSortOrder()
     }
 
     //magic header twice, case they've changed
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET, SEEK_SET);
+    KDE_fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET, SEEK_SET);
     fwrite(&byteOrder, sizeof(byteOrder), 1, sortStream);
     fwrite(&column, sizeof(column), 1, sortStream);
     fwrite(&ascending, sizeof(ascending), 1, sortStream);
@@ -2854,7 +2853,7 @@ bool KMHeaders::writeSortOrder()
 void KMHeaders::appendItemToSortFile(HeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+")) {
+  if(FILE *sortStream = KDE_fopen(QFile::encodeName(sortFile), "r+")) {
     int parent_id = -1; //no parent, top level
 
     if (isThreaded()) {
@@ -2873,9 +2872,9 @@ void KMHeaders::appendItemToSortFile(HeaderItem *khi)
 
     //update the appended flag FIXME obsolete?
     qint32 appended = 1;
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+    KDE_fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
     fwrite(&appended, sizeof(appended), 1, sortStream);
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+    KDE_fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
 
     if (sortStream && ferror(sortStream)) {
         fclose(sortStream);
@@ -2901,10 +2900,10 @@ void SortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder,
                                       bool waiting_for_parent, bool update_discover)
 {
     if(mSortOffset == -1) {
-        fseek(sortStream, 0, SEEK_END);
-        mSortOffset = ftell(sortStream);
+        KDE_fseek(sortStream, 0, SEEK_END);
+        mSortOffset = KDE_ftell(sortStream);
     } else {
-        fseek(sortStream, mSortOffset, SEEK_SET);
+        KDE_fseek(sortStream, mSortOffset, SEEK_SET);
     }
 
     int parent_id = -1;
@@ -3109,7 +3108,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     mRoot->clearChildren();
 
     QString sortFile = KMAIL_SORT_FILE(mFolder);
-    FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
+    FILE *sortStream = KDE_fopen(QFile::encodeName(sortFile), "r+");
     mSortInfo.fakeSort = 0;
 
     if(sortStream) {
@@ -3149,7 +3148,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             CREATE_TIMER(parse);
             START_TIMER(parse);
             for(x = 0; !feof(sortStream) && !error; x++) {
-                off_t offset = ftell(sortStream);
+                off_t offset = KDE_ftell(sortStream);
                 KMFolder *folder;
                 //parse
                 if(!fread(&serNum, sizeof(serNum), 1, sortStream) || //short read means to end
@@ -3441,7 +3440,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         } else {
             //update the appended flag
             appended = 0;
-            fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+            KDE_fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
             fwrite(&appended, sizeof(appended), 1, sortStream);
         }
     }

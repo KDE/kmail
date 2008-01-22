@@ -615,7 +615,7 @@ int KMFolderSearch::create()
   }
 
   old_umask = umask( 077 );
-  FILE *mStream = fopen( QFile::encodeName( location() ), "w+" );
+  FILE *mStream = KDE_fopen( QFile::encodeName( location() ), "w+" );
   umask( old_umask );
   if ( !mStream ) {
     return errno;
@@ -771,7 +771,7 @@ int KMFolderSearch::writeIndex( bool )
     // running, while the clock switches from daylight savings time to normal time
     utime(QFile::encodeName(location()), 0);
 
-    FILE *tmpIndexStream = fopen(QFile::encodeName(tempName), "w");
+    FILE *tmpIndexStream = KDE_fopen(QFile::encodeName(tempName), "w");
     umask(old_umask);
 
     if (!tmpIndexStream) {
@@ -827,7 +827,7 @@ bool KMFolderSearch::readIndex()
 {
   clearIndex();
   QString filename = indexLocation();
-  mIdsStream = fopen( QFile::encodeName( filename ), "r+" );
+  mIdsStream = KDE_fopen( QFile::encodeName( filename ), "r+" );
   if ( !mIdsStream ) {
     return false;
   }

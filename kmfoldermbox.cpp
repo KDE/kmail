@@ -119,7 +119,7 @@ int KMFolderMbox::open( const char *owner )
   assert( !folder()->name().isEmpty() );
 
   mFilesLocked = false;
-  mStream = fopen( QFile::encodeName( location() ), "r+" ); // messages file
+  mStream = KDE_fopen( QFile::encodeName( location() ), "r+" ); // messages file
   if ( !mStream ) {
     KNotification::event( "warning",
                           i18n("Cannot open file \"%1\":\n%2",
@@ -178,7 +178,7 @@ int KMFolderMbox::open( const char *owner )
                   objectName());
        emit statusMsg( str );
      } else {
-       mIndexStream = fopen( QFile::encodeName( indexLocation() ), "r+" ); // index file
+       mIndexStream = KDE_fopen( QFile::encodeName( indexLocation() ), "r+" ); // index file
        if ( mIndexStream ) {
          fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
          updateIndexStreamPtr();
@@ -237,7 +237,7 @@ int KMFolderMbox::create()
   }
 
   old_umask = umask(077);
-  mStream = fopen(QFile::encodeName(location()), "w+"); //sven; open RW
+  mStream = KDE_fopen(QFile::encodeName(location()), "w+"); //sven; open RW
   umask(old_umask);
 
   if (!mStream) return errno;
@@ -247,7 +247,7 @@ int KMFolderMbox::create()
   if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
-    mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
+    mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
     updateIndexStreamPtr(true);
     umask(old_umask);
 
@@ -643,7 +643,7 @@ int KMFolderMbox::createIndexFromContents()
 
   while (!atEof)
   {
-    off_t pos = ftell(mStream);
+    off_t pos = KDE_ftell(mStream);
     if (!fgets(line, MAX_LINE, mStream)) atEof = true;
 
     if (atEof ||
@@ -651,7 +651,7 @@ int KMFolderMbox::createIndexFromContents()
          regexp.indexIn(line) >= 0))
     {
       size = pos - offs;
-      pos = ftell(mStream);
+      pos = KDE_ftell(mStream);
 
       if (num >= 0)
       {
@@ -761,7 +761,7 @@ int KMFolderMbox::createIndexFromContents()
         else num--,numStatus++;
       }
 
-      offs = ftell(mStream);
+      offs = KDE_ftell(mStream);
       num++;
       numStatus--;
       inHeader = true;
@@ -1044,12 +1044,12 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   // Make sure the file is large enough to check for an end
   // character
   fseek( mStream, 0, SEEK_END );
-  off_t revert = ftell( mStream );
-  if ( ftell( mStream ) >= 2 ) {
+  off_t revert = KDE_ftell( mStream );
+  if ( KDE_ftell( mStream ) >= 2 ) {
     // write message to folder file
     fseek( mStream, -2, SEEK_END );
     fread( endStr, 1, 2, mStream ); // ensure separating empty line
-    if ( ftell( mStream ) > 0 && endStr[0]!='\n' ) {
+    if ( KDE_ftell( mStream ) > 0 && endStr[0]!='\n' ) {
       ++growth;
       if ( endStr[1]!='\n' ) {
         //printf ("****endStr[1]=%c\n", endStr[1]);
@@ -1067,19 +1067,19 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
   QByteArray messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
-  off_t offs = ftell( mStream );
+  off_t offs = KDE_ftell( mStream );
   fwrite( msgText.data(), len, 1, mStream );
   if ( msgText[(int)len-1] != '\n' ) {
     fwrite( "\n\n", 1, 2, mStream );
   }
   fflush( mStream );
-  size_t size = ftell( mStream ) - offs;
+  size_t size = KDE_ftell( mStream ) - offs;
 
   error = ferror( mStream );
   if ( error ) {
     kDebug(5006) <<"Error: Could not add message to folder:"
                  << strerror(errno);
-    if ( ftell( mStream ) > revert ) {
+    if ( KDE_ftell( mStream ) > revert ) {
       kDebug(5006) <<"Undoing changes";
       truncate( QFile::encodeName(location()), revert );
     }
@@ -1149,13 +1149,13 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     assert( mIndexStream != 0 );
     clearerr( mIndexStream );
     fseek( mIndexStream, 0, SEEK_END );
-    revert = ftell( mIndexStream );
+    revert = KDE_ftell( mIndexStream );
 
     KMMsgBase * mb = &aMsg->toMsgBase();
     int len;
     const uchar *buffer = mb->asIndexString( len );
     fwrite( &len,sizeof( len ), 1, mIndexStream );
-    mb->setIndexOffset( ftell( mIndexStream ) );
+    mb->setIndexOffset( KDE_ftell( mIndexStream ) );
     mb->setIndexLength( len );
     if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {
       kDebug(5006) <<"Whoa!";
@@ -1170,7 +1170,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
     if (error) {
       kWarning(5006) <<"Error: Could not add message to folder (No space left on device?)";
-      if ( ftell( mIndexStream ) > revert ) {
+      if ( KDE_ftell( mIndexStream ) > revert ) {
         kWarning(5006) <<"Undoing changes";
         truncate( QFile::encodeName( indexLocation() ), revert );
       }

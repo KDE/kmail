@@ -8,16 +8,15 @@
 #include "globalsettings.h"
 #include "folderstorage.h"
 
-#include <QFileInfo>
-//Added by qt3to4:
-#include <Q3MemArray>
-
 #include <kdebug.h>
+#include <kde_file.h>
 #include <k3staticdeleter.h>
+
+#include <QFileInfo>
+#include <Q3MemArray>
 
 #include <stdio.h>
 #include <unistd.h>
-
 #include <string.h>
 #include <errno.h>
 
@@ -397,7 +396,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
     return -1;
 
   QString filename = getFolderIdsLocation( storage );
-  FILE *fp = fopen(QFile::encodeName(filename), "r+");
+  FILE *fp = KDE_fopen(QFile::encodeName(filename), "r+");
   if (!fp)
     return -1;
 
@@ -426,9 +425,9 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
 
   // quick consistency check to avoid allocating huge amount of memory
   // due to reading corrupt file (#71549)
-  long pos = ftell(fp);       // store current position
+  long pos = KDE_ftell(fp);       // store current position
   fseek(fp, 0, SEEK_END);
-  long fileSize = ftell(fp);  // how large is the file ?
+  long fileSize = KDE_ftell(fp);  // how large is the file ?
   fseek(fp, pos, SEEK_SET);   // back to previous position
 
   // the file must at least contain what we try to read below
@@ -490,7 +489,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
 
   if (!rentry->fp) {
     QString filename = getFolderIdsLocation( storage );
-    FILE *fp = truncate ? 0 : fopen(QFile::encodeName(filename), "r+");
+    FILE *fp = truncate ? 0 : KDE_fopen(QFile::encodeName(filename), "r+");
     if (fp)
     {
       int version = 0;
@@ -510,7 +509,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
 
     if (!fp)
     {
-      fp = fopen(QFile::encodeName(filename), "w+");
+      fp = KDE_fopen(QFile::encodeName(filename), "w+");
       if (!fp)
       {
         kDebug(5006) <<"Dict '" << filename
@@ -525,7 +524,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
       fwrite(&byteOrder, sizeof(byteOrder), 1, fp);
       rentry->swapByteOrder = false;
     }
-    rentry->baseOffset = ftell(fp);
+    rentry->baseOffset = KDE_ftell(fp);
     rentry->fp = fp;
   }
 
@@ -558,7 +557,7 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
 
   rentry->sync();
 
-  off_t eof = ftell(fp);
+  off_t eof = KDE_ftell(fp);
   QString filename = getFolderIdsLocation( storage );
   truncate(QFile::encodeName(filename), eof);
   fclose(rentry->fp);

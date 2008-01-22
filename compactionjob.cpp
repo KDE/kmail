@@ -121,7 +121,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mTempName = pathInfo.path() + "/." + pathInfo.fileName() + ".compacted";
 
   mode_t old_umask = umask( 077 );
-  mTmpFile = fopen( QFile::encodeName( mTempName ), "w" );
+  mTmpFile = KDE_fopen( QFile::encodeName( mTempName ), "w" );
   umask( old_umask );
   if (!mTmpFile) {
     kWarning(5006) <<"Couldn't start compacting" << mSrcFolder->label()

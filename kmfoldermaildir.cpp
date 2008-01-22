@@ -128,7 +128,7 @@ int KMFolderMaildir::open( const char * )
       str = i18n("Folder `%1' changed; recreating index.", objectName());
       emit statusMsg(str);
     } else {
-      mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+      mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
       if ( mIndexStream ) {
         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
         updateIndexStreamPtr();
@@ -212,7 +212,7 @@ int KMFolderMaildir::create()
   if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
-    mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
+    mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
     updateIndexStreamPtr(true);
     umask(old_umask);
 
@@ -502,7 +502,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     assert(mIndexStream != 0);
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
-    off_t revert = ftell(mIndexStream);
+    off_t revert = KDE_ftell(mIndexStream);
 
     int len;
     KMMsgBase * mb = &aMsg->toMsgBase();
@@ -577,7 +577,7 @@ DwString KMFolderMaildir::getDwString(int idx)
 
   if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
   {
-    FILE* stream = fopen(QFile::encodeName(abs_file), "r+");
+    FILE* stream = KDE_fopen(QFile::encodeName(abs_file), "r+");
     if (stream) {
       size_t msgSize = fi.size();
       char* msgText = new char[ msgSize + 1 ];

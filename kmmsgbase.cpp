@@ -15,6 +15,7 @@
 using KMail::MessageProperty;
 
 #include <kdebug.h>
+#include <kde_file.h>
 #include <kglobal.h>
 #include <kcharsets.h>
 #include <kascii.h>
@@ -885,7 +886,7 @@ retry:
       return ret;
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    off_t first_off=ftell(storage()->mIndexStream);
+    off_t first_off = KDE_ftell(storage()->mIndexStream);
     fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
     fseek(storage()->mIndexStream, first_off, SEEK_SET);
@@ -962,7 +963,7 @@ retry:
     assert(mIndexLength >= 0);
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    off_t first_off=ftell(storage()->mIndexStream);
+    off_t first_off = KDE_ftell(storage()->mIndexStream);
     fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
     fseek(storage()->mIndexStream, first_off, SEEK_SET);

@@ -133,17 +133,18 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   indexName = indexLocation();
   tempName = indexName + ".temp";
-  unlink(QFile::encodeName(tempName));
+  unlink( QFile::encodeName( tempName ) );
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  utime(QFile::encodeName(location()), 0);
+  utime( QFile::encodeName( location() ), 0 );
 
-  old_umask = umask(077);
-  FILE *tmpIndexStream = fopen(QFile::encodeName(tempName), "w");
-  umask(old_umask);
-  if (!tmpIndexStream)
+  old_umask = umask( 077 );
+  FILE *tmpIndexStream = KDE_fopen( QFile::encodeName( tempName ), "w" );
+  umask( old_umask );
+  if ( !tmpIndexStream ) {
     return errno;
+  }
 
   fprintf(tmpIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
 
@@ -160,7 +161,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
   fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
 
-  off_t nho = ftell(tmpIndexStream);
+  off_t nho = KDE_ftell(tmpIndexStream);
 
   if ( !createEmptyIndex ) {
     KMMsgBase* msgBase;
@@ -170,7 +171,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
       buffer = msgBase->asIndexString(len);
       fwrite(&len,sizeof(len), 1, tmpIndexStream);
 
-      off_t tmp = ftell(tmpIndexStream);
+      off_t tmp = KDE_ftell(tmpIndexStream);
       msgBase->setIndexOffset(tmp);
       msgBase->setIndexLength(len);
       if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
@@ -200,7 +201,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   if ( createEmptyIndex )
     return 0;
 
-  mIndexStream = fopen(QFile::encodeName(indexName), "r+"); // index file
+  mIndexStream = KDE_fopen(QFile::encodeName(indexName), "r+"); // index file
   assert( mIndexStream );
   fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
 
@@ -230,7 +231,7 @@ bool KMFolderIndex::readIndex()
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
-  mHeaderOffset = ftell(mIndexStream);
+  mHeaderOffset = KDE_ftell(mIndexStream);
 
   clearIndex();
   while (!feof(mIndexStream))
@@ -243,7 +244,7 @@ bool KMFolderIndex::readIndex()
       if (mIndexSwapByteOrder)
         len = kmail_swap_32(len);
 
-      off_t offs = ftell(mIndexStream);
+      off_t offs = KDE_ftell(mIndexStream);
       if(fseek(mIndexStream, len, SEEK_CUR))
         break;
       mi = new KMMsgInfo(folder(), offs, len);
@@ -354,7 +355,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       if (header_length > 0xFFFF)
          header_length = kmail_swap_32(header_length);
 
-      off_t endOfHeader = ftell(mIndexStream) + header_length;
+      off_t endOfHeader = KDE_ftell(mIndexStream) + header_length;
 
       bool needs_update = true;
       // Process available header parts

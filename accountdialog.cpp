@@ -143,12 +143,12 @@ ProcmailRCParser::ProcmailRCParser(const QString &filename)
     }
 
   }
-  QString default_Location = getenv("MAIL");
+  QString default_Location = qgetenv("MAIL");
 
   if (default_Location.isNull()) {
     default_Location = _PATH_MAILDIR;
     default_Location += '/';
-    default_Location += getenv("USER");
+    default_Location += qgetenv("USER");
   }
   if ( !mSpoolFiles.contains(default_Location) )
     mSpoolFiles << default_Location;
