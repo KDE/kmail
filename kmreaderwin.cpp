@@ -481,7 +481,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
-    mDecrytMessageOverwrite( false )
+    mDecrytMessageOverwrite( false ),
+    mShowSignatureDetails( false )
 {
   mUpdateReaderWinTimer.setObjectName( "mUpdateReaderWinTimer" );
   mDelayedMarkTimer.setObjectName( "mDelayedMarkTimer" );

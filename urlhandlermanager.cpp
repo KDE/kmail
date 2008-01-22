@@ -358,6 +358,18 @@ namespace {
         w->update( true );
         return true;
       }
+
+      if ( url.path() == "showSignatureDetails" ) {
+        w->setShowSignatureDetails();
+        w->update( true );
+        return true;
+      }
+      if ( url.path() == "hideSignatureDetails" ) {
+        w->setShowSignatureDetails( false );
+        w->update( true );
+        return true;
+      }
+
     }
     return false;
   }

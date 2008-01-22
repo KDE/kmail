@@ -61,6 +61,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
   mReaderWin->setHtmlOverride( htmlOverride );
   mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
   mReaderWin->setDecryptMessageOverwrite( true );
+  mReaderWin->setShowSignatureDetails( false );
   initKMReaderMainWin();
 }
 
