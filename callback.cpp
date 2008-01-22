@@ -66,6 +66,11 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   msg->setSubject( subject );
   msg->setTo( to );
   msg->setFrom( receiver() );
+  if ( !GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    msg->setHeaderField( "Content-Type",
+                         "text/calendar; method=reply; charset=\"utf-8\"" );
+    msg->setBody( iCal.utf8() );
+  }
 
   if ( delMessage && deleteInvitationAfterReply() )
     /* We want the triggering mail to be moved to the trash once this one
@@ -106,10 +111,6 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     msgPart->setSubtypeStr( "calendar" );
     msgPart->setParameter( "method", "reply" );
     cWin->addAttach( msgPart );
-  } else {
-    msg->setHeaderField( "Content-Type",
-                         "text/calendar; method=reply; charset=\"utf-8\"" );
-    msg->setBody( iCal.utf8() );
   }
 
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
@@ -184,7 +185,7 @@ void Callback::closeIfSecondaryWindow() const
 
 bool Callback::askForComment( KCal::Attendee::PartStat status ) const
 {
-    if ( ( status != KCal::Attendee::Accepted 
+    if ( ( status != KCal::Attendee::Accepted
             && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
             == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
         || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
