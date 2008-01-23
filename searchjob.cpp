@@ -91,11 +91,11 @@ void SearchJob::searchCompleteFolder()
   KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
   if ( mFolder->imapPath() != QString( "/" ) )
   {
-    KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-    connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-      SLOT(slotSearchData(KIO::Job*,const QString&)) );
-    connect( job, SIGNAL(result(KIO::Job *)),
-      SLOT(slotSearchResult(KIO::Job *)) );
+    KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
+    connect( job, SIGNAL( infoMessage( KIO::Job*, const QString& ) ),
+      SLOT( slotSearchData( KIO::Job*, const QString& ) ) );
+    connect( job, SIGNAL( result( KIO::Job * ) ),
+      SLOT( slotSearchResult( KIO::Job * ) ) );
   }
   else
   { // for the "/ folder" of an imap account, searching blocks the kioslave
