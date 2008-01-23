@@ -205,7 +205,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 	emit insertSnippet();
     } 
     else {
-        return KEdit::contentsDropEvent(e);
+        KEdit::contentsDropEvent(e);
     }
 }
 
