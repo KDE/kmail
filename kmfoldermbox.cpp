@@ -43,6 +43,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
+#include <ctype.h>
 #include <unistd.h>
 
 #ifdef HAVE_FCNTL_H

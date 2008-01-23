@@ -37,7 +37,7 @@ using KMail::MaildirJob;
 #include <unistd.h>
 #include <assert.h>
 #include <limits.h>
-#include <unistd.h>
+#include <ctype.h>
 #include <fcntl.h>
 
 #ifndef MAX_LINE
