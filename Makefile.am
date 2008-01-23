@@ -52,8 +52,6 @@ bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_LDADD   = libkmailprivate.la
 
-libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
-
 libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 configuredialog_p.cpp klistviewindexedsearchline.cpp \
                 simplestringlisteditor.cpp index.cpp  \
@@ -152,7 +150,11 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 messageactions.cpp \
                 korghelper.cpp
 
+libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
+
 kmail_SOURCES = main.cpp
+
+kmail_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel  kmail_part.cpp
 
