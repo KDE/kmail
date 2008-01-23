@@ -741,7 +741,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       // Check if this is an IMAP resource folder or a no-content parent only
       // containing groupware folders
       if ( (kmkernel->iCalIface().hideResourceFolder( folder ) || folder->noContent())
-            && fti->childCount() == 0 && GlobalSettings::hideGroupwareFolders() ) {
+            && fti->childCount() == 0 ) {
         // It is
         removeFromFolderToItemMap( folder );
         delete fti;
