@@ -31,7 +31,6 @@ Name[sv]=Program-oktettström
 Name[ta]=பயன்பாட்டு எண்மம்
 Name[tg]=Миқдори зиёди бинарии барномот
 Name[tr]=Uygulama Sekizli Akışı
-Name[uk]=Aliran Oktet  Aplikasi
 Name[x-test]=xxApplication Octetstreamxx
 Name[zh_CN]=应用程序 Octetstream
 Comment=A bodypart formatter plugin for application/octet-stream
@@ -76,7 +75,7 @@ Comment[sv]=Ett insticksprogram för brevtextformatering av application/octet-st
 Comment[ta]=பயன்பாடு அல்லது எண்மத்திற்கான அங்க அமைப்பு சொருகி
 Comment[tg]=Модули ба андозадарории application/octet-stream
 Comment[tr]=application/octet-stream için bir gövde biçimleyici eklentisi
-Comment[uk]=Plugin pemformat bahagian isi untuk alpikasi/aliran oktet
+Comment[uk]=Втулок для форматування application/octet-stream
 Comment[x-test]=xxA bodypart formatter plugin for application/octet-streamxx
 Comment[zh_CN]=application/octet-stream 的正文格式化插件
 
