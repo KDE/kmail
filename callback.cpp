@@ -102,9 +102,9 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
   cWin->setSigningAndEncryptionDisabled( true );
 
   if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-    msg->setSubject( status );
     // For Exchange, send ical as attachment, with proper
     // parameters
+    msg->setSubject( status );
     msg->setCharset( "utf-8" );
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName( "cal.ics" );
