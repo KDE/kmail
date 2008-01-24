@@ -57,13 +57,17 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 }
 
 bool Callback::mailICal( const QString& to, const QString iCal,
-                         const QString& subject, bool delMessage ) const
+                         const QString& subject, int reply,
+                         bool delMessage ) const
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setSubject( subject );
+  if( GlobalSettings::self()->exchangeCompatibleInvitations() && reply == 5 )
+    msg->setSubject("The sender has accepted the invitation");
+
   msg->setTo( to );
   msg->setFrom( receiver() );
   if ( !GlobalSettings::self()->exchangeCompatibleInvitations() ) {
@@ -100,6 +104,8 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->setSigningAndEncryptionDisabled( true );
 
   if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    if ( reply == 5 )
+      msg->setSubject( "The sender has accepted the invitation" );
     // For Exchange, send ical as attachment, with proper
     // parameters
     msg->setCharset( "utf-8" );
