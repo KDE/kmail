@@ -59,9 +59,11 @@ public:
   /** Get the full message */
   KMMessage* getMsg() const { return mMsg; }
 
-  /** Mail a message */
-  bool mailICal( const QString& to, const QString iCal,
-                 const QString& subject, int reply,
+  /** Mail a message 
+   * @ param status can be accepted/declined/tentative
+   */
+  bool mailICal( const QString &to, const QString &iCal,
+                 const QString &subject, const QString &status,
                  bool delMessage = true ) const;
 
   /** Get the receiver of the mail */
@@ -69,7 +71,7 @@ public:
 
   /** Close the main window showing this message, if it's a secondary window. */
   void closeIfSecondaryWindow() const;
-  
+
   bool askForComment( KCal::Attendee::PartStat status ) const;
   bool deleteInvitationAfterReply() const;
 
