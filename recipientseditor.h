@@ -231,6 +231,7 @@ class RecipientsView : public QScrollArea
     void calculateTotal();
     void slotTypeModified( RecipientLine * );
     void moveCompletionPopup();
+    void moveScrollBarToEnd();
 
   private:
     QList<RecipientLine*> mLines;

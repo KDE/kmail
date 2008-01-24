@@ -318,6 +318,7 @@ RecipientsView::RecipientsView( QWidget *parent )
   setFrameStyle( QFrame::NoFrame );
 
   mPage = new QWidget;
+
   mPage->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
   setWidget( mPage );
 
@@ -400,12 +401,17 @@ RecipientLine *RecipientsView::addLine()
 
   calculateTotal();
 
-  ensureVisible( 0, mLines.count() * mLineHeight );
+  ensureVisible( 0, mLines.count() * mLineHeight, 0, 0 );
 
-  // scroll to bottom
-  verticalScrollBar()->triggerAction( QAbstractSlider::SliderToMaximum );
+  QTimer::singleShot( 0, this, SLOT(moveScrollBarToEnd()) );
 
   return line;
+}
+
+void RecipientsView::moveScrollBarToEnd()
+{
+// scroll to bottom
+   verticalScrollBar()->triggerAction( QAbstractSlider::SliderToMaximum );
 }
 
 void RecipientsView::slotTypeModified( RecipientLine *line )
@@ -525,7 +531,10 @@ void RecipientsView::slotDeleteLine()
 void RecipientsView::resizeView()
 {
   if ( mLines.count() < 6 ) {
-//    setFixedHeight( mLineHeight * mLines.count() );
+    setMinimumHeight( mLineHeight * mLines.count() );
+  } else {
+    setMinimumHeight( mLineHeight * 5 );
+    setMaximumHeight( mLineHeight * mLines.count() );
   }
 
   parentWidget()->layout()->activate();
@@ -541,10 +550,11 @@ void RecipientsView::activateLine( RecipientLine *line )
 
 void RecipientsView::resizeEvent ( QResizeEvent *ev )
 {
+  QScrollArea::resizeEvent(ev);
   for( int i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
-  ensureVisible( 0, mLines.count() * mLineHeight );
+  ensureVisible( 0, mLines.count() * mLineHeight, 0 , 0 );
 }
 
 QSize RecipientsView::sizeHint() const

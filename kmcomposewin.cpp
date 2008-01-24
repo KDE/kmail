@@ -183,7 +183,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mHeadersToEditorSplitter->setChildrenCollapsible( false );
   mHeadersArea = new QWidget( mHeadersToEditorSplitter );
   mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horData(),
-                               QSizePolicy::Maximum );
+                               QSizePolicy::Expanding );
+  mHeadersToEditorSplitter->addWidget( mHeadersArea );
   QList<int> defaultSizes;
   defaultSizes << 0;
   mHeadersToEditorSplitter->setSizes( defaultSizes );
@@ -193,7 +194,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mFcc = new KMFolderComboBox(mHeadersArea);
   mFcc->showOutboxFolder( false );
-  mTransport = new MailTransport::TransportComboBox( mMainWidget );
+  mTransport = new MailTransport::TransportComboBox( mHeadersArea );
   mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
   mEdtReplyTo = new KMLineEdit( true, mHeadersArea, "replyToLine" );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
@@ -233,9 +234,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
+  mSplitter->addWidget( mSnippetSplitter );
 
   mEditor = new KMComposerEditor( this, mSnippetSplitter );
-  v->addWidget( mEditor );
+  mSnippetSplitter->addWidget( mEditor );
+
+  mHeadersToEditorSplitter->addWidget( mSplitter );
   mEditor->setAcceptDrops( true );
   connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor,
            SLOT( slotDictionaryChanged( const QString & ) ) );
@@ -245,6 +249,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
+  mSnippetSplitter->addWidget( mSnippetWidget );
   mSnippetSplitter->setCollapsible( 0, false );
 
   mSplitter->setOpaqueResize( true );
@@ -263,6 +268,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
 
   mAtmListView = new AttachmentListView( this, mSplitter );
+  mSplitter->addWidget( mAtmListView );
 
   connect( mAtmListView,
            SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
