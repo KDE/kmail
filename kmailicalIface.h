@@ -73,10 +73,15 @@ k_dcop:
                                  const QString& resource ) = 0;
 
   virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
-  
+
   virtual KURL getAttachment( const QString& resource,
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
+  virtual QString attachmentMimetype( const QString &resource,
+                                      Q_UINT32 sernum,
+                                      const QString &filename ) = 0;
+
+  virtual QStringList listAttachments( const QString &resource, Q_UINT32 sernum ) = 0;
 
   /// Update a kolab storage entry. Returns the new mail serial number,
   /// or 0 if something went wrong. Can be used for adding as well.
@@ -107,6 +112,20 @@ k_dcop:
    * Mail, Calendar, Contact, Note, Task or Journal
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
+
+   /**
+   * Trigger the creation of a new resource folder with name @param resource
+   * under parent @param.
+   * @return success or failure
+   */
+  virtual bool addSubresource( const QString& resource,
+                               const QString& parent,
+                               const QString& contentsType ) = 0;
+  /**
+   * Trigger the deletion of a new resource folder with id @param resource.
+   * @return success or failure
+   */
+  virtual bool removeSubresource( const QString& resource ) = 0;
 
   /**
    * Causes all resource folders of the given type to be synced with the server.
@@ -140,14 +159,14 @@ inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& s
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::StorageFormat& format  )
 {
   Q_UINT32 foo = format;
-  str << foo; 
+  str << foo;
   return str;
 }
 
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::StorageFormat& format  )
 {
   Q_UINT32 foo;
-  str >> foo; 
+  str >> foo;
   format = ( KMailICalIface::StorageFormat )foo;
   return str;
 }
