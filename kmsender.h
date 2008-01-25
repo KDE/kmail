@@ -100,7 +100,7 @@ public:
   void readConfig();
 
   /** Write configuration to global config with optional sync() */
-  void writeConfig(bool withSync=TRUE);
+  void writeConfig(bool withSync=true);
 
 private:
   /** sets a status msg and emits statusMsg() */

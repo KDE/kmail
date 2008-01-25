@@ -200,7 +200,7 @@ void RenameJob::folderCopyComplete(bool success)
   mCopyFolderJob = 0;
 
   if ( mStorageTempOpened ) {
-    mStorageTempOpened->close("renamejob");
+    mStorageTempOpened->close( "renamejob" );
     mStorageTempOpened = 0;
   }
 

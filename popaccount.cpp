@@ -114,12 +114,12 @@ void PopAccount::init(void)
 {
   NetworkAccount::init();
 
-  mUsePipelining = FALSE;
-  mLeaveOnServer = FALSE;
+  mUsePipelining = false;
+  mLeaveOnServer = false;
   mLeaveOnServerDays = -1;
   mLeaveOnServerCount = -1;
   mLeaveOnServerSize = -1;
-  mFilterOnServer = FALSE;
+  mFilterOnServer = false;
   //tz todo
   mFilterOnServerCheckSize = 50000;
 }
@@ -152,7 +152,7 @@ void PopAccount::processNewMail(bool _interactive)
       bool b = storePasswd();
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
         i18n("You need to supply a username and a password to access this "
-        "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
+        "mailbox."), false, QString::null, mName, i18n("Account:"))
         != QDialog::Accepted)
       {
         checkDone( false, CheckAborted );
@@ -162,7 +162,7 @@ void PopAccount::processNewMail(bool _interactive)
         if ( b ) {
           kmkernel->acctMgr()->writeConfig( true );
         }
-        mAskAgain = FALSE;
+        mAskAgain = false;
       }
     }
 
@@ -201,7 +201,7 @@ void PopAccount::processNewMail(bool _interactive)
     mSizeOfNextSeenMsgsDict.clear();
 
     interactive = _interactive;
-    mUidlFinished = FALSE;
+    mUidlFinished = false;
     startJob();
   }
   else {
@@ -216,12 +216,12 @@ void PopAccount::readConfig(KConfig& config)
 {
   NetworkAccount::readConfig(config);
 
-  mUsePipelining = config.readNumEntry("pipelining", FALSE);
-  mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
+  mUsePipelining = config.readNumEntry("pipelining", false);
+  mLeaveOnServer = config.readNumEntry("leave-on-server", false);
   mLeaveOnServerDays = config.readNumEntry("leave-on-server-days", -1);
   mLeaveOnServerCount = config.readNumEntry("leave-on-server-count", -1);
   mLeaveOnServerSize = config.readNumEntry("leave-on-server-size", -1);
-  mFilterOnServer = config.readNumEntry("filter-on-server", FALSE);
+  mFilterOnServer = config.readNumEntry("filter-on-server", false);
   mFilterOnServerCheckSize = config.readUnsignedNumEntry("filter-os-check-size", 50000);
 }
 
@@ -486,7 +486,7 @@ void PopAccount::slotJobFinished() {
   }
   else if (stage == Uidl) {
     kdDebug(5006) << k_funcinfo << "stage == Uidl" << endl;
-    mUidlFinished = TRUE;
+    mUidlFinished = true;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
         mUidsOfNextSeenMsgsDict.isEmpty() && !idsOfMsgs.isEmpty() ) {
@@ -788,7 +788,7 @@ void PopAccount::slotJobFinished() {
     mSlave = 0;
     stage = Idle;
     if( mMailCheckProgressItem ) { // do this only once...
-      bool canceled = kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
+      bool canceled = !kmkernel || kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         this->name(), numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
@@ -1015,14 +1015,14 @@ void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
     mSlave = 0;
   }
 
-  if (interactive) {
+  if (interactive && kmkernel) {
     KMessageBox::error(kmkernel->mainWin(), KIO::buildErrorString(error, errorMsg));
   }
 
 
   stage = Quit;
   if (error == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd)
-    mAskAgain = TRUE;
+    mAskAgain = true;
   /* We need a timer, otherwise slotSlaveError of the next account is also
      executed, if it reuses the slave, because the slave member variable
      is changed too early */

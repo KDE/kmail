@@ -125,7 +125,7 @@ bool KMAcctLocal::preProcess()
 
   //BroadcastStatus::instance()->reset();
   BroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...").arg(mName));
+        i18n("Preparing transmission from \"%1\"...").arg(mName));
 
 
   Q_ASSERT( !mMailCheckProgressItem );
@@ -145,7 +145,7 @@ bool KMAcctLocal::preProcess()
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     return false;
   }
-  
+
   const int rc = mMailFolder->open("acctlocalMail");
   if ( rc != 0 ) {
     QString aStr;

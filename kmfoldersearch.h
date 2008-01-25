@@ -173,7 +173,7 @@ public:
   virtual int open(const char *owner);
   virtual int canAccess();
   virtual void sync();
-  virtual void reallyDoClose(const char *owner);
+  virtual void reallyDoClose(const char* owner);
   virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;

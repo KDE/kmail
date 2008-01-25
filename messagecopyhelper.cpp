@@ -44,7 +44,7 @@ MessageCopyHelper::MessageCopyHelper( const QValueList< Q_UINT32 > & msgs,
     if ( f == dest )
       continue; // already there
     if ( !mOpenFolders.contains( f ) ) {// not yet opened
-      f->open("messagecopyhelper");
+      f->open( "messagecopyhelper" );
       mOpenFolders.insert( f, 0 );
     }
     KMMsgBase *msgBase = f->getMsgBase( index );
@@ -73,7 +73,7 @@ void MessageCopyHelper::copyCompleted(KMCommand * cmd)
   // close all folders we opened
   for ( QMap<QGuardedPtr<KMFolder>, int>::ConstIterator it = mOpenFolders.constBegin();
         it != mOpenFolders.constEnd(); ++it ) {
-    it.key()->close("messagecopyhelper");
+    it.key()->close( "messagecopyhelper" );
   }
   mOpenFolders.clear();
   deleteLater();
