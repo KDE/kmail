@@ -38,7 +38,7 @@ namespace KMail {
   class Vacation : public QObject {
     Q_OBJECT
   public:
-    Vacation( QObject * parent=0, const char * name=0 );
+    Vacation( QObject * parent=0, bool checkOnly = false, const char * name=0 );
     virtual ~Vacation();
 
     bool isUsable() const { return !mUrl.isEmpty(); }
@@ -46,19 +46,25 @@ namespace KMail {
     static QString defaultMessageText();
     static int defaultNotificationInterval();
     static QStringList defaultMailAliases();
+    static bool defaultSendForSpam();
+    static QString defaultDomainName();
 
   protected:
     static QString composeScript( const QString & messageText,
 				  int notificationInterval,
-				  const KMime::Types::AddrSpecList & aliases);
+				  const KMime::Types::AddrSpecList & aliases,
+                                  bool sendForSpam, const QString & excludeDomain );
     static bool parseScript( const QString & script, QString & messageText,
-			     int & notificationInterval, QStringList & aliases );
+			     int & notificationInterval, QStringList & aliases,
+                             bool & sendForSpam, QString & domainName );
     KURL findURL() const;
     void handlePutResult( KMail::SieveJob * job, bool success, bool );
 
 
   signals:
     void result( bool success );
+    // indicates if the vaction script is active or not
+    void scriptActive( bool active );
 
   protected slots:
     void slotDialogDefaults();
@@ -75,6 +81,7 @@ namespace KMail {
     // GUI:
     KMail::VacationDialog * mDialog;
     bool mWasActive;
+    bool mCheckOnly;
   };
 
 } // namespace KMail

@@ -176,7 +176,6 @@ void DImapTroubleShootDialog::slotDone()
   done( Ok );
 }
 
-
 KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   : KMFolderMaildir( folder, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
@@ -192,7 +191,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo()
+    mQuotaInfo(), mAlarmsBlocked( false ),
+    mRescueCommandCount( 0 ),
+    mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
   setUidValidity("");
   // if we fail to read a uid file but there is one, nuke it
@@ -216,7 +217,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
-void KMFolderCachedImap::reallyDoClose( const char * owner )
+void KMFolderCachedImap::reallyDoClose( const char* owner )
 {
   if( !mFolderRemoved ) {
     writeUidCache();
@@ -246,6 +247,8 @@ void KMFolderCachedImap::readConfig()
   }
   mNoContent = config->readBoolEntry( "NoContent", false );
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
+  if ( !config->readEntry( "FolderAttributes" ).isEmpty() )
+    mFolderAttributes = config->readEntry( "FolderAttributes" );
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
@@ -256,6 +259,7 @@ void KMFolderCachedImap::readConfig()
 //                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
   }
   mIncidencesFor = incidencesForFromString( config->readEntry( "IncidencesFor" ) );
+  mAlarmsBlocked = config->readBoolEntry( "AlarmsBlocked", false );
 //  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
@@ -287,7 +291,9 @@ void KMFolderCachedImap::readConfig()
   }
 
   QStringList uids = config->readListEntry( "UIDSDeletedSinceLastSync" );
-//  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyURL() << endl << uids << endl;
+#if MAIL_LOSS_DEBUGGING
+  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyURL() << endl << uids << endl;
+#endif
   for ( QStringList::iterator it = uids.begin(); it != uids.end(); it++ ) {
       mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
   }
@@ -299,6 +305,7 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "ImapPath", mImapPath );
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
+  configGroup.writeEntry( "FolderAttributes", mFolderAttributes );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
   if ( !mImapPathCreation.isEmpty() ) {
     if ( mImapPath.isEmpty() ) {
@@ -306,15 +313,19 @@ void KMFolderCachedImap::writeConfig()
     } else {
       configGroup.deleteEntry( "ImapPathCreation" );
     }
-    if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
-        QValueList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
-        QStringList uidstrings;
-        for( QValueList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
-            uidstrings.append(  QString::number( (*it) ) );
-        }
-        configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
-//        kdDebug( 5006 ) << "WRITING OUT UIDSDeletedSinceLastSync in: " << folder( )->prettyURL( ) << endl << uidstrings << endl;
-    }
+  }
+  if ( !mDeletedUIDsSinceLastSync.isEmpty() ) {
+      QValueList<ulong> uids = mDeletedUIDsSinceLastSync.keys();
+      QStringList uidstrings;
+      for( QValueList<ulong>::iterator it = uids.begin(); it != uids.end(); it++ ) {
+          uidstrings.append(  QString::number( (*it) ) );
+      }
+      configGroup.writeEntry( "UIDSDeletedSinceLastSync", uidstrings );
+#if MAIL_LOSS_DEBUGGING
+      kdDebug( 5006 ) << "WRITING OUT UIDSDeletedSinceLastSync in: " << folder( )->prettyURL( ) << endl << uidstrings << endl;
+#endif
+  } else {
+    configGroup.deleteEntry( "UIDSDeletedSinceLastSync" );
   }
   writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
   KMFolderMaildir::writeConfig();
@@ -329,7 +340,12 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
     configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
     configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+    configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
     configGroup.writeEntry( "UserRights", mUserRights );
+
+    configGroup.deleteEntry( "StorageQuotaUsage");
+    configGroup.deleteEntry( "StorageQuotaRoot");
+    configGroup.deleteEntry( "StorageQuotaLimit");
 
     if ( mQuotaInfo.isValid() ) {
       if ( mQuotaInfo.current().isValid() ) {
@@ -339,10 +355,6 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
         configGroup.writeEntry( "StorageQuotaLimit", mQuotaInfo.max().toInt() );
       }
       configGroup.writeEntry( "StorageQuotaRoot", mQuotaInfo.root() );
-    } else {
-      configGroup.deleteEntry( "StorageQuotaUsage");
-      configGroup.deleteEntry( "StorageQuotaRoot");
-      configGroup.deleteEntry( "StorageQuotaLimit");
     }
   }
 }
@@ -392,7 +404,9 @@ int KMFolderCachedImap::readUidCache()
           setUidValidity( QString::fromLocal8Bit(buf).stripWhiteSpace() );
           len = uidcache.readLine( buf, sizeof(buf) );
           if( len > 0 ) {
-//            kdDebug(5006) << "Reading in last uid from cache: " << QString::fromLocal8Bit(buf).stripWhiteSpace() << " in " << folder()->prettyURL() << endl;
+#if MAIL_LOSS_DEBUGGING
+            kdDebug(5006) << "Reading in last uid from cache: " << QString::fromLocal8Bit(buf).stripWhiteSpace() << " in " << folder()->prettyURL() << endl;
+#endif
             // load the last known highest uid from the on disk cache
             setLastUid( QString::fromLocal8Bit(buf).stripWhiteSpace().toULong() );
             return 0;
@@ -412,8 +426,9 @@ int KMFolderCachedImap::writeUidCache()
       return unlink( QFile::encodeName( uidCacheLocation() ) );
     return 0;
   }
-
-//  kdDebug(5006) << "Writing out UID cache lastuid: " << lastUid()  << " in: " << folder()->prettyURL() << endl;
+#if MAIL_LOSS_DEBUGGING
+  kdDebug(5006) << "Writing out UID cache lastuid: " << lastUid()  << " in: " << folder()->prettyURL() << endl;
+#endif
   QFile uidcache( uidCacheLocation() );
   if( uidcache.open( IO_WriteOnly ) ) {
     QTextStream str( &uidcache );
@@ -472,7 +487,9 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
   // Add the message
   int rc = KMFolderMaildir::addMsg(msg, index_return);
 
-  if( newMail && imapPath() == "/INBOX/" )
+  if( newMail && ( imapPath() == "/INBOX/" || ( !GlobalSettings::self()->filterOnlyDIMAPInbox()
+      && (userRights() <= 0 || userRights() & ACLJobs::Administer )
+      && (contentsType() == ContentsTypeMail || GlobalSettings::self()->filterGroupwareFolders()) ) ) )
     // This is a new message. Filter it
     mAccount->processNewMsg( msg );
 
@@ -492,9 +509,10 @@ void KMFolderCachedImap::rememberDeletion( int idx )
 {
   KMMsgBase *msg = getMsgBase( idx );
   assert(msg);
-  ulong uid = msg->UID();
+  long uid = msg->UID();
+  assert(uid>=0);
   mDeletedUIDsSinceLastSync.insert(uid, 0);
-//  kdDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyURL();
+  kdDebug(5006) << "Explicit delete of UID " << uid << " at index: " << idx << " in " << folder()->prettyURL() << endl;
 }
 
 /* Reimplemented from KMFolderMaildir */
@@ -558,7 +576,9 @@ KMFolder* KMFolderCachedImap::trashFolder() const
 
 void KMFolderCachedImap::setLastUid( ulong uid )
 {
-//  kdDebug(5006) << "Setting mLastUid to: " << uid  <<  " in " << folder()->prettyURL() << endl;
+#if MAIL_LOSS_DEBUGGING
+  kdDebug(5006) << "Setting mLastUid to: " << uid  <<  " in " << folder()->prettyURL() << endl;
+#endif
   mLastUid = uid;
   if( uidWriteTimer == -1 )
     // Write in one minute
@@ -629,7 +649,7 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
 // not been done
 KMAcctCachedImap *KMFolderCachedImap::account() const
 {
-  if( (KMAcctCachedImap *)mAccount == 0 ) {
+  if( (KMAcctCachedImap *)mAccount == 0 && kmkernel && kmkernel->acctMgr() ) {
     // Find the account
     mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->findByName( name() ) );
   }
@@ -1268,7 +1288,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
   } else {
     // Error (error message already shown by the account)
     newState( mProgress, KIO::buildErrorString( errorCode, errorMsg ));
-    emit folderComplete(this, FALSE);
+    emit folderComplete(this, false);
   }
 }
 
@@ -1299,100 +1319,9 @@ void KMFolderCachedImap::uploadNewMessages()
       job->start();
       return;
     } else {
-      KMFolder *dest = 0;
-      bool manualMove = true;
-      while ( GlobalSettings::autoLostFoundMove() ) {
-        // find the inbox of this account
-        KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
-        if ( !inboxFolder ) {
-          kdWarning(5006) << k_funcinfo << "inbox not found!" << endl;
-          break;
-        }
-        KMFolderDir *inboxDir = inboxFolder->child();
-        if ( !inboxDir && !inboxFolder->storage() )
-          break;
-        assert( inboxFolder->storage()->folderType() == KMFolderTypeCachedImap );
-
-        // create lost+found folder if needed
-        KMFolderNode *node;
-        KMFolder *lfFolder = 0;
-        if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
-          kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
-          KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
-              i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
-          if ( !folder || !folder->storage() )
-            break;
-          static_cast<KMFolderCachedImap*>( folder->storage() )->initializeFrom(
-            static_cast<KMFolderCachedImap*>( inboxFolder->storage() ) );
-          folder->storage()->setContentsType( KMail::ContentsTypeMail );
-          folder->storage()->writeConfig();
-          lfFolder = folder;
-        } else {
-          kdDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
-          lfFolder = dynamic_cast<KMFolder*>( node );
-        }
-        if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
-          break;
-
-        // create subfolder for this incident
-        QDate today = QDate::currentDate();
-        QString baseName = folder()->label() + "-" + QString::number( today.year() )
-            + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
-            + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
-        QString name = baseName;
-        int suffix = 0;
-        while ( (node = lfFolder->child()->hasNamedFolder( name )) ) {
-          ++suffix;
-          name = baseName + '-' + QString::number( suffix );
-        }
-        kdDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
-        dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
-        if ( !dest || !dest->storage() )
-            break;
-        static_cast<KMFolderCachedImap*>( dest->storage() )->initializeFrom(
-          static_cast<KMFolderCachedImap*>( lfFolder->storage() ) );
-        dest->storage()->setContentsType( contentsType() );
-        dest->storage()->writeConfig();
-
-        KMessageBox::sorry( 0, i18n("<p>There are new messages in folder <b>%1</b>, which "
-              "have not been uploaded to the server yet, but you do not seem to "
-              "have sufficient access rights on the folder now to upload them.</p>"
-              "<p>All affected messages will therefore be moved to <b>%2</b>"
-              "to avoid data loss.</p>").arg( folder()->prettyURL() ).arg( dest->prettyURL() ),
-              i18n("Insufficient access rights") );
-        manualMove = false;
-        break;
-      }
-
-      if ( manualMove ) {
-        const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
-              "have not been uploaded to the server yet, but you do not seem to "
-              "have sufficient access rights on the folder now to upload them. "
-              "Please contact your administrator to allow upload of new messages "
-              "to you, or move them out of this folder.</p> "
-              "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
-        if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
-          KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
-              i18n("Move Messages to Folder"), true );
-          if ( dlg.exec() ) {
-            dest = dlg.folder();
-          }
-        }
-      }
-      if ( dest ) {
-        QPtrList<KMMsgBase> msgs;
-        for( int i = 0; i < count(); ++i ) {
-          KMMsgBase *msg = getMsgBase( i );
-          if( !msg ) continue; /* what goes on if getMsg() returns 0? */
-          if ( msg->UID() == 0 )
-            msgs.append( msg );
-        }
-        KMCommand *command = new KMMoveCommand( dest, msgs );
-        connect( command, SIGNAL( completed( KMCommand * ) ),
-                  this, SLOT( serverSyncInternal() ) );
-        command->start();
-        return;
-      }
+      KMCommand *command = rescueUnsyncedMessages();
+      connect( command, SIGNAL( completed( KMCommand * ) ),
+               this, SLOT( serverSyncInternal() ) );
     }
   } else { // nothing to upload
     if ( mUserRights != mOldUserRights && (mOldUserRights & KMail::ACLJobs::Insert)
@@ -1433,7 +1362,7 @@ void KMFolderCachedImap::uploadFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
 
-      QString flags = KMFolderImap::statusToFlags(msg->status());
+      QString flags = KMFolderImap::statusToFlags(msg->status(), mPermanentFlags);
       // Collect uids for each typem of flags.
       QString uid;
       uid.setNum( msg->UID() );
@@ -1649,6 +1578,7 @@ void KMFolderCachedImap::checkUidValidity() {
   else {
     newState( mProgress, i18n("Checking folder validity"));
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
+    connect( job, SIGNAL(permanentFlags(int)), SLOT(slotPermanentFlags(int)) );
     connect( job, SIGNAL( result( KMail::FolderJob* ) ),
              this, SLOT( slotCheckUidValidityResult( KMail::FolderJob* ) ) );
     job->start();
@@ -1664,6 +1594,11 @@ void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
   }
   mProgress += 5;
   serverSyncInternal();
+}
+
+void KMFolderCachedImap::slotPermanentFlags(int flags)
+{
+  mPermanentFlags = flags;
 }
 
 /* This will only list the messages in a folder.
@@ -1743,14 +1678,30 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
   // Start with something largish when rebuilding the cache
   if ( uidsOnServer.size() == 0 )
     uidsOnServer.resize( KMail::nextPrime( 2000 ) );
-  int flags;
   const int v = 42;
   while (pos >= 0) {
+      /*
     KMMessage msg;
     msg.fromString((*it).cdata.mid(16, pos - 16));
-    flags = msg.headerField("X-Flags").toInt();
-    bool deleted = ( flags & 8 );
-    ulong uid = msg.UID();
+    const int flags = msg.headerField("X-Flags").toInt();
+    const ulong size = msg.headerField("X-Length").toULong();
+    const ulong uid = msg.UID();
+       */
+    // The below is optimized for speed, not prettiness. The commented out chunk
+    // above was the solution copied from kmfolderimap, and it's 15-20% slower.
+    const QCString& entry( (*it).cdata );
+    const int indexOfUID = entry.find("X-UID", 16);
+    const int startOfUIDValue = indexOfUID  + 7;
+    const int indexOfLength = entry.find("X-Length", startOfUIDValue ); // we know length comes after UID
+    const int startOfLengthValue = indexOfLength + 10;
+    const int indexOfFlags = entry.find("X-Flags", startOfLengthValue ); // we know flags comes last
+    const int startOfFlagsValue = indexOfFlags + 9;
+
+    const int flags = entry.mid( startOfFlagsValue, entry.find( '\r', startOfFlagsValue ) - startOfFlagsValue ).toInt();
+    const ulong size = entry.mid( startOfLengthValue, entry.find( '\r', startOfLengthValue ) - startOfLengthValue ).toULong();
+    const ulong uid = entry.mid( startOfUIDValue, entry.find( '\r', startOfUIDValue ) - startOfUIDValue ).toULong();
+
+    const bool deleted = ( flags & 8 );
     if ( !deleted ) {
       if( uid != 0 ) {
         if ( uidsOnServer.count() == uidsOnServer.size() ) {
@@ -1773,7 +1724,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<label()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
         KMMsgBase *existingMessage = findByUID(uid);
         if( !existingMessage ) {
-//           kdDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should delete it" << endl;
+#if MAIL_LOSS_DEBUGGING
+           kdDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should delete it" << endl;
+#endif
           // double check we deleted it since the last sync
            if ( mDeletedUIDsSinceLastSync.contains(uid) ) {
                if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
@@ -1785,9 +1738,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
                    redownload = true;
                }
            } else {
-//               kdDebug(5006) << "WARNING: ####### " << endl;
-//               kdDebug(5006) << "Message locally missing but not deleted in folder: " << folder()->prettyURL() << endl;
-//               kdDebug(5006) << "The missing UID: " << uid << ". It will be redownloaded " << endl;
+               kdDebug(5006) << "WARNING: ####### " << endl;
+               kdDebug(5006) << "Message locally missing but not deleted in folder: " << folder()->prettyURL() << endl;
+               kdDebug(5006) << "The missing UID: " << uid << ". It will be redownloaded " << endl;
                redownload = true;
            }
 
@@ -1795,9 +1748,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           // if this is a read only folder, ignore status updates from the server
           // since we can't write our status back our local version is what has to
           // be considered correct.
-          if (!mReadOnly) {
+          if ( !mReadOnly || !GlobalSettings::allowLocalFlags() ) {
             /* The message is OK, update flags */
-            KMFolderImap::flagsToStatus( existingMessage, flags, false );
+            KMFolderImap::flagsToStatus( existingMessage, flags,  false, mReadOnly ? INT_MAX : mPermanentFlags );
           } else if ( mUserRights & KMail::ACLJobs::WriteSeenFlag ) {
             KMFolderImap::seenFlagToStatus( existingMessage, flags );
           }
@@ -1805,18 +1758,21 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
       if ( uid > lastUid() || redownload ) {
-//      kdDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should download it" << endl;
+#if MAIL_LOSS_DEBUGGING
+        kdDebug(5006) << "Looking at uid " << uid << " high water is: " << lastUid() << " we should download it" << endl;
+#endif
         // The message is new since the last sync, but we might have just uploaded it, in which case
         // the uid map already contains it.
         if ( !uidMap.contains( uid ) ) {
-          ulong size = msg.headerField("X-Length").toULong();
           mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
           if( imapPath() == "/INBOX/" )
             mUidsForDownload << uid;
         }
         // Remember the highest uid and once the download is completed, update mLastUid
         if ( uid > mTentativeHighestUid ) {
-//          kdDebug(5006) << "Setting the tentative highest UID to: " << uid << endl;
+#if MAIL_LOSS_DEBUGGING
+          kdDebug(5006) << "Setting the tentative highest UID to: " << uid << endl;
+#endif
           mTentativeHighestUid = uid;
         }
       }
@@ -1857,7 +1813,6 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   // (going from mProgress to mProgress+progressSpan)
   newState( mProgress + (progressSpan * done) / total, QString::null );
 }
-
 
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
@@ -2029,9 +1984,9 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
-  mSubfolderAttributes = folderAttributes;
-
   mSubfolderState = imapFinished;
+  mSubfolderAttributes = folderAttributes;
+  kdDebug(5006) << "##### setting subfolder attributes: " << mSubfolderAttributes << endl;
 
   folder()->createChildFolder();
   KMFolderNode *node = folder()->child()->first();
@@ -2063,6 +2018,12 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
           }
         } else { // folder both local and on server
           //kdDebug(5006) << node->name() << " is on the server." << endl;
+
+          /**
+           * Store the folder attributes for every subfolder.
+           */
+          int index = mSubfolderNames.findIndex( node->name() );
+          f->mFolderAttributes = folderAttributes[ index ];
         }
       } else {
         //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
@@ -2072,11 +2033,13 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
   }
 
   for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() ) {
-    kmkernel->dimapFolderMgr()->remove( doomed );
+    rescueUnsyncedMessagesAndDeleteFolder( doomed );
   }
 
   mProgress += 5;
-  serverSyncInternal();
+
+  // just in case there is nothing to rescue
+  slotRescueDone( 0 );
 }
 
 // This synchronizes the local folders as needed (creation/deletion). No network communication here.
@@ -2221,6 +2184,8 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing( const QValueV
       f->setNoContent(mSubfolderMimeTypes[idx] == "inode/directory");
       f->setNoChildren(mSubfolderMimeTypes[idx] == "message/digest");
       f->setImapPath(mSubfolderPaths[idx]);
+      f->mFolderAttributes = mSubfolderAttributes[idx];
+      kdDebug(5006) << " ####### Attributes: " << f->mFolderAttributes <<endl;
       //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
       kmkernel->dimapFolderMgr()->contentsChanged();
     } else {
@@ -2300,7 +2265,6 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   buff.close();
 }
 
-
 FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                  QString, const AttachmentStrategy* ) const
@@ -2368,8 +2332,16 @@ KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job*, const KMail::A
 void
 KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 {
-    mQuotaInfo = info;
-    writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+  setQuotaInfo( info );
+}
+
+void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
+{
+    if ( info != mQuotaInfo ) {
+      mQuotaInfo = info;
+      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+      emit folderSizeChanged();
+    }
 }
 
 void
@@ -2666,7 +2638,6 @@ void KMFolderCachedImap::slotMultiUrlGetAnnotationResult( KIO::Job* job )
   createFoldersNewOnServerAndFinishListing( folders );
 }
 
-
 void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -2681,7 +2652,7 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
     if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
       // that's when the imap server doesn't support quota
       mAccount->setHasNoQuotaSupport();
-      mQuotaInfo = empty;
+      setQuotaInfo( empty );
     }
     else
       kdWarning(5006) << "slotGetQuotaResult: " << job->errorString() << endl;
@@ -2691,8 +2662,6 @@ void KMFolderCachedImap::slotQuotaResult( KIO::Job* job )
   mProgress += 2;
   serverSyncInternal();
 }
-
-
 
 void
 KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )
@@ -2753,7 +2722,7 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
 void KMFolderCachedImap::slotUpdateLastUid()
 {
   if( mTentativeHighestUid != 0 ) {
-    
+
       // Sanity checking:
       // By now all new mails should be downloaded, which means
       // that iteration over the folder should yield only UIDs
@@ -2779,7 +2748,9 @@ void KMFolderCachedImap::slotUpdateLastUid()
           }
       }
       if (sane) {
-//          kdDebug(5006) << "Tentative highest UID test was sane, writing out: " << mTentativeHighestUid << endl;
+#if MAIL_LOSS_DEBUGGING
+          kdDebug(5006) << "Tentative highest UID test was sane, writing out: " << mTentativeHighestUid << endl;
+#endif
           setLastUid( mTentativeHighestUid );
       }
   }
@@ -2820,6 +2791,177 @@ int KMFolderCachedImap::createIndexFromContentsRecursive()
   }
 
   return createIndexFromContents();
+}
+
+void KMFolderCachedImap::setAlarmsBlocked( bool blocked )
+{
+  mAlarmsBlocked = blocked;
+}
+
+bool KMFolderCachedImap::alarmsBlocked() const
+{
+  return mAlarmsBlocked;
+}
+
+bool KMFolderCachedImap::isCloseToQuota() const
+{
+  bool closeToQuota = false;
+  if ( mQuotaInfo.isValid() && mQuotaInfo.max().toInt() > 0 ) {
+    const int ratio = mQuotaInfo.current().toInt() * 100  / mQuotaInfo.max().toInt();
+    //kdDebug(5006) << "Quota ratio: " << ratio << "% " << mQuotaInfo.toString() << endl;
+    closeToQuota = ( ratio > 0 && ratio >= GlobalSettings::closeToQuotaThreshold() );
+  }
+  //kdDebug(5006) << "Folder: " << folder()->prettyURL() << " is over quota: " << closeToQuota << endl;
+  return closeToQuota;
+}
+
+KMCommand* KMFolderCachedImap::rescueUnsyncedMessages()
+{
+  QValueList<unsigned long> newMsgs = findNewMessages();
+  kdDebug() << k_funcinfo << newMsgs << " of " << count() << endl;
+  if ( newMsgs.isEmpty() )
+    return 0;
+  KMFolder *dest = 0;
+  bool manualMove = true;
+  while ( GlobalSettings::autoLostFoundMove() ) {
+    // find the inbox of this account
+    KMFolder *inboxFolder = kmkernel->findFolderById( QString(".%1.directory/INBOX").arg( account()->id() ) );
+    if ( !inboxFolder ) {
+      kdWarning(5006) << k_funcinfo << "inbox not found!" << endl;
+      break;
+    }
+    KMFolderDir *inboxDir = inboxFolder->child();
+    if ( !inboxDir && !inboxFolder->storage() )
+      break;
+    assert( inboxFolder->storage()->folderType() == KMFolderTypeCachedImap );
+
+    // create lost+found folder if needed
+    KMFolderNode *node;
+    KMFolder *lfFolder = 0;
+    if ( !(node = inboxDir->hasNamedFolder( i18n("lost+found") )) ) {
+      kdDebug(5006) << k_funcinfo << "creating lost+found folder" << endl;
+      KMFolder* folder = kmkernel->dimapFolderMgr()->createFolder(
+          i18n("lost+found"), false, KMFolderTypeCachedImap, inboxDir );
+      if ( !folder || !folder->storage() )
+        break;
+      static_cast<KMFolderCachedImap*>( folder->storage() )->initializeFrom(
+        static_cast<KMFolderCachedImap*>( inboxFolder->storage() ) );
+      folder->storage()->setContentsType( KMail::ContentsTypeMail );
+      folder->storage()->writeConfig();
+      lfFolder = folder;
+    } else {
+      kdDebug(5006) << k_funcinfo << "found lost+found folder" << endl;
+      lfFolder = dynamic_cast<KMFolder*>( node );
+    }
+    if ( !lfFolder || !lfFolder->createChildFolder() || !lfFolder->storage() )
+      break;
+
+    // create subfolder for this incident
+    QDate today = QDate::currentDate();
+    QString baseName = folder()->label() + "-" + QString::number( today.year() )
+        + (today.month() < 10 ? "0" : "" ) + QString::number( today.month() )
+        + (today.day() < 10 ? "0" : "" ) + QString::number( today.day() );
+    QString name = baseName;
+    int suffix = 0;
+    while ( (node = lfFolder->child()->hasNamedFolder( name )) ) {
+      ++suffix;
+      name = baseName + '-' + QString::number( suffix );
+    }
+    kdDebug(5006) << k_funcinfo << "creating lost+found folder " << name << endl;
+    dest = kmkernel->dimapFolderMgr()->createFolder( name, false, KMFolderTypeCachedImap, lfFolder->child() );
+    if ( !dest || !dest->storage() )
+        break;
+    static_cast<KMFolderCachedImap*>( dest->storage() )->initializeFrom(
+      static_cast<KMFolderCachedImap*>( lfFolder->storage() ) );
+    dest->storage()->setContentsType( contentsType() );
+    dest->storage()->writeConfig();
+
+    KMessageBox::sorry( 0, i18n("<p>There are new messages in folder <b>%1</b>, which "
+          "have not been uploaded to the server yet, but the folder has been deleted "
+          "on the server or you do not "
+          "have sufficient access rights on the folder to upload them.</p>"
+          "<p>All affected messages will therefore be moved to <b>%2</b> "
+          "to avoid data loss.</p>").arg( folder()->prettyURL() ).arg( dest->prettyURL() ),
+          i18n("Insufficient access rights") );
+    manualMove = false;
+    break;
+  }
+
+  if ( manualMove ) {
+    const QString msg ( i18n( "<p>There are new messages in this folder (%1), which "
+          "have not been uploaded to the server yet, but the folder has been deleted "
+          "on the server or you do not "
+          "have sufficient access rights on the folder now to upload them. "
+          "Please contact your administrator to allow upload of new messages "
+          "to you, or move them out of this folder.</p> "
+          "<p>Do you want to move these messages to another folder now?</p>").arg( folder()->prettyURL() ) );
+    if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
+      KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
+          i18n("Move Messages to Folder"), true );
+      if ( dlg.exec() ) {
+        dest = dlg.folder();
+      }
+    }
+  }
+  if ( dest ) {
+    QPtrList<KMMsgBase> msgs;
+    for( int i = 0; i < count(); ++i ) {
+      KMMsgBase *msg = getMsgBase( i );
+      if( !msg ) continue; /* what goes on if getMsg() returns 0? */
+      if ( msg->UID() == 0 )
+        msgs.append( msg );
+    }
+    KMCommand *command = new KMMoveCommand( dest, msgs );
+    command->start();
+    return command;
+  }
+  return 0;
+}
+
+void KMFolderCachedImap::rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder, bool root )
+{
+  kdDebug() << k_funcinfo << folder << " " << root << endl;
+  if ( root )
+    mToBeDeletedAfterRescue.append( folder );
+  folder->open("cachedimap");
+  KMFolderCachedImap* storage = dynamic_cast<KMFolderCachedImap*>( folder->storage() );
+  if ( storage ) {
+    KMCommand *command = storage->rescueUnsyncedMessages();
+    if ( command ) {
+      connect( command, SIGNAL(completed(KMCommand*)),
+               SLOT(slotRescueDone(KMCommand*)) );
+      ++mRescueCommandCount;
+    } else {
+      // nothing to rescue, close folder
+      // (we don't need to close it in the other case, it will be deleted anyway)
+      folder->close("cachedimap");
+    }
+  }
+  if ( folder->child() ) {
+    KMFolderNode *node = folder->child()->first();
+    while (node) {
+      if (!node->isDir() ) {
+        KMFolder *subFolder = static_cast<KMFolder*>( node );
+        rescueUnsyncedMessagesAndDeleteFolder( subFolder, false );
+      }
+      node = folder->child()->next();
+    }
+  }
+}
+
+void KMFolderCachedImap::slotRescueDone(KMCommand * command)
+{
+  // FIXME: check command result
+  if ( command )
+    --mRescueCommandCount;
+  if ( mRescueCommandCount > 0 )
+    return;
+  for ( QValueList<KMFolder*>::ConstIterator it = mToBeDeletedAfterRescue.constBegin();
+        it != mToBeDeletedAfterRescue.constEnd(); ++it ) {
+    kmkernel->dimapFolderMgr()->remove( *it );
+  }
+  mToBeDeletedAfterRescue.clear();
+  serverSyncInternal();
 }
 
 #include "kmfoldercachedimap.moc"

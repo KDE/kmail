@@ -14,6 +14,8 @@
 #include "composer.h"
 #include "messagesender.h"
 
+#include <set>
+
 #include <qlabel.h>
 #include <qlistview.h>
 
@@ -75,6 +77,7 @@ class RecipientsEditor;
 class KMLineEdit;
 class KMLineEditSpell;
 class KMAtmListViewItem;
+class SnippetWidget;
 
 namespace KPIM {
   class IdentityCombo;
@@ -84,6 +87,7 @@ namespace KPIM {
 namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
+  class EditorWatcher;
 }
 
 namespace GpgME {
@@ -153,6 +157,8 @@ public: // kmkernel, kmcommands, callback
    */
    void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE,
 	       bool allowDecryption=FALSE, bool isModified=FALSE);
+
+   void disableWordWrap();
 
 private: // kmedit
   /**
@@ -238,6 +244,7 @@ private: // kmedit:
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
 
+  void paste( QClipboard::Mode mode );
 
 public: // callback
   /** Disabled signing and encryption completely for this composer window. */
@@ -281,9 +288,9 @@ private slots:
   void slotRedo();
   void slotCut();
   void slotCopy();
-  void slotPaste();
-  void slotPasteAsQuotation();
-  void slotPasteAsAttachment();
+  void slotPasteClipboard();
+  void slotPasteClipboardAsQuotation();
+  void slotPasteClipboardAsAttachment();
   void slotAddQuotes();
   void slotRemoveQuotes();
   void slotAttachPNGImageData(const QByteArray &image);
@@ -291,6 +298,8 @@ private slots:
   void slotMarkAll();
 
   void slotFolderRemoved(KMFolder*);
+
+  void slotEditDone( KMail::EditorWatcher* watcher );
 
 public slots: // kmkernel
   /**
@@ -369,6 +378,16 @@ private slots:
   void slotAppendSignature();
 
   /**
+   * Prepend signature file at the beginning of the text in the editor.
+   */
+  void slotPrependSignature();
+
+  /**
+   * Insert signature file at the cursor position of the text in the editor.
+   */
+  void slotInsertSignatureAtCursor();
+
+  /**
    * Attach sender's public key.
    */
   void slotInsertMyPublicKey();
@@ -403,6 +422,9 @@ private slots:
   void slotAttachSave();
   void slotAttachProperties();
   void slotAttachOpenWith();
+  void slotAttachEdit();
+  void slotAttachEditWith();
+  void slotAttachmentDragStarted();
 
   /**
    * Select an email from the addressbook and add it to the line
@@ -555,6 +577,11 @@ private:
   void viewAttach( int index );
 
   /**
+    Edit the attachment with the given index.
+  */
+  void editAttach( int index, bool openWith );
+
+  /**
    * Remove an attachment from the list.
    */
    void removeAttach(const QString &url);
@@ -663,6 +690,11 @@ private:
    */
   void setTransport( const QString & transport );
 
+  /**
+   * Helper to insert the signature of the current identy at the
+   * beginning or end of the editor.
+   */
+  void insertSignature( bool append = true, int pos = 0 );
 private slots:
    /**
     * Compress an attachemnt with the given index
@@ -670,6 +702,8 @@ private slots:
     void compressAttach(int idx);
     void uncompressAttach(int idx);
     void editorFocusChanged(bool gained);
+    void recipientEditorSizeHintChanged();
+    void setMaximumHeaderSize();
 
 private:
   QWidget   *mMainWidget;
@@ -702,7 +736,7 @@ private:
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
-  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  int mOpenId, mOpenWithId, mViewId, mRemoveId, mSaveAsId, mPropertiesId, mEditId, mEditWithId;
   bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
   bool mLastSignActionState, mLastEncryptActionState;
@@ -725,13 +759,15 @@ private:
           *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
   KRecentFilesAction *mRecentAction;
 
+  KAction *mAppendSignatureAction, *mPrependSignatureAction, *mInsertSignatureAction;
+
   KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
   KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
   KToggleAction *mReplyToAction, *mToAction, *mCcAction, *mBccAction;
   KToggleAction *mSubjectAction;
   KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
   KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-  KToggleAction *mDictionaryAction;
+  KToggleAction *mDictionaryAction, *mSnippetAction;
 
   KSelectAction *listAction;
   KFontAction *fontAction;
@@ -795,10 +831,22 @@ private slots:
    */
   void slotAutoSpellCheckingToggled(bool);
 
+  /**
+   *  Updates signature actions when identity changes.
+   */
+  void slotUpdateSignatureActions();
+
+  /**
+   * Updates the visibility and text of the signature and encryption state indicators.
+   */
+  void slotUpdateSignatureAndEncrypionStateIndicators();
 private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
+  QSplitter *mHeadersToEditorSplitter;
+  QWidget* mHeadersArea;
   QSplitter *mSplitter;
+  QSplitter *mSnippetSplitter;
   struct atmLoadData
   {
     KURL url;
@@ -839,6 +887,15 @@ private:
 
   QPopupMenu *mActNowMenu;
   QPopupMenu *mActLaterMenu;
+
+  QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
+  QMap<KMail::EditorWatcher*, KTempFile*> mEditorTempFiles;
+
+  QLabel *mSignatureStateIndicator;
+  QLabel *mEncryptionStateIndicator;
+
+  SnippetWidget *mSnippetWidget;
+  std::set<KTempDir*> mTempDirs;
 
   /** If the message in this composer has a cursor position set (for
    *   instance because it comes from a template containing %CURSOR)

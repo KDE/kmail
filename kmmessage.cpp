@@ -31,7 +31,6 @@ using KMail::HeaderStrategy;
 
 #include <kasciistringtools.h>
 
-#include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
 #include <kaddrbook.h>
 
@@ -86,6 +85,8 @@ const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 //helper
 static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart );
 
+QValueList<KMMessage*> KMMessage::sPendingDeletes;
+
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
   : KMMsgBase()
@@ -135,7 +136,7 @@ void KMMessage::init( DwMessage* aMsg )
   if ( aMsg ) {
     mMsg = aMsg;
   } else {
-  mMsg = new DwMessage;
+    mMsg = new DwMessage;
   }
   mOverrideCodec = 0;
   mDecodeHTML = false;
@@ -152,6 +153,7 @@ void KMMessage::init( DwMessage* aMsg )
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
   mCursorPos = 0;
+  mMsgInfo = 0;
   mIsParsed = false;
 }
 
@@ -190,6 +192,7 @@ void KMMessage::assign( const KMMessage& other )
 //-----------------------------------------------------------------------------
 KMMessage::~KMMessage()
 {
+  delete mMsgInfo;
   delete mMsg;
   kmkernel->undoStack()->msgDestroyed( this );
 }
@@ -200,7 +203,7 @@ void KMMessage::setReferences(const QCString& aStr)
 {
   if (!aStr) return;
   mMsg->Headers().References().FromString(aStr);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -229,7 +232,7 @@ void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 //-----------------------------------------------------------------------------
 bool KMMessage::isMessage() const
 {
-  return TRUE;
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -243,6 +246,15 @@ bool KMMessage::transferInProgress() const
 void KMMessage::setTransferInProgress(bool value, bool force)
 {
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
+  if ( !transferInProgress() && sPendingDeletes.contains( this ) ) {
+    sPendingDeletes.remove( this );
+    if ( parent() ) {
+      int idx = parent()->find( this );
+      if ( idx > 0 ) {
+        parent()->removeMsg( idx );
+      }
+    }
+  }
 }
 
 
@@ -284,7 +296,7 @@ const DwString& KMMessage::asDwString() const
 {
   if (mNeedsAssembly)
   {
-    mNeedsAssembly = FALSE;
+    mNeedsAssembly = false;
     mMsg->Assemble();
   }
   return mMsg->AsString();
@@ -295,7 +307,7 @@ const DwMessage* KMMessage::asDwMessage()
 {
   if (mNeedsAssembly)
   {
-    mNeedsAssembly = FALSE;
+    mNeedsAssembly = false;
     mMsg->Assemble();
   }
   return mMsg;
@@ -406,7 +418,7 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
   if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
     updateAttachmentState();
 
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
   mDate = date();
 }
 
@@ -1177,6 +1189,24 @@ QCString KMMessage::createForwardBody()
   return str;
 }
 
+void KMMessage::sanitizeHeaders( const QStringList& whiteList )
+{
+   // Strip out all headers apart from the content description and other
+   // whitelisted ones, because we don't want to inherit them.
+   DwHeaders& header = mMsg->Headers();
+   DwField* field = header.FirstField();
+   DwField* nextField;
+   while (field)
+   {
+     nextField = field->Next();
+     if ( field->FieldNameStr().find( "ontent" ) == DwString::npos
+             && !whiteList.contains( QString::fromLatin1( field->FieldNameStr().c_str() ) ) )
+       header.RemoveField(field);
+     field = nextField;
+   }
+   mMsg->Assemble();
+}
+
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 {
@@ -1195,17 +1225,19 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
     const int type = msg->type();
     const int subtype = msg->subtype();
 
-    // Strip out all headers apart from the content description ones, because we
-    // don't want to inherit them.
-    DwHeaders& header = msg->mMsg->Headers();
-    DwField* field = header.FirstField();
-    DwField* nextField;
-    while (field)
-    {
-      nextField = field->Next();
-      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos )
-        header.RemoveField(field);
-      field = nextField;
+    msg->sanitizeHeaders();
+
+    // strip blacklisted parts
+    QStringList blacklist = GlobalSettings::self()->mimetypesToStripWhenInlineForwarding();
+    for ( QStringList::Iterator it = blacklist.begin(); it != blacklist.end(); ++it ) {
+      QString entry = (*it);
+      int sep = entry.find( '/' );
+      QCString type = entry.left( sep ).latin1();
+      QCString subtype = entry.mid( sep+1 ).latin1();
+      kdDebug( 5006 ) << "Looking for blacklisted type: " << type << "/" << subtype << endl;
+      while ( DwBodyPart * part = msg->findDwBodyPart( type, subtype ) ) {
+        msg->mMsg->Body().RemoveBodyPart( part );
+      }
     }
     msg->mMsg->Assemble();
 
@@ -1435,8 +1467,8 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     s = MDN::SentManually;
   }
 
-  if ( a != KMime::MDN::AutomaticAction ) { 
-    //TODO: only ingore user settings for AutomaticAction if requested 
+  if ( a != KMime::MDN::AutomaticAction ) {
+    //TODO: only ingore user settings for AutomaticAction if requested
     if ( mode == 1 ) { // ask
       if ( !allowGUI ) return 0; // don't setMDNSentState here!
       mode = requestAdviceOnMDN( "mdnNormalAsk" );
@@ -1560,7 +1592,19 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   QString result = s;
   QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
   Q_ASSERT( rx.isValid() );
+
+  QRegExp rxDate( "\\$\\{date\\}" );
+  Q_ASSERT( rxDate.isValid() );
+
+  QString sDate = KMime::DateFormatter::formatDate(
+                      KMime::DateFormatter::Localized, date() );
+
   int idx = 0;
+  if( ( idx = rxDate.search( result, idx ) ) != -1  ) {
+    result.replace( idx, rxDate.matchedLength(), sDate );
+  }
+
+  idx = 0;
   while ( ( idx = rx.search( result, idx ) ) != -1 ) {
     QString replacement = headerField( rx.cap(1).latin1() );
     result.replace( idx, rx.matchedLength(), replacement );
@@ -1695,7 +1739,7 @@ void KMMessage::cleanupHeader()
   DwField* nextField;
 
   if (mNeedsAssembly) mMsg->Assemble();
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
 
   while (field)
   {
@@ -1703,7 +1747,7 @@ void KMMessage::cleanupHeader()
     if (field->FieldBody()->AsString().empty())
     {
       header.RemoveField(field);
-      mNeedsAssembly = TRUE;
+      mNeedsAssembly = true;
     }
     field = nextField;
   }
@@ -1726,7 +1770,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
     // Create a random printable string and set it as the boundary parameter
     contentType.CreateBoundary(0);
   }
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -1807,8 +1851,8 @@ void KMMessage::setDate(time_t aDate)
   mDate = aDate;
   mMsg->Headers().Date().FromCalendarTime(aDate);
   mMsg->Headers().Date().Assemble();
-  mNeedsAssembly = TRUE;
-  mDirty = TRUE;
+  mNeedsAssembly = true;
+  mDirty = true;
 }
 
 
@@ -1819,8 +1863,8 @@ void KMMessage::setDate(const QCString& aStr)
 
   header.Date().FromString(aStr);
   header.Date().Parse();
-  mNeedsAssembly = TRUE;
-  mDirty = TRUE;
+  mNeedsAssembly = true;
+  mDirty = true;
 
   if (header.HasDate())
     mDate = header.Date().AsUnixTime();
@@ -1952,7 +1996,7 @@ void KMMessage::setFrom(const QString& bStr)
   if (aStr.isNull())
     aStr = "";
   setHeaderField( "From", aStr, Address );
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -1983,7 +2027,7 @@ QString KMMessage::subject() const
 void KMMessage::setSubject(const QString& aStr)
 {
   setHeaderField("Subject",aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -1998,7 +2042,7 @@ QString KMMessage::xmark() const
 void KMMessage::setXMark(const QString& aStr)
 {
   setHeaderField("X-KMail-Mark", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -2101,7 +2145,7 @@ bool KMMessage::subjectIsPrefixed() const {
 void KMMessage::setReplyToId(const QString& aStr)
 {
   setHeaderField("In-Reply-To", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 
@@ -2132,7 +2176,7 @@ QString KMMessage::msgIdMD5() const {
 void KMMessage::setMsgId(const QString& aStr)
 {
   setHeaderField("Message-Id", aStr);
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2145,7 +2189,7 @@ size_t KMMessage::msgSizeServer() const {
 void KMMessage::setMsgSizeServer(size_t size)
 {
   setHeaderField("X-Length", QCString().setNum(size));
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2158,7 +2202,7 @@ ulong KMMessage::UID() const {
 void KMMessage::setUID(ulong uid)
 {
   setHeaderField("X-UID", QCString().setNum(uid));
-  mDirty = TRUE;
+  mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2248,7 +2292,17 @@ void KMMessage::removeHeaderField(const QCString& aName)
   if (!field) return;
 
   header.RemoveField(field);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::removeHeaderFields(const QCString& aName)
+{
+  DwHeaders & header = mMsg->Headers();
+  while ( DwField * field = header.FindField(aName) ) {
+    header.RemoveField(field);
+    mNeedsAssembly = true;
+  }
 }
 
 
@@ -2300,7 +2354,7 @@ void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
     header.AddFieldAt( 1, field );
   else
     header.AddOrReplaceField( field );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2327,7 +2381,7 @@ void KMMessage::setTypeStr(const QCString& aStr)
 {
   dwContentType().SetTypeStr(DwString(aStr));
   dwContentType().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2336,7 +2390,7 @@ void KMMessage::setType(int aType)
 {
   dwContentType().SetType(aType);
   dwContentType().Assemble();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2364,7 +2418,7 @@ void KMMessage::setSubtypeStr(const QCString& aStr)
 {
   dwContentType().SetSubtypeStr(DwString(aStr));
   dwContentType().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2373,7 +2427,7 @@ void KMMessage::setSubtype(int aSubtype)
 {
   dwContentType().SetSubtype(aSubtype);
   dwContentType().Assemble();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2406,9 +2460,9 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
 void KMMessage::setContentTypeParam(const QCString& attr, const QCString& val)
 {
   if (mNeedsAssembly) mMsg->Assemble();
-  mNeedsAssembly = FALSE;
+  mNeedsAssembly = false;
   setDwMediaTypeParam( dwContentType(), attr, val );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2437,7 +2491,7 @@ void KMMessage::setContentTransferEncodingStr(const QCString& aStr)
 {
   mMsg->Headers().ContentTransferEncoding().FromString(aStr);
   mMsg->Headers().ContentTransferEncoding().Parse();
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2445,7 +2499,7 @@ void KMMessage::setContentTransferEncodingStr(const QCString& aStr)
 void KMMessage::setContentTransferEncoding(int aCte)
 {
   mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2644,7 +2698,7 @@ void KMMessage::setBodyEncoded(const QCString& aStr)
   }
 
   mMsg->Body().FromString(dwResult);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -2667,7 +2721,7 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
   }
 
   mMsg->Body().FromString(dwResult);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -2675,17 +2729,17 @@ void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
 void KMMessage::setBody(const QCString& aStr)
 {
   mMsg->Body().FromString(KMail::Util::dwString(aStr));
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 void KMMessage::setBody(const DwString& aStr)
 {
   mMsg->Body().FromString(aStr);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 void KMMessage::setBody(const char* aStr)
 {
   mMsg->Body().FromString(aStr);
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 void KMMessage::setMultiPartBody( const QCString & aStr ) {
@@ -2880,6 +2934,56 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
   return part;
 }
 
+//-----------------------------------------------------------------------------
+DwBodyPart * KMMessage::findDwBodyPart( const QCString& type, const QCString&  subtype ) const
+{
+  DwBodyPart *part, *curpart;
+  QPtrList< DwBodyPart > parts;
+  // Get the DwBodyPart for this index
+
+  curpart = getFirstDwBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+    //dive into multipart messages
+    while(curpart
+	  && curpart->hasHeaders()
+	  && curpart->Headers().HasContentType()
+      && curpart->Body().FirstBodyPart()
+	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
+	parts.append( curpart );
+	curpart = curpart->Body().FirstBodyPart();
+    }
+    // this is where curPart->msgPart contains a leaf message part
+
+    // pending(khz): Find out WHY this look does not travel down *into* an
+    //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
+    if (curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
+      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
+            << "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
+    }
+
+    if (curpart &&
+	curpart->hasHeaders() &&
+        curpart->Headers().HasContentType() &&
+	curpart->Headers().ContentType().TypeStr().c_str() == type &&
+	curpart->Headers().ContentType().SubtypeStr().c_str() == subtype) {
+	part = curpart;
+    } else {
+      // go up in the tree until reaching a node with next
+      // (or the last top-level node)
+      while (curpart && !(curpart->Next()) && !(parts.isEmpty())) {
+	curpart = parts.getLast();
+	parts.removeLast();
+      } ;
+      if (curpart)
+	curpart = curpart->Next();
+    }
+  }
+  return part;
+}
+
+
 void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 {
   // TODO: Instead of manually implementing RFC2231 header encoding (i.e.
@@ -3022,6 +3126,11 @@ void KMMessage::deleteBodyParts()
   mMsg->Body().DeleteBodyParts();
 }
 
+void KMMessage::removeBodyPart(DwBodyPart * dwPart)
+{
+  mMsg->Body().RemoveBodyPart( dwPart );
+  mNeedsAssembly = true;
+}
 
 //-----------------------------------------------------------------------------
 DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
@@ -3163,7 +3272,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 void KMMessage::addDwBodyPart(DwBodyPart * aDwPart)
 {
   mMsg->Body().AddBodyPart( aDwPart );
-  mNeedsAssembly = TRUE;
+  mNeedsAssembly = true;
 }
 
 
@@ -3652,7 +3761,7 @@ QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
+QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const QString& cssStyle, bool aLink)
 {
   if( aEmail.isEmpty() )
     return aEmail;
@@ -3666,17 +3775,21 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
        ++it ) {
     if( !(*it).isEmpty() ) {
       QString address = *it;
-      result += "<a href=\"mailto:"
+      if(aLink) {
+	result += "<a href=\"mailto:"
               + KMMessage::encodeMailtoUrl( address )
-              + "\">";
+	  + "\" "+cssStyle+">";
+      }
       if( stripped )
         address = KMMessage::stripEmailAddr( address );
       result += KMMessage::quoteHtmlChars( address, true );
-      result += "</a>, ";
+      if(aLink)
+	result += "</a>, ";
     }
   }
   // cut of the trailing ", "
-  result.truncate( result.length() - 2 );
+  if(aLink)
+    result.truncate( result.length() - 2 );
 
   //kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
   //              << "') returns:\n-->" << result << "<--" << endl;
@@ -4248,4 +4361,9 @@ QCString KMMessage::mboxMessageSeparator()
       dateStr.truncate( len - 1 );
   }
   return "From " + str + " " + dateStr + "\n";
+}
+
+void KMMessage::deleteWhenUnused()
+{
+  sPendingDeletes << this;
 }

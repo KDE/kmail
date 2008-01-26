@@ -25,7 +25,7 @@
           <choice name="SelectFirstUnreadNew"/>
           <choice name="SelectLastSelected"/>
         </choices>
-        <default>SelectFirstNew</default>
+        <default>SelectLastSelected</default>
       </entry>
       <entry name="NetworkState"  type="Enum">
         <choices>
@@ -69,6 +69,11 @@
       <entry name="AutoLostFoundMove" type="Bool">
         <label>Automatically move non-synced mails from folders with insufficient access rights</label>
         <whatsthis>If there are new messages in a folder, which have not been uploaded to the server yet, but you do not have sufficient access rights on the folder now to upload them, these messages will automatically be moved into a lost and found folder.</whatsthis>
+        <default>true</default>
+      </entry>
+
+      <entry name="AllowLocalFlags" type="Bool">
+        <label>Allow local flags in read-only folders</label>
         <default>false</default>
       </entry>
     </group>
@@ -87,16 +92,6 @@
         <default>inbox</default>
       </entry>
 
-      <entry name="QuotaUnit"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="KB"/>
-          <choice name="MB"/>
-          <choice name="GB"/>
-        </choices>
-        <default>MB</default>
-      </entry>
     </group>
 
     <group name="General">
@@ -115,6 +110,10 @@
           <choice name="ShowOnUnread"/>
         </choices>
         <default>ShowOnUnread</default>
+      </entry>
+      <entry name="CloseDespiteSystemTray" type="Bool">
+          <label>Close the application when the mainwindow is closed, even if there is a system tray icon active.</label>
+        <default>false</default>
       </entry>
       <entry name="VerboseNewMailNotification" type="Bool">
         <label>Verbose new mail notification</label>
@@ -140,6 +139,23 @@
       <entry name="FolderLoadingTimeout" type="Int" hidden="true">
          <default>1000</default>
       </entry>
+
+      <entry name="QuotaUnit"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="KB"/>
+          <choice name="MB"/>
+          <choice name="GB"/>
+        </choices>
+        <default>MB</default>
+      </entry>
+
+      <entry name="CloseToQuotaThreshold" type="Int">
+        <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
+         <default>85</default>
+      </entry>
+
     </group>
 <!-- General -->
 
@@ -173,7 +189,26 @@
         <whatsthis>When this is checked, you will not see the mail composer window. Instead, all invitation mails are sent automatically. If you want to see the mail before sending it, you can uncheck this option. However, be aware that the text in the composer window is in iCalendar syntax, and you should not try modifying it by hand.</whatsthis>
         <default>true</default>
       </entry>
-    </group>
+
+      <entry name="AskForCommentWhenReactingToInvitation"  type="Enum">
+        <label></label>
+        <whatsthis></whatsthis>
+        <choices>
+          <choice name="NeverAsk"/>
+          <choice name="AskForAllButAcceptance"/>
+          <choice name="AlwaysAsk"/>
+        </choices>
+        <default>AskForAllButAcceptance</default>
+      </entry>
+      
+      <entry name="DeleteInvitationEmailsAfterSendingReply" type="Bool">
+        <label>Delete invitation emails after the reply to them has been sent</label>
+        <whatsthis>When this is checked, received invitation emails that have been replied to will be moved to the Trash folder, once the reply has been successfully sent.</whatsthis>
+        <default>true</default>
+      </entry>
+      
+
+    </group> 
 
     <group name="IMAP Resource">
       <entry name="TheIMAPResourceEnabled" type="Bool">
@@ -217,6 +252,20 @@
         <whatsthis>&lt;p&gt;If you want to set the folder names of the IMAP storage to your local language, you can choose between these available languages.&lt;/p&gt;&lt;p&gt; Please note, that the only reason to do so is for compatibility with Microsoft Outlook. It is considered a bad idea to set this, since it makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So do not set this unless you have to.&lt;/p&gt;</whatsthis>
         <default>0</default>
       </entry>
+
+      <entry name="FilterOnlyDIMAPInbox" type="Bool">
+        <default>true</default>
+        <label>Only filter mails received in disconnected IMAP inbox.</label>
+      </entry>
+      <entry name="FilterGroupwareFolders" type="Bool">
+        <default>false</default>
+        <label>Also filter new mails received in groupware folders.</label>
+      </entry>
+
+      <entry name="ImmediatlySyncDIMAPOnGroupwareChanges" type="Bool">
+        <default>true</default>
+        <label>Synchronize groupware changes in DIMAP folders immediately when being online.</label>
+      </entry>
     </group>
 
     <group name="Internal">
@@ -244,16 +293,27 @@
         <whatsthis>This option enables or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
         <default>true</default>
       </entry>
-
+      <entry name="HideLocalInbox" type="Bool">
+        <label>Hide local inbox if unused</label>
+        <default>true</default>
+      </entry>
     </group>
 
     <group name="Composer">
+      <entry name="ForwardingInlineByDefault" type="Bool">
+        <default>false</default>
+        <label>Forward Inline As Default.</label>
+      </entry>
+      <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
+          <default>true</default>
+          <label>Allow the semicolon charactor (';') to be used as separator in the message composer.</label>
+      </entry>
       <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
         <label>Keep original charset when replying or forwarding if possible</label>
         <default>false</default>
       </entry>
       <entry name="AutoTextSignature" type="String" key="signature">
-        <label>A&amp;utomatically append signature</label>
+        <label>A&amp;utomatically insert signature</label>
         <default>auto</default>
       </entry>
       <entry name="StickyIdentity" type="Bool" key="sticky-identity">
@@ -281,7 +341,7 @@
         <label></label>
         <default>78</default>
         <min>30</min>
-        <max>78</max>
+        <max>255</max>
       </entry>
       <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
@@ -350,6 +410,10 @@
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
         <default>2</default>
       </entry>
+      <entry name="PrependSignature" type="Bool" key="prepend-signature">
+        <label>Insert signatures above quoted text</label>
+        <default>false</default>
+      </entry>
       <entry name="ReplyPrefixes" type="StringList" key="reply-prefixes">
         <default>Re\\s*:,Re\\[\\d+\\]:,Re\\d+:</default>
       </entry>
@@ -401,6 +465,28 @@
         <default>200</default>
       </entry>
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
+
+      <entry name="MimetypesToStripWhenInlineForwarding" type="StringList">
+          <label>List of message part types to strip off mails that are being forwarded inline.</label>
+      </entry>
+
+      <entry name="MaximumAttachmentSize" type="Int">
+          <label>The maximum size in MB that email attachments are allowed to have.</label>
+          <default>50</default>
+      </entry>
+
+      <entry name="ShowSnippetManager" type="Bool">
+          <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
+          <default>false</default>
+      </entry>
+
+      <entry name="SnippetSplitterPosition" type="IntList"/>
+
+      <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
+          <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
+          <default>false</default>
+      </entry>
+
     </group>
 <!-- Composer -->
 
@@ -481,6 +567,19 @@
        <whatsthis>Enable this option to get the User-Agent and X-Mailer header lines displayed when using fancy headers.</whatsthis>
      </entry>
 
+     <entry name="AllowAttachmentDeletion" type="Bool">
+       <default>true</default>
+       <label>Allow to delete attachments of existing mails.</label>
+     </entry>
+     <entry name="AllowAttachmentEditing" type="Bool">
+       <default>false</default>
+       <label>Allow to edit attachments of existing mails.</label>
+     </entry>
+
+     <entry name="AlwaysDecrypt" type="Bool">
+      <default>false</default>
+      <label>Always decrypt messages when viewing or ask befor decrypting</label>
+     </entry>
     </group>
 
     <group name="TextIndex">
@@ -529,6 +628,39 @@
       <whatsthis></whatsthis>
       <default code="true">TemplatesConfiguration::defaultQuoteString()</default>
     </entry>
+  </group>
+
+    <group name="OutOfOffice">
+        <entry name="AllowOutOfOfficeSettings" type="Bool">
+            <default>true</default>
+            <label>Allow out-of-office settings to to be changeable by the user.</label>
+        </entry>
+        <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
+            <default>false</default>
+            <label>Allow users to upload out-of-office sieve scripts, but disallow them changin any settings, such as the domain to react to and the spam reaction switch.</label>
+        </entry>
+        <entry name="OutOfOfficeDomain" type="String">
+            <default></default>
+            <label>Send out-of-office replies to mails coming from this domain only.</label>
+        </entry>
+        <entry name="OutOfOfficeReactToSpam" type="Bool">
+            <default>false</default>
+            <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
+        </entry>
+        <entry name="CheckOutOfOfficeOnStartup" type="Bool">
+              <default>true</default>
+              <label>Check if there is still an active out-of-office reply configured when starting KMail.</label>
+        </entry>
+    </group>
+
+  <group name="FavoriteFolderView">
+    <entry name="EnableFavoriteFolderView" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="FolderViewSplitterPosition" type="IntList"/>
+    <entry name="FavoriteFolderIds" type="IntList"/>
+    <entry name="FavoriteFolderNames" type="StringList"/>
+    <entry name="FavoriteFolderViewSeenInboxes" type="IntList"/>
   </group>
 
 </kcfg>

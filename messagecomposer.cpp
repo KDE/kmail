@@ -55,6 +55,7 @@
 
 #include <ui/keyselectiondialog.h>
 #include <ui/keyapprovaldialog.h>
+#include <ui/messagebox.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/keylistjob.h>
 #include <kleo/encryptjob.h>
@@ -528,6 +529,7 @@ void MessageComposer::readFromComposeWin()
   // according to the line breaks of the richtext version.
   mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
+
 static QCString escape_quoted_string( const QCString & str ) {
   QCString result;
   const unsigned int str_len = str.length();
@@ -1371,7 +1373,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   theMessage.deleteBodyParts();
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
-  theMessage.setAutomaticFields(TRUE); // == multipart/mixed
+  theMessage.setAutomaticFields(true); // == multipart/mixed
 
   // this is our *final* body part
   mNewBodyPart = new KMMessagePart;
@@ -1560,7 +1562,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(bodyData, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-                                   doSign);
+                                    doSign);
     if ( !mIsRichText )
       mOldBodyPart.setCharset(mCharset);
   }
@@ -2081,7 +2083,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec()
   QString text;
   QCString cText;
 
-  if( mDisableBreaking || mIsRichText )
+  if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() )
     text = mComposeWin->mEditor->text();
   else
     text = mComposeWin->mEditor->brokenText();
@@ -2179,6 +2181,9 @@ void MessageComposer::pgpSignedMsg( const QByteArray& cText, Kleo::CryptoMessage
     return;
   }
 
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Signing Operation") );
+
   mSignature = signature;
   if ( mSignature.isEmpty() ) {
     KMessageBox::sorry( mComposeWin,
@@ -2202,18 +2207,18 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
   assert( proto ); // hmmmm....?
 
   std::auto_ptr<Kleo::EncryptJob> job( proto->encryptJob( armor( format ),
-							  textMode( format ) ) );
+                                                          textMode( format ) ) );
   if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
-			i18n("This message could not be encrypted, "
-			     "since the chosen backend does not seem to support "
-			     "encryption; this should actually never happen, "
-			     "please report this bug.") );
+                        i18n("This message could not be encrypted, "
+                             "since the chosen backend does not seem to support "
+                             "encryption; this should actually never happen, "
+                             "please report this bug.") );
     return Kpgp::Failure;
   }
 
   const GpgME::EncryptionResult res =
-    job->exec( encryptionKeys, cText, false, encryptedBody );
+    job->exec( encryptionKeys, cText, true /* we do ownertrust ourselves */, encryptedBody );
   if ( res.error().isCanceled() ) {
     kdDebug() << "encryption was canceled by user" << endl;
     return Kpgp::Canceled;
@@ -2223,6 +2228,10 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
+
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
+
   return Kpgp::Ok;
 }
 
@@ -2264,6 +2273,10 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
     job->showErrorDialog( mComposeWin );
     return Kpgp::Failure;
   }
+
+  if ( GlobalSettings::showGnuPGAuditLogAfterSuccessfulSignEncrypt() )
+      Kleo::MessageBox::auditLog( 0, job.get(), i18n("GnuPG Audit Log for Encryption Operation") );
+
   return Kpgp::Ok;
 }
 

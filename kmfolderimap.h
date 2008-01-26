@@ -131,9 +131,6 @@ public:
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void remove();
 
-  /** Closes and cancels all pending jobs. */
-  virtual void reallyDoClose(const char *owner);
-
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
 
@@ -242,7 +239,7 @@ public:
   /**
    * Convert message status to a list of IMAP flags
    */
-  static QString statusToFlags(KMMsgStatus status);
+  static QString statusToFlags(KMMsgStatus status, int supportedFalgs);
 
   /**
    * Return the filename of the folder (reimplemented from KFolder)
@@ -279,6 +276,9 @@ public:
 
   /** imap folders cannot expire */
   virtual bool isAutoExpire() const { return false; }
+
+  /** Closes and cancels all pending jobs. */
+  virtual void reallyDoClose(const char* owner);
 
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
 
@@ -317,6 +317,9 @@ public:
 
   /** Initialize this storage from another one. Used when creating a child folder */
   void initializeFrom( KMFolderImap* parent, QString path, QString mimeType );
+
+  /** Returns the IMAP flags that can be stored on the server. */
+  int permanentFlags() const { return mPermanentFlags; }
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
@@ -370,7 +373,7 @@ public slots:
    * Convert IMAP flags to a message status
    * @param newMsg specifies whether unseen messages are new or unread
    */
-  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE, int supportedFalgs = 31 );
 
   /**
    * Convert IMAP seen flag to a message status.
@@ -536,6 +539,10 @@ private:
   // this is needed for migrating local flags from the time where we didn't
   // have the ability to store them on the server
   bool mUploadAllFlags;
+
+  // PERMANENTFLAGS part of SELECT response, needed to determine if custom flags can be
+  // stored on the server
+  int mPermanentFlags;
 };
 
 #endif // kmfolderimap_h

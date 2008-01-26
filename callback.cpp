@@ -56,31 +56,43 @@ Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
 {
 }
 
-bool Callback::mailICal( const QString& to, const QString iCal,
-                         const QString& subject, const QString &status ) const
+bool Callback::mailICal( const QString& to, const QString &iCal,
+                         const QString& subject, const QString &status,
+                         bool delMessage ) const
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
+
   KMMessage *msg = new KMMessage;
   msg->initHeader();
+  msg->setSubject( subject );
   if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-    if ( status == QString("cancel") ) msg->setSubject( QString("Declined: %1").arg(subject).replace("Answer: ","") );
-    else if ( status == QString("tentative") ) msg->setSubject(QString("Tentative: %1").arg(subject).replace("Answer: ","") );
-    else if ( status == QString("accepted") ) msg->setSubject( QString("Accepted: %1").arg(subject).replace("Answer: ","") );
-    else msg->setSubject( subject );
-  } else {
-    msg->setSubject( subject );
+    if ( status == QString("cancel") )
+      msg->setSubject( QString("Declined: %1").arg(subject).replace("Answer: ","") );
+    else if ( status == QString("tentative") )
+      msg->setSubject(QString("Tentative: %1").arg(subject).replace("Answer: ","") );
+    else if ( status == QString("accepted") )
+      msg->setSubject( QString("Accepted: %1").arg(subject).replace("Answer: ","") );
+    else if ( status == QString("delegated") )
+      msg->setSubject( QString("Delegated: %1").arg(subject).replace("Answer: ","") );
   }
   msg->setTo( to );
   msg->setFrom( receiver() );
-  /* We want the triggering mail to be moved to the trash once this one
-   * has been sent successfully. Set a link header which accomplishes that. */
-  msg->link( mMsg, KMMsgStatusDeleted );
+
+  if ( !GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    msg->setHeaderField( "Content-Type",
+                         "text/calendar; method=reply; charset=\"utf-8\"" );
+    msg->setBody( iCal.utf8() );
+  }
+
+  if ( delMessage && deleteInvitationAfterReply() )
+    /* We want the triggering mail to be moved to the trash once this one
+    * has been sent successfully. Set a link header which accomplishes that. */
+    msg->link( mMsg, KMMsgStatusDeleted );
 
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) )
-  {
+  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) {
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
@@ -96,7 +108,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   KMail::Composer * cWin = KMail::makeComposer();
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
-  cWin->slotWordWrapToggled( false );
+  cWin->disableWordWrap();
   cWin->setSigningAndEncryptionDisabled( true );
 
   if( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
@@ -112,10 +124,6 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     msgPart->setSubtypeStr( "calendar" );
     msgPart->setParameter( "method", "reply" );
     cWin->addAttach( msgPart );
-  } else {
-    msg->setHeaderField( "Content-Type",
-                         "text/calendar; method=reply; charset=\"utf-8\"" );
-    msg->setBody( iCal.utf8() );
   }
 
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
@@ -186,4 +194,20 @@ void Callback::closeIfSecondaryWindow() const
   KMail::SecondaryWindow *window = dynamic_cast<KMail::SecondaryWindow*>( mReaderWin->mainWindow() );
   if ( window )
     window->close();
+}
+
+bool Callback::askForComment( KCal::Attendee::PartStat status ) const
+{
+    if ( ( status != KCal::Attendee::Accepted
+            && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+            == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
+        || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
+        == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
+        return true;
+    return false;
+}
+
+bool Callback::deleteInvitationAfterReply() const
+{
+    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }

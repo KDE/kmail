@@ -42,12 +42,14 @@ public:
 
 protected:
   virtual void keyPressEvent( QKeyEvent * e );
+  virtual void startDrag();
 
 private:
   KMail::Composer * mComposer;
 
 signals:
   void attachmentDeleted();
+  void dragStarted();
 
 };
 

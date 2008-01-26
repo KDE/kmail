@@ -15,7 +15,6 @@ using KMail::HeaderItem;
 #include "kmmsgdict.h"
 #include "kmdebug.h"
 #include "kmfoldertree.h"
-#include "kmfolderimap.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "actionscheduler.h"
@@ -30,6 +29,7 @@ using KPIM::ProgressItem;
 #include <maillistdrag.h>
 #include "globalsettings.h"
 using namespace KPIM;
+#include "messageactions.h"
 
 #include <kapplication.h>
 #include <kaccelmanager.h>
@@ -129,7 +129,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup->setCheckable(true);
   mPopup->insertItem(i18n("Status"),          KPaintInfo::COL_STATUS);
   mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);
-  mPopup->insertItem(i18n("Todo"),            KPaintInfo::COL_TODO);
+  mPopup->insertItem(i18n("Action Item"),     KPaintInfo::COL_TODO);
   mPopup->insertItem(i18n("Attachment"),      KPaintInfo::COL_ATTACHMENT);
   mPopup->insertItem(i18n("Spam/Ham"),        KPaintInfo::COL_SPAM_HAM);
   mPopup->insertItem(i18n("Watched/Ignored"), KPaintInfo::COL_WATCHED_IGNORED);
@@ -221,11 +221,6 @@ KMHeaders::~KMHeaders ()
   {
     writeFolderConfig();
     writeSortOrder();
-    if (mFolder->folderType() == KMFolderTypeImap)
-    {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-      imap->setSelected( false );
-    }
     mFolder->close("kmheaders");
   }
   writeConfig();
@@ -262,6 +257,7 @@ void KMHeaders::slotToggleColumn(int id, int mode)
   bool *show = 0;
   int  *col  = 0;
   int  width = 0;
+  int moveToCol = -1;
 
   switch ( static_cast<KPaintInfo::ColumnIds>(id) )
   {
@@ -276,56 +272,72 @@ void KMHeaders::slotToggleColumn(int id, int mode)
     {
       show  = &mPaintInfo.showAttachment;
       col   = &mPaintInfo.attachmentCol;
-      width = pixAttachment->width();
+      width = pixAttachment->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_IMPORTANT:
     {
       show  = &mPaintInfo.showImportant;
       col   = &mPaintInfo.importantCol;
-      width = pixFlag->width();
+      width = pixFlag->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_TODO:
     {
       show  = &mPaintInfo.showTodo;
       col   = &mPaintInfo.todoCol;
-      width = pixTodo->width();
+      width = pixTodo->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_SPAM_HAM:
     {
       show  = &mPaintInfo.showSpamHam;
       col   = &mPaintInfo.spamHamCol;
-      width = pixSpam->width();
+      width = pixSpam->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_WATCHED_IGNORED:
     {
       show  = &mPaintInfo.showWatchedIgnored;
       col   = &mPaintInfo.watchedIgnoredCol;
-      width = pixWatched->width();
+      width = pixWatched->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_STATUS:
     {
       show  = &mPaintInfo.showStatus;
       col   = &mPaintInfo.statusCol;
-      width = pixNew->width();
+      width = pixNew->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_SIGNED:
     {
       show  = &mPaintInfo.showSigned;
       col   = &mPaintInfo.signedCol;
-      width = pixFullySigned->width();
+      width = pixFullySigned->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_CRYPTO:
     {
       show  = &mPaintInfo.showCrypto;
       col   = &mPaintInfo.cryptoCol;
-      width = pixFullyEncrypted->width();
+      width = pixFullyEncrypted->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
       break;
     }
     case KPaintInfo::COL_RECEIVER:
@@ -351,6 +363,8 @@ void KMHeaders::slotToggleColumn(int id, int mode)
   if (*show) {
     header()->setResizeEnabled(true, *col);
     setColumnWidth(*col, width);
+    if ( moveToCol >= 0 )
+      header()->moveSection( *col, moveToCol );
   }
   else {
     header()->setResizeEnabled(false, *col);
@@ -688,12 +702,10 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled( mFolder ?
-                         ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
-                           kmkernel->folderIsTemplates( mFolder ) ) : false );
+
     mOwner->useAction()->setEnabled( mFolder ?
                          ( kmkernel->folderIsTemplates( mFolder ) ) : false );
-    mOwner->replyListAction()->setEnabled( mFolder ?
+    mOwner->messageActions()->replyListAction()->setEnabled( mFolder ?
                          mFolder->isMailingListEnabled() : false );
     if ( mFolder ) {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -757,7 +769,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 
     colText = i18n( "Date" );
     if (mPaintInfo.orderOfArrival)
-      colText = i18n( "Date (Order of Arrival)" );
+      colText = i18n( "Order of Arrival" );
     setColumnText( mPaintInfo.dateCol, colText);
 
     colText = i18n( "Subject" );
@@ -1173,27 +1185,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   //  kdDebug() << k_funcinfo << endl;
-  SerNumList serNums;
-  QListViewItemIterator it(this, QListViewItemIterator::Selected|QListViewItemIterator::Visible);
-  while( it.current() ) {
-    if ( it.current()->isSelected() && it.current()->isVisible() ) {
-      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
-        // the item's parent is closed, don't traverse any more of this subtree
-        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
-        // travel towards the root until we find an ancestor with siblings
-        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
-          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
-        // move the iterator to that ancestor's next sibling
-        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
-        continue;
-      }
-
-      HeaderItem *item = static_cast<HeaderItem*>(it.current());
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      serNums.append( msgBase->getMsgSerNum() );
-    }
-    ++it;
-  }
+  SerNumList serNums = selectedVisibleSernums();
   if (serNums.empty())
     return;
 
@@ -1369,43 +1361,56 @@ void KMHeaders::applyFiltersOnMsg()
     int contentX, contentY;
     HeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
-    KMMessageList* msgList = selectedMsgs();
-    if (msgList->isEmpty())
+    //prevent issues with stale message pointers by using serial numbers instead
+    QValueList<unsigned long> serNums = KMMsgDict::serNumList( *selectedMsgs() );
+    if ( serNums.isEmpty() )
       return;
-    finalizeMove( nextItem, contentX, contentY );
 
+    finalizeMove( nextItem, contentX, contentY );
     CREATE_TIMER(filter);
     START_TIMER(filter);
 
     KCursorSaver busy( KBusyPtr::busy() );
     int msgCount = 0;
-    int msgCountToFilter = msgList->count();
+    int msgCountToFilter = serNums.count();
     ProgressItem* progressItem =
       ProgressManager::createProgressItem( "filter"+ProgressManager::getUniqueID(),
                                            i18n( "Filtering messages" ) );
     progressItem->setTotalItems( msgCountToFilter );
-    for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-      int diff = msgCountToFilter - ++msgCount;
-      if ( diff < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
+
+    for ( QValueList<unsigned long>::ConstIterator it = serNums.constBegin();
+          it != serNums.constEnd(); ++it ) {
+      msgCount++;
+      if ( msgCountToFilter - msgCount < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
         progressItem->updateProgress();
         QString statusMsg = i18n("Filtering message %1 of %2");
         statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
         KApplication::kApplication()->eventLoop()->processEvents( QEventLoop::ExcludeUserInput, 50 );
       }
-      int idx = msgBase->parent()->find(msgBase);
-      assert(idx != -1);
-      KMMessage * msg = msgBase->parent()->getMsg(idx);
-      if (msg->transferInProgress()) continue;
-      msg->setTransferInProgress(true);
-      if ( !msg->isComplete() )
-      {
-        FolderJob *job = mFolder->createJob(msg);
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-                     SLOT(slotFilterMsg(KMMessage*)));
-        job->start();
+
+      KMFolder *folder = 0;
+      int idx;
+      KMMsgDict::instance()->getLocation( *it, &folder, &idx );
+      KMMessage *msg = 0;
+      if (folder)
+        msg = folder->getMsg(idx);
+      if (msg) {
+        if (msg->transferInProgress())
+          continue;
+        msg->setTransferInProgress(true);
+        if (!msg->isComplete()) {
+          FolderJob *job = mFolder->createJob(msg);
+          connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+                  this, SLOT(slotFilterMsg(KMMessage*)));
+          job->start();
+        } else {
+          if (slotFilterMsg(msg) == 2)
+            break;
+        }
       } else {
-        if (slotFilterMsg(msg) == 2) break;
+        kdDebug (5006) << "####### KMHeaders::applyFiltersOnMsg -"
+                          " A message went missing during filtering " << endl;
       }
       progressItem->incCompletedItems();
     }
@@ -2010,7 +2015,12 @@ bool KMHeaders::prevUnreadMessage()
 //-----------------------------------------------------------------------------
 void KMHeaders::slotNoDrag()
 {
-  mMousePressed = false;
+  // This causes Kolab issue 1569 (encrypted mails sometimes not dragable)
+  // This was introduced in r73594 to fix interference between dnd and
+  // pinentry, which is no longer reproducable now. However, since the
+  // original problem was probably a race and might reappear, let's keep
+  // this workaround in for now and just disable it.
+//   mMousePressed = false;
 }
 
 
@@ -2078,7 +2088,7 @@ void KMHeaders::resetCurrentTime()
 {
     mDate.reset();
     // only reset exactly during minute switch
-    QTimer::singleShot( ( 60-QTime::currentTime().second() ) * 1000, 
+    QTimer::singleShot( ( 60-QTime::currentTime().second() ) * 1000,
         this, SLOT( resetCurrentTime() ) );
 }
 
@@ -2255,6 +2265,31 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     if ((e->button() == LeftButton) )
       mMousePressed = true;
   }
+
+  // check if we are on a status column and toggle it
+  if ( lvi && e->button() == LeftButton  && !( e->state() & (ShiftButton | ControlButton | AltButton | MetaButton) ) ) {
+    bool flagsToggleable = GlobalSettings::self()->allowLocalFlags() || !(mFolder ? mFolder->isReadOnly() : true);
+    int section = header()->sectionAt( e->pos().x() );
+    HeaderItem *item = static_cast<HeaderItem*>( lvi );
+    KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
+    if ( section == mPaintInfo.flagCol && flagsToggleable ) {
+      setMsgStatus( KMMsgStatusFlag, true );
+    } else if ( section == mPaintInfo.importantCol && flagsToggleable ) {
+      setMsgStatus( KMMsgStatusFlag, true );
+    } else if ( section == mPaintInfo.todoCol && flagsToggleable ) {
+      setMsgStatus( KMMsgStatusTodo, true );
+    } else if ( section == mPaintInfo.watchedIgnoredCol && flagsToggleable ) {
+      if ( msg->isWatched() || msg->isIgnored() )
+        setMsgStatus( KMMsgStatusIgnored, true );
+      else
+        setMsgStatus( KMMsgStatusWatched, true );
+    } else if ( section == mPaintInfo.statusCol ) {
+      if ( msg->isUnread() || msg->isNew() )
+        setMsgStatus( KMMsgStatusRead );
+      else
+        setMsgStatus( KMMsgStatusUnread );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2316,6 +2351,22 @@ void KMHeaders::highlightMessage(QListViewItem* i)
 void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
+  mOwner->updateMessageActions();
+
+  // check if the user clicked into a status column and only show the respective menues
+  QListViewItem *item = itemAt( viewport()->mapFromGlobal( QCursor::pos() ) );
+  if ( item ) {
+    int section = header()->sectionAt( viewportToContents( viewport()->mapFromGlobal( QCursor::pos() ) ).x() );
+    if ( section == mPaintInfo.flagCol || section == mPaintInfo.importantCol
+         || section == mPaintInfo.todoCol || section == mPaintInfo.statusCol ) {
+      mOwner->statusMenu()->popup( QCursor::pos() );
+      return;
+    }
+    if ( section == mPaintInfo.watchedIgnoredCol ) {
+      mOwner->threadStatusMenu()->popup( QCursor::pos() );
+      return;
+    }
+  }
 
   QPopupMenu *menu = new QPopupMenu(this);
 
@@ -2325,19 +2376,18 @@ void KMHeaders::slotRMB()
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox( mFolder );
   bool tem_folder = kmkernel->folderIsTemplates( mFolder );
-  if ( out_folder ) {
-    mOwner->editAction()->plug(menu);
-  } else if ( tem_folder ) {
+  if ( tem_folder ) {
      mOwner->useAction()->plug( menu );
-     mOwner->editAction()->plug( menu );
   } else {
     // show most used actions
     if( !mFolder->isSent() ) {
-      mOwner->replyMenu()->plug( menu );
+      mOwner->messageActions()->replyMenu()->plug( menu );
     }
     mOwner->forwardMenu()->plug( menu );
     if( mOwner->sendAgainAction()->isEnabled() ) {
       mOwner->sendAgainAction()->plug( menu );
+    } else {
+      mOwner->editAction()->plug( menu );
     }
   }
   menu->insertSeparator();
@@ -2382,6 +2432,9 @@ void KMHeaders::slotRMB()
     if ( mOwner->trashThreadAction()->isEnabled() )
       mOwner->trashThreadAction()->plug(menu);
   }
+  menu->insertSeparator();
+  mOwner->messageActions()->createTodoAction()->plug( menu );
+
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
   menu->exec(QCursor::pos(), 0);
@@ -2512,7 +2565,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 
     QString colText = i18n( "Date" );
     if (mPaintInfo.orderOfArrival)
-      colText = i18n( "Date (Order of Arrival)" );
+      colText = i18n( "Order of Arrival" );
     setColumnText( mPaintInfo.dateCol, colText);
 
     colText = i18n( "Subject" );
@@ -3439,6 +3492,43 @@ void KMHeaders::setCopiedMessages(const QValueList< Q_UINT32 > & msgs, bool move
 bool KMHeaders::isMessageCut(Q_UINT32 serNum) const
 {
   return mMoveMessages && mCopiedMessages.contains( serNum );
+}
+
+QValueList< Q_UINT32 > KMHeaders::selectedSernums()
+{
+  QValueList<Q_UINT32> list;
+  for ( QListViewItemIterator it(this); it.current(); it++ ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      HeaderItem* item = static_cast<HeaderItem*>( it.current() );
+      list.append( item->msgSerNum() );
+    }
+  }
+  return list;
+}
+
+QValueList< Q_UINT32 > KMHeaders::selectedVisibleSernums()
+{
+  QValueList<Q_UINT32> list;
+  QListViewItemIterator it(this, QListViewItemIterator::Selected|QListViewItemIterator::Visible);
+  while( it.current() ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
+        // the item's parent is closed, don't traverse any more of this subtree
+        QListViewItem * lastAncestorWithSiblings = it.current()->parent();
+        // travel towards the root until we find an ancestor with siblings
+        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
+          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
+        // move the iterator to that ancestor's next sibling
+        it = QListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
+        continue;
+      }
+      HeaderItem *item = static_cast<HeaderItem*>(it.current());
+      list.append( item->msgSerNum() );
+    }
+    ++it;
+  }
+
+  return list;
 }
 
 #include "kmheaders.moc"

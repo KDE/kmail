@@ -62,6 +62,8 @@ KMMainWin::KMMainWin(QWidget *)
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
+  mKMMainWidget->setupForwardingActionsList();
+
   applyMainWindowSettings(KMKernel::config(), "Main Window");
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
@@ -173,8 +175,9 @@ void KMMainWin::setupStatusBar()
   mLittleProgress->show();
 
   statusBar()->addWidget( mLittleProgress, 0 , true );
-  statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
+  statusBar()->insertItem(i18n(" Initializing..."), 1, 4 );
   statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
+  statusBar()->addWidget( mKMMainWidget->vacationScriptIndicator(), 1 );
   mLittleProgress->show();
 }
 

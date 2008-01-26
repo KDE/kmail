@@ -44,6 +44,7 @@
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
 #include "maildirjob.h"
+#include "scalix.h"
 #include "util.h"
 
 #include <kio/scheduler.h>
@@ -145,6 +146,34 @@ void CachedImapJob::execute()
 
   // All necessary conditions have been met. Register this job
   mAccount->mJobList.append(this);
+
+  /**
+   * The Scalix server requires to send him a custom X-SCALIX-ID command
+   * to switch it into a special mode.
+   *
+   * This should be done once after the login and before the first command.
+   */
+  if ( mAccount->groupwareType() == KMAcctCachedImap::GroupwareScalix ) {
+    if ( !mAccount->sentCustomLoginCommand() ) {
+      QByteArray packedArgs;
+      QDataStream stream( packedArgs, IO_WriteOnly );
+
+      const QString command = QString( "X-SCALIX-ID " );
+      const QString argument = QString( "(\"name\" \"Evolution\" \"version\" \"2.10.0\")" );
+
+      stream << (int) 'X' << 'N' << command << argument;
+
+      const KURL url = mAccount->getUrl();
+
+      ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+      jd.items << mFolder->label(); // for the err msg
+      KIO::SimpleJob *simpleJob = KIO::special( url.url(), packedArgs, false );
+      KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+      mAccount->insertJob(simpleJob, jd);
+
+      mAccount->setSentCustomLoginCommand( true );
+    }
+  }
 
   switch( mType ) {
   case tGetMessage:       slotGetNextMessage();     break;
@@ -310,7 +339,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   mMsg->setUID(mfd.uid);
   mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
-    KMFolderImap::flagsToStatus(mMsg, mfd.flags);
+    KMFolderImap::flagsToStatus(mMsg, mfd.flags, true, GlobalSettings::allowLocalFlags() ? mFolder->permanentFlags() : INT_MAX);
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
@@ -365,7 +394,7 @@ void CachedImapJob::slotPutNextMessage()
   }
 
   KURL url = mAccount->getUrl();
-  QString flags = KMFolderImap::statusToFlags( mMsg->status() );
+  QString flags = KMFolderImap::statusToFlags( mMsg->status(), mFolder->permanentFlags() );
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -515,6 +544,18 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
     if( job->error() ) {
       delete this;
       return;
+    } else {
+      KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( (*it).current->storage() );
+      KMFolderCachedImap* parentStorage = static_cast<KMFolderCachedImap*>( (*it).parent->storage() );
+      Q_ASSERT( storage );
+      Q_ASSERT( parentStorage );
+      if ( storage->imapPath().isEmpty() ) {
+        QString path = mAccount->createImapPath( parentStorage->imapPath(), storage->folder()->name() );
+        if ( !storage->imapPathForCreation().isEmpty() )
+          path = storage->imapPathForCreation();
+        storage->setImapPath( path );
+        storage->writeConfig();
+      }
     }
     mAccount->removeJob( it );
   }
@@ -528,7 +569,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  QString path = mAccount->createImapPath( mFolder->imapPath(), 
+  QString path = mAccount->createImapPath( mFolder->imapPath(),
       folder->folder()->name() );
   if ( !folder->imapPathForCreation().isEmpty() ) {
     // the folder knows it's namespace
@@ -536,16 +577,37 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   }
   url.setPath( path );
 
-  // Associate the jobData with the parent folder, not with the child
-  // This is necessary in case of an error while creating the subfolder,
-  // so that folderComplete is called on the parent (and the sync resetted).
-  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
-  jd.items << folder->label(); // for the err msg
-  KIO::SimpleJob *simpleJob = KIO::mkdir(url);
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
-  mAccount->insertJob(simpleJob, jd);
-  connect( simpleJob, SIGNAL(result(KIO::Job *)),
-           this, SLOT(slotAddNextSubfolder(KIO::Job *)) );
+  if ( mAccount->groupwareType() != KMAcctCachedImap::GroupwareScalix ) {
+    // Associate the jobData with the parent folder, not with the child
+    // This is necessary in case of an error while creating the subfolder,
+    // so that folderComplete is called on the parent (and the sync resetted).
+    ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+    jd.items << folder->label(); // for the err msg
+    jd.current = folder->folder();
+    KIO::SimpleJob *simpleJob = KIO::mkdir(url);
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+    mAccount->insertJob(simpleJob, jd);
+    connect( simpleJob, SIGNAL(result(KIO::Job *)),
+             this, SLOT(slotAddNextSubfolder(KIO::Job *)) );
+  } else {
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly );
+
+    const QString command = QString( "X-CREATE-SPECIAL" );
+    const QString argument = QString( "%1 %2" ).arg( Scalix::Utils::contentsTypeToScalixId( folder->contentsType() ) )
+                                               .arg( path );
+
+    stream << (int) 'X' << 'N' << command << argument;
+
+    ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+    jd.items << folder->label(); // for the err msg
+    jd.current = folder->folder();
+    KIO::SimpleJob *simpleJob = KIO::special( url.url(), packedArgs, false );
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
+    mAccount->insertJob(simpleJob, jd);
+    connect( simpleJob, SIGNAL(result(KIO::Job *)),
+             this, SLOT(slotAddNextSubfolder(KIO::Job *)) );
+  }
 }
 
 
@@ -644,6 +706,19 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
     } else
       kdDebug(5006) << "No uidvalidity available for folder "
                     << mFolder->name() << endl;
+  }
+
+  a = cstr.find( "X-PermanentFlags: " );
+  if ( a < 0 ) {
+    kdDebug(5006) << "no PERMANENTFLAGS response? assumming custom flags are not available" << endl;
+  } else {
+    int b = cstr.find( "\r\n", a );
+    if ( (b - a - 18) >= 0 ) {
+      int flags = cstr.mid( a + 18, b - a - 18 ).toInt();
+      emit permanentFlags( flags );
+    } else {
+      kdDebug(5006) << "PERMANENTFLAGS response broken, assumming custom flags are not available" << endl;
+    }
   }
 
   mAccount->removeJob(it);

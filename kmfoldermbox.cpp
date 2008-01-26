@@ -39,6 +39,7 @@
 #include <kprocess.h>
 #include <kconfig.h>
 
+#include <ctype.h>
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
@@ -84,8 +85,10 @@ KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMbox::~KMFolderMbox()
 {
-  if (mOpenCount>0) close("~kmfoldermbox", true);
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+  if (mOpenCount>0)
+    close("~kmfoldermbox", true);
+  if (kmkernel->undoStack())
+    kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 //-----------------------------------------------------------------------------
@@ -96,10 +99,7 @@ int KMFolderMbox::open(const char *owner)
   mOpenCount++;
   kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
 
-  if (mOpenCount > 1) {
-     assert(mStream);
-     return 0;  // already open
-  }
+  if (mOpenCount > 1) return 0;  // already open
 
   assert(!folder()->name().isEmpty());
 
@@ -256,7 +256,7 @@ int KMFolderMbox::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMbox::reallyDoClose(const char *owner)
+void KMFolderMbox::reallyDoClose(const char* owner)
 {
   if (mAutoCreateIndex)
   {
@@ -817,7 +817,8 @@ KMMessage* KMFolderMbox::readMsg(int idx)
   assert(mi!=0 && !mi->isMessage());
   assert(mStream != 0);
 
-  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  KMMessage *msg = new KMMessage(*mi);
+  msg->setMsgInfo( mi ); // remember the KMMsgInfo object to that we can restore it when the KMMessage object is no longer needed
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->fromDwString(getDwString(idx));
   return msg;
@@ -928,7 +929,6 @@ DwString KMFolderMbox::getDwString(int idx)
 int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
-  bool opened = false;
   QByteArray msgText;
   char endStr[3];
   int idx = -1, rc;
@@ -936,12 +936,12 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   bool editing = false;
   int growth = 0;
 
-  if (!mStream)
+  KMFolderOpener openThis(folder(), "mboxaddMsg");
+  rc = openThis.openResult();
+  if (rc)
   {
-    opened = true;
-    rc = open("mboxaddMsg");
-    kdDebug(5006) << "KMFolderMBox::addMsg-open: " << rc << " of folder: " << label() << endl;
-    if (rc) return rc;
+    kdDebug(5006) << "KMFolderMbox::addMsg-open: " << rc << " of folder: " << label() << endl;
+    return rc;
   }
 
   // take message out of the folder it is currently in, if any
@@ -994,7 +994,6 @@ if( fileD1.open( IO_WriteOnly ) ) {
   if (len <= 0)
   {
     kdDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
-    if (opened) close("mboxaddMsg");
     return 0;
   }
 
@@ -1019,10 +1018,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   int error = ferror(mStream);
   if (error)
-  {
-    if (opened) close("mboxaddMsg");
     return error;
-  }
 
   QCString messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
@@ -1049,7 +1045,6 @@ if( fileD1.open( IO_WriteOnly ) ) {
                "(No space left on device or insufficient quota?)\n"
                "Free space and sufficient quota are required to continue safely."));
     if (busy) kmkernel->kbp()->busy();
-    if (opened) close();
     kmkernel->kbp()->idle();
     */
     return error;
@@ -1068,6 +1063,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
       emit numUnreadMsgsChanged( folder() );
   }
   ++mTotalMsgs;
+  mSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
@@ -1132,16 +1128,13 @@ if( fileD1.open( IO_WriteOnly ) ) {
              "(No space left on device or insufficient quota?)\n"
              "Free space and sufficient quota are required to continue safely."));
       if (busy) kmkernel->kbp()->busy();
-      if (opened) close();
       */
       return error;
     }
   }
 
-  // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
   emitMsgAddedSignals(idx);
-  if (opened) close("mboxaddMsg");
 
   // All streams have been flushed without errors if we arrive here
   // Return success!
@@ -1271,6 +1264,14 @@ int KMFolderMbox::expungeContents()
   if (truncate(QFile::encodeName(location()), 0))
     rc = errno;
   return rc;
+}
+
+//-----------------------------------------------------------------------------
+/*virtual*/
+Q_INT64 KMFolderMbox::doFolderSize() const
+{
+  QFileInfo info( location() );
+  return (Q_INT64)(info.size());
 }
 
 //-----------------------------------------------------------------------------

@@ -40,6 +40,10 @@ class KMReaderWin;
 
 #include <kdepimmacros.h>
 
+
+#include <libkcal/attendee.h> // only for an enum, we are not linking
+
+
 namespace KMail {
 
 /** This class is used for callback hooks needed by bodypart
@@ -56,16 +60,20 @@ public:
   KMMessage* getMsg() const { return mMsg; }
 
   /** Mail a message
-   * @ param status can be accepted/cancel/tentative
+   * @ param status can be accepted/cancel/tentative/delegated
    */
-  bool mailICal( const QString& to, const QString iCal,
-                 const QString& subject, const QString &status ) const;
+  bool mailICal( const QString &to, const QString &iCal,
+                 const QString &subject, const QString &status,
+                 bool delMessage = true ) const;
 
   /** Get the receiver of the mail */
   QString receiver() const;
 
   /** Close the main window showing this message, if it's a secondary window. */
   void closeIfSecondaryWindow() const;
+
+  bool askForComment( KCal::Attendee::PartStat status ) const;
+  bool deleteInvitationAfterReply() const;
 
 private:
   KMMessage* mMsg;

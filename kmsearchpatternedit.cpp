@@ -31,13 +31,13 @@ static const struct {
   const char *internalName;
   const char *displayName;
 } SpecialRuleFields[] = {
-  { "<message>",     I18N_NOOP( "<message>" )       },
-  { "<body>",        I18N_NOOP( "<body>" )          },
-  { "<any header>",  I18N_NOOP( "<any header>" )    },
-  { "<recipients>",  I18N_NOOP( "<recipients>" )    },
-  { "<size>",        I18N_NOOP( "<size in bytes>" ) },
-  { "<age in days>", I18N_NOOP( "<age in days>" )   },
-  { "<status>",      I18N_NOOP( "<status>" )        }
+  { "<message>",     I18N_NOOP( "Complete Message" )       },
+  { "<body>",        I18N_NOOP( "Body of Message" )          },
+  { "<any header>",  I18N_NOOP( "Anywhere in Headers" )    },
+  { "<recipients>",  I18N_NOOP( "All Recipients" )    },
+  { "<size>",        I18N_NOOP( "Size in Bytes" ) },
+  { "<age in days>", I18N_NOOP( "Age in Days" )   },
+  { "<status>",      I18N_NOOP( "Message Status" )        }
 };
 static const int SpecialRuleFieldsCount =
   sizeof( SpecialRuleFields ) / sizeof( *SpecialRuleFields );
@@ -72,14 +72,14 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
   QCString currentText = srule->field();
   delete srule;
   initFieldList( headersOnly, mAbsoluteDates );
-  
+
   mRuleField->clear();
   mRuleField->insertStringList( mFilterFieldList );
   mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
 
-  if ((currentText != "<message>") &&
-      (currentText != "<body>"))
+  if (( currentText != "<message>") &&
+      ( currentText != "<body>"))
     mRuleField->changeItem( QString::fromAscii( currentText ), 0 );
   else
     mRuleField->changeItem( QString::null, 0 );
@@ -128,8 +128,8 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 {
   assert ( aRule );
 
-  //kdDebug(5006) << "KMSearchRuleWidget::setRule( "
-  //              << aRule->asString() << " )" << endl;
+//  kdDebug(5006) << "KMSearchRuleWidget::setRule( "
+//                << aRule->asString() << " )" << endl;
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
@@ -208,12 +208,23 @@ int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
   return -1; // no pseudo header
 }
 
+static QString displayNameFromInternalName( const QString & internal )
+{
+  for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
+    if ( internal == SpecialRuleFields[i].internalName )
+      return i18n(SpecialRuleFields[i].displayName);
+  }
+  return internal.latin1();
+}
+
+
+
 int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
 {
   if ( aName.isEmpty() )
     return -1;
 
-  QString i18n_aName = i18n( aName );
+  QString i18n_aName = displayNameFromInternalName( aName );
 
   for ( int i = 1; i < mRuleField->count(); ++i ) {
     if ( mRuleField->text( i ) == i18n_aName )
@@ -281,17 +292,17 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 {
   assert ( aList );
 
-  if ( mRuleList )
+  if ( mRuleList && mRuleList != aList )
     regenerateRuleListFromWidgets();
 
   mRuleList = aList;
 
   if ( mWidgetList.first() ) // move this below next 'if'?
-    mWidgetList.first()->blockSignals(TRUE);
+    mWidgetList.first()->blockSignals(true);
 
   if ( aList->count() == 0 ) {
     slotClear();
-    mWidgetList.first()->blockSignals(FALSE);
+    mWidgetList.first()->blockSignals(false);
     return;
   }
 
@@ -314,13 +325,13 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
   QPtrListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
-    (static_cast<KMSearchRuleWidget*>(*wIt))->setRule( (*rIt) );
+    static_cast<KMSearchRuleWidget*>(*wIt)->setRule( (*rIt) );
   }
   for ( ; wIt.current() ; ++wIt )
     ((KMSearchRuleWidget*)(*wIt))->reset();
 
   assert( mWidgetList.first() );
-  mWidgetList.first()->blockSignals(FALSE);
+  mWidgetList.first()->blockSignals(false);
 }
 
 void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
@@ -397,8 +408,8 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this, "mAllRBtn" );
   mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this, "mAnyRBtn" );
 
-  mAllRBtn->setChecked(TRUE);
-  mAnyRBtn->setChecked(FALSE);
+  mAllRBtn->setChecked(true);
+  mAnyRBtn->setChecked(false);
 
   QButtonGroup *bg = new QButtonGroup( this );
   bg->hide();
@@ -431,14 +442,14 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
 
   mPattern = aPattern;
 
-  blockSignals(TRUE);
+  blockSignals(true);
   if ( mPattern->op() == KMSearchPattern::OpOr )
-    mAnyRBtn->setChecked(TRUE);
+    mAnyRBtn->setChecked(true);
   else
-    mAllRBtn->setChecked(TRUE);
-  blockSignals(FALSE);
+    mAllRBtn->setChecked(true);
+  blockSignals(false);
 
-  setEnabled( TRUE );
+  setEnabled( true );
 }
 
 void KMSearchPatternEdit::setHeadersOnly( bool headersOnly )
@@ -450,11 +461,11 @@ void KMSearchPatternEdit::reset()
 {
   mRuleLister->reset();
 
-  blockSignals(TRUE);
-  mAllRBtn->setChecked( TRUE );
-  blockSignals(FALSE);
+  blockSignals(true);
+  mAllRBtn->setChecked( true );
+  blockSignals(false);
 
-  setEnabled( FALSE );
+  setEnabled( false );
 }
 
 void KMSearchPatternEdit::slotRadioClicked(int aIdx)

@@ -32,6 +32,7 @@
 #include <libemailfunctions/email.h>
 
 #include <kapplication.h>
+#include <kcompletionbox.h>
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -328,7 +329,9 @@ RecipientsView::RecipientsView( QWidget *parent )
 
   addLine();
   setResizePolicy( QScrollView::Manual );
-  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+
+  viewport()->setPaletteBackgroundColor( paletteBackgroundColor() );
 }
 
 RecipientLine *RecipientsView::activeLine()
@@ -528,8 +531,12 @@ void RecipientsView::resizeView()
   resizeContents( width(), mLines.count() * mLineHeight );
 
   if ( mLines.count() < 6 ) {
-    setFixedHeight( mLineHeight * mLines.count() );
+//    setFixedHeight( mLineHeight * mLines.count() );
   }
+
+  parentWidget()->layout()->activate();
+  emit sizeHintChanged();
+  QTimer::singleShot( 0, this, SLOT(moveCompletionPopup()) );
 }
 
 void RecipientsView::activateLine( RecipientLine *line )
@@ -543,6 +550,7 @@ void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )
   for( uint i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
+  ensureVisible( 0, mLines.count() * mLineHeight );
 }
 
 QSize RecipientsView::sizeHint() const
@@ -553,12 +561,9 @@ QSize RecipientsView::sizeHint() const
 QSize RecipientsView::minimumSizeHint() const
 {
   int height;
-
   uint numLines = 5;
-
   if ( mLines.count() < numLines ) height = mLineHeight * mLines.count();
   else height = mLineHeight * numLines;
-
   return QSize( 200, height );
 }
 
@@ -675,6 +680,20 @@ int RecipientsView::setFirstColumnWidth( int w )
 
   resizeView();
   return mFirstColumnWidth;
+}
+
+void RecipientsView::moveCompletionPopup()
+{
+  for( RecipientLine* line = mLines.first(); line; line = mLines.next() ) {
+    if ( line->lineEdit()->completionBox( false ) ) {
+      if ( line->lineEdit()->completionBox()->isVisible() ) {
+        // ### trigger moving, is there a nicer way to do that?
+        line->lineEdit()->completionBox()->hide();
+        line->lineEdit()->completionBox()->show();
+      }
+    }
+  }
+
 }
 
 RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
@@ -840,6 +859,9 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
     mSideWidget, SLOT( setTotal( int, int ) ) );
   connect( mRecipientsView, SIGNAL( focusRight() ),
     mSideWidget, SLOT( setFocus() ) );
+
+  connect( mRecipientsView, SIGNAL(sizeHintChanged()),
+           SIGNAL(sizeHintChanged()) );
 }
 
 RecipientsEditor::~RecipientsEditor()
@@ -972,4 +994,5 @@ void RecipientsEditor::setCompletionMode( KGlobalSettings::Completion mode )
 {
   mRecipientsView->setCompletionMode( mode );
 }
+
 #include "recipientseditor.moc"

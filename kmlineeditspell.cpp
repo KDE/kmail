@@ -32,6 +32,7 @@ KMLineEdit::KMLineEdit(bool useCompletion,
                        QWidget *parent, const char *name)
     : KPIM::AddresseeLineEdit(parent,useCompletion,name)
 {
+   allowSemiColonAsSeparator( GlobalSettings::allowSemicolonAsAddressSeparator() );
 }
 
 

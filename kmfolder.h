@@ -382,7 +382,7 @@ public:
   QString mailingListPostAddress() const;
 
   void setIdentity(uint identity);
-  uint identity() const { return mIdentity; }
+  uint identity() const;
 
   /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
   QString whoField() const { return mWhoField; }
@@ -587,6 +587,9 @@ signals:
   /** Emitted when the variables for the config of the view have changed */
   void viewConfigChanged();
 
+  /** Emitted when the folder's size changes. */
+  void folderSizeChanged( KMFolder * );
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   int updateIndex();
@@ -602,6 +605,8 @@ public slots:
 private slots:
   /** The type of contents of this folder changed. Do what is needed. */
   void slotContentsTypeChanged( KMail::FolderContentsType type );
+  /** Triggered by the storage when its size changed. */
+  void slotFolderSizeChanged();
 
 private:
   FolderStorage* mStorage;
@@ -650,20 +655,40 @@ private:
   KShortcut mShortcut;
 };
 
+
 /**
    RAII for KMFolder::open() / close().
 
-   Usage: const KMFolderCloser closer( folder );
+   Usage: const KMFolderOpener opener( folder );
 */
-class KMFolderCloser {
-  KMFolder * f;
-  QString mOwner;
+class KMFolderOpener {
+  KMFolder* mFolder;
+  const char* const mOwner;
+  int mOpenRc;
+
 public:
-  KMFolderCloser( const char *owner, KMFolder * folder ) : f( folder ), mOwner( owner ) {}
-  ~KMFolderCloser() {
-    if ( f ) f->close(mOwner.latin1());
+  KMFolderOpener( KMFolder* folder, const char* const owner )
+   : mFolder( folder )
+   , mOwner( owner )
+  {
+    assert( folder ); //change if that's not what you want
+    mOpenRc = folder->open( owner );
   }
-  KMFolder * folder() const { return f; }
+
+  ~KMFolderOpener()
+  {
+    if ( !mOpenRc )
+      mFolder->close( mOwner );
+  }
+
+  KMFolder* folder() const { return mFolder; }
+
+  int openResult() const { return mOpenRc; }
+
+private:
+  //we forbid construction on the heap as good as we can
+  void* operator new( size_t size );
 };
+
 
 #endif /*kmfolder_h*/

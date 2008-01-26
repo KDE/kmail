@@ -48,7 +48,6 @@ using KMail::AccountManager;
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
@@ -59,7 +58,9 @@ using KMail::AccountManager;
 KMAcctCachedImap::KMAcctCachedImap( AccountManager* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
-    mAnnotationCheckPassed(false)
+    mAnnotationCheckPassed(false),
+    mGroupwareType( GroupwareKolab ),
+    mSentCustomLoginCommand(false)
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
@@ -120,7 +121,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
     fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
+    fld->sendFolderComplete(false);
   }
 }
 
@@ -174,7 +175,7 @@ void KMAcctCachedImap::cancelMailCheck()
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
     fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
+    fld->sendFolderComplete(false);
   }
 }
 
@@ -329,6 +330,7 @@ void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   for( ; it != oldPaths.end() && nameit != newNames.end(); ++it, ++nameit ) {
     addRenamedFolder( *it, QString::null, *nameit );
   }
+  mGroupwareType = (GroupwareType)config.readNumEntry( "groupwareType", GroupwareKolab );
 }
 
 void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
@@ -341,6 +343,7 @@ void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
   for ( ; it != values.end() ; ++it )
     lstNames.append( (*it).mNewName );
   config.writeEntry( "renamed-folders-names", lstNames );
+  config.writeEntry( "groupwareType", mGroupwareType );
 }
 
 void KMAcctCachedImap::invalidateIMAPFolders()

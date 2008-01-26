@@ -216,7 +216,7 @@ public:
    * @return whether mail checks can proceed
    */
   virtual bool mailCheckCanProceed() const { return true; }
-  
+
   /**
    * Set/Get if this account is currently checking mail
    */
@@ -244,6 +244,12 @@ public:
   ProgressItem *mailCheckProgressItem() const {
     return mMailCheckProgressItem;
   }
+
+  /**
+   * Set/get identity for checking account.
+   */
+  void setIdentityId(uint identityId ) { mIdentityId = identityId; }
+  uint identityId() const{ return mIdentityId; }
 
 signals:
   /**
@@ -303,9 +309,9 @@ protected:
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer;
   int mInterval; // this is a switch and a scalar at the same time. If it is 0,
-  // interval mail checking is turned off and the interval spinbox proposes a 
+  // interval mail checking is turned off and the interval spinbox proposes a
   // default value. If it is non-null, it is the count of minutes between two
-  // automated mail checks. This means that as soon as you disable interval 
+  // automated mail checks. This means that as soon as you disable interval
   // mail checking, the value in the spin box returns to a default value.
   bool mExclude;
   bool mCheckingMail : 1;
@@ -314,7 +320,7 @@ protected:
   QPtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
-
+  uint mIdentityId;
 private:
     /**
      * avoid compiler warning about hidden virtual

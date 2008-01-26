@@ -110,6 +110,14 @@ public:
   /** Returns the index values of currently selected items */
   QValueList<int> selectedItems();
 
+  /** Returns the sernums of all selected items. */
+  QValueList<Q_UINT32> selectedSernums();
+
+  /** Returns the sernums of all visible (ie. items with expanded parent, not hidden by
+      eg. the quick search) selected items.
+  */
+  QValueList<Q_UINT32> selectedVisibleSernums();
+
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
 

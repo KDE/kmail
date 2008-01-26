@@ -43,6 +43,10 @@ class KMFolder;
 class KMServerTest;
 class QButtonGroup;
 
+namespace KPIM {
+class IdentityCombo;
+}
+
 namespace KMail {
 
 class SieveConfigEditor;
@@ -79,7 +83,9 @@ class AccountDialog : public KDialogBase
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
       QComboBox    *folderCombo;
-      QComboBox    *identityCombo;
+      //QComboBox    *identityCombo;
+      KPIM::IdentityCombo    *identityCombo;
+      QLabel       *identityLabel;
     };
 
     struct MaildirWidgets
@@ -98,7 +104,9 @@ class AccountDialog : public KDialogBase
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
       QComboBox    *folderCombo;
-      QComboBox    *identityCombo;
+      //QComboBox    *identityCombo;
+      KPIM::IdentityCombo    *identityCombo;
+      QLabel       *identityLabel;
     };
 
     struct PopWidgets
@@ -146,7 +154,9 @@ class AccountDialog : public KDialogBase
       KIntNumInput *intervalSpin;
       KIntNumInput *filterOnServerSizeSpin;
       QComboBox    *folderCombo;
-      QComboBox    *identityCombo;
+      //QComboBox    *identityCombo;
+      KPIM::IdentityCombo    *identityCombo;
+      QLabel       *identityLabel;
     };
 
     struct ImapWidgets
@@ -196,6 +206,8 @@ class AccountDialog : public KDialogBase
       QToolButton  *editONS;
       QToolButton  *editSNS;
       ImapAccountBase::nsDelimMap nsMap;
+      KPIM::IdentityCombo    *identityCombo;
+      QLabel       *identityLabel;
     };
 
   private slots:

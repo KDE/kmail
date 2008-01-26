@@ -1715,6 +1715,7 @@ static const struct {
   { "PGPMessageWarn", I18N_NOOP("OpenPGP Message - Unchecked Signature") },
   { "PGPMessageErr", I18N_NOOP("OpenPGP Message - Bad Signature") },
   { "HTMLWarningColor", I18N_NOOP("Border Around Warning Prepending HTML Messages") },
+  { "CloseToQuotaColor", I18N_NOOP("Folder Name and Size When Close to Quota") },
   { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
   { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
   { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
@@ -1751,11 +1752,26 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
   connect( mRecycleColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  // close to quota threshold
+  QHBoxLayout *hbox = new QHBoxLayout(vlay);
+  QLabel *l = new QLabel( i18n("Close to quota threshold"), this );
+  hbox->addWidget( l );
+  l->setEnabled( false );
+  mCloseToQuotaThreshold = new QSpinBox( 0, 100, 1, this );
+  connect( mCloseToQuotaThreshold, SIGNAL( valueChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  mCloseToQuotaThreshold->setSuffix( i18n("%"));
+  hbox->addWidget( mCloseToQuotaThreshold );
+  hbox->addWidget( new QWidget(this), 2 );
+
   // {en,dir}able widgets depending on the state of mCustomColorCheck:
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            mColorList, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            mRecycleColorCheck, SLOT(setEnabled(bool)) );
+  connect( mCustomColorCheck, SIGNAL(toggled(bool)),
+           l, SLOT(setEnabled(bool)) );
+
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1765,6 +1781,7 @@ void AppearancePage::ColorsTab::doLoadOther() {
 
   mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readBoolEntry( "RecycleQuoteColors", false ) );
+  mCloseToQuotaThreshold->setValue( GlobalSettings::closeToQuotaThreshold() );
 
   static const QColor defaultColor[ numColorNames ] = {
     kapp->palette().active().base(), // bg
@@ -1779,21 +1796,24 @@ void AppearancePage::ColorsTab::doLoadOther() {
     Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
+    Qt::blue, // todo mgs
     QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
     QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
     Qt::red, // pgp bad
     QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
+    Qt::red, // close to quota
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
     Qt::white,     // colorbar html  fg
   };
 
-  for ( int i = 0 ; i < numColorNames ; i++ )
+  for ( int i = 0 ; i < numColorNames ; i++ ) {
     mColorList->setColor( i,
       reader.readColorEntry( colorNames[i].configName, &defaultColor[i] ) );
+  }
   connect( mColorList, SIGNAL( changed( ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1824,6 +1844,7 @@ void AppearancePage::ColorsTab::save() {
       reader.writeEntry( colorNames[i].configName, mColorList->color(i) );
 
   reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
+  GlobalSettings::setCloseToQuotaThreshold( mCloseToQuotaThreshold->value() );
 }
 
 QString AppearancePage::LayoutTab::helpAnchor() const {
@@ -1884,6 +1905,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   connect( mFolderListGroup, SIGNAL ( clicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
+  connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  vlay->addWidget( mFavoriteFolderViewCB );
+
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroup );
@@ -1913,6 +1938,7 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
   loadWidget( mReaderWindowModeGroup, geometry, readerWindowMode );
+  mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1933,6 +1959,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
+  GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
 }
 
 //
@@ -2557,6 +2584,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mTopQuoteCheck =
+    new QCheckBox( GlobalSettings::self()->prependSignatureItem()->label(), this );
+  vlay->addWidget( mTopQuoteCheck);
+  connect( mTopQuoteCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mSmartQuoteCheck = new QCheckBox(
            GlobalSettings::self()->smartQuoteItem()->label(),
            this, "kcfg_SmartQuote" );
@@ -2674,6 +2707,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   mAutoAppSignFileCheck->setChecked(
            GlobalSettings::self()->autoTextSignature()=="auto" );
+  mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
@@ -2694,6 +2728,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     bool state = composer.readBoolEntry("signature");
     mAutoAppSignFileCheck->setChecked( state );
   }
+  if ( composer.hasKey( "prepend-signature" ) )
+    mTopQuoteCheck->setChecked( composer.readBoolEntry( "prepend-signature" ) );
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote" ) );
   if ( composer.hasKey( "request-mdn" ) )
@@ -2715,6 +2751,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
+  GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked());
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
@@ -3658,6 +3695,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
 
+  // encrypted messages group
+  group = new QVGroupBox( i18n("Encrypted Messages"), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+  mAlwaysDecrypt = new QCheckBox( i18n( "Attempt decryption of encrypted messages when viewing" ), group );
+  connect( mAlwaysDecrypt, SIGNAL(stateChanged(int)), this, SLOT(slotEmitChanged()) );
+  vlay->addWidget( group );
+
   // "Message Disposition Notification" groupbox:
   group = new QVGroupBox( i18n("Message Disposition Notifications"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
@@ -3747,6 +3791,8 @@ void SecurityPage::GeneralTab::doLoadOther() {
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
   mAutomaticallyImportAttachedKeysCheck->setChecked( reader.readBoolEntry( "AutoImportKeys", false ) );
 
+  mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
   int num = mdn.readNumEntry( "default-policy", 0 );
@@ -3817,6 +3863,7 @@ void SecurityPage::GeneralTab::save() {
   mdn.writeEntry( "default-policy", mMDNGroup->id( mMDNGroup->selected() ) );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->id( mOrigQuoteGroup->selected() ) );
   mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
+  GlobalSettings::self()->setAlwaysDecrypt( mAlwaysDecrypt->isChecked() );
 }
 
 
@@ -4645,7 +4692,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mBox = new QWidget( b1 );
-  QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
+  QGridLayout* grid = new QGridLayout( mBox, 5, 2, 0, KDialog::spacingHint() );
   grid->setColStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
            mBox, SLOT( setEnabled(bool) ) );
@@ -4741,6 +4788,19 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().utf8() ) );
   connect( mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
+
+  mSyncImmediately = new QCheckBox( i18n( "Synchronize groupware changes immediately" ), mBox );
+  QToolTip::add( mSyncImmediately,
+                 i18n( "Synchronize groupware changes in disconnected IMAP folders immediately when being online." ) );
+  connect( mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  grid->addMultiCellWidget( mSyncImmediately, 4, 4, 0, 1 );
+  
+  mDeleteInvitations = new QCheckBox( 
+             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().utf8() ), mBox );
+  QWhatsThis::add( mDeleteInvitations, i18n( GlobalSettings::self()
+             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().utf8() ) );
+    connect( mDeleteInvitations, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+    grid->addMultiCellWidget( mDeleteInvitations, 5, 5, 0, 1 );
 
   // Groupware functionality compatibility setup
   b1 = new QVGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
@@ -4839,6 +4899,8 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   mStorageFormatCombo->setCurrentItem(i);
   slotStorageFormatChanged( i );
   mOnlyShowGroupwareFolders->setChecked( GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
+  mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
+  mDeleteInvitations->setChecked( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
 
   QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -4901,6 +4963,8 @@ void MiscPage::GroupwareTab::save() {
   // Write the IMAP resource config
   GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
   GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mOnlyShowGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mSyncImmediately->isChecked() );
+  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mDeleteInvitations->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled

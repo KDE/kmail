@@ -50,6 +50,7 @@ using KRecentAddress::RecentAddresses;
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+#include <kstatusbar.h>
 #include <ksettings/dispatcher.h>
 
 
@@ -126,6 +127,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
+
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
                                 "KMailSidebar" );
@@ -219,6 +222,8 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
   mainWidget->initializeFolderShortcutActions();
+  mainWidget->setupForwardingActionsList();
+  mainWidget->updateVactionScriptStatus();
 }
 
 void KMailPart::exit()

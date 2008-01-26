@@ -33,6 +33,7 @@
 #include "compactionjob.h"
 #include "kmfoldertree.h"
 #include "kmailicalifaceimpl.h"
+#include "kmaccount.h"
 
 #include <errno.h>
 
@@ -126,6 +127,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
                 this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
+  
+  connect( mStorage, SIGNAL( folderSizeChanged() ),
+           this, SLOT( slotFolderSizeChanged() ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   // Meanwhile, readConfig must be done before registerWithMessageDict, since
@@ -206,7 +210,10 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   mMailingList.writeConfig( config );
 
-  config->writeEntry("Identity", mIdentity);
+  if ( mIdentity != 0 && ( !mStorage || !mStorage->account() || mIdentity != mStorage->account()->identityId() ) )
+      config->writeEntry("Identity", mIdentity);
+  else
+      config->deleteEntry("Identity");
 
   config->writeEntry("WhoField", mUserWhoField);
   config->writeEntry("Id", mId);
@@ -422,12 +429,12 @@ int KMFolder::moveMsg(QPtrList<KMMessage> q, int* index_return )
 
 int KMFolder::find( const KMMsgBase* msg ) const
 {
-  return mStorage ? mStorage->find( msg ) : 0;
+  return mStorage ? mStorage->find( msg ) : -1;
 }
 
 int KMFolder::find( const KMMessage* msg ) const
 {
-  return mStorage ? mStorage->find( msg ) : 0;
+  return mStorage ? mStorage->find( msg ) : -1;
 }
 
 int KMFolder::count( bool cache ) const
@@ -507,7 +514,7 @@ void KMFolder::remove()
      the message dict, since its message list is empty, and the .ids
      file contents are not loaded. That can lead to lookups in the
      dict returning stale pointers to the folder later. */
-  mStorage->open( "KMFolder::remove" );
+  mStorage->open("kmfolder_remove");
   mStorage->remove();
 }
 
@@ -606,6 +613,16 @@ void KMFolder::setIdentity( uint identity )
 {
   mIdentity = identity;
   kmkernel->slotRequestConfigSync();
+}
+
+uint KMFolder::identity() const
+{
+  // if we don't have one set ourselves, check our account
+  kdDebug() << "FOO: " << mIdentity << " :: " << mStorage << endl;
+  if ( !mIdentity && mStorage )
+    if ( KMAccount *act = mStorage->account() )
+      return act->identityId();
+  return mIdentity;
 }
 
 void KMFolder::setWhoField(const QString& aWhoField )
@@ -849,5 +866,15 @@ void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
   kmkernel->iCalIface().folderContentsTypeChanged( this, type );
   emit iconsChanged();
 }
+
+void KMFolder::slotFolderSizeChanged()
+{
+  emit folderSizeChanged( this );
+  KMFolder* papa = parent()->manager()->parentFolder( this );
+  if ( papa && papa != this ) {
+    papa->slotFolderSizeChanged();
+  }
+}
+
 
 #include "kmfolder.moc"

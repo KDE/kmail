@@ -59,6 +59,7 @@
 #include <qeventloop.h>
 
 #include <libemailfunctions/email.h>
+#include <kdcopservicestarter.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>
@@ -77,6 +78,8 @@
 // KIO headers
 #include <kio/job.h>
 #include <kio/netaccess.h>
+
+#include <libkpimidentities/identitymanager.h>
 
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
@@ -110,11 +113,14 @@ using KMail::SecondaryWindow;
 using KMail::RedirectDialog;
 #include "util.h"
 #include "templateparser.h"
+#include "editorwatcher.h"
+#include "korghelper.h"
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 
 #include <libkdepim/kfileio.h>
+#include "kcalendariface_stub.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -463,7 +469,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( msg, id );
-  win->setCharset("", TRUE);
+  win->setCharset("", true);
   win->setFocusToSubject();
   win->show();
 
@@ -488,7 +494,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus();
   win->show();
 
@@ -513,7 +519,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   KMail::Composer * win = KMail::makeComposer( fmsg );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->show();
 
   return OK;
@@ -676,7 +682,7 @@ KMCommand::Result KMEditMsgCommand::execute()
 
   KMail::Composer * win = KMail::makeComposer();
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.
-  win->setMsg(msg, FALSE, TRUE);
+  win->setMsg(msg, false, true);
   win->setFolder( parent );
   win->show();
 
@@ -705,7 +711,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
 
   KMail::Composer *win = KMail::makeComposer();
   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
-  win->setMsg( newMsg, FALSE, TRUE );
+  win->setMsg( newMsg, false, true );
   win->show();
 
   return OK;
@@ -772,6 +778,9 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   // from an .eml file.
   if ( msg->getMsgSerNum() != 0 ) {
     mMsgList.append( msg->getMsgSerNum() );
+    if ( msg->parent() ) {
+      msg->parent()->open( "kmsavemsgcommand" );
+    }
   } else {
     mStandAloneMessage = msg;
   }
@@ -847,6 +856,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     KMMsgDict::instance()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
     assert( p );
     assert( idx >= 0 );
+    //kdDebug() << "SERNUM: " << mMsgList[mMsgListIndex] << " idx: " << idx << " folder: " << p->prettyURL() << endl;
     msg = p->getMsg(idx);
 
     if ( msg ) {
@@ -1080,7 +1090,7 @@ KMCommand::Result KMReplyToCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1101,9 +1111,9 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   if ( !msg || !msg->codec() ) {
     return Failed;
   }
-  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", TRUE);
+  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", true);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1126,7 +1136,7 @@ KMCommand::Result KMReplyListCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), true);
   win->setReplyFocus(false);
   win->show();
 
@@ -1149,7 +1159,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1172,7 +1182,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   }
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1451,7 +1461,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1476,7 +1486,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection,
                                        false, true, false, mTemplate );
   KMail::Composer * win = KMail::makeComposer( reply );
-  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setCharset( msg->codec()->mimeName(), true );
   win->setReplyFocus();
   win->show();
 
@@ -1564,6 +1574,13 @@ KMPrintCommand::KMPrintCommand( QWidget *parent,
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
+  mOverrideFont = KGlobalSettings::generalFont();
+}
+
+
+void KMPrintCommand::setOverrideFont( const QFont& font )
+{
+  mOverrideFont = font;
 }
 
 KMCommand::Result KMPrintCommand::execute()
@@ -1575,6 +1592,8 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printWin.setUseFixedFont( mUseFixedFont );
   printWin.setOverrideEncoding( mEncoding );
+  printWin.setPrintFont( mOverrideFont );
+  printWin.setDecryptMessageOverwrite( true );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
 
@@ -2059,7 +2078,7 @@ void KMCopyCommand::slotFolderComplete( KMFolderImap*, bool success )
   kdDebug(5006) << k_funcinfo << success << endl;
   if ( !success )
     setResult( Failed );
-  mDestFolder->close("kmcommand");
+  mDestFolder->close( "kmcommand" );
   emit completed( this );
   deleteLater();
 }
@@ -2136,10 +2155,8 @@ KMCommand::Result KMMoveCommand::execute()
     if (srcFolder == mDestFolder)
       continue;
     assert(idx != -1);
-    if ( !srcFolder->isOpened() ) {
-      srcFolder->open( "kmcommand" );
-      mOpenedFolders.append( srcFolder );
-    }
+    srcFolder->open( "kmmovecommand" );
+    mOpenedFolders.append( srcFolder );
     msg = srcFolder->getMsg(idx);
     if ( !msg ) {
       kdDebug(5006) << k_funcinfo << "No message found for serial number " << *it << endl;
@@ -2372,7 +2389,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
     }
 
     KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
-    win->setCharset("", TRUE);
+    win->setCharset("", true);
     win->show();
   }
   else if ( mUrl.protocol() == "im" )
@@ -2633,20 +2650,20 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
           // carefully look for the part that is *not* the signature part:
           if( node->findType( DwMime::kTypeApplication,
                 DwMime::kSubtypePgpSignature,
-                TRUE, false ) ){
+                true, false ) ){
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
                 DwMime::kSubtypePgpSignature,
-                TRUE, false );
+                true, false );
           }else if( node->findType( DwMime::kTypeApplication,
                 DwMime::kSubtypePkcs7Mime,
-                TRUE, false ) ){
+                true, false ) ){
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
                 DwMime::kSubtypePkcs7Mime,
-                TRUE, false );
+                true, false );
           }else{
             dataNode = node->findTypeNot( DwMime::kTypeMultipart,
                 DwMime::kSubtypeUnknown,
-                TRUE, false );
+                true, false );
           }
 	}else{
 	  ObjectTreeParser otp( 0, 0, false, false, false );
@@ -2800,24 +2817,27 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-  KMMessage *msg = retrievedMessage();
-  if ( !msg || !msg->codec() ) {
-    return Failed;
-  }
-  KMMessage *newMsg = new KMMessage(*msg);
-  newMsg->setCharset(msg->codec()->mimeName());
-  // the message needs a new Message-Id
-  newMsg->removeHeaderField( "Message-Id" );
-  newMsg->setParent( 0 );
+   KMMessage *msg = retrievedMessage();
+   if ( !msg || !msg->codec() ) {
+     return Failed;
+   }
+   KMMessage *newMsg = new KMMessage(*msg);
 
-  // adds the new date to the message
-  newMsg->removeHeaderField( "Date" );
+   QStringList whiteList;
+   whiteList << "To" << "Cc" << "Bcc" << "Subject";
+   newMsg->sanitizeHeaders( whiteList );
 
-  KMail::Composer * win = KMail::makeComposer();
-  win->setMsg(newMsg, false, true);
-  win->show();
+   newMsg->setCharset(msg->codec()->mimeName());
+   newMsg->setParent( 0 );
 
-  return OK;
+   // make sure we have an identity set, default, if necessary
+   newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
+
+   KMail::Composer * win = KMail::makeComposer();
+   win->setMsg(newMsg, false, true);
+   win->show();
+
+   return OK;
 }
 
 KMMailingListCommand::KMMailingListCommand( QWidget *parent, KMFolder *folder )
@@ -3224,23 +3244,6 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
            this, SLOT(slotAtmDecryptWithChiasmusResult(const GpgME::Error&,const QVariant&)) );
 }
 
-// return true if we should proceed, false if we should abort
-static bool checkOverwrite( const KURL& url, bool& overwrite, QWidget* w )
-{
-  if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
-    if ( KMessageBox::Cancel ==
-         KMessageBox::warningContinueCancel(
-                                            w,
-                                            i18n( "A file named \"%1\" already exists. "
-                                                  "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
-                                            i18n( "Overwrite File?" ),
-                                            i18n( "&Overwrite" ) ) )
-      return false;
-    overwrite = true;
-  }
-  return true;
-}
-
 static const QString chomp( const QString & base, const QString & suffix, bool cs ) {
   return base.endsWith( suffix, cs ) ? base.left( base.length() - suffix.length() ) : base ;
 }
@@ -3274,8 +3277,8 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   if ( url.isEmpty() )
     return;
 
-  bool overwrite = false;
-  if ( !checkOverwrite( url, overwrite, parentWidget() ) )
+  bool overwrite = KMail::Util::checkOverwrite( url, parentWidget() );
+  if ( !overwrite )
     return;
 
   d.setDisabled( true ); // we got this far, don't delete yet
@@ -3291,6 +3294,230 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job
     job->showErrorDialog();
   LaterDeleterWithCommandCompletion d( this );
   d.setResult( OK );
+}
+
+
+AttachmentModifyCommand::AttachmentModifyCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    KMCommand( parent, msg ),
+    mPartIndex( node->nodeId() ),
+    mSernum( 0 )
+{
+}
+
+AttachmentModifyCommand::~ AttachmentModifyCommand()
+{
+}
+
+KMCommand::Result AttachmentModifyCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg )
+    return Failed;
+  mSernum = msg->getMsgSerNum();
+
+  mFolder = msg->parent();
+  if ( !mFolder || !mFolder->storage() )
+    return Failed;
+
+  Result res = doAttachmentModify();
+  if ( res != OK )
+    return res;
+
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void AttachmentModifyCommand::storeChangedMessage(KMMessage * msg)
+{
+  if ( !mFolder || !mFolder->storage() ) {
+    kdWarning(5006) << k_funcinfo << "We lost the folder!" << endl;
+    setResult( Failed );
+    emit completed( this );
+    deleteLater();
+  }
+  int res = mFolder->addMsg( msg ) != 0;
+  if ( mFolder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap *f = static_cast<KMFolderImap*>( mFolder->storage() );
+    connect( f, SIGNAL(folderComplete(KMFolderImap*,bool)),
+             SLOT(messageStoreResult(KMFolderImap*,bool)) );
+  } else {
+    messageStoreResult( 0, res == 0 );
+  }
+}
+
+void AttachmentModifyCommand::messageStoreResult(KMFolderImap* folder, bool success )
+{
+  Q_UNUSED( folder );
+  if ( success ) {
+    KMCommand *delCmd = new KMDeleteMsgCommand( mSernum );
+    connect( delCmd, SIGNAL(completed(KMCommand*)), SLOT(messageDeleteResult(KMCommand*)) );
+    delCmd->start();
+    return;
+  }
+  kdWarning(5006) << k_funcinfo << "Adding modified message failed." << endl;
+  setResult( Failed );
+  emit completed( this );
+  deleteLater();
+}
+
+void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
+{
+  setResult( cmd->result() );
+  emit completed( this );
+  deleteLater();
+}
+
+
+KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+}
+
+KMDeleteAttachmentCommand::~KMDeleteAttachmentCommand()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+}
+
+KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+  msg->removeBodyPart( dwpart );
+
+  // add dummy part to show that a attachment has been deleted
+  KMMessagePart dummyPart;
+  dummyPart.duplicate( part );
+  QString comment = i18n("This attachment has been deleted.");
+  if ( !part.fileName().isEmpty() )
+    comment = i18n( "The attachment '%1' has been deleted." ).arg( part.fileName() );
+  dummyPart.setContentDescription( comment );
+  dummyPart.setBodyEncodedBinary( QByteArray() );
+  QCString cd = dummyPart.contentDisposition();
+  if ( cd.find( "inline", 0, false ) == 0 ) {
+    cd.replace( 0, 10, "attachment" );
+    dummyPart.setContentDisposition( cd );
+  } else if ( cd.isEmpty() ) {
+    dummyPart.setContentDisposition( "attachment" );
+  }
+  msg->addBodyPart( &dummyPart );
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  storeChangedMessage( newMsg );
+  return OK;
+}
+
+
+KMEditAttachmentCommand::KMEditAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
+    AttachmentModifyCommand( node, msg, parent )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  mTempFile.setAutoDelete( true );
+}
+
+KMEditAttachmentCommand::~ KMEditAttachmentCommand()
+{
+}
+
+KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
+{
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  if ( !dwpart )
+    return Failed;
+  KMMessage::bodyPart( dwpart, &part, true );
+  if ( !part.isComplete() )
+     return Failed;
+
+  mTempFile.file()->writeBlock( part.bodyDecodedBinary() );
+  mTempFile.file()->flush();
+
+  KMail::EditorWatcher *watcher = new KMail::EditorWatcher( KURL(mTempFile.file()->name()), part.typeStr() + "/" + part.subtypeStr(), false, this );
+  connect( watcher, SIGNAL(editDone(KMail::EditorWatcher*)), SLOT(editDone(KMail::EditorWatcher*)) );
+  if ( !watcher->start() )
+    return Failed;
+  setEmitsCompletedItself( true );
+  setDeletesItself( true );
+  return OK;
+}
+
+void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  // anything changed?
+  if ( !watcher->fileChanged() ) {
+    kdDebug(5006) << k_funcinfo << "File has not been changed" << endl;
+    setResult( Canceled );
+    emit completed( this );
+    deleteLater();
+  }
+
+  mTempFile.file()->reset();
+  QByteArray data = mTempFile.file()->readAll();
+
+  // build the new message
+  KMMessage *msg = retrievedMessage();
+  KMMessagePart part;
+  // -2 because partNode counts root and body of the message as well
+  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  KMMessage::bodyPart( dwpart, &part, true );
+  msg->removeBodyPart( dwpart );
+
+  KMMessagePart att;
+  att.duplicate( part );
+  att.setBodyEncodedBinary( data );
+  msg->addBodyPart( &att );
+
+  KMMessage *newMsg = new KMMessage();
+  newMsg->fromDwString( msg->asDwString() );
+  newMsg->setStatus( msg->status() );
+
+  storeChangedMessage( newMsg );
+}
+
+
+CreateTodoCommand::CreateTodoCommand(QWidget * parent, KMMessage * msg)
+  : KMCommand( parent, msg )
+{
+}
+
+KMCommand::Result CreateTodoCommand::execute()
+{
+  KMMessage *msg = retrievedMessage();
+  if ( !msg || !msg->codec() ) {
+    return Failed;
+  }
+
+  KMail::KorgHelper::ensureRunning();
+
+  QString txt = i18n("From: %1\nTo: %2\nSubject: %3").arg( msg->from() )
+                .arg( msg->to() ).arg( msg->subject() );
+
+  KTempFile tf;
+  tf.setAutoDelete( true );
+  QString uri = "kmail:" + QString::number( msg->getMsgSerNum() ) + "/" + msg->msgId();
+  tf.file()->writeBlock( msg->asDwString().c_str(), msg->asDwString().length() );
+  tf.close();
+
+  KCalendarIface_stub *iface = new KCalendarIface_stub( kapp->dcopClient(), "korganizer", "CalendarIface" );
+  iface->openTodoEditor( i18n("Mail: %1").arg( msg->subject() ), txt,
+                         uri, tf.name(), QStringList(), "message/rfc822" );
+  delete iface;
+
+  return OK;
 }
 
 #include "kmcommands.moc"

@@ -39,6 +39,7 @@
 #include <kiconloader.h>
 #include <klistview.h>
 #include <klocale.h>
+#include <ktoolbarbutton.h>
 
 #include "kmheaders.h"
 #include "kmsearchpattern.h"
@@ -85,6 +86,10 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
            this, SLOT( slotStatusChanged( int ) ) );
 
   label->setBuddy( mStatusCombo );
+
+  KToolBarButton * btn = new KToolBarButton( "mail_find", 0, parent,
+                                            0, i18n( "Open Full Search" ) );
+  connect( btn, SIGNAL( clicked() ), SIGNAL( requestFullSearch() ) );
 
   /* Disable the signal connected by KListViewSearchLine since it will call 
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
@@ -137,6 +142,7 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 
 bool HeaderListQuickSearch::itemMatches(const QListViewItem *item, const QString &s) const
 {
+  mCurrentSearchTerm = s; // bit of a hack, but works
   if ( mStatus != 0 ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
@@ -168,6 +174,18 @@ void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
   mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[which].icon ),
     i18n( KMail::StatusValues[ which ].text ) );
   statusList.append( KMail::StatusValues[ which ].text );
+}
+
+
+QString HeaderListQuickSearch::currentSearchTerm() const
+{
+    return mCurrentSearchTerm;
+}
+
+
+int HeaderListQuickSearch::currentStatus() const
+{
+    return mStatus;
 }
 
 } // namespace KMail

@@ -57,6 +57,7 @@ class KColorCombo;
 class KFontRequester;
 class KIconButton;
 class KKeyButton;
+class QSpinBox;
 
 namespace Kpgp {
   class Config;
@@ -461,6 +462,7 @@ private:
   QCheckBox    *mCustomColorCheck;
   ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
+  QSpinBox     *mCloseToQuotaThreshold;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab {
@@ -482,6 +484,7 @@ private: // data
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
   QButtonGroup *mReaderWindowModeGroup;
+  QCheckBox *mFavoriteFolderViewCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
@@ -604,6 +607,7 @@ private:
 
 private:
   QCheckBox     *mAutoAppSignFileCheck;
+  QCheckBox     *mTopQuoteCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox	*mShowRecentAddressesInComposer;
@@ -826,6 +830,7 @@ private:
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
+  QCheckBox    *mAlwaysDecrypt;
 };
 
 
@@ -1007,9 +1012,8 @@ private:
 
   QCheckBox* mHideGroupwareFolders;
   QCheckBox* mOnlyShowGroupwareFolders;
-  QCheckBox* mAutoResCB;
-  QCheckBox* mAutoDeclConflCB;
-  QCheckBox* mAutoDeclRecurCB;
+  QCheckBox* mSyncImmediately;
+  QCheckBox* mDeleteInvitations;
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;

@@ -125,8 +125,8 @@ public:
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
       unencrypted form that were sent in encrypted form.
-      NOTE: Target of this pointer becomes property of KMMessage,
-            and will be deleted in the d'tor.
+      NOTE: Ownership of @p unencrypted transfers to this KMMessage,
+            and it will be deleted in the d'tor.
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
 
@@ -161,8 +161,8 @@ public:
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          QString selection=QString::null, bool noQuote=FALSE,
-                          bool allowDecryption=TRUE, bool selectionIsBody=FALSE,
+                          QString selection=QString::null, bool noQuote=false,
+                          bool allowDecryption=true, bool selectionIsBody=false,
                           const QString &tmpl = QString::null );
 
   /** Create a new message that is a redirect to this message, filling all
@@ -205,9 +205,12 @@ public:
           bool allowGUI=false,
           QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
 
+  /** Remove all headers but the content description ones, and those in the white list. */
+  void sanitizeHeaders( const QStringList& whiteList = QStringList() );
+
   /** Parse the string and create this message from it. */
-  void fromDwString(const DwString& str, bool setStatus=FALSE);
-  void fromString(const QCString& str, bool setStatus=FALSE);
+  void fromDwString(const DwString& str, bool setStatus=false);
+  void fromString(const QCString& str, bool setStatus=false);
   void fromByteArray(const QByteArray & ba, bool setStatus=false);
 
   /** Return the entire message contents in the DwString. This function
@@ -265,7 +268,7 @@ public:
 
   /** Initialize headers fields according to the identity and the transport
     header of the given original message */
-  void initFromMessage(const KMMessage *msg, bool idHeaders = TRUE);
+  void initFromMessage(const KMMessage *msg, bool idHeaders = true);
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
@@ -287,7 +290,7 @@ public:
     Call this method before sending *after* all changes to the message
     are done because this method does things different if there are
     attachments / multiple body parts. */
-  void setAutomaticFields(bool isMultipart=FALSE);
+  void setAutomaticFields(bool isMultipart=false);
 
   /** Get or set the 'Date' header field */
   QString dateStr() const;
@@ -467,6 +470,9 @@ public:
   /** Remove header field with given name */
   void removeHeaderField(const QCString& name);
 
+  /** Remove all header fields with given name */
+  void removeHeaderFields(const QCString& name);
+
   /** Get or set the 'Content-Type' header field
       The member functions that involve enumerated types (ints)
       will work only for well-known types or subtypes. */
@@ -577,6 +583,10 @@ public:
       or zero, if no found. */
   DwBodyPart * findDwBodyPart( int type, int subtype ) const;
 
+  /** Return the first DwBodyPart matching a given Content-Type
+      or zero, if no found. */
+  DwBodyPart * findDwBodyPart( const QCString& type, const QCString&  subtype ) const;
+
   /** Return the first DwBodyPart matching a given partSpecifier
       or zero, if no found. */
   DwBodyPart* findDwBodyPart( DwBodyPart* part, const QString & partSpecifier );
@@ -616,6 +626,9 @@ public:
 
   /** Delete all body parts. */
   void deleteBodyParts();
+
+  /** Removes the given body part. */
+  void removeBodyPart( DwBodyPart * dwPart );
 
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
@@ -667,7 +680,7 @@ public:
    * only the name part and not the given emailAddr.
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,
-          bool stripped=TRUE);
+          bool stripped=true, const QString& cssStyle = QString::null, bool link = true);
 
   /** Strips an address from an address list. This is for example used
       when replying to all.
@@ -739,17 +752,17 @@ public:
 
   /** Get/set offset in mail folder. */
   off_t folderOffset() const { return mFolderOffset; }
-  void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+  void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(true); } }
 
   /** Get/set filename in mail folder. */
   QString fileName() const { return mFileName; }
-  void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
+  void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(true); } }
 
   /** Get/set size of message in the folder including the whole header in
       bytes. Can be 0, if the message is not in a folder.
       The setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
   size_t msgSize() const { return mMsgSize; }
-  void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
+  void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(true); } }
 
   /** Unlike the above function this works also, if the message is not in a
       folder */
@@ -855,11 +868,19 @@ public:
   /** Set cursor position as offset from message start */
   void setCursorPos(int pos) { mCursorPos = pos; };
 
+  /** Get the KMMsgInfo object that was set with setMsgInfo(). */
+  KMMsgInfo* msgInfo() { return mMsgInfo; }
+  /** Set the KMMsgInfo object corresponding to this message. */
+  void setMsgInfo( KMMsgInfo* msgInfo ) { mMsgInfo = msgInfo; }
+
   /* This is set in kmreaderwin if a message is being parsed to avoid
-     other parts of kmail (e.g. kmheaders) destroying the message. 
+     other parts of kmail (e.g. kmheaders) destroying the message.
      Parsing can take longer and can be async (in case of gpg mails) */
   bool isBeingParsed() const { return mIsParsed; }
   void setIsBeingParsed( bool t ) { mIsParsed = t; }
+
+  /** Delete this message as soon as it no longer in use. */
+  void deleteWhenUnused();
 
 private:
 
@@ -890,6 +911,8 @@ private:
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
   int mCursorPos;
+  KMMsgInfo* mMsgInfo; // used to remember the KMMsgInfo object this KMMessage replaced in the KMMsgList
+  static QValueList<KMMessage*> sPendingDeletes;
 };
 
 

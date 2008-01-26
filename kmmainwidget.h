@@ -30,6 +30,7 @@
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
+#include "messageactions.h"
 #include <kaction.h>
 
 class QVBoxLayout;
@@ -42,6 +43,7 @@ class KConfig;
 class KRadioAction;
 class KToggleAction;
 class KMenuBar;
+class KStatusBarLabel;
 
 class KMFolder;
 class KMFolderDir;
@@ -71,6 +73,7 @@ namespace KMail {
   class HeaderListQuickSearch;
   class SearchWindow;
   class ImapAccountBase;
+  class FavoriteFolderView;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -106,24 +109,19 @@ public:
   /** Easy access to main components of the window. */
   KMReaderWin* messageView(void) const { return mMsgView; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
+  KMail::FavoriteFolderView *favoriteFolderView() const { return mFavoriteFolderView; }
 
   static void cleanup();
 
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
-  KAction *replyAction() const { return mReplyAction; }
-  KAction *replyAuthorAction() const { return mReplyAuthorAction; }
-  KAction *replyAllAction() const { return mReplyAllAction; }
-  KAction *replyListAction() const { return mReplyListAction; }
   KActionMenu *customReplyAction() const { return mCustomReplyActionMenu; }
   KActionMenu *customReplyAllAction() const { return mCustomReplyAllActionMenu; }
-  KActionMenu * replyMenu() const { return mReplyActionMenu; }
   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
   KAction *forwardInlineAction() const { return mForwardInlineAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *forwardDigestAction() const { return mForwardDigestAction; }
   KAction *redirectAction() const { return mRedirectAction; }
   KActionMenu *customForwardAction() const { return mCustomForwardActionMenu; }
-  KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
   KAction *trashAction() const { return mTrashAction; }
@@ -131,16 +129,17 @@ public:
   KAction *trashThreadAction() const { return mTrashThreadAction; }
   KAction *deleteThreadAction() const { return mDeleteThreadAction; }
   KAction *saveAsAction() const { return mSaveAsAction; }
-  KAction *editAction() const { return mEditAction; }
+  KAction *editAction() const { return mMsgActions->editAction(); }
   KAction *useAction() const { return mUseAction; }
   KAction *sendAgainAction() const { return mSendAgainAction; }
   KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
   KAction *findInMessageAction() const { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
-  KAction *viewSourceAction() { return mViewSourceAction; }
+  KAction *viewSourceAction() const { return mViewSourceAction; }
+  KMail::MessageActions *messageActions() const { return mMsgActions; }
 
-  KActionMenu *statusMenu()  const{ return mStatusMenu; }
+  KActionMenu *statusMenu()  const{ return mMsgActions->messageStatusMenu(); }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
   KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
   KActionMenu *mopyActionMenu() const { return mCopyActionMenu; }
@@ -172,6 +171,14 @@ public:
    * navigation inside child widgets like combo boxes.
    */
   void setAccelsEnabled( bool enabled = true );
+
+  /**
+   * Sets up action list for forward menu.
+  */
+  void setupForwardingActionsList();
+
+  KStatusBarLabel* vacationScriptIndicator() const { return mVacationScriptIndicator; }
+  void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -233,6 +240,7 @@ public slots:
   void slotShortcutChanged( KMFolder *folder );
 
   void updateCustomTemplateMenus();
+  void slotEditVacation();
 
 signals:
   void messagesTransfered( bool );
@@ -245,10 +253,6 @@ protected:
   void showMsg( KMReaderWin *win, KMMessage *msg );
   void updateFileMenu();
   void newFromTemplate( KMMessage *msg );
-
-  // helper functions for keeping reference to mFolder
-  void openFolder();
-  void closeFolder();
 
   KActionCollection * actionCollection() const { return mActionCollection; }
 
@@ -290,7 +294,6 @@ protected slots:
   void slotOverrideThread();
   void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
-  void slotEditMsg();
   void slotUseTemplate();
   //void slotTrashMsg();   // move to trash
   void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
@@ -307,7 +310,7 @@ protected slots:
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
-  void slotEditVacation();
+  void slotCheckVacation();
   void slotDebugSieve();
   void slotStartCertManager();
   void slotStartWatchGnuPG();
@@ -317,12 +320,6 @@ protected slots:
   void slotCollapseThread();
   void slotCollapseAllThreads();
   void slotShowMsgSrc();
-  void slotSetMsgStatusNew();
-  void slotSetMsgStatusUnread();
-  void slotSetMsgStatusRead();
-  void slotSetMsgStatusTodo();
-  void slotSetMsgStatusSent();
-  void slotSetMsgStatusFlag();
   void slotSetThreadStatusNew();
   void slotSetThreadStatusUnread();
   void slotSetThreadStatusRead();
@@ -332,6 +329,7 @@ protected slots:
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
+  void slotToggleSizeColumn();
   void slotSendQueued();
   void slotSendQueuedVia( int item );
   void slotOnlineStatus();
@@ -391,11 +389,6 @@ protected slots:
   void slotChangeCaption(QListViewItem*);
   void removeDuplicates();
 
-  /** Slot to reply to a message */
-  void slotReplyToMsg();
-  void slotReplyAuthorToMsg();
-  void slotReplyListToMsg();
-  void slotReplyAllToMsg();
   void slotCustomReplyToMsg( int tid );
   void slotCustomReplyAllToMsg( int tid );
   void slotForwardInlineMsg();
@@ -409,6 +402,7 @@ protected slots:
   void slotFromFilter();
   void slotToFilter();
   void slotPrintMsg();
+  void slotCreateTodo();
 
   void slotConfigChanged();
   /** Remove the shortcut actions associated with a folder. */
@@ -436,18 +430,23 @@ private:
    */
   QString findCurrentImapPath();
 
+  void setupFolderView();
+
+private slots:
+  void slotRequestFullSearchFromQuickSearch();
+  void updateVactionScriptStatus( bool active );
+
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
-    *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
+    *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
+    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
+    *mFavoritesCheckMailAction;
   // Composition actions
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-    *mReplyListAction,
+  KAction *mPrintAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
-    *mRedirectAction, *mNoQuoteReplyAction;
-  KActionMenu *mReplyActionMenu;
+    *mRedirectAction;
   KActionMenu *mForwardActionMenu;
   // Filter actions
   KActionMenu *mFilterMenu;
@@ -464,15 +463,13 @@ private:
                 *mCustomReplyAllMapper,
                 *mCustomForwardMapper;
 
-  KActionMenu *mStatusMenu, *mThreadStatusMenu,
+  KActionMenu *mThreadStatusMenu,
     *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
   KAction *mMarkThreadAsNewAction;
   KAction *mMarkThreadAsReadAction;
   KAction *mMarkThreadAsUnreadAction;
   KToggleAction *mToggleThreadTodoAction;
   KToggleAction *mToggleThreadFlagAction;
-  KToggleAction *mToggleTodoAction;
-  KToggleAction *mToggleFlagAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
@@ -480,12 +477,17 @@ private:
   KRadioAction* mUnreadColumnToggle;
   KRadioAction* mUnreadTextToggle;
   KToggleAction* mTotalColumnToggle;
+  KToggleAction* mSizeColumnToggle;
 
   KToggleAction *mToggleShowQuickSearchAction;
 
   KMFolderTree *mFolderTree;
+  KMail::FavoriteFolderView *mFavoriteFolderView;
+  QWidget      *mFolderView;
+  QSplitter    *mFolderViewParent;
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
+  QSplitter    *mFolderViewSplitter;
   KMHeaders    *mHeaders;
   QVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
@@ -513,6 +515,7 @@ private:
   bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
        mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
+  bool mEnableFavoriteFolderView;
 
 //  QPopupMenu *mMessageMenu;
   KMail::SearchWindow *mSearchWin;
@@ -550,8 +553,12 @@ private:
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
 
+  KMail::MessageActions *mMsgActions;
+
   static QValueList<KMMainWidget*>* s_mainWidgetList;
-  bool mOpenedImapFolder;
+
+  KStatusBarLabel *mVacationScriptIndicator;
+  bool mVacationIndicatorActive;
 };
 
 #endif

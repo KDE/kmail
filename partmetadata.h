@@ -17,33 +17,28 @@
 #ifndef _KMAIL_PARTMETADATA_H_
 #define _KMAIL_PARTMETADATA_H_
 
-#include <cryptplugwrapper.h>
+#include <gpgmepp/verificationresult.h>
 
 #include <kpgp.h>
 #include <qstring.h>
 #include <qcstring.h>
-#include <time.h>
+#include <qdatetime.h>
 
 namespace KMail {
 
   class PartMetaData {
   public:
     PartMetaData()
-      : isSigned( false ),
+      : sigSummary( GpgME::Signature::None ),
+        isSigned( false ),
         isGoodSignature( false ),
-        sigStatusFlags( CryptPlugWrapper::SigStatus_UNKNOWN ),
         isEncrypted( false ),
         isDecryptable( false ),
         technicalProblem( false ),
         isEncapsulatedRfc822Message( false )
     {
-      creationTime.tm_year = 0;
-      creationTime.tm_mon  = 1;
-      creationTime.tm_mday = 1;
     }
-    bool isSigned;
-    bool isGoodSignature;
-    CryptPlugWrapper::SigStatusFlags sigStatusFlags;
+    GpgME::Signature::Summary sigSummary;
     QString signClass;
     QString signer;
     QStringList signerMailAddresses;
@@ -52,12 +47,15 @@ namespace KMail {
     QString status;  // to be used for unknown plug-ins
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
     QString errorText;
-    tm creationTime;
-    bool isEncrypted;
-    bool isDecryptable;
+    QDateTime creationTime;
     QString decryptionError;
-    bool technicalProblem;
-    bool isEncapsulatedRfc822Message;
+    QString auditLog;
+    bool isSigned : 1;
+    bool isGoodSignature : 1;
+    bool isEncrypted : 1;
+    bool isDecryptable : 1;
+    bool technicalProblem : 1;
+    bool isEncapsulatedRfc822Message : 1;
   };
 
 } // namespace KMail

@@ -63,6 +63,13 @@ protected slots:
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
+  void slotDelete();
+  void slotEdit();
+  void slotOpen();
+  void slotOpenWith();
+  void slotView();
+  void slotProperties();
+  void slotCopy();
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed
@@ -75,6 +82,11 @@ protected:
 
   void saveSelectedBodyParts( bool encoded );
   void restoreLayoutIfPresent();
+
+  /* reimpl */
+  void startDrag();
+
+  void startHandleAttachmentCommand( int type );
 
 protected:
   KMReaderWin* mReaderWin;

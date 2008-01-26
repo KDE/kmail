@@ -41,7 +41,7 @@
 
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
-#include "kmacctimap.h"
+#include "kmacctcachedimap.h"
 #include "kmfoldertype.h"
 #include "folderjob.h"
 #include "cachedimapjob.h"
@@ -49,7 +49,7 @@
 
 using KMail::FolderJob;
 using KMail::QuotaInfo;
-class KMAcctCachedImap;
+class KMCommand;
 
 class QComboBox;
 class QRadioButton;
@@ -102,7 +102,7 @@ public:
   virtual ~KMFolderCachedImap();
 
   /**  @reimpl */
-  void reallyDoClose( const char * owner );
+  void reallyDoClose(const char* owner);
 
   /** Initialize this storage from another one. Used when creating a child folder */
   void initializeFrom( KMFolderCachedImap* parent );
@@ -117,15 +117,22 @@ public:
 
   /** @reimpl */
   virtual int create();
-  
+
   /** Remove this folder */
   virtual void remove();
 
   /** Synchronize this folder and it's subfolders with the server */
   virtual void serverSync( bool recurse );
 
-  /** Force the sync state to be done. */
-  void resetSyncState();
+  /**  Force the sync state to be done. */
+  void resetSyncState( );
+
+  /** Block this folder from generating alarms, even if the annotations
+   * on it say otherwise. Used to override alarms for read-only folders.
+   * (Only useful for resource folders) */
+  void setAlarmsBlocked( bool blocked );
+  /** Should alarms for this folder be blocked?  (Only useful for resource folders) */
+  bool alarmsBlocked() const;
 
   void checkUidValidity();
 
@@ -186,12 +193,13 @@ public:
   }
 
   /* Reimplemented from KMFolderMaildir */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = false)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMaildir::isReadOnly() || mReadOnly; }
+
 
   /**
    * Emit the folderComplete signal
@@ -243,6 +251,7 @@ public:
    * @see QuotaInfo::isEmpty(), QuotaInfo::isValid()
    */
   const QuotaInfo quotaInfo() const { return mQuotaInfo; }
+  void setQuotaInfo( const QuotaInfo & );
 
   /// Return the list of ACL for this folder
   typedef QValueVector<KMail::ACLListEntry> ACLList;
@@ -277,7 +286,7 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
-  /** 
+  /**
    * List of namespaces that need to be queried
    * Is set by the account for the root folder when the listing starts
    */
@@ -290,6 +299,15 @@ public:
    */
   const QString& imapPathForCreation() { return mImapPathCreation; }
   void setImapPathForCreation( const QString& path ) { mImapPathCreation = path; }
+
+  /**  \reimp */
+  bool isCloseToQuota() const;
+
+  /** Flags that can be permanently stored on the server. */
+  int permanentFlags() const { return mPermanentFlags; }
+
+
+  QString folderAttributes() const { return mFolderAttributes; }
 
 protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
@@ -305,6 +323,7 @@ protected slots:
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotCheckUidValidityResult( KMail::FolderJob* job );
+  void slotPermanentFlags( int flags );
   void slotTestAnnotationResult(KIO::Job *job);
   void slotGetAnnotationResult( KIO::Job* );
   void slotMultiUrlGetAnnotationResult( KIO::Job* );
@@ -357,7 +376,9 @@ protected:
   void newState( int progress, const QString& syncStatus );
 
   /** See if there is a better parent then this folder */
-  KMFolderCachedImap* findParent( const QString& path, const QString& name );  
+  KMFolderCachedImap* findParent( const QString& path, const QString& name );
+
+
 
 public slots:
   /**
@@ -389,6 +410,7 @@ private slots:
   void slotIncreaseProgress();
   void slotUpdateLastUid();
   void slotFolderDeletionOnServerFinished();
+  void slotRescueDone( KMCommand* command );
 
 signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);
@@ -403,6 +425,13 @@ private:
   void setReadOnly( bool readOnly );
   QString state2String( int state ) const;
   void rememberDeletion( int );
+  /** Rescue not yet synced messages to a lost+found folder in case
+    syncing is not possible because the folder has been deleted on the
+    server or write access to this folder has been revoked.
+  */
+  KMCommand* rescueUnsyncedMessages();
+  /** Recursive helper function calling the above method. */
+  void rescueUnsyncedMessagesAndDeleteFolder( KMFolder *folder, bool root = true );
 
   /** State variable for the synchronization mechanism */
   enum {
@@ -440,6 +469,7 @@ private:
   imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
+  QString     mFolderAttributes;
   QString     mAnnotationFolderType;
   IncidencesFor mIncidencesFor;
 
@@ -508,9 +538,15 @@ private:
   int mNamespacesToCheck;
   bool mPersonalNamespacesCheckDone;
   QString mImapPathCreation;
-  QMap<ulong,void*> mDeletedUIDsSinceLastSync;
 
   QuotaInfo mQuotaInfo;
+  QMap<ulong,void*> mDeletedUIDsSinceLastSync;
+  bool mAlarmsBlocked;
+
+  QValueList<KMFolder*> mToBeDeletedAfterRescue;
+  int mRescueCommandCount;
+
+  int mPermanentFlags;
 };
 
 #endif /*kmfoldercachedimap_h*/

@@ -76,6 +76,7 @@ class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   friend void KMMimePartTree::itemClicked( QListViewItem* item );
   friend void KMMimePartTree::itemRightClicked( QListViewItem* item, const QPoint & );
   friend void KMMimePartTree::slotSaveAs();
+  friend void KMMimePartTree::startDrag();
 
   friend class KMail::ObjectTreeParser;
   friend class KMail::KHtmlPartHtmlWriter;
@@ -126,6 +127,8 @@ public:
 
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
+
+  void setPrintFont( const QFont& font );
 
   /** Get codec corresponding to the currently selected override character encoding.
       @return The override codec or 0 if auto-detection is selected. */
@@ -244,6 +247,8 @@ public:
 
   partNode * partNodeForId( int id );
 
+  KURL tempFileUrlFromPartNode( const partNode * node );
+
   /** Returns id of message part from given URL or -1 if invalid. */
   static int msgPartFromUrl(const KURL &url);
 
@@ -274,6 +279,18 @@ public:
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
 
   QWidget* mainWindow() { return mMainWindow; }
+
+  /** Returns wether the message should be decryted. */
+  bool decryptMessage() const;
+
+  /** Enforce message decryption. */
+  void setDecryptMessageOverwrite( bool overwrite = true ) { mDecrytMessageOverwrite = overwrite; }
+
+  /** Show signature details. */
+  bool showSignatureDetails() const { return mShowSignatureDetails; }
+
+  /** Show signature details. */
+  void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -356,10 +373,16 @@ public slots:
   void slotLevelQuote( int l );
   void slotTouchMessage();
 
+  void slotDeleteAttachment( partNode* node );
+  void slotEditAttachment( partNode* node );
+
+  KMail::CSSHelper* cssHelper();
+
 protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
   void slotFancyHeaders();
+  void slotEnterpriseHeaders();
   void slotStandardHeaders();
   void slotLongHeaders();
   void slotAllHeaders();
@@ -399,7 +422,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false);
+  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false, bool topLevel=false);
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString::null if writing failed.
@@ -431,19 +454,21 @@ protected:
 
 private slots:
   void slotSetEncoding();
+  void injectAttachments();
 
 private:
   void adjustLayout();
   void createWidgets();
   void createActions( KActionCollection * ac );
   void saveSplitterSizes( KConfigBase & c ) const;
-  QString createAtmFileLink() const;
 
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
   /** Read override codec from configuration */
   void readGlobalOverrideCodec();
+
+  QString renderAttachments( partNode *node, const QColor &bgColor );
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
@@ -464,7 +489,7 @@ private:
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
-  QTimer updateReaderWinTimer;
+  QTimer mUpdateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
   QString mOverrideEncoding;
@@ -501,6 +526,8 @@ private:
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
 	int mLevelQuote;
+  bool mDecrytMessageOverwrite;
+  bool mShowSignatureDetails;
 };
 
 

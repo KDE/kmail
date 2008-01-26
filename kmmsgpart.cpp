@@ -300,7 +300,6 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   }
 }
 
-//-----------------------------------------------------------------------------
 void KMMessagePart::setMessageBody( const QByteArray& aBuf )
 {
   CharFreq cf( aBuf ); // it's safe to pass null arrays
@@ -430,7 +429,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::iconName() const
+QString KMMessagePart::iconName( int size ) const
 {
   QCString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
@@ -448,7 +447,7 @@ QString KMMessagePart::iconName() const
   }
 
   fileName =
-    KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
+    KGlobal::instance()->iconLoader()->iconPath( fileName, size );
   return fileName;
 }
 
@@ -556,7 +555,7 @@ QString KMMessagePart::fileName(void) const
 
   // Allow for multiple filname*0, filename*1, ... params (defined by RFC 2231)
   // in the Content-Disposision
-  if ( mContentDisposition.contains( "filename*", FALSE ) ) {
+  if ( mContentDisposition.contains( "filename*", false ) ) {
 
     // It's RFC 2231 encoded, so extract the file name with the 2231 method
     str = KMMsgBase::extractRFC2231HeaderField( mContentDisposition, "filename" );
@@ -566,7 +565,7 @@ QString KMMessagePart::fileName(void) const
 
     // Standard RFC 2047-encoded
     // search the start of the filename
-    int startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
+    int startOfFilename = mContentDisposition.find("filename=", 0, false);
     if (startOfFilename < 0)
       return QString::null;
     startOfFilename += 9;

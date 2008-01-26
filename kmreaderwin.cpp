@@ -65,6 +65,7 @@ using KMail::TeeHtmlWriter;
 #endif
 
 #include <kasciistringtools.h>
+#include <kstringhandler.h>
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -107,6 +108,7 @@ using KMail::TeeHtmlWriter;
 #include <kiconloader.h>
 #include <kmdcodec.h>
 #include <kasciistricmp.h>
+#include <kurldrag.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -489,6 +491,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
+    mUpdateReaderWinTimer( 0, "mUpdateReaderWinTimer" ),
+    mResizeTimer( 0, "mResizeTimer" ),
+    mDelayedMarkTimer( 0, "mDelayedMarkTimer" ),
     mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
@@ -510,9 +515,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
-    updateReaderWinTimer( 0, "updateReaderWinTimer" ),
-    mResizeTimer( 0, "mResizeTimer" ),
-    mDelayedMarkTimer( 0, "mDelayedMarkTimer" )
+    mDecrytMessageOverwrite( false ),
+    mShowSignatureDetails( false )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -537,7 +541,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 
   mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 
-  connect( &updateReaderWinTimer, SIGNAL(timeout()),
+  connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
@@ -559,6 +563,13 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
   connect( headerMenu, SIGNAL(activated()),
            this, SLOT(slotCycleHeaderStyles()) );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Enterprise Headers"), 0,
+                              this, SLOT(slotEnterpriseHeaders()),
+                              ac, "view_headers_enterprise" );
+  raction->setToolTip( i18n("Show the list of headers in Enterprise style") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert(raction);
 
   raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0,
                               this, SLOT(slotFancyHeaders()),
@@ -681,6 +692,8 @@ KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, cons
   if ( !mActionCollection )
     return 0;
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() )
+    actionName = "view_headers_enterprise";
   if ( style == HeaderStyle::fancy() )
     actionName = "view_headers_fancy";
   else if ( style == HeaderStyle::brief() )
@@ -716,6 +729,11 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
     return static_cast<KRadioAction*>(mActionCollection->action(actionName));
   else
     return 0;
+}
+
+void KMReaderWin::slotEnterpriseHeaders() {
+  setHeaderStyleAndStrategy( HeaderStyle::enterprise(),
+                             HeaderStrategy::rich() );
 }
 
 void KMReaderWin::slotFancyHeaders() {
@@ -758,6 +776,10 @@ void KMReaderWin::slotCycleHeaderStyles() {
   const HeaderStyle * style = headerStyle();
 
   const char * actionName = 0;
+  if ( style == HeaderStyle::enterprise() ) {
+    slotFancyHeaders();
+    actionName = "view_headers_fancy";
+  }
   if ( style == HeaderStyle::fancy() ) {
     slotBriefHeaders();
     actionName = "view_headers_brief";
@@ -772,8 +794,8 @@ void KMReaderWin::slotCycleHeaderStyles() {
       slotAllHeaders();
       actionName = "view_headers_all";
     } else if ( strategy == HeaderStrategy::all() ) {
-      slotFancyHeaders();
-      actionName = "view_headers_fancy";
+      slotEnterpriseHeaders();
+      actionName = "view_headers_enterprise";
     }
   }
 
@@ -1118,6 +1140,13 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
   update( true );
 }
 
+
+void KMReaderWin::setPrintFont( const QFont& font )
+{
+
+  mCSSHelper->setPrintFont( font );
+}
+
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
@@ -1222,18 +1251,18 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     // Avoid flicker, somewhat of a cludge
     if (force) {
       // stop the timer to avoid calling updateReaderWin twice
-      updateReaderWinTimer.stop();
+      mUpdateReaderWinTimer.stop();
       updateReaderWin();
     }
-    else if (updateReaderWinTimer.isActive())
-      updateReaderWinTimer.changeInterval( delay );
+    else if (mUpdateReaderWinTimer.isActive())
+      mUpdateReaderWinTimer.changeInterval( delay );
     else
-      updateReaderWinTimer.start( 0, TRUE );
+      mUpdateReaderWinTimer.start( 0, true );
   }
 
   if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
     if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, true );
     else
       slotTouchMessage();
   }
@@ -1242,7 +1271,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
-  updateReaderWinTimer.stop();
+  mUpdateReaderWinTimer.stop();
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;
@@ -1488,6 +1517,8 @@ void KMReaderWin::displayMessage() {
 
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
+
+  QTimer::singleShot( 1, this, SLOT(injectAttachments()) );
 }
 
 
@@ -1549,7 +1580,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
+  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard, true ) );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -1658,7 +1689,7 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
+QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard, bool topLevel)
 {
   kdFatal( !headerStyle(), 5006 )
     << "trying to writeMsgHeader() without a header style set!" << endl;
@@ -1668,7 +1699,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
   if (hasVCard)
     href = QString("file:") + KURL::encode_string( mTempFiles.last() );
 
-  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
+  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting, topLevel );
 }
 
 
@@ -1751,13 +1782,18 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
   if (aUrl.isEmpty()) return -1;
 
+  bool ok;
+  if ( aUrl.url().startsWith( "#att" ) ) {
+    int res = aUrl.url().mid( 4 ).toInt( &ok );
+    if ( ok ) return res;
+  }
+
   if (!aUrl.isLocalFile()) return -1;
 
   QString path = aUrl.path();
   uint right = path.findRev('/');
   uint left = path.findRev('.', right);
 
-  bool ok;
   int res = path.mid(left + 1, right - left - 1).toInt(&ok);
   return (ok) ? res : -1;
 }
@@ -1805,11 +1841,10 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if (folder) {
-    if (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-        folder->isDrafts() || folder->isTemplates())
-      return;
-  }
+  if (folder &&
+     (folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+      folder->isDrafts() || folder->isTemplates() ) )
+    return;
 
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
 						   MDN::Displayed,
@@ -1873,12 +1908,19 @@ bool foundSMIMEData( const QString aUrl,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
+  const KURL url(aUrl);
+  if ( url.protocol() == "kmail" || url.protocol() == "x-kmail"
+       || (url.protocol().isEmpty() && url.path().isEmpty()) ) {
+    mViewer->setDNDEnabled( false );
+  } else {
+    mViewer->setDNDEnabled( true );
+  }
+
   if ( aUrl.stripWhiteSpace().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     return;
   }
 
-  const KURL url(aUrl);
   mUrlClicked = url;
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
@@ -1925,6 +1967,11 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+  menu->insertItem(SmallIcon("editcopy"), i18n("Copy"), 9 );
+  if ( GlobalSettings::self()->allowAttachmentEditing() )
+    menu->insertItem(SmallIcon("edit"), i18n("Edit Attachment"), 8 );
+  if ( GlobalSettings::self()->allowAttachmentDeletion() )
+    menu->insertItem(SmallIcon("editdelete"), i18n("Delete Attachment"), 7 );
   if ( name.endsWith( ".xia", false ) &&
        Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
     menu->insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
@@ -1963,12 +2010,28 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if ( mAtmCurrentName.isEmpty() && node )
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
+  if ( choice < 7 ) {
   KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
       node, message(), mAtmCurrent, mAtmCurrentName,
       KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
   connect( command, SIGNAL( showAttachment( int, const QString& ) ),
       this, SLOT( slotAtmView( int, const QString& ) ) );
   command->start();
+  } else if ( choice == 7 ) {
+    slotDeleteAttachment( node );
+  } else if ( choice == 8 ) {
+    slotEditAttachment( node );
+  } else if ( choice == 9 ) {
+    if ( !node ) return;
+    KURL::List urls;
+    KURL url = tempFileUrlFromPartNode( node );
+    if (!url.isValid() ) return;
+    urls.append( url );
+    KURLDrag* drag = new KURLDrag( urls, this );
+    QApplication::clipboard()->setData( drag, QClipboard::Clipboard );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2136,6 +2199,8 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
   if( node ) {
     mAtmCurrent = id;
     mAtmCurrentName = name;
+    if ( mAtmCurrentName.isEmpty() )
+      mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
     KMMessagePart& msgPart = node->msgPart();
     QString pname = msgPart.fileName();
@@ -2169,6 +2234,8 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     kdWarning(5006) << "KMReaderWin::openAttachment - could not find node " << id << endl;
     return;
   }
+  if ( mAtmCurrentName.isEmpty() )
+    mAtmCurrentName = tempFileUrlFromPartNode( node ).path();
 
   KMMessagePart& msgPart = node->msgPart();
   if (kasciistricmp(msgPart.typeStr(), "message")==0)
@@ -2479,6 +2546,27 @@ partNode * KMReaderWin::partNodeForId( int id ) {
   return mRootNode ? mRootNode->findId( id ) : 0 ;
 }
 
+
+KURL KMReaderWin::tempFileUrlFromPartNode( const partNode * node )
+{
+  if (!node) return KURL();
+  QStringList::const_iterator it = mTempFiles.begin();
+  QStringList::const_iterator end = mTempFiles.end();
+
+  while ( it != end ) {
+      QString path = *it;
+      it++;
+      uint right = path.findRev('/');
+      uint left = path.findRev('.', right);
+
+      bool ok;
+      int res = path.mid(left + 1, right - left - 1).toInt(&ok);
+      if ( res == node->nodeId() )
+          return KURL( path );
+  }
+  return KURL();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveAttachments()
 {
@@ -2506,25 +2594,6 @@ void KMReaderWin::slotIMChat()
 }
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::createAtmFileLink() const
-{
-  QFileInfo atmFileInfo(mAtmCurrentName);
-
-  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
-                          "]."+ atmFileInfo.extension() );
-
-  linkFile->setAutoDelete(true);
-  QString linkName = linkFile->name();
-  delete linkFile;
-
-  if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {
-    return linkName; // success
-  }
-  kdWarning(5006) << "Couldn't link to " << mAtmCurrentName << endl;
-  return QString::null;
-}
-
-//-----------------------------------------------------------------------------
 bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress ) {
@@ -2540,6 +2609,121 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   }
   // standard event processing
   return false;
+}
+
+void KMReaderWin::slotDeleteAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+       i18n("Deleting an attachment might invalidate any digital signature on this message."),
+       i18n("Delete Attachment"), KStdGuiItem::del(), "DeleteAttachmentSignatureWarning" )
+     != KMessageBox::Continue ) {
+    return;
+  }
+  KMDeleteAttachmentCommand* command = new KMDeleteAttachmentCommand( node, message(), this );
+  command->start();
+}
+
+void KMReaderWin::slotEditAttachment(partNode * node)
+{
+  if ( KMessageBox::warningContinueCancel( this,
+        i18n("Modifying an attachment might invalidate any digital signature on this message."),
+        i18n("Edit Attachment"), KGuiItem( i18n("Edit"), "edit" ), "EditAttachmentSignatureWarning" )
+        != KMessageBox::Continue ) {
+    return;
+  }
+  KMEditAttachmentCommand* command = new KMEditAttachmentCommand( node, message(), this );
+  command->start();
+}
+
+KMail::CSSHelper* KMReaderWin::cssHelper()
+{
+  return mCSSHelper;
+}
+
+bool KMReaderWin::decryptMessage() const
+{
+  if ( !GlobalSettings::self()->alwaysDecrypt() )
+    return mDecrytMessageOverwrite;
+  return true;
+}
+
+void KMReaderWin::injectAttachments()
+{
+  // inject attachments in header view
+  // we have to do that after the otp has run so we also see encrypted parts
+  DOM::Document doc = mViewer->htmlDocument();
+  DOM::Element injectionPoint = doc.getElementById( "attachmentInjectionPoint" );
+  if ( injectionPoint.isNull() )
+    return;
+
+  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  if ( html.isEmpty() )
+    return;
+  if ( headerStyle() == HeaderStyle::fancy() )
+    html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
+  assert( injectionPoint.tagName() == "div" );
+  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+}
+
+static QColor nextColor( const QColor & c )
+{
+  int h, s, v;
+  c.hsv( &h, &s, &v );
+  return QColor( (h + 50) % 360, QMAX(s, 64), v, QColor::Hsv );
+}
+
+QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
+{
+  if ( !node )
+    return QString();
+
+  QString html;
+  if ( node->firstChild() ) {
+    QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
+    if ( !subHtml.isEmpty() ) {
+      QString margin;
+      if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
+        margin = "padding:2px; margin:2px; ";
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += QString::fromLatin1("<div style=\"background:%1; %2"
+            "vertical-align:middle; float:left;\">").arg( bgColor.name() ).arg( margin );
+      html += subHtml;
+      if ( node->msgPart().typeStr() == "message" || node == mRootNode )
+        html += "</div>";
+    }
+  } else {
+    QString label, icon;
+    icon = node->msgPart().iconName( KIcon::Small );
+    label = node->msgPart().contentDescription();
+    if( label.isEmpty() )
+      label = node->msgPart().name().stripWhiteSpace();
+    if( label.isEmpty() )
+      label = node->msgPart().fileName();
+    bool typeBlacklisted = node->msgPart().typeStr() == "multipart";
+    if ( !typeBlacklisted && node->msgPart().typeStr() == "application" ) {
+      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
+          || node->msgPart().subtypeStr() == "pgp-signature"
+          || node->msgPart().subtypeStr() == "pkcs7-mime"
+          || node->msgPart().subtypeStr() == "pkcs7-signature";
+    }
+    typeBlacklisted = typeBlacklisted || node == mRootNode;
+    if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
+      html += "<div style=\"float:left;\">";
+      html += "<span style=\"white-space:nowrap;\">";
+      html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
+      html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
+      if ( headerStyle() == HeaderStyle::enterprise() ) {
+        QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
+        QFontMetrics fm( bodyFont );
+        html += KStringHandler::rPixelSqueeze( label, fm, 140 );
+      } else
+        html += label;
+      html += "</a></span></div> ";
+    }
+  }
+
+  html += renderAttachments( node->nextSibling(), bgColor );
+  return html;
 }
 
 #include "kmreaderwin.moc"

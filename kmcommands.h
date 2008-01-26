@@ -3,20 +3,25 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 
+#include <qdatetime.h>
 #include <qguardedptr.h>
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qvaluevector.h>
+#include <qtimer.h>
+#include <qfont.h>
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
 #include <kdepimmacros.h>
 #include <kservice.h>
+#include <ktempfile.h>
 
 class QPopupMenu;
 class KMainWindow;
 class KAction;
 class KProgressDialog;
+class KProcess;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;
@@ -31,6 +36,7 @@ namespace KIO { class Job; }
 namespace KMail {
   class Composer;
   class FolderJob;
+  class EditorWatcher;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
@@ -598,12 +604,15 @@ public:
                   bool useFixedFont = false,
                   const QString & encoding = QString() );
 
+  void setOverrideFont( const QFont& );
+
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
+  QFont mOverrideFont;
   QString mEncoding;
 };
 
@@ -1011,11 +1020,78 @@ private:
   partNode* mNode;
   KMMessage* mMsg;
   int mAtmId;
-  const QString& mAtmName;
+  QString mAtmName;
   AttachmentAction mAction;
   KService::Ptr mOffer;
   Kleo::SpecialJob *mJob;
 
+};
+
+
+/** Base class for commands modifying attachements of existing messages. */
+class KDE_EXPORT AttachmentModifyCommand : public KMCommand
+{
+  Q_OBJECT
+  public:
+    AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~AttachmentModifyCommand();
+
+  protected:
+    void storeChangedMessage( KMMessage* msg );
+    virtual Result doAttachmentModify() = 0;
+
+  protected:
+    int mPartIndex;
+    Q_UINT32 mSernum;
+
+  private:
+    Result execute();
+
+  private slots:
+    void messageStoreResult( KMFolderImap* folder, bool success );
+    void messageDeleteResult( KMCommand *cmd );
+
+  private:
+    QGuardedPtr<KMFolder> mFolder;
+};
+
+class KDE_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
+{
+  Q_OBJECT
+  public:
+    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~KMDeleteAttachmentCommand();
+
+  protected:
+    Result doAttachmentModify();
+};
+
+
+class KDE_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
+{
+  Q_OBJECT
+  public:
+    KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
+    ~KMEditAttachmentCommand();
+
+  protected:
+    Result doAttachmentModify();
+
+  private slots:
+    void editDone( KMail::EditorWatcher *watcher );
+
+  private:
+    KTempFile mTempFile;
+};
+
+class KDE_EXPORT CreateTodoCommand : public KMCommand
+{
+  Q_OBJECT
+  public:
+    CreateTodoCommand( QWidget *parent, KMMessage *msg );
+
+  private:
+    Result execute();
 };
 
 #endif /*KMCommands_h*/

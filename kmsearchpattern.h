@@ -270,6 +270,8 @@ class KMSearchRuleStatus : public KMSearchRule
 public:
    KMSearchRuleStatus( const QCString & field=0, Function function=FuncContains,
 		       const QString & contents=QString::null );
+   KMSearchRuleStatus( int status, Function function=FuncContains );
+
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;
   //Not possible to implement this form for status searching

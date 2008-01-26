@@ -99,7 +99,7 @@ KMSearchRule * KMSearchRule::createInstance( const QCString & field,
                                              Function func,
                                              const QString & contents )
 {
-  KMSearchRule *ret;
+  KMSearchRule *ret = 0;
   if (field == "<status>")
     ret = new KMSearchRuleStatus( field, func, contents );
   else if ( field == "<age in days>" || field == "<size>" )
@@ -610,7 +610,15 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 // class KMSearchRuleStatus
 //
 //==================================================
-
+QString englishNameForStatus( const KMMsgStatus& status )
+{
+  for ( int i=0; i< numStatusNames; i++ ) {
+    if ( statusNames[i].status == status ) {
+      return statusNames[i].name;
+    }
+  }
+  return QString::null;
+}
 
 KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
                                         Function func, const QString & aContents )
@@ -621,8 +629,13 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
   mStatus = statusFromEnglishName( aContents );
 }
 
-KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
-      const QString & aStatusString )
+KMSearchRuleStatus::KMSearchRuleStatus( int status, Function func )
+: KMSearchRule( "<status>", func, englishNameForStatus( status ) )
+{
+    mStatus = status;
+}
+
+KMMsgStatus KMSearchRuleStatus::statusFromEnglishName( const QString & aStatusString )
 {
   for ( int i=0; i< numStatusNames; i++ ) {
     if ( !aStatusString.compare( statusNames[i].name ) ) {
@@ -760,9 +773,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
     return false;
   }
 
-  bool opened = folder->isOpened();
-  if ( !opened )
-    folder->open("searchptr");
+  KMFolderOpener openFolder(folder, "searchptr");
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
@@ -776,8 +787,6 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
   } else {
     res = matches( folder->getDwString(idx), ignoreBody );
   }
-  if ( !opened )
-    folder->close("searchptr");
   return res;
 }
 
@@ -910,8 +919,11 @@ const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & othe
   setName( other.name() );
 
   clear(); // ###
-  for ( QPtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
-    append( KMSearchRule::createInstance( **it ) ); // deep copy
+
+  for ( QPtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it ) {
+    KMSearchRule * rule = KMSearchRule::createInstance( **it ); // deep copy
+    append( rule );
+  }
 
   return *this;
 }

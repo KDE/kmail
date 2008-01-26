@@ -101,16 +101,16 @@ namespace KMail {
     virtual void readConfig( KConfig& config );
     virtual void writeConfig( KConfig& config );
 
-    /** 
+    /**
      * The state of the kioslave connection
      */
     enum ConnectionState { Error = 0, Connected, Connecting };
 
     // possible list types
-    enum ListType { 
-      List, 
-      ListSubscribed, 
-      ListSubscribedNoCheck, 
+    enum ListType {
+      List,
+      ListSubscribed,
+      ListSubscribedNoCheck,
       ListFolderOnly,
       ListFolderOnlySubscribed
     };
@@ -141,17 +141,14 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), progressItem(0),
+      jobData() : url(QString::null), parent(0), current(0), total(1), done(0), offset(0), progressItem(0),
                   onlySubscribed(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false,
           bool _cancelable = false )
-        : url(_url), parent(_parent), total(_total), done(_done), offset(0),
+        : url(_url), parent(_parent), current(0), total(_total), done(_done), offset(0),
           progressItem(0), quiet(_quiet), cancellable(_cancelable) {}
-
-      // Return "url" in a form that can be displayed in HTML (w/o password)
-      QString htmlURL() const;
 
       QString path;
       QString url;
@@ -159,7 +156,7 @@ namespace KMail {
       QByteArray data;
       QCString cdata;
       QStringList items;
-      KMFolder *parent;
+      KMFolder *parent, *current;
       QPtrList<KMMessage> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
@@ -339,21 +336,21 @@ namespace KMail {
      */
     virtual unsigned int folderCount() const;
 
-    /** 
-     * @return defined namespaces 
+    /**
+     * @return defined namespaces
      */
     nsMap namespaces() const { return mNamespaces; }
 
     /**
      * Set defined namespaces
-     */ 
-    virtual void setNamespaces( nsMap map ) 
+     */
+    virtual void setNamespaces( nsMap map )
     { mNamespaces = map; }
 
     /**
      * Full blown section - namespace - delimiter map
      * Do not call this very often as the map is constructed on the fly
-     */ 
+     */
     nsDelimMap namespacesWithDelimiter();
 
     /**
@@ -386,11 +383,11 @@ namespace KMail {
       * Set the namespace - delimiter map
       */
      void setNamespaceToDelimiter( namespaceDelim map )
-     { mNamespaceToDelimiter = map; } 
+     { mNamespaceToDelimiter = map; }
 
      /**
       * Returns true if the given string is a namespace
-      */ 
+      */
      bool isNamespaceFolder( QString& name );
 
      /**
@@ -402,7 +399,7 @@ namespace KMail {
      /**
       * Create an IMAP path for a parent folder and a foldername
       * Parent and folder are separated with the delimiter of the account
-      * The path starts and ends with '/' 
+      * The path starts and ends with '/'
       */
      QString createImapPath( FolderStorage* parent, const QString& folderName );
 
@@ -416,7 +413,7 @@ namespace KMail {
     /**
      * Call this to get the namespaces
      * You are notified by the signal namespacesFetched
-     */ 
+     */
     void getNamespaces();
 
   private slots:
@@ -472,11 +469,11 @@ namespace KMail {
 
     /**
      * Saves the fetched namespaces
-     */ 
+     */
     void slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map );
 
-    /** 
-     * Saves the capabilities list 
+    /**
+     * Saves the capabilities list
      */
     void slotCapabilitiesResult( KIO::Job*, const QString& result );
 
@@ -518,6 +515,7 @@ namespace KMail {
     // used for writing the blacklist out to the config file
     QStringList locallyBlacklistedFolders() const;
     void localBlacklistFromStringList( const QStringList & );
+    QString prettifyQuotaError( const QString& _error, KIO::Job * job );
 
   protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;

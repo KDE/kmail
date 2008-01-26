@@ -213,7 +213,7 @@ namespace KMail {
     // read namespace - delimiter
     namespaceDelim entries = config.entryMap( config.group() );
     namespaceDelim namespaceToDelimiter;
-    for ( namespaceDelim::ConstIterator it = entries.begin(); 
+    for ( namespaceDelim::ConstIterator it = entries.begin();
           it != entries.end(); ++it ) {
       if ( it.key().startsWith( "Namespace:" ) ) {
         QString key = it.key().right( it.key().length() - 10 );
@@ -245,7 +245,7 @@ namespace KMail {
       }
     }
     QString key;
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it ) {
       key = "Namespace:" + it.key();
       config.writeEntry( key, it.data() );
@@ -269,7 +269,7 @@ namespace KMail {
     return m;
   }
 
-  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() 
+  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection()
   {
     if ( mSlave && mSlaveConnected ) {
       return Connected;
@@ -291,7 +291,7 @@ namespace KMail {
       QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
-      
+
       PasswordDialog dlg( msg, log, true /* store pw */, true, KMKernel::self()->mainWin() );
       dlg.setPlainCaption( i18n("Authorization Dialog") );
       dlg.addCommentLine( i18n("Account:"), name() );
@@ -372,9 +372,9 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if ( makeConnection() != Connected ) 
+    if ( makeConnection() != Connected )
       return;// ## doesn't handle Connecting
-    KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+    KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd( url.url(), NULL );
     // a bit of a hack to save one slot
@@ -626,13 +626,13 @@ namespace KMail {
       }
       return;
     }
-    
+
     QByteArray packedArgs;
     QDataStream stream( packedArgs, IO_WriteOnly);
     stream << (int) 'n';
     jobData jd;
     jd.total = 1; jd.done = 0; jd.cancellable = true;
-    jd.progressItem = ProgressManager::createProgressItem( 
+    jd.progressItem = ProgressManager::createProgressItem(
         ProgressManager::getUniqueID(),
         i18n("Retrieving Namespaces"),
         QString::null, true, useSSL() || useTLS() );
@@ -675,7 +675,7 @@ namespace KMail {
     kdDebug(5006) << "namespaces fetched" << endl;
     emit namespacesFetched( map );
   }
-    
+
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map )
   {
@@ -762,7 +762,7 @@ namespace KMail {
         }
         KMessageBox::information( kmkernel->getKMMainWidget(), msg );
       }
-    } else 
+    } else
     {
       kdDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
@@ -797,7 +797,7 @@ namespace KMail {
       }
     }
     return QString::null;
-  }  
+  }
 
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
@@ -810,12 +810,12 @@ namespace KMail {
 
     // then try if the prefix is part of a namespace
     // exclude empty namespace
-    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin();
           it != mNamespaceToDelimiter.end(); ++it ) {
       // the namespace definition sometimes contains the delimiter
       // make sure we also match this version
       QString stripped = it.key().left( it.key().length() - 1 );
-      if ( !it.key().isEmpty() && 
+      if ( !it.key().isEmpty() &&
           ( prefix.contains( it.key() ) || prefix.contains( stripped ) ) ) {
         return it.data();
       }
@@ -875,12 +875,37 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
+      + i18n("Could not upload the message dated %1 from <i>%2</i> with subject <i>%3</i> to the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
       + "</p><p>"
-      + i18n("The destination folder was %1, which has the URL %2.").arg( QStyleSheet::escape( folder->label() ), QStyleSheet::escape( jd.htmlURL() ) )
+      + i18n("The destination folder was: <b>%1</b>.").arg( QStyleSheet::escape( folder->prettyURL() ) )
       + "</p><p>"
-      + i18n("The error message from the server communication is here:") + "</p>";
+      + i18n("The server reported:") + "</p>";
     return handleJobError( job, myError );
+  }
+
+  QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * job )
+  {
+      QString error = _error;
+      if ( error.find( "quota", 0, false ) == -1 ) return error;
+      // this is a quota error, prettify it a bit
+      JobIterator it = findJob( job );
+      QString quotaAsString( i18n("No detailed quota information available.") );
+      bool readOnly = false;
+      if (it != mapJobData.end()) {
+          const KMFolder * const folder = (*it).parent;
+          assert(folder);
+          const KMFolderCachedImap * const imap = dynamic_cast<const KMFolderCachedImap*>( folder->storage() );
+          if ( imap ) {
+              quotaAsString = imap->quotaInfo().toString();
+          }
+          readOnly = folder->isReadOnly();
+      }
+      error = i18n("The folder is too close to its quota limit. (%1)").arg( quotaAsString );
+      if ( readOnly ) {
+          error += i18n("\nSince you do not have write privileges on this folder, "
+                  "please ask the owner of the folder to free up some space in it.");
+      }
+      return error;
   }
 
   //-----------------------------------------------------------------------------
@@ -918,9 +943,9 @@ namespace KMail {
     // check if we still display an error
     if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED ) {
       mErrorDialogIsActive = true;
-      QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
+      QString msg = context + '\n' + prettifyQuotaError( KIO::buildErrorString( errorCode, errorMsg ), job );
       QString caption = i18n("Error");
-      
+
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
           msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.").
@@ -939,10 +964,10 @@ namespace KMail {
           else
               KMessageBox::error( kapp->activeWindow(), msg, caption );
           }
-      }
-      else { // i.e. we have a chance to continue, ask the user about it
+      } else { // i.e. we have a chance to continue, ask the user about it
         if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
-          msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+          QString error = prettifyQuotaError( errors[1], job );
+          msg = QString( "<qt>") + context + error + '\n' + errors[2];
           caption = errors[0];
         }
         int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
@@ -989,17 +1014,11 @@ namespace KMail {
     }
   }
 
-
-  //-----------------------------------------------------------------------------
-  QString ImapAccountBase::jobData::htmlURL() const
-  {
-    KURL u(  url );
-    return u.htmlURL();
-  }
-
   //-----------------------------------------------------------------------------
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
   {
+    if ( mFoldersQueuedForChecking.contains( folder ) )
+      return;
     mFoldersQueuedForChecking.append(folder);
     mCheckingSingleFolder = true;
     if ( checkingMail() )
@@ -1179,10 +1198,10 @@ namespace KMail {
 
      stream << (int) 'S' << url << flags;
 
-     if ( makeConnection() != Connected ) 
+     if ( makeConnection() != Connected )
        return; // can't happen with dimap
 
-     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+     KIO::SimpleJob *job = KIO::special(url, packedArgs, false);
      KIO::Scheduler::assignJobToSlave(slave(), job);
      ImapAccountBase::jobData jd( url.url(), folder );
      jd.path = path;
@@ -1343,10 +1362,10 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( const QString& parent, 
+  QString ImapAccountBase::createImapPath( const QString& parent,
                                            const QString& folderName )
   {
-    kdDebug(5006) << "createImapPath parent="<<parent<<", folderName="<<folderName<<endl;  
+    kdDebug(5006) << "createImapPath parent="<<parent<<", folderName="<<folderName<<endl;
     QString newName = parent;
     // strip / at the end
     if ( newName.endsWith("/") ) {
@@ -1358,7 +1377,7 @@ namespace KMail {
     if ( delim.isEmpty() ) {
       delim = "/";
     }
-    if ( !newName.isEmpty() && 
+    if ( !newName.isEmpty() &&
          !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
       newName = newName + delim;
     }
@@ -1372,7 +1391,7 @@ namespace KMail {
   }
 
   //------------------------------------------------------------------------------
-  QString ImapAccountBase::createImapPath( FolderStorage* parent, 
+  QString ImapAccountBase::createImapPath( FolderStorage* parent,
                                            const QString& folderName )
   {
     QString path;
@@ -1384,7 +1403,7 @@ namespace KMail {
       // error
       return path;
     }
-    
+
     return createImapPath( path, folderName );
   }
 

@@ -53,7 +53,6 @@ using KMail::RenameJob;
 #include <kdebug.h>
 #include <kio/scheduler.h>
 #include <kconfig.h>
-#include <kmessagebox.h>
 
 #include <qbuffer.h>
 #include <qtextcodec.h>
@@ -68,11 +67,11 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mContentState = imapNoInformation;
   mSubfolderState = imapNoInformation;
   mAccount = 0;
-  mIsSelected = FALSE;
+  mIsSelected = false;
   mLastUid = 0;
-  mCheckFlags = TRUE;
-  mCheckMail = TRUE;
-  mCheckingValidity = FALSE;
+  mCheckFlags = true;
+  mCheckMail = true;
+  mCheckingValidity = false;
   mUserRights = 0;
   mAlreadyRemoved = false;
   mHasChildren = ChildrenUnknown;
@@ -107,11 +106,11 @@ KMFolderImap::~KMFolderImap()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::reallyDoClose(const char *owner)
+void KMFolderImap::reallyDoClose(const char* owner)
 {
-  if ( isSelected() ) {
+  if (isSelected()) {
       kdWarning(5006) << "Trying to close the selected folder " << label() <<
-        " - ignoring! " << kdBacktrace() << endl;
+          " - ignoring!" << endl;
       return;
   }
 
@@ -126,10 +125,7 @@ void KMFolderImap::reallyDoClose(const char *owner)
           msg->setTransferInProgress( false );
     }
   }
-
-  mCheckingValidity = false;
-
-  KMFolderMbox::reallyDoClose(owner);
+  KMFolderMbox::reallyDoClose( owner );
 }
 
 KMFolder* KMFolderImap::trashFolder() const
@@ -207,9 +203,10 @@ void KMFolderImap::readConfig()
     folder()->setSystemFolder( true );
     folder()->setLabel( i18n("inbox") );
   }
-  mNoContent = config->readBoolEntry("NoContent", FALSE);
-  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
+  mNoContent = config->readBoolEntry("NoContent", false);
+  mReadOnly = config->readBoolEntry("ReadOnly", false);
   mUploadAllFlags = config->readBoolEntry( "UploadAllFlags", true );
+  mPermanentFlags = config->readNumEntry( "PermanentFlags", 31 /* default flags */ );
 
   KMFolderMbox::readConfig();
 }
@@ -225,6 +222,7 @@ void KMFolderImap::writeConfig()
   config->writeEntry("NoContent", mNoContent);
   config->writeEntry("ReadOnly", mReadOnly);
   config->writeEntry( "UploadAllFlags", mUploadAllFlags );
+  config->writeEntry( "PermanentFlags", mPermanentFlags );
   KMFolderMbox::writeConfig();
 }
 
@@ -245,7 +243,7 @@ void KMFolderImap::remove()
     emit removed(folder(), false);
     return;
   }
-  KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+  KIO::SimpleJob *job = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd(url.url());
   jd.progressItem = ProgressManager::createProgressItem(
@@ -723,6 +721,7 @@ void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
         KMFolderImap* f = static_cast<KMFolderImap*> ( fld->storage() );
         f->initializeFrom( this, account()->addPathToNamespace( name ),
             "inode/directory" );
+        f->close( "kmfolderimap_create" );
         if ( !account()->listOnlyOpenFolders() )
         {
           f->slotListResult( subfolderNames, subfolderPaths,
@@ -839,6 +838,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
       KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
       if ( fld ) {
         f = static_cast<KMFolderImap*> ( fld->storage() );
+        f->close( "kmfolderimap_create" );
         settingsChanged = true;
       } else {
         kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
@@ -903,6 +903,7 @@ void KMFolderImap::initInbox()
     if ( f )
     {
       f->folder()->setLabel( i18n("inbox") );
+      f->close( "kmfolderimap" );
     }
     kmkernel->imapFolderMgr()->contentsChanged();
   }
@@ -946,9 +947,6 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames,
     const QString& myNamespace )
 {
   QPtrList<KMFolder> toRemove;
-  if (!folder()->child())
-    return;
-
   KMFolderNode *node = folder()->child()->first();
   while ( node )
   {
@@ -1025,6 +1023,7 @@ void KMFolderImap::checkValidity()
 {
   if (!account()) {
     emit folderComplete(this, false);
+    close("checkvalidity");
     return;
   }
   KURL url = account()->getUrl();
@@ -1038,8 +1037,9 @@ void KMFolderImap::checkValidity()
   KMAcctImap::ConnectionState connectionState = account()->makeConnection();
   if ( connectionState == ImapAccountBase::Error ) {
     kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
-    emit folderComplete(this, FALSE);
+    emit folderComplete(this, false);
     mContentState = imapNoInformation;
+    close("checkvalidity");
     return;
   } else if ( connectionState == ImapAccountBase::Connecting ) {
     // We'll wait for the connectionResult signal from the account. If it
@@ -1052,6 +1052,7 @@ void KMFolderImap::checkValidity()
   // Only check once at a time.
   if (mCheckingValidity) {
     kdDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
+    close("checkvalidity");
     return;
   }
   // otherwise we already are inside a mailcheck
@@ -1071,9 +1072,8 @@ void KMFolderImap::checkValidity()
   if ( account()->mailCheckProgressItem() ) {
     account()->mailCheckProgressItem()->setStatus( folder()->prettyURL() );
   }
-  open( "checkvalidity" );
   ImapAccountBase::jobData jd( url.url() );
-  KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
+  KIO::SimpleJob *job = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   account()->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -1104,28 +1104,19 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
-  // if we closed the folder in between, we don't want this results
-  if (!mCheckingValidity)
-    return;
-
   kdDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = account()->findJob(job);
-  if ( it == account()->jobsEnd() )
-  {
-    // the job has been killed internally, so we're not interested in its results
-    job = 0;
-  }
-  if (!job || job->error()) {
-    if ( job && job->error() != KIO::ERR_ACCESS_DENIED ) {
+  if ( it == account()->jobsEnd() ) return;
+  if (job->error()) {
+    if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
       // we suppress access denied messages because they are normally a result of
       // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that
       // we notice when this changes
       account()->handleJobError( job, i18n("Error while querying the server status.") );
     }
-    kdDebug() << "error in slotCheckValidityResult\n";
     mContentState = imapNoInformation;
-    emit folderComplete(this, FALSE);
+    emit folderComplete(this, false);
     close("checkvalidity");
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
@@ -1147,6 +1138,11 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     if ( (b - a - 9) >= 0 )
         exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
     if ( !ok ) exists = -1;
+    a = cstr.find( "X-PermanentFlags: " );
+    b = cstr.find( "\r\n", a );
+    if ( a >= 0 && (b - a - 18) >= 0 )
+      mPermanentFlags = cstr.mid( a + 18, b - a - 18 ).toInt(&ok);
+    if ( !ok ) mPermanentFlags = 0;
     QString startUid;
     if (uidValidity() != uidv)
     {
@@ -1180,7 +1176,6 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
       mMailCheckProgressItem->setCompletedItems( 0 );
     }
     reallyGetFolder(startUid);
-    close("checkvalidity");
   }
 }
 
@@ -1194,7 +1189,7 @@ void KMFolderImap::getAndCheckFolder(bool force)
     account()->processNewMailSingleFolder( folder() );
   if (force) {
     // force an update
-    mCheckFlags = TRUE;
+    mCheckFlags = true;
   }
 }
 
@@ -1204,7 +1199,6 @@ void KMFolderImap::getFolder(bool force)
   mGuessedUnreadMsgs = -1;
   if (mNoContent)
   {
-    kdDebug() << "getFolder " << force << " " << mContentState << endl;
     mContentState = imapFinished;
     emit folderComplete(this, true);
     return;
@@ -1213,10 +1207,9 @@ void KMFolderImap::getFolder(bool force)
   mContentState = imapListingInProgress;
   if (force) {
     // force an update
-    mCheckFlags = TRUE;
+    mCheckFlags = true;
   }
   checkValidity();
-  close( "getfolder" );
 }
 
 
@@ -1227,7 +1220,8 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   if ( account()->makeConnection() != ImapAccountBase::Connected )
   {
     mContentState = imapNoInformation;
-    emit folderComplete(this, FALSE);
+    emit folderComplete(this, false);
+    close("listfolder");
     return;
   }
   quiet(true);
@@ -1236,8 +1230,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     if ( mMailCheckProgressItem )
       mMailCheckProgressItem->setStatus( i18n("Retrieving message status") );
     url.setPath(imapPath() + ";SECTION=UID FLAGS");
-    KIO::SimpleJob *job = KIO::listDir(url, FALSE);
-    open( "listfolder" );
+    KIO::SimpleJob *job = KIO::listDir(url, false);
     KIO::Scheduler::assignJobToSlave(account()->slave(), job);
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
@@ -1253,12 +1246,10 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
       mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
-    kdDebug() << folder()->name() << " download " << url << endl;
-    KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
+    KIO::SimpleJob *newJob = KIO::get(url, false, false);
     KIO::Scheduler::assignJobToSlave(account()->slave(), newJob);
     ImapAccountBase::jobData jd( url.url(), folder() );
     jd.cancellable = true;
-    open( "getMessage" );
     account()->insertJob(newJob, jd);
     connect(newJob, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotGetLastMessagesResult(KIO::Job *)));
@@ -1282,7 +1273,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     finishMailCheck( "listfolder", imapNoInformation );
     return;
   }
-  mCheckFlags = FALSE;
+  mCheckFlags = false;
   QStringList::Iterator uid;
   /*
     The code below does the following:
@@ -1306,14 +1297,17 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       serverUid = (*uid).left( c ).toLong();
       serverFlags = (*uid).mid( c+1 ).toInt();
       if ( mailUid < serverUid ) {
-        removeMsg( idx, TRUE );
+        removeMsg( idx, true );
       } else if ( mailUid == serverUid ) {
         // if this is a read only folder, ignore status updates from the server
         // since we can't write our status back our local version is what has to
         // be considered correct.
-        if (!mReadOnly)
-          flagsToStatus( msgBase, serverFlags, false );
-        else
+        if ( !mReadOnly || !GlobalSettings::allowLocalFlags() ) {
+          int supportedFlags = mUploadAllFlags ? 31 : mPermanentFlags;
+          if ( mReadOnly )
+            supportedFlags = INT_MAX;
+          flagsToStatus( msgBase, serverFlags, false, supportedFlags );
+        } else
           seenFlagToStatus( msgBase, serverFlags, false );
         idx++;
         uid = (*it).items.remove(uid);
@@ -1325,7 +1319,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     }
     // remove all remaining entries in the local cache, they are no longer
     // present on the server
-    while (idx < count()) removeMsg(idx, TRUE);
+    while (idx < count()) removeMsg(idx, true);
   }
   // strip the flags from the list of uids, so it can be reused
   for (uid = (*it).items.begin(); uid != (*it).items.end(); ++uid)
@@ -1353,19 +1347,13 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   else sets = makeSets( (*it).items );
   account()->removeJob(it); // don't use *it below
 
-  if ( !sets.isEmpty() )
-    open( "getMessage" );
-
-  close( "listfolder" );
-
   // Now kick off the getting of envelopes for the new mails in the folder
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
   {
     mContentState = imapDownloadInProgress;
     KURL url = account()->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
-    KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
-    kdDebug() << folder()->name() << " download " << url << endl;
+    KIO::SimpleJob *newJob = KIO::get(url, false, false);
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(account()->slave(), newJob);
     account()->insertJob(newJob, jd);
@@ -1430,24 +1418,35 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 //X }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
+void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg, int supportedFlags )
 {
   if ( !msg ) return;
 
-  const KMMsgStatus oldStatus = msg->status();
-  // Set flags if they are new
-  if ( (flags & 4) && (oldStatus & KMMsgStatusFlag) == 0 )
-    msg->setStatus( KMMsgStatusFlag );
-  if ( (flags & 2) && (oldStatus & KMMsgStatusReplied) == 0 )
-    msg->setStatus( KMMsgStatusReplied );
+  // see imap4/imapinfo.h for the magic numbers
+  static const struct {
+    const int imapFlag;
+    const int kmFlag;
+    const bool standardFlag;
+  } imapFlagMap[] = {
+    { 2, KMMsgStatusReplied, true },
+    { 4, KMMsgStatusFlag, true },
+    { 128, KMMsgStatusForwarded, false },
+    { 256, KMMsgStatusTodo, false },
+    { 512, KMMsgStatusWatched, false },
+    { 1024, KMMsgStatusIgnored, false }
+  };
+  static const int numFlags = sizeof imapFlagMap / sizeof *imapFlagMap;
 
-  // Toggle flags if they changed
-//  if ( ( (flags & 4) > 0 ) != ( (oldStatus & KMMsgStatusFlag) > 0 ) )
-//    msg->toggleStatus( KMMsgStatusFlag );
-//  if ( ( (flags & 2) > 0 ) != ( (oldStatus & KMMsgStatusReplied) > 0 ) )
-//    msg->toggleStatus( KMMsgStatusReplied );
-//  if ( ( (flags & 1) > 0 ) != ( (oldStatus & KMMsgStatusOld) > 0 ) )
-//    msg->toggleStatus( KMMsgStatusOld );
+  const KMMsgStatus oldStatus = msg->status();
+  for ( int i = 0; i < numFlags; ++i ) {
+    if ( ( (supportedFlags & imapFlagMap[i].imapFlag) == 0 && (supportedFlags & 64) == 0 )
+         && !imapFlagMap[i].standardFlag ) {
+      continue;
+    }
+    if ( ((flags & imapFlagMap[i].imapFlag) > 0) != ((oldStatus & imapFlagMap[i].kmFlag) > 0) ) {
+      msg->toggleStatus( imapFlagMap[i].kmFlag );
+    }
+  }
 
   seenFlagToStatus( msg, flags, newMsg );
 }
@@ -1476,7 +1475,7 @@ void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderImap::statusToFlags(KMMsgStatus status)
+QString KMFolderImap::statusToFlags(KMMsgStatus status, int supportedFlags)
 {
   QString flags;
   if (status & KMMsgStatusDeleted)
@@ -1487,7 +1486,16 @@ QString KMFolderImap::statusToFlags(KMMsgStatus status)
     if (status & KMMsgStatusReplied)
       flags += "\\ANSWERED ";
     if (status & KMMsgStatusFlag)
-      flags += "\\FLAGGED";
+      flags += "\\FLAGGED ";
+    // non standard flags
+    if ( (status & KMMsgStatusForwarded) && ((supportedFlags & 64) || (supportedFlags & 128)) )
+      flags += "$FORWARDED ";
+    if ( (status & KMMsgStatusTodo) && ((supportedFlags & 64) || (supportedFlags & 256)) )
+      flags += "$TODO ";
+    if ( (status & KMMsgStatusWatched) && ((supportedFlags & 64) || (supportedFlags & 512)) )
+      flags += "$WATCHED ";
+    if ( (status & KMMsgStatusIgnored) && ((supportedFlags & 64) || (supportedFlags & 1024)) )
+      flags += "$IGNORED ";
   }
 
   return flags.simplifyWhiteSpace();
@@ -1547,7 +1555,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     }
     (*it).cdata.remove(0, pos);
   }
-  open("digestsplit");
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   int flags;
   while (pos >= 0)
@@ -1603,7 +1610,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         }
         KMFolderMbox::addMsg(msg, 0);
         // Merge with the flags from the server.
-        flagsToStatus((KMMsgBase*)msg, flags);
+        flagsToStatus((KMMsgBase*)msg, flags, true, mUploadAllFlags ? 31 : mPermanentFlags);
         // set the correct size
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
@@ -1629,7 +1636,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   } // while
-  close("digestsplit");
 }
 
 //-------------------------------------------------------------
@@ -1828,7 +1834,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   url.setPath(msg_parent->imapPath() + ";UID=" + QString::number(uid) );
   if ( account()->makeConnection() != ImapAccountBase::Connected )
     return;
-  KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+  KIO::SimpleJob *job = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
   account()->insertJob(job, jd);
@@ -1861,7 +1867,7 @@ void KMFolderImap::deleteMessage(const QPtrList<KMMessage>& msgList)
     url.setPath(msg_parent->imapPath() + ";UID=" + uid);
     if ( account()->makeConnection() != ImapAccountBase::Connected )
       return;
-    KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+    KIO::SimpleJob *job = KIO::file_delete(url, false);
     KIO::Scheduler::assignJobToSlave(account()->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
     account()->insertJob(job, jd);
@@ -1879,7 +1885,6 @@ void KMFolderImap::setStatus(int idx, KMMsgStatus status, bool toggle)
 
 void KMFolderImap::setStatus(QValueList<int>& _ids, KMMsgStatus status, bool toggle)
 {
-  open( "setstatus" );
   FolderStorage::setStatus(_ids, status, toggle);
   QValueList<int> ids;
   if ( mUploadAllFlags ) {
@@ -1940,7 +1945,7 @@ void KMFolderImap::setStatus(QValueList<int>& _ids, KMMsgStatus status, bool tog
     bool unget = !isMessage(*it);
     msg = getMsg(*it);
     if (!msg) continue;
-    QString flags = statusToFlags(msg->status());
+    QString flags = statusToFlags(msg->status(), mPermanentFlags);
     // Collect uids for each type of flags.
     groups[flags].append(QString::number(msg->UID()));
     if (unget) unGetMsg(*it);
@@ -1955,18 +1960,15 @@ void KMFolderImap::setStatus(QValueList<int>& _ids, KMMsgStatus status, bool tog
        account()->setImapStatus(folder(), imappath, flags);
      }
   }
-  kdDebug() << folder()->name() << " setStatus " << mContentState << endl;
   if ( mContentState == imapListingInProgress ) {
     // we're currently get'ing this folder
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
     kdDebug(5006) << "Set status during folder listing, restarting listing." << endl;
-    kdDebug() << "disconnct slotListFolderResult\n";
     disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
     quiet( false );
     reallyGetFolder( QString::null );
   }
-  close( "setstatus" );
 }
 
 //-----------------------------------------------------------------------------
@@ -2060,12 +2062,12 @@ void KMFolderImap::getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>
 //-----------------------------------------------------------------------------
 void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
 {
-  aFolder->setNeedsCompacting(FALSE);
+  aFolder->setNeedsCompacting(false);
   KURL url = account()->getUrl();
   url.setPath(aFolder->imapPath() + ";UID=*");
   if ( account()->makeConnection() != ImapAccountBase::Connected )
     return;
-  KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+  KIO::SimpleJob *job = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
   jd.quiet = quiet;
@@ -2127,7 +2129,7 @@ bool KMFolderImap::processNewMail(bool)
               false,
               account()->useSSL() || account()->useTLS() );
 
-  KIO::SimpleJob *job = KIO::stat(url, FALSE);
+  KIO::SimpleJob *job = KIO::stat(url, false);
   KIO::Scheduler::assignJobToSlave(account()->slave(), job);
   ImapAccountBase::jobData jd(url.url(), folder() );
   jd.cancellable = true;
@@ -2237,7 +2239,7 @@ int KMFolderImap::expungeContents()
   url.setPath( imapPath() + ";UID=1:*");
   if ( account()->makeConnection() == ImapAccountBase::Connected )
   {
-    KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+    KIO::SimpleJob *job = KIO::file_delete(url, false);
     KIO::Scheduler::assignJobToSlave(account()->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
     jd.quiet = true;
@@ -2421,7 +2423,6 @@ void KMFolderImap::setImapPath( const QString& path )
 
 void KMFolderImap::finishMailCheck( const char *dbg, imapState state )
 {
-  kdDebug() << folder()->name() << " finishMailCheck " << dbg << " " << state << endl;
   quiet( false );
   mContentState = state;
   emit folderComplete( this, mContentState == imapFinished );

@@ -51,6 +51,7 @@ using KMail::FolderJob;
 #include <stdio.h>
 
 class KMMessage;
+class KMAccount;
 class KMFolderDir;
 class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
@@ -212,9 +213,9 @@ public:
   virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
 
   /** Remove (first occurrence of) given message from the folder. */
-  virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(int i, bool imapQuiet = false);
+  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = false);
+  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -237,6 +238,13 @@ public:
   /** Number of new or unread messages in this folder. */
   virtual int countUnread();
 
+  /** Total size of the contents of this folder. */
+  Q_INT64 folderSize() const;
+
+  /** Return whether the folder is close to its quota limit, which can
+   * be reflected in the UI.  */
+  virtual bool isCloseToQuota() const;
+
   /** Called by KMMsgBase::setStatus when status of a message has changed
       required to keep the number unread messages variable current. */
   virtual void msgStatusChanged( const KMMsgStatus oldStatus,
@@ -244,20 +252,21 @@ public:
 				 int idx);
 
   /** Open folder for access.
-    Does nothing if the folder is already opened. To reopen a folder
-    call close() first.
+    open() and close() use reference counting.
     Returns zero on success and an error code equal to the c-library
-    fopen call otherwise (errno). */
-  virtual int open(const char *owner) = 0;
+    fopen call otherwise (errno).
+    @see KMFolderOpener */
+  virtual int open(const char* owner) = 0;
 
   /** Check folder for permissions
     Returns zero if readable and writable. */
   virtual int canAccess() = 0;
 
-  /** Close folder. If force is TRUE the files are closed even if
-    others still use it (e.g. other mail reader windows). */
-  void close(const char * owner, bool force=FALSE);
-  virtual void reallyDoClose(const char * owner) = 0;
+  /** Close folder. open() and close() use reference counting.
+    If @p force is true the files are closed regardless of reference count,
+    and the reference count will be set to zero. */
+  void close(const char* owner, bool force=false);
+  virtual void reallyDoClose(const char* owner) = 0;
 
   /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry. */
@@ -266,7 +275,7 @@ public:
   /** fsync buffers to disk */
   virtual void sync() = 0;
 
-  /** Test if folder is opened. */
+  /** Test if folder is opened, i.e. its reference count is greater than zero. */
   bool isOpened() const { return (mOpenCount>0); }
 
   /** Mark all new messages as unread. */
@@ -406,6 +415,8 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
+  virtual KMAccount* account() const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -479,6 +490,9 @@ signals:
    * The serial number and a bool matching yes/no is included
    */
   void searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool );
+
+  /** Emitted when the folder's size changes. */
+  void folderSizeChanged();
 
 
 public slots:
@@ -579,6 +593,8 @@ friend class KMMsgDict;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void truncateIndex() = 0;
 
+  virtual Q_INT64 doFolderSize() const { return 0; };
+
   int mOpenCount;
   int mQuiet;
   bool mChanged :1;
@@ -595,6 +611,7 @@ friend class KMMsgDict;
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
+  Q_INT64 mSize;
   bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact :1;

@@ -333,6 +333,14 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
     kmkernel->acctMgr()->singleCheckMail(acct, false);
 }
 
+void KMKernel::loadProfile( const QString& )
+{
+}
+
+void KMKernel::saveToProfile( const QString& ) const
+{
+}
+
 void KMKernel::openReader( bool onlyCheck )
 {
   mWin = 0;
@@ -425,7 +433,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
   if (hidden == 0) {
@@ -543,7 +551,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       && GlobalSettings::self()->legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
-    cWin->slotWordWrapToggled( false );
+    cWin->disableWordWrap();
   else
     cWin->setCharset( "", true );
   if ( msgPart )
@@ -595,7 +603,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   if (!hidden) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
@@ -679,7 +687,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).utf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", TRUE);
+  cWin->setCharset("", true);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
@@ -810,7 +818,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+        QStringList subFList = QStringList::split("/",_foldername,false);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -827,7 +835,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
-             folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+             folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }
 
             if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
@@ -988,7 +996,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
         KMFolderDir *subfolder;
         bool root = true;
 
-        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+        QStringList subFList = QStringList::split("/",_foldername,false);
 
         for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
           QString _newFolder = *it;
@@ -1005,7 +1013,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
             subfolder = folder->createChildFolder();
             tmp_fname += "/" + *it;
             if(!the_folderMgr->getFolderByURL( tmp_fname )) {
-              folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+              folder = the_folderMgr->createFolder(*it, false, folder->folderType(), subfolder);
             }
             if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
           }
@@ -1103,7 +1111,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (!folder || (idx == -1))
       return false;
-    folder->open("showmail");
+    KMFolderOpener openFolder(folder, "showmail");
     KMMsgBase *msgBase = folder->getMsgBase(idx);
     if (!msgBase)
       return false;
@@ -1120,7 +1128,6 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
 
     if (unGet)
       folder->unGetMsg(idx);
-    folder->close("showmail");
     return true;
   }
 
@@ -1134,7 +1141,7 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
     return QString::null;
-  folder->open("getFrom");
+  KMFolderOpener openFolder(folder, "getFrom");
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (!msgBase)
     return QString::null;
@@ -1143,7 +1150,6 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   QString result = msg->from();
   if (unGet)
     folder->unGetMsg(idx);
-  folder->close("getFrom");
   return result;
 }
 
@@ -1165,17 +1171,16 @@ QString KMKernel::debugSernum( Q_UINT32 serialNumber )
     // different folder
     if (folder && (idx != -1)) {
       // everything is ok
-      folder->open("debugser");
+      KMFolderOpener openFolder(folder, "debugser");
       msg = folder->getMsgBase( idx );
       if (msg) {
-	res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-		    .arg( msg->subject() )
-		    .arg( msg->fromStrip() )
-		    .arg( msg->dateStr() ) );
+        res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
+                             .arg( msg->subject() )
+                             .arg( msg->fromStrip() )
+                             .arg( msg->dateStr() ) );
       } else {
-	res.append( QString( "Invalid serial number." ) );
+        res.append( QString( "Invalid serial number." ) );
       }
-      folder->close("debugser");
     } else {
       res.append( QString( "Invalid serial number." ) );
     }
@@ -1337,8 +1342,8 @@ void KMKernel::recoverDeadLetters()
     return;
 
   KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  const int rc = folder.open("recover");
-  if ( rc ) {
+  KMFolderOpener openFolder( &folder, "recover" );
+  if ( !folder.isOpened() ) {
     perror( "cannot open autosave folder" );
     return;
   }
@@ -1353,7 +1358,6 @@ void KMKernel::recoverDeadLetters()
       win->show();
     }
   }
-  folder.close("recover");
 }
 
 //-----------------------------------------------------------------------------
@@ -1375,7 +1379,7 @@ void KMKernel::initFolders(KConfig* cfg)
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
 
-  the_inboxFolder->setSystemFolder(TRUE);
+  the_inboxFolder->setSystemFolder(true);
   if ( the_inboxFolder->userWhoField().isEmpty() )
     the_inboxFolder->setUserWhoField( QString::null );
   // inboxFolder->open();
@@ -1386,7 +1390,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_outboxFolder->setNoChildren(true);
 
-  the_outboxFolder->setSystemFolder(TRUE);
+  the_outboxFolder->setSystemFolder(true);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString::null );
   /* Nuke the oubox's index file, to make sure that no ghost messages are in
@@ -1403,7 +1407,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_sentFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
-  the_sentFolder->setSystemFolder(TRUE);
+  the_sentFolder->setSystemFolder(true);
   if ( the_sentFolder->userWhoField().isEmpty() )
     the_sentFolder->setUserWhoField( QString::null );
   // the_sentFolder->open();
@@ -1412,7 +1416,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
-  the_trashFolder->setSystemFolder( TRUE );
+  the_trashFolder->setSystemFolder( true );
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString::null );
   // the_trashFolder->open();
@@ -1421,7 +1425,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
-  the_draftsFolder->setSystemFolder( TRUE );
+  the_draftsFolder->setSystemFolder( true );
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString::null );
   the_draftsFolder->open("kmkernel");
@@ -1432,7 +1436,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if ( the_templatesFolder->canAccess() != 0 ) {
     emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
   }
-  the_templatesFolder->setSystemFolder( TRUE );
+  the_templatesFolder->setSystemFolder( true );
   if ( the_templatesFolder->userWhoField().isEmpty() )
     the_templatesFolder->setUserWhoField( QString::null );
   the_templatesFolder->open("kmkernel");
@@ -1679,7 +1683,7 @@ void KMKernel::cleanup(void)
 
   if (the_trashFolder) {
 
-    the_trashFolder->close("kmkernel", TRUE);
+    the_trashFolder->close("kmkernel", true);
 
     if (config->readBoolEntry("empty-trash-on-exit", true))
     {
@@ -1698,7 +1702,7 @@ void KMKernel::cleanup(void)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    folder->close("kmkernel", TRUE);
+    folder->close("kmkernel", true);
   }
   strList.clear();
   folders.clear();
@@ -1707,7 +1711,7 @@ void KMKernel::cleanup(void)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    folder->close("kmkernel", TRUE);
+    folder->close("kmkernel", true);
   }
 
   delete the_msgIndex;
@@ -1889,7 +1893,7 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
   bool overwrite)
 {
   // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether
-  KIO::Job *job = KIO::put(aURL, -1, overwrite, FALSE);
+  KIO::Job *job = KIO::put(aURL, -1, overwrite, false);
   putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
   mPutJobs.insert(job, pd);
   connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
@@ -1935,7 +1939,7 @@ void KMKernel::slotResult(KIO::Job *job)
         i18n("File %1 exists.\nDo you want to replace it?")
         .arg((*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue)
-        byteArrayToRemoteFile((*it).data, (*it).url, TRUE);
+        byteArrayToRemoteFile((*it).data, (*it).url, true);
     }
     else job->showErrorDialog();
   }
@@ -2317,10 +2321,12 @@ bool KMKernel::canQueryClose()
   if ( !widget )
     return true;
   KMSystemTray* systray = widget->systray();
-  if ( systray && systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
+  if ( !systray || GlobalSettings::closeDespiteSystemTray() )
+      return true;
+  if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     systray->hideKMail();
     return false;
-  } else if ( systray && systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+  } else if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     systray->show();
     systray->hideKMail();
     return false;

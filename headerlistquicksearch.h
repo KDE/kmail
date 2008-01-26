@@ -58,8 +58,21 @@ public:
      */
     bool eventFilter( QObject *watched, QEvent *event );
 
+    /**
+     * Returns the currently entered search text.
+     */
+    QString currentSearchTerm() const;
+
+    /**
+     * Returns the currently selected status filter.
+     */
+    int currentStatus() const;
+
 public slots:
    void reset();
+
+signals:
+    void requestFullSearch();
 
 protected:
     /**
@@ -81,6 +94,7 @@ private:
     QComboBox *mStatusCombo;
     KMMsgStatus mStatus;
     QValueVector<QString> statusList;
+    mutable QString mCurrentSearchTerm;
 };
 
 }

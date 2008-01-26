@@ -13,6 +13,8 @@
 #include "kmmainwidget.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
+#include "filterimporterexporter.h"
+using KMail::FilterImporterExporter;
 
 // other KDE headers:
 #include <kmessagebox.h>
@@ -123,14 +125,20 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //=============================================================================
 
 KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
-  : KDialogBase( parent, name, FALSE /* modality */,
+  : KDialogBase( parent, name,  false  /* modality */,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
-		 Help|Ok|Apply|Cancel /* button mask */,
-		 Ok /* default btn */, FALSE /* separator */),
+		 Help|Ok|Apply|Cancel|User1|User2 /* button mask */,
+		 Ok /* default btn */,  false  /* separator */),
   bPopFilter(popFilter)
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
+  setButtonText( User1, i18n("Import") );
+  setButtonText( User2, i18n("Export") );
+  connect( this, SIGNAL(user1Clicked()),
+           this, SLOT( slotImportFilters()) );
+  connect( this, SIGNAL(user2Clicked()),
+           this, SLOT( slotExportFilters()) );
 
   QWidget *w = new QWidget( this );
   setMainWidget( w );
@@ -360,7 +368,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 
   if (bPopFilter){
     mActionGroup->setAction( aFilter->action() );
-    mGlobalsBox->setEnabled(true);
+    mGlobalsBox->setEnabled( true );
     mShowLaterBtn->setChecked(mFilterList->showLaterMsgs());
   } else {
     mActionLister->setActionList( aFilter->actions() );
@@ -569,7 +577,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   : QGroupBox( 1, Horizontal, title, parent, name ),
     bPopFilter(popFilter)
 {
-  mFilterList.setAutoDelete(TRUE);
+  mFilterList.setAutoDelete( true );
   mIdxSelItem = -1;
 
   //----------- the list box
@@ -700,9 +708,9 @@ void KMFilterListBox::slotUpdateFilterName()
 
   if ( displayedName == shouldBeName ) return;
 
-  mListBox->blockSignals(TRUE);
+  mListBox->blockSignals( true );
   mListBox->changeItem( shouldBeName, mIdxSelItem );
-  mListBox->blockSignals(FALSE);
+  mListBox->blockSignals( false );
 }
 
 void KMFilterListBox::slotShowLaterToggled(bool aOn)
@@ -712,8 +720,10 @@ void KMFilterListBox::slotShowLaterToggled(bool aOn)
 
 void KMFilterListBox::slotApplyFilterChanges()
 {
-  if ( mIdxSelItem >= 0 )
+  if ( mIdxSelItem >= 0 ) {
+    emit applyWidgets();
     slotSelected( mListBox->currentItem() );
+  }
 
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
@@ -724,26 +734,11 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  QValueList<KMFilter*> newFilters;
-  QStringList emptyFilters;
-  QPtrListIterator<KMFilter> it( mFilterList );
-  for ( it.toFirst() ; it.current() ; ++it ) {
-    KMFilter *f = new KMFilter( **it ); // deep copy
-    f->purify();
-    if ( !f->isEmpty() )
-      // the filter is valid:
-      newFilters.append( f );
-    else {
-      // the filter is invalid:
-      emptyFilters << f->name();
-      delete f;
-    }
-  }
+  QValueList<KMFilter*> newFilters = filtersForSaving();
+
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
 
-  // block attemts to use filters (currently a no-op)
-  fm->beginUpdate();
   fm->setFilters( newFilters );
   if (fm->atLeastOneOnlineImapFolderTarget()) {
     QString str = i18n("At least one filter targets a folder on an online "
@@ -753,18 +748,36 @@ void KMFilterListBox::slotApplyFilterChanges()
     KMessageBox::information( this, str, QString::null,
 			      "filterDlgOnlineImapCheck" );
   }
-  // allow usage of the filters again.
-  fm->endUpdate();
-  fm->writeConfig();
+}
 
-  // report on invalid filters:
-  if ( !emptyFilters.empty() ) {
-    QString msg = i18n("The following filters have not been saved because they "
-		       "were invalid (e.g. containing no actions or no search "
-		       "rules).");
-    KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
-				  "ShowInvalidFilterWarning" );
-  }
+QValueList<KMFilter*> KMFilterListBox::filtersForSaving() const
+{
+      const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
+      QValueList<KMFilter*> filters;
+      QStringList emptyFilters;
+      QPtrListIterator<KMFilter> it( mFilterList );
+      for ( it.toFirst() ; it.current() ; ++it ) {
+        KMFilter *f = new KMFilter( **it ); // deep copy
+        f->purify();
+        if ( !f->isEmpty() )
+          // the filter is valid:
+          filters.append( f );
+        else {
+          // the filter is invalid:
+          emptyFilters << f->name();
+          delete f;
+        }
+      }
+
+      // report on invalid filters:
+      if ( !emptyFilters.empty() ) {
+        QString msg = i18n("The following filters have not been saved because they "
+                   "were invalid (e.g. containing no actions or no search "
+                   "rules).");
+        KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
+                      "ShowInvalidFilterWarning" );
+      }
+      return filters;
 }
 
 void KMFilterListBox::slotSelected( int aIdx )
@@ -817,7 +830,7 @@ void KMFilterListBox::slotDelete()
   int oIdxSelItem = mIdxSelItem;
   mIdxSelItem = -1;
   // unselect all
-  mListBox->selectAll(FALSE);
+  mListBox->selectAll( false );
   // broadcast that all widgets let go
   // of the filter
   emit resetWidgets();
@@ -831,11 +844,11 @@ void KMFilterListBox::slotDelete()
   // and set the new current item.
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
-    mListBox->setSelected( oIdxSelItem, TRUE );
+    mListBox->setSelected( oIdxSelItem, true );
   else if ( count )
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
-    mListBox->setSelected( count - 1, TRUE );
+    mListBox->setSelected( count - 1, true );
   // the list is empty - keep index -1
 
   enableControls();
@@ -908,7 +921,7 @@ void KMFilterListBox::slotRename()
     return;
   }
 
-  bool okPressed = FALSE;
+  bool okPressed =  false ;
   KMFilter *filter = mFilterList.at( mIdxSelItem );
 
   // enableControls should make sure this method is
@@ -963,10 +976,11 @@ void KMFilterListBox::enableControls()
 void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
   assert(mListBox);
-  setEnabled(FALSE);
+  setEnabled( false );
+  emit resetWidgets();
   // we don't want the insertion to
   // cause flicker in the edit widgets.
-  blockSignals(TRUE);
+  blockSignals( true );
 
   // clear both lists
   mFilterList.clear();
@@ -990,8 +1004,8 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
     mListBox->insertItem( (*it)->pattern()->name() );
   }
 
-  blockSignals(FALSE);
-  setEnabled(TRUE);
+  blockSignals( false );
+  setEnabled( true );
 
   // create an empty filter when there's none, to avoid a completely
   // disabled dialog (usability tests indicated that the new-filter
@@ -1015,15 +1029,21 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
   if ( mIdxSelItem < 0 ) {
     // none selected -> append
     mFilterList.append( aFilter );
-    mListBox->setSelected( mListBox->count() - 1, TRUE );
+    mListBox->setSelected( mListBox->count() - 1, true );
     //    slotSelected( mListBox->count() - 1 );
   } else {
     // insert just before selected
     mFilterList.insert( mIdxSelItem, aFilter );
-    mListBox->setSelected( mIdxSelItem, TRUE );
+    mListBox->setSelected( mIdxSelItem, true );
     //    slotSelected( mIdxSelItem );
   }
 
+}
+
+void KMFilterListBox::appendFilter( KMFilter* aFilter )
+{
+    mFilterList.append( aFilter );
+    mListBox->insertItem( aFilter->pattern()->name(), -1 );
 }
 
 void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
@@ -1069,9 +1089,9 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   : QHBox( parent, name )
 {
   int i;
-  mActionList.setAutoDelete(TRUE);
+  mActionList.setAutoDelete( true );
 
-  mComboBox = new QComboBox( FALSE, this );
+  mComboBox = new QComboBox(  false , this );
   assert( mComboBox );
   mWidgetStack = new QWidgetStack(this);
   assert( mWidgetStack );
@@ -1117,7 +1137,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 {
   int i=0;
-  bool found = FALSE;
+  bool found =  false ;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
   QString label = ( aAction ) ? aAction->label() : QString::null ;
 
@@ -1132,7 +1152,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
       // the combo box
       mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
       mWidgetStack->raiseWidget(i);
-      found = TRUE;
+      found = true;
     } else // clear the parameter widget
       mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
   if ( found ) return;
@@ -1185,7 +1205,7 @@ void KMFilterActionWidgetLister::setActionList( QPtrList<KMFilterAction> *aList 
 
   mActionList = aList;
 
-  ((QWidget*)parent())->setEnabled( TRUE );
+  ((QWidget*)parent())->setEnabled( true );
 
   if ( aList->count() == 0 ) {
     slotClear();
@@ -1219,7 +1239,7 @@ void KMFilterActionWidgetLister::reset()
 
   mActionList = 0;
   slotClear();
-  ((QWidget*)parent())->setEnabled( FALSE );
+  ((QWidget*)parent())->setEnabled(  false  );
 }
 
 QWidget* KMFilterActionWidgetLister::createWidget( QWidget *parent )
@@ -1280,11 +1300,11 @@ void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
   blockSignals( true );
   if(!mActionMap[aAction]->isChecked())
   {
-    mActionMap[aAction]->setChecked(true);
+    mActionMap[aAction]->setChecked( true );
   }
   blockSignals( false );
 
-  setEnabled(true);
+  setEnabled( true );
 }
 
 KMPopFilterAction  KMPopFilterActionWidget::action()
@@ -1300,11 +1320,35 @@ void KMPopFilterActionWidget::slotActionClicked(int aId)
 
 void KMPopFilterActionWidget::reset()
 {
-  blockSignals(TRUE);
-  mActionMap[Down]->setChecked( TRUE );
-  blockSignals(FALSE);
+  blockSignals( true );
+  mActionMap[Down]->setChecked( true );
+  blockSignals( false );
 
-  setEnabled( FALSE );
+  setEnabled(  false  );
+}
+
+void KMFilterDlg::slotImportFilters()
+{
+    FilterImporterExporter importer( this, bPopFilter );
+    QValueList<KMFilter*> filters = importer.importFilters();
+    // FIXME message box how many were imported?
+    if (filters.isEmpty()) return;
+
+    QValueListConstIterator<KMFilter*> it;
+
+    for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
+        mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
+    }
+}
+
+void KMFilterDlg::slotExportFilters()
+{
+    FilterImporterExporter exporter( this, bPopFilter );
+    QValueList<KMFilter*> filters = mFilterList->filtersForSaving();
+    exporter.exportFilters( filters );
+    QValueList<KMFilter*>::iterator it;
+    for ( it = filters.begin(); it != filters.end(); ++it )
+        delete *it;
 }
 
 #include "kmfilterdlg.moc"

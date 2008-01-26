@@ -27,6 +27,7 @@ using KMail::MaildirJob;
 #include <klocale.h>
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
+#include <kdirsize.h>
 
 #include <dirent.h>
 #include <errno.h>
@@ -49,7 +50,7 @@ using KMail::MaildirJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
-  : KMFolderIndex(folder, name)
+  : KMFolderIndex(folder, name), mCurrentlyCheckingFolderSize(false)
 {
 
 }
@@ -219,7 +220,7 @@ int KMFolderMaildir::create()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMaildir::reallyDoClose(const char *)
+void KMFolderMaildir::reallyDoClose(const char* owner)
 {
   if (mAutoCreateIndex)
   {
@@ -229,10 +230,10 @@ void KMFolderMaildir::reallyDoClose(const char *)
 
   mMsgList.clear(true);
 
-    if (mIndexStream) {
-	fclose(mIndexStream);
-	updateIndexStreamPtr(true);
-    }
+  if (mIndexStream) {
+    fclose(mIndexStream);
+    updateIndexStreamPtr(true);
+  }
 
   mOpenCount   = 0;
   mIndexStream = 0;
@@ -365,7 +366,6 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
   long len;
   unsigned long size;
-  bool opened = false;
   KMFolder* msgParent;
   QCString msgText;
   int idx(-1);
@@ -417,12 +417,12 @@ if( fileD0.open( IO_WriteOnly ) ) {
   QFile file(tmp_file);
   size = msgText.length();
 
-  if (!isOpened())
+  KMFolderOpener openThis(folder(), "maildir");
+  rc = openThis.openResult();
+  if (rc)
   {
-    opened = true;
-    rc = open("maildir");
     kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
-    if (rc) return rc;
+    return rc;
   }
 
   // now move the file to the correct location
@@ -431,12 +431,11 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (moveInternal(tmp_file, new_loc, filename, aMsg->status()).isNull())
   {
     file.remove();
-    if (opened) close("maildir");
     return -1;
   }
 
-  if (msgParent)
-    if (idx >= 0) msgParent->take(idx);
+  if (msgParent && idx >= 0)
+    msgParent->take(idx);
 
   // just to be sure it does not end up in the index
   if ( stripUid ) aMsg->setUID( 0 );
@@ -462,6 +461,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     }
   }
   ++mTotalMsgs;
+  mSize = -1;
 
   if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
@@ -491,7 +491,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     mb->setIndexOffset( ftell(mIndexStream) );
     mb->setIndexLength( len );
     if(fwrite(buffer, len, 1, mIndexStream) != 1)
-    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+      kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
@@ -516,20 +516,17 @@ if( fileD0.open( IO_WriteOnly ) ) {
 	     "(No space left on device or insufficient quota?)\n"
 	     "Free space and sufficient quota are required to continue safely."));
       if (busy) kmkernel->kbp()->busy();
-      if (opened) close();
       */
       return error;
     }
   }
 
-  // some "paper work"
   if (index_return)
     *index_return = idx;
 
   emitMsgAddedSignals(idx);
   needsCompact = true;
 
-  if (opened) close("maildir" );
 /*
 QFile fileD1( "testdat_xx-kmfoldermaildir-1" );
 if( fileD1.open( IO_WriteOnly ) ) {
@@ -544,7 +541,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
 KMMessage* KMFolderMaildir::readMsg(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  KMMessage *msg = new KMMessage(*mi);
+  msg->setMsgInfo( mi ); // remember the KMMsgInfo object to that we can restore it when the KMMessage object is no longer needed
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->setComplete( true );
   msg->fromDwString(getDwString(idx));
@@ -1096,6 +1094,35 @@ void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
   needsCompact = true;
 
   KMFolderIndex::msgStatusChanged(oldStatus, newStatus, idx);
+}
+
+/*virtual*/
+Q_INT64 KMFolderMaildir::doFolderSize() const
+{
+  if (mCurrentlyCheckingFolderSize) return -1;
+  KFileItemList list;
+  KFileItem *item = 0;
+  item = new KFileItem( S_IFDIR, -1, location() + "/cur" );
+  list.append( item );
+  item = new KFileItem( S_IFDIR, -1, location() + "/new" );
+  list.append( item );
+  item = new KFileItem( S_IFDIR, -1, location() + "/tmp" );
+  list.append( item );
+
+  KDirSize* job = KDirSize::dirSizeJob( list );
+  connect( job, SIGNAL( result( KIO::Job* ) ),
+           this, SLOT( slotDirSizeJobResult( KIO::Job*) ) );
+  mCurrentlyCheckingFolderSize = true;
+  return -1;
+}
+
+void KMFolderMaildir::slotDirSizeJobResult( KIO::Job* job )
+{
+    mCurrentlyCheckingFolderSize = false;
+    KDirSize * dirsize = dynamic_cast<KDirSize*>( job );
+    if ( !dirsize || dirsize->error() ) return;
+    mSize = dirsize->totalSize();
+    emit folderSizeChanged();
 }
 
 #include "kmfoldermaildir.moc"

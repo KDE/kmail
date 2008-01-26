@@ -64,6 +64,9 @@
 #include "folderrequester.h"
 #include "kmmainwidget.h"
 #include "kmfolder.h"
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identitycombo.h>
+#include <libkpimidentities/identity.h>
 #include "globalsettings.h"
 
 #include <cassert>
@@ -431,7 +434,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
-  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
+  mLocal.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( defaultmailcheckintervalmin );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
@@ -447,6 +450,12 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.precommand = new KLineEdit( page );
   label->setBuddy( mLocal.precommand );
   topLayout->addWidget( mLocal.precommand, 9, 1 );
+
+  mLocal.identityLabel = new QLabel( i18n("Identity:"), page );
+  topLayout->addWidget( mLocal.identityLabel, 10, 0 );
+  mLocal.identityCombo = new KPIM::IdentityCombo(kmkernel->identityManager(), page );
+  mLocal.identityLabel->setBuddy( mLocal.identityCombo );
+  topLayout->addWidget( mLocal.identityCombo, 10, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -524,7 +533,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 6, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
-  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
+  mMaildir.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mMaildir.intervalSpin->setSuffix( i18n(" min") );
   mMaildir.intervalSpin->setValue( defaultmailcheckintervalmin );
   mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
@@ -540,6 +549,13 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->addWidget( mMaildir.precommand, 8, 1 );
   label = new QLabel( mMaildir.precommand, i18n("&Pre-command:"), page );
   topLayout->addWidget( label, 8, 0 );
+
+
+  mMaildir.identityLabel = new QLabel( i18n("Identity:"), page );
+  topLayout->addWidget( mMaildir.identityLabel, 9, 0 );
+  mMaildir.identityCombo = new KPIM::IdentityCombo(kmkernel->identityManager(), page );
+  mMaildir.identityLabel->setBuddy( mMaildir.identityCombo );
+  topLayout->addWidget( mMaildir.identityCombo, 9, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -698,7 +714,7 @@ void AccountDialog::makePopAccountPage()
   mPop.filterOnServerSizeSpin = new KIntNumInput ( hbox );
   mPop.filterOnServerSizeSpin->setEnabled( false );
   hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
-  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
+  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, false );
   connect(mPop.filterOnServerSizeSpin, SIGNAL(valueChanged(int)),
           SLOT(slotFilterOnServerSizeChanged(int)));
   mPop.filterOnServerSizeSpin->setValue( 50000 );
@@ -721,7 +737,7 @@ void AccountDialog::makePopAccountPage()
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
   grid->addWidget( mPop.intervalLabel, 13, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
-  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, FALSE );
+  mPop.intervalSpin->setRange( GlobalSettings::self()->minimumCheckInterval(), 10000, 1, false );
   mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( defaultmailcheckintervalmin );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
@@ -738,6 +754,12 @@ void AccountDialog::makePopAccountPage()
   mPop.precommand = new KLineEdit( page1 );
   label->setBuddy(mPop.precommand);
   grid->addWidget( mPop.precommand, 15, 1 );
+
+  mPop.identityLabel = new QLabel( i18n("Identity:"), page1 );
+  grid->addWidget( mPop.identityLabel, 16, 0 );
+  mPop.identityCombo = new KPIM::IdentityCombo(kmkernel->identityManager(), page1 );
+  mPop.identityLabel->setBuddy( mPop.identityCombo );
+  grid->addWidget( mPop.identityCombo, 16, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
@@ -1032,7 +1054,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, row, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1, FALSE );
+  mImap.intervalSpin->setRange( GlobalSettings::minimumCheckInterval(), 60, 1, false );
   mImap.intervalSpin->setValue( defaultmailcheckintervalmin );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
@@ -1046,6 +1068,13 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.trashCombo->setShowOutbox( false );
   label->setBuddy( mImap.trashCombo );
   grid->addWidget( mImap.trashCombo, row, 1 );
+
+  ++row;
+  mImap.identityLabel = new QLabel( i18n("Identity:"), page1 );
+  grid->addWidget( mImap.identityLabel, row, 0 );
+  mImap.identityCombo = new KPIM::IdentityCombo(kmkernel->identityManager(), page1 );
+  mImap.identityLabel->setBuddy( mImap.identityCombo );
+  grid->addWidget( mImap.identityCombo, row, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -1152,6 +1181,7 @@ void AccountDialog::setupSettings()
 
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
+    mLocal.identityCombo-> setCurrentIdentity( mAccount->identityId() );
   }
   else if( accountType == "pop" )
   {
@@ -1187,26 +1217,27 @@ void AccountDialog::setupSettings()
 #endif
     mPop.includeInCheck->setChecked( !mAccount->checkExclude() );
     mPop.precommand->setText( ap.precommand() );
+    mPop.identityCombo-> setCurrentIdentity( mAccount->identityId() );
     if (ap.useSSL())
-      mPop.encryptionSSL->setChecked( TRUE );
+      mPop.encryptionSSL->setChecked( true );
     else if (ap.useTLS())
-      mPop.encryptionTLS->setChecked( TRUE );
-    else mPop.encryptionNone->setChecked( TRUE );
+      mPop.encryptionTLS->setChecked( true );
+    else mPop.encryptionNone->setChecked( true );
     if (ap.auth() == "LOGIN")
-      mPop.authLogin->setChecked( TRUE );
+      mPop.authLogin->setChecked( true );
     else if (ap.auth() == "PLAIN")
-      mPop.authPlain->setChecked( TRUE );
+      mPop.authPlain->setChecked( true );
     else if (ap.auth() == "CRAM-MD5")
-      mPop.authCRAM_MD5->setChecked( TRUE );
+      mPop.authCRAM_MD5->setChecked( true );
     else if (ap.auth() == "DIGEST-MD5")
-      mPop.authDigestMd5->setChecked( TRUE );
+      mPop.authDigestMd5->setChecked( true );
     else if (ap.auth() == "NTLM")
-      mPop.authNTLM->setChecked( TRUE );
+      mPop.authNTLM->setChecked( true );
     else if (ap.auth() == "GSSAPI")
-      mPop.authGSSAPI->setChecked( TRUE );
+      mPop.authGSSAPI->setChecked( true );
     else if (ap.auth() == "APOP")
-      mPop.authAPOP->setChecked( TRUE );
-    else mPop.authUser->setChecked( TRUE );
+      mPop.authAPOP->setChecked( true );
+    else mPop.authUser->setChecked( true );
 
     slotEnableLeaveOnServerDays( mPop.leaveOnServerDaysCheck->isEnabled() ?
                                    ap.leaveOnServerDays() >= 1 : 0);
@@ -1245,26 +1276,28 @@ void AccountDialog::setupSettings()
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
+    mImap.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( TRUE );
+      mImap.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( TRUE );
-    else mImap.encryptionNone->setChecked( TRUE );
+      mImap.encryptionTLS->setChecked( true );
+    else mImap.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( TRUE );
+      mImap.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( TRUE );
+      mImap.authDigestMd5->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( TRUE );
+      mImap.authNTLM->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( TRUE );
+      mImap.authGSSAPI->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( TRUE );
+      mImap.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( TRUE );
+      mImap.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( TRUE );
-    else mImap.authUser->setChecked( TRUE );
+      mImap.authLogin->setChecked( true );
+    else mImap.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
@@ -1293,26 +1326,28 @@ void AccountDialog::setupSettings()
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
+    mImap.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( TRUE );
+      mImap.encryptionSSL->setChecked( true );
     else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( TRUE );
-    else mImap.encryptionNone->setChecked( TRUE );
+      mImap.encryptionTLS->setChecked( true );
+    else mImap.encryptionNone->setChecked( true );
     if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( TRUE );
+      mImap.authCramMd5->setChecked( true );
     else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( TRUE );
+      mImap.authDigestMd5->setChecked( true );
     else if (ai.auth() == "GSSAPI")
-      mImap.authGSSAPI->setChecked( TRUE );
+      mImap.authGSSAPI->setChecked( true );
     else if (ai.auth() == "NTLM")
-      mImap.authNTLM->setChecked( TRUE );
+      mImap.authNTLM->setChecked( true );
     else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( TRUE );
+      mImap.authAnonymous->setChecked( true );
     else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( TRUE );
+      mImap.authPlain->setChecked( true );
     else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( TRUE );
-    else mImap.authUser->setChecked( TRUE );
+      mImap.authLogin->setChecked( true );
+    else mImap.authUser->setChecked( true );
     if ( mSieveConfigEditor )
       mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
@@ -1332,7 +1367,7 @@ void AccountDialog::setupSettings()
 #endif
     mMaildir.includeInCheck->setChecked( !mAccount->checkExclude() );
     mMaildir.precommand->setText( mAccount->precommand() );
-
+    mMaildir.identityCombo-> setCurrentIdentity( mAccount->identityId() );
     slotEnableMaildirInterval( interval >= 1 );
     folderCombo = mMaildir.folderCombo;
   }
@@ -1511,7 +1546,7 @@ void AccountDialog::slotCheckPopCapabilities()
                                               const QStringList & ) ),
            this, SLOT( slotPopCapabilities( const QStringList &,
                                             const QStringList & ) ) );
-  mPop.checkCapabilities->setEnabled(FALSE);
+  mPop.checkCapabilities->setEnabled(false);
 }
 
 
@@ -1530,7 +1565,7 @@ void AccountDialog::slotCheckImapCapabilities()
                                               const QStringList & ) ),
            this, SLOT( slotImapCapabilities( const QStringList &,
                                              const QStringList & ) ) );
-  mImap.checkCapabilities->setEnabled(FALSE);
+  mImap.checkCapabilities->setEnabled(false);
 }
 
 
@@ -1779,6 +1814,8 @@ void AccountDialog::saveSettings()
 
     mAccount->setFolder( *mFolderList.at(mLocal.folderCombo->currentItem()) );
 
+    mAccount->setIdentityId( mLocal.identityCombo->currentIdentity() );
+
   }
   else if( accountType == "pop" )
   {
@@ -1791,6 +1828,8 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mPop.includeInCheck->isChecked() );
 
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
+
+    mAccount->setIdentityId( mPop.identityCombo->currentIdentity() );
 
     initAccountForConnect();
     PopAccount &epa = *(PopAccount*)mAccount;
@@ -1808,12 +1847,15 @@ void AccountDialog::saveSettings()
     epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
     epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );
+
   }
   else if( accountType == "imap" )
   {
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
+    mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
+
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
 #endif
@@ -1845,6 +1887,8 @@ void AccountDialog::saveSettings()
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
+    mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
+
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
 #endif
@@ -1899,6 +1943,8 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mMaildir.includeInCheck->isChecked() );
 
     mAccount->setPrecommand( mMaildir.precommand->text() );
+
+    mAccount->setIdentityId( mMaildir.identityCombo->currentIdentity() );
   }
 
   if ( accountType == "imap" || accountType == "cachedimap" )
@@ -1922,8 +1968,7 @@ void AccountDialog::saveSettings()
     ai.setNamespaceToDelimiter( delimMap );
   }
 
-  kmkernel->acctMgr()->writeConfig(TRUE);
-
+  kmkernel->acctMgr()->writeConfig( true );
   // get the new account and register the new destination folder
   // this is the target folder for local or pop accounts and the root folder
   // of the account for (d)imap
@@ -2052,8 +2097,6 @@ void AccountDialog::slotFontChanged( void )
     mImap.titleLabel->setFont(titleFont);
   }
 }
-
-
 
 #if 0
 void AccountDialog::slotClearResourceAllocations()

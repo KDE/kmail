@@ -322,12 +322,18 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                                         "mail_forward", 0, this,
                                         SLOT(slotForwardAttachedMsg()), ac,
                                         "search_message_forward_as_attachment" );
-  mForwardActionMenu->insert( mForwardAttachedAction );
   mForwardInlineAction = new KAction( i18n("&Inline..."),
                                       "mail_forward", 0, this,
                                       SLOT(slotForwardInlineMsg()), ac,
                                       "search_message_forward_inline" );
-  mForwardActionMenu->insert( mForwardInlineAction );
+  if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
+    mForwardActionMenu->insert( mForwardInlineAction );
+    mForwardActionMenu->insert( mForwardAttachedAction );
+  } else {
+    mForwardActionMenu->insert( mForwardAttachedAction );
+    mForwardActionMenu->insert( mForwardInlineAction );
+  }
+
   mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
                                       "mail_forward", 0, this,
                                       SLOT(slotForwardDigestMsg()), ac,
@@ -401,7 +407,7 @@ void SearchWindow::updStatus(void)
         folderName = search->currentFolder();
     }
 
-    if (mFolder && mFolder->search() && !mFolder->search()->running()) {
+    if (search && !search->running()) {
         procMsg = i18n("%n message searched", "%n messages searched",
                        numProcessed);
         if(!mStopped) {
@@ -489,7 +495,7 @@ void SearchWindow::slotSearch()
       }
 
       if (!folder)
-        folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
+        folder = mgr->createFolder(fullName, false, KMFolderTypeSearch,
             &mgr->dir());
 
       mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
@@ -778,7 +784,7 @@ void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &,
 {
     if (!lvi)
         return;
-    mLbxMatches->setSelected( lvi, TRUE );
+    mLbxMatches->setSelected( lvi, true );
     mLbxMatches->setCurrentItem( lvi );
     // FIXME is this ever unGetMsg()'d?
     if (!message())
@@ -905,6 +911,13 @@ void SearchWindow::slotCutMsgs()
 {
   QValueList<Q_UINT32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
   mKMMainWidget->headers()->setCopiedMessages( list, true );
+}
+
+
+void SearchWindow::setSearchPattern( const KMSearchPattern& pattern )
+{
+    *mSearchPattern = pattern;
+    mPatternEdit->setSearchPattern( mSearchPattern );
 }
 
 } // namespace KMail

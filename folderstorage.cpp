@@ -72,6 +72,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
   mTotalMsgs = -1;
+  mSize = -1;
   needsCompact    = false;
   mConvertToUtf8  = false;
   mCompactable     = true;
@@ -98,12 +99,14 @@ FolderStorage::~FolderStorage()
 }
 
 
-void FolderStorage::close( const char * owner, bool aForced )
+void FolderStorage::close( const char* owner, bool aForced )
 {
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-    reallyDoClose( owner );
+
+  // kdWarning() << "Really closing: " << folder()->prettyURL()  << kdBacktrace() << endl;
+  reallyDoClose(owner);
 }
 
 //-----------------------------------------------------------------------------
@@ -409,6 +412,7 @@ void FolderStorage::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
+  mSize = -1;
   QString msgIdMD5 = mb->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
@@ -446,6 +450,7 @@ KMMessage* FolderStorage::take(int idx)
   --mTotalMsgs;
   msg->setParent(0);
   setDirty( true );
+  mSize = -1;
   needsCompact=true; // message is taken from here - needs to be compacted
   QString msgIdMD5 = msg->msgIdMD5();
   emit msgRemoved( idx, msgIdMD5 );
@@ -461,7 +466,8 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
     if (msg->parent())
     {
       int idx = msg->parent()->find(msg);
-      take(idx);
+      if ( idx >= 0 )
+        take(idx);
     }
   }
 }
@@ -470,11 +476,20 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 KMMessage* FolderStorage::getMsg(int idx)
 {
-  if ( idx < 0 || idx >= count() )
+  if ( mOpenCount <= 0 ) {
+    kdWarning(5006) << "FolderStorage::getMsg was called on a closed folder: " << folder()->prettyURL() << endl; 
     return 0;
+  }
+  if ( idx < 0 || idx >= count() ) { 
+    kdWarning(5006) << "FolderStorage::getMsg was asked for an invalid index. idx =" << idx << " count()=" << count() << endl; 
+    return 0;
+  }
 
   KMMsgBase* mb = getMsgBase(idx);
-  if (!mb) return 0;
+  if (!mb) {
+    kdWarning(5006) << "FolderStorage::getMsg, getMsgBase failed for index: " << idx << endl;
+    return 0;
+  }
 
   KMMessage *msg = 0;
   bool undo = mb->enableUndo();
@@ -495,8 +510,10 @@ KMMessage* FolderStorage::getMsg(int idx)
   // Either isMessage and we had a sernum, or readMsg gives us one
   // (via insertion into mMsgList). sernum == 0 may still occur due to
   // an outdated or corrupt IMAP cache.
-  if ( msg->getMsgSerNum() == 0 )
+  if ( msg->getMsgSerNum() == 0 ) {
+    kdWarning(5006) << "FolderStorage::getMsg, message has no sernum, index: " << idx << endl;
     return 0;
+  }
   msg->setEnableUndo(undo);
   msg->setComplete( true );
   return msg;
@@ -771,6 +788,7 @@ int FolderStorage::expunge()
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
+  mSize = 0;
   emit numUnreadMsgsChanged( folder() );
   if ( mAutoCreateIndex ) // FIXME Heh? - Till
     writeConfig();
@@ -811,6 +829,22 @@ int FolderStorage::countUnread()
   int unread = mUnreadMsgs;
   close("countunread");
   return (unread > 0) ? unread : 0;
+}
+
+Q_INT64 FolderStorage::folderSize() const
+{
+    if ( mSize != -1 ) {
+        return mSize;
+    } else {
+        return doFolderSize();
+    }
+}
+
+
+/*virtual*/
+bool FolderStorage::isCloseToQuota() const
+{
+  return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -878,7 +912,9 @@ void FolderStorage::readConfig()
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
   mCompactable = config->readBoolEntry("Compactable", true);
-
+  if ( mSize == -1 )
+      mSize = config->readNum64Entry("FolderSize", -1);
+  
   int type = config->readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
@@ -896,6 +932,7 @@ void FolderStorage::writeConfig()
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
   config->writeEntry("ContentsType", mContentsType);
+  config->writeEntry("FolderSize", mSize);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
@@ -1083,9 +1120,10 @@ void FolderStorage::search( const KMSearchPattern* pattern )
 
 void FolderStorage::slotProcessNextSearchBatch()
 {
-  if ( !mSearchPattern ) return;
+  if ( !mSearchPattern )
+    return;
   QValueList<Q_UINT32> matchingSerNums;
-  int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
+  const int end = QMIN( mCurrentSearchedMsg + 15, count() );
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
     Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
@@ -1093,7 +1131,7 @@ void FolderStorage::slotProcessNextSearchBatch()
       matchingSerNums.append( serNum );
   }
   mCurrentSearchedMsg = end;
-  bool complete = ( end == count() ) ? true : false;
+  bool complete = ( end >= count() );
   emit searchResult( folder(), matchingSerNums, mSearchPattern, complete );
   if ( !complete )
     QTimer::singleShot( 0, this, SLOT(slotProcessNextSearchBatch()) );
@@ -1126,6 +1164,13 @@ int FolderStorage::addMsg( QPtrList<KMMessage>& msgList, QValueList<int>& index_
 bool FolderStorage::isMoveable() const
 {
   return ( folder()->isSystemFolder() ) ? false : true;
+}
+
+
+/*virtual*/
+KMAccount* FolderStorage::account() const
+{
+    return 0;
 }
 
 #include "folderstorage.moc"

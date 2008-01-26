@@ -148,6 +148,7 @@ class RecipientLine : public QWidget
 
   protected:
     void keyPressEvent( QKeyEvent * );
+    RecipientLineEdit* lineEdit() const { return mEdit; }
 
   protected slots:
     void slotReturnPressed();
@@ -220,6 +221,7 @@ class RecipientsView : public QScrollView
     void focusDown();
     void focusRight();
     void completionModeChanged( KGlobalSettings::Completion );
+    void sizeHintChanged();
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
@@ -233,6 +235,7 @@ class RecipientsView : public QScrollView
     void slotDeleteLine();
     void calculateTotal();
     void slotTypeModified( RecipientLine * );
+    void moveCompletionPopup();
 
   private:
     QPtrList<RecipientLine> mLines;
@@ -349,6 +352,7 @@ class RecipientsEditor : public QWidget
     void focusUp();
     void focusDown();
     void completionModeChanged( KGlobalSettings::Completion );
+    void sizeHintChanged();
 
   protected slots:
     void slotPickedRecipient( const Recipient & );

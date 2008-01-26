@@ -28,6 +28,9 @@
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "folderstorage.h"
+#include "kmfolder.h"
+#include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
 #include "renamejob.h"
 #include "copyfolderjob.h"
 
@@ -180,6 +183,27 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 
   if (!aFolderDir)
     fldDir = &mDir;
+
+  // check if this is a dimap folder and the folder we want to create has been deleted
+  // since the last sync
+  if ( fldDir->owner() && fldDir->owner()->folderType() == KMFolderTypeCachedImap ) {
+    KMFolderCachedImap *storage = static_cast<KMFolderCachedImap*>( fldDir->owner()->storage() );
+    KMAcctCachedImap *account = storage->account();
+    // guess imap path
+    QString imapPath = storage->imapPath();
+    if ( !imapPath.endsWith( "/" ) )
+      imapPath += "/";
+    imapPath += fName;
+    if ( account->isDeletedFolder( imapPath ) || account->isDeletedFolder( imapPath + "/" )
+       || account->isPreviouslyDeletedFolder( imapPath )
+       || account->isPreviouslyDeletedFolder( imapPath + "/" ) ) {
+      KMessageBox::error( 0, i18n("A folder with the same name has been deleted since the last mail check."
+          "You need to check mails first before creating another folder with the same name."),
+          i18n("Could Not Create Folder") );
+      return 0;
+    }
+  }
+
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
     if ( fld->id() == 0 )
@@ -342,6 +366,22 @@ void KMFolderMgr::removeFolder(KMFolder* aFolder)
   aFolder->remove();
 }
 
+KMFolder* KMFolderMgr::parentFolder( KMFolder* folder )
+{
+  // find the parent folder by stripping "." and ".directory" from the name
+  KMFolderDir* fdir = folder->parent();
+  QString parentName = fdir->name();
+  parentName = parentName.mid( 1, parentName.length()-11 );
+  KMFolderNode* parent = fdir->hasNamedFolder( parentName );
+  if ( !parent && fdir->parent() ) // dimap obviously has a different structure
+    parent = fdir->parent()->hasNamedFolder( parentName );
+
+  KMFolder* parentF = 0;
+  if ( parent )
+    parentF = dynamic_cast<KMFolder*>( parent );
+  return parentF;
+}
+
 void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
 {
   if (!success) {
@@ -357,20 +397,17 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
       break;
     }
   }
-  // find the parent folder by stripping "." and ".directory" from the name
-  QString parentName = fdir->name();
-  parentName = parentName.mid( 1, parentName.length()-11 );
-  KMFolderNode* parent = fdir->hasNamedFolder( parentName );
-  if ( !parent && fdir->parent() ) // dimap obviously has a different structure
-    parent = fdir->parent()->hasNamedFolder( parentName );
+  KMFolder* parentF = parentFolder( aFolder );
+
   // aFolder will be deleted by the next call!
   aFolder->parent()->remove(aFolder);
+
   // update the children state
-  if ( parent )
+  if ( parentF )
   {
-    if ( parent != aFolder )
+    if ( parentF != aFolder )
     {
-      static_cast<KMFolder*>( parent )->storage()->updateChildrenState();
+      parentF->storage()->updateChildrenState();
     }
   }
   else

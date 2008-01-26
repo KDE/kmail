@@ -164,7 +164,8 @@ File=kmailrc
 Group=FolderSelectionDialog
 RemoveKey=Size
 # Trigger migration of all local imap flags to the server
-Id=3.5.7-imap-flag-migration
+# increment suffix every time you need to trigger that
+Id=3.5.7-imap-flag-migration-2
 Options=overwrite
 File=kmailrc
 Script=kmail-3.5-trigger-flag-migration.pl,perl

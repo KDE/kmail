@@ -64,6 +64,8 @@ using namespace KPIM;
 #include <qapplication.h>
 #include <qregexp.h>
 
+#include <kstandarddirs.h>
+
 namespace KMail {
 
   //
@@ -110,12 +112,12 @@ namespace KMail {
     const HeaderStyle * prev() const { return fancy(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
   };
 
   QString BriefHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::brief();
@@ -205,7 +207,7 @@ namespace KMail {
     const HeaderStyle * prev() const { return brief(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
 
   private:
     QString formatAllMessageHeaders( const KMMessage * message ) const;
@@ -213,7 +215,7 @@ namespace KMail {
 
   QString PlainHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -288,7 +290,7 @@ namespace KMail {
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
       headerStr.append(i18n("From: ") +
-          KMMessage::emailAddrAsAnchor( fromStr, false) );
+          KMMessage::emailAddrAsAnchor( fromStr, "", false) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -306,19 +308,19 @@ namespace KMail {
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18n("To: ")+
-                       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->to(),false) + "<br>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(message->cc(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->cc(),false) + "<br>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(message->bcc(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->bcc(),false) + "<br>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(message->replyTo(),FALSE) + "<br>\n");
+                     KMMessage::emailAddrAsAnchor(message->replyTo(),false) + "<br>\n");
 
     headerStr += "</div>\n";
 
@@ -351,11 +353,11 @@ namespace KMail {
 
   public:
     const char * name() const { return "fancy"; }
-    const HeaderStyle * next() const { return brief(); }
+    const HeaderStyle * next() const { return enterprise(); }
     const HeaderStyle * prev() const { return plain(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-                    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing, bool topLevel ) const;
     static QString imgToDataUrl( const QImage & image,
                                  const char *fmt = "PNG" );
 
@@ -413,7 +415,7 @@ namespace KMail {
 
   QString FancyHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
-                                    const QString & vCardName, bool printing ) const {
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -639,7 +641,7 @@ namespace KMail {
                  + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
                                 + i18n("(resent from %1)")
                                   .arg( KMMessage::emailAddrAsAnchor(
-                                    message->headerField( "Resent-From" ),FALSE) )
+                                    message->headerField( "Resent-From" ),false) )
                               : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
@@ -661,21 +663,21 @@ namespace KMail {
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("To: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->to(),false)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("CC: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->cc(),false)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
                                "<td>%2</td></tr>\n")
                        .arg(i18n("BCC: "))
-                       .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
+                       .arg(KMMessage::emailAddrAsAnchor(message->bcc(),false)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
@@ -712,6 +714,7 @@ namespace KMail {
                                     .arg( directionOf( onlineStatus ) )
                                     .arg(onlineStatus));
     */
+    headerStr.append( QString("<tr><td colspan=\"2\"><div id=\"attachmentInjectionPoint\"></div></td></tr>" ) );
     headerStr.append(
           QString( "</table></td><td align=\"center\">%1</td></tr></table>\n" ).arg(userHTML) );
 
@@ -733,6 +736,186 @@ namespace KMail {
            .arg( fmt, KCodecs::base64Encode( ba ) );
   }
 
+// #####################
+
+  class EnterpriseHeaderStyle : public HeaderStyle {
+    friend class ::KMail::HeaderStyle;
+  protected:
+    EnterpriseHeaderStyle() : HeaderStyle() {}
+    virtual ~EnterpriseHeaderStyle() {}
+
+  public:
+    const char * name() const { return "enterprise"; }
+    const HeaderStyle * next() const { return brief(); }
+    const HeaderStyle * prev() const { return fancy(); }
+
+    QString format( const KMMessage * message, const HeaderStrategy * strategy,
+                    const QString & vCardName, bool printing, bool topLevel ) const;
+  };
+
+    QString EnterpriseHeaderStyle::format( const KMMessage * message,
+                                    const HeaderStrategy * strategy,
+                                    const QString & vCardName, bool printing, bool topLevel ) const {
+	if ( !message ) return QString::null;
+	if ( !strategy )
+	    strategy = HeaderStrategy::brief();
+
+	// The direction of the header is determined according to the direction
+	// of the application layout.
+
+	QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
+
+	// However, the direction of the message subject within the header is
+	// determined according to the contents of the subject itself. Since
+	// the "Re:" and "Fwd:" prefixes would always cause the subject to be
+	// considered left-to-right, they are ignored when determining its
+	// direction.
+
+	QString subjectDir;
+	if (!message->subject().isEmpty())
+	    subjectDir = directionOf( message->cleanSubject() );
+	else
+	    subjectDir = directionOf( i18n("No Subject") );
+
+	// colors depend on if its encapsulated or not
+        QColor fontColor(Qt::white);
+	QString linkColor = "class =\"white\"";
+	const QColor activeColor = qApp->palette().active().highlight();
+	QColor activeColorDark = activeColor.dark(130);
+        // reverse colors for encapsulated
+        if( !topLevel ){
+            activeColorDark = activeColor.dark(50);
+            fontColor = qApp->palette().active().text();
+	    linkColor = "";
+        }
+
+	QStringList headerParts;
+	if( strategy->showHeader( "to" ) )
+	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, linkColor );
+
+	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
+	    headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
+
+	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
+	    headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
+
+	// remove all empty (modulo whitespace) entries and joins them via ", \n"
+	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
+
+	// Prepare the date string (when printing always use the localized date)
+	QString dateString;
+	if( printing ) {
+	    QDateTime dateTime;
+	    KLocale * locale = KGlobal::locale();
+	    dateTime.setTime_t( message->date() );
+	    dateString = locale->formatDateTime( dateTime );
+	} else {
+	    dateString = message->dateStr();
+	}
+
+	QString imgpath(locate("data","kmail/pics/"));
+	imgpath.append("enterprise_");
+	const QString borderSettings(" padding-top: 0px; padding-bottom: 0px; border-width: 0px ");
+	QString headerStr ("");
+
+	// 3D borders
+	if(topLevel)
+	    headerStr +=
+		"<div style=\"position: fixed; top: 0px; left: 0px; background-color: #606060; "
+		"background-image: url("+imgpath+"shadow_left.png); width: 10px; min-height: 100%;\">&nbsp;</div>"
+		"<div style=\"position: fixed; top: 0px; right: 0px;  background-color: #606060; "
+		"background-image: url("+imgpath+"shadow_right.png); width: 10px; min-height: 100%;\">&nbsp;</div>";
+
+	headerStr += ""
+	    "<div style=\"margin-left: 8px; top: 0px;\"><span style=\"font-size: 10px; font-weight: bold;\">"+dateString+"</span></div>"
+	    // #0057ae
+	    "<table style=\"background: "+activeColorDark.name()+"; border-collapse:collapse; top: 14px; min-width: 200px; \" cellpadding=0> \n"
+	    "  <tr> \n"
+	    "   <td style=\"min-width: 6px; background-image: url("+imgpath+"top_left.png); \"></td> \n"
+	    "   <td style=\"height: 6px; width: 100%; background: url("+imgpath+"top.png); \"></td> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"top_right.png); \"></td> </tr> \n"
+	    "   <tr> \n"
+	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
+	    "   <td style=\"\"> \n"
+	    "    <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n";
+
+	// subject
+	//strToHtml( message->subject() )
+	if ( strategy->showHeader( "subject" ) ){
+	    headerStr +=
+		"     <tr> \n"
+		"      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\"></td> \n"
+		"      <td style=\"font-weight: bolder; font-size: 120%;"+borderSettings+"\">"+message->subject()+"</td> \n"
+		"     </tr> \n";
+	}
+
+	// from
+	if ( strategy->showHeader( "from" ) ){
+	    QString fromStr = message->from();
+	    if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
+		fromStr = message->fromStrip(); // let's use that
+            // TODO vcard
+	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, linkColor );
+	    if ( !vCardName.isEmpty() )
+		fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
+	    //TDDO strategy date
+	    //if ( strategy->showHeader( "date" ) )
+	    headerStr +=
+		"     <tr> \n"
+		"      <td style=\"font-size: 6px; padding-left: 5px; padding-right: 24px; text-align: right; "+borderSettings+"\">"+i18n("From: ")+"</td> \n"
+		"      <td style=\""+borderSettings+"\">"+ fromPart +"</td> "
+		"     </tr> ";
+	}
+
+	// to, cc, bcc
+	headerStr +=
+	    "     <tr> "
+	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18n("To: ")+"</td> "
+	    "      <td style=\""+borderSettings+"\">"
+	    +headerPart+
+	    "      </td> "
+	    "     </tr> ";
+
+	// header-bottom
+	headerStr +=
+	    "    </table> \n"
+	    "   </td> \n"
+	    "   <td style=\"min-width: 6px; max-height: 15px; background: url("+imgpath+"right.png); \"></td> \n"
+	    "  </tr> \n"
+	    "  <tr> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_left.png); \"></td> \n"
+	    "   <td style=\"height: 35px; width: 80%; background: url("+imgpath+"sbar.png);\"> \n"
+	    "    <img src=\""+imgpath+"sw.png\" style=\"margin: 0px; height: 30px; overflow:hidden; \"> \n"
+	    "    <img src=\""+imgpath+"sp_right.png\" style=\"float: right; \"> </td> \n"
+	    "   <td style=\"min-width: 6px; background: url("+imgpath+"s_right.png); \"></td> \n"
+	    "  </tr> \n"
+	    " </table> \n";
+
+    // kmail icon
+    if(topLevel) {
+        headerStr +=
+        "<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 200px;\">\n"
+        "<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
+        "</div>\n";
+
+        // attachments
+        headerStr +=
+        "<div class=\"noprint\" style=\"position: fixed; top: 60px; right: 20px; width: 91px; height: 200px;\">"
+        "<div id=\"attachmentInjectionPoint\"></div>"
+        "</div>\n";
+    }
+
+	headerStr += "<div style=\"padding: 6px;\">";
+
+	// TODO
+	// spam status
+	// ### iterate over the rest of strategy->headerToDisplay() (or
+	// ### all headers if DefaultPolicy == Display) (elsewhere, too)
+	return headerStr;
+  }
+
+// #####################
+
   //
   // HeaderStyle abstract base:
   //
@@ -750,6 +933,7 @@ namespace KMail {
     case Brief:  return brief();
     case Plain:  return plain();
     case Fancy:   return fancy();
+    case Enterprise: return enterprise();
     }
     kdFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
                     << (int)type << " ) requested!" << endl;
@@ -760,6 +944,7 @@ namespace KMail {
     QString lowerType = type.lower();
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "plain" )  return plain();
+    if ( lowerType == "enterprise" )  return enterprise();
     //if ( lowerType == "fancy" ) return fancy(); // not needed, see below
     // don't kdFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
@@ -769,6 +954,7 @@ namespace KMail {
   static const HeaderStyle * briefStyle = 0;
   static const HeaderStyle * plainStyle = 0;
   static const HeaderStyle * fancyStyle = 0;
+  static const HeaderStyle * enterpriseStyle = 0;
 
   const HeaderStyle * HeaderStyle::brief() {
     if ( !briefStyle )
@@ -786,6 +972,12 @@ namespace KMail {
     if ( !fancyStyle )
       fancyStyle = new FancyHeaderStyle();
     return fancyStyle;
+  }
+
+  const HeaderStyle * HeaderStyle::enterprise() {
+    if ( !enterpriseStyle )
+      enterpriseStyle = new EnterpriseHeaderStyle();
+    return enterpriseStyle;
   }
 
 } // namespace KMail

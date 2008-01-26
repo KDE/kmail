@@ -20,6 +20,9 @@
 #ifndef __KMMSGDICT
 #define __KMMSGDICT
 
+#include <qvaluelist.h>
+#include <qptrlist.h>
+
 class KMFolder;
 class KMMsgBase;
 class KMMessage;
@@ -67,6 +70,9 @@ class KMMsgDict
    * @p folder.
    * @return the message serial number or zero is no such message can be found */
     unsigned long getMsgSerNum( KMFolder *folder, int index ) const;
+
+  /** Convert a list of KMMsgBase pointers to a list of serial numbers */
+    static QValueList<unsigned long> serNumList(QPtrList<KMMsgBase> msgList);
 
 private:
  /* FIXME It would be better to do without these, they are the classes

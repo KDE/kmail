@@ -19,6 +19,9 @@ using KPIM::BroadcastStatus;
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identity.h>
+
 using KMail::FolderJob;
 
 #include <kapplication.h>
@@ -91,7 +94,8 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mCheckingMail(false),
     mPrecommandSuccess(true),
     mHasInbox(false),
-    mMailCheckProgressItem(0)
+    mMailCheckProgressItem(0),
+    mIdentityId(0)
 {
   assert(aOwner != 0);
 }
@@ -99,7 +103,6 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
 void KMAccount::init() {
   mTrash = kmkernel->trashFolder()->idString();
   mExclude = false;
-  // when creating a new account, mail checking interval shall be default
   mInterval = 0;
   mNewInFolder.clear();
 }
@@ -107,7 +110,7 @@ void KMAccount::init() {
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
 {
-  if (!kmkernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
+  if ( (kmkernel && !kmkernel->shuttingDown()) && mFolder ) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
 }
 
@@ -144,12 +147,11 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
   mFolder = 0;
   folderName = config.readEntry("Folder");
-  // if check-interval has been deleted from kmailrc, it shall be default
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readPathEntry("precommand"));
-
+  setIdentityId(config.readNumEntry("identity-id", 0));
   if (!folderName.isEmpty())
   {
     setFolder(kmkernel->folderMgr()->findIdString(folderName), true);
@@ -174,6 +176,10 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-exclude", mExclude);
   config.writePathEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
+  if ( mIdentityId && mIdentityId != kmkernel->identityManager()->defaultIdentity().uoid() )
+    config.writeEntry("identity-id", mIdentityId);
+  else
+    config.deleteEntry("identity-id");
 }
 
 
@@ -450,6 +456,7 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   setFolder( a->folder() );
   setPrecommand( a->precommand() );
   setTrash( a->trash() );
+  setIdentityId( a->identityId() );
 }
 
 //-----------------------------------------------------------------------------

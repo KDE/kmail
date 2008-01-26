@@ -200,7 +200,10 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         }
         else
           kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
-    }
+    } 
+    else if( e->provides("text/x-textsnippet") ) {
+	emit insertSnippet();
+    } 
     else {
         KEdit::contentsDropEvent(e);
     }
@@ -220,7 +223,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
     mUseExtEditor( false ),
     mWasModifiedBeforeSpellCheck( false ),
     mSpellChecker( 0 ),
-    mSpellLineEdit( false )
+    mSpellLineEdit( false ),
+    mPasteMode( QClipboard::Clipboard )
 {
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
@@ -353,14 +357,14 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       if (k->key() == Key_Up)
       {
         emit focusUp();
-        return TRUE;
+        return true;
       }
 
       // ignore modifier keys (cf. bug 48841)
       if ( (k->key() == Key_Shift) || (k->key() == Key_Control) ||
            (k->key() == Key_Meta) || (k->key() == Key_Alt) )
         return true;
-      if (mExtEditorTempFile) return TRUE;
+      if (mExtEditorTempFile) return true;
       QString sysLine = mExtEditor;
       mExtEditorTempFile = new KTempFile();
 
@@ -392,7 +396,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
                  SLOT(slotExternalEditorTempFileChanged(const QString&)) );
         mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
       }
-      return TRUE;
+      return true;
     } else {
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
@@ -401,7 +405,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       deselect();
       emit focusUp();
-      return TRUE;
+      return true;
     }
     // ---sven's Arrow key navigation end ---
 
@@ -409,7 +413,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       deselect();
       emit focusUp();
-      return TRUE;
+      return true;
     }
 
     }
@@ -599,11 +603,21 @@ void KMEdit::del()
 
 void KMEdit::paste()
 {
-  if ( ! QApplication::clipboard()->image().isNull() )  {
-    emit pasteImage();
-  }
-  else
-    KEdit::paste();
+  mComposer->paste( mPasteMode );
+}
+
+// KMEdit indirectly inherits from QTextEdit, which has virtual paste() method,
+// but it controls whether it pastes clipboard or selection by an internal
+// flag that is not accessible in any way, so paste() being virtual is actually
+// useless, because reimplementations can't known where to paste from anyway.
+// Roll our own internal flag.
+void KMEdit::contentsMouseReleaseEvent( QMouseEvent * e )
+{
+  if( e->button() != Qt::MidButton )
+    return KEdit::contentsMouseReleaseEvent( e );
+  mPasteMode = QClipboard::Selection;
+  KEdit::contentsMouseReleaseEvent( e );
+  mPasteMode = QClipboard::Clipboard;
 }
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)

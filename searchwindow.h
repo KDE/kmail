@@ -99,6 +99,8 @@ public:
    */
   KMMessage* message();
 
+  void setSearchPattern( const KMSearchPattern& pattern );
+
 protected slots:
   /** Update status line widget. */
   virtual void updStatus(void);
