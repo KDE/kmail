@@ -133,7 +133,8 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 }
 
 
-bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QString &s) const
+bool HeaderListQuickSearch::itemMatches( const Q3ListViewItem *item,
+                                         const QString &s ) const
 {
   mCurrentSearchTerm = s; // this "hack" used to work in the KDE3 version
   if ( !mStatus.isOfUnknownStatus() ) {
@@ -219,13 +220,13 @@ void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
 
 QString HeaderListQuickSearch::currentSearchTerm() const
 {
-    return mCurrentSearchTerm;
+  return mCurrentSearchTerm;
 }
 
 
 KPIM::MessageStatus HeaderListQuickSearch::currentStatus() const
 {
-    return mStatus;
+  return mStatus;
 }
 
 } // namespace KMail

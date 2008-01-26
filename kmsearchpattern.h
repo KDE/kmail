@@ -99,9 +99,9 @@ public:
        @see DwString.
        @return true if the rule matched, false otherwise.
    */
-   virtual bool matches( const DwString & str, KMMessage & msg,
-                         const DwBoyerMoore * headerField=0,
-                         int headerLen=-1 ) const;
+  virtual bool matches( const DwString & str, KMMessage & msg,
+                        const DwBoyerMoore * headerField=0,
+                        int headerLen=-1 ) const;
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.

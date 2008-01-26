@@ -645,7 +645,7 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QByteArray & field,
 KMSearchRuleStatus::KMSearchRuleStatus( MessageStatus status, Function func )
  : KMSearchRule( "<status>", func, englishNameForStatus( status ) )
 {
-    mStatus = status;
+  mStatus = status;
 }
 
 MessageStatus KMSearchRuleStatus::statusFromEnglishName( const QString &aStatusString )

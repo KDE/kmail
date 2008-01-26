@@ -127,7 +127,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   setDefaultButton( User1 );
   setButtonGuiItem( User1, KGuiItem( i18n("&Search"), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
-  KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)));
+  KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(
+                               IconSize( KIconLoader::Desktop ),
+                               IconSize( KIconLoader::Desktop ) ),
+                           qApp->windowIcon().pixmap(
+                               IconSize( KIconLoader::Small ),
+                               IconSize( KIconLoader::Small ) ) );
 
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "SearchDialog" );
@@ -900,8 +905,8 @@ void SearchWindow::slotCutMsgs()
 
 void SearchWindow::setSearchPattern( const KMSearchPattern &pattern )
 {
-    *mSearchPattern = pattern;
-    mPatternEdit->setSearchPattern( mSearchPattern );
+  *mSearchPattern = pattern;
+  mPatternEdit->setSearchPattern( mSearchPattern );
 }
 
 } // namespace KMail
