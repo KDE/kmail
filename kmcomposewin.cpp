@@ -181,7 +181,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mComposer( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
-    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 )
+    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreserveUserCursorPosition( false )
 {
   mClassicalRecipients = GlobalSettings::self()->recipientsEditorType() ==
