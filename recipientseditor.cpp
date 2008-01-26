@@ -328,8 +328,6 @@ RecipientsView::RecipientsView( QWidget *parent )
   mPage->setLayout( mTopLayout );
 
   addLine();
-
-  viewport()->setPaletteBackgroundColor( paletteBackgroundColor() );
 }
 
 RecipientLine *RecipientsView::activeLine()

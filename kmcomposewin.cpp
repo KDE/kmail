@@ -179,10 +179,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   }
   mMainWidget = new QWidget( this );
   // splitter between the headers area and the actual editor
-  mHeadersToEditorSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mHeadersToEditorSplitter" );
+  mHeadersToEditorSplitter = new QSplitter( Qt::Vertical, mMainWidget );
+  mHeadersToEditorSplitter->setObjectName( "mHeadersToEditorSplitter" );
   mHeadersToEditorSplitter->setChildrenCollapsible( false );
   mHeadersArea = new QWidget( mHeadersToEditorSplitter );
-  mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horData(),
+  mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(),
                                QSizePolicy::Expanding );
   mHeadersToEditorSplitter->addWidget( mHeadersArea );
   QList<int> defaultSizes;
@@ -190,9 +191,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
   v->addWidget( mHeadersToEditorSplitter );
-  mIdentity = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
+  mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
+                                                 mHeadersArea );
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
-  mFcc = new KMFolderComboBox(mHeadersArea);
+  mFcc = new KMFolderComboBox( mHeadersArea );
   mFcc->showOutboxFolder( false );
   mTransport = new MailTransport::TransportComboBox( mHeadersArea );
   mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
