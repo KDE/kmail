@@ -132,7 +132,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 customtemplates_kfg.kcfgc \
                 templatesconfiguration_base.ui templatesconfiguration.cpp \
                 templatesconfiguration_kfg.kcfgc \
-                templateparser.cpp copyfolderjob.cpp \
+                templateparser.cpp \
+                copyfolderjob.cpp \
                 messagecopyhelper.cpp \
                 localsubscriptiondialog.cpp \
                 editorwatcher.cpp \
