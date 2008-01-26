@@ -47,6 +47,8 @@ using KMail::MaildirJob;
 #define INIT_MSGS 8
 #endif
 
+// define the static member
+QValueList<KMFolderMaildir::DirSizeJobQueueEntry> KMFolderMaildir::s_DirSizeJobQueue;
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
@@ -1099,7 +1101,12 @@ void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
 /*virtual*/
 Q_INT64 KMFolderMaildir::doFolderSize() const
 {
-  if (mCurrentlyCheckingFolderSize) return -1;
+  if ( mCurrentlyCheckingFolderSize )
+  {
+    return -1;
+  }
+  mCurrentlyCheckingFolderSize = true;
+
   KFileItemList list;
   KFileItem *item = 0;
   item = new KFileItem( S_IFDIR, -1, location() + "/cur" );
@@ -1108,11 +1115,20 @@ Q_INT64 KMFolderMaildir::doFolderSize() const
   list.append( item );
   item = new KFileItem( S_IFDIR, -1, location() + "/tmp" );
   list.append( item );
+  s_DirSizeJobQueue.append(
+    qMakePair( QGuardedPtr<const KMFolderMaildir>( this ), list ) );
 
-  KDirSize* job = KDirSize::dirSizeJob( list );
-  connect( job, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( slotDirSizeJobResult( KIO::Job*) ) );
-  mCurrentlyCheckingFolderSize = true;
+  // if there's only one entry in the queue then we can start
+  // a dirSizeJob right away
+  if ( s_DirSizeJobQueue.size() == 1 )
+  {
+    //kdDebug(5006) << k_funcinfo << "Starting dirSizeJob for folder "
+    //  << location() << endl;
+    KDirSize* job = KDirSize::dirSizeJob( list );
+    connect( job, SIGNAL( result( KIO::Job* ) ),
+             this, SLOT( slotDirSizeJobResult( KIO::Job* ) ) );
+  }
+
   return -1;
 }
 
@@ -1120,9 +1136,37 @@ void KMFolderMaildir::slotDirSizeJobResult( KIO::Job* job )
 {
     mCurrentlyCheckingFolderSize = false;
     KDirSize * dirsize = dynamic_cast<KDirSize*>( job );
-    if ( !dirsize || dirsize->error() ) return;
-    mSize = dirsize->totalSize();
-    emit folderSizeChanged();
+    if ( dirsize && ! dirsize->error() )
+    {
+      mSize = dirsize->totalSize();
+      //kdDebug(5006) << k_funcinfo << "dirSizeJob completed. Folder "
+      //  << location() << " has size " << mSize << endl;
+      emit folderSizeChanged();
+    }
+    // remove the completed job from the queue
+    s_DirSizeJobQueue.pop_front();
+
+    // process the next entry in the queue
+    while ( s_DirSizeJobQueue.size() > 0 )
+    {
+      DirSizeJobQueueEntry entry = s_DirSizeJobQueue.first();
+      // check whether the entry is valid, i.e. whether the folder still exists
+      if ( entry.first )
+      {
+        // start the next dirSizeJob
+        //kdDebug(5006) << k_funcinfo << "Starting dirSizeJob for folder "
+        //  << entry.first->location() << endl;
+        KDirSize* job = KDirSize::dirSizeJob( entry.second );
+        connect( job, SIGNAL( result( KIO::Job* ) ),
+                 entry.first, SLOT( slotDirSizeJobResult( KIO::Job* ) ) );
+        break;
+      }
+      else
+      {
+        // remove the invalid entry from the queue
+        s_DirSizeJobQueue.pop_front();
+      }
+    }
 }
 
 #include "kmfoldermaildir.moc"
