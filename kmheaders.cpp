@@ -687,6 +687,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(folderCleared()));
       disconnect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
+      disconnect(mFolder, SIGNAL(closed()),
+                 this, SLOT(folderClosed()));
       disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       disconnect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
@@ -718,6 +720,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
+      connect(mFolder, SIGNAL(closed()),
+                 this, SLOT(folderClosed()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
               BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
@@ -2617,6 +2621,13 @@ void KMHeaders::folderCleared()
     mImperfectlyThreadedList.clear();
     mPrevCurrent = 0;
     emit selected(0);
+}
+
+
+void KMHeaders::folderClosed()
+{
+    mFolder->open( "kmheaders" );
+    folderCleared();
 }
 
 bool KMHeaders::writeSortOrder()

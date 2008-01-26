@@ -430,6 +430,9 @@ signals:
       emmitted first. */
   void expunged( KMFolder* );
 
+  /** Emitted when the folder was closed and ticket owners have to reopen */
+  void closed( KMFolder* );
+  
   /** Emitted when the serial numbers of this folder were invalidated. */
   void invalidated( KMFolder * );
 
