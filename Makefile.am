@@ -15,6 +15,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/certmanager/lib/ui \
         -I$(top_srcdir)/indexlib \
         -I$(top_srcdir)/ktnef \
+        -I$(top_srcdir)/korganizer \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
         $(all_includes)
@@ -68,6 +69,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
                 kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
                 kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
+		filterimporterexporter.cpp \
                 kmfilteraction.cpp kmsearchpattern.cpp \
                 kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
                 kmmsgbase.cpp kmmsglist.cpp kmaddrbook.cpp  \
@@ -133,7 +135,21 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 templateparser.cpp \
                 copyfolderjob.cpp \
                 messagecopyhelper.cpp \
-                localsubscriptiondialog.cpp
+                localsubscriptiondialog.cpp \
+                editorwatcher.cpp \
+                kcalendariface.stub \
+                favoritefolderview.cpp \
+                foldertreebase.cpp \
+                snippetdlgbase.ui \
+                snippet_widget.cpp \
+                snippetconfig.cpp \
+                snippetdlg.cpp \
+                snippetitem.cpp \
+                snippetsettings.cpp \
+                snippetsettingsbase.ui \
+                scalix.cpp \
+                messageactions.cpp \
+                korghelper.cpp
 
 libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
@@ -142,6 +158,8 @@ kmail_SOURCES = main.cpp
 kmail_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel  kmail_part.cpp
+
+libkmailpart_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 
 check_PROGRAMS = dcoptest recipienteditortest
 
@@ -159,6 +177,7 @@ kmailIface_DCOPIDLNG = true
 kmailicalIface_DCOPIDLNG = true
 
 korganizeriface_DIR = $(top_srcdir)/korganizer
+kcalendariface_DIR = $(top_srcdir)/korganizer
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 
