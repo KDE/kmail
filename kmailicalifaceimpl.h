@@ -56,7 +56,8 @@ namespace KMail {
   // Local helper class
 class ExtraFolder {
 public:
-  ExtraFolder( KMFolder* f ) : folder( f ) {}
+  ExtraFolder( KMFolder* f );
+  ~ExtraFolder();
   QGuardedPtr<KMFolder> folder;
 };
 
@@ -123,6 +124,18 @@ public:
                       Q_UINT32 sernum,
                       const QString& filename );
 
+  QString attachmentMimetype( const QString &resource,
+                              Q_UINT32 sernum,
+                              const QString &filename );
+
+  QStringList listAttachments( const QString &resource, Q_UINT32 sernum );
+
+
+  bool removeSubresource( const QString& );
+
+  bool addSubresource( const QString& resource,
+                       const QString& parent,
+                       const QString& contentsType );
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
@@ -233,10 +246,13 @@ private slots:
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KMail::FolderContentsType contentsType );
+  KMFolder* initScalixFolder( KMail::FolderContentsType contentsType );
 
   void connectFolder( KMFolder* folder );
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
+
+  void syncFolder( KMFolder* folder ) const;
 
   struct StandardFolderSearchResult
   {
