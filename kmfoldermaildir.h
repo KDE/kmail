@@ -3,6 +3,9 @@
 
 #include "kmfolderindex.h"
 
+#include <kfileitem.h>
+
+#include <qguardedptr.h>
 
 class KMFolderMaildir;
 namespace KMail {
@@ -155,6 +158,9 @@ private:
       Returns IndexOk if the index is not older than the contents.
   */
   virtual IndexStatus indexStatus();
+
+  typedef QPair<QGuardedPtr<const KMFolderMaildir>,KFileItemList> DirSizeJobQueueEntry;
+  static QValueList<DirSizeJobQueueEntry> s_DirSizeJobQueue;
 
   QStrList mIdxToFileList;
   int mIdxCount;
