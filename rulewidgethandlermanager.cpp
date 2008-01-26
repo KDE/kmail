@@ -1054,7 +1054,11 @@ namespace {
     QComboBox *statusCombo = new QComboBox( valueStack );
     statusCombo->setObjectName( "statusRuleValueCombo" );
     for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
-      statusCombo->addItem( UserIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
+      if ( KMail::StatusValues[ i ].icon != 0 )
+        statusCombo->addItem( SmallIcon( KMail::StatusValues[ i ].icon ),
+                              i18n( KMail::StatusValues[ i ].text ) );
+      else
+        statusCombo->addItem( i18n( KMail::StatusValues[ i ].text ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
