@@ -39,9 +39,17 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
+
 #include <qobject.h>
 #include <qcstring.h>
+
+#include <kio/netaccess.h>
+#include <kmessagebox.h>
+#include <klocale.h>
+
 class DwString;
+class KURL;
+class QWidget;
 
 namespace KMail
 {
@@ -60,7 +68,7 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-    
+
     /**
      * Convert "\n" line endings to "\r\n".
      * @param src The source string to convert.
@@ -161,11 +169,11 @@ namespace Util {
 
     void insert( QByteArray& that, uint index, const char* s );
 
-    /**
+   /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisition is Initialization ) paradigm. When an instance of it
-     * goes out of scope it deletes the associated object  It can be 
-     * disabled, in case the deletion needs to be avoided for some 
+     * goes out of scope it deletes the associated object  It can be
+     * disabled, in case the deletion needs to be avoided for some
      * reason, since going out-of-scope cannot be avoided.
      */
     class LaterDeleter
@@ -189,6 +197,25 @@ namespace Util {
       QObject *m_object;
       bool m_disabled;
     };
+
+    // return true if we should proceed, false if we should abort
+    inline bool checkOverwrite( const KURL& url, QWidget* w )
+    {
+        if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
+            if ( KMessageBox::Cancel ==
+                    KMessageBox::warningContinueCancel(
+                        w,
+                        i18n( "A file named \"%1\" already exists. "
+                            "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
+                        i18n( "Overwrite File?" ),
+                        i18n( "&Overwrite" ) ) )
+                return false;
+        }
+        return true;
+    }
+
+
+
 }
 }
 
