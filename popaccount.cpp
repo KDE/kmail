@@ -377,6 +377,7 @@ void PopAccount::startJob()
   idsOfMsgs.clear();
   mUidForIdMap.clear();
   idsOfMsgsToDelete.clear();
+  idsOfForcedDeletes.clear();
   //delete any headers if there are some this have to be done because of check again
   qDeleteAll( mHeadersOnServer );
   mHeadersOnServer.clear();
@@ -737,6 +738,12 @@ void PopAccount::slotJobFinished() {
         idsOfMsgsToDelete.remove( idsToSave[i].second );
       }
     }
+
+    if ( !idsOfForcedDeletes.isEmpty() ) {
+      idsOfMsgsToDelete += idsOfForcedDeletes;
+      idsOfForcedDeletes.clear();
+    }
+
     // If there are messages to delete then delete them
     if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
@@ -880,6 +887,8 @@ void PopAccount::slotGetNextMsg()
 //-----------------------------------------------------------------------------
 void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 {
+  Q_UNUSED( job );
+
   if (data.size() == 0) {
     kDebug(5006) <<"Data: <End>";
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
@@ -942,8 +951,8 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   if ( qdata.at( qdata.size() - 1 ) == 0 )
     qdata.chop( 1 );
 
-  if (spc > 0) {
-    if (stage == List) {
+  if ( stage == List ) {
+    if ( spc > 0 ) {
       QByteArray length = qdata.mid(spc+1);
       const int spaceInLengthPos = length.indexOf(' ');
       if ( spaceInLengthPos != -1 )
@@ -954,37 +963,68 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
       idsOfMsgs.append( id );
       mMsgsPendingDownload.insert( id, len );
     }
-    else { // stage == Uidl
-      const QByteArray id = qdata.left(spc);
-      const QByteArray uid = qdata.mid(spc + 1);
-      mSizeOfNextSeenMsgsDict.insert( uid, mMsgsPendingDownload[id] );
-      if ( mUidsOfSeenMsgsDict.contains( uid ) ) {
-        if ( mMsgsPendingDownload.contains( id ) ) {
-          mMsgsPendingDownload.remove( id );
-        }
-        else
-          kDebug(5006) <<"PopAccount::slotData synchronization failure.";
-        idsOfMsgsToDelete.insert( id );
-        mUidsOfNextSeenMsgsDict.insert( uid, 1 );
-        if ( mTimeOfSeenMsgsVector.empty() ) {
-          mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
-        }
-        else {
-          mTimeOfNextSeenMsgsMap.insert( uid,
-            mTimeOfSeenMsgsVector[ mUidsOfSeenMsgsDict[uid] ] );
-        }
-      }
-      mUidForIdMap.insert( id, uid );
+    else {
+      slotAbortRequested();
+      KMessageBox::error( 0, i18n( "Unable to complete LIST operation." ),
+                          i18n("Invalid Response From Server") );
+      return;
     }
   }
-  else {
-    stage = Idle;
-    if (job) job->kill();
-    job = 0;
-    mSlave = 0;
-    KMessageBox::error(0, i18n( "Unable to complete LIST operation." ),
-                          i18n("Invalid Response From Server"));
-    return;
+  else { // stage == Uidl
+
+    Q_ASSERT ( stage == Uidl);
+    QByteArray id;
+    QByteArray uid;
+
+    // If there is no space in the UIDL entry, the response is invalid.
+    // However, some servers seem to do this, see bug 127696. Try to work
+    // around this problem by downloading and deleting the message if we
+    // can still parse the ID part of the entry.
+    // Otherwise, just skip that message.
+    if ( spc <=0 ) {
+
+      // Try to convert the entire UIDL entry to an ID
+      QByteArray testID = qdata;
+      bool idIsNumber;
+      testID.toInt( &idIsNumber );
+      if ( !idIsNumber ) {
+        // we'll just have to skip this
+        kWarning(5006) << "Skipping UIDL entry due to parse error:" << qdata;
+        return;
+      }
+
+      id = testID;
+      // Generate a fake UID, so we don't get problems because all the code
+      // requires a UID. This is a rather bad hack, but it works, since the
+      // message will be deleted from the server.
+      uid = QString( QString("uidlgen") + time(0) + QString(".") +
+                     (++dataCounter) ).toAscii();
+      kWarning(5006) << "Message" << id << "has bad UIDL, cannot keep a copy on server!";
+      idsOfForcedDeletes.insert( id );
+    }
+    else {
+      id = qdata.left( spc );
+      uid = qdata.mid( spc + 1 );
+    }
+
+    mSizeOfNextSeenMsgsDict.insert( uid, mMsgsPendingDownload[id] );
+    if ( mUidsOfSeenMsgsDict.contains( uid ) ) {
+      if ( mMsgsPendingDownload.contains( id ) ) {
+        mMsgsPendingDownload.remove( id );
+      }
+      else
+        kDebug(5006) << "Synchronization failure.";
+      idsOfMsgsToDelete.insert( id );
+      mUidsOfNextSeenMsgsDict.insert( uid, 1 );
+      if ( mTimeOfSeenMsgsVector.empty() ) {
+        mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
+      }
+      else {
+        mTimeOfNextSeenMsgsMap.insert( uid,
+                            mTimeOfSeenMsgsVector[ mUidsOfSeenMsgsDict[uid] ] );
+      }
+    }
+    mUidForIdMap.insert( id, uid );
   }
 }
 

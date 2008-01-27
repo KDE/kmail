@@ -152,6 +152,12 @@ private:
   QHash<QByteArray, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
   QHash<QByteArray, int> mSizeOfNextSeenMsgsDict;
   QSet<QByteArray> idsOfMsgsToDelete;
+
+  // All IDs that we'll delete in any case, even if we have "leave on server"
+  // checked. This is only used when the server issues an invalid UIDL response
+  // and we can't map a UID to the ID. See bug 127696.
+  QSet<QByteArray> idsOfForcedDeletes; 
+
   int indexOfCurrentMsg;
 
   QQueue<KMMessage*> msgsAwaitingProcessing;
