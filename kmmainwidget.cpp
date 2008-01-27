@@ -2061,10 +2061,15 @@ void KMMainWidget::slotOnlineStatus()
 
 void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type )
 {
-  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
-    actionCollection()->action( "online_status" )->setText( i18n("Work Offline") );
-  else
-    actionCollection()->action( "online_status" )->setText( i18n("Work Online") );
+  QAction *action = actionCollection()->action( "online_status" );
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
+    action->setText( i18n("Work Offline") );
+    action->setIcon( KIcon("user-offline") );
+  }
+  else {
+    action->setText( i18n("Work Online") );
+    action->setIcon( KIcon("user-online") );
+  }
 }
 
 
@@ -2763,7 +2768,8 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
-    QAction *action = new KAction(KIcon("online_status"), i18n("Onlinestatus (unknown)"), this);
+    QAction *action = new KAction(i18n("Onlinestatus (unknown)"), this);
+    action->setIconText(i18n("Status"));
     actionCollection()->addAction("online_status", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()));
   }
