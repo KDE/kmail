@@ -2768,10 +2768,9 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
-    QAction *action = new KAction(i18n("Onlinestatus (unknown)"), this);
-    action->setIconText(i18n("Status"));
-    actionCollection()->addAction("online_status", action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()));
+    QAction *action = new KAction( i18n("Onlinestatus (unknown)"), this );
+    actionCollection()->addAction( "online_status", action );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()) );
   }
 
   KActionMenu *sendActionMenu = new KActionMenu(KIcon("mail-send-via"), i18n("Send Queued Messages Via"), this);

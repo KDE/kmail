@@ -1209,7 +1209,7 @@ void KMComposeWin::setupActions( void )
 
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Formatting (HTML)"), this );
-  markupAction->setIconText(i18n("HTML"));
+  markupAction->setIconText( i18n("HTML") );
   actionCollection()->addAction( "html", markupAction );
   connect( markupAction, SIGNAL(triggered(bool) ), SLOT(slotToggleMarkup()) );
 
@@ -1269,7 +1269,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::preferences( kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection() );
 
   action = new KAction( i18n("&Spellchecker..."), this );
-  action->setIconText(i18n("Spellchecker"));
+  action->setIconText( i18n("Spellchecker") );
   actionCollection()->addAction( "setup_spellchecker", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()) );
 
@@ -1360,16 +1360,16 @@ void KMComposeWin::setupActions( void )
            SLOT( slotSizeAction( int ) ) );
 
   alignLeftAction = new KToggleAction( KIcon( "format-justify-left" ), i18n("Align Left"), this );
-  alignLeftAction->setIconText(i18n("Left"));
+  alignLeftAction->setIconText( i18n("Left") );
   actionCollection()->addAction( "align_left", alignLeftAction );
   connect( alignLeftAction, SIGNAL( triggered(bool) ), SLOT( slotAlignLeft() ) );
   alignLeftAction->setChecked( true );
   alignRightAction = new KToggleAction( KIcon( "format-justify-right" ), i18n("Align Right"), this );
-  alignRightAction->setIconText(i18n("Right"));
+  alignRightAction->setIconText( i18n("Right") );
   actionCollection()->addAction( "align_right", alignRightAction );
   connect( alignRightAction, SIGNAL( triggered(bool) ), SLOT( slotAlignRight() ) );
   alignCenterAction = new KToggleAction( KIcon( "format-justify-center" ), i18n("Align Center"), this );
-  alignCenterAction->setIconText(i18n("Center"));
+  alignCenterAction->setIconText( i18n("Center") );
   actionCollection()->addAction( "align_center", alignCenterAction );
   connect( alignCenterAction, SIGNAL( triggered(bool) ), SLOT( slotAlignCenter() ) );
   textBoldAction = new KToggleAction( KIcon( "format-text-bold" ), i18n("&Bold"), this );
@@ -1385,11 +1385,11 @@ void KMComposeWin::setupActions( void )
   connect( textUnderAction, SIGNAL( triggered(bool) ), SLOT( slotTextUnder(bool) ) );
   textUnderAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_U ) );
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
-  actionFormatReset->setIconText(i18n("Reset Font"));
+  actionFormatReset->setIconText( i18n("Reset Font") );
   actionCollection()->addAction( "format_reset", actionFormatReset );
   connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
   actionFormatColor = new KAction( KIcon( "format-stroke-color" ), i18n("Text Color..."), this );
-  actionFormatColor->setIconText(i18n("Text Color"));
+  actionFormatColor->setIconText( i18n("Text Color") );
   actionCollection()->addAction("format_color", actionFormatColor );
   connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
 
