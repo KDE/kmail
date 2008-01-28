@@ -90,11 +90,9 @@ namespace KMail {
 
     // "Send responses for these addresses" lineedit and label:
     ++row;
-    QWidget *page = new QWidget( this );
-    setMainWidget( page );
-    mMailAliasesEdit = new QLineEdit( page);
+    mMailAliasesEdit = new QLineEdit( frame );
     mMailAliasesEdit->setObjectName( "mMailAliasesEdit" );
-    QLabel *tmpLabel = new QLabel( i18n("&Send responses for these addresses:"), page );
+    QLabel *tmpLabel = new QLabel( i18n("&Send responses for these addresses:"), frame );
     tmpLabel->setBuddy( mMailAliasesEdit );
     glay->addWidget( tmpLabel, row, 0 );
     glay->addWidget( mMailAliasesEdit, row, 1 );
