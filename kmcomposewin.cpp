@@ -144,7 +144,6 @@ int KMComposeWin::s_composerNumber = 0;
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   : KMail::Composer( "kmail-composer#" ),
-    mSpellCheckInProgress( false ),
     mDone( false ),
     mAtmModified( false ),
     mMsg( 0 ),
@@ -259,8 +258,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
   mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
   mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
-
-  mSpellCheckInProgress = false;
 
   setCaption( i18n("Composer") );
   setMinimumSize( 200, 200 );

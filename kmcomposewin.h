@@ -704,7 +704,6 @@ class KMComposeWin : public KMail::Composer
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
-    bool mSpellCheckInProgress;
     bool mDone;
     bool mAtmModified;
 
