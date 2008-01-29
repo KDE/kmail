@@ -173,8 +173,8 @@ void KMMainWin::setupStatusBar()
 
   statusBar()->insertItem( i18n("Starting...") , 1, 4 );
   statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
-  statusBar()->addWidget( mKMMainWidget->vacationScriptIndicator(), 1 );
-  statusBar()->addPermanentWidget( mLittleProgress, 0 );
+  statusBar()->addPermanentWidget( mKMMainWidget->vacationScriptIndicator() );
+  statusBar()->addPermanentWidget( mLittleProgress );
   mLittleProgress->show();
 }
 

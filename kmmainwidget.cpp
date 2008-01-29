@@ -138,6 +138,7 @@ using KMail::HeaderListQuickSearch;
 #include "mailinglistpropertiesdialog.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
+#include "statusbarlabel.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -260,9 +261,9 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
-  mVacationScriptIndicator = new QLabel( QString(), sb );
+  mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
   mVacationScriptIndicator->hide();
-  connect( mVacationScriptIndicator, SIGNAL(itemReleased(int)), SLOT(slotEditVacation()) );
+  connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
   if ( GlobalSettings::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 }
@@ -4400,12 +4401,15 @@ void KMMainWidget::updateVactionScriptStatus( bool active )
   mVacationIndicatorActive = active;
   if ( active ) {
     mVacationScriptIndicator->setText( i18n("Out of office reply active") );
-    QPalette palette;
-    palette.setColor( mVacationScriptIndicator->backgroundRole(), Qt::yellow );
-    mVacationScriptIndicator->setPalette( palette );
+    mVacationScriptIndicator->setBackgroundColor( Qt::yellow );
     mVacationScriptIndicator->setCursor( QCursor( Qt::PointingHandCursor ) );
     mVacationScriptIndicator->show();
   } else {
     mVacationScriptIndicator->hide();
   }
+}
+
+QLabel * KMMainWidget::vacationScriptIndicator() const
+{
+  return mVacationScriptIndicator;
 }

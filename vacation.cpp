@@ -650,7 +650,8 @@ namespace KMail {
     if ( mCheckOnly && mWasActive ) {
       if ( KMessageBox::questionYesNo( 0, i18n( "There is still an active out-of-office reply configured.\n"
                                         "Do you want to edit it?"), i18n("Out-of-office reply still active"),
-                                        KGuiItem( i18n( "Edit"), "edit" ), KGuiItem( i18n("Ignore"), "button_cancel" ) )
+                                        KGuiItem( i18n( "Edit"), "document-properties" ),
+                                        KGuiItem( i18n("Ignore"), "dialog-cancel" ) )
            == KMessageBox::Yes ) {
         kmkernel->getKMMainWidget()->slotEditVacation();
       }

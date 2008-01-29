@@ -77,6 +77,7 @@ namespace KMail {
   class SearchWindow;
   class ImapAccountBase;
   class FavoriteFolderView;
+  class StatusBarLabel;
 }
 
 typedef QMap<QAction*,KMFolder*> KMMenuToFolder;
@@ -178,7 +179,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void setAccelsEnabled( bool enabled = true );
 
-    QLabel* vacationScriptIndicator() const { return mVacationScriptIndicator; }
+    QLabel* vacationScriptIndicator() const;
     void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
 
   public slots:
@@ -603,7 +604,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     Q3Accel *mAccel;
 
-    QLabel *mVacationScriptIndicator;
+    KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
 };
 
