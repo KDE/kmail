@@ -340,10 +340,10 @@ KMMsgSignatureState  partNode::overallSignatureState() const
 }
 
 
-int partNode::nodeId()
+int partNode::nodeId() const
 {
     int curId = 0;
-    partNode* rootNode = this;
+    partNode* rootNode = const_cast<partNode*>( this );
     while( rootNode->mRoot )
         rootNode = rootNode->mRoot;
     return rootNode->calcNodeIdOrFindNode( curId, this, 0, 0 );

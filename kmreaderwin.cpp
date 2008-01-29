@@ -1779,11 +1779,10 @@ void KMReaderWin::slotTouchMessage()
     return;
 
   KMFolder *folder = message()->parent();
-  if ( folder ) {
-    if ( folder->isOutbox() || folder->isSent() || folder->isTrash() ||
-         folder->isDrafts() || folder->isTemplates() )
-      return;
-  }
+  if ( folder &&
+       ( folder->isOutbox() || folder->isSent() || folder->isTrash() ||
+         folder->isDrafts() || folder->isTemplates() ) )
+    return;
 
   if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
                                                    MDN::Displayed,
@@ -1911,15 +1910,23 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   action = menu->addAction(SmallIcon("document-open"),i18nc("to open", "Open"));
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Open );
+
   action = menu->addAction(i18n("Open With..."));
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::OpenWith );
+
   action = menu->addAction(i18nc("to view something", "View") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::View );
+
   action = menu->addAction(SmallIcon("document-save-as"),i18n("Save As...") );
   connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
   attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Save );
+
+  action = menu->addAction(SmallIcon("edit-copy"), i18n("Copy") );
+  connect( action, SIGNAL( triggered(bool) ), attachmentMapper, SLOT( map() ) );
+  attachmentMapper->setMapping( action, KMHandleAttachmentCommand::Copy );
+
   if ( GlobalSettings::self()->allowAttachmentEditing() ) {
     action = menu->addAction(SmallIcon("document-properties"), i18n("Edit Attachment") );
     connect( action, SIGNAL(triggered()), attachmentMapper, SLOT(map()) );
@@ -1985,6 +1992,23 @@ void KMReaderWin::slotHandleAttachment( int choice )
     slotDeleteAttachment( node );
   } else if ( choice == KMHandleAttachmentCommand::Edit ) {
     slotEditAttachment( node );
+  } else if ( choice == KMHandleAttachmentCommand::Copy ) {
+    if ( !node )
+      return;
+    QList<QUrl> urls;
+    KUrl kUrl = tempFileUrlFromPartNode( node );
+    QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );
+    
+    if ( !url.isValid() )
+      return;
+    urls.append( url );
+
+    QDrag *drag = new QDrag( this );
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setUrls( urls );
+    drag->setMimeData( mimeData );
+    QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
+    drag->exec( Qt::CopyAction );
   }
 }
 
@@ -2480,6 +2504,24 @@ partNode * KMReaderWin::partNodeForId( int id ) {
   return mRootNode ? mRootNode->findId( id ) : 0 ;
 }
 
+
+KUrl KMReaderWin::tempFileUrlFromPartNode( const partNode *node )
+{
+  if (!node)
+    return KUrl();
+
+  foreach ( const QString &path, mTempFiles ) {
+    int right = path.lastIndexOf( '/' );
+    int left = path.lastIndexOf( '.', right );
+
+    bool ok = false;
+    int res = path.mid( left + 1, right - left - 1 ).toInt( &ok );
+    if ( ok && res == node->nodeId() )
+      return KUrl( path );
+  }
+  return KUrl();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveAttachments()
 {
@@ -2498,25 +2540,6 @@ void KMReaderWin::slotSaveMsg()
     delete saveCommand;
   else
     saveCommand->start();
-}
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::createAtmFileLink() const
-{
-  QFileInfo atmFileInfo(mAtmCurrentName);
-
-  KTemporaryFile *linkFile = new KTemporaryFile();
-  linkFile->setPrefix(atmFileInfo.fileName() +"_[");
-  linkFile->setSuffix("]."+ atmFileInfo.suffix());
-  linkFile->open();
-  QString linkName = linkFile->fileName();
-  delete linkFile;
-
-  if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {
-    return linkName; // success
-  }
-  kWarning(5006) <<"Couldn't link to" << mAtmCurrentName;
-  return QString();
 }
 
 //-----------------------------------------------------------------------------

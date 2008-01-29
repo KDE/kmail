@@ -152,7 +152,7 @@ public:
         return mSignatureState;
     }
 
-    int nodeId();  // node ids start at 1 (this is the top level root node)
+    int nodeId() const;  // node ids start at 1 (this is the top level root node)
 
     partNode* findId( int id );  // returns the node which has the given id (or 0, resp.)
 

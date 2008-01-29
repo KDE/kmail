@@ -903,7 +903,8 @@ public:
     Properties = 5,
     ChiasmusEncrypt = 6,
     Delete = 7,
-    Edit = 8
+    Edit = 8,
+    Copy = 9
   };
   /**
    * Construct a new command
@@ -967,7 +968,7 @@ private:
   partNode* mNode;
   KMMessage* mMsg;
   int mAtmId;
-  const QString& mAtmName;
+  QString mAtmName;
   AttachmentAction mAction;
   KService::Ptr mOffer;
   Kleo::SpecialJob *mJob;
