@@ -378,9 +378,6 @@ protected slots:
    * often the the other updates and is therefor in its own method. */
   void updateMarkAsReadAction();
 
-  /** Settings menu */
-  void slotToggleShowQuickSearch();
-
   /** XML-GUI stuff */
   void slotEditNotifications();
   void slotEditKeys();
@@ -479,8 +476,8 @@ private:
   KToggleAction* mTotalColumnToggle;
   KToggleAction* mSizeColumnToggle;
 
-  KToggleAction *mToggleShowQuickSearchAction;
-
+  QVBox        *mSearchAndTree;
+  QHBox        *mFolderQuickSearch;
   KMFolderTree *mFolderTree;
   KMail::FavoriteFolderView *mFavoriteFolderView;
   QWidget      *mFolderView;
@@ -516,6 +513,8 @@ private:
        mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
   bool mEnableFavoriteFolderView;
+  bool mEnableFolderQuickSearch;
+  bool mEnableQuickSearch;
 
 //  QPopupMenu *mMessageMenu;
   KMail::SearchWindow *mSearchWin;

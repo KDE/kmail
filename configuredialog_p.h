@@ -485,6 +485,7 @@ private: // data
   QButtonGroup *mMIMETreeModeGroup;
   QButtonGroup *mReaderWindowModeGroup;
   QCheckBox *mFavoriteFolderViewCB;
+  QCheckBox *mFolderQuickSearchCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
@@ -504,6 +505,7 @@ private: // methods
   void setDateDisplay( int id, const QString & format );
 
 private: // data
+  QCheckBox    *mShowQuickSearch;
   QCheckBox    *mMessageSizeCheck;
   QCheckBox    *mAttachmentCheck;
   QCheckBox    *mNestedMessagesCheck;

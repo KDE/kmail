@@ -18,11 +18,14 @@
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qpopupmenu.h>
+#include <qpushbutton.h>
 #include <qptrlist.h>
 
 #include <kopenwith.h>
 
 #include <kmessagebox.h>
+#include <klistviewsearchline.h>
+#include <kiconloader.h>
 
 #include <kpopupmenu.h>
 #include <kaccelmanager.h>
@@ -296,6 +299,8 @@ void KMMainWidget::readPreConfig(void)
   mHtmlPref = reader.readBoolEntry( "htmlMail", false );
   mHtmlLoadExtPref = reader.readBoolEntry( "htmlLoadExternal", false );
   mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
+  mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
+  mEnableQuickSearch = GlobalSettings::self()->quickSearchActive();
 }
 
 
@@ -338,6 +343,8 @@ void KMMainWidget::readConfig(void)
   bool oldReaderWindowActive = mReaderWindowActive;
   bool oldReaderWindowBelow = mReaderWindowBelow;
   bool oldFavoriteFolderView = mEnableFavoriteFolderView;
+  bool oldFolderQuickSearch = mEnableFolderQuickSearch;
+  bool oldQuickSearch = mEnableQuickSearch;
 
   QString str;
   QSize siz;
@@ -352,7 +359,9 @@ void KMMainWidget::readConfig(void)
     bool layoutChanged = ( oldLongFolderList != mLongFolderList )
                     || ( oldReaderWindowActive != mReaderWindowActive )
                     || ( oldReaderWindowBelow != mReaderWindowBelow )
-                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView );
+                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView )
+                    || ( oldFolderQuickSearch != mEnableFolderQuickSearch )
+                    || ( oldQuickSearch != mEnableQuickSearch );
 
 
     if( layoutChanged ) {
@@ -483,7 +492,9 @@ void KMMainWidget::readConfig(void)
     bool layoutChanged = ( oldLongFolderList != mLongFolderList )
                     || ( oldReaderWindowActive != mReaderWindowActive )
                     || ( oldReaderWindowBelow != mReaderWindowBelow )
-                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView );
+                    || ( oldFavoriteFolderView != mEnableFavoriteFolderView )
+                    || ( oldFolderQuickSearch != mEnableFolderQuickSearch )
+                    || ( oldQuickSearch != mEnableQuickSearch );
     if ( layoutChanged ) {
       activatePanners();
     }
@@ -682,9 +693,25 @@ void KMMainWidget::createWidgets(void)
     folderTreeParent = mFolderViewSplitter;
     mFolderView = mFolderViewSplitter;
   }
-  mFolderTree = new KMFolderTree(this, folderTreeParent, "folderTree");
+
+  // the "folder tree" consists of a quicksearch input field and the tree itself
+  mSearchAndTree = new QVBox(folderTreeParent);
+  mFolderQuickSearch = new QHBox(mSearchAndTree);
+  QPushButton *clear = new QPushButton(QApplication::reverseLayout()
+                                       ? SmallIcon("clear_left")
+                                       : SmallIcon("locationbar_erase"), "", mFolderQuickSearch);
+  clear->setFlat(true);
+  KListViewSearchLine *search = new KListViewSearchLine(mFolderQuickSearch);
+  mFolderTree = new KMFolderTree(this, mSearchAndTree, "folderTree");
+  search->setListView(mFolderTree);
+  connect(clear, SIGNAL(clicked()), search, SLOT(clear()));
+
+  if ( !GlobalSettings::enableFolderQuickSearch() ) {
+    mFolderQuickSearch->hide();
+  }
+
   if ( !GlobalSettings::enableFavoriteFolderView() ) {
-     mFolderView = mFolderTree;
+     mFolderView = mSearchAndTree;
   }
   connect( mFolderTree, SIGNAL(folderSelected(KMFolder*)),
             mFavoriteFolderView, SLOT(folderTreeSelectionChanged(KMFolder*)) );
@@ -1410,18 +1437,6 @@ void KMMainWidget::slotToggleSubjectThreading()
 {
   mFolderThreadSubjPref = !mFolderThreadSubjPref;
   mHeaders->setSubjectThreading(mFolderThreadSubjPref);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotToggleShowQuickSearch()
-{
-  GlobalSettings::self()->setQuickSearchActive( !GlobalSettings::self()->quickSearchActive() );
-  if ( GlobalSettings::self()->quickSearchActive() )
-    mSearchToolBar->show();
-  else {
-    mQuickSearchLine->reset();
-    mSearchToolBar->hide();
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3095,13 +3110,6 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_unread_text" );
 
   //----- Settings Menu
-  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString::null,
-                                       0, this, SLOT(slotToggleShowQuickSearch()),
-                                       actionCollection(), "show_quick_search");
-  mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
-  mToggleShowQuickSearchAction->setWhatsThis(
-        i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().utf8() ) );
-
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
@@ -3927,17 +3935,17 @@ void KMMainWidget::setupFolderView()
 {
   if ( GlobalSettings::self()->enableFavoriteFolderView() ) {
     mFolderView = mFolderViewSplitter;
-    mFolderTree->reparent( mFolderViewSplitter, 0, QPoint( 0, 0 ) );
+    mSearchAndTree->reparent( mFolderViewSplitter, 0, QPoint( 0, 0 ) );
     mFolderViewSplitter->show();
     mFavoriteFolderView->show();
   } else {
-    mFolderView = mFolderTree;
+    mFolderView = mSearchAndTree;
     mFolderViewSplitter->hide();
     mFavoriteFolderView->hide();
   }
   mFolderView->reparent( mFolderViewParent, 0, QPoint( 0, 0 ) );
   mFolderViewParent->moveToFirst( mFolderView );
-  mFolderTree->show();
+  mSearchAndTree->show();
 }
 
 
