@@ -132,7 +132,6 @@ QList<FavoriteFolderView*> FavoriteFolderView::mInstances;
 
 FavoriteFolderView::FavoriteFolderView( KMMainWidget *mainWidget, QWidget * parent) :
     FolderTreeBase( mainWidget, parent ),
-    mContextMenuItem( 0 ),
     mReadingConfig( false )
 {
   assert( mainWidget );

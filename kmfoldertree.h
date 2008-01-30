@@ -340,7 +340,7 @@ protected:
   /** Drag and drop variables */
   Q3ListViewItem *oldCurrent, *oldSelected;
   Q3ListViewItem *dropItem;
-  KMFolderTreeItem *mLastItem;
+  QPointer<KMFolderTreeItem> mLastItem;
   QTimer autoopen_timer;
 
   // filter some rmb-events

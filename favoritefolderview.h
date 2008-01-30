@@ -87,7 +87,7 @@ class FavoriteFolderView : public FolderTreeBase
     void notifyInstancesOnChange();
 
   private:
-    KMFolderTreeItem* mContextMenuItem;
+    QPointer<KMFolderTreeItem> mContextMenuItem;
     static QList<FavoriteFolderView*> mInstances;
     bool mReadingConfig;
 };
