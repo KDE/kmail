@@ -122,14 +122,10 @@ void KMFolderMgr::compactAllFolders(bool immediate, KMFolderDir* dir)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::setBasePath(const QString& aBasePath)
 {
-  assert(!aBasePath.isNull());
+  assert(!aBasePath.isEmpty());
 
-  if (aBasePath[0] == '~')
-  {
-    mBasePath = QDir::homePath();
-    mBasePath.append("/");
-    mBasePath.append(aBasePath.mid(1));
-  }
+  if (aBasePath.startsWith('~'))
+    mBasePath = QDir::homePath() + "/" + aBasePath.mid(1);
   else
     mBasePath = aBasePath;
 
@@ -137,6 +133,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
 
   // FIXME We should ask for an alternative dir, rather than bailing out,
   // I guess - till
+  // FIXME We also should return boolean value here instead if exiting - jstaniek
   if ( info.exists() ) {
    if ( !info.isDir() ) {
       KMessageBox::sorry(0, i18n("'%1' does not appear to be a folder.\n"
