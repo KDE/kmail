@@ -17,6 +17,7 @@
 #include "signatureconfigurator.h"
 
 #include <klocale.h>
+#include <kdebug.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <kurlrequester.h>
@@ -29,6 +30,7 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QLayout>
+#include <QMimeData>
 #include <QTextEdit>
 
 #include <QStackedWidget>
@@ -108,13 +110,26 @@ namespace KMail {
 
     int pageno = 0;
     // page 0: input field for direct entering:
-    mTextEdit = new QTextEdit( widgetStack );
+    page = new QWidget( widgetStack );
+    widgetStack->insertWidget( pageno, page );
+    page_vlay = new QVBoxLayout( page );
+    mTextEdit = new QTextEdit();
+    page_vlay->addWidget( mTextEdit, 0 );
     mTextEdit->setWhatsThis(
         i18n("Use this field to enter an arbitrary static signature."));
-    widgetStack->insertWidget( pageno,mTextEdit );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
-    mTextEdit->setAcceptRichText( false );
+
+    hlay = new QHBoxLayout(); // inherits spacing
+    page_vlay->addLayout( hlay );
+    mHtmlCheck = new QCheckBox( i18n("&Use HTML"), page );
+    connect( mHtmlCheck, SIGNAL(clicked()),
+             this, SLOT(slotSetHtml()) );
+    mShowCodeOrHtmlBtn = new QPushButton( i18n("Show HTML"), page );
+    connect( mShowCodeOrHtmlBtn, SIGNAL(clicked()), SLOT(slotShowCodeOrHtml()) );
+    hlay->addWidget( mHtmlCheck );
+    hlay->addWidget( mShowCodeOrHtmlBtn, 1 );
+    mInlinedHtml = true;
 
     widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0
 
@@ -211,7 +226,13 @@ namespace KMail {
   }
 
   QString SignatureConfigurator::inlineText() const {
-    return mTextEdit->toPlainText();
+    if ( mHtmlCheck->checkState() == Qt::Unchecked ) 
+      return mTextEdit->toPlainText();
+
+    if ( mViewMode == ShowHtml )
+      return mTextEdit->toHtml();
+    else
+      return mTextEdit->toPlainText();
   }
 
   void SignatureConfigurator::setInlineText( const QString & text ) {
@@ -245,6 +266,7 @@ namespace KMail {
   Signature SignatureConfigurator::signature() const {
     Signature sig;
     sig.setType( signatureType() );
+    sig.setInlinedHtml( mInlinedHtml );
     sig.setText( inlineText() );
     if ( signatureType() == Signature::FromCommand )
       sig.setUrl( commandURL(), true );
@@ -255,11 +277,25 @@ namespace KMail {
 
   void SignatureConfigurator::setSignature( const Signature & sig ) {
     setSignatureType( sig.type() );
+    if ( sig.isInlinedHtml() )
+    {
+      mHtmlCheck->setCheckState( Qt::Checked );
+      mInlinedHtml = true;
+      initHtmlState();
+    }
+    else
+    {
+      mInlinedHtml = false;
+      mShowCodeOrHtmlBtn->setEnabled( false );
+      mTextEdit->setAcceptRichText( false );
+    }
     setInlineText( sig.text() );
+
     if ( sig.type() == Signature::FromFile )
       setFileURL( sig.url() );
     else
       setFileURL( QString() );
+
     if ( sig.type() == Signature::FromCommand )
       setCommandURL( sig.url() );
     else
@@ -276,6 +312,65 @@ namespace KMail {
     assert( !url.isEmpty() );
 
     (void)KRun::runUrl( KUrl( url ), QString::fromLatin1("text/plain"), this );
+  }
+
+  // button clicked
+  void SignatureConfigurator::slotShowCodeOrHtml() {
+    if ( mViewMode == ShowCode )
+      toggleHtmlBtnState( ShowHtml );
+    else
+      toggleHtmlBtnState( ShowCode );
+  }
+
+  void SignatureConfigurator::initHtmlState()
+  {
+    mShowCodeOrHtmlBtn->setEnabled( true );
+    mTextEdit->setAcceptRichText( true );
+    mViewMode = ShowHtml;
+    mShowCodeOrHtmlBtn->setText( i18n("Show HTML Code") );
+  }
+
+  void SignatureConfigurator::toggleHtmlBtnState(ViewMode state) {
+    QString text;
+    switch ( state )
+    {
+      case ShowCode:
+        // show the html code, and toggle the button text
+        mTextEdit->setAcceptRichText( false );
+        text = mTextEdit->toHtml();
+        mTextEdit->setPlainText( text );
+        mViewMode = ShowCode;
+        mShowCodeOrHtmlBtn->setText( i18n("Show HTML") );
+        break;
+      case ShowHtml:
+        // show the formatted signature
+        mTextEdit->setAcceptRichText( true );
+        text = mTextEdit->toPlainText(); // get the raw html code
+        mViewMode = ShowHtml;
+        mTextEdit->setHtml( text );
+        mShowCodeOrHtmlBtn->setText( i18n("Show HTML Code") );
+        break;
+    }
+  }
+
+  // "use HTML"-checkbox (un)checked
+  void SignatureConfigurator::slotSetHtml() {
+    if ( mHtmlCheck->checkState() == Qt::Unchecked )
+    {
+      QString text;
+      mTextEdit->setAcceptRichText( false );
+      mShowCodeOrHtmlBtn->setEnabled( false );
+      mInlinedHtml = false;
+      if ( mViewMode == ShowCode )
+        mTextEdit->setHtml( mTextEdit->toPlainText() );
+      text = mTextEdit->toPlainText();
+      mTextEdit->setPlainText( text );
+    }
+    else
+    {
+      mInlinedHtml = true;
+      initHtmlState();
+    }
   }
 
 } // namespace KMail

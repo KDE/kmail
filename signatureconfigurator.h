@@ -28,6 +28,7 @@ class KLineEdit;
 class QString;
 class QPushButton;
 class QTextEdit;
+class QTextCharFormat;
 
 namespace KMail {
 
@@ -36,6 +37,8 @@ namespace KMail {
   public:
     SignatureConfigurator( QWidget * parent=0 );
     virtual ~SignatureConfigurator();
+
+    enum ViewMode { ShowCode, ShowHtml };
 
     bool isSignatureEnabled() const;
     void setSignatureEnabled( bool enable );
@@ -62,17 +65,30 @@ namespace KMail {
     **/
     void setSignature( const Signature & sig );
 
+  private:
+    void toggleHtmlBtnState( ViewMode state );
+
+    void initHtmlState();
+
   protected slots:
     void slotEnableEditButton( const QString & );
     void slotEdit();
+    void slotShowCodeOrHtml();
+    void slotSetHtml();
 
   protected:
     QCheckBox     * mEnableCheck;
+    QCheckBox     * mHtmlCheck;
     QComboBox     * mSourceCombo;
     KUrlRequester * mFileRequester;
     QPushButton   * mEditButton;
+    QPushButton   * mShowCodeOrHtmlBtn;
     KLineEdit     * mCommandEdit;
     QTextEdit     * mTextEdit;
+
+  private:
+    bool mInlinedHtml;
+    ViewMode  mViewMode;
   };
 
 } // namespace KMail

@@ -3831,7 +3831,13 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
                                 mIdentity->currentIdentity() ) );
 
   mOldSigText = ident.signatureText();
-  mEditor->insertSignature( ident.signature(), placement );
+  if ( ident.signatureIsInlinedHtml() ) {
+    kDebug(5006) << "Html signature, turning editor into html mode";
+    toggleMarkup( true );
+    mEditor->insertSignature( ident.signature(), placement, true );
+  }
+  else
+    mEditor->insertSignature( ident.signature(), placement );
 }
 
 //-----------------------------------------------------------------------------
