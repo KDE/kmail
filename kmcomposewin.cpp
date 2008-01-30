@@ -3731,7 +3731,6 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   mFolder = 0;
   cleanupAutoSave();
   close();
-  return;
 }
 
 //----------------------------------------------------------------------------
