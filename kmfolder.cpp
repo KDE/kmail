@@ -32,6 +32,7 @@
 #include "compactionjob.h"
 #include "kmfoldertree.h"
 #include "kmailicalifaceimpl.h"
+#include "kmaccount.h"
 
 #include <errno.h>
 #include <unistd.h> // W_OK
@@ -220,8 +221,12 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
   configGroup.writeEntry("MailingListEnabled", mMailingListEnabled);
   mMailingList.writeConfig( configGroup );
 
+
   configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
-  configGroup.writeEntry( "Identity", mIdentity );
+  if ( mIdentity != 0 && ( !mStorage || !mStorage->account() || mIdentity != mStorage->account()->identityId() ) )
+      configGroup.writeEntry("Identity", mIdentity);
+  else
+      configGroup.deleteEntry("Identity");
 
   configGroup.writeEntry("WhoField", mUserWhoField);
   configGroup.writeEntry("Id", mId);
@@ -631,6 +636,16 @@ void KMFolder::setIdentity( uint identity )
 {
   mIdentity = identity;
   kmkernel->slotRequestConfigSync();
+}
+
+uint KMFolder::identity() const
+{
+  // if we don't have one set ourselves, check our account
+  kDebug() << "FOO: " << mIdentity << " :: " << mStorage << endl;
+  if ( !mIdentity && mStorage )
+    if ( KMAccount *act = mStorage->account() )
+      return act->identityId();
+  return mIdentity;
 }
 
 void KMFolder::setWhoField(const QString& aWhoField )

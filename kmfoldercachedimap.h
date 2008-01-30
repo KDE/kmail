@@ -34,7 +34,7 @@
 
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
-#include "kmacctimap.h"
+#include "kmacctcachedimap.h"
 #include "kmfoldertype.h"
 #include "folderjob.h"
 #include "cachedimapjob.h"
@@ -49,7 +49,6 @@
 
 using KMail::FolderJob;
 using KMail::QuotaInfo;
-class KMAcctCachedImap;
 class KMCommand;
 
 class QComboBox;

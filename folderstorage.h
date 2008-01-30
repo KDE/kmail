@@ -53,6 +53,7 @@ using KMail::FolderJob;
 #include <stdio.h>
 
 class KMMessage;
+class KMAccount;
 class KMFolderDir;
 class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
@@ -417,6 +418,8 @@ public:
 
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
+
+  virtual KMAccount* account() const;
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

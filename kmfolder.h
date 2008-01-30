@@ -392,7 +392,7 @@ public:
   bool useDefaultIdentity() const { return mUseDefaultIdentity; }
 
   void setIdentity(uint identity);
-  uint identity() const { return mIdentity; }
+  uint identity() const;
 
   /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
   QString whoField() const { return mWhoField; }

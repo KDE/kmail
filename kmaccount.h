@@ -233,6 +233,12 @@ public:
     return mMailCheckProgressItem;
   }
 
+  /**
+   * Set/get identity for checking account.
+   */
+  void setIdentityId(uint identityId ) { mIdentityId = identityId; }
+  uint identityId() const{ return mIdentityId; }
+
 signals:
   /**
    * Emitted after the mail check is finished.
@@ -290,7 +296,11 @@ protected:
   AccountManager*    mOwner;
   QPointer<KMAcctFolder> mFolder;
   QTimer *mTimer;
-  int mInterval;
+  int mInterval; // this is a switch and a scalar at the same time. If it is 0,
+  // interval mail checking is turned off and the interval spinbox proposes a
+  // default value. If it is non-null, it is the count of minutes between two
+  // automated mail checks. This means that as soon as you disable interval
+  // mail checking, the value in the spin box returns to a default value.
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
@@ -298,7 +308,7 @@ protected:
   QList<FolderJob*>  mJobList;
   bool mHasInbox : 1;
   ProgressItem *mMailCheckProgressItem;
-
+  uint mIdentityId;
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
