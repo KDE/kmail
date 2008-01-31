@@ -70,7 +70,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
     this, SLOT(slotNoQuoteReplyToMsg()), mActionCollection, "noquotereply" );
 
 
-  mCreateTodoAction = new KAction( i18n("Create Task..."), "mail_todo",
+  mCreateTodoAction = new KAction( i18n("Create Task/Reminder..."), "mail_todo",
                                    0, this, SLOT(slotCreateTodo()), mActionCollection,
                                    "create_todo" );
 
