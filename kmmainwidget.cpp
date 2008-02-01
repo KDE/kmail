@@ -314,6 +314,8 @@ void KMMainWidget::readPreConfig()
   mHtmlPref = reader.readEntry( "htmlMail", false );
   mHtmlLoadExtPref = reader.readEntry( "htmlLoadExternal", false );
   mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
+  mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
+  mEnableQuickSearch = GlobalSettings::self()->quickSearchActive();
 }
 
 
@@ -433,14 +435,14 @@ void KMMainWidget::layoutSplitters()
   } else
     folderTreeParent = folderViewParent;
 
-  folderTreeParent->insertWidget( folderTreePosition, mFolderTree );
+  folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
   mSplitter2->addWidget( mSearchAndHeaders );
   if ( mMsgView ) {
     messageViewerParent->addWidget( mMsgView );
     mMsgView->setParent( messageViewerParent );
   }
 
-  mFolderTree->setParent( folderTreeParent );
+  mSearchAndTree->setParent( folderTreeParent );
   mSearchAndHeaders->setParent( mSplitter2 );
 
   //
@@ -546,6 +548,8 @@ void KMMainWidget::readConfig()
   bool oldReaderWindowActive = mReaderWindowActive;
   bool oldReaderWindowBelow = mReaderWindowBelow;
   bool oldFavoriteFolderView = mEnableFavoriteFolderView;
+  bool oldFolderQuickSearch = mEnableFolderQuickSearch;
+  bool oldQuickSearch = mEnableQuickSearch;
 
   // on startup, the layout is always new and we need to relayout the widgets
   bool layoutChanged = !mStartupDone;
@@ -561,7 +565,9 @@ void KMMainWidget::readConfig()
     layoutChanged = ( oldLongFolderList != mLongFolderList ) ||
                     ( oldReaderWindowActive != mReaderWindowActive ) ||
                     ( oldReaderWindowBelow != mReaderWindowBelow ) ||
-                    ( oldFavoriteFolderView != mEnableFavoriteFolderView );
+                    ( oldFavoriteFolderView != mEnableFavoriteFolderView ) ||
+                    ( oldFolderQuickSearch != mEnableFolderQuickSearch ) ||
+                    ( oldQuickSearch != mEnableQuickSearch );
 
 
     if( layoutChanged ) {
@@ -736,6 +742,7 @@ void KMMainWidget::deleteWidgets()
   mHeaders = 0;
   mQuickSearchLine = 0;
   mMsgView = 0;
+  mSearchAndTree = 0;
   mFolderTree = 0;
   mFavoriteFolderView = 0;
   mFolderViewSplitter = 0;
@@ -816,8 +823,21 @@ void KMMainWidget::createWidgets()
 
   //
   // Create the folder tree
+  // the "folder tree" consists of a quicksearch input field and the tree itself
   //
-  mFolderTree = new KMFolderTree( this, this, "folderTree" );
+  mSearchAndTree = new QWidget( this );
+  QVBoxLayout *vboxlayout = new QVBoxLayout;
+  mFolderQuickSearch = new K3ListViewSearchLine( mSearchAndTree );
+  mFolderTree = new KMFolderTree( this, mSearchAndTree, "folderTree" );
+  mFolderQuickSearch->setListView( mFolderTree );
+  vboxlayout->addWidget( mFolderQuickSearch );
+  vboxlayout->addWidget( mFolderTree );
+  mSearchAndTree->setLayout( vboxlayout );
+
+  if ( !GlobalSettings::enableFolderQuickSearch() ) {
+    mFolderQuickSearch->hide();
+  }
+
   connect( mFolderTree, SIGNAL( folderSelected(KMFolder*) ),
            this, SLOT( folderSelected(KMFolder*) ) );
   connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
@@ -1581,18 +1601,6 @@ void KMMainWidget::slotToggleSubjectThreading()
 {
   mFolderThreadSubjPref = !mFolderThreadSubjPref;
   mHeaders->setSubjectThreading(mFolderThreadSubjPref);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotToggleShowQuickSearch()
-{
-  GlobalSettings::self()->setQuickSearchActive( !GlobalSettings::self()->quickSearchActive() );
-  if ( GlobalSettings::self()->quickSearchActive() )
-    mSearchToolBar->show();
-  else {
-    mQuickSearchLine->reset();
-    mSearchToolBar->hide();
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3409,13 +3417,6 @@ void KMMainWidget::setupActions()
   }
 
   //----- Settings Menu
-  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), this);
-  actionCollection()->addAction("show_quick_search", mToggleShowQuickSearchAction );
-  connect(mToggleShowQuickSearchAction, SIGNAL(triggered(bool) ), SLOT(slotToggleShowQuickSearch()));
-  mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
-  mToggleShowQuickSearchAction->setWhatsThis(
-        i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().toUtf8() ) );
-
   {
     QAction *action = new KAction(i18n("Configure &Filters..."), this);
     actionCollection()->addAction("filter", action );

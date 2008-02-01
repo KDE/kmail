@@ -1685,6 +1685,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   vlay->addWidget( mFavoriteFolderViewCB );
 
+  mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
+  connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  vlay->addWidget( mFolderQuickSearchCB );
+
   // "show reader window" radio buttons:
   populateButtonGroup( mReaderWindowModeGroupBox = new QGroupBox(this), mReaderWindowModeGroup = new QButtonGroup(this), Qt::Vertical, readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroupBox );
@@ -1715,6 +1719,7 @@ void AppearancePage::LayoutTab::doLoadOther() {
   loadWidget( mMIMETreeModeGroupBox, mMIMETreeModeGroup, reader, mimeTreeMode );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, geometry, readerWindowMode );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
+  mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1736,6 +1741,7 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
+  GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
 }
 
 //
@@ -1777,6 +1783,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
+  mShowQuickSearch = new QCheckBox( i18n("Show Quick Search"), group );
+  gvlay->addWidget( mShowQuickSearch );
+
   mMessageSizeCheck = new QCheckBox( i18n("Display messa&ge sizes"), group );
   gvlay->addWidget( mMessageSizeCheck );
 
@@ -1789,6 +1798,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   mNestedMessagesCheck = new QCheckBox( i18n("&Threaded message list"), group );
   gvlay->addWidget( mNestedMessagesCheck );
 
+  connect( mShowQuickSearch, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   connect( mMessageSizeCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mAttachmentCheck, SIGNAL( stateChanged( int ) ),
@@ -1897,6 +1908,7 @@ void AppearancePage::HeadersTab::doLoadOther() {
   mMessageSizeCheck->setChecked( general.readEntry( "showMessageSize", false ) );
   mCryptoIconsCheck->setChecked( general.readEntry( "showCryptoIcons", false ) );
   mAttachmentCheck->setChecked( general.readEntry( "showAttachmentIcon", true ) );
+  mShowQuickSearch->setChecked( GlobalSettings::self()->quickSearchActive() );
 
   // "Message Header Threading Options":
   int num = geometry.readEntry( "nestingPolicy", 3 );
@@ -1978,6 +1990,7 @@ void AppearancePage::HeadersTab::save() {
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
   general.writeEntry( "showAttachmentIcon", mAttachmentCheck->isChecked() );
+  GlobalSettings::self()->setQuickSearchActive( mShowQuickSearch->isChecked() );
 
   int dateDisplayID = mDateDisplay->selected();
   // check bounds:

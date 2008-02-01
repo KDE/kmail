@@ -47,6 +47,7 @@ class QToolBar;
 class KActionMenu;
 class KConfig;
 class KToggleAction;
+class K3ListViewSearchLine;
 
 class KMFolder;
 class KMFolderTree;
@@ -417,7 +418,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateMarkAsReadAction();
 
     /** Settings menu */
-    void slotToggleShowQuickSearch();
     void slotCreateTodo();
 
     /** XML-GUI stuff */
@@ -529,11 +529,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KToggleAction* mUnreadTextToggle;
     KToggleAction* mTotalColumnToggle;
 
-    KToggleAction *mToggleShowQuickSearchAction;
-
     KMail::HeaderListQuickSearch *mQuickSearchLine;
     KMail::FavoriteFolderView    *mFavoriteFolderView;
     QPointer<KMFolder> mFolder;
+    QWidget      *mSearchAndTree;
+    K3ListViewSearchLine *mFolderQuickSearch;
     KMFolderTree *mFolderTree;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
@@ -561,6 +561,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
       mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
+    bool mEnableFolderQuickSearch;
+    bool mEnableQuickSearch;
 
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
