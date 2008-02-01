@@ -1496,9 +1496,9 @@ void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
 {
   if ( !msg ) return;
 
-  const KPIM::MessageStatus oldStatus = msg->status();
+  KPIM::MessageStatus oldStatus = msg->status();
   if ( (flags & 1) && !oldStatus.isOld() )
-    msg->status().setOld();
+    oldStatus.setOld();
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
@@ -1506,10 +1506,11 @@ void KMFolderImap::seenFlagToStatus(KMMsgBase * msg, int flags, bool newMsg)
   if ( ( msg->status().isOfUnknownStatus() )
     || (!(flags&1) && !msg->status().isNew() && !msg->status().isUnread() ) ) {
     if (newMsg)
-      msg->status().setNew();
+      oldStatus.setNew();
     else
-      msg->status().setUnread();
+      oldStatus.setUnread();
   }
+  msg->setStatus( oldStatus );
 }
 
 
