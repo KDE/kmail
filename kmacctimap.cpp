@@ -406,11 +406,11 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
     QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     if (!mScheduler) {
-	mScheduler = new KMail::ActionScheduler( set, filters );
-	mScheduler->setAccountId( id() );
-	connect( mScheduler, SIGNAL(filtered(quint32)), this, SLOT(slotFiltered(quint32)) );
+      mScheduler = new KMail::ActionScheduler( set, filters );
+      mScheduler->setAccountId( id() );
+      connect( mScheduler, SIGNAL(filtered(quint32)), this, SLOT(slotFiltered(quint32)) );
     } else {
-	mScheduler->setFilterList( filters );
+      mScheduler->setFilterList( filters );
     }
   }
 
@@ -429,7 +429,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
 
     KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder->storage());
     if (!imapFolder ||
-	!imapFolder->folder()->isSystemFolder() ||
+        !imapFolder->folder()->isSystemFolder() ||
         !(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
       mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
       continue;
@@ -444,23 +444,23 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
       }
 
       if (ActionScheduler::isEnabled() ||
-	  kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
-	mScheduler->execFilters( msg );
+          kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
+        mScheduler->execFilters( msg );
       } else {
-	if (msg->transferInProgress()) {
-	  inTransit.append( sernum );
-	  continue;
-	}
-	msg->setTransferInProgress(true);
-	if ( !msg->isComplete() ) {
-	  FolderJob *job = folder->createJob(msg);
-	  connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-		  SLOT(slotFilterMsg(KMMessage*)));
-	  job->start();
-	} else {
-	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
-	  if (slotFilterMsg(msg) == 2) break;
-	}
+        if (msg->transferInProgress()) {
+          inTransit.append( sernum );
+          continue;
+        }
+        msg->setTransferInProgress(true);
+        if ( !msg->isComplete() ) {
+          FolderJob *job = folder->createJob(msg);
+          connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotFilterMsg(KMMessage*)));
+          job->start();
+        } else {
+          mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
+          if (slotFilterMsg(msg) == 2) break;
+        }
       }
     }
   }

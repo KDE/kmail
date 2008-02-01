@@ -978,12 +978,6 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
   if ( !canAddMsgNow( aMsg, aIndex_ret ) ) {
     return 0;
   }
-  QByteArray msgText;
-  char endStr[3];
-  int idx = -1;
-  KMFolder* msgParent;
-  bool editing = false;
-  int growth = 0;
 
   KMFolderOpener openThis( folder(), "mboxaddMsg" );
   if ( openThis.openResult() )
@@ -993,13 +987,13 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
   }
 
   // take message out of the folder it is currently in, if any
-  msgParent = aMsg->parent();
+  KMFolder* msgParent = aMsg->parent();
+  int idx = -1;
   if ( msgParent ) {
     if ( msgParent== folder() ) {
       if ( kmkernel->folderIsDraftOrOutbox( folder() ) ) {
         //special case for Edit message.
         kDebug(5006) <<"Editing message in outbox or drafts";
-        editing = true;
       } else {
         return 0;
       }
@@ -1030,7 +1024,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
-  msgText = escapeFrom( aMsg->asDwString() );
+  QByteArray msgText = escapeFrom( aMsg->asDwString() );
   size_t len = msgText.size();
 
   assert( mStream != 0 );
@@ -1045,8 +1039,10 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   // character
   fseek( mStream, 0, SEEK_END );
   off_t revert = KDE_ftell( mStream );
+  int growth = 0;
   if ( KDE_ftell( mStream ) >= 2 ) {
     // write message to folder file
+    char endStr[3];
     fseek( mStream, -2, SEEK_END );
     fread( endStr, 1, 2, mStream ); // ensure separating empty line
     if ( KDE_ftell( mStream ) > 0 && endStr[0]!='\n' ) {
