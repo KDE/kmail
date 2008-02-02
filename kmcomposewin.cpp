@@ -142,7 +142,7 @@ using KRecentAddress::RecentAddresses;
 
 #include "kmcomposewin.moc"
 
-#include "snippet_widget.h"
+#include "snippetwidget.h"
 
 KMail::Composer * KMail::makeComposer( KMMessage * msg, uint identitiy ) {
   return KMComposeWin::create( msg, identitiy );
