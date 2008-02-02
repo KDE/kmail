@@ -951,7 +951,7 @@ bool ImapAccountBase::handlePutError( KIO::Job* job, jobData& jd, KMFolder* fold
 QString ImapAccountBase::prettifyQuotaError( const QString& _error, KIO::Job * job )
 {
   QString error = _error;
-  if ( error.contains( "quota", Qt::CaseInsensitive ) ) return error;
+  if ( !error.contains( "quota", Qt::CaseInsensitive ) ) return error;
   // this is a quota error, prettify it a bit
   JobIterator it = findJob( job );
   QString quotaAsString( i18n("No detailed quota information available.") );
