@@ -433,6 +433,7 @@ void KMReaderWin::createWidgets() {
   vlay->setMargin( 0 );
   mSplitter = new QSplitter( Qt::Vertical, this );
   mSplitter->setObjectName( "mSplitter" );
+  mSplitter->setChildrenCollapsible( false );
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter );
   mMimePartTree->setObjectName( "mMimePartTree" );

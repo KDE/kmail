@@ -235,6 +235,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
   mSnippetSplitter->setObjectName( "mSnippetSplitter" );
+  mSnippetSplitter->setChildrenCollapsible( false );
   mSplitter->addWidget( mSnippetSplitter );
 
   mEditor = new KMComposerEditor( this, mSnippetSplitter );

@@ -386,9 +386,11 @@ void KMMainWidget::layoutSplitters()
   mSplitter1 = new QSplitter( this );
   mSplitter1->setObjectName( "splitter1" );
   mSplitter1->setOpaqueResize( opaqueResize );
+  mSplitter1->setChildrenCollapsible( false );
   mSplitter2 = new QSplitter( mSplitter1 );
   mSplitter2->setObjectName( "splitter2" );
   mSplitter2->setOpaqueResize( opaqueResize );
+  mSplitter2->setChildrenCollapsible( false );
   mSplitter1->addWidget( mSplitter2 );
 
   //
@@ -427,6 +429,7 @@ void KMMainWidget::layoutSplitters()
   if ( mFavoriteFolderView ) {
     mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
     mFolderViewSplitter->setOpaqueResize( opaqueResize );
+    mFolderViewSplitter->setChildrenCollapsible( false );
     folderTreeParent = mFolderViewSplitter;
     mFolderViewSplitter->addWidget( mFavoriteFolderView );
     mFavoriteFolderView->setParent( mFolderViewSplitter );
