@@ -1071,9 +1071,9 @@ qint64 KMFolderMaildir::doFolderSize() const
 {
   if (mCurrentlyCheckingFolderSize) return -1;
   KFileItemList list;
-  list.append( KFileItem( S_IFDIR, -1, location() + "/cur" ) );
-  list.append( KFileItem( S_IFDIR, -1, location() + "/new" ) );
-  list.append( KFileItem( S_IFDIR, -1, location() + "/tmp" ) );
+  list.append( KFileItem( S_IFDIR, KFileItem::Unknown, location() + "/cur" ) );
+  list.append( KFileItem( S_IFDIR, KFileItem::Unknown, location() + "/new" ) );
+  list.append( KFileItem( S_IFDIR, KFileItem::Unknown, location() + "/tmp" ) );
 
   KIO::DirectorySizeJob* job = KIO::directorySize( list );
   connect( job, SIGNAL( result( KJob* ) ),
