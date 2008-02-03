@@ -387,10 +387,12 @@ namespace KMail {
 
       // check whether the crypto plug-in is usable
       if ( cryptPlug->initStatus( 0 ) != CryptPlugWrapper::InitStatus_Ok ) {
+        kDebug(5006) << k_funcinfo << "crypto plug-in " << cryptPlugLibName << " not initialized" << endl;
         cryptPlugError = NOT_INITIALIZED;
         cryptPlug = 0;
       }
       else if ( !cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
+        kDebug(5006) << k_funcinfo << "crypto plug-in " << cryptPlugLibName << " cannot verify signatures" << endl;
         cryptPlugError = CANT_VERIFY_SIGNATURES;
         cryptPlug = 0;
       }
