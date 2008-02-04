@@ -3500,7 +3500,8 @@ QValueList< Q_UINT32 > KMHeaders::selectedSernums()
   for ( QListViewItemIterator it(this); it.current(); it++ ) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem* item = static_cast<HeaderItem*>( it.current() );
-      list.append( item->msgSerNum() );
+      KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
+      list.append( msgBase->getMsgSerNum() );
     }
   }
   return list;
@@ -3523,7 +3524,8 @@ QValueList< Q_UINT32 > KMHeaders::selectedVisibleSernums()
         continue;
       }
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
-      list.append( item->msgSerNum() );
+      KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
+      list.append( msgBase->getMsgSerNum() );
     }
     ++it;
   }
