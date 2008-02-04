@@ -166,7 +166,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 ),
+    mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 )
 {
   (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -230,7 +231,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mFolder = 0;
   mAutoCharset = true;
   mFixedFontAction = 0;
-  mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
+  // the attachment view is separated from the editor by a splitter
+  mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
   mSplitter->setObjectName( "mSplitter" );
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
@@ -238,8 +240,35 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mSnippetSplitter->setChildrenCollapsible( false );
   mSplitter->addWidget( mSnippetSplitter );
 
-  mEditor = new KMComposerEditor( this, mSnippetSplitter );
-  mSnippetSplitter->addWidget( mEditor );
+  QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
+  QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
+  QHBoxLayout *hbox = new QHBoxLayout( vbox );
+  {
+      mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+      mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
+      hbox->addWidget( mSignatureStateIndicator );
+
+      KConfigGroup reader( KMKernel::config(), "Reader" );
+      QPalette p( mSignatureStateIndicator->palette() );
+
+      QColor defaultSignedColor( 0x40, 0xFF, 0x40 ); // light green // pgp ok, trusted key
+      QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
+      p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageOkKeyOk", defaultSignedColor ) );
+      mSignatureStateIndicator->setPalette( p );
+      mSignatureStateIndicator->setAutoFillBackground( true );
+
+      mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+      mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
+      hbox->addWidget( mEncryptionStateIndicator );
+      p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr" , defaultEncryptedColor ) );
+      mEncryptionStateIndicator->setPalette( p );
+      mEncryptionStateIndicator->setAutoFillBackground( true );
+  }
+
+  mEditor = new KMComposerEditor( this, editorAndCryptoStateIndicators );
+  vbox->addWidget( mEditor );
+  mSnippetSplitter->moveToFirst( editorAndCryptoStateIndicators );
+  mSnippetSplitter->setOpaqueResize( true );
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
   mEditor->setAcceptDrops( true );
@@ -292,6 +321,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupActions();
   setupEditor();
   rethinkFields();
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   applyMainWindowSettings( KMKernel::config()->group( "Composer") );
 
@@ -1694,6 +1724,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     setEncryption( mLastEncryptActionState );
     setSigning( ( canOpenPGPSign || canSMIMESign ) && mLastSignActionState );
   }
+  slotUpdateSignatureAndEncrypionStateIndicators();
 
   // "Attach my public key" is only possible if the user uses OpenPGP
   // support and he specified his key:
@@ -3327,6 +3358,7 @@ void KMComposeWin::slotUpdWinTitle( const QString &text )
 void KMComposeWin::slotEncryptToggled( bool on )
 {
   setEncryption( on, true );
+  slotUpdateSignatureAndEncrypionStateIndicators();
 }
 
 //-----------------------------------------------------------------------------
@@ -3381,6 +3413,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 void KMComposeWin::slotSignToggled( bool on )
 {
   setSigning( on, true );
+  slotUpdateSignatureAndEncrypionStateIndicators();
 }
 
 //-----------------------------------------------------------------------------
@@ -4574,5 +4607,16 @@ void KMComposeWin::recipientEditorSizeHintChanged()
 void KMComposeWin::setMaximumHeaderSize()
 {
   mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
+}
+
+void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
+{
+    const bool showIndicatorsAlways = false; // FIXME config option?
+    mSignatureStateIndicator->setText( mSignAction->isChecked()? i18n("Message will be signed") : i18n("Message will not be signed") );
+    mEncryptionStateIndicator->setText( mEncryptAction->isChecked()? i18n("Message will be encrypted") : i18n("Message will not be encrypted") );
+    if ( !showIndicatorsAlways ) {
+      mSignatureStateIndicator->setShown( mSignAction->isChecked() );
+      mEncryptionStateIndicator->setShown( mEncryptAction->isChecked() );
+    }
 }
 

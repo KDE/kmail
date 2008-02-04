@@ -809,6 +809,11 @@ class KMComposeWin : public KMail::Composer
      */
     void slotAutoSpellCheckingToggled( bool );
 
+    /**
+     * Updates the visibility and text of the signature and encryption state indicators.
+     */
+    void slotUpdateSignatureAndEncrypionStateIndicators();
+
   private:
     QColor mForeColor, mBackColor;
     QFont mSaveFont;
@@ -859,6 +864,9 @@ class KMComposeWin : public KMail::Composer
 
     SnippetWidget *mSnippetWidget;
     QList<KTempDir*> mTempDirs;
+
+    QLabel *mSignatureStateIndicator;
+    QLabel *mEncryptionStateIndicator;
 };
 
 #endif
