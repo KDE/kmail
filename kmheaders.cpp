@@ -30,6 +30,7 @@ using KPIM::ProgressItem;
 #include <maillistdrag.h>
 #include "globalsettings.h"
 using namespace KPIM;
+#include "messageactions.h"
 
 #include <kde_file.h>
 #include <kactionmenu.h>
@@ -740,7 +741,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                            kmkernel->folderIsTemplates( mFolder ) ) : false );
     mOwner->useAction()->setEnabled( mFolder ?
                          ( kmkernel->folderIsTemplates( mFolder ) ) : false );
-    mOwner->replyListAction()->setEnabled( mFolder ?
+    mOwner->messageActions()->replyListAction()->setEnabled( mFolder ?
                          mFolder->isMailingListEnabled() : false );
     if (mFolder)
     {
@@ -2459,7 +2460,7 @@ void KMHeaders::slotRMB()
     int section = header()->sectionAt( viewportToContents( viewport()->mapFromGlobal( QCursor::pos() ) ).x() );
     if ( section == mPaintInfo.flagCol || section == mPaintInfo.importantCol
          || section == mPaintInfo.todoCol || section == mPaintInfo.statusCol ) {
-      mOwner->statusMenu()->menu()->exec( QCursor::pos() );
+      mOwner->messageActions()->messageStatusMenu()->menu()->exec( QCursor::pos() );
       return;
     }
     if ( section == mPaintInfo.watchedIgnoredCol ) {
@@ -2486,10 +2487,12 @@ void KMHeaders::slotRMB()
   else {
      // show most used actions
      if( !mFolder->isSent() )
-       menu->addAction( mOwner->replyMenu() );
+       menu->addAction( mOwner->messageActions()->replyMenu() );
      menu->addAction( mOwner->forwardMenu() );
      if(mOwner->sendAgainAction()->isEnabled()) {
        menu->addAction( mOwner->sendAgainAction() );
+     } else {
+       menu->addAction( mOwner->editAction() );
      }
   }
   menu->addSeparator();
@@ -2511,7 +2514,7 @@ void KMHeaders::slotRMB()
     menu->addMenu( msgMoveMenu) ;
   }
   menu->addSeparator();
-  menu->addAction( mOwner->statusMenu() ); // Mark Message menu
+  menu->addAction( mOwner->messageActions()->messageStatusMenu() ); // Mark Message menu
   if ( mOwner->threadStatusMenu()->isEnabled() ) {
     menu->addAction( mOwner->threadStatusMenu() ); // Mark Thread menu
   }
@@ -2537,7 +2540,7 @@ void KMHeaders::slotRMB()
       menu->addAction( mOwner->trashThreadAction() );
   }
   menu->addSeparator();
-  menu->addAction( mOwner->createTodoAction() );
+  menu->addAction( mOwner->messageActions()->createTodoAction() );
 
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
@@ -3590,6 +3593,43 @@ void KMHeaders::setCopiedMessages(const QList<quint32> & msgs, bool move)
 bool KMHeaders::isMessageCut(quint32 serNum) const
 {
   return mMoveMessages && mCopiedMessages.contains( serNum );
+}
+
+QList< Q_UINT32 > KMHeaders::selectedSernums()
+{
+  QList<Q_UINT32> list;
+  for ( Q3ListViewItemIterator it(this); it.current(); it++ ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      HeaderItem* item = static_cast<HeaderItem*>( it.current() );
+      list.append( item->msgSerNum() );
+    }
+  }
+  return list;
+}
+
+QList< Q_UINT32 > KMHeaders::selectedVisibleSernums()
+{
+  QList<Q_UINT32> list;
+  Q3ListViewItemIterator it(this, Q3ListViewItemIterator::Selected|Q3ListViewItemIterator::Visible);
+  while( it.current() ) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
+      if ( it.current()->parent() && ( !it.current()->parent()->isOpen() ) ) {
+        // the item's parent is closed, don't traverse any more of this subtree
+        Q3ListViewItem * lastAncestorWithSiblings = it.current()->parent();
+        // travel towards the root until we find an ancestor with siblings
+        while ( ( lastAncestorWithSiblings->depth() > 0 ) && !lastAncestorWithSiblings->nextSibling() )
+          lastAncestorWithSiblings = lastAncestorWithSiblings->parent();
+        // move the iterator to that ancestor's next sibling
+        it = Q3ListViewItemIterator( lastAncestorWithSiblings->nextSibling() );
+        continue;
+      }
+      HeaderItem *item = static_cast<HeaderItem*>(it.current());
+      list.append( item->msgSerNum() );
+    }
+    ++it;
+  }
+
+  return list;
 }
 
 #include "kmheaders.moc"

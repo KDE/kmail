@@ -212,6 +212,7 @@ set(kmailprivate_LIB_SRCS
    groupwareadaptor.cpp
    editorwatcher.cpp
    scalix.cpp
+   messageactions.cpp
    statusbarlabel.cpp
 )
 

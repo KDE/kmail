@@ -27,6 +27,7 @@
 
 #include <kurl.h>
 #include <kxmlguiclient.h>
+#include "messageactions.h"
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kvbox.h>
@@ -117,17 +118,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     static void cleanup();
 
     QAction *action( const char *name ) { return mActionCollection->action( name ); }
-
-    KAction *replyAction() const { return mReplyAction; }
-    KAction *replyAuthorAction() const { return mReplyAuthorAction; }
-    KAction *replyAllAction() const { return mReplyAllAction; }
-    KAction *replyListAction() const { return mReplyListAction; }
-    KActionMenu * replyMenu() const { return mReplyActionMenu; }
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
     KAction *forwardAction() const { return mForwardAction; }
     KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
     KAction *redirectAction() const { return mRedirectAction; }
-    KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KAction *printAction() const { return mPrintAction; }
     KAction *trashAction() const { return mTrashAction; }
@@ -135,17 +129,16 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *trashThreadAction() const { return mTrashThreadAction; }
     KAction *deleteThreadAction() const { return mDeleteThreadAction; }
     KAction *saveAsAction() const { return mSaveAsAction; }
-    KAction *editAction() const { return mEditAction; }
+    KAction *editAction() const { return mMsgActions->editAction(); }
     KAction *useAction() const { return mUseAction; }
     KAction *sendAgainAction() const { return mSendAgainAction; }
     KAction *applyAllFiltersAction() const { return mApplyAllFiltersAction; }
     KAction *findInMessageAction() const { return mFindInMessageAction; }
     KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
     KAction *openAction() const { return mOpenAction; }
-    KAction *viewSourceAction() { return mViewSourceAction; }
-    KAction *createTodoAction() { return mCreateTodoAction; }
+    KAction *viewSourceAction() const { return mViewSourceAction; }
+    KMail::MessageActions *messageActions() const { return mMsgActions; }
 
-    KActionMenu *statusMenu()  const{ return mStatusMenu; }
     KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
     KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
     KActionMenu *mopyActionMenu() const { return mCopyActionMenu; }
@@ -263,6 +256,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
 
+
     /** If @p aCount is 0, disables all tag related actions in menus.
         If @p aCount is 1, Checks/unchecks according to the selected message's tag list.
         If @p aCount is >1, changes labels of the actions to "Toggle <tag>"
@@ -331,8 +325,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotOverrideThread();
     void slotToggleSubjectThreading();
     void slotMessageQueuedOrDrafted();
-    void slotEditMsg();
     void slotUseTemplate();
+    //void slotTrashMsg();   // move to trash
     void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
     void slotTrashThread();
     void slotDeleteThread( bool confirmDelete = true );  // completely delete thread
@@ -343,9 +337,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSaveAttachments();
     void slotJumpToFolder();
     void slotMoveMsg();
+    //void slotMoveMsgToFolder( KMFolder *dest);
     void slotCopyMsgToFolder( KMFolder *dest);
     void slotCopyMsg();
     void slotResendMsg();
+    void slotCheckVacation();
     void slotDebugSieve();
     void slotStartCertManager();
     void slotStartWatchGnuPG();
@@ -355,24 +351,18 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCollapseThread();
     void slotCollapseAllThreads();
     void slotShowMsgSrc();
-    void slotSetMsgStatusNew();
-    void slotSetMsgStatusUnread();
-    void slotSetMsgStatusRead();
-    void slotSetMsgStatusTodo();
-    void slotSetMsgStatusSent();
-    void slotSetMsgStatusImportant();
     void slotSetThreadStatusNew();
     void slotSetThreadStatusUnread();
     void slotSetThreadStatusRead();
-    void slotSetThreadStatusTodo();
     void slotSetThreadStatusImportant();
+    void slotSetThreadStatusTodo();
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
     void slotToggleUnread();
     void slotToggleTotalColumn();
     void slotToggleSizeColumn();
     void slotSendQueued();
-    void slotSendQueuedVia( QAction* );
+    void slotSendQueuedVia( QAction* item );
     void slotOnlineStatus();
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
     void slotMsgPopup(KMMessage &msg, const KUrl &aUrl, const QPoint&);
@@ -382,7 +372,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotFind();
     void slotIntro();
     void slotShowStartupFolder();
-    void slotShowTip();  // Show tip-of-the-day, forced
+    /** Show tip-of-the-day, forced */
+    void slotShowTip();
     void slotAntiSpamWizard();
     void slotAntiVirusWizard();
     void slotFilterLogViewer();
@@ -418,7 +409,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void updateMarkAsReadAction();
 
     /** Settings menu */
-    void slotCreateTodo();
 
     /** XML-GUI stuff */
     void slotEditNotifications();
@@ -429,25 +419,21 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void removeDuplicates();
 
     /** Slot to reply to a message */
-    void slotReplyToMsg();
-    void slotReplyAuthorToMsg();
-    void slotReplyListToMsg();
-    void slotReplyAllToMsg();
     void slotCustomReplyToMsg( const QString &tmpl );
     void slotCustomReplyAllToMsg( const QString &tmpl );
-    void slotCustomForwardMsg( const QString &tmpl );
     void slotForwardMsg();
     void slotForwardAttachedMsg();
     void slotRedirectMsg();
+    void slotCustomForwardMsg( const QString &tmpl );
     void slotNoQuoteReplyToMsg();
     void slotSubjectFilter();
     void slotMailingListFilter();
     void slotFromFilter();
     void slotToFilter();
     void slotPrintMsg();
+    void slotCreateTodo();
 
     void slotConfigChanged();
-    void slotCheckVacation();
 
     /**
       Remove the shortcut actions associated with a folder.
@@ -490,36 +476,35 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRequestFullSearchFromQuickSearch();
 
   private:
-
     // Message actions
     KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
-      *mDeleteThreadAction, *mSaveAsAction, *mEditAction, *mUseAction,
+      *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mCreateTodoAction, *mFavoritesCheckMailAction;
-
+      *mFavoritesCheckMailAction;
     // Composition actions
     KAction *mPrintAction,
-      *mReplyAction, *mReplyAllAction, *mReplyAuthorAction, *mReplyListAction,
-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction, *mNoQuoteReplyAction;
-    KActionMenu *mReplyActionMenu;
+      *mForwardAction, *mForwardAttachedAction,
+      *mRedirectAction;
     KActionMenu *mForwardActionMenu;
-
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
-      *mListFilterAction;
+        *mListFilterAction;
 
     KActionMenu *mTemplateMenu;
 
     // Custom template actions menu
     CustomTemplatesMenu *mCustomTemplateMenus;
 
-    KActionMenu *mStatusMenu, *mThreadStatusMenu, *mMoveActionMenu,
-      *mCopyActionMenu, *mApplyFilterActionsMenu;
-    KAction *mMarkThreadAsNewAction, *mMarkThreadAsReadAction, *mMarkThreadAsUnreadAction;
-    KToggleAction *mToggleThreadTodoAction, *mToggleThreadImportantAction,
-      *mToggleTodoAction, *mToggleImportantAction;
+    KActionMenu *mThreadStatusMenu,
+      *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
+    KAction *mMarkThreadAsNewAction;
+    KAction *mMarkThreadAsReadAction;
+    KAction *mMarkThreadAsUnreadAction;
+    KToggleAction *mToggleThreadImportantAction;
+    KToggleAction *mToggleThreadTodoAction;
+    KToggleAction *mToggleThreadFlagAction;
     KToggleAction* mSizeColumnToggle;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
@@ -600,6 +585,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMSystemTray *mSystemTray;
     KConfig *mConfig;
     KXMLGUIClient *mGUIClient;
+
+    KMail::MessageActions *mMsgActions;
 
     static QList<KMMainWidget*> *s_mainWidgetList;
     bool mOpenedImapFolder;
