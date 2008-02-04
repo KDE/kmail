@@ -523,11 +523,14 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( &mUpdateReaderWinTimer, SIGNAL(timeout()),
            this, SLOT(updateReaderWin()) );
 
+  setMsg( 0, false );
 }
 
-void KMReaderWin::createActions( KActionCollection * ac ) {
-  if ( !ac )
-      return;
+void KMReaderWin::createActions( KActionCollection *ac )
+{
+  if ( !ac ) {
+    return;
+  }
 
   KToggleAction *raction = 0;
 
@@ -1999,7 +2002,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
     QList<QUrl> urls;
     KUrl kUrl = tempFileUrlFromPartNode( node );
     QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );
-    
+
     if ( !url.isValid() )
       return;
     urls.append( url );
