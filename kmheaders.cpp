@@ -736,9 +736,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled( mFolder ?
-                         ( kmkernel->folderIsDraftOrOutbox( mFolder ) ||
-                           kmkernel->folderIsTemplates( mFolder ) ) : false );
+
     mOwner->useAction()->setEnabled( mFolder ?
                          ( kmkernel->folderIsTemplates( mFolder ) ) : false );
     mOwner->messageActions()->replyListAction()->setEnabled( mFolder ?

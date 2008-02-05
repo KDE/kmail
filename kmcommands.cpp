@@ -79,6 +79,8 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
+#include <kpimidentities/identitymanager.h>
+
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -2733,8 +2735,12 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
 
-  // adds the new date to the message
-  newMsg->removeHeaderField( "Date" );
+  QStringList whiteList;
+  whiteList << "To" << "Cc" << "Bcc" << "Subject";
+  newMsg->sanitizeHeaders( whiteList );
+
+  // make sure we have an identity set, default, if necessary
+  newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
 
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );

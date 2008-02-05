@@ -1630,14 +1630,21 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     mId = newMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
   }
 
+  const bool stickyIdentity = mBtnIdentity->isChecked();
+  const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
+  if (!stickyIdentity && messageHasIdentity)
+    mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
-  if ( !mBtnIdentity->isChecked() ) {
+  if ( !stickyIdentity ) {
     disconnect( mIdentity,SIGNAL(identityChanged(uint)),
                 this, SLOT(slotIdentityChanged(uint)) ) ;
   }
+  // load the mId into the gui, sticky or not, without emitting
   mIdentity->setCurrentIdentity( mId );
-  if ( !mBtnIdentity->isChecked() ) {
+  const uint idToApply = mId;
+  if ( !stickyIdentity ) {
     connect( mIdentity,SIGNAL(identityChanged(uint)),
              this, SLOT(slotIdentityChanged(uint)) );
   } else {
@@ -1652,6 +1659,10 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     }
     slotIdentityChanged( savedId );
   }
+  // manually load the identity's value into the fields; either the one from the
+  // messge, where appropriate, or the one from the sticky identity. What's in
+  // mId might have changed meanwhile, thus the save value
+  slotIdentityChanged( idToApply );
 
   const KPIMIdentities::Identity &ident = im->identityForUoid( mIdentity->currentIdentity() );
 

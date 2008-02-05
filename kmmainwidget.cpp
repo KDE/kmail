@@ -3490,6 +3490,7 @@ void KMMainWidget::updateMessageActions()
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
+    mMsgActions->editAction()->setEnabled( single_actions );
     mUseAction->setEnabled( single_actions &&
                             kmkernel->folderIsTemplates( mFolder ) );
     filterMenu()->setEnabled( single_actions );
