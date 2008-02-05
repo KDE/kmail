@@ -511,7 +511,7 @@ namespace KMail {
 
     bool DoesntMatchEMailAddress::checkForEmail( const char * e ) const {
       const QString em = extractEmail( e );
-      return !em.isEmpty() && email == em;
+      return !em.isEmpty() && email.toLower() == em.toLower();
     }
 
     QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
