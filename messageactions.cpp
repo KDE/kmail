@@ -131,7 +131,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   mActionCollection->addAction( "status_todo", mToggleTodoAction );
   mStatusMenu->addAction( mToggleTodoAction );
 
-  mEditAction = new KAction( KIcon("edit"), i18n("&Edit Message"), this );
+  mEditAction = new KAction( KIcon("accessories-text-editor"), i18n("&Edit Message"), this );
   mActionCollection->addAction( "edit", mEditAction );
   connect( mEditAction, SIGNAL(activated()),
            this, SLOT(editCurrentMessage()) );
