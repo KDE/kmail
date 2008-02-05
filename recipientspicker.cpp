@@ -109,7 +109,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
   if ( !img.isNull() )
     mIcon = QPixmap::fromImage( img.scaled( 20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
   else
-    mIcon = KIconLoader::global()->loadIcon( "personal", KIconLoader::Small );
+    mIcon = KIconLoader::global()->loadIcon( "user-identity", KIconLoader::Small );
 
   mName = mAddressee.realName();
   mKey = mAddressee.realName() + '|' + mEmail;
