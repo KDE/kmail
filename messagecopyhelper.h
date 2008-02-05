@@ -62,6 +62,11 @@ class MessageCopyHelper : public QObject
     */
     static QValueList<Q_UINT32> serNumListFromMsgList( QPtrList<KMMsgBase> list );
 
+    /**
+      Checks of any of the given messages comes from a read-only source.
+    */
+    static bool inReadOnlyFolder( const QValueList<Q_UINT32> &sernums );
+
   private slots:
     void copyCompleted( KMCommand *cmd );
 

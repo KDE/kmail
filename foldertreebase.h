@@ -43,7 +43,7 @@ class FolderTreeBase : public KFolderTree
        else
          return 0;
     }
-    
+
     void insertIntoFolderToItemMap( const KMFolder *folder, QListViewItem* item )
     {
       mFolderToItem.insert( folder, item );
@@ -53,16 +53,16 @@ class FolderTreeBase : public KFolderTree
     {
       mFolderToItem.remove( folder );
     }
-        
+
   signals:
     /** Messages have been dropped onto a folder */
     void folderDrop(KMFolder*);
 
     /** Messages have been dropped onto a folder with Ctrl */
     void folderDropCopy(KMFolder*);
-    
+
     void triggerRefresh();
-    
+
   public slots:
     /** Update the total and unread columns (if available, or if forced) */
     void slotUpdateCounts(KMFolder * folder, bool force = false );
@@ -84,7 +84,10 @@ class FolderTreeBase : public KFolderTree
 
     /** Checks if the local inbox should be hidden. */
     bool hideLocalInbox() const;
-    
+
+    /** Handle drop of a MailList object. */
+    void handleMailListDrop( QDropEvent *event, KMFolder *destination );
+
   protected:
     KMMainWidget *mMainWidget;
     QMap<const KMFolder*, QListViewItem*> mFolderToItem;

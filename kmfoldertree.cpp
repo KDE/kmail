@@ -1485,8 +1485,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     }
     if (fti && acceptDrag(e) && ( fti != oldSelected || e->source() != mMainWidget->headers()->viewport() ) )
     {
-      int action = dndMode( e->provides("application/x-qlistviewitem") /* always ask */ );
       if ( e->provides("application/x-qlistviewitem") ) {
+        int action = dndMode( true /* always ask */ );
         if ( (action == DRAG_COPY || action == DRAG_MOVE) && !mCopySourceFolders.isEmpty() ) {
           for ( QValueList<QGuardedPtr<KMFolder> >::ConstIterator it = mCopySourceFolders.constBegin();
                 it != mCopySourceFolders.constEnd(); ++it ) {
@@ -1497,19 +1497,18 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         }
       } else {
         if ( e->source() == mMainWidget->headers()->viewport() ) {
+          int action;
+          if ( mMainWidget->headers()->folder() && mMainWidget->headers()->folder()->isReadOnly() )
+            action = DRAG_COPY;
+          else
+            action = dndMode();
           // KMHeaders does copy/move itself
           if ( action == DRAG_MOVE && fti->folder() )
             emit folderDrop( fti->folder() );
           else if ( action == DRAG_COPY && fti->folder() )
             emit folderDropCopy( fti->folder() );
-        } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
-          MailList list;
-          if ( !MailListDrag::decode( e, list ) ) {
-            kdWarning() << k_funcinfo << "Could not decode drag data!" << endl;
-          } else {
-            QValueList<Q_UINT32> serNums = MessageCopyHelper::serNumListFromMailList( list );
-            new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
-          }
+        } else {
+          handleMailListDrop( e, fti->folder() );
         }
       }
       e->accept( true );
