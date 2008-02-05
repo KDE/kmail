@@ -92,21 +92,21 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   KAction *action;
 
-  action = new KAction( KIcon("kmmsgread"), i18n("Mark Message as &Read"), this );
+  action = new KAction( KIcon("mail-mark-read"), i18n("Mark Message as &Read"), this );
   action->setToolTip( i18n("Mark selected messages as read") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusRead()) );
   mActionCollection->addAction( "status_read", action );
   mStatusMenu->addAction( action );
 
-  action = new KAction( KIcon("kmmsgnew"), i18n("Mark Message as &New"), this );
+  action = new KAction( KIcon("mail-mark-unread-new"), i18n("Mark Message as &New"), this );
   action->setToolTip( i18n("Mark selected messages as new") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusNew()) );
   mActionCollection->addAction( "status_new" , action );
   mStatusMenu->addAction( action );
 
-  action = new KAction( KIcon("kmmsgunseen"), i18n("Mark Message as &Unread"), this );
+  action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
   action->setToolTip( i18n("Mark selected messages as unread") );
   connect( action, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusUnread()) );
@@ -115,7 +115,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
 
   mStatusMenu->addSeparator();
 
-  mToggleFlagAction = new KToggleAction( KIcon("mail-flag"),
+  mToggleFlagAction = new KToggleAction( KIcon("mail-mark-important"),
                                          i18n("Mark Message as &Important"), this );
   connect( mToggleFlagAction, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusFlag()) );
@@ -123,7 +123,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget * parent ) :
   mActionCollection->addAction( "status_flag", mToggleFlagAction );
   mStatusMenu->addAction( mToggleFlagAction );
 
-  mToggleTodoAction = new KToggleAction( KIcon("view-pim-tasks"),
+  mToggleTodoAction = new KToggleAction( KIcon("mail-mark-task"),
                                          i18n("Mark Message as &Action Item"), this );
   connect( mToggleTodoAction, SIGNAL(activated()),
            this, SLOT(slotSetMsgStatusTodo()) );
