@@ -559,8 +559,10 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
 
   off_t eof = KDE_ftell(fp);
   QString filename = getFolderIdsLocation( storage );
-  truncate(QFile::encodeName(filename), eof);
-  fclose(rentry->fp);
+  if (fclose(rentry->fp) != 0)
+    return -1;
+  if (truncate(QFile::encodeName(filename), eof) != 0)
+    return -1;
   rentry->fp = 0;
 
   return 0;
