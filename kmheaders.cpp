@@ -1520,6 +1520,7 @@ void KMHeaders::finalizeMove( HeaderItem *item, int contentX, int contentY )
 void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation )
 {
   if ( destFolder == mFolder ) return; // Catch the noop case
+  if ( mFolder->isReadOnly() ) return;
 
   KMMessageList msgList = *selectedMsgs();
   if ( msgList.isEmpty() ) return;
@@ -2337,7 +2338,10 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
         QPoint hotspot( pixmap.width() / 2, pixmap.height() / 2 );
         d->setPixmap( pixmap, hotspot );
       }
-      d->drag();
+      if ( mFolder->isReadOnly() )
+        d->dragCopy();
+      else
+        d->drag();
     }
   }
 }

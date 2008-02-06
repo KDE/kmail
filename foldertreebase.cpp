@@ -51,21 +51,19 @@ void FolderTreeBase::contentsDropEvent(QDropEvent * e)
   QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
   if ( fti && fti->folder() && e->provides( MailListDrag::format() ) ) {
-    int action = dndMode();
     if ( e->source() == mMainWidget->headers()->viewport() ) {
+      int action;
+      if ( mMainWidget->headers()->folder() && mMainWidget->headers()->folder()->isReadOnly() )
+        action = DRAG_COPY;
+      else
+        action = dndMode();
       // KMHeaders does copy/move itself
       if ( action == DRAG_MOVE && fti->folder() )
         emit folderDrop( fti->folder() );
       else if ( action == DRAG_COPY && fti->folder() )
         emit folderDropCopy( fti->folder() );
-    } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
-      MailList list;
-      if ( !MailListDrag::decode( e, list ) ) {
-        kdWarning() << k_funcinfo << "Could not decode drag data!" << endl;
-      } else {
-        QValueList<Q_UINT32> serNums = MessageCopyHelper::serNumListFromMailList( list );
-        new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
-      }
+    } else {
+      handleMailListDrop( e, fti->folder() );
     }
     e->accept( true );
   } else {
@@ -164,7 +162,7 @@ void FolderTreeBase::slotUpdateCounts(KMFolder * folder, bool force /* = false*/
     current = indexOfFolder(folder);
   else
     current = currentItem();
-  
+
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(current);
 
   // sanity check
@@ -222,6 +220,24 @@ void FolderTreeBase::slotUpdateCounts(KMFolder * folder, bool force /* = false*/
   }
   // tell the kernel that one of the counts has changed
   kmkernel->messageCountChanged();
+}
+
+void FolderTreeBase::handleMailListDrop(QDropEvent * event, KMFolder *destination )
+{
+  MailList list;
+  if ( !MailListDrag::decode( event, list ) ) {
+    kdWarning() << k_funcinfo << "Could not decode drag data!" << endl;
+  } else {
+    QValueList<Q_UINT32> serNums = MessageCopyHelper::serNumListFromMailList( list );
+    int action;
+    if ( MessageCopyHelper::inReadOnlyFolder( serNums ) )
+      action = DRAG_COPY;
+    else
+      action = dndMode();
+    if ( action == DRAG_COPY || action == DRAG_MOVE ) {
+      new MessageCopyHelper( serNums, destination, action == DRAG_MOVE, this );
+    }
+  }
 }
 
 #include "foldertreebase.moc"

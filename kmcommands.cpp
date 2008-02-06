@@ -2832,6 +2832,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 
    // make sure we have an identity set, default, if necessary
    newMsg->setHeaderField("X-KMail-Identity", QString::number( newMsg->identityUoid() ));
+   newMsg->applyIdentity( newMsg->identityUoid() );
 
    KMail::Composer * win = KMail::makeComposer();
    win->setMsg(newMsg, false, true);
