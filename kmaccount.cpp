@@ -111,7 +111,7 @@ void KMAccount::init() {
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
 {
-  if (!kmkernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
+  if ( (kmkernel && !kmkernel->shuttingDown()) && mFolder ) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
 }
 
