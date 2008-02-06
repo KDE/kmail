@@ -96,4 +96,18 @@ QList<quint32> MessageCopyHelper::serNumListFromMsgList(QList<KMMsgBase*> list)
   return rv;
 }
 
+bool MessageCopyHelper::inReadOnlyFolder(const QList< quint32 > & sernums)
+{
+  KMFolder *f = 0;
+  int index;
+  for ( QList<quint32>::ConstIterator it = sernums.begin(); it != sernums.end(); ++it ) {
+    KMMsgDict::instance()->getLocation( *it, &f, &index );
+    if ( !f ) // not found
+      continue;
+    if ( f->isReadOnly() )
+      return true;
+  }
+  return false;
+}
+
 #include "messagecopyhelper.moc"

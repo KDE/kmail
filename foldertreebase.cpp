@@ -53,21 +53,19 @@ void FolderTreeBase::contentsDropEvent( QDropEvent *e )
   Q3ListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem *>( item );
   if ( fti && fti->folder() && e->mimeData()->hasFormat( MailList::mimeDataType() ) ) {
-    const int action = dndMode();
     if ( e->source() == mMainWidget->headers()->viewport() ) {
+      int action;
+      if ( mMainWidget->headers()->folder() && mMainWidget->headers()->folder()->isReadOnly() )
+        action = DRAG_COPY;
+      else
+        action = dndMode();
       // KMHeaders does copy/move itself
       if ( action == DRAG_MOVE && fti->folder() )
         emit folderDrop( fti->folder() );
       else if ( action == DRAG_COPY && fti->folder() )
         emit folderDropCopy( fti->folder() );
-    } else if ( action == DRAG_COPY || action == DRAG_MOVE ) {
-      MailList list = MailList::fromMimeData( e->mimeData() );
-      if ( list.isEmpty() ) {
-        kWarning() << k_funcinfo << "Could not decode drag data!";
-      } else {
-        QList<uint> serNums = MessageCopyHelper::serNumListFromMailList( list );
-        new MessageCopyHelper( serNums, fti->folder(), action == DRAG_MOVE, this );
-      }
+    } else {
+      handleMailListDrop( e, fti->folder() );
     }
     e->setAccepted( true );
   } else {
@@ -159,6 +157,24 @@ bool FolderTreeBase::hideLocalInbox() const
   if ( localInbox->hasAccounts() )
     return false;
   return true;
+}
+
+void FolderTreeBase::handleMailListDrop(QDropEvent * event, KMFolder *destination )
+{
+  MailList list = MailList::fromMimeData( event->mimeData() );
+  if ( list.isEmpty() ) {
+    kWarning() << "Could not decode drag data!";
+  } else {
+    QList<uint> serNums = MessageCopyHelper::serNumListFromMailList( list );
+    int action;
+    if ( MessageCopyHelper::inReadOnlyFolder( serNums ) )
+      action = DRAG_COPY;
+    else
+      action = dndMode();
+    if ( action == DRAG_COPY || action == DRAG_MOVE ) {
+      new MessageCopyHelper( serNums, destination, action == DRAG_MOVE, this );
+    }
+  }
 }
 
 #include "foldertreebase.moc"

@@ -60,6 +60,9 @@ class FolderTreeBase : public KPIM::KFolderTree
     /** Checks if the local inbox should be hidden. */
     bool hideLocalInbox() const;
 
+    /** Handle drop of a MailList object. */
+    void handleMailListDrop( QDropEvent *event, KMFolder *destination );
+
   protected:
     KMMainWidget *mMainWidget;
 };

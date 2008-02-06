@@ -1478,10 +1478,6 @@ QList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 
 bool KMFolderCachedImap::deleteMessages()
 {
-  if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) ) {
-    return false;
-  }
-
   /* Delete messages from cache that are gone from the server */
   QList<KMMessage*> msgsForDeletion;
 
@@ -1500,6 +1496,10 @@ bool KMFolderCachedImap::deleteMessages()
 
   if ( !msgsForDeletion.isEmpty() ) {
     removeMessages( msgsForDeletion );
+  }
+
+  if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) ) {
+    return false;
   }
 
   /* Delete messages from the server that we don't have anymore */
