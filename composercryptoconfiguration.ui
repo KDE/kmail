@@ -41,7 +41,7 @@
             <item>
               <widget class="QCheckBox" name="mEncToSelf" >
                 <property name="text" >
-                  <string>Always encr&amp;ypt to self</string>
+                  <string>When encrypting emails, always also encr&amp;ypt to the certificate of my own identity</string>
                 </property>
                 <property name="whatsThis" stdset="0" >
                   <string>When this option is enabled, the message/file will not only be encrypted with the receiver's public key, but also with your key. This will enable you to decrypt the message/file at a later time. This is generally a good idea.</string>

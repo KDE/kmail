@@ -2238,11 +2238,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     QString msgFrom( KPIMUtils::extractEmailAddress(fromAddress) );
                     QString certificate;
                     if( block.keyId.isEmpty() )
-                        certificate = "certificate";
+                        certificate = i18n("certificate");
                     else
-                        certificate = QString("%1%2</a>")
-                                      .arg( startKeyHREF )
-                                      .arg( "certificate" );
+                        certificate = startKeyHREF + i18n("certificate") + "</a>"; 
                     if( !blockAddrs.empty() ){
                         if( !blockAddrs.contains( msgFrom, Qt::CaseInsensitive ) ) {
                             greenCaseWarning =
