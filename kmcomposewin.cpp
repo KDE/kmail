@@ -30,6 +30,7 @@
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
+#include "encodingdetector.h"
 #include "attachmentlistview.h"
 #include "transportmanager.h"
 using KMail::AttachmentListView;
@@ -2750,9 +2751,18 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
       emit attachmentAdded(attachURL, true);
     return;
   }
-  const QCString partCharset = (*it).url.fileEncoding().isEmpty()
-                             ? mCharset
-                             : QCString((*it).url.fileEncoding().latin1());
+  QCString partCharset;
+  if ( !( *it ).url.fileEncoding().isEmpty() ) {
+    partCharset = QCString( ( *it ).url.fileEncoding().latin1() );
+  } else {
+    EncodingDetector ed;
+    KLocale *loc = KGlobal::locale();
+    ed.setAutoDetectLanguage( EncodingDetector::scriptForLanguageCode ( loc->language() ) );
+    ed.decode( ( *it ).data );
+    partCharset = ed.encoding();
+    if (partCharset.isEmpty()) //shouldn't happen
+      partCharset = mCharset;
+  }
 
   KMMessagePart* msgPart;
 
@@ -2786,7 +2796,8 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   QCString encoding = KMMsgBase::autoDetectCharset(partCharset,
     KMMessage::preferredCharsets(), name);
-  if (encoding.isEmpty()) encoding = "utf-8";
+  if ( encoding.isEmpty() )
+    encoding = "utf-8";
 
   QCString encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
