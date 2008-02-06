@@ -164,7 +164,7 @@ void MessageActions::setSelectedVisibleSernums(const QList< Q_UINT32 > & sernums
 
 void MessageActions::updateActions()
 {
-  const bool singleMsg = (mCurrentMessage != 0 && mSelectedSernums.count() <= 1);
+  const bool singleMsg = (mCurrentMessage != 0);
   const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentMessage;
   const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags() ||
       !((mCurrentMessage && mCurrentMessage->parent()) ? mCurrentMessage->parent()->isReadOnly() : true);
