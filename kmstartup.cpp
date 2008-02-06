@@ -32,6 +32,7 @@
 #include <kaboutdata.h>
 #include <kiconloader.h>
 #include <kconfiggroup.h>
+#include <kde_file.h>
 
 #include <QHostInfo>
 
@@ -45,6 +46,11 @@
 #include <qfile.h>
 
 #undef Status // stupid X headers
+
+// FIXME make it work for KDE 4.0.x; remove when we depend on >=4.1 - jstaniek
+#ifndef KDE_signal
+#define KDE_signal ::signal
+#endif
 
 extern "C" {
 
@@ -72,9 +78,9 @@ void kmcrashHandler(int sigId)
 
 void kmsetSignalHandler(void (*handler)(int))
 {
-  signal(SIGKILL, handler);
-  signal(SIGTERM, handler);
-  signal(SIGHUP,  handler);
+  KDE_signal(SIGKILL, handler);
+  KDE_signal(SIGTERM, handler);
+  KDE_signal(SIGHUP,  handler);
   KCrash::setEmergencySaveFunction(kmcrashHandler);
 }
 
