@@ -17,6 +17,7 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
+#include "config-kmail.h"
 #include "kmmessagetag.h"
 #include "headerstrategy.h"
 #include "globalsettings.h"
@@ -43,6 +44,7 @@ using KMail::TemplateParser;
 #include <kuser.h>
 #include <k3resolver.h>
 #include <kconfiggroup.h>
+#include <KProtocolManager>
 
 #include <QList>
 #include <QCursor>
@@ -1688,7 +1690,28 @@ void KMMessage::initHeader( uint id )
   setSubject("");
   setDateToday();
 
-  setHeaderField("User-Agent", "KMail/" KMAIL_VERSION );
+#if KDE_IS_VERSION(4,0,60)
+  // user agent, e.g. KMail/1.9.50 (Windows/5.0; KDE/3.97.1; i686; svn-762186; 2008-01-15)
+  QStringList extraInfo;
+# if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
+  extraInfo << KMAIL_SVN_REVISION_STRING << KMAIL_SVN_LAST_CHANGE;
+# endif
+  setHeaderField("User-Agent", 
+    KProtocolManager::userAgentForApplication( "KMail", KMAIL_VERSION, extraInfo )
+  );
+#else
+  // <FIXME remove later for KDE < 4.0.60 (jstaniek) >
+  // user agent, e.g. KMail/1.9.50 (KDE/3.97.1; svn-762186; 2008-01-15)
+  setHeaderField("User-Agent", QString::fromLatin1("KMail/" KMAIL_VERSION " (KDE/%1.%2.%3")
+    .arg( KDE::versionMajor() ).arg( KDE::versionMinor() ).arg( KDE::versionRelease() )
+# if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
+    + "; " KMAIL_SVN_REVISION_STRING "; " KMAIL_SVN_LAST_CHANGE
+# endif
+    + ")"
+  );
+  // </FIXME>
+#endif
+
   // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");
 }
