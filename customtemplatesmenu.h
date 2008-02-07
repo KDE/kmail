@@ -1,6 +1,6 @@
 /*   -*- mode: C++; c-file-style: "gnu" -*-
  *   kmail: KDE mail client
- *   This file: Copyright (C) 2006 Dmitry Morozhnikov
+ *   This file: Copyright (C) 2006 Dmitry Morozhnikov <dmiceman@ubiz.ru>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -12,12 +12,10 @@
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
+ *   You should have received a copy of the GNU General Public License along
+ *   with this program; if not, write to the Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 
 #ifndef CUSTOMTEMPLATESMENU_H
 #define CUSTOMTEMPLATESMENU_H
@@ -36,40 +34,40 @@ class CustomTemplatesMenu : public QObject
 {
   Q_OBJECT
 
-public:
-  CustomTemplatesMenu(QWidget *parent,KActionCollection *ac);
-  ~CustomTemplatesMenu();
+  public:
+    CustomTemplatesMenu( QWidget *parent, KActionCollection *ac );
+    ~CustomTemplatesMenu();
 
-  KActionMenu *replyActionMenu() const { return (mCustomReplyActionMenu); }
-  KActionMenu *replyAllActionMenu() const { return (mCustomReplyAllActionMenu); }
-  KActionMenu *forwardActionMenu() const { return (mCustomForwardActionMenu); }
+    KActionMenu *replyActionMenu() const { return (mCustomReplyActionMenu); }
+    KActionMenu *replyAllActionMenu() const { return (mCustomReplyAllActionMenu); }
+    KActionMenu *forwardActionMenu() const { return (mCustomForwardActionMenu); }
 
-public slots:
-  void update();
+  public slots:
+    void update();
 
-signals:
-  void replyTemplateSelected( const QString &tmpl );
-  void replyAllTemplateSelected( const QString &tmpl );
-  void forwardTemplateSelected( const QString &tmpl );
+  signals:
+    void replyTemplateSelected( const QString &tmpl );
+    void replyAllTemplateSelected( const QString &tmpl );
+    void forwardTemplateSelected( const QString &tmpl );
 
-private slots:
-  void slotReplySelected( int idx );
-  void slotReplyAllSelected( int idx );
-  void slotForwardSelected( int idx );
+  private slots:
+    void slotReplySelected( int idx );
+    void slotReplyAllSelected( int idx );
+    void slotForwardSelected( int idx );
 
-private:
-  void clear();
+  private:
+    void clear();
 
-  KActionCollection *mOwnerActionCollection;
+    KActionCollection *mOwnerActionCollection;
 
-  QVector<QString> mCustomTemplates;
-  QList<KAction*> mCustomTemplateActions;
+    QVector<QString> mCustomTemplates;
+    QList<KAction*> mCustomTemplateActions;
 
-  // Custom template actions menu
-  KActionMenu *mCustomReplyActionMenu, *mCustomReplyAllActionMenu, *mCustomForwardActionMenu;
+    // Custom template actions menu
+    KActionMenu *mCustomReplyActionMenu, *mCustomReplyAllActionMenu, *mCustomForwardActionMenu;
 
-  // Signal mappers for custom template actions
-  QSignalMapper *mCustomReplyMapper, *mCustomReplyAllMapper, *mCustomForwardMapper;
+    // Signal mappers for custom template actions
+    QSignalMapper *mCustomReplyMapper, *mCustomReplyAllMapper, *mCustomForwardMapper;
 };
 
 #endif // CUSTOMTEMPLATESMENU_H
