@@ -2745,8 +2745,8 @@ bool KMHeaders::writeSortOrder()
   QString sortFile = KMAIL_SORT_FILE(mFolder);
 
   if (!mSortInfo.dirty) {
-    struct stat stat_tmp;
-    if(stat(QFile::encodeName(sortFile), &stat_tmp) == -1) {
+    KDE_struct_stat stat_tmp;
+    if(KDE_stat(QFile::encodeName(sortFile), &stat_tmp) == -1) {
         mSortInfo.dirty = true;
     }
   }
