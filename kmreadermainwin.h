@@ -44,6 +44,7 @@ private slots:
 
   /** Copy selected messages to folder with corresponding to given QAction */
   void copySelectedToFolder( QAction* );
+  void slotTrashMsg();
   void slotPrintMsg();
   void slotForwardMsg();
   void slotForwardAttachedMsg();

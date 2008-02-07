@@ -49,6 +49,7 @@
 #include "csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
+#include "kmmsgdict.h"
 
 #include "kmreadermainwin.h"
 
@@ -143,6 +144,24 @@ void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
   assert(folderPtr == mMsg->parent());
   if( mMsg && folderPtr == mMsg->parent() )
     mMsg->setParent( 0 );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotTrashMsg()
+{
+  // find the real msg by its sernum
+  KMFolder* parent;
+  int index;
+  KMMsgDict::instance()->getLocation( mMsg->getMsgSerNum(), &parent, &index );
+  if (parent) {
+    KMMessage *msg = parent->getMsg( index );
+    if (msg) {
+      // now delete the msg and close this window
+      KMDeleteMsgCommand *command = new KMDeleteMsgCommand( parent, msg );
+      command->start();
+      close();
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -253,6 +272,13 @@ void KMReaderMainWin::setupAccel()
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
+  
+  mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
+  mTrashAction->setIconText( i18n( "Trash" ) );
+  mTrashAction->setToolTip( i18n( "Move message to trashcan" ) );
+  mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
+  actionCollection()->addAction( "move_to_trash", mTrashAction );
+  connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
 
   QAction *closeAction = KStandardAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = KShortcut(closeAction->shortcuts());
