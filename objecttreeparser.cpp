@@ -661,7 +661,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
   }
 
-  if ( !mReader->decryptMessage() ) {
+  if ( mReader && !mReader->decryptMessage() ) {
     QString iconName = KIconLoader::global()->iconPath( "document-decrypt",
                                                         KIconLoader::Small );
     decryptedData = "<div style=\"font-size:large; text-align:center;"
