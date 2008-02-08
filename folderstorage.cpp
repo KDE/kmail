@@ -1178,7 +1178,7 @@ bool FolderStorage::isMoveable() const
 /*virtual*/
 KMAccount* FolderStorage::account() const
 {
-    return 0;
+  return 0;
 }
 
 #include "folderstorage.moc"

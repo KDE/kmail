@@ -94,11 +94,15 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mExclude(false),
     mCheckingMail(false),
     mPrecommandSuccess(true),
+    mUseDefaultIdentity(true),
     mHasInbox(false),
-    mMailCheckProgressItem(0),
-    mIdentityId(0)
+    mMailCheckProgressItem(0)
 {
   assert(aOwner != 0);
+  mIdentityId = kmkernel->identityManager()->defaultIdentity().uoid();
+
+  connect( kmkernel->identityManager(), SIGNAL( changed() ),
+           this, SLOT( slotIdentitiesChanged() ) );
 }
 
 void KMAccount::init() {
@@ -152,10 +156,14 @@ void KMAccount::readConfig(KConfigGroup& config)
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setCheckExclude(config.readEntry("check-exclude", false ) );
   setPrecommand(config.readPathEntry("precommand", QString()));
-  setIdentityId(config.readEntry("identity-id", 0));
-  if (!folderName.isEmpty())
-  {
-    setFolder(kmkernel->folderMgr()->findIdString(folderName), true);
+
+  uint defaultIdentity = kmkernel->identityManager()->defaultIdentity().uoid();
+  setIdentityId( config.readEntry( "identity-id", defaultIdentity ) );
+  mUseDefaultIdentity = config.readEntry( "use-default-identity", true );
+  slotIdentitiesChanged();
+
+  if ( !folderName.isEmpty() ) {
+    setFolder (kmkernel->folderMgr()->findIdString( folderName ), true );
   }
 
   if (mInterval == 0)
@@ -177,10 +185,8 @@ void KMAccount::writeConfig(KConfigGroup& config)
   config.writeEntry("check-exclude", mExclude);
   config.writePathEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
-  if ( mIdentityId && mIdentityId != kmkernel->identityManager()->defaultIdentity().uoid() )
-    config.writeEntry("identity-id", mIdentityId);
-  else
-    config.deleteEntry("identity-id");
+  config.writeEntry( "use-default-identity", mUseDefaultIdentity );
+  config.writeEntry( "identity-id", mIdentityId );
 }
 
 
@@ -389,6 +395,14 @@ void KMAccount::precommandExited(bool success)
   QEventLoop ().exit ();
 }
 
+void KMAccount::slotIdentitiesChanged()
+{
+  // Fall back to the default identity if the one used currently is invalid
+  if ( kmkernel->identityManager()->identityForUoid( mIdentityId ).isNull() ) {
+    mIdentityId = kmkernel->identityManager()->defaultIdentity().uoid();
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
@@ -447,6 +461,7 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   setPrecommand( a->precommand() );
   setTrash( a->trash() );
   setIdentityId( a->identityId() );
+  setUseDefaultIdentity( a->useDefaultIdentity() );
 }
 
 //-----------------------------------------------------------------------------
@@ -465,6 +480,14 @@ void KMAccount::checkDone( bool newmail, CheckStatus status )
   emit newMailsProcessed( mNewInFolder );
   emit finishedCheck( newmail, status );
   mNewInFolder.clear();
+}
+
+uint KMAccount::identityId() const
+{
+  if ( mUseDefaultIdentity )
+    return kmkernel->identityManager()->defaultIdentity().uoid();
+  else
+    return mIdentityId;
 }
 
 //-----------------------------------------------------------------------------

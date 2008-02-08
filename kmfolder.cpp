@@ -223,7 +223,8 @@ void KMFolder::writeConfig( KConfigGroup & configGroup ) const
 
 
   configGroup.writeEntry( "UseDefaultIdentity", mUseDefaultIdentity );
-  if ( mIdentity != 0 && ( !mStorage || !mStorage->account() || mIdentity != mStorage->account()->identityId() ) )
+  if ( !mUseDefaultIdentity && ( !mStorage || !mStorage->account() ||
+                           mIdentity != mStorage->account()->identityId() ) )
       configGroup.writeEntry("Identity", mIdentity);
   else
       configGroup.deleteEntry("Identity");
@@ -641,8 +642,7 @@ void KMFolder::setIdentity( uint identity )
 uint KMFolder::identity() const
 {
   // if we don't have one set ourselves, check our account
-  kDebug() << "FOO: " << mIdentity << " :: " << mStorage << endl;
-  if ( !mIdentity && mStorage )
+  if ( mUseDefaultIdentity && mStorage )
     if ( KMAccount *act = mStorage->account() )
       return act->identityId();
   return mIdentity;

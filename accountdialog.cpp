@@ -454,11 +454,16 @@ void AccountDialog::makeLocalAccountPage()
   label->setBuddy( mLocal.precommand );
   topLayout->addWidget( mLocal.precommand, 9, 1 );
 
+  mLocal.useDefaultIdentityCheck = new QCheckBox( i18n("Use Default Identity"), page );
+  connect( mLocal.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotIdentityCheckboxChanged() ) );
+  topLayout->addWidget( mLocal.useDefaultIdentityCheck, 10, 0 );
+
   mLocal.identityLabel = new QLabel( i18n("Identity:"), page );
-  topLayout->addWidget( mLocal.identityLabel, 10, 0 );
+  topLayout->addWidget( mLocal.identityLabel, 11, 0 );
   mLocal.identityCombo = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), page );
   mLocal.identityLabel->setBuddy( mLocal.identityCombo );
-  topLayout->addWidget( mLocal.identityCombo, 10, 1 );
+  topLayout->addWidget( mLocal.identityCombo, 11, 1 );
 
   connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -564,11 +569,16 @@ void AccountDialog::makeMaildirAccountPage()
   label->setBuddy( mMaildir.precommand );
   topLayout->addWidget( label, 8, 0 );
 
+  mMaildir.useDefaultIdentityCheck = new QCheckBox( i18n("Use Default Identity"), page );
+  connect( mMaildir.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotIdentityCheckboxChanged() ) );
+  topLayout->addWidget( mMaildir.useDefaultIdentityCheck, 9, 0 );
+
   mMaildir.identityLabel = new QLabel( i18n("Identity:"), page );
-  topLayout->addWidget( mMaildir.identityLabel, 9, 0 );
+  topLayout->addWidget( mMaildir.identityLabel, 10, 0 );
   mMaildir.identityCombo = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), page );
   mMaildir.identityLabel->setBuddy( mMaildir.identityCombo );
-  topLayout->addWidget( mMaildir.identityCombo, 9, 1 );
+  topLayout->addWidget( mMaildir.identityCombo, 10, 1 );
 
   connect(KGlobalSettings::self(),SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -781,11 +791,16 @@ void AccountDialog::makePopAccountPage()
   label->setBuddy(mPop.precommand);
   grid->addWidget( mPop.precommand, 15, 1 );
 
+  mPop.useDefaultIdentityCheck = new QCheckBox( i18n("Use Default Identity"), page );
+  connect( mPop.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotIdentityCheckboxChanged() ) );
+  grid->addWidget( mPop.useDefaultIdentityCheck, 16, 0 );
+
   mPop.identityLabel = new QLabel( i18n("Identity:"), page1 );
-  grid->addWidget( mPop.identityLabel, 16, 0 );
+  grid->addWidget( mPop.identityLabel, 17, 0 );
   mPop.identityCombo = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), page1 );
   mPop.identityLabel->setBuddy( mPop.identityCombo );
-  grid->addWidget( mPop.identityCombo, 16, 1 );
+  grid->addWidget( mPop.identityCombo, 17, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
@@ -1152,6 +1167,12 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.trashCombo, row, 1 );
 
   ++row;
+  mImap.useDefaultIdentityCheck = new QCheckBox( i18n("Use Default Identity"), page );
+  connect( mImap.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotIdentityCheckboxChanged() ) );
+  grid->addWidget( mImap.useDefaultIdentityCheck, row, 0 );
+
+  ++row;
   mImap.identityLabel = new QLabel( i18n("Identity:"), page1 );
   grid->addWidget( mImap.identityLabel, row, 0 );
   mImap.identityCombo = new KPIMIdentities::IdentityCombo(kmkernel->identityManager(), page1 );
@@ -1296,6 +1317,7 @@ void AccountDialog::setupSettings()
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
     mLocal.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    mLocal.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
   }
   else if( accountType == KAccount::Pop )
   {
@@ -1331,6 +1353,7 @@ void AccountDialog::setupSettings()
     mPop.includeInCheck->setChecked( !mAccount->checkExclude() );
     mPop.precommand->setText( ap.precommand() );
     mPop.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    mPop.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     if (ap.useSSL())
       mPop.encryptionSSL->setChecked( true );
     else if (ap.useTLS())
@@ -1390,7 +1413,8 @@ void AccountDialog::setupSettings()
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
-    mImap.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
+    mImap.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( true );
@@ -1441,7 +1465,8 @@ void AccountDialog::setupSettings()
       trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
-    mImap.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    mImap.identityCombo->setCurrentIdentity( mAccount->identityId() );
+    mImap.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     //mImap.identityCombo->insertStringList( kmkernel->identityManager()->shadowIdentities() );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( true );
@@ -1482,6 +1507,7 @@ void AccountDialog::setupSettings()
     mMaildir.includeInCheck->setChecked( !mAccount->checkExclude() );
     mMaildir.precommand->setText( mAccount->precommand() );
     mMaildir.identityCombo-> setCurrentIdentity( mAccount->identityId() );
+    mMaildir.useDefaultIdentityCheck->setChecked( mAccount->useDefaultIdentity() );
     slotEnableMaildirInterval( interval >= 1 );
     folderCombo = mMaildir.folderCombo;
   }
@@ -1868,6 +1894,35 @@ void AccountDialog::slotFilterOnServerSizeChanged ( int value )
   mPop.filterOnServerSizeSpin->setSuffix( i18np(" byte", " bytes", value) );
 }
 
+void AccountDialog::slotIdentityCheckboxChanged()
+{
+  QCheckBox *useDefaultIdentity;
+  KPIMIdentities::IdentityCombo *identityCombo;
+  KAccount::Type accountType = mAccount->type();
+  switch ( accountType ) {
+    case KAccount::Local:
+      useDefaultIdentity = mLocal.useDefaultIdentityCheck;
+      identityCombo = mLocal.identityCombo;
+      break;
+    case KAccount::Imap: /* Fall through */
+    case KAccount::DImap:
+      useDefaultIdentity = mImap.useDefaultIdentityCheck;
+      identityCombo = mImap.identityCombo;
+      break;
+    case KAccount::Maildir:
+      useDefaultIdentity = mMaildir.useDefaultIdentityCheck;
+      identityCombo = mMaildir.identityCombo;
+      break;
+    case KAccount::Pop:
+      useDefaultIdentity = mPop.useDefaultIdentityCheck;
+      identityCombo = mPop.identityCombo;
+      break;
+    default:
+      assert( false );
+      break;
+  }
+  identityCombo->setEnabled( !useDefaultIdentity->isChecked() );
+}
 
 void AccountDialog::enableImapAuthMethods( unsigned int capa )
 {
@@ -1937,6 +1992,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentIndex()) );
 
     mAccount->setIdentityId( mLocal.identityCombo->currentIdentity() );
+    mAccount->setUseDefaultIdentity( mLocal.useDefaultIdentityCheck->isChecked() );
 
   }
   else if( accountType == KAccount::Pop )
@@ -1952,6 +2008,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( mFolderList.at(mPop.folderCombo->currentIndex()) );
 
     mAccount->setIdentityId( mPop.identityCombo->currentIdentity() );
+    mAccount->setUseDefaultIdentity( mPop.useDefaultIdentityCheck->isChecked() );
 
     initAccountForConnect();
     PopAccount &epa = *(PopAccount*)mAccount;
@@ -1977,6 +2034,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
     mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
+    mAccount->setUseDefaultIdentity( mImap.useDefaultIdentityCheck->isChecked() );
 
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
@@ -2010,6 +2068,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
     mAccount->setIdentityId( mImap.identityCombo->currentIdentity() );
+    mAccount->setUseDefaultIdentity( mImap.useDefaultIdentityCheck->isChecked() );
 
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
@@ -2067,6 +2126,7 @@ void AccountDialog::saveSettings()
     mAccount->setPrecommand( mMaildir.precommand->text() );
 
     mAccount->setIdentityId( mMaildir.identityCombo->currentIdentity() );
+    mAccount->setUseDefaultIdentity( mMaildir.useDefaultIdentityCheck->isChecked() );
   }
 
   if ( accountType == KAccount::Imap ||

@@ -235,9 +235,19 @@ public:
 
   /**
    * Set/get identity for checking account.
+   * If useDefaultIdentity() is true, the getter will always return the
+   * default identity of the identity manager.
    */
-  void setIdentityId(uint identityId ) { mIdentityId = identityId; }
-  uint identityId() const{ return mIdentityId; }
+  void setIdentityId( uint identityId ) { mIdentityId = identityId; }
+  uint identityId() const;
+
+  /**
+   * Set/get whether to use the default identity instead of the identity
+   * specified with setIdentityId().
+   */
+  void setUseDefaultIdentity( bool useDefaultIdentity ) {
+    mUseDefaultIdentity = useDefaultIdentity;  }
+  bool useDefaultIdentity() const { return mUseDefaultIdentity; }
 
 signals:
   /**
@@ -257,6 +267,7 @@ protected slots:
   virtual void mailCheck();
   virtual void sendReceipts();
   virtual void precommandExited(bool);
+  void slotIdentitiesChanged();
 
 protected:
   KMAccount( AccountManager* owner, const QString& accountName, uint id);
@@ -304,6 +315,7 @@ protected:
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
+  bool mUseDefaultIdentity;
   QList<KMMessage*> mReceipts;
   QList<FolderJob*>  mJobList;
   bool mHasInbox : 1;

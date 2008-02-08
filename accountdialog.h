@@ -93,6 +93,7 @@ class AccountDialog : public KDialog
       QComboBox    *folderCombo;
       //QComboBox    *identityCombo;
       KPIMIdentities::IdentityCombo    *identityCombo;
+      QCheckBox    *useDefaultIdentityCheck;
       QLabel       *identityLabel;
     };
 
@@ -114,6 +115,7 @@ class AccountDialog : public KDialog
       QComboBox    *folderCombo;
       //QComboBox    *identityCombo;
       KPIMIdentities::IdentityCombo    *identityCombo;
+      QCheckBox    *useDefaultIdentityCheck;
       QLabel       *identityLabel;
     };
 
@@ -166,6 +168,7 @@ class AccountDialog : public KDialog
       QComboBox    *folderCombo;
       //QComboBox    *identityCombo;
       KPIMIdentities::IdentityCombo    *identityCombo;
+      QCheckBox    *useDefaultIdentityCheck;
       QLabel       *identityLabel;
     };
 
@@ -219,6 +222,7 @@ class AccountDialog : public KDialog
       QToolButton  *editSNS;
       ImapAccountBase::nsDelimMap nsMap;
       KPIMIdentities::IdentityCombo    *identityCombo;
+      QCheckBox    *useDefaultIdentityCheck;
       QLabel       *identityLabel;
     };
 
@@ -253,6 +257,7 @@ class AccountDialog : public KDialog
     void slotLeaveOnServerDaysChanged( int value );
     void slotLeaveOnServerCountChanged( int value );
     void slotFilterOnServerSizeChanged( int value );
+    void slotIdentityCheckboxChanged();
 #if 0
     // Moc doesn't understand #if 0, so they are also commented out
     // void slotClearResourceAllocations();
