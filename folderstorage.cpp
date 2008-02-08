@@ -505,6 +505,7 @@ KMMessage* FolderStorage::getMsg(int idx)
 }
 
 //-----------------------------------------------------------------------------
+/* mschill: This one is buggy. Somhow it starts a transfer and deleting the message will result in an error
 KMMessage* FolderStorage::readTemporaryMsg(int idx)
 {
   if(!(idx >= 0 && idx <= count()))
@@ -532,7 +533,7 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
   msg->setEnableUndo(undo);
   return msg;
 }
-
+*/
 
 //-----------------------------------------------------------------------------
 KMMsgInfo* FolderStorage::unGetMsg(int idx)

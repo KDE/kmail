@@ -564,12 +564,8 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
                 << resource << ") from" << startIndex << "to" << stopIndex;
 
   for(int i = startIndex; i < stopIndex; ++i) {
-#if 0
-    bool unget = !f->isMessage(i);
+    bool unget = !f->isMessage( i );
     KMMessage* msg = f->getMsg( i );
-#else // faster
-    KMMessage* msg = f->storage()->readTemporaryMsg(i);
-#endif
     if ( msg ) {
       const int iSlash = mimetype.indexOf('/');
       const QByteArray sType    = mimetype.left( iSlash   ).toLatin1();
@@ -595,11 +591,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
           // have a message part that is matching the wanted MIME type
         }
       }
-#if 0
-      if( unget ) f->unGetMsg(i);
-#else
-      delete msg;
-#endif
+      if( unget ) f->unGetMsg( i );
     }
   }
   f->close( "incidences" );

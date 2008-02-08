@@ -142,12 +142,13 @@ public:
   /** Checks if the message is already "gotten" with getMsg */
   virtual bool isMessage(int idx);
 
-  /** Load message from file and do NOT store it, only return it.
+  /* Load message from file and do NOT store it, only return it.
       This is equivalent to, but faster than, getMsg+unGetMsg
       WARNING: the caller has to delete the returned value!
   */
+  /* mschill: This one is buggy
   virtual KMMessage* readTemporaryMsg(int idx);
-
+  */
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;
 

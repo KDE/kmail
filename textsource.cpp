@@ -47,22 +47,25 @@ KMTextSource::~KMTextSource() {
 }
 
 
-QByteArray KMTextSource::text(quint32 serialNumber) const {
-    QByteArray rc;
-    KMFolder *folder = 0;
-    int idx;
-    KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
-    if (folder) {
-        KMMsgBase *msgBase = folder->getMsgBase(idx);
-        if (msgBase) {
-            KMMessage *msg = msgBase->storage()->readTemporaryMsg(idx);
-            if (msg) {
-                rc = msg->asString();
-                delete msg;
-            }
+QByteArray KMTextSource::text( quint32 serialNumber ) const {
+  QByteArray rc;
+  KMFolder *folder = 0;
+  int idx;
+  KMMsgDict::instance()->getLocation( serialNumber, &folder, &idx );
+  if ( folder ) {
+    KMMsgBase *msgBase = folder->getMsgBase( idx );
+    if (msgBase) {
+      KMFolderIndex* storage = msgBase->storage();
+      if( storage ) {
+        KMMessage *msg = storage->getMsg( idx );
+        if ( msg ) {
+          rc = msg->asString();
+          storage->unGetMsg( idx );
         }
+      }
     }
+  }
 
-    return rc;
+  return rc;
 }
 
