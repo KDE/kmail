@@ -232,7 +232,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mAutoCharset = true;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
-  mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
   mSplitter->setObjectName( "mSplitter" );
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
@@ -242,32 +242,37 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
   QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
-  QHBoxLayout *hbox = new QHBoxLayout( vbox );
+  QHBoxLayout *hbox = new QHBoxLayout();
   {
-      mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
-      mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
-      hbox->addWidget( mSignatureStateIndicator );
+    mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+    mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
+    hbox->addWidget( mSignatureStateIndicator );
 
-      KConfigGroup reader( KMKernel::config(), "Reader" );
-      QPalette p( mSignatureStateIndicator->palette() );
+    KConfigGroup reader( KMKernel::config(), "Reader" );
+    QPalette p( mSignatureStateIndicator->palette() );
 
-      QColor defaultSignedColor( 0x40, 0xFF, 0x40 ); // light green // pgp ok, trusted key
-      QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
-      p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageOkKeyOk", defaultSignedColor ) );
-      mSignatureStateIndicator->setPalette( p );
-      mSignatureStateIndicator->setAutoFillBackground( true );
+    KColorScheme scheme( QPalette::Active, KColorScheme::View );
+    QColor defaultSignedColor =  // pgp signed
+        scheme.background( KColorScheme::PositiveBackground ).color();
+    QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
+    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageOkKeyOk",
+                                                       defaultSignedColor ) );
+    mSignatureStateIndicator->setPalette( p );
+    mSignatureStateIndicator->setAutoFillBackground( true );
 
-      mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
-      mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
-      hbox->addWidget( mEncryptionStateIndicator );
-      p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr" , defaultEncryptedColor ) );
-      mEncryptionStateIndicator->setPalette( p );
-      mEncryptionStateIndicator->setAutoFillBackground( true );
+    mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
+    mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
+    hbox->addWidget( mEncryptionStateIndicator );
+    p.setColor( QColorGroup::Window, reader.readEntry( "PGPMessageEncr" ,
+                                                       defaultEncryptedColor ) );
+    mEncryptionStateIndicator->setPalette( p );
+    mEncryptionStateIndicator->setAutoFillBackground( true );
   }
 
   mEditor = new KMComposerEditor( this, editorAndCryptoStateIndicators );
+  vbox->addLayout( hbox );
   vbox->addWidget( mEditor );
-  mSnippetSplitter->moveToFirst( editorAndCryptoStateIndicators );
+  mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
   mSnippetSplitter->setOpaqueResize( true );
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
@@ -4601,12 +4606,16 @@ void KMComposeWin::setMaximumHeaderSize()
 
 void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
 {
-    const bool showIndicatorsAlways = false; // FIXME config option?
-    mSignatureStateIndicator->setText( mSignAction->isChecked()? i18n("Message will be signed") : i18n("Message will not be signed") );
-    mEncryptionStateIndicator->setText( mEncryptAction->isChecked()? i18n("Message will be encrypted") : i18n("Message will not be encrypted") );
-    if ( !showIndicatorsAlways ) {
-      mSignatureStateIndicator->setShown( mSignAction->isChecked() );
-      mEncryptionStateIndicator->setShown( mEncryptAction->isChecked() );
-    }
+  const bool showIndicatorsAlways = false; // FIXME config option?
+  mSignatureStateIndicator->setText( mSignAction->isChecked() ?
+                                     i18n("Message will be signed") :
+                                     i18n("Message will not be signed") );
+  mEncryptionStateIndicator->setText( mEncryptAction->isChecked() ?
+                                      i18n("Message will be encrypted") :
+                                      i18n("Message will not be encrypted") );
+  if ( !showIndicatorsAlways ) {
+    mSignatureStateIndicator->setVisible( mSignAction->isChecked() );
+    mEncryptionStateIndicator->setVisible( mEncryptAction->isChecked() );
+  }
 }
 

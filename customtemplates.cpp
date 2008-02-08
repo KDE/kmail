@@ -83,8 +83,14 @@ CustomTemplates::CustomTemplates( QWidget *parent, const char *name )
 
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
           this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
-  
-  mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
+
+#if KDE_IS_VERSION(4,0,60)
+  mKeySequenceWidget->setCheckActionCollections(
+      kmkernel->getKMMainWidget()->actionCollections() );
+#else
+  mKeySequenceWidget->setCheckActionList(
+      kmkernel->getKMMainWidget()->actionList() );
+#endif
 
   mReplyPix = KIconLoader().loadIcon( "mail-reply-sender", KIconLoader::Small );
   mReplyAllPix = KIconLoader().loadIcon( "mail-reply-all", KIconLoader::Small );

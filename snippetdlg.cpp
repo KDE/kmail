@@ -13,6 +13,7 @@
 
 #include "snippetdlg.h"
 
+#include <kdeversion.h>
 #include <kdialog.h>
 #include <klocale.h>
 
@@ -37,7 +38,11 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
     setupUi( this );
     setModal( modal );
 
+#if KDE_IS_VERSION(4,0,60)
+    keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
+#else
     keyWidget->setCheckActionList( ac->actions() );
+#endif
 
     //TODO tab order in designer!
     setTabOrder( snippetText, keyWidget );

@@ -3693,6 +3693,11 @@ void KMMainWidget::updateMessageTagActions( const int count )
     }
   }
 }
+
+QList<KActionCollection*> KMMainWidget::actionCollections() const {
+  return QList<KActionCollection*>() << actionCollection();
+}
+
 void KMMainWidget::slotUpdateMessageTagList( const QString &name )
 {
   mHeaders->setMessageTagList( name );

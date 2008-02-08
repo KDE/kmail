@@ -2445,7 +2445,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
-  mKeySequenceWidget->setCheckActionList(kmkernel->getKMMainWidget()->actionList());
+#if KDE_IS_VERSION(4,0,60)
+  mKeySequenceWidget->setCheckActionCollections(
+      kmkernel->getKMMainWidget()->actionCollections() );
+#else
+  mKeySequenceWidget->setCheckActionList(
+      kmkernel->getKMMainWidget()->actionList() );
+#endif
 
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
            this, SLOT( slotEmitChangeCheck() ) );

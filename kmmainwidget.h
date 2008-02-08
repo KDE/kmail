@@ -264,6 +264,15 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void updateMessageTagActions( const int aCount );
 
+    /**
+     * Convenience function to get the action collection in a list.
+     *
+     * @return a list of action collections. The list only has one item, and
+     *         that is the action collection of this main widget as returned
+     *         by actionCollection().
+     */
+    QList<KActionCollection*> actionCollections() const;
+
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
