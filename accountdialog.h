@@ -91,10 +91,6 @@ class AccountDialog : public KDialog
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
       QComboBox    *folderCombo;
-      //QComboBox    *identityCombo;
-      KPIMIdentities::IdentityCombo    *identityCombo;
-      QCheckBox    *useDefaultIdentityCheck;
-      QLabel       *identityLabel;
     };
 
     struct MaildirWidgets
@@ -113,10 +109,6 @@ class AccountDialog : public KDialog
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
       QComboBox    *folderCombo;
-      //QComboBox    *identityCombo;
-      KPIMIdentities::IdentityCombo    *identityCombo;
-      QCheckBox    *useDefaultIdentityCheck;
-      QLabel       *identityLabel;
     };
 
     struct PopWidgets
@@ -166,10 +158,6 @@ class AccountDialog : public KDialog
       KIntNumInput *intervalSpin;
       KIntNumInput *filterOnServerSizeSpin;
       QComboBox    *folderCombo;
-      //QComboBox    *identityCombo;
-      KPIMIdentities::IdentityCombo    *identityCombo;
-      QCheckBox    *useDefaultIdentityCheck;
-      QLabel       *identityLabel;
     };
 
     struct ImapWidgets
