@@ -1475,6 +1475,27 @@ void KMComposeWin::setupEditor( void )
   // Font setup
   slotUpdateFont();
 
+  /* installRBPopup() is broken in kdelibs, we should wait for
+     the new klibtextedit (dnaber, 2002-01-01)
+     menu = new QPopupMenu(this);
+     //#ifdef BROKEN
+     menu->insertItem(i18n("Undo"),mEditor,
+     SLOT(undo()), KStandardShortcut::shortcut(KStandardShortcut::Undo));
+     menu->insertItem(i18n("Redo"),mEditor,
+     SLOT(redo()), KStandardShortcut::shortcut(KStandardShortcut::Redo));
+     menu->addSeparator();
+     //#endif //BROKEN
+     menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
+     menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
+     menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
+     menu->insertItem(i18n("Mark All"),this, SLOT(slotMarkAll()));
+     menu->addSeparator();
+     menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
+     menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
+     menu->addSeparator();
+     menu->insertItem(i18n("Fixed Font Widths"), this, SLOT(slotUpdateFont()));
+     mEditor->installRBPopup(menu);
+  */
   updateCursorPosition();
   connect( mEditor, SIGNAL(cursorPositionChanged()), SLOT(updateCursorPosition()) );
   connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
