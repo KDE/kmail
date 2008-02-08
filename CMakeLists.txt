@@ -22,6 +22,7 @@ endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+add_definitions ( -DKDE_DEFAULT_DEBUG_AREA=5006 )
 
 qt4_generate_dbus_interface( kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a )
 qt4_generate_dbus_interface( kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a )
