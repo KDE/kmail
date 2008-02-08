@@ -38,10 +38,7 @@ KMMainWin::KMMainWin(QWidget *)
   actionCollection()->addAction( "new_mail_client", action );
   connect( action, SIGNAL( triggered(bool) ), SLOT( slotNewMailReader() ) );
 
-  // Reading the config has to be done before setting up the main widget,
-  // because that needs a correct size
   resize( 700, 500 ); // The default size
-  applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
 
   mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
   setCentralWidget( mKMMainWidget );
@@ -62,6 +59,8 @@ KMMainWin::KMMainWin(QWidget *)
   // Don't use conserveMemory() because this renders dynamic plugging
   // of actions unusable!
 
+  //must be after createGUI, otherwise e.g toolbar settings are not loaded
+  applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
            this, SLOT( displayStatusMsg(const QString&) ) );
