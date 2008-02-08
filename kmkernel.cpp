@@ -2027,7 +2027,7 @@ void KMKernel::emergencyExit( const QString& reason )
   }
 
   kdWarning() << mesg << endl;
-  KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
+  KNotifyClient::userEvent( 0, "<qt>"+mesg+"</qt>", KNotifyClient::Messagebox, KNotifyClient::Error );
 
   ::exit(1);
 }
