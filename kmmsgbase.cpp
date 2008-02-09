@@ -887,9 +887,9 @@ retry:
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     off_t first_off = KDE_ftell(storage()->mIndexStream);
-    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+    KDE_fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
-    fseek(storage()->mIndexStream, first_off, SEEK_SET);
+    KDE_fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
 
   MsgPartType type;
@@ -964,9 +964,9 @@ retry:
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     off_t first_off = KDE_ftell(storage()->mIndexStream);
-    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+    KDE_fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
-    fseek(storage()->mIndexStream, first_off, SEEK_SET);
+    KDE_fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
 
   MsgPartType type;
@@ -1150,7 +1150,7 @@ bool KMMsgBase::syncIndexString() const
   const uchar *buffer = asIndexString(len);
   if (len == mIndexLength) {
     Q_ASSERT(storage()->mIndexStream);
-    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+    KDE_fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     assert( mIndexOffset > 0 );
     fwrite( buffer, len, 1, storage()->mIndexStream);
     return true;

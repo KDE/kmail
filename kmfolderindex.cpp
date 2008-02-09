@@ -245,7 +245,7 @@ bool KMFolderIndex::readIndex()
         len = kmail_swap_32(len);
 
       off_t offs = KDE_ftell(mIndexStream);
-      if(fseek(mIndexStream, len, SEEK_CUR))
+      if(KDE_fseek(mIndexStream, len, SEEK_CUR))
         break;
       mi = new KMMsgInfo(folder(), offs, len);
     }
@@ -350,7 +350,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       quint32 sizeOfLong = sizeof(long); // default
 
       quint32 header_length = 0;
-      fseek(mIndexStream, sizeof(char), SEEK_CUR );
+      KDE_fseek(mIndexStream, sizeof(char), SEEK_CUR );
       fread(&header_length, sizeof(header_length), 1, mIndexStream);
       if (header_length > 0xFFFF)
          header_length = kmail_swap_32(header_length);
@@ -378,7 +378,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       if (needs_update || mIndexSwapByteOrder || (mIndexSizeOfLong != sizeof(long)))
 	setDirty( true );
       // Seek to end of header
-      fseek(mIndexStream, endOfHeader, SEEK_SET );
+      KDE_fseek(mIndexStream, endOfHeader, SEEK_SET );
 
       if (mIndexSwapByteOrder)
          kDebug(5006) <<"Index File has byte order swapped!";
@@ -413,8 +413,8 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
     }
 
     assert(mIndexStream);
-    struct stat stat_buf;
-    if(fstat(fileno(mIndexStream), &stat_buf) == -1) {
+    KDE_struct_stat stat_buf;
+    if(KDE_fstat(fileno(mIndexStream), &stat_buf) == -1) {
 	if(mIndexStreamPtr)
 	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
 	mIndexStreamPtr = 0;

@@ -425,10 +425,10 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
 
   // quick consistency check to avoid allocating huge amount of memory
   // due to reading corrupt file (#71549)
-  long pos = KDE_ftell(fp);       // store current position
-  fseek(fp, 0, SEEK_END);
-  long fileSize = KDE_ftell(fp);  // how large is the file ?
-  fseek(fp, pos, SEEK_SET);   // back to previous position
+  long pos = KDE_ftell( fp );       // store current position
+  KDE_fseek( fp, 0, SEEK_END );
+  long fileSize = KDE_ftell( fp );  // how large is the file ?
+  KDE_fseek( fp, pos, SEEK_SET );   // back to previous position
 
   // the file must at least contain what we try to read below
   if ( (fileSize - pos) < ( long )(count * sizeof(quint32)) ) {
@@ -524,7 +524,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
       fwrite(&byteOrder, sizeof(byteOrder), 1, fp);
       rentry->swapByteOrder = false;
     }
-    rentry->baseOffset = KDE_ftell(fp);
+    rentry->baseOffset = KDE_ftell( fp );
     rentry->fp = fp;
   }
 
@@ -540,7 +540,7 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
     return 0;
   FILE *fp = rentry->fp;
 
-  fseek(fp, rentry->baseOffset, SEEK_SET);
+  KDE_fseek( fp, rentry->baseOffset, SEEK_SET );
   // kDebug(5006) <<"Dict writing for folder" << storage.label();
   quint32 count = rentry->getRealSize();
   if (!fwrite(&count, sizeof(count), 1, fp)) {
@@ -557,12 +557,14 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
 
   rentry->sync();
 
-  off_t eof = KDE_ftell(fp);
+  off_t eof = KDE_ftell( fp );
   QString filename = getFolderIdsLocation( storage );
-  if (fclose(rentry->fp) != 0)
+  if ( fclose( rentry->fp ) != 0 ) {
     return -1;
-  if (truncate(QFile::encodeName(filename), eof) != 0)
+  }
+  if ( truncate( QFile::encodeName( filename ), eof ) != 0 ) {
     return -1;
+  }
   rentry->fp = 0;
 
   return 0;
@@ -592,7 +594,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
 
 //  kDebug(5006) <<"Dict appending for folder" << storage.label();
 
-  fseek(fp, rentry->baseOffset, SEEK_SET);
+  KDE_fseek( fp, rentry->baseOffset, SEEK_SET );
   quint32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
     kDebug(5006) <<"Dict cannot read count for folder" << storage.label() <<":"
@@ -606,7 +608,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
 
   if (rentry->swapByteOrder)
      count = kmail_swap_32(count);
-  fseek(fp, rentry->baseOffset, SEEK_SET);
+  KDE_fseek( fp, rentry->baseOffset, SEEK_SET );
   if (!fwrite(&count, sizeof(count), 1, fp)) {
     kDebug(5006) <<"Dict cannot write count for folder" << storage.label() <<":"
                   << strerror(errno) << "(" << errno << ")";
@@ -614,8 +616,9 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
   }
 
   long ofs = (count - 1) * sizeof(ulong);
-  if (ofs > 0)
-    fseek(fp, ofs, SEEK_CUR);
+  if ( ofs > 0 ) {
+    KDE_fseek( fp, ofs, SEEK_CUR );
+  }
 
   quint32 msn = rentry->getMsn(index);
   if (rentry->swapByteOrder)

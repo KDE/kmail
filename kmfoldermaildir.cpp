@@ -504,14 +504,14 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   {
     assert(mIndexStream != 0);
     clearerr(mIndexStream);
-    fseek(mIndexStream, 0, SEEK_END);
+    KDE_fseek(mIndexStream, 0, SEEK_END);
     off_t revert = KDE_ftell(mIndexStream);
 
     int len;
     KMMsgBase * mb = &aMsg->toMsgBase();
     const uchar *buffer = mb->asIndexString(len);
     fwrite(&len,sizeof(len), 1, mIndexStream);
-    mb->setIndexOffset( ftell(mIndexStream) );
+    mb->setIndexOffset( KDE_ftell(mIndexStream) );
     mb->setIndexLength( len );
     if(fwrite(buffer, len, 1, mIndexStream) != 1)
       kDebug(5006) <<"Whoa!";
@@ -522,11 +522,11 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     if ( mExportsSernums )
       error |= appendToFolderIdsFile( idx );
 
-    if (error) {
-      kDebug(5006) <<"Error: Could not add message to folder (No space left on device?)";
-      if (ftell(mIndexStream) > revert) {
-	kDebug(5006) <<"Undoing changes";
-	truncate( QFile::encodeName(indexLocation()), revert );
+    if ( error ) {
+      kDebug(5006) << "Error: Could not add message to folder (No space left on device?)";
+      if ( KDE_ftell( mIndexStream ) > revert ) {
+	kDebug(5006) << "Undoing changes";
+	truncate( QFile::encodeName( indexLocation() ), revert );
       }
       kmkernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
       // exit(1); // don't ever use exit(), use the above!

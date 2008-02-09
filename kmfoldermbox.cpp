@@ -958,7 +958,7 @@ DwString KMFolderMbox::getDwString(int idx)
   size_t msgSize = mi->msgSize();
   char* msgText = new char[ msgSize + 1 ];
 
-  fseek(mStream, mi->folderOffset(), SEEK_SET);
+  KDE_fseek(mStream, mi->folderOffset(), SEEK_SET);
   fread(msgText, msgSize, 1, mStream);
   msgText[msgSize] = '\0';
 
@@ -1037,13 +1037,13 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
   // Make sure the file is large enough to check for an end
   // character
-  fseek( mStream, 0, SEEK_END );
+  KDE_fseek( mStream, 0, SEEK_END );
   off_t revert = KDE_ftell( mStream );
   int growth = 0;
   if ( KDE_ftell( mStream ) >= 2 ) {
     // write message to folder file
     char endStr[3];
-    fseek( mStream, -2, SEEK_END );
+    KDE_fseek( mStream, -2, SEEK_END );
     fread( endStr, 1, 2, mStream ); // ensure separating empty line
     if ( KDE_ftell( mStream ) > 0 && endStr[0]!='\n' ) {
       ++growth;
@@ -1056,7 +1056,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
       }
     }
   }
-  fseek( mStream, 0, SEEK_END ); // this is needed on solaris and others
+  KDE_fseek( mStream, 0, SEEK_END ); // this is needed on solaris and others
   int error = ferror( mStream );
   if ( error )
     return error;
@@ -1144,7 +1144,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   if ( mAutoCreateIndex ) {
     assert( mIndexStream != 0 );
     clearerr( mIndexStream );
-    fseek( mIndexStream, 0, SEEK_END );
+    KDE_fseek( mIndexStream, 0, SEEK_END );
     revert = KDE_ftell( mIndexStream );
 
     KMMsgBase * mb = &aMsg->toMsgBase();
@@ -1221,7 +1221,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
     //now we need to find the separator! grr...
     for( off_t i = folder_offset-25; true; i -= 20 ) {
       off_t chunk_offset = i <= 0 ? 0 : i;
-      if ( fseek( mStream, chunk_offset, SEEK_SET ) == -1 ) {
+      if ( KDE_fseek( mStream, chunk_offset, SEEK_SET ) == -1 ) {
         rc = errno;
         break;
       }
@@ -1229,14 +1229,14 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
         mtext.resize( 20 );
       }
       fread( mtext.data(), 20, 1, mStream );
-      if( i <= 0 ) { //woops we've reached the top of the file, last try..
+      if ( i <= 0 ) { //woops we've reached the top of the file, last try..
         if ( mtext.indexOf( "from " ) ) {
           if ( (size_t) mtext.size() < folder_offset ) {
               mtext.resize( folder_offset );
           }
-          if( fseek( mStream, chunk_offset, SEEK_SET) == -1 ||
-              !fread( mtext.data(), folder_offset, 1, mStream ) ||
-              !fwrite( mtext.data(), folder_offset, 1, tmpfile ) ) {
+          if ( KDE_fseek( mStream, chunk_offset, SEEK_SET) == -1 ||
+               !fread( mtext.data(), folder_offset, 1, mStream ) ||
+               !fwrite( mtext.data(), folder_offset, 1, tmpfile ) ) {
             rc = errno;
             break;
           }
@@ -1257,7 +1257,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
           if ( (int)mtext.size() < size ) {
               mtext.resize( size );
           }
-          if ( fseek( mStream, i + last_crlf+1, SEEK_SET ) == -1 ||
+          if ( KDE_fseek( mStream, i + last_crlf+1, SEEK_SET ) == -1 ||
                !fread( mtext.data(), size, 1, mStream ) ||
                !fwrite( mtext.data(), size, 1, tmpfile ) ) {
             rc = errno;
@@ -1273,9 +1273,9 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
     }
 
     //now actually write the message
-    if( fseek( mStream, folder_offset, SEEK_SET ) == -1 ||
-        !fread( mtext.data(), msize, 1, mStream ) ||
-        !fwrite( mtext.data(), msize, 1, tmpfile ) ) {
+    if ( KDE_fseek( mStream, folder_offset, SEEK_SET ) == -1 ||
+         !fread( mtext.data(), msize, 1, mStream ) ||
+         !fwrite( mtext.data(), msize, 1, tmpfile ) ) {
       rc = errno;
       break;
     }

@@ -4630,7 +4630,7 @@ void SecurityPage::SMimeTab::doLoadOther() {
   initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
   initializeDirmngrCheckbox( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
   if ( e.mCustomHTTPProxy ) {
-    QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
+    QString systemProxy = QString::fromLocal8Bit( qgetenv( "http_proxy" ) );
     if ( systemProxy.isEmpty() )
       systemProxy = i18n( "no proxy" );
     mWidget->systemHTTPProxy->setText( i18n( "(Current system setting: %1)", systemProxy ) );
