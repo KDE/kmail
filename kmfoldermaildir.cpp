@@ -23,12 +23,15 @@ using KMail::MaildirJob;
 
 #include <kdebug.h>
 #include <kde_file.h>
+#include <kfileitem.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <k3staticdeleter.h>
 #include <kmessagebox.h>
 #include <krandom.h>
 
 #include <QDateTime>
+#include <QPointer>
 
 #include <dirent.h>
 #include <errno.h>
@@ -48,9 +51,6 @@ using KMail::MaildirJob;
 #endif
 
 using KPIMUtils::removeDirAndContentsRecursively;
-
-// define the static member
-QList<KMFolderMaildir::DirSizeJobQueueEntry> KMFolderMaildir::s_DirSizeJobQueue;
 
 
 //-----------------------------------------------------------------------------
@@ -1069,6 +1069,12 @@ void KMFolderMaildir::msgStatusChanged( const MessageStatus& oldStatus,
   KMFolderIndex::msgStatusChanged(oldStatus, newStatus, idx);
 }
 
+
+// define the global static s_DirSizeJobQueue used below
+typedef QPair<QPointer<KMFolderMaildir>,KFileItemList> DirSizeJobQueueEntry;
+typedef QList<DirSizeJobQueueEntry> DirSizeJobQueue;
+K_GLOBAL_STATIC( DirSizeJobQueue, s_DirSizeJobQueue )
+
 /*virtual*/
 qint64 KMFolderMaildir::doFolderSize() const
 {
@@ -1084,12 +1090,12 @@ qint64 KMFolderMaildir::doFolderSize() const
   list.append( KFileItem( S_IFDIR, KFileItem::Unknown, location() + "/tmp" ) );
   // using QPointer<const KMFolderMaildir> would be nicer, but QPointer does not support
   // const types as template parameter; therefore we have to const_cast this
-  s_DirSizeJobQueue.append(
+  s_DirSizeJobQueue->append(
     qMakePair( QPointer<KMFolderMaildir>( const_cast<KMFolderMaildir*>( this ) ), list ) );
 
   // if there's only one entry in the queue then we can start
   // a DirectorySizeJob right away
-  if ( s_DirSizeJobQueue.size() == 1 )
+  if ( s_DirSizeJobQueue->size() == 1 )
   {
     //kdDebug(5006) << k_funcinfo << "Starting DirectorySizeJob for folder "
     //  << location() << endl;
@@ -1113,12 +1119,12 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
     emit folderSizeChanged();
   }
   // remove the completed job from the queue
-  s_DirSizeJobQueue.pop_front();
+  s_DirSizeJobQueue->pop_front();
 
   // process the next entry in the queue
-  while ( s_DirSizeJobQueue.size() > 0 )
+  while ( s_DirSizeJobQueue->size() > 0 )
   {
-    DirSizeJobQueueEntry entry = s_DirSizeJobQueue.first();
+    DirSizeJobQueueEntry entry = s_DirSizeJobQueue->first();
     // check whether the entry is valid, i.e. whether the folder still exists
     if ( entry.first )
     {
@@ -1133,7 +1139,7 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
     else
     {
       // remove the invalid entry from the queue
-      s_DirSizeJobQueue.pop_front();
+      s_DirSizeJobQueue->pop_front();
     }
   }
 }

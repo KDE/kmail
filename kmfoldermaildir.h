@@ -3,10 +3,7 @@
 
 #include "kmfolderindex.h"
 
-#include <kfileitem.h>
-
 #include <QList>
-#include <QPointer>
 
 class KJob;
 
@@ -159,9 +156,6 @@ private:
       Returns IndexOk if the index is not older than the contents.
   */
   virtual IndexStatus indexStatus();
-
-  typedef QPair<QPointer<KMFolderMaildir>,KFileItemList> DirSizeJobQueueEntry;
-  static QList<DirSizeJobQueueEntry> s_DirSizeJobQueue;
 
   int mIdxCount;
   mutable bool mCurrentlyCheckingFolderSize;
