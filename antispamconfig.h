@@ -77,6 +77,8 @@ namespace KMail {
   typedef QList<SpamAgent> SpamAgents;
   typedef QList<SpamAgent>::Iterator SpamAgentsIterator;
 
+  class AntiSpamConfigSingletonProvider;
+
   /**
      @short Singleton to manage loading the kmail.antispamrc file.
      @author Patrick Audley <paudley@blackcat.ca>
@@ -87,9 +89,8 @@ namespace KMail {
      public member functions.
    */
   class AntiSpamConfig {
+  friend class AntiSpamConfigSingletonProvider;
   private:
-    static AntiSpamConfig * sSelf;
-
     AntiSpamConfig() {}
 
   public:

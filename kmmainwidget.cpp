@@ -47,6 +47,7 @@
 #include <kactionmenu.h>
 #include <kmenu.h>
 #include <kacceleratormanager.h>
+#include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kstandardshortcut.h>
 #include <kshortcutsdialog.h>
@@ -65,7 +66,6 @@
 #include <ktoolinvocation.h>
 #include <kxmlguifactory.h>
 #include <kstatusbar.h>
-#include <k3staticdeleter.h>
 #include <kaction.h>
 #include <kvbox.h>
 
@@ -150,8 +150,7 @@ using KMail::TemplateParser;
 
 #include "kmmainwidget.moc"
 
-QList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
-static K3StaticDeleter<QList<KMMainWidget*> > mwlsd;
+K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 static const int defaultMinimumWidth = 400;
 static const int defaultMinimumHeight = 300;
@@ -206,9 +205,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
   mMessageTagToolbarActionSeparator = new QAction( this );
   mMessageTagToolbarActionSeparator->setSeparator( true );
 
-  if( !s_mainWidgetList )
-    mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
-  s_mainWidgetList->append( this );
+  theMainWidgetList->append( this );
 
   setMinimumSize( defaultMinimumWidth, defaultMinimumHeight );
 
@@ -274,7 +271,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
 //perform all cleanup that requires the kernel in destruct()
 KMMainWidget::~KMMainWidget()
 {
-  s_mainWidgetList->removeAll( this );
+  theMainWidgetList->removeAll( this );
   qDeleteAll( mFilterCommands );
   destruct();
 }
@@ -4160,6 +4157,17 @@ void KMMainWidget::setAccelsEnabled( bool enabled )
 {
   if ( mAccel )
     mAccel->setEnabled( enabled );
+}
+
+//-----------------------------------------------------------------------------
+const KMMainWidget::PtrList * KMMainWidget::mainWidgetList()
+{
+  // better safe than sorry; check whether the global static has already been destroyed
+  if ( theMainWidgetList.isDestroyed() )
+  {
+    return 0;
+  }
+  return theMainWidgetList;
 }
 
 //-----------------------------------------------------------------------------

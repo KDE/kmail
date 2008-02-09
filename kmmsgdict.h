@@ -30,6 +30,8 @@ class KMDict;
 class QString;
 class FolderStorage;
 
+class KMMsgDictSingletonProvider;
+
 /**
  * @short KMail message dictionary. Keeps location information for every
  * message. The message serial number is the key for the dictionary.
@@ -49,7 +51,7 @@ class FolderStorage;
  */
 class KMMsgDict
 {
-  template<class> friend class K3StaticDeleter;
+  friend class KMMsgDictSingletonProvider;
   public:
     /** Access the globally unique MessageDict */
     static const KMMsgDict* instance();
@@ -158,9 +160,6 @@ private:
 
   /** The dictionary. */
   KMDict *dict;
-
-  /** The singleton instance */
-  static KMMsgDict *m_self;
 };
 
 #endif /* __KMMSGDICT */

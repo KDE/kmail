@@ -34,24 +34,35 @@
 #include "antispamconfig.h"
 
 #include <kascii.h>
-
-#include <k3staticdeleter.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <kglobal.h>
+
 #include <QStringList>
 
 using namespace KMail;
 
-AntiSpamConfig * AntiSpamConfig::sSelf = 0;
-static K3StaticDeleter<AntiSpamConfig> antispamconfig_sd;
 
-AntiSpamConfig * AntiSpamConfig::instance() {
-  if ( !sSelf ) {
-    antispamconfig_sd.setObject( sSelf, new AntiSpamConfig() );
-    sSelf->readConfig();
-  }
-  return sSelf;
+namespace KMail {
+  class AntiSpamConfigSingletonProvider
+  {
+    public:
+      AntiSpamConfig instance;
+  };
 }
+
+K_GLOBAL_STATIC( AntiSpamConfigSingletonProvider, theAntiSpamConfigSingletonProvider )
+
+AntiSpamConfig * AntiSpamConfig::instance()
+{
+  // better safe than sorry; check whether the global static has already been destroyed
+  if ( theAntiSpamConfigSingletonProvider.isDestroyed() )
+  {
+    return 0;
+  }
+  return &theAntiSpamConfigSingletonProvider->instance;
+}
+
 
 void AntiSpamConfig::readConfig()
 {

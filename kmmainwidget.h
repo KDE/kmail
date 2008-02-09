@@ -89,6 +89,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   Q_OBJECT
 
   public:
+    typedef QList<KMMainWidget*> PtrList;
+
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
                  KConfig *config = KMKernel::config() );
@@ -156,7 +158,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
       @return the list of all main widgets, or 0 if it is not yet initialized
     */
-    static const QList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
+    static const PtrList *mainWidgetList();
 
     KMSystemTray *systray() const;
 
@@ -597,7 +599,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMail::MessageActions *mMsgActions;
 
-    static QList<KMMainWidget*> *s_mainWidgetList;
     bool mOpenedImapFolder;
 
     Q3Accel *mAccel;

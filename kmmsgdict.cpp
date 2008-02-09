@@ -10,7 +10,7 @@
 
 #include <kdebug.h>
 #include <kde_file.h>
-#include <k3staticdeleter.h>
+#include <kglobal.h>
 
 #include <QFileInfo>
 #include <Q3MemArray>
@@ -141,8 +141,13 @@ public:
 };
 
 
-static K3StaticDeleter<KMMsgDict> msgDict_sd;
-KMMsgDict * KMMsgDict::m_self = 0;
+class KMMsgDictSingletonProvider
+{
+  public:
+    KMMsgDict instance;
+};
+
+K_GLOBAL_STATIC( KMMsgDictSingletonProvider, theKMMsgDictSingletonProvider )
 
 //-----------------------------------------------------------------------------
 
@@ -153,7 +158,6 @@ KMMsgDict::KMMsgDict()
   GlobalSettings::self()->setMsgDictSizeHint( 0 );
   dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
-  m_self = this;
 }
 
 //-----------------------------------------------------------------------------
@@ -167,18 +171,22 @@ KMMsgDict::~KMMsgDict()
 
 const KMMsgDict* KMMsgDict::instance()
 {
-  if ( !m_self ) {
-    msgDict_sd.setObject( m_self, new KMMsgDict() );
+  // better safe than sorry; check whether the global static has already been destroyed
+  if ( theKMMsgDictSingletonProvider.isDestroyed() )
+  {
+    return 0;
   }
-  return m_self;
+  return &theKMMsgDictSingletonProvider->instance;
 }
 
 KMMsgDict* KMMsgDict::mutableInstance()
 {
-  if ( !m_self ) {
-    msgDict_sd.setObject( m_self, new KMMsgDict() );
+  // better safe than sorry; check whether the global static has already been destroyed
+  if ( theKMMsgDictSingletonProvider.isDestroyed() )
+  {
+    return 0;
   }
-  return m_self;
+  return &theKMMsgDictSingletonProvider->instance;
 }
 
 //-----------------------------------------------------------------------------
