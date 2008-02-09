@@ -1858,7 +1858,7 @@ void AccountDialog::slotFilterOnServerSizeChanged ( int value )
 void AccountDialog::slotIdentityCheckboxChanged()
 {
   if ( mAccount->type() == KAccount::Imap ||
-       mAccount->type() == KAccount::Imap  ) {
+       mAccount->type() == KAccount::DImap  ) {
      mImap.identityCombo->setEnabled( !mImap.useDefaultIdentityCheck->isChecked() );
    }
    else
