@@ -242,8 +242,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
   QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
+  vbox->setMargin(0);
   QHBoxLayout *hbox = new QHBoxLayout();
   {
+    hbox->setMargin(0);
     mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
     mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mSignatureStateIndicator );
