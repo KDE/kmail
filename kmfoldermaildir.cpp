@@ -26,7 +26,6 @@ using KMail::MaildirJob;
 #include <kfileitem.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <k3staticdeleter.h>
 #include <kmessagebox.h>
 #include <krandom.h>
 
@@ -988,8 +987,7 @@ int KMFolderMaildir::removeContents()
   return 0;
 }
 
-static QRegExp *suffix_regex = 0;
-static K3StaticDeleter<QRegExp> suffix_regex_sd;
+K_GLOBAL_STATIC_WITH_ARGS(QRegExp, s_suffixRegExp, (":2,?R?S?$"))
 
 //-----------------------------------------------------------------------------
 // static
@@ -1004,10 +1002,7 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
     aFileName += KRandom::randomString(5);
   }
 
-  if (!suffix_regex)
-      suffix_regex_sd.setObject(suffix_regex, new QRegExp(":2,?R?S?$"));
-
-  int pos = aFileName.lastIndexOf( *suffix_regex );
+  int pos = aFileName.lastIndexOf( *s_suffixRegExp );
   if ( pos >= 0 )
     aFileName.truncate( pos );
 
