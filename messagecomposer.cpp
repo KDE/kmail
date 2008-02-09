@@ -345,7 +345,7 @@ void MessageComposer::applyChanges( bool disableCrypto )
 {
   // Do the initial setup
   if ( !qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" ).isEmpty() ) {
-    QString cE = qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" );
+    QByteArray cE = qgetenv( "KMAIL_DEBUG_COMPOSER_CRYPTO" );
     mDebugComposerCrypto = ( cE == "1" || cE.toUpper() == "ON" || cE.toUpper() == "TRUE" );
     kDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE";
   } else {
