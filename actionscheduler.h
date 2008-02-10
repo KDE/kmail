@@ -115,6 +115,8 @@ private slots:
   KMMessage* message(Q_UINT32 serNum);
   void finish();
 
+  void folderClosedOrExpunged();
+
   int tempOpenFolder(KMFolder* aFolder);
   void tempCloseFolders();
 
