@@ -113,6 +113,8 @@ void KMReaderMainWin::initKMReaderMainWin() {
 //-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
+  delete mCustomTemplateMenus;
+  mCustomTemplateMenus = 0;
   saveMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
 }
 
