@@ -55,10 +55,13 @@ QByteArray KMTextSource::text(quint32 serialNumber) const {
     if (folder) {
         KMMsgBase *msgBase = folder->getMsgBase(idx);
         if (msgBase) {
-            KMMessage *msg = msgBase->storage()->readTemporaryMsg(idx);
-            if (msg) {
-                rc = msg->asString();
-                delete msg;
+            FolderStorage *storage = msgBase->storage();
+            if ( storage ) {
+                KMMessage *msg = storage->getMsg( idx );
+                if ( msg ) {
+                    rc = msg->asString();
+                    storage->unGetMsg( idx );
+                }
             }
         }
     }

@@ -145,6 +145,9 @@ public:
   /** Load message from file and do NOT store it, only return it.
       This is equivalent to, but faster than, getMsg+unGetMsg
       WARNING: the caller has to delete the returned value!
+      WARNING: Use this only for messages which are local, never for remote
+               messages, because remote messages could start a transfer, which
+               would trigger an assert when the message is deleted by the caller.
   */
   virtual KMMessage* readTemporaryMsg(int idx);
 
