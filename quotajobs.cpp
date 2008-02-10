@@ -54,6 +54,11 @@ QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
            SLOT(slotInfoMessage(KJob*,const QString&)) );
 }
 
+//The #warning here is there to replace a compiler warning in the header file,
+//see the using directive there.
+#ifdef __GNUC__
+#warning Fix me!
+#endif
 void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str )
 {
   // Parse the result
