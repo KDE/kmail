@@ -166,11 +166,6 @@ public:
   void getAndCheckFolder(bool force = false);
 
   /**
-   * Get the whole message
-   */
-  void getMessage(KMFolder * folder, KMMessage * msg);
-
-  /**
    * Create a new subfolder
    * You may specify the root imap path or this folder will be used
    * If you set askUser to false and the server can only handle folders
