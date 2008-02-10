@@ -96,7 +96,6 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::initKMReaderMainWin() {
-  mCustomTemplateMenus = 0;
   setCentralWidget( mReaderWin );
   setupAccel();
   setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
@@ -113,8 +112,6 @@ void KMReaderMainWin::initKMReaderMainWin() {
 //-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
-  delete mCustomTemplateMenus;
-  mCustomTemplateMenus = 0;
   saveMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
 }
 
@@ -358,14 +355,13 @@ void KMReaderMainWin::setupAccel()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::updateCustomTemplateMenus()
 {
-  if (!mCustomTemplateMenus)
-  {
-    mCustomTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
-    connect( mCustomTemplateMenus, SIGNAL(replyTemplateSelected( const QString& )),
+  if ( !mCustomTemplateMenus ) {
+    mCustomTemplateMenus.reset( new CustomTemplatesMenu( this, actionCollection() ) );
+    connect( mCustomTemplateMenus.get(), SIGNAL(replyTemplateSelected( const QString& )),
              this, SLOT(slotCustomReplyToMsg( const QString& )) );
-    connect( mCustomTemplateMenus, SIGNAL(replyAllTemplateSelected( const QString& )),
+    connect( mCustomTemplateMenus.get(), SIGNAL(replyAllTemplateSelected( const QString& )),
              this, SLOT(slotCustomReplyAllToMsg( const QString& )) );
-    connect( mCustomTemplateMenus, SIGNAL(forwardTemplateSelected( const QString& )),
+    connect( mCustomTemplateMenus.get(), SIGNAL(forwardTemplateSelected( const QString& )),
              this, SLOT(slotCustomForwardMsg( const QString& )) );
   }
 

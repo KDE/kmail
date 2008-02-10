@@ -7,6 +7,8 @@
 
 #include <kurl.h>
 
+#include <boost/shared_ptr.hpp>
+
 class KMReaderWin;
 class KMMessage;
 class KMMessagePart;
@@ -84,7 +86,7 @@ private:
   KMail::MessageActions *mMsgActions;
 
   // Custom template actions menu
-  CustomTemplatesMenu *mCustomTemplateMenus;
+  boost::shared_ptr<CustomTemplatesMenu> mCustomTemplateMenus;
 };
 
 #endif /*KMReaderMainWin_h*/
