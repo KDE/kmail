@@ -50,6 +50,7 @@ if(Nepomuk_FOUND)
   include_directories( ${NEPOMUK_INCLUDES} )
 endif(Nepomuk_FOUND)
 
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}" )
 
 ########### next target ###############
 
