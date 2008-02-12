@@ -1855,6 +1855,7 @@ void KMFolderCachedImap::listNamespaces()
         continue;
       }
       KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+      job->setHonorLocalSubscription( true );
       connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
               const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
           this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
@@ -1876,6 +1877,7 @@ void KMFolderCachedImap::listNamespaces()
   KMail::ListJob* job = new KMail::ListJob( mAccount, type, this,
       mAccount->addPathToNamespace( ns ) );
   job->setNamespace( ns );
+  job->setHonorLocalSubscription( true );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
