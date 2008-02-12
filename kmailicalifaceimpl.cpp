@@ -2042,7 +2042,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
     //kDebug(5006) <<"Found existing folder type" << itemType <<" :" << folder->location();
   }
 
-  if( folder->canAccess() != 0 ) {
+  if( !folder->canAccess() ) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.",
                          folderName( itemType ) ) );
     return 0;
@@ -2096,7 +2096,7 @@ KMFolder* KMailICalIfaceImpl::initScalixFolder( KMail::FolderContentsType conten
     //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
   }
 
-  if( folder->canAccess() != 0 ) {
+  if( !folder->canAccess() ) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your folder.") );
     return 0;
   }

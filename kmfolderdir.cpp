@@ -171,38 +171,36 @@ QString KMFolderDir::prettyUrl() const
 //-----------------------------------------------------------------------------
 bool KMFolderDir::reload(void)
 {
-  QDir             dir;
-  KMFolder*        folder;
-  QFileInfo        fileInfo;
-  QStringList      diList;
-  QList<KMFolder*> folderList;
-
   qDeleteAll( begin(), end() ); // we own the pointers to our folders
   clear();
 
   const QString fldPath = path();
-  dir.setFilter(QDir::Files | QDir::Dirs | QDir::Hidden);
+  QDir dir;
+  dir.setFilter(QDir::Files | QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot);
   dir.setNameFilters(QStringList("*"));
 
-  if (!dir.cd(fldPath))
+  if ( !dir.cd(fldPath) )
   {
     QString msg = i18n("<qt>Cannot enter folder <b>%1</b>.</qt>", fldPath);
     KMessageBox::information(0, msg);
     return false;
   }
 
-  const QFileInfoList fiList = dir.entryInfoList();
-  if (fiList.isEmpty())
+  if ( !dir.isReadable() )
   {
     QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>", fldPath);
     KMessageBox::information(0, msg);
     return false;
   }
 
-  Q_FOREACH( fileInfo, fiList )
+  QSet<QString> dirs;
+  QList<KMFolder*> folderList;
+  const QFileInfoList fiList( dir.entryInfoList() ); 
+  Q_FOREACH( const QFileInfo& fileInfo, fiList )
   {
     const QString fname = fileInfo.fileName();
-    if( ( fname[0] == '.' ) && !fname.endsWith( ".directory" ) ) {
+    const bool fileIsHidden = fname.startsWith('.');
+    if ( fileIsHidden && !fname.endsWith( ".directory" ) ) {
       // ignore all hidden files except our subfolder containers
       continue;
     }
@@ -212,8 +210,9 @@ bool KMFolderDir::reload(void)
     }
     // Collect subdirectories.
     if ( fileInfo.isDir() &&
-         fname.startsWith( '.' ) && fname.endsWith( ".directory" ) ) {
-       diList.append(fname);
+         fileIsHidden && fname.endsWith( ".directory" ) )
+    {
+       dirs.insert(fname);
        continue;
     }
 
@@ -224,7 +223,7 @@ bool KMFolderDir::reload(void)
        if ( KMFolderImap::encodeFileName(
                 KMFolderImap::decodeFileName( fname ) ) == fname )
        {
-          folder = new KMFolder(  this, KMFolderImap::decodeFileName( fname ),
+          KMFolder* folder = new KMFolder(  this, KMFolderImap::decodeFileName( fname ),
                                   KMFolderTypeImap );
           append(folder);
           folderList.append(folder);
@@ -241,7 +240,7 @@ bool KMFolderDir::reload(void)
           QString imapcachefile = QString::fromLatin1(".%1.uidcache").arg(fname);
           if ( dir.exists( imapcachefile) || dir.exists( maildir ) )
           {
-             folder = new KMFolder( this, fname, KMFolderTypeCachedImap );
+             KMFolder* folder = new KMFolder( this, fname, KMFolderTypeCachedImap );
              append(folder);
              folderList.append(folder);
           }
@@ -249,7 +248,7 @@ bool KMFolderDir::reload(void)
     }
     else if ( mDirType == KMSearchDir)
     {
-       folder = new KMFolder( this, fname, KMFolderTypeSearch );
+       KMFolder* folder = new KMFolder( this, fname, KMFolderTypeSearch );
        append(folder);
        folderList.append(folder);
     }
@@ -262,7 +261,7 @@ bool KMFolderDir::reload(void)
           // Maildir folder
           if( dir.exists( fname + "/new" ) )
           {
-             folder = new KMFolder( this, fname, KMFolderTypeMaildir );
+             KMFolder* folder = new KMFolder( this, fname, KMFolderTypeMaildir );
              append(folder);
              folderList.append(folder);
           }
@@ -270,28 +269,23 @@ bool KMFolderDir::reload(void)
        else
        {
           // all other files are folders (at the moment ;-)
-          folder = new KMFolder( this, fname, KMFolderTypeMbox );
+          KMFolder* folder = new KMFolder( this, fname, KMFolderTypeMbox );
           append(folder);
           folderList.append(folder);
        }
     }
   }
 
-  QList<KMFolder*>::const_iterator jt;
-  for ( jt = folderList.constBegin(); jt != folderList.constEnd(); ++jt )
+  foreach ( KMFolder* folder, folderList )
   {
-    folder = *jt;
-    for(QStringList::const_iterator it = diList.constBegin();
-        it != diList.constEnd();
-        ++it)
-      if (*it == '.' + folder->fileName() + ".directory")
-      {
-        KMFolderDir* folderDir = new KMFolderDir( folder, this, *it, mDirType);
-        folderDir->reload();
-        append(folderDir);
-        folder->setChild(folderDir);
-        break;
-      }
+    if ( dirs.contains( '.' + folder->fileName() + ".directory" ) )
+    {
+      KMFolderDir* folderDir = new KMFolderDir( folder, this, '.' + folder->fileName() + ".directory", mDirType );
+      folderDir->reload();
+      append(folderDir);
+      folder->setChild(folderDir);
+      break;
+    }
   }
   return true;
 }

@@ -208,15 +208,16 @@ int KMFolderMbox::open( const char *owner )
 }
 
 //----------------------------------------------------------------------------
-int KMFolderMbox::canAccess()
+bool KMFolderMbox::canAccess() const
 {
   assert(!folder()->name().isEmpty());
 
-  if (access(QFile::encodeName(location()), R_OK | W_OK) != 0) {
+  QFileInfo finfo( location() );
+  if ( !finfo.isReadable() || !finfo.isWritable() ) {
     kDebug(5006) <<"KMFolderMbox::access call to access function failed";
-      return 1;
+    return false;
   }
-  return 0;
+  return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -1231,7 +1232,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
       fread( mtext.data(), 20, 1, mStream );
       if ( i <= 0 ) { //woops we've reached the top of the file, last try..
         if ( mtext.indexOf( "from " ) ) {
-          if ( (size_t) mtext.size() < folder_offset ) {
+          if ( (off_t) mtext.size() < folder_offset ) {
               mtext.resize( folder_offset );
           }
           if ( KDE_fseek( mStream, chunk_offset, SEEK_SET) == -1 ||

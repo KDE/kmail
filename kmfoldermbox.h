@@ -82,7 +82,7 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close( const char *owner, bool force=false );
 
-  virtual int canAccess();
+  virtual bool canAccess() const;
 
   /** fsync buffers to disk */
   virtual void sync();

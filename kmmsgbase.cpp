@@ -910,7 +910,8 @@ retry:
             g_chunk_length = 0;
             g_chunk = 0;
         }
-        storage()->recreateIndex();
+        if (!storage()->recreateIndex())
+          return QString();
         goto retry;
     }
     if(type == t) {
@@ -988,7 +989,8 @@ retry:
         g_chunk_length = 0;
         g_chunk = 0;
       }
-      storage()->recreateIndex();
+      if (!storage()->recreateIndex())
+        return 0;
       goto retry;
     }
     if(type == t) {

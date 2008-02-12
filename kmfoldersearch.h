@@ -176,7 +176,7 @@ public:
   //See base class for documentation
   virtual int addMsg( KMMessage *msg, int *index_return = 0 );
   virtual int open( const char *owner );
-  virtual int canAccess();
+  virtual bool canAccess() const;
   virtual void sync();
   virtual void close( const char *owner, bool force=false );
   virtual int create();

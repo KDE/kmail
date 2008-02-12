@@ -63,7 +63,7 @@ public:
     fopen call otherwise (errno). */
   virtual int open( const char *owner );
 
-  virtual int canAccess();
+  virtual bool canAccess() const;
 
   /** fsync buffers to disk */
   virtual void sync();

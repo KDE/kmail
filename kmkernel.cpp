@@ -69,6 +69,7 @@ using KWallet::Wallet;
 #include <QList>
 #include <QObject>
 #include <QWidget>
+#include <QFileInfo>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -1291,7 +1292,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
 
-  if (the_inboxFolder->canAccess() != 0) {
+  if ( !the_inboxFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
 
@@ -1301,7 +1302,7 @@ void KMKernel::initFolders(KConfig* cfg)
   // inboxFolder->open();
 
   the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
-  if (the_outboxFolder->canAccess() != 0) {
+  if ( !the_outboxFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
   the_outboxFolder->setNoChildren(true);
@@ -1320,7 +1321,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_outboxFolder->open( "kmkernel" );
 
   the_sentFolder = the_folderMgr->findOrCreate(group.readEntry("sentFolder", I18N_NOOP("sent-mail")));
-  if (the_sentFolder->canAccess() != 0) {
+  if ( !the_sentFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
   the_sentFolder->setSystemFolder(true);
@@ -1329,7 +1330,7 @@ void KMKernel::initFolders(KConfig* cfg)
   // the_sentFolder->open();
 
   the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
-  if (the_trashFolder->canAccess() != 0) {
+  if ( !the_trashFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
   the_trashFolder->setSystemFolder(true);
@@ -1338,7 +1339,7 @@ void KMKernel::initFolders(KConfig* cfg)
   // the_trashFolder->open();
 
   the_draftsFolder = the_folderMgr->findOrCreate(group.readEntry("draftsFolder", I18N_NOOP("drafts")));
-  if (the_draftsFolder->canAccess() != 0) {
+  if ( !the_draftsFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
   the_draftsFolder->setSystemFolder(true);
@@ -1347,7 +1348,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_draftsFolder->open( "kmkernel" );
 
   the_templatesFolder = the_folderMgr->findOrCreate(group.readEntry("templatesFolder", I18N_NOOP("templates")));
-  if (the_templatesFolder->canAccess() != 0) {
+  if ( !the_templatesFolder->canAccess() ) {
     emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
   }
   the_templatesFolder->setSystemFolder(true);

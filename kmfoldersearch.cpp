@@ -45,6 +45,7 @@
 #include <QFile>
 #include <QList>
 #include <QPointer>
+#include <QFileInfo>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -540,14 +541,12 @@ int KMFolderSearch::open( const char * )
   return 0;
 }
 
-int KMFolderSearch::canAccess()
+bool KMFolderSearch::canAccess() const
 {
   assert( !folder()->name().isEmpty() );
 
-  if ( access( QFile::encodeName( location() ), R_OK | W_OK | X_OK ) != 0 )
-    return 1;
-
-  return 0;
+  QFileInfo finfo( location() );
+  return finfo.isDir() && finfo.isReadable() && finfo.isWritable();
 }
 
 void KMFolderSearch::sync()

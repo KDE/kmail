@@ -492,7 +492,7 @@ int KMFolder::open( const char *owner )
   return mStorage->open( owner );
 }
 
-int KMFolder::canAccess()
+bool KMFolder::canAccess() const
 {
   return mStorage->canAccess();
 }

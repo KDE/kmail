@@ -288,8 +288,8 @@ public:
   int open( const char *owner );
 
   /** Check folder for permissions
-    Returns zero if readable and writable. */
-  int canAccess();
+    @return true if readable and writable. */
+  virtual bool canAccess() const;
 
   /** Close folder.
     open() and close() use reference counting.
