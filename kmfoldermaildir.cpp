@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QRegExp>
 #include <QByteArray>
+#include <QFileInfo>
 
 #include <kpimutils/kfileio.h>
 #include "kmfoldermaildir.h"
@@ -51,6 +52,16 @@ using KMail::MaildirJob;
 
 using KPIMUtils::removeDirAndContentsRecursively;
 
+// A separator for "uniq:info" (see the original maildir specification 
+// at http://cr.yp.to/proto/maildir.html.
+// Windows uses '!' charater instead as ':' is not supported by the OS.
+// TODO make it configurable - jstaniek
+// TODO check what the choice for Thunderbird 3 - jstaniek
+#ifdef Q_WS_WIN
+#define KMAIL_MAILDIR_FNAME_SEPARATOR "!"
+#else
+#define KMAIL_MAILDIR_FNAME_SEPARATOR ":"
+#endif
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
@@ -72,43 +83,38 @@ KMFolderMaildir::~KMFolderMaildir()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::canAccess()
+bool KMFolderMaildir::canAccess() const
 {
-
   assert(!folder()->name().isEmpty());
 
   QString sBadFolderName;
-  if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0) {
-    sBadFolderName = location();
-  } else if (access(QFile::encodeName(location() + "/new"), R_OK | W_OK | X_OK) != 0) {
-    sBadFolderName = location() + "/new";
-  } else if (access(QFile::encodeName(location() + "/cur"), R_OK | W_OK | X_OK) != 0) {
-    sBadFolderName = location() + "/cur";
-  } else if (access(QFile::encodeName(location() + "/tmp"), R_OK | W_OK | X_OK) != 0) {
-    sBadFolderName = location() + "/tmp";
+  QStringList files;
+  files << "" << "/new" << "/cur" << "/tmp";
+  foreach( const QString& fname, files ) {
+    QFileInfo finfo( location() + fname );
+    if ( !finfo.isDir() || !finfo.isReadable() || !finfo.isWritable() ) {
+      sBadFolderName = location() + fname;
+      break;
+    }
   }
 
-  if ( !sBadFolderName.isEmpty() ) {
-    int nRetVal = QFile::exists(sBadFolderName) ? EPERM : ENOENT;
-    KCursorSaver idle(KBusyPtr::idle());
-    if ( nRetVal == ENOENT )
-      KMessageBox::sorry(0, i18n("Error opening %1; this folder is missing.",
-                          sBadFolderName));
-    else
-      KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
-                                 "maildir folder, or you do not have sufficient access permissions.",
-                          sBadFolderName));
-    return nRetVal;
-  }
+  if ( sBadFolderName.isEmpty() )
+    return true;
 
-  return 0;
+  KCursorSaver idle(KBusyPtr::idle());
+  if ( !QFile::exists(sBadFolderName) )
+    KMessageBox::sorry(0, i18n("Error opening %1; this folder is missing.",
+                        sBadFolderName));
+  else
+    KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
+                               "maildir folder, or you do not have sufficient access permissions.",
+                        sBadFolderName));
+  return false;
 }
 
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::open( const char * )
 {
-  int rc = 0;
-
   mOpenCount++;
   kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
 
@@ -116,11 +122,10 @@ int KMFolderMaildir::open( const char * )
 
   assert(!folder()->name().isEmpty());
 
-  rc = canAccess();
-  if ( rc != 0 ) {
-      return rc;
-  }
+  if ( !canAccess() )
+    return 1;
 
+  int rc = 0;
   if (!folder()->path().isEmpty())
   {
     if (KMFolderIndex::IndexOk != indexStatus()) // test if contents file has changed
@@ -613,9 +618,9 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
   // messages in the 'cur' directory are Read by default.. but may
   // actually be some other state (but not New)
   if ( status.isRead() ) {
-    if ( !file.contains(":2,") ) {
+    if ( !file.contains(KMAIL_MAILDIR_FNAME_SEPARATOR "2,") ) {
       status.setUnread();
-    } else if ( file.right(5) == ":2,RS" ) {
+    } else if ( file.right(5) == KMAIL_MAILDIR_FNAME_SEPARATOR "2,RS" ) {
       status.setReplied();
     }
   }
@@ -942,6 +947,7 @@ KMMessage* KMFolderMaildir::take(int idx)
   }
 }
 
+
 // static
 bool KMFolderMaildir::removeFile( const QString & folderPath,
                                   const QString & filename )
@@ -987,7 +993,7 @@ int KMFolderMaildir::removeContents()
   return 0;
 }
 
-K_GLOBAL_STATIC_WITH_ARGS(QRegExp, s_suffixRegExp, (":2,?R?S?$"))
+K_GLOBAL_STATIC_WITH_ARGS(QRegExp, s_suffixRegExp, (KMAIL_MAILDIR_FNAME_SEPARATOR "2,?R?S?$"))
 
 //-----------------------------------------------------------------------------
 // static
@@ -1001,7 +1007,6 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
     aFileName.sprintf("%ld.%d.", (long)time(0), getpid());
     aFileName += KRandom::randomString(5);
   }
-
   int pos = aFileName.lastIndexOf( *s_suffixRegExp );
   if ( pos >= 0 )
     aFileName.truncate( pos );
@@ -1009,7 +1014,7 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
   // only add status suffix if the message is neither new nor unread
   if (! ( status.isNew() || status.isUnread() ) )
   {
-    QString suffix( ":2," );
+    QString suffix( KMAIL_MAILDIR_FNAME_SEPARATOR "2," );
     if ( status.isReplied() )
       suffix += "RS";
     else
