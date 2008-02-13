@@ -284,7 +284,6 @@ bool KMFolderDir::reload(void)
       folderDir->reload();
       append(folderDir);
       folder->setChild(folderDir);
-      break;
     }
   }
   return true;
