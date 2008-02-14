@@ -97,8 +97,8 @@ void MatchListView::startDrag ( Qt::DropActions supportedActions )
     mailList.append( mailSummary );
   }
   QDrag *drag = new QDrag( viewport() );
-  drag->setMimeData( new QMimeData );
-  mailList.populateMimeData( drag->mimeData(), new KMTextSource );
+  drag->setMimeData( new MailListMimeData( new KMTextSource() ) );
+  mailList.populateMimeData( drag->mimeData() );
 
   QPixmap pixmap;
   if( mailList.count() == 1 )

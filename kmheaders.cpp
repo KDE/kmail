@@ -2422,8 +2422,8 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
           ++count;
         }
       QDrag *drag = new QDrag( viewport() );
-      drag->setMimeData( new QMimeData );
-      mailList.populateMimeData( drag->mimeData(), new KMTextSource );
+      drag->setMimeData( new MailListMimeData( new KMTextSource ) );
+      mailList.populateMimeData( drag->mimeData() );
 
       // Set pixmap
       QPixmap pixmap;
