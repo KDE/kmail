@@ -389,6 +389,8 @@ void PopAccount::startJob()
   idsOfMsgs.clear();
   mUidForIdMap.clear();
   idsOfMsgsToDelete.clear();
+  idsOfForcedDeletes.clear();
+
   //delete any headers if there are some this have to be done because of check again
   headersOnServer.clear();
   headers = false;
@@ -735,6 +737,12 @@ void PopAccount::slotJobFinished() {
         idsOfMsgsToDelete.remove( it.key().second );
       }
     }
+
+    if ( !idsOfForcedDeletes.isEmpty() ) {
+      idsOfMsgsToDelete += idsOfForcedDeletes;
+      idsOfForcedDeletes.clear();
+    }
+
     // If there are messages to delete then delete them
     if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
@@ -923,8 +931,8 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
   QString qdata = data;
   qdata = qdata.simplifyWhiteSpace(); // Workaround for Maillennium POP3/UNIBOX
   int spc = qdata.find( ' ' );
-  if (spc > 0) {
-    if (stage == List) {
+  if ( stage == List ) {
+    if ( spc > 0 ) {
       QString length = qdata.mid(spc+1);
       if (length.find(' ') != -1) length.truncate(length.find(' '));
       int len = length.toInt();
@@ -933,45 +941,75 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
       idsOfMsgs.append( id );
       mMsgsPendingDownload.insert( id, len );
     }
-    else { // stage == Uidl
-      const QString id = qdata.left(spc);
-      const QString uid = qdata.mid(spc + 1);
-      int *size = new int; //malloc(size_of(int));
-      *size = mMsgsPendingDownload[id];
-      mSizeOfNextSeenMsgsDict.insert( uid, size );
-      if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
-
-        if ( mMsgsPendingDownload.contains( id ) ) {
-          mMsgsPendingDownload.remove( id );
-        }
-        else
-          kdDebug(5006) << "PopAccount::slotData synchronization failure." << endl;
-        idsOfMsgsToDelete.append( id );
-        mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
-        if ( mTimeOfSeenMsgsVector.empty() ) {
-          mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
-        }
-        else {
-          // cast the int* with a long to can convert it to a int, BTW
-          // works with g++-4.0 and amd64
-          mTimeOfNextSeenMsgsMap.insert( uid,
-            mTimeOfSeenMsgsVector[(int)( long )mUidsOfSeenMsgsDict[uid] - 1] );
-        }
-      }
-      mUidForIdMap.insert( id, uid );
+    else {
+      stage = Idle;
+      if ( job ) job->kill();
+      job = 0;
+      mSlave = 0;
+      KMessageBox::error( 0, i18n( "Unable to complete LIST operation." ),
+                             i18n( "Invalid Response From Server") );
+      return;
     }
   }
-  else {
-    stage = Idle;
-    if (job) job->kill();
-    job = 0;
-    mSlave = 0;
-    KMessageBox::error(0, i18n( "Unable to complete LIST operation." ),
-                          i18n("Invalid Response From Server"));
-    return;
+  else { // stage == Uidl
+    Q_ASSERT ( stage == Uidl);
+
+    QString id;
+    QString uid;
+
+    if ( spc <= 0 ) {
+      // an invalid uidl line. we might just need to skip it, but
+      // some servers generate invalid uids with valid ids. in that
+      // case we will just make up a uid - which will cause us to
+      // not cache the document, but we will be able to interoperate
+
+      int testid = atoi ( qdata.ascii() );
+      if ( testid < 1 ) {
+        // we'll just have to skip this
+        kdDebug(5006) << "PopAccount::slotData skipping UIDL entry due to parse error "
+                      << endl << qdata.ascii() << endl;
+        return;
+      }
+      id.setNum (testid, 10);
+
+      QString datestring, serialstring;
+
+      serialstring.setNum ( ++dataCounter, 10 );
+      datestring.setNum ( time(NULL),10 );
+      uid = QString( "uidlgen" ) + datestring + QString( "." ) + serialstring;
+      kdDebug(5006) << "PopAccount::slotData message " << id.ascii()
+                    <<  "%d has bad UIDL, cannot keep a copy on server" << endl;
+      idsOfForcedDeletes.append( id );
+    }
+    else {
+      id = qdata.left( spc );
+      uid = qdata.mid( spc + 1 );
+    }
+
+    int *size = new int; //malloc(size_of(int));
+    *size = mMsgsPendingDownload[id];
+    mSizeOfNextSeenMsgsDict.insert( uid, size );
+    if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
+      if ( mMsgsPendingDownload.contains( id ) ) {
+        mMsgsPendingDownload.remove( id );
+      }
+      else
+        kdDebug(5006) << "PopAccount::slotData synchronization failure." << endl;
+      idsOfMsgsToDelete.append( id );
+      mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
+      if ( mTimeOfSeenMsgsVector.empty() ) {
+        mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
+      }
+      else {
+        // cast the int* with a long to can convert it to a int, BTW
+        // works with g++-4.0 and amd64
+        mTimeOfNextSeenMsgsMap.insert( uid, mTimeOfSeenMsgsVector[(int)( long )
+                                                 mUidsOfSeenMsgsDict[uid] - 1] );
+      }
+    }
+    mUidForIdMap.insert( id, uid );
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void PopAccount::slotResult( KIO::Job* )
