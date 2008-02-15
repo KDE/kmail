@@ -385,26 +385,26 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
 
 void KMMimePartTree::startDrag()
 {
-    KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
-    if ( !item )
-      return;
-    partNode *node = item->node();
-    if ( !node )
-      return;
+  KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
+  if ( !item )
+    return;
+  partNode *node = item->node();
+  if ( !node )
+    return;
 
-    QList<QUrl> urls;
-    KUrl kUrl = mReaderWin->tempFileUrlFromPartNode( node );
-    QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );    
-    if ( !url.isValid() )
-      return;
-    urls.append( url );
+  QList<QUrl> urls;
+  KUrl kUrl = mReaderWin->tempFileUrlFromPartNode( node );
+  QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );    
+  if ( !url.isValid() )
+    return;
+  urls.append( url );
 
-    QDrag *drag = new QDrag( this );
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setUrls( urls );
-    drag->setMimeData( mimeData );
-    QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
-    drag->exec( Qt::CopyAction );
+  QDrag *drag = new QDrag( this );
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setUrls( urls );
+  drag->setMimeData( mimeData );
+  QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
+  drag->exec( Qt::CopyAction );
 }
 
 #include "kmmimeparttree.moc"
