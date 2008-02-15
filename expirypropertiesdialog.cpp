@@ -36,8 +36,6 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   setObjectName( "expiry_properties" );
   setAttribute( Qt::WA_DeleteOnClose );
 
-  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
-
   QWidget* privateLayoutWidget = new QWidget;
   privateLayoutWidget->setObjectName( "privateLayoutWidget" );
   setMainWidget( privateLayoutWidget );
@@ -164,8 +162,15 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
     // no need to delete child widgets, Qt does it all for us
 }
 
-void ExpiryPropertiesDialog::slotOk()
+void ExpiryPropertiesDialog::accept()
 {
+  bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
+  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
+    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
+                        i18n( "No Folder Selected" ) );
+    return;
+  }
+
   mFolder->setAutoExpire( enableGlobally );
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
@@ -184,17 +189,7 @@ void ExpiryPropertiesDialog::slotOk()
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-}
 
-
-void ExpiryPropertiesDialog::accept()
-{
-  enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
-    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
-        i18n( "No Folder Selected" ) );
-    return;
-  }
   KDialog::accept();
 }
 

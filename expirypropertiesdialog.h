@@ -24,7 +24,6 @@ public:
 
 protected slots:
     void accept();
-    void slotOk();
     void slotUpdateControls();
 
 private:
@@ -37,8 +36,6 @@ private:
     QRadioButton *moveToRB;
     FolderRequester *folderSelector;
     QRadioButton *deletePermanentlyRB;
-
-    bool enableGlobally;
 };
 } // namespace
 #endif // EXPIRYPROPERTIESDIALOG_H
