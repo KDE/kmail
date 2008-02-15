@@ -1668,13 +1668,14 @@ void KMailICalIfaceImpl::readConfig()
     kDebug(5006) <<"Groupware folder" << parentName <<" not found. Groupware functionality disabled";
     // Or maybe the inbox simply wasn't created on the first startup
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
-    Q_ASSERT( account );
     if ( account ) {
       // just in case we were connected already
       disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                this, SLOT( slotCheckDone() ) );
       connect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                this, SLOT( slotCheckDone() ) );
+    } else {
+      kDebug(5006) << "null IMAP account!";
     }
     mUseResourceIMAP = false;
     // We can't really call cleanup(), if those folders were completely deleted.
@@ -2093,7 +2094,7 @@ KMFolder* KMailICalIfaceImpl::initScalixFolder( KMail::FolderContentsType conten
   } else {
     FolderInfo info = readFolderInfo( folder );
     mFolderInfoMap.insert( folder, info );
-    //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
+    //kDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location();
   }
 
   if( !folder->canAccess() ) {
