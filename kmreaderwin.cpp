@@ -732,12 +732,10 @@ void KMReaderWin::slotAllHeaders() {
 
 void KMReaderWin::slotLevelQuote( int l )
 {
-  kDebug(5006) <<"Old Level:" << mLevelQuote <<" New Level:" << l;
-  mLevelQuote = l;
-  QScrollArea *scrollview = mViewer->view();
-  mSavedRelativePosition = (float)scrollview->widget()->pos().y() /
-                           scrollview->widget()->size().height();
+  kDebug(5006) << "Old Level:" << mLevelQuote << "New Level:" << l;
 
+  mLevelQuote = l;
+  saveRelativePosition();
   update( true );
 }
 
@@ -1410,8 +1408,7 @@ void KMReaderWin::updateReaderWin()
   if ( mSavedRelativePosition ) {
     QScrollArea *scrollview = mViewer->view();
     scrollview->widget()->move( 0,
-                                qRound( scrollview->widget()->size().height() *
-                                        mSavedRelativePosition ) );
+      qRound( scrollview->widget()->size().height() * mSavedRelativePosition ) );
     mSavedRelativePosition = 0;
   }
 }
@@ -2025,11 +2022,8 @@ void KMReaderWin::slotFind()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
-  QScrollArea * scrollview = mViewer->view();
-  mSavedRelativePosition = (float)scrollview->widget()->pos().y() /
-                           scrollview->widget()->size().height();
-
   mUseFixedFont = !mUseFixedFont;
+  saveRelativePosition();
   update( true );
 }
 
@@ -2381,6 +2375,15 @@ bool KMReaderWin::htmlLoadExternal()
   return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
           (!mHtmlLoadExternal && mHtmlLoadExtOverride));
 }
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::saveRelativePosition()
+{
+  const QScrollArea *scrollview = mViewer->view();
+  mSavedRelativePosition = static_cast<float>( scrollview->widget()->pos().y() ) /
+                           scrollview->widget()->size().height();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )

@@ -478,6 +478,7 @@ void KMReaderMainWin::slotFontAction( const QString& font)
   f.setFamily( font );
   mReaderWin->cssHelper()->setBodyFont( f );
   mReaderWin->cssHelper()->setPrintFont( f );
+  mReaderWin->saveRelativePosition();
   mReaderWin->update();
 }
 
@@ -487,6 +488,7 @@ void KMReaderMainWin::slotSizeAction( int size )
   f.setPointSize( size );
   mReaderWin->cssHelper()->setBodyFont( f );
   mReaderWin->cssHelper()->setPrintFont( f );
+  mReaderWin->saveRelativePosition();
   mReaderWin->update();
 }
 
