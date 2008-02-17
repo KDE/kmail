@@ -24,10 +24,7 @@
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QList>
+
 using KMail::AccountManager;
 #include "globalsettings.h"
 
@@ -73,27 +70,13 @@ KMSystemTray::KMSystemTray(QWidget *parent)
 
   mLastUpdate = time( 0 );
   mUpdateTimer = new QTimer( this );
-  mUpdateTimer->setObjectName( "systraytimer" );
   mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = KIcon( "internet-mail" ).pixmap( 22 );
-  QImage overlayImage = mDefaultIcon.copy().toImage();
 
-  // derive a mono-color version of the icon
-  KColorScheme scheme( QPalette::Active, KColorScheme::Window );
-  mLightIconImage = overlayImage.copy();
-  mLightIconImage.fill(
-    scheme.background( KColorScheme::LinkBackground ).color().rgb() );
-  mLightIconImage.setAlphaChannel( overlayImage.alphaChannel() );
-
-  // overlay the link background color in order to get the "light icon" image.
-  KIconEffect::semiTransparent( overlayImage );
-  KIconEffect::overlay( mLightIconImage, overlayImage );
-  KIconEffect::semiTransparent( mLightIconImage );
-  KIconEffect::overlay( mLightIconImage, overlayImage );
-  KIconEffect::semiTransparent( overlayImage );
-  KIconEffect::overlay( mLightIconImage, overlayImage );
+  mLightIconImage = mDefaultIcon.toImage();
+  KIconEffect::deSaturate( mLightIconImage, 0.60f );
 
   setIcon( mDefaultIcon );
 #ifdef Q_WS_X11
@@ -543,10 +526,10 @@ void KMSystemTray::updateNewMessages()
   updateCount();
 
   /** Update tooltip to reflect count of unread messages */
-  this->setToolTip( mCount == 0 ? i18n("There are no unread messages")
-                                : i18np("There is 1 unread message.",
-                                        "There are %1 unread messages.",
-                                        mCount));
+  setToolTip( mCount == 0 ? i18n("KMail - There are no unread messages")
+                          : i18np("KMail - 1 unread message",
+                                  "KMail - %1 unread messages",
+                                  mCount));
 
   mLastUpdate = time( 0 );
 }
