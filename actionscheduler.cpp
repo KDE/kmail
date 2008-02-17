@@ -127,6 +127,10 @@ ActionScheduler::~ActionScheduler()
 {
   schedulerList->removeAll( this );
   tempCloseFolders();
+  disconnect( mSrcFolder, SIGNAL(closed()),
+              this, SLOT(folderClosedOrExpunged()) );
+  disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
+              this, SLOT(folderClosedOrExpunged()) );
   mSrcFolder->close( "actionschedsrc" );
 
   if ( mDeleteSrcFolder ) {
@@ -161,6 +165,10 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
   if ( mSrcFolder ) {
     disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
 		this, SLOT(msgAdded(KMFolder*, quint32)) );
+    disconnect( mSrcFolder, SIGNAL(closed()),
+                this, SLOT(folderClosedOrExpunged()) );
+    disconnect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
+                this, SLOT(folderClosedOrExpunged()) );
     mSrcFolder->close( "actionschedsrc" );
   }
   mSrcFolder = srcFolder;
@@ -171,6 +179,10 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
   if ( mSrcFolder ) {
     connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
 	     this, SLOT(msgAdded(KMFolder*, quint32)) );
+    connect( mSrcFolder, SIGNAL(closed()),
+             this, SLOT(folderClosedOrExpunged()) );
+    connect( mSrcFolder, SIGNAL(expunged(KMFolder*)),
+             this, SLOT(folderClosedOrExpunged()) );
   }
 }
 
@@ -186,6 +198,15 @@ void ActionScheduler::setFilterList( QList<KMFilter*> filters )
       mFilters = mQueuedFilters;
       mFiltersAreQueued = false;
       mQueuedFilters.clear();
+  }
+}
+
+void ActionScheduler::folderClosedOrExpunged()
+{
+  // mSrcFolder has been closed. reopen it.
+  if ( mSrcFolder )
+  {
+    mSrcFolder->open( "actionsched" );
   }
 }
 
