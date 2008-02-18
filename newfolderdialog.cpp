@@ -170,7 +170,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     }
     if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
       ImapAccountBase* ai = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
-      if ( mFolder->storage() == ai->rootFolder() ) {
+      if ( ai && mFolder->storage() == ai->rootFolder() ) {
         rootFolder = true;
         namespaces = ai->namespaces()[ImapAccountBase::PersonalNS];
       }
@@ -240,10 +240,12 @@ void NewFolderDialog::slotOk()
     QString delimiter;
     if ( mFolder->folderType() == KMFolderTypeImap ) {
       KMAcctImap* ai = static_cast<KMFolderImap*>( mFolder->storage() )->account();
-      delimiter = ai->delimiterForFolder( mFolder->storage() );
+      if ( ai )
+        delimiter = ai->delimiterForFolder( mFolder->storage() );
     } else {
       KMAcctCachedImap* ai = static_cast<KMFolderCachedImap*>( mFolder->storage() )->account();
-      delimiter = ai->delimiterForFolder( mFolder->storage() );
+      if ( ai )
+        delimiter = ai->delimiterForFolder( mFolder->storage() );
     }
     if ( !delimiter.isEmpty() && fldName.contains( delimiter ) ) {
       KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name.", delimiter ) );
