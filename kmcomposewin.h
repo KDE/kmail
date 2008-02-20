@@ -184,6 +184,8 @@ class KMComposeWin : public KMail::Composer
      void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
+     void disableWordWrap();
+
   private: // kmedit
     /**
      * Returns message of the composer. To apply the user changes to the

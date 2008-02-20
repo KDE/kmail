@@ -139,6 +139,8 @@ class Composer : public KMail::SecondaryWindow
   public: // kmkernel, attachmentlistview
     virtual bool addAttach( const KUrl &url ) = 0;
 
+    virtual void disableWordWrap() = 0;
+
   public: // kmcommand
     /**
      * Add an attachment to the list.

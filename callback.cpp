@@ -111,7 +111,7 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   KMail::Composer *cWin = KMail::makeComposer();
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
-  cWin->slotWordWrapToggled( false );
+  cWin->disableWordWrap();
   cWin->setSigningAndEncryptionDisabled( true );
   if ( GlobalSettings::self()->exchangeCompatibleInvitations() ) {
     // For Exchange, send ical as attachment, with proper

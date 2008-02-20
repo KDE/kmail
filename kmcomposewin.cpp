@@ -3457,6 +3457,12 @@ void KMComposeWin::slotWordWrapToggled( bool on )
   }
 }
 
+void KMComposeWin::disableWordWrap()
+{
+  mEditor->setWordWrapMode( QTextOption::WordWrap );
+}
+
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
