@@ -1611,11 +1611,6 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
   mRecipientsEditor->setFocusBottom();
   mEdtSubject->setText( mMsg->subject() );
 
-  if ( !mBtnIdentity->isChecked() &&
-       !newMsg->headerField( "X-KMail-Identity" ).isEmpty() ) {
-    mId = newMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt();
-  }
-
   const bool stickyIdentity = mBtnIdentity->isChecked();
   const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
   if (!stickyIdentity && messageHasIdentity)
@@ -1634,16 +1629,14 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     connect( mIdentity,SIGNAL(identityChanged(uint)),
              this, SLOT(slotIdentityChanged(uint)) );
   } else {
-    // make sure the header values are overwritten with the values of the
-    // sticky identity (the slot isn't called by the signal for new messages
-    // since the identity has already been set before the signal was connected)
-    uint savedId = mId;
-    if ( !newMsg->headerField("X-KMail-Identity").isEmpty() ) {
+    // load the message's state into the mId, without applying it to the gui
+    // that's so we can detect that the id changed (because a sticky was set)
+    // on apply()
+    if ( messageHasIdentity ) {
       mId = newMsg->headerField("X-KMail-Identity").simplified().toUInt();
     } else {
       mId = im->defaultIdentity().uoid();
     }
-    slotIdentityChanged( savedId );
   }
   // manually load the identity's value into the fields; either the one from the
   // messge, where appropriate, or the one from the sticky identity. What's in
