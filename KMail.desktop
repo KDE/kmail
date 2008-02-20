@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=KMail
 Name[eo]=Retpoŝto
-Name[lv]=KPasts
 Name[mk]=КПошта
 Name[ne]=केडीई पत्र
 Name[pa]=ਕੇ-ਮੇਲ
@@ -45,7 +44,7 @@ GenericName[kk]=Эл.пошта клиент бағдарламасы
 GenericName[km]=កម្មវិធី​អ៊ីមែល
 GenericName[ko]=전자 우편 클라이언트
 GenericName[lt]=Pašto klientas
-GenericName[lv]=Pasta Klients
+GenericName[lv]=Pasta klients
 GenericName[mk]=Клиент за електронска пошта
 GenericName[ms]=Pelanggan Mel
 GenericName[nb]=E-postklient
