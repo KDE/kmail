@@ -2479,12 +2479,8 @@ void KMHeaders::slotRMB()
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox( mFolder );
   bool tem_folder = kmkernel->folderIsTemplates( mFolder );
-  if ( out_folder ) {
-     menu->addAction( mOwner->editAction() );
-  }
-  else if (tem_folder) {
+  if (tem_folder) {
      menu->addAction( mOwner->useAction() );
-     menu->addAction( mOwner->editAction() );
   }
   else {
      // show most used actions
