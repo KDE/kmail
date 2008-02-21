@@ -1352,7 +1352,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
     srcFolder->removeMsg(idx);
     delete msg;
   } else {
-    kdDebug(5006) << k_funcinfo << "Message cannot be deleted now because it is currently in use " << msg << endl;
+    kDebug(5006) << "Message cannot be deleted now because it is currently in use " << msg;
     msg->deleteWhenUnused();
   }
   addFolderChange( srcFolder, ContentsChanged );
