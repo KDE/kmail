@@ -907,8 +907,9 @@ void KMHeaders::msgAdded(int id)
     // make sure the id and subject dicts grow, if necessary
     if (mSortCacheItems.count() == (uint)mFolder->count()
         || mSortCacheItems.count() == 0) {
-      kDebug (5006) <<"KMHeaders::msgAdded - Resizing id and subject trees of" << mFolder->label()
-       << ": before=" << mSortCacheItems.count() << " ,after=" << (mFolder->count()*2);
+      kDebug () << "Resizing id and subject trees of" << mFolder->label()
+                << ": before=" << mSortCacheItems.count()
+                << " ,after=" << (mFolder->count()*2);
       mSortCacheItems.resize(mFolder->count()*2);
       mSubjectLists.resize(mFolder->count()*2);
     }
@@ -993,7 +994,7 @@ void KMHeaders::msgAdded(int id)
         bool perfectParent = true;
         KMMsgBase *otherMsg = mFolder->getMsgBase(tryMe);
         if ( !otherMsg ) {
-          kDebug(5006) <<"otherMsg is NULL !!! tryMe:" << tryMe;
+          kDebug() << "otherMsg is NULL !!! tryMe:" << tryMe;
           continue;
         }
         QString otherId = otherMsg->replyToIdMD5();
@@ -1174,7 +1175,7 @@ void KMHeaders::msgRemoved(int id, const QString &msgId )
   // This should never happen, in this case the folders are inconsistent.
   while ( mImperfectlyThreadedList.findRef( removedItem ) != -1 ) {
     mImperfectlyThreadedList.remove();
-    kDebug(5006) <<"Remove doubled item from mImperfectlyThreadedList:" << removedItem;
+    kDebug() << "Remove doubled item from mImperfectlyThreadedList:" << removedItem;
   }
 #endif
   delete removedItem;
@@ -1507,8 +1508,7 @@ void KMHeaders::applyFiltersOnMsg()
             break;
         }
       } else {
-        kDebug (5006) << "####### KMHeaders::applyFiltersOnMsg -"
-                         " A message went missing during filtering " << endl;
+        kDebug () << "A message went missing during filtering";
       }
     progressItem->incCompletedItems();
     }
@@ -1648,7 +1648,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
 
 void KMHeaders::slotMoveCompleted( KMCommand *command )
 {
-  kDebug(5006) << command->result();
+  kDebug() << command->result();
   bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
     // make sure the current item is shown
@@ -2841,7 +2841,7 @@ bool KMHeaders::writeSortOrder()
     if (sortStream && ferror(sortStream)) {
         fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
-        kWarning(5006) <<"Error: Failure modifying" << sortFile <<"(No space left on device?)";
+        kWarning() <<"Error: Failure modifying" << sortFile <<"(No space left on device?)";
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
@@ -2880,7 +2880,7 @@ void KMHeaders::appendItemToSortFile(HeaderItem *khi)
     if (sortStream && ferror(sortStream)) {
         fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
-        kWarning(5006) <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
+        kWarning() <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
         kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)", sortFile ));
     }
     fclose(sortStream);
@@ -2933,33 +2933,33 @@ static int compare_SortCacheItem(const void *s1, const void *s2)
 void KMHeaders::printSubjectThreadingTree()
 {
     Q3DictIterator< QList< SortCacheItem* > > it ( mSubjectLists );
-    kDebug(5006) <<"SubjectThreading tree:";
+    kDebug();
     for( ; it.current(); ++it ) {
       QList<SortCacheItem*> list = *( it.current() );
-      kDebug(5006) <<"Subject MD5:" << it.currentKey() <<" list:";
+      kDebug() << "Subject MD5:" << it.currentKey() <<" list:";
       foreach ( SortCacheItem *sci, list ) {
-        kDebug(5006) <<"     item:" << sci <<" sci id:" << sci->id();
+        kDebug() << "     item:" << sci <<" sci id:" << sci->id();
       }
     }
-    kDebug(5006);
+    kDebug();
 }
 
 void KMHeaders::printThreadingTree()
 {
-    kDebug(5006) <<"Threading tree:";
+    kDebug();
     Q3DictIterator<SortCacheItem> it( mSortCacheItems );
-    kDebug(5006);
+    kDebug();
     for( ; it.current(); ++it ) {
       SortCacheItem *sci = it.current();
-      kDebug(5006) <<"MsgId MD5:" << it.currentKey() <<" message id:" << sci->id();
+      kDebug() << "MsgId MD5:" << it.currentKey() <<" message id:" << sci->id();
     }
     for (int i = 0; i < (int)mItems.size(); ++i) {
       HeaderItem *item = mItems[i];
       int parentCacheId = item->sortCacheItem()->parent()?item->sortCacheItem()->parent()->id():0;
-      kDebug( 5006 ) <<"SortCacheItem:" << item->sortCacheItem()->id() <<" parent:" << parentCacheId;
-      kDebug( 5006 ) <<"Item:" << item <<" sortCache:" << item->sortCacheItem() <<" parent:" << item->sortCacheItem()->parent();
+      kDebug() << "SortCacheItem:" << item->sortCacheItem()->id() <<" parent:" << parentCacheId;
+      kDebug() << "Item:" << item <<" sortCache:" << item->sortCacheItem() <<" parent:" << item->sortCacheItem()->parent();
     }
-    kDebug(5006);
+    kDebug();
 }
 
 // -------------------------------------
@@ -3084,7 +3084,7 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
 
 bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
-    //kDebug(5006) << endl << kBacktrace();
+    //kDebug() << endl << kBacktrace();
 
     if ( !mFolder->isOpened() ) mFolder->open( "kmheaders" );
 
@@ -3158,7 +3158,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                     break;
                 }
                 if ((len < 0) || (len > KMAIL_MAX_KEY_LEN)) {
-                    kDebug(5006) <<"Whoa.2! len" << len;
+                    kDebug() << "Whoa.2! len" << len;
                     error = true;
                     continue;
                 }
@@ -3188,14 +3188,14 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 }
                 if ((id < 0) || (id >= mFolderCount) ||
                     (parent < -2) || (parent >= mFolderCount)) { // sanity checking
-                    kDebug(5006) <<"Whoa.1!";
+                    kDebug() << "Whoa.1!";
                     error = true;
                     continue;
                 }
 
                 if ((item=sortCache[id])) {
                     if (item->id() != -1) {
-                        kDebug(5006) <<"Whoa.3!";
+                        kDebug() << "Whoa.3!";
                         error = true;
                         continue;
                     }
@@ -3224,7 +3224,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 }
             }
             if (error || (x != sorted_count + discovered_count)) {// sanity check
-                kDebug(5006) << endl <<"Whoa: x" << x <<", sorted_count" << sorted_count <<", discovered_count" << discovered_count <<", count" << mFolder->count();
+                kDebug() << endl << "Whoa: x" << x <<", sorted_count" << sorted_count <<", discovered_count" << discovered_count <<", count" << mFolder->count();
                 fclose(sortStream);
                 sortStream = 0;
             }
@@ -3411,8 +3411,9 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         }
 
         if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
-            kDebug(5006) <<"KMHeaders::readSortOrder - msg could not be threaded."
-                  << endl << "Please talk to your threading counselor asap. ";
+            kDebug() << "msg could not be threaded."
+                     << endl
+                     << "Please talk to your threading counselor asap. ";
             khi = new HeaderItem(this, sortCache[x]->id(), sortCache[x]->key());
             sortCache[x]->setItem(mItems[sortCache[x]->id()] = khi);
         }
@@ -3494,7 +3495,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         if ( sortStream )
             fclose(sortStream);
         unlink(QFile::encodeName(sortFile));
-        kWarning(5006) <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
+        kWarning() <<"Error: Failure modifying" << sortFile <<" (No space left on device?)";
 
         return true;
     }
@@ -3524,7 +3525,7 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
     }
   }
   // Not found. Maybe we should select the last item instead?
-  kDebug(5006) <<"KMHeaders::setCurrentItem item with serial number" << serialNum <<" NOT FOUND";
+  kDebug() << serialNum <<" NOT FOUND";
 }
 
 void KMHeaders::copyMessages()

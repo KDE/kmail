@@ -103,8 +103,8 @@ int KMFolderMbox::open( const char *owner )
   mOwners.append( owner );
 
 #ifdef FOLDER_REFCOUNT_DEBUGGING
-  kDebug(5006) << endl << "open" << mOpenCount << folder()->name()
-               << mOwners << ", adding:" << owner;
+  kDebug() << endl << "open" << mOpenCount << folder()->name()
+           << mOwners << ", adding:" << owner;
 //           << mOwners << ", adding:" << owner << kBacktrace();
 #endif
   int rc = 0;
@@ -124,7 +124,7 @@ int KMFolderMbox::open( const char *owner )
     KNotification::event( "warning",
                           i18n("Cannot open file \"%1\":\n%2",
                                location(), strerror( errno ) ) );
-    kDebug(5006) <<"Cannot open folder `" << location() <<"':" << strerror(errno);
+    kDebug() << "Cannot open folder `" << location() <<"':" << strerror(errno);
     mOpenCount = 0;
     return errno;
   }
@@ -214,7 +214,7 @@ bool KMFolderMbox::canAccess() const
 
   QFileInfo finfo( location() );
   if ( !finfo.isReadable() || !finfo.isWritable() ) {
-    kDebug(5006) <<"KMFolderMbox::access call to access function failed";
+    kDebug() << "call to access function failed";
     return false;
   }
   return true;
@@ -229,11 +229,11 @@ int KMFolderMbox::create()
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
 
-  kDebug(5006) <<"Creating folder" << objectName();
+  kDebug() << "Creating folder" << objectName();
   if (access(QFile::encodeName(location()), F_OK) == 0) {
-    kDebug(5006) <<"KMFolderMbox::create call to access function failed.";
-    kDebug(5006) <<"File::";
-    kDebug(5006) <<"Error";
+    kDebug() << "call to access function failed.";
+    kDebug() << "File::";
+    kDebug() << "Error";
     return EEXIST;
   }
 
@@ -273,9 +273,9 @@ int KMFolderMbox::create()
 void KMFolderMbox::close( const char *owner, bool aForced )
 {
 #ifdef FOLDER_REFCOUNT_DEBUGGING
-  kDebug(5006) <<"\nclose" << folder()->name() << mOwners
-               << owner << mOpenCount;
-//             << owner << mOpenCount << kBacktrace();
+  kDebug() << "\nclose" << folder()->name() << mOwners
+           << owner << mOpenCount;
+//           << owner << mOpenCount << kBacktrace();
 #endif
   int ownerPos = mOwners.indexOf( owner );
   if ( !aForced && !mOwners.isEmpty() ) {
@@ -305,8 +305,8 @@ void KMFolderMbox::close( const char *owner, bool aForced )
 
   if ( mAutoCreateIndex ) {
       if ( KMFolderIndex::IndexOk != indexStatus() ) {
-        kDebug(5006) <<"Critical error:" << location()
-                     << "has been modified by an external application while KMail was running.";
+        kDebug() << "Critical error:" << location()
+                 << "has been modified by an external application while KMail was running.";
         //      exit(1); backed out due to broken nfs
       }
 
@@ -376,8 +376,8 @@ int KMFolderMbox::lock()
 
       if (rc < 0)
       {
-        kDebug(5006) <<"Cannot lock folder `" << location() <<"':"
-                  << strerror(errno) << "(" << errno << ")";
+        kDebug() << "Cannot lock folder `" << location() << "':"
+                 << strerror(errno) << "(" << errno << ")";
         mReadOnly = true;
         return errno;
       }
@@ -388,8 +388,8 @@ int KMFolderMbox::lock()
 
         if (rc < 0)
         {
-          kDebug(5006) <<"Cannot lock index of folder `" << location() <<"':"
-                    << strerror(errno) << "(" << errno << ")";
+          kDebug() << "Cannot lock index of folder `" << location() << "':"
+                   << strerror(errno) << "(" << errno << ")";
           rc = errno;
           fl.l_type = F_UNLCK;
           /*rc =*/ fcntl(fileno(mIndexStream), F_SETLK, &fl);
@@ -409,8 +409,8 @@ int KMFolderMbox::lock()
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
-        kDebug(5006) <<"Cannot lock folder `" << location() <<"':"
-                  << strerror(rc) << "(" << rc << ")";
+        kDebug() << "Cannot lock folder `" << location() << "':"
+                 << strerror(rc) << "(" << rc << ")";
         mReadOnly = true;
         return rc;
       }
@@ -420,8 +420,8 @@ int KMFolderMbox::lock()
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
-          kDebug(5006) <<"Cannot lock index of folder `" << location() <<"':"
-                    << strerror(rc) << "(" << rc << ")";
+          kDebug() << "Cannot lock index of folder `" << location() << "':"
+                   << strerror(rc) << "(" << rc << ")";
           mReadOnly = true;
           return rc;
         }
@@ -433,8 +433,8 @@ int KMFolderMbox::lock()
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
-        kDebug(5006) <<"Cannot lock folder `" << location() <<"':"
-                  << strerror(rc) << "(" << rc << ")";
+        kDebug() << "Cannot lock folder `" << location() << "':"
+                 << strerror(rc) << "(" << rc << ")";
         mReadOnly = true;
         return rc;
       }
@@ -444,8 +444,8 @@ int KMFolderMbox::lock()
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
-          kDebug(5006) <<"Cannot lock index of folder `" << location() <<"':"
-                    << strerror(rc) << "(" << rc << ")";
+          kDebug() << "Cannot lock index of folder `" << location() << "':"
+                   << strerror(rc) << "(" << rc << ")";
           mReadOnly = true;
           return rc;
         }
@@ -457,8 +457,8 @@ int KMFolderMbox::lock()
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
-        kDebug(5006) <<"Cannot lock folder `" << location() <<"':"
-                  << strerror(rc) << "(" << rc << ")";
+        kDebug() << "Cannot lock folder `" << location() << "':"
+                 << strerror(rc) << "(" << rc << ")";
         mReadOnly = true;
         return rc;
       }
@@ -468,8 +468,8 @@ int KMFolderMbox::lock()
         rc = system( cmd_str.data() );
         if( rc != 0 )
         {
-          kDebug(5006) <<"Cannot lock index of folder `" << location() <<"':"
-                    << strerror(rc) << "(" << rc << ")";
+          kDebug() << "Cannot lock index of folder `" << location() << "':"
+                   << strerror(rc) << "(" << rc << ")";
           mReadOnly = true;
           return rc;
         }
@@ -983,7 +983,7 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
   KMFolderOpener openThis( folder(), "mboxaddMsg" );
   if ( openThis.openResult() )
   {
-    kDebug(5006) << "KMFolderMbox::addMsg-open: " << openThis.openResult() << " of folder: " << label() << endl;
+    kDebug() << openThis.openResult() << " of folder: " << label();
     return openThis.openResult();
   }
 
@@ -994,7 +994,7 @@ int KMFolderMbox::addMsg( KMMessage *aMsg, int *aIndex_ret )
     if ( msgParent== folder() ) {
       if ( kmkernel->folderIsDraftOrOutbox( folder() ) ) {
         //special case for Edit message.
-        kDebug(5006) <<"Editing message in outbox or drafts";
+        kDebug() << "Editing message in outbox or drafts";
       } else {
         return 0;
       }
@@ -1031,8 +1031,8 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
   assert( mStream != 0 );
   clearerr( mStream );
   if ( len <= 0 ) {
-    kDebug(5006) <<"Message added to folder `" << objectName()
-                 << "' contains no data. Ignoring it.";
+    kDebug() << "Message added to folder `" << objectName()
+             << "' contains no data. Ignoring it.";
     return 0;
   }
 
@@ -1074,10 +1074,9 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
 
   error = ferror( mStream );
   if ( error ) {
-    kDebug(5006) <<"Error: Could not add message to folder:"
-                 << strerror(errno);
+    kDebug() << "Error: Could not add message to folder:" << strerror(errno);
     if ( KDE_ftell( mStream ) > revert ) {
-      kDebug(5006) <<"Undoing changes";
+      kDebug() << "Undoing changes";
       truncate( QFile::encodeName(location()), revert );
     }
     kmkernel->emergencyExit( i18n("Could not add message to folder: ") +
@@ -1155,7 +1154,7 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     mb->setIndexOffset( KDE_ftell( mIndexStream ) );
     mb->setIndexLength( len );
     if ( fwrite( buffer, len, 1, mIndexStream ) != 1 ) {
-      kDebug(5006) <<"Whoa!";
+      kDebug() << "Whoa!";
     }
 
     fflush( mIndexStream );
@@ -1166,9 +1165,9 @@ if( fileD1.open( QIODevice::WriteOnly ) ) {
     }
 
     if (error) {
-      kWarning(5006) <<"Error: Could not add message to folder (No space left on device?)";
+      kWarning() <<"Error: Could not add message to folder (No space left on device?)";
       if ( KDE_ftell( mIndexStream ) > revert ) {
-        kWarning(5006) <<"Undoing changes";
+        kWarning() <<"Undoing changes";
         truncate( QFile::encodeName( indexLocation() ), revert );
       }
       if ( errno ) {
@@ -1210,7 +1209,7 @@ int KMFolderMbox::compact( int startIndex, int nbMessages, FILE *tmpfile,
   int stopIndex = nbMessages == -1
                   ? mMsgList.count()
                   : qMin( (int)mMsgList.count(), startIndex + nbMessages );
-  //kDebug(5006) <<"KMFolderMbox: compacting from" << startIndex <<" to" << stopIndex;
+  //kDebug() << "KMFolderMbox: compacting from" << startIndex <<" to" << stopIndex;
   for ( int idx = startIndex; idx < stopIndex; ++idx ) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at( idx );
     size_t msize = mi->msgSize();

@@ -44,10 +44,10 @@ void KMail::KorgHelper::ensureRunning()
         kDebug() <<"Loaded" << dcopService <<" successfully";
         Q_ASSERT( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dummy, dummy ) );
       } else
-        kWarning(5006) <<"Error loading" << dcopService;
+        kWarning() << "Error loading" << dcopService;
     }
 #endif
   }
   else
-    kWarning() << "Couldn't start DBUS/Organizer: " << dbusService << " " << error << endl;
+    kWarning() << "Couldn't start DBUS/Organizer: " << dbusService << " " << error;
 }
