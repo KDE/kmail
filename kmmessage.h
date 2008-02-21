@@ -851,6 +851,9 @@ public:
   bool isBeingParsed() const { return mIsParsed; }
   void setIsBeingParsed( bool t ) { mIsParsed = t; }
 
+  /** Delete this message as soon as it no longer in use. */
+  void deleteWhenUnused();
+
 private:
 
   /** Initialization shared by the ctors. */
@@ -880,6 +883,7 @@ private:
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
   int mCursorPos;
+  static QList<KMMessage*> sPendingDeletes;
 };
 
 

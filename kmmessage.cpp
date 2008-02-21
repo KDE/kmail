@@ -91,6 +91,8 @@ const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 //helper
 static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart );
 
+QList<KMMessage*> KMMessage::sPendingDeletes;
+
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
   : KMMsgBase()
@@ -266,6 +268,15 @@ bool KMMessage::transferInProgress() const
 void KMMessage::setTransferInProgress(bool value, bool force)
 {
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
+  if ( !transferInProgress() && sPendingDeletes.contains( this ) ) {
+    sPendingDeletes.remove( this );
+    if ( parent() ) {
+      int idx = parent()->find( this );
+      if ( idx > 0 ) {
+        parent()->removeMsg( idx );
+      }
+    }
+  }
 }
 
 
@@ -4312,4 +4323,9 @@ QByteArray KMMessage::mboxMessageSeparator()
       dateStr.truncate( len - 1 );
   }
   return "From " + str + ' ' + dateStr + '\n';
+}
+
+void KMMessage::deleteWhenUnused()
+{
+  sPendingDeletes << this;
 }
