@@ -1407,6 +1407,8 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     setMDNSentState( KMMsgMDNIgnore );
     return 0;
   }
+  if ( mode == 1 /* ask */ && !allowGUI )
+    return 0; // don't setMDNSentState here!
 
   // RFC 2298: An importance of "required" indicates that
   // interpretation of the parameter is necessary for proper
@@ -1457,10 +1459,9 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
     s = MDN::SentManually;
   }
 
-  if ( a != KMime::MDN::AutomaticAction ) {
-    //TODO: only ingore user settings for AutomaticAction if requested
+  if ( true ) {
     if ( mode == 1 ) { // ask
-      if ( !allowGUI ) return 0; // don't setMDNSentState here!
+      assert( allowGUI );
       mode = requestAdviceOnMDN( "mdnNormalAsk" );
       s = MDN::SentManually; // asked user
     }
