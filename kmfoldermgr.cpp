@@ -392,15 +392,17 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
   }
 
   KMFolder* parentF = parentFolder( aFolder );
-  assert( parentF != aFolder );
 
 
   // aFolder will be deleted by the next call!
   aFolder->parent()->removeAll(aFolder);
 
   // update the children state
-  if ( parentF )
-    parentF->storage()->updateChildrenState();
+  if ( parentF )  {
+    if ( parentF != aFolder ) {
+      parentF->storage()->updateChildrenState();
+    }
+  }
   else
     kWarning(5006) <<"Can not find parent folder";
 
