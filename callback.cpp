@@ -86,6 +86,11 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
   }
   msg->setTo( to );
   msg->setFrom( receiver() );
+  if ( !GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+    msg->setHeaderField( "Content-Type",
+                         "text/calendar; method=reply; charset=\"utf-8\"" );
+    msg->setBody( iCal.toUtf8() );
+  }
 
   if ( delMessage && deleteInvitationAfterReply() )
     /* We want the triggering mail to be moved to the trash once this one
@@ -126,10 +131,6 @@ bool Callback::mailICal( const QString &to, const QString &iCal,
     msgPart->setSubtypeStr( "calendar" );
     msgPart->setParameter( "method", "reply" );
     cWin->addAttach( msgPart );
-  } else {
-    msg->setHeaderField( "Content-Type",
-                         "text/calendar; method=reply; charset=\"utf-8\"" );
-    msg->setBody( iCal.toUtf8() );
   }
 
   if ( options.readEntry( "AutomaticSending", true ) ) {
