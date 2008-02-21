@@ -978,7 +978,6 @@ private:
   WarningConfiguration* mWidget;
 };
 
-//FIXME This  a DCOPObject, so we probably need to port it to DBus!
 class SecurityPageSMimeTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -987,7 +986,6 @@ public:
 
   QString helpAnchor() const;
 
-  // Can't use k_dcop here. dcopidl can't parse this file, dcopidlng has a namespace bug.
   void save();
   void installProfile( KConfig * profile );
 

@@ -4729,34 +4729,6 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
-// The DCOP stuff here is used by Kleopatra
-#ifdef __GNUC__
-#warning Port the hand-made DCOP stuff to D-Bus
-#endif
-/*bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
-{
-    if ( fun == "load()" ) {
-        replyType = "void";
-        load();
-    } else {
-        return DCOPObject::process( fun, data, replyType, replyData );
-    }
-    return true;
-}
-
-DCOPCStringList SecurityPageSMimeTab::interfaces()
-{
-  DCOPCStringList ifaces = DCOPObject::interfaces();
-  ifaces += "SecurityPageSMimeTab";
-  return ifaces;
-}
-
-DCOPCStringList SecurityPageSMimeTab::functions()
-{
-  // Hide our slot, just because it's simpler to do so.
-  return DCOPObject::functions();
-}*/
-
 Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* componentName,
                                                                 const char* groupName,
                                                                 const char* entryName,
