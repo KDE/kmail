@@ -3459,7 +3459,7 @@ void KMComposeWin::slotWordWrapToggled( bool on )
 
 void KMComposeWin::disableWordWrap()
 {
-  mEditor->setWordWrapMode( QTextOption::WordWrap );
+  mEditor->setWordWrapMode( QTextOption::NoWrap );
 }
 
 
