@@ -4214,9 +4214,6 @@ void KMMainWidget::showEvent( QShowEvent *event )
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
   slotSearch();
-#ifdef HAVE_INDEXLIB
-  return;
-#endif
   assert( mSearchWin );
   KMSearchPattern pattern;
   pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mQuickSearchLine->currentSearchTerm() ) );
