@@ -764,10 +764,9 @@ void KMReaderWin::slotAllHeaders() {
 void KMReaderWin::slotLevelQuote( int l )
 {
   kdDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
-	mLevelQuote = l;
-  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
 
+  mLevelQuote = l;
+  saveRelativePosition();
   update(true);
 }
 
@@ -1461,7 +1460,8 @@ void KMReaderWin::updateReaderWin()
   if (mSavedRelativePosition)
   {
     QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
-    scrollview->setContentsPos ( 0, qRound(  scrollview->contentsHeight() * mSavedRelativePosition ) );
+    scrollview->setContentsPos( 0,
+      qRound( scrollview->contentsHeight() * mSavedRelativePosition ) );
     mSavedRelativePosition = 0;
   }
 }
@@ -2049,10 +2049,8 @@ void KMReaderWin::slotFindNext()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
-  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
-  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
-
   mUseFixedFont = !mUseFixedFont;
+  saveRelativePosition();
   update(true);
 }
 
@@ -2415,6 +2413,15 @@ bool KMReaderWin::htmlLoadExternal()
 {
   return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
           (!mHtmlLoadExternal && mHtmlLoadExtOverride));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::saveRelativePosition()
+{
+  const QScrollView * scrollview = static_cast<QScrollView *>( mViewer->widget() );
+  mSavedRelativePosition =
+    static_cast<float>( scrollview->contentsY() ) / scrollview->contentsHeight();
 }
 
 

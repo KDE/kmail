@@ -162,6 +162,10 @@ public:
   /** Clear the reader and discard the current message. */
   void clear(bool force = false) { setMsg(0, force); }
 
+  /** Saves the relative position of the scroll view. Call this before calling update()
+      if you want to preserve the current view. */
+  void saveRelativePosition();
+
   /** Re-parse the current message. */
   void update(bool force = false);
 

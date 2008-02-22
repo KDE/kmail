@@ -1540,8 +1540,8 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
     // if we should list all folders we limit this to the root folder
-    if ( !folder->account()->listOnlyOpenFolders() &&
-         fti->parent() )
+    if ( !folder->account() || ( !folder->account()->listOnlyOpenFolders() &&
+         fti->parent() ) )
       return;
     if ( folder->getSubfolderState() == KMFolderImap::imapNoInformation )
     {
