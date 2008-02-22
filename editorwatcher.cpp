@@ -18,7 +18,7 @@
 
 #include "editorwatcher.h"
 
-#include <config.h>
+#include <config-kmail.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -33,30 +33,11 @@
 #include <cassert>
 
 // inotify stuff taken from kdelibs/kio/kio/kdirwatch.cpp
-#ifdef HAVE_INOTIFY
-#include <sys/ioctl.h>
+#ifdef HAVE_SYS_INOTIFY_H
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/syscall.h>
-#include <linux/types.h>
-// Linux kernel headers are documented to not compile
-#define _S390_BITOPS_H
-#include <linux/inotify.h>
-
-static inline int inotify_init (void)
-{
-  return syscall (__NR_inotify_init);
-}
-
-static inline int inotify_add_watch (int fd, const char *name, __u32 mask)
-{
-  return syscall (__NR_inotify_add_watch, fd, name, mask);
-}
-
-static inline int inotify_rm_watch (int fd, __u32 wd)
-{
-  return syscall (__NR_inotify_rm_watch, fd, wd);
-}
+#include <sys/inotify.h>
+#include <sys/ioctl.h>
 #endif
 
 using namespace KMail;
@@ -93,11 +74,11 @@ bool EditorWatcher::start()
       return false;
   }
 
-#ifdef HAVE_INOTIFY
+#ifdef HAVE_SYS_INOTIFY_H
   // monitor file
   mInotifyFd = inotify_init();
   if ( mInotifyFd > 0 ) {
-    mInotifyWatch = inotify_add_watch( mInotifyFd, mUrl.path().latin1(), IN_CLOSE | IN_OPEN | IN_MODIFY );
+    mInotifyWatch = inotify_add_watch( mInotifyFd, mUrl.path().toLatin1(), IN_CLOSE | IN_OPEN | IN_MODIFY );
     if ( mInotifyWatch >= 0 ) {
       QSocketNotifier *sn = new QSocketNotifier( mInotifyFd, QSocketNotifier::Read, this );
       connect( sn, SIGNAL(activated(int)), SLOT(inotifyEvent()) );
@@ -127,7 +108,7 @@ bool EditorWatcher::start()
 void EditorWatcher::inotifyEvent()
 {
   assert( mHaveInotify );
-#ifdef HAVE_INOTIFY
+#ifdef HAVE_SYS_INOTIFY_H
   int pending = -1;
   char buffer[4096];
   ioctl( mInotifyFd, FIONREAD, &pending );
