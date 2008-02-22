@@ -21,8 +21,6 @@
 #ifndef RECIPIENTSPICKER_H
 #define RECIPIENTSPICKER_H
 
-#include <config.h> // for KDEPIM_NEW_DISTRLISTS
-
 #include "recipientseditor.h"
 
 #include <kabc/addressee.h>

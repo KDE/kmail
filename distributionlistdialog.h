@@ -21,7 +21,6 @@
 #ifndef DISTRIBUTIONLISTDIALOG_H
 #define DISTRIBUTIONLISTDIALOG_H
 
-#include <config.h> // for KDEPIM_NEW_DISTRLISTS
 #include "recipientseditor.h"
 #include <kdialog.h>
 
