@@ -47,7 +47,7 @@ class KMFolder;
 class QButtonGroup;
 class QGroupBox;
 
-namespace KPIM {
+namespace MailTransport {
 class ServerTest;
 }
 
@@ -66,7 +66,7 @@ class AccountDialog : public KDialog
 
   public:
     AccountDialog( const QString & caption, KMAccount *account,
-		   QWidget *parent=0 );
+                   QWidget *parent=0 );
     virtual ~AccountDialog();
   private:
     struct LocalWidgets
@@ -234,8 +234,8 @@ class AccountDialog : public KDialog
     void slotImapEncryptionChanged(int);
     void slotCheckPopCapabilities();
     void slotCheckImapCapabilities();
-    void slotPopCapabilities( const QStringList &, const QStringList & );
-    void slotImapCapabilities( const QStringList &, const QStringList & );
+    void slotPopCapabilities( QList<int> );
+    void slotImapCapabilities( QList<int> );
     void slotReloadNamespaces();
     void slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map );
     void slotEditPersonalNamespace();
@@ -260,10 +260,8 @@ class AccountDialog : public KDialog
     void setupSettings();
     void saveSettings();
     void checkHighest( QButtonGroup * );
-    static unsigned int popCapabilitiesFromStringList( const QStringList & );
-    static unsigned int imapCapabilitiesFromStringList( const QStringList & );
-    void enablePopFeatures( unsigned int );
-    void enableImapAuthMethods( unsigned int );
+    void enablePopFeatures();
+    void enableImapAuthMethods();
     void initAccountForConnect();
     const QString namespaceListToString( const QStringList& list );
 
@@ -275,32 +273,7 @@ class AccountDialog : public KDialog
     KMAccount    *mAccount;
     QList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
-    KPIM::ServerTest *mServerTest;
-    enum EncryptionMethods {
-      NoEncryption = 0,
-      SSL = 1,
-      TLS = 2
-    };
-    enum Capabilities {
-      Plain      =   1,
-      Login      =   2,
-      CRAM_MD5   =   4,
-      Digest_MD5 =   8,
-      Anonymous  =  16,
-      APOP       =  32,
-      Pipelining =  64,
-      TOP        = 128,
-      UIDL       = 256,
-      STLS       = 512, // TLS for POP
-      STARTTLS   = 512, // TLS for IMAP
-      GSSAPI     = 1024,
-      NTLM       = 2048,
-      AllCapa    = 0xffffffff
-    };
-    unsigned int mCurCapa;
-    unsigned int mCapaNormal;
-    unsigned int mCapaSSL;
-    unsigned int mCapaTLS;
+    MailTransport::ServerTest *mServerTest;
     KMail::SieveConfigEditor *mSieveConfigEditor;
     QRegExpValidator *mValidator;
 };

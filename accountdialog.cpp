@@ -33,9 +33,9 @@
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
+#include <mailtransport/servertest.h>
+using namespace MailTransport;
 #include "globalsettings.h"
-
-#include <libkdepim/servertest.h>
 
 #include <KGlobalSettings>
 #include <KFileDialog>
@@ -266,10 +266,6 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   : KDialog( parent ),
     mAccount( account ),
     mServerTest( 0 ),
-    mCurCapa( AllCapa ),
-    mCapaNormal( AllCapa ),
-    mCapaSSL( AllCapa ),
-    mCapaTLS( AllCapa ),
     mSieveConfigEditor( 0 )
 {
   setCaption( caption );
@@ -804,9 +800,12 @@ void AccountDialog::makePopAccountPage()
   mPop.encryptionGroup->layout()->addWidget( mPop.encryptionTLS );
 
   mPop.encryptionButtonGroup = new QButtonGroup();
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone,NoEncryption );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL,SSL );
-  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS,TLS );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionNone,
+                                         Transport::EnumEncryption::None );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionSSL,
+                                         Transport::EnumEncryption::SSL );
+  mPop.encryptionButtonGroup->addButton( mPop.encryptionTLS,
+                                         Transport::EnumEncryption::TLS );
 
   connect( mPop.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
            SLOT(slotPopEncryptionChanged(int)) );
@@ -1181,9 +1180,12 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.encryptionGroup->layout()->addWidget( mImap.encryptionTLS );
 
   mImap.encryptionButtonGroup = new QButtonGroup();
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone,NoEncryption );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL,SSL );
-  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS,TLS );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionNone,
+                                          Transport::EnumEncryption::None );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionSSL,
+                                          Transport::EnumEncryption::SSL );
+  mImap.encryptionButtonGroup->addButton( mImap.encryptionTLS,
+                                          Transport::EnumEncryption::TLS );
 
   connect( mImap.encryptionButtonGroup, SIGNAL(buttonClicked(int)),
            SLOT(slotImapEncryptionChanged(int)) );
@@ -1552,7 +1554,8 @@ void AccountDialog::slotLeaveOnServerClicked()
     slotEnableLeaveOnServerCount( state );
     slotEnableLeaveOnServerSize( state );
   }
-  if ( !( mCurCapa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
+  if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::UIDL ) &&
+       mPop.leaveOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support unique "
                                    "message numbers, but this is a "
@@ -1567,7 +1570,8 @@ void AccountDialog::slotLeaveOnServerClicked()
 
 void AccountDialog::slotFilterOnServerClicked()
 {
-  if ( !( mCurCapa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
+  if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Top ) &&
+       mPop.filterOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
                                    "fetching message headers, but this is a "
@@ -1597,18 +1601,14 @@ void AccountDialog::slotPipeliningClicked()
 }
 
 
-void AccountDialog::slotPopEncryptionChanged(int id)
+void AccountDialog::slotPopEncryptionChanged( int id )
 {
   kDebug(5006) << "ID:" << id;
   // adjust port
-  if ( id == SSL || mPop.portEdit->text() == "995" )
-    mPop.portEdit->setText( ( id == SSL ) ? "995" : "110" );
+  if ( id == Transport::EnumEncryption::SSL || mPop.portEdit->text() == "995" )
+    mPop.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "995" : "110" );
 
-  // switch supported auth methods
-  mCurCapa = ( id == TLS ) ? mCapaTLS
-                           : ( id == SSL ) ? mCapaSSL
-                                           : mCapaNormal;
-  enablePopFeatures( mCurCapa );
+  enablePopFeatures();
   const QAbstractButton *old = mPop.authButtonGroup->checkedButton();
   if ( old && !old->isEnabled() )
     checkHighest( mPop.authButtonGroup );
@@ -1622,18 +1622,14 @@ void AccountDialog::slotPopPasswordChanged(const QString& text)
     mPop.storePasswordCheck->setCheckState( Qt::Checked );
 }
 
-void AccountDialog::slotImapEncryptionChanged(int id)
+void AccountDialog::slotImapEncryptionChanged( int id )
 {
-  kDebug(5006) <<"slotImapEncryptionChanged(" << id <<" )";
+  kDebug(5006) << id;
   // adjust port
-  if ( id == SSL || mImap.portEdit->text() == "993" )
-    mImap.portEdit->setText( ( id == SSL ) ? "993" : "143" );
+  if ( id == Transport::EnumEncryption::SSL || mImap.portEdit->text() == "993" )
+    mImap.portEdit->setText( ( id == Transport::EnumEncryption::SSL ) ? "993" : "143" );
 
-  // switch supported auth methods
-  int authMethods = ( id == TLS ) ? mCapaTLS
-                                  : ( id == SSL ) ? mCapaSSL
-                                                  : mCapaNormal;
-  enableImapAuthMethods( authMethods );
+  enableImapAuthMethods();
   QAbstractButton *old = mImap.authButtonGroup->checkedButton();
   if ( !old->isEnabled() )
     checkHighest( mImap.authButtonGroup );
@@ -1645,17 +1641,23 @@ void AccountDialog::slotCheckPopCapabilities()
   if ( mPop.hostEdit->text().isEmpty() || mPop.portEdit->text().isEmpty() )
   {
      KMessageBox::sorry( this, i18n( "Please specify a server and port on "
-              "the General tab first." ) );
+                                     "the General tab first." ) );
      return;
   }
   delete mServerTest;
-  mServerTest = new KPIM::ServerTest(POP_PROTOCOL, mPop.hostEdit->text(),
-    mPop.portEdit->text().toInt());
-  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
-                                              const QStringList & ) ),
-           this, SLOT( slotPopCapabilities( const QStringList &,
-                                            const QStringList & ) ) );
-  mPop.checkCapabilities->setEnabled(false);
+  mServerTest = new ServerTest( this );
+  Transport::EnumEncryption::type encryptionType;
+  if ( mPop.encryptionSSL->isChecked() )
+    encryptionType = Transport::EnumEncryption::SSL;
+  else
+    encryptionType = Transport::EnumEncryption::None;
+  mServerTest->setPort( encryptionType, mPop.portEdit->text().toInt() );
+  mServerTest->setServer( mPop.hostEdit->text() );
+  mServerTest->setProtocol( "pop" );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           this, SLOT( slotPopCapabilities(QList<int>) ) );
+  mServerTest->start();
+  mPop.checkCapabilities->setEnabled( false );
 }
 
 
@@ -1668,82 +1670,55 @@ void AccountDialog::slotCheckImapCapabilities()
      return;
   }
   delete mServerTest;
-  mServerTest = new KPIM::ServerTest(IMAP_PROTOCOL, mImap.hostEdit->text(),
-    mImap.portEdit->text().toInt());
-  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
-                                              const QStringList & ) ),
-           this, SLOT( slotImapCapabilities( const QStringList &,
-                                             const QStringList & ) ) );
+  mServerTest = new ServerTest( this );
+  Transport::EnumEncryption::type encryptionType;
+  if ( mImap.encryptionSSL->isChecked() )
+    encryptionType = Transport::EnumEncryption::SSL;
+  else
+    encryptionType = Transport::EnumEncryption::None;
+  mServerTest->setPort( encryptionType, mImap.portEdit->text().toInt() );
+  mServerTest->setServer( mImap.hostEdit->text() );
+  mServerTest->setProtocol( "imap" );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           this, SLOT( slotImapCapabilities(QList<int>) ) );
+  mServerTest->start();
   mImap.checkCapabilities->setEnabled(false);
 }
 
-
-unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
-{
-  unsigned int capa = 0;
-  kDebug( 5006 ) << l;
-  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).toUpper();
-    if ( cur == "PLAIN" )
-      capa |= Plain;
-    else if ( cur == "LOGIN" )
-      capa |= Login;
-    else if ( cur == "CRAM-MD5" )
-      capa |= CRAM_MD5;
-    else if ( cur == "DIGEST-MD5" )
-      capa |= Digest_MD5;
-    else if ( cur == "NTLM" )
-      capa |= NTLM;
-    else if ( cur == "GSSAPI" )
-      capa |= GSSAPI;
-    else if ( cur == "APOP" )
-      capa |= APOP;
-    else if ( cur == "PIPELINING" )
-      capa |= Pipelining;
-    else if ( cur == "TOP" )
-      capa |= TOP;
-    else if ( cur == "UIDL" )
-      capa |= UIDL;
-    else if ( cur == "STLS" )
-      capa |= STLS;
-  }
-  return capa;
-}
-
-
-void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
-                                         const QStringList & capaSSL )
+void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 {
   mPop.checkCapabilities->setEnabled( true );
-  mCapaNormal = popCapabilitiesFromStringList( capaNormal );
-  if ( mCapaNormal & STLS )
-    mCapaTLS = mCapaNormal;
-  else
-    mCapaTLS = 0;
-  mCapaSSL = popCapabilitiesFromStringList( capaSSL );
-  kDebug(5006) <<"mCapaNormal =" << mCapaNormal
-                << "; mCapaSSL =" << mCapaSSL
-                << "; mCapaTLS =" << mCapaTLS;
-  mPop.encryptionNone->setEnabled( !capaNormal.isEmpty() );
-  mPop.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
-  mPop.encryptionTLS->setEnabled( mCapaTLS != 0 );
+  mPop.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
+  mPop.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
+  mPop.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
   checkHighest( mPop.encryptionButtonGroup );
-  delete mServerTest;
-  mServerTest = 0;
 }
 
 
-void AccountDialog::enablePopFeatures( unsigned int capa )
+void AccountDialog::enablePopFeatures()
 {
-  kDebug(5006) <<"enablePopFeatures(" << capa <<" )";
-  mPop.authPlain->setEnabled( capa & Plain );
-  mPop.authLogin->setEnabled( capa & Login );
-  mPop.authCRAM_MD5->setEnabled( capa & CRAM_MD5 );
-  mPop.authDigestMd5->setEnabled( capa & Digest_MD5 );
-  mPop.authNTLM->setEnabled( capa & NTLM );
-  mPop.authGSSAPI->setEnabled( capa & GSSAPI );
-  mPop.authAPOP->setEnabled( capa & APOP );
-  if ( !( capa & Pipelining ) && mPop.usePipeliningCheck->isChecked() ) {
+  kDebug(5006);
+  if ( !mServerTest )
+    return;
+
+  QList<int> supportedAuths;
+  if ( mPop.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::None )
+    supportedAuths = mServerTest->normalProtocols();
+  if ( mPop.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::SSL )
+    supportedAuths = mServerTest->secureProtocols();
+  if ( mPop.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::TLS )
+    supportedAuths = mServerTest->tlsProtocols();
+
+  mPop.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
+  mPop.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
+  mPop.authCRAM_MD5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
+  mPop.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
+  mPop.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
+  mPop.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
+  mPop.authAPOP->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::APOP ) );
+
+  if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Pipelining ) &&
+       mPop.usePipeliningCheck->isChecked() ) {
     mPop.usePipeliningCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
@@ -1762,7 +1737,9 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
                                    "download in one go from the POP "
                                    "server.") );
   }
-  if ( !( capa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
+
+  if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::UIDL ) &&
+       mPop.leaveOnServerCheck->isChecked() ) {
     mPop.leaveOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support unique "
@@ -1775,7 +1752,9 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
                                    "have the possibility to turn leaving "
                                    "fetched messages on the server on.") );
   }
-  if ( !( capa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
+
+  if ( mServerTest && !mServerTest->capabilities().contains( ServerTest::Top ) &&
+       mPop.filterOnServerCheck->isChecked() ) {
     mPop.filterOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support "
@@ -1790,52 +1769,13 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
   }
 }
 
-
-unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & l )
-{
-  unsigned int capa = 0;
-  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).toUpper();
-    if ( cur == "AUTH=PLAIN" )
-      capa |= Plain;
-    else if ( cur == "AUTH=LOGIN" )
-      capa |= Login;
-    else if ( cur == "AUTH=CRAM-MD5" )
-      capa |= CRAM_MD5;
-    else if ( cur == "AUTH=DIGEST-MD5" )
-      capa |= Digest_MD5;
-    else if ( cur == "AUTH=NTLM" )
-      capa |= NTLM;
-    else if ( cur == "AUTH=GSSAPI" )
-      capa |= GSSAPI;
-    else if ( cur == "AUTH=ANONYMOUS" )
-      capa |= Anonymous;
-    else if ( cur == "STARTTLS" )
-      capa |= STARTTLS;
-  }
-  return capa;
-}
-
-
-void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
-                                          const QStringList & capaSSL )
+void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
   mImap.checkCapabilities->setEnabled( true );
-  mCapaNormal = imapCapabilitiesFromStringList( capaNormal );
-  if ( mCapaNormal & STARTTLS )
-    mCapaTLS = mCapaNormal;
-  else
-    mCapaTLS = 0;
-  mCapaSSL = imapCapabilitiesFromStringList( capaSSL );
-  kDebug(5006) <<"mCapaNormal =" << mCapaNormal
-                << "; mCapaSSL =" << mCapaSSL
-                << "; mCapaTLS =" << mCapaTLS;
-  mImap.encryptionNone->setEnabled( !capaNormal.isEmpty() );
-  mImap.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
-  mImap.encryptionTLS->setEnabled( mCapaTLS != 0 );
+  mImap.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
+  mImap.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
+  mImap.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
   checkHighest( mImap.encryptionButtonGroup );
-  delete mServerTest;
-  mServerTest = 0;
 }
 
 void AccountDialog::slotLeaveOnServerDaysChanged ( int value )
@@ -1865,22 +1805,33 @@ void AccountDialog::slotIdentityCheckboxChanged()
      assert( false );
 }
 
-void AccountDialog::enableImapAuthMethods( unsigned int capa )
+void AccountDialog::enableImapAuthMethods()
 {
-  kDebug(5006) <<"enableImapAuthMethods(" << capa <<" )";
-  mImap.authPlain->setEnabled( capa & Plain );
-  mImap.authLogin->setEnabled( capa & Login );
-  mImap.authCramMd5->setEnabled( capa & CRAM_MD5 );
-  mImap.authDigestMd5->setEnabled( capa & Digest_MD5 );
-  mImap.authNTLM->setEnabled( capa & NTLM );
-  mImap.authGSSAPI->setEnabled( capa & GSSAPI );
-  mImap.authAnonymous->setEnabled( capa & Anonymous );
+  kDebug(5006);
+  if ( !mServerTest )
+    return;
+
+  QList<int> supportedAuths;
+  if ( mImap.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::None )
+    supportedAuths = mServerTest->normalProtocols();
+  if ( mImap.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::SSL )
+    supportedAuths = mServerTest->secureProtocols();
+  if ( mImap.encryptionButtonGroup->checkedId() == Transport::EnumEncryption::TLS )
+    supportedAuths = mServerTest->tlsProtocols();
+
+  mImap.authPlain->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::PLAIN ) );
+  mImap.authLogin->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::LOGIN ) );
+  mImap.authCramMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) );
+  mImap.authDigestMd5->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) );
+  mImap.authNTLM->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::NTLM ) );
+  mImap.authGSSAPI->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::GSSAPI ) );
+  mImap.authAnonymous->setEnabled( supportedAuths.contains( Transport::EnumAuthenticationType::ANONYMOUS ) );
 }
 
 
 void AccountDialog::checkHighest( QButtonGroup *btnGroup )
 {
-  kDebug(5006) <<"checkHighest(" << btnGroup <<" )";
+  kDebug(5006) << btnGroup;
   QAbstractButton *btn;
   foreach (btn, btnGroup->buttons()) {
     if (btn && btn->isEnabled()) {
