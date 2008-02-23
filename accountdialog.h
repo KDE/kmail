@@ -251,6 +251,7 @@ class AccountDialog : public KDialog
     MailTransport::ServerTest *mServerTest;
     KMail::SieveConfigEditor *mSieveConfigEditor;
     QRegExpValidator *mValidator;
+    bool mServerTestFailed;
 };
 
 class NamespaceLineEdit: public KLineEdit

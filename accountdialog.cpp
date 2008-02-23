@@ -1538,6 +1538,7 @@ void AccountDialog::slotCheckPopCapabilities()
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotPopCapabilities(QList<int>) ) );
   mServerTest->start();
+  mServerTestFailed = false;
   mPop.checkCapabilities->setEnabled( false );
 }
 
@@ -1563,12 +1564,21 @@ void AccountDialog::slotCheckImapCapabilities()
   connect( mServerTest, SIGNAL( finished(QList<int>) ),
            this, SLOT( slotImapCapabilities(QList<int>) ) );
   mServerTest->start();
+  mServerTestFailed = false;
   mImap.checkCapabilities->setEnabled(false);
 }
 
 void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 {
   mPop.checkCapabilities->setEnabled( true );
+
+  // If the servertest did not find any useable authentication modes, assume the
+  // connection failed and don't disable any of the radioboxes.
+  if ( encryptionTypes.isEmpty() ) {
+    mServerTestFailed = true;
+    return;
+  }
+
   mPop.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
   mPop.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
   mPop.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
@@ -1579,7 +1589,7 @@ void AccountDialog::slotPopCapabilities( QList<int> encryptionTypes )
 void AccountDialog::enablePopFeatures()
 {
   kDebug(5006);
-  if ( !mServerTest )
+  if ( !mServerTest || mServerTestFailed )
     return;
 
   QList<int> supportedAuths;
@@ -1653,6 +1663,14 @@ void AccountDialog::enablePopFeatures()
 void AccountDialog::slotImapCapabilities( QList<int> encryptionTypes )
 {
   mImap.checkCapabilities->setEnabled( true );
+
+  // If the servertest did not find any useable authentication modes, assume the
+  // connection failed and don't disable any of the radioboxes.
+  if ( encryptionTypes.isEmpty() ) {
+    mServerTestFailed = true;
+    return;
+  }
+
   mImap.encryptionNone->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::None ) );
   mImap.encryptionSSL->setEnabled( encryptionTypes.contains( Transport::EnumEncryption::SSL ) );
   mImap.encryptionTLS->setEnabled(  encryptionTypes.contains( Transport::EnumEncryption::TLS )  );
@@ -1689,7 +1707,7 @@ void AccountDialog::slotIdentityCheckboxChanged()
 void AccountDialog::enableImapAuthMethods()
 {
   kDebug(5006);
-  if ( !mServerTest )
+  if ( !mServerTest || mServerTestFailed )
     return;
 
   QList<int> supportedAuths;
