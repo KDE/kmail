@@ -168,6 +168,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFolderViewSplitter( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
+    mMsgActions( 0 ),
     mAccel( 0 ),
     mVacationIndicatorActive( false )
 {
@@ -796,6 +797,9 @@ void KMMainWidget::createWidgets()
   //
   if ( mReaderWindowActive ) {
     mMsgView = new KMReaderWin( this, this, actionCollection(), 0 );
+    if ( mMsgActions ) {
+      mMsgActions->setMessageView( mMsgView );
+    }
 
     connect( mMsgView, SIGNAL( replaceMsgByUnencryptedVersion() ),
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
