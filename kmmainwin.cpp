@@ -139,8 +139,7 @@ void KMMainWin::slotEditToolbars()
   KEditToolBar dlg(actionCollection(), this);
   dlg.setResourceFile( "kmmainwin.rc" );
 
-  connect( &dlg, SIGNAL(newToolbarConfig()),
-	   SLOT(slotUpdateToolbars()) );
+  connect( &dlg, SIGNAL(newToolbarConfig()), SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
 }

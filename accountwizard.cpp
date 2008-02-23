@@ -42,10 +42,9 @@ using KMail::AccountManager;
 #include "kpimidentities/identitymanager.h"
 #include "protocols.h"
 
-#include <libkdepim/servertest.h>
-
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
+#include <mailtransport/servertest.h>
 using namespace MailTransport;
 
 #include <kdialog.h>
@@ -64,23 +63,6 @@ using namespace MailTransport;
 #include <QListWidget>
 #include <QPushButton>
 #include <QGridLayout>
-
-enum Capabilities {
-  Plain      =   1,
-  Login      =   2,
-  CRAM_MD5   =   4,
-  Digest_MD5 =   8,
-  Anonymous  =  16,
-  APOP       =  32,
-  Pipelining =  64,
-  TOP        = 128,
-  UIDL       = 256,
-  STLS       = 512, // TLS for POP
-  STARTTLS   = 512, // TLS for IMAP
-  GSSAPI     = 1024,
-  NTLM       = 2048,
-  AllCapa    = 0xffffffff
-};
 
 class AccountTypeBox : public QListWidget
 {
@@ -139,6 +121,8 @@ AccountWizard::AccountWizard( KMKernel *kernel, QWidget *parent )
 
 AccountWizard::~AccountWizard()
 {
+  delete mServerTest;
+  mServerTest = 0;
 }
 
 void AccountWizard::start( KMKernel *kernel, QWidget *parent )
@@ -311,9 +295,6 @@ void AccountWizard::setupServerInformationPage()
   layout->addWidget( mIncomingLabel, 0, 0 );
   layout->addWidget( mIncomingServer, 0, 1 );
 
-  mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), page );
-  layout->addWidget( mIncomingUseSSL, 1, 1 );
-
   mIncomingLocationWdg = new KHBox( page );
   mIncomingLocation = new KLineEdit( mIncomingLocationWdg );
   layout->addWidget( mIncomingLocationWdg, 0, 1 );
@@ -329,9 +310,6 @@ void AccountWizard::setupServerInformationPage()
 
   layout->addWidget( label, 2, 0 );
   layout->addWidget( mOutgoingServer, 2, 1 );
-
-  mOutgoingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), page );
-  layout->addWidget( mOutgoingUseSSL, 3, 1 );
 
   // Local delivery
   mLocalDelivery = new QCheckBox( i18n( "Use local delivery" ), page );
@@ -433,14 +411,16 @@ void AccountWizard::createTransport()
     mTransport->setHost( mOutgoingServer->text() );
     mTransport->setUserName( mLoginName->text() );
     mTransport->setPassword( mPassword->text() );
+    mTransport->setRequiresAuthentication( true );
+    mTransport->setStorePassword( true );
 
-    int port = ( mOutgoingUseSSL->isChecked() ? 465 : 25 );
-    checkSmtpCapabilities( mTransport->host(), port );
+    checkSmtpCapabilities( mTransport->host() );
   }
 }
 
 void AccountWizard::transportCreated()
 {
+  mTransport->writeConfig();
   TransportManager::self()->addTransport( mTransport );
   QTimer::singleShot( 0, this, SLOT( createAccount() ) );
 }
@@ -449,8 +429,6 @@ void AccountWizard::createAccount()
 {
   // create incoming account
   AccountManager *acctManager = mKernel->acctMgr();
-
-  int port = 0;
 
   switch ( mTypeBox->type() ) {
     case AccountTypeBox::Local:
@@ -466,7 +444,6 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
-      port = mIncomingUseSSL->isChecked() ? 995 : 110;
       break;
     }
     case AccountTypeBox::IMAP:
@@ -476,7 +453,6 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
-      port = mIncomingUseSSL->isChecked() ? 993 : 143;
       break;
     }
     case AccountTypeBox::dIMAP:
@@ -486,7 +462,6 @@ void AccountWizard::createAccount()
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );
-      port = mIncomingUseSSL->isChecked() ? 993 : 143;
       break;
     }
     case AccountTypeBox::Maildir:
@@ -498,10 +473,10 @@ void AccountWizard::createAccount()
   }
 
   if ( mTypeBox->type() == AccountTypeBox::POP3 ) {
-    checkPopCapabilities( mIncomingServer->text(), port );
+    checkPopCapabilities( mIncomingServer->text() );
   } else if ( mTypeBox->type() == AccountTypeBox::IMAP ||
               mTypeBox->type() == AccountTypeBox::dIMAP ) {
-    checkImapCapabilities( mIncomingServer->text(), port );
+    checkImapCapabilities( mIncomingServer->text() );
   } else {
     QTimer::singleShot( 0, this, SLOT( accountCreated() ) );
   }
@@ -526,88 +501,83 @@ void AccountWizard::finished()
 
 // ----- Security Checks --------------
 
-void AccountWizard::checkPopCapabilities( const QString &server, int port )
+void AccountWizard::checkPopCapabilities( const QString &server )
 {
   delete mServerTest;
-  mServerTest = new KPIM::ServerTest( POP_PROTOCOL, server, port );
+  mServerTest = new ServerTest( this );
+  mServerTest->setProtocol( "pop" );
+  mServerTest->setServer( server );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           this, SLOT( popCapabilities(QList<int>) ) );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
-                                              const QStringList & ) ),
-           this, SLOT( popCapabilities( const QStringList &,
-                                        const QStringList & ) ) );
+  mServerTest->start();
 
   mAuthInfoLabel =
     createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
-void AccountWizard::checkImapCapabilities( const QString &server, int port )
+void AccountWizard::checkImapCapabilities( const QString &server )
 {
   delete mServerTest;
-  mServerTest = new KPIM::ServerTest( IMAP_PROTOCOL, server, port );
+  mServerTest = new ServerTest( this );
+  mServerTest->setProtocol( "imap" );
+  mServerTest->setServer( server );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           this, SLOT( imapCapabilities(QList<int>) ) );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
-                                              const QStringList & ) ),
-           this, SLOT( imapCapabilities( const QStringList &,
-                                         const QStringList & ) ) );
+  mServerTest->start();
 
   mAuthInfoLabel =
     createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
-void AccountWizard::checkSmtpCapabilities( const QString &server, int port )
+void AccountWizard::checkSmtpCapabilities( const QString &server )
 {
   delete mServerTest;
-  mServerTest = new KPIM::ServerTest( SMTP_PROTOCOL, server, port );
+  mServerTest = new ServerTest( this );
+  mServerTest->setProtocol( "smtp" );
+  mServerTest->setServer( server );
+  connect( mServerTest, SIGNAL( finished(QList<int>) ),
+           this, SLOT( smtpCapabilities(QList<int>) ) );
 
-  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
-                                              const QStringList &,
-                                              const QString &, const QString &,
-                                              const QString & ) ),
-           this, SLOT( smtpCapabilities( const QStringList &,
-                                         const QStringList &,
-                                         const QString &,
-                                         const QString &, const QString & ) ) );
+  mServerTest->start();
 
   mAuthInfoLabel =
     createInfoLabel( i18n( "Checking for supported security capabilities of %1...", server ) );
 }
 
-void AccountWizard::popCapabilities( const QStringList &capaNormalList,
-                                     const QStringList &capaSSLList )
+void AccountWizard::popCapabilities( QList<int> encryptionModes )
 {
-  uint capaNormal = popCapabilitiesFromStringList( capaNormalList );
-  uint capaTLS = 0;
-
-  if ( capaNormal & STLS ) {
-    capaTLS = capaNormal;
-  }
-
-  uint capaSSL = popCapabilitiesFromStringList( capaSSLList );
-
   KMail::NetworkAccount *account =
     static_cast<KMail::NetworkAccount*>( mAccount );
 
-  bool useSSL = !capaSSLList.isEmpty();
-  bool useTLS = capaTLS != 0;
+  bool useSSL = encryptionModes.contains( Transport::EnumEncryption::SSL );
+  bool useTLS = encryptionModes.contains( Transport::EnumEncryption::TLS ) && !useSSL;
 
   account->setUseSSL( useSSL );
   account->setUseTLS( useTLS );
 
-  uint capa = ( useSSL ? capaSSL : ( useTLS ? capaTLS : capaNormal ) );
+  QList<int> authModes;
+  if ( useSSL )
+    authModes = mServerTest->secureProtocols();
+  else if ( useTLS )
+    authModes = mServerTest->tlsProtocols();
+  else
+    authModes = mServerTest->normalProtocols();
 
-  if ( capa & Plain ) {
+  if ( authModes.contains( Transport::EnumAuthenticationType::PLAIN ) ) {
     account->setAuth( "PLAIN" );
-  } else if ( capa & Login ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::LOGIN ) ) {
     account->setAuth( "LOGIN" );
-  } else if ( capa & CRAM_MD5 ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) ) {
     account->setAuth( "CRAM-MD5" );
-  } else if ( capa & Digest_MD5 ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) ) {
     account->setAuth( "DIGEST-MD5" );
-  } else if ( capa & NTLM ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::NTLM ) ) {
     account->setAuth( "NTLM" );
-  } else if ( capa & GSSAPI ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::GSSAPI ) ) {
     account->setAuth( "GSSAPI" );
-  } else if ( capa & APOP ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::APOP ) ) {
     account->setAuth( "APOP" );
   } else {
     account->setAuth( "USER" );
@@ -615,50 +585,44 @@ void AccountWizard::popCapabilities( const QStringList &capaNormalList,
 
   account->setPort( useSSL ? 995 : 110 );
 
-  mServerTest->deleteLater();
-  mServerTest = 0;
-
   delete mAuthInfoLabel;
   mAuthInfoLabel = 0;
 
   accountCreated();
 }
 
-void AccountWizard::imapCapabilities( const QStringList &capaNormalList,
-                                      const QStringList &capaSSLList )
+void AccountWizard::imapCapabilities( QList<int> encryptionModes )
 {
-  uint capaNormal = imapCapabilitiesFromStringList( capaNormalList );
-  uint capaTLS = 0;
-  if ( capaNormal & STARTTLS ) {
-    capaTLS = capaNormal;
-  }
-
-  uint capaSSL = imapCapabilitiesFromStringList( capaSSLList );
-
   KMail::NetworkAccount *account =
     static_cast<KMail::NetworkAccount*>( mAccount );
 
-  bool useSSL = !capaSSLList.isEmpty();
-  bool useTLS = ( capaTLS != 0 );
+  bool useSSL = encryptionModes.contains( Transport::EnumEncryption::SSL );
+  bool useTLS = encryptionModes.contains( Transport::EnumEncryption::TLS ) && !useSSL;
 
   account->setUseSSL( useSSL );
   account->setUseTLS( useTLS );
 
-  uint capa = ( useSSL ? capaSSL : ( useTLS ? capaTLS : capaNormal ) );
+  QList<int> authModes;
+  if ( useSSL )
+    authModes = mServerTest->secureProtocols();
+  else if ( useTLS )
+    authModes = mServerTest->tlsProtocols();
+  else
+    authModes = mServerTest->normalProtocols();
 
-  if ( capa & CRAM_MD5 ) {
+  if ( authModes.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) ) {
     account->setAuth( "CRAM-MD5" );
-  } else if ( capa & Digest_MD5 ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) ) {
     account->setAuth( "DIGEST-MD5" );
-  } else if ( capa & NTLM ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::NTLM ) ) {
     account->setAuth( "NTLM" );
-  } else if ( capa & GSSAPI ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::GSSAPI ) ) {
     account->setAuth( "GSSAPI" );
-  } else if ( capa & Anonymous ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::ANONYMOUS ) ) {
     account->setAuth( "ANONYMOUS" );
-  } else if ( capa & Login ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::LOGIN ) ) {
     account->setAuth( "LOGIN" );
-  } else if ( capa & Plain ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::PLAIN ) ) {
     account->setAuth( "PLAIN" );
   } else {
     account->setAuth( "*" );
@@ -666,176 +630,51 @@ void AccountWizard::imapCapabilities( const QStringList &capaNormalList,
 
   account->setPort( useSSL ? 993 : 143 );
 
-  mServerTest->deleteLater();
-  mServerTest = 0;
-
   delete mAuthInfoLabel;
   mAuthInfoLabel = 0;
 
   accountCreated();
 }
 
-void AccountWizard::smtpCapabilities( const QStringList &capaNormal,
-                                      const QStringList &capaSSL,
-                                      const QString &authNone,
-                                      const QString &authSSL,
-                                      const QString &authTLS )
+void AccountWizard::smtpCapabilities( QList<int> encryptionModes )
 {
-  uint authBitsNone, authBitsSSL, authBitsTLS;
+  bool useSSL = encryptionModes.contains( Transport::EnumEncryption::SSL );
+  bool useTLS = encryptionModes.contains( Transport::EnumEncryption::TLS ) && !useSSL;
 
-  if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() ) {
-    // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
-    authBitsNone = authMethodsFromStringList( capaNormal );
-    if ( capaNormal.indexOf( "STARTTLS" ) != -1 ) {
-      authBitsTLS = authBitsNone;
-    } else {
-      authBitsTLS = 0;
-    }
-    authBitsSSL = authMethodsFromStringList( capaSSL );
-  } else {
-    authBitsNone = authMethodsFromString( authNone );
-    authBitsSSL = authMethodsFromString( authSSL );
-    authBitsTLS = authMethodsFromString( authTLS );
-  }
-
-  uint authBits = 0;
-  if ( capaNormal.indexOf( "STARTTLS" ) != -1 ) {
-    mTransport->setEncryption( Transport::EnumEncryption::TLS );
-    authBits = authBitsTLS;
-  } else if ( !capaSSL.isEmpty() ) {
+  QList<int> authModes;
+  if ( useSSL ) {
+    authModes = mServerTest->secureProtocols();
     mTransport->setEncryption( Transport::EnumEncryption::SSL );
-    authBits = authBitsSSL;
-  } else {
+  }
+  else if ( useTLS ) {
+    authModes = mServerTest->tlsProtocols();
+    mTransport->setEncryption( Transport::EnumEncryption::TLS );
+  }
+  else {
+    authModes = mServerTest->normalProtocols();
     mTransport->setEncryption( Transport::EnumEncryption::None );
-    authBits = authBitsNone;
   }
 
-  if ( authBits & Login ) {
+  if ( authModes.contains( Transport::EnumAuthenticationType::LOGIN ) ) {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::LOGIN );
-  } else if ( authBits & CRAM_MD5 ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::CRAM_MD5 ) ) {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::CRAM_MD5 );
-  } else if ( authBits & Digest_MD5 ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::DIGEST_MD5 ) ) {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::DIGEST_MD5 );
-  } else if ( authBits & NTLM ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::NTLM ) ) {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::NTLM );
-  } else if ( authBits & GSSAPI ) {
+  } else if ( authModes.contains( Transport::EnumAuthenticationType::GSSAPI ) ) {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::GSSAPI );
   } else {
     mTransport->setAuthenticationType( Transport::EnumAuthenticationType::PLAIN );
   }
 
-  mTransport->setPort( !capaSSL.isEmpty() ? 465 : 25 );
-
-  mServerTest->deleteLater();
-  mServerTest = 0;
+  mTransport->setPort( useSSL ? 465 : 25 );
 
   delete mAuthInfoLabel;
   mAuthInfoLabel = 0;
 
   transportCreated();
-}
-
-uint AccountWizard::popCapabilitiesFromStringList( const QStringList &l )
-{
-  unsigned int capa = 0;
-
-  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).toUpper();
-    if ( cur == "PLAIN" ) {
-      capa |= Plain;
-    } else if ( cur == "LOGIN" ) {
-      capa |= Login;
-    } else if ( cur == "CRAM-MD5" ) {
-      capa |= CRAM_MD5;
-    } else if ( cur == "DIGEST-MD5" ) {
-      capa |= Digest_MD5;
-    } else if ( cur == "NTLM" ) {
-      capa |= NTLM;
-    } else if ( cur == "GSSAPI" ) {
-      capa |= GSSAPI;
-    } else if ( cur == "APOP" ) {
-      capa |= APOP;
-    } else if ( cur == "STLS" ) {
-      capa |= STLS;
-    }
-  }
-
-  return capa;
-}
-
-uint AccountWizard::imapCapabilitiesFromStringList( const QStringList &l )
-{
-  unsigned int capa = 0;
-
-  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).toUpper();
-    if ( cur == "AUTH=PLAIN" ) {
-      capa |= Plain;
-    } else if ( cur == "AUTH=LOGIN" ) {
-      capa |= Login;
-    } else if ( cur == "AUTH=CRAM-MD5" ) {
-      capa |= CRAM_MD5;
-    } else if ( cur == "AUTH=DIGEST-MD5" ) {
-      capa |= Digest_MD5;
-    } else if ( cur == "AUTH=NTLM" ) {
-      capa |= NTLM;
-    } else if ( cur == "AUTH=GSSAPI" ) {
-      capa |= GSSAPI;
-    } else if ( cur == "AUTH=ANONYMOUS" ) {
-      capa |= Anonymous;
-    } else if ( cur == "STARTTLS" ) {
-      capa |= STARTTLS;
-    }
-  }
-
-  return capa;
-}
-
-uint AccountWizard::authMethodsFromString( const QString &s )
-{
-  unsigned int result = 0;
-
-  QStringList sl = s.toUpper().split( '\n', QString::SkipEmptyParts );
-  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it ) {
-    if ( *it == "SASL/LOGIN" ) {
-      result |= Login;
-    } else if ( *it == "SASL/PLAIN" ) {
-      result |= Plain;
-    } else if ( *it == "SASL/CRAM-MD5" ) {
-      result |= CRAM_MD5;
-    } else if ( *it == "SASL/DIGEST-MD5" ) {
-      result |= Digest_MD5;
-    } else if ( *it == "SASL/NTLM" ) {
-      result |= NTLM;
-    } else if ( *it == "SASL/GSSAPI" ) {
-      result |= GSSAPI;
-    }
-  }
-
-  return result;
-}
-
-uint AccountWizard::authMethodsFromStringList( const QStringList &l )
-{
-  unsigned int result = 0;
-
-  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    if ( *it == "LOGIN" ) {
-      result |= Login;
-    } else if ( *it == "PLAIN" ) {
-      result |= Plain;
-    } else if ( *it == "CRAM-MD5" ) {
-      result |= CRAM_MD5;
-    } else if ( *it == "DIGEST-MD5" ) {
-      result |= Digest_MD5;
-    } else if ( *it == "NTLM" ) {
-      result |= NTLM;
-    } else if ( *it == "GSSAPI" ) {
-      result |= GSSAPI;
-    }
-  }
-
-  return result;
 }
 
 #include "accountwizard.moc"

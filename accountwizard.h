@@ -30,8 +30,6 @@
 #define ACCOUNTWIZARD_H
 
 #include <KAssistantDialog>
-
-#include <QLabel>
 #include <QList>
 
 class KLineEdit;
@@ -43,11 +41,9 @@ class KMAccount;
 class KMKernel;
 class AccountTypeBox;
 
-namespace KPIM {
-class ServerTest;
-}
 namespace MailTransport {
   class Transport;
+  class ServerTest;
 }
 
 class AccountWizard : public KAssistantDialog
@@ -86,27 +82,17 @@ class AccountWizard : public KAssistantDialog
   private slots:
     void slotCurrentPageChanged( KPageWidgetItem *current );
 
-    void popCapabilities( const QStringList &capaNormalList,
-                          const QStringList &capaSSLList );
-    void imapCapabilities( const QStringList &capaNormalList,
-                           const QStringList &capaSSLList );
-    void smtpCapabilities( const QStringList &capaNormal,
-                           const QStringList &capaSSL,
-                           const QString &authNone,
-                           const QString &authSSL,
-                           const QString &authTLS );
+    void popCapabilities( QList<int> encryptionModes );
+    void imapCapabilities( QList<int> encryptionModes );
+    void smtpCapabilities( QList<int> encryptionModes );
 
   private:
     QString accountName() const;
     QLabel *createInfoLabel( const QString &msg );
 
-    void checkPopCapabilities( const QString &server, int port );
-    void checkImapCapabilities( const QString &server, int port );
-    void checkSmtpCapabilities( const QString &server, int port );
-    uint popCapabilitiesFromStringList( const QStringList &l );
-    uint imapCapabilitiesFromStringList( const QStringList &l );
-    uint authMethodsFromString( const QString &s );
-    uint authMethodsFromStringList( const QStringList &l );
+    void checkPopCapabilities( const QString &server );
+    void checkImapCapabilities( const QString &server );
+    void checkSmtpCapabilities( const QString &server );
 
     KPageWidgetItem *mWelcomePage;
 
@@ -125,12 +111,10 @@ class AccountWizard : public KAssistantDialog
     KPageWidgetItem *mServerInformationPage;
     QLabel *mIncomingLabel;
     KLineEdit *mIncomingServer;
-    QCheckBox *mIncomingUseSSL;
     KLineEdit *mIncomingLocation;
 
     QPushButton *mChooseLocation;
     KLineEdit *mOutgoingServer;
-    QCheckBox *mOutgoingUseSSL;
     QCheckBox *mLocalDelivery;
 
     QWidget *mIncomingLocationWdg;
@@ -140,7 +124,7 @@ class AccountWizard : public KAssistantDialog
     KMKernel *mKernel;
     KMAccount *mAccount;
     MailTransport::Transport *mTransport;
-    KPIM::ServerTest *mServerTest;
+    MailTransport::ServerTest *mServerTest;
 };
 
 #endif // ACCOUNTWIZARD_H
