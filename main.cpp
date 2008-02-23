@@ -71,7 +71,7 @@ int KMailApplication::newInstance()
     mDelayedInstanceCreation = true;
     return 0;
   }
-  
+
   if (!kmkernel)
      return 0;
 
@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
 
   KMailApplication app;
   QApplication::setWindowIcon( KIcon( "internet-mail" ) );
+  QApplication::setQuitOnLastWindowClosed( false );
 
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
