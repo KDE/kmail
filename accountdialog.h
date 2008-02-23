@@ -81,11 +81,6 @@ class AccountDialog : public KDialog
       QRadioButton *lockFcntl;
       QRadioButton *lockNone;
       QLineEdit    *precommand;
-#if 0
-      QCheckBox    *resourceCheck;
-      QPushButton  *resourceClearButton;
-      QPushButton  *resourceClearPastButton;
-#endif
       QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -99,11 +94,6 @@ class AccountDialog : public KDialog
       QLineEdit    *nameEdit;
       QComboBox    *locationEdit;
       QLineEdit    *precommand;
-#if 0
-      QCheckBox    *resourceCheck;
-      QPushButton  *resourceClearButton;
-      QPushButton  *resourceClearPastButton;
-#endif
       QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -146,11 +136,6 @@ class AccountDialog : public KDialog
       KIntNumInput *leaveOnServerCountSpin;
       QCheckBox    *leaveOnServerSizeCheck;
       KIntNumInput *leaveOnServerSizeSpin;
-#if 0
-      QCheckBox    *resourceCheck;
-      QPushButton  *resourceClearButton;
-      QPushButton  *resourceClearPastButton;
-#endif
       QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QCheckBox    *filterOnServerCheck;
@@ -168,11 +153,6 @@ class AccountDialog : public KDialog
       QLineEdit    *passwordEdit;
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
-#if 0
-      QCheckBox    *resourceCheck;
-      QPushButton  *resourceClearButton;
-      QPushButton  *resourceClearPastButton;
-#endif
       QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
@@ -246,11 +226,6 @@ class AccountDialog : public KDialog
     void slotLeaveOnServerCountChanged( int value );
     void slotFilterOnServerSizeChanged( int value );
     void slotIdentityCheckboxChanged();
-#if 0
-    // Moc doesn't understand #if 0, so they are also commented out
-    // void slotClearResourceAllocations();
-    // void slotClearPastResourceAllocations();
-#endif
 
   private:
     void makeLocalAccountPage();
