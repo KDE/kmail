@@ -394,7 +394,7 @@ void KMMimePartTree::startDrag()
 
   QList<QUrl> urls;
   KUrl kUrl = mReaderWin->tempFileUrlFromPartNode( node );
-  QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );    
+  QUrl url = QUrl::fromPercentEncoding( kUrl.toEncoded() );
   if ( !url.isValid() )
     return;
   urls.append( url );
@@ -403,7 +403,6 @@ void KMMimePartTree::startDrag()
   QMimeData *mimeData = new QMimeData;
   mimeData->setUrls( urls );
   drag->setMimeData( mimeData );
-  QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
   drag->exec( Qt::CopyAction );
 }
 
