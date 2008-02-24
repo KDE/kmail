@@ -1982,14 +1982,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if ( choice != KMHandleAttachmentCommand::Delete && choice != KMHandleAttachmentCommand::Edit ) {
-    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
-        node, message(), mAtmCurrent, mAtmCurrentName,
-        KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
-    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
-        this, SLOT( slotAtmView( int, const QString& ) ) );
-    command->start();
-  } else if ( choice == KMHandleAttachmentCommand::Delete ) {
+  if ( choice == KMHandleAttachmentCommand::Delete ) {
     slotDeleteAttachment( node );
   } else if ( choice == KMHandleAttachmentCommand::Edit ) {
     slotEditAttachment( node );
@@ -2004,12 +1997,17 @@ void KMReaderWin::slotHandleAttachment( int choice )
       return;
     urls.append( url );
 
-    QDrag *drag = new QDrag( this );
     QMimeData *mimeData = new QMimeData;
     mimeData->setUrls( urls );
-    drag->setMimeData( mimeData );
     QApplication::clipboard()->setMimeData( mimeData, QClipboard::Clipboard );
-    drag->exec( Qt::CopyAction );
+  }
+  else {
+    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
+        node, message(), mAtmCurrent, mAtmCurrentName,
+        KMHandleAttachmentCommand::AttachmentAction( choice ), KService::Ptr( 0 ), this );
+    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+        this, SLOT( slotAtmView( int, const QString& ) ) );
+    command->start();
   }
 }
 

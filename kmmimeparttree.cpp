@@ -134,7 +134,7 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem *item,
                     this, SLOT( slotSaveAs() ) );
    if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
         mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
-     popup.addAction( SmallIcon( "file-open" ), i18nc( "to open", "Open" ),
+     popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
                       this, SLOT( slotOpen() ) );
      popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
      popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
