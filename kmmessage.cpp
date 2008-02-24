@@ -269,7 +269,7 @@ void KMMessage::setTransferInProgress(bool value, bool force)
 {
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
   if ( !transferInProgress() && sPendingDeletes.contains( this ) ) {
-    sPendingDeletes.remove( this );
+    sPendingDeletes.removeAll( this );
     if ( parent() ) {
       int idx = parent()->find( this );
       if ( idx > 0 ) {
