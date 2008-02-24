@@ -185,22 +185,25 @@ namespace KMail {
     hlay->addWidget( label );
     hlay->addWidget( mCommandEdit, 1 );
     page_vlay->addStretch( 1 ); // spacer
+  }
+
+  SignatureConfigurator::~SignatureConfigurator()
+  {
 
   }
 
-  SignatureConfigurator::~SignatureConfigurator() {
-
-  }
-
-  bool SignatureConfigurator::isSignatureEnabled() const {
+  bool SignatureConfigurator::isSignatureEnabled() const
+  {
     return mEnableCheck->isChecked();
   }
 
-  void SignatureConfigurator::setSignatureEnabled( bool enable ) {
+  void SignatureConfigurator::setSignatureEnabled( bool enable )
+  {
     mEnableCheck->setChecked( enable );
   }
 
-  Signature::Type SignatureConfigurator::signatureType() const {
+  Signature::Type SignatureConfigurator::signatureType() const
+  {
     if ( !isSignatureEnabled() ) return Signature::Disabled;
 
     switch ( mSourceCombo->currentIndex() ) {
@@ -211,7 +214,8 @@ namespace KMail {
     }
   }
 
-  void SignatureConfigurator::setSignatureType( Signature::Type type ) {
+  void SignatureConfigurator::setSignatureType( Signature::Type type )
+  {
     setSignatureEnabled( type != Signature::Disabled );
 
     int idx = 0;
@@ -225,21 +229,24 @@ namespace KMail {
     mSourceCombo->setCurrentIndex( idx );
   }
 
-  QString SignatureConfigurator::inlineText() const {
+  QString SignatureConfigurator::inlineText() const
+  {
     if ( mHtmlCheck->checkState() == Qt::Unchecked ) 
       return mTextEdit->toPlainText();
 
     if ( mViewMode == ShowHtml )
-      return mTextEdit->toHtml();
+      return asCleanedHTML();
     else
       return mTextEdit->toPlainText();
   }
 
-  void SignatureConfigurator::setInlineText( const QString & text ) {
+  void SignatureConfigurator::setInlineText( const QString & text )
+  {
     mTextEdit->setText( text );
   }
 
-  QString SignatureConfigurator::fileURL() const {
+  QString SignatureConfigurator::fileURL() const
+  {
     QString file = mFileRequester->url().path();
 
     // Force the filename to be relative to ~ instead of $PWD depending
@@ -250,20 +257,24 @@ namespace KMail {
     return file;
   }
 
-  void SignatureConfigurator::setFileURL( const QString & url ) {
+  void SignatureConfigurator::setFileURL( const QString & url )
+  {
     mFileRequester->setUrl( url );
   }
 
-  QString SignatureConfigurator::commandURL() const {
+  QString SignatureConfigurator::commandURL() const
+  {
     return mCommandEdit->text();
   }
 
-  void SignatureConfigurator::setCommandURL( const QString & url ) {
+  void SignatureConfigurator::setCommandURL( const QString & url )
+  {
     mCommandEdit->setText( url );
   }
 
 
-  Signature SignatureConfigurator::signature() const {
+  Signature SignatureConfigurator::signature() const
+  {
     Signature sig;
     sig.setType( signatureType() );
     sig.setInlinedHtml( mInlinedHtml );
@@ -275,7 +286,8 @@ namespace KMail {
     return sig;
   }
 
-  void SignatureConfigurator::setSignature( const Signature & sig ) {
+  void SignatureConfigurator::setSignature( const Signature & sig )
+  {
     setSignatureType( sig.type() );
     if ( sig.isInlinedHtml() )
     {
@@ -302,11 +314,13 @@ namespace KMail {
       setCommandURL( QString() );
   }
 
-  void SignatureConfigurator::slotEnableEditButton( const QString & url ) {
+  void SignatureConfigurator::slotEnableEditButton( const QString & url )
+  {
     mEditButton->setDisabled( url.trimmed().isEmpty() );
   }
 
-  void SignatureConfigurator::slotEdit() {
+  void SignatureConfigurator::slotEdit()
+  {
     QString url = fileURL();
     // slotEnableEditButton should prevent this assert from being hit:
     assert( !url.isEmpty() );
@@ -314,8 +328,21 @@ namespace KMail {
     (void)KRun::runUrl( KUrl( url ), QString::fromLatin1("text/plain"), this );
   }
 
+  QString SignatureConfigurator::asCleanedHTML() const
+  {
+    QString text = mTextEdit->toHtml();
+    text.remove( "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n" );
+    text.remove( "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n" );
+    text.remove( "p, li { white-space: pre-wrap; }\n" );
+    text.remove( "</style></head><body style=\" font-family:'Monospace'; font-size:10pt; font-weight:400; font-style:normal;\">\n" );
+    text.remove( "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">" );
+    text.remove( "</p></body></html>" );
+    return text;
+  }
+
   // button clicked
-  void SignatureConfigurator::slotShowCodeOrHtml() {
+  void SignatureConfigurator::slotShowCodeOrHtml()
+  {
     if ( mViewMode == ShowCode )
       toggleHtmlBtnState( ShowHtml );
     else
@@ -330,44 +357,39 @@ namespace KMail {
     mShowCodeOrHtmlBtn->setText( i18n("Show HTML Code") );
   }
 
-  void SignatureConfigurator::toggleHtmlBtnState(ViewMode state) {
-    QString text;
+  void SignatureConfigurator::toggleHtmlBtnState( ViewMode state )
+  {
     switch ( state )
     {
       case ShowCode:
         // show the html code, and toggle the button text
         mTextEdit->setAcceptRichText( false );
-        text = mTextEdit->toHtml();
-        mTextEdit->setPlainText( text );
+        mTextEdit->setPlainText( asCleanedHTML() );
         mViewMode = ShowCode;
         mShowCodeOrHtmlBtn->setText( i18n("Show HTML") );
         break;
       case ShowHtml:
         // show the formatted signature
         mTextEdit->setAcceptRichText( true );
-        text = mTextEdit->toPlainText(); // get the raw html code
         mViewMode = ShowHtml;
-        mTextEdit->setHtml( text );
+        mTextEdit->setHtml( mTextEdit->toPlainText() );
         mShowCodeOrHtmlBtn->setText( i18n("Show HTML Code") );
         break;
     }
   }
 
   // "use HTML"-checkbox (un)checked
-  void SignatureConfigurator::slotSetHtml() {
-    if ( mHtmlCheck->checkState() == Qt::Unchecked )
-    {
-      QString text;
+  void SignatureConfigurator::slotSetHtml()
+  {
+    if ( mHtmlCheck->checkState() == Qt::Unchecked ) {
       mTextEdit->setAcceptRichText( false );
       mShowCodeOrHtmlBtn->setEnabled( false );
       mInlinedHtml = false;
       if ( mViewMode == ShowCode )
         mTextEdit->setHtml( mTextEdit->toPlainText() );
-      text = mTextEdit->toPlainText();
-      mTextEdit->setPlainText( text );
+      mTextEdit->setPlainText( mTextEdit->toPlainText() );
     }
-    else
-    {
+    else {
       mInlinedHtml = true;
       initHtmlState();
     }

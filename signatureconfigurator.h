@@ -70,6 +70,10 @@ namespace KMail {
 
     void initHtmlState();
 
+    // Returns the current text of the textedit as HTML code, but strips
+    // unnecessary tags Qt inserts
+    QString asCleanedHTML() const;
+
   protected slots:
     void slotEnableEditButton( const QString & );
     void slotEdit();
