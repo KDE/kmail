@@ -1613,14 +1613,14 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
   const bool stickyIdentity = mBtnIdentity->isChecked();
   const bool messageHasIdentity = !newMsg->headerField("X-KMail-Identity").isEmpty();
-  if (!stickyIdentity && messageHasIdentity)
-    mId = newMsg->headerField("X-KMail-Identity").simplified().toUInt();
+  if ( !stickyIdentity && messageHasIdentity )
+    mId = newMsg->headerField( "X-KMail-Identity" ).simplified().toUInt();
 
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
   if ( !stickyIdentity ) {
-    disconnect( mIdentity,SIGNAL(identityChanged(uint)),
-                this, SLOT(slotIdentityChanged(uint)) ) ;
+    disconnect( mIdentity,SIGNAL( identityChanged(uint) ),
+                this, SLOT( slotIdentityChanged(uint) ) ) ;
   }
   // load the mId into the gui, sticky or not, without emitting
   mIdentity->setCurrentIdentity( mId );

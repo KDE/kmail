@@ -1097,8 +1097,7 @@ qint64 KMFolderMaildir::doFolderSize() const
   // a DirectorySizeJob right away
   if ( s_DirSizeJobQueue->size() == 1 )
   {
-    //kdDebug(5006) << k_funcinfo << "Starting DirectorySizeJob for folder "
-    //  << location() << endl;
+    //kDebug(5006) << "Starting DirectorySizeJob for folder" << location();
     KIO::DirectorySizeJob* job = KIO::directorySize( list );
     connect( job, SIGNAL( result( KJob* ) ),
              this, SLOT( slotDirSizeJobResult( KJob*) ) );
@@ -1111,11 +1110,11 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
 {
   mCurrentlyCheckingFolderSize = false;
   KIO::DirectorySizeJob * dirsize = dynamic_cast<KIO::DirectorySizeJob*>( job );
-  if ( dirsize && ! dirsize->error() )
+  if ( dirsize && !dirsize->error() )
   {
     mSize = dirsize->totalSize();
-    //kdDebug(5006) << k_funcinfo << "DirectorySizeJob completed. Folder "
-    //  << location() << " has size " << mSize << endl;
+    //kDebug(5006) << << "DirectorySizeJob completed. Folder"
+    //             << location() << "has size" << mSize;
     emit folderSizeChanged();
   }
   // remove the completed job from the queue
@@ -1129,8 +1128,8 @@ void KMFolderMaildir::slotDirSizeJobResult( KJob* job )
     if ( entry.first )
     {
       // start the next dirSizeJob
-      //kdDebug(5006) << k_funcinfo << "Starting DirectorySizeJob for folder "
-      //  << entry.first->location() << endl;
+      //kDebug(5006) << "Starting DirectorySizeJob for folder"
+      //             << entry.first->location();
       KIO::DirectorySizeJob* job = KIO::directorySize( entry.second );
       connect( job, SIGNAL( result( KJob* ) ),
                entry.first, SLOT( slotDirSizeJobResult( KJob*) ) );
