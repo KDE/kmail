@@ -50,16 +50,12 @@ QuotaJobs::GetQuotarootJob::GetQuotarootJob( const KUrl& url,
                                              const QByteArray &packedArgs)
   : KIO::SpecialJob( url, packedArgs)
 {
-  connect( this, SIGNAL(infoMessage(KJob*,const QString&)),
-           SLOT(slotInfoMessage(KJob*,const QString&)) );
+  connect( this, SIGNAL(infoMessage(KJob*,const QString&,const QString&)),
+           SLOT(slotInfoMessage(KJob*,const QString&,const QString&)) );
 }
 
-//The #warning here is there to replace a compiler warning in the header file,
-//see the using directive there.
-#ifdef __GNUC__
-#warning Fix me!
-#endif
-void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str )
+void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str,
+                                                  const QString& )
 {
   // Parse the result
   QStringList results = str.split("\r");
@@ -129,6 +125,7 @@ void QuotaJobs::GetStorageQuotaJob::slotQuotarootResult( const QStringList& root
     }
     if ( mStorageQuotaInfo.isValid() )
       emit storageQuotaResult( mStorageQuotaInfo );
+    emitResult();
 }
 
 void QuotaJobs::GetStorageQuotaJob::slotQuotaInfoReceived( const QuotaInfoList& infos )
