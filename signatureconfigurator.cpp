@@ -92,8 +92,8 @@ namespace KMail {
     QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
-    connect( mSourceCombo, SIGNAL(activated(int)),
-	     widgetStack, SLOT(setCurrentIndex (int)) );
+    connect( mSourceCombo, SIGNAL(currentIndexChanged(int)),
+             widgetStack, SLOT(setCurrentIndex (int)) );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
              widgetStack, SLOT(setCurrentIndex (int)) );
     // connects for the enabling of the widgets depending on
@@ -221,7 +221,7 @@ namespace KMail {
     int idx = 0;
     switch( type ) {
     case Signature::Inlined:     idx = 0; break;
-    case Signature::FromFile:	 idx = 1; break;
+    case Signature::FromFile:    idx = 1; break;
     case Signature::FromCommand: idx = 2; break;
     default:                     idx = 0; break;
     };
