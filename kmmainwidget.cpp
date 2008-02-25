@@ -152,6 +152,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
     mShowingOfflineScreen( false ),
+    mMsgActions( 0 ),
     mVacationIndicatorActive( false )
 {
   // must be the first line of the constructor:
@@ -642,6 +643,9 @@ void KMMainWidget::createWidgets(void)
 
   if (mReaderWindowActive) {
     mMsgView = new KMReaderWin(messageParent, this, actionCollection(), 0 );
+    if ( mMsgActions ) {
+      mMsgActions->setMessageView( mMsgView );
+    }
 
     connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
         this, SLOT(slotReplaceMsgByUnencryptedVersion()));
