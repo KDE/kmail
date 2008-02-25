@@ -3863,7 +3863,7 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
   mOldSigText = ident.signatureText();
   if ( ident.signatureIsInlinedHtml() ) {
     kDebug(5006) << "Html signature, turning editor into html mode";
-    toggleMarkup( true );
+    toggleMarkup( true, false /* don't set document to modified */ );
     mEditor->insertSignature( ident.signature(), placement, true );
   }
   else
@@ -3958,8 +3958,10 @@ void KMComposeWin::slotToggleMarkup()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::toggleMarkup( bool markup )
+void KMComposeWin::toggleMarkup( bool markup, bool makeDocumentModified )
 {
+  bool isModified = mEditor->document()->isModified();
+
   if ( markup ) {
     if ( !mUserUsesHtml ) {
       kDebug(5006) << "user wants Html";
@@ -3994,6 +3996,11 @@ void KMComposeWin::toggleMarkup( bool markup )
       mCleanSpace->setEnabled(true);
     }
   }
+
+  if ( !makeDocumentModified )
+    mEditor->document()->setModified( isModified );
+  else
+    mEditor->document()->setModified( true );
 }
 
 void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )

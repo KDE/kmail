@@ -248,6 +248,8 @@ class KMComposeWin : public KMail::Composer
      */
      bool inlineSigningEncryptionSelected();
 
+     void toggleMarkup( bool markup, bool makeDocumentModified = true );
+
      /**
       * Tries to find the given mimetype @p type in the KDE Mimetype registry.
       * If found, returns its localized description, otherwise the @p type
@@ -439,7 +441,6 @@ class KMComposeWin : public KMail::Composer
 
     void slotCleanSpace();
     void slotToggleMarkup();
-    void toggleMarkup( bool markup );
     void htmlToolBarVisibilityChanged( bool visible );
     void slotSpellcheckDoneClearStatus();
 
