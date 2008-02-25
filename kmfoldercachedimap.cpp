@@ -126,7 +126,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   setMainWidget( page );
   QVBoxLayout *topLayout = new QVBoxLayout( page );
   topLayout->setSpacing( 0 );
-  QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
+  QString txt = i18n( "<p><b>Troubleshooting the IMAP Cache</b></p>"
                       "<p>If you have problems with synchronizing an IMAP "
                       "folder, you should first try rebuilding the index "
                       "file. This will take some time to rebuild, but will "
@@ -142,7 +142,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   QButtonGroup *group = new QButtonGroup( 0 );
 
   mIndexButton = new QRadioButton( page );
-  mIndexButton->setText( i18n( "Rebuild &Index" ) );
+  mIndexButton->setText( i18n( "Rebuild &index" ) );
   group->addButton( mIndexButton );
   topLayout->addWidget( mIndexButton );
 
@@ -150,14 +150,14 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget *parent )
   QLabel *scopeLabel = new QLabel( i18n( "Scope:" ), hbox );
   scopeLabel->setEnabled( false );
   mIndexScope = new QComboBox( hbox );
-  mIndexScope->addItem( i18n( "Only current folder" ) );
-  mIndexScope->addItem( i18n( "Current folder and all subfolders" ) );
-  mIndexScope->addItem( i18n( "All folders of this account" ) );
+  mIndexScope->addItem( i18n( "Only Current Folder" ) );
+  mIndexScope->addItem( i18n( "Current Folder & All Subfolders" ) );
+  mIndexScope->addItem( i18n( "All Folders of This Account" ) );
   mIndexScope->setEnabled( false );
   topLayout->addWidget( hbox );
 
   mCacheButton = new QRadioButton( page );
-  mCacheButton->setText( i18n( "Refresh &Cache" ) );
+  mCacheButton->setText( i18n( "Refresh &cache" ) );
   group->addButton( mCacheButton );
   topLayout->addWidget( mCacheButton );
 

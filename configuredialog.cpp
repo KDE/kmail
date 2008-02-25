@@ -1524,7 +1524,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   // close to quota threshold
   QHBoxLayout *hbox = new QHBoxLayout();
   vlay->addLayout( hbox );
-  QLabel *l = new QLabel( i18n("Close to quota threshold"), this );
+  QLabel *l = new QLabel( i18n("Close to quota threshold:"), this );
   hbox->addWidget( l );
   l->setEnabled( false );
   mCloseToQuotaThreshold = new QSpinBox( this );
@@ -2387,7 +2387,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagNameLineEdit = new QLineEdit( mTagSettingGroupBox );
   settings->addWidget( mTagNameLineEdit, 1, 1 );
 
-  QLabel *namelabel = new QLabel( i18n("Name") , mTagSettingGroupBox );
+  QLabel *namelabel = new QLabel( i18n("Name:") , mTagSettingGroupBox );
   namelabel->setBuddy( mTagNameLineEdit );
   settings->addWidget( namelabel , 1 , 0 );
 
@@ -2395,7 +2395,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
             this, SLOT( slotEmitChangeCheck( void ) ) );
 
   //Second row for text color
-  mTextColorCheck = new QCheckBox( i18n("Change Te&xt Color"),
+  mTextColorCheck = new QCheckBox( i18n("Change te&xt color:"),
                                    mTagSettingGroupBox );
   settings->addWidget( mTextColorCheck, 2, 0 );
 
@@ -2410,7 +2410,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
           this, SLOT( slotEmitChangeCheck( void ) ) );
 
   //Third for font selection
-  mTextFontCheck = new QCheckBox( i18n("Change Fo&nt"), mTagSettingGroupBox );
+  mTextFontCheck = new QCheckBox( i18n("Change fo&nt:"), mTagSettingGroupBox );
   settings->addWidget( mTextFontCheck, 3, 0 );
 
   mFontRequester = new KFontRequester( mTagSettingGroupBox );
@@ -2429,7 +2429,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
   settings->addWidget( mIconButton, 5, 1 );
 
-  QLabel *iconlabel = new QLabel( i18n("Message Tag &Icon"),
+  QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
                                   mTagSettingGroupBox );
   iconlabel->setBuddy( mIconButton );
   settings->addWidget( iconlabel, 5, 0 );
@@ -2442,7 +2442,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   //Fifth for shortcut
   mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
   settings->addWidget( mKeySequenceWidget, 6, 1 );
-  QLabel *sclabel = new QLabel( i18n("Shortc&ut") , mTagSettingGroupBox );
+  QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
 #if KDE_IS_VERSION(4,0,60)
@@ -2457,7 +2457,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
            this, SLOT( slotEmitChangeCheck() ) );
 
   //Sixth for Toolbar checkbox
-  mInToolbarCheck = new QCheckBox( i18n("Enable &Toolbar Button"),
+  mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
                                    mTagSettingGroupBox );
   settings->addWidget( mInToolbarCheck, 7, 0, 1, 2 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),

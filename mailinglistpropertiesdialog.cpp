@@ -149,7 +149,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   //depend on it
   el << i18n( "Post to List" )
      << i18n( "Subscribe to List" )
-     << i18n( "Unsubscribe from List" )
+     << i18n( "Unsubscribe From List" )
      << i18n( "List Archives" )
      << i18n( "List Help" );
   mAddressCombo->addItems( el );

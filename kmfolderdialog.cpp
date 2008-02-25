@@ -430,7 +430,7 @@ KMail::FolderDialogGeneralTab::FolderDialogGeneralTab( KMFolderDialog* dlg,
 
   // sender identity
   ++row;
-  mUseDefaultIdentityCheckBox = new QCheckBox( i18n("Use &Default Identity"),
+  mUseDefaultIdentityCheckBox = new QCheckBox( i18n("Use &default identity"),
                                                this );
   gl->addWidget( mUseDefaultIdentityCheckBox );
   connect( mUseDefaultIdentityCheckBox, SIGNAL( stateChanged(int) ),

@@ -1029,7 +1029,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.trashCombo, row, 1 );
 
   ++row;
-  mImap.useDefaultIdentityCheck = new QCheckBox( i18n("Use Default Identity"), page );
+  mImap.useDefaultIdentityCheck = new QCheckBox( i18n("Use default identity"), page );
   connect( mImap.useDefaultIdentityCheck, SIGNAL( toggled(bool) ),
            this, SLOT( slotIdentityCheckboxChanged() ) );
   grid->addWidget( mImap.useDefaultIdentityCheck, row, 0 );
