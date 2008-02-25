@@ -418,7 +418,7 @@ namespace KMail {
     vlay->setMargin( marginHint() );
     vlay->setSpacing( spacingHint() );
 
-    QHBoxLayout *tlay = new QHBoxLayout( tab );
+    QHBoxLayout *tlay = new QHBoxLayout();
     vlay->addLayout( tlay );
 
     mCustom = new QCheckBox( i18n("&Use custom message templates"), tab );
