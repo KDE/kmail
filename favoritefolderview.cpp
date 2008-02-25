@@ -400,9 +400,10 @@ void FavoriteFolderView::contextMenu(Q3ListViewItem * item, const QPoint & point
 #ifdef __GNUC__
 #warning Port me!
 #endif
-bool FavoriteFolderView::event( QEvent * /*e*/ )
+bool FavoriteFolderView::event( QEvent *e )
 {
-  return true;/*
+  return FolderTreeBase::event( e );
+  /*
   if ( e->type() == QEvent::ToolTip ) {
     QHelpEvent *he = static_cast<QHelpEvent *>( e );
 

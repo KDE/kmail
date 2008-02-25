@@ -467,22 +467,6 @@ void KMMainWidget::layoutSplitters()
   }
 
   //
-  // Resize workaround for the favorite folder view
-  //
-  if ( mFavoriteFolderView ) {
-
-    // Because of some bug, the favorite folder view is not updated when its
-    // size changes, which creates glitches like the horizontal scrollbar not
-    // appearing. To fix that, manually update the widget if the surrounding
-    // splitters are moved.
-    // The other workaround for this bug can be found in resizeEvent().
-    connect( mFolderViewSplitter, SIGNAL( splitterMoved( int, int ) ),
-             mFavoriteFolderView, SLOT( triggerUpdate() ) );
-    connect( folderViewParent, SIGNAL( splitterMoved( int, int ) ),
-             mFavoriteFolderView, SLOT( triggerUpdate() ) );
-  }
-
-  //
   // Set the sizes of the splitters to the values stored in the config
   //
   QList<int> splitter1Sizes;
@@ -4195,18 +4179,6 @@ void KMMainWidget::slotCreateTodo()
     return;
   KMCommand *command = new CreateTodoCommand( this, msg );
   command->start();
-}
-
-void KMMainWidget::resizeEvent( QResizeEvent *event )
-{
-  QWidget::resizeEvent( event );
-
-  // Because of some bug, the favorite folder view does not receive update
-  // events when the view is resized. Because of this, manually trigger an
-  // update if this widget is resized.
-  // The other workaround for this bug can be found in layoutSplitters().
-  if( mFavoriteFolderView )
-    mFavoriteFolderView->triggerUpdate();
 }
 
 void KMMainWidget::showEvent( QShowEvent *event )

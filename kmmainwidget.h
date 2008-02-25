@@ -292,7 +292,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void openFolder();
     void closeFolder();
 
-    virtual void resizeEvent( QResizeEvent *event );
     virtual void showEvent( QShowEvent *event );
 
     KActionCollection *actionCollection() const { return mActionCollection; }
