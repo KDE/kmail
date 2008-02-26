@@ -461,7 +461,7 @@ void FavoriteFolderView::renameFolder()
   if ( !mContextMenuItem )
     return;
   bool ok;
-  QString name = KInputDialog::getText( i18n("Rename Favorite"), i18n("Name"), mContextMenuItem->text( 0 ), &ok, this );
+  QString name = KInputDialog::getText( i18n("Rename Favorite"), i18n("Name:"), mContextMenuItem->text( 0 ), &ok, this );
   if ( !ok )
     return;
   mContextMenuItem->setText( 0, name );
