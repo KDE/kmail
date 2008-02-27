@@ -2086,7 +2086,7 @@ static QString makeShowAuditLogLink( const QString & auditLog ) {
   url.setPath( "showAuditLog" );
   url.addQueryItem( "log", auditLog );
 
-  return "<a href=\"" + url.htmlURL() + "\">" + i18n("Show Audit Log") + "</a>";
+  return "<a href=\"" + url.htmlURL() + "\">" + i18n("The Audit Log is a detailed error log from the gnupg backend", "Show Audit Log") + "</a>";
 }
 
 static QString endVerboseSigstatHeader( const PartMetaData & pmd )
