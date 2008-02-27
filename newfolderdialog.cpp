@@ -148,7 +148,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     }
     if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
       ImapAccountBase* ai = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
-      if ( mFolder->storage() == ai->rootFolder() ) {
+      if ( ai && mFolder->storage() == ai->rootFolder() ) {
         rootFolder = true;
         namespaces = ai->namespaces()[ImapAccountBase::PersonalNS];
       }
