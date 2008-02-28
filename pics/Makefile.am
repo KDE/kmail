@@ -26,7 +26,9 @@ pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	enterprise_top.png \
 	enterprise_top_right.png \
 	enterprise_sw.png \
-	enterprise_w.png
+	enterprise_w.png \
+	attachmentQuicklistClosed.png \
+	attachmentQuicklistOpened.png
 
 
 picsdir = $(kde_datadir)/kmail/pics

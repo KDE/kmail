@@ -296,6 +296,12 @@ public:
   /** Show signature details. */
   void setShowSignatureDetails( bool showDetails = true ) { mShowSignatureDetails = showDetails; }
 
+  /* show or hide the list that points to the attachments */
+  bool showAttachmentQuicklist() const { return mShowAttachmentQuicklist; }
+
+  /* show or hide the list that points to the attachments */
+  void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true ) { mShowAttachmentQuicklist = showAttachmentQuicklist; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -532,6 +538,7 @@ private:
 	int mLevelQuote;
   bool mDecrytMessageOverwrite;
   bool mShowSignatureDetails;
+  bool mShowAttachmentQuicklist;
 };
 
 

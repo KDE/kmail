@@ -391,6 +391,18 @@ namespace {
         return true;
       }
 
+      if ( url.path() == "showAttachmentQuicklist" ) {
+	  w->setShowAttachmentQuicklist( true );
+	  w->update( true );
+	  return true;
+      }
+
+      if ( url.path() == "hideAttachmentQuicklist" ) {
+	  w->setShowAttachmentQuicklist( false );
+	  w->update( true );
+	  return true;
+      }
+
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();

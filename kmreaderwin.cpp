@@ -2663,13 +2663,27 @@ void KMReaderWin::injectAttachments()
   if ( injectionPoint.isNull() )
     return;
 
-  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  QString imgpath( locate("data","kmail/pics/") );
+  if( showAttachmentQuicklist() ){
+    QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
   if ( html.isEmpty() )
     return;
-  if ( headerStyle() == HeaderStyle::fancy() )
-    html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
-  assert( injectionPoint.tagName() == "div" );
-  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+
+    if ( headerStyle() == HeaderStyle::fancy() )
+      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
+
+    QString link("");
+    link += "<div style=\"text-align: right;\"><a href=\"kmail:hideAttachmentQuicklist\"><img src=\""+imgpath+"attachmentQuicklistOpened.png\"/></a></div>";
+    html.prepend( link );
+    assert( injectionPoint.tagName() == "div" );
+    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+  } else {
+    QString html("");
+    html += "<div style=\"text-align: right; border-width: 0px; border-bottom-width: 1px; border-style: solid; border-color: white;\">"
+      "<a href=\"kmail:showAttachmentQuicklist\"><img src=\""+imgpath+"attachmentQuicklistClosed.png\"/></a></div>";
+    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+  }
+  
 }
 
 static QColor nextColor( const QColor & c )
