@@ -516,7 +516,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
-    mShowSignatureDetails( false )
+    mShowSignatureDetails( false ),
+    mShowAttachmentQuicklist( true )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
