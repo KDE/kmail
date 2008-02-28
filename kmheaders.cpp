@@ -1218,7 +1218,36 @@ QPtrList<QListViewItem> KMHeaders::currentThread() const
 
 void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 {
-  QPtrList<QListViewItem> curThread = currentThread();
+  QPtrList<QListViewItem> curThread;
+
+  if (mFolder) {
+    QPtrList<QListViewItem> topOfThreads;
+
+    // for each selected item...
+    for (QListViewItem *item = firstChild(); item; item = item->itemBelow())
+      if (item->isSelected() ) {
+        // ...find the top-level item:
+        QListViewItem *top = item;
+        while ( top->parent() )
+          top = top->parent();
+        if (!topOfThreads.contains(top)) {
+          topOfThreads.append(top);
+        }
+      }
+
+    // for each thread found...
+    for ( QPtrListIterator<QListViewItem> it( topOfThreads ) ;
+          it.current() ; ++ it ) {
+        QListViewItem *top = *it;
+
+        // collect the items in this thread:
+        QListViewItem *topOfNextThread = top->nextSibling();
+        for ( QListViewItemIterator it( top ) ;
+              it.current() && it.current() != topOfNextThread ; ++it )
+          curThread.append( it.current() );
+    }
+  }
+
   QPtrListIterator<QListViewItem> it( curThread );
   SerNumList serNums;
 
