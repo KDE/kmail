@@ -17,7 +17,7 @@
 #include <qbuttongroup.h>
 
 #include "snippetsettings.h"
-#include "snippet_widget.h"
+#include "snippetwidget.h"
 
 
 SnippetSettings::SnippetSettings(QWidget *parent, const char *name)

@@ -894,7 +894,7 @@ namespace KMail {
     // kmail icon
     if(topLevel) {
         headerStr +=
-        "<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 200px;\">\n"
+        "<div class=\"noprint\" style=\"position: absolute; top: -14px; left: 0px; width: 95%; height: 135px;\">\n"
         "<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
         "</div>\n";
 

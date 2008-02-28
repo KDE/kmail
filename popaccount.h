@@ -150,6 +150,7 @@ protected:
   QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
   QDict<int> mSizeOfNextSeenMsgsDict;
   QStringList idsOfMsgsToDelete;
+  QStringList idsOfForcedDeletes;
   int indexOfCurrentMsg;
 
   QValueList<KMMessage*> msgsAwaitingProcessing;

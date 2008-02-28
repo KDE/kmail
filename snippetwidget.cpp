@@ -40,7 +40,7 @@
 
 #include "snippetdlg.h"
 #include "snippetitem.h"
-#include "snippet_widget.h"
+#include "snippetwidget.h"
 
 #include <cassert>
 
@@ -953,5 +953,5 @@ void SnippetWidget::slotExecute()
 }
 
 
-#include "snippet_widget.moc"
+#include "snippetwidget.moc"
 
