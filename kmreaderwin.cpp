@@ -2731,7 +2731,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     typeBlacklisted = typeBlacklisted || node == mRootNode;
     if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
       html += "<div style=\"float:left;\">";
-      html += "<span style=\"white-space:nowrap;\">";
+      html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
       html += QString::fromLatin1( "<a href=\"#att%1\">" ).arg( node->nodeId() );
       html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
       if ( headerStyle() == HeaderStyle::enterprise() ) {
@@ -2744,7 +2744,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
     }
   }
 
-  html += renderAttachments( node->nextSibling(), bgColor );
+  html += renderAttachments( node->nextSibling(), nextColor ( bgColor ) );
   return html;
 }
 
