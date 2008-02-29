@@ -24,6 +24,7 @@
 #include <kde_file.h>
 
 #include <QFileInfo>
+#include <QDir>
 #include <QTimer>
 #include <QByteArray>
 #include <QDateTime>
@@ -137,7 +138,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  utime( QFile::encodeName( location() ), 0 );
+  utime( QFile::encodeName( QDir::toNativeSeparators(location()) ), 0 );
 
   old_umask = umask( 077 );
   FILE *tmpIndexStream = KDE_fopen( QFile::encodeName( tempName ), "w" );
@@ -193,10 +194,19 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   if( fclose( tmpIndexStream ) != 0 )
     return errno;
 
-  KDE_rename(QFile::encodeName(tempName), QFile::encodeName(indexName));
+#ifdef Q_WS_WIN
+  if (mIndexStream) // close before renaming
+    fclose(mIndexStream);
+#endif
+
+  if ( KDE_rename(QFile::encodeName(tempName), QFile::encodeName(indexName)) != 0 )
+    return errno;
   mHeaderOffset = nho;
+
+#ifndef Q_WS_WIN
   if (mIndexStream)
       fclose(mIndexStream);
+#endif
 
   if ( createEmptyIndex )
     return 0;
@@ -398,9 +408,9 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 {
     // We touch the folder, otherwise the index is regenerated, if KMail is
     // running, while the clock switches from daylight savings time to normal time
-    utime(QFile::encodeName(location()), 0);
-    utime(QFile::encodeName(indexLocation()), 0);
-    utime(QFile::encodeName( KMMsgDict::getFolderIdsLocation( *this ) ), 0);
+    utime(QFile::encodeName( QDir::toNativeSeparators(location()) ), 0);
+    utime(QFile::encodeName( QDir::toNativeSeparators(indexLocation()) ), 0);
+    utime(QFile::encodeName( QDir::toNativeSeparators(KMMsgDict::getFolderIdsLocation( *this )) ), 0);
 
   mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP

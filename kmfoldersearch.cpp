@@ -46,6 +46,7 @@
 #include <QList>
 #include <QPointer>
 #include <QFileInfo>
+#include <QDir>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -776,7 +777,7 @@ int KMFolderSearch::writeIndex( bool )
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  utime( QFile::encodeName( location() ), 0 );
+  utime( QFile::encodeName( QDir::toNativeSeparators(location()) ), 0 );
 
   FILE *tmpIndexStream = KDE_fopen( QFile::encodeName( tempName ), "w" );
   umask( old_umask );
