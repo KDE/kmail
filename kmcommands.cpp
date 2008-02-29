@@ -2551,36 +2551,36 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       partNode *dataNode = node;
       QByteArray rawReplyString;
       bool gotRawReplyString = false;
-      if( !bSaveWithSig ) {
-        if( DwMime::kTypeMultipart == node->type() &&
-            DwMime::kSubtypeSigned == node->subType() ){
+      if ( !bSaveWithSig ) {
+        if ( DwMime::kTypeMultipart == node->type() &&
+             DwMime::kSubtypeSigned == node->subType() ) {
           // carefully look for the part that is *not* the signature part:
-          if( node->findType( DwMime::kTypeApplication,
-                DwMime::kSubtypePgpSignature,
-                true, false ) ){
+          if ( node->findType( DwMime::kTypeApplication,
+                               DwMime::kSubtypePgpSignature,
+                               true, false ) ) {
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                DwMime::kSubtypePgpSignature,
-                true, false );
-          }else if( node->findType( DwMime::kTypeApplication,
-                DwMime::kSubtypePkcs7Mime,
-                true, false ) ){
+                                          DwMime::kSubtypePgpSignature,
+                                          true, false );
+          } else if ( node->findType( DwMime::kTypeApplication,
+                                      DwMime::kSubtypePkcs7Mime,
+                                      true, false ) ) {
             dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                DwMime::kSubtypePkcs7Mime,
-                true, false );
-          }else{
+                                          DwMime::kSubtypePkcs7Mime,
+                                          true, false );
+          } else {
             dataNode = node->findTypeNot( DwMime::kTypeMultipart,
-                DwMime::kSubtypeUnknown,
-                true, false );
+                                          DwMime::kSubtypeUnknown,
+                                          true, false );
           }
-	}else{
-	  ObjectTreeParser otp( 0, 0, false, false, false );
+        } else {
+          ObjectTreeParser otp( 0, 0, false, false, false );
 
-	  // process this node and all it's siblings and descendants
-	  dataNode->setProcessed( false, true );
-	  otp.parseObjectTree( dataNode );
+          // process this node and all it's siblings and descendants
+          dataNode->setProcessed( false, true );
+          otp.parseObjectTree( dataNode );
 
-	  rawReplyString = otp.rawReplyString();
-	  gotRawReplyString = true;
+          rawReplyString = otp.rawReplyString();
+          gotRawReplyString = true;
         }
       }
       QByteArray cstr = gotRawReplyString
