@@ -356,6 +356,9 @@ int KMFolderMbox::lock()
 # else
 #  pragma WARNING( TODO implement mbox locking on Windows )
 # endif
+  assert(mStream != 0);
+  mFilesLocked = true;
+  mReadOnly = false;
 #else
   int rc;
   struct flock fl;
@@ -516,6 +519,7 @@ int KMFolderMbox::unlock()
 # else
 #  pragma WARNING( TODO implement mbox unlocking on Windows )
 # endif
+  mFilesLocked = false;
   return 0;
 #else
   int rc;
