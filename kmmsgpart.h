@@ -193,7 +193,7 @@ public:
   void setPartSpecifier( const QString & part ) { mPartSpecifier = part; }
 
   /** If this part is complete (contains a body) */
-  bool isComplete() { return (!mBody.isNull()); }
+  bool isComplete() { return !mBody.isEmpty(); }
 
   /** Returns the parent part */
   KMMessagePart* parent() { return mParent; }
