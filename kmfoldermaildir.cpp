@@ -145,7 +145,7 @@ int KMFolderMaildir::open( const char * )
     if (!mIndexStream)
       rc = createIndexFromContents();
     else
-      readIndex();
+      rc = readIndex() ? 0 : 1;
   }
   else
   {
