@@ -44,25 +44,31 @@ AccountManager::~AccountManager()
 void AccountManager::writeConfig( bool withSync )
 {
   KConfig* config = KMKernel::config();
-  QString groupName;
 
-  KConfigGroup group(config, "General");
-  group.writeEntry("accounts", mAcctList.count());
-
-  // first delete all account groups in the config file:
+  // Delete all account enabled groups in the config file
+  // and replace them with new account groups
+  uint accounts = 0;
   QStringList accountGroups =
     config->groupList().filter( QRegExp( "Account \\d+" ) );
-  for ( QStringList::Iterator it = accountGroups.begin() ;
-	it != accountGroups.end() ; ++it )
-    config->deleteGroup( *it );
-
-  // now write new account groups:
-  int i = 1;
-  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
-    groupName.sprintf("Account %d", i);
+  AccountList::ConstIterator enabledAccountIt = mAcctList.constBegin();
+  foreach ( const QString& groupName, accountGroups ) {
     KConfigGroup group(config, groupName);
-    (*it)->writeConfig(group);
+    uint id = group.readEntry( "Id", 0 );
+    if ( mDisabledAccounts.contains( id ) )
+      accounts++;
+    else {
+      config->deleteGroup( groupName );
+      if ( enabledAccountIt != mAcctList.constEnd() ) {
+        (*enabledAccountIt)->writeConfig( group );
+        ++enabledAccountIt;
+        accounts++;
+      }
+    }
   }
+
+  KConfigGroup group(config, "General");
+  group.writeEntry("accounts", accounts);
+
   if (withSync) config->sync();
 }
 
@@ -75,7 +81,6 @@ void AccountManager::readConfig(void)
   QString acctName;
   QString groupName;
   int i, num;
-  uint id;
 
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
       delete *it;
@@ -88,10 +93,14 @@ void AccountManager::readConfig(void)
   {
     groupName.sprintf("Account %d", i);
     KConfigGroup group(config, groupName);
+    uint id = group.readEntry( "Id", 0 );
+    if ( !group.readEntry("Enabled", true) ) {
+      mDisabledAccounts += id;
+      continue;
+    }
 
     KAccount::Type acctType = KAccount::typeForName( group.readEntry( "Type" ) );
     acctName = group.readEntry("Name");
-    id = group.readEntry( "Id", 0 );
     if (acctName.isEmpty()) acctName = i18n("Account %1", i);
     acct = create(acctType, acctName, id);
     if (!acct) continue;

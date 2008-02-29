@@ -80,6 +80,13 @@ class KMAIL_EXPORT AccountManager: public QObject
     KMAccount *find( const uint id ) const;
 
     /**
+      @return true if account with ID @p id is enabled. 
+      Accounts can be disabled by setting "enabled" flag to false 
+      in "Account #" groups of kmailrc.
+    */
+    bool isEnabled( const uint id ) const { return !mDisabledAccounts.contains(id); }
+
+    /**
       Physically remove account. Also deletes the given account object !
       Returns false and does nothing if the account cannot be removed.
     */
@@ -169,6 +176,9 @@ class KMAIL_EXPORT AccountManager: public QObject
 
     // if a summary should be displayed
     bool mDisplaySummary;
+
+    // IDs of disabled accounts, used in AccountManager::writeConfig()
+    QSet<uint> mDisabledAccounts;
 };
 
 } // namespace KMail
