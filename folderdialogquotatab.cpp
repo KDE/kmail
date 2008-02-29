@@ -67,6 +67,7 @@ KMail::FolderDialogQuotaTab::FolderDialogQuotaTab( KMFolderDialog* dlg, QWidget*
   mStack->addWidget( mLabel );
 
   mQuotaWidget = new KMail::QuotaWidget( mStack );
+  mStack->addWidget( mQuotaWidget );
 }
 
 
