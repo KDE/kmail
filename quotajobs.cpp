@@ -72,7 +72,7 @@ void QuotaJobs::GetQuotarootJob::slotInfoMessage( KJob*, const QString& str,
       if ( results.size() > 0 ) {
         QStringList triplets = results.front().split( ' ' );
         results.pop_front();
-        while ( triplets.size() > 0 ) {
+        while ( triplets.size() >= 3 ) {
           // there's always three, the label, current and max values
           QString name = triplets.front(); triplets.pop_front();
           QString current = triplets.front(); triplets.pop_front();
