@@ -304,7 +304,7 @@
         <default>false</default>
       </entry>
       <entry name="AutoTextSignature" type="String" key="signature">
-        <label>A&amp;utomatically append signature</label>
+        <label>A&amp;utomatically insert signature</label>
         <default>auto</default>
       </entry>
       <entry name="StickyIdentity" type="Bool" key="sticky-identity">
@@ -398,6 +398,14 @@
         <label>Autosave interval:</label>
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
         <default>2</default>
+      </entry>
+      <entry name="PrependSignature" type="Bool" key="prepend-signature">
+        <label>Insert signature above quoted text</label>
+        <default>false</default>
+      </entry>
+      <entry name="DashDashSignature" type="Bool" key="dash-dash-signature">
+        <label>Prepend separator to signature</label>
+        <default>true</default>
       </entry>
       <entry name="ReplyPrefixes" type="StringList" key="reply-prefixes">
         <default>Re\\s*:,Re\\[\\d+\\]:,Re\\d+:</default>

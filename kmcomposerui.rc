@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="390" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="391" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -64,6 +64,9 @@
   <Menu name="attach" >
    <text>&amp;Attach</text>
    <Action name="append_signature" />
+   <Action name="prepend_signature" />
+   <Action name="insert_signature_at_cursor_position" />
+   <Separator/>
    <Action name="attach_public_key" />
    <Action name="attach_my_public_key" />
    <Separator/>

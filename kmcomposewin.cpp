@@ -1277,6 +1277,12 @@ void KMComposeWin::setupActions( void )
   action = new KAction( i18n("Append S&ignature"), this );
   actionCollection()->addAction( "append_signature", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotAppendSignature()));
+  action = new KAction( i18n("Pr&epend Signature"), this );
+  actionCollection()->addAction( "prepend_signature", action );
+  connect( action, SIGNAL( triggered(bool) ), SLOT( slotPrependSignature() ) );
+  action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
+  actionCollection()->addAction( "insert_signature_at_cursor_position", action );
+  connect( action, SIGNAL( triggered(bool) ), SLOT( slotInsertSignatureAtCursor() ) );
   mAttachPK = new KAction(i18n("Attach &Public Key..."), this);
   actionCollection()->addAction("attach_public_key", mAttachPK );
   connect( mAttachPK, SIGNAL(triggered(bool) ), SLOT(slotInsertPublicKey()));
@@ -1910,7 +1916,11 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
     // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
+    if ( GlobalSettings::self()->prependSignature() ) {
+      QTimer::singleShot( 0, this, SLOT( slotPrependSignature() ) );
+    } else {
+      QTimer::singleShot( 0, this, SLOT( slotAppendSignature() ) );
+    }
   }
 
   // Make sure the cursor is at the correct position, which is set by
@@ -3866,10 +3876,12 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
        signature.type() == KPIMIdentities::Signature::Inlined ) {
     kDebug(5006) << "Html signature, turning editor into html mode";
     toggleMarkup( true, false /* don't set document to modified */ );
-    mEditor->insertSignature( signature, placement, true );
+    mEditor->insertSignature( signature, placement,
+                              GlobalSettings::self()->dashDashSignature() );
   }
   else
-    mEditor->insertSignature( signature, placement );
+    mEditor->insertSignature( signature, placement,
+                              GlobalSettings::self()->dashDashSignature() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4084,10 +4096,12 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   else {
 
     // Just append the signature if there is no old signature
-    if ( GlobalSettings::self()->autoTextSignature()=="auto" )
-      // TODO: Prepend if config option set
-      // TODO: Merge with setMsg() code
-      mEditor->insertSignature( newSig, KMeditor::End, true );
+    if ( GlobalSettings::self()->autoTextSignature()=="auto" ) {
+      if ( GlobalSettings::self()->prependSignature() )
+        mEditor->insertSignature( newSig, KMeditor::Start, true );
+      else
+        mEditor->insertSignature( newSig, KMeditor::End, true );
+    }
   }
 
   // disable certain actions if there is no PGP user identity set

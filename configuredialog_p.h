@@ -705,6 +705,8 @@ private:
 
 private:
   QCheckBox     *mAutoAppSignFileCheck;
+  QCheckBox     *mTopQuoteCheck;
+  QCheckBox     *mDashDashCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox	*mShowRecentAddressesInComposer;

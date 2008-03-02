@@ -2861,6 +2861,23 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mTopQuoteCheck = new QCheckBox(
+                GlobalSettings::self()->prependSignatureItem()->label(), this );
+  mTopQuoteCheck->setEnabled( false );
+  vlay->addWidget( mTopQuoteCheck);
+  connect( mTopQuoteCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged(void) ) );
+  connect( mAutoAppSignFileCheck, SIGNAL( toggled(bool) ),
+           mTopQuoteCheck, SLOT( setEnabled(bool) ) );
+  mDashDashCheck = new QCheckBox(
+               GlobalSettings::self()->dashDashSignatureItem()->label(), this );
+  mDashDashCheck->setEnabled( false );
+  vlay->addWidget( mDashDashCheck);
+  connect( mDashDashCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged(void) ) );
+  connect( mAutoAppSignFileCheck, SIGNAL( toggled(bool) ),
+           mDashDashCheck, SLOT( setEnabled(bool)) );
+
   mSmartQuoteCheck = new QCheckBox(
            GlobalSettings::self()->smartQuoteItem()->label(), this);
   mSmartQuoteCheck->setObjectName( "kcfg_SmartQuote" );
@@ -2991,6 +3008,8 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
 
   mAutoAppSignFileCheck->setChecked(
            GlobalSettings::self()->autoTextSignature()=="auto" );
+  mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
+  mDashDashCheck->setChecked( GlobalSettings::self()->dashDashSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
@@ -3011,6 +3030,10 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     bool state = composer.readEntry( "signature", false );
     mAutoAppSignFileCheck->setChecked( state );
   }
+  if ( composer.hasKey( "prepend-signature" ) )
+    mTopQuoteCheck->setChecked( composer.readEntry( "prepend-signature", false ) );
+  if ( composer.hasKey( "dash-dash-signature" ) )
+    mDashDashCheck->setChecked( composer.readEntry( "dash-dash-signature", false ) );
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readEntry( "smart-quote", false ) );
   if ( composer.hasKey( "request-mdn" ) )
@@ -3033,6 +3056,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
+  GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
+  GlobalSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
