@@ -735,7 +735,6 @@ class KMComposeWin : public KMail::Composer
     QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
     uint mId;
-    QString mOldSigText;
 
     KAction *mAttachPK, *mAttachMPK,
       *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction,

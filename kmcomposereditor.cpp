@@ -76,13 +76,13 @@ void KMComposerEditor::slotDictionaryChanged( const QString & dict )
     //kDebug()<<" language after :"<<highlighter()->currentLanguage();
   }
 #if KDE_IS_VERSION(4,0,80)
-  setSpellCheckingLanguage(dict);
+  setSpellCheckingLanguage( dict );
 #endif
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
 {
-  return m_composerWin->smartQuote(msg);
+  return m_composerWin->smartQuote( msg );
 }
 
 QString KMComposerEditor::quotePrefixName() const
@@ -145,7 +145,7 @@ void KMComposerEditor::dropEvent( QDropEvent *e )
       textCursor().insertText( md->text() );
       e->accept();
     } else {
-      kDebug(5006) <<"KMComposerEditor::dropEvent, unable to add dropped object";
+      kDebug(5006) << "Unable to add dropped object";
       return KMeditor::dropEvent( e );
     }
   }

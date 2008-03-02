@@ -3453,7 +3453,7 @@ void KMComposeWin::slotWordWrapToggled( bool on )
   mEditor->wordWrapToggled( on );
   if (on)
   {
-    mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
+    mEditor->setLineWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
 }
 
@@ -3859,15 +3859,17 @@ void KMComposeWin::insertSignatureHelper( KPIM::KMeditor::Placement placement )
   KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
       kmkernel->identityManager()->identityForUoidOrDefault(
                                 mIdentity->currentIdentity() ) );
+  KPIMIdentities::Signature signature = ident.signature();
 
-  mOldSigText = ident.signatureText();
-  if ( ident.signatureIsInlinedHtml() ) {
+  //TODO: Handle HTML stuff in KMEditor
+  if ( signature.isInlinedHtml() &&
+       signature.type() == KPIMIdentities::Signature::Inlined ) {
     kDebug(5006) << "Html signature, turning editor into html mode";
     toggleMarkup( true, false /* don't set document to modified */ );
-    mEditor->insertSignature( ident.signature(), placement, true );
+    mEditor->insertSignature( signature, placement, true );
   }
   else
-    mEditor->insertSignature( ident.signature(), placement );
+    mEditor->insertSignature( signature, placement );
 }
 
 //-----------------------------------------------------------------------------
@@ -3879,68 +3881,11 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCleanSpace()
 {
-  // Originally we simply used the KEdit::cleanWhiteSpace() method,
-  // but that code doesn't handle quoted-lines or signatures, so instead
-  // we now simply use regexp's to squeeze sequences of tabs and spaces
-  // into a single space, and make sure all our lines are single-spaced.
-  //
-  // Yes, extra space in a quote string is squeezed.
-  // Signatures are respected (i.e. not cleaned).
-
-  QString s;
-  QTextCursor cursor = mEditor->textCursor();
-  if ( cursor.hasSelection() ) {
-    s = cursor.selectedText();
-    if ( s.isEmpty() ) {
-      return;
-    }
-  } else {
-    s = mEditor->text();
-  }
-
-  // Remove the signature for now.
-  QString sig;
-  bool restore = false;
-  const KPIMIdentities::Identity &ident =
-    kmkernel->identityManager()->identityForUoid( mId );
-  if ( !ident.isNull() ) {
-    sig = ident.signatureText();
-    if ( !sig.isEmpty() ) {
-      if ( s.endsWith( sig ) ) {
-        s.truncate( s.length() - sig.length() );
-        restore = true;
-      }
-    }
-  }
-
-  // Squeeze tabs and spaces
-  QRegExp squeeze( "[\t ]+" );
-  s.replace( squeeze, QChar( ' ' ) );
-
-  // Remove trailing whitespace
-  QRegExp trailing( "\\s+$" );
-  s.replace( trailing, QChar( '\n' ) );
-
-  // Single space lines
-  QRegExp singleSpace( "[\n]{2,}" );
-  s.replace( singleSpace, QChar( '\n' ) );
-
-  // Restore the signature
-  if ( restore ) {
-    s.append( sig );
-  }
-
-  // Put the new text in place.
-  // The lines below do not clear the undo history, but unfortuately cause
-  // the side-effect that you need to press Ctrl-Z twice (first Ctrl-Z will
-  // show cleared text area) to get back the original, pre-cleaned text.
-  // If you use mEditor->setText( s ) then the undo history is cleared so
-  // that isn't a good solution either.
-  // TODO: is Qt4 better at handling the undo history??
-  if ( !cursor.hasSelection() ) {
-    cursor.clearSelection();
-  }
-  mEditor->insert( s );
+  KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
+      kmkernel->identityManager()->identityForUoidOrDefault(
+                                mIdentity->currentIdentity() ) );
+  KPIMIdentities::Signature signature = ident.signature();
+  mEditor->cleanWhitespace( signature );
 }
 
 //-----------------------------------------------------------------------------
@@ -3979,7 +3924,6 @@ void KMComposeWin::toggleMarkup( bool markup, bool makeDocumentModified )
       //mEditor->deleteAutoSpellChecking();
       mAutoSpellCheckingAction->setChecked( false );
       slotAutoSpellCheckingToggled( false );
-      mCleanSpace->setEnabled(false);
     }
   } else { // markup is to be turned off
     kDebug(5006) <<" user wants textmode";
@@ -3993,7 +3937,6 @@ void KMComposeWin::toggleMarkup( bool markup, bool makeDocumentModified )
       mEditor->moveCursor( QTextCursor::Start, QTextCursor::MoveAnchor ); // deselect
       // like the next 2 lines, or should we selectAll and apply the default font?
       slotAutoSpellCheckingToggled( true );
-      mCleanSpace->setEnabled(true);
     }
   }
 
@@ -4131,28 +4074,20 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     setFcc( ident.fcc() );
   }
 
-  QString edtText = mEditor->text();
-  bool appendNewSig = true;
-  // try to truncate the old sig
-  if ( !mOldSigText.isEmpty() ) {
-    if ( edtText.endsWith( mOldSigText ) ) {
-      edtText.truncate( edtText.length() - mOldSigText.length() );
-    } else {
-      appendNewSig = false;
-    }
+  KPIMIdentities::Signature oldSig = const_cast<KPIMIdentities::Identity&>
+                                               ( oldIdentity ).signature();
+  KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
+                                               ( ident ).signature();
+  if ( !oldSig.rawText().isEmpty() ) {
+    mEditor->replaceSignature( oldSig, newSig );
   }
-  // now append the new sig
-  mOldSigText = ident.signatureText();
-  if ( appendNewSig ) {
-    if ( (!mOldSigText.isEmpty()) &&
-         (GlobalSettings::self()->autoTextSignature() == "auto") ) {
-      if ( mEditor->htmlMode() == false ) // TODO : support for adding according signature when changing identities in html
-        edtText.append( mOldSigText );
-    }
-    if ( mEditor->htmlMode() == false )
-      mEditor->setPlainText( edtText );
-    else
-      mEditor->setHtml( edtText );
+  else {
+
+    // Just append the signature if there is no old signature
+    if ( GlobalSettings::self()->autoTextSignature()=="auto" )
+      // TODO: Prepend if config option set
+      // TODO: Merge with setMsg() code
+      mEditor->insertSignature( newSig, KMeditor::End, true );
   }
 
   // disable certain actions if there is no PGP user identity set
