@@ -32,6 +32,8 @@ class KMMessage;
 class KMMsgBase;
 class KMReaderWin;
 class partNode;
+class DwBodyPart;
+class DwEntity;
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
@@ -1038,6 +1040,7 @@ class KDE_EXPORT AttachmentModifyCommand : public KMCommand
 
   protected:
     void storeChangedMessage( KMMessage* msg );
+    DwBodyPart* findPart( KMMessage* msg, int index );
     virtual Result doAttachmentModify() = 0;
 
   protected:
@@ -1046,6 +1049,7 @@ class KDE_EXPORT AttachmentModifyCommand : public KMCommand
 
   private:
     Result execute();
+    DwBodyPart* findPartInternal( DwEntity* root, int index, int &accu );
 
   private slots:
     void messageStoreResult( KMFolderImap* folder, bool success );
