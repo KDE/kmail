@@ -261,6 +261,8 @@
         <default>false</default>
         <label>Also filter new mails received in groupware folders.</label>
       </entry>
+      <entry name="FilterSourceFolders" type="IntList">
+      </entry>
 
       <entry name="ImmediatlySyncDIMAPOnGroupwareChanges" type="Bool">
         <default>true</default>

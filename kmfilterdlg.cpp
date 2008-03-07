@@ -15,6 +15,8 @@
 using KMail::AccountManager;
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
+#include "foldersetselector.h"
+#include "globalsettings.h"
 
 // other KDE headers:
 #include <kmessagebox.h>
@@ -44,6 +46,8 @@ using KMail::FilterImporterExporter;
 
 // other headers:
 #include <assert.h>
+
+using namespace KMail;
 
 
 // What's this help texts
@@ -634,6 +638,14 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   QWhatsThis::add( mBtnDelete, i18n(_wt_filterlist_delete) );
   QWhatsThis::add( mBtnRename, i18n(_wt_filterlist_rename) );
 
+  // third row
+  if ( !popFilter ) {
+    hb = new QHBox( this );
+    hb->setSpacing( 4 );
+    QPushButton *btn = new QPushButton( i18n("Select Source Folders"), hb );
+    connect( btn, SIGNAL(clicked()), SLOT(slotSelectSourceFolders()) );
+  }
+
 
   //----------- now connect everything
   connect( mListBox, SIGNAL(highlighted(int)),
@@ -953,6 +965,17 @@ void KMFilterListBox::slotRename()
   }
 
   slotUpdateFilterName();
+}
+
+void KMFilterListBox::slotSelectSourceFolders()
+{
+  FolderSetSelector dlg( kmkernel->getKMMainWidget()->folderTree(), this );
+  dlg.setCaption( i18n( "Select Folders to Filter" ) );
+  if ( !GlobalSettings::filterSourceFolders().isEmpty() )
+    dlg.setSelectedFolders( GlobalSettings::filterSourceFolders() );
+  if ( dlg.exec() == QDialog::Accepted ) {
+    GlobalSettings::setFilterSourceFolders( dlg.selectedFolders() );
+  }
 }
 
 void KMFilterListBox::enableControls()

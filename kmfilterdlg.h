@@ -149,6 +149,8 @@ protected slots:
       dialog prompting to enter the new name. */
   void slotRename();
 
+  void slotSelectSourceFolders();
+
 protected:
   /** The deep copy of the filter list. */
   QPtrList<KMFilter> mFilterList;

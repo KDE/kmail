@@ -150,7 +150,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 snippetsettingsbase.ui \
                 scalix.cpp \
                 messageactions.cpp \
-                korghelper.cpp
+                korghelper.cpp \
+		foldersetselector.cpp \
+		treebase.cpp
 
 libkmailprivate_la_COMPILE_FIRST = globalsettings_base.h customtemplates_base.h templatesconfiguration_base.h
 

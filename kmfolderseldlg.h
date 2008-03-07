@@ -7,61 +7,16 @@
 #define kmfolderseldlg_h
 
 #include <kdialogbase.h>
-#include <kfoldertree.h>
+#include <simplefoldertree.h>
+#include <qvaluelist.h>
+#include <qguardedptr.h>
 
 class KMFolder;
 class KMFolderTree;
 class KMMainWidget;
+class SimpleFolderTree;
 
 namespace KMail {
-
-  class SimpleFolderTree : public KFolderTree
-  {
-    Q_OBJECT
-
-    public:
-      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree,
-                        const QString & preSelection, bool mustBeReadWrite );
-
-      /** Reload the tree and select what folders to show and what not */
-      void reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolders,
-                   const QString& preSelection = QString::null );
-
-      /** Return the current folder */
-      const KMFolder * folder() const;
-
-      /** Set the current folder */
-      void setFolder( KMFolder* );
-      void setFolder( const QString& idString );
-
-      /** Apply the given filter. */
-      void applyFilter( const QString& filter );
-
-    public slots:
-      void addChildFolder();
-
-    protected slots:
-      void slotContextMenuRequested( QListViewItem *, const QPoint & );
-      virtual void recolorRows();
-
-    protected:
-      /** Read color options and set palette. */
-      virtual void readColorConfig(void);
-      virtual void keyPressEvent( QKeyEvent *e );
-
-      /** Folder and path column IDs. */
-      friend class KMFolderSelDlg;
-      int mFolderColumn;
-      int mPathColumn;
-
-    private:
-      KMFolderTree* mFolderTree;
-      QString mFilter;
-      bool mLastMustBeReadWrite;
-      bool mLastShowOutbox;
-      bool mLastShowImapFolders;
-};
-
   //-----------------------------------------------------------------------------
   class KMFolderSelDlg: public KDialogBase
   {
