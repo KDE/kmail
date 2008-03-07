@@ -3100,12 +3100,6 @@ void KMMessage::deleteBodyParts()
   mMsg->Body().DeleteBodyParts();
 }
 
-void KMMessage::removeBodyPart(DwBodyPart * dwPart)
-{
-  mMsg->Body().RemoveBodyPart( dwPart );
-  mNeedsAssembly = true;
-}
-
 //-----------------------------------------------------------------------------
 DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 {

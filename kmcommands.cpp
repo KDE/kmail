@@ -3234,6 +3234,28 @@ void AttachmentModifyCommand::messageDeleteResult(KMCommand * cmd)
   deleteLater();
 }
 
+DwBodyPart * AttachmentModifyCommand::findPart(KMMessage* msg, int index)
+{
+  int accu = 0;
+  return findPartInternal( msg->getTopLevelPart(), index, accu );
+}
+
+DwBodyPart * AttachmentModifyCommand::findPartInternal(DwEntity * root, int index, int & accu)
+{
+  accu++;
+  if ( index < accu ) // should not happen
+    return 0;
+  DwBodyPart *current = dynamic_cast<DwBodyPart*>( root );
+  if ( index == accu )
+    return current;
+  DwBodyPart *rv = 0;
+  if ( root->Body().FirstBodyPart() )
+    rv = findPartInternal( root->Body().FirstBodyPart(), index, accu );
+  if ( !rv && current && current->Next() )
+    rv = findPartInternal( current->Next(), index, accu );
+  return rv;
+}
+
 
 KMDeleteAttachmentCommand::KMDeleteAttachmentCommand(partNode * node, KMMessage * msg, QWidget * parent) :
     AttachmentModifyCommand( node, msg, parent )
@@ -3250,14 +3272,17 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
 {
   KMMessage *msg = retrievedMessage();
   KMMessagePart part;
-  // -2 because partNode counts root and body of the message as well
-  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  DwBodyPart *dwpart = findPart( msg, mPartIndex );
   if ( !dwpart )
     return Failed;
   KMMessage::bodyPart( dwpart, &part, true );
   if ( !part.isComplete() )
      return Failed;
-  msg->removeBodyPart( dwpart );
+
+  DwBody *parentNode = dynamic_cast<DwBody*>( dwpart->Parent() );
+  if ( !parentNode )
+    return Failed;
+  parentNode->RemoveBodyPart( dwpart );
 
   // add dummy part to show that a attachment has been deleted
   KMMessagePart dummyPart;
@@ -3274,7 +3299,9 @@ KMCommand::Result KMDeleteAttachmentCommand::doAttachmentModify()
   } else if ( cd.isEmpty() ) {
     dummyPart.setContentDisposition( "attachment" );
   }
-  msg->addBodyPart( &dummyPart );
+  DwBodyPart* newDwPart = msg->createDWBodyPart( &dummyPart );
+  parentNode->AddBodyPart( newDwPart );
+  msg->getTopLevelPart()->Assemble();
 
   KMMessage *newMsg = new KMMessage();
   newMsg->fromDwString( msg->asDwString() );
@@ -3300,13 +3327,14 @@ KMCommand::Result KMEditAttachmentCommand::doAttachmentModify()
 {
   KMMessage *msg = retrievedMessage();
   KMMessagePart part;
-  // -2 because partNode counts root and body of the message as well
-  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  DwBodyPart *dwpart = findPart( msg, mPartIndex );
   if ( !dwpart )
     return Failed;
   KMMessage::bodyPart( dwpart, &part, true );
   if ( !part.isComplete() )
      return Failed;
+  if( !dynamic_cast<DwBody*>( dwpart->Parent() ) )
+    return Failed;
 
   if ( !mTempFile.open() ) {
     kWarning(5006) << "KMEditAttachmentCommand: Unable to open temp file.";
@@ -3344,15 +3372,20 @@ void KMEditAttachmentCommand::editDone(KMail::EditorWatcher * watcher)
   // build the new message
   KMMessage *msg = retrievedMessage();
   KMMessagePart part;
-  // -2 because partNode counts root and body of the message as well
-  DwBodyPart *dwpart = msg->dwBodyPart( mPartIndex - 2 );
+  DwBodyPart *dwpart = findPart( msg, mPartIndex );
   KMMessage::bodyPart( dwpart, &part, true );
-  msg->removeBodyPart( dwpart );
+
+  DwBody *parentNode = dynamic_cast<DwBody*>( dwpart->Parent() );
+  assert( parentNode );
+  parentNode->RemoveBodyPart( dwpart );
 
   KMMessagePart att;
   att.duplicate( part );
   att.setBodyEncodedBinary( data );
-  msg->addBodyPart( &att );
+
+  DwBodyPart* newDwPart = msg->createDWBodyPart( &att );
+  parentNode->AddBodyPart( newDwPart );
+  msg->getTopLevelPart()->Assemble();
 
   KMMessage *newMsg = new KMMessage();
   newMsg->fromDwString( msg->asDwString() );
