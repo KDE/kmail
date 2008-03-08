@@ -125,32 +125,16 @@ public:
     EncodingChoiceSource encodingChoiceSource() const;
 
     /**
-    * The main class method
-    *
-    * Calls protected analyze() only the first time of the whole object life
-    *
-    * Replaces all null chars with spaces.
+    * Analyze text data.
+    * @returns true if there was enough data for accurate detection
     */
-    QString decode(const char *data, int len);
-    QString decode(const QByteArray &data);
-
-    //* You don't need to call analyze() if you use this method.
-    /**
-    * Convenience method that uses buffering. It waits for full html head to be buffered
-    * (i.e. calls analyze every time until it returns true).
-    *
-    * Replaces all null chars with spaces.
-    *
-    * @returns Decoded data, or empty string, if there was not enough data for accurate detection
-    * @see flush()
-    */
-    QString decodeWithBuffering(const char *data, int len);
+    bool analyze( const char *data, int len );
 
     /**
-    * Convenience method to be used with decodeForHtml. Flushes buffer.
-    * @see decodeForHtml()
+    * Analyze text data.
+    * @returns true if there was enough data for accurate detection
     */
-    QString flush();
+    bool analyze( const QByteArray &data );
 
     /**
      * Takes lang name _after_ it were i18n()'ed
@@ -162,12 +146,6 @@ public:
 
 protected:
     /**
-     * This nice method will kill all 0 bytes (or double bytes)
-     * and remember if this was a binary or not ;)
-     */
-    bool processNull(char* data,int length);
-
-    /**
      * Check if we are really utf8. Taken from kate
      *
      * @returns true if current encoding is utf8 and the text cannot be in this encoding
@@ -175,12 +153,6 @@ protected:
      * Please somebody read http://de.wikipedia.org/wiki/UTF-8 and check this code...
      */
     bool errorsIfUtf8 (const char* data, int length);
-
-    /**
-    * Analyze text data.
-    * @returns true if there was enough data for accurate detection
-    */
-    bool analyze (const char *data, int len);
 
     /**
     * @returns QTextDecoder for detected encoding

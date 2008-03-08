@@ -2758,12 +2758,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     EncodingDetector ed;
     KLocale *loc = KGlobal::locale();
     ed.setAutoDetectLanguage( EncodingDetector::scriptForLanguageCode ( loc->language() ) );
-    // ### FIXME decode(_const_ QByteArray &) replaces 0x00 bytes by 0x20 in the parameter
-    // despite being const, which obviously breaks binary attachments.
-    QByteArray copy = (*it).data.copy();
-    ed.decode( copy );
+    ed.analyze( (*it).data );
     partCharset = ed.encoding();
-    if (partCharset.isEmpty()) //shouldn't happen
+    if ( partCharset.isEmpty() ) //shouldn't happen
       partCharset = mCharset;
   }
 
