@@ -37,6 +37,7 @@ class TreeBase : public KListView
     TreeBase( QWidget * parent, KMFolderTree *folderTree,
         const QString &preSelection, bool mustBeReadWrite );
 	
+    virtual  ~TreeBase() {}
 
      const KMFolder * folder() const;
     /** Set the current folder */
