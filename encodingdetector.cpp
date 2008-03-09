@@ -1370,6 +1370,7 @@ EncodingDetector::AutoDetectScript EncodingDetector::scriptForLanguageCode(const
      if ( lc.startsWith( QString::fromAscii( langStr ) ) )
        return pango_script_for_lang[i].scripts[0];
   }
+  return None;
 }
 
 #undef DECODE_DEBUG
