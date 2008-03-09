@@ -248,7 +248,17 @@ class KMComposeWin : public KMail::Composer
      */
      bool inlineSigningEncryptionSelected();
 
-     void toggleMarkup( bool markup, bool makeDocumentModified = true );
+     /**
+      * Enables HTML mode, by showing the HTML toolbar and checking the
+      * "Formatting" action
+      */
+     void enableHtml();
+
+     /**
+      * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
+      * "Formatting" action. Also, removes all rich-text formatting.
+      */
+     void disableHtml();
 
      /**
       * Tries to find the given mimetype @p type in the KDE Mimetype registry.
@@ -274,7 +284,6 @@ class KMComposeWin : public KMail::Composer
     }
 
   private slots:
-    void ensurePolished();
 
     /**
      * Actions:
@@ -441,6 +450,7 @@ class KMComposeWin : public KMail::Composer
 
     void slotCleanSpace();
     void slotToggleMarkup();
+    void slotTextModeChanged( KPIM::KMeditor::Mode );
     void htmlToolBarVisibilityChanged( bool visible );
     void slotSpellcheckDoneClearStatus();
 
@@ -448,7 +458,7 @@ class KMComposeWin : public KMail::Composer
     void autoSaveMessage();
 
   private slots:
-    void updateCursorPosition();
+
     void slotView();
 
     /**
@@ -462,20 +472,13 @@ class KMComposeWin : public KMail::Composer
     void slotAttachFileData( KIO::Job *, const QByteArray & );
     void slotAttachFileResult( KJob * );
 
-    void slotChangeParagStyle( QTextListFormat::Style style );
-    void slotFontAction( const QString & );
     void slotAlignLeft();
     void slotAlignCenter();
     void slotAlignRight();
-    void slotTextBold( bool bold );
-    void slotTextItalic( bool italic );
-    void slotTextUnder( bool under );
-    void slotTextColor();
-    void slotSizeAction( int );
     void fontChanged( const QFont & );
     void slotCursorPositionChanged();
 
-  void slotSpellCheckingStatus(const QString & status);
+    void slotSpellCheckingStatus( const QString & status );
 
   public: // kmkernel, attachmentlistview
     bool addAttach( const KUrl &url );
@@ -501,7 +504,7 @@ class KMComposeWin : public KMail::Composer
      * Applies the user changes to the message object of the composer
      * and signs/encrypts the message if activated. Returns false in
      * case of an error (e.g. if PGP encryption fails).
-     * Disables the controls of the composer window unless @dontDisable
+     * Disables the controls of the composer window unless @p dontDisable
      * is true.
      */
     void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false );
@@ -729,8 +732,6 @@ class KMComposeWin : public KMail::Composer
     bool mConfirmSend;
     bool mDisableBreaking; // Move
     int mNumHeaders;
-    bool mUserUsesHtml;
-    bool mHtmlMarkup; // is the toolbar visible or not
     QFont mBodyFont, mFixedFont;
     QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;

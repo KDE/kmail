@@ -467,7 +467,7 @@ void MessageComposer::readFromComposeWin()
   if ( mAutoCharset ) {
     QByteArray charset =
       KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(),
-                                    mComposeWin->mEditor->text() );
+                                    mComposeWin->mEditor->textOrHTML() );
     if ( charset.isEmpty() ) {
       KMessageBox::sorry( mComposeWin,
                           i18n( "No suitable encoding could be found for "
@@ -555,7 +555,7 @@ void MessageComposer::readFromComposeWin()
 
   mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
 
-  mIsRichText = mComposeWin->mEditor->htmlMode();
+  mIsRichText = ( mComposeWin->mEditor->textMode() == KMeditor::Rich );
   mIdentityUid = mComposeWin->identityUid();
   mText = breakLinesAndApplyCodec();
   // Hopefully we can get rid of this eventually, it's needed to be able
@@ -1269,8 +1269,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage &theMessage,
 
   const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos =
     mKeyResolver->encryptionItems( Kleo::InlineOpenPGPFormat );
-  kWarning( splitInfos.empty() )
-    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for InlineOpenPGPFormat";
+  kWarning( splitInfos.empty() ) << "splitInfos.empty() for InlineOpenPGPFormat";
   std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it;
   for ( it = splitInfos.begin(); it != splitInfos.end(); ++it ) {
     const Kleo::KeyResolver::SplitInfo &splitInfo = *it;
@@ -1403,7 +1402,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
                                       bool doSign, bool doEncrypt,
                                       Kleo::CryptoMessageFormat format )
 {
-  kDebug(5006) <<"entering KMComposeWin::composeMessage";
+  kDebug(5006) << "Entering";
   if ( format == Kleo::InlineOpenPGPFormat ) {
     composeInlineOpenPGPMessage( theMessage, doSign, doEncrypt );
     return;
@@ -1463,7 +1462,7 @@ void MessageComposer::composeMessage( KMMessage &theMessage,
     }
   }
 
-  kDebug(5006) <<"mEarlyAddAttachments=" << mEarlyAddAttachments
+  kDebug(5006) << "mEarlyAddAttachments=" << mEarlyAddAttachments
                << "mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody;
 
   // if an html message is to be generated, make a text/plain and text/html part
@@ -2154,7 +2153,7 @@ QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText ) con
   if ( mCharset == "us-ascii" ) {
     textbody = KMMsgBase::toUsAscii( text );
   } else if ( codec == 0 ) {
-    kDebug(5006) <<"Something is wrong and I can not get a codec.";
+    kDebug(5006) << "Something is wrong and I can not get a codec.";
     textbody = text.toLocal8Bit();
   } else {
     text = codec->toUnicode( text.toLatin1() );
@@ -2175,11 +2174,10 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   QString text;
 
   if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
-    text = mComposeWin->mEditor->text();
+    text = mComposeWin->mEditor->textOrHTML();
   } else {
     text = mComposeWin->mEditor->brokenText();
   }
-  text.truncate( text.length() ); // to ensure text.size()==text.length()+1
 
   QString newText;
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
@@ -2188,7 +2186,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
     cText = KMMsgBase::toUsAscii( text );
     newText = QString::fromLatin1( cText );
   } else if ( codec == 0 ) {
-    kDebug(5006) <<"Something is wrong and I can not get a codec.";
+    kDebug(5006) << "Something is wrong and I can not get a codec.";
     cText = text.toLocal8Bit();
     newText = QString::fromLocal8Bit( cText );
   } else {
@@ -2200,6 +2198,11 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   }
 
   if ( !text.isEmpty() && ( newText != text ) ) {
+    // FIXME the whole thing here is completely broken, see
+    //       bug 149309 and 145163.
+    //       Furthermore, there is no reason the set the text to the editor,
+    //       it will just break rich text formatting anyway. text() and
+    //       setText() are evil.
     QString oldText = mComposeWin->mEditor->text();
     mComposeWin->mEditor->setText( newText );
     KCursorSaver idle( KBusyPtr::idle() );
@@ -2228,7 +2231,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   //  MUST be identical).
   // So make sure that the body ends with a <LF>.
   if ( cText.isEmpty() || !cText.endsWith('\n') ) {
-    kDebug(5006) <<"Added an <LF> on the last line";
+    kDebug(5006) << "Added an <LF> on the last line";
     cText += '\n';
   }
   return cText;

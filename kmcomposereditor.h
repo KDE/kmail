@@ -29,7 +29,7 @@ class KMComposeWin;
 
 class KMComposerEditor : public KMeditor
 {
-    Q_OBJECT
+  Q_OBJECT
 
   public:
     /**
@@ -43,24 +43,12 @@ class KMComposerEditor : public KMeditor
     virtual QString smartQuote( const QString & msg );
     QString brokenText() const;
 
-    /**
-     * set html mode
-     */
-    void setHtmlMode( bool mode );
-    bool htmlMode();
-
-    /**
-     * Depending on htmlMode, return the text as Html or plain text
-     */
-    QString text();
-
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
   public slots:
      void slotDictionaryChanged( const QString & );
   private:
      KMComposeWin *m_composerWin;
-     bool mHtmlMode;
   protected:
      void dropEvent( QDropEvent *e );
      bool canInsertFromMimeData( const QMimeData *source ) const;
