@@ -809,34 +809,6 @@ static int findXMLEncoding(const QCString &str, int &encodingLength)
     return pos;
 }
 
-bool EncodingDetector::processNull(char *data, int len)
-{
-    bool bin=false;
-    if(is16Bit(d->m_codec))
-    {
-        for (int i=1; i < len; i+=2)
-        {
-            if ((data[i]=='\0') && (data[i-1]=='\0'))
-            {
-                bin=true;
-                data[i]=' ';
-            }
-        }
-        return bin;
-    }
-    // replace '\0' by spaces, for buggy pages
-    int i = len-1;
-    while(--i>=0)
-    {
-        if(data[i]==0)
-        {
-            bin=true;
-            data[i]=' ';
-        }
-    }
-    return bin;
-}
-
 
 bool EncodingDetector::errorsIfUtf8 (const char* data, int length)
 {
@@ -901,7 +873,6 @@ static const unsigned char highest5Bits = 0xF8;
     }
     return false;
 }
-
 
 EncodingDetector::EncodingDetector() : d(new EncodingDetectorPrivate)
 {
@@ -1007,111 +978,9 @@ bool EncodingDetector::setEncoding(const char *_encoding, EncodingChoiceSource t
     return true;
 }
 
-QString EncodingDetector::decode(const char *data, int len)
+bool EncodingDetector::analyze(const QByteArray &data)
 {
-    processNull(const_cast<char *>(data),len);
-    if (!d->m_analyzeCalled)
-    {
-        analyze(data,len);
-        d->m_analyzeCalled=true;
-    }
-
-    return d->m_decoder->toUnicode(data,len);
-}
-
-QString EncodingDetector::decode(const QByteArray &data)
-{
-    processNull(const_cast<char *>(data.data()),data.size());
-    if (!d->m_analyzeCalled)
-    {
-        analyze(data.data(),data.size());
-        d->m_analyzeCalled=true;
-    }
-
-    return d->m_decoder->toUnicode(data, data.size());
-}
-
-QString EncodingDetector::decodeWithBuffering(const char *data, int len)
-{
-#ifdef DECODE_DEBUG
-        kWarning() << "EncodingDetector: decoding "<<len<<" bytes";
-#endif
-    if (d->m_writtingHappened)
-    {
-#ifdef DECODE_DEBUG
-        kWarning() << "EncodingDetector: d->m_writtingHappened "<< d->m_codec->name();
-#endif
-        processNull(const_cast<char *>(data),len);
-        return d->m_decoder->toUnicode(data, len);
-    }
-    else
-    {
-        if (d->m_bufferForDefferedEncDetection.isEmpty())
-        {
-            if (analyze(data,len)
-                && (d->m_seenBody
-                    || !(d->m_source==AutoDetectedEncoding
-                        ||d->m_source==DefaultEncoding
-                        )
-                   )
-               )//dontWannaSeeHead()
-            {
-#ifdef DECODE_DEBUG
-                kWarning() << "EncodingDetector: m_writtingHappened first time "<< d->m_codec->name();
-#endif
-                processNull(const_cast<char *>(data),len);
-                d->m_writtingHappened=true;
-                return d->m_decoder->toUnicode(data, len);
-            }
-            else
-            {
-#ifdef DECODE_DEBUG
-                kWarning() << "EncodingDetector: begin deffer";
-#endif
-                d->m_bufferForDefferedEncDetection=data;
-            }
-        }
-        else
-        {
-            d->m_bufferForDefferedEncDetection+=data;
-            if ( (analyze(data,len)
-                  && (d->m_seenBody
-                     || !(d->m_source==AutoDetectedEncoding
-                        ||d->m_source==DefaultEncoding
-                         )
-                     )
-                 ) || d->m_bufferForDefferedEncDetection.length()>MAX_BUFFER
-               )//dontWannaSeeHead()
-            {
-                d->m_writtingHappened=true;
-                d->m_bufferForDefferedEncDetection.replace('\0',' ');
-                QString result(d->m_decoder->toUnicode(d->m_bufferForDefferedEncDetection,
-                                                       d->m_bufferForDefferedEncDetection.size()));
-                d->m_bufferForDefferedEncDetection.resize(0);
-#ifdef DECODE_DEBUG
-                kWarning() << "EncodingDetector: m_writtingHappened in the middle " << d->m_codec->name();
-#endif
-                return result;
-            }
-        }
-    }
-
-    return QString();
-}
-
-QString EncodingDetector::flush()
-{
-    if (d->m_bufferForDefferedEncDetection.isEmpty())
-        return QString();
-
-    d->m_bufferForDefferedEncDetection.replace('\0',' ');
-    QString result(d->m_decoder->toUnicode(d->m_bufferForDefferedEncDetection,
-                                           d->m_bufferForDefferedEncDetection.size()));
-    d->m_bufferForDefferedEncDetection.resize(0);
-#ifdef DECODE_DEBUG
-    kWarning() << "EncodingDetector:flush() "<< d->m_bufferForDefferedEncDetection.length()<<" bytes "<< d->m_codec->name();
-#endif
-    return result;
+    return analyze( data.data(), data.size() );
 }
 
 bool EncodingDetector::analyze(const char *data, int len)
@@ -1501,6 +1370,7 @@ EncodingDetector::AutoDetectScript EncodingDetector::scriptForLanguageCode(const
      if ( lc.startsWith( QString::fromAscii( langStr ) ) )
        return pango_script_for_lang[i].scripts[0];
   }
+  return None;
 }
 
 #undef DECODE_DEBUG

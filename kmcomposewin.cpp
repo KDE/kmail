@@ -2758,9 +2758,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     EncodingDetector ed;
     KLocale *loc = KGlobal::locale();
     ed.setAutoDetectLanguage( EncodingDetector::scriptForLanguageCode ( loc->language() ) );
-    ed.decode( ( *it ).data );
+    ed.analyze( (*it).data );
     partCharset = ed.encoding();
-    if (partCharset.isEmpty()) //shouldn't happen
+    if ( partCharset.isEmpty() ) //shouldn't happen
       partCharset = mCharset;
   }
 
