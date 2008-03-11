@@ -484,8 +484,15 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
     uidMapDirty = true;
   }
 
+  KMFolderOpener openThis(folder(), "KMFolderCachedImap::addMsgInternal");
+  int rc = openThis.openResult();
+  if ( rc ) {
+    kdDebug(5006) << k_funcinfo << "open: " << rc << " of folder: " << label() << endl;
+    return rc;
+  }
+
   // Add the message
-  int rc = KMFolderMaildir::addMsg(msg, index_return);
+  rc = KMFolderMaildir::addMsg(msg, index_return);
 
   if( newMail && ( imapPath() == "/INBOX/" || ( !GlobalSettings::self()->filterOnlyDIMAPInbox()
       && (userRights() <= 0 || userRights() & ACLJobs::Administer )
