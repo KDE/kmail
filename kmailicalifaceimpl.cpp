@@ -927,7 +927,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
   return rc;
 }
 
-KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
+QString KMailICalIfaceImpl::getAttachment( const QString& resource,
                                         quint32 sernum,
                                         const QString& filename )
 {
@@ -935,7 +935,7 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   // temp file and returns a URL to it. It's up to the resource
   // to delete the tmp file later.
   if( !mUseResourceIMAP )
-    return KUrl();
+    return QString();
 
   kDebug() << resource << ", " << sernum << ", " << filename;
 
@@ -943,11 +943,11 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   KMFolder* f = findResourceFolder( resource );
   if( !f ) {
     kError() << resource << ": Not an IMAP resource folder";
-    return KUrl();
+    return QString();
   }
   if ( storageFormat( f ) != StorageXML ) {
     kError() << resource << ": Folder has wrong storage format" << storageFormat( f );
-    return KUrl();
+    return QString();
   }
 
   KUrl url;
@@ -985,7 +985,7 @@ KUrl KMailICalIfaceImpl::getAttachment( const QString& resource,
   }
 
   mResourceQuiet = quiet;
-  return url;
+  return url.url();
 }
 
 QStringList KMailICalIfaceImpl::listAttachments(const QString & resource, quint32 sernum)

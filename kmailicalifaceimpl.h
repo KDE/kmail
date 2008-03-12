@@ -134,7 +134,7 @@ public:
 
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
-  KUrl getAttachment( const QString& resource,
+  QString getAttachment( const QString& resource,
                       quint32 sernum,
                       const QString& filename );
 

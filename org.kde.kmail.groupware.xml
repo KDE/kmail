@@ -64,7 +64,6 @@
       <arg name="resource" type="s" direction="in"/>
       <arg name="sernum" type="u" direction="in"/>
       <arg name="filename" type="s" direction="in"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KUrl"/>
     </method>
     <method name="listAttachments">
       <arg type="as" direction="out"/>
