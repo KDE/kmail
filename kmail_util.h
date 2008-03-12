@@ -30,6 +30,8 @@
 #ifndef KMAILUTILS_H
 #define KMAILUTILS_H
 
+#include <QMetaType>
+
 #define DBUS_KMAIL "org.kde.kmail"
 namespace KMail {
 
@@ -56,4 +58,13 @@ namespace KMail {
   /// This bitfield indicates which changes have been made in a folder, at syncing time.
   enum FolderChanges { NoChange = 0, ContentsChanged = 1, ACLChanged = 2 };
 }
+
+Q_DECLARE_METATYPE( KMail::SubResource )
+Q_DECLARE_METATYPE( QList<KMail::SubResource> )
+Q_DECLARE_METATYPE( KMail::StorageFormat )
+typedef QMap<quint32, QString> Quint32QStringMap;
+Q_DECLARE_METATYPE( Quint32QStringMap )
+typedef QMap<QByteArray, QString> QByteArrayStringMap;
+Q_DECLARE_METATYPE( QByteArrayStringMap)
+
 #endif

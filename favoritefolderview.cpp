@@ -44,6 +44,8 @@
 //#include <QHelpEvent>
 #include <QtCore/QTimer>
 #include <QtGui/QToolTip>
+#include <QDBusConnection>
+#include <QDBusInterface>
 
 #include <cassert>
 

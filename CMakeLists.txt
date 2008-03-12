@@ -222,7 +222,6 @@ set(kmailprivate_LIB_SRCS
    messagecopyhelper.cpp
    korghelper.cpp
    localsubscriptiondialog.cpp
-   groupwareadaptor.cpp
    editorwatcher.cpp
    scalix.cpp
    messageactions.cpp
@@ -231,6 +230,7 @@ set(kmailprivate_LIB_SRCS
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin )
+qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.kmail.groupware.xml kmailicalifaceimpl.h KMailICalIfaceImpl )
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
@@ -252,8 +252,8 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS composercryptoconfiguration.ui warningco
 
 # Generate org.kde.kmail.groupware.xml from kmailicalIface.h
 #qt4_generate_dbus_interface( groupwareadaptor.h org.kde.kmail.groupware.xml )
-#qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml)
-#qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml kmailicalIface.h KMailICalIface )
+# qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml)
+# qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.groupware.xml kmailicalIface.h KMailICalIface )
 
 #kde4_add_dcop_stubs(kmailprivate_LIB_SRCS ${CMAKE_SOURCE_DIR}/korganizer/korganizeriface.h )
 

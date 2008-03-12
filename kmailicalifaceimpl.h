@@ -47,8 +47,8 @@
 
 #include <kfoldertree.h>
 using KPIM::KFolderTreeItem;
-#include "groupwareadaptor.h"
 #include "kmfoldertype.h"
+#include "kmail_util.h"
 
 class KMFolder;
 class KMMessage;

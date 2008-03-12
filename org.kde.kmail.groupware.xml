@@ -1,0 +1,102 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.kde.kmail.groupware">
+    <signal name="incidenceAdded">
+      <arg name="type" type="s" direction="out"/>
+      <arg name="folder" type="s" direction="out"/>
+      <arg name="sernum" type="u" direction="out"/>
+      <arg name="format" type="i" direction="out"/>
+      <arg name="entry" type="s" direction="out"/>
+    </signal>
+    <signal name="asyncLoadResult">
+      <arg name="incidences" type="a{us}" direction="out"/>
+      <arg name="type" type="s" direction="out"/>
+      <arg name="folder" type="s" direction="out"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="const QMap&lt;quint32, QString&gt; &amp;"/>
+    </signal>
+    <signal name="incidenceDeleted">
+      <arg name="type" type="s" direction="out"/>
+      <arg name="folder" type="s" direction="out"/>
+      <arg name="uid" type="s" direction="out"/>
+    </signal>
+    <signal name="signalRefresh">
+      <arg name="type" type="s" direction="out"/>
+      <arg name="folder" type="s" direction="out"/>
+    </signal>
+    <signal name="subresourceAdded">
+      <arg name="type" type="s" direction="out"/>
+      <arg name="resource" type="s" direction="out"/>
+      <arg name="label" type="s" direction="out"/>
+      <arg name="writable" type="b" direction="out"/>
+      <arg name="alarmRelevant" type="b" direction="out"/>
+    </signal>
+    <signal name="subresourceDeleted">
+      <arg name="type" type="s" direction="out"/>
+      <arg name="resource" type="s" direction="out"/>
+    </signal>
+    <method name="isWritableFolder">
+      <arg type="b" direction="out"/>
+      <arg name="type" type="s" direction="in"/>
+      <arg name="resource" type="s" direction="in"/>
+    </method>
+    <method name="incidencesKolabCount">
+      <arg type="i" direction="out"/>
+      <arg name="mimetype" type="s" direction="in"/>
+      <arg name="resource" type="s" direction="in"/>
+    </method>
+    <method name="triggerSync">
+      <arg type="b" direction="out"/>
+      <arg type="s" direction="in"/>
+    </method>
+    <method name="deleteIncidenceKolab">
+      <arg type="b" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="sernum" type="u" direction="in"/>
+    </method>
+    <method name="storageFormat">
+      <arg name="resource" type="s" direction="in"/>
+      <!-- ### Shouldn't that be just 'i'? -->
+      <arg type="(i)" direction="out"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::StorageFormat"/>
+    </method>
+    <method name="getAttachment">
+      <arg type="s" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="sernum" type="u" direction="in"/>
+      <arg name="filename" type="s" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KUrl"/>
+    </method>
+    <method name="listAttachments">
+      <arg type="as" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="sernum" type="u" direction="in"/>
+    </method>
+    <method name="update">
+      <arg type="u" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="sernum" type="u" direction="in"/>
+      <arg name="subject" type="s" direction="in"/>
+      <arg name="plainTextBody" type="s" direction="in"/>
+      <!-- FIXME should be a{ays} but qdbusxml2cpp considers that invalid -->
+      <arg name="customHeaders" type="a{ss}" direction="in"/>
+      <arg name="attachmentURLs" type="as" direction="in"/>
+      <arg name="attachmentMimetypes" type="as" direction="in"/>
+      <arg name="attachmentNames" type="as" direction="in"/>
+      <arg name="deletedAttachments" type="as" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In4" value="const QMap&lt;QByteArray, QString&gt; &amp;"/>
+    </method>
+    <method name="incidencesKolab">
+      <arg type="a{us}" direction="out"/>
+      <arg name="mimetype" type="s" direction="in"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="startIndex" type="i" direction="in"/>
+      <arg name="nbMessages" type="i" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QMap&lt;quint32, QString&gt;"/>
+    </method>
+    <method name="subresourcesKolab">
+      <arg type="a(ssbb)" direction="out"/>
+      <arg name="contentsType" type="s" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList&lt;KMail::SubResource&gt;"/>
+    </method>
+  </interface>
+</node>

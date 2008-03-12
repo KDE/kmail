@@ -140,6 +140,40 @@ ExtraFolder::~ExtraFolder()
         folder->close("kmailicaliface::extrafolder");
 }
 
+const QDBusArgument &operator<<(QDBusArgument &arg, const SubResource &subResource)
+{
+  arg.beginStructure();
+  arg << subResource.location << subResource.label << subResource.writable << subResource.alarmRelevant;
+  arg.endStructure();
+  return arg;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &arg, SubResource &subResource)
+{
+  arg.beginStructure();
+  arg >> subResource.location >> subResource.label >> subResource.writable >> subResource.alarmRelevant;
+  arg.endStructure();
+  return arg;
+}
+
+const QDBusArgument &operator<<(QDBusArgument &arg, const StorageFormat &format)
+{
+  arg.beginStructure();
+  quint32 foo = format;
+  arg << foo;
+  arg.endStructure();
+  return arg;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &arg, StorageFormat &format)
+{
+  arg.beginStructure();
+  quint32 foo = format;
+  arg >> foo;
+  arg.endStructure();
+  return arg;
+}
+
 
 /*
   This interface has three parts to it - libkcal interface;
@@ -174,7 +208,10 @@ KMailICalIfaceImpl::~KMailICalIfaceImpl()
 
 void KMailICalIfaceImpl::registerWithDBus()
 {
-  (void) new GroupwareAdaptor( this );
+  qDBusRegisterMetaType< QList<KMail::SubResource> >();
+  qDBusRegisterMetaType< QMap<quint32,QString> >();
+  QDBusConnection::sessionBus().registerObject( "/Groupware", this, QDBusConnection::ExportAdaptors );
+  new GroupwareAdaptor( this );
 }
 
 /* libkcal part of the interface, called from the resources using this
