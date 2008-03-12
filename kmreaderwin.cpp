@@ -2680,7 +2680,7 @@ void KMReaderWin::injectAttachments()
     static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
   } else {
     QString html("");
-    html += "<div style=\"text-align: right; border-width: 0px; border-bottom-width: 1px; border-style: solid; border-color: white;\">"
+    html += "<div style=\"text-align: right; border-width: 0px;\">"
       "<a href=\"kmail:showAttachmentQuicklist\"><img src=\""+imgpath+"attachmentQuicklistClosed.png\"/></a></div>";
     static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
   }
