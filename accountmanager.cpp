@@ -45,24 +45,39 @@ void AccountManager::writeConfig( bool withSync )
 {
   KConfig* config = KMKernel::config();
 
-  // Delete all account enabled groups in the config file
-  // and replace them with new account groups
+  // Delete all accounts for groups in the config file not having 
+  // Enabled=false flag (accountGroups) 
+  // and replace them with account groups existing in memory (mAcctList)
   uint accounts = 0;
   QStringList accountGroups =
     config->groupList().filter( QRegExp( "Account \\d+" ) );
   AccountList::ConstIterator enabledAccountIt = mAcctList.constBegin();
-  foreach ( const QString& groupName, accountGroups ) {
+  for ( QStringList::ConstIterator it = accountGroups.constBegin() ;; ) {
+    QString groupName;
+    bool appendNewGroup = false;
+    if ( it == accountGroups.constEnd() ) {
+      if ( enabledAccountIt == mAcctList.constEnd() )
+        break;
+      appendNewGroup = true;
+      groupName.sprintf( "Account %d", accounts + 1 );
+    }
+    else {
+      groupName = *it;
+      ++it;
+    }
+
     KConfigGroup group(config, groupName);
     uint id = group.readEntry( "Id", 0 );
     if ( mDisabledAccounts.contains( id ) )
-      accounts++;
+      accounts++; // do not modify disabled account - skip
     else {
-      config->deleteGroup( groupName );
-      if ( enabledAccountIt != mAcctList.constEnd() ) {
+      if ( appendNewGroup ) {
         (*enabledAccountIt)->writeConfig( group );
         ++enabledAccountIt;
         accounts++;
       }
+      else // no such account on the list - disabled / enabled
+        config->deleteGroup( groupName );
     }
   }
 
