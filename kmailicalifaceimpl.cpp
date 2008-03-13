@@ -1102,17 +1102,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     if ( mInTransit.contains( uid ) ) {
       mInTransit.remove( uid );
     }
-//    incidenceAdded( type, folder->location(), sernum, format, s );
-    QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "incidenceAdded");
-    message << type;
-    message << folder->location();
-    message << sernum;
-    message <<format;
-    message <<s;
-    QDBusConnection::sessionBus().send(message);
-
-
+    emit incidenceAdded( type, folder->location(), sernum, format, s );
 
   } else {
     // go get the rest of it, then try again
@@ -1167,14 +1157,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
         kDebug() << "Emitting D-Bus signal incidenceDeleted("
                  << type << "," << folder->location() << "," << uid << ")";
 
-//        incidenceDeleted( type, folder->location(), uid );
-    QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "incidenceDeleted");
-    message << type;
-    message << folder->location();
-    message << uid;
-    QDBusConnection::sessionBus().send(message);
-
+        emit incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -1185,14 +1168,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-//    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
-    QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "signalRefresh");
-    message << type;
-    message << QString();
-    QDBusConnection::sessionBus().send(message);
-
     kDebug() << "Emitting D-Bus signal signalRefresh(" << type << " )";
+    emit signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
   }
 }
 
@@ -1407,11 +1384,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   ExtraFolder* ef = mExtraFolders.value( location, 0 );
   if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
-    QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceDeleted");
-    message << folderContentsType( folder->storage()->contentsType() );
-    message << location;
-    QDBusConnection::sessionBus().send(message);
+    emit subresourceDeleted( folderContentsType( folder->storage()->contentsType() ), location );
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
@@ -1448,15 +1421,11 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
     connectFolder( folder );
   }
-    // Tell about the new resource
-    QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-    message << folderContentsType( contentsType );
-    message << location;
-    message << subresourceLabelForPresentation( folder );
-    message << !folder->isReadOnly();
-    message << folderIsAlarmRelevant( folder );
-    QDBusConnection::sessionBus().send(message);
+  // Tell about the new resource
+  emit subresourceAdded( folderContentsType( contentsType ), location,
+                         subresourceLabelForPresentation( folder ),
+                         !folder->isReadOnly(),
+                         folderIsAlarmRelevant( folder ) );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1599,23 +1568,11 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
 
-    //    subresourceDeleted( contentsTypeStr, location );
-      QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceDeleted");
-    message << contentsTypeStr;
-    message << location;
-    QDBusConnection::sessionBus().send(message);
-
-    //    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
-    //                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
-    message =
-        QDBusMessage::createSignal("/Groupware",DBUS_KMAIL , "subresourceAdded");
-    message << contentsTypeStr;
-    message << location;
-    message << subresourceLabelForPresentation( folder );
-    message << !folder->isReadOnly();
-    message << folderIsAlarmRelevant( folder );
-    QDBusConnection::sessionBus().send(message);
+    emit subresourceDeleted( contentsTypeStr, location );
+    emit subresourceAdded( contentsTypeStr, location,
+                           subresourceLabelForPresentation( folder ),
+                           !folder->isReadOnly(),
+                           folderIsAlarmRelevant( folder ) );
   }
 }
 
@@ -1638,14 +1595,7 @@ void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
   }
 
   if ( folder )
-  {
-      QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceDeleted");
-    message << folderContentsType(  folder->storage()->contentsType() );
-    message << oldLocation;
-    QDBusConnection::sessionBus().send(message);
-  }
-
+    emit subresourceDeleted( folderContentsType( folder->storage()->contentsType() ), oldLocation );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1868,55 +1818,17 @@ void KMailICalIfaceImpl::readConfig()
 
     // END TILL TODO
 
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
-      QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeCalendar );
-      message << mCalendar->location();
-      message <<  mCalendar->label();
-      message<< true;
-      message<< true;
-      QDBusConnection::sessionBus().send(message);
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ),
+                           mCalendar->location(), mCalendar->label(), true, true );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeTask ),
+                           mTasks->location(), mTasks->label(), true, true );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ),
+                           mJournals->location(), mJournals->label(), true, false );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeContact ),
+                           mContacts->location(), mContacts->label(), true, false );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeNote ),
+                           mNotes->location(), mNotes->label(), true, false );
 
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeTask );
-      message << mTasks->location();
-      message <<  mTasks->label();
-      message<< true;
-      message<< true;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label(), true, false );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeJournal );
-      message << mJournals->location();
-      message <<  mJournals->label();
-      message<< true;
-      message<< false;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeContact );
-      message << mContacts->location();
-      message <<  mContacts->label();
-      message<< true;
-      message<< false;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeNote );
-      message << mNotes->location();
-      message <<  mNotes->label();
-      message<< true;
-      message<< false;
-      QDBusConnection::sessionBus().send(message);
   } else if ( groupwareType == KMAcctCachedImap::GroupwareScalix ) {
     // Make the new settings work
     mUseResourceIMAP = true;
@@ -1991,45 +1903,14 @@ void KMailICalIfaceImpl::readConfig()
 
     // END TILL TODO
 
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label(), true, true );
-      QDBusMessage message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeCalendar );
-      message << mCalendar->location();
-      message <<  mCalendar->label();
-      message<< true;
-      message<< true;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label(), true, true );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeTask );
-      message << mTasks->location();
-      message <<  mTasks->label();
-      message<< true;
-      message<< true;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label(), true, false );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeContact );
-      message << mContacts->location();
-      message <<  mContacts->label();
-      message<< true;
-      message<< false;
-      QDBusConnection::sessionBus().send(message);
-
-    //  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label(), true, false );
-      message =
-        QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceAdded");
-      message << folderContentsType( KMail::ContentsTypeNote );
-      message << mNotes->location();
-      message <<  mNotes->label();
-      message<< true;
-      message<< false;
-      QDBusConnection::sessionBus().send(message);
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ),
+                           mCalendar->location(), mCalendar->label(), true, true );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeTask ),
+                           mTasks->location(), mTasks->label(), true, true );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeContact ),
+                           mContacts->location(), mContacts->label(), true, false );
+    emit subresourceAdded( folderContentsType( KMail::ContentsTypeNote ),
+                           mNotes->location(), mNotes->label(), true, false );
   }
 
   reloadFolderTree();
@@ -2379,7 +2260,7 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
 
 bool KMailICalIfaceImpl::removeSubresource( const QString& location )
 {
-  kDebug() ;
+  kDebug();
 
   KMFolder *folder = findResourceFolder( location );
 
@@ -2391,12 +2272,7 @@ bool KMailICalIfaceImpl::removeSubresource( const QString& location )
 
   // the folder will be removed, which implies closed, so make sure
   // nothing is using it anymore first
-
-  QDBusMessage message =
-      QDBusMessage::createSignal("/Groupware", DBUS_KMAIL, "subresourceDeleted");
-  message << folderContentsType( folder->storage()->contentsType() );
-  message << location;
-  QDBusConnection::sessionBus().send(message);
+  emit subresourceDeleted( folderContentsType( folder->storage()->contentsType() ), location );
 
   if ( mExtraFolders.contains( location ) )
     delete mExtraFolders.take( location );

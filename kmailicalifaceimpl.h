@@ -253,6 +253,18 @@ private slots:
   void slotFolderRenamed();
   void slotMessageRetrieved( KMMessage* );
 
+signals:
+  void incidenceAdded( const QString& type, const QString& folder,
+                       quint32 sernum, int format, const QString& entry );
+  void asyncLoadResult( const QMap<quint32, QString>, const QString& type,
+                        const QString& folder );
+  void incidenceDeleted( const QString& type, const QString& folder,
+                         const QString& uid );
+  void signalRefresh( const QString& type, const QString& folder );
+  void subresourceAdded( const QString& type, const QString& resource,
+                         const QString& label, bool writable, bool alarmRelevant );
+  void subresourceDeleted( const QString& type, const QString& resource );
+
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KMail::FolderContentsType contentsType );
