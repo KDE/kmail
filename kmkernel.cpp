@@ -85,7 +85,7 @@ using KWallet::Wallet;
 #include "kmailinterface.h"
 
 #include "folderadaptor.h"
-#include "kmail_util.h"
+#include "groupware_types.h"
 
 static KMKernel * mySelf = 0;
 
@@ -992,7 +992,7 @@ QString KMKernel::getFolder( const QString& vpath )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface( DBUS_KMAIL, "/MainApplication",
+  QDBusInterface iface( KMAIL_DBUS_SERVICE, "/MainApplication",
                         "org.kde.KUniqueApplication",
                         QDBusConnection::sessionBus());
   QDBusReply<int> reply;
@@ -1458,7 +1458,7 @@ void KMKernel::cleanupImapFolders()
   {
     KMFolderNode *node = *it;
     if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-                          && ( acct->type() == KAccount::Imap )) 
+                          && ( acct->type() == KAccount::Imap ))
                       || !the_acctMgr->isEnabled( node->id() ))
     {
       ++it;

@@ -27,12 +27,16 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef KMAILUTILS_H
-#define KMAILUTILS_H
+
+#ifndef KMAIL_GROUPWARETYPES_H
+#define KMAIL_GROUPWARETYPES_H
 
 #include <QMetaType>
 
-#define DBUS_KMAIL "org.kde.kmail"
+#define KMAIL_DBUS_SERVICE "org.kde.kmail"
+#define KMAIL_DBUS_GROUPWARE_PATH "/Groupware"
+#define KMAIL_DBUS_GROUPWARE_INTERFACE "org.kde.kmail.groupware"
+
 namespace KMail {
 
   struct SubResource {
@@ -46,6 +50,8 @@ namespace KMail {
     QString label;    // shown to the user
     bool writable;
     bool alarmRelevant;
+
+    typedef QList<SubResource> List;
   };
 
   /// The format of the mails containing other contents than actual mail
@@ -57,14 +63,33 @@ namespace KMail {
 
   /// This bitfield indicates which changes have been made in a folder, at syncing time.
   enum FolderChanges { NoChange = 0, ContentsChanged = 1, ACLChanged = 2 };
+
+  /** Custom header structure, consisting of the header name and value. */
+  struct CustomHeader
+  {
+    CustomHeader() {}
+    CustomHeader( const QByteArray &n, const QString &v ) :
+        name( n ), value( v ) {}
+
+    QByteArray name;
+    QString value;
+
+    typedef QList<CustomHeader> List;
+  };
+
+  /**
+    Register D-Bus types.
+  */
+  void registerGroupwareTypes();
 }
 
-Q_DECLARE_METATYPE( KMail::SubResource )
-Q_DECLARE_METATYPE( QList<KMail::SubResource> )
-Q_DECLARE_METATYPE( KMail::StorageFormat )
 typedef QMap<quint32, QString> Quint32QStringMap;
+
+Q_DECLARE_METATYPE( KMail::SubResource )
+Q_DECLARE_METATYPE( KMail::SubResource::List )
+Q_DECLARE_METATYPE( KMail::StorageFormat )
 Q_DECLARE_METATYPE( Quint32QStringMap )
-typedef QMap<QByteArray, QString> QByteArrayStringMap;
-Q_DECLARE_METATYPE( QByteArrayStringMap)
+Q_DECLARE_METATYPE( KMail::CustomHeader )
+Q_DECLARE_METATYPE( KMail::CustomHeader::List )
 
 #endif

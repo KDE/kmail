@@ -140,6 +140,7 @@ ExtraFolder::~ExtraFolder()
         folder->close("kmailicaliface::extrafolder");
 }
 
+#if 0
 const QDBusArgument &operator<<(QDBusArgument &arg, const SubResource &subResource)
 {
   arg.beginStructure();
@@ -173,6 +174,7 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, StorageFormat &format)
   arg.endStructure();
   return arg;
 }
+#endif
 
 
 /*
@@ -208,8 +210,9 @@ KMailICalIfaceImpl::~KMailICalIfaceImpl()
 
 void KMailICalIfaceImpl::registerWithDBus()
 {
-  qDBusRegisterMetaType< QList<KMail::SubResource> >();
-  qDBusRegisterMetaType< QMap<quint32,QString> >();
+/*  qDBusRegisterMetaType< QList<KMail::SubResource> >();
+  qDBusRegisterMetaType< QMap<quint32,QString> >();*/
+  KMail::registerGroupwareTypes();
   QDBusConnection::sessionBus().registerObject( "/Groupware", this, QDBusConnection::ExportAdaptors );
   new GroupwareAdaptor( this );
 }
@@ -449,7 +452,7 @@ static void setXMLContentTypeHeader( KMMessage *msg, const QString &plainTextBod
 quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
                                                 const QString& plainTextBody,
-                                                const QMap<QByteArray, QString>& customHeaders,
+                                                const KMail::CustomHeader::List& customHeaders,
                                                 const QStringList& attachmentURLs,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
@@ -465,11 +468,8 @@ quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
 
-  QMap<QByteArray, QString>::ConstIterator ith = customHeaders.begin();
-  const QMap<QByteArray, QString>::ConstIterator ithEnd = customHeaders.end();
-  for ( ; ith != ithEnd ; ++ith ) {
-    msg->setHeaderField( ith.key(), ith.value() );
-  }
+  foreach ( const CustomHeader header, customHeaders )
+    msg->setHeaderField( header.name, header.value );
   // In case of the ical format, simply add the plain text content with the
   // right content type
   if ( storageFormat( &folder ) == StorageXML ) {
@@ -813,7 +813,7 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
                                      quint32 sernum,
                                      const QString& subject,
                                      const QString& plainTextBody,
-                                     const QMap<QByteArray, QString>& customHeaders,
+                                     const KMail::CustomHeader::List& customHeaders,
                                      const QStringList& attachmentURLs,
                                      const QStringList& attachmentMimetypes,
                                      const QStringList& attachmentNames,
@@ -848,10 +848,8 @@ quint32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
-    QMap<QByteArray, QString>::ConstIterator ith = customHeaders.begin();
-    const QMap<QByteArray, QString>::ConstIterator ithEnd = customHeaders.begin();
-    for ( ; ith != ithEnd ; ++ith )
-      newMsg->setHeaderField( ith.key(), ith.value() );
+    foreach ( const CustomHeader header, customHeaders )
+      newMsg->setHeaderField( header.name, header.value );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
     // Note that plainTextBody isn't used in this branch. We assume it's still valid from when the mail was created.
 

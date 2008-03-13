@@ -48,7 +48,7 @@
 #include <kfoldertree.h>
 using KPIM::KFolderTreeItem;
 #include "kmfoldertype.h"
-#include "kmail_util.h"
+#include "groupware_types.h"
 
 class KMFolder;
 class KMMessage;
@@ -113,7 +113,7 @@ public:
                    quint32 sernum,
                    const QString& subject,
                    const QString& plainTextBody,
-                   const QMap<QByteArray, QString>& customHeaders,
+                   const KMail::CustomHeader::List& customHeaders,
                    const QStringList& attachmentURLs,
                    const QStringList& attachmentMimetypes,
                    const QStringList& attachmentNames,
@@ -299,7 +299,7 @@ private:
   quint32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
                               const QString& plainTextBody,
-                              const QMap<QByteArray, QString>& customHeaders,
+                              const KMail::CustomHeader::List& customHeaders,
                               const QStringList& attachmentURLs,
                               const QStringList& attachmentNames,
                               const QStringList& attachmentMimetypes );

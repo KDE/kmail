@@ -55,7 +55,6 @@
     </method>
     <method name="storageFormat">
       <arg name="resource" type="s" direction="in"/>
-      <!-- ### Shouldn't that be just 'i'? -->
       <arg type="(i)" direction="out"/>
       <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::StorageFormat"/>
     </method>
@@ -76,13 +75,12 @@
       <arg name="sernum" type="u" direction="in"/>
       <arg name="subject" type="s" direction="in"/>
       <arg name="plainTextBody" type="s" direction="in"/>
-      <!-- FIXME should be a{ays} but qdbusxml2cpp considers that invalid -->
-      <arg name="customHeaders" type="a{ss}" direction="in"/>
+      <arg name="customHeaders" type="a(ays)" direction="in"/>
       <arg name="attachmentURLs" type="as" direction="in"/>
       <arg name="attachmentMimetypes" type="as" direction="in"/>
       <arg name="attachmentNames" type="as" direction="in"/>
       <arg name="deletedAttachments" type="as" direction="in"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.In4" value="const QMap&lt;QByteArray, QString&gt; &amp;"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In4" value="const QList&lt;KMail::CustomHeader&gt; &amp;"/>
     </method>
     <method name="incidencesKolab">
       <arg type="a{us}" direction="out"/>
@@ -95,7 +93,7 @@
     <method name="subresourcesKolab">
       <arg type="a(ssbb)" direction="out"/>
       <arg name="contentsType" type="s" direction="in"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList&lt;KMail::SubResource&gt;"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::SubResource::List"/>
     </method>
   </interface>
 </node>
