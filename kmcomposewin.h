@@ -311,9 +311,6 @@ class KMComposeWin : public KMail::Composer
     void slotNewMailReader();
     void slotClose();
     void slotHelp();
-
-
-    void slotUpdateCheckSpellChecking(bool _b);
     void slotUndo();
     void slotRedo();
     void slotCut();
@@ -326,6 +323,7 @@ class KMComposeWin : public KMail::Composer
 
     void slotFolderRemoved( KMFolder * );
     void slotEditDone( KMail::EditorWatcher* watcher );
+    void slotLanguageChanged( const QString &language );
 
   public slots: // kmkernel
     /**
@@ -694,8 +692,6 @@ class KMComposeWin : public KMail::Composer
     void editorFocusChanged( bool gained );
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
-
-    void slotHighlighterCreated();
 
   private:
     QWidget   *mMainWidget;

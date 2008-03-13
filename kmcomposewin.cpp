@@ -108,7 +108,6 @@ using KPIM::DictionaryComboBox;
 
 #include <kio/jobuidelegate.h>
 #include <kio/scheduler.h>
-#include <sonnet/configdialog.h>
 
 // Qt includes
 #include <QBuffer>
@@ -270,6 +269,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   }
 
   mEditor = new KMComposerEditor( this, editorAndCryptoStateIndicators );
+
   vbox->addLayout( hbox );
   vbox->addWidget( mEditor );
   mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
@@ -277,11 +277,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
   mEditor->setAcceptDrops( true );
-  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ), mEditor,
-           SLOT( slotDictionaryChanged( const QString & ) ) );
-  connect( mEditor, SIGNAL( highlighterCreated() ), this, SLOT( slotHighlighterCreated() ) );
-  connect( mEditor, SIGNAL( spellCheckStatus(const QString &)), this,
-           SLOT( slotSpellCheckingStatus( const QString & ) ) );
+  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ),
+           mEditor, SLOT( setSpellCheckLanguage( const QString & ) ) );
+  connect( mEditor, SIGNAL( spellcheckLanguageChanged(const QString &) ),
+           this, SLOT( slotLanguageChanged(const QString&) ) );
+  connect( mEditor, SIGNAL( spellCheckStatus(const QString &)),
+           this, SLOT( slotSpellCheckingStatus(const QString &) ) );
 
   mSnippetWidget = new SnippetWidget( mEditor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -416,11 +417,6 @@ KMComposeWin::~KMComposeWin()
 QString KMComposeWin::dbusObjectPath() const
 {
   return mdbusObjectPath;
-}
-
-void KMComposeWin::slotHighlighterCreated()
-{
-  mEditor->slotDictionaryChanged( mDictionaryCombo->realDictionaryName() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1180,7 +1176,8 @@ void KMComposeWin::setupActions( void )
   KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
 
   KStandardAction::replace( mEditor, SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck", mEditor, SLOT(checkSpelling()) );
+  actionCollection()->addAction( KStandardAction::Spelling , "spellcheck",
+                                 mEditor, SLOT( slotCheckSpelling() ) );
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection()->addAction("paste_quoted", mPasteQuotation );
@@ -1228,15 +1225,17 @@ void KMComposeWin::setupActions( void )
            mSnippetWidget, SLOT( setShown(bool) ) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
-  mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ), i18n("&Automatic Spellchecking"), this );
+  mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ),
+                                                i18n("&Automatic Spellchecking"),
+                                                this );
   actionCollection()->addAction( "options_auto_spellchecking", mAutoSpellCheckingAction );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
+  const bool spellCheckingEnabled = !GlobalSettings::self()->useExternalEditor() && spellChecking;
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
-  mAutoSpellCheckingAction->setChecked( !GlobalSettings::self()->useExternalEditor() && spellChecking );
-  slotAutoSpellCheckingToggled( !GlobalSettings::self()->useExternalEditor() && spellChecking );
+  mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
+  slotAutoSpellCheckingToggled( spellCheckingEnabled );
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
-  connect( mEditor, SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotUpdateCheckSpellChecking(bool)));
 
   QStringList encodings = KMMsgBase::supportedEncodings( true );
   encodings.prepend( i18n("Auto-Detect") );
@@ -1450,11 +1449,6 @@ void KMComposeWin::setupActions( void )
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
   }
-}
-
-void KMComposeWin::slotUpdateCheckSpellChecking(bool _b)
-{
-   mAutoSpellCheckingAction->setChecked(_b);
 }
 
 //-----------------------------------------------------------------------------
@@ -3950,10 +3944,7 @@ void KMComposeWin::slotSubjectTextSpellChecked()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
-  // FIXME this doesn't work at the moment since KMeditor does not
-  // support continuous spell checking when in RichText mode, i.e.
-  // the createHighlighter() method is never called.
-  mEditor->setCheckSpellingEnabled( on );
+  mEditor->toggleSpellChecking( on );
 
   QString temp;
   if ( on ) {
@@ -4101,11 +4092,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  //Laurent TODO fix me
-  KConfig config("kmailrc");
-  Sonnet::ConfigDialog dialog(&config, this);
-  dialog.setWindowIcon( KIcon( "internet-mail" ) );
-  dialog.exec();
+  mEditor->showSpellConfigDialog( "kmailrc" );
 }
 
 //-----------------------------------------------------------------------------
@@ -4509,3 +4496,7 @@ void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
   }
 }
 
+void KMComposeWin::slotLanguageChanged( const QString &language )
+{
+  mDictionaryCombo->setCurrentByDictionaryCode( language );
+}

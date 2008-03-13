@@ -45,8 +45,6 @@ class KMComposerEditor : public KMeditor
 
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
-  public slots:
-     void slotDictionaryChanged( const QString & );
   private:
      KMComposeWin *m_composerWin;
   protected:
