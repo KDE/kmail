@@ -3274,11 +3274,10 @@ void KMComposeWin::slotPaste()
         }
         break;
     }
+  } else if ( mimeData->hasHtml() && mEditor->textMode() == KMeditor::Rich ) {
+    mEditor->textCursor().insertHtml( mimeData->html() );
   } else if ( mimeData->hasText() ) {
-      if ( mEditor->textMode() == KMeditor::Rich )
-        mEditor->textCursor().insertHtml( mimeData->html() );
-      else
-        mEditor->textCursor().insertText( mimeData->text() );
+    mEditor->textCursor().insertText( mimeData->text() );
   }
 }
 
@@ -3884,6 +3883,7 @@ void KMComposeWin::slotCleanSpace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::enableHtml()
 {
+  mEditor->enableRichTextMode();
   if ( !toolBar( "htmlToolBar" )->isVisible() )
     toolBar( "htmlToolBar" )->show();
   if ( !markupAction->isChecked() )
