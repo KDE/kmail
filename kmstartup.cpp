@@ -18,6 +18,7 @@
 
 
 #include "kmstartup.h"
+#include <kdepim-compat.h> // for KDE_signal, remove in KDEPIM 4.2
 
 #include "kmkernel.h" //control center
 #include "kcursorsaver.h"
@@ -46,11 +47,6 @@
 #include <qfile.h>
 
 #undef Status // stupid X headers
-
-// FIXME make it work for KDE 4.0.x; remove when we depend on >=4.1 - jstaniek
-#ifndef KDE_signal
-#define KDE_signal ::signal
-#endif
 
 extern "C" {
 
