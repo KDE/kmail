@@ -2665,8 +2665,19 @@ void KMReaderWin::injectAttachments()
     return;
 
   QString imgpath( locate("data","kmail/pics/") );
-  if( showAttachmentQuicklist() ){
-    QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
+  QString visibility;
+  QString urlHandle;
+  QString imgSrc;
+  if( !showAttachmentQuicklist() )
+    {
+      urlHandle.append( "kmail:showAttachmentQuicklist" );
+      imgSrc.append( "attachmentQuicklistClosed.png" );
+    } else {
+      urlHandle.append( "kmail:hideAttachmentQuicklist" );
+      imgSrc.append( "attachmentQuicklistOpened.png" );
+    }
+
+  QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
   if ( html.isEmpty() )
     return;
 
@@ -2674,17 +2685,11 @@ void KMReaderWin::injectAttachments()
       html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
 
     QString link("");
-    link += "<div style=\"text-align: right;\"><a href=\"kmail:hideAttachmentQuicklist\"><img src=\""+imgpath+"attachmentQuicklistOpened.png\"/></a></div>";
+    link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
     html.prepend( link );
+
     assert( injectionPoint.tagName() == "div" );
-    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
-  } else {
-    QString html("");
-    html += "<div style=\"text-align: right; border-width: 0px;\">"
-      "<a href=\"kmail:showAttachmentQuicklist\"><img src=\""+imgpath+"attachmentQuicklistClosed.png\"/></a></div>";
-    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
-  }
-  
+    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );  
 }
 
 static QColor nextColor( const QColor & c )
@@ -2703,12 +2708,19 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
   if ( node->firstChild() ) {
     QString subHtml = renderAttachments( node->firstChild(), nextColor( bgColor ) );
     if ( !subHtml.isEmpty() ) {
+
+      QString visibility;
+      if( !showAttachmentQuicklist() )
+	{
+	  visibility.append( "display:none;" );
+	}
+
       QString margin;
       if ( node != mRootNode || headerStyle() != HeaderStyle::enterprise() )
         margin = "padding:2px; margin:2px; ";
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += QString::fromLatin1("<div style=\"background:%1; %2"
-            "vertical-align:middle; float:left;\">").arg( bgColor.name() ).arg( margin );
+            "vertical-align:middle; float:left; %3\">").arg( bgColor.name() ).arg( margin ).arg( visibility );
       html += subHtml;
       if ( node->msgPart().typeStr() == "message" || node == mRootNode )
         html += "</div>";
