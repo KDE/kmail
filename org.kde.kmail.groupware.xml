@@ -95,5 +95,15 @@
       <arg name="contentsType" type="s" direction="in"/>
       <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::SubResource::List"/>
     </method>
+    <method name="addSubresource">
+      <arg type="b" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+      <arg name="parentRes" type="s" direction="in"/>
+      <arg name="contentsType" type="s" direction="in"/>
+    </method>
+    <method name="removeSubresource">
+      <arg type="b" direction="out"/>
+      <arg name="resource" type="s" direction="in"/>
+    </method>
   </interface>
 </node>
