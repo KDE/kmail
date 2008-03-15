@@ -514,7 +514,7 @@ void KMFolderTree::reload(bool openFolders)
 {
   if ( mReloading ) {
     // no parallel reloads are allowed
-    kDebug(5006) <<"KMFolderTree::reload - already reloading";
+    kDebug(5006) << "Already reloading";
     return;
   }
   mReloading = true;
@@ -1618,7 +1618,7 @@ void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 {
-//  kDebug(5006) <<"KMFolderTree::slotUpdateCountsDelayed()";
+//  kDebug(5006);
   if ( !mFolderToUpdateCount.contains( folder->idString() ) )
   {
 //    kDebug( 5006 )<<"adding" << folder->idString() <<" to updateCountList";
@@ -1631,7 +1631,7 @@ void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
 
 void KMFolderTree::slotUpdateCountTimeout()
 {
-//  kDebug(5006) <<"KMFolderTree::slotUpdateCountTimeout()";
+//  kDebug(5006);
 
   QMap<QString,KMFolder*>::iterator it;
   for ( it= mFolderToUpdateCount.begin();
@@ -1647,7 +1647,7 @@ void KMFolderTree::slotUpdateCountTimeout()
 
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
- // kDebug(5006) <<"KMFolderTree::slotUpdateCounts()";
+ // kDebug(5006);
   Q3ListViewItem * current;
   if (folder)
     current = indexOfFolder(folder);

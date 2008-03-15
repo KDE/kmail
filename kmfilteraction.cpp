@@ -122,7 +122,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
-    kDebug(5006) <<"KMFilterAction::sendMDN(): sending failed.";
+    kDebug(5006) << "Sending failed.";
     //delete mdn;
   }
 

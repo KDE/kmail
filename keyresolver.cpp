@@ -506,10 +506,11 @@ Kleo::KeyResolver::~KeyResolver() {
 }
 
 Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, const char * dontAskAgainName,
-						    bool mine, bool sign, bool ca,
-						    int recur_limit, const GpgME::Key & orig ) const {
+                                                    bool mine, bool sign, bool ca,
+                                                    int recur_limit, const GpgME::Key & orig ) const
+{
   if ( recur_limit <= 0 ) {
-    kDebug(5006) <<"Kleo::KeyResolver::checkKeyNearExpiry(): key chain too long (>100 certs)";
+    kDebug(5006) << "Key chain too long (>100 certs)";
     return Kpgp::Ok;
   }
   const GpgME::Subkey subkey = key.subkey(0);
@@ -1456,8 +1457,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
 std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns, bool secret ) const {
   if ( patterns.empty() )
     return std::vector<GpgME::Key>();
-  kDebug(5006) <<"Kleo::KeyResolver::lookup( \"" << patterns.join("\", \"" )
-	           << "\"," << secret << ")";
+  kDebug(5006) << "( \"" << patterns.join("\", \"" ) << "\"," << secret << ")";
   std::vector<GpgME::Key> result;
   if ( mCryptoMessageFormats & (InlineOpenPGPFormat|OpenPGPMIMEFormat) )
     if ( const Kleo::CryptoBackend::Protocol * p = Kleo::CryptoBackendFactory::instance()->openpgp() ) {
@@ -1509,7 +1509,7 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
       }
     }
     if ( f == AutoFormat )
-      kWarning(5006) <<"Kleo::KeyResolver::addKeys(): Something went wrong. Didn't find a format for \""
+      kWarning(5006) << "Something went wrong. Didn't find a format for \""
                   << it->address << "\"";
     else
       std::remove_copy_if( it->keys.begin(), it->keys.end(),

@@ -515,8 +515,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         msgPart->setContentDisposition( attachContDisp );
       }
       if( !attachCharset.isEmpty() ) {
-        // kDebug(5006) <<"KMKernel::openComposer set attachCharset to"
-        // << attachCharset;
+        // kDebug(5006) << "Set attachCharset to" << attachCharset;
         msgPart->setCharset( attachCharset );
       }
       // Don't show the composer window, if the automatic sending is checked
@@ -1983,7 +1982,7 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
 
 KPIMIdentities::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
-    kDebug(5006) <<"instantating KPIMIdentities::IdentityManager";
+    kDebug(5006);
     mIdentityManager = new KPIMIdentities::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;

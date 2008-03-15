@@ -617,7 +617,7 @@ int KMFolderSearch::create()
 
   kDebug(5006) <<"Creating folder" << location();
   if ( access( QFile::encodeName( location() ), F_OK ) == 0 ) {
-    kDebug(5006) <<"KMFolderSearch::create call to access function failed.";
+    kDebug(5006) << "Call to access function failed.";
     return EEXIST;
   }
 

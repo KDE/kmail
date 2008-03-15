@@ -734,7 +734,7 @@ void RecipientsPicker::slotPicked()
 
 void RecipientsPicker::pick( Recipient::Type type )
 {
-  kDebug(5006) <<"RecipientsPicker::pick" << int( type );
+  kDebug(5006) << int( type );
 
   int count = mRecipientList->selectedItems().count();
 

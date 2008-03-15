@@ -232,7 +232,6 @@ int KMFolderMbox::create()
   kDebug() << "Creating folder" << objectName();
   if (access(QFile::encodeName(location()), F_OK) == 0) {
     kDebug() << "call to access function failed.";
-    kDebug() << "File::";
     kDebug() << "Error";
     return EEXIST;
   }

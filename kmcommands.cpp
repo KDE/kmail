@@ -2174,8 +2174,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
   if ( folder != mDestFolder || !mLostBoys.contains( serNum )  ) {
-    //kDebug(5006) <<"KMMoveCommand::msgAddedToDestFolder different"
-    //                 "folder or invalid serial number.";
+    //kDebug(5006) << "Different folder or invalid serial number.";
     return;
   }
   mLostBoys.removeAll(serNum);
@@ -2702,7 +2701,7 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
         it.key()->setDwPart( part );
     }
   } else
-    kWarning(5006) <<"KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!";
+    kWarning(5006) << "Could not find bodypart!";
   --mNeedsRetrieval;
   if ( mNeedsRetrieval == 0 )
     execute();

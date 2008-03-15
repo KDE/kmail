@@ -1238,8 +1238,7 @@ void KMFolderCachedImap::serverSyncInternal()
   break;
 
   default:
-    kDebug(5006) <<"KMFolderCachedImap::serverSyncInternal() WARNING: no such state"
-                 << int(mSyncState);
+    kDebug(5006) << "WARNING: no such state" << int(mSyncState);
   }
 }
 
@@ -2067,8 +2066,7 @@ void KMFolderCachedImap::listDirectory2()
     KMFolderCachedImap *parent =
       findParent( mSubfolderPaths.first(), mSubfolderNames.first() );
     if ( parent ) {
-      kDebug(5006) <<"KMFolderCachedImap::listDirectory2 - pass listing to"
-                   << parent->label();
+      kDebug(5006) << "Pass listing to" << parent->label();
       mSubfolderNames.clear();
     }
   }

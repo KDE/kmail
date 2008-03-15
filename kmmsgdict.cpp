@@ -215,7 +215,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
 
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
-    kDebug(5006) <<"KMMsgDict::insert: Cannot insert the message,"
+    kDebug(5006) << "Cannot insert the message,"
       << "null pointer to storage. Requested serial: " << msgSerNum;
     kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
       << msg->toStrip() << ", Date:" << msg->dateStr();
@@ -258,7 +258,7 @@ void KMMsgDict::replace(unsigned long msgSerNum,
 {
   KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if ( !folder ) {
-    kDebug(5006) <<"KMMsgDict::replace: Cannot replace the message serial"
+    kDebug(5006) << "Cannot replace the message serial"
       << "number, null pointer to storage. Requested serial: " << msgSerNum;
     kDebug(5006) <<"  Message info: Subject:" << msg->subject() <<", To:"
       << msg->toStrip() << ", Date:" << msg->dateStr();

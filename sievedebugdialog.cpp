@@ -308,10 +308,10 @@ void SieveDebugDialog::slotDiagNextScript()
 void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,
     const QString &script, bool active )
 {
-    kDebug( 5006 ) <<"SieveDebugDialog::slotGetScript( ??," << success
-              << ", ?," << active << ")" << endl
-              << "script:" << endl
-              << script;
+    kDebug( 5006 ) << "( ??," << success
+                   << ", ?," << active << ")" << endl
+                   << "script:" << endl
+                   << script;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     if ( script.isEmpty() )
@@ -371,7 +371,7 @@ void SieveDebugDialog::slotGetScriptList( SieveJob *job, bool success,
 
 void SieveDebugDialog::slotDialogOk()
 {
-    kDebug(5006) <<"SieveDebugDialog::slotDialogOk()";
+    kDebug(5006);
 }
 
 void SieveDebugDialog::slotPutActiveResult( SieveJob * job, bool success )
@@ -395,7 +395,7 @@ void SieveDebugDialog::handlePutResult( SieveJob *, bool success, bool activated
             "Out of Office reply has been deactivated." ) );
     }
 
-    kDebug( 5006 ) <<"SieveDebugDialog::handlePutResult( ???," << success <<", ? )";
+    kDebug( 5006 ) << "( ???," << success <<", ? )";
     mSieveJob = 0; // job deletes itself after returning from this slot!
 }
 

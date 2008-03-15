@@ -100,7 +100,7 @@ KMFolderDialog::KMFolderDialog( KMFolder *aFolder, KMFolderDir *aFolderDir,
   setObjectName( "KMFolderDialog" );
   setModal( true );
 
-  kDebug(5006)<<"KMFolderDialog::KMFolderDialog()";
+  kDebug(5006);
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folders;

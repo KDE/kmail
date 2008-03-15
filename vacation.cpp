@@ -322,9 +322,9 @@ namespace {
   public:
     VacationDataExtractor()
       : KSieve::ScriptBuilder(),
-	mContext( None ), mNotificationInterval( 0 )
+        mContext( None ), mNotificationInterval( 0 )
     {
-      kDebug(5006) <<"VacationDataExtractor instantiated";
+      kDebug(5006);
     }
     virtual ~VacationDataExtractor() {}
 
@@ -334,15 +334,15 @@ namespace {
 
   private:
     void commandStart( const QString & identifier ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::commandStart( \"" << identifier <<"\" )";
+      kDebug( 5006 ) << "( \"" << identifier <<"\" )";
       if ( identifier != "vacation" )
-	return;
+        return;
       reset();
       mContext = VacationCommand;
     }
 
     void commandEnd() {
-      kDebug( 5006 ) <<"VacationDataExtractor::commandEnd()";
+      kDebug( 5006 );
       mContext = None;
     }
 
@@ -356,54 +356,53 @@ namespace {
     void bracketComment( const QString & ) {}
     void lineFeed() {}
     void error( const KSieve::Error & e ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::error() ###"
-		      << e.asString() << "@" << e.line() << "," << e.column();
+      kDebug( 5006 ) << e.asString() << "@" << e.line() << "," << e.column();
     }
     void finished() {}
 
     void taggedArgument( const QString & tag ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::taggedArgument( \"" << tag <<"\" )";
+      kDebug( 5006 ) << "( \"" << tag <<"\" )";
       if ( mContext != VacationCommand )
-	return;
+        return;
       if ( tag == "days" )
-	mContext = Days;
+        mContext = Days;
       else if ( tag == "addresses" )
-	mContext = Addresses;
+        mContext = Addresses;
     }
 
     void stringArgument( const QString & string, bool, const QString & ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::stringArgument( \"" << string <<"\" )";
+      kDebug( 5006 ) << "( \"" << string <<"\" )";
       if ( mContext == Addresses ) {
-	mAliases.push_back( string );
-	mContext = VacationCommand;
+        mAliases.push_back( string );
+        mContext = VacationCommand;
       } else if ( mContext == VacationCommand ) {
-	mMessageText = string;
-	mContext = VacationCommand;
+        mMessageText = string;
+        mContext = VacationCommand;
       }
     }
 
     void numberArgument( unsigned long number, char ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::numberArgument( \"" << number <<"\" )";
+      kDebug( 5006 ) << "( \"" << number <<"\" )";
       if ( mContext != Days )
-	return;
+        return;
       if ( number > INT_MAX )
-	mNotificationInterval = INT_MAX;
+        mNotificationInterval = INT_MAX;
       else
-	mNotificationInterval = number;
+        mNotificationInterval = number;
       mContext = VacationCommand;
     }
 
     void stringListArgumentStart() {}
     void stringListEntry( const QString & string, bool, const QString & ) {
-      kDebug( 5006 ) <<"VacationDataExtractor::stringListEntry( \"" << string <<"\" )";
+      kDebug( 5006 ) << "( \"" << string <<"\" )";
       if ( mContext != Addresses )
-	return;
+        return;
       mAliases.push_back( string );
     }
     void stringListArgumentEnd() {
-      kDebug( 5006 ) <<"VacationDataExtractor::stringListArgumentEnd()";
+      kDebug( 5006 );
       if ( mContext != Addresses )
-	return;
+        return;
       mContext = VacationCommand;
     }
 
@@ -414,7 +413,7 @@ namespace {
     QStringList mAliases;
 
     void reset() {
-      kDebug(5006) <<"VacationDataExtractor::reset()";
+      kDebug(5006);
       mContext = None;
       mNotificationInterval = 0;
       mAliases.clear();
@@ -454,8 +453,8 @@ namespace KMail {
   }
 
   QString Vacation::composeScript( const QString & messageText,
-				   int notificationInterval,
-				   const AddrSpecList & addrSpecs,
+                                   int notificationInterval,
+                                   const AddrSpecList & addrSpecs,
                                    bool sendForSpam, const QString & domain )
   {
     QString addressesArgument;
@@ -464,8 +463,8 @@ namespace KMail {
       addressesArgument += ":addresses [ ";
       QStringList sl;
       for ( AddrSpecList::const_iterator it = addrSpecs.begin() ; it != addrSpecs.end() ; ++it ) {
-	sl.push_back( '"' + (*it).asString().replace( '\\', "\\\\" ).replace( '"', "\\\"" ) + '"' );
-	aliases.push_back( (*it).asString() );
+        sl.push_back( '"' + (*it).asString().replace( '\\', "\\\\" ).replace( '"', "\\\"" ) + '"' );
+        aliases.push_back( (*it).asString() );
       }
       addressesArgument += sl.join( ", " ) + " ] ";
     }
@@ -516,8 +515,8 @@ namespace KMail {
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
         KUrl u = findUrlForAccount( iab );
-	if ( !u.isEmpty() )
-	  return u;
+        if ( !u.isEmpty() )
+          return u;
       }
     return KUrl();
   }
@@ -540,7 +539,7 @@ namespace KMail {
     const QByteArray scriptUTF8 = script.trimmed().toUtf8();
     kDebug(5006) <<"scriptUtf8 = \"" + scriptUTF8 +"\"";
     KSieve::Parser parser( scriptUTF8.begin(),
-			   scriptUTF8.begin() + scriptUTF8.length() );
+                           scriptUTF8.begin() + scriptUTF8.length() );
     VacationDataExtractor vdx;
     SpamDataExtractor sdx;
     DomainRestrictionDataExtractor drdx;
@@ -559,16 +558,16 @@ namespace KMail {
   }
 
   QString Vacation::defaultMessageText() {
-    return i18n("I am out of office till %1.\n"
-		"\n"
-		"In urgent cases, please contact Mrs. <vacation replacement>\n"
-		"\n"
-		"email: <email address of vacation replacement>\n"
-		"phone: +49 711 1111 11\n"
-		"fax.:  +49 711 1111 12\n"
-		"\n"
-		"Yours sincerely,\n"
-		"-- <enter your name and email address here>\n",
+    return i18n( "I am out of office till %1.\n"
+                 "\n"
+                 "In urgent cases, please contact Mrs. <vacation replacement>\n"
+                 "\n"
+                 "email: <email address of vacation replacement>\n"
+                 "phone: +49 711 1111 11\n"
+                 "fax.:  +49 711 1111 12\n"
+                 "\n"
+                 "Yours sincerely,\n"
+                 "-- <enter your name and email address here>\n",
         KGlobal::locale()->formatDate( QDate::currentDate().addDays( 1 ) ) );
   }
 
@@ -579,9 +578,9 @@ namespace KMail {
   QStringList Vacation::defaultMailAliases() {
     QStringList sl;
     for ( KPIMIdentities::IdentityManager::ConstIterator it = kmkernel->identityManager()->begin() ;
-	  it != kmkernel->identityManager()->end() ; ++it )
+          it != kmkernel->identityManager()->end() ; ++it )
       if ( !(*it).emailAddr().isEmpty() )
-	sl.push_back( (*it).emailAddr() );
+        sl.push_back( (*it).emailAddr() );
     return sl;
   }
 
@@ -594,20 +593,20 @@ namespace KMail {
   }
 
   void Vacation::slotGetResult( SieveJob * job, bool success,
-				const QString & script, bool active ) {
-    kDebug(5006) <<"Vacation::slotGetResult( ??," << success
-	      << ", ?," << active << ")" << endl
-	      << "script:" << endl
-	      << script;
+                                const QString & script, bool active ) {
+    kDebug(5006) << success
+                 << ", ?," << active << ")" << endl
+                 << "script:" << endl
+                 << script;
     mSieveJob = 0; // job deletes itself after returning from this slot!
 
     if ( !mCheckOnly && mUrl.protocol() == "sieve" && !job->sieveCapabilities().isEmpty() &&
-	 !job->sieveCapabilities().contains("vacation") ) {
-      KMessageBox::sorry( 0, i18n("Your server did not list \"vacation\" in "
-				  "its list of supported Sieve extensions;\n"
-				  "without it, KMail cannot install out-of-"
-				  "office replies for you.\n"
-				  "Please contact you system administrator.") );
+         !job->sieveCapabilities().contains("vacation") ) {
+      KMessageBox::sorry( 0, i18n( "Your server did not list \"vacation\" in "
+                                   "its list of supported Sieve extensions;\n"
+                                   "without it, KMail cannot install out-of-"
+                                   "office replies for you.\n"
+                                   "Please contact you system administrator." ) );
       emit result( false );
       return;
     }
@@ -624,10 +623,10 @@ namespace KMail {
 
     if ( !mCheckOnly && ( !success || !parseScript( script, messageText, notificationInterval, aliases, sendForSpam, domainName ) ) )
       KMessageBox::information( 0, i18n("Someone (probably you) changed the "
-					"vacation script on the server.\n"
-					"KMail is no longer able to determine "
-					"the parameters for the autoreplies.\n"
-					"Default values will be used." ) );
+                                        "vacation script on the server.\n"
+                                        "KMail is no longer able to determine "
+                                        "the parameters for the autoreplies.\n"
+                                        "Default values will be used." ) );
 
     mWasActive = active;
     if ( mDialog ) {
@@ -670,13 +669,13 @@ namespace KMail {
   }
 
   void Vacation::slotDialogOk() {
-    kDebug(5006) <<"Vacation::slotDialogOk()";
+    kDebug(5006);
     // compose a new script:
     const QString script = composeScript( mDialog->messageText(),
-				    mDialog->notificationInterval(),
-				    mDialog->mailAliases(),
-                                    mDialog->sendForSpam(),
-                                    mDialog->domainName() );
+                                          mDialog->notificationInterval(),
+                                          mDialog->mailAliases(),
+                                          mDialog->sendForSpam(),
+                                          mDialog->domainName() );
     const bool active = mDialog->activateVacation();
     emit scriptActive( active );
 
@@ -685,9 +684,9 @@ namespace KMail {
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );
     connect( mSieveJob, SIGNAL(gotScript(KMail::SieveJob*,bool,const QString&,bool)),
-	     active
-	     ? SLOT(slotPutActiveResult(KMail::SieveJob*,bool))
-	     : SLOT(slotPutInactiveResult(KMail::SieveJob*,bool)) );
+             active
+                 ? SLOT(slotPutActiveResult(KMail::SieveJob*,bool))
+                 : SLOT(slotPutInactiveResult(KMail::SieveJob*,bool)) );
 
     // destroy the dialog:
     mDialog->delayedDestruct();
@@ -695,7 +694,7 @@ namespace KMail {
   }
 
   void Vacation::slotDialogCancel() {
-    kDebug(5006) <<"Vacation::slotDialogCancel()";
+    kDebug(5006);
     mDialog->delayedDestruct();
     mDialog = 0;
     emit result( false );
@@ -712,12 +711,12 @@ namespace KMail {
   void Vacation::handlePutResult( SieveJob *, bool success, bool activated ) {
     if ( success )
       KMessageBox::information( 0, activated
-				? i18n("Sieve script installed successfully on the server.\n"
-				       "Out of Office reply is now active.")
-				: i18n("Sieve script installed successfully on the server.\n"
-				       "Out of Office reply has been deactivated.") );
+          ? i18n("Sieve script installed successfully on the server.\n"
+                 "Out of Office reply is now active.")
+          : i18n("Sieve script installed successfully on the server.\n"
+                 "Out of Office reply has been deactivated.") );
 
-    kDebug(5006) <<"Vacation::handlePutResult( ???," << success <<", ? )";
+    kDebug(5006) << "( ???," << success << ", ? )";
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );
     emit scriptActive( activated );

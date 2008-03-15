@@ -147,8 +147,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 {
   assert ( aRule );
 
-//  kDebug(5006) << "KMSearchRuleWidget::setRule("
-//               << aRule->asString() << ")";
+//  kDebug(5006) << "(" << aRule->asString() << ")";
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );

@@ -619,7 +619,7 @@ void KMComposeWin::readConfig( void )
 
   mIdentity->setCurrentIdentity( mId );
 
-  kDebug(5006) <<"KMComposeWin::readConfig." << mIdentity->currentIdentityName();
+  kDebug(5006) << mIdentity->currentIdentityName();
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
@@ -1564,7 +1564,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
   if ( !newMsg ) {
-    kDebug(5006) <<"KMComposeWin::setMsg() : newMsg == 0!";
+    kDebug(5006) << "newMsg == 0!";
     return;
   }
   mMsg = newMsg;
@@ -1780,8 +1780,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
 #ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
   const int num = mMsg->numBodyParts();
-  kDebug(5006) <<"KMComposeWin::setMsg() mMsg->numBodyParts="
-               << mMsg->numBodyParts();
+  kDebug(5006) << "mMsg->numBodyParts=" << mMsg->numBodyParts();
 
   if ( num > 0 ) {
     KMMessagePart bodyPart;
@@ -1811,7 +1810,7 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
       mMsg->bodyPart( 0, &bodyPart );
       if ( bodyPart.typeStr().toLower() == "text" ) {
         // we have a mp/mx body with a text body
-        kDebug(5006) <<"KMComposeWin::setMsg() : text/* found";
+        kDebug(5006) << "text/* found";
         firstAttachment = 1;
       }
     }
@@ -2040,16 +2039,16 @@ bool KMComposeWin::userForgotAttachment()
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
-  kDebug(5006) <<"entering KMComposeWin::applyChanges";
+  kDebug(5006) << "Entering";
 
   if(!mMsg) {
-    kDebug(5006) <<"KMComposeWin::applyChanges() : mMsg == 0!";
+    kDebug(5006) << "mMsg == 0!";
     emit applyChangesDone( false );
     return;
   }
 
   if( mComposer ) {
-    kDebug(5006) <<"KMComposeWin::applyChanges() : applyChanges called twice";
+    kDebug(5006) << "applyChanges called twice";
     return;
   }
 

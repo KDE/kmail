@@ -180,15 +180,13 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
     return;
   default:
     if ( button & All )
-      kDebug(5006) <<"SimpleStringListEditor::setButtonText: No such button!";
+      kDebug(5006) << "No such button!";
     else
-      kDebug(5006) <<"SimpleStringListEditor::setButtonText: Can only set"
-                     "text for one button at a time!";
+      kDebug(5006) << "Can only set text for one button at a time!";
     return;
   }
 
-  kDebug(5006) <<"SimpleStringListEditor::setButtonText: the requested"
-    "button has not been created!";
+  kDebug(5006) << "The requested button has not been created!";
 }
 
 void SimpleStringListEditor::slotAdd() {

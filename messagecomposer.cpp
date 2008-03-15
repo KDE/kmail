@@ -1818,8 +1818,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
     msg->headers().ContentType().SetType( DwMime::kTypeMultipart );
     msg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
     msg->headers().ContentType().CreateBoundary( 0 );
-    kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                 << "set top level Content-Type to Multipart/Mixed";
+    kDebug(5006) << "Set top level Content-Type to Multipart/Mixed";
 
     // add our Body Part
     DwBodyPart *tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
@@ -1937,14 +1936,12 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
     if ( !ourFineBodyPart.originalContentTypeStr().isEmpty() ) {
       msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
       msg->headers().ContentType().Parse();
-      kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                   << "set top level Content-Type from originalContentTypeStr()="
+      kDebug(5006) << "Set top level Content-Type from originalContentTypeStr()="
                    << ourFineBodyPart.originalContentTypeStr();
     } else {
       msg->headers().ContentType().FromString(
         ourFineBodyPart.typeStr() + '/' + ourFineBodyPart.subtypeStr() );
-      kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                   << "set top level Content-Type to"
+      kDebug(5006) << "Set top level Content-Type to"
                    << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr();
     }
     if ( !ourFineBodyPart.charset().isEmpty() ) {
@@ -1958,8 +1955,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
                          ourFineBodyPart.contentDisposition() );
 
     if ( mDebugComposerCrypto ) {
-      kDebug(5006) <<"MessageComposer::addBodyAndAttachments() :"
-                   << "top level headers and body adjusted";
+      kDebug(5006) << "Top level headers and body adjusted";
     }
 
     // set body content
@@ -1975,11 +1971,9 @@ void MessageComposer::addBodyAndAttachments( KMMessage *msg,
                        splitInfo.recipients.join( ", " ), KMMessage::Address );
 
   if ( mDebugComposerCrypto ) {
-    kDebug(5006) <<"MessageComposer::addBodyAndAttachments():"
-                 << "Final message:\n|||" << msg->asString() << "|||\n\n";
+    kDebug(5006) << "Final message:\n|||" << msg->asString() << "|||\n\n";
     msg->headers().Assemble();
-    kDebug(5006) <<"\n\n\nMessageComposer::addBodyAndAttachments():"
-                 << "Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n";
+    kDebug(5006) << "\n\n\nFinal headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n";
   }
 }
 

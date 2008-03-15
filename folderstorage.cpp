@@ -377,7 +377,7 @@ void FolderStorage::removeMsg(int idx, bool)
   //assert(idx>=0);
   if(idx < 0)
   {
-    kDebug(5006) <<"FolderStorage::removeMsg() : idx < 0";
+    kDebug(5006) << "idx < 0";
     return;
   }
 

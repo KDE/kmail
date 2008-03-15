@@ -246,8 +246,7 @@ bool CopyFolderJob::createTargetDir()
   // FIXME we should probably copy over most if not all settings
   mNewFolder->storage()->setContentsType( mStorage->contentsType(), true /*quiet*/ );
   mNewFolder->storage()->writeConfig();
-  kDebug(5006)<<"CopyJob::createTargetDir -" << mStorage->folder()->idString()
-    << "|=>" << mNewFolder->idString();
+  kDebug(5006) << mStorage->folder()->idString() << "|=>" << mNewFolder->idString();
   return !waitForFolderCreation;
 }
 

@@ -1013,7 +1013,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
-//  kDebug() << "KMailICalIfaceImpl::slotIncidenceAdded";
+//  kDebug();
   QString type = folderContentsType( folder->storage()->contentsType() );
   if( type.isEmpty() ) {
     kError() <<"Not an IMAP resource folder";
@@ -1898,7 +1898,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
   KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
-  //kDebug() <<"KMailICalIfaceImpl::initFolder" << folderName( itemType );
+  //kDebug() << folderName( itemType );
 
   // Find the folder
   StandardFolderSearchResult result = findStandardResourceFolder( mFolderParentDir, contentsType );

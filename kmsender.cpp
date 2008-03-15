@@ -326,7 +326,7 @@ void KMSender::doSendMsg()
   if ( mCurrentMsg  && kmkernel->filterMgr() ) {
     mCurrentMsg->setTransferInProgress( false );
     if ( mCurrentMsg->hasUnencryptedMsg() ) {
-      kDebug(5006) <<"KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data";
+      kDebug(5006) << "Post-processing: replace mCurrentMsg body by unencryptedMsg data";
       // delete all current body parts
       mCurrentMsg->deleteBodyParts();
       // copy Content-[..] headers from unencrypted message to current one

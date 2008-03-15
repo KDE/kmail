@@ -305,7 +305,7 @@ void ImapJob::slotGetNextMessage()
         jd.total = msg->msgSizeServer();
   }
   url.setPath( path );
-//  kDebug(5006) <<"ImapJob::slotGetNextMessage - retrieve" << url.path();
+//  kDebug(5006) << "Retrieve" << url.path();
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
   const QString escapedSubject = Qt::escape( msg->subject() );
@@ -374,7 +374,7 @@ void ImapJob::slotGetMessageResult( KJob * job )
   } else {
     if ((*it).data.size() > 0)
     {
-      kDebug(5006) <<"ImapJob::slotGetMessageResult - retrieved part" << mPartSpecifier;
+      kDebug(5006) << "Retrieved part" << mPartSpecifier;
       if ( mPartSpecifier.isEmpty() ||
            mPartSpecifier == "HEADER" )
       {
@@ -421,7 +421,7 @@ void ImapJob::slotGetMessageResult( KJob * job )
           msg->updateAttachmentState();
       }
     } else {
-      kDebug(5006) <<"ImapJob::slotGetMessageResult - got no data for" << mPartSpecifier;
+      kDebug(5006) << "Got no data for" << mPartSpecifier;
       gotData = false;
       msg->setReadyToShow( true );
       // nevertheless give visual feedback

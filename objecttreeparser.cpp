@@ -2844,8 +2844,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   else
      htmlStr.append( quoteEnd );
 
-  //kDebug() <<"KMReaderWin::quotedHTML:"
-  //         << "========================================\n"
+  //kDebug() << "========================================\n"
   //         << htmlStr
   //         << "\n======================================\n";
   return htmlStr;

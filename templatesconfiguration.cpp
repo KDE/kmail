@@ -355,7 +355,7 @@ void TemplatesConfiguration::loadFromPhrases()
 
 void TemplatesConfiguration::importFromPhrases()
 {
-  kDebug(5006) <<"TemplatesConfiguration::importFromPhrases()";
+  kDebug(5006);
 
   int currentNr = GlobalSettings::self()->replyCurrentLanguage();
 

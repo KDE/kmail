@@ -127,8 +127,8 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem *item,
      return;
    }
 
-   kDebug(5006) <<"\n**\n** KMMimePartTree::itemRightClicked() **\n**";
- 
+   kDebug(5006);
+
    QMenu popup;
    popup.addAction( SmallIcon( "document-save-as" ),i18n( "Save &As..." ),
                     this, SLOT( slotSaveAs() ) );

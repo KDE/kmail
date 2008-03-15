@@ -143,7 +143,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
     for ( ; it2 != msgList.end(); ++it2 ) {
        KMMessage *msg = *it2;
        if ( msg->transferInProgress() ) {
-          kDebug(5006) <<"KMAcctImap::killAllJobs - resetting mail";
+          kDebug(5006) << "Resetting mail";
           msg->setTransferInProgress( false );
        }
     }
@@ -490,7 +490,7 @@ void KMAcctImap::slotUpdateFolderList()
 {
   if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() )
   {
-    kWarning(5006) <<"KMAcctImap::slotUpdateFolderList return";
+    kWarning(5006) << "Return";
     return;
   }
   QStringList strList;

@@ -733,8 +733,7 @@ void KMMessage::parseTextStringFromDwPart( partNode * root,
                                DwMime::kSubtypeUnknown,
                                true,
                                false );
-  kDebug(5006) <<"\n\n======= KMMessage::parseTextStringFromDwPart()   -"
-                << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
+  kDebug(5006) << ( curNode ? "text part found!\n" : "sorry, no text node!\n" );
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->subType();
     // now parse the TEXT message part we want to quote
@@ -2347,8 +2346,7 @@ void KMMessage::setHeaderField( const QByteArray& aName, const QString& bValue,
 {
 #if 0
   if ( type != Unstructured )
-    kDebug(5006) <<"KMMessage::setHeaderField( \"" << aName <<"\", \""
-                << bValue << "\"," << type << ")";
+    kDebug(5006) << "( \"" << aName <<"\", \"" << bValue << "\"," << type << ")";
 #endif
   if (aName.isEmpty()) return;
 
@@ -3373,7 +3371,7 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::stripEmailAddr( const QByteArray& aStr )
 {
-  //kDebug(5006) <<"KMMessage::stripEmailAddr(" << aStr <<" )";
+  //kDebug(5006) << "(" << aStr <<" )";
 
   if ( aStr.isEmpty() )
     return QByteArray();
@@ -3524,15 +3522,14 @@ QByteArray KMMessage::stripEmailAddr( const QByteArray& aStr )
     result += angleAddress;
   }
 
-  //kDebug(5006) <<"KMMessage::stripEmailAddr(...) returns \"" << result
-  //              << "\"";
+  //kDebug(5006) << "Returns \"" << result << "\"";
   return result;
 }
 
 //-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr( const QString& aStr )
 {
-  //kDebug(5006) <<"KMMessage::stripEmailAddr(" << aStr <<" )";
+  //kDebug(5006) << "(" << aStr << ")";
 
   if ( aStr.isEmpty() )
     return QString();
@@ -3686,8 +3683,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
     result += angleAddress;
   }
 
-  //kDebug(5006) <<"KMMessage::stripEmailAddr(...) returns \"" << result
-  //              << "\"";
+  //kDebug(5006) << "Returns \"" << result << "\"";
   return result;
 }
 
@@ -3754,8 +3750,7 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
   // cut of the trailing ", "
   result.truncate( result.length() - 2 );
 
-  //kDebug(5006) <<"KMMessage::emailAddrAsAnchor('" << aEmail
-  //              << "') returns:\n-->" << result << "<--";
+  //kDebug(5006) << "('" << aEmail << "') returns:\n-->" << result << "<--";
   return result;
 }
 
@@ -3973,7 +3968,7 @@ QByteArray KMMessage::charset() const
 void KMMessage::setCharset(const QByteArray& bStr)
 {
   kWarning( type() != DwMime::kTypeText )
-    << "KMMessage::setCharset(): trying to set a charset for a non-textual mimetype." << endl
+    << "Trying to set a charset for a non-textual mimetype." << endl
     << "Fix this caller:" << endl
     << "====================================================================" << endl
     << kBacktrace( 5 ) << endl
@@ -4130,11 +4125,10 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 
     // search for the bodypart
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
-    kDebug(5006) <<"KMMessage::updateBodyPart" << specifier;
+    kDebug(5006) << specifier;
     if (!mLastUpdated)
     {
-      kWarning(5006) <<"KMMessage::updateBodyPart - can not find part"
-        << specifier;
+      kWarning(5006) << "Can not find part" << specifier;
       return;
     }
     if ( partSpecifier.endsWith(".MIME") )

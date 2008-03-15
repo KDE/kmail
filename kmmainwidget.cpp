@@ -2287,12 +2287,12 @@ void KMMainWidget::slotSelectMessage(KMMessage* msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-  kDebug(5006) <<"KMMainWidget::slotReplaceMsgByUnencryptedVersion()";
+  kDebug(5006);
   KMMessage* oldMsg = mHeaders->currentMsg();
   if( oldMsg ) {
-    kDebug(5006) <<"KMMainWidget  -  old message found";
+    kDebug(5006) << "Old message found";
     if( oldMsg->hasUnencryptedMsg() ) {
-      kDebug(5006) <<"KMMainWidget  -  extra unencrypted message found";
+      kDebug(5006) << "Extra unencrypted message found";
       KMMessage* newMsg = oldMsg->unencryptedMsg();
       // adjust the message id
       {
@@ -2316,7 +2316,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         mMsgView->setIdOfLastViewedMessage( msgId );
       }
       // insert the unencrypted message
-      kDebug(5006) <<"KMMainWidget  -  adding unencrypted message to folder";
+      kDebug(5006) << "Adding unencrypted message to folder";
       mFolder->addMsg( newMsg );
       /* Figure out its index in the folder for selecting. This must be count()-1,
        * since we append. Be safe and do find, though, just in case. */
@@ -2331,18 +2331,18 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       mHeaders->setCurrentItemByIndex( newMsgIdx );
       // remove the old one
       if ( idx != -1 ) {
-        kDebug(5006) <<"KMMainWidget  -  deleting encrypted message";
+        kDebug(5006) << "Deleting encrypted message";
         mFolder->take( idx );
       }
 
-      kDebug(5006) <<"KMMainWidget  -  updating message actions";
+      kDebug(5006) << "Updating message actions";
       updateMessageActions();
 
-      kDebug(5006) <<"KMMainWidget  -  done.";
+      kDebug(5006) << "Done.";
     } else
-      kDebug(5006) <<"KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND";
+      kDebug(5006) << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
   } else
-    kDebug(5006) <<"KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND";
+    kDebug(5006) << "PANIC: NO OLD MESSAGE FOUND";
 }
 
 //-----------------------------------------------------------------------------

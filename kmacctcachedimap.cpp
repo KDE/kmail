@@ -413,7 +413,7 @@ QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath )
     if ( (*it).startsWith( subFolderPath ) )
       lst.prepend( *it );
   }
-  kDebug(5006) <<"KMAcctCachedImap::deletedFolderPaths for" << subFolderPath <<" returning:" << lst;
+  kDebug(5006) << "For" << subFolderPath <<" returning:" << lst;
   Q_ASSERT( !lst.isEmpty() );
   return lst;
 }

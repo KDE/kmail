@@ -85,7 +85,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     mType    = explicitType;     // this happens e.g. for the Root Node
     mSubType = explicitSubType;  // representing the _whole_ message
   } else {
-//    kDebug(5006) <<"\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown";
+//    kDebug(5006) << "explicitType == DwMime::kTypeUnknown";
     if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
       mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
       mSubType = dwPart->Headers().ContentType().Subtype();
@@ -99,7 +99,7 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     DwString type, subType;
     DwTypeEnumToStr( mType, type );
     DwSubtypeEnumToStr( mSubType, subType );
-    kDebug(5006) <<"\npartNode::partNode()" << type.c_str() <<"/" << subType.c_str();
+    kDebug(5006) << "\n" << type.c_str() <<"/" << subType.c_str();
   }
 #endif
 }
@@ -395,8 +395,8 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
   DwString typeStr, subTypeStr;
   DwTypeEnumToStr( mType, typeStr );
   DwSubtypeEnumToStr( mSubType, subTypeStr );
-  kDebug(5006) <<"partNode::findType() is looking at" << typeStr.c_str()
-                << "/" << subTypeStr.c_str();
+  kDebug(5006) << "Is looking at" << typeStr.c_str()
+               << "/" << subTypeStr.c_str();
 #endif
     if(    (mType != DwMime::kTypeUnknown)
            && (    (type == DwMime::kTypeUnknown)

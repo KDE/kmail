@@ -168,8 +168,8 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             bool weAreReplacingTheRootNode,
                                             int recCount )
 {
-  kDebug(5006) << QString("-------------------------------------------------" );
-  kDebug(5006) << QString("KMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount );
+  kDebug(5006) << "-------------------------------------------------";
+  kDebug(5006) << "START" << "(" << recCount << ")";
   if( node ) {
     partNode* curNode = node;
     partNode* dataNode = curNode;
@@ -404,7 +404,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                 recCount + 1 );
     }
   }
-  kDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  END").arg( recCount );
+  kDebug(5006) << "END" << "(" << recCount << ")";
 }
 
 
@@ -810,7 +810,7 @@ void KMReaderWin::slotMessageArrived( KMMessage *msg )
     if ( msg->getMsgSerNum() == mWaitingForSerNum ) {
       setMsg( msg, true );
     } else {
-      kDebug( 5006 ) <<"KMReaderWin::slotMessageArrived - ignoring update";
+      kDebug( 5006 ) << "Ignoring update";
     }
   }
 }
@@ -820,7 +820,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
-    kDebug(5006) <<"KMReaderWin::update - message";
+    kDebug(5006) << "Message";
     updateReaderWin();
     return;
   }
@@ -833,12 +833,12 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 
   // find our partNode and update it
   if ( !msg->lastUpdatedPart() ) {
-    kDebug(5006) <<"KMReaderWin::update - no updated part";
+    kDebug(5006) << "No updated part";
     return;
   }
   partNode* node = mRootNode->findNodeForDwPart( msg->lastUpdatedPart() );
   if ( !node ) {
-    kDebug(5006) <<"KMReaderWin::update - can't find node for part";
+    kDebug(5006) << "Can't find node for part";
     return;
   }
   node->setDwPart( msg->lastUpdatedPart() );
@@ -1558,7 +1558,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   //       something different than 'curNode'.
 
 
-kDebug(5006) <<"\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1.";
+kDebug(5006) <<"\n\n\nSpecial post-encryption handling:\n1.";
 kDebug(5006) <<"(aMsg == msg) ="                      << (aMsg == message());
 kDebug(5006) <<"   mLastStatus.isOfUnknownStatus() =" << mLastStatus.isOfUnknownStatus();
 kDebug(5006) <<"|| mLastStatus.isNew() ="             << mLastStatus.isNew();
@@ -1864,7 +1864,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
-  kWarning( msg.isEmpty(), 5006 ) <<"KMReaderWin::slotUrlOn(): Unhandled URL hover!";
+  kWarning( msg.isEmpty(), 5006 ) << "Unhandled URL hover!";
   KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
 
@@ -1877,7 +1877,7 @@ void KMReaderWin::slotUrlOpen(const KUrl &aUrl, const KParts::OpenUrlArguments &
   if ( URLHandlerManager::instance()->handleClick( aUrl, this ) )
     return;
 
-  kWarning( 5006 ) <<"KMReaderWin::slotOpenUrl(): Unhandled URL click!";
+  kWarning( 5006 ) << "Unhandled URL click!";
   emit urlClicked( aUrl, Qt::LeftButton );
 }
 
@@ -1891,7 +1891,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     return;
 
   if ( message() ) {
-    kWarning( 5006 ) <<"KMReaderWin::slotUrlPopup(): Unhandled URL right-click!";
+    kWarning( 5006 ) << "Unhandled URL right-click!";
     emit popupMenu( *message(), url, aPos );
   }
 }
@@ -2199,7 +2199,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
 
   partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
   if( !node ) {
-    kWarning(5006) <<"KMReaderWin::openAttachment - could not find node" << id;
+    kWarning(5006) << "Could not find node" << id;
     return;
   }
 

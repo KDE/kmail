@@ -708,7 +708,7 @@ bool KMFilterListBox::showLaterMsgs()
 void KMFilterListBox::slotUpdateFilterName()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotUpdateFilterName called while no filter is selected, ignoring. idx=" << mIdxSelItem;
+    kDebug(5006) << "Called while no filter is selected, ignoring. idx=" << mIdxSelItem;
     return;
   }
 
@@ -805,7 +805,7 @@ QList<KMFilter *> KMFilterListBox::filtersForSaving() const
 
 void KMFilterListBox::slotSelected( int aIdx )
 {
-  kDebug(5006) <<"KMFilterListBox::slotSelected called. idx=" << aIdx;
+  kDebug(5006) << "idx=" << aIdx;
   mIdxSelItem = aIdx;
 
   if ( mIdxSelItem >= 0 && mIdxSelItem < mFilterList.count() ) {
@@ -830,7 +830,7 @@ void KMFilterListBox::slotNew()
 void KMFilterListBox::slotCopy()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotCopy called while no filter is selected, ignoring.";
+    kDebug(5006) << "Called while no filter is selected, ignoring.";
     return;
   }
 
@@ -851,7 +851,7 @@ void KMFilterListBox::slotCopy()
 void KMFilterListBox::slotDelete()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotDelete called while no filter is selected, ignoring.";
+    kDebug(5006) << "Called while no filter is selected, ignoring.";
     return;
   }
 
@@ -893,11 +893,11 @@ void KMFilterListBox::slotDelete()
 void KMFilterListBox::slotUp()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotUp called while no filter is selected, ignoring.";
+    kDebug(5006) << "Called while no filter is selected, ignoring.";
     return;
   }
   if ( mIdxSelItem == 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring.";
+    kDebug(5006) << "Called while the _topmost_ filter is selected, ignoring.";
     return;
   }
 
@@ -908,11 +908,11 @@ void KMFilterListBox::slotUp()
 void KMFilterListBox::slotDown()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotDown called while no filter is selected, ignoring.";
+    kDebug(5006) << "Called while no filter is selected, ignoring.";
     return;
   }
   if ( mIdxSelItem == (int)mListWidget->count() - 1 ) {
-    kDebug(5006) <<"KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring.";
+    kDebug(5006) << "Called while the _last_ filter is selected, ignoring.";
     return;
   }
 
@@ -923,7 +923,7 @@ void KMFilterListBox::slotDown()
 void KMFilterListBox::slotRename()
 {
   if ( mIdxSelItem < 0 ) {
-    kDebug(5006) <<"KMFilterListBox::slotRename called while no filter is selected, ignoring.";
+    kDebug(5006) << "Called while no filter is selected, ignoring.";
     return;
   }
 

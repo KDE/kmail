@@ -447,7 +447,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
   KMFolderOpener openThis(folder(), "maildir");
   if (openThis.openResult())
   {
-    kDebug(5006) <<"KMFolderMaildir::addMsg-open:" << openThis.openResult() <<" of folder:" << label();
+    kDebug(5006) << openThis.openResult() << "of folder:" << label();
     return openThis.openResult();
   }
 
@@ -477,7 +477,7 @@ if( fileD0.open( QIODevice::WriteOnly ) ) {
     else
       ++mUnreadMsgs;
     if ( !mQuiet ) {
-      kDebug( 5006 ) <<"FolderStorage::msgStatusChanged";
+      kDebug( 5006 ) << "FolderStorage::msgStatusChanged";
       emit numUnreadMsgsChanged( folder() );
     }else{
       if ( !mEmitChangedTimer->isActive() ) {

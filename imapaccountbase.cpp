@@ -1186,7 +1186,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
   for ( it = parts.begin(); it != parts.end(); ++it ) {
     KMMessagePart *part = (*it);
-    kDebug(5006) <<"ImapAccountBase::handleBodyStructure - load" << part->partSpecifier()
+    kDebug(5006) << "Load" << part->partSpecifier()
                  << "(" << part->originalContentTypeStr() << ")";
     if ( part->loadHeaders() ) {
       kDebug(5006) <<"load HEADER";
@@ -1213,7 +1213,7 @@ void ImapAccountBase::constructParts( QDataStream &stream, int count, KMMessageP
     KMMessagePart* part = new KMMessagePart( stream );
     part->setParent( parentKMPart );
     mBodyPartList.append( part );
-    kDebug(5006) <<"ImapAccountBase::constructParts - created id" << part->partSpecifier()
+    kDebug(5006) << "Created id" << part->partSpecifier()
                  << "of type" << part->originalContentTypeStr();
     DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
 
