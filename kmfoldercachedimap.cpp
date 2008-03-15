@@ -459,7 +459,7 @@ int KMFolderCachedImap::addMsgInternal( KMMessage *msg, bool newMail, int *index
   KMFolderOpener openThis( folder(), "KMFolderCachedImap::addMsgInternal" );
   int rc = openThis.openResult();
   if ( rc ) {
-    kDebug() << "open: " << rc << " of folder: " << label() << endl;
+    kDebug() << "open:" << rc << "of folder:" << label();
     return rc;
   }
 
