@@ -1532,30 +1532,6 @@ QString KMComposeWin::replyTo() const
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::verifyWordWrapLengthIsAdequate( const QString &body )
-{
-  int maxLineLength = 0;
-  int curPos;
-  int oldPos = 0;
-  if ( mEditor->lineWrapMode () == QTextEdit::FixedColumnWidth ) {
-    for ( curPos = 0; curPos < (int)body.length(); ++curPos ) {
-      if ( body[curPos] == '\n' ) {
-        if ( (curPos - oldPos ) > maxLineLength ) {
-          maxLineLength = curPos - oldPos;
-        }
-        oldPos = curPos;
-      }
-    }
-    if ( ( curPos - oldPos ) > maxLineLength ) {
-      maxLineLength = curPos - oldPos;
-    }
-    if ( mEditor->lineWrapColumnOrWidth() < maxLineLength ) {
-      mEditor->setLineWrapColumnOrWidth( maxLineLength );
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 {
   QList<Kpgp::Block> pgpBlocks;
@@ -1849,12 +1825,6 @@ void KMComposeWin::setMsg( KMMessage *newMsg, bool mayAutoSign,
 
       if( allowDecryption )
         decryptOrStripOffCleartextSignature( bodyDecoded );
-
-      // As nobody seems to know the purpose of the following line and
-      // as it breaks word wrapping of long lines if drafts with attachments
-      // are opened for editting in the composer (cf. Bug#41102) I comment it
-      // out. Ingo, 2002-04-21
-      //verifyWordWrapLengthIsAdequate(bodyDecoded);
 
       const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
       if (codec)
@@ -3442,11 +3412,10 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotWordWrapToggled( bool on )
 {
-  mEditor->wordWrapToggled( on );
-  if (on)
-  {
-    mEditor->setLineWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
-  }
+  if ( on )
+    mEditor->enableWordWrap( GlobalSettings::self()->lineWrapWidth() );
+  else
+    mEditor->disableWordWrap();
 }
 
 void KMComposeWin::disableWordWrap()

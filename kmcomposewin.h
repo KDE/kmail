@@ -170,12 +170,6 @@ class KMComposeWin : public KMail::Composer
      */
     void writeConfig( void );
 
-    /**
-     * If necessary increases the word wrap of the editor so that it will
-     * not wrap the body string
-     */
-    void verifyWordWrapLengthIsAdequate( const QString & );
-
   public: // kmkernel, kmcommands, callback
     /**
      * Set the message the composer shall work with. This discards
@@ -184,6 +178,10 @@ class KMComposeWin : public KMail::Composer
      void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
+     /**
+      * Disables word wrap completely. No wrapping at all will occur, not even
+      * at the right end of the editor.
+      */
      void disableWordWrap();
 
   private: // kmedit

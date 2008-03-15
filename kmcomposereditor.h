@@ -41,8 +41,6 @@ class KMComposerEditor : public KMeditor
 
     virtual QString quotePrefixName() const;
     virtual QString smartQuote( const QString & msg );
-    QString brokenText() const;
-
     virtual void changeHighlighterColors(KPIM::KEMailQuotingHighlighter * highlighter);
 
   private:

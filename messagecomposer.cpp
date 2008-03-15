@@ -561,8 +561,7 @@ void MessageComposer::readFromComposeWin()
   // Hopefully we can get rid of this eventually, it's needed to be able
   // to break the plain/text version of a multipart/alternative (html) mail
   // according to the line breaks of the richtext version.
-//Laurent fixme
-  //mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
+  mLineBreakColumn = mComposeWin->mEditor->lineWrapColumnOrWidth();
 }
 
 static QByteArray escape_quoted_string( const QByteArray &str ) {
@@ -2139,14 +2138,11 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 //-----------------------------------------------------------------------------
 QByteArray MessageComposer::plainTextFromMarkup( const QString &markupText ) const
 {
-  QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
-  hackConspiratorTextEdit->setAcceptRichText( false );
+  KMeditor *hackConspiratorTextEdit = new KMeditor( markupText );
   if ( !mDisableBreaking ) {
-    hackConspiratorTextEdit->setWordWrapMode( QTextOption::WrapAnywhere );
-    hackConspiratorTextEdit->setLineWrapMode( QTextEdit::FixedColumnWidth );
-    hackConspiratorTextEdit->setLineWrapColumnOrWidth( mLineBreakColumn );
+    hackConspiratorTextEdit->enableWordWrap( mLineBreakColumn );
   }
-  QString text = hackConspiratorTextEdit->toPlainText();
+  QString text = hackConspiratorTextEdit->toWrappedPlainText();
   QByteArray textbody;
 
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
@@ -2176,7 +2172,7 @@ QByteArray MessageComposer::breakLinesAndApplyCodec() const
   if( mDisableBreaking || mIsRichText || !GlobalSettings::self()->wordWrap() ) {
     text = mComposeWin->mEditor->textOrHTML();
   } else {
-    text = mComposeWin->mEditor->brokenText();
+    text = mComposeWin->mEditor->toWrappedPlainText();
   }
 
   QString newText;
