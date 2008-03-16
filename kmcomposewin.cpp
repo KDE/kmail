@@ -353,8 +353,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   connect( mEditor, SIGNAL( attachPNGImageData(const QByteArray &) ),
            this, SLOT( slotAttachPNGImageData(const QByteArray &) ) );
-  connect( mEditor, SIGNAL( focusChanged(bool) ),
-           this, SLOT(editorFocusChanged(bool)) );
 
   mMainWidget->resize( 480, 510 );
   setCentralWidget( mMainWidget );
@@ -4189,13 +4187,6 @@ void KMComposeWin::slotFolderRemoved( KMFolder *folder )
   if ( mMsg ) {
     mMsg->setParent( 0 );
   }
-}
-
-void KMComposeWin::editorFocusChanged( bool gained )
-{
-  mPasteQuotation->setEnabled( gained );
-  mAddQuoteChars->setEnabled( gained );
-  mRemQuoteChars->setEnabled( gained );
 }
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )

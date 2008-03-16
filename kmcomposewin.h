@@ -687,7 +687,6 @@ class KMComposeWin : public KMail::Composer
      */
     void compressAttach( KMAtmListViewItem *attachmentItem );
     void uncompressAttach( KMAtmListViewItem *attachmentItem );
-    void editorFocusChanged( bool gained );
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
 
