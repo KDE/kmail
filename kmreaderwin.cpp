@@ -1469,10 +1469,7 @@ void KMReaderWin::displayMessage() {
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
 #ifndef NDEBUG
-  kDebug( 5006 )
-    << "parseMsg(KMMessage* aMsg"
-    << ( aMsg == message() ? "==" : "!=" )
-    << "aMsg )";
+  kDebug( 5006 ) << "aMsg" << ( aMsg == message() ? "==" : "!=" ) << "aMsg )";
 #endif
 
   KMMessagePart msgPart;
@@ -1482,7 +1479,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   aMsg->setIsBeingParsed( true );
 
   if ( mRootNode && !mRootNode->processed() ) {
-    kWarning(5006) <<"The root node is not yet processed! Danger!";
+    kWarning(5006) << "The root node is not yet processed! Danger!";
     return;
   } else {
     delete mRootNode;
@@ -1580,15 +1577,15 @@ kDebug(5006) <<"|| (KMMsgPartiallyEncrypted == encryptionState) =" << (KMMsgPart
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 
-kDebug(5006) <<"KMReaderWin  -  calling objectTreeToDecryptedMsg()";
+    kDebug(5006) <<"Calling objectTreeToDecryptedMsg()";
 
     QByteArray decryptedData;
     // note: The following call may change the message's headers.
     objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-kDebug(5006) <<"KMReaderWin  -  resulting data:" << decryptedData;
+    kDebug(5006) << "Resulting data:" << decryptedData;
 
     if( !decryptedData.isEmpty() ) {
-kDebug(5006) <<"KMReaderWin  -  composing unencrypted message";
+      kDebug(5006) <<"Composing unencrypted message";
       // try this:
       aMsg->setBody( decryptedData );
       KMMessage* unencryptedMessage = new KMMessage( *aMsg );
@@ -1600,8 +1597,8 @@ kDebug(5006) <<"KMReaderWin  -  composing unencrypted message";
       dwMsg.Body().Parse();
       KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
       */
-kDebug(5006) <<"KMReaderWin  -  resulting message:" << unencryptedMessage->asString();
-kDebug(5006) <<"KMReaderWin  -  attach unencrypted message to aMsg";
+      kDebug(5006) << "Resulting message:" << unencryptedMessage->asString();
+      kDebug(5006) << "Attach unencrypted message to aMsg";
       aMsg->setUnencryptedMsg( unencryptedMessage );
       emitReplaceMsgByUnencryptedVersion = true;
     }
@@ -1616,10 +1613,10 @@ kDebug(5006) <<"KMReaderWin  -  attach unencrypted message to aMsg";
   setIdOfLastViewedMessage( aMsg->msgId() );
 
   if( emitReplaceMsgByUnencryptedVersion ) {
-    kDebug(5006) <<"KMReaderWin  -  invoce saving in decrypted form:";
+    kDebug(5006) << "Invoce saving in decrypted form:";
     emit replaceMsgByUnencryptedVersion();
   } else {
-    kDebug(5006) <<"KMReaderWin  -  finished parsing and displaying of message.";
+    kDebug(5006) << "Finished parsing and displaying of message.";
     showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
                       rootNodeCntSubtype == DwMime::kSubtypePlain );
   }

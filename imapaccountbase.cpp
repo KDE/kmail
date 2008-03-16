@@ -1151,7 +1151,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   }
 
   if ( !as ) {
-    kWarning(5006) <<" - found no attachment strategy!";
+    kWarning(5006) << "Found no attachment strategy!";
     return;
   }
 
@@ -1178,7 +1178,7 @@ void ImapAccountBase::handleBodyStructure( QDataStream &stream, KMMessage *msg,
   if ( (mBodyPartList.count() * 0.5) < partsToLoad ) {
     // more than 50% of the parts have to be loaded anyway so it is faster
     // to load the message completely
-    kDebug(5006) <<"Falling back to normal mode";
+    kDebug(5006) << "Falling back to normal mode";
     FolderJob *job =
       msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "TEXT" );
     job->start();
