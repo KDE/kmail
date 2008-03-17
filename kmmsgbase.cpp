@@ -384,7 +384,6 @@ namespace {
       } else
         *d++ = *s++;
 
-    *d++ = '\0';
     result.truncate( d - result.data() );
     return result;
   }
