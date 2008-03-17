@@ -509,7 +509,9 @@ void TemplatesConfiguration::slotInsertCommand( QString cmd, int adjustCursor )
 QString TemplatesConfiguration::defaultNewMessage() {
   return i18n(
     "%REM=\"Default new message template\"%-\n"
-    "%BLANK"
+    "%BLANK\n"
+    "%BLANK\n"
+    "%BLANK\n"
     );
 }
 
