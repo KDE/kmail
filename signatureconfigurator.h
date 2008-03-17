@@ -1,16 +1,20 @@
 /*  -*- c++ -*-
-    signatureconfigurator.cpp
-
-    KMail, the KDE mail client.
-    Copyright (c) 2002 the KMail authors.
-    See file AUTHORS for details
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License,
-    version 2.0, as published by the Free Software Foundation.
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software Foundation,
-    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, US
+    Copyright 2008 Thomas McGuire <Thomas.McGuire@gmx.net>
+    Copyright 2008 Edwin Schepers <yez@familieschepers.nl>
+    Copyright 2004 Marc Mutz <mutz@kde.org>
+    
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either 
+    version 2.1 of the License, or (at your option) any later version.
+    
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public 
+    License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef __KMAIL_SIGNATURECONFIGURATOR_H__
