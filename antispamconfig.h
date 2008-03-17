@@ -91,7 +91,7 @@ namespace KMail {
   class AntiSpamConfig {
   friend class AntiSpamConfigSingletonProvider;
   private:
-    AntiSpamConfig() {}
+    AntiSpamConfig();
 
   public:
     ~AntiSpamConfig() {}

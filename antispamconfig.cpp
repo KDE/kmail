@@ -63,6 +63,10 @@ AntiSpamConfig * AntiSpamConfig::instance()
   return &theAntiSpamConfigSingletonProvider->instance;
 }
 
+AntiSpamConfig::AntiSpamConfig()
+{
+  readConfig();
+}
 
 void AntiSpamConfig::readConfig()
 {
@@ -83,13 +87,13 @@ void AntiSpamConfig::readConfig()
       QString confidence  = tool.readEntryUntranslated( "ScoreConfidenceRegexp" );
       SpamAgentTypes typeE = SpamAgentNone;
       if ( kasciistricmp( type.data(), "bool" ) == 0 )
-	typeE = SpamAgentBool;
+        typeE = SpamAgentBool;
       else if ( kasciistricmp( type.data(), "decimal" ) == 0 )
-	typeE = SpamAgentFloat;
+        typeE = SpamAgentFloat;
       else if ( kasciistricmp( type.data(), "percentage" ) == 0 )
-	typeE = SpamAgentFloatLarge;
+        typeE = SpamAgentFloatLarge;
       else if ( kasciistricmp( type.data(), "adjusted" ) == 0 )
-	typeE = SpamAgentAdjustedFloat;
+        typeE = SpamAgentAdjustedFloat;
       mAgents.append( SpamAgent( name, typeE, header, cheader, QRegExp( score ),
                                  QRegExp( threshold ), QRegExp( confidence ) ) );
     }

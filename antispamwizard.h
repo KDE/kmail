@@ -156,7 +156,7 @@ namespace KMail {
           QString getDetectCmd() const { return mDetectCmd; }
           QString getSpamCmd() const { return mSpamCmd; }
           QString getHamCmd() const { return mHamCmd; }
-		  QString getNoSpamCmd() const { return mNoSpamCmd; }
+          QString getNoSpamCmd() const { return mNoSpamCmd; }
           QString getDetectionHeader() const { return mDetectionHeader; }
           QString getDetectionPattern() const { return mDetectionPattern; }
           QString getDetectionPattern2() const { return mDetectionPattern2; }
@@ -195,7 +195,7 @@ namespace KMail {
           QString mHamCmd;
           // pipe through cmd to let the tool delete the spam markup
           QString mNoSpamCmd;
-		  // by which header are messages marked as spam
+          // by which header are messages marked as spam
           QString mDetectionHeader;
           // what header pattern is used to mark spam messages
           QString mDetectionPattern;
