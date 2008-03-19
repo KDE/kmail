@@ -1,6 +1,6 @@
 /*   -*- mode: C++; c-file-style: "gnu" -*-
  *   kmail: KDE mail client
- *   This file: Copyright (C) 2006 Dmitry Morozhnikov
+ *   Copyright (C) 2006 Dmitry Morozhnikov <dmiceman@mail.ru>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

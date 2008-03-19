@@ -1,6 +1,6 @@
 /*   -*- mode: C++; c-file-style: "gnu" -*-
 *   kmail: KDE mail client
-*   This file: Copyright (C) 2006 Dmitry Morozhnikov
+*   Copyright (C) 2006 Dmitry Morozhnikov <dmiceman@mail.ru>
 *
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -12,9 +12,9 @@
 *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 *   GNU General Public License for more details.
 *
-*   You should have received a copy of the GNU General Public License
-*   along with this program; if not, write to the Free Software
-*   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+*   You should have received a copy of the GNU General Public License along
+*   with this program; if not, write to the Free Software Foundation, Inc.,
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 *
 */
 
@@ -276,7 +276,7 @@ void CustomTemplates::slotRemoveClicked()
     return;
 
   delete mItemList.take( mList->currentItem()->text( 1 ) );
-  delete mList->takeTopLevelItem( mList->indexOfTopLevelItem ( 
+  delete mList->takeTopLevelItem( mList->indexOfTopLevelItem (
                                   mList->currentItem() ) );
   mRemove->setEnabled( mList->topLevelItemCount() > 0 );
   emit changed();

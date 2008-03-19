@@ -2,7 +2,7 @@
  *   accountdialog.h
  *
  *   kmail: KDE mail client
- *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
+ *   Copyright (C) 2000 Espen Sand, espen@kde.org
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
