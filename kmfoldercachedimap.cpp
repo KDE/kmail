@@ -2490,8 +2490,8 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
     if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) )
       newSubType = "default";
-    else
-      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc. And preserve ".default" too.
+    else if ( oldSubType != "default" )
+      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc.
   }
 
   //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << newType << " " << newSubType << endl;
