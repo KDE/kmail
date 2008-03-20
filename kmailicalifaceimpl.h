@@ -255,7 +255,7 @@ private slots:
 
 signals:
   void incidenceAdded( const QString& type, const QString& folder,
-                       quint32 sernum, int format, const QString& entry );
+                       uint sernum, int format, const QString& entry );
   void asyncLoadResult( const QMap<quint32, QString>, const QString& type,
                         const QString& folder );
   void incidenceDeleted( const QString& type, const QString& folder,
