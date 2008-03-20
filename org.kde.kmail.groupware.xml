@@ -80,15 +80,15 @@
       <arg name="attachmentMimetypes" type="as" direction="in"/>
       <arg name="attachmentNames" type="as" direction="in"/>
       <arg name="deletedAttachments" type="as" direction="in"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.In4" value="const QList&lt;KMail::CustomHeader&gt; &amp;"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In4" value="const KMail::CustomHeader::List &amp;"/>
     </method>
     <method name="incidencesKolab">
-      <arg type="a{us}" direction="out"/>
+      <arg type="a(us)" direction="out"/>
       <arg name="mimetype" type="s" direction="in"/>
       <arg name="resource" type="s" direction="in"/>
       <arg name="startIndex" type="i" direction="in"/>
       <arg name="nbMessages" type="i" direction="in"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QMap&lt;quint32, QString&gt;"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::SernumDataPair::List"/>
     </method>
     <method name="subresourcesKolab">
       <arg type="a(ssbb)" direction="out"/>

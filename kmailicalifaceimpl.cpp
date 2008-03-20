@@ -533,16 +533,16 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
   return n;
 }
 
-QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
-                                                             const QString& resource,
-                                                             int startIndex,
-                                                             int nbMessages )
+KMail::SernumDataPair::List KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
+                                                                 const QString& resource,
+                                                                 int startIndex,
+                                                                 int nbMessages )
 {
   /// Get the mimetype attachments from this folder. Returns a
   /// QMap with serialNumber/attachment pairs.
   /// (serial numbers of the mail are provided for easier later update)
 
-  QMap<quint32, QString> aMap;
+  KMail::SernumDataPair::List aMap;
   if( !mUseResourceIMAP )
     return aMap;
 
@@ -576,7 +576,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
-          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) ));
+          aMap << SernumDataPair(msg->getMsgSerNum(), msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) ));
         } else {
           // Check if the whole message has the right types. This is what
           // happens in the case of ical storage, where the whole mail is
@@ -584,7 +584,7 @@ QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimet
           const QByteArray type( msg->typeStr() );
           const QByteArray subtype( msg->subtypeStr() );
           if (type.toLower() == sType && subtype.toLower() == sSubtype ) {
-            aMap.insert( msg->getMsgSerNum(), msg->bodyToUnicode() );
+            aMap << SernumDataPair( msg->getMsgSerNum(), msg->bodyToUnicode() );
           }
           // This is *not* an error: it may be that not all of the messages
           // have a message part that is matching the wanted MIME type

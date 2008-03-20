@@ -71,6 +71,22 @@ const QDBusArgument &operator>>( const QDBusArgument &arg, KMail::CustomHeader &
   return arg;
 }
 
+const QDBusArgument &operator<<( QDBusArgument &arg, const KMail::SernumDataPair &pair )
+{
+  arg.beginStructure();
+  arg << pair.sernum << pair.data;
+  arg.endStructure();
+  return arg;
+}
+
+const QDBusArgument &operator>>( const QDBusArgument &arg, KMail::SernumDataPair &pair )
+{
+  arg.beginStructure();
+  arg >> pair.sernum >> pair.data;
+  arg.endStructure();
+  return arg;
+}
+
 void KMail::registerGroupwareTypes()
 {
   qDBusRegisterMetaType< KMail::SubResource >();
@@ -78,4 +94,6 @@ void KMail::registerGroupwareTypes()
   qDBusRegisterMetaType< QMap<quint32,QString> >();
   qDBusRegisterMetaType< KMail::CustomHeader >();
   qDBusRegisterMetaType< KMail::CustomHeader::List >();
+  qDBusRegisterMetaType< KMail::SernumDataPair >();
+  qDBusRegisterMetaType< KMail::SernumDataPair::List >();
 }

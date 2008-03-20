@@ -77,6 +77,18 @@ namespace KMail {
     typedef QList<CustomHeader> List;
   };
 
+  /** Sernum/data pairs, used to transfer the actual incidence content. */
+  struct SernumDataPair
+  {
+    SernumDataPair() {}
+    SernumDataPair( quint32 n, const QString &d ) :
+        sernum( n ), data( d ) {}
+    quint32 sernum;
+    QString data;
+
+    typedef QList<SernumDataPair> List;
+  };
+
   /**
     Register D-Bus types.
   */
@@ -91,5 +103,7 @@ Q_DECLARE_METATYPE( KMail::StorageFormat )
 Q_DECLARE_METATYPE( Quint32QStringMap )
 Q_DECLARE_METATYPE( KMail::CustomHeader )
 Q_DECLARE_METATYPE( KMail::CustomHeader::List )
+Q_DECLARE_METATYPE( KMail::SernumDataPair )
+Q_DECLARE_METATYPE( KMail::SernumDataPair::List )
 
 #endif

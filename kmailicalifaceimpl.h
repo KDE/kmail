@@ -123,7 +123,7 @@ public:
                              quint32 sernum );
   int incidencesKolabCount( const QString& mimetype,
                             const QString& resource );
-  QMap<quint32, QString> incidencesKolab( const QString& mimetype,
+  KMail::SernumDataPair::List incidencesKolab( const QString& mimetype,
                                            const QString& resource,
                                            int startIndex,
                                            int nbMessages );
