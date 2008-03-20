@@ -55,8 +55,7 @@
     </method>
     <method name="storageFormat">
       <arg name="resource" type="s" direction="in"/>
-      <arg type="(i)" direction="out"/>
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="KMail::StorageFormat"/>
+      <arg type="i" direction="out"/>
     </method>
     <method name="getAttachment">
       <arg type="s" direction="out"/>

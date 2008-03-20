@@ -99,7 +99,6 @@ typedef QMap<quint32, QString> Quint32QStringMap;
 
 Q_DECLARE_METATYPE( KMail::SubResource )
 Q_DECLARE_METATYPE( KMail::SubResource::List )
-Q_DECLARE_METATYPE( KMail::StorageFormat )
 Q_DECLARE_METATYPE( Quint32QStringMap )
 Q_DECLARE_METATYPE( KMail::CustomHeader )
 Q_DECLARE_METATYPE( KMail::CustomHeader::List )

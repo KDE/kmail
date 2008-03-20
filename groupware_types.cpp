@@ -38,23 +38,6 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, KMail::SubResource &su
   return arg;
 }
 
-const QDBusArgument &operator<<(QDBusArgument &arg, const KMail::StorageFormat &format)
-{
-  arg.beginStructure();
-  qint32 i = format;
-  arg << i;
-  arg.endStructure();
-  return arg;
-}
-
-const QDBusArgument &operator>>(const QDBusArgument &arg, KMail::StorageFormat &format)
-{
-  arg.beginStructure();
-  arg >> format;
-  arg.endStructure();
-  return arg;
-}
-
 const QDBusArgument &operator<<( QDBusArgument &arg, const KMail::CustomHeader &header )
 {
   arg.beginStructure();
