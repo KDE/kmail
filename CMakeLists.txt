@@ -227,6 +227,7 @@ set(kmailprivate_LIB_SRCS
    messageactions.cpp
    statusbarlabel.cpp
    groupware_types.cpp
+#TODO   locale.c
 )
 
 qt4_add_dbus_adaptor( kmailprivate_LIB_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel )
@@ -345,7 +346,7 @@ install( FILES
          ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
          ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
          DESTINATION
-         ${DBUS_INTERFACES_INSTALL_DIR} )
+         ${KDE4_DBUS_INTERFACES_DIR} )
 
 kde4_install_icons( ${ICON_INSTALL_DIR} )
 

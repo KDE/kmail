@@ -139,17 +139,25 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   new Kpgp::Module();
 
+  netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
+
   // In the case of Japan. Japanese locale name is "eucjp" but
   // The Japanese mail systems normally used "iso-2022-jp" of locale name.
   // We want to change locale name from eucjp to iso-2022-jp at KMail only.
-  if ( QByteArray(QTextCodec::codecForLocale()->name()).toLower() == "eucjp" )
+
+  // (Introduction to i18n, 6.6 Limit of Locale technology):
+  // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
+  // is the standard for Internet, and Shift-JIS is the encoding 
+  // for Windows and Macintosh.
+  if ( netCodec->name().toLower() == "eucjp" 
+#if defined Q_WS_WIN || defined Q_WS_MACX
+    || netCodec->name().toLower() == "shift-jis" ) // OK?
+#endif
   {
     netCodec = QTextCodec::codecForName("jis7");
     // QTextCodec *cdc = QTextCodec::codecForName("jis7");
     // QTextCodec::setCodecForLocale(cdc);
     // KGlobal::locale()->setEncoding(cdc->mibEnum());
-  } else {
-    netCodec = QTextCodec::codecForLocale();
   }
 
   connect( MailTransport::TransportManager::self(),
