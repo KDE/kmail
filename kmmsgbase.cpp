@@ -25,6 +25,7 @@ using KMail::MessageProperty;
 
 #include <mimelib/mimepp.h>
 #include <kmime/kmime_codecs.h>
+#include <kmime/kmime_util.h>
 
 #include <QTextCodec>
 #include <q3deepcopy.h>
@@ -360,251 +361,52 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   return encodings;
 }
 
-namespace {
-  // don't rely on isblank(), which is a GNU extension in
-  // <cctype>. But if someone wants to write a configure test for
-  // isblank(), we can then rename this function to isblank and #ifdef
-  // it's definition...
-  inline bool isBlank( char ch ) { return ch == ' ' || ch == '\t' ; }
-
-  QByteArray unfold( const QByteArray & header ) {
-    if ( header.isEmpty() )
-      return QByteArray();
-
-    QByteArray result( header.size(), '\0' ); // size() >= length()+1 and size() is O(1)
-    char * d = result.data();
-
-    for ( const char * s = header.data() ; *s ; )
-      if ( *s == '\r' ) { // ignore
-        ++s;
-        continue;
-      } else if ( *s == '\n' ) { // unfold
-        while ( isBlank( *++s ) );
-        *d++ = ' ';
-      } else
-        *d++ = *s++;
-
-    result.truncate( d - result.data() );
-    return result;
+//-----------------------------------------------------------------------------
+QByteArray fallbackCharsetForRFC2047Decoding( const QByteArray &prefCharset )
+{
+  QByteArray charsetName;
+  if ( !prefCharset.isEmpty() ) {
+    if ( kasciistricmp( prefCharset.data(), "us-ascii" ) == 0 ) {
+      charsetName = "utf-8";
+    } else {
+      charsetName = prefCharset;
+    }
+  } else {
+    charsetName = GlobalSettings::self()->fallbackCharacterEncoding().toLatin1();
   }
-}
 
+  const QTextCodec *codec = KMMsgBase::codecForName( charsetName );
+  if ( ! codec ) {
+    codec = kmkernel->networkCodec();
+  }
+  return codec->name();
+}
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
                                         const QByteArray &prefCharset )
 {
-  if ( aStr.isEmpty() ) {
-    return QString();
-  }
-
-  const QByteArray str = unfold( aStr );
-
-  if ( str.isEmpty() ) {
-    return QString();
-  }
-
-  if ( str.indexOf( "=?" ) < 0 ) {
-    QByteArray charsetName;
-    if ( !prefCharset.isEmpty() ) {
-      if ( kasciistricmp( prefCharset.data(), "us-ascii" ) == 0 ) {
-        charsetName = "utf-8";
-      } else {
-        charsetName = prefCharset;
-      }
-    } else {
-      charsetName = GlobalSettings::self()->fallbackCharacterEncoding().toLatin1();
-    }
-    const QTextCodec *codec = KMMsgBase::codecForName( charsetName );
-    if ( ! codec ) {
-      codec = kmkernel->networkCodec();
-    }
-    return codec->toUnicode( str );
-  }
-
-  QString result;
-  QByteArray LWSP_buffer;
-  bool lastWasEncodedWord = false;
-
-  for ( const char * pos = str.data() ; *pos ; ++pos ) {
-    // collect LWSP after encoded-words,
-    // because we might need to throw it out
-    // (when the next word is an encoded-word)
-    if ( lastWasEncodedWord && isBlank( pos[0] ) ) {
-      LWSP_buffer += pos[0];
-      continue;
-    }
-    // verbatimly copy normal text
-    if (pos[0]!='=' || pos[1]!='?') {
-      result += LWSP_buffer + pos[0];
-      LWSP_buffer = 0;
-      lastWasEncodedWord = false;
-      continue;
-    }
-    // found possible encoded-word
-    const char * const beg = pos;
-    {
-      // parse charset name
-      QByteArray charset;
-      int i = 2;
-      pos += 2;
-      for ( ; *pos != '?' && ( *pos==' ' || ispunct(*pos) || isalnum(*pos) );
-            ++i, ++pos ) {
-        charset += *pos;
-      }
-      if ( *pos!='?' || i<4 )
-        goto invalid_encoded_word;
-
-      // get encoding and check delimiting question marks
-      const char encoding[2] = { pos[1], '\0' };
-      if (pos[2]!='?' || (encoding[0]!='Q' && encoding[0]!='q' &&
-          encoding[0]!='B' && encoding[0]!='b'))
-        goto invalid_encoded_word;
-      pos+=3; i+=3; // skip ?x?
-      const char * enc_start = pos;
-      // search for end of encoded part
-      while ( *pos && !(*pos=='?' && *(pos+1)=='=') ) {
-        i++;
-        pos++;
-      }
-      if ( !*pos )
-        goto invalid_encoded_word;
-
-      // valid encoding: decode and throw away separating LWSP
-      const KMime::Codec * c = KMime::Codec::codecForName( encoding );
-      kFatal( !c, 5006 ) <<"No \"" << encoding <<"\" codec!?";
-
-      QByteArray in = QByteArray::fromRawData( enc_start, pos - enc_start );
-      const QByteArray enc = c->decode( in );
-      in.clear();
-
-      const QTextCodec * codec = codecForName(charset);
-      if (!codec) codec = kmkernel->networkCodec();
-      result += codec->toUnicode(enc);
-      lastWasEncodedWord = true;
-
-      ++pos; // eat '?' (for loop eats '=')
-      LWSP_buffer = 0;
-    }
-    continue;
-  invalid_encoded_word:
-    // invalid encoding, keep separating LWSP.
-    pos = beg;
-    if ( !LWSP_buffer.isNull() )
-    result += LWSP_buffer;
-    result += "=?";
-    lastWasEncodedWord = false;
-    ++pos; // eat '?' (for loop eats '=')
-    LWSP_buffer = 0;
-  }
-  return result;
+  QByteArray usedCharset;
+  QByteArray fallback = fallbackCharsetForRFC2047Decoding( prefCharset );
+  return KMime::decodeRFC2047String( aStr, usedCharset, fallback );
 }
-
 
 //-----------------------------------------------------------------------------
 static const QByteArray especials = "()<>@,;:\"/[]?.= \033";
 
-QByteArray KMMsgBase::encodeRFC2047Quoted( const QByteArray & s, bool base64 ) {
-  const char * codecName = base64 ? "b" : "q" ;
-  const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
-  kFatal( !codec, 5006 ) <<"No \"" << codecName <<"\" found!?";
-  QByteArray in = QByteArray::fromRawData( s.data(), s.length() );
-  const QByteArray result = codec->encode( in );
-  in.clear();
-  return QByteArray( result.data(), result.size());
-}
-
-QByteArray KMMsgBase::encodeRFC2047String(const QString& _str,
-  const QByteArray& charset)
+QByteArray KMMsgBase::encodeRFC2047String( const QString& _str,
+                                           const QByteArray& charset )
 {
-  static const QString dontQuote = "\"()<>,@";
-
-  if (_str.isEmpty()) return QByteArray();
-  if (charset == "us-ascii") return toUsAscii(_str);
-
   QByteArray cset;
-  if (charset.isEmpty())
-  {
+  if ( charset.isEmpty() ) {
     cset = kmkernel->networkCodec()->name();
-    kAsciiToLower(cset.data());
+    kAsciiToLower( cset.data() );
   }
-  else cset = charset;
+  else
+    cset = charset;
 
-  const QTextCodec *codec = codecForName(cset);
-  if (!codec) codec = kmkernel->networkCodec();
-
-  unsigned int nonAscii = 0;
-  unsigned int strLength(_str.length());
-  for (unsigned int i = 0; i < strLength; i++)
-    if (_str.at(i).unicode() >= 128) nonAscii++;
-  bool useBase64 = (nonAscii * 6 > strLength);
-
-  unsigned int start, stop, p, pos = 0, encLength;
-  QByteArray result;
-  bool breakLine = false;
-  const unsigned int maxLen = 75 - 7 - cset.length();
-
-  while (pos < strLength)
-  {
-    start = pos; p = pos;
-    while (p < strLength)
-    {
-      if (!breakLine && (_str.at(p) == ' ' || dontQuote.contains(_str.at(p)) ))
-        start = p + 1;
-      if (_str.at(p).unicode() >= 128 || _str.at(p).unicode() < 32)
-        break;
-      p++;
-    }
-    if (breakLine || p < strLength)
-    {
-      while (dontQuote.contains(_str.at(start)) ) start++;
-      stop = start;
-      while (stop < strLength && !dontQuote.contains(_str.at(stop)) )
-        stop++;
-      result += _str.mid(pos, start - pos).toLatin1();
-      encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
-        mid(start, stop - start)), useBase64).length();
-      breakLine = (encLength > maxLen);
-      if (breakLine)
-      {
-        int dif = (stop - start) / 2;
-        int step = dif;
-        while (abs(step) > 1)
-        {
-          encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
-            mid(start, dif)), useBase64).length();
-          step = (encLength > maxLen) ? (-abs(step) / 2) : (abs(step) / 2);
-          dif += step;
-        }
-        stop = start + dif;
-      }
-      p = (stop >= strLength ? strLength - 1 : stop);
-      while (p > start && _str.at(p) != ' ') p--;
-      if (p > start) stop = p;
-      if (result.right(3) == "?= ") start--;
-      if (result.right(5) == "?=\n  ") {
-        start--; result.truncate(result.length() - 1);
-      }
-      int lastNewLine = result.lastIndexOf("\n ");
-      if (!result.mid(lastNewLine).trimmed().isEmpty()
-        && result.length() - lastNewLine + encLength + 2 > maxLen)
-          result += "\n ";
-      result += "=?";
-      result += cset;
-      result += (useBase64) ? "?b?" : "?q?";
-      result += encodeRFC2047Quoted(codec->fromUnicode(_str.mid(start,
-        stop - start)), useBase64);
-      result += "?=";
-      if (breakLine) result += "\n ";
-      pos = stop;
-    } else {
-      result += _str.mid(pos).toLatin1();
-      break;
-    }
-  }
-  return result;
+  return KMime::encodeRFC2047String( _str, cset );
 }
-
 
 //-----------------------------------------------------------------------------
 QByteArray KMMsgBase::encodeRFC2231String( const QString& _str,

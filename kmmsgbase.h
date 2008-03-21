@@ -247,9 +247,6 @@ public:
   /** Copy constructor that simply calls assign(). */
   KMMsgBase( const KMMsgBase &other );
 
-  /** Helper function for encodeRFC2047String */
-  static QByteArray encodeRFC2047Quoted( const QByteArray &aStr, bool base64 );
-
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
   static QString decodeRFC2047String( const QByteArray &aStr,
