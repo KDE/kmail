@@ -151,8 +151,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // for Windows and Macintosh.
   if ( netCodec->name().toLower() == "eucjp" 
 #if defined Q_WS_WIN || defined Q_WS_MACX
-    || netCodec->name().toLower() == "shift-jis" ) // OK?
+    || netCodec->name().toLower() == "shift-jis" // OK?
 #endif
+  )
   {
     netCodec = QTextCodec::codecForName("jis7");
     // QTextCodec *cdc = QTextCodec::codecForName("jis7");
