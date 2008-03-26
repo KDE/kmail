@@ -144,7 +144,7 @@ static struct langtab langtab[] = {
   { "mt",    NULL, "iso-8859-3"},      /* Maltese */
   { "my",    NULL, NULL},              /* Burmese */
   { "na",    NULL, NULL},              /* Nauru */
-  { "nb",    NULL, "iso-8859-1"},      /* Norwegian Bokmål; Bokm@aa{}l  */
+  { "nb",    NULL, "iso-8859-1"},      /* Norwegian BokmÄºl; Bokm@aa{}l  */
   { "nd",    NULL, NULL},              /* Ndebele, North */
   { "ne",    NULL, NULL},              /* Nepali */
   { "ng",    NULL, NULL},              /* Ndonga */
@@ -154,7 +154,7 @@ static struct langtab langtab[] = {
   { "nr",    NULL, NULL},              /* Ndebele, South */
   { "nv",    NULL, NULL},              /* Navajo */
   { "ny",    NULL, NULL},              /* Chichewa; Nyanja */
-  { "oc",    NULL, NULL},              /* Occitan; Provençal; Proven@,{c}al */
+  { "oc",    NULL, NULL},              /* Occitan; ProvenÃ§al; Proven@,{c}al */
   { "om",    NULL, NULL},              /* (Afan) Oromo */
   { "or",    NULL, NULL},              /* Oriya */
   { "os",    NULL, NULL},              /* Ossetian; Ossetic */
@@ -206,7 +206,7 @@ static struct langtab langtab[] = {
   { "ur",    NULL, NULL},              /* Urdu */
   { "uz",    NULL, NULL},              /* Uzbek */
   { "vi",    NULL, NULL},              /* Vietnamese */
-  { "vo",    NULL, NULL},              /* Volapük; Volap@"{u}k; Volapuk */
+  { "vo",    NULL, NULL},              /* VolapÃ¼k; Volap@"{u}k; Volapuk */
   { "wa",    NULL, "iso-8859-1"},      /* Walloon */
   { "wo",    NULL, NULL},              /* Wolof */
   { "xh",    NULL, NULL},              /* Xhosa */
