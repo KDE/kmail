@@ -320,6 +320,8 @@ install(TARGETS kmail_bodypartformatter_application_octetstream  DESTINATION ${P
 
 set(kmail_SRCS main.cpp )
 
+# todo: move to Oxygen icon
+kde4_add_app_icon(kmail_SRCS "hi*-app-kmail.png")
 
 kde4_add_executable(kmail ${kmail_SRCS})
 
