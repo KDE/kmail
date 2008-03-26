@@ -25,6 +25,7 @@
 #include <qptrlist.h>
 #include <qstringlist.h>
 #include <qguardedptr.h>
+#include <qtimer.h>
 
 #include <kdialogbase.h>
 #include <kxmlguiclient.h>
@@ -108,11 +109,13 @@ protected slots:
   virtual void slotClose();
   virtual void slotSearch();
   virtual void slotStop();
-  void updateCreateButton( const QString &);
+  void scheduleRename( const QString &);
   void renameSearchFolder();
   void openSearchFolder();
   void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QListViewItem *);
+  void slotShowSelectedMsg();
+  void slotCurrentChanged(QListViewItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
   virtual void copySelectedToFolder( int menuId );
@@ -167,8 +170,8 @@ protected:
   KListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
-  QPushButton *mSearchFolderBtn;
   QPushButton *mSearchFolderOpenBtn;
+  QPushButton *mSearchResultOpenBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<int,KMFolder*> mMenuToFolder;
@@ -178,6 +181,7 @@ protected:
     *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
+  QTimer mRenameTimer;
 
   // not owned by us
   KMMainWidget* mKMMainWidget;
