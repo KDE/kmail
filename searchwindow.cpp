@@ -527,10 +527,6 @@ void SearchWindow::slotSearch()
     mFolder->setSearch(search);
     enableGUI();
 
-    if (mFolder && !mFolders.contains(mFolder.operator->()->folder())) {
-        mFolder->open("searchwindow");
-        mFolders.append(mFolder.operator->()->folder());
-    }
     mTimer->start(200);
 }
 
