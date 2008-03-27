@@ -593,7 +593,10 @@ KMail::SernumDataPair::List KMailICalIfaceImpl::incidencesKolab( const QString& 
 #if 0
       if( unget ) f->unGetMsg(i);
 #else
-      delete msg;
+      if ( msg->transferInProgress() )
+        msg->deleteWhenUnused();
+      else
+        delete msg;
 #endif
     }
   }
