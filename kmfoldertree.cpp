@@ -383,7 +383,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mTotalAction = mPopup->addAction(i18n("Total Column"), this,
                                    SLOT(slotToggleTotalColumn()));
   mTotalAction->setCheckable( true );
-  mSizeAction= mPopup->addAction(i18n("Size Column"), this,
+  mSizeAction= mPopup->addAction(i18nc("Column that shows the size", "Size Column"), this,
                                  SLOT(slotToggleSizeColumn()));
   mSizeAction->setCheckable( true );
 }
