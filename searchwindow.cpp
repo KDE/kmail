@@ -348,11 +348,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
 
   ac->addAssociatedWidget( this );
   foreach (QAction* action, ac->actions())
-#if QT_VERSION < KDE_MAKE_VERSION(4,4,0)
-    action->setShortcutContext(Qt::WidgetShortcut); // remove after Qt4.4 becomes mandatory
-#else
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-#endif
 }
 
 //-----------------------------------------------------------------------------
