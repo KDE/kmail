@@ -39,7 +39,6 @@ using KMail::FilterImporterExporter;
 #include <kconfig.h>
 #include <kicondialog.h>
 #include <kkeysequencewidget.h>
-#include <k3listview.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
 #include <kvbox.h>
@@ -51,6 +50,7 @@ using KMail::FilterImporterExporter;
 #include <QListWidget>
 #include <QStackedWidget>
 #include <QVBoxLayout>
+#include <QTreeWidget>
 
 // other headers:
 #include <assert.h>
@@ -227,13 +227,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       vbl3->addWidget( mApplyOnForChecked );
       vbl3->addStretch( 2 );
 
-      mAccountList = new K3ListView( mAdvOptsGroup );
+      mAccountList = new QTreeWidget( mAdvOptsGroup );
       mAccountList->setObjectName( "accountList" );
-      mAccountList->addColumn( i18n("Account Name") );
-      mAccountList->addColumn( i18n("Type") );
+      mAccountList->setColumnCount( 2 );
+      QStringList headerNames;
+      headerNames << i18n("Account Name") << i18n("Type");
+      mAccountList->setHeaderItem( new QTreeWidgetItem( headerNames ) );
       mAccountList->setAllColumnsShowFocus( true );
       mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
-      mAccountList->setSorting( -1 );
+      mAccountList->setSortingEnabled( false );
+      mAccountList->setRootIsDecorated( false );
       gl->addWidget( mAccountList, 0, 1, 4, 3 );
 
       mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
@@ -312,10 +315,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
              this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnCtrlJ, SIGNAL(clicked()),
              this, SLOT(slotApplicabilityChanged()) );
-    connect( mAccountList, SIGNAL(clicked(Q3ListViewItem*)),
-             this, SLOT(slotApplicableAccountsChanged()) );
-    connect( mAccountList, SIGNAL(spacePressed(Q3ListViewItem*)),
-             this, SLOT(slotApplicableAccountsChanged()) );
+    connect( mAccountList, SIGNAL( itemChanged(QTreeWidgetItem *,int) ),
+             this, SLOT( slotApplicableAccountsChanged() ) );
 
     // transfer changes from the 'stop processing here'
     // check box to the filter
@@ -407,12 +408,9 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
   mFilter = aFilter;
 
   if (!bPopFilter) {
-    kDebug(5006) <<"apply on inbound =="
-		  << aFilter->applyOnInbound();
-    kDebug(5006) <<"apply on outbound =="
-		  << aFilter->applyOnOutbound();
-    kDebug(5006) <<"apply on explicit =="
-		  << aFilter->applyOnExplicit();
+    kDebug(5006) << "apply on inbound ==" << aFilter->applyOnInbound();
+    kDebug(5006) << "apply on outbound ==" << aFilter->applyOnOutbound();
+    kDebug(5006) << "apply on explicit ==" << aFilter->applyOnExplicit();
 
     // NOTE: setting these values activates the slot that sets them in
     // the filter! So make sure we have the correct values _before_ we
@@ -490,34 +488,31 @@ void KMFilterDlg::slotApplicabilityChanged()
     mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
 
     // Advanced tab functionality - Update list of accounts this filter applies to
-    Q3ListViewItemIterator it( mAccountList );
-    while ( it.current() ) {
-      Q3CheckListItem *item = dynamic_cast<Q3CheckListItem*>( it.current() );
-      if (item) {
-	int id = item->text( 2 ).toInt();
-	  item->setOn( mFilter->applyOnAccount( id ) );
-      }
+    QTreeWidgetItemIterator it( mAccountList );
+    while( QTreeWidgetItem * item = *it ) {
+      int id = item->text( 2 ).toInt();
+      item->setCheckState( 0, mFilter->applyOnAccount( id ) ? Qt::Checked :
+                                                              Qt::Unchecked );
       ++it;
     }
 
-    kDebug(5006) <<"KMFilterDlg: setting filter to be applied at"
-                  << ( mFilter->applyOnInbound() ? "incoming " : "" )
-                  << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
-                  << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" );
+    kDebug(5006) << "Setting filter to be applied at"
+                 << ( mFilter->applyOnInbound() ? "incoming " : "" )
+                 << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
+                 << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" );
   }
 }
 
 void KMFilterDlg::slotApplicableAccountsChanged()
 {
+  // Advanced tab functionality - Update list of accounts this filter applies to
   if ( mFilter && mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() ) {
-    // Advanced tab functionality - Update list of accounts this filter applies to
-    Q3ListViewItemIterator it( mAccountList );
-    while ( it.current() ) {
-      Q3CheckListItem *item = dynamic_cast<Q3CheckListItem*>( it.current() );
-      if (item) {
-	int id = item->text( 2 ).toInt();
-	mFilter->setApplyOnAccount( id, item->isOn() );
-      }
+
+    QTreeWidgetItemIterator it( mAccountList );
+
+    while( QTreeWidgetItem *item = *it ) {
+      int id = item->text( 2 ).toInt();
+      mFilter->setApplyOnAccount( id, item->checkState( 0 ) == Qt::Checked );
       ++it;
     }
   }
@@ -564,22 +559,34 @@ void KMFilterDlg::slotFilterActionIconChanged( const QString &icon )
 void KMFilterDlg::slotUpdateAccountList()
 {
   mAccountList->clear();
-  Q3ListViewItem *top = 0;
+
+  QTreeWidgetItem *top = 0;
+
+  // Block the signals here, otherwise we end up calling
+  // slotApplicableAccountsChanged(), which will read the incomplete item
+  // state and write that back to the filter
+  mAccountList->blockSignals( true );
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next() ) {
-    Q3CheckListItem *listItem =
-      new Q3CheckListItem( mAccountList, top, a->name(), Q3CheckListItem::CheckBox );
+    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
+    listItem->setText( 0, a->name() );
     listItem->setText( 1, KAccount::displayNameForType( a->type() ) );
     listItem->setText( 2, QString( "%1" ).arg( a->id() ) );
     if ( mFilter )
-      listItem->setOn( mFilter->applyOnAccount( a->id() ) );
+      listItem->setCheckState( 0, mFilter->applyOnAccount( a->id() ) ?
+                                  Qt::Checked : Qt::Unchecked );
     top = listItem;
   }
+  mAccountList->blockSignals( false );
 
-  Q3ListViewItem *listItem = mAccountList->firstChild();
-  if ( listItem ) {
-    mAccountList->setCurrentItem( listItem );
-    mAccountList->setSelected( listItem, true );
+  // make sure our hidden column is really hidden (Qt tends to re-show it)
+  mAccountList->hideColumn( 2 );
+  mAccountList->resizeColumnToContents( 0 );
+  mAccountList->resizeColumnToContents( 1 );
+
+  top = mAccountList->topLevelItem( 0 );
+  if ( top ) {
+    mAccountList->setCurrentItem( top );
   }
 }
 

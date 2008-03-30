@@ -30,7 +30,6 @@
 
 #include <QGroupBox>
 #include <QList>
-#include <q3buttongroup.h>
 #include <QMap>
 #include <QRadioButton>
 #include <QComboBox>
@@ -42,9 +41,9 @@ class QListWidget;
 class QPushButton;
 class QStackedWidget;
 class QCheckBox;
+class QTreeWidget;
 class KIconButton;
 class KKeySequenceWidget;
-class K3ListView;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -415,7 +414,7 @@ protected:
       this filter to all accounts or to selected accounts only. */
   QRadioButton *mApplyOnForAll, *mApplyOnForTraditional, *mApplyOnForChecked;
   /** ListView that shows the accounts in the advanced tab */
-  K3ListView *mAccountList;
+  QTreeWidget *mAccountList;
 
   QCheckBox *mStopProcessingHere;
   QCheckBox *mConfigureShortcut;
