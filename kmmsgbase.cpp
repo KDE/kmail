@@ -394,18 +394,105 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
 //-----------------------------------------------------------------------------
 static const QByteArray especials = "()<>@,;:\"/[]?.= \033";
 
+QByteArray KMMsgBase::encodeRFC2047Quoted( const QByteArray & s, bool base64 ) {
+  const char * codecName = base64 ? "b" : "q" ;
+  const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
+  kFatal( !codec, 5006 ) <<"No \"" << codecName <<"\" found!?";
+  QByteArray in = QByteArray::fromRawData( s.data(), s.length() );
+  const QByteArray result = codec->encode( in );
+  in.clear();
+  return QByteArray( result.data(), result.size());
+}
+
 QByteArray KMMsgBase::encodeRFC2047String( const QString& _str,
                                            const QByteArray& charset )
 {
-  QByteArray cset;
-  if ( charset.isEmpty() ) {
-    cset = kmkernel->networkCodec()->name();
-    kAsciiToLower( cset.data() );
-  }
-  else
-    cset = charset;
+  static const QString dontQuote = "\"()<>,@";
 
-  return KMime::encodeRFC2047String( _str, cset );
+  if (_str.isEmpty()) return QByteArray();
+  if (charset == "us-ascii") return toUsAscii(_str);
+
+  QByteArray cset;
+  if (charset.isEmpty())
+  {
+    cset = kmkernel->networkCodec()->name();
+    kAsciiToLower(cset.data());
+  }
+  else cset = charset;
+
+  const QTextCodec *codec = codecForName(cset);
+  if (!codec) codec = kmkernel->networkCodec();
+
+  unsigned int nonAscii = 0;
+  unsigned int strLength(_str.length());
+  for (unsigned int i = 0; i < strLength; i++)
+    if (_str.at(i).unicode() >= 128) nonAscii++;
+  bool useBase64 = (nonAscii * 6 > strLength);
+
+  unsigned int start, stop, p, pos = 0, encLength;
+  QByteArray result;
+  bool breakLine = false;
+  const unsigned int maxLen = 75 - 7 - cset.length();
+
+  while (pos < strLength)
+  {
+    start = pos; p = pos;
+    while (p < strLength)
+    {
+      if (!breakLine && (_str.at(p) == ' ' || dontQuote.contains(_str.at(p)) ))
+        start = p + 1;
+      if (_str.at(p).unicode() >= 128 || _str.at(p).unicode() < 32)
+        break;
+      p++;
+    }
+    if (breakLine || p < strLength)
+    {
+      while (dontQuote.contains(_str.at(start)) ) start++;
+      stop = start;
+      while (stop < strLength && !dontQuote.contains(_str.at(stop)) )
+        stop++;
+      result += _str.mid(pos, start - pos).toLatin1();
+      encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
+        mid(start, stop - start)), useBase64).length();
+      breakLine = (encLength > maxLen);
+      if (breakLine)
+      {
+        int dif = (stop - start) / 2;
+        int step = dif;
+        while (abs(step) > 1)
+        {
+          encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
+            mid(start, dif)), useBase64).length();
+          step = (encLength > maxLen) ? (-abs(step) / 2) : (abs(step) / 2);
+          dif += step;
+        }
+        stop = start + dif;
+      }
+      p = (stop >= strLength ? strLength - 1 : stop);
+      while (p > start && _str.at(p) != ' ') p--;
+      if (p > start) stop = p;
+      if (result.right(3) == "?= ") start--;
+      if (result.right(5) == "?=\n  ") {
+        start--; result.truncate(result.length() - 1);
+      }
+      int lastNewLine = result.lastIndexOf("\n ");
+      if (!result.mid(lastNewLine).trimmed().isEmpty()
+        && result.length() - lastNewLine + encLength + 2 > maxLen)
+          result += "\n ";
+      result += "=?";
+      result += cset;
+      result += (useBase64) ? "?b?" : "?q?";
+      result += encodeRFC2047Quoted(codec->fromUnicode(_str.mid(start,
+        stop - start)), useBase64);
+      result += "?=";
+      if (breakLine) result += "\n ";
+      pos = stop;
+    } else {
+      result += _str.mid(pos).toLatin1();
+      break;
+    }
+  }
+  return result;
 }
 
 //-----------------------------------------------------------------------------
