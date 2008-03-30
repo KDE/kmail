@@ -537,11 +537,10 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 
 void KMFilterDlg::slotShortcutChanged( const QKeySequence &newSeq )
 {
-    if ( mFilter )
-    {
-      mKeySeqWidget->applyStealShortcut();
-      mFilter->setShortcut( KShortcut( newSeq ) );
-    }
+  if ( mFilter ) {
+    mKeySeqWidget->applyStealShortcut();
+    mFilter->setShortcut( KShortcut( newSeq ) );
+  }
 }
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
