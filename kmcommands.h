@@ -69,7 +69,7 @@ public:
   /** Returns the result of the command. Only call this method from the slot
       connected to completed().
   */
-  Result result();
+  Result result() const;
 
 public slots:
   // Retrieve messages then calls execute
@@ -92,7 +92,7 @@ protected:
   // Returns the parent widget
   QWidget *parentWidget() const;
 
-  bool deletesItself() { return mDeletesItself; }
+  bool deletesItself() const { return mDeletesItself; }
   /** Specify whether the subclass takes care of the deletion of the object.
       By default the base class will delete the object.
       @param deletesItself true if the subclass takes care of deletion, false
@@ -101,7 +101,7 @@ protected:
   void setDeletesItself( bool deletesItself )
   { mDeletesItself = deletesItself; }
 
-  bool emitsCompletedItself() { return mEmitsCompletedItself; }
+  bool emitsCompletedItself() const { return mEmitsCompletedItself; }
   /** Specify whether the subclass takes care of emitting the completed()
       signal. By default the base class will emit this signal.
       @param emitsCompletedItself true if the subclass emits the completed

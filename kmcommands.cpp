@@ -199,7 +199,7 @@ KMCommand::~KMCommand()
   }
 }
 
-KMCommand::Result KMCommand::result()
+KMCommand::Result KMCommand::result() const
 {
   if ( mResult == Undefined ) {
     kDebug(5006) <<"mResult is Undefined";
@@ -638,8 +638,8 @@ KMCommand::Result KMUrlSaveCommand::execute()
   if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, parentWidget() ) )
   {
     if (KMessageBox::warningContinueCancel(0,
-        i18n("<qt>File <b>%1</b> exists.<br />Do you want to replace it?</qt>",
-         saveUrl.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
+        i18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
+         saveUrl.pathOrUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         != KMessageBox::Continue)
       return Canceled;
   }
@@ -2316,8 +2316,8 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-ms-dos-executable" ||
         mime->name() == "application/x-shellscript" )
     {
-      if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" ,
-          mUrl.prettyUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
+      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</<filename>?" ,
+          mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl, mMainWidget );
