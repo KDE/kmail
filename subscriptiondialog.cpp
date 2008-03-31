@@ -350,31 +350,34 @@ void SubscriptionDialogBase::slotConnectionResult( int errorCode, const QString&
     slotLoadFolders();
 }
 
+void SubscriptionDialogBase::checkIfSubscriptionsEnabled()
+{
+  KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
+  if( !account )
+    return;
+  if( account->onlySubscribedFolders() )
+    return;
+  kDebug(5006) <<"Not subscribed!!!";
+  int result = KMessageBox::questionYesNoCancel( this,
+    i18nc("@info", "Currently subscriptions are not used for server <resource>%1</resource>.<nl/>"
+      "\nDo you want to enable subscriptions?", account->name() ),
+      i18n("Enable Subscriptions?"), KGuiItem(i18n("Enable")), KGuiItem(i18n("Do Not Enable")));
+  switch(result) {
+    case KMessageBox::Yes:
+        mForceSubscriptionEnable = true;
+        break;
+    case KMessageBox::No:
+        break;
+    case KMessageBox::Cancel:
+        reject();
+        break;
+  }
+}
+
 void SubscriptionDialogBase::show()
 {
   KDialog::show();
-  KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
-  if( account )
-  {
-    if( !account->onlySubscribedFolders() )
-    {
-      kDebug(5006) <<"Not subscribed!!!";
-      int result = KMessageBox::questionYesNoCancel( this,
-              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?",
-                account->name() ),
-            i18n("Enable Subscriptions?"), KGuiItem(i18n("Enable")), KGuiItem(i18n("Do Not Enable")));
-        switch(result) {
-            case KMessageBox::Yes:
-                mForceSubscriptionEnable = true;
-                break;
-            case KMessageBox::No:
-                break;
-            case KMessageBox::Cancel:
-                reject();
-                break;
-        }
-    }
-  }
+  checkIfSubscriptionsEnabled();
 }
 
 // =======
@@ -387,21 +390,7 @@ void SubscriptionDialog::processFolderListing()
 /* virtual */
 void SubscriptionDialog::doSave()
 {
-  KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>(mAcct);
-  if( !a->onlySubscribedFolders() ) {
-      int result = KMessageBox::questionYesNoCancel( this,
-              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?", a->name() ),
-              i18n("Enable Subscriptions?"), KGuiItem( i18n("Enable") ), KGuiItem( i18n("Do Not Enable") ) );
-      switch(result) {
-          case KMessageBox::Yes:
-              mForceSubscriptionEnable = true;
-              break;
-          case KMessageBox::No:
-              break;
-          case KMessageBox::Cancel:
-              reject();
-      }
-  }
+  checkIfSubscriptionsEnabled();
 
   // subscribe
   Q3ListViewItemIterator it(subView);
@@ -420,6 +409,7 @@ void SubscriptionDialog::doSave()
   }
 
   if ( mForceSubscriptionEnable ) {
+    KMail::ImapAccountBase *a = static_cast<KMail::ImapAccountBase*>(mAcct);
     a->setOnlySubscribedFolders(true);
   }
 }

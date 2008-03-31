@@ -113,6 +113,10 @@ namespace KMail {
        * folders. */
       void createListViewItem( int i );
 
+      /** If subscriptions are not used for the server, 
+       *  asks "Do you want to enable subscriptions?" */
+      void checkIfSubscriptionsEnabled();
+
       QString mDelimiter;
       QStringList mFolderNames, mFolderPaths,
                   mFolderMimeTypes, mFolderAttributes;
