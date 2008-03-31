@@ -847,7 +847,7 @@ void KMHeaders::msgChanged()
   QList<int> curItems = selectedItems();
   updateMessageList(); // do not change the selection
   // restore the old state, but move up when there are unread message just out of view
-  HeaderItem *topOfList = mItems[i];
+  HeaderItem *topOfList = (i >= 0 && i < (int)mItems.size()) ? mItems[i] : 0;
   item = firstChild();
   Q3ListViewItem *unreadItem = 0;
   while(item && item != topOfList) {
