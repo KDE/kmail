@@ -750,6 +750,7 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *textBoldAction, *textItalicAction, *textUnderAction;
     KToggleAction *plainTextAction, *markupAction;
     KAction *actionFormatColor, *actionFormatReset;
+    KAction *actionConfigureLink;
     KAction *mHtmlToolbar;
 
     KSelectAction *mEncodingAction;

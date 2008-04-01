@@ -1435,6 +1435,11 @@ void KMComposeWin::setupActions( void )
   actionFormatColor->setIconText( i18n("Text Color") );
   actionCollection()->addAction("format_color", actionFormatColor );
   connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
+  actionConfigureLink = new KAction( KIcon( "insert-link" ), i18n("Manage Link..."), this );
+  actionConfigureLink->setIconText( i18n("Link") );
+  actionCollection()->addAction( "manage_link", actionConfigureLink );
+  connect( actionConfigureLink, SIGNAL( triggered(bool) ),
+           mEditor, SLOT( slotConfigureLink() ) );
 
   createGUI( "kmcomposerui.rc" );
   connect( toolBar( "htmlToolBar" )->toggleViewAction(),
@@ -4286,6 +4291,16 @@ void KMComposeWin::slotCursorPositionChanged()
   statusBar()->changeItem( temp, 1 );
   temp = i18n( " Column: %1 ", col + 1 );
   statusBar()->changeItem( temp, 2 );
+
+  // Show link target in status bar
+  if ( mEditor->textCursor().charFormat().isAnchor() ) {
+    QString text = mEditor->currentLinkText();
+    QString href = mEditor->currentLinkHref();
+    statusBar()->changeItem( text + " -> " + href, 0 );
+  }
+  else {
+    statusBar()->changeItem( QString(), 0 );
+  }
 }
 
 namespace {
