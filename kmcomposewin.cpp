@@ -4067,11 +4067,6 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotStatusMessage( const QString &message )
-{
-  statusBar()->changeItem( message, 0 );
-}
-
 void KMComposeWin::slotEditToolbars()
 {
   saveMainWindowSettings( KMKernel::config()->group( "Composer") );

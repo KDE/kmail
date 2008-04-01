@@ -364,7 +364,6 @@ class KMComposeWin : public KMail::Composer
     /**
      * XML-GUI stuff
      */
-    void slotStatusMessage( const QString &message );
     void slotEditToolbars();
     void slotUpdateToolbars();
     void slotEditKeys();
