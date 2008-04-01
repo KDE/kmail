@@ -4290,8 +4290,8 @@ void KMComposeWin::slotCursorPositionChanged()
   // Show link target in status bar
   if ( mEditor->textCursor().charFormat().isAnchor() ) {
     QString text = mEditor->currentLinkText();
-    QString href = mEditor->currentLinkHref();
-    statusBar()->changeItem( text + " -> " + href, 0 );
+    QString url = mEditor->currentLinkUrl();
+    statusBar()->changeItem( text + " -> " + url, 0 );
   }
   else {
     statusBar()->changeItem( QString(), 0 );
