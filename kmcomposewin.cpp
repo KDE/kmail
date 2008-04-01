@@ -1436,7 +1436,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("format_color", actionFormatColor );
   connect( actionFormatColor, SIGNAL(triggered(bool) ),mEditor, SLOT( slotTextColor() ));
   actionConfigureLink = new KAction( KIcon( "insert-link" ), i18n("Manage Link..."), this );
-  actionConfigureLink->setIconText( i18n("Link") );
+  actionConfigureLink->setIconText( i18nc("Short toolbar text for the \"Manage Link...\" action", "Link") );
   actionCollection()->addAction( "manage_link", actionConfigureLink );
   connect( actionConfigureLink, SIGNAL( triggered(bool) ),
            mEditor, SLOT( slotConfigureLink() ) );
