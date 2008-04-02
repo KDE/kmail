@@ -151,7 +151,7 @@ public:
   /** Instead of settings a message to be shown sets a message part
       to be shown */
   void setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
-		   const QString& aFileName, const QString& pname );
+                   const QString& aFileName, const QString& pname );
 
   void setMsgPart( partNode * node );
 

@@ -1198,10 +1198,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWin();
     }
     else if (mUpdateReaderWinTimer.isActive()) {
-      mUpdateReaderWinTimer.setSingleShot( true );
-      mUpdateReaderWinTimer.start( delay );
+      mUpdateReaderWinTimer.setInterval( delay );
     } else {
-      mUpdateReaderWinTimer.setSingleShot( true );
       mUpdateReaderWinTimer.start( 0 );
     }
   }
@@ -1649,7 +1647,6 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
   if( fileName.isEmpty() )
     fileName = aMsgPart->name();
 
-  //--- Sven's save attachments to /tmp start ---
   QString fname = createTempDir( QString::number( aPartNum ) );
   if ( fname.isEmpty() )
     return QString();
@@ -2066,6 +2063,12 @@ void KMReaderWin::setMsgPart( partNode * node ) {
 void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
                               const QString& aFileName, const QString& pname )
 {
+  // Cancel scheduled updates of the reader window, as that would stop the
+  // timer of the HTML writer, which would make viewing attachment not work
+  // anymore as not all HTML is written to the HTML part.
+  // We're updating the reader window here ourselves anyway.
+  mUpdateReaderWinTimer.stop();
+
   KCursorSaver busy(KBusyPtr::busy());
   if (kasciistricmp(aMsgPart->typeStr(), "message")==0) {
       // if called from compose win
@@ -2154,7 +2157,6 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     htmlWriter()->flush();
     mMainWindow->setWindowTitle(i18n("View Attachment: %1", pname));
   }
-  // ---Sven's view text, html and image attachments in html widget end ---
 }
 
 
