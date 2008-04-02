@@ -181,7 +181,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   vbl->setSpacing( spacingHint() );
   hbl->setStretchFactor( vbl, 2 );
 
-  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), bPopFilter ? w : page1 , "spe", bPopFilter);
+  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"),
+                                          bPopFilter ? w : page1 , bPopFilter );
   vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
 
   if(bPopFilter){

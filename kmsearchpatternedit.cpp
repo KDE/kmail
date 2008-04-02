@@ -403,16 +403,20 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //
 //=============================================================================
 
-KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, bool headersOnly, bool absoluteDates )
-  : QGroupBox( "", parent )
+KMSearchPatternEdit::KMSearchPatternEdit( QWidget *parent, bool headersOnly,
+                                          bool absoluteDates )
+  : QGroupBox( parent )
 {
+  setObjectName( "KMSearchPatternEdit" );
   setTitle( i18n("Search Criteria") );
   initLayout( headersOnly, absoluteDates );
 }
 
-KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, bool headersOnly, bool absoluteDates)
+KMSearchPatternEdit::KMSearchPatternEdit( const QString &title, QWidget *parent,
+                                          bool headersOnly, bool absoluteDates )
   : QGroupBox( title, parent )
 {
+  setObjectName( "KMSearchPatternEdit" );
   initLayout( headersOnly, absoluteDates );
 }
 

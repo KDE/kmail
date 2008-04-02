@@ -176,14 +176,17 @@ private:
 class KMSearchPatternEdit : public QGroupBox  {
   Q_OBJECT
 public:
-  /** Constructor. The parent and name parameters are passed to the underlying
+  /** Constructor. The parent parameter is passed to the underlying
       QGroupBox, as usual. */
-  explicit KMSearchPatternEdit(QWidget *parent=0, bool headersOnly = false,
-                      bool absoluteDates = false);
+  explicit KMSearchPatternEdit( QWidget *parent = 0, bool headersOnly = false,
+                                bool absoluteDates = false );
+
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
-  explicit KMSearchPatternEdit(const QString & title, QWidget *parent=0,
-                      bool headersOnly = false, bool absoluteDates = false);
+  explicit KMSearchPatternEdit( const QString &title, QWidget *parent = 0,
+                                bool headersOnly = false,
+                                bool absoluteDates = false );
+
   ~KMSearchPatternEdit();
 
   /** Set the search pattern. Rules are inserted regardless of the

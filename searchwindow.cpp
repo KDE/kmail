@@ -167,7 +167,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, KMFolder *curFolder):
   radioLayout->addLayout( hbl );
 
 
-  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , false, true );
+  mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget , false, true );
   mPatternEdit->setFlat( true );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
