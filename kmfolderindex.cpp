@@ -213,7 +213,9 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   mIndexStream = KDE_fopen(QFile::encodeName(indexName), "r+"); // index file
   assert( mIndexStream );
+#ifndef Q_WS_WIN
   fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+#endif
 
   updateIndexStreamPtr();
 

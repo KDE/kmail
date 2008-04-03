@@ -180,7 +180,9 @@ int KMFolderMbox::open( const char *owner )
      } else {
        mIndexStream = KDE_fopen( QFile::encodeName( indexLocation() ), "r+" ); // index file
        if ( mIndexStream ) {
+#ifndef Q_WS_WIN
          fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
+#endif
          updateIndexStreamPtr();
        }
      }
@@ -199,10 +201,12 @@ int KMFolderMbox::open( const char *owner )
 
   mChanged = false;
 
+#ifndef Q_WS_WIN
   fcntl( fileno( mStream ), F_SETFD, FD_CLOEXEC );
   if ( mIndexStream ) {
      fcntl( fileno( mIndexStream ), F_SETFD, FD_CLOEXEC );
   }
+#endif
 
   return rc;
 }
@@ -242,7 +246,9 @@ int KMFolderMbox::create()
 
   if (!mStream) return errno;
 
+#ifndef Q_WS_WIN
   fcntl(fileno(mStream), F_SETFD, FD_CLOEXEC);
+#endif
 
   if (!folder()->path().isEmpty())
   {
@@ -252,7 +258,9 @@ int KMFolderMbox::create()
     umask(old_umask);
 
     if (!mIndexStream) return errno;
+#ifndef Q_WS_WIN
     fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+#endif
   }
   else
   {

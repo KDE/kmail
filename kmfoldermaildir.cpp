@@ -137,7 +137,9 @@ int KMFolderMaildir::open( const char * )
     } else {
       mIndexStream = KDE_fopen(QFile::encodeName(indexLocation()), "r+"); // index file
       if ( mIndexStream ) {
+#ifndef Q_WS_WIN
         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+#endif
         updateIndexStreamPtr();
       }
     }
@@ -224,7 +226,9 @@ int KMFolderMaildir::create()
     umask(old_umask);
 
     if (!mIndexStream) return errno;
+#ifndef Q_WS_WIN
     fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+#endif
   }
   else
   {
