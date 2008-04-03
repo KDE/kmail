@@ -388,7 +388,8 @@ QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
 {
   QByteArray usedCharset;
   QByteArray fallback = fallbackCharsetForRFC2047Decoding( prefCharset );
-  return KMime::decodeRFC2047String( aStr, usedCharset, fallback );
+  return KMime::decodeRFC2047String( KMime::unfoldHeader( aStr ), usedCharset,
+                                     fallback );
 }
 
 //-----------------------------------------------------------------------------
