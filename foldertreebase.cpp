@@ -84,7 +84,7 @@ int FolderTreeBase::dndMode(bool alwaysAsk)
   } else {
     if ( GlobalSettings::self()->showPopupAfterDnD() || alwaysAsk ) {
       KMenu menu;
-      QAction *moveAction = menu.addAction( i18n( "&Move Here" ) );
+      QAction *moveAction = menu.addAction( SmallIcon( "edit-rename"), i18n( "&Move Here" ) );
       QAction *copyAction = menu.addAction( SmallIcon( "edit-copy" ), i18n( "&Copy Here" ) );
       menu.addSeparator();
       menu.addAction( SmallIcon( "dialog-cancel" ), i18n( "C&ancel" ) );
