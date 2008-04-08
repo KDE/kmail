@@ -859,20 +859,19 @@ retry:
     KDE_fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
 
-  MsgPartType type;
-  quint16 l;
   while (g_chunk_offset < mIndexLength) {
     quint32 tmp;
     copy_from_stream(tmp);
-    copy_from_stream(l);
+    quint16 len;
+    copy_from_stream(len);
     if (swapByteOrder)
     {
        tmp = kmail_swap_32(tmp);
-       l = kmail_swap_16(l);
+       len = kmail_swap_16(len);
     }
-    type = (MsgPartType) tmp;
+    MsgPartType type = (MsgPartType) tmp;
 
-    if (g_chunk_offset + l > mIndexLength) {
+    if (g_chunk_offset + len > mIndexLength) {
       kDebug(5006) <<"This should never happen..";
       if(using_mmap) {
         g_chunk_length = 0;
@@ -883,7 +882,7 @@ retry:
       goto retry;
     }
     if(type == t) {
-      assert(sizeOfLong == l);
+      assert(sizeOfLong == len);
       if (sizeOfLong == sizeof(ret))
       {
         copy_from_stream(ret);
@@ -939,7 +938,7 @@ retry:
       }
       break;
     }
-    g_chunk_offset += l;
+    g_chunk_offset += len;
   }
   if(using_mmap) {
     g_chunk_length = 0;
