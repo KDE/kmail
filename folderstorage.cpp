@@ -497,8 +497,10 @@ KMMessage* FolderStorage::getMsg(int idx)
   // Either isMessage and we had a sernum, or readMsg gives us one
   // (via insertion into mMsgList). sernum == 0 may still occur due to
   // an outdated or corrupt IMAP cache.
-  if ( msg->getMsgSerNum() == 0 )
+  if ( msg->getMsgSerNum() == 0 ) {
+    kWarning() << "msg serial number == 0";
     return 0;
+  }
   msg->setEnableUndo(undo);
   msg->setComplete( true );
   return msg;
@@ -514,6 +516,11 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
   if (!mb) return 0;
 
   unsigned long sernum = mb->getMsgSerNum();
+  // sanity check: serial num can be broken for any reason (storage?), give up in this case
+  if (sernum == 0) {
+    kWarning() << "msg serial number == 0";
+    return 0;
+  }
 
   KMMessage *msg = 0;
   bool undo = mb->enableUndo();
