@@ -39,9 +39,10 @@ class KMFolderImap;
 class KPushButton;
 class QStackedWidget;
 class KHBox;
-class Q3VButtonGroup;
-class K3ListView;
-class Q3ListViewItem;
+class QGroupBox;
+class QButtonGroup;
+class QTreeWidget;
+class QTreeWidgetItem;
 class QLabel;
 namespace KIO { class Job; }
 
@@ -75,7 +76,7 @@ private slots:
   void slotChanged();
 
 private:
-  Q3VButtonGroup* mButtonGroup;
+  QButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
   IMAPUserIdFormat mUserIdFormat;
 };
@@ -106,9 +107,9 @@ private slots:
   void slotReceivedUserRights( KMFolder* folder );
   void slotDirectoryListingFinished(KMFolderImap*);
 
-  // User (K3ListView) slots
-  void slotEditACL(Q3ListViewItem*);
-  void slotSelectionChanged(Q3ListViewItem*);
+  // User (QTreeWidget) slots
+  void slotEditACL( QTreeWidgetItem* );
+  void slotSelectionChanged();
 
   // User (pushbuttons) slots
   void slotAddACL();
@@ -130,7 +131,7 @@ private:
   KHBox* mACLWidget;
   //class ListView;
   class ListViewItem;
-  K3ListView* mListView;
+  QTreeWidget* mListView;
   KPushButton* mAddACL;
   KPushButton* mEditACL;
   KPushButton* mRemoveACL;

@@ -58,7 +58,9 @@
 #include <QGridLayout>
 #include <QList>
 #include <QVBoxLayout>
-#include <Q3ButtonGroup>
+#include <QButtonGroup>
+#include <QGroupBox>
+#include <QTreeWidget>
 
 #include <assert.h>
 #include <kmessagebox.h>
@@ -102,21 +104,28 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   QPushButton* kabBtn = new QPushButton( "...", page );
   topLayout->addWidget( kabBtn, 0, 2 );
 
-  mButtonGroup = new Q3VButtonGroup( i18n( "Permissions" ), page );
-  topLayout->addWidget( mButtonGroup, 1, 0, 1, 3 );
+  QGroupBox* groupBox = new QGroupBox( i18n( "Permissions" ), page );
+  QVBoxLayout *vbox = new QVBoxLayout( groupBox );
+
+  mButtonGroup = new QButtonGroup( groupBox );
 
   for ( unsigned int i = 0;
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );
         ++i ) {
-    QRadioButton* cb = new QRadioButton( i18nc( "Permissions", standardPermissions[i].userString ), mButtonGroup );
+    QRadioButton* cb = new QRadioButton( i18nc( "Permissions", standardPermissions[i].userString ), groupBox );
+    vbox->addWidget( cb );
     // We store the permission value (bitfield) as the id of the radiobutton in the group
-    mButtonGroup->insert( cb, standardPermissions[i].permissions );
+    mButtonGroup->addButton( cb , standardPermissions[i].permissions );
   }
+
+  vbox->addStretch( 1 );
+
+  topLayout->addWidget( groupBox, 1, 0, 1, 3 );
   topLayout->setRowStretch(2, 10);
 
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
   connect( kabBtn, SIGNAL( clicked() ), SLOT( slotSelectAddresses() ) );
-  connect( mButtonGroup, SIGNAL( clicked( int ) ), SLOT( slotChanged() ) );
+  connect( mButtonGroup, SIGNAL( buttonClicked( int ) ), SLOT( slotChanged() ) );
   enableButtonOk( false );
 
   mUserIdLineEdit->setFocus();
@@ -126,7 +135,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
 
 void KMail::ACLEntryDialog::slotChanged()
 {
-  enableButtonOk( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->selected() != 0 );
+  enableButtonOk( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->checkedButton() != 0 );
 }
 
 static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat userIdFormat )
@@ -166,7 +175,11 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
 void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permissions )
 {
   mUserIdLineEdit->setText( userId );
-  mButtonGroup->setButton( permissions );
+
+  QAbstractButton* button = mButtonGroup->button(permissions);
+  if( button )
+    button->setChecked( true );
+  //mButtonGroup->setButton( permissions );
   enableButtonOk( !userId.isEmpty() );
 }
 
@@ -187,14 +200,17 @@ QStringList KMail::ACLEntryDialog::userIds() const
 
 unsigned int KMail::ACLEntryDialog::permissions() const
 {
-  return mButtonGroup->selectedId();
+  QAbstractButton* button = mButtonGroup->checkedButton();
+  if( !button )
+    return -1; // hm ?
+  return mButtonGroup->id( button );
 }
 
-class KMail::FolderDialogACLTab::ListViewItem : public K3ListViewItem
+class KMail::FolderDialogACLTab::ListViewItem : public QTreeWidgetItem
 {
 public:
-  ListViewItem( Q3ListView* listview )
-    : K3ListViewItem( listview, listview->lastItem() ),
+  ListViewItem( QTreeWidget* listview )
+    : QTreeWidgetItem( listview ),
       mModified( false ), mNew( false ) {}
 
   void load( const ACLListEntry& entry );
@@ -326,18 +342,22 @@ KMail::FolderDialogACLTab::FolderDialogACLTab( KMFolderDialog* dlg, QWidget* par
 
   mACLWidget = new KHBox( mStack );
   mACLWidget->setSpacing( KDialog::spacingHint() );
-  mListView = new K3ListView( mACLWidget );
-  mListView->setAllColumnsShowFocus( true );
-  mStack->addWidget( mACLWidget );
-  mListView->addColumn( i18n( "User Id" ) );
-  mListView->addColumn( i18n( "Permissions" ) );
 
-  connect( mListView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
-	   SLOT(slotEditACL(Q3ListViewItem*)) );
-  connect( mListView, SIGNAL(returnPressed(Q3ListViewItem*)),
-	   SLOT(slotEditACL(Q3ListViewItem*)) );
-  connect( mListView, SIGNAL(selectionChanged(Q3ListViewItem*)),
-	   SLOT(slotSelectionChanged(Q3ListViewItem*)) );
+  mListView = new QTreeWidget( mACLWidget );
+  QStringList headerNames;
+  headerNames << i18n("User Id") << i18n("Permissions");
+  mListView->setHeaderItem( new QTreeWidgetItem( headerNames ) );
+  mListView->setAllColumnsShowFocus( true );
+  mListView->setAlternatingRowColors( true );
+  mListView->setSortingEnabled( false );
+  mListView->setRootIsDecorated( false );
+
+  mStack->addWidget( mACLWidget );
+
+  connect( mListView, SIGNAL( itemActivated( QTreeWidgetItem* , int ) ),
+       SLOT( slotEditACL( QTreeWidgetItem* ) ) );
+  connect( mListView, SIGNAL( itemSelectionChanged() ),
+       SLOT( slotSelectionChanged() ) );
 
   KVBox* buttonBox = new KVBox( mACLWidget );
   buttonBox->setSpacing( KDialog::spacingHint() );
@@ -536,10 +556,10 @@ void KMail::FolderDialogACLTab::loadFinished( const ACLList& aclList )
   if ( mDlg->folder() ) // not when creating a new folder
     mInitialACLList = aclList;
   mStack->setCurrentWidget( mACLWidget );
-  slotSelectionChanged( mListView->selectedItem() );
+  slotSelectionChanged();
 }
 
-void KMail::FolderDialogACLTab::slotEditACL(Q3ListViewItem* item)
+void KMail::FolderDialogACLTab::slotEditACL(QTreeWidgetItem* item)
 {
   if ( !item ) return;
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
@@ -595,8 +615,10 @@ void KMail::FolderDialogACLTab::slotAddACL()
   }
 }
 
-void KMail::FolderDialogACLTab::slotSelectionChanged(Q3ListViewItem* item)
+void KMail::FolderDialogACLTab::slotSelectionChanged()
 {
+  QTreeWidgetItem* item = mListView->currentItem();
+
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
   bool canAdminThisItem = canAdmin;
   if ( canAdmin && mImapAccount && item ) {
@@ -663,11 +685,14 @@ bool KMail::FolderDialogACLTab::save()
   // ACLList and reload that.
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   ACLList aclList;
-  for ( Q3ListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+
+  QTreeWidgetItemIterator it( mListView );
+  while( QTreeWidgetItem* item = *it ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     ACLitem->save( aclList,
                    addressBook,
                    mUserIdFormat );
+    ++it;
   }
   loadListView( aclList );
 
@@ -767,7 +792,8 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
   // -> we note that it's been done.
   bool ok = false;
   if ( permissions > -1 ) {
-    for ( Q3ListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+    QTreeWidgetItemIterator it( mListView );
+    while( QTreeWidgetItem* item = *it ) {
       ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
       if ( ACLitem->userId() == userId ) {
         ACLitem->setModified( false );
@@ -775,6 +801,7 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
         ok = true;
         break;
       }
+      ++it;
     }
   } else {
     uint nr = mRemovedACLs.removeAll( userId );
