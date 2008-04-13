@@ -447,7 +447,7 @@ namespace KMail {
     void slotGetACLResult( KJob* _job );
 
     /// Result of getStorageQuotaInfo() job
-    void slotGetStorageQuotaInfoResult( KIO::Job* _job );
+    void slotGetStorageQuotaInfoResult( KJob* _job );
 
     /**
      * Send a NOOP command regularly to keep the slave from disconnecting

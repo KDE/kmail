@@ -547,11 +547,11 @@ void ImapAccountBase::getStorageQuotaInfo( KMFolder *parent, const QString &imap
   jd.cancellable = true;
   insertJob( job, jd );
 
-  connect( job, SIGNAL(result(KIO::Job *)),
-           SLOT(slotGetStorageQuotaInfoResult(KIO::Job *)) );
+  connect( job, SIGNAL(result(KJob *)),
+           SLOT(slotGetStorageQuotaInfoResult(KJob *)) );
 }
 
-void ImapAccountBase::slotGetStorageQuotaInfoResult( KIO::Job *_job )
+void ImapAccountBase::slotGetStorageQuotaInfoResult( KJob *_job )
 {
   QuotaJobs::GetStorageQuotaJob *job = static_cast<QuotaJobs::GetStorageQuotaJob *>( _job );
   JobIterator it = findJob( job );
