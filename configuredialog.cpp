@@ -2140,15 +2140,13 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
-  currentEncoding = currentEncoding.replace( "iso ", "iso-", Qt::CaseInsensitive );
-  ///kDebug(5006) <<"Looking for encoding:" << currentEncoding;
   uint i = 0;
   int indexOfLatin9 = 0;
   bool found = false;
   for( ; it != end; ++it)
   {
     const QString encoding = KGlobal::charsets()->encodingForName(*it);
-    if ( encoding == "iso-8859-15" )
+    if ( encoding == "ISO 8859-15" )
         indexOfLatin9 = i;
     if( encoding == currentEncoding )
     {
