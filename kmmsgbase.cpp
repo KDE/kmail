@@ -386,10 +386,19 @@ QByteArray fallbackCharsetForRFC2047Decoding( const QByteArray &prefCharset )
 QString KMMsgBase::decodeRFC2047String( const QByteArray &aStr,
                                         const QByteArray &prefCharset )
 {
+  QByteArray str = KMime::unfoldHeader( aStr );
   QByteArray usedCharset;
   QByteArray fallback = fallbackCharsetForRFC2047Decoding( prefCharset );
-  return KMime::decodeRFC2047String( KMime::unfoldHeader( aStr ), usedCharset,
-                                     fallback );
+
+  if ( str.indexOf( "=?" ) < 0 ) {
+    const QTextCodec *codec = KMMsgBase::codecForName( fallback );
+    if ( !codec ) {
+      codec = kmkernel->networkCodec();
+    }
+    return codec->toUnicode( str );
+  }
+
+  return KMime::decodeRFC2047String( str, usedCharset, fallback );
 }
 
 //-----------------------------------------------------------------------------
