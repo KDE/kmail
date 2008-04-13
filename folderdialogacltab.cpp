@@ -176,10 +176,10 @@ void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permi
 {
   mUserIdLineEdit->setText( userId );
 
-  QAbstractButton* button = mButtonGroup->button(permissions);
-  if( button )
+  QAbstractButton* button = mButtonGroup->button( permissions );
+  if ( button )
     button->setChecked( true );
-  //mButtonGroup->setButton( permissions );
+
   enableButtonOk( !userId.isEmpty() );
 }
 
@@ -687,7 +687,7 @@ bool KMail::FolderDialogACLTab::save()
   ACLList aclList;
 
   QTreeWidgetItemIterator it( mListView );
-  while( QTreeWidgetItem* item = *it ) {
+  while ( QTreeWidgetItem* item = *it ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     ACLitem->save( aclList,
                    addressBook,
@@ -698,10 +698,10 @@ bool KMail::FolderDialogACLTab::save()
 
   // Now compare with the initial ACLList, because if the user renamed a userid
   // we have to add the old userid to the "to be deleted" list.
-  for( ACLList::ConstIterator init = mInitialACLList.begin(); init != mInitialACLList.end(); ++init ) {
+  for ( ACLList::ConstIterator init = mInitialACLList.begin(); init != mInitialACLList.end(); ++init ) {
     bool isInNewList = false;
     QString uid = (*init).userId;
-    for( ACLList::ConstIterator it = aclList.begin(); it != aclList.end() && !isInNewList; ++it )
+    for ( ACLList::ConstIterator it = aclList.begin(); it != aclList.end() && !isInNewList; ++it )
       isInNewList = uid == (*it).userId;
     if ( !isInNewList && !mRemovedACLs.contains(uid) )
       mRemovedACLs.append( uid );
@@ -793,7 +793,7 @@ void KMail::FolderDialogACLTab::slotACLChanged( const QString& userId, int permi
   bool ok = false;
   if ( permissions > -1 ) {
     QTreeWidgetItemIterator it( mListView );
-    while( QTreeWidgetItem* item = *it ) {
+    while ( QTreeWidgetItem* item = *it ) {
       ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
       if ( ACLitem->userId() == userId ) {
         ACLitem->setModified( false );
