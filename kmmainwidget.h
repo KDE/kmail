@@ -450,6 +450,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void slotFolderRemoved( KMFolder *folder );
 
+    /**
+     * Reopens the folder if it was closed because of a rename
+     */
+    void folderClosed( KMFolder *folder );
+
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
 

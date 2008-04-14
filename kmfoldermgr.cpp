@@ -574,7 +574,7 @@ void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
   connect( job, SIGNAL( renameDone( const QString&, bool ) ),
       this, SLOT( slotRenameDone( const QString&, bool ) ) );
   connect( job, SIGNAL( renameDone( const QString&, bool ) ),
- 	   this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
+           this, SIGNAL( folderMoveOrCopyOperationFinished() ) );
 
   job->start();
 }

@@ -739,8 +739,8 @@ int FolderStorage::rename( const QString &newName, KMFolderDir *newParent )
 
   emit locationChanged( oldLoc, newLoc );
   emit nameChanged();
-  kmkernel->folderMgr()->contentsChanged();
   emit closed( folder() ); // let the ticket owners regain
+  kmkernel->folderMgr()->contentsChanged();
   return rc;
 }
 

@@ -2066,6 +2066,13 @@ void KMMainWidget::openFolder()
   mOpenedImapFolder = true;
   // first get new headers before we select the folder
   imap->setSelected( true );
+
+  // If the folder gets closed because of renaming, re-open it again to prevent
+  // an assert in closeFolder() later.
+  disconnect( imap, SIGNAL( closed( KMFolder* ) ),
+              this, SLOT( folderClosed( KMFolder*) ) );
+  connect( imap, SIGNAL( closed( KMFolder* ) ),
+           this, SLOT( folderClosed( KMFolder*) ) );
 }
 
 void KMMainWidget::closeFolder()
@@ -2078,6 +2085,17 @@ void KMMainWidget::closeFolder()
   imap->setSelected( false );
   mFolder->close( "mainwidget" );
   mOpenedImapFolder = false;
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::folderClosed( KMFolder *folder )
+{
+  if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
+    return;
+  }
+
+  mOpenedImapFolder = false;
+  openFolder();
 }
 
 //-----------------------------------------------------------------------------

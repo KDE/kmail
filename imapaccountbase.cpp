@@ -421,7 +421,7 @@ void ImapAccountBase::slotSubscriptionResult( KJob *job )
   }
   bool onlySubscribed = (*it).onlySubscribed;
   QString path = static_cast<KIO::SimpleJob*>(job)->url().path();
-  if ( job->error() ) {
+  if ( job->error() && onlySubscribed ) {
     handleJobError( static_cast<KIO::Job*>(job),
                     i18n( "Error while trying to subscribe to %1:", path ) + '\n' );
     // ## emit subscriptionChanged here in case anyone needs it to support continue/cancel

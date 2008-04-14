@@ -179,6 +179,7 @@ void RenameJob::slotRenameResult( KJob *job )
 
   // local part (will set the new name)
   mStorage->rename( mNewName );
+  mStorage->setObjectName( mNewName );
 
   emit renameDone( mNewName, true );
   deleteLater();
