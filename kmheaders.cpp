@@ -903,7 +903,7 @@ void KMHeaders::msgAdded(int id)
   /* Create a new SortCacheItem to be used for threading. */
   SortCacheItem *sci = new SortCacheItem;
   sci->setId(id);
-  if (isThreaded()) {
+  if ( isThreaded() ) {
     // make sure the id and subject dicts grow, if necessary
     if (mSortCacheItems.count() == (uint)mFolder->count()
         || mSortCacheItems.count() == 0) {
@@ -1065,8 +1065,10 @@ void KMHeaders::msgAdded(int id)
   }
 
   /* restore signal */
-  connect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
-           this, SLOT(highlightMessage(Q3ListViewItem*)));
+  if ( isThreaded() ) {
+    connect( this, SIGNAL( currentChanged(Q3ListViewItem*) ),
+             this, SLOT( highlightMessage(Q3ListViewItem*) ) );
+  }
 
   emit msgAddedToListView( hi );
   END_TIMER(msgAdded);
