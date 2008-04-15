@@ -321,8 +321,7 @@ namespace KMail {
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
                     const QString & vCardName, bool printing ) const;
-    static QString imgToDataUrl( const QImage & image,
-                                 const char *fmt = "PNG" );
+    static QString imgToDataUrl( const QImage & image );
 
   private:
     static QString drawSpamMeter( double percent, double confidence,
@@ -333,10 +332,12 @@ namespace KMail {
   QString FancyHeaderStyle::drawSpamMeter( double percent, double confidence,
                                            const QString & filterHeader, const QString & confidenceHeader )
   {
-    QImage meterBar( 20, 1, QImage::Format_Indexed8 );
+    static const int meterWidth = 20;
+    static const int meterHeight = 5;
+    QImage meterBar( meterWidth, 1, QImage::Format_Indexed8/*QImage::Format_RGB32*/ );
     meterBar.setNumColors( 24 );
 
-    const unsigned short gradient[20][3] = {
+    const unsigned short gradient[meterWidth][3] = {
       {   0, 255,   0 },
       {  27, 254,   0 },
       {  54, 252,   0 },
@@ -358,13 +359,13 @@ namespace KMail {
       { 255,  25,   0 },
       { 255,   0,   0 }
     };
-    meterBar.setColor( 21, qRgb( 255, 255, 255 ) );
-    meterBar.setColor( 22, qRgb( 170, 170, 170 ) );
+    meterBar.setColor( meterWidth + 1, qRgb( 255, 255, 255 ) );
+    meterBar.setColor( meterWidth + 2, qRgb( 170, 170, 170 ) );
     if ( percent < 0 ) // grey is for errors
-      meterBar.fill( 22 );
+      meterBar.fill( meterWidth + 2 );
     else {
-      meterBar.fill( 21 );
-      int max = qMin( 20, static_cast<int>( percent ) / 5 );
+      meterBar.fill( meterWidth + 1 );
+      int max = qMin( meterWidth, static_cast<int>( percent ) / 5 );
       for ( int i = 0; i < max; ++i ) {
         meterBar.setColor( i+1, qRgb( gradient[i][0], gradient[i][1],
                                       gradient[i][2] ) );
@@ -385,8 +386,8 @@ namespace KMail {
                        "Full report:\n%2",
                        percent, filterHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
-      .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
-            QString::number( 5 ), titleText ) + confidenceString;
+      .arg( imgToDataUrl( meterBar ), QString::number( meterWidth ),
+            QString::number( meterHeight ), titleText ) + confidenceString;
   }
 
 
@@ -642,14 +643,14 @@ namespace KMail {
     return headerStr;
   }
 
-  QString FancyHeaderStyle::imgToDataUrl( const QImage &image, const char* fmt  )
+  QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
   {
     QByteArray ba;
     QBuffer buffer( &ba );
     buffer.open( QIODevice::WriteOnly );
-    image.save( &buffer, fmt );
+    image.save( &buffer, "PNG" );
     return QString::fromLatin1("data:image/%1;base64,%2")
-           .arg( QString::fromLatin1( fmt ), QString::fromLatin1( ba.toBase64() ) );
+           .arg( QString::fromLatin1( "PNG" ), QString::fromLatin1( ba.toBase64() ) );
   }
 
   //
