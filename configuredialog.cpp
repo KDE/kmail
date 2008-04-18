@@ -5030,7 +5030,7 @@ void MiscPage::FolderTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mEmptyTrashCheck->setChecked(
-      general.readEntry( "empty-trash-on-exit", true ) );
+      general.readEntry( "empty-trash-on-exit", false ) );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
       kmkernel->inboxFolder()->idString() ) );
   mEmptyFolderConfirmCheck->setChecked(

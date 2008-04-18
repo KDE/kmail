@@ -1623,7 +1623,7 @@ void KMKernel::cleanup(void)
 
     the_trashFolder->close( "kmkernel", true );
 
-    if ( group.readEntry( "empty-trash-on-exit", true ) ) {
+    if ( group.readEntry( "empty-trash-on-exit", false ) ) {
       if ( the_trashFolder->count( true ) > 0 ) {
         the_trashFolder->expunge();
       }
