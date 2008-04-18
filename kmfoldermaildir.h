@@ -103,6 +103,11 @@ public:
   /** reimp */
   virtual qint64 doFolderSize() const;
 
+  /** Create index file from messages file and fill the message-info list
+      mMsgList. Returns 0 on success and an errno value (see fopen) on
+      failure. */
+  virtual int createIndexFromContents();
+
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   const QString &partSpecifier, const AttachmentStrategy *as ) const;
@@ -121,11 +126,6 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-
-  /** Create index file from messages file and fill the message-info list
-      mMsgList. Returns 0 on success and an errno value (see fopen) on
-      failure. */
-  virtual int createIndexFromContents();
 
   /**
    * Internal helper called by addMsg. If stripUid is true it will remove any

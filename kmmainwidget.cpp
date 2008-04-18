@@ -1491,6 +1491,16 @@ void KMMainWidget::slotTroubleshootFolder()
   }
 }
 
+void KMMainWidget::slotTroubleshootMaildir()
+{
+  if ( !mFolder || !mFolder->folderType() == KMFolderTypeMaildir )
+    return;
+  KMFolderMaildir* f = static_cast<KMFolderMaildir*>( mFolder->storage() );
+  f->createIndexFromContents();
+  KMessageBox::information( this, i18n("The index of folder %1 has been recreated.", mFolder->label()),
+                            i18n("Index recreated") );
+}
+
 void KMMainWidget::slotInvalidateIMAPFolders() {
   if ( KMessageBox::warningContinueCancel( this,
           i18n("Are you sure you want to refresh the IMAP cache?\n"
@@ -2885,6 +2895,10 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction->setShortcut(KStandardShortcut::shortcut( KStandardShortcut::Reload ));
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
+  mTroubleshootMaildirAction = new KAction( KIcon("tools-wizard"), i18n("Rebuild Index"), this );
+  actionCollection()->addAction( "troubleshoot_maildir", mTroubleshootMaildirAction );
+  connect( mTroubleshootMaildirAction, SIGNAL(triggered()), SLOT(slotTroubleshootMaildir()) );
+
   mEmptyFolderAction = new KAction(KIcon("user-trash"),
                                     "foo" /*set in updateFolderMenu*/, this);
   actionCollection()->addAction("empty", mEmptyFolderAction );
@@ -3567,6 +3581,7 @@ void KMMainWidget::updateFolderMenu()
                                                            || ( cachedImap && knownImapPath ) ) && !multiFolder );
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
+  mTroubleshootMaildirAction->setVisible( mFolder && mFolder->folderType() == KMFolderTypeMaildir );
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );

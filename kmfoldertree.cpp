@@ -1147,6 +1147,12 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
     folderMenu->addSeparator();
   }
 
+  // Maildir specific actions
+  if ( fti->folder() && fti->folder()->folderType() == KMFolderTypeMaildir && !multiFolder ) {
+    folderMenu->addAction( mMainWidget->action( "troubleshoot_maildir" ) );
+    folderMenu->addSeparator();
+  }
+
   if ( fti->folder() && fti->folder()->isMailingListEnabled() && !multiFolder ) {
     folderMenu->addAction( mMainWidget->action("post_message") );
   }
