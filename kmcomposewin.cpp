@@ -946,12 +946,8 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   } else {
     mAtmListView->hide();
   }
-  resize( this->size() );
-  repaint();
 
   mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
-  mGrid->activate();
-  mHeadersArea->show();
 
   slotUpdateAttachActions();
   mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
@@ -1011,20 +1007,12 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
                                       QCheckBox *aChk )
 {
   if ( aValue & aMask ) {
-    aLbl->adjustSize();
-    aLbl->resize( (int)aLbl->sizeHint().width(), aLbl->sizeHint().height() + 6 );
-    aLbl->setMinimumSize( aLbl->size() );
-    aLbl->show();
     aLbl->setBuddy( aCbx );
     mGrid->addWidget( aLbl, aRow, 0 );
-    aCbx->show();
-    aCbx->setMinimumSize( 100, aLbl->height() + 2 );
 
     mGrid->addWidget( aCbx, aRow, 1 );
     if ( aChk ) {
       mGrid->addWidget( aChk, aRow, 2 );
-      aChk->setFixedSize( aChk->sizeHint().width(), aLbl->height() );
-      aChk->show();
     }
     aRow++;
   } else {
