@@ -74,25 +74,9 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = KIcon( "internet-mail" ).pixmap( 22 );
-  QImage overlayImage = mDefaultIcon.copy().toImage();
 
-  // derive a mono-color version of the icon
-  KColorScheme scheme( QPalette::Active, KColorScheme::Window );
-  mLightIconImage = overlayImage.copy();
-  mLightIconImage.fill(
-    scheme.background( KColorScheme::LinkBackground ).color().rgb() );
-  mLightIconImage.setAlphaChannel( overlayImage.alphaChannel() );
-
-  // overlay the link background color in order to get the "light icon" image.
-  KIconEffect::semiTransparent( overlayImage );
-  KIconEffect::overlay( mLightIconImage, overlayImage );
-//   KIconEffect::semiTransparent( mLightIconImage );
-//   KIconEffect::overlay( mLightIconImage, overlayImage );
-//   KIconEffect::semiTransparent( overlayImage );
-//   KIconEffect::overlay( mLightIconImage, overlayImage );
-
-//   mLightIconImage = mDefaultIcon.toImage();
-//   KIconEffect::deSaturate( mLightIconImage, 0.60f );
+  mLightIconImage = mDefaultIcon.toImage();
+  KIconEffect::deSaturate( mLightIconImage, 0.60f );
 
   setIcon( mDefaultIcon );
 #ifdef Q_WS_X11
