@@ -1,10 +1,5 @@
-
-#headerR {
-  position: absolute;
-  right: 0px;
-  width: 430px;
-  height: 131px;
-  background-image: url(top-right-kmail.png);
+#headerL {
+  background-image: url(top-left-kmail.png);
 }
 
 #title {
@@ -16,11 +11,7 @@
 }
 
 #boxCenter {
-  background-image: url(box-center-kmail.png);
-  background-repeat: no-repeat;
-  background-color: #dfe7f3;
-  background-position: bottom right;
+  padding: 1em;
 }
 
 /* vim:set sw=2 et nocindent smartindent: */
-

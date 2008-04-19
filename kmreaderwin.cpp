@@ -1263,10 +1263,10 @@ void KMReaderWin::displaySplashPage( const QString &info )
 
   QString location = KStandardDirs::locate("data", "kmail/about/main.html");
   QString content = KPIMUtils::kFileToByteArray( location );
-  content = content.arg( KStandardDirs::locate( "data", "libkdepim/about/kde_infopage.css" ) );
+  content = content.arg( KStandardDirs::locate( "data", "kdeui/about/kde_infopage.css" ) );
   if ( QApplication::isRightToLeft() )
     content = content.arg( "@import \"" + KStandardDirs::locate( "data",
-                           "libkdepim/about/kde_infopage_rtl.css" ) +  "\";");
+                           "kdeui/about/kde_infopage_rtl.css" ) +  "\";");
   else
     content = content.arg( "" );
 
