@@ -160,6 +160,7 @@ void KMMimePartTree::slotHeaderContextMenuRequested( const QPoint& p )
   if ( !hitem )
     return; // oops..
 
+  // Dynamically build the menu and check the items for visible columns
   int cc = hitem->columnCount();
   for ( int i = 1 ; i < cc; i++ ) {
     QAction * act = popup.addAction( hitem->text( i ) );
@@ -210,26 +211,32 @@ void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
   if ( !item )
     return;
 
-  QMenu popup;
+  bool isAttachment = ( item->node()->nodeId() > 2 ) &&
+                      ( item->node()->typeString() != "Multipart" );
+
+  KMenu popup;
+
   popup.addAction( SmallIcon( "document-save-as" ),i18n( "Save &As..." ),
-                    this, SLOT( slotSaveAs() ) );
-  if ( item->node()->nodeId() > 2 &&
-       item->node()->typeString() != "Multipart" ) {
+                   this, SLOT( slotSaveAs() ) );
+
+  if ( isAttachment ) {
     popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
                       this, SLOT( slotOpen() ) );
     popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
     popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
   }
+
   /*
    * FIXME make optional?
   popup.addAction( i18n( "Save as &Encoded..." ), this,
                    SLOT( slotSaveAsEncoded() ) );
   */
+
   popup.addAction( i18n( "Save All Attachments..." ), this,
                     SLOT( slotSaveAll() ) );
+
   // edit + delete only for attachments
-  if ( item->node()->nodeId() > 2 &&
-       item->node()->typeString() != "Multipart" ) {
+  if ( isAttachment ) {
     popup.addAction( SmallIcon( "edit-copy" ), i18n( "Copy" ),
                      this, SLOT( slotCopy() ) );
     if ( GlobalSettings::self()->allowAttachmentDeletion() )
@@ -239,6 +246,7 @@ void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
       popup.addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
                        this, SLOT( slotEdit() ) );
   }
+
   if ( item->node()->nodeId() > 0 )
     popup.addAction( i18n( "Properties" ), this, SLOT( slotProperties() ) );
   popup.exec( viewport()->mapToGlobal( p ) );
@@ -266,10 +274,11 @@ void KMMimePartTree::saveSelectedBodyParts( bool encoded )
     return;
 
   QList<partNode*> parts;
-  for ( QList<QTreeWidgetItem*>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
+  for ( QList<QTreeWidgetItem*>::Iterator it = selected.begin(); it != selected.end(); ++it )
     parts.append( static_cast<KMMimePartTreeItem *>( *it )->node() );
-  }
+
   mReaderWin->setUpdateAttachment();
+
   KMSaveAttachmentsCommand *command =
     new KMSaveAttachmentsCommand( this, parts, mReaderWin->message(), encoded );
   command->start();
@@ -278,7 +287,7 @@ void KMMimePartTree::saveSelectedBodyParts( bool encoded )
 //-----------------------------------------------------------------------------
 void KMMimePartTree::slotSaveAll()
 {
-  if ( topLevelItemCount() == 0)
+  if ( topLevelItemCount() == 0 )
     return;
 
   mReaderWin->setUpdateAttachment();
@@ -318,17 +327,23 @@ void KMMimePartTree::styleChange( QStyle& oldStyle )
 //-----------------------------------------------------------------------------
 void KMMimePartTree::correctSize( QTreeWidgetItem * item )
 {
-  if (!item) return;
+  if (!item)
+    return;
+
+  // Gather size for all the children
 
   KIO::filesize_t totalSize = 0;
+
   QTreeWidgetItemIterator it( item );
   while( QTreeWidgetItem * myChild = *it )
   {
     totalSize += static_cast<KMMimePartTreeItem*>(myChild)->origSize();
     ++it;
   }
+
   if ( totalSize > static_cast<KMMimePartTreeItem*>(item)->origSize() )
     item->setText( 3 , KIO::convertSize(totalSize) );
+
   if ( item->parent() )
     correctSize( item->parent() );
 }
@@ -338,7 +353,9 @@ void KMMimePartTree::slotDelete()
   QList<QTreeWidgetItem*> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
-  mReaderWin->slotDeleteAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
+  mReaderWin->slotDeleteAttachment(
+      static_cast<KMMimePartTreeItem*>( selected.first() )->node()
+    );
 }
 
 void KMMimePartTree::slotEdit()
@@ -346,7 +363,9 @@ void KMMimePartTree::slotEdit()
   QList<QTreeWidgetItem*> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
-  mReaderWin->slotEditAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
+  mReaderWin->slotEditAttachment(
+      static_cast<KMMimePartTreeItem*>( selected.first() )->node()
+    );
 }
 
 void KMMimePartTree::slotOpen()
@@ -374,8 +393,11 @@ void KMMimePartTree::startHandleAttachmentCommand( int action )
   QList<QTreeWidgetItem *> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
+
   partNode *node = static_cast<KMMimePartTreeItem *>( selected.first() )->node();
+
   QString name = mReaderWin->tempFileUrlFromPartNode( node ).path();
+
   KMHandleAttachmentCommand *command = new KMHandleAttachmentCommand(
       node, mReaderWin->message(), node->nodeId(), name,
       KMHandleAttachmentCommand::AttachmentAction( action ),
@@ -404,6 +426,7 @@ void KMMimePartTree::slotCopy()
 }
 
 //=============================================================================
+
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         partNode* node,
                                         const QString & description,
@@ -470,11 +493,10 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
     setIcon( 0, QIcon( SmallIcon("application-octet-stream") ) );
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
-    setText( 1, (mtp && !mtp->comment().isEmpty()) ? mtp->comment() : mimetype );
+    setText( 1, ( mtp && !mtp->comment().isEmpty() ) ? mtp->comment() : mimetype );
     setIcon( 0, QIcon( mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") ) );
   }
 }
-
 
 void KMMimePartTree::startDrag( Qt::DropActions )
 {

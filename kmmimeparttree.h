@@ -95,7 +95,6 @@ protected:
 
 protected:
   KMReaderWin* mReaderWin;
-  int mSizeColumn;
   bool mLayoutColumnsOnFirstShow;
 };
 
