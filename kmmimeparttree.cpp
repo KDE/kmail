@@ -29,8 +29,6 @@
     your version.
 */
 
-
-
 #include "kmmimeparttree.h"
 
 #include "kmreaderwin.h"
@@ -44,124 +42,206 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kurl.h>
+#include <kmenu.h>
 
 #include <QClipboard>
 #include <QStyle>
-//Added by qt3to4:
-#include <q3header.h>
-#include <kurl.h>
+#include <QHeaderView>
 
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent )
-    : K3ListView( parent ),
-      mReaderWin( readerWin ), mSizeColumn(0)
+  : QTreeWidget( parent ),
+    mReaderWin( readerWin ), mLayoutColumnsOnFirstShow( false )
 {
-    setStyleDependantFrameWidth();
-    addColumn( i18n("Description") );
-    addColumn( i18n("Type") );
-    addColumn( i18n("Encoding") );
-    mSizeColumn = addColumn( i18n("Size") );
-    setColumnAlignment( 3, Qt::AlignRight );
+  setStyleDependantFrameWidth();
 
-    restoreLayoutIfPresent();
-    connect( this, SIGNAL( clicked( Q3ListViewItem* ) ),
-             this, SLOT( itemClicked( Q3ListViewItem* ) ) );
-    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*,
-                                                 const QPoint&, int ) ),
-             this, SLOT( itemRightClicked( Q3ListViewItem*, const QPoint& ) ) );
-    setSelectionMode( Q3ListView::Extended );
-    setRootIsDecorated( false );
-    setAllColumnsShowFocus( true );
-    setShowToolTips( true );
-    setSorting(-1);
-    setDragEnabled( true );
+  // Setup the header
+  QStringList headerNames;
+  headerNames << i18n("Description") << i18n("Type")
+                << i18n("Encoding") << i18n("Size");
+
+  QTreeWidgetItem  * hitem = new QTreeWidgetItem( headerNames );
+  hitem->setTextAlignment( 3 , Qt::AlignRight );
+  setHeaderItem( hitem );
+
+  header()->setContextMenuPolicy( Qt::CustomContextMenu );
+  connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
+           this, SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
+
+  // Setup our mouse handlers
+  connect( this, SIGNAL( itemClicked( QTreeWidgetItem* , int ) ),
+           this, SLOT( slotItemClicked( QTreeWidgetItem* ) ) );
+
+  setContextMenuPolicy( Qt::CustomContextMenu );
+  connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ),
+           this, SLOT( slotContextMenuRequested( const QPoint& ) ) );
+
+  // Setup view properties
+  setSelectionMode( QTreeWidget::ExtendedSelection );
+  setAlternatingRowColors( true );
+  setRootIsDecorated( false );
+  setAllColumnsShowFocus( true );
+  // FIXME: With Qt4.3 there seems to be no appropriate substitute for setShowToolTips()
+  //setShowToolTips( true );
+  setDragEnabled( true );
+
+  restoreLayoutIfPresent();
 }
-
 
 static const char configGroup[] = "MimePartTree";
+static const char configEntry[] = "State";
 
-KMMimePartTree::~KMMimePartTree() {
-  saveLayout( KMKernel::config(), configGroup );
+KMMimePartTree::~KMMimePartTree()
+{
+  // Store the view column order, width and visibility
+  KMKernel::config()->group( configGroup ).writeEntry(
+      configEntry , QVariant( header()->saveState() )
+    );
 }
 
-
-void KMMimePartTree::restoreLayoutIfPresent() {
-  // first column: soaks up the rest of the space:
-  setColumnWidthMode( 0, Manual );
-  header()->setStretchEnabled( true, 0 );
-  // rest of the columns:
+void KMMimePartTree::restoreLayoutIfPresent()
+{
   if ( KMKernel::config()->hasGroup( configGroup ) ) {
-    // there is a saved layout. use it...
-    restoreLayout( KMKernel::config(), configGroup );
-    // and disable Maximum mode:
-    for ( int i = 1 ; i < 4 ; ++i )
-      setColumnWidthMode( i, Manual );
+    // Restore the view column order, width and visibility
+    header()->restoreState(
+        KMKernel::config()->group( configGroup ).readEntry(
+          configEntry , QVariant( QVariant::ByteArray )
+        ).toByteArray()
+      );
   } else {
-    // columns grow with their contents:
-    for ( int i = 1 ; i < 4 ; ++i )
-      setColumnWidthMode( i, Maximum );
+     // Provide nice defaults on first show
+     mLayoutColumnsOnFirstShow = true;
   }
 }
 
-
-void KMMimePartTree::itemClicked( Q3ListViewItem* item )
+void KMMimePartTree::showEvent( QShowEvent* e )
 {
-  if ( const KMMimePartTreeItem * i = dynamic_cast<KMMimePartTreeItem*>( item ) ) {
-    if( mReaderWin->mRootNode == i->node() )
-      mReaderWin->update( true ); // Force update
-    else
-      mReaderWin->setMsgPart( i->node() );
-  } else
-    kWarning(5006) <<"Item was not a KMMimePartTreeItem!";
+  if ( mLayoutColumnsOnFirstShow ) {
+    // This seems to be the best way to provide reasonable defaults
+    // for the column widths. We're triggered before the tree
+    // is actually filled so fitting to contents is not an option (here).
+    // Having a fuction called from outside seems to be an overkill.
+    // QHeaderView::ResizeToContents can't be set since it disables
+    // user resizing of columns...
+    // So in the end, we provide heuristic defaults based on the width
+    // of the widget the first time we're shown...
+    int w = width();
+    header()->resizeSection( 0 , ( w / 10 ) * 6 );
+    header()->resizeSection( 1 , ( w / 10 ) * 2 );
+    header()->resizeSection( 2 , ( w / 10 ) );
+    header()->resizeSection( 3 , ( w / 10 ) );
+    mLayoutColumnsOnFirstShow = false;
+  }
+
+  QTreeWidget::showEvent( e );
 }
 
-
-void KMMimePartTree::itemRightClicked( Q3ListViewItem *item,
-                                       const QPoint &point )
+void KMMimePartTree::slotItemClicked( QTreeWidgetItem* item )
 {
-   // TODO: remove this member var?
-   mCurrentContextMenuItem = dynamic_cast<KMMimePartTreeItem *>( item );
-   if ( 0 == mCurrentContextMenuItem ) {
-     kDebug(5006) <<"Item was not a KMMimePartTreeItem!";
-     return;
-   }
+  if ( const KMMimePartTreeItem * i = dynamic_cast<KMMimePartTreeItem*>( item ) ) {
+    // Display the clicked tree node in the reader window
+    if ( mReaderWin->mRootNode == i->node() )
+      mReaderWin->update( true ); // Force update so the reader will display the whole message
+    else
+      mReaderWin->setMsgPart( i->node() ); // Show the message sub-part
+  }
+}
 
-   kDebug(5006);
+void KMMimePartTree::slotHeaderContextMenuRequested( const QPoint& p )
+{
+  // Popup a menu that allows showing/hiding columns
+  KMenu popup;
 
-   QMenu popup;
-   popup.addAction( SmallIcon( "document-save-as" ),i18n( "Save &As..." ),
+  popup.addTitle( i18n("View Columns") );
+
+  QTreeWidgetItem * hitem = headerItem();
+  if ( !hitem )
+    return; // oops..
+
+  int cc = hitem->columnCount();
+  for ( int i = 1 ; i < cc; i++ ) {
+    QAction * act = popup.addAction( hitem->text( i ) );
+    act->setCheckable( true );
+    if ( !header()->isSectionHidden( i ) )
+      act->setChecked( true );
+  }
+
+  connect( &popup , SIGNAL( triggered( QAction* ) ) ,
+           this , SLOT( slotToggleColumn( QAction* ) ) );
+  popup.exec( header()->mapToGlobal( p ) ); // synchronous
+
+}
+
+void KMMimePartTree::slotToggleColumn( QAction* a )
+{
+  if ( !a )
+    return; // hm ?
+
+  // This is tricky: we actually trust translators to do the correct
+  // job and the user's language to have different words for each
+  // one of our column names :)
+
+  QString columnName = a->text();
+
+  QTreeWidgetItem * hitem = headerItem();
+  if ( !hitem )
+    return; // oops..
+
+  int cc = hitem->columnCount();
+  for ( int i = 1; i < cc; i++ ) {
+    if ( columnName == hitem->text( i ) ) {
+      // got the column to hide/show
+      if ( a->isChecked() )
+        header()->showSection( i );
+      else
+        header()->hideSection( i );
+      return;
+    }
+  }
+  
+  // oops.. found no column to hide/show ?
+}
+
+void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
+{
+  KMMimePartTreeItem * item = dynamic_cast<KMMimePartTreeItem *>( itemAt( p ) );
+  if ( !item )
+    return;
+
+  QMenu popup;
+  popup.addAction( SmallIcon( "document-save-as" ),i18n( "Save &As..." ),
                     this, SLOT( slotSaveAs() ) );
-   if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
-        mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
-     popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
+  if ( item->node()->nodeId() > 2 &&
+       item->node()->typeString() != "Multipart" ) {
+    popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
                       this, SLOT( slotOpen() ) );
-     popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
-     popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
-   }
-   /*
-    * FIXME make optional?
-   popup.addAction( i18n( "Save as &Encoded..." ), this,
-                    SLOT( slotSaveAsEncoded() ) );
-   */
-   popup.addAction( i18n( "Save All Attachments..." ), this,
+    popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
+    popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
+  }
+  /*
+   * FIXME make optional?
+  popup.addAction( i18n( "Save as &Encoded..." ), this,
+                   SLOT( slotSaveAsEncoded() ) );
+  */
+  popup.addAction( i18n( "Save All Attachments..." ), this,
                     SLOT( slotSaveAll() ) );
-   // edit + delete only for attachments
-   if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
-        mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {
-     popup.addAction( SmallIcon( "edit-copy" ), i18n( "Copy" ),
-                      this, SLOT( slotCopy() ) );
-     if ( GlobalSettings::self()->allowAttachmentDeletion() )
-       popup.addAction( SmallIcon( "edit-delete" ), i18n( "Delete Attachment" ),
-                        this, SLOT( slotDelete() ) );
-     if ( GlobalSettings::self()->allowAttachmentEditing() )
-       popup.addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
-                        this, SLOT( slotEdit() ) );
-   }
-   if ( mCurrentContextMenuItem->node()->nodeId() > 0 )
-     popup.addAction( i18n( "Properties" ), this, SLOT( slotProperties() ) );
-   popup.exec( point );
-   mCurrentContextMenuItem = 0;
+  // edit + delete only for attachments
+  if ( item->node()->nodeId() > 2 &&
+       item->node()->typeString() != "Multipart" ) {
+    popup.addAction( SmallIcon( "edit-copy" ), i18n( "Copy" ),
+                     this, SLOT( slotCopy() ) );
+    if ( GlobalSettings::self()->allowAttachmentDeletion() )
+      popup.addAction( SmallIcon( "edit-delete" ), i18n( "Delete Attachment" ),
+                       this, SLOT( slotDelete() ) );
+    if ( GlobalSettings::self()->allowAttachmentEditing() )
+      popup.addAction( SmallIcon( "document-properties" ), i18n( "Edit Attachment" ),
+                       this, SLOT( slotEdit() ) );
+  }
+  if ( item->node()->nodeId() > 0 )
+    popup.addAction( i18n( "Properties" ), this, SLOT( slotProperties() ) );
+  popup.exec( viewport()->mapToGlobal( p ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -179,14 +259,14 @@ void KMMimePartTree::slotSaveAsEncoded()
 //-----------------------------------------------------------------------------
 void KMMimePartTree::saveSelectedBodyParts( bool encoded )
 {
-  QList<Q3ListViewItem*> selected = selectedItems();
+  QList<QTreeWidgetItem*> selected = selectedItems();
 
   Q_ASSERT( !selected.isEmpty() );
   if ( selected.isEmpty() )
     return;
 
   QList<partNode*> parts;
-  for ( QList<Q3ListViewItem*>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
+  for ( QList<QTreeWidgetItem*>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
     parts.append( static_cast<KMMimePartTreeItem *>( *it )->node() );
   }
   mReaderWin->setUpdateAttachment();
@@ -198,22 +278,25 @@ void KMMimePartTree::saveSelectedBodyParts( bool encoded )
 //-----------------------------------------------------------------------------
 void KMMimePartTree::slotSaveAll()
 {
-    if( childCount() == 0)
-        return;
+  if ( topLevelItemCount() == 0)
+    return;
 
-    mReaderWin->setUpdateAttachment();
-    KMCommand *command =
-      new KMSaveAttachmentsCommand( this, mReaderWin->message() );
-    command->start();
+  mReaderWin->setUpdateAttachment();
+
+  KMCommand *command =
+    new KMSaveAttachmentsCommand( this, mReaderWin->message() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMMimePartTree::setStyleDependantFrameWidth()
 {
+  // FIXME: This seems to be hack...Is it still needed with Qt4/KDE4 ?
+
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
 #if 0 // is this hack still needed with kde4?
-  if( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
+  if ( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
     frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
 #endif
@@ -229,30 +312,30 @@ void KMMimePartTree::setStyleDependantFrameWidth()
 void KMMimePartTree::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  K3ListView::styleChange( oldStyle );
+  QTreeWidget::styleChange( oldStyle );
 }
 
 //-----------------------------------------------------------------------------
-void KMMimePartTree::correctSize( Q3ListViewItem * item )
+void KMMimePartTree::correctSize( QTreeWidgetItem * item )
 {
   if (!item) return;
 
   KIO::filesize_t totalSize = 0;
-  Q3ListViewItem * myChild = item->firstChild();
-  while ( myChild )
+  QTreeWidgetItemIterator it( item );
+  while( QTreeWidgetItem * myChild = *it )
   {
     totalSize += static_cast<KMMimePartTreeItem*>(myChild)->origSize();
-    myChild = myChild->nextSibling();
+    ++it;
   }
   if ( totalSize > static_cast<KMMimePartTreeItem*>(item)->origSize() )
-    item->setText( mSizeColumn, KIO::convertSize(totalSize) );
+    item->setText( 3 , KIO::convertSize(totalSize) );
   if ( item->parent() )
     correctSize( item->parent() );
 }
 
 void KMMimePartTree::slotDelete()
 {
-  QList<Q3ListViewItem*> selected = selectedItems();
+  QList<QTreeWidgetItem*> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
   mReaderWin->slotDeleteAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
@@ -260,7 +343,7 @@ void KMMimePartTree::slotDelete()
 
 void KMMimePartTree::slotEdit()
 {
-  QList<Q3ListViewItem*> selected = selectedItems();
+  QList<QTreeWidgetItem*> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
   mReaderWin->slotEditAttachment( static_cast<KMMimePartTreeItem*>( selected.first() )->node() );
@@ -288,7 +371,7 @@ void KMMimePartTree::slotProperties()
 
 void KMMimePartTree::startHandleAttachmentCommand( int action )
 {
-  QList<Q3ListViewItem *> selected = selectedItems();
+  QList<QTreeWidgetItem *> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
   partNode *node = static_cast<KMMimePartTreeItem *>( selected.first() )->node();
@@ -304,7 +387,7 @@ void KMMimePartTree::startHandleAttachmentCommand( int action )
 
 void KMMimePartTree::slotCopy()
 {
-  QList<Q3ListViewItem *> selected = selectedItems();
+  QList<QTreeWidgetItem *> selected = selectedItems();
   if ( selected.count() != 1 )
     return;
   partNode *node = static_cast<KMMimePartTreeItem *>( selected.first() )->node();
@@ -327,17 +410,18 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         const QString & mimetype,
                                         const QString & encoding,
                                         KIO::filesize_t size )
-  : Q3ListViewItem( parent, description,
-		   QString(), // set by setIconAndTextForType()
-		   encoding,
-		   KIO::convertSize( size ) ),
-    mPartNode( node ), mOrigSize(size)
+  : QTreeWidgetItem( parent ),
+    mPartNode( node ), mOrigSize( size )
 {
   Q_ASSERT(parent);
-  if( node )
+  if ( node )
     node->setMimePartTreeItem( this );
+  setText( 0 , description );
   setIconAndTextForType( mimetype );
-  parent->correctSize(this);
+  setText( 2 , encoding );
+  setText( 3 , KIO::convertSize( size ) );
+  setTextAlignment( 3 , Qt::AlignRight );
+  parent->correctSize( this );
 }
 
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
@@ -347,23 +431,32 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
                                         const QString & encoding,
                                         KIO::filesize_t size,
                                         bool revertOrder )
-  : Q3ListViewItem( parent, description,
-		   QString(), // set by setIconAndTextForType()
-		   encoding,
-		   KIO::convertSize( size ) ),
+  : QTreeWidgetItem( parent ),
     mPartNode( node ), mOrigSize(size)
 {
-  if( revertOrder && nextSibling() ){
-    Q3ListViewItem* sib = nextSibling();
-    while( sib->nextSibling() )
-      sib = sib->nextSibling();
-    moveItem( sib );
+  // With Qt3 the items were inserted at the beginning of the
+  // parent's child list. revertOrder caused the item to be appended.
+  // With Qt4 we get the opposite behaviour: we're appended
+  // by default and with !revertOrder we want to be prepended.
+  if ( ( !revertOrder ) && parent ) {
+    int idx = parent->indexOfChild( this );
+    if ( idx > 0 ) {
+      parent->takeChild( idx ); // should return this.
+      parent->insertChild( 0 , this );
+    }
   }
-  if( node )
+  // Attach to the data tree node
+  if ( node )
     node->setMimePartTreeItem( this );
+
+  // Setup column data
+  setText( 0 , description );
   setIconAndTextForType( mimetype );
-  if ( listView() )
-    static_cast<KMMimePartTree*>(listView())->correctSize(this);
+  setText( 2 , encoding );
+  setText( 3 , KIO::convertSize( size ) );
+  setTextAlignment( 3 , Qt::AlignRight );
+  if ( treeWidget() )
+    static_cast<KMMimePartTree*>( treeWidget() )->correctSize( this );
 }
 
 void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
@@ -371,19 +464,19 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
   QString mimetype = mime.toLower();
   if ( mimetype.startsWith( "multipart/" ) ) {
     setText( 1, mimetype );
-    setPixmap( 0, SmallIcon("folder") );
+    setIcon( 0, QIcon( SmallIcon("folder") ) );
   } else if ( mimetype == "application/octet-stream" ) {
     setText( 1, i18n("Unspecified Binary Data") ); // do not show "Unknown"...
-    setPixmap( 0, SmallIcon("application-octet-stream") );
+    setIcon( 0, QIcon( SmallIcon("application-octet-stream") ) );
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
     setText( 1, (mtp && !mtp->comment().isEmpty()) ? mtp->comment() : mimetype );
-    setPixmap( 0, mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") );
+    setIcon( 0, QIcon( mtp ? KIconLoader::global()->loadMimeTypeIcon(mtp->iconName(), KIconLoader::Small) : SmallIcon("unknown") ) );
   }
 }
 
 
-void KMMimePartTree::startDrag()
+void KMMimePartTree::startDrag( Qt::DropActions )
 {
   KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( currentItem() );
   if ( !item )

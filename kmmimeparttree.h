@@ -35,16 +35,17 @@
 #ifndef KMMIMEPARTTREE_H
 #define KMMIMEPARTTREE_H
 
-#include <k3listview.h>
 #include <kio/global.h>
 
+#include <QTreeWidget>
 #include <QString>
 
 class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
+class QAction;
 
-class KMMimePartTree : public K3ListView
+class KMMimePartTree : public QTreeWidget
 {
   Q_OBJECT
   friend class ::KMReaderWin;
@@ -54,11 +55,13 @@ public:
                   QWidget* parent );
   virtual ~KMMimePartTree();
 
-  void correctSize( Q3ListViewItem * item );
+  void correctSize( QTreeWidgetItem * item );
 
 protected slots:
-  void itemClicked( Q3ListViewItem* );
-  void itemRightClicked( Q3ListViewItem*, const QPoint& );
+  void slotItemClicked( QTreeWidgetItem* );
+  void slotContextMenuRequested( const QPoint& );
+  void slotHeaderContextMenuRequested( const QPoint& );
+  void slotToggleColumn( QAction* );
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
@@ -83,17 +86,20 @@ protected:
   void restoreLayoutIfPresent();
 
   /* reimpl */
-  void startDrag();
+  virtual void startDrag( Qt::DropActions actions );
+
+  /* reimpl */
+  virtual void showEvent( QShowEvent* e );
 
   void startHandleAttachmentCommand( int action );
 
 protected:
   KMReaderWin* mReaderWin;
-  KMMimePartTreeItem* mCurrentContextMenuItem;
   int mSizeColumn;
+  bool mLayoutColumnsOnFirstShow;
 };
 
-class KMMimePartTreeItem :public Q3ListViewItem
+class KMMimePartTreeItem : public QTreeWidgetItem
 {
 public:
   KMMimePartTreeItem( KMMimePartTree * parent,

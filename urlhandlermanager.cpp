@@ -45,6 +45,9 @@
 #include <kurl.h>
 #include <QProcess>
 #include <algorithm>
+
+#include <q3scrollview.h> // temporary hack
+
 using std::for_each;
 using std::remove;
 using std::find;

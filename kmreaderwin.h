@@ -37,7 +37,7 @@ using KPIM::MessageStatus;
 
 class QSplitter;
 class KHBox;
-class Q3ListViewItem;
+class QTreeWidgetItem;
 class QString;
 class QTextCodec;
 
@@ -83,10 +83,10 @@ namespace KParts {
 class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   Q_OBJECT
 
-  friend void KMMimePartTree::itemClicked( Q3ListViewItem* item );
-  friend void KMMimePartTree::itemRightClicked( Q3ListViewItem* item, const QPoint & );
+  friend void KMMimePartTree::slotItemClicked( QTreeWidgetItem* );
+  friend void KMMimePartTree::slotContextMenuRequested( const QPoint & );
   friend void KMMimePartTree::slotSaveAs();
-  friend void KMMimePartTree::startDrag();
+  friend void KMMimePartTree::startDrag( Qt::DropActions actions );
 
   friend class KMail::ObjectTreeParser;
   friend class KMail::KHtmlPartHtmlWriter;

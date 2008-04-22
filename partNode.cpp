@@ -510,7 +510,7 @@ kDebug(5006) <<"                Content-Type:" << cntType;
                                                   cntType,
                                                   cntEnc,
                                                   cntSize );
-    mMimePartTreeItem->setOpen( true );
+    mMimePartTreeItem->setExpanded( true );
     if( mChild )
         mChild->fillMimePartTree( mMimePartTreeItem, 0,
                                   QString(), QString(), QString(), 0,
