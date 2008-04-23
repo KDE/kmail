@@ -105,15 +105,18 @@ void KMMimePartTree::restoreLayoutIfPresent()
 {
   if ( KMKernel::config()->hasGroup( configGroup ) ) {
     // Restore the view column order, width and visibility
-    header()->restoreState(
-        KMKernel::config()->group( configGroup ).readEntry(
-          configEntry , QVariant( QVariant::ByteArray )
-        ).toByteArray()
-      );
-  } else {
-     // Provide nice defaults on first show
-     mLayoutColumnsOnFirstShow = true;
+    QByteArray state = KMKernel::config()->group( configGroup ).readEntry(
+                           configEntry , QVariant( QVariant::ByteArray )
+                         ).toByteArray();
+
+    if( !state.isEmpty() ) {
+      header()->restoreState( state );
+      return;
+    }
   }
+  // No configGroup or no configEntry.
+  // Provide nice defaults on first show
+  mLayoutColumnsOnFirstShow = true;
 }
 
 void KMMimePartTree::showEvent( QShowEvent* e )
