@@ -1898,7 +1898,12 @@ void KMMessage::setDate(const QByteArray& aStr)
 QString KMMessage::to() const
 {
   // handle To same as Cc below, bug 80747
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( headerFields( "To" ).join( ", " ) );
+  QList<QByteArray> rawHeaders = rawHeaderFields( "To" );
+  QStringList headers;
+  for ( QList<QByteArray>::Iterator it = rawHeaders.begin(); it != rawHeaders.end(); ++it ) {
+    headers << *it;
+  }
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( headers.join( ", " ) );
 }
 
 
@@ -1917,7 +1922,7 @@ QString KMMessage::toStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyTo() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( headerField("Reply-To") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("Reply-To") );
 }
 
 
@@ -1940,7 +1945,12 @@ QString KMMessage::cc() const
 {
   // get the combined contents of all Cc headers (as workaround for invalid
   // messages with multiple Cc headers)
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( headerFields( "Cc" ).join( ", " ) );
+  QList<QByteArray> rawHeaders = rawHeaderFields( "Cc" );
+  QStringList headers;
+  for ( QList<QByteArray>::Iterator it = rawHeaders.begin(); it != rawHeaders.end(); ++it ) {
+    headers << *it;
+  }
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( headers.join( ", " ) );
 }
 
 
@@ -1961,7 +1971,7 @@ QString KMMessage::ccStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::bcc() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( headerField("Bcc") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("Bcc") );
 }
 
 
@@ -2000,7 +2010,7 @@ void KMMessage::setTemplates(const QString& aStr)
 QString KMMessage::who() const
 {
   if (mParent)
-    return KPIMUtils::normalizeAddressesAndDecodeIdn( headerField(mParent->whoField().toUtf8()) );
+    return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField(mParent->whoField().toUtf8()) );
   return from();
 }
 
@@ -2008,7 +2018,7 @@ QString KMMessage::who() const
 //-----------------------------------------------------------------------------
 QString KMMessage::from() const
 {
-  return KPIMUtils::normalizeAddressesAndDecodeIdn( headerField("From") );
+  return KPIMUtils::normalizeAddressesAndDecodeIdn( rawHeaderField("From") );
 }
 
 
