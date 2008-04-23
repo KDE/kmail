@@ -3279,7 +3279,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotManageSieveScripts()));
   }
   {
-    QAction *action = new KAction(i18n("KMail &Introduction"), this);
+    QAction *action = new KAction(KIcon("kmail"), i18n("KMail &Introduction"), this);
     actionCollection()->addAction("help_kmail_welcomepage", action );
     action->setToolTip( i18n("Display KMail's Welcome Page") );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotIntro()));
