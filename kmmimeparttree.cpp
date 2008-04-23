@@ -55,7 +55,10 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
   : QTreeWidget( parent ),
     mReaderWin( readerWin ), mLayoutColumnsOnFirstShow( false )
 {
+#if 0
+  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
   setStyleDependantFrameWidth();
+#endif
 
   // Setup the header
   QStringList headerNames;
@@ -300,6 +303,9 @@ void KMMimePartTree::slotSaveAll()
   command->start();
 }
 
+#if 0
+  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
+
 //-----------------------------------------------------------------------------
 void KMMimePartTree::setStyleDependantFrameWidth()
 {
@@ -319,13 +325,13 @@ void KMMimePartTree::setStyleDependantFrameWidth()
     setLineWidth( frameWidth );
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMimePartTree::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
   QTreeWidget::styleChange( oldStyle );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMimePartTree::correctSize( QTreeWidgetItem * item )

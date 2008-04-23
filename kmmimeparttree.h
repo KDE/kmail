@@ -85,15 +85,21 @@ protected slots:
   void slotCopy();
 
 protected:
+#if 0
+  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
   /** reimplemented in order to update the frame width in case of a changed
       GUI style FIXME: Still needed with Qt4 ? */
   virtual void styleChange( QStyle& oldStyle );
+#endif
   virtual void startDrag( Qt::DropActions actions );
   virtual void showEvent( QShowEvent* e );
 
+#if 0
+  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
   /** Set the width of the frame to a reasonable value for the current GUI
       style */
   void setStyleDependantFrameWidth();
+#endif
   void restoreLayoutIfPresent();
   void startHandleAttachmentCommand( int action );
   void saveSelectedBodyParts( bool encoded );
