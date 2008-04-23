@@ -197,7 +197,7 @@ bool KMAcctLocal::fetchMsg()
     // debug code, don't remove
     QFile fileD0( "testdat_xx-0-0" );
     if( fileD0.open( QIODevice::WriteOnly ) ) {
-      Q3CString s = msg->asString();
+      QByteArray s = msg->asString();
       uint l = s.length();
       if ( l > 0 ) {
         QDataStream ds( &fileD0 );

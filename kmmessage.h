@@ -17,22 +17,26 @@
 #include <kmime/kmime_mdn.h>
 
 #include<kpimutils/email.h>
-//Added by qt3to4:
+
 #include <QList>
 #include <QByteArray>
 
-template <typename T>
-class QList;
-
+// Forward declarations
 class QStringList;
 class QString;
 class QTextCodec;
 
 class KMFolder;
-class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
 class KMForwardCommand;
+
+class DwMessage;
+class DwBodyPart;
+class DwMediaType;
+class DwHeaders;
+
+class partNode;
 
 namespace KMime {
   class CharFreq;
@@ -48,18 +52,20 @@ namespace KMail {
   class HeaderStrategy;
 }
 
-class DwBodyPart;
-class DwMediaType;
-class DwHeaders;
 
-class partNode;
+// Real code starts here :)
 
 namespace KMail {
-  enum ReplyStrategy { ReplySmart = 0,
-                       ReplyAuthor,
-                       ReplyList,
-                       ReplyAll,
-                       ReplyNone };
+  /**
+   * Enumeration that defines the available reply "modes"
+   */
+  enum ReplyStrategy {
+    ReplySmart = 0,    //< Attempt to automatically guess the best recipient for the reply
+    ReplyAuthor,       //< Reply to the author of the message (possibly NOT the mailing list, if any)
+    ReplyList,         //< Reply to the mailing list (and not the author of the message)
+    ReplyAll,          //< Reply to author and all the recipients in CC
+    ReplyNone          //< Don't set reply addresses: they will be set manually
+  };
 }
 
 /** This is a Mime Message. */

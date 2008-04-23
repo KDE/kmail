@@ -1,5 +1,5 @@
 /* -*- c++ -*-
-    kmmimeparttree.cpp A MIME part tree viwer.
+    kmmimeparttree.h A MIME part tree viwer.
 
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2002-2004 Klarälvdalens Datakonsult AB
@@ -29,8 +29,6 @@
     your version.
 */
 
-
-
 // -*- c++ -*-
 #ifndef KMMIMEPARTTREE_H
 #define KMMIMEPARTTREE_H
@@ -45,23 +43,36 @@ class KMReaderWin;
 class KMMimePartTreeItem;
 class QAction;
 
+/**
+ * @short The widget that displays the message MIME tree
+ *
+ * This widget displays the message tree and allows viewing
+ * the contents of single nodes in the KMReaderWin.
+ */
 class KMMimePartTree : public QTreeWidget
 {
   Q_OBJECT
   friend class ::KMReaderWin;
 
 public:
-  KMMimePartTree( KMReaderWin* readerWin,
-                  QWidget* parent );
+  KMMimePartTree( KMReaderWin *readerWin,
+                  QWidget *parent );
   virtual ~KMMimePartTree();
 
-  void correctSize( QTreeWidgetItem * item );
+public:
+  /**
+  * Corrects the size displayed by the specified item
+  * by accounting for its current children.
+  *
+  * @param the item to correct the size for
+  */
+  void correctSize( QTreeWidgetItem *item );
 
 protected slots:
-  void slotItemClicked( QTreeWidgetItem* );
-  void slotContextMenuRequested( const QPoint& );
-  void slotHeaderContextMenuRequested( const QPoint& );
-  void slotToggleColumn( QAction* );
+  void slotItemClicked( QTreeWidgetItem * );
+  void slotContextMenuRequested( const QPoint & );
+  void slotHeaderContextMenuRequested( const QPoint & );
+  void slotToggleColumn( QAction * );
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
@@ -75,53 +86,67 @@ protected slots:
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed
-      GUI style */
-  void styleChange( QStyle& oldStyle );
+      GUI style FIXME: Still needed with Qt4 ? */
+  virtual void styleChange( QStyle& oldStyle );
+  virtual void startDrag( Qt::DropActions actions );
+  virtual void showEvent( QShowEvent* e );
 
   /** Set the width of the frame to a reasonable value for the current GUI
       style */
   void setStyleDependantFrameWidth();
-
-  void saveSelectedBodyParts( bool encoded );
   void restoreLayoutIfPresent();
-
-  /* reimpl */
-  virtual void startDrag( Qt::DropActions actions );
-
-  /* reimpl */
-  virtual void showEvent( QShowEvent* e );
-
   void startHandleAttachmentCommand( int action );
+  void saveSelectedBodyParts( bool encoded );
 
 protected:
-  KMReaderWin* mReaderWin;
-  bool mLayoutColumnsOnFirstShow;
+  KMReaderWin* mReaderWin;         // pointer to the main reader window
+  bool mLayoutColumnsOnFirstShow;  // provide layout defaults on first show ?
+
 };
 
+
+/**
+ * @short The message MIME tree items used in KMMimePartTree
+ *
+ * Each display item has a reference to the partNode (which is a node
+ * of the "real" message tree).
+ */
 class KMMimePartTreeItem : public QTreeWidgetItem
 {
 public:
-  KMMimePartTreeItem( KMMimePartTree * parent,
-                      partNode* node,
-                      const QString & labelDescr,
-                      const QString & labelCntType  = QString(),
-                      const QString & labelEncoding = QString(),
-                      KIO::filesize_t size=0 );
-  KMMimePartTreeItem( KMMimePartTreeItem * parent,
-                      partNode* node,
-                      const QString & labelDescr,
-                      const QString & labelCntType  = QString(),
-                      const QString & labelEncoding = QString(),
-                      KIO::filesize_t size=0,
-                      bool revertOrder = false );
-  partNode* node() const { return mPartNode; }
+  KMMimePartTreeItem( KMMimePartTree *parent,
+                      partNode *node,
+                      const QString &labelDescr,
+                      const QString &labelCntType  = QString(),
+                      const QString &labelEncoding = QString(),
+                      KIO::filesize_t size = 0 );
 
+  KMMimePartTreeItem( KMMimePartTreeItem * parent,
+                      partNode *node,
+                      const QString &labelDescr,
+                      const QString &labelCntType  = QString(),
+                      const QString &labelEncoding = QString(),
+                      KIO::filesize_t size = 0,
+                      bool revertOrder = false );
+
+public:
+  /**
+  * @returns a pointer to the partNode this item is displaying.
+  */
+  partNode* node() const { return mPartNode; }
+  /**
+  * @returns the initial size of the tree node data.
+  */
   KIO::filesize_t origSize() const { return mOrigSize; }
+  /**
+  * Sets the initial size of the tree node data.
+  */
   void setOrigSize( KIO::filesize_t size ) { mOrigSize = size; }
 
 private:
-  void setIconAndTextForType( const QString & mimetype );
+  void setIconAndTextForType( const QString &mimetype );
 
+private:
   partNode* mPartNode;
   KIO::filesize_t mOrigSize;
 };

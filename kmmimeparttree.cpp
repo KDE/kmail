@@ -1,5 +1,5 @@
 /* -*- c++ -*-
-    kmmimeparttree.h A MIME part tree viwer.
+    kmmimeparttree.cpp A MIME part tree viwer.
 
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2002-2004 Klarälvdalens Datakonsult AB
