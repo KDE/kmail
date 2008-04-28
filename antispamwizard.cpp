@@ -1118,8 +1118,8 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
 
-  QString s = "trash";
-  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s, true );
+  mFolderTree = new FolderSelectionTreeWidget( this, mainFolderTree );
+  mFolderTree->reload( true , true , true , QString( "trash" ) );
   grid->addWidget( mFolderTree, 3, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
@@ -1130,6 +1130,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveRules, SIGNAL( toggled( bool ) ),
            mMarkRules, SLOT( setEnabled( bool ) ) );
+
 }
 
 bool ASWizVirusRulesPage::pipeRulesSelected() const
