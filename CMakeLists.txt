@@ -102,6 +102,7 @@ set(kmailprivate_LIB_SRCS
    kmsearchpatternedit.cpp
    kmfilteraction.cpp
    kmsearchpattern.cpp
+   folderselectiontreewidget.cpp
    folderselectiondialog.cpp
    kmfilter.cpp
    kmfilterdlg.cpp
