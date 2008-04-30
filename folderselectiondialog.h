@@ -78,7 +78,7 @@ public:
   /**
    * Returns the currently selected folder, or 0 if no folder is selected (yet)
    */
-  virtual KMFolder * folder();
+  KMFolder * folder() const;
 
   /**
    * Set the selected folder. Forwarded to FolderSelectionTreeWidget.

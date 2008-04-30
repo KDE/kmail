@@ -44,7 +44,7 @@ public:
   void setFolder( KMFolder * folder )
     { mFolder = folder; };
 
-  KMFolder * folder()
+  KMFolder * folder() const
     { return mFolder; };
 
 private:
@@ -62,10 +62,8 @@ FolderSelectionTreeWidget::FolderSelectionTreeWidget( QWidget * parent , KMFolde
   mPathColumnIndex = addColumn( i18n( "Path" ) );
 
   setContextMenuPolicy( Qt::CustomContextMenu );
-  connect(
-      this, SIGNAL( customContextMenuRequested( const QPoint & ) ),
-      this, SLOT( slotContextMenuRequested( const QPoint & ) )
-    );
+  connect( this, SIGNAL( customContextMenuRequested( const QPoint & ) ),
+           this, SLOT( slotContextMenuRequested( const QPoint & ) ) );
 }
 
 void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti , FolderSelectionTreeWidgetItem *parent )
@@ -83,19 +81,20 @@ void FolderSelectionTreeWidget::recursiveReload( KMFolderTreeItem *fti , FolderS
     return;
 
   // top level
-  FolderSelectionTreeWidgetItem *item = parent ? new FolderSelectionTreeWidgetItem( parent ) : new FolderSelectionTreeWidgetItem( this );
+  FolderSelectionTreeWidgetItem *item = parent ? new FolderSelectionTreeWidgetItem( parent )
+                                               : new FolderSelectionTreeWidgetItem( this );
 
   // Build the path (ParentItemPath/CurrentItemName)
   QString path;
   if( parent )
-      path = parent->text( mPathColumnIndex ) + "/";
+    path = parent->text( mPathColumnIndex ) + "/";
   path += fti->text( 0 );
 
   item->setText( mNameColumnIndex , fti->text( 0 ) );
   item->setText( mPathColumnIndex , path );
-  item->setProtocol( (KPIM::FolderTreeWidgetItem::Protocol)( fti->protocol() ) );
-  item->setFolderType( (KPIM::FolderTreeWidgetItem::FolderType)( fti->type() ) );
-  QPixmap pix = fti->normalIcon(KIconLoader::SizeSmall);
+  item->setProtocol( static_cast<KPIM::FolderTreeWidgetItem::Protocol>( fti->protocol() ) );
+  item->setFolderType( static_cast<KPIM::FolderTreeWidgetItem::FolderType>( fti->type() ) );
+  QPixmap pix = fti->normalIcon( KIconLoader::SizeSmall );
   item->setIcon( mNameColumnIndex , pix.isNull() ? SmallIcon( "folder" ) : QIcon( pix ) );
   item->setExpanded( true );
 
@@ -129,7 +128,7 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
   if ( selected.isEmpty() && folder() )
     selected = folder()->idString();
 
-  mFilter = "";
+  mFilter = QString();
 
   for (
          KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( mFolderTree->firstChild() ) ;
@@ -139,20 +138,21 @@ void FolderSelectionTreeWidget::reload( bool mustBeReadWrite, bool showOutbox,
      recursiveReload( fti , 0 );
 
   if ( preSelection.isEmpty() )
-     return; // nothing more to do
+    return; // nothing more to do
 
   QTreeWidgetItemIterator it( this );
   while ( FolderSelectionTreeWidgetItem * fitem = static_cast<FolderSelectionTreeWidgetItem *>( *it ) )
   {
-     if ( fitem->folder() ) {
-       if ( fitem->folder()->idString() == preSelection ) {
-          // found
-          fitem->setSelected( true );
-          scrollToItem( fitem );
-          return;
-       }
-     }
-     ++it;
+    if ( fitem->folder() ) {
+      if ( fitem->folder()->idString() == preSelection ) {
+        // found
+        fitem->setSelected( true );
+        scrollToItem( fitem );
+        setCurrentItem( fitem );
+        return;
+      }
+    }
+    ++it;
   }
 
 }
@@ -200,7 +200,7 @@ void FolderSelectionTreeWidget::slotContextMenuRequested( const QPoint &p )
 {
   QTreeWidgetItem * lvi = itemAt( p );
 
-  if (!lvi)
+  if ( !lvi )
     return;
   setCurrentItem( lvi );
   lvi->setSelected( true );
@@ -257,7 +257,7 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
   // Now search...
   QList<QTreeWidgetItem *> lItems = findItems( mFilter , Qt::MatchContains | Qt::MatchRecursive , mPathColumnIndex );
 
-  for( QList<QTreeWidgetItem *>::Iterator it = lItems.begin(); it != lItems.end(); ++it)
+  for( QList<QTreeWidgetItem *>::Iterator it = lItems.begin(); it != lItems.end(); ++it )
   {
     ( *it )->setDisabled( false );
     ( *it )->setHidden( false );
@@ -274,12 +274,13 @@ void FolderSelectionTreeWidget::applyFilter( const QString& filter )
 
 
   // Iterate through the list to find the first selectable item
-  QTreeWidgetItemIterator first ( this );
+  QTreeWidgetItemIterator first( this );
   while ( FolderSelectionTreeWidgetItem * item = static_cast< FolderSelectionTreeWidgetItem* >( *first ) )
   {
     if ( ( !item->isHidden() ) && ( !item->isDisabled() ) && ( item->flags() & Qt::ItemIsSelectable ) )
     {
       item->setSelected( true );
+      setCurrentItem( item );
       scrollToItem( item );
       break;
     }
@@ -303,7 +304,7 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
 
   QString s = e->text();
 
-  switch(e->key())
+  switch( e->key() )
   {
     case Qt::Key_Backspace:
       if ( mFilter.length() > 0 )
@@ -317,12 +318,12 @@ void FolderSelectionTreeWidget::keyPressEvent( QKeyEvent *e )
       return;
     break;
     default:
-     if ( !s.isEmpty() )
-     {
-       mFilter += s;
-       applyFilter( mFilter );
-       return;
-     }
+      int ch = s.isEmpty() ? 0 : s[0].toAscii();
+      if ( !s.isEmpty() && ch >= 32 && ch <= 126 ) {
+        mFilter += s;
+        applyFilter( mFilter );
+        return;
+      }
     break;
   }
 

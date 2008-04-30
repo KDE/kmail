@@ -60,6 +60,7 @@ public:
   virtual ~KMMimePartTree();
 
 public:
+
   /**
   * Corrects the size displayed by the specified item
   * by accounting for its current children.
@@ -85,21 +86,10 @@ protected slots:
   void slotCopy();
 
 protected:
-#if 0
-  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
-  /** reimplemented in order to update the frame width in case of a changed
-      GUI style FIXME: Still needed with Qt4 ? */
-  virtual void styleChange( QStyle& oldStyle );
-#endif
+
   virtual void startDrag( Qt::DropActions actions );
   virtual void showEvent( QShowEvent* e );
 
-#if 0
-  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
-  /** Set the width of the frame to a reasonable value for the current GUI
-      style */
-  void setStyleDependantFrameWidth();
-#endif
   void restoreLayoutIfPresent();
   void startHandleAttachmentCommand( int action );
   void saveSelectedBodyParts( bool encoded );
@@ -140,10 +130,12 @@ public:
   * @returns a pointer to the partNode this item is displaying.
   */
   partNode* node() const { return mPartNode; }
+
   /**
   * @returns the initial size of the tree node data.
   */
   KIO::filesize_t origSize() const { return mOrigSize; }
+
   /**
   * Sets the initial size of the tree node data.
   */

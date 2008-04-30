@@ -86,7 +86,7 @@ FolderSelectionDialog::~FolderSelectionDialog()
 }
 
 
-KMFolder * FolderSelectionDialog::folder( void )
+KMFolder * FolderSelectionDialog::folder( void ) const
 {
   return mTreeView->folder();
 }

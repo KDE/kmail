@@ -46,7 +46,6 @@
 #include <kmenu.h>
 
 #include <QClipboard>
-#include <QStyle>
 #include <QHeaderView>
 
 
@@ -55,17 +54,12 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
   : QTreeWidget( parent ),
     mReaderWin( readerWin ), mLayoutColumnsOnFirstShow( false )
 {
-#if 0
-  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
-  setStyleDependantFrameWidth();
-#endif
-
   // Setup the header
   QStringList headerNames;
   headerNames << i18n("Description") << i18n("Type")
-                << i18n("Encoding") << i18n("Size");
+              << i18n("Encoding") << i18n("Size");
 
-  QTreeWidgetItem  * hitem = new QTreeWidgetItem( headerNames );
+  QTreeWidgetItem * hitem = new QTreeWidgetItem( headerNames );
   hitem->setTextAlignment( 3 , Qt::AlignRight );
   setHeaderItem( hitem );
 
@@ -170,6 +164,7 @@ void KMMimePartTree::slotHeaderContextMenuRequested( const QPoint& p )
   int cc = hitem->columnCount();
   for ( int i = 1 ; i < cc; i++ ) {
     QAction * act = popup.addAction( hitem->text( i ) );
+    act->setData( i );
     act->setCheckable( true );
     if ( !header()->isSectionHidden( i ) )
       act->setChecked( true );
@@ -183,32 +178,21 @@ void KMMimePartTree::slotHeaderContextMenuRequested( const QPoint& p )
 
 void KMMimePartTree::slotToggleColumn( QAction* a )
 {
+  Q_ASSERT( a );
   if ( !a )
     return; // hm ?
-
-  // This is tricky: we actually trust translators to do the correct
-  // job and the user's language to have different words for each
-  // one of our column names :)
-
-  QString columnName = a->text();
 
   QTreeWidgetItem * hitem = headerItem();
   if ( !hitem )
     return; // oops..
 
-  int cc = hitem->columnCount();
-  for ( int i = 1; i < cc; i++ ) {
-    if ( columnName == hitem->text( i ) ) {
-      // got the column to hide/show
-      if ( a->isChecked() )
-        header()->showSection( i );
-      else
-        header()->hideSection( i );
-      return;
-    }
-  }
-  
-  // oops.. found no column to hide/show ?
+  int column = a->data().toInt();
+  Q_ASSERT( column >= 0 && column < hitem->columnCount() );
+
+  if ( a->isChecked() )
+    header()->showSection( column );
+  else
+    header()->hideSection( column );
 }
 
 void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
@@ -222,12 +206,12 @@ void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
 
   KMenu popup;
 
-  popup.addAction( SmallIcon( "document-save-as" ),i18n( "Save &As..." ),
+  popup.addAction( SmallIcon( "document-save-as" ), i18n( "Save &As..." ),
                    this, SLOT( slotSaveAs() ) );
 
   if ( isAttachment ) {
     popup.addAction( SmallIcon( "document-open" ), i18nc( "to open", "Open" ),
-                      this, SLOT( slotOpen() ) );
+                     this, SLOT( slotOpen() ) );
     popup.addAction( i18n( "Open With..." ), this, SLOT( slotOpenWith() ) );
     popup.addAction( i18nc( "to view something", "View" ), this, SLOT( slotView() ) );
   }
@@ -239,7 +223,7 @@ void KMMimePartTree::slotContextMenuRequested( const QPoint& p )
   */
 
   popup.addAction( i18n( "Save All Attachments..." ), this,
-                    SLOT( slotSaveAll() ) );
+                   SLOT( slotSaveAll() ) );
 
   // edit + delete only for attachments
   if ( isAttachment ) {
@@ -303,40 +287,10 @@ void KMMimePartTree::slotSaveAll()
   command->start();
 }
 
-#if 0
-  /* FIXME: Remove this ifdefed code if nobody complains (2008.04.23) */
-
-//-----------------------------------------------------------------------------
-void KMMimePartTree::setStyleDependantFrameWidth()
-{
-  // FIXME: This seems to be hack...Is it still needed with Qt4/KDE4 ?
-
-  // set the width of the frame to a reasonable value for the current GUI style
-  int frameWidth;
-#if 0 // is this hack still needed with kde4?
-  if ( !qstrcmp( style()->metaObject()->className(), "KeramikStyle" ) )
-    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
-  else
-#endif
-    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
-  if ( frameWidth < 0 )
-    frameWidth = 0;
-  if ( frameWidth != lineWidth() )
-    setLineWidth( frameWidth );
-}
-
-//-----------------------------------------------------------------------------
-void KMMimePartTree::styleChange( QStyle& oldStyle )
-{
-  setStyleDependantFrameWidth();
-  QTreeWidget::styleChange( oldStyle );
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMMimePartTree::correctSize( QTreeWidgetItem * item )
 {
-  if (!item)
+  if ( !item )
     return;
 
   // Gather size for all the children
@@ -351,7 +305,7 @@ void KMMimePartTree::correctSize( QTreeWidgetItem * item )
   }
 
   if ( totalSize > static_cast<KMMimePartTreeItem*>(item)->origSize() )
-    item->setText( 3 , KIO::convertSize(totalSize) );
+    item->setText( 3 , KIO::convertSize( totalSize ) );
 
   if ( item->parent() )
     correctSize( item->parent() );
@@ -445,7 +399,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
   : QTreeWidgetItem( parent ),
     mPartNode( node ), mOrigSize( size )
 {
-  Q_ASSERT(parent);
+  Q_ASSERT( parent );
   if ( node )
     node->setMimePartTreeItem( this );
   setText( 0 , description );

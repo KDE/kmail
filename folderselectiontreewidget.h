@@ -48,13 +48,13 @@ class FolderSelectionTreeWidget : public KPIM::FolderTreeWidget
 {
   Q_OBJECT
 private:
-  int mNameColumnIndex;          //< The index of the folder name column
-  int mPathColumnIndex;          //< The index of the path column
-  KMFolderTree* mFolderTree;     //< The KMFolderTree to fetch the data from
-  QString mFilter;               //< The current folder path filter string
-  bool mLastMustBeReadWrite;     //< Internal state for reload()
-  bool mLastShowOutbox;          //< Internal state for reload()
-  bool mLastShowImapFolders;     //< Internal state for reload()
+  int mNameColumnIndex;          ///< The index of the folder name column
+  int mPathColumnIndex;          ///< The index of the path column
+  KMFolderTree* mFolderTree;     ///< The KMFolderTree to fetch the data from
+  QString mFilter;               ///< The current folder path filter string
+  bool mLastMustBeReadWrite;     ///< Internal state for reload()
+  bool mLastShowOutbox;          ///< Internal state for reload()
+  bool mLastShowImapFolders;     ///< Internal state for reload()
 
 public:
   /**
@@ -107,18 +107,18 @@ public:
    * Apply the given filter string.
    * Folders NOT matching the string are hidden and disabled (can't be selected).
    */
-  void applyFilter( const QString& filter );
+  void applyFilter( const QString &filter );
 
   /**
    * Returns the folder name column logical index.
    */
-  int nameColumnIndex()
+  int nameColumnIndex() const
     { return mNameColumnIndex; };
 
   /**
    * Returns the folder path column logical index.
    */
-  int pathColumnIndex()
+  int pathColumnIndex() const
     { return mPathColumnIndex; };
 
 public slots:
