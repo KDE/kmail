@@ -2100,6 +2100,7 @@ void KMMainWidget::closeFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderClosed( KMFolder *folder )
 {
+  Q_UNUSED( folder );
   if ( !mFolder || mFolder->folderType() != KMFolderTypeImap ) {
     return;
   }
