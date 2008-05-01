@@ -31,7 +31,6 @@ using KMail::TemplateParser;
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
 
-#include "kleo/cryptplugwrapperlist.h"
 #include <libkpgp/kpgpblock.h>
 #include <kaddrbookexternal.h>
 
@@ -1707,7 +1706,7 @@ void KMMessage::initHeader( uint id )
 # if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
   extraInfo << KMAIL_SVN_REVISION_STRING << KMAIL_SVN_LAST_CHANGE;
 # endif
-  setHeaderField("User-Agent", 
+  setHeaderField("User-Agent",
     KProtocolManager::userAgentForApplication( "KMail", KMAIL_VERSION, extraInfo )
   );
 #else

@@ -35,7 +35,8 @@
 
 #include "kmmsgbase.h"
 
-#include "kleo/cryptplugwrapper.h"
+#include <kleo/cryptobackend.h>
+#include <gpgme++/verificationresult.h>
 
 class KMReaderWin;
 class KMMessagePart;
@@ -94,16 +95,16 @@ namespace KMail {
   };
 
   class ObjectTreeParser {
-    class CryptPlugWrapperSaver;
+    class CryptoProtocolSaver;
     /** Internal. Copies the context of @p other, but not it's rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
-    explicit ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
-        		       bool showOneMimePart=false, bool keepEncryptions=false,
-        		       bool includeSignatures=true,
-        		       const KMail::AttachmentStrategy * attachmentStrategy=0,
-            		       KMail::HtmlWriter * htmlWriter=0,
-        		       KMail::CSSHelper * cssHelper=0 );
+    explicit ObjectTreeParser( KMReaderWin * reader=0, const Kleo::CryptoBackend::Protocol * protocol=0,
+                      bool showOneMimePart=false, bool keepEncryptions=false,
+                      bool includeSignatures=true,
+                      const KMail::AttachmentStrategy * attachmentStrategy=0,
+                      KMail::HtmlWriter * htmlWriter=0,
+                      KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     QByteArray rawReplyString() const { return mRawReplyString; }
@@ -114,11 +115,11 @@ namespace KMail {
 
     QByteArray textualContentCharset() const { return mTextualContentCharset; }
 
-    void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
-      mCryptPlugWrapper = wrapper;
+    void setCryptoProtocol( const Kleo::CryptoBackend::Protocol * protocol ) {
+      mCryptoProtocol = protocol;
     }
-    CryptPlugWrapper * cryptPlugWrapper() const {
-      return mCryptPlugWrapper;
+    const Kleo::CryptoBackend::Protocol* cryptoProtocol() const {
+      return mCryptoProtocol;
     }
 
     bool showOnlyOneMimePart() const { return mShowOnlyOneMimePart; }
@@ -182,7 +183,7 @@ namespace KMail {
                                            const QString & fromAddress,
                                            bool doCheck=true,
                                            QByteArray * cleartextData=0,
-                                           CryptPlug::SignatureMetaData * paramSigMeta=0,
+                                           std::vector<GpgME::Signature> paramSignatures = std::vector<GpgME::Signature>(),
                                            bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
@@ -190,7 +191,7 @@ namespace KMail {
     bool okDecryptMIME( partNode& data,
                         QByteArray& decryptedData,
                         bool& signatureFound,
-                        CryptPlug::SignatureMetaData& sigMeta,
+                        std::vector<GpgME::Signature> &signatures,
                         bool showWarning,
                         bool& passphraseError,
                         bool& notActuallyEncrypted,
@@ -232,13 +233,13 @@ namespace KMail {
 
     void writePartIcon( KMMessagePart * msgPart, int partNumber, bool inlineImage=false );
 
-    QString sigStatusToString( CryptPlugWrapper * cryptPlug,
+    QString sigStatusToString( const Kleo::CryptoBackend::Protocol * cryptProto,
                                int status_code,
-                               CryptPlugWrapper::SigStatusFlags statusFlags,
+                               GpgME::Signature::Summary summary,
                                int & frameColor,
                                bool & showKeyInfos );
     QString writeSigstatHeader( KMail::PartMetaData & part,
-                                CryptPlugWrapper * cryptPlug,
+                                const Kleo::CryptoBackend::Protocol * cryptProto,
                                 const QString & fromAddress,
                                 const QString & filename = QString() );
     QString writeSigstatFooter( KMail::PartMetaData & part );
@@ -272,7 +273,7 @@ namespace KMail {
     QByteArray mRawReplyString;
     QByteArray mTextualContentCharset;
     QString mTextualContent;
-    CryptPlugWrapper * mCryptPlugWrapper;
+    const Kleo::CryptoBackend::Protocol * mCryptoProtocol;
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;

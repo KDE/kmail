@@ -228,6 +228,7 @@ set(kmailprivate_LIB_SRCS
    messageactions.cpp
    statusbarlabel.cpp
    groupware_types.cpp
+   kleojobexecutor.cpp
 #TODO   locale.c
 )
 
