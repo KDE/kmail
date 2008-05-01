@@ -446,20 +446,18 @@ namespace KMail {
     if ( doCheck && cryptProto ) {
       GpgME::VerificationResult result;
       if ( data ) { // detached
-        Kleo::VerifyDetachedJob *job = cryptProto->verifyDetachedJob();
-        if ( !job ) {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
-        } else {
+        if ( Kleo::VerifyDetachedJob * const job = cryptProto->verifyDetachedJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+        } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       } else { // opaque
-        Kleo::VerifyOpaqueJob *job = cryptProto->verifyOpaqueJob();
-        if ( !job ) {
-          cryptPlugError = CANT_VERIFY_SIGNATURES;
-        } else {
+        if ( Kleo::VerifyOpaqueJob * const job = cryptProto->verifyOpaqueJob() ) {
           KleoJobExecutor executor;
           result = executor.exec( job, signaturetext, cleartext );
+        } else {
+          cryptPlugError = CANT_VERIFY_SIGNATURES;
         }
       }
       signatures = result.signatures();
@@ -660,7 +658,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                       "<a href=\"kmail:decryptMessage\">"
                       "<img src=\"" + iconName.toUtf8() + "\"/>"
                     + i18n("Decrypt Message").toUtf8()
-                    + "</div>";
+                    + "</a></div>";
     return false;
   }
 
@@ -699,9 +697,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     } else {
       QByteArray plainText;
       KleoJobExecutor executor;
-      std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job, ciphertext, plainText );
-      GpgME::DecryptionResult decryptResult = res.first;
-      GpgME::VerificationResult verifyResult = res.second;
+      const std::pair<GpgME::DecryptionResult,GpgME::VerificationResult> res = executor.exec( job, ciphertext, plainText );
+      const GpgME::DecryptionResult decryptResult = res.first;
+      const GpgME::VerificationResult verifyResult = res.second;
       signatureFound = verifyResult.signatures().size() > 0;
       signatures = verifyResult.signatures();
       bDecryptionOk = !decryptResult.error();
@@ -2062,7 +2060,7 @@ static QString writeSimpleSigstatHeader( const PartMetaData &block )
   html += "</td><td align=\"right\">";
   html += "<a href=\"kmail:showSignatureDetails\">";
   html += i18n( "Show Details" );
-  html += "</a></div></td></tr></table>";
+  html += "</a></td></tr></table>";
   return html;
 }
 
@@ -2077,7 +2075,7 @@ static QString endVerboseSigstatHeader()
   html += "</td><td align=\"right\" valign=\"top\" nowrap=\"nowrap\">";
   html += "<a href=\"kmail:hideSignatureDetails\">";
   html += i18n( "Hide Details" );
-  html += "</a></div></td></tr></table>";
+  html += "</a></td></tr></table>";
   return html;
 }
 
@@ -2086,7 +2084,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    bool isSMIME = cryptProto == Kleo::CryptoBackendFactory::instance()->smime();;
+    const bool isSMIME = cryptProto && ( cryptProto == Kleo::CryptoBackendFactory::instance()->smime() );
     QString signer = block.signer;
 
     QString htmlStr, simpleHtmlStr;
