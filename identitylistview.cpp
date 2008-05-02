@@ -112,6 +112,7 @@ namespace KMail {
     setRootIsDecorated( false );
     header()->setMovable( false );
     setAllColumnsShowFocus( true );
+    setAlternatingRowColors( true );
     setSortingEnabled( false ); // disabled
     setSelectionMode( SingleSelection ); // ### Extended would be nicer...
     setColumnWidth( 0, 175 );

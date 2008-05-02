@@ -136,6 +136,7 @@ ListView::ListView( QWidget *parent )
   : QTreeWidget( parent )
 {
   setAllColumnsShowFocus( true );
+  setAlternatingRowColors( true );
   setSelectionMode( QAbstractItemView::SingleSelection );
   setRootIsDecorated( false );
 }
