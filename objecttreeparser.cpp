@@ -468,7 +468,7 @@ namespace KMail {
 
     // ### only one signature supported
     if ( signatures.size() > 0 ) {
-      kDebug() << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: found signature";
+      kDebug() << "\nFound signature";
       GpgME::Signature signature = signatures[0];
 
       messagePart.status_code = signatureToStatus( signature );
